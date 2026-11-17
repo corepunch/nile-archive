@@ -26,7 +26,24 @@
       ],
       "source": "engine/art/match3-elements/source.png",
       "mode": "fill",
-      "runtime": "games/relic-rush/data/board-states/stone-1.png",
+      "runtime": "games/relic-rush/art/registered/board-states/stone-1.png",
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "game": "engine",
+      "name": "stone-1",
+      "crop": [
+        0,
+        0,
+        181,
+        181
+      ],
+      "source": "engine/art/match3-elements/source.png",
+      "mode": "fill",
+      "runtime": "engine/art/registered/board-states/stone-1.png",
       "size": [
         128,
         128
@@ -43,7 +60,24 @@
       ],
       "source": "engine/art/match3-elements/source.png",
       "mode": "fill",
-      "runtime": "games/relic-rush/data/board-states/stone-2.png",
+      "runtime": "games/relic-rush/art/registered/board-states/stone-2.png",
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "game": "engine",
+      "name": "stone-2",
+      "crop": [
+        181,
+        0,
+        362,
+        181
+      ],
+      "source": "engine/art/match3-elements/source.png",
+      "mode": "fill",
+      "runtime": "engine/art/registered/board-states/stone-2.png",
       "size": [
         128,
         128
@@ -60,7 +94,24 @@
       ],
       "source": "engine/art/match3-elements/source.png",
       "mode": "fill",
-      "runtime": "games/relic-rush/data/board-states/stone-3.png",
+      "runtime": "games/relic-rush/art/registered/board-states/stone-3.png",
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "game": "engine",
+      "name": "stone-3",
+      "crop": [
+        362,
+        0,
+        543,
+        181
+      ],
+      "source": "engine/art/match3-elements/source.png",
+      "mode": "fill",
+      "runtime": "engine/art/registered/board-states/stone-3.png",
       "size": [
         128,
         128
@@ -77,7 +128,7 @@
       ],
       "source": "engine/art/match3-elements/source.png",
       "mode": "fill",
-      "runtime": "games/christmas-market/data/board-states/stone-1.png",
+      "runtime": "games/christmas-market/art/registered/board-states/stone-1.png",
       "size": [
         128,
         128
@@ -94,7 +145,7 @@
       ],
       "source": "engine/art/match3-elements/source.png",
       "mode": "fill",
-      "runtime": "games/christmas-market/data/board-states/stone-2.png",
+      "runtime": "games/christmas-market/art/registered/board-states/stone-2.png",
       "size": [
         128,
         128
@@ -111,7 +162,7 @@
       ],
       "source": "engine/art/match3-elements/source.png",
       "mode": "fill",
-      "runtime": "games/christmas-market/data/board-states/stone-3.png",
+      "runtime": "games/christmas-market/art/registered/board-states/stone-3.png",
       "size": [
         128,
         128
@@ -123,12 +174,15 @@
     "engine/art/match3-elements/prompt.txt": "56b26b45f3e99132bdfd9e11ac5ce91d67103d015faee72a97fe8c11bd2f2d1c",
     "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
     "engine/art/hex-tile/atlas-template-8x6-181.png": "6d2ff6b2b1967f2c82d6ff54085c659e4841541da8af6f38c13dc7c846c90e00",
-    "tools/match3_elements_art.py": "84d40813d43a0eba3a3e41876fb6b25151082f56b1485d3869592444a3db1525",
-    "games/relic-rush/data/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
-    "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
-    "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
-    "games/christmas-market/data/board-states/stone-1.png": "5878a8835b6a159be473b2aeb2f044512453fa1fa97df7c3fb7c1512e37dafa0",
-    "games/christmas-market/data/board-states/stone-2.png": "e74589be9e08c844e52f5e438e0ed1f9093f7f63119dc5441100746a2d79c337",
-    "games/christmas-market/data/board-states/stone-3.png": "4de3d35bcfe876b27ab6bb4bdd219c3140e997f30d396bbcfc54bceae6de366e"
+    "tools/match3_elements_art.py": "7ddcf2fee805c98c2571c8f45b1792f45e2f2d1b73e6291c86afafe74280b745",
+    "games/relic-rush/art/registered/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
+    "engine/art/registered/board-states/stone-1.png": "cdb210c348c3403ccc1e229b272f3c67c179e10d05c5dc173e27d763da7fd05a",
+    "games/relic-rush/art/registered/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
+    "engine/art/registered/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
+    "games/relic-rush/art/registered/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
+    "engine/art/registered/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
+    "games/christmas-market/art/registered/board-states/stone-1.png": "5878a8835b6a159be473b2aeb2f044512453fa1fa97df7c3fb7c1512e37dafa0",
+    "games/christmas-market/art/registered/board-states/stone-2.png": "e74589be9e08c844e52f5e438e0ed1f9093f7f63119dc5441100746a2d79c337",
+    "games/christmas-market/art/registered/board-states/stone-3.png": "4de3d35bcfe876b27ab6bb4bdd219c3140e997f30d396bbcfc54bceae6de366e"
   }
 }

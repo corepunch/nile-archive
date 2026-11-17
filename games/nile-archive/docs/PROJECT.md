@@ -173,8 +173,8 @@
 
 - Три фона сцен: 1200 × 800, PNG с палитрой.
 - Остров: 2400 × 1600, PNG с палитрой.
-- Постройки: пять PNG с прозрачностью (`data/buildings`), исходники в `art/`.
-- Портреты: уменьшенные PNG (`data/characters`), исходники в `art/characters`.
+- Постройки: пять PNG с прозрачностью (`data/city/buildings`), исходники в `art/`.
+- Портреты: уменьшенные PNG (`data/story/characters`), исходники в `art/characters`.
 - Значки монеты и влияния рисует `tools/make_icons.py`.
 - Шрифты: Philosopher Bold (заголовки) и PT Sans (текст), обе под лицензией OFL.
 - `tools/import_buildings.py` собирал атлас для прежней версии и сохранён для истории.

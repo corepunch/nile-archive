@@ -151,14 +151,14 @@ Scener render with the piece's name. A material Blender textures with noise (`mo
 Scener has no global illumination: a calibrated
 gain stands in for bounced light. Use `BLENDER=1` when that matters.
 
-**A full render replaces the painted sprites.** `data/buildings/` holds the accepted
+**A full render replaces the painted sprites.** `data/city/buildings/` holds the accepted
 paint-over ([BUILDING_STYLE.md](BUILDING_STYLE.md)); a full `make buildings` writes raw
 renders there. Use `--shadows` to re-render shadows alone, or restore the painted
 sprites afterwards.
 
 **The name is the file.** A building's Blender collection name is its key:
-collection `lodge` becomes `data/buildings/lodge.png` and
-`data/building-shadows/lodge.png`, and `lua/building_sprites.lua` holds its
+collection `lodge` becomes `data/city/buildings/lodge.png` and
+`data/city/building-shadows/lodge.png`, and `lua/building_sprites.lua` holds its
 registration under `lodge`. Games merge that table into their city defs by key;
 never edit it. Numeric types stay in save files only, as positions in the game's
 own list: append new rows, never reorder.
@@ -269,7 +269,7 @@ repeat and a tile always looks the same. A cell is 1.6 tile sides wide and its
 centre is the tile's centre.
 
 ```sh
-python3 tools/roads.py christmas-market    # writes games/christmas-market/data/roads.png
+python3 tools/roads.py christmas-market    # writes games/christmas-market/data/city/roads.png
 ```
 
 `tools/roads.py` models the pieces and renders each with Scener
@@ -289,7 +289,7 @@ the joints, `rough` (cm) lets every stone's corners wander, `gap` widens the joi
 `missing` leaves the odd stone out and `heights` makes them uneven.
 
 A game can keep a second look beside its own: `--style NAME` reads
-`art/roads-NAME.json` and writes `data/roads-NAME.png`. Christmas Market has
+`art/roads-NAME.json` and writes `data/city/roads-NAME.png`. Christmas Market has
 `sandstone`, shown with `--roads sandstone`.
 
 ## Ground shadows

@@ -47,9 +47,9 @@ end
 
 return ui.skin{
     fonts = {
-        serif = {path = "fonts/Philosopher-Bold.ttf", fallback = "sans_bold"},
-        sans = "fonts/PT_Sans-Web-Regular.ttf",
-        sans_bold = "fonts/PT_Sans-Web-Bold.ttf",
+        serif = {path = "common/fonts/Philosopher-Bold.ttf", fallback = "sans_bold"},
+        sans = "common/fonts/PT_Sans-Web-Regular.ttf",
+        sans_bold = "common/fonts/PT_Sans-Web-Bold.ttf",
     },
 
     colors = {

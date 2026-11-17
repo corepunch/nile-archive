@@ -58,10 +58,10 @@ are the guides.
 
 | Script | What it does | Run |
 | --- | --- | --- |
-| `match3_atlas.py` | Builds and checks the engine skin and each game's single-texture override | `python3 tools/match3_atlas.py` (`--check` in `make test-assets`) |
+| `match3_atlas.py` | Packs the engine's and each game's registered sprites into one atlas per kind (`data/board/<kind>.png`, see [Asset layout](../docs/ASSET_LAYOUT.md)) | `python3 tools/match3_atlas.py` (`--check` in `make test-assets`) |
 | `match3_elements_art.py` | Registers the authored 48-state blocker and tablet atlas | `--check` in `make test-assets` |
 | `match3_theme_art.py` | Registers each portrait game's board-theme sheet | imported by `match3_atlas.py` |
-| `pack_particles.py` | Registers particle frames in the match-3 atlas | imported by `match3_atlas.py` |
+| `pack_particles.py` | Registers particle frames for the `fx` atlas | imported by `match3_atlas.py` |
 | `match3_buttons.py` | Prepares the Pause plate and packs the shared campaign actions; uses `games/relic-rush/tools/prepare_bonus_gems.py` for the button recipe | `python3 tools/match3_buttons.py` |
 | `board_tiles.py` | Bakes the shared board tiles into hex sprites for every game | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |

@@ -152,7 +152,7 @@ local measured=ui.form{kind="list",id="rows",item=function(item)
         {kind="label",grow=1,wrap=true,text=item.text,text_align="start"}}}
 end}
 check(measured:set_items("rows",{{id="long",text="Every little row can wrap into several lines beside its icon"}}),"wrap source")
-local measured_font=font.load("games/relic-rush/data/fonts/LilitaOne-Regular.ttf")
+local measured_font=font.load("games/relic-rush/data/common/fonts/LilitaOne-Regular.ttf")
 local font_style={style=function()return style{font=measured_font,size=20}end}
 local accent=ui.form{kind="button",id="confirm",text="Confirm",accent=true}
 local plain=ui.form{kind="button",id="cancel",text="Confirm"}

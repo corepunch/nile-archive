@@ -23,7 +23,7 @@ def export(key, atlas, crop, check):
     bust.thumbnail(SIZE, Image.Resampling.LANCZOS)
     image = Image.new('RGBA', SIZE)
     image.paste(bust, ((SIZE[0] - bust.width) // 2, SIZE[1] - bust.height))
-    path = ROOT / 'data/characters' / f'{key}.png'
+    path = ROOT / 'data/story/characters' / f'{key}.png'
     if check:
         # PNG compression can vary between platforms. The art contract is the
         # decoded RGBA canvas, including the authored alpha.

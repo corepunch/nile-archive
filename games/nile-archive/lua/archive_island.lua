@@ -41,8 +41,8 @@ function M.setup()
     end
     c.zones = zones
     c.cam = camera{center = vec2(900, 650), zoom = .8, min_zoom = .35, max_zoom = 2, cover = true}
-    c:init("island.png")
-    c.road = texture.load("roads.png")   -- tools/roads.py nile-archive
+    c:init("city/island.png")
+    c.road = texture.load("city/roads.png")   -- tools/roads.py nile-archive
     G.island = c
     G.buildings = c.defs   -- with the sprites loaded
     M.town_setup()
@@ -281,7 +281,7 @@ end
 -------------------------------------------------------------------- frame
 
 -- The island on the engine's shared town screen (engine/town.lua), laid out
--- by data/town.json like Relic Rush and Christmas Market. The archive adds its
+-- by data/city/town.json like Relic Rush and Christmas Market. The archive adds its
 -- player plate, the cast button and the goal card between Build and Play.
 local function shore(z)
     if G.island:unlock(z, G.wallet) then
@@ -305,7 +305,7 @@ end
 
 function M.town_setup()
     local town = require("town")
-    M.town = town.new(G.island, town.load("town.json"), {
+    M.town = town.new(G.island, town.load("city/town.json"), {
         skin = K.skin,
         wallet = function() return G.wallet end,
         notice = function(text)

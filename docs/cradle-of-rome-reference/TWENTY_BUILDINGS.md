@@ -112,7 +112,7 @@ alongside the Shutter Gear quest piece.
   slot's climb: trade goods, a wreck's cargo, winged sandals, a museum's harp.
   Rome's Arch, Ship, Statue and Temple of Saturn do the same.
 
-The [bonus atlas](../../games/relic-rush/data/bonus-gems.png)
+The [bonus atlas](../../games/relic-rush/art/registered/bonus-gems.png)
 contains the gems and the five states of each button. All four sockets stay
 visible in one row.
 

@@ -39,21 +39,22 @@ def main():
     for name in pieces['frames']:
         sprite = atlas['board_theme'][name]
         assert sprite['source'] == pieces['source'] and sprite['prompt'] == pieces['prompt'], name
-        assert sprite['reference'] == pieces['layout'] and atlas['frames'][name][2:] == [128,128], name
+        assert sprite['reference'] == pieces['layout'] and atlas['frames'][name]['box'][2:] == [128,128], name
+        assert atlas['frames'][name]['atlas'] == 'pieces' and pieces['runtime'] == 'data/board/pieces.png', name
     for entry in registration['icons']:
-        assert png(ROOT/'data'/entry['path']) == ((128,128),6), entry['path']
+        assert png(ROOT/'art/registered'/entry['path']) == ((128,128),6), entry['path']
     for tool, folder in [('pickaxe','board-states'),('dynamite','board-states'),('sunburst','board-states'),('pause','expedition-hud')]:
-        hashes = {digest(ROOT/'data'/folder/f'{tool}-{state}.png') for state in STATES}
+        hashes = {digest(ROOT/'art/registered'/folder/f'{tool}-{state}.png') for state in STATES}
         assert len(hashes) == 5, f'{tool}: every state must have its own authored artwork'
         for state in STATES:
             name = f'{tool}-{state}'
-            assert name in atlas['hud']['frames'] and name not in atlas['frames']
+            assert atlas['frames'][name]['atlas'] in atlas['hud'] and atlas['frames'][name]['atlas'] not in ('pieces', 'blockers', 'cells', 'fx')
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_hud.py'), '--check'], check=True)
     tiles = manifest['tiles']
     spec = json.loads((ROOT.parents[1]/tiles['spec']).read_text())
-    assert list(spec['tiles']) == tiles['frames'] and 'games/christmas-market/data/board-tiles' in spec['outputs']
+    assert list(spec['tiles']) == tiles['frames'] and 'games/christmas-market/art/registered/board-tiles' in spec['outputs']
     for name in spec['tiles']:
-        assert png(ROOT/'data/board-tiles'/f'{name}.png') == ((128, 128), 6), name
+        assert png(ROOT/'art/registered/board-tiles'/f'{name}.png') == ((128, 128), 6), name
     subprocess.run([sys.executable, str(ROOT.parents[1]/tiles['generator']), '--check'], check=True)
     frame = manifest['board_frame']
     art = (ROOT/'lua/art.lua').read_text()
@@ -69,7 +70,7 @@ def main():
     assert png(ROOT/goods['runtime']) == ((512, 512), 6) and len(set(goods['frames'])) == 16
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
     assert (ROOT/manifest['campaign_buttons']).is_file()
-    assert png(ROOT/'data/campaign-buttons.png') == ((512, 768), 6)
+    assert png(ROOT/'data/common/buttons.png') == ((512, 768), 6)
     buttons = manifest['bonus_buttons']
     assert len(set(buttons['columns'])) == 4 and set(buttons['columns']) == set(buttons['icons'])
     assert png(ROOT/buttons['runtime']) == ((512, 768), 6)
@@ -83,12 +84,12 @@ def main():
         assert png(ROOT/entry['runtime']) == (tuple(entry['image']),6), entry['key']
         assert all(x > 0 and x % 1 == 0 for x in entry['size'])
         assert entry['base_width'] > 0 and len(entry['pivot']) == 2
-    assert {p.name for p in (ROOT/'data/buildings').iterdir()} == {e['key'] + '.png' for e in buildings}
+    assert {p.name for p in (ROOT/'data/city/buildings').iterdir()} == {e['key'] + '.png' for e in buildings}
     for i in range(6):
-        assert png(ROOT/'data/tile-sets/festive'/f'{i}.png') == ((128,128),6)
+        assert png(ROOT/'art/registered/tile-sets/festive'/f'{i}.png') == ((128,128),6)
     cast = manifest['story_cast']
     assert png(ROOT/cast['source']) == ((1536,1024),6)
-    assert set(cast['runtime']) == {str(p.relative_to(ROOT)) for p in (ROOT/'data/characters').glob('*.png')}
+    assert set(cast['runtime']) == {str(p.relative_to(ROOT)) for p in (ROOT/'data/story/characters').glob('*.png')}
     for portrait in cast['runtime']:
         assert png(ROOT/portrait) == ((320,480),6), portrait
     catalogue = ROOT/'Assets.xcassets/AppIcon.appiconset'

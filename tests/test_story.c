@@ -30,7 +30,7 @@ static int imax(int a,int b) { return a>b ? a:b; }
 
 static void init(void)
 {
-    lettering=font_load("fonts/LilitaOne-Regular.ttf");
+    lettering=font_load("common/fonts/LilitaOne-Regular.ttf");
     CHECK(lettering != NULL);
     test_style=(story_style){.text={.font=lettering,.size=21,.fill={20,20,20,255}},
         .name={.font=lettering,.size=15,.fill={255,255,255,255}},

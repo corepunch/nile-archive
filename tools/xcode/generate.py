@@ -219,8 +219,9 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     engine_lua = [project.add('engine/lua/' + f.name, 'PBXFileReference', path=rel('engine/' + f.name), name=f.name,
                               sourceTree='SOURCE_ROOT', lastKnownFileType='text')
                   for f in sorted((ROOT / 'engine').glob('*.lua')) if f.name != 'engine.d.lua']
-    engine_data = [project.add('engine/data/match3.png', 'PBXFileReference', path=rel('engine/data/match3.png'), name='match3.png',
-                               sourceTree='SOURCE_ROOT', lastKnownFileType='image.png')]
+    # The default skin's atlases and background, copied as one folder to engine/data/board.
+    engine_data = [project.add('engine/data/board', 'PBXFileReference', path=rel('engine/data/board'), name='board',
+                               sourceTree='SOURCE_ROOT', lastKnownFileType='folder')]
     assets = None
     if (home / 'Assets.xcassets').is_dir():
         assets = project.add('game/assets', 'PBXFileReference', path='Assets.xcassets',

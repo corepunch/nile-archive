@@ -106,7 +106,7 @@ no ImageGen prompt or added runtime texture.
 
 ## Island roads
 
-`archive_island.lua` loads `data/roads.png` as `city.road`: the engine paves a
+`archive_island.lua` loads `data/city/roads.png` as `city.road`: the engine paves a
 flag tile against every building's front and joins the flags along whole tiles
 ([Roads](../../../docs/BUILDINGS.md#roads)). The atlas holds worn limestone
 flagstones, without kerbs and with the sand showing in the joints, as an ancient
@@ -114,7 +114,7 @@ path would be: fifteen pieces, one per combination of joined neighbours (rounded
 corners) and eight looks of each straight direction, modelled and rendered with
 Scener by `python3 tools/roads.py nile-archive` from the palette in
 `art/roads.json`; it has no interaction states. Paths painted into
-`data/island.png` remain part of the terrain, and a road is drawn on the
+`data/city/island.png` remain part of the terrain, and a road is drawn on the
 ground, so it passes over painted scenery inside the buildable lawn. The curved
 connectors these replace were removed in
 [the earlier comparison](review/no-auto-roads/README.md). Reviewed capture:

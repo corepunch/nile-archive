@@ -13,7 +13,7 @@ local navigation_button = require("match3").navigation_button
 return ui.skin{
     fonts = {
         -- Lilita One measures ascent to descent: 1.17 of its em.
-        lilita = {path = "fonts/LilitaOne-Regular.ttf", scale = 1.171875},
+        lilita = {path = "common/fonts/LilitaOne-Regular.ttf", scale = 1.171875},
     },
 
     colors = {

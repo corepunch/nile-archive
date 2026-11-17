@@ -1,5 +1,5 @@
 -- Named presentation contract; tools/check_assets.py checks its coverage.
--- The market goods atlas is shared by the board and the wallet.
+-- The market goods (in the pieces atlas) are shared by the board and the wallet.
 local elements_view = require("match3.elements_view")
 local economy = require("economy")
 local A = {}
@@ -14,12 +14,9 @@ A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
 
-local bonus_atlas = {path="bonus-buttons.png", frames={}}
-for col, booster in ipairs(economy.tool_slots) do
-    for row, state in ipairs(A.states) do
-        bonus_atlas.frames[booster.icon .. "-" .. state] = {(col - 1) * 128, row * 128, 128, 128}
-    end
-end
+-- The game's own atlases, even when the board borrows the engine's neutral skin.
+local function own_board() return require("match3").skin(require("match3_skin")) end
+local function own_hud() return require("match3").hud(require("match3_hud")) end
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
@@ -39,10 +36,15 @@ function A.load_hud()
             assert(hud["board-pause-" .. state], "missing board Settings state: " .. state)
         end
     end
-    local bonus = match3.atlas(bonus_atlas)
+    local bonus = own_hud()
     local images = setmetatable({}, {__index=hud})
     if neutral then images.score = hud.complete end
-    for key in pairs(bonus_atlas.frames) do images[key] = bonus[key] end
+    -- Every booster's toolbar states, from the boosters atlas.
+    for _, booster in ipairs(economy.tool_slots) do
+        for _, state in ipairs(A.states) do
+            images[booster.icon .. "-" .. state] = bonus[booster.icon .. "-" .. state]
+        end
+    end
     return images
 end
 
@@ -74,22 +76,21 @@ end
 function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
+    local own = own_board()
+    local function piece(name) return assert(own[name], "missing atlas frame: " .. name) end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    elements_view.load(textures, require("match3").skin(require("match3_skin")))
+    elements_view.load(textures, own)
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
-        if name then textures[name] = texture.load("story-floors/" .. name .. ".jpg") end
+        if name then textures[name] = texture.load("story/floors/" .. name .. ".jpg") end
         local find = level.story_piece
-        if find then textures["story-" .. find.key] = texture.load("story-pieces/" .. find.key .. ".png") end
+        if find then textures["story-" .. find.key] = piece("story-" .. find.key) end
     end
-    local goods = texture.load("market-goods.png")
-    for kind = 0, #economy.pieces do
-        textures["market-" .. kind] = texture.region(goods, rect(kind % 4 * 128, kind // 4 * 128, 128, 128))
-    end
+    for kind = 0, #economy.pieces do textures["market-" .. kind] = piece("market-" .. kind) end
     -- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
-    -- engine/art/board-tiles/tiles.json, under "tile-" keys.
+    -- engine/art/board-tiles/tiles.json and packed in the cells atlas.
     for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
-        textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
+        textures["tile-" .. key] = piece("tile-" .. key)
     end
     elements_view.load_frame(textures, A.board_frame)
     for _, name in ipairs(A.layers) do load(name) end

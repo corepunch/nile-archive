@@ -20,7 +20,7 @@
         349,
         344
       ],
-      "runtime": "data/navigation/build-normal.png",
+      "runtime": "art/registered/navigation/build-normal.png",
       "meaning": "Build button: normal"
     },
     "build-hover": {
@@ -30,7 +30,7 @@
         661,
         344
       ],
-      "runtime": "data/navigation/build-hover.png",
+      "runtime": "art/registered/navigation/build-hover.png",
       "meaning": "Build button: hover"
     },
     "build-pressed": {
@@ -40,7 +40,7 @@
         971,
         344
       ],
-      "runtime": "data/navigation/build-pressed.png",
+      "runtime": "art/registered/navigation/build-pressed.png",
       "meaning": "Build button: pressed"
     },
     "build-selected": {
@@ -50,7 +50,7 @@
         1282,
         344
       ],
-      "runtime": "data/navigation/build-selected.png",
+      "runtime": "art/registered/navigation/build-selected.png",
       "meaning": "Build button: selected"
     },
     "build-disabled": {
@@ -60,7 +60,7 @@
         1594,
         344
       ],
-      "runtime": "data/navigation/build-disabled.png",
+      "runtime": "art/registered/navigation/build-disabled.png",
       "meaning": "Build button: disabled"
     },
     "play-normal": {
@@ -70,7 +70,7 @@
         349,
         652
       ],
-      "runtime": "data/navigation/play-normal.png",
+      "runtime": "art/registered/navigation/play-normal.png",
       "meaning": "Play button: normal"
     },
     "play-hover": {
@@ -80,7 +80,7 @@
         661,
         652
       ],
-      "runtime": "data/navigation/play-hover.png",
+      "runtime": "art/registered/navigation/play-hover.png",
       "meaning": "Play button: hover"
     },
     "play-pressed": {
@@ -90,7 +90,7 @@
         971,
         652
       ],
-      "runtime": "data/navigation/play-pressed.png",
+      "runtime": "art/registered/navigation/play-pressed.png",
       "meaning": "Play button: pressed"
     },
     "play-selected": {
@@ -100,7 +100,7 @@
         1282,
         652
       ],
-      "runtime": "data/navigation/play-selected.png",
+      "runtime": "art/registered/navigation/play-selected.png",
       "meaning": "Play button: selected"
     },
     "play-disabled": {
@@ -110,7 +110,7 @@
         1594,
         652
       ],
-      "runtime": "data/navigation/play-disabled.png",
+      "runtime": "art/registered/navigation/play-disabled.png",
       "meaning": "Play button: disabled"
     },
     "levels-normal": {
@@ -120,7 +120,7 @@
         349,
         956
       ],
-      "runtime": "data/navigation/levels-normal.png",
+      "runtime": "art/registered/navigation/levels-normal.png",
       "meaning": "Levels button: normal"
     },
     "levels-hover": {
@@ -130,7 +130,7 @@
         661,
         956
       ],
-      "runtime": "data/navigation/levels-hover.png",
+      "runtime": "art/registered/navigation/levels-hover.png",
       "meaning": "Levels button: hover"
     },
     "levels-pressed": {
@@ -140,7 +140,7 @@
         971,
         956
       ],
-      "runtime": "data/navigation/levels-pressed.png",
+      "runtime": "art/registered/navigation/levels-pressed.png",
       "meaning": "Levels button: pressed"
     },
     "levels-selected": {
@@ -150,7 +150,7 @@
         1282,
         956
       ],
-      "runtime": "data/navigation/levels-selected.png",
+      "runtime": "art/registered/navigation/levels-selected.png",
       "meaning": "Levels button: selected"
     },
     "levels-disabled": {
@@ -160,7 +160,7 @@
         1594,
         956
       ],
-      "runtime": "data/navigation/levels-disabled.png",
+      "runtime": "art/registered/navigation/levels-disabled.png",
       "meaning": "Levels button: disabled"
     }
   },

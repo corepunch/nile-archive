@@ -166,21 +166,27 @@ gems are still falling. The last arrivals use the existing landing interval
 before the next cascade or result check. Reduced motion shortens the same
 schedule and omits the rebound.
 
-## Graphics and the one-atlas skin
+## Graphics: one atlas per kind of art
 
-`match3.skin()` loads `engine/data/match3.png` from its resource directory.
-The pieces, controls, HUD, blockers and effect
+`match3.skin()` loads the engine's default skin from `engine/data/board/` in
+its resource directory: one atlas each for pieces, blockers, cells, boosters,
+HUD and effects, and a separate background. The pieces, controls, HUD, blockers and effect
 frames come from the engine's own authored art. The [registration manifest](../engine/art/match3/manifest.json)
 records source hashes and transforms; the retired original-art
 [prompt](../engine/art/match3/prompt.txt) remains historical provenance.
 
-Both game atlases use `{path="filename.png", frames={name={x,y,w,h}, ...}}`.
-`match3.skin(override)` loads the board atlas with chips, powers, floors,
-blockers, selection, backgrounds and effects. `match3.hud(override)` loads
-the HUD atlas with score, completion and the normal, selected, pressed, hover
-and disabled states of pickaxe, dynamite, sunburst and Pause. The engine
-neutral preview uses its built-in atlas for both. The loaders check frame
-bounds and required names.
+A skin definition lists typed atlases under `sheets`, each
+`{path="board/pieces.png", frames={name={x,y,w,h}, ...}}`, standalone
+`images` such as backgrounds, and `aliases`; a plain `{path=, frames=}` is a
+one-sheet definition, and `engine=true` reads paths with `texture.load_engine`.
+`match3.atlas(definition)` flattens all of it into one table of named images,
+loading each sheet once. `match3.skin(override)` loads the board: pieces,
+blockers, cells, effects and boosters, with the backgrounds. `match3.hud(override)`
+loads the HUD and boosters atlases: score, completion and the normal, selected,
+pressed, hover and disabled states of pickaxe, dynamite, sunburst and Pause.
+The engine neutral preview uses its built-in skin for both. The loaders check
+frame bounds and required names. [Asset layout](ASSET_LAYOUT.md) lists which
+frames go in which atlas.
 
 `texture.region(atlas, rectangle)` returns a borrowed ordinary texture view.
 Every sprite retains its own dimensions while sharing the atlas's GPU
@@ -191,10 +197,12 @@ texture. Keep the owner alive; freeing a view leaves the owner intact.
 alpha-blended pieces in one atlas. Font glyphs, engine shape primitives and
 transient beam/particle geometry remain normal renderer facilities.
 
-Relic Rush and Christmas Market each use a 2048×4096 `data/match3.png`
-for board imagery and a 1024×1024 `data/match3-hud.png` for UI. Goal displays
-can reuse the board's chip and objective frames. The generated
-`lua/match3_skin.lua` and `lua/match3_hud.lua` register both textures.
+Relic Rush and Christmas Market each ship `data/board/pieces.png`,
+`blockers.png`, `cells.png`, `boosters.png`, `hud.png` and `fx.png`, with
+backgrounds as separate JPEGs in `data/board/backs/`. Goal displays can reuse
+the board's chip and objective frames. The generated `lua/match3_atlases.lua`
+gives each atlas's frames; `lua/match3_skin.lua` and `lua/match3_hud.lua` pick
+the atlases, images and aliases for the board and its HUD.
 The shared floor renderer in `match3.elements_view` draws an edge-to-edge
 backing and insets each face by `R.GROUND.seam_width` (0.18 design units by
 default) at its radius. The seam shows the backing colour through that inset.

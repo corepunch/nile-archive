@@ -6,7 +6,7 @@
 -- with the size asked for. Layer boxes take `height_ratio` (top fraction),
 -- then `inset` and `offset`; a state's `inset` shrinks every non-fixed layer.
 return ui.skin{
-    fonts = {lilita = "fonts/LilitaOne-Regular.ttf"},
+    fonts = {lilita = "common/fonts/LilitaOne-Regular.ttf"},
 
     colors = {
         cream = "#FFF2D2", ink = "#193D43", gold = "#F4CB78", amber = "#D6A050", teal = "#234F55",

@@ -37,8 +37,8 @@
     416,
     432
    ],
-   "runtime": "data/buildings/arch.png",
-   "shadow": "data/building-shadows/arch.png",
+   "runtime": "data/city/buildings/arch.png",
+   "shadow": "data/city/building-shadows/arch.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#arch"
   },
   {
@@ -67,8 +67,8 @@
     417,
     455
    ],
-   "runtime": "data/buildings/lumber.png",
-   "shadow": "data/building-shadows/lumber.png",
+   "runtime": "data/city/buildings/lumber.png",
+   "shadow": "data/city/building-shadows/lumber.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#lumber"
   },
   {
@@ -97,8 +97,8 @@
     416,
     452
    ],
-   "runtime": "data/buildings/bakery.png",
-   "shadow": "data/building-shadows/bakery.png",
+   "runtime": "data/city/buildings/bakery.png",
+   "shadow": "data/city/building-shadows/bakery.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#bakery"
   },
   {
@@ -127,8 +127,8 @@
     415,
     461
    ],
-   "runtime": "data/buildings/cocoa.png",
-   "shadow": "data/building-shadows/cocoa.png",
+   "runtime": "data/city/buildings/cocoa.png",
+   "shadow": "data/city/building-shadows/cocoa.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#cocoa"
   },
   {
@@ -157,8 +157,8 @@
     417,
     467
    ],
-   "runtime": "data/buildings/toys.png",
-   "shadow": "data/building-shadows/toys.png",
+   "runtime": "data/city/buildings/toys.png",
+   "shadow": "data/city/building-shadows/toys.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#toys"
   },
   {
@@ -187,8 +187,8 @@
     417,
     445
    ],
-   "runtime": "data/buildings/gifts.png",
-   "shadow": "data/building-shadows/gifts.png",
+   "runtime": "data/city/buildings/gifts.png",
+   "shadow": "data/city/building-shadows/gifts.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#gifts"
   },
   {
@@ -217,8 +217,8 @@
     417,
     456
    ],
-   "runtime": "data/buildings/candles.png",
-   "shadow": "data/building-shadows/candles.png",
+   "runtime": "data/city/buildings/candles.png",
+   "shadow": "data/city/building-shadows/candles.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#candles"
   },
   {
@@ -247,8 +247,8 @@
     417,
     438
    ],
-   "runtime": "data/buildings/carousel.png",
-   "shadow": "data/building-shadows/carousel.png",
+   "runtime": "data/city/buildings/carousel.png",
+   "shadow": "data/city/building-shadows/carousel.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#carousel"
   },
   {
@@ -277,8 +277,8 @@
     427,
     383
    ],
-   "runtime": "data/buildings/rink.png",
-   "shadow": "data/building-shadows/rink.png",
+   "runtime": "data/city/buildings/rink.png",
+   "shadow": "data/city/building-shadows/rink.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#rink"
   },
   {
@@ -307,8 +307,8 @@
     423,
     466
    ],
-   "runtime": "data/buildings/tree.png",
-   "shadow": "data/building-shadows/tree.png",
+   "runtime": "data/city/buildings/tree.png",
+   "shadow": "data/city/building-shadows/tree.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#tree"
   },
   {
@@ -337,8 +337,8 @@
     278,
     277
    ],
-   "runtime": "data/buildings/firs.png",
-   "shadow": "data/building-shadows/firs.png",
+   "runtime": "data/city/buildings/firs.png",
+   "shadow": "data/city/building-shadows/firs.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#firs"
   },
   {
@@ -367,8 +367,8 @@
     278,
     260
    ],
-   "runtime": "data/buildings/bench.png",
-   "shadow": "data/building-shadows/bench.png",
+   "runtime": "data/city/buildings/bench.png",
+   "shadow": "data/city/building-shadows/bench.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#bench"
   },
   {
@@ -397,8 +397,8 @@
     83,
     104
    ],
-   "runtime": "data/buildings/snowman.png",
-   "shadow": "data/building-shadows/snowman.png",
+   "runtime": "data/city/buildings/snowman.png",
+   "shadow": "data/city/building-shadows/snowman.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#snowman"
   },
   {
@@ -427,8 +427,8 @@
     95,
     86
    ],
-   "runtime": "data/buildings/presents.png",
-   "shadow": "data/building-shadows/presents.png",
+   "runtime": "data/city/buildings/presents.png",
+   "shadow": "data/city/building-shadows/presents.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#presents"
   },
   {
@@ -456,8 +456,8 @@
     69,
     104
    ],
-   "runtime": "data/buildings/candy_canes.png",
-   "shadow": "data/building-shadows/candy_canes.png",
+   "runtime": "data/city/buildings/candy_canes.png",
+   "shadow": "data/city/building-shadows/candy_canes.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#candy_canes"
   },
   {
@@ -486,8 +486,8 @@
     35,
     126
    ],
-   "runtime": "data/buildings/lamp_post.png",
-   "shadow": "data/building-shadows/lamp_post.png",
+   "runtime": "data/city/buildings/lamp_post.png",
+   "shadow": "data/city/building-shadows/lamp_post.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#lamp_post"
   },
   {
@@ -516,8 +516,8 @@
     116,
     118
    ],
-   "runtime": "data/buildings/snowy_bench.png",
-   "shadow": "data/building-shadows/snowy_bench.png",
+   "runtime": "data/city/buildings/snowy_bench.png",
+   "shadow": "data/city/building-shadows/snowy_bench.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#snowy_bench"
   },
   {
@@ -546,8 +546,8 @@
     58,
     114
    ],
-   "runtime": "data/buildings/mailbox.png",
-   "shadow": "data/building-shadows/mailbox.png",
+   "runtime": "data/city/buildings/mailbox.png",
+   "shadow": "data/city/building-shadows/mailbox.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#mailbox"
   },
   {
@@ -574,8 +574,8 @@
     92,
     80
    ],
-   "runtime": "data/buildings/snow_rocks.png",
-   "shadow": "data/building-shadows/snow_rocks.png",
+   "runtime": "data/city/buildings/snow_rocks.png",
+   "shadow": "data/city/building-shadows/snow_rocks.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#snow_rocks"
   },
   {
@@ -604,8 +604,8 @@
     80,
     107
    ],
-   "runtime": "data/buildings/giant_ornament.png",
-   "shadow": "data/building-shadows/giant_ornament.png",
+   "runtime": "data/city/buildings/giant_ornament.png",
+   "shadow": "data/city/building-shadows/giant_ornament.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#giant_ornament"
   },
   {
@@ -634,8 +634,8 @@
     86,
     115
    ],
-   "runtime": "data/buildings/ice_star.png",
-   "shadow": "data/building-shadows/ice_star.png",
+   "runtime": "data/city/buildings/ice_star.png",
+   "shadow": "data/city/building-shadows/ice_star.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#ice_star"
   },
   {
@@ -664,8 +664,8 @@
     48,
     108
    ],
-   "runtime": "data/buildings/nutcracker.png",
-   "shadow": "data/building-shadows/nutcracker.png",
+   "runtime": "data/city/buildings/nutcracker.png",
+   "shadow": "data/city/building-shadows/nutcracker.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#nutcracker"
   },
   {
@@ -693,8 +693,8 @@
     59,
     101
    ],
-   "runtime": "data/buildings/reindeer.png",
-   "shadow": "data/building-shadows/reindeer.png",
+   "runtime": "data/city/buildings/reindeer.png",
+   "shadow": "data/city/building-shadows/reindeer.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#reindeer"
   },
   {
@@ -722,8 +722,8 @@
     68,
     95
    ],
-   "runtime": "data/buildings/penguins.png",
-   "shadow": "data/building-shadows/penguins.png",
+   "runtime": "data/city/buildings/penguins.png",
+   "shadow": "data/city/building-shadows/penguins.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#penguins"
   },
   {
@@ -752,8 +752,8 @@
     171,
     166
    ],
-   "runtime": "data/buildings/wreath_arch.png",
-   "shadow": "data/building-shadows/wreath_arch.png",
+   "runtime": "data/city/buildings/wreath_arch.png",
+   "shadow": "data/city/building-shadows/wreath_arch.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#wreath_arch"
   },
   {
@@ -782,8 +782,8 @@
     154,
     129
    ],
-   "runtime": "data/buildings/sleigh.png",
-   "shadow": "data/building-shadows/sleigh.png",
+   "runtime": "data/city/buildings/sleigh.png",
+   "shadow": "data/city/building-shadows/sleigh.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#sleigh"
   },
   {
@@ -812,8 +812,8 @@
     187,
     162
    ],
-   "runtime": "data/buildings/igloo.png",
-   "shadow": "data/building-shadows/igloo.png",
+   "runtime": "data/city/buildings/igloo.png",
+   "shadow": "data/city/building-shadows/igloo.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#igloo"
   },
   {
@@ -840,8 +840,8 @@
     113,
     153
    ],
-   "runtime": "data/buildings/fir_snowy.png",
-   "shadow": "data/building-shadows/fir_snowy.png",
+   "runtime": "data/city/buildings/fir_snowy.png",
+   "shadow": "data/city/building-shadows/fir_snowy.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#fir_snowy"
   },
   {
@@ -868,8 +868,8 @@
     100,
     147
    ],
-   "runtime": "data/buildings/birch.png",
-   "shadow": "data/building-shadows/birch.png",
+   "runtime": "data/city/buildings/birch.png",
+   "shadow": "data/city/building-shadows/birch.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#birch"
   },
   {
@@ -898,8 +898,8 @@
     100,
     164
    ],
-   "runtime": "data/buildings/fir_decorated.png",
-   "shadow": "data/building-shadows/fir_decorated.png",
+   "runtime": "data/city/buildings/fir_decorated.png",
+   "shadow": "data/city/building-shadows/fir_decorated.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#fir_decorated"
   },
   {
@@ -928,8 +928,8 @@
     239,
     265
    ],
-   "runtime": "data/buildings/pine_grove.png",
-   "shadow": "data/building-shadows/pine_grove.png",
+   "runtime": "data/city/buildings/pine_grove.png",
+   "shadow": "data/city/building-shadows/pine_grove.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#pine_grove"
   },
   {
@@ -958,8 +958,8 @@
     278,
     291
    ],
-   "runtime": "data/buildings/log_cabin.png",
-   "shadow": "data/building-shadows/log_cabin.png",
+   "runtime": "data/city/buildings/log_cabin.png",
+   "shadow": "data/city/building-shadows/log_cabin.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#log_cabin"
   },
   {
@@ -988,8 +988,8 @@
     285,
     284
    ],
-   "runtime": "data/buildings/gingerbread_house.png",
-   "shadow": "data/building-shadows/gingerbread_house.png",
+   "runtime": "data/city/buildings/gingerbread_house.png",
+   "shadow": "data/city/building-shadows/gingerbread_house.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#gingerbread_house"
   },
   {
@@ -1018,8 +1018,8 @@
     279,
     276
    ],
-   "runtime": "data/buildings/post_office.png",
-   "shadow": "data/building-shadows/post_office.png",
+   "runtime": "data/city/buildings/post_office.png",
+   "shadow": "data/city/building-shadows/post_office.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#post_office"
   },
   {
@@ -1048,8 +1048,8 @@
     282,
     305
    ],
-   "runtime": "data/buildings/chapel.png",
-   "shadow": "data/building-shadows/chapel.png",
+   "runtime": "data/city/buildings/chapel.png",
+   "shadow": "data/city/building-shadows/chapel.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#chapel"
   },
   {
@@ -1078,8 +1078,8 @@
     377,
     334
    ],
-   "runtime": "data/buildings/reindeer_stable.png",
-   "shadow": "data/building-shadows/reindeer_stable.png",
+   "runtime": "data/city/buildings/reindeer_stable.png",
+   "shadow": "data/city/building-shadows/reindeer_stable.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#reindeer_stable"
   },
   {
@@ -1108,8 +1108,8 @@
     427,
     437
    ],
-   "runtime": "data/buildings/santa_workshop.png",
-   "shadow": "data/building-shadows/santa_workshop.png",
+   "runtime": "data/city/buildings/santa_workshop.png",
+   "shadow": "data/city/building-shadows/santa_workshop.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#santa_workshop"
   }
  ]

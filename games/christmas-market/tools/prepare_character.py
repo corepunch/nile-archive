@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     portrait = Image.open(ROOT / 'art/noelle.png').convert('RGBA')
-    portrait_path = ROOT / 'data/characters/noelle.png'
+    portrait_path = ROOT / 'data/story/characters/noelle.png'
     portrait_path.parent.mkdir(parents=True, exist_ok=True)
     portrait.resize((320, 480), Image.Resampling.LANCZOS).save(portrait_path)
 

@@ -1,47 +1,47 @@
 {
   "runtime": [
     {
-      "asset": "fonts/LilitaOne-Regular.ttf",
+      "asset": "common/fonts/LilitaOne-Regular.ttf",
       "sha256": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
       "bytes": 28092
     },
     {
-      "asset": "fonts/lilitaone-OFL.txt",
+      "asset": "common/fonts/lilitaone-OFL.txt",
       "sha256": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
       "bytes": 4393
     },
     {
-      "asset": "pets-to-replace.png",
+      "asset": "sprites/pets-to-replace.png",
       "sha256": "739c7129f7870909bd5d2fd8f52d8c9d12505f289921ed018f09f83dfaa4aef6",
       "bytes": 593439
     },
     {
-      "asset": "sprites.png",
+      "asset": "sprites/sprites.png",
       "sha256": "a4bbab4eac112edf2ad64988accf98717d13f3fdeafd0aa5a3f807316de3209b",
       "bytes": 6578339
     },
     {
-      "asset": "emergency-01-outskirts.png",
+      "asset": "levels/emergency-01-outskirts.png",
       "sha256": "5d4f2c49a2b8a7f309419cf668cfe6c781283c01a4567988bcf3671a9798349f",
       "bytes": 3912734
     },
     {
-      "asset": "emergency-02-suburbs.png",
+      "asset": "levels/emergency-02-suburbs.png",
       "sha256": "a76d0dbdecde1db4674b3fc1b6be019af763ec96b8f91fbdc899351335b9053b",
       "bytes": 4178981
     },
     {
-      "asset": "emergency-03-square.png",
+      "asset": "levels/emergency-03-square.png",
       "sha256": "0be70a07eeb3e29206f51fa9cd3b6cd6a2924c541ee48b92ebdb51b512823deb",
       "bytes": 4026883
     },
     {
-      "asset": "emergency-04-district.png",
+      "asset": "levels/emergency-04-district.png",
       "sha256": "5bea0f98aa73d79d96adf44e7ac70e0e6d26a9f79f65bd5899315f8f9a37a044",
       "bytes": 4011494
     },
     {
-      "asset": "emergency-05-centre.png",
+      "asset": "levels/emergency-05-centre.png",
       "sha256": "c54da55e7b9732af0ccb9798ba0a88a3175dd6b746fbb5912f3e4ee3ecf46525",
       "bytes": 4219967
     }
@@ -51,7 +51,7 @@
   "source_commit": "a9b3a09a4ad680748c14303e5cf86455c002d7ef",
   "borrowed": [
     {
-      "asset": "pets-to-replace.png",
+      "asset": "sprites/pets-to-replace.png",
       "origin": "Rescue Team 5 / Rionix",
       "status": "replace",
       "reason": "No original or CC0 cat/dog substitute exists in either repository.",

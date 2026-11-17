@@ -35,7 +35,7 @@ make buildings GAME=relic-rush KEYS="lodge"     # one
 make buildings GAME=relic-rush REBUILD=1        # after editing build_scene.py
 ```
 
-Outputs are `data/buildings/<key>.png` and `data/building-shadows/<key>.png` at 100
+Outputs are `data/city/buildings/<key>.png` and `data/city/building-shadows/<key>.png` at 100
 pixels per tile side, the registry `art/building-catalogue/registration.json`,
 `lua/building_sprites.lua`, and the [review sheet](screenshots/buildings.jpg).
 `tools/prepare_buildings.py` then writes `lua/buildings.lua`, merging prices and
@@ -69,7 +69,7 @@ This completes the building paint pass tracked in [#41](https://github.com/corep
 ## Separate ground shadows
 
 All 96 entries have a registered low-resolution shadow PNG under
-`data/building-shadows/`, rendered per building with the sprites from the same
+`data/city/building-shadows/`, rendered per building with the sprites from the same
 geometry, sun and fill: camera-invisible casters on a transparent Cycles catcher,
 direct light only. Crops use alpha >= 24 support plus a three-pixel feather margin
 to exclude ray-sampling speckles; retained RGB/alpha stays unchanged. Generated Lua
@@ -114,7 +114,7 @@ All entries support the presentation/interaction contract above. `manifest.json`
 records sources, costs, requirements and registration; `art/building-catalogue/registration.json`
 holds each sprite's pivot and base width. Category and Star unlocks come from the
 supplied study catalogue; its June's Journey names are design references only. The
-sprite file is always `data/buildings/<key>.png`.
+sprite file is always `data/city/buildings/<key>.png`.
 
 | ID / key | Name | Category | Tiles | Price | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |

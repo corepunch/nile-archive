@@ -21,16 +21,19 @@ def main():
     recipe = json.loads((RELIC / "art/board-states/manifest.json").read_text())["bonus_gems"]
     frames = json.loads((ROOT / "art/match3-atlas.json").read_text())["frames"]
     icons = []
-    with Image.open(ROOT / "data/market-goods.png") as goods, Image.open(ROOT / "data/match3.png") as board:
+    with Image.open(ROOT / "art/registered/market-goods.png") as goods:
         for key in spec["columns"]:
             source = spec["icons"][key]
             if "good" in source:
                 kind = source["good"]
-                image, x, y, w, h = goods, kind % 4 * 128, kind // 4 * 128, 128, 128
+                x, y, w, h = kind % 4 * 128, kind // 4 * 128, 128, 128
+                icons.append(goods.crop((x, y, x + w, y + h)))
             else:
-                image = board
-                x, y, w, h = frames[source["frame"]]
-            icons.append(image.crop((x, y, x + w, y + h)))
+                # The painted icon frame, from whichever typed atlas packs it.
+                frame = frames[source["frame"]]
+                x, y, w, h = frame["box"]
+                with Image.open(ROOT / f"data/board/{frame['atlas']}.png") as board:
+                    icons.append(board.crop((x, y, x + w, y + h)))
     path = ROOT / spec["runtime"]
     data = pack({**recipe, **spec}, root=RELIC, icons=icons)
     if args.check:

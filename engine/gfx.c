@@ -22,26 +22,10 @@ texture tex_from_pixels(const void *rgba, int w, int h)
     return t;
 }
 
-texture tex_match3_default(void)
-{
-    if (!render_ready()) return (texture){0};
-    int w, h, channels;
-    const char *path = engine_path("data/match3.png");   /* the engine's default gems */
-    unsigned char *rgba = stbi_load(path, &w, &h, &channels, 4);
-    if (!rgba) {
-        fprintf(stderr, "tex_match3_default: %s: %s\n", path, stbi_failure_reason());
-        return (texture){0};
-    }
-    texture result = tex_from_pixels(rgba, w, h);
-    stbi_image_free(rgba);
-    return result;
-}
-
-texture tex_load(const char *path)
+static texture tex_load_file(const char *full)
 {
     int w, h, n;
     if (!render_ready()) return (texture){0};   /* headless (tests): nothing to draw with */
-    const char *full = app_path(path);
     unsigned char *px = stbi_load(full, &w, &h, &n, 4);
     if (!px) {
         fprintf(stderr, "tex_load: %s: %s\n", full, stbi_failure_reason());
@@ -51,6 +35,9 @@ texture tex_load(const char *path)
     stbi_image_free(px);
     return t;
 }
+
+texture tex_load(const char *path) { return tex_load_file(app_path(path)); }
+texture tex_load_engine(const char *path) { return tex_load_file(engine_path(path)); }
 
 texture tex_region(texture atlas, rect source)
 {

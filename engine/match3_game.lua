@@ -991,7 +991,7 @@ function G.bind(R, over)
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
 
     function R.town_setup()
-        R.town = town.new(R.island, town.load("town.json"), {
+        R.town = town.new(R.island, town.load("city/town.json"), {
             skin = skin,
             wallet = function() return R.prog.wallet end,
             notice = R.notice,
@@ -1469,7 +1469,8 @@ function G.app(R)
         R.hud_art = art.load_hud()
         require("match3").load_action_buttons(R.skin, R.hud_art)
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
-        R.life_art = R.hud_art.life or texture.load("expedition-hud/life.png")
+        -- The neutral skin has no life icon: borrow the game's own HUD atlas.
+        R.life_art = R.hud_art.life or require("match3").hud(require("match3_hud")).life
         if app.arg("art-states") then
             R.art_packs = {}
             for _, pack in ipairs(W.packs) do R.art_packs[pack] = pack_kinds(pack) end

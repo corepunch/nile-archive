@@ -25,7 +25,7 @@ def fit_sprite(tile, name, size, extent):
 
 def register_piece(tile, name, size, extent, check):
     canvas = fit_sprite(tile, name, size, extent)
-    target = ROOT / 'data' / 'resource-pieces' / f'{name}.png'
+    target = ROOT / 'art/registered/resource-pieces' / f'{name}.png'
     if check:
         assert Image.open(target).tobytes() == canvas.tobytes(), f'Outdated sprite: {target.name}'
     else:

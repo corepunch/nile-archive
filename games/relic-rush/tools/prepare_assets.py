@@ -17,6 +17,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 TILE_SETS = ('relics', 'jewels', 'resources')   # relics is the default, the others are optional art packs
 ART, DATA = ROOT / 'art', ROOT / 'data'
+REGISTERED = ART / 'registered'   # registered sprites the atlas packer reads
 
 
 def save_jpg(im, name, size):
@@ -78,7 +79,7 @@ def original_tile(row, col):
 def hex_replacements():
     # Correct only the two hex silhouettes; all other 16 originals stay in use.
     source = Image.open(ART / 'tile-sets/source-flat-hex.png').convert('RGBA')
-    mask = Image.open(DATA / 'board-states/cell-mask.png').getchannel('A')
+    mask = Image.open(REGISTERED / 'board-states/cell-mask.png').getchannel('A')
     left, top, right, bottom = mask.point(lambda a: 255 if a > 128 else 0).getbbox()
     height = round(112 * (bottom - top) / (right - left))
     result = {}
@@ -95,7 +96,7 @@ def hex_replacements():
 def prepare_portraits():
     # Dialogue uses a right-facing source pose. Normalize Adrian from the
     # original lineup before the engine mirrors portraits on the right side.
-    (DATA / 'characters').mkdir(parents=True, exist_ok=True)
+    (DATA / 'story/characters').mkdir(parents=True, exist_ok=True)
     cast = Image.open(ART / 'art-direction' / 'expedition-cast.png').convert('RGBA')
     busts = {'elena': (40, 100, 370, 505), 'mara': (430, 95, 760, 500), 'tomas': (790, 100, 1120, 505), 'adrian': (1160, 85, 1490, 490)}
     for name, box in busts.items():
@@ -109,7 +110,7 @@ def prepare_portraits():
             im.paste(sprite, bounds[:2])
         if name == 'adrian':
             im = im.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
-        im.save(DATA / 'characters' / f'{name}.png', optimize=True)
+        im.save(DATA / 'story/characters' / f'{name}.png', optimize=True)
 
 
 def main():
@@ -120,14 +121,14 @@ def main():
     # is the pieces' meaning (idol, flame, leaf, scarab, crystal, amphora...).
     sheet = Image.open(ART / 'tile-sets' / 'source.png').convert('RGBA')
     for row, pack in enumerate(TILE_SETS):
-        (DATA / 'tile-sets' / pack).mkdir(parents=True, exist_ok=True)
+        (REGISTERED / 'tile-sets' / pack).mkdir(parents=True, exist_ok=True)
         for col in range(6):
             im = sheet.crop((round(col * sheet.width / 6), round(row * sheet.height / 3),
                              round((col + 1) * sheet.width / 6), round((row + 1) * sheet.height / 3)))
-            tile(isolate_sprite(im), inner=112).save(DATA / 'tile-sets' / pack / f'{col}.png', optimize=True)
+            tile(isolate_sprite(im), inner=112).save(REGISTERED / 'tile-sets' / pack / f'{col}.png', optimize=True)
 
     for (pack, kind), image in hex_replacements().items():
-        image.save(DATA / 'tile-sets' / pack / f'{kind}.png', optimize=True)
+        image.save(REGISTERED / 'tile-sets' / pack / f'{kind}.png', optimize=True)
 
     prepare_portraits()
     print('relic-rush data ready')

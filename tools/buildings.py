@@ -14,7 +14,7 @@ orthographic camera per building. Set SCENER to the binary, or keep an orion-ui 
 this one and run `make scener` there. Without a display, the renders run under xvfb-run.
 
 A building's Blender collection name is its key and its file name: collection
-`lodge` becomes data/buildings/lodge.png and data/building-shadows/lodge.png. Each
+`lodge` becomes data/city/buildings/lodge.png and data/city/building-shadows/lodge.png. Each
 game's art/buildings.json says where its master is. Generated beside the sprites:
 the registry (registration of every sprite), lua/building_sprites.lua, which games
 merge into their city defs, and docs/screenshots/buildings.jpg, the review sheet.
@@ -271,7 +271,7 @@ def store(game, root, cfg, keys, out, report, ppt, strength, look, shadows_only,
     registry = json.loads(path.read_text()) if path.exists() else {}
     if (not keys and not shadows_only) or 'camera' not in registry:   # a whole set, or a registry from before this tool
         registry['items'] = {}
-    sprites, shadows = root / 'data/buildings', root / 'data/building-shadows'
+    sprites, shadows = root / 'data/city/buildings', root / 'data/city/building-shadows'
     sprites.mkdir(parents=True, exist_ok=True)
     shadows.mkdir(parents=True, exist_ok=True)
     for key, item in report['items'].items():
@@ -291,11 +291,11 @@ def store(game, root, cfg, keys, out, report, ppt, strength, look, shadows_only,
         old = registry['items'].get(key, {})
         registry['items'][key] = dict(
             title=item['title'], size=item['size'], scale=item['scale'],
-            sprite=f'data/buildings/{key}.png',
+            sprite=f'data/city/buildings/{key}.png',
             image=old['image'] if shadows_only else list(sprite.size),
             pivot=old['pivot'] if shadows_only else rounded([item['pivot'][0] - at[0], item['pivot'][1] - at[1]]),
             base_width=round(item['base_width'], 3),
-            shadow=f'data/building-shadows/{key}.png',
+            shadow=f'data/city/building-shadows/{key}.png',
             shadow_pivot=rounded([item['shadow_pivot'][0] - shadow_at[0], item['shadow_pivot'][1] - shadow_at[1]]),
             shadow_base_width=round(item['shadow_base_width'], 3))
         if shadows_only and old.get('painted_foundation'):
@@ -361,11 +361,11 @@ def check():
                 problems.append(f'{game}: {key} base_width disagrees with the camera')
         for folder, field in (('buildings', 'sprite'), ('building-shadows', 'shadow')):
             known = {Path(b[field]).name for b in registry['items'].values()}
-            stray = [p.name for p in (root / 'data' / folder).glob('*.png') if p.name not in known]
+            stray = [p.name for p in (root / 'data/city' / folder).glob('*.png') if p.name not in known]
             if stray:
-                problems.append(f'{game}: stray files in data/{folder}: {stray[:5]}')
+                problems.append(f'{game}: stray files in data/city/{folder}: {stray[:5]}')
         lua = (root / 'lua/building_sprites.lua')
-        if not lua.exists() or any(f'buildings/{k}.png' not in lua.read_text() for k in registry['items']):
+        if not lua.exists() or any(f'city/buildings/{k}.png' not in lua.read_text() for k in registry['items']):
             problems.append(f'{game}: lua/building_sprites.lua is stale: python3 tools/buildings.py {game} --finish')
     if problems:
         sys.exit('\n'.join(problems))

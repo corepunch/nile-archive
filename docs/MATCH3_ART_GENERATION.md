@@ -70,8 +70,8 @@ provenance. The Scener models that set its geometry have been deleted.
    Preserve authored alpha on objects. Apply
    the [canonical flat-top mask](../engine/art/hex-tile/README.md) to full-cell
    sprites. The carved stone face uses the exact canonical mask.
-2. Run `python3 tools/match3_atlas.py` to pack `data/match3.png` for the board
-   and its effects, and `data/match3-hud.png` for the controls and HUD. Run
+2. Run `python3 tools/match3_atlas.py` to pack each kind of art into its own
+   atlas in `data/board/` ([Asset layout](ASSET_LAYOUT.md)). Run
    `python3 tools/match3_atlas.py --check`. Record the packed frames in the
    [Christmas Market catalogue](../games/christmas-market/docs/asset-catalogue.md)
    or [Relic Rush catalogue](../games/relic-rush/docs/asset-catalogue.md).

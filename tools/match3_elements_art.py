@@ -57,13 +57,16 @@ def main():
             # The user's canonical mask defines the cutout. Full-bleed
             # paintings retain every authored strength/color inside it.
             image.putalpha(ImageChops.multiply(image.getchannel('A'), mask))
-            path = ROOT / 'games' / game / 'data/board-states' / f'{name}.png'
-            path.parent.mkdir(parents=True, exist_ok=True)
-            image.save(path, optimize=True)
-            paths.append(path)
-            assets.append({'game': game, 'name': name, 'crop': box,
-                           'source': str(SOURCE.relative_to(ROOT)), 'mode': 'fill',
-                           'runtime': str(path.relative_to(ROOT)), 'size': [128, 128]})
+            # The engine's default skin shares the first theme, in its own folder.
+            for owner in ([game, 'engine'] if theme == 0 else [game]):
+                folder = ROOT / 'engine' if owner == 'engine' else ROOT / 'games' / owner
+                path = folder / 'art/registered/board-states' / f'{name}.png'
+                path.parent.mkdir(parents=True, exist_ok=True)
+                image.save(path, optimize=True)
+                paths.append(path)
+                assets.append({'game': owner, 'name': name, 'crop': box,
+                               'source': str(SOURCE.relative_to(ROOT)), 'mode': 'fill',
+                               'runtime': str(path.relative_to(ROOT)), 'size': [128, 128]})
     spec = {'source': str(SOURCE.relative_to(ROOT)), 'prompt': str(PROMPT.relative_to(ROOT)),
             'generator': 'built-in ImageGen; 48-cell surface atlas authored together on 2026-11-12',
             'source_size': list(source.size), 'grid': [8, 6],
@@ -73,7 +76,7 @@ def main():
             'review': 'docs/review/match3-elements/README.md', 'assets': assets,
             'fingerprints': {str(p.relative_to(ROOT)): digest(p) for p in paths}}
     MANIFEST.write_text(json.dumps(spec, indent=2) + '\n')
-    print(f'Registered {len(assets)} original sprites for both game atlases')
+    print(f'Registered {len(assets)} original sprites for the engine and both game atlases')
 
 
 if __name__ == '__main__':

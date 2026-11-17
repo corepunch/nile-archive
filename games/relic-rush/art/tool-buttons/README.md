@@ -12,7 +12,7 @@ grid. That manifest's `tool_buttons.registration` records the spatial resize
 used to fit the subtly wide authored bodies to one square footprint. Authored
 alpha, colors, tool glyphs and state differences are retained.
 
-Runtime exports keep the existing `data/board-states/<tool>-<state>.png` paths.
+Runtime exports keep the existing `art/registered/board-states/<tool>-<state>.png` paths.
 Reproduce the registration from the repository root:
 
 ```sh

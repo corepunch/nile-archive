@@ -50,7 +50,7 @@ def main():
         sprite = sprite.crop(sprite.getchannel('A').getbbox())
         frame, _, _ = fit_object(sprite, mask, 112, None)
         atlas.paste(frame, (col * SLOT, ROWS * SLOT))
-    output = ROOT / 'data/market-goods.png'
+    output = ROOT / 'art/registered/market-goods.png'
     if args.check:
         previous = Image.open(output)
         assert atlas.size == previous.size and atlas.tobytes() == previous.tobytes(), output

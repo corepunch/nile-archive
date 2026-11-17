@@ -33,7 +33,7 @@ Reproduce the exact runtime asset from the saved source:
 
 ```sh
 python3 games/relic-rush/tools/prepare_buildings.py
-python3 tools/footprint.py games/relic-rush/data/buildings/4.png --bottom 425,542 --left 4 --right 720 --overlay /tmp/courtyard.png
+python3 tools/footprint.py games/relic-rush/data/city/buildings/4.png --bottom 425,542 --left 4 --right 720 --overlay /tmp/courtyard.png
 ```
 
 Re-generation with ImageGen uses the saved prompt and the two references; its

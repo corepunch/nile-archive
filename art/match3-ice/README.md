@@ -21,7 +21,7 @@ continuous face in the full state. See the exact prompts for [painting](prompt.t
 and [the filled pane](filled-pane-prompt.txt).
 
 Run `python3 tools/match3_atlas.py` to pack the runtime textures at
-`engine/data/match3.png` and `games/<game>/data/match3.png`. The recipe crops
+the `blockers` atlases, `engine/data/board/blockers.png` and `games/<game>/data/board/blockers.png`. The recipe crops
 matching 690×690 source squares and resizes them to 128×128. Each state uses
 a linear luma-to-opacity ramp clamped at its endpoints. The full pane reaches
 nearly opaque at a lower luma to make its painted highlights stand out.

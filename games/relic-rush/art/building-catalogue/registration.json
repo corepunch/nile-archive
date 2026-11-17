@@ -13,7 +13,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/camp.png",
+   "sprite": "data/city/buildings/camp.png",
    "image": [
     284,
     240
@@ -23,7 +23,7 @@
     159.719
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/camp.png",
+   "shadow": "data/city/building-shadows/camp.png",
    "shadow_pivot": [
     117.112,
     79.081
@@ -37,7 +37,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/well.png",
+   "sprite": "data/city/buildings/well.png",
    "image": [
     290,
     278
@@ -47,7 +47,7 @@
     191.175
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/well.png",
+   "shadow": "data/city/building-shadows/well.png",
    "shadow_pivot": [
     117.112,
     79.255
@@ -61,7 +61,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/workshop.png",
+   "sprite": "data/city/buildings/workshop.png",
    "image": [
     376,
     332
@@ -71,7 +71,7 @@
     225.83
    ],
    "base_width": 359.808,
-   "shadow": "data/building-shadows/workshop.png",
+   "shadow": "data/city/building-shadows/workshop.png",
    "shadow_pivot": [
     153.918,
     112.528
@@ -85,7 +85,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/market.png",
+   "sprite": "data/city/buildings/market.png",
    "image": [
     374,
     317
@@ -95,7 +95,7 @@
     211.408
    ],
    "base_width": 359.808,
-   "shadow": "data/building-shadows/market.png",
+   "shadow": "data/city/building-shadows/market.png",
    "shadow_pivot": [
     153.918,
     103.119
@@ -109,7 +109,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/gateway.png",
+   "sprite": "data/city/buildings/gateway.png",
    "image": [
     372,
     310
@@ -119,7 +119,7 @@
     202.13
    ],
    "base_width": 359.808,
-   "shadow": "data/building-shadows/gateway.png",
+   "shadow": "data/city/building-shadows/gateway.png",
    "shadow_pivot": [
     153.918,
     95.419
@@ -133,7 +133,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/lodge.png",
+   "sprite": "data/city/buildings/lodge.png",
    "image": [
     435,
     433
@@ -143,7 +143,7 @@
     306.197
    ],
    "base_width": 409.808,
-   "shadow": "data/building-shadows/lodge.png",
+   "shadow": "data/city/building-shadows/lodge.png",
    "shadow_pivot": [
     175.168,
     158.713
@@ -157,7 +157,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/archive.png",
+   "sprite": "data/city/buildings/archive.png",
    "image": [
     437,
     395
@@ -167,7 +167,7 @@
     258.785
    ],
    "base_width": 409.808,
-   "shadow": "data/building-shadows/archive.png",
+   "shadow": "data/city/building-shadows/archive.png",
    "shadow_pivot": [
     175.168,
     137.731
@@ -181,7 +181,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/observatory.png",
+   "sprite": "data/city/buildings/observatory.png",
    "image": [
     290,
     360
@@ -191,7 +191,7 @@
     271.521
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/observatory.png",
+   "shadow": "data/city/building-shadows/observatory.png",
    "shadow_pivot": [
     117.112,
     88.779
@@ -205,7 +205,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/fountain.png",
+   "sprite": "data/city/buildings/fountain.png",
    "image": [
     436,
     423
@@ -215,7 +215,7 @@
     291.86
    ],
    "base_width": 409.808,
-   "shadow": "data/building-shadows/fountain.png",
+   "shadow": "data/city/building-shadows/fountain.png",
    "shadow_pivot": [
     175.168,
     116.857
@@ -229,7 +229,7 @@
     4
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/temple.png",
+   "sprite": "data/city/buildings/temple.png",
    "image": [
     569,
     526
@@ -239,7 +239,7 @@
     339.44
    ],
    "base_width": 546.41,
-   "shadow": "data/building-shadows/temple.png",
+   "shadow": "data/city/building-shadows/temple.png",
    "shadow_pivot": [
     233.224,
     174.103
@@ -253,7 +253,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/log_cabin.png",
+   "sprite": "data/city/buildings/log_cabin.png",
    "image": [
     279,
     283
@@ -263,7 +263,7 @@
     193.791
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/log_cabin.png",
+   "shadow": "data/city/building-shadows/log_cabin.png",
    "shadow_pivot": [
     117.112,
     89.419
@@ -277,7 +277,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/apothecary.png",
+   "sprite": "data/city/buildings/apothecary.png",
    "image": [
     278,
     254
@@ -287,7 +287,7 @@
     168.704
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/apothecary.png",
+   "shadow": "data/city/building-shadows/apothecary.png",
    "shadow_pivot": [
     117.112,
     78.684
@@ -301,7 +301,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/mess_hall.png",
+   "sprite": "data/city/buildings/mess_hall.png",
    "image": [
     373,
     322
@@ -311,7 +311,7 @@
     214.626
    ],
    "base_width": 359.808,
-   "shadow": "data/building-shadows/mess_hall.png",
+   "shadow": "data/city/building-shadows/mess_hall.png",
    "shadow_pivot": [
     153.918,
     104.193
@@ -325,7 +325,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/stilt_house.png",
+   "sprite": "data/city/buildings/stilt_house.png",
    "image": [
     367,
     329
@@ -335,7 +335,7 @@
     220.163
    ],
    "base_width": 359.808,
-   "shadow": "data/building-shadows/stilt_house.png",
+   "shadow": "data/city/building-shadows/stilt_house.png",
    "shadow_pivot": [
     153.918,
     110.206
@@ -349,7 +349,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/map_room.png",
+   "sprite": "data/city/buildings/map_room.png",
    "image": [
     369,
     346
@@ -359,7 +359,7 @@
     233.232
    ],
    "base_width": 359.808,
-   "shadow": "data/building-shadows/map_room.png",
+   "shadow": "data/city/building-shadows/map_room.png",
    "shadow_pivot": [
     153.918,
     109.414
@@ -373,7 +373,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/greenhouse.png",
+   "sprite": "data/city/buildings/greenhouse.png",
    "image": [
     383,
     305
@@ -383,7 +383,7 @@
     197.962
    ],
    "base_width": 359.808,
-   "shadow": "data/building-shadows/greenhouse.png",
+   "shadow": "data/city/building-shadows/greenhouse.png",
    "shadow_pivot": [
     153.918,
     92.858
@@ -397,7 +397,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/trading_post.png",
+   "sprite": "data/city/buildings/trading_post.png",
    "image": [
     419,
     396
@@ -407,7 +407,7 @@
     260.814
    ],
    "base_width": 409.808,
-   "shadow": "data/building-shadows/trading_post.png",
+   "shadow": "data/city/building-shadows/trading_post.png",
    "shadow_pivot": [
     175.168,
     129.461
@@ -421,7 +421,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/water_mill.png",
+   "sprite": "data/city/buildings/water_mill.png",
    "image": [
     419,
     372
@@ -431,7 +431,7 @@
     232.79
    ],
    "base_width": 409.808,
-   "shadow": "data/building-shadows/water_mill.png",
+   "shadow": "data/city/building-shadows/water_mill.png",
    "shadow_pivot": [
     175.168,
     134.24
@@ -445,7 +445,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/clock_tower.png",
+   "sprite": "data/city/buildings/clock_tower.png",
    "image": [
     278,
     398
@@ -455,7 +455,7 @@
     306.519
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/clock_tower.png",
+   "shadow": "data/city/building-shadows/clock_tower.png",
    "shadow_pivot": [
     117.112,
     121.434
@@ -469,7 +469,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/lighthouse.png",
+   "sprite": "data/city/buildings/lighthouse.png",
    "image": [
     278,
     368
@@ -479,7 +479,7 @@
     281.74
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/lighthouse.png",
+   "shadow": "data/city/building-shadows/lighthouse.png",
    "shadow_pivot": [
     117.112,
     81.586
@@ -493,7 +493,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/treehouse.png",
+   "sprite": "data/city/buildings/treehouse.png",
    "image": [
     416,
     467
@@ -503,7 +503,7 @@
     334.246
    ],
    "base_width": 409.808,
-   "shadow": "data/building-shadows/treehouse.png",
+   "shadow": "data/city/building-shadows/treehouse.png",
    "shadow_pivot": [
     175.168,
     116.044
@@ -517,7 +517,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/aviary.png",
+   "sprite": "data/city/buildings/aviary.png",
    "image": [
     416,
     359
@@ -527,7 +527,7 @@
     224.8
    ],
    "base_width": 409.808,
-   "shadow": "data/building-shadows/aviary.png",
+   "shadow": "data/city/building-shadows/aviary.png",
    "shadow_pivot": [
     175.168,
     116.372
@@ -541,7 +541,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/beached_ship.png",
+   "sprite": "data/city/buildings/beached_ship.png",
    "image": [
     475,
     398
@@ -551,7 +551,7 @@
     274.276
    ],
    "base_width": 446.41,
-   "shadow": "data/building-shadows/beached_ship.png",
+   "shadow": "data/city/building-shadows/beached_ship.png",
    "shadow_pivot": [
     190.724,
     106.053
@@ -565,7 +565,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/amphitheater.png",
+   "sprite": "data/city/buildings/amphitheater.png",
    "image": [
     494,
     372
@@ -575,7 +575,7 @@
     226.211
    ],
    "base_width": 496.41,
-   "shadow": "data/building-shadows/amphitheater.png",
+   "shadow": "data/city/building-shadows/amphitheater.png",
    "shadow_pivot": [
     211.974,
     129.693
@@ -589,7 +589,7 @@
     3
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/museum.png",
+   "sprite": "data/city/buildings/museum.png",
    "image": [
     515,
     460
@@ -599,7 +599,7 @@
     304.224
    ],
    "base_width": 496.41,
-   "shadow": "data/building-shadows/museum.png",
+   "shadow": "data/city/building-shadows/museum.png",
    "shadow_pivot": [
     211.974,
     137.788
@@ -613,7 +613,7 @@
     4
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/hanging_gardens.png",
+   "sprite": "data/city/buildings/hanging_gardens.png",
    "image": [
     534,
     515
@@ -623,7 +623,7 @@
     331.221
    ],
    "base_width": 546.41,
-   "shadow": "data/building-shadows/hanging_gardens.png",
+   "shadow": "data/city/building-shadows/hanging_gardens.png",
    "shadow_pivot": [
     233.224,
     165.239
@@ -637,7 +637,7 @@
     1
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/palm_young.png",
+   "sprite": "data/city/buildings/palm_young.png",
    "image": [
     103,
     109
@@ -647,7 +647,7 @@
     100.181
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/palm_young.png",
+   "shadow": "data/city/building-shadows/palm_young.png",
    "shadow_pivot": [
     12.636,
     46.604
@@ -661,7 +661,7 @@
     1
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/jungle_tree.png",
+   "sprite": "data/city/buildings/jungle_tree.png",
    "image": [
     112,
     133
@@ -671,7 +671,7 @@
     123.51
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/jungle_tree.png",
+   "shadow": "data/city/building-shadows/jungle_tree.png",
    "shadow_pivot": [
     12.852,
     45.433
@@ -685,7 +685,7 @@
     1
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/cypress.png",
+   "sprite": "data/city/buildings/cypress.png",
    "image": [
     72,
     148
@@ -695,7 +695,7 @@
     140.647
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/cypress.png",
+   "shadow": "data/city/building-shadows/cypress.png",
    "shadow_pivot": [
     12.262,
     36.85
@@ -709,7 +709,7 @@
     1
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/banana.png",
+   "sprite": "data/city/buildings/banana.png",
    "image": [
     100,
     98
@@ -719,7 +719,7 @@
     82.347
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/banana.png",
+   "shadow": "data/city/building-shadows/banana.png",
    "shadow_pivot": [
     18.723,
     37.021
@@ -733,7 +733,7 @@
     1
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/fan_palm.png",
+   "sprite": "data/city/buildings/fan_palm.png",
    "image": [
     125,
     91
@@ -743,7 +743,7 @@
     79.242
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/fan_palm.png",
+   "shadow": "data/city/building-shadows/fan_palm.png",
    "shadow_pivot": [
     29.213,
     42.929
@@ -757,7 +757,7 @@
     1
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/papaya.png",
+   "sprite": "data/city/buildings/papaya.png",
    "image": [
     93,
     115
@@ -767,7 +767,7 @@
     108.188
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/papaya.png",
+   "shadow": "data/city/building-shadows/papaya.png",
    "shadow_pivot": [
     10.076,
     44.26
@@ -781,7 +781,7 @@
     1
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/frangipani.png",
+   "sprite": "data/city/buildings/frangipani.png",
    "image": [
     115,
     125
@@ -791,7 +791,7 @@
     116.787
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/frangipani.png",
+   "shadow": "data/city/building-shadows/frangipani.png",
    "shadow_pivot": [
     11.269,
     47.719
@@ -805,7 +805,7 @@
     2
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/bamboo.png",
+   "sprite": "data/city/buildings/bamboo.png",
    "image": [
     239,
     265
@@ -815,7 +815,7 @@
     205.267
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/bamboo.png",
+   "shadow": "data/city/building-shadows/bamboo.png",
    "shadow_pivot": [
     83.48,
     83.927
@@ -829,7 +829,7 @@
     2
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/twin_palms.png",
+   "sprite": "data/city/buildings/twin_palms.png",
    "image": [
     198,
     234
@@ -839,7 +839,7 @@
     192.114
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/twin_palms.png",
+   "shadow": "data/city/building-shadows/twin_palms.png",
    "shadow_pivot": [
     27.015,
     95.747
@@ -853,7 +853,7 @@
     2
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/mango.png",
+   "sprite": "data/city/buildings/mango.png",
    "image": [
     205,
     209
@@ -863,7 +863,7 @@
     191.079
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/mango.png",
+   "shadow": "data/city/building-shadows/mango.png",
    "shadow_pivot": [
     26.026,
     74.867
@@ -877,7 +877,7 @@
     2
    ],
    "scale": 1.3300000429153442,
-   "sprite": "data/buildings/kapok.png",
+   "sprite": "data/city/buildings/kapok.png",
    "image": [
     320,
     345
@@ -887,7 +887,7 @@
     293.341
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/kapok.png",
+   "shadow": "data/city/building-shadows/kapok.png",
    "shadow_pivot": [
     71.149,
     101.79
@@ -901,7 +901,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/shrub.png",
+   "sprite": "data/city/buildings/shrub.png",
    "image": [
     78,
     79
@@ -911,7 +911,7 @@
     56.769
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/shrub.png",
+   "shadow": "data/city/building-shadows/shrub.png",
    "shadow_pivot": [
     22.341,
     29.703
@@ -925,7 +925,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/fern.png",
+   "sprite": "data/city/buildings/fern.png",
    "image": [
     88,
     62
@@ -935,7 +935,7 @@
     32.135
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/fern.png",
+   "shadow": "data/city/building-shadows/fern.png",
    "shadow_pivot": [
     37.158,
     26.084
@@ -949,7 +949,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/monstera.png",
+   "sprite": "data/city/buildings/monstera.png",
    "image": [
     87,
     72
@@ -959,7 +959,7 @@
     43.571
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/monstera.png",
+   "shadow": "data/city/building-shadows/monstera.png",
    "shadow_pivot": [
     37.6,
     23.565
@@ -973,7 +973,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/flower_shrub.png",
+   "sprite": "data/city/buildings/flower_shrub.png",
    "image": [
     86,
     87
@@ -983,7 +983,7 @@
     64.692
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/flower_shrub.png",
+   "shadow": "data/city/building-shadows/flower_shrub.png",
    "shadow_pivot": [
     25.214,
     28.438
@@ -997,7 +997,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/berry.png",
+   "sprite": "data/city/buildings/berry.png",
    "image": [
     82,
     77
@@ -1007,7 +1007,7 @@
     54.377
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/berry.png",
+   "shadow": "data/city/building-shadows/berry.png",
    "shadow_pivot": [
     26.336,
     27.703
@@ -1021,7 +1021,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/reeds.png",
+   "sprite": "data/city/buildings/reeds.png",
    "image": [
     82,
     120
@@ -1031,7 +1031,7 @@
     101.504
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/reeds.png",
+   "shadow": "data/city/building-shadows/reeds.png",
    "shadow_pivot": [
     26.178,
     38.728
@@ -1045,7 +1045,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/topiary.png",
+   "sprite": "data/city/buildings/topiary.png",
    "image": [
     60,
     92
@@ -1055,7 +1055,7 @@
     81.44
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/topiary.png",
+   "shadow": "data/city/building-shadows/topiary.png",
    "shadow_pivot": [
     15.183,
     30.674
@@ -1069,7 +1069,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/hedge.png",
+   "sprite": "data/city/buildings/hedge.png",
    "image": [
     118,
     114
@@ -1079,7 +1079,7 @@
     78.34
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/hedge.png",
+   "shadow": "data/city/building-shadows/hedge.png",
    "shadow_pivot": [
     47.928,
     43.557
@@ -1093,7 +1093,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/orchid.png",
+   "sprite": "data/city/buildings/orchid.png",
    "image": [
     63,
     81
@@ -1103,7 +1103,7 @@
     55.619
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/orchid.png",
+   "shadow": "data/city/building-shadows/orchid.png",
    "shadow_pivot": [
     26.232,
     23.726
@@ -1117,7 +1117,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/hibiscus.png",
+   "sprite": "data/city/buildings/hibiscus.png",
    "image": [
     75,
     62
@@ -1127,7 +1127,7 @@
     46.1
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/hibiscus.png",
+   "shadow": "data/city/building-shadows/hibiscus.png",
    "shadow_pivot": [
     19.617,
     21.645
@@ -1141,7 +1141,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/daisies.png",
+   "sprite": "data/city/buildings/daisies.png",
    "image": [
     76,
     77
@@ -1151,7 +1151,7 @@
     51.283
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/daisies.png",
+   "shadow": "data/city/building-shadows/daisies.png",
    "shadow_pivot": [
     26.818,
     25.423
@@ -1165,7 +1165,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/blue_lily.png",
+   "sprite": "data/city/buildings/blue_lily.png",
    "image": [
     56,
     90
@@ -1175,7 +1175,7 @@
     67.291
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/blue_lily.png",
+   "shadow": "data/city/building-shadows/blue_lily.png",
    "shadow_pivot": [
     21.636,
     28.648
@@ -1189,7 +1189,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/flower_box.png",
+   "sprite": "data/city/buildings/flower_box.png",
    "image": [
     90,
     74
@@ -1199,7 +1199,7 @@
     48.364
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/flower_box.png",
+   "shadow": "data/city/building-shadows/flower_box.png",
    "shadow_pivot": [
     38.011,
     27.618
@@ -1213,7 +1213,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/bromeliad.png",
+   "sprite": "data/city/buildings/bromeliad.png",
    "image": [
     76,
     63
@@ -1223,7 +1223,7 @@
     42.424
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/bromeliad.png",
+   "shadow": "data/city/building-shadows/bromeliad.png",
    "shadow_pivot": [
     27.432,
     23.658
@@ -1237,7 +1237,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/flower_bed.png",
+   "sprite": "data/city/buildings/flower_bed.png",
    "image": [
     273,
     209
@@ -1247,7 +1247,7 @@
     121.376
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/flower_bed.png",
+   "shadow": "data/city/building-shadows/flower_bed.png",
    "shadow_pivot": [
     114.64,
     79.507
@@ -1261,7 +1261,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/rainbow_bed.png",
+   "sprite": "data/city/buildings/rainbow_bed.png",
    "image": [
     197,
     151
@@ -1271,7 +1271,7 @@
     88.561
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/rainbow_bed.png",
+   "shadow": "data/city/building-shadows/rainbow_bed.png",
    "shadow_pivot": [
     85.425,
     58.718
@@ -1285,7 +1285,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/broken_column.png",
+   "sprite": "data/city/buildings/broken_column.png",
    "image": [
     90,
     101
@@ -1295,7 +1295,7 @@
     70.98
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/broken_column.png",
+   "shadow": "data/city/building-shadows/broken_column.png",
    "shadow_pivot": [
     35.995,
     28.237
@@ -1309,7 +1309,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/idol_head.png",
+   "sprite": "data/city/buildings/idol_head.png",
    "image": [
     98,
     119
@@ -1319,7 +1319,7 @@
     89.179
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/idol_head.png",
+   "shadow": "data/city/building-shadows/idol_head.png",
    "shadow_pivot": [
     38.317,
     36.552
@@ -1333,7 +1333,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/jaguar.png",
+   "sprite": "data/city/buildings/jaguar.png",
    "image": [
     104,
     92
@@ -1343,7 +1343,7 @@
     59.601
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/jaguar.png",
+   "shadow": "data/city/building-shadows/jaguar.png",
    "shadow_pivot": [
     42.961,
     32.389
@@ -1357,7 +1357,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/obelisk.png",
+   "sprite": "data/city/buildings/obelisk.png",
    "image": [
     89,
     140
@@ -1367,7 +1367,7 @@
     113.868
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/obelisk.png",
+   "shadow": "data/city/building-shadows/obelisk.png",
    "shadow_pivot": [
     34.834,
     28.113
@@ -1381,7 +1381,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/sundial.png",
+   "sprite": "data/city/buildings/sundial.png",
    "image": [
     62,
     83
@@ -1391,7 +1391,7 @@
     66.15
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/sundial.png",
+   "shadow": "data/city/building-shadows/sundial.png",
    "shadow_pivot": [
     24.67,
     29.283
@@ -1405,7 +1405,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/explorer.png",
+   "sprite": "data/city/buildings/explorer.png",
    "image": [
     92,
     124
@@ -1415,7 +1415,7 @@
     95.637
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/explorer.png",
+   "shadow": "data/city/building-shadows/explorer.png",
    "shadow_pivot": [
     37.156,
     30.105
@@ -1429,7 +1429,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/gold_idol.png",
+   "sprite": "data/city/buildings/gold_idol.png",
    "image": [
     94,
     114
@@ -1439,7 +1439,7 @@
     84.442
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/gold_idol.png",
+   "shadow": "data/city/building-shadows/gold_idol.png",
    "shadow_pivot": [
     38.317,
     31.525
@@ -1453,7 +1453,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/stone_arch.png",
+   "sprite": "data/city/buildings/stone_arch.png",
    "image": [
     245,
     192
@@ -1463,7 +1463,7 @@
     139.116
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/stone_arch.png",
+   "shadow": "data/city/building-shadows/stone_arch.png",
    "shadow_pivot": [
     99.175,
     53.107
@@ -1477,7 +1477,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/giant_head.png",
+   "sprite": "data/city/buildings/giant_head.png",
    "image": [
     209,
     216
@@ -1487,7 +1487,7 @@
     137.75
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/giant_head.png",
+   "shadow": "data/city/building-shadows/giant_head.png",
    "shadow_pivot": [
     101.927,
     56.078
@@ -1501,7 +1501,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/birdbath.png",
+   "sprite": "data/city/buildings/birdbath.png",
    "image": [
     71,
     90
@@ -1511,7 +1511,7 @@
     73.21
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/birdbath.png",
+   "shadow": "data/city/building-shadows/birdbath.png",
    "shadow_pivot": [
     24.432,
     34.234
@@ -1525,7 +1525,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/small_fountain.png",
+   "sprite": "data/city/buildings/small_fountain.png",
    "image": [
     95,
     96
@@ -1535,7 +1535,7 @@
     66.933
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/small_fountain.png",
+   "shadow": "data/city/building-shadows/small_fountain.png",
    "shadow_pivot": [
     39.4,
     31.343
@@ -1549,7 +1549,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/lily_pond.png",
+   "sprite": "data/city/buildings/lily_pond.png",
    "image": [
     220,
     145
@@ -1559,7 +1559,7 @@
     81.99
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/lily_pond.png",
+   "shadow": "data/city/building-shadows/lily_pond.png",
    "shadow_pivot": [
     84.45,
     59.718
@@ -1573,7 +1573,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/duck_pond.png",
+   "sprite": "data/city/buildings/duck_pond.png",
    "image": [
     189,
     183
@@ -1583,7 +1583,7 @@
     112.824
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/duck_pond.png",
+   "shadow": "data/city/building-shadows/duck_pond.png",
    "shadow_pivot": [
     82.033,
     62.433
@@ -1597,7 +1597,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/spring_rocks.png",
+   "sprite": "data/city/buildings/spring_rocks.png",
    "image": [
     199,
     179
@@ -1607,7 +1607,7 @@
     115.897
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/spring_rocks.png",
+   "shadow": "data/city/building-shadows/spring_rocks.png",
    "shadow_pivot": [
     67.169,
     65.485
@@ -1621,7 +1621,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/bench.png",
+   "sprite": "data/city/buildings/bench.png",
    "image": [
     95,
     93
@@ -1631,7 +1631,7 @@
     72.372
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/bench.png",
+   "shadow": "data/city/building-shadows/bench.png",
    "shadow_pivot": [
     33.816,
     33.22
@@ -1645,7 +1645,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/lantern.png",
+   "sprite": "data/city/buildings/lantern.png",
    "image": [
     41,
     98
@@ -1655,7 +1655,7 @@
     87.171
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/lantern.png",
+   "shadow": "data/city/building-shadows/lantern.png",
    "shadow_pivot": [
     14.611,
     16.56
@@ -1669,7 +1669,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/tiki.png",
+   "sprite": "data/city/buildings/tiki.png",
    "image": [
     34,
     88
@@ -1679,7 +1679,7 @@
     82.733
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/tiki.png",
+   "shadow": "data/city/building-shadows/tiki.png",
    "shadow_pivot": [
     6.05,
     15.773
@@ -1693,7 +1693,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/signpost.png",
+   "sprite": "data/city/buildings/signpost.png",
    "image": [
     66,
     89
@@ -1703,7 +1703,7 @@
     84.171
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/signpost.png",
+   "shadow": "data/city/building-shadows/signpost.png",
    "shadow_pivot": [
     6.775,
     23.066
@@ -1717,7 +1717,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/flagpole.png",
+   "sprite": "data/city/buildings/flagpole.png",
    "image": [
     84,
     138
@@ -1727,7 +1727,7 @@
     122.753
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/flagpole.png",
+   "shadow": "data/city/building-shadows/flagpole.png",
    "shadow_pivot": [
     19.739,
     22.79
@@ -1741,7 +1741,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/pump.png",
+   "sprite": "data/city/buildings/pump.png",
    "image": [
     82,
     86
@@ -1751,7 +1751,7 @@
     66.113
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/pump.png",
+   "shadow": "data/city/building-shadows/pump.png",
    "shadow_pivot": [
     27.639,
     21.407
@@ -1765,7 +1765,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/picnic.png",
+   "sprite": "data/city/buildings/picnic.png",
    "image": [
     230,
     147
@@ -1775,7 +1775,7 @@
     82.262
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/picnic.png",
+   "shadow": "data/city/building-shadows/picnic.png",
    "shadow_pivot": [
     85.601,
     58.04
@@ -1789,7 +1789,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/hammock.png",
+   "sprite": "data/city/buildings/hammock.png",
    "image": [
     184,
     167
@@ -1799,7 +1799,7 @@
     136.146
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/hammock.png",
+   "shadow": "data/city/building-shadows/hammock.png",
    "shadow_pivot": [
     63.503,
     59.213
@@ -1813,7 +1813,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/pergola.png",
+   "sprite": "data/city/buildings/pergola.png",
    "image": [
     252,
     250
@@ -1823,7 +1823,7 @@
     179.72
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/pergola.png",
+   "shadow": "data/city/building-shadows/pergola.png",
    "shadow_pivot": [
     93.082,
     88.036
@@ -1837,7 +1837,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/swing.png",
+   "sprite": "data/city/buildings/swing.png",
    "image": [
     196,
     211
@@ -1847,7 +1847,7 @@
     135.225
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/swing.png",
+   "shadow": "data/city/building-shadows/swing.png",
    "shadow_pivot": [
     73.815,
     71.163
@@ -1861,7 +1861,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/gazebo.png",
+   "sprite": "data/city/buildings/gazebo.png",
    "image": [
     200,
     225
@@ -1871,7 +1871,7 @@
     166.978
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/gazebo.png",
+   "shadow": "data/city/building-shadows/gazebo.png",
    "shadow_pivot": [
     79.462,
     74.396
@@ -1885,7 +1885,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/crates.png",
+   "sprite": "data/city/buildings/crates.png",
    "image": [
     109,
     94
@@ -1895,7 +1895,7 @@
     73.806
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/crates.png",
+   "shadow": "data/city/building-shadows/crates.png",
    "shadow_pivot": [
     40.1,
     28.754
@@ -1909,7 +1909,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/barrels.png",
+   "sprite": "data/city/buildings/barrels.png",
    "image": [
     84,
     76
@@ -1919,7 +1919,7 @@
     49.899
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/barrels.png",
+   "shadow": "data/city/building-shadows/barrels.png",
    "shadow_pivot": [
     37.199,
     30.704
@@ -1933,7 +1933,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/campfire.png",
+   "sprite": "data/city/buildings/campfire.png",
    "image": [
     91,
     73
@@ -1943,7 +1943,7 @@
     45.974
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/campfire.png",
+   "shadow": "data/city/building-shadows/campfire.png",
    "shadow_pivot": [
     35.718,
     28.616
@@ -1957,7 +1957,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/field_scope.png",
+   "sprite": "data/city/buildings/field_scope.png",
    "image": [
     74,
     97
@@ -1967,7 +1967,7 @@
     84.494
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/field_scope.png",
+   "shadow": "data/city/building-shadows/field_scope.png",
    "shadow_pivot": [
     24.668,
     22.003
@@ -1981,7 +1981,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/globe.png",
+   "sprite": "data/city/buildings/globe.png",
    "image": [
     65,
     90
@@ -1991,7 +1991,7 @@
     72.374
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/globe.png",
+   "shadow": "data/city/building-shadows/globe.png",
    "shadow_pivot": [
     25.911,
     26.321
@@ -2005,7 +2005,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/chest.png",
+   "sprite": "data/city/buildings/chest.png",
    "image": [
     110,
     92
@@ -2015,7 +2015,7 @@
     53.273
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/chest.png",
+   "shadow": "data/city/building-shadows/chest.png",
    "shadow_pivot": [
     55.139,
     28.78
@@ -2029,7 +2029,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/supply_tent.png",
+   "sprite": "data/city/buildings/supply_tent.png",
    "image": [
     222,
     182
@@ -2039,7 +2039,7 @@
     102.753
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/supply_tent.png",
+   "shadow": "data/city/building-shadows/supply_tent.png",
    "shadow_pivot": [
     104.223,
     55.025
@@ -2053,7 +2053,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/dig_site.png",
+   "sprite": "data/city/buildings/dig_site.png",
    "image": [
     217,
     172
@@ -2063,7 +2063,7 @@
     103.056
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/dig_site.png",
+   "shadow": "data/city/building-shadows/dig_site.png",
    "shadow_pivot": [
     90.567,
     67.657
@@ -2077,7 +2077,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/rowboat.png",
+   "sprite": "data/city/buildings/rowboat.png",
    "image": [
     209,
     122
@@ -2087,7 +2087,7 @@
     70.773
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/rowboat.png",
+   "shadow": "data/city/building-shadows/rowboat.png",
    "shadow_pivot": [
     61.508,
     39.942
@@ -2101,7 +2101,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/cart.png",
+   "sprite": "data/city/buildings/cart.png",
    "image": [
     172,
     130
@@ -2111,7 +2111,7 @@
     97.768
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/cart.png",
+   "shadow": "data/city/building-shadows/cart.png",
    "shadow_pivot": [
     32.067,
     53.469
@@ -2125,7 +2125,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/turtle.png",
+   "sprite": "data/city/buildings/turtle.png",
    "image": [
     74,
     52
@@ -2135,7 +2135,7 @@
     39.85
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/turtle.png",
+   "shadow": "data/city/building-shadows/turtle.png",
    "shadow_pivot": [
     15.902,
     29.475
@@ -2149,7 +2149,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/toucan.png",
+   "sprite": "data/city/buildings/toucan.png",
    "image": [
     52,
     97
@@ -2159,7 +2159,7 @@
     83.692
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/toucan.png",
+   "shadow": "data/city/building-shadows/toucan.png",
    "shadow_pivot": [
     17.202,
     22.588
@@ -2173,7 +2173,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/parrot.png",
+   "sprite": "data/city/buildings/parrot.png",
    "image": [
     51,
     98
@@ -2183,7 +2183,7 @@
     85.224
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/parrot.png",
+   "shadow": "data/city/building-shadows/parrot.png",
    "shadow_pivot": [
     17.202,
     21.89
@@ -2197,7 +2197,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/monkey.png",
+   "sprite": "data/city/buildings/monkey.png",
    "image": [
     75,
     80
@@ -2207,7 +2207,7 @@
     67.622
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/monkey.png",
+   "shadow": "data/city/building-shadows/monkey.png",
    "shadow_pivot": [
     15.875,
     25.929
@@ -2221,7 +2221,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/capybara.png",
+   "sprite": "data/city/buildings/capybara.png",
    "image": [
     59,
     63
@@ -2231,7 +2231,7 @@
     48.761
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/capybara.png",
+   "shadow": "data/city/building-shadows/capybara.png",
    "shadow_pivot": [
     18.362,
     26.897
@@ -2245,7 +2245,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/boulder.png",
+   "sprite": "data/city/buildings/boulder.png",
    "image": [
     78,
     85
@@ -2255,7 +2255,7 @@
     57.332
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/boulder.png",
+   "shadow": "data/city/building-shadows/boulder.png",
    "shadow_pivot": [
     26.9,
     32.183
@@ -2269,7 +2269,7 @@
     1
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/crystal.png",
+   "sprite": "data/city/buildings/crystal.png",
    "image": [
     64,
     79
@@ -2279,7 +2279,7 @@
     67.944
    ],
    "base_width": 136.603,
-   "shadow": "data/building-shadows/crystal.png",
+   "shadow": "data/city/building-shadows/crystal.png",
    "shadow_pivot": [
     14.064,
     25.052
@@ -2293,7 +2293,7 @@
     2
    ],
    "scale": 1.0,
-   "sprite": "data/buildings/mossy_rocks.png",
+   "sprite": "data/city/buildings/mossy_rocks.png",
    "image": [
     180,
     184
@@ -2303,7 +2303,7 @@
     107.018
    ],
    "base_width": 273.205,
-   "shadow": "data/building-shadows/mossy_rocks.png",
+   "shadow": "data/city/building-shadows/mossy_rocks.png",
    "shadow_pivot": [
     69.351,
     63.415

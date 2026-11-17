@@ -1,7 +1,7 @@
 # Blender building projection study
 
 Editable geometry and review renders for all ten Relic Rush buildings. This is
-an art study, not a replacement for `data/buildings/` or the runtime definitions.
+an art study, not a replacement for `data/city/buildings/` or the runtime definitions.
 The persistent source master is `relic_rush_buildings.blend`; the procedural
 source is `build_scene.py`. Both are committed alongside the previews.
 

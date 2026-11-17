@@ -13,7 +13,7 @@ let brown = Color(red: 0.30, green: 0.22, blue: 0.12)
 let grey = Color(red: 0.55, green: 0.60, blue: 0.54)
 
 func art(_ name: String) -> Image {
-    let p = "data/buildings/\(name).png"
+    let p = "data/city/buildings/\(name).png"
     if let i = NSImage(contentsOfFile: p) { return Image(nsImage: i) }
     return Image(systemName: "house.fill")
 }

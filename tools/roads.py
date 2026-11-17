@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Render a game's road tiles for the city camera with Scener.
 
-    python3 tools/roads.py christmas-market            # writes games/<game>/data/roads.png
-    python3 tools/roads.py christmas-market --style sandstone   # a second look: data/roads-sandstone.png
+    python3 tools/roads.py christmas-market            # writes games/<game>/data/city/roads.png
+    python3 tools/roads.py christmas-market --style sandstone   # a second look: data/city/roads-sandstone.png
     python3 tools/roads.py christmas-market --keep DIR  # keep the scene and the single renders
 
 The engine lays roads on whole tiles (engine/city.c): every building gets a flag tile
@@ -291,7 +291,7 @@ def utilities(scener):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('game')
-    ap.add_argument('--style', help='a second look: reads art/roads-STYLE.json and writes data/roads-STYLE.png')
+    ap.add_argument('--style', help='a second look: reads art/roads-STYLE.json and writes data/city/roads-STYLE.png')
     ap.add_argument('--keep', help='keep the scene and single renders in this directory')
     args = ap.parse_args()
     from PIL import Image
@@ -317,7 +317,7 @@ def main():
         if image.size != (width, height): sys.exit(f'{shot}: {image.size}, expected {(width, height)}')
         atlas.paste(image, (column * width, row * height))
         shot.rename(work / f'{name}.png')
-    out = game / f'data/{stem}.png'
+    out = game / f'data/city/{stem}.png'
     atlas.save(out, optimize=True)
     print(f'{out.relative_to(ROOT)}: {len(PIECES)} pieces, {width}x{height} each')
     if not args.keep: shutil.rmtree(work)

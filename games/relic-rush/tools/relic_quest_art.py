@@ -8,9 +8,9 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'art/quest-objects/source.png'
-OUTPUT = ROOT / 'data/quest-objects.png'
+OUTPUT = ROOT / 'art/registered/quest-objects.png'
 # The props used on the Item recovered card.
-FINDS = ROOT / 'data/finds'
+FINDS = ROOT / 'art/registered/finds'
 KEYS = ['timber', 'lens', 'cable', 'chart', 'marker', 'tools', 'supplies', 'gear']
 FIND_SIZE, FIND_PAINT = 320, 256
 # Pixel boxes separate the two props whose painted silhouettes straddle the grid.

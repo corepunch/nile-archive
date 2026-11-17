@@ -14,8 +14,14 @@ from fit_match3_edges import thin_ring   # beside this script
 DATA = ROOT / 'data'
 REGISTRATION = ROOT / 'art' / 'registration.json'
 
+# Registered sprites feed tools/match3_atlas.py; only runtime files go in data/.
+PLACES = {'winter.jpg': DATA / 'board/backs/background.jpg', 'island.jpg': DATA / 'city/island.jpg'}
+
+def place(path):
+    return PLACES.get(path) or ROOT / 'art/registered' / path
+
 def save(im, path):
-    path = DATA / path
+    path = place(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     im.save(path)
 

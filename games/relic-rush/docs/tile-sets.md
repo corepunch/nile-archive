@@ -1,6 +1,6 @@
 # Tile art comparison — 29 October 2026
 
-Three original six-piece sets are available as art packs; **set 1 (Relics) is the production default**. Gameplay, rewards and construction costs are the same with every pack. The original generated source is `art/tile-sets/source.png` (a 6 × 3 sheet, one pack per row, pieces in rule order); `tools/prepare_assets.py` registers the two flat-top hex pieces from `art/tile-sets/source-flat-hex.png`, isolates the remaining original pieces, and cuts them into `data/tile-sets/<pack>/0..5.png`, removing neighbouring fragments. See the [complete artwork/state catalogue](asset-catalogue.md) for all special frames, blocker strengths and tool states.
+Three original six-piece sets are available as art packs; **set 1 (Relics) is the production default**. Gameplay, rewards and construction costs are the same with every pack. The original generated source is `art/tile-sets/source.png` (a 6 × 3 sheet, one pack per row, pieces in rule order); `tools/prepare_assets.py` registers the two flat-top hex pieces from `art/tile-sets/source-flat-hex.png`, isolates the remaining original pieces, and cuts them into `art/registered/tile-sets/<pack>/0..5.png`, removing neighbouring fragments. See the [complete artwork/state catalogue](asset-catalogue.md) for all special frames, blocker strengths and tool states.
 
 1. **Relics**: round gold sun coin, flame, leaf, scarab, crystal cluster, amber amphora.
 2. **Jewels**: yellow hexagon, red heart, green square, blue drop, purple diamond, orange star.

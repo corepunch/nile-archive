@@ -2,7 +2,7 @@
 
 Relic Rush and Christmas Market use one painted plate for the bottom
 controls. The source is Christmas Market's existing
-[Pause button](../../games/christmas-market/data/expedition-hud/pause-normal.png).
+[Pause button](../../games/christmas-market/art/registered/expedition-hud/pause-normal.png).
 The tool separates its two bars from the face, keeps the painted gold rim
 and interpolates the ivory paint beneath the bars. Build, Play and Wishes
 reuse the shapes of the existing Christmas Market navigation glyphs.
@@ -35,6 +35,6 @@ python3 games/christmas-market/tools/check_assets.py --update
 
 Run any packer with `--check` to compare its output with the checked-in
 files. Run `make test` to verify the shipped inventories and the shared atlas.
-The two games load identical `data/campaign-buttons.png` sheets. The booster
+The two games load identical `data/common/buttons.png` sheets. The booster
 sheets add the board pieces as their first row and use the same interaction
 state order as the action sheet.

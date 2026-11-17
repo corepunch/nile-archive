@@ -33,7 +33,7 @@ R.town:frame(inp, dt, R.overlay == R.OV_NONE)   -- once per frame
 - `view.buttons` (`build`, `play`, `middle`, `menu`) and `view.placement_form`
   give tests real control positions.
 
-## data/town.json
+## data/city/town.json
 
 Every field is optional; the engine defaults are in `engine/town.lua`, and
 `null` clears a default.

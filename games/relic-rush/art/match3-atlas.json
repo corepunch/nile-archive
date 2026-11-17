@@ -1,343 +1,1646 @@
 {
-  "runtime": "data/match3.png",
-  "size": [
-    2048,
-    4096
+  "atlases": {
+    "pieces": {
+      "runtime": "data/board/pieces.png",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    "blockers": {
+      "runtime": "data/board/blockers.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    "cells": {
+      "runtime": "data/board/cells.png",
+      "size": [
+        512,
+        1024
+      ]
+    },
+    "boosters": {
+      "runtime": "data/board/boosters.png",
+      "size": [
+        1024,
+        2048
+      ]
+    },
+    "hud": {
+      "runtime": "data/board/hud.png",
+      "size": [
+        1024,
+        512
+      ]
+    },
+    "fx": {
+      "runtime": "data/board/fx.png",
+      "size": [
+        1024,
+        512
+      ]
+    }
+  },
+  "board": [
+    "pieces",
+    "blockers",
+    "cells",
+    "fx",
+    "boosters"
   ],
+  "hud": [
+    "hud",
+    "boosters"
+  ],
+  "images": {
+    "background": "data/board/backs/background.jpg",
+    "scene-1": "data/board/backs/scene-1.jpg",
+    "scene-2": "data/board/backs/scene-2.jpg"
+  },
+  "aliases": {
+    "kind-0": "relics-0",
+    "kind-1": "relics-1",
+    "kind-2": "relics-2",
+    "kind-3": "relics-3",
+    "kind-4": "relics-4",
+    "kind-5": "relics-5"
+  },
   "frames": {
-    "background": [
-      2,
-      2,
-      768,
-      1152
-    ],
-    "scene-1": [
-      774,
-      2,
-      768,
-      1152
-    ],
-    "scene-2": [
-      2,
-      1158,
-      768,
-      1152
-    ],
-    "fx-burst": [
-      774,
-      1158,
-      256,
-      256
-    ],
-    "fx-flash": [
-      1034,
-      1158,
-      256,
-      256
-    ],
-    "fx-shock": [
-      1294,
-      1158,
-      256,
-      256
-    ],
-    "cell-mask": [
-      1554,
-      1158,
-      128,
-      128
-    ],
-    "chain": [
-      1686,
-      1158,
-      128,
-      128
-    ],
-    "chain-1": [
-      1818,
-      1158,
-      128,
-      128
-    ],
-    "chain-1-mirror": [
-      2,
-      2314,
-      128,
-      128
-    ],
-    "chain-2": [
-      134,
-      2314,
-      128,
-      128
-    ],
-    "fx-glint": [
-      266,
-      2314,
-      128,
-      128
-    ],
-    "fx-ring": [
-      398,
-      2314,
-      128,
-      128
-    ],
-    "fx-smoke-0": [
-      530,
-      2314,
-      128,
-      128
-    ],
-    "fx-smoke-1": [
-      662,
-      2314,
-      128,
-      128
-    ],
-    "fx-smoke-2": [
-      794,
-      2314,
-      128,
-      128
-    ],
-    "fx-smoke-3": [
-      926,
-      2314,
-      128,
-      128
-    ],
-    "fx-streak": [
-      1058,
-      2314,
-      128,
-      128
-    ],
-    "fx-twinkle": [
-      1190,
-      2314,
-      128,
-      128
-    ],
-    "guide": [
-      1322,
-      2314,
-      128,
-      128
-    ],
-    "hint": [
-      1454,
-      2314,
-      128,
-      128
-    ],
-    "ice-1": [
-      1586,
-      2314,
-      128,
-      128
-    ],
-    "ice-2": [
-      1718,
-      2314,
-      128,
-      128
-    ],
-    "jewels-0": [
-      1850,
-      2314,
-      128,
-      128
-    ],
-    "jewels-1": [
-      2,
-      2446,
-      128,
-      128
-    ],
-    "jewels-2": [
-      134,
-      2446,
-      128,
-      128
-    ],
-    "jewels-3": [
-      266,
-      2446,
-      128,
-      128
-    ],
-    "jewels-4": [
-      398,
-      2446,
-      128,
-      128
-    ],
-    "jewels-5": [
-      530,
-      2446,
-      128,
-      128
-    ],
-    "relics-0": [
-      662,
-      2446,
-      128,
-      128
-    ],
-    "relics-1": [
-      794,
-      2446,
-      128,
-      128
-    ],
-    "relics-2": [
-      926,
-      2446,
-      128,
-      128
-    ],
-    "relics-3": [
-      1058,
-      2446,
-      128,
-      128
-    ],
-    "relics-4": [
-      1190,
-      2446,
-      128,
-      128
-    ],
-    "relics-5": [
-      1322,
-      2446,
-      128,
-      128
-    ],
-    "resources-0": [
-      1454,
-      2446,
-      128,
-      128
-    ],
-    "resources-1": [
-      1586,
-      2446,
-      128,
-      128
-    ],
-    "resources-2": [
-      1718,
-      2446,
-      128,
-      128
-    ],
-    "resources-3": [
-      1850,
-      2446,
-      128,
-      128
-    ],
-    "resources-4": [
-      2,
-      2578,
-      128,
-      128
-    ],
-    "resources-5": [
-      134,
-      2578,
-      128,
-      128
-    ],
-    "selected": [
-      266,
-      2578,
-      128,
-      128
-    ],
-    "stone-1": [
-      398,
-      2578,
-      128,
-      128
-    ],
-    "glow": [
-      530,
-      2578,
-      64,
-      64
-    ],
-    "fx-tablet-glow": [
-      598,
-      2578,
-      16,
-      16
-    ],
-    "fx-tablet-spark": [
-      618,
-      2578,
-      16,
-      16
-    ],
-    "kind-0": [
-      662,
-      2446,
-      128,
-      128
-    ],
-    "kind-1": [
-      794,
-      2446,
-      128,
-      128
-    ],
-    "kind-2": [
-      926,
-      2446,
-      128,
-      128
-    ],
-    "kind-3": [
-      1058,
-      2446,
-      128,
-      128
-    ],
-    "kind-4": [
-      1190,
-      2446,
-      128,
-      128
-    ],
-    "kind-5": [
-      1322,
-      2446,
-      128,
-      128
-    ]
+    "campaign-amphora": {
+      "atlas": "pieces",
+      "box": [
+        974,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-apple": {
+      "atlas": "pieces",
+      "box": [
+        1106,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-berries": {
+      "atlas": "pieces",
+      "box": [
+        1238,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-cable": {
+      "atlas": "pieces",
+      "box": [
+        1370,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-chart": {
+      "atlas": "pieces",
+      "box": [
+        1502,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-coin": {
+      "atlas": "pieces",
+      "box": [
+        1634,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-cut-blocks": {
+      "atlas": "pieces",
+      "box": [
+        1766,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-emerald": {
+      "atlas": "pieces",
+      "box": [
+        1898,
+        326,
+        128,
+        128
+      ]
+    },
+    "campaign-flower": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-gear": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-grain": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-harp": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-helmet": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-leaf": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-lens": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-marker": {
+      "atlas": "pieces",
+      "box": [
+        926,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-note": {
+      "atlas": "pieces",
+      "box": [
+        1058,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-pliers": {
+      "atlas": "pieces",
+      "box": [
+        1190,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-quartz": {
+      "atlas": "pieces",
+      "box": [
+        1322,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-rations": {
+      "atlas": "pieces",
+      "box": [
+        1454,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-ring": {
+      "atlas": "pieces",
+      "box": [
+        1586,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-sandal": {
+      "atlas": "pieces",
+      "box": [
+        1718,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-scarab": {
+      "atlas": "pieces",
+      "box": [
+        1850,
+        650,
+        128,
+        128
+      ]
+    },
+    "campaign-shrimp": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        782,
+        128,
+        128
+      ]
+    },
+    "campaign-silver-coin": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        782,
+        128,
+        128
+      ]
+    },
+    "campaign-stone": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        782,
+        128,
+        128
+      ]
+    },
+    "campaign-supplies": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        782,
+        128,
+        128
+      ]
+    },
+    "campaign-timber": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        782,
+        128,
+        128
+      ]
+    },
+    "campaign-tools": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        782,
+        128,
+        128
+      ]
+    },
+    "campaign-water": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        782,
+        128,
+        128
+      ]
+    },
+    "find-cable": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        2,
+        320,
+        320
+      ]
+    },
+    "find-chart": {
+      "atlas": "pieces",
+      "box": [
+        326,
+        2,
+        320,
+        320
+      ]
+    },
+    "find-gear": {
+      "atlas": "pieces",
+      "box": [
+        650,
+        2,
+        320,
+        320
+      ]
+    },
+    "find-lens": {
+      "atlas": "pieces",
+      "box": [
+        974,
+        2,
+        320,
+        320
+      ]
+    },
+    "find-marker": {
+      "atlas": "pieces",
+      "box": [
+        1298,
+        2,
+        320,
+        320
+      ]
+    },
+    "find-note": {
+      "atlas": "pieces",
+      "box": [
+        1622,
+        2,
+        320,
+        320
+      ]
+    },
+    "find-supplies": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        326,
+        320,
+        320
+      ]
+    },
+    "find-tools": {
+      "atlas": "pieces",
+      "box": [
+        326,
+        326,
+        320,
+        320
+      ]
+    },
+    "jewels-0": {
+      "atlas": "pieces",
+      "box": [
+        926,
+        782,
+        128,
+        128
+      ]
+    },
+    "jewels-1": {
+      "atlas": "pieces",
+      "box": [
+        1058,
+        782,
+        128,
+        128
+      ]
+    },
+    "jewels-2": {
+      "atlas": "pieces",
+      "box": [
+        1190,
+        782,
+        128,
+        128
+      ]
+    },
+    "jewels-3": {
+      "atlas": "pieces",
+      "box": [
+        1322,
+        782,
+        128,
+        128
+      ]
+    },
+    "jewels-4": {
+      "atlas": "pieces",
+      "box": [
+        1454,
+        782,
+        128,
+        128
+      ]
+    },
+    "jewels-5": {
+      "atlas": "pieces",
+      "box": [
+        1586,
+        782,
+        128,
+        128
+      ]
+    },
+    "relics-0": {
+      "atlas": "pieces",
+      "box": [
+        1718,
+        782,
+        128,
+        128
+      ]
+    },
+    "relics-1": {
+      "atlas": "pieces",
+      "box": [
+        1850,
+        782,
+        128,
+        128
+      ]
+    },
+    "relics-2": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        914,
+        128,
+        128
+      ]
+    },
+    "relics-3": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        914,
+        128,
+        128
+      ]
+    },
+    "relics-4": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        914,
+        128,
+        128
+      ]
+    },
+    "relics-5": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-berries": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-coin": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-emerald": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-rations": {
+      "atlas": "pieces",
+      "box": [
+        926,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-stone": {
+      "atlas": "pieces",
+      "box": [
+        1058,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-timber": {
+      "atlas": "pieces",
+      "box": [
+        650,
+        326,
+        320,
+        320
+      ]
+    },
+    "resource-wallet-food": {
+      "atlas": "pieces",
+      "box": [
+        1190,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-wallet-supplies": {
+      "atlas": "pieces",
+      "box": [
+        1322,
+        914,
+        128,
+        128
+      ]
+    },
+    "resource-water": {
+      "atlas": "pieces",
+      "box": [
+        1454,
+        914,
+        128,
+        128
+      ]
+    },
+    "resources-0": {
+      "atlas": "pieces",
+      "box": [
+        1586,
+        914,
+        128,
+        128
+      ]
+    },
+    "resources-1": {
+      "atlas": "pieces",
+      "box": [
+        1718,
+        914,
+        128,
+        128
+      ]
+    },
+    "resources-2": {
+      "atlas": "pieces",
+      "box": [
+        1850,
+        914,
+        128,
+        128
+      ]
+    },
+    "resources-3": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        1046,
+        128,
+        128
+      ]
+    },
+    "resources-4": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        1046,
+        128,
+        128
+      ]
+    },
+    "resources-5": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-cable": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-chart": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-gear": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-lens": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-marker": {
+      "atlas": "pieces",
+      "box": [
+        926,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-note": {
+      "atlas": "pieces",
+      "box": [
+        1058,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-supplies": {
+      "atlas": "pieces",
+      "box": [
+        1190,
+        1046,
+        128,
+        128
+      ]
+    },
+    "story-tools": {
+      "atlas": "pieces",
+      "box": [
+        1322,
+        1046,
+        128,
+        128
+      ]
+    },
+    "chain": {
+      "atlas": "blockers",
+      "box": [
+        2,
+        2,
+        128,
+        128
+      ]
+    },
+    "chain-1": {
+      "atlas": "blockers",
+      "box": [
+        134,
+        2,
+        128,
+        128
+      ]
+    },
+    "chain-1-mirror": {
+      "atlas": "blockers",
+      "box": [
+        266,
+        2,
+        128,
+        128
+      ]
+    },
+    "chain-2": {
+      "atlas": "blockers",
+      "box": [
+        2,
+        134,
+        128,
+        128
+      ]
+    },
+    "ice-1": {
+      "atlas": "blockers",
+      "box": [
+        134,
+        134,
+        128,
+        128
+      ]
+    },
+    "ice-2": {
+      "atlas": "blockers",
+      "box": [
+        266,
+        134,
+        128,
+        128
+      ]
+    },
+    "stone-1": {
+      "atlas": "blockers",
+      "box": [
+        2,
+        266,
+        128,
+        128
+      ]
+    },
+    "cell-mask": {
+      "atlas": "cells",
+      "box": [
+        2,
+        2,
+        128,
+        128
+      ]
+    },
+    "guide": {
+      "atlas": "cells",
+      "box": [
+        134,
+        2,
+        128,
+        128
+      ]
+    },
+    "hint": {
+      "atlas": "cells",
+      "box": [
+        266,
+        2,
+        128,
+        128
+      ]
+    },
+    "selected": {
+      "atlas": "cells",
+      "box": [
+        2,
+        134,
+        128,
+        128
+      ]
+    },
+    "tile-bonus-area": {
+      "atlas": "cells",
+      "box": [
+        134,
+        134,
+        128,
+        128
+      ]
+    },
+    "tile-cell-normal": {
+      "atlas": "cells",
+      "box": [
+        266,
+        134,
+        128,
+        128
+      ]
+    },
+    "tile-hover": {
+      "atlas": "cells",
+      "box": [
+        2,
+        266,
+        128,
+        128
+      ]
+    },
+    "tile-ice": {
+      "atlas": "cells",
+      "box": [
+        134,
+        266,
+        128,
+        128
+      ]
+    },
+    "tile-light-wave": {
+      "atlas": "cells",
+      "box": [
+        266,
+        266,
+        128,
+        128
+      ]
+    },
+    "tile-selected": {
+      "atlas": "cells",
+      "box": [
+        2,
+        398,
+        128,
+        128
+      ]
+    },
+    "tile-tablet-double": {
+      "atlas": "cells",
+      "box": [
+        134,
+        398,
+        128,
+        128
+      ]
+    },
+    "tile-tablet-single": {
+      "atlas": "cells",
+      "box": [
+        266,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-dynamite": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        2,
+        128,
+        128
+      ]
+    },
+    "bonus-dynamite-disabled": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        2,
+        128,
+        128
+      ]
+    },
+    "bonus-dynamite-hover": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        2,
+        128,
+        128
+      ]
+    },
+    "bonus-dynamite-normal": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        2,
+        128,
+        128
+      ]
+    },
+    "bonus-dynamite-pressed": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        2,
+        128,
+        128
+      ]
+    },
+    "bonus-dynamite-selected": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        2,
+        128,
+        128
+      ]
+    },
+    "bonus-hammer": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        2,
+        128,
+        128
+      ]
+    },
+    "bonus-hammer-disabled": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        134,
+        128,
+        128
+      ]
+    },
+    "bonus-hammer-hover": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        134,
+        128,
+        128
+      ]
+    },
+    "bonus-hammer-normal": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        134,
+        128,
+        128
+      ]
+    },
+    "bonus-hammer-pressed": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        134,
+        128,
+        128
+      ]
+    },
+    "bonus-hammer-selected": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        134,
+        128,
+        128
+      ]
+    },
+    "bonus-lightning": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        134,
+        128,
+        128
+      ]
+    },
+    "bonus-lightning-disabled": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        134,
+        128,
+        128
+      ]
+    },
+    "bonus-lightning-hover": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        266,
+        128,
+        128
+      ]
+    },
+    "bonus-lightning-normal": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        266,
+        128,
+        128
+      ]
+    },
+    "bonus-lightning-pressed": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        266,
+        128,
+        128
+      ]
+    },
+    "bonus-lightning-selected": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        266,
+        128,
+        128
+      ]
+    },
+    "bonus-plus": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        266,
+        128,
+        128
+      ]
+    },
+    "bonus-plus-disabled": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        266,
+        128,
+        128
+      ]
+    },
+    "bonus-plus-hover": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        266,
+        128,
+        128
+      ]
+    },
+    "bonus-plus-normal": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-plus-pressed": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-plus-selected": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-shield": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-shield-disabled": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-shield-hover": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-shield-normal": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        398,
+        128,
+        128
+      ]
+    },
+    "bonus-shield-pressed": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        530,
+        128,
+        128
+      ]
+    },
+    "bonus-shield-selected": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        530,
+        128,
+        128
+      ]
+    },
+    "bonus-star": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        530,
+        128,
+        128
+      ]
+    },
+    "bonus-star-disabled": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        530,
+        128,
+        128
+      ]
+    },
+    "bonus-star-hover": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        530,
+        128,
+        128
+      ]
+    },
+    "bonus-star-normal": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        530,
+        128,
+        128
+      ]
+    },
+    "bonus-star-pressed": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        530,
+        128,
+        128
+      ]
+    },
+    "bonus-star-selected": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        662,
+        128,
+        128
+      ]
+    },
+    "dynamite-disabled": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        662,
+        128,
+        128
+      ]
+    },
+    "dynamite-hover": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        662,
+        128,
+        128
+      ]
+    },
+    "dynamite-normal": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        662,
+        128,
+        128
+      ]
+    },
+    "dynamite-pressed": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        662,
+        128,
+        128
+      ]
+    },
+    "dynamite-selected": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        662,
+        128,
+        128
+      ]
+    },
+    "pickaxe-disabled": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        662,
+        128,
+        128
+      ]
+    },
+    "pickaxe-hover": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        794,
+        128,
+        128
+      ]
+    },
+    "pickaxe-normal": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        794,
+        128,
+        128
+      ]
+    },
+    "pickaxe-pressed": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        794,
+        128,
+        128
+      ]
+    },
+    "pickaxe-selected": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        794,
+        128,
+        128
+      ]
+    },
+    "sunburst-disabled": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        794,
+        128,
+        128
+      ]
+    },
+    "sunburst-hover": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        794,
+        128,
+        128
+      ]
+    },
+    "sunburst-normal": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        794,
+        128,
+        128
+      ]
+    },
+    "sunburst-pressed": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        926,
+        128,
+        128
+      ]
+    },
+    "sunburst-selected": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        926,
+        128,
+        128
+      ]
+    },
+    "complete": {
+      "atlas": "hud",
+      "box": [
+        2,
+        203,
+        128,
+        128
+      ]
+    },
+    "discovery-star": {
+      "atlas": "hud",
+      "box": [
+        134,
+        203,
+        128,
+        128
+      ]
+    },
+    "life": {
+      "atlas": "hud",
+      "box": [
+        266,
+        203,
+        128,
+        128
+      ]
+    },
+    "next-clue": {
+      "atlas": "hud",
+      "box": [
+        398,
+        203,
+        128,
+        128
+      ]
+    },
+    "pause-disabled": {
+      "atlas": "hud",
+      "box": [
+        530,
+        203,
+        128,
+        128
+      ]
+    },
+    "pause-hover": {
+      "atlas": "hud",
+      "box": [
+        662,
+        203,
+        128,
+        128
+      ]
+    },
+    "pause-normal": {
+      "atlas": "hud",
+      "box": [
+        794,
+        203,
+        128,
+        128
+      ]
+    },
+    "pause-pressed": {
+      "atlas": "hud",
+      "box": [
+        2,
+        335,
+        128,
+        128
+      ]
+    },
+    "pause-selected": {
+      "atlas": "hud",
+      "box": [
+        134,
+        335,
+        128,
+        128
+      ]
+    },
+    "score": {
+      "atlas": "hud",
+      "box": [
+        266,
+        335,
+        128,
+        128
+      ]
+    },
+    "shop-built": {
+      "atlas": "hud",
+      "box": [
+        398,
+        335,
+        128,
+        128
+      ]
+    },
+    "shop-locked": {
+      "atlas": "hud",
+      "box": [
+        530,
+        335,
+        128,
+        128
+      ]
+    },
+    "signboard": {
+      "atlas": "hud",
+      "box": [
+        2,
+        2,
+        960,
+        197
+      ]
+    },
+    "fx-burst": {
+      "atlas": "fx",
+      "box": [
+        2,
+        2,
+        256,
+        256
+      ]
+    },
+    "fx-flash": {
+      "atlas": "fx",
+      "box": [
+        262,
+        2,
+        256,
+        256
+      ]
+    },
+    "fx-glint": {
+      "atlas": "fx",
+      "box": [
+        782,
+        2,
+        128,
+        128
+      ]
+    },
+    "fx-ring": {
+      "atlas": "fx",
+      "box": [
+        2,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-shock": {
+      "atlas": "fx",
+      "box": [
+        522,
+        2,
+        256,
+        256
+      ]
+    },
+    "fx-smoke-0": {
+      "atlas": "fx",
+      "box": [
+        134,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-1": {
+      "atlas": "fx",
+      "box": [
+        266,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-2": {
+      "atlas": "fx",
+      "box": [
+        398,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-3": {
+      "atlas": "fx",
+      "box": [
+        530,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-streak": {
+      "atlas": "fx",
+      "box": [
+        662,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-tablet-glow": {
+      "atlas": "fx",
+      "box": [
+        994,
+        262,
+        16,
+        16
+      ]
+    },
+    "fx-tablet-spark": {
+      "atlas": "fx",
+      "box": [
+        2,
+        394,
+        16,
+        16
+      ]
+    },
+    "fx-twinkle": {
+      "atlas": "fx",
+      "box": [
+        794,
+        262,
+        128,
+        128
+      ]
+    },
+    "glow": {
+      "atlas": "fx",
+      "box": [
+        926,
+        262,
+        64,
+        64
+      ]
+    }
   },
   "sources": {
-    "jewels-0": "data/tile-sets/jewels/0.png",
-    "jewels-1": "data/tile-sets/jewels/1.png",
-    "jewels-2": "data/tile-sets/jewels/2.png",
-    "jewels-3": "data/tile-sets/jewels/3.png",
-    "jewels-4": "data/tile-sets/jewels/4.png",
-    "jewels-5": "data/tile-sets/jewels/5.png",
-    "resources-0": "data/tile-sets/resources/0.png",
-    "resources-1": "data/tile-sets/resources/1.png",
-    "resources-2": "data/tile-sets/resources/2.png",
-    "resources-3": "data/tile-sets/resources/3.png",
-    "resources-4": "data/tile-sets/resources/4.png",
-    "resources-5": "data/tile-sets/resources/5.png",
-    "cell-mask": "data/board-states/cell-mask.png",
-    "guide": "data/board-states/guide.png",
-    "hint": "data/board-states/hint.png",
-    "selected": "data/board-states/selected.png",
-    "background": "data/jungle.jpg",
-    "scene-1": "data/scene-lagoon.jpg",
-    "scene-2": "data/scene-temple.jpg"
+    "jewels-0": "art/registered/tile-sets/jewels/0.png",
+    "jewels-1": "art/registered/tile-sets/jewels/1.png",
+    "jewels-2": "art/registered/tile-sets/jewels/2.png",
+    "jewels-3": "art/registered/tile-sets/jewels/3.png",
+    "jewels-4": "art/registered/tile-sets/jewels/4.png",
+    "jewels-5": "art/registered/tile-sets/jewels/5.png",
+    "resources-0": "art/registered/tile-sets/resources/0.png",
+    "resources-1": "art/registered/tile-sets/resources/1.png",
+    "resources-2": "art/registered/tile-sets/resources/2.png",
+    "resources-3": "art/registered/tile-sets/resources/3.png",
+    "resources-4": "art/registered/tile-sets/resources/4.png",
+    "resources-5": "art/registered/tile-sets/resources/5.png",
+    "cell-mask": "art/registered/board-states/cell-mask.png",
+    "dynamite-disabled": "art/registered/board-states/dynamite-disabled.png",
+    "dynamite-hover": "art/registered/board-states/dynamite-hover.png",
+    "dynamite-normal": "art/registered/board-states/dynamite-normal.png",
+    "dynamite-pressed": "art/registered/board-states/dynamite-pressed.png",
+    "dynamite-selected": "art/registered/board-states/dynamite-selected.png",
+    "guide": "art/registered/board-states/guide.png",
+    "hint": "art/registered/board-states/hint.png",
+    "pickaxe-disabled": "art/registered/board-states/pickaxe-disabled.png",
+    "pickaxe-hover": "art/registered/board-states/pickaxe-hover.png",
+    "pickaxe-normal": "art/registered/board-states/pickaxe-normal.png",
+    "pickaxe-pressed": "art/registered/board-states/pickaxe-pressed.png",
+    "pickaxe-selected": "art/registered/board-states/pickaxe-selected.png",
+    "selected": "art/registered/board-states/selected.png",
+    "sunburst-disabled": "art/registered/board-states/sunburst-disabled.png",
+    "sunburst-hover": "art/registered/board-states/sunburst-hover.png",
+    "sunburst-normal": "art/registered/board-states/sunburst-normal.png",
+    "sunburst-pressed": "art/registered/board-states/sunburst-pressed.png",
+    "sunburst-selected": "art/registered/board-states/sunburst-selected.png",
+    "complete": "art/registered/expedition-hud/complete.png",
+    "life": "art/registered/expedition-hud/life.png",
+    "pause-disabled": "art/registered/expedition-hud/pause-disabled.png",
+    "pause-hover": "art/registered/expedition-hud/pause-hover.png",
+    "pause-normal": "art/registered/expedition-hud/pause-normal.png",
+    "pause-pressed": "art/registered/expedition-hud/pause-pressed.png",
+    "pause-selected": "art/registered/expedition-hud/pause-selected.png",
+    "score": "art/registered/expedition-hud/score.png",
+    "shop-built": "art/registered/expedition-hud/shop-built.png",
+    "shop-locked": "art/registered/expedition-hud/shop-locked.png"
   },
   "effects": {
     "fx-shock": "art/particles/kenney/circle_03.png",
@@ -354,214 +1657,22 @@
     "fx-smoke-2": "../../engine/art/match3/kenney-smoke/whitePuff08.png",
     "fx-smoke-3": "../../engine/art/match3/kenney-smoke/whitePuff12.png"
   },
-  "hud": {
-    "runtime": "data/match3-hud.png",
-    "size": [
-      1024,
-      1024
+  "signboard": {
+    "source": "../../art/match3-signboards/source.png",
+    "prompt": "../../art/match3-signboards/prompt.txt",
+    "reference": "../../art/match3-signboards/concept.jpg",
+    "crop": [
+      18,
+      93,
+      1752,
+      449
     ],
-    "frames": {
-      "complete": [
-        2,
-        2,
-        128,
-        128
-      ],
-      "dynamite-disabled": [
-        134,
-        2,
-        128,
-        128
-      ],
-      "dynamite-hover": [
-        266,
-        2,
-        128,
-        128
-      ],
-      "dynamite-normal": [
-        398,
-        2,
-        128,
-        128
-      ],
-      "dynamite-pressed": [
-        530,
-        2,
-        128,
-        128
-      ],
-      "dynamite-selected": [
-        662,
-        2,
-        128,
-        128
-      ],
-      "life": [
-        794,
-        2,
-        128,
-        128
-      ],
-      "pause-disabled": [
-        2,
-        134,
-        128,
-        128
-      ],
-      "pause-hover": [
-        134,
-        134,
-        128,
-        128
-      ],
-      "pause-normal": [
-        266,
-        134,
-        128,
-        128
-      ],
-      "pause-pressed": [
-        398,
-        134,
-        128,
-        128
-      ],
-      "pause-selected": [
-        530,
-        134,
-        128,
-        128
-      ],
-      "pickaxe-disabled": [
-        662,
-        134,
-        128,
-        128
-      ],
-      "pickaxe-hover": [
-        794,
-        134,
-        128,
-        128
-      ],
-      "pickaxe-normal": [
-        2,
-        266,
-        128,
-        128
-      ],
-      "pickaxe-pressed": [
-        134,
-        266,
-        128,
-        128
-      ],
-      "pickaxe-selected": [
-        266,
-        266,
-        128,
-        128
-      ],
-      "score": [
-        398,
-        266,
-        128,
-        128
-      ],
-      "shop-built": [
-        530,
-        266,
-        128,
-        128
-      ],
-      "shop-locked": [
-        662,
-        266,
-        128,
-        128
-      ],
-      "sunburst-disabled": [
-        794,
-        266,
-        128,
-        128
-      ],
-      "sunburst-hover": [
-        2,
-        398,
-        128,
-        128
-      ],
-      "sunburst-normal": [
-        134,
-        398,
-        128,
-        128
-      ],
-      "sunburst-pressed": [
-        266,
-        398,
-        128,
-        128
-      ],
-      "sunburst-selected": [
-        398,
-        398,
-        128,
-        128
-      ],
-      "signboard": [
-        2,
-        530,
-        960,
-        197
-      ]
-    },
-    "sources": {
-      "dynamite-disabled": "data/board-states/dynamite-disabled.png",
-      "dynamite-hover": "data/board-states/dynamite-hover.png",
-      "dynamite-normal": "data/board-states/dynamite-normal.png",
-      "dynamite-pressed": "data/board-states/dynamite-pressed.png",
-      "dynamite-selected": "data/board-states/dynamite-selected.png",
-      "pickaxe-disabled": "data/board-states/pickaxe-disabled.png",
-      "pickaxe-hover": "data/board-states/pickaxe-hover.png",
-      "pickaxe-normal": "data/board-states/pickaxe-normal.png",
-      "pickaxe-pressed": "data/board-states/pickaxe-pressed.png",
-      "pickaxe-selected": "data/board-states/pickaxe-selected.png",
-      "sunburst-disabled": "data/board-states/sunburst-disabled.png",
-      "sunburst-hover": "data/board-states/sunburst-hover.png",
-      "sunburst-normal": "data/board-states/sunburst-normal.png",
-      "sunburst-pressed": "data/board-states/sunburst-pressed.png",
-      "sunburst-selected": "data/board-states/sunburst-selected.png",
-      "complete": "data/expedition-hud/complete.png",
-      "life": "data/expedition-hud/life.png",
-      "pause-disabled": "data/expedition-hud/pause-disabled.png",
-      "pause-hover": "data/expedition-hud/pause-hover.png",
-      "pause-normal": "data/expedition-hud/pause-normal.png",
-      "pause-pressed": "data/expedition-hud/pause-pressed.png",
-      "pause-selected": "data/expedition-hud/pause-selected.png",
-      "score": "data/expedition-hud/score.png",
-      "shop-built": "data/expedition-hud/shop-built.png",
-      "shop-locked": "data/expedition-hud/shop-locked.png"
-    },
-    "signboard": {
-      "source": "../../art/match3-signboards/source.png",
-      "prompt": "../../art/match3-signboards/prompt.txt",
-      "reference": "../../art/match3-signboards/concept.jpg",
-      "crop": [
-        18,
-        93,
-        1752,
-        449
-      ],
-      "size": [
-        960,
-        197
-      ],
-      "state": "static backplate",
-      "frame": "signboard"
-    }
+    "size": [
+      960,
+      197
+    ],
+    "state": "static backplate",
+    "frame": "signboard"
   },
   "board_theme": {
     "chain": {
@@ -873,7 +1984,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "99aafd47a193e2316a0117b762438c233b82ebeba9c668653146ae73adcf8ee2",
+    "recipe": "ff9e54791be81167e3cd1e2a36fe7fbc66001df9dc5e5bba1c867ba1c1ae6504",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -914,64 +2025,105 @@
       "games/relic-rush/art/particles/kenney/star_07.png": "ae3e59099231a3daf031a56b5e0c841aad60ec2fb7549df79412da4c75bb3bcf",
       "games/relic-rush/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
       "games/relic-rush/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
+      "games/relic-rush/art/registered/board-states/cell-mask.png": "e51da6f444ca0f877436eb32bb3d3de943f8a1739a39a333c02ab7cff73ad719",
+      "games/relic-rush/art/registered/board-states/dynamite-disabled.png": "044c73d5f9394cb0c038cb7059614d0b54a3061abe6576d000a3389f055405a3",
+      "games/relic-rush/art/registered/board-states/dynamite-hover.png": "d19bfef9723f1dabdc09faa5b931a7d53a61cbf121cba9518895873b5e3d82dc",
+      "games/relic-rush/art/registered/board-states/dynamite-normal.png": "8a139567b07701863eac4b899e8870d6dbbbbefcc78091cbfbab95eaf3ef221b",
+      "games/relic-rush/art/registered/board-states/dynamite-pressed.png": "070c346a769abb6cdc9c5fae7d6d5a10b555b9ad7d8d4829c0e76221137d02ef",
+      "games/relic-rush/art/registered/board-states/dynamite-selected.png": "013ed3be9fad54679cd9bb19697582114a9d89b853e4fd5c917b8336ab561e49",
+      "games/relic-rush/art/registered/board-states/guide.png": "3c3dfce86d4833b5fd71b2bed2d012fd4d4f0c45d8c41fffc42b182bcf1f7306",
+      "games/relic-rush/art/registered/board-states/hint.png": "07cf83ac91b4b02f3ea076455a4116326cfcbf0b0ad0345afead940828142777",
+      "games/relic-rush/art/registered/board-states/pickaxe-disabled.png": "e057ca4f7f940a275b7091dceb057d995644d549842d47587d3f031faf656286",
+      "games/relic-rush/art/registered/board-states/pickaxe-hover.png": "fd1839b7ac73671b2bd014150e41374b05912cc511f660dd570192fe3900bae6",
+      "games/relic-rush/art/registered/board-states/pickaxe-normal.png": "2d57379ec71ebdac40a36a21427ab1a19e66ebcf0280a004517d9f50155739d2",
+      "games/relic-rush/art/registered/board-states/pickaxe-pressed.png": "b0cb481075dd812e188ae8682aeadc3b63d5d72296918c18358a2afc99c64734",
+      "games/relic-rush/art/registered/board-states/pickaxe-selected.png": "59052520ed696b81fca7ce8a0cd3d85c9260bca94bfbcd339b1c874f23b8db00",
+      "games/relic-rush/art/registered/board-states/selected.png": "a7c3541a46c33606fd8ef2ce5a46e71db51b2eae814822a7a3ba2a4de47a9aff",
+      "games/relic-rush/art/registered/board-states/sunburst-disabled.png": "6abfe7ade16df5949594fc18bd286e4d748828cf1d772cf913fbb50f2f407652",
+      "games/relic-rush/art/registered/board-states/sunburst-hover.png": "77491e89d7ff54452131d86754c1b4a6e3eba297f724eacb75ecf7c3744ab172",
+      "games/relic-rush/art/registered/board-states/sunburst-normal.png": "e275397437e2538fa765a0faa644a69568efc71bafcb99bd7cc90747beef46cf",
+      "games/relic-rush/art/registered/board-states/sunburst-pressed.png": "a5064eb46874e6ac5fbccc89fab171b3f8506f21c494cc943ba7f7d741f38976",
+      "games/relic-rush/art/registered/board-states/sunburst-selected.png": "6db450213241f00a69e0b59af0081cf01bbcee59789ac39934d942323654d1bc",
+      "games/relic-rush/art/registered/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b",
+      "games/relic-rush/art/registered/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
+      "games/relic-rush/art/registered/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
+      "games/relic-rush/art/registered/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
+      "games/relic-rush/art/registered/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",
+      "games/relic-rush/art/registered/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
+      "games/relic-rush/art/registered/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
+      "games/relic-rush/art/registered/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
+      "games/relic-rush/art/registered/bonus-gems.png": "df6be7765763e07088eaa425f32b64aa229b79cceff2e90a01a8a2fe68c66520",
+      "games/relic-rush/art/registered/campaign-pieces.png": "2af737b42415768ba7a75909f1d933781f690163f577cf6631fc5bd07c85f893",
+      "games/relic-rush/art/registered/expedition-hud/complete.png": "8f2db8c6941dd8a717741555329734e7bf6ced57249c397d8dda982e26f0120c",
+      "games/relic-rush/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
+      "games/relic-rush/art/registered/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
+      "games/relic-rush/art/registered/expedition-hud/pause-hover.png": "4506492d3933ceaaba186d22b49bbfe88e58f9e8e66ee6c34c5613fa40467627",
+      "games/relic-rush/art/registered/expedition-hud/pause-normal.png": "e711b0ecd719f4af4b5813ce6d58bf48f867c62c679fcde674d17019f9391621",
+      "games/relic-rush/art/registered/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
+      "games/relic-rush/art/registered/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
+      "games/relic-rush/art/registered/expedition-hud/score.png": "8e395c4ae507674be6669e43d4a37a404886fed5acd70d1adac4c07e14818f65",
+      "games/relic-rush/art/registered/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
+      "games/relic-rush/art/registered/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
+      "games/relic-rush/art/registered/finds/cable.png": "bebe456dd13124a151ebe20d5fb4aae8167c29a847a9f41db4bd87b1dd183de7",
+      "games/relic-rush/art/registered/finds/chart.png": "c082ca549525e1f540d3167205461921f42cdd35e6217aae0dcde81c2fb27c46",
+      "games/relic-rush/art/registered/finds/gear.png": "1d8ddc296779d1caa9f9f3f1ed30aa3b655c3f51d99d268950c46901b0ed1cce",
+      "games/relic-rush/art/registered/finds/lens.png": "e6b16399eb6a9fd2dabe0b4bc437cc2e7e10dcd4450a9811156ffab8f165ac19",
+      "games/relic-rush/art/registered/finds/marker.png": "a6a75c045efcd9d049e17ddaf999d9cada3e050081628ebb3168ebd31b333be8",
+      "games/relic-rush/art/registered/finds/note.png": "17f8cd5eb4022ca9c2872ceadb430f64572c46ba8c525f511b28902bcd455715",
+      "games/relic-rush/art/registered/finds/supplies.png": "b904f87ec338a12aa213b8afce89a2f4a887a74a00b65d9e542d96d5e11a39cc",
+      "games/relic-rush/art/registered/finds/tools.png": "4eaffa6c2e2c7c9068c54dc9b258892fd8d8394ccb78cbf5c12eaf759fd0688d",
+      "games/relic-rush/art/registered/resource-pieces/berries.png": "4d7e82b87f61a49efd51357364d0824e2ad5bfa2888f087371c3ddbb5595f955",
+      "games/relic-rush/art/registered/resource-pieces/coin.png": "09ae55316de4b0a7d4a4a70b03aa17e362ecab5c306310478d71d9edc49e5e51",
+      "games/relic-rush/art/registered/resource-pieces/emerald.png": "98fb7355012ecc7e2e3365e74aa3c41b6fb7ba29711850ce2f3b397c684a1309",
+      "games/relic-rush/art/registered/resource-pieces/rations.png": "b8921984588a7a5b2e375a51df181a4d48e980a4fc16f77b8326a33c73599d9f",
+      "games/relic-rush/art/registered/resource-pieces/stone.png": "f13c2e0504b83cbeffe087e949e6ff09c97b3b638d961fd577d6f37d8c7381ae",
+      "games/relic-rush/art/registered/resource-pieces/timber.png": "785a8029b31a02b0b29e69c01aa31e378c00223f8410596f0b861bb93c4e4172",
+      "games/relic-rush/art/registered/resource-pieces/wallet-food.png": "0e9289814444b3b2223b3058c10c9e01f7dcaf3c68e57662779c391ebad5380c",
+      "games/relic-rush/art/registered/resource-pieces/wallet-supplies.png": "ddd2114a9e7ee18eb76e213f8d6085a5569033c8c6dec7d7dd4f2e75c0ec2d81",
+      "games/relic-rush/art/registered/resource-pieces/water.png": "5eaaa529bf7de275198e08ddaba50abbd4e2248299991406da9511898f7be4b5",
+      "games/relic-rush/art/registered/result-icons.png": "a4f1254f574a9d287b8d2d2345cb7823ea1b5c3407baed8b96e3b7407e102a5e",
+      "games/relic-rush/art/registered/story-pieces/cable.png": "6c5610eab0f83b7fe8836983bccf5eaa7f9d1868fece7e92866607e8083e5044",
+      "games/relic-rush/art/registered/story-pieces/chart.png": "56573300ba922558e781aea265c4a7306bcb718d794a7fcdec53c326e210ecf4",
+      "games/relic-rush/art/registered/story-pieces/gear.png": "1380006113a1ccb9bfb043dea16fe685374f360746529f190777a0dc0961e873",
+      "games/relic-rush/art/registered/story-pieces/lens.png": "5aff8c68b0c0342f2cbde6eda53760e8cef9702eb4b0f40cc6816b496dd42b49",
+      "games/relic-rush/art/registered/story-pieces/marker.png": "be98a249de4eb937327a5f0c2c36c4e2da7a8ea6b87e7747326b0272ba6db5b9",
+      "games/relic-rush/art/registered/story-pieces/note.png": "edd1593cbce0dc4790d9837a8054e8cedafd66afb983025382b459658d2fd85a",
+      "games/relic-rush/art/registered/story-pieces/supplies.png": "ed6934b61d974285f3c6d3525996e9ab5ad1b835163d1de4c997946f8a3640c2",
+      "games/relic-rush/art/registered/story-pieces/tools.png": "7d752ad304a2ad3170f3c43e57ebc5a550de5ade4be06652700070c83f05a8d6",
+      "games/relic-rush/art/registered/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
+      "games/relic-rush/art/registered/tile-sets/jewels/1.png": "66833412fb1c7f31fc862c1ede7302f2c3a1ca395c7cdde94f081e78cce62556",
+      "games/relic-rush/art/registered/tile-sets/jewels/2.png": "c9ca304387cc3b6d37a5717cc75f43b905ff9c3af2268d0a99c0e85ba5b5bd15",
+      "games/relic-rush/art/registered/tile-sets/jewels/3.png": "7ba31f2140da12bdf28761dc9ab39b689df77cc492d96fbe430c5f9544eb27f9",
+      "games/relic-rush/art/registered/tile-sets/jewels/4.png": "a1a438c51f69fa221926f7b6b55ea85c406b008c0da5105a36d9d5c08669ff31",
+      "games/relic-rush/art/registered/tile-sets/jewels/5.png": "d8066d88f2d8f1631c71e1d3814f27187784e6eeb4db051d6ad2deaa1f943b78",
+      "games/relic-rush/art/registered/tile-sets/resources/0.png": "65133c9abf22da14476ae78119e90412b00439c93cbedda1a7695b5e22f19428",
+      "games/relic-rush/art/registered/tile-sets/resources/1.png": "45b22014f34398f145a308f00a8ba94e5befa008abff21056f3c3a24e6c33e63",
+      "games/relic-rush/art/registered/tile-sets/resources/2.png": "f377eb36b0c4052e55a5f0d2b0875b869bf62e97816f42d06d94eceb7dd2c1a2",
+      "games/relic-rush/art/registered/tile-sets/resources/3.png": "56718f477672df3fe9fac1267e69b9e3f92ea3f4b897b921fa0d63d61e688eeb",
+      "games/relic-rush/art/registered/tile-sets/resources/4.png": "d6f5782acd974114c1d90089fd33399da57695cda0b045fb606038cd85a098cb",
+      "games/relic-rush/art/registered/tile-sets/resources/5.png": "2e7fb26156cba5d872ef506cab2386cef848ff9d2fee08ea4e05a4cbcab58d87",
       "games/relic-rush/art/tile-sets/source-flat-hex.png": "9af886c7b92ac0dd340e6cc18c21c7e1abaf5b401c6788d011e6f17f1e87961c",
       "games/relic-rush/art/tile-sets/source.png": "2cd534c2ad89c431a043e9182c21366569c6883e5e4a2579c62c4a3664b0e50c",
-      "games/relic-rush/data/board-states/cell-mask.png": "e51da6f444ca0f877436eb32bb3d3de943f8a1739a39a333c02ab7cff73ad719",
-      "games/relic-rush/data/board-states/dynamite-disabled.png": "044c73d5f9394cb0c038cb7059614d0b54a3061abe6576d000a3389f055405a3",
-      "games/relic-rush/data/board-states/dynamite-hover.png": "d19bfef9723f1dabdc09faa5b931a7d53a61cbf121cba9518895873b5e3d82dc",
-      "games/relic-rush/data/board-states/dynamite-normal.png": "8a139567b07701863eac4b899e8870d6dbbbbefcc78091cbfbab95eaf3ef221b",
-      "games/relic-rush/data/board-states/dynamite-pressed.png": "070c346a769abb6cdc9c5fae7d6d5a10b555b9ad7d8d4829c0e76221137d02ef",
-      "games/relic-rush/data/board-states/dynamite-selected.png": "013ed3be9fad54679cd9bb19697582114a9d89b853e4fd5c917b8336ab561e49",
-      "games/relic-rush/data/board-states/guide.png": "3c3dfce86d4833b5fd71b2bed2d012fd4d4f0c45d8c41fffc42b182bcf1f7306",
-      "games/relic-rush/data/board-states/hint.png": "07cf83ac91b4b02f3ea076455a4116326cfcbf0b0ad0345afead940828142777",
-      "games/relic-rush/data/board-states/pickaxe-disabled.png": "e057ca4f7f940a275b7091dceb057d995644d549842d47587d3f031faf656286",
-      "games/relic-rush/data/board-states/pickaxe-hover.png": "fd1839b7ac73671b2bd014150e41374b05912cc511f660dd570192fe3900bae6",
-      "games/relic-rush/data/board-states/pickaxe-normal.png": "2d57379ec71ebdac40a36a21427ab1a19e66ebcf0280a004517d9f50155739d2",
-      "games/relic-rush/data/board-states/pickaxe-pressed.png": "b0cb481075dd812e188ae8682aeadc3b63d5d72296918c18358a2afc99c64734",
-      "games/relic-rush/data/board-states/pickaxe-selected.png": "59052520ed696b81fca7ce8a0cd3d85c9260bca94bfbcd339b1c874f23b8db00",
-      "games/relic-rush/data/board-states/selected.png": "a7c3541a46c33606fd8ef2ce5a46e71db51b2eae814822a7a3ba2a4de47a9aff",
-      "games/relic-rush/data/board-states/sunburst-disabled.png": "6abfe7ade16df5949594fc18bd286e4d748828cf1d772cf913fbb50f2f407652",
-      "games/relic-rush/data/board-states/sunburst-hover.png": "77491e89d7ff54452131d86754c1b4a6e3eba297f724eacb75ecf7c3744ab172",
-      "games/relic-rush/data/board-states/sunburst-normal.png": "e275397437e2538fa765a0faa644a69568efc71bafcb99bd7cc90747beef46cf",
-      "games/relic-rush/data/board-states/sunburst-pressed.png": "a5064eb46874e6ac5fbccc89fab171b3f8506f21c494cc943ba7f7d741f38976",
-      "games/relic-rush/data/board-states/sunburst-selected.png": "6db450213241f00a69e0b59af0081cf01bbcee59789ac39934d942323654d1bc",
-      "games/relic-rush/data/expedition-hud/complete.png": "8f2db8c6941dd8a717741555329734e7bf6ced57249c397d8dda982e26f0120c",
-      "games/relic-rush/data/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
-      "games/relic-rush/data/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
-      "games/relic-rush/data/expedition-hud/pause-hover.png": "4506492d3933ceaaba186d22b49bbfe88e58f9e8e66ee6c34c5613fa40467627",
-      "games/relic-rush/data/expedition-hud/pause-normal.png": "e711b0ecd719f4af4b5813ce6d58bf48f867c62c679fcde674d17019f9391621",
-      "games/relic-rush/data/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
-      "games/relic-rush/data/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
-      "games/relic-rush/data/expedition-hud/score.png": "8e395c4ae507674be6669e43d4a37a404886fed5acd70d1adac4c07e14818f65",
-      "games/relic-rush/data/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
-      "games/relic-rush/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
-      "games/relic-rush/data/jungle.jpg": "cc8a50ab0c8b840ba18abe1c1f316d8573d044ef4bb1fd7c8166c42b92bfd122",
-      "games/relic-rush/data/scene-lagoon.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
-      "games/relic-rush/data/scene-temple.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
-      "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
-      "games/relic-rush/data/tile-sets/jewels/1.png": "66833412fb1c7f31fc862c1ede7302f2c3a1ca395c7cdde94f081e78cce62556",
-      "games/relic-rush/data/tile-sets/jewels/2.png": "c9ca304387cc3b6d37a5717cc75f43b905ff9c3af2268d0a99c0e85ba5b5bd15",
-      "games/relic-rush/data/tile-sets/jewels/3.png": "7ba31f2140da12bdf28761dc9ab39b689df77cc492d96fbe430c5f9544eb27f9",
-      "games/relic-rush/data/tile-sets/jewels/4.png": "a1a438c51f69fa221926f7b6b55ea85c406b008c0da5105a36d9d5c08669ff31",
-      "games/relic-rush/data/tile-sets/jewels/5.png": "d8066d88f2d8f1631c71e1d3814f27187784e6eeb4db051d6ad2deaa1f943b78",
-      "games/relic-rush/data/tile-sets/resources/0.png": "65133c9abf22da14476ae78119e90412b00439c93cbedda1a7695b5e22f19428",
-      "games/relic-rush/data/tile-sets/resources/1.png": "45b22014f34398f145a308f00a8ba94e5befa008abff21056f3c3a24e6c33e63",
-      "games/relic-rush/data/tile-sets/resources/2.png": "f377eb36b0c4052e55a5f0d2b0875b869bf62e97816f42d06d94eceb7dd2c1a2",
-      "games/relic-rush/data/tile-sets/resources/3.png": "56718f477672df3fe9fac1267e69b9e3f92ea3f4b897b921fa0d63d61e688eeb",
-      "games/relic-rush/data/tile-sets/resources/4.png": "d6f5782acd974114c1d90089fd33399da57695cda0b045fb606038cd85a098cb",
-      "games/relic-rush/data/tile-sets/resources/5.png": "2e7fb26156cba5d872ef506cab2386cef848ff9d2fee08ea4e05a4cbcab58d87",
-      "games/relic-rush/tools/prepare_assets.py": "e08cbe315f015e6e101e08cf8451516fa171a4dfaef85a7b0f2f0f5f990f530d",
+      "games/relic-rush/data/board/backs/background.jpg": "cc8a50ab0c8b840ba18abe1c1f316d8573d044ef4bb1fd7c8166c42b92bfd122",
+      "games/relic-rush/data/board/backs/scene-1.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
+      "games/relic-rush/data/board/backs/scene-2.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
+      "games/relic-rush/tools/prepare_assets.py": "bec3e105b26ba39b3adfb692cf77091a97451577ed5db8f0f1e25bfd05e0927d",
       "tools/match3_theme_art.py": "77d1488d6c5005236dc0c1cb35dc98fcae22b686d7010c99ca3392273d2c5ce8",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
-      "games/relic-rush/data/match3-hud.png": "1cd3e4cdb429b0a6bd8c8676cd91274f84ac0bf79f029616574dbb0b00dfdde6",
-      "games/relic-rush/data/match3.png": "025729ecf760bbd80ceb4da4484784c2b3a000c0c72cfe533c9ca32a95ad9812",
-      "games/relic-rush/data/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
-      "games/relic-rush/data/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
-      "games/relic-rush/data/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
-      "games/relic-rush/lua/match3_hud.lua": "eed82a0069590446e2e9311c1b4f1a2c7acd227bce4f750fd7834423e0e8b25d",
-      "games/relic-rush/lua/match3_skin.lua": "edd5371f2b2d7c0b9000cfc5dae8ab8aea3c8cde56d1005b08f8e8da3c679204"
+      "games/relic-rush/art/registered/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
+      "games/relic-rush/art/registered/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
+      "games/relic-rush/art/registered/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
+      "games/relic-rush/data/board/blockers.png": "39e66c17702357faacf3d5722daabb6e642d973ac35bf879bbe8762b73180845",
+      "games/relic-rush/data/board/boosters.png": "5810c989caf5fd48d84fb93d82367460fe6cff699e3bc4214dbb6278e25a5fa3",
+      "games/relic-rush/data/board/cells.png": "e6341b1c80682c7b994ced006031f3744427dc61f61578484fad4f9a3358eecc",
+      "games/relic-rush/data/board/fx.png": "d2a75c3c72131432d591907f44c96ca2e252c2c60f032b698aaa2f2810b96567",
+      "games/relic-rush/data/board/hud.png": "086366f5b0c59aef2d67854634b3bcf5db94f362698d7fd2a273be807e03c1ce",
+      "games/relic-rush/data/board/pieces.png": "d6bbfdb698d82e4fb272de32b273dbfe5614f77384a31415bd7c78ffc409ee01",
+      "games/relic-rush/lua/match3_atlases.lua": "97e655d19d0b3d0a36d6fd5c260477d0239270217d601511f298b2bd45e6a393",
+      "games/relic-rush/lua/match3_hud.lua": "4bea82ff82b4a64cc5ca3c2b4a6aec2ce45520eef4424f1af073791c3ea232df",
+      "games/relic-rush/lua/match3_skin.lua": "aee4d68c46b4446e7a71b665e8a2947f2de38a096613283da3f96e3f7b0e44a6"
     }
   }
 }

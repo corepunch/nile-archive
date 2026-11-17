@@ -62,7 +62,7 @@ tools. The steps below use Nile Archive.
 
 | Field | Requirement |
 |---|---|
-| `key` | Lower-case snake_case and unique. It names the builder function, the Blender collection, the sprite (`data/buildings/<key>.png`), its shadow and its entry in `lua/building_sprites.lua`. |
+| `key` | Lower-case snake_case and unique. It names the builder function, the Blender collection, the sprite (`data/city/buildings/<key>.png`), its shadow and its entry in `lua/building_sprites.lua`. |
 | Name | In the game's language. Nile Archive is Russian. |
 | `category` | One of the tray's categories: `wonder`, `building`, `tree`, `bush`, `flower`, `statue`, `water`, `garden`, `camp`, `animal`, `rock`. A new category also needs an entry in `TRAY_CATEGORIES` in `lua/archive_island.lua`. |
 | `w`, `h` | The footprint in whole tiles. `w` runs along the front-left side (world X), `h` along the front-right side (world Y). Choose it from what the art should cover, not to space objects apart: spacing comes from `city.clearance`. |
@@ -184,7 +184,7 @@ It then crops each sprite to its visible pixels, moving the pivot with the crop,
 gives fully transparent edge pixels their neighbours' RGB so filtering can't darken the
 outline. It writes:
 
-- `data/buildings/<key>.png` and `data/building-shadows/<key>.png`.
+- `data/city/buildings/<key>.png` and `data/city/building-shadows/<key>.png`.
 - `art/building-catalogue/registration.json`, the registry of every sprite.
 - `lua/building_sprites.lua`, generated, which the game's Lua merges by key.
 - `docs/screenshots/buildings.jpg`, the review sheet: every object on the tile grid

@@ -32,7 +32,7 @@ def main():
     for name, asset in manifest["assets"].items():
         if asset.get("atlas_frame"):
             # Registered into the shared atlas by tools/match3_atlas.py, which
-            # checks it; writing it here would overwrite data/match3.png.
+            # checks it; writing it here would overwrite the packed atlas.
             continue
         verified += 1
         im = sources[asset.get("source", manifest["source"])].crop(asset["box"])

@@ -17,7 +17,7 @@ rescue-characters.blend             the saved scene
 29 atlases + kenney.sprites.xml     source/assets/kenney-characters/sprites/
    | games/emergency/tools/import_episode.py    keep what the game uses
    v
-data/sprites.png + lua/emergency_art.lua        what actually ships
+data/sprites/sprites.png + lua/emergency_art.lua        what actually ships
 ```
 
 Normal game builds use only the last step's committed output. Nobody needs Blender
@@ -60,7 +60,7 @@ Paths are relative to `games/emergency/`.
 | Review sheets | `source/assets/kenney-characters/previews/` |
 | Original animation names, frame counts and FPS | `source/assets/kenney-characters/retail-worker-actions.json` |
 | Import into the game | `tools/import_episode.py` |
-| Shipped sprites | `data/sprites.png`, `lua/emergency_art.lua` |
+| Shipped sprites | `data/sprites/sprites.png`, `lua/emergency_art.lua` |
 
 `reference/volcano-backup/build/workers-before-outfit.blend` is a snapshot from before
 the blue uniform. Nothing uses it. It is in the git-ignored `reference/` folder, so it
@@ -248,7 +248,7 @@ python3 games/emergency/tools/import_episode.py
 python3 games/emergency/tools/check_assets.py
 ```
 
-`import_episode.py` regenerates `data/sprites.png`, `data/pets-to-replace.png`,
+`import_episode.py` regenerates `data/sprites/sprites.png`, `data/sprites/pets-to-replace.png`,
 `lua/emergency_art.lua`, `lua/emergency_levels.lua`, the five backgrounds and
 `docs/asset-catalog.json`. With unchanged sources all of them come out byte-identical,
 so `git status` shows only what your change touched. It needs the pet art in

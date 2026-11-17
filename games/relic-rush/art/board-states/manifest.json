@@ -44,7 +44,7 @@
         128,
         128
       ],
-      "runtime": "data/match3.png",
+      "runtime": "data/board/blockers.png",
       "atlas_frame": "chain",
       "fit": "hex-slot",
       "registration": "art/match3-atlas.json",
@@ -58,7 +58,7 @@
         128,
         128
       ],
-      "runtime": "data/match3.png",
+      "runtime": "data/board/blockers.png",
       "atlas_frame": "ice-2",
       "fit": "hex-slot",
       "registration": "art/match3-atlas.json",
@@ -72,7 +72,7 @@
         128,
         128
       ],
-      "runtime": "data/match3.png",
+      "runtime": "data/board/blockers.png",
       "atlas_frame": "ice-1",
       "fit": "hex-slot",
       "registration": "art/match3-atlas.json",
@@ -86,7 +86,7 @@
         970,
         1024
       ],
-      "runtime": "data/board-states/selected.png",
+      "runtime": "art/registered/board-states/selected.png",
       "fit": "free-icon",
       "source": "art/board-states/clear-indicators.png"
     },
@@ -97,7 +97,7 @@
         1400,
         1024
       ],
-      "runtime": "data/board-states/hint.png",
+      "runtime": "art/registered/board-states/hint.png",
       "fit": "free-icon",
       "source": "art/board-states/clear-indicators.png"
     },
@@ -108,7 +108,7 @@
         1374,
         493
       ],
-      "runtime": "data/board-states/guide.png"
+      "runtime": "art/registered/board-states/guide.png"
     },
     "pickaxe-normal": {
       "box": [
@@ -117,7 +117,7 @@
         344,
         322
       ],
-      "runtime": "data/board-states/pickaxe-normal.png",
+      "runtime": "art/registered/board-states/pickaxe-normal.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -128,7 +128,7 @@
         651,
         322
       ],
-      "runtime": "data/board-states/pickaxe-selected.png",
+      "runtime": "art/registered/board-states/pickaxe-selected.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -139,7 +139,7 @@
         954,
         322
       ],
-      "runtime": "data/board-states/pickaxe-pressed.png",
+      "runtime": "art/registered/board-states/pickaxe-pressed.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -150,7 +150,7 @@
         1260,
         322
       ],
-      "runtime": "data/board-states/pickaxe-hover.png",
+      "runtime": "art/registered/board-states/pickaxe-hover.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -161,7 +161,7 @@
         1566,
         322
       ],
-      "runtime": "data/board-states/pickaxe-disabled.png",
+      "runtime": "art/registered/board-states/pickaxe-disabled.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -172,7 +172,7 @@
         344,
         608
       ],
-      "runtime": "data/board-states/dynamite-normal.png",
+      "runtime": "art/registered/board-states/dynamite-normal.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -183,7 +183,7 @@
         651,
         608
       ],
-      "runtime": "data/board-states/dynamite-selected.png",
+      "runtime": "art/registered/board-states/dynamite-selected.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -194,7 +194,7 @@
         954,
         608
       ],
-      "runtime": "data/board-states/dynamite-pressed.png",
+      "runtime": "art/registered/board-states/dynamite-pressed.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -205,7 +205,7 @@
         1260,
         608
       ],
-      "runtime": "data/board-states/dynamite-hover.png",
+      "runtime": "art/registered/board-states/dynamite-hover.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -216,7 +216,7 @@
         1567,
         608
       ],
-      "runtime": "data/board-states/dynamite-disabled.png",
+      "runtime": "art/registered/board-states/dynamite-disabled.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -227,7 +227,7 @@
         344,
         902
       ],
-      "runtime": "data/board-states/sunburst-normal.png",
+      "runtime": "art/registered/board-states/sunburst-normal.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -238,7 +238,7 @@
         651,
         903
       ],
-      "runtime": "data/board-states/sunburst-selected.png",
+      "runtime": "art/registered/board-states/sunburst-selected.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -249,7 +249,7 @@
         954,
         903
       ],
-      "runtime": "data/board-states/sunburst-pressed.png",
+      "runtime": "art/registered/board-states/sunburst-pressed.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -260,7 +260,7 @@
         1260,
         902
       ],
-      "runtime": "data/board-states/sunburst-hover.png",
+      "runtime": "art/registered/board-states/sunburst-hover.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     },
@@ -271,7 +271,7 @@
         1566,
         903
       ],
-      "runtime": "data/board-states/sunburst-disabled.png",
+      "runtime": "art/registered/board-states/sunburst-disabled.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
     }
@@ -302,323 +302,221 @@
     "disabled"
   ],
   "runtime_inventory": [
-    "data/board-frame/stone.png",
-    "data/board-states/cell-mask.png",
-    "data/board-states/chain.png",
-    "data/board-states/dynamite-disabled.png",
-    "data/board-states/dynamite-hover.png",
-    "data/board-states/dynamite-normal.png",
-    "data/board-states/dynamite-pressed.png",
-    "data/board-states/dynamite-selected.png",
-    "data/board-states/guide.png",
-    "data/board-states/hint.png",
-    "data/board-states/ice-1.png",
-    "data/board-states/ice-2.png",
-    "data/board-states/pickaxe-disabled.png",
-    "data/board-states/pickaxe-hover.png",
-    "data/board-states/pickaxe-normal.png",
-    "data/board-states/pickaxe-pressed.png",
-    "data/board-states/pickaxe-selected.png",
-    "data/board-states/selected.png",
-    "data/board-states/stone-1.png",
-    "data/board-states/stone-2.png",
-    "data/board-states/stone-3.png",
-    "data/board-states/sunburst-disabled.png",
-    "data/board-states/sunburst-hover.png",
-    "data/board-states/sunburst-normal.png",
-    "data/board-states/sunburst-pressed.png",
-    "data/board-states/sunburst-selected.png",
-    "data/board-tiles/bonus-area.png",
-    "data/board-tiles/cell-normal.png",
-    "data/board-tiles/hover.png",
-    "data/board-tiles/ice.png",
-    "data/board-tiles/light-wave.png",
-    "data/board-tiles/selected.png",
-    "data/board-tiles/tablet-double.png",
-    "data/board-tiles/tablet-single.png",
-    "data/bonus-gems.png",
-    "data/building-shadows/amphitheater.png",
-    "data/building-shadows/apothecary.png",
-    "data/building-shadows/archive.png",
-    "data/building-shadows/aviary.png",
-    "data/building-shadows/bamboo.png",
-    "data/building-shadows/banana.png",
-    "data/building-shadows/barrels.png",
-    "data/building-shadows/beached_ship.png",
-    "data/building-shadows/bench.png",
-    "data/building-shadows/berry.png",
-    "data/building-shadows/birdbath.png",
-    "data/building-shadows/blue_lily.png",
-    "data/building-shadows/boulder.png",
-    "data/building-shadows/broken_column.png",
-    "data/building-shadows/bromeliad.png",
-    "data/building-shadows/camp.png",
-    "data/building-shadows/campfire.png",
-    "data/building-shadows/capybara.png",
-    "data/building-shadows/cart.png",
-    "data/building-shadows/chest.png",
-    "data/building-shadows/clock_tower.png",
-    "data/building-shadows/crates.png",
-    "data/building-shadows/crystal.png",
-    "data/building-shadows/cypress.png",
-    "data/building-shadows/daisies.png",
-    "data/building-shadows/dig_site.png",
-    "data/building-shadows/duck_pond.png",
-    "data/building-shadows/explorer.png",
-    "data/building-shadows/fan_palm.png",
-    "data/building-shadows/fern.png",
-    "data/building-shadows/field_scope.png",
-    "data/building-shadows/flagpole.png",
-    "data/building-shadows/flower_bed.png",
-    "data/building-shadows/flower_box.png",
-    "data/building-shadows/flower_shrub.png",
-    "data/building-shadows/fountain.png",
-    "data/building-shadows/frangipani.png",
-    "data/building-shadows/gateway.png",
-    "data/building-shadows/gazebo.png",
-    "data/building-shadows/giant_head.png",
-    "data/building-shadows/globe.png",
-    "data/building-shadows/gold_idol.png",
-    "data/building-shadows/greenhouse.png",
-    "data/building-shadows/hammock.png",
-    "data/building-shadows/hanging_gardens.png",
-    "data/building-shadows/hedge.png",
-    "data/building-shadows/hibiscus.png",
-    "data/building-shadows/idol_head.png",
-    "data/building-shadows/jaguar.png",
-    "data/building-shadows/jungle_tree.png",
-    "data/building-shadows/kapok.png",
-    "data/building-shadows/lantern.png",
-    "data/building-shadows/lighthouse.png",
-    "data/building-shadows/lily_pond.png",
-    "data/building-shadows/lodge.png",
-    "data/building-shadows/log_cabin.png",
-    "data/building-shadows/mango.png",
-    "data/building-shadows/map_room.png",
-    "data/building-shadows/market.png",
-    "data/building-shadows/mess_hall.png",
-    "data/building-shadows/monkey.png",
-    "data/building-shadows/monstera.png",
-    "data/building-shadows/mossy_rocks.png",
-    "data/building-shadows/museum.png",
-    "data/building-shadows/obelisk.png",
-    "data/building-shadows/observatory.png",
-    "data/building-shadows/orchid.png",
-    "data/building-shadows/palm_young.png",
-    "data/building-shadows/papaya.png",
-    "data/building-shadows/parrot.png",
-    "data/building-shadows/pergola.png",
-    "data/building-shadows/picnic.png",
-    "data/building-shadows/pump.png",
-    "data/building-shadows/rainbow_bed.png",
-    "data/building-shadows/reeds.png",
-    "data/building-shadows/rowboat.png",
-    "data/building-shadows/shrub.png",
-    "data/building-shadows/signpost.png",
-    "data/building-shadows/small_fountain.png",
-    "data/building-shadows/spring_rocks.png",
-    "data/building-shadows/stilt_house.png",
-    "data/building-shadows/stone_arch.png",
-    "data/building-shadows/sundial.png",
-    "data/building-shadows/supply_tent.png",
-    "data/building-shadows/swing.png",
-    "data/building-shadows/temple.png",
-    "data/building-shadows/tiki.png",
-    "data/building-shadows/topiary.png",
-    "data/building-shadows/toucan.png",
-    "data/building-shadows/trading_post.png",
-    "data/building-shadows/treehouse.png",
-    "data/building-shadows/turtle.png",
-    "data/building-shadows/twin_palms.png",
-    "data/building-shadows/water_mill.png",
-    "data/building-shadows/well.png",
-    "data/building-shadows/workshop.png",
-    "data/buildings/amphitheater.png",
-    "data/buildings/apothecary.png",
-    "data/buildings/archive.png",
-    "data/buildings/aviary.png",
-    "data/buildings/bamboo.png",
-    "data/buildings/banana.png",
-    "data/buildings/barrels.png",
-    "data/buildings/beached_ship.png",
-    "data/buildings/bench.png",
-    "data/buildings/berry.png",
-    "data/buildings/birdbath.png",
-    "data/buildings/blue_lily.png",
-    "data/buildings/boulder.png",
-    "data/buildings/broken_column.png",
-    "data/buildings/bromeliad.png",
-    "data/buildings/camp.png",
-    "data/buildings/campfire.png",
-    "data/buildings/capybara.png",
-    "data/buildings/cart.png",
-    "data/buildings/chest.png",
-    "data/buildings/clock_tower.png",
-    "data/buildings/crates.png",
-    "data/buildings/crystal.png",
-    "data/buildings/cypress.png",
-    "data/buildings/daisies.png",
-    "data/buildings/dig_site.png",
-    "data/buildings/duck_pond.png",
-    "data/buildings/explorer.png",
-    "data/buildings/fan_palm.png",
-    "data/buildings/fern.png",
-    "data/buildings/field_scope.png",
-    "data/buildings/flagpole.png",
-    "data/buildings/flower_bed.png",
-    "data/buildings/flower_box.png",
-    "data/buildings/flower_shrub.png",
-    "data/buildings/fountain.png",
-    "data/buildings/frangipani.png",
-    "data/buildings/gateway.png",
-    "data/buildings/gazebo.png",
-    "data/buildings/giant_head.png",
-    "data/buildings/globe.png",
-    "data/buildings/gold_idol.png",
-    "data/buildings/greenhouse.png",
-    "data/buildings/hammock.png",
-    "data/buildings/hanging_gardens.png",
-    "data/buildings/hedge.png",
-    "data/buildings/hibiscus.png",
-    "data/buildings/idol_head.png",
-    "data/buildings/jaguar.png",
-    "data/buildings/jungle_tree.png",
-    "data/buildings/kapok.png",
-    "data/buildings/lantern.png",
-    "data/buildings/lighthouse.png",
-    "data/buildings/lily_pond.png",
-    "data/buildings/lodge.png",
-    "data/buildings/log_cabin.png",
-    "data/buildings/mango.png",
-    "data/buildings/map_room.png",
-    "data/buildings/market.png",
-    "data/buildings/mess_hall.png",
-    "data/buildings/monkey.png",
-    "data/buildings/monstera.png",
-    "data/buildings/mossy_rocks.png",
-    "data/buildings/museum.png",
-    "data/buildings/obelisk.png",
-    "data/buildings/observatory.png",
-    "data/buildings/orchid.png",
-    "data/buildings/palm_young.png",
-    "data/buildings/papaya.png",
-    "data/buildings/parrot.png",
-    "data/buildings/pergola.png",
-    "data/buildings/picnic.png",
-    "data/buildings/pump.png",
-    "data/buildings/rainbow_bed.png",
-    "data/buildings/reeds.png",
-    "data/buildings/rowboat.png",
-    "data/buildings/shrub.png",
-    "data/buildings/signpost.png",
-    "data/buildings/small_fountain.png",
-    "data/buildings/spring_rocks.png",
-    "data/buildings/stilt_house.png",
-    "data/buildings/stone_arch.png",
-    "data/buildings/sundial.png",
-    "data/buildings/supply_tent.png",
-    "data/buildings/swing.png",
-    "data/buildings/temple.png",
-    "data/buildings/tiki.png",
-    "data/buildings/topiary.png",
-    "data/buildings/toucan.png",
-    "data/buildings/trading_post.png",
-    "data/buildings/treehouse.png",
-    "data/buildings/turtle.png",
-    "data/buildings/twin_palms.png",
-    "data/buildings/water_mill.png",
-    "data/buildings/well.png",
-    "data/buildings/workshop.png",
-    "data/campaign-buttons.png",
-    "data/campaign-pieces.png",
-    "data/characters/adrian.png",
-    "data/characters/elena.png",
-    "data/characters/mara.png",
-    "data/characters/tomas.png",
-    "data/expedition-hud/complete.png",
-    "data/expedition-hud/life.png",
-    "data/expedition-hud/pause-disabled.png",
-    "data/expedition-hud/pause-hover.png",
-    "data/expedition-hud/pause-normal.png",
-    "data/expedition-hud/pause-pressed.png",
-    "data/expedition-hud/pause-selected.png",
-    "data/expedition-hud/score.png",
-    "data/expedition-hud/shop-built.png",
-    "data/expedition-hud/shop-locked.png",
-    "data/finds/cable.png",
-    "data/finds/chart.png",
-    "data/finds/gear.png",
-    "data/finds/lens.png",
-    "data/finds/marker.png",
-    "data/finds/note.png",
-    "data/finds/supplies.png",
-    "data/finds/tools.png",
-    "data/fonts/LilitaOne-Regular.ttf",
-    "data/fonts/lilitaone-OFL.txt",
+    "data/board/backs/background.jpg",
+    "data/board/backs/scene-1.jpg",
+    "data/board/backs/scene-2.jpg",
+    "data/board/blockers.png",
+    "data/board/boosters.png",
+    "data/board/cells.png",
+    "data/board/frame/stone.png",
+    "data/board/fx.png",
+    "data/board/hud.png",
+    "data/board/pieces.png",
+    "data/city/building-shadows/amphitheater.png",
+    "data/city/building-shadows/apothecary.png",
+    "data/city/building-shadows/archive.png",
+    "data/city/building-shadows/aviary.png",
+    "data/city/building-shadows/bamboo.png",
+    "data/city/building-shadows/banana.png",
+    "data/city/building-shadows/barrels.png",
+    "data/city/building-shadows/beached_ship.png",
+    "data/city/building-shadows/bench.png",
+    "data/city/building-shadows/berry.png",
+    "data/city/building-shadows/birdbath.png",
+    "data/city/building-shadows/blue_lily.png",
+    "data/city/building-shadows/boulder.png",
+    "data/city/building-shadows/broken_column.png",
+    "data/city/building-shadows/bromeliad.png",
+    "data/city/building-shadows/camp.png",
+    "data/city/building-shadows/campfire.png",
+    "data/city/building-shadows/capybara.png",
+    "data/city/building-shadows/cart.png",
+    "data/city/building-shadows/chest.png",
+    "data/city/building-shadows/clock_tower.png",
+    "data/city/building-shadows/crates.png",
+    "data/city/building-shadows/crystal.png",
+    "data/city/building-shadows/cypress.png",
+    "data/city/building-shadows/daisies.png",
+    "data/city/building-shadows/dig_site.png",
+    "data/city/building-shadows/duck_pond.png",
+    "data/city/building-shadows/explorer.png",
+    "data/city/building-shadows/fan_palm.png",
+    "data/city/building-shadows/fern.png",
+    "data/city/building-shadows/field_scope.png",
+    "data/city/building-shadows/flagpole.png",
+    "data/city/building-shadows/flower_bed.png",
+    "data/city/building-shadows/flower_box.png",
+    "data/city/building-shadows/flower_shrub.png",
+    "data/city/building-shadows/fountain.png",
+    "data/city/building-shadows/frangipani.png",
+    "data/city/building-shadows/gateway.png",
+    "data/city/building-shadows/gazebo.png",
+    "data/city/building-shadows/giant_head.png",
+    "data/city/building-shadows/globe.png",
+    "data/city/building-shadows/gold_idol.png",
+    "data/city/building-shadows/greenhouse.png",
+    "data/city/building-shadows/hammock.png",
+    "data/city/building-shadows/hanging_gardens.png",
+    "data/city/building-shadows/hedge.png",
+    "data/city/building-shadows/hibiscus.png",
+    "data/city/building-shadows/idol_head.png",
+    "data/city/building-shadows/jaguar.png",
+    "data/city/building-shadows/jungle_tree.png",
+    "data/city/building-shadows/kapok.png",
+    "data/city/building-shadows/lantern.png",
+    "data/city/building-shadows/lighthouse.png",
+    "data/city/building-shadows/lily_pond.png",
+    "data/city/building-shadows/lodge.png",
+    "data/city/building-shadows/log_cabin.png",
+    "data/city/building-shadows/mango.png",
+    "data/city/building-shadows/map_room.png",
+    "data/city/building-shadows/market.png",
+    "data/city/building-shadows/mess_hall.png",
+    "data/city/building-shadows/monkey.png",
+    "data/city/building-shadows/monstera.png",
+    "data/city/building-shadows/mossy_rocks.png",
+    "data/city/building-shadows/museum.png",
+    "data/city/building-shadows/obelisk.png",
+    "data/city/building-shadows/observatory.png",
+    "data/city/building-shadows/orchid.png",
+    "data/city/building-shadows/palm_young.png",
+    "data/city/building-shadows/papaya.png",
+    "data/city/building-shadows/parrot.png",
+    "data/city/building-shadows/pergola.png",
+    "data/city/building-shadows/picnic.png",
+    "data/city/building-shadows/pump.png",
+    "data/city/building-shadows/rainbow_bed.png",
+    "data/city/building-shadows/reeds.png",
+    "data/city/building-shadows/rowboat.png",
+    "data/city/building-shadows/shrub.png",
+    "data/city/building-shadows/signpost.png",
+    "data/city/building-shadows/small_fountain.png",
+    "data/city/building-shadows/spring_rocks.png",
+    "data/city/building-shadows/stilt_house.png",
+    "data/city/building-shadows/stone_arch.png",
+    "data/city/building-shadows/sundial.png",
+    "data/city/building-shadows/supply_tent.png",
+    "data/city/building-shadows/swing.png",
+    "data/city/building-shadows/temple.png",
+    "data/city/building-shadows/tiki.png",
+    "data/city/building-shadows/topiary.png",
+    "data/city/building-shadows/toucan.png",
+    "data/city/building-shadows/trading_post.png",
+    "data/city/building-shadows/treehouse.png",
+    "data/city/building-shadows/turtle.png",
+    "data/city/building-shadows/twin_palms.png",
+    "data/city/building-shadows/water_mill.png",
+    "data/city/building-shadows/well.png",
+    "data/city/building-shadows/workshop.png",
+    "data/city/buildings/amphitheater.png",
+    "data/city/buildings/apothecary.png",
+    "data/city/buildings/archive.png",
+    "data/city/buildings/aviary.png",
+    "data/city/buildings/bamboo.png",
+    "data/city/buildings/banana.png",
+    "data/city/buildings/barrels.png",
+    "data/city/buildings/beached_ship.png",
+    "data/city/buildings/bench.png",
+    "data/city/buildings/berry.png",
+    "data/city/buildings/birdbath.png",
+    "data/city/buildings/blue_lily.png",
+    "data/city/buildings/boulder.png",
+    "data/city/buildings/broken_column.png",
+    "data/city/buildings/bromeliad.png",
+    "data/city/buildings/camp.png",
+    "data/city/buildings/campfire.png",
+    "data/city/buildings/capybara.png",
+    "data/city/buildings/cart.png",
+    "data/city/buildings/chest.png",
+    "data/city/buildings/clock_tower.png",
+    "data/city/buildings/crates.png",
+    "data/city/buildings/crystal.png",
+    "data/city/buildings/cypress.png",
+    "data/city/buildings/daisies.png",
+    "data/city/buildings/dig_site.png",
+    "data/city/buildings/duck_pond.png",
+    "data/city/buildings/explorer.png",
+    "data/city/buildings/fan_palm.png",
+    "data/city/buildings/fern.png",
+    "data/city/buildings/field_scope.png",
+    "data/city/buildings/flagpole.png",
+    "data/city/buildings/flower_bed.png",
+    "data/city/buildings/flower_box.png",
+    "data/city/buildings/flower_shrub.png",
+    "data/city/buildings/fountain.png",
+    "data/city/buildings/frangipani.png",
+    "data/city/buildings/gateway.png",
+    "data/city/buildings/gazebo.png",
+    "data/city/buildings/giant_head.png",
+    "data/city/buildings/globe.png",
+    "data/city/buildings/gold_idol.png",
+    "data/city/buildings/greenhouse.png",
+    "data/city/buildings/hammock.png",
+    "data/city/buildings/hanging_gardens.png",
+    "data/city/buildings/hedge.png",
+    "data/city/buildings/hibiscus.png",
+    "data/city/buildings/idol_head.png",
+    "data/city/buildings/jaguar.png",
+    "data/city/buildings/jungle_tree.png",
+    "data/city/buildings/kapok.png",
+    "data/city/buildings/lantern.png",
+    "data/city/buildings/lighthouse.png",
+    "data/city/buildings/lily_pond.png",
+    "data/city/buildings/lodge.png",
+    "data/city/buildings/log_cabin.png",
+    "data/city/buildings/mango.png",
+    "data/city/buildings/map_room.png",
+    "data/city/buildings/market.png",
+    "data/city/buildings/mess_hall.png",
+    "data/city/buildings/monkey.png",
+    "data/city/buildings/monstera.png",
+    "data/city/buildings/mossy_rocks.png",
+    "data/city/buildings/museum.png",
+    "data/city/buildings/obelisk.png",
+    "data/city/buildings/observatory.png",
+    "data/city/buildings/orchid.png",
+    "data/city/buildings/palm_young.png",
+    "data/city/buildings/papaya.png",
+    "data/city/buildings/parrot.png",
+    "data/city/buildings/pergola.png",
+    "data/city/buildings/picnic.png",
+    "data/city/buildings/pump.png",
+    "data/city/buildings/rainbow_bed.png",
+    "data/city/buildings/reeds.png",
+    "data/city/buildings/rowboat.png",
+    "data/city/buildings/shrub.png",
+    "data/city/buildings/signpost.png",
+    "data/city/buildings/small_fountain.png",
+    "data/city/buildings/spring_rocks.png",
+    "data/city/buildings/stilt_house.png",
+    "data/city/buildings/stone_arch.png",
+    "data/city/buildings/sundial.png",
+    "data/city/buildings/supply_tent.png",
+    "data/city/buildings/swing.png",
+    "data/city/buildings/temple.png",
+    "data/city/buildings/tiki.png",
+    "data/city/buildings/topiary.png",
+    "data/city/buildings/toucan.png",
+    "data/city/buildings/trading_post.png",
+    "data/city/buildings/treehouse.png",
+    "data/city/buildings/turtle.png",
+    "data/city/buildings/twin_palms.png",
+    "data/city/buildings/water_mill.png",
+    "data/city/buildings/well.png",
+    "data/city/buildings/workshop.png",
+    "data/city/island.jpg",
+    "data/city/roads.png",
+    "data/city/town.json",
+    "data/common/buttons.png",
+    "data/common/fonts/LilitaOne-Regular.ttf",
+    "data/common/fonts/lilitaone-OFL.txt",
     "data/game.json",
-    "data/island.jpg",
-    "data/jungle.jpg",
-    "data/match3-hud.png",
-    "data/match3.png",
-    "data/navigation/build-disabled.png",
-    "data/navigation/build-hover.png",
-    "data/navigation/build-normal.png",
-    "data/navigation/build-pressed.png",
-    "data/navigation/build-selected.png",
-    "data/navigation/levels-disabled.png",
-    "data/navigation/levels-hover.png",
-    "data/navigation/levels-normal.png",
-    "data/navigation/levels-pressed.png",
-    "data/navigation/levels-selected.png",
-    "data/navigation/play-disabled.png",
-    "data/navigation/play-hover.png",
-    "data/navigation/play-normal.png",
-    "data/navigation/play-pressed.png",
-    "data/navigation/play-selected.png",
-    "data/quest-objects.png",
-    "data/resource-pieces/berries.png",
-    "data/resource-pieces/coin.png",
-    "data/resource-pieces/emerald.png",
-    "data/resource-pieces/rations.png",
-    "data/resource-pieces/stone.png",
-    "data/resource-pieces/timber.png",
-    "data/resource-pieces/wallet-food.png",
-    "data/resource-pieces/wallet-supplies.png",
-    "data/resource-pieces/water.png",
-    "data/result-icons.png",
-    "data/roads.png",
-    "data/safe-landing.jpg",
-    "data/scene-lagoon.jpg",
-    "data/scene-temple.jpg",
-    "data/signal-plate.png",
-    "data/story-pieces/cable.png",
-    "data/story-pieces/chart.png",
-    "data/story-pieces/gear.png",
-    "data/story-pieces/lens.png",
-    "data/story-pieces/marker.png",
-    "data/story-pieces/note.png",
-    "data/story-pieces/supplies.png",
-    "data/story-pieces/tools.png",
-    "data/tile-sets/jewels/0.png",
-    "data/tile-sets/jewels/1.png",
-    "data/tile-sets/jewels/2.png",
-    "data/tile-sets/jewels/3.png",
-    "data/tile-sets/jewels/4.png",
-    "data/tile-sets/jewels/5.png",
-    "data/tile-sets/relics/0.png",
-    "data/tile-sets/relics/1.png",
-    "data/tile-sets/relics/2.png",
-    "data/tile-sets/relics/3.png",
-    "data/tile-sets/relics/4.png",
-    "data/tile-sets/relics/5.png",
-    "data/tile-sets/resources/0.png",
-    "data/tile-sets/resources/1.png",
-    "data/tile-sets/resources/2.png",
-    "data/tile-sets/resources/3.png",
-    "data/tile-sets/resources/4.png",
-    "data/tile-sets/resources/5.png",
-    "data/title.png",
-    "data/town.json"
+    "data/story/characters/adrian.png",
+    "data/story/characters/elena.png",
+    "data/story/characters/mara.png",
+    "data/story/characters/tomas.png",
+    "data/story/finale/safe-landing.jpg",
+    "data/story/finale/signal-plate.png"
   ],
   "hex_slot": {
     "orientation": "flat-top",
@@ -662,7 +560,7 @@
   },
   "cell_mask": {
     "source": "art/board-states/cell-mask.png",
-    "runtime": "data/board-states/cell-mask.png",
+    "runtime": "art/registered/board-states/cell-mask.png",
     "capture": "python3 games/relic-rush/tools/capture_cell_mask.py",
     "geometry": "gfx.ngon(center, radius, 6, 0): flat-top cell face",
     "use": "Asset registration reference. Live wells use gfx.ngon_grad with the same flat-top geometry."
@@ -723,7 +621,7 @@
   "building_shadows": {
     "registration": "art/isometric-paintover/registration.json",
     "exporter": "python3 games/relic-rush/tools/building_assets.py",
-    "runtime": "data/building-shadows/{0,1,2,3,5,6,7,8,9}.png",
+    "runtime": "data/city/building-shadows/{0,1,2,3,5,6,7,8,9}.png",
     "states": {
       "restored": "separate ground pass below all buildings",
       "valid-placement": "shadow at snapped landing point",
@@ -815,10 +713,10 @@
   },
   "match3_atlas": {
     "source": "art/match3-atlas.json",
-    "runtime": "data/match3.png",
-    "contract": "lua/match3_skin.lua",
+    "runtime": "data/board/",
+    "contract": "lua/match3_atlases.lua",
     "behavior": "engine/match3.lua",
-    "states": "all existing authored pieces, terrain, controls and HUD; packed without alpha changes",
+    "states": "all existing authored pieces, blockers, cells, boosters, HUD and effects in one atlas per kind (data/board/<kind>.png); backgrounds are separate files in data/board/backs/; packed without alpha changes",
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/review/trickling/README.md"
   },
@@ -832,7 +730,7 @@
         316,
         289
       ],
-      "runtime": "data/tile-sets/relics/0.png",
+      "runtime": "art/registered/tile-sets/relics/0.png",
       "orientation": "flat-top, six-sided; centre artwork stays upright",
       "transform": "crop and fit to the renderer-authored cell mask aspect; 112px inner width",
       "reproduction": "python3 tools/match3_atlas.py",
@@ -847,7 +745,7 @@
         315,
         570
       ],
-      "runtime": "data/tile-sets/jewels/0.png",
+      "runtime": "art/registered/tile-sets/jewels/0.png",
       "orientation": "flat-top, six-sided; centre artwork stays upright",
       "transform": "crop and fit to the renderer-authored cell mask aspect; 112px inner width",
       "reproduction": "python3 tools/match3_atlas.py",
@@ -888,7 +786,7 @@
       "reduced-motion",
       "paused"
     ],
-    "art": "existing data/match3.png regions, authored alpha preserved; animation transforms and transient glows/sparks only",
+    "art": "existing data/board/ atlas regions, authored alpha preserved; animation transforms and transient glows/sparks only",
     "reproduction": "build/test/relic-rush board-intro",
     "review": "docs/review/entrance/README.md"
   },
@@ -925,7 +823,7 @@
   "building_paintover": {
     "source": "art/building-catalogue/painted-v1",
     "registration": "art/building-catalogue/registration.json",
-    "runtime": "data/buildings/<key>.png",
+    "runtime": "data/city/buildings/<key>.png",
     "normal": "authored ImageGen paint-over of the current-camera Blender render",
     "interaction_states": "unchanged engine placement, lift, valid/invalid footprint and shop controls",
     "reproduction": "python3 tools/import_painted_buildings.py relic-rush",
@@ -946,12 +844,12 @@
     ],
     "meaning": "Settings gear states and archived life readout art. The active wallet uses the three currency icons.",
     "runtime": [
-      "data/expedition-hud/pause-normal.png",
-      "data/expedition-hud/pause-hover.png",
-      "data/expedition-hud/pause-pressed.png",
-      "data/expedition-hud/pause-selected.png",
-      "data/expedition-hud/pause-disabled.png",
-      "data/expedition-hud/life.png"
+      "art/registered/expedition-hud/pause-normal.png",
+      "art/registered/expedition-hud/pause-hover.png",
+      "art/registered/expedition-hud/pause-pressed.png",
+      "art/registered/expedition-hud/pause-selected.png",
+      "art/registered/expedition-hud/pause-disabled.png",
+      "art/registered/expedition-hud/life.png"
     ],
     "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
     "review": "docs/screenshots/hud-states.jpg"
@@ -965,7 +863,7 @@
       887
     ],
     "generator": "Built-in ImageGen, 2026-11-15. Both readout icons authored in one transparent atlas, using the Christmas Market result screen as a style reference.",
-    "runtime": "data/result-icons.png",
+    "runtime": "art/registered/result-icons.png",
     "registration": "tools/prepare_result_icons.py",
     "cell_size": 128,
     "art_size": 120,
@@ -997,10 +895,10 @@
     "import": "python3 games/relic-rush/tools/prepare_assets.py --portraits-only",
     "source_orientation": "Runtime crops face right. Adrian is mirrored horizontally on export from the original lineup. Mara retains her original crop canvas after removing a disconnected neighboring fragment. The engine mirrors the right slot.",
     "cast": {
-      "elena": "data/characters/elena.png",
-      "mara": "data/characters/mara.png",
-      "tomas": "data/characters/tomas.png",
-      "adrian": "data/characters/adrian.png"
+      "elena": "data/story/characters/elena.png",
+      "mara": "data/story/characters/mara.png",
+      "tomas": "data/story/characters/tomas.png",
+      "adrian": "data/story/characters/adrian.png"
     },
     "states": [
       "speaking",
@@ -1017,8 +915,8 @@
     "source": "art/particles/kenney/",
     "license": "art/particles/kenney/License.txt",
     "origin": "Particle Pack by Kenney Vleugels, CC0, https://opengameart.org/content/particle-pack-80-sprites",
-    "runtime": "data/match3.png",
-    "contract": "lua/match3_skin.lua",
+    "runtime": "data/board/fx.png",
+    "contract": "lua/match3_atlases.lua",
     "renderer": "../../engine/match3_vfx.lua",
     "frames": {
       "shock": "circle_03",
@@ -1038,8 +936,8 @@
     "source": "../../engine/art/match3/kenney-smoke/",
     "license": "../../engine/art/match3/kenney-smoke/License.txt",
     "origin": "Smoke particle assets by Kenney Vleugels, CC0, https://opengameart.org/content/smoke-particle-assets",
-    "runtime": "data/match3.png",
-    "contract": "lua/match3_skin.lua",
+    "runtime": "data/board/fx.png",
+    "contract": "lua/match3_atlases.lua",
     "renderer": "../../engine/match3_shatter.lua",
     "frames": {
       "smoke-0": "whitePuff00",
@@ -1058,9 +956,9 @@
     "registration": "../../engine/art/match3-elements/manifest.json",
     "reproduction": "python3 tools/match3_elements_art.py && python3 tools/match3_atlas.py",
     "runtime": {
-      "stone-1": "data/board-states/stone-1.png",
-      "stone-2": "data/board-states/stone-2.png",
-      "stone-3": "data/board-states/stone-3.png"
+      "stone-1": "art/registered/board-states/stone-1.png",
+      "stone-2": "art/registered/board-states/stone-2.png",
+      "stone-3": "art/registered/board-states/stone-3.png"
     },
     "review": [
       "../../docs/review/match3-elements/relic-rush-states.png",
@@ -1073,7 +971,7 @@
   "quest_objects": {
     "source": "art/quest-objects/source.png",
     "prompt": "art/quest-objects/prompt.txt",
-    "runtime": "data/quest-objects.png",
+    "runtime": "art/registered/quest-objects.png",
     "registration": "tools/relic_quest_art.py",
     "slots": [
       "timber",
@@ -1093,9 +991,9 @@
       "first-clear award",
       "scenario icon"
     ],
-    "award_runtime": "data/finds/<slot>.png",
+    "award_runtime": "art/registered/finds/<slot>.png",
     "shared_rewards": {
-      "timber": "data/resource-pieces/timber.png"
+      "timber": "art/registered/resource-pieces/timber.png"
     },
     "transform": "Compact props uniformly resized to fit 256 px inside a 320 px transparent canvas.",
     "gear_reward": {
@@ -1124,7 +1022,7 @@
       "note": {
         "source": "art/quest-objects/ines-note-states.png",
         "prompt": "art/quest-objects/ines-note-states.prompt.txt",
-        "runtime": "data/finds/note.png",
+        "runtime": "art/registered/finds/note.png",
         "crop": [
           67,
           99,
@@ -1175,7 +1073,7 @@
                 619,
                 910
               ],
-              "runtime": "data/story-pieces/chart.png"
+              "runtime": "art/registered/story-pieces/chart.png"
             },
             "supplies": {
               "boards": [
@@ -1188,7 +1086,7 @@
                 613,
                 1229
               ],
-              "runtime": "data/story-pieces/supplies.png"
+              "runtime": "art/registered/story-pieces/supplies.png"
             },
             "lens": {
               "boards": [
@@ -1201,7 +1099,7 @@
                 1230,
                 612
               ],
-              "runtime": "data/story-pieces/lens.png"
+              "runtime": "art/registered/story-pieces/lens.png"
             },
             "cable": {
               "boards": [
@@ -1214,7 +1112,7 @@
                 300,
                 929
               ],
-              "runtime": "data/story-pieces/cable.png"
+              "runtime": "art/registered/story-pieces/cable.png"
             },
             "tools": {
               "boards": [
@@ -1227,7 +1125,7 @@
                 1245,
                 899
               ],
-              "runtime": "data/story-pieces/tools.png"
+              "runtime": "art/registered/story-pieces/tools.png"
             },
             "note": {
               "boards": [
@@ -1240,7 +1138,7 @@
                 1243,
                 1206
               ],
-              "runtime": "data/story-pieces/note.png"
+              "runtime": "art/registered/story-pieces/note.png"
             },
             "gear": {
               "boards": [
@@ -1253,7 +1151,7 @@
                 924,
                 1236
               ],
-              "runtime": "data/story-pieces/gear.png"
+              "runtime": "art/registered/story-pieces/gear.png"
             }
           }
         },
@@ -1273,7 +1171,7 @@
                 1739,
                 795
               ],
-              "runtime": "data/story-pieces/marker.png"
+              "runtime": "art/registered/story-pieces/marker.png"
             }
           }
         }
@@ -1292,7 +1190,7 @@
     "source": "art/board-theme/source.png",
     "prompt": "art/board-theme/prompt.txt",
     "registration": "art/match3-atlas.json",
-    "runtime": "data/match3.png",
+    "runtime": "data/board/",
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/screenshots/review/board-palette/README.md",
     "states": {
@@ -1380,7 +1278,7 @@
       "signal-plate": {
         "source": "art/finale/signal-plate.png",
         "prompt": "art/finale/signal-plate.prompt.txt",
-        "runtime": "data/signal-plate.png",
+        "runtime": "data/story/finale/signal-plate.png",
         "size": [
           128,
           128
@@ -1395,12 +1293,12 @@
           94,
           80
         ],
-        "reference": "data/quest-objects.png"
+        "reference": "art/registered/quest-objects.png"
       },
       "safe-landing": {
         "source": "art/finale/safe-landing.png",
         "prompt": "art/finale/safe-landing.prompt.txt",
-        "runtime": "data/safe-landing.jpg",
+        "runtime": "data/story/finale/safe-landing.jpg",
         "size": [
           864,
           1152
@@ -1411,7 +1309,7 @@
         ],
         "references": [
           "art/art-direction/expedition-cast.png",
-          "data/scene-lagoon.jpg",
+          "data/board/backs/scene-1.jpg",
           "art/story-pictures/broken-relay.png"
         ]
       }
@@ -1432,7 +1330,7 @@
       "yield": {
         "provisions": 3
       },
-      "runtime": "data/resource-pieces/water.png"
+      "runtime": "art/registered/resource-pieces/water.png"
     },
     "cut-blocks": {
       "building": "workshop",
@@ -1441,7 +1339,7 @@
       "yield": {
         "supplies": 5
       },
-      "runtime": "data/tile-sets/resources/4.png",
+      "runtime": "art/registered/tile-sets/resources/4.png",
       "source": "art/tile-sets/source.png",
       "source_cell": {
         "row": 3,
@@ -1456,7 +1354,7 @@
       "yield": {
         "provisions": 4
       },
-      "runtime": "data/resource-pieces/rations.png"
+      "runtime": "art/registered/resource-pieces/rations.png"
     },
     "helmet": {
       "building": "gateway",
@@ -1465,7 +1363,7 @@
       "yield": {
         "gold": 6
       },
-      "runtime": "data/campaign-pieces.png"
+      "runtime": "art/registered/campaign-pieces.png"
     },
     "grain": {
       "building": "lodge",
@@ -1474,7 +1372,7 @@
       "yield": {
         "provisions": 5
       },
-      "runtime": "data/tile-sets/resources/5.png",
+      "runtime": "art/registered/tile-sets/resources/5.png",
       "source": "art/tile-sets/source.png",
       "source_cell": {
         "row": 3,
@@ -1489,7 +1387,7 @@
       "yield": {
         "supplies": 7
       },
-      "runtime": "data/tile-sets/relics/4.png",
+      "runtime": "art/registered/tile-sets/relics/4.png",
       "source": "art/tile-sets/source.png",
       "source_cell": {
         "row": 1,
@@ -1504,7 +1402,7 @@
       "yield": {
         "provisions": 6
       },
-      "runtime": "data/campaign-pieces.png"
+      "runtime": "art/registered/campaign-pieces.png"
     },
     "emerald": {
       "building": "temple",
@@ -1513,7 +1411,7 @@
       "yield": {
         "gold": 11
       },
-      "runtime": "data/resource-pieces/emerald.png"
+      "runtime": "art/registered/resource-pieces/emerald.png"
     }
   },
   "resource_pieces": {
@@ -1569,9 +1467,9 @@
       ]
     },
     "runtime": {
-      "coins": "data/resource-pieces/coin.png",
-      "supplies": "data/resource-pieces/wallet-supplies.png",
-      "food": "data/resource-pieces/wallet-food.png"
+      "coins": "art/registered/resource-pieces/coin.png",
+      "supplies": "art/registered/resource-pieces/wallet-supplies.png",
+      "food": "art/registered/resource-pieces/wallet-food.png"
     },
     "states": "Static currency readouts. The shared capsule handles pressed feedback.",
     "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
@@ -1583,7 +1481,7 @@
     "prompt": "art/campaign-pieces/prompt.txt",
     "style_reference": "../../reference/cradle-of-rome/visuals/board-pieces.png",
     "generator": "built-in ImageGen, all 23 pieces in one edit",
-    "runtime": "data/campaign-pieces.png",
+    "runtime": "art/registered/campaign-pieces.png",
     "revisions": [
       {
         "source": "art/campaign-pieces/fruit-and-score.png",
@@ -1752,7 +1650,7 @@
   },
   "board_frame": {
     "generator": "tools/board_frame.py",
-    "stone": "data/board-frame/stone.png",
+    "stone": "data/board/frame/stone.png",
     "review": "docs/review/board-frame-atlas/README.md",
     "decorations": "engine/art/board-frame/decorations.json",
     "decoration_review": "docs/review/board-frame-decorations/front.md",
@@ -1767,7 +1665,7 @@
       "yield": {
         "gold": 3
       },
-      "runtime": "data/campaign-pieces.png"
+      "runtime": "art/registered/campaign-pieces.png"
     },
     "ring": {
       "first_level": 18,
@@ -1776,7 +1674,7 @@
       "yield": {
         "gold": 7
       },
-      "runtime": "data/campaign-pieces.png",
+      "runtime": "art/registered/campaign-pieces.png",
       "building": "gateway"
     },
     "scarab": {
@@ -1786,7 +1684,7 @@
       "yield": {
         "gold": 8
       },
-      "runtime": "data/campaign-pieces.png",
+      "runtime": "art/registered/campaign-pieces.png",
       "building": "gateway"
     },
     "sandal": {
@@ -1796,7 +1694,7 @@
       "yield": {
         "gold": 9
       },
-      "runtime": "data/campaign-pieces.png",
+      "runtime": "art/registered/campaign-pieces.png",
       "building": "gateway"
     },
     "harp": {
@@ -1806,7 +1704,7 @@
       "yield": {
         "gold": 10
       },
-      "runtime": "data/campaign-pieces.png",
+      "runtime": "art/registered/campaign-pieces.png",
       "building": "gateway"
     }
   },
@@ -1814,7 +1712,7 @@
     "source": "art/bonus-gems/six-bonuses.png",
     "prompt": "art/bonus-gems/six-bonuses.prompt.txt",
     "generator": "prepare_bonus_gems.py maps one painted base to a circle and generates all five button states with the existing standalone gems",
-    "runtime": "data/bonus-gems.png",
+    "runtime": "art/registered/bonus-gems.png",
     "review": "docs/screenshots/bonus-states.jpg",
     "columns": [
       "hammer",

@@ -1,276 +1,1137 @@
 {
-  "runtime": "data/match3.png",
-  "size": [
-    2048,
-    2048
+  "atlases": {
+    "pieces": {
+      "runtime": "data/board/pieces.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    "blockers": {
+      "runtime": "data/board/blockers.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    "cells": {
+      "runtime": "data/board/cells.png",
+      "size": [
+        512,
+        1024
+      ]
+    },
+    "boosters": {
+      "runtime": "data/board/boosters.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    "hud": {
+      "runtime": "data/board/hud.png",
+      "size": [
+        1024,
+        512
+      ]
+    },
+    "fx": {
+      "runtime": "data/board/fx.png",
+      "size": [
+        1024,
+        512
+      ]
+    }
+  },
+  "board": [
+    "pieces",
+    "blockers",
+    "cells",
+    "fx",
+    "boosters"
   ],
+  "hud": [
+    "hud",
+    "boosters"
+  ],
+  "images": {
+    "background": "data/board/backs/background.jpg",
+    "character": "data/story/characters/noelle.png"
+  },
+  "aliases": {
+    "kind-0": "festive-0",
+    "kind-1": "festive-1",
+    "kind-2": "festive-2",
+    "kind-3": "festive-3",
+    "kind-4": "festive-4",
+    "kind-5": "festive-5",
+    "scene-1": "background",
+    "scene-2": "background",
+    "score": "complete"
+  },
   "frames": {
-    "background": [
-      2,
-      2,
-      600,
-      900
-    ],
-    "fx-burst": [
-      606,
-      2,
-      256,
-      256
-    ],
-    "fx-flash": [
-      866,
-      2,
-      256,
-      256
-    ],
-    "fx-shock": [
-      1126,
-      2,
-      256,
-      256
-    ],
-    "booster-firework-icon": [
-      1386,
-      2,
-      128,
-      128
-    ],
-    "booster-star-icon": [
-      1518,
-      2,
-      128,
-      128
-    ],
-    "cell-mask": [
-      1650,
-      2,
-      128,
-      128
-    ],
-    "chain": [
-      1782,
-      2,
-      128,
-      128
-    ],
-    "chain-1": [
-      1914,
-      2,
-      128,
-      128
-    ],
-    "chain-1-mirror": [
-      2,
-      906,
-      128,
-      128
-    ],
-    "chain-2": [
-      134,
-      906,
-      128,
-      128
-    ],
-    "chain-board": [
-      266,
-      906,
-      128,
-      128
-    ],
-    "festive-0": [
-      398,
-      906,
-      128,
-      128
-    ],
-    "festive-1": [
-      530,
-      906,
-      128,
-      128
-    ],
-    "festive-2": [
-      662,
-      906,
-      128,
-      128
-    ],
-    "festive-3": [
-      794,
-      906,
-      128,
-      128
-    ],
-    "festive-4": [
-      926,
-      906,
-      128,
-      128
-    ],
-    "festive-5": [
-      1058,
-      906,
-      128,
-      128
-    ],
-    "fx-glint": [
-      1190,
-      906,
-      128,
-      128
-    ],
-    "fx-ring": [
-      1322,
-      906,
-      128,
-      128
-    ],
-    "fx-smoke-0": [
-      1454,
-      906,
-      128,
-      128
-    ],
-    "fx-smoke-1": [
-      1586,
-      906,
-      128,
-      128
-    ],
-    "fx-smoke-2": [
-      1718,
-      906,
-      128,
-      128
-    ],
-    "fx-smoke-3": [
-      1850,
-      906,
-      128,
-      128
-    ],
-    "fx-streak": [
-      2,
-      1038,
-      128,
-      128
-    ],
-    "fx-twinkle": [
-      134,
-      1038,
-      128,
-      128
-    ],
-    "guide": [
-      266,
-      1038,
-      128,
-      128
-    ],
-    "hint": [
-      398,
-      1038,
-      128,
-      128
-    ],
-    "ice-1": [
-      530,
-      1038,
-      128,
-      128
-    ],
-    "ice-2": [
-      662,
-      1038,
-      128,
-      128
-    ],
-    "selected": [
-      794,
-      1038,
-      128,
-      128
-    ],
-    "stone-1": [
-      926,
-      1038,
-      128,
-      128
-    ],
-    "glow": [
-      1058,
-      1038,
-      64,
-      64
-    ],
-    "fx-tablet-glow": [
-      1126,
-      1038,
-      16,
-      16
-    ],
-    "fx-tablet-spark": [
-      1146,
-      1038,
-      16,
-      16
-    ],
-    "kind-0": [
-      398,
-      906,
-      128,
-      128
-    ],
-    "kind-1": [
-      530,
-      906,
-      128,
-      128
-    ],
-    "kind-2": [
-      662,
-      906,
-      128,
-      128
-    ],
-    "kind-3": [
-      794,
-      906,
-      128,
-      128
-    ],
-    "kind-4": [
-      926,
-      906,
-      128,
-      128
-    ],
-    "kind-5": [
-      1058,
-      906,
-      128,
-      128
-    ],
-    "scene-1": [
-      2,
-      2,
-      600,
-      900
-    ],
-    "scene-2": [
-      2,
-      2,
-      600,
-      900
-    ]
+    "festive-0": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        2,
+        128,
+        128
+      ]
+    },
+    "festive-1": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        2,
+        128,
+        128
+      ]
+    },
+    "festive-2": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        2,
+        128,
+        128
+      ]
+    },
+    "festive-3": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        2,
+        128,
+        128
+      ]
+    },
+    "festive-4": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        2,
+        128,
+        128
+      ]
+    },
+    "festive-5": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        2,
+        128,
+        128
+      ]
+    },
+    "market-0": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        2,
+        128,
+        128
+      ]
+    },
+    "market-1": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        134,
+        128,
+        128
+      ]
+    },
+    "market-10": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        134,
+        128,
+        128
+      ]
+    },
+    "market-11": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        134,
+        128,
+        128
+      ]
+    },
+    "market-12": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        134,
+        128,
+        128
+      ]
+    },
+    "market-13": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        134,
+        128,
+        128
+      ]
+    },
+    "market-14": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        134,
+        128,
+        128
+      ]
+    },
+    "market-15": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        134,
+        128,
+        128
+      ]
+    },
+    "market-2": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        266,
+        128,
+        128
+      ]
+    },
+    "market-3": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        266,
+        128,
+        128
+      ]
+    },
+    "market-4": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        266,
+        128,
+        128
+      ]
+    },
+    "market-5": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        266,
+        128,
+        128
+      ]
+    },
+    "market-6": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        266,
+        128,
+        128
+      ]
+    },
+    "market-7": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        266,
+        128,
+        128
+      ]
+    },
+    "market-8": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        266,
+        128,
+        128
+      ]
+    },
+    "market-9": {
+      "atlas": "pieces",
+      "box": [
+        2,
+        398,
+        128,
+        128
+      ]
+    },
+    "story-cocoa": {
+      "atlas": "pieces",
+      "box": [
+        134,
+        398,
+        128,
+        128
+      ]
+    },
+    "story-lantern": {
+      "atlas": "pieces",
+      "box": [
+        266,
+        398,
+        128,
+        128
+      ]
+    },
+    "story-letter": {
+      "atlas": "pieces",
+      "box": [
+        398,
+        398,
+        128,
+        128
+      ]
+    },
+    "story-ribbon": {
+      "atlas": "pieces",
+      "box": [
+        530,
+        398,
+        128,
+        128
+      ]
+    },
+    "story-scarf": {
+      "atlas": "pieces",
+      "box": [
+        662,
+        398,
+        128,
+        128
+      ]
+    },
+    "story-telegram": {
+      "atlas": "pieces",
+      "box": [
+        794,
+        398,
+        128,
+        128
+      ]
+    },
+    "chain": {
+      "atlas": "blockers",
+      "box": [
+        2,
+        2,
+        128,
+        128
+      ]
+    },
+    "chain-1": {
+      "atlas": "blockers",
+      "box": [
+        134,
+        2,
+        128,
+        128
+      ]
+    },
+    "chain-1-mirror": {
+      "atlas": "blockers",
+      "box": [
+        266,
+        2,
+        128,
+        128
+      ]
+    },
+    "chain-2": {
+      "atlas": "blockers",
+      "box": [
+        2,
+        134,
+        128,
+        128
+      ]
+    },
+    "chain-board": {
+      "atlas": "blockers",
+      "box": [
+        134,
+        134,
+        128,
+        128
+      ]
+    },
+    "ice-1": {
+      "atlas": "blockers",
+      "box": [
+        266,
+        134,
+        128,
+        128
+      ]
+    },
+    "ice-2": {
+      "atlas": "blockers",
+      "box": [
+        2,
+        266,
+        128,
+        128
+      ]
+    },
+    "stone-1": {
+      "atlas": "blockers",
+      "box": [
+        134,
+        266,
+        128,
+        128
+      ]
+    },
+    "cell-mask": {
+      "atlas": "cells",
+      "box": [
+        2,
+        2,
+        128,
+        128
+      ]
+    },
+    "guide": {
+      "atlas": "cells",
+      "box": [
+        134,
+        2,
+        128,
+        128
+      ]
+    },
+    "hint": {
+      "atlas": "cells",
+      "box": [
+        266,
+        2,
+        128,
+        128
+      ]
+    },
+    "selected": {
+      "atlas": "cells",
+      "box": [
+        2,
+        134,
+        128,
+        128
+      ]
+    },
+    "tile-bonus-area": {
+      "atlas": "cells",
+      "box": [
+        134,
+        134,
+        128,
+        128
+      ]
+    },
+    "tile-cell-normal": {
+      "atlas": "cells",
+      "box": [
+        266,
+        134,
+        128,
+        128
+      ]
+    },
+    "tile-hover": {
+      "atlas": "cells",
+      "box": [
+        2,
+        266,
+        128,
+        128
+      ]
+    },
+    "tile-ice": {
+      "atlas": "cells",
+      "box": [
+        134,
+        266,
+        128,
+        128
+      ]
+    },
+    "tile-light-wave": {
+      "atlas": "cells",
+      "box": [
+        266,
+        266,
+        128,
+        128
+      ]
+    },
+    "tile-selected": {
+      "atlas": "cells",
+      "box": [
+        2,
+        398,
+        128,
+        128
+      ]
+    },
+    "tile-tablet-double": {
+      "atlas": "cells",
+      "box": [
+        134,
+        398,
+        128,
+        128
+      ]
+    },
+    "tile-tablet-single": {
+      "atlas": "cells",
+      "box": [
+        266,
+        398,
+        128,
+        128
+      ]
+    },
+    "booster-firework-disabled": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        2,
+        128,
+        128
+      ]
+    },
+    "booster-firework-hover": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        2,
+        128,
+        128
+      ]
+    },
+    "booster-firework-icon": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        2,
+        128,
+        128
+      ]
+    },
+    "booster-firework-normal": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        2,
+        128,
+        128
+      ]
+    },
+    "booster-firework-pressed": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        2,
+        128,
+        128
+      ]
+    },
+    "booster-firework-selected": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        2,
+        128,
+        128
+      ]
+    },
+    "booster-hammer-disabled": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        2,
+        128,
+        128
+      ]
+    },
+    "booster-hammer-hover": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        134,
+        128,
+        128
+      ]
+    },
+    "booster-hammer-normal": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        134,
+        128,
+        128
+      ]
+    },
+    "booster-hammer-pressed": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        134,
+        128,
+        128
+      ]
+    },
+    "booster-hammer-selected": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        134,
+        128,
+        128
+      ]
+    },
+    "booster-lantern-disabled": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        134,
+        128,
+        128
+      ]
+    },
+    "booster-lantern-hover": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        134,
+        128,
+        128
+      ]
+    },
+    "booster-lantern-normal": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        134,
+        128,
+        128
+      ]
+    },
+    "booster-lantern-pressed": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        266,
+        128,
+        128
+      ]
+    },
+    "booster-lantern-selected": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        266,
+        128,
+        128
+      ]
+    },
+    "booster-star-disabled": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        266,
+        128,
+        128
+      ]
+    },
+    "booster-star-hover": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        266,
+        128,
+        128
+      ]
+    },
+    "booster-star-icon": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        266,
+        128,
+        128
+      ]
+    },
+    "booster-star-normal": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        266,
+        128,
+        128
+      ]
+    },
+    "booster-star-pressed": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        266,
+        128,
+        128
+      ]
+    },
+    "booster-star-selected": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        398,
+        128,
+        128
+      ]
+    },
+    "dynamite-disabled": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        398,
+        128,
+        128
+      ]
+    },
+    "dynamite-hover": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        398,
+        128,
+        128
+      ]
+    },
+    "dynamite-normal": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        398,
+        128,
+        128
+      ]
+    },
+    "dynamite-pressed": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        398,
+        128,
+        128
+      ]
+    },
+    "dynamite-selected": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        398,
+        128,
+        128
+      ]
+    },
+    "pickaxe-disabled": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        398,
+        128,
+        128
+      ]
+    },
+    "pickaxe-hover": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        530,
+        128,
+        128
+      ]
+    },
+    "pickaxe-normal": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        530,
+        128,
+        128
+      ]
+    },
+    "pickaxe-pressed": {
+      "atlas": "boosters",
+      "box": [
+        266,
+        530,
+        128,
+        128
+      ]
+    },
+    "pickaxe-selected": {
+      "atlas": "boosters",
+      "box": [
+        398,
+        530,
+        128,
+        128
+      ]
+    },
+    "sunburst-disabled": {
+      "atlas": "boosters",
+      "box": [
+        530,
+        530,
+        128,
+        128
+      ]
+    },
+    "sunburst-hover": {
+      "atlas": "boosters",
+      "box": [
+        662,
+        530,
+        128,
+        128
+      ]
+    },
+    "sunburst-normal": {
+      "atlas": "boosters",
+      "box": [
+        794,
+        530,
+        128,
+        128
+      ]
+    },
+    "sunburst-pressed": {
+      "atlas": "boosters",
+      "box": [
+        2,
+        662,
+        128,
+        128
+      ]
+    },
+    "sunburst-selected": {
+      "atlas": "boosters",
+      "box": [
+        134,
+        662,
+        128,
+        128
+      ]
+    },
+    "board-pause-disabled": {
+      "atlas": "hud",
+      "box": [
+        2,
+        167,
+        128,
+        128
+      ]
+    },
+    "board-pause-hover": {
+      "atlas": "hud",
+      "box": [
+        134,
+        167,
+        128,
+        128
+      ]
+    },
+    "board-pause-normal": {
+      "atlas": "hud",
+      "box": [
+        266,
+        167,
+        128,
+        128
+      ]
+    },
+    "board-pause-pressed": {
+      "atlas": "hud",
+      "box": [
+        398,
+        167,
+        128,
+        128
+      ]
+    },
+    "board-pause-selected": {
+      "atlas": "hud",
+      "box": [
+        530,
+        167,
+        128,
+        128
+      ]
+    },
+    "complete": {
+      "atlas": "hud",
+      "box": [
+        662,
+        167,
+        128,
+        128
+      ]
+    },
+    "life": {
+      "atlas": "hud",
+      "box": [
+        794,
+        167,
+        128,
+        128
+      ]
+    },
+    "pause-disabled": {
+      "atlas": "hud",
+      "box": [
+        2,
+        299,
+        128,
+        128
+      ]
+    },
+    "pause-hover": {
+      "atlas": "hud",
+      "box": [
+        134,
+        299,
+        128,
+        128
+      ]
+    },
+    "pause-normal": {
+      "atlas": "hud",
+      "box": [
+        266,
+        299,
+        128,
+        128
+      ]
+    },
+    "pause-pressed": {
+      "atlas": "hud",
+      "box": [
+        398,
+        299,
+        128,
+        128
+      ]
+    },
+    "pause-selected": {
+      "atlas": "hud",
+      "box": [
+        530,
+        299,
+        128,
+        128
+      ]
+    },
+    "shop-built": {
+      "atlas": "hud",
+      "box": [
+        662,
+        299,
+        128,
+        128
+      ]
+    },
+    "shop-locked": {
+      "atlas": "hud",
+      "box": [
+        794,
+        299,
+        128,
+        128
+      ]
+    },
+    "signboard": {
+      "atlas": "hud",
+      "box": [
+        2,
+        2,
+        960,
+        161
+      ]
+    },
+    "fx-burst": {
+      "atlas": "fx",
+      "box": [
+        2,
+        2,
+        256,
+        256
+      ]
+    },
+    "fx-flash": {
+      "atlas": "fx",
+      "box": [
+        262,
+        2,
+        256,
+        256
+      ]
+    },
+    "fx-glint": {
+      "atlas": "fx",
+      "box": [
+        782,
+        2,
+        128,
+        128
+      ]
+    },
+    "fx-ring": {
+      "atlas": "fx",
+      "box": [
+        2,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-shock": {
+      "atlas": "fx",
+      "box": [
+        522,
+        2,
+        256,
+        256
+      ]
+    },
+    "fx-smoke-0": {
+      "atlas": "fx",
+      "box": [
+        134,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-1": {
+      "atlas": "fx",
+      "box": [
+        266,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-2": {
+      "atlas": "fx",
+      "box": [
+        398,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-smoke-3": {
+      "atlas": "fx",
+      "box": [
+        530,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-streak": {
+      "atlas": "fx",
+      "box": [
+        662,
+        262,
+        128,
+        128
+      ]
+    },
+    "fx-tablet-glow": {
+      "atlas": "fx",
+      "box": [
+        994,
+        262,
+        16,
+        16
+      ]
+    },
+    "fx-tablet-spark": {
+      "atlas": "fx",
+      "box": [
+        2,
+        394,
+        16,
+        16
+      ]
+    },
+    "fx-twinkle": {
+      "atlas": "fx",
+      "box": [
+        794,
+        262,
+        128,
+        128
+      ]
+    },
+    "glow": {
+      "atlas": "fx",
+      "box": [
+        926,
+        262,
+        64,
+        64
+      ]
+    }
   },
   "sources": {
-    "cell-mask": "data/board-states/cell-mask.png",
-    "chain-board": "data/board-states/chain-board.png",
-    "guide": "data/board-states/guide.png",
-    "hint": "data/board-states/hint.png",
-    "selected": "data/board-states/selected.png",
-    "background": "data/winter.jpg"
+    "cell-mask": "art/registered/board-states/cell-mask.png",
+    "chain-board": "art/registered/board-states/chain-board.png",
+    "dynamite-disabled": "art/registered/board-states/dynamite-disabled.png",
+    "dynamite-hover": "art/registered/board-states/dynamite-hover.png",
+    "dynamite-normal": "art/registered/board-states/dynamite-normal.png",
+    "dynamite-pressed": "art/registered/board-states/dynamite-pressed.png",
+    "dynamite-selected": "art/registered/board-states/dynamite-selected.png",
+    "guide": "art/registered/board-states/guide.png",
+    "hint": "art/registered/board-states/hint.png",
+    "pickaxe-disabled": "art/registered/board-states/pickaxe-disabled.png",
+    "pickaxe-hover": "art/registered/board-states/pickaxe-hover.png",
+    "pickaxe-normal": "art/registered/board-states/pickaxe-normal.png",
+    "pickaxe-pressed": "art/registered/board-states/pickaxe-pressed.png",
+    "pickaxe-selected": "art/registered/board-states/pickaxe-selected.png",
+    "selected": "art/registered/board-states/selected.png",
+    "sunburst-disabled": "art/registered/board-states/sunburst-disabled.png",
+    "sunburst-hover": "art/registered/board-states/sunburst-hover.png",
+    "sunburst-normal": "art/registered/board-states/sunburst-normal.png",
+    "sunburst-pressed": "art/registered/board-states/sunburst-pressed.png",
+    "sunburst-selected": "art/registered/board-states/sunburst-selected.png",
+    "complete": "art/registered/expedition-hud/complete.png",
+    "life": "art/registered/expedition-hud/life.png",
+    "pause-disabled": "art/registered/expedition-hud/pause-disabled.png",
+    "pause-hover": "art/registered/expedition-hud/pause-hover.png",
+    "pause-normal": "art/registered/expedition-hud/pause-normal.png",
+    "pause-pressed": "art/registered/expedition-hud/pause-pressed.png",
+    "pause-selected": "art/registered/expedition-hud/pause-selected.png",
+    "shop-built": "art/registered/expedition-hud/shop-built.png",
+    "shop-locked": "art/registered/expedition-hud/shop-locked.png",
+    "board-pause-normal": "../relic-rush/art/registered/expedition-hud/pause-normal.png",
+    "board-pause-selected": "../relic-rush/art/registered/expedition-hud/pause-selected.png",
+    "board-pause-pressed": "../relic-rush/art/registered/expedition-hud/pause-pressed.png",
+    "board-pause-hover": "../relic-rush/art/registered/expedition-hud/pause-hover.png",
+    "board-pause-disabled": "../relic-rush/art/registered/expedition-hud/pause-disabled.png"
   },
   "effects": {
     "fx-shock": "art/particles/kenney/circle_03.png",
@@ -287,255 +1148,22 @@
     "fx-smoke-2": "../../engine/art/match3/kenney-smoke/whitePuff08.png",
     "fx-smoke-3": "../../engine/art/match3/kenney-smoke/whitePuff12.png"
   },
-  "hud": {
-    "runtime": "data/match3-hud.png",
-    "size": [
-      1024,
-      2048
+  "signboard": {
+    "source": "../../art/match3-signboards/source.png",
+    "prompt": "../../art/match3-signboards/prompt.txt",
+    "reference": "../../art/match3-signboards/concept.jpg",
+    "crop": [
+      18,
+      496,
+      1752,
+      786
     ],
-    "frames": {
-      "character": [
-        2,
-        2,
-        320,
-        480
-      ],
-      "board-pause-disabled": [
-        326,
-        2,
-        128,
-        128
-      ],
-      "board-pause-hover": [
-        458,
-        2,
-        128,
-        128
-      ],
-      "board-pause-normal": [
-        590,
-        2,
-        128,
-        128
-      ],
-      "board-pause-pressed": [
-        722,
-        2,
-        128,
-        128
-      ],
-      "board-pause-selected": [
-        854,
-        2,
-        128,
-        128
-      ],
-      "complete": [
-        2,
-        486,
-        128,
-        128
-      ],
-      "dynamite-disabled": [
-        134,
-        486,
-        128,
-        128
-      ],
-      "dynamite-hover": [
-        266,
-        486,
-        128,
-        128
-      ],
-      "dynamite-normal": [
-        398,
-        486,
-        128,
-        128
-      ],
-      "dynamite-pressed": [
-        530,
-        486,
-        128,
-        128
-      ],
-      "dynamite-selected": [
-        662,
-        486,
-        128,
-        128
-      ],
-      "life": [
-        794,
-        486,
-        128,
-        128
-      ],
-      "pause-disabled": [
-        2,
-        618,
-        128,
-        128
-      ],
-      "pause-hover": [
-        134,
-        618,
-        128,
-        128
-      ],
-      "pause-normal": [
-        266,
-        618,
-        128,
-        128
-      ],
-      "pause-pressed": [
-        398,
-        618,
-        128,
-        128
-      ],
-      "pause-selected": [
-        530,
-        618,
-        128,
-        128
-      ],
-      "pickaxe-disabled": [
-        662,
-        618,
-        128,
-        128
-      ],
-      "pickaxe-hover": [
-        794,
-        618,
-        128,
-        128
-      ],
-      "pickaxe-normal": [
-        2,
-        750,
-        128,
-        128
-      ],
-      "pickaxe-pressed": [
-        134,
-        750,
-        128,
-        128
-      ],
-      "pickaxe-selected": [
-        266,
-        750,
-        128,
-        128
-      ],
-      "shop-built": [
-        398,
-        750,
-        128,
-        128
-      ],
-      "shop-locked": [
-        530,
-        750,
-        128,
-        128
-      ],
-      "sunburst-disabled": [
-        662,
-        750,
-        128,
-        128
-      ],
-      "sunburst-hover": [
-        794,
-        750,
-        128,
-        128
-      ],
-      "sunburst-normal": [
-        2,
-        882,
-        128,
-        128
-      ],
-      "sunburst-pressed": [
-        134,
-        882,
-        128,
-        128
-      ],
-      "sunburst-selected": [
-        266,
-        882,
-        128,
-        128
-      ],
-      "signboard": [
-        2,
-        1014,
-        960,
-        161
-      ],
-      "score": [
-        2,
-        486,
-        128,
-        128
-      ]
-    },
-    "sources": {
-      "dynamite-disabled": "data/board-states/dynamite-disabled.png",
-      "dynamite-hover": "data/board-states/dynamite-hover.png",
-      "dynamite-normal": "data/board-states/dynamite-normal.png",
-      "dynamite-pressed": "data/board-states/dynamite-pressed.png",
-      "dynamite-selected": "data/board-states/dynamite-selected.png",
-      "pickaxe-disabled": "data/board-states/pickaxe-disabled.png",
-      "pickaxe-hover": "data/board-states/pickaxe-hover.png",
-      "pickaxe-normal": "data/board-states/pickaxe-normal.png",
-      "pickaxe-pressed": "data/board-states/pickaxe-pressed.png",
-      "pickaxe-selected": "data/board-states/pickaxe-selected.png",
-      "sunburst-disabled": "data/board-states/sunburst-disabled.png",
-      "sunburst-hover": "data/board-states/sunburst-hover.png",
-      "sunburst-normal": "data/board-states/sunburst-normal.png",
-      "sunburst-pressed": "data/board-states/sunburst-pressed.png",
-      "sunburst-selected": "data/board-states/sunburst-selected.png",
-      "complete": "data/expedition-hud/complete.png",
-      "life": "data/expedition-hud/life.png",
-      "pause-disabled": "data/expedition-hud/pause-disabled.png",
-      "pause-hover": "data/expedition-hud/pause-hover.png",
-      "pause-normal": "data/expedition-hud/pause-normal.png",
-      "pause-pressed": "data/expedition-hud/pause-pressed.png",
-      "pause-selected": "data/expedition-hud/pause-selected.png",
-      "shop-built": "data/expedition-hud/shop-built.png",
-      "shop-locked": "data/expedition-hud/shop-locked.png",
-      "character": "data/characters/noelle.png",
-      "board-pause-normal": "../../games/relic-rush/data/expedition-hud/pause-normal.png",
-      "board-pause-selected": "../../games/relic-rush/data/expedition-hud/pause-selected.png",
-      "board-pause-pressed": "../../games/relic-rush/data/expedition-hud/pause-pressed.png",
-      "board-pause-hover": "../../games/relic-rush/data/expedition-hud/pause-hover.png",
-      "board-pause-disabled": "../../games/relic-rush/data/expedition-hud/pause-disabled.png"
-    },
-    "signboard": {
-      "source": "../../art/match3-signboards/source.png",
-      "prompt": "../../art/match3-signboards/prompt.txt",
-      "reference": "../../art/match3-signboards/concept.jpg",
-      "crop": [
-        18,
-        496,
-        1752,
-        786
-      ],
-      "size": [
-        960,
-        161
-      ],
-      "state": "static backplate",
-      "frame": "signboard"
-    }
+    "size": [
+      960,
+      161
+    ],
+    "state": "static backplate",
+    "frame": "signboard"
   },
   "board_theme": {
     "chain": {
@@ -907,7 +1535,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "99aafd47a193e2316a0117b762438c233b82ebeba9c668653146ae73adcf8ee2",
+    "recipe": "ff9e54791be81167e3cd1e2a36fe7fbc66001df9dc5e5bba1c867ba1c1ae6504",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -951,50 +1579,71 @@
       "games/christmas-market/art/particles/kenney/star_07.png": "ae3e59099231a3daf031a56b5e0c841aad60ec2fb7549df79412da4c75bb3bcf",
       "games/christmas-market/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
       "games/christmas-market/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
-      "games/christmas-market/data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
-      "games/christmas-market/data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
-      "games/christmas-market/data/board-states/dynamite-disabled.png": "b1de17dae5b084c824a8faeebd6a4d7cd543494ba0e5b6af07c0690cf0a0e86c",
-      "games/christmas-market/data/board-states/dynamite-hover.png": "0bd70e5b9fd9a37633e9d9cc8f0597a139fc6f79958dd2ed4a7ad9d3908dcdad",
-      "games/christmas-market/data/board-states/dynamite-normal.png": "3af8e04f293dcea94a8fb01633bc728732e2a6b759e5b4e1b0533b8008608b93",
-      "games/christmas-market/data/board-states/dynamite-pressed.png": "f9e796dbc159bc61314ad17ff051f022955872742ec64f0ce6aedcdaeb73cf5e",
-      "games/christmas-market/data/board-states/dynamite-selected.png": "1668adfc3def009501e83d94779123d90ac22c54e871850c794b68a6832d50a6",
-      "games/christmas-market/data/board-states/guide.png": "05f60d162d516c9e1f9f2ef71ba1c0c1db4febdc78e1b36f354013c25f3e0c5c",
-      "games/christmas-market/data/board-states/hint.png": "96f06c48b50d785931e7df3b4fd3285dea52423fac9350f2acbfb5941358e835",
-      "games/christmas-market/data/board-states/pickaxe-disabled.png": "a71fc0e42f010cdffadf3c42c552790b91425c82ea2c14209caf9c343112dc4d",
-      "games/christmas-market/data/board-states/pickaxe-hover.png": "9364d2fd0f89da6d9b79622f0b8dd643c18806d13e222b689bf4d4129683db86",
-      "games/christmas-market/data/board-states/pickaxe-normal.png": "4a804a5c510e6e64bbfacdeea8f6132561f07eed4dd69f7a3e21ecc67777c26a",
-      "games/christmas-market/data/board-states/pickaxe-pressed.png": "4b83f6178205a2c612fbb7687fc398db6049d44bcc02ac71e8d9420e3b5fe8a2",
-      "games/christmas-market/data/board-states/pickaxe-selected.png": "e4440120fd9947f4ebf459e74c9cdaee44fd455ef13dee80a741d4c9d0b42b70",
-      "games/christmas-market/data/board-states/selected.png": "3fce0d388034f7d7b45a83e66a46f32bbb83ac5f73500a8b0a50f3f5d7e61fd5",
-      "games/christmas-market/data/board-states/sunburst-disabled.png": "da7ca8366477b51b4f60449a64f5093375db74aa20656c6f2b2a3f03d81cd8ed",
-      "games/christmas-market/data/board-states/sunburst-hover.png": "979f91a39b3689e150d9cc988086089955b90862173c09b3ad14452c664f9814",
-      "games/christmas-market/data/board-states/sunburst-normal.png": "082084a6d8a5e8f9b519d996e085a22118a1941d3a4425672ec63a05a9c39299",
-      "games/christmas-market/data/board-states/sunburst-pressed.png": "431a29a858bc098cec92d20b7e30c29a4d046509bc6dd788742b6f1a40710c5b",
-      "games/christmas-market/data/board-states/sunburst-selected.png": "b265a8b8f0935b2c7444032f60176c7ab934f742f9e5dde103adf9afedae9ce9",
-      "games/christmas-market/data/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
-      "games/christmas-market/data/expedition-hud/complete.png": "5187914f965d5a88e879106862f7dbca79dd74b43b1286e7b40bd3bb052db8e4",
-      "games/christmas-market/data/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
-      "games/christmas-market/data/expedition-hud/pause-disabled.png": "e166178a7f2bc4da406a7f31ee2e312c5298eac97d3eac415ba810fa991592ea",
-      "games/christmas-market/data/expedition-hud/pause-hover.png": "0333222c12a18e76c159e3bf934bdd17b8bade83ce965d50ad6f645687fdaefd",
-      "games/christmas-market/data/expedition-hud/pause-normal.png": "b4a3131d25ffb3a8d419fd658b90208b1024e2e97a9eb5b4dd1d5ca589c1394a",
-      "games/christmas-market/data/expedition-hud/pause-pressed.png": "d166db886202f02a7fb2a3a34f2bc5b8682605c7c8fb05878c064758c2be3cd8",
-      "games/christmas-market/data/expedition-hud/pause-selected.png": "56287787c7e68549b0b72af866a02712681902578264a795fe4323a17c649d9f",
-      "games/christmas-market/data/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
-      "games/christmas-market/data/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
-      "games/christmas-market/data/winter.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
-      "games/relic-rush/data/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
-      "games/relic-rush/data/expedition-hud/pause-hover.png": "4506492d3933ceaaba186d22b49bbfe88e58f9e8e66ee6c34c5613fa40467627",
-      "games/relic-rush/data/expedition-hud/pause-normal.png": "e711b0ecd719f4af4b5813ce6d58bf48f867c62c679fcde674d17019f9391621",
-      "games/relic-rush/data/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
-      "games/relic-rush/data/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
+      "games/christmas-market/art/registered/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
+      "games/christmas-market/art/registered/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
+      "games/christmas-market/art/registered/board-states/dynamite-disabled.png": "b1de17dae5b084c824a8faeebd6a4d7cd543494ba0e5b6af07c0690cf0a0e86c",
+      "games/christmas-market/art/registered/board-states/dynamite-hover.png": "0bd70e5b9fd9a37633e9d9cc8f0597a139fc6f79958dd2ed4a7ad9d3908dcdad",
+      "games/christmas-market/art/registered/board-states/dynamite-normal.png": "3af8e04f293dcea94a8fb01633bc728732e2a6b759e5b4e1b0533b8008608b93",
+      "games/christmas-market/art/registered/board-states/dynamite-pressed.png": "f9e796dbc159bc61314ad17ff051f022955872742ec64f0ce6aedcdaeb73cf5e",
+      "games/christmas-market/art/registered/board-states/dynamite-selected.png": "1668adfc3def009501e83d94779123d90ac22c54e871850c794b68a6832d50a6",
+      "games/christmas-market/art/registered/board-states/guide.png": "05f60d162d516c9e1f9f2ef71ba1c0c1db4febdc78e1b36f354013c25f3e0c5c",
+      "games/christmas-market/art/registered/board-states/hint.png": "96f06c48b50d785931e7df3b4fd3285dea52423fac9350f2acbfb5941358e835",
+      "games/christmas-market/art/registered/board-states/pickaxe-disabled.png": "a71fc0e42f010cdffadf3c42c552790b91425c82ea2c14209caf9c343112dc4d",
+      "games/christmas-market/art/registered/board-states/pickaxe-hover.png": "9364d2fd0f89da6d9b79622f0b8dd643c18806d13e222b689bf4d4129683db86",
+      "games/christmas-market/art/registered/board-states/pickaxe-normal.png": "4a804a5c510e6e64bbfacdeea8f6132561f07eed4dd69f7a3e21ecc67777c26a",
+      "games/christmas-market/art/registered/board-states/pickaxe-pressed.png": "4b83f6178205a2c612fbb7687fc398db6049d44bcc02ac71e8d9420e3b5fe8a2",
+      "games/christmas-market/art/registered/board-states/pickaxe-selected.png": "e4440120fd9947f4ebf459e74c9cdaee44fd455ef13dee80a741d4c9d0b42b70",
+      "games/christmas-market/art/registered/board-states/selected.png": "3fce0d388034f7d7b45a83e66a46f32bbb83ac5f73500a8b0a50f3f5d7e61fd5",
+      "games/christmas-market/art/registered/board-states/sunburst-disabled.png": "da7ca8366477b51b4f60449a64f5093375db74aa20656c6f2b2a3f03d81cd8ed",
+      "games/christmas-market/art/registered/board-states/sunburst-hover.png": "979f91a39b3689e150d9cc988086089955b90862173c09b3ad14452c664f9814",
+      "games/christmas-market/art/registered/board-states/sunburst-normal.png": "082084a6d8a5e8f9b519d996e085a22118a1941d3a4425672ec63a05a9c39299",
+      "games/christmas-market/art/registered/board-states/sunburst-pressed.png": "431a29a858bc098cec92d20b7e30c29a4d046509bc6dd788742b6f1a40710c5b",
+      "games/christmas-market/art/registered/board-states/sunburst-selected.png": "b265a8b8f0935b2c7444032f60176c7ab934f742f9e5dde103adf9afedae9ce9",
+      "games/christmas-market/art/registered/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b",
+      "games/christmas-market/art/registered/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
+      "games/christmas-market/art/registered/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
+      "games/christmas-market/art/registered/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
+      "games/christmas-market/art/registered/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",
+      "games/christmas-market/art/registered/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
+      "games/christmas-market/art/registered/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
+      "games/christmas-market/art/registered/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
+      "games/christmas-market/art/registered/bonus-buttons.png": "2395e0c3a17f3b097df81708857247c065a116a597d2f7cb520430a3c068c6c1",
+      "games/christmas-market/art/registered/expedition-hud/complete.png": "5187914f965d5a88e879106862f7dbca79dd74b43b1286e7b40bd3bb052db8e4",
+      "games/christmas-market/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
+      "games/christmas-market/art/registered/expedition-hud/pause-disabled.png": "e166178a7f2bc4da406a7f31ee2e312c5298eac97d3eac415ba810fa991592ea",
+      "games/christmas-market/art/registered/expedition-hud/pause-hover.png": "0333222c12a18e76c159e3bf934bdd17b8bade83ce965d50ad6f645687fdaefd",
+      "games/christmas-market/art/registered/expedition-hud/pause-normal.png": "b4a3131d25ffb3a8d419fd658b90208b1024e2e97a9eb5b4dd1d5ca589c1394a",
+      "games/christmas-market/art/registered/expedition-hud/pause-pressed.png": "d166db886202f02a7fb2a3a34f2bc5b8682605c7c8fb05878c064758c2be3cd8",
+      "games/christmas-market/art/registered/expedition-hud/pause-selected.png": "56287787c7e68549b0b72af866a02712681902578264a795fe4323a17c649d9f",
+      "games/christmas-market/art/registered/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
+      "games/christmas-market/art/registered/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
+      "games/christmas-market/art/registered/market-goods.png": "7158aae3eabf4a2b11343ff23f9d9c0b82256017fb4ad388c48c5a41f0151640",
+      "games/christmas-market/art/registered/story-pieces/cocoa.png": "864159376cf89a1133dbfadada1ccf53dae86e86274f8b9eb13e9b6b403d3417",
+      "games/christmas-market/art/registered/story-pieces/lantern.png": "1d972fbb8eaf61751fd11c77d0ddce2742f67dac79b780464eb560b3d5a99f84",
+      "games/christmas-market/art/registered/story-pieces/letter.png": "8f90982671454af25c96c27485cf35d5af20e5bdc66f76248e3ade7fc168ffc5",
+      "games/christmas-market/art/registered/story-pieces/ribbon.png": "eeb31326273b44077d7505875ad9904adee339ff9d3438cd11ed7995933e585a",
+      "games/christmas-market/art/registered/story-pieces/scarf.png": "d0f1287e1f8537db369d6a5e46218e2e1dac9cfb8d386eb51fa9b42804c6e9ac",
+      "games/christmas-market/art/registered/story-pieces/telegram.png": "da4dcb762ad7bb9d46765606c49d59ff20ca49901defbc74906b85be5b291870",
+      "games/christmas-market/data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
+      "games/christmas-market/data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
+      "games/relic-rush/art/registered/expedition-hud/pause-disabled.png": "cafe6683fc930b813e160237082ab955960fbf16471c21a887581a2ca90364d0",
+      "games/relic-rush/art/registered/expedition-hud/pause-hover.png": "4506492d3933ceaaba186d22b49bbfe88e58f9e8e66ee6c34c5613fa40467627",
+      "games/relic-rush/art/registered/expedition-hud/pause-normal.png": "e711b0ecd719f4af4b5813ce6d58bf48f867c62c679fcde674d17019f9391621",
+      "games/relic-rush/art/registered/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
+      "games/relic-rush/art/registered/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
       "tools/match3_theme_art.py": "77d1488d6c5005236dc0c1cb35dc98fcae22b686d7010c99ca3392273d2c5ce8",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
-      "games/christmas-market/data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-      "games/christmas-market/data/match3.png": "8fe7575f2eda9c26941eb5c0b50301720e690c21f20b782a5a4af4dd3f729978",
-      "games/christmas-market/lua/match3_hud.lua": "5f0d6292396bfecd5c4a3f7aa81158d679a054fb51565caf6e6a1974cff93427",
-      "games/christmas-market/lua/match3_skin.lua": "c516599a3408923de38d8a1af91b66b34bc7abca28bb658c6c1dbc82a8d5f1e8"
+      "games/christmas-market/data/board/blockers.png": "544e7c4108a5b77ceb000ebbba4703faddfdc66ab3df4180bb056c72c464c3e4",
+      "games/christmas-market/data/board/boosters.png": "7128cd28170dda111fa7db27a1ee0951aba57e4f5c9e898d42797310162d6eed",
+      "games/christmas-market/data/board/cells.png": "03df4c3cb3011133df1031e4939e323d43d27489a2cf3d9b30e0f5f60eec8f29",
+      "games/christmas-market/data/board/fx.png": "d2a75c3c72131432d591907f44c96ca2e252c2c60f032b698aaa2f2810b96567",
+      "games/christmas-market/data/board/hud.png": "c4f7ba61fa8cee23038f45fb1fd0af3d5245e9c8816356f51f2d3b91e9f7ae79",
+      "games/christmas-market/data/board/pieces.png": "4ceab2df117cc0da725546a934373f02aa38a1f0045e00a7f07a530af0210629",
+      "games/christmas-market/lua/match3_atlases.lua": "53a25170eb11861fea28efe6b039eb76e9a647ebc5dbd094ba4359b92664088a",
+      "games/christmas-market/lua/match3_hud.lua": "50a72119aa753c6842ad486ac0e3a15903c6b54b451bbea91f1b5158b3c60e14",
+      "games/christmas-market/lua/match3_skin.lua": "ab7b09e1d65c4b6e23e25431a24a3cf785da93ee8c7eaa66f67672dfddef84f8"
     }
   }
 }

@@ -11,7 +11,7 @@
 -- placement_confirm and the resource role named in header.role).
 --
 --   local town = require("town")
---   local view = town.new(c, town.load("town.json"), hooks)
+--   local view = town.new(c, town.load("city/town.json"), hooks)
 --   view:frame(inp, dt, active)   -- once per frame; active = no dialog or story
 --
 -- Hooks (all optional unless marked):

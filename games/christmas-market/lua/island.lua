@@ -195,10 +195,10 @@ function M.island_setup(c)
     c.movable = true
     c.placement_guides_on_ground = true
     c.cam = camera{center = vec2(760, 2010), zoom = .65, min_zoom = .24, max_zoom = 1.05, world = size2(M.ISLAND_W, M.ISLAND_H)}
-    c:init("island.jpg")
+    c:init("city/island.jpg")
     -- tools/roads.py christmas-market; --roads sandstone previews the second look (roads-sandstone.png)
     local look = app.arg("roads")
-    c.road = texture.load(look and look ~= "" and "roads-" .. look .. ".png" or "roads.png")
+    c.road = texture.load(look and look ~= "" and "city/roads-" .. look .. ".png" or "city/roads.png")
 end
 
 -- Build the next ladder stall at a free spot.

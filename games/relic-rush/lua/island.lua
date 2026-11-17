@@ -220,8 +220,8 @@ function M.island_setup(c)
     c.fog_clouds = true
     c.movable = true
     c.cam = camera{center = vec2(760, 2010), zoom = .65, min_zoom = .24, max_zoom = 1.05, world = size2(M.ISLAND_W, M.ISLAND_H)}
-    c:init("island.jpg")
-    c.road = texture.load("roads.png")   -- tools/roads.py relic-rush
+    c:init("city/island.jpg")
+    c.road = texture.load("city/roads.png")   -- tools/roads.py relic-rush
 end
 
 -- Build the next ladder restoration at a free spot.

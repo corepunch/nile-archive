@@ -86,7 +86,7 @@ def main():
             anim(name,frames,float(m[2]),1,'rescue-team-temporary',[decl,path])
     # Shelf packing copies pixels only. Deduplicate repeated timing frames.
     native={}
-    for borrowed,file in [(False,'sprites.png'),(True,'pets-to-replace.png')]:
+    for borrowed,file in [(False,'sprites/sprites.png'),(True,'sprites/pets-to-replace.png')]:
         x=y=row=0; placements=[]; seen={}
         for name,e in entries.items():
             if (e['origin']=='rescue-team-temporary') != borrowed: continue
@@ -102,7 +102,7 @@ def main():
             native[name]=dict(image=file,fps=e['fps'],scale=e['scale'],frames=out)
         atlas=Image.new('RGBA',(2048,y+row+2))
         for image,x,y in placements: atlas.paste(image,(x,y))
-        atlas.save(data/file)
+        (data/file).parent.mkdir(parents=True,exist_ok=True); atlas.save(data/file)
         if borrowed:
             catalog.append(dict(asset=file,origin='Rescue Team 5 / Rionix',status='replace',reason='No original or CC0 cat/dog substitute exists in either repository.',uses=['cat0','dog0','dog1'],animations=[n for n,e in entries.items() if e['origin']=='rescue-team-temporary'],replacement='An original pet atlas with idle and eight running directions; keep native animation keys and pivots.'))
     (code/'emergency_art.lua').write_text('-- Migrated atlas metadata; frames retain their authored pivots and timing.\nreturn '+lua(native)+'\n')
@@ -115,7 +115,7 @@ def main():
         for e in root.findall('object'):
             level['objects'].append(dict(id=int(e.get('id')),type=e.get('type'),x=float(e.get('x')),y=float(e.get('y')),variant=int(e.get('variant','0'))))
         level['animals']=sum(o['type'] in ('cat','dog') for o in level['objects'])
-        level['background']=name+'.png'; shutil.copyfile(folder/'background.png',data/level['background']); levels.append(level)
+        level['background']='levels/'+name+'.png'; (data/'levels').mkdir(parents=True,exist_ok=True); shutil.copyfile(folder/'background.png',data/level['background']); levels.append(level)
         record(path,'Native Lua campaign layout'); record(folder/'background.png','Painted campaign backdrop')
         for p in folder.glob('*.prompt.txt'): shutil.copyfile(p,DEST/'docs'/(name+'.prompt.txt'))
     (code/'emergency_levels.lua').write_text('-- Native Lua campaign: no XML or retail level loader at runtime.\nreturn '+lua(levels)+'\n')
@@ -136,6 +136,6 @@ def main():
     for p in licenses:
         if p.is_file(): shutil.copyfile(p,DEST/'docs'/('kenney-'+p.name))
     for p in (src/'assets/volcano-episode').glob('*.prompt.txt'): shutil.copyfile(p,DEST/'docs'/p.name)
-    print(f'Migrated {len(levels)} maps, {len(native)} animations; borrowed art isolated in pets-to-replace.png')
+    print(f'Migrated {len(levels)} maps, {len(native)} animations; borrowed art isolated in sprites/pets-to-replace.png')
 
 if __name__=='__main__': main()

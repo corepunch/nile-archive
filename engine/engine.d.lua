@@ -792,9 +792,10 @@ function texture.region(atlas, source) end
 ---@return texture
 function texture.hex_field(centres, count, radius, corner, fillet, area, w, h, range, inset) end
 
----Load the engine-owned resource match-3 atlas. Available without game assets on native, mobile and web.
+---PNG, JPG or BMP relative to the engine's resource directory (engine/ in a checkout, the bundle's engine/ folder, /engine on the web), for the engine-owned default art. A missing file gives a texture with tex = nil and size 0.
+---@param path string
 ---@return texture
-function texture.match3_default() end
+function texture.load_engine(path) end
 
 ---PNG, JPG or BMP relative to the data root. A missing file gives a texture with tex = nil and size 0.
 ---@param path string

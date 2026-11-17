@@ -1089,9 +1089,13 @@ A signed distance field of the union of flat-top hexes, for gfx.sdf_mask. centre
 
 **Returns:** `texture`
 
-### `texture.match3_default()`
+### `texture.load_engine(path)`
 
-Load the engine-owned resource match-3 atlas. Available without game assets on native, mobile and web.
+PNG, JPG or BMP relative to the engine's resource directory (engine/ in a checkout, the bundle's engine/ folder, /engine on the web), for the engine-owned default art. A missing file gives a texture with tex = nil and size 0.
+
+| Argument | Type | |
+|---|---|---|
+| `path` | `string` |  |
 
 **Returns:** `texture`
 

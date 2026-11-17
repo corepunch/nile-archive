@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / 'tools'))
 from artkit import coin  # noqa: E402
 
-OUT = Path(__file__).resolve().parent.parent / 'data' / 'icons'
+OUT = Path(__file__).resolve().parent.parent / 'data' / 'common' / 'icons'
 S = 4  # supersampling
 
 

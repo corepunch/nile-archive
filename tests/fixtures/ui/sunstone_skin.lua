@@ -1,6 +1,6 @@
 -- A warm stone skin: rounded parchment, sandstone buttons, a ticked checkbox.
 return ui.skin{
-    fonts = {display = "fonts/LilitaOne-Regular.ttf"},
+    fonts = {display = "common/fonts/LilitaOne-Regular.ttf"},
     colors = {
         ink = "#47341E", parchment = "#FFF0C0", sand = "#EBCB84", sand_low = "#DDB66A",
         sand_hot = "#FFE3A1", rim = "#BB9555", amber = "#D6AC62", rust = "#AC713A",

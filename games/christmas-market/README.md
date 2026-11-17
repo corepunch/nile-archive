@@ -56,10 +56,12 @@ hairline seams; cleared tablets return to parchment. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
-`data/market-goods.png` holds the live campaign pieces. `data/match3.png` holds
-the backdrop, blockers, effects and earlier pieces for previews.
-The HUD and tool controls use `data/match3-hud.png`. Run
-`python3 tools/match3_atlas.py` to rebuild the two atlases. The three lantern
+The board's art is one atlas per kind in `data/board/`: `pieces.png` (the
+market goods and the earlier festive pieces), `blockers.png`, `cells.png`,
+`boosters.png`, `hud.png` and `fx.png`, with the backdrop in
+`data/board/backs/background.jpg`. Run `python3 tools/match3_atlas.py` to
+rebuild the atlases from the registered sprites in `art/registered/`;
+[Asset layout](../../docs/ASSET_LAYOUT.md) describes the folders. The three lantern
 panes use the board tiles shared with Relic Rush, which `tools/board_tiles.py`
 bakes from `engine/art/board-tiles/tiles.json`.
 [Asset catalogue](docs/asset-catalogue.md#lantern-panes).
@@ -169,7 +171,7 @@ Guides hide after Confirm/Cancel; the mover's old spot is omitted. See the
 ## Town screen
 
 The market is the engine's [shared town screen](../../docs/TOWN.md), laid out by
-`data/town.json`. Tapping a building shows its name in a word bubble; holding
+`data/city/town.json`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
 
 Build and Play use authored winter-market navigation badges with five interaction

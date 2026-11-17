@@ -300,7 +300,7 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
 ## Town screen
 
 The city games share one town screen, `require("town")`, configured by each
-game's `data/town.json`. See [Shared town screen](TOWN.md).
+game's `data/city/town.json`. See [Shared town screen](TOWN.md).
 
 ## Portrait match-3 game
 

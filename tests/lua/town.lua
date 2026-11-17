@@ -15,14 +15,14 @@ check(cfg.header.align == "right" and cfg.header.role == nil, "a game overrides 
 check(cfg.header.width == 110 and cfg.bottom.build == 132, "untouched defaults survive")
 check(cfg.bottom.middle.kind == "custom" and cfg.bottom.middle.diameter == 64, "nested objects merge field by field")
 for _, game in ipairs({"relic-rush", "christmas-market", "nile-archive"}) do
-    local text = app.read_text("../../" .. game .. "/data/town.json") or app.read_text("games/" .. game .. "/data/town.json")
+    local text = app.read_text("../../" .. game .. "/data/city/town.json") or app.read_text("games/" .. game .. "/data/city/town.json")
     check(text and json.decode(text).texts.placing, game .. " ships a town.json with its wording")
 end
 
 -- The two puzzle towns share the primary Play layout. The level-list action
 -- keeps the old middle hook, so existing progression and smoke input stay valid.
 for _, game in ipairs{"relic-rush", "christmas-market"} do
-    local source = app.read_text("../../" .. game .. "/data/town.json") or app.read_text("games/" .. game .. "/data/town.json")
+    local source = app.read_text("../../" .. game .. "/data/city/town.json") or app.read_text("games/" .. game .. "/data/city/town.json")
     local config = town.config(json.decode(source))
     local b = config.bottom
     check(b.layout == "play-primary" and b.play > b.build, "Play is the primary button")

@@ -1,8 +1,8 @@
 {
-  "source": "games/christmas-market/data/expedition-hud/pause-normal.png",
+  "source": "games/christmas-market/art/registered/expedition-hud/pause-normal.png",
   "base": "art/match3-buttons/base.png",
   "pause_glyph": [38, 33, 89, 98],
-  "navigation_dir": "games/christmas-market/data/navigation",
+  "navigation_dir": "games/christmas-market/art/registered/navigation",
   "navigation_crops": {
     "build": [33, 41, 121, 126],
     "play": [41, 37, 121, 125],
@@ -16,7 +16,7 @@
     "pause": {"button": 62}
   },
   "runtime": [
-    "games/relic-rush/data/campaign-buttons.png",
-    "games/christmas-market/data/campaign-buttons.png"
+    "games/relic-rush/data/common/buttons.png",
+    "games/christmas-market/data/common/buttons.png"
   ]
 }

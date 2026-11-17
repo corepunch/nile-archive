@@ -216,8 +216,8 @@ local function init()
         if not backgrounds[sc.background] then backgrounds[sc.background] = texture.load(sc.background) end
         G.backgrounds[i] = backgrounds[sc.background]
     end
-    G.coin = texture.load("icons/coin.png")
-    G.influence = texture.load("icons/influence.png")
+    G.coin = texture.load("common/icons/coin.png")
+    G.influence = texture.load("common/icons/influence.png")
     island.setup()
     progress.new_game()
     progress.import_legacy()

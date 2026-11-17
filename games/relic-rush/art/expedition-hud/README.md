@@ -22,6 +22,6 @@ python3 games/relic-rush/tools/prepare_hud.py
 python3 games/relic-rush/tools/prepare_hud.py --check
 ```
 
-Runtime icons are `data/expedition-hud/{pause-<state>,score,complete}.png`.
+Runtime icons are `art/registered/expedition-hud/{pause-<state>,score,complete}.png`.
 The [game review](../../docs/review/expedition-header/README.md) contains both phone
 sizes, every new icon state, the static portrait and native popup input checks.

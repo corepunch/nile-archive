@@ -2664,10 +2664,11 @@ static int l_texture_hex_field(lua_State *L)
     return 1;
 }
 
-/* texture.match3_default() */
-static int l_texture_match3_default(lua_State *L)
+/* texture.load_engine(path) */
+static int l_texture_load_engine(lua_State *L)
 {
-    texture r = tex_match3_default();
+    const char * a_path = luaL_checkstring(L, 1);
+    texture r = tex_load_engine(a_path);
     api_push_texture(L, r);
     return 1;
 }
@@ -4364,7 +4365,7 @@ static void open_texture(lua_State *L)
     static const luaL_Reg funcs[] = {
         {"region", l_texture_region},
         {"hex_field", l_texture_hex_field},
-        {"match3_default", l_texture_match3_default},
+        {"load_engine", l_texture_load_engine},
         {"load", l_texture_load},
         {"from_pixels", l_texture_from_pixels},
         {"free", l_texture_free},

@@ -4,7 +4,7 @@
   "bevel": 3.2,
   "grain_sample": 150,
   "grain": {"seed": 7},
-  "outputs": ["games/relic-rush/data/board-tiles", "games/christmas-market/data/board-tiles"],
+  "outputs": ["games/relic-rush/art/registered/board-tiles", "games/christmas-market/art/registered/board-tiles"],
   "tiles": {
     "cell-normal": {"slot": 1, "meaning": "Normal cell (parchment), after Cradle of Rome 1: cream at the upper left to gold at the lower right, a thin edge light, a warm mottle", "top": "#F2E09A", "bottom": "#A8884C", "light": "#FFFBE6", "shade": "#C29A62", "grain": 0.5, "shading": {"light": [-1, -1], "contrast": 1, "bevel": 2.2, "bevel_style": "facets"}, "grain_params": {"seed": 41, "stain": 0.25, "rings": 0.0, "mottle": 0.5, "fibre": 0.08, "speck": 0.05, "strength": 0.6}, "grain_tint": {"dark": "#9A6E28", "light": "#FFE8A6"}},
     "tablet-single": {"slot": 2, "meaning": "Single tablet (deep blue), after Cradle of Rome 1", "top": "#4A859E", "bottom": "#15365C", "light": "#9AD4EC", "shade": "#071A26", "grain": 0.35, "shading": {"light": [-1, -1], "contrast": 1, "bevel": 7, "bevel_style": "facets", "bevel_contrast": 1}},

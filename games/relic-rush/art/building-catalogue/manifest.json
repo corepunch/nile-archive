@@ -28,7 +28,7 @@
       "base_width": 273.205,
       "gold": 0,
       "stars": 0,
-      "runtime": "data/buildings/camp.png",
+      "runtime": "data/city/buildings/camp.png",
       "image": [
         284,
         240
@@ -43,7 +43,7 @@
       "about": "Match Hammer gems to charge a hit on one cell.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/camp.png",
+        "runtime": "data/city/building-shadows/camp.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           117.112,
@@ -68,7 +68,7 @@
       "base_width": 273.205,
       "gold": 125,
       "stars": 0,
-      "runtime": "data/buildings/well.png",
+      "runtime": "data/city/buildings/well.png",
       "image": [
         290,
         278
@@ -83,7 +83,7 @@
       "about": "Water buckets earn 3 Food each from expedition 5.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/well.png",
+        "runtime": "data/city/building-shadows/well.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           117.112,
@@ -108,7 +108,7 @@
       "base_width": 359.808,
       "gold": 120,
       "stars": 0,
-      "runtime": "data/buildings/workshop.png",
+      "runtime": "data/city/buildings/workshop.png",
       "image": [
         376,
         332
@@ -123,7 +123,7 @@
       "about": "Cut blocks earn 5 Supplies each from expedition 8.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/workshop.png",
+        "runtime": "data/city/building-shadows/workshop.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           153.918,
@@ -148,7 +148,7 @@
       "base_width": 359.808,
       "gold": 125,
       "stars": 0,
-      "runtime": "data/buildings/market.png",
+      "runtime": "data/city/buildings/market.png",
       "image": [
         374,
         317
@@ -163,7 +163,7 @@
       "about": "Adds ration jars to later expeditions.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/market.png",
+        "runtime": "data/city/building-shadows/market.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           153.918,
@@ -188,7 +188,7 @@
       "base_width": 359.808,
       "gold": 55,
       "stars": 0,
-      "runtime": "data/buildings/gateway.png",
+      "runtime": "data/city/buildings/gateway.png",
       "image": [
         372,
         310
@@ -203,7 +203,7 @@
       "about": "Helmets replace sun coins, 6 Coins each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/gateway.png",
+        "runtime": "data/city/building-shadows/gateway.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           153.918,
@@ -228,7 +228,7 @@
       "base_width": 409.808,
       "gold": 330,
       "stars": 0,
-      "runtime": "data/buildings/lodge.png",
+      "runtime": "data/city/buildings/lodge.png",
       "image": [
         435,
         433
@@ -243,7 +243,7 @@
       "about": "Adds grain bundles worth 5 Food each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/lodge.png",
+        "runtime": "data/city/building-shadows/lodge.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           175.168,
@@ -268,7 +268,7 @@
       "base_width": 409.808,
       "gold": 140,
       "stars": 0,
-      "runtime": "data/buildings/archive.png",
+      "runtime": "data/city/buildings/archive.png",
       "image": [
         437,
         395
@@ -283,7 +283,7 @@
       "about": "Adds carved quartz worth 7 Supplies each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/archive.png",
+        "runtime": "data/city/building-shadows/archive.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           175.168,
@@ -308,7 +308,7 @@
       "base_width": 273.205,
       "gold": 120,
       "stars": 0,
-      "runtime": "data/buildings/observatory.png",
+      "runtime": "data/city/buildings/observatory.png",
       "image": [
         290,
         360
@@ -323,7 +323,7 @@
       "about": "Upgrades Star to Star II so it can hit through one layer of chain or ice.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/observatory.png",
+        "runtime": "data/city/building-shadows/observatory.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           117.112,
@@ -348,7 +348,7 @@
       "base_width": 409.808,
       "gold": 315,
       "stars": 0,
-      "runtime": "data/buildings/fountain.png",
+      "runtime": "data/city/buildings/fountain.png",
       "image": [
         436,
         423
@@ -363,7 +363,7 @@
       "about": "Adds shrimp worth 6 Food each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/fountain.png",
+        "runtime": "data/city/building-shadows/fountain.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           175.168,
@@ -388,7 +388,7 @@
       "base_width": 546.41,
       "gold": 435,
       "stars": 0,
-      "runtime": "data/buildings/temple.png",
+      "runtime": "data/city/buildings/temple.png",
       "image": [
         569,
         526
@@ -403,7 +403,7 @@
       "about": "Adds emeralds worth 11 Coins each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/temple.png",
+        "runtime": "data/city/building-shadows/temple.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           233.224,
@@ -428,7 +428,7 @@
       "base_width": 273.205,
       "gold": 65,
       "stars": 0,
-      "runtime": "data/buildings/log_cabin.png",
+      "runtime": "data/city/buildings/log_cabin.png",
       "image": [
         279,
         283
@@ -443,7 +443,7 @@
       "about": "Upgrades Hammer to Dynamite. The Blast slot keeps its charge.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/log_cabin.png",
+        "runtime": "data/city/building-shadows/log_cabin.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           117.112,
@@ -468,7 +468,7 @@
       "base_width": 273.205,
       "gold": 220,
       "stars": 6,
-      "runtime": "data/buildings/apothecary.png",
+      "runtime": "data/city/buildings/apothecary.png",
       "image": [
         278,
         254
@@ -483,7 +483,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/apothecary.png",
+        "runtime": "data/city/building-shadows/apothecary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           117.112,
@@ -508,7 +508,7 @@
       "base_width": 359.808,
       "gold": 240,
       "stars": 9,
-      "runtime": "data/buildings/mess_hall.png",
+      "runtime": "data/city/buildings/mess_hall.png",
       "image": [
         373,
         322
@@ -523,7 +523,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/mess_hall.png",
+        "runtime": "data/city/building-shadows/mess_hall.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           153.918,
@@ -548,7 +548,7 @@
       "base_width": 359.808,
       "gold": 260,
       "stars": 9,
-      "runtime": "data/buildings/stilt_house.png",
+      "runtime": "data/city/buildings/stilt_house.png",
       "image": [
         367,
         329
@@ -563,7 +563,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/stilt_house.png",
+        "runtime": "data/city/building-shadows/stilt_house.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           153.918,
@@ -588,7 +588,7 @@
       "base_width": 359.808,
       "gold": 275,
       "stars": 0,
-      "runtime": "data/buildings/map_room.png",
+      "runtime": "data/city/buildings/map_room.png",
       "image": [
         369,
         346
@@ -603,7 +603,7 @@
       "about": "Match Plus gems to add a quarter charge to your other unlocked bonuses.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/map_room.png",
+        "runtime": "data/city/building-shadows/map_room.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           153.918,
@@ -628,7 +628,7 @@
       "base_width": 359.808,
       "gold": 300,
       "stars": 12,
-      "runtime": "data/buildings/greenhouse.png",
+      "runtime": "data/city/buildings/greenhouse.png",
       "image": [
         383,
         305
@@ -643,7 +643,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/greenhouse.png",
+        "runtime": "data/city/building-shadows/greenhouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           153.918,
@@ -668,7 +668,7 @@
       "base_width": 409.808,
       "gold": 170,
       "stars": 0,
-      "runtime": "data/buildings/trading_post.png",
+      "runtime": "data/city/buildings/trading_post.png",
       "image": [
         419,
         396
@@ -683,7 +683,7 @@
       "about": "Rings replace helmets, 7 Coins each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/trading_post.png",
+        "runtime": "data/city/building-shadows/trading_post.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           175.168,
@@ -708,7 +708,7 @@
       "base_width": 409.808,
       "gold": 65,
       "stars": 0,
-      "runtime": "data/buildings/water_mill.png",
+      "runtime": "data/city/buildings/water_mill.png",
       "image": [
         419,
         372
@@ -723,7 +723,7 @@
       "about": "Restore the Water mill before rebuilding the Jungle market.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/water_mill.png",
+        "runtime": "data/city/building-shadows/water_mill.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           175.168,
@@ -748,7 +748,7 @@
       "base_width": 273.205,
       "gold": 150,
       "stars": 0,
-      "runtime": "data/buildings/clock_tower.png",
+      "runtime": "data/city/buildings/clock_tower.png",
       "image": [
         278,
         398
@@ -763,7 +763,7 @@
       "about": "Match Star gems to charge a hit on every piece of one kind.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/clock_tower.png",
+        "runtime": "data/city/building-shadows/clock_tower.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           117.112,
@@ -788,7 +788,7 @@
       "base_width": 273.205,
       "gold": 70,
       "stars": 0,
-      "runtime": "data/buildings/lighthouse.png",
+      "runtime": "data/city/buildings/lighthouse.png",
       "image": [
         278,
         368
@@ -803,7 +803,7 @@
       "about": "Upgrades Shield to Lightning. Hit a row and strike up to 20 cells in total.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/lighthouse.png",
+        "runtime": "data/city/building-shadows/lighthouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           117.112,
@@ -828,7 +828,7 @@
       "base_width": 409.808,
       "gold": 400,
       "stars": 21,
-      "runtime": "data/buildings/treehouse.png",
+      "runtime": "data/city/buildings/treehouse.png",
       "image": [
         416,
         467
@@ -843,7 +843,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/treehouse.png",
+        "runtime": "data/city/building-shadows/treehouse.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           175.168,
@@ -868,7 +868,7 @@
       "base_width": 409.808,
       "gold": 210,
       "stars": 0,
-      "runtime": "data/buildings/aviary.png",
+      "runtime": "data/city/buildings/aviary.png",
       "image": [
         416,
         359
@@ -883,7 +883,7 @@
       "about": "Sandals replace scarabs, 9 Coins each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/aviary.png",
+        "runtime": "data/city/building-shadows/aviary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           175.168,
@@ -908,7 +908,7 @@
       "base_width": 446.41,
       "gold": 145,
       "stars": 0,
-      "runtime": "data/buildings/beached_ship.png",
+      "runtime": "data/city/buildings/beached_ship.png",
       "image": [
         475,
         398
@@ -923,7 +923,7 @@
       "about": "Scarabs replace rings, 8 Coins each.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/beached_ship.png",
+        "runtime": "data/city/building-shadows/beached_ship.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           190.724,
@@ -948,7 +948,7 @@
       "base_width": 496.41,
       "gold": 35,
       "stars": 0,
-      "runtime": "data/buildings/amphitheater.png",
+      "runtime": "data/city/buildings/amphitheater.png",
       "image": [
         494,
         372
@@ -963,7 +963,7 @@
       "about": "Shield gems join later expeditions. Match them to charge a row strike.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/amphitheater.png",
+        "runtime": "data/city/building-shadows/amphitheater.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           211.974,
@@ -988,7 +988,7 @@
       "base_width": 496.41,
       "gold": 205,
       "stars": 0,
-      "runtime": "data/buildings/museum.png",
+      "runtime": "data/city/buildings/museum.png",
       "image": [
         515,
         460
@@ -1003,7 +1003,7 @@
       "about": "Harps replace sandals and earn 10 Coins each. Plus II gives the other unlocked bonuses a half charge.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/museum.png",
+        "runtime": "data/city/building-shadows/museum.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           211.974,
@@ -1028,7 +1028,7 @@
       "base_width": 546.41,
       "gold": 550,
       "stars": 30,
-      "runtime": "data/buildings/hanging_gardens.png",
+      "runtime": "data/city/buildings/hanging_gardens.png",
       "image": [
         534,
         515
@@ -1043,7 +1043,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/hanging_gardens.png",
+        "runtime": "data/city/building-shadows/hanging_gardens.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           233.224,
@@ -1068,7 +1068,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 0,
-      "runtime": "data/buildings/palm_young.png",
+      "runtime": "data/city/buildings/palm_young.png",
       "image": [
         103,
         109
@@ -1083,7 +1083,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/palm_young.png",
+        "runtime": "data/city/building-shadows/palm_young.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           12.636,
@@ -1108,7 +1108,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 0,
-      "runtime": "data/buildings/jungle_tree.png",
+      "runtime": "data/city/buildings/jungle_tree.png",
       "image": [
         112,
         133
@@ -1123,7 +1123,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/jungle_tree.png",
+        "runtime": "data/city/building-shadows/jungle_tree.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           12.852,
@@ -1148,7 +1148,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 3,
-      "runtime": "data/buildings/cypress.png",
+      "runtime": "data/city/buildings/cypress.png",
       "image": [
         72,
         148
@@ -1163,7 +1163,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/cypress.png",
+        "runtime": "data/city/building-shadows/cypress.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           12.262,
@@ -1188,7 +1188,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 3,
-      "runtime": "data/buildings/banana.png",
+      "runtime": "data/city/buildings/banana.png",
       "image": [
         100,
         98
@@ -1203,7 +1203,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/banana.png",
+        "runtime": "data/city/building-shadows/banana.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           18.723,
@@ -1228,7 +1228,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 6,
-      "runtime": "data/buildings/fan_palm.png",
+      "runtime": "data/city/buildings/fan_palm.png",
       "image": [
         125,
         91
@@ -1243,7 +1243,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/fan_palm.png",
+        "runtime": "data/city/building-shadows/fan_palm.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           29.213,
@@ -1268,7 +1268,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 9,
-      "runtime": "data/buildings/papaya.png",
+      "runtime": "data/city/buildings/papaya.png",
       "image": [
         93,
         115
@@ -1283,7 +1283,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/papaya.png",
+        "runtime": "data/city/building-shadows/papaya.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           10.076,
@@ -1308,7 +1308,7 @@
       "base_width": 136.603,
       "gold": 75,
       "stars": 12,
-      "runtime": "data/buildings/frangipani.png",
+      "runtime": "data/city/buildings/frangipani.png",
       "image": [
         115,
         125
@@ -1323,7 +1323,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/frangipani.png",
+        "runtime": "data/city/building-shadows/frangipani.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           11.269,
@@ -1348,7 +1348,7 @@
       "base_width": 273.205,
       "gold": 120,
       "stars": 6,
-      "runtime": "data/buildings/bamboo.png",
+      "runtime": "data/city/buildings/bamboo.png",
       "image": [
         239,
         265
@@ -1363,7 +1363,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/bamboo.png",
+        "runtime": "data/city/building-shadows/bamboo.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           83.48,
@@ -1388,7 +1388,7 @@
       "base_width": 273.205,
       "gold": 150,
       "stars": 6,
-      "runtime": "data/buildings/twin_palms.png",
+      "runtime": "data/city/buildings/twin_palms.png",
       "image": [
         198,
         234
@@ -1403,7 +1403,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/twin_palms.png",
+        "runtime": "data/city/building-shadows/twin_palms.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           27.015,
@@ -1428,7 +1428,7 @@
       "base_width": 273.205,
       "gold": 180,
       "stars": 9,
-      "runtime": "data/buildings/mango.png",
+      "runtime": "data/city/buildings/mango.png",
       "image": [
         205,
         209
@@ -1443,7 +1443,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/mango.png",
+        "runtime": "data/city/building-shadows/mango.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           26.026,
@@ -1468,7 +1468,7 @@
       "base_width": 273.205,
       "gold": 300,
       "stars": 18,
-      "runtime": "data/buildings/kapok.png",
+      "runtime": "data/city/buildings/kapok.png",
       "image": [
         320,
         345
@@ -1483,7 +1483,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/kapok.png",
+        "runtime": "data/city/building-shadows/kapok.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           71.149,
@@ -1508,7 +1508,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 0,
-      "runtime": "data/buildings/shrub.png",
+      "runtime": "data/city/buildings/shrub.png",
       "image": [
         78,
         79
@@ -1523,7 +1523,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/shrub.png",
+        "runtime": "data/city/building-shadows/shrub.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           22.341,
@@ -1548,7 +1548,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 0,
-      "runtime": "data/buildings/fern.png",
+      "runtime": "data/city/buildings/fern.png",
       "image": [
         88,
         62
@@ -1563,7 +1563,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/fern.png",
+        "runtime": "data/city/building-shadows/fern.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           37.158,
@@ -1588,7 +1588,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 3,
-      "runtime": "data/buildings/monstera.png",
+      "runtime": "data/city/buildings/monstera.png",
       "image": [
         87,
         72
@@ -1603,7 +1603,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/monstera.png",
+        "runtime": "data/city/building-shadows/monstera.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           37.6,
@@ -1628,7 +1628,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 3,
-      "runtime": "data/buildings/flower_shrub.png",
+      "runtime": "data/city/buildings/flower_shrub.png",
       "image": [
         86,
         87
@@ -1643,7 +1643,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/flower_shrub.png",
+        "runtime": "data/city/building-shadows/flower_shrub.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           25.214,
@@ -1668,7 +1668,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 6,
-      "runtime": "data/buildings/berry.png",
+      "runtime": "data/city/buildings/berry.png",
       "image": [
         82,
         77
@@ -1683,7 +1683,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/berry.png",
+        "runtime": "data/city/building-shadows/berry.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           26.336,
@@ -1708,7 +1708,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 6,
-      "runtime": "data/buildings/reeds.png",
+      "runtime": "data/city/buildings/reeds.png",
       "image": [
         82,
         120
@@ -1723,7 +1723,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/reeds.png",
+        "runtime": "data/city/building-shadows/reeds.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           26.178,
@@ -1748,7 +1748,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 9,
-      "runtime": "data/buildings/topiary.png",
+      "runtime": "data/city/buildings/topiary.png",
       "image": [
         60,
         92
@@ -1763,7 +1763,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/topiary.png",
+        "runtime": "data/city/building-shadows/topiary.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           15.183,
@@ -1788,7 +1788,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 9,
-      "runtime": "data/buildings/hedge.png",
+      "runtime": "data/city/buildings/hedge.png",
       "image": [
         118,
         114
@@ -1803,7 +1803,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/hedge.png",
+        "runtime": "data/city/building-shadows/hedge.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           47.928,
@@ -1828,7 +1828,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 0,
-      "runtime": "data/buildings/orchid.png",
+      "runtime": "data/city/buildings/orchid.png",
       "image": [
         63,
         81
@@ -1843,7 +1843,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/orchid.png",
+        "runtime": "data/city/building-shadows/orchid.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           26.232,
@@ -1868,7 +1868,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 0,
-      "runtime": "data/buildings/hibiscus.png",
+      "runtime": "data/city/buildings/hibiscus.png",
       "image": [
         75,
         62
@@ -1883,7 +1883,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/hibiscus.png",
+        "runtime": "data/city/building-shadows/hibiscus.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           19.617,
@@ -1908,7 +1908,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 3,
-      "runtime": "data/buildings/daisies.png",
+      "runtime": "data/city/buildings/daisies.png",
       "image": [
         76,
         77
@@ -1923,7 +1923,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/daisies.png",
+        "runtime": "data/city/building-shadows/daisies.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           26.818,
@@ -1948,7 +1948,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 6,
-      "runtime": "data/buildings/blue_lily.png",
+      "runtime": "data/city/buildings/blue_lily.png",
       "image": [
         56,
         90
@@ -1963,7 +1963,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/blue_lily.png",
+        "runtime": "data/city/building-shadows/blue_lily.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           21.636,
@@ -1988,7 +1988,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 6,
-      "runtime": "data/buildings/flower_box.png",
+      "runtime": "data/city/buildings/flower_box.png",
       "image": [
         90,
         74
@@ -2003,7 +2003,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/flower_box.png",
+        "runtime": "data/city/building-shadows/flower_box.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           38.011,
@@ -2028,7 +2028,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 9,
-      "runtime": "data/buildings/bromeliad.png",
+      "runtime": "data/city/buildings/bromeliad.png",
       "image": [
         76,
         63
@@ -2043,7 +2043,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/bromeliad.png",
+        "runtime": "data/city/building-shadows/bromeliad.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           27.432,
@@ -2068,7 +2068,7 @@
       "base_width": 273.205,
       "gold": 90,
       "stars": 6,
-      "runtime": "data/buildings/flower_bed.png",
+      "runtime": "data/city/buildings/flower_bed.png",
       "image": [
         273,
         209
@@ -2083,7 +2083,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": true,
       "shadow": {
-        "runtime": "data/building-shadows/flower_bed.png",
+        "runtime": "data/city/building-shadows/flower_bed.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           114.64,
@@ -2108,7 +2108,7 @@
       "base_width": 273.205,
       "gold": 180,
       "stars": 15,
-      "runtime": "data/buildings/rainbow_bed.png",
+      "runtime": "data/city/buildings/rainbow_bed.png",
       "image": [
         197,
         151
@@ -2123,7 +2123,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": true,
       "shadow": {
-        "runtime": "data/building-shadows/rainbow_bed.png",
+        "runtime": "data/city/building-shadows/rainbow_bed.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           85.425,
@@ -2148,7 +2148,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 3,
-      "runtime": "data/buildings/broken_column.png",
+      "runtime": "data/city/buildings/broken_column.png",
       "image": [
         90,
         101
@@ -2163,7 +2163,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/broken_column.png",
+        "runtime": "data/city/building-shadows/broken_column.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           35.995,
@@ -2188,7 +2188,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 3,
-      "runtime": "data/buildings/idol_head.png",
+      "runtime": "data/city/buildings/idol_head.png",
       "image": [
         98,
         119
@@ -2203,7 +2203,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/idol_head.png",
+        "runtime": "data/city/building-shadows/idol_head.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           38.317,
@@ -2228,7 +2228,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 6,
-      "runtime": "data/buildings/jaguar.png",
+      "runtime": "data/city/buildings/jaguar.png",
       "image": [
         104,
         92
@@ -2243,7 +2243,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/jaguar.png",
+        "runtime": "data/city/building-shadows/jaguar.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           42.961,
@@ -2268,7 +2268,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 9,
-      "runtime": "data/buildings/obelisk.png",
+      "runtime": "data/city/buildings/obelisk.png",
       "image": [
         89,
         140
@@ -2283,7 +2283,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/obelisk.png",
+        "runtime": "data/city/building-shadows/obelisk.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           34.834,
@@ -2308,7 +2308,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 9,
-      "runtime": "data/buildings/sundial.png",
+      "runtime": "data/city/buildings/sundial.png",
       "image": [
         62,
         83
@@ -2323,7 +2323,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/sundial.png",
+        "runtime": "data/city/building-shadows/sundial.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           24.67,
@@ -2348,7 +2348,7 @@
       "base_width": 136.603,
       "gold": 90,
       "stars": 12,
-      "runtime": "data/buildings/explorer.png",
+      "runtime": "data/city/buildings/explorer.png",
       "image": [
         92,
         124
@@ -2363,7 +2363,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/explorer.png",
+        "runtime": "data/city/building-shadows/explorer.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           37.156,
@@ -2388,7 +2388,7 @@
       "base_width": 136.603,
       "gold": 150,
       "stars": 18,
-      "runtime": "data/buildings/gold_idol.png",
+      "runtime": "data/city/buildings/gold_idol.png",
       "image": [
         94,
         114
@@ -2403,7 +2403,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/gold_idol.png",
+        "runtime": "data/city/building-shadows/gold_idol.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           38.317,
@@ -2428,7 +2428,7 @@
       "base_width": 273.205,
       "gold": 180,
       "stars": 12,
-      "runtime": "data/buildings/stone_arch.png",
+      "runtime": "data/city/buildings/stone_arch.png",
       "image": [
         245,
         192
@@ -2443,7 +2443,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/stone_arch.png",
+        "runtime": "data/city/building-shadows/stone_arch.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           99.175,
@@ -2468,7 +2468,7 @@
       "base_width": 273.205,
       "gold": 240,
       "stars": 15,
-      "runtime": "data/buildings/giant_head.png",
+      "runtime": "data/city/buildings/giant_head.png",
       "image": [
         209,
         216
@@ -2483,7 +2483,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/giant_head.png",
+        "runtime": "data/city/building-shadows/giant_head.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           101.927,
@@ -2508,7 +2508,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 3,
-      "runtime": "data/buildings/birdbath.png",
+      "runtime": "data/city/buildings/birdbath.png",
       "image": [
         71,
         90
@@ -2523,7 +2523,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/birdbath.png",
+        "runtime": "data/city/building-shadows/birdbath.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           24.432,
@@ -2548,7 +2548,7 @@
       "base_width": 136.603,
       "gold": 90,
       "stars": 9,
-      "runtime": "data/buildings/small_fountain.png",
+      "runtime": "data/city/buildings/small_fountain.png",
       "image": [
         95,
         96
@@ -2563,7 +2563,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/small_fountain.png",
+        "runtime": "data/city/building-shadows/small_fountain.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           39.4,
@@ -2588,7 +2588,7 @@
       "base_width": 273.205,
       "gold": 120,
       "stars": 6,
-      "runtime": "data/buildings/lily_pond.png",
+      "runtime": "data/city/buildings/lily_pond.png",
       "image": [
         220,
         145
@@ -2603,7 +2603,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": true,
       "shadow": {
-        "runtime": "data/building-shadows/lily_pond.png",
+        "runtime": "data/city/building-shadows/lily_pond.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           84.45,
@@ -2628,7 +2628,7 @@
       "base_width": 273.205,
       "gold": 150,
       "stars": 9,
-      "runtime": "data/buildings/duck_pond.png",
+      "runtime": "data/city/buildings/duck_pond.png",
       "image": [
         189,
         183
@@ -2643,7 +2643,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/duck_pond.png",
+        "runtime": "data/city/building-shadows/duck_pond.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           82.033,
@@ -2668,7 +2668,7 @@
       "base_width": 273.205,
       "gold": 240,
       "stars": 15,
-      "runtime": "data/buildings/spring_rocks.png",
+      "runtime": "data/city/buildings/spring_rocks.png",
       "image": [
         199,
         179
@@ -2683,7 +2683,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/spring_rocks.png",
+        "runtime": "data/city/building-shadows/spring_rocks.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           67.169,
@@ -2708,7 +2708,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 0,
-      "runtime": "data/buildings/bench.png",
+      "runtime": "data/city/buildings/bench.png",
       "image": [
         95,
         93
@@ -2723,7 +2723,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/bench.png",
+        "runtime": "data/city/building-shadows/bench.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           33.816,
@@ -2748,7 +2748,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 0,
-      "runtime": "data/buildings/lantern.png",
+      "runtime": "data/city/buildings/lantern.png",
       "image": [
         41,
         98
@@ -2763,7 +2763,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/lantern.png",
+        "runtime": "data/city/building-shadows/lantern.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           14.611,
@@ -2788,7 +2788,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 3,
-      "runtime": "data/buildings/tiki.png",
+      "runtime": "data/city/buildings/tiki.png",
       "image": [
         34,
         88
@@ -2803,7 +2803,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/tiki.png",
+        "runtime": "data/city/building-shadows/tiki.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           6.05,
@@ -2828,7 +2828,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 3,
-      "runtime": "data/buildings/signpost.png",
+      "runtime": "data/city/buildings/signpost.png",
       "image": [
         66,
         89
@@ -2843,7 +2843,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/signpost.png",
+        "runtime": "data/city/building-shadows/signpost.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           6.775,
@@ -2868,7 +2868,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 6,
-      "runtime": "data/buildings/flagpole.png",
+      "runtime": "data/city/buildings/flagpole.png",
       "image": [
         84,
         138
@@ -2883,7 +2883,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/flagpole.png",
+        "runtime": "data/city/building-shadows/flagpole.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           19.739,
@@ -2908,7 +2908,7 @@
       "base_width": 136.603,
       "gold": 45,
       "stars": 9,
-      "runtime": "data/buildings/pump.png",
+      "runtime": "data/city/buildings/pump.png",
       "image": [
         82,
         86
@@ -2923,7 +2923,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/pump.png",
+        "runtime": "data/city/building-shadows/pump.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           27.639,
@@ -2948,7 +2948,7 @@
       "base_width": 273.205,
       "gold": 120,
       "stars": 6,
-      "runtime": "data/buildings/picnic.png",
+      "runtime": "data/city/buildings/picnic.png",
       "image": [
         230,
         147
@@ -2963,7 +2963,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/picnic.png",
+        "runtime": "data/city/building-shadows/picnic.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           85.601,
@@ -2988,7 +2988,7 @@
       "base_width": 273.205,
       "gold": 150,
       "stars": 6,
-      "runtime": "data/buildings/hammock.png",
+      "runtime": "data/city/buildings/hammock.png",
       "image": [
         184,
         167
@@ -3003,7 +3003,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/hammock.png",
+        "runtime": "data/city/building-shadows/hammock.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           63.503,
@@ -3028,7 +3028,7 @@
       "base_width": 273.205,
       "gold": 180,
       "stars": 9,
-      "runtime": "data/buildings/pergola.png",
+      "runtime": "data/city/buildings/pergola.png",
       "image": [
         252,
         250
@@ -3043,7 +3043,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/pergola.png",
+        "runtime": "data/city/building-shadows/pergola.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           93.082,
@@ -3068,7 +3068,7 @@
       "base_width": 273.205,
       "gold": 240,
       "stars": 12,
-      "runtime": "data/buildings/swing.png",
+      "runtime": "data/city/buildings/swing.png",
       "image": [
         196,
         211
@@ -3083,7 +3083,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/swing.png",
+        "runtime": "data/city/building-shadows/swing.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           73.815,
@@ -3108,7 +3108,7 @@
       "base_width": 273.205,
       "gold": 300,
       "stars": 12,
-      "runtime": "data/buildings/gazebo.png",
+      "runtime": "data/city/buildings/gazebo.png",
       "image": [
         200,
         225
@@ -3123,7 +3123,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": true,
       "shadow": {
-        "runtime": "data/building-shadows/gazebo.png",
+        "runtime": "data/city/building-shadows/gazebo.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           79.462,
@@ -3148,7 +3148,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 0,
-      "runtime": "data/buildings/crates.png",
+      "runtime": "data/city/buildings/crates.png",
       "image": [
         109,
         94
@@ -3163,7 +3163,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/crates.png",
+        "runtime": "data/city/building-shadows/crates.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           40.1,
@@ -3188,7 +3188,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 0,
-      "runtime": "data/buildings/barrels.png",
+      "runtime": "data/city/buildings/barrels.png",
       "image": [
         84,
         76
@@ -3203,7 +3203,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/barrels.png",
+        "runtime": "data/city/building-shadows/barrels.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           37.199,
@@ -3228,7 +3228,7 @@
       "base_width": 136.603,
       "gold": 30,
       "stars": 0,
-      "runtime": "data/buildings/campfire.png",
+      "runtime": "data/city/buildings/campfire.png",
       "image": [
         91,
         73
@@ -3243,7 +3243,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/campfire.png",
+        "runtime": "data/city/building-shadows/campfire.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           35.718,
@@ -3268,7 +3268,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 9,
-      "runtime": "data/buildings/field_scope.png",
+      "runtime": "data/city/buildings/field_scope.png",
       "image": [
         74,
         97
@@ -3283,7 +3283,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/field_scope.png",
+        "runtime": "data/city/building-shadows/field_scope.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           24.668,
@@ -3308,7 +3308,7 @@
       "base_width": 136.603,
       "gold": 90,
       "stars": 15,
-      "runtime": "data/buildings/globe.png",
+      "runtime": "data/city/buildings/globe.png",
       "image": [
         65,
         90
@@ -3323,7 +3323,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/globe.png",
+        "runtime": "data/city/building-shadows/globe.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           25.911,
@@ -3348,7 +3348,7 @@
       "base_width": 136.603,
       "gold": 120,
       "stars": 15,
-      "runtime": "data/buildings/chest.png",
+      "runtime": "data/city/buildings/chest.png",
       "image": [
         110,
         92
@@ -3363,7 +3363,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/chest.png",
+        "runtime": "data/city/building-shadows/chest.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           55.139,
@@ -3388,7 +3388,7 @@
       "base_width": 273.205,
       "gold": 120,
       "stars": 3,
-      "runtime": "data/buildings/supply_tent.png",
+      "runtime": "data/city/buildings/supply_tent.png",
       "image": [
         222,
         182
@@ -3403,7 +3403,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/supply_tent.png",
+        "runtime": "data/city/building-shadows/supply_tent.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           104.223,
@@ -3428,7 +3428,7 @@
       "base_width": 273.205,
       "gold": 120,
       "stars": 6,
-      "runtime": "data/buildings/dig_site.png",
+      "runtime": "data/city/buildings/dig_site.png",
       "image": [
         217,
         172
@@ -3443,7 +3443,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/dig_site.png",
+        "runtime": "data/city/building-shadows/dig_site.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           90.567,
@@ -3468,7 +3468,7 @@
       "base_width": 273.205,
       "gold": 150,
       "stars": 9,
-      "runtime": "data/buildings/rowboat.png",
+      "runtime": "data/city/buildings/rowboat.png",
       "image": [
         209,
         122
@@ -3483,7 +3483,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/rowboat.png",
+        "runtime": "data/city/building-shadows/rowboat.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           61.508,
@@ -3508,7 +3508,7 @@
       "base_width": 273.205,
       "gold": 180,
       "stars": 9,
-      "runtime": "data/buildings/cart.png",
+      "runtime": "data/city/buildings/cart.png",
       "image": [
         172,
         130
@@ -3523,7 +3523,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/cart.png",
+        "runtime": "data/city/building-shadows/cart.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           32.067,
@@ -3548,7 +3548,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 6,
-      "runtime": "data/buildings/turtle.png",
+      "runtime": "data/city/buildings/turtle.png",
       "image": [
         74,
         52
@@ -3563,7 +3563,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/turtle.png",
+        "runtime": "data/city/building-shadows/turtle.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           15.902,
@@ -3588,7 +3588,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 6,
-      "runtime": "data/buildings/toucan.png",
+      "runtime": "data/city/buildings/toucan.png",
       "image": [
         52,
         97
@@ -3603,7 +3603,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/toucan.png",
+        "runtime": "data/city/building-shadows/toucan.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           17.202,
@@ -3628,7 +3628,7 @@
       "base_width": 136.603,
       "gold": 60,
       "stars": 9,
-      "runtime": "data/buildings/parrot.png",
+      "runtime": "data/city/buildings/parrot.png",
       "image": [
         51,
         98
@@ -3643,7 +3643,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/parrot.png",
+        "runtime": "data/city/building-shadows/parrot.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           17.202,
@@ -3668,7 +3668,7 @@
       "base_width": 136.603,
       "gold": 90,
       "stars": 12,
-      "runtime": "data/buildings/monkey.png",
+      "runtime": "data/city/buildings/monkey.png",
       "image": [
         75,
         80
@@ -3683,7 +3683,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/monkey.png",
+        "runtime": "data/city/building-shadows/monkey.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           15.875,
@@ -3708,7 +3708,7 @@
       "base_width": 136.603,
       "gold": 90,
       "stars": 12,
-      "runtime": "data/buildings/capybara.png",
+      "runtime": "data/city/buildings/capybara.png",
       "image": [
         59,
         63
@@ -3723,7 +3723,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/capybara.png",
+        "runtime": "data/city/building-shadows/capybara.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           18.362,
@@ -3748,7 +3748,7 @@
       "base_width": 136.603,
       "gold": 15,
       "stars": 0,
-      "runtime": "data/buildings/boulder.png",
+      "runtime": "data/city/buildings/boulder.png",
       "image": [
         78,
         85
@@ -3763,7 +3763,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/boulder.png",
+        "runtime": "data/city/building-shadows/boulder.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           26.9,
@@ -3788,7 +3788,7 @@
       "base_width": 136.603,
       "gold": 120,
       "stars": 18,
-      "runtime": "data/buildings/crystal.png",
+      "runtime": "data/city/buildings/crystal.png",
       "image": [
         64,
         79
@@ -3803,7 +3803,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/crystal.png",
+        "runtime": "data/city/building-shadows/crystal.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           14.064,
@@ -3828,7 +3828,7 @@
       "base_width": 273.205,
       "gold": 60,
       "stars": 3,
-      "runtime": "data/buildings/mossy_rocks.png",
+      "runtime": "data/city/buildings/mossy_rocks.png",
       "image": [
         180,
         184
@@ -3843,7 +3843,7 @@
       "about": "Place this treasure anywhere on open grass.",
       "road": false,
       "shadow": {
-        "runtime": "data/building-shadows/mossy_rocks.png",
+        "runtime": "data/city/building-shadows/mossy_rocks.png",
         "source": "art/building-catalogue/relic_rush_buildings.blend",
         "pivot": [
           69.351,

@@ -244,7 +244,7 @@ dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.
 	@mkdir -p dist/$(1)
 	$$(EMCC) $$(WEB_FLAGS) $(LUA_FLAGS) -DGAME_DIR='"/game"' -DGAME_DATA_DIR='"/data"' -DGAME_LUA_DIR='"/lua"' -DENGINE_DIR='"/engine"' -o $$@ \
 	    engine/launcher.c $(WEB_OBJ) \
-	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua $(foreach f,$(ENGINE_LUA),--preload-file $(f)@/engine/$(notdir $(f))) --preload-file engine/data/match3.png@/engine/data/match3.png
+	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua $(foreach f,$(ENGINE_LUA),--preload-file $(f)@/engine/$(notdir $(f))) --preload-file engine/data@/engine/data
 endef
 $(foreach g,$(GAMES),$(eval $(call WEB_RULES,$(g))))
 

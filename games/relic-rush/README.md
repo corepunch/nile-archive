@@ -55,10 +55,12 @@ vertically. Interior gems fall straight down whenever their cell below is
 empty and movable, and slide diagonally only when that cell is occupied,
 locked or missing. Locks still route gems around their sides.
 
-`data/match3.png` holds the board's backgrounds, pieces, blockers, materials,
-and effects. The HUD uses `data/match3-hud.png`, and the six campaign
-bonus pieces and sockets use `data/bonus-gems.png`.
-`python3 tools/match3_atlas.py` rebuilds both atlases from their source art.
+The board's art is one atlas per kind in `data/board/`: `pieces.png`,
+`blockers.png`, `cells.png`, `boosters.png` (tools and the six campaign
+bonuses), `hud.png` and `fx.png`. Its backgrounds are separate JPEGs in
+`data/board/backs/`. `python3 tools/match3_atlas.py` rebuilds the atlases from
+the registered sprites in `art/registered/`; [Asset layout](../../docs/ASSET_LAYOUT.md)
+describes the folders.
 `--default-match3` previews the engine's neutral skin.
 
 
@@ -436,7 +438,7 @@ effects and the debug entry points are the engine's (`engine/match3_game.lua`,
 `engine/match3_vfx.lua`, `engine/match3_debug.lua`); this folder is data and art.
 
 - `data/game.json`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop, level list), the piece packs and the dialogue scale.
-- `data/town.json`: the town screen's layout and notices.
+- `data/city/town.json`: the town screen's layout and notices.
 - `lua/state.lua`: the shared state table (`R`) from the engine.
 - `lua/art.lua`: named authored states, control-state selection and the in-game catalogue.
 - `lua/rules.lua`: piece identities, the economy slots and rewards over the engine's match-3 rules.
@@ -506,7 +508,7 @@ free; guides remain until Confirm/Cancel. See the
 ## Town screen
 
 The island is the engine's [shared town screen](../../docs/TOWN.md), laid out by
-`data/town.json`. Tapping a building shows its name in a word bubble; holding
+`data/city/town.json`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
 
 The town bottom row has a large central Play button and equal smaller Build

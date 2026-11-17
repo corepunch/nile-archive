@@ -16,26 +16,34 @@ for field, key in [("tools", "tools"), ("states", "tool_states")]:
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
+# Registered sprites ship packed in the typed atlases (data/board/<kind>.png).
+atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
+registered = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "art/registered").rglob("*") if p.is_file())
+shipped = set(actual) | set(registered)
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
 pieces = [*resources["slots"], *resources["from_campaign"]]
 assert re.findall(r'"([^"]+)"', declaration) == pieces
 assert all((ROOT / resources[key]).is_file() for key in ("source", "prompt"))
 for name in pieces:
-    path = f"data/resource-pieces/{name}.png"
-    assert path in actual and f"`{name}`" in doc
+    path = f"art/registered/resource-pieces/{name}.png"
+    assert path in shipped and f"`{name}`" in doc
 wallet = manifest["wallet_icons"]
 assert all((ROOT / wallet[key]).is_file() for key in ("source", "prompt", "review"))
 declaration = re.search(r"A\.wallet_icons\s*=\s*\{([^}]+)\}", art).group(1)
-assert {name: f"data/resource-pieces/{key}.png" for name, key in re.findall(r'(\w+)="([^"]+)"', declaration)} == wallet["runtime"]
+assert {name: f"art/registered/resource-pieces/{key}.png" for name, key in re.findall(r'(\w+)="([^"]+)"', declaration)} == wallet["runtime"]
 for path in wallet["runtime"].values():
-    assert path in actual and f"`{Path(path).stem}`" in doc
+    assert path in shipped and f"`{Path(path).stem}`" in doc
 campaign = manifest["campaign_pieces"]
 for name, unlock in (manifest["resource_unlocks"] | manifest["featured_pieces"]).items():
-    assert unlock["runtime"] in actual and f"`{name}`" in doc
+    assert unlock["runtime"] in shipped and f"`{name}`" in doc
     assert all((ROOT / unlock[key]).is_file() for key in ("source", "registration") if key in unlock)
 declaration = re.search(r"A\.resource_upgrades = \{([^}]+)\}", art).group(1)
-upgrades = {quoted or bare: "data/" + path for quoted, bare, path in
+def registered_tile(frame):
+    pack, kind = frame.rsplit("-", 1)
+    assert atlas["frames"][frame]["atlas"] == "pieces", frame
+    return f"art/registered/tile-sets/{pack}/{kind}.png"
+upgrades = {quoted or bare: registered_tile(frame) for quoted, bare, frame in
             re.findall(r'(?:\["([^"]+)"\]|(\w+))\s*=\s*"([^"]+)"', declaration)}
 assert upgrades == {name: item["runtime"] for name, item in manifest["resource_unlocks"].items()
                     if name not in pieces and item["runtime"] != campaign["runtime"]}, "Runtime upgrades need catalogue coverage"
@@ -43,7 +51,7 @@ declaration = re.search(r"A\.campaign_resources = \{([^}]+)\}", art).group(1)
 campaign_resources = set(re.findall(r'"([^"]+)"', declaration))
 assert campaign_resources == {"apple"} | {name for name, item in
     (manifest["resource_unlocks"] | manifest["featured_pieces"]).items() if item["runtime"] == campaign["runtime"]}
-assert campaign["runtime"] in actual
+assert campaign["runtime"] in shipped
 assert all((ROOT / campaign[key]).is_file() for key in ("source", "edit_target", "prompt", "review"))
 revised_pieces = set()
 for revision in campaign["revisions"]:
@@ -83,13 +91,12 @@ for tool in manifest["tools"]:
         expected.add(tool + "-" + state)
         assert '"' + tool + '"' in art and '"' + state + '"' in art
 assert expected == set(manifest["assets"]), "Missing or uncatalogued atlas state"
-atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
 for name, asset in manifest["assets"].items():
     assert "`" + name + "`" in doc, f"Undocumented atlas state: {name}"
     assert len(asset["box"]) == 4
     if asset.get("atlas_frame"):
         assert asset["atlas_frame"] in atlas[asset.get("atlas_section", "board_theme")]
-        assert asset["runtime"] == "data/match3.png"
+        assert asset["runtime"] == "data/board/" + atlas["frames"][asset["atlas_frame"]]["atlas"] + ".png"
         continue
     data = (ROOT / asset["runtime"]).read_bytes()
     assert data[:8] == b"\x89PNG\r\n\x1a\n"
@@ -109,12 +116,12 @@ for tool in manifest["tools"]:
         key = tool + "-" + state
         asset = manifest["assets"][key]
         assert asset["source"] == buttons["source"] and asset["fit"] == "square-button"
-        assert key in atlas["hud"]["frames"] and key not in atlas["frames"]
+        assert atlas["frames"][key]["atlas"] == "boosters" and "boosters" in atlas["hud"]
 assert (ROOT / manifest["cell_mask"]["source"]).is_file(), "Missing renderer-authored cell mask"
 assert (ROOT / manifest["cell_mask"]["runtime"]).is_file(), "Missing runtime cell mask"
 for pack in manifest["packs"]:
     for kind in range(len(kinds)):
-        assert (ROOT / f"data/tile-sets/{pack}/{kind}.png").is_file()
+        assert (ROOT / f"art/registered/tile-sets/{pack}/{kind}.png").is_file()
 hud = json.loads((ROOT / manifest["expedition_hud"]).read_text())
 assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | {"score", "complete", "life"}
 for asset in [hud["controls"], hud["retired_portrait"]]:
@@ -128,7 +135,7 @@ assert set(nav["icons"])=={kind+"-"+state for kind in ("build","play","levels") 
 for name,asset in nav["icons"].items():
     assert "`"+name+"`" in doc
     assert (ROOT/asset["runtime"]).is_file()
-assert not (ROOT / "data/characters/elena-investigating.png").exists(), "retired portrait must not ship"
+assert not (ROOT / "data/story/characters/elena-investigating.png").exists(), "retired portrait must not ship"
 buildings = json.loads((ROOT / manifest['buildings']).read_text())
 assert (ROOT / buildings['source']).is_file()
 assert (ROOT / buildings['registration']).is_file()
@@ -137,7 +144,7 @@ assert len({b['key'] for b in buildings['items']}) == 96
 definitions = (ROOT / 'lua/buildings.lua').read_text()
 building_doc = (ROOT / 'docs/building-catalogue.md').read_text()
 for i, b in enumerate(buildings['items']):
-    assert b['id'] == i and b['runtime'] in actual
+    assert b['id'] == i and b['runtime'] in shipped
     assert (ROOT / b['source']).is_file(), b['key']
     assert all(n > 0 and n % 1 == 0 for n in b['size'])
     assert b['base_width'] > 0 and len(b['pivot']) == 2
@@ -168,7 +175,7 @@ def silhouette(alpha):
     return width / height, spans
 board_ratio, board_spans = silhouette(mask)
 for pack in ['relics', 'jewels']:
-    image = Image.open(ROOT / f'data/tile-sets/{pack}/0.png').convert('RGBA')
+    image = Image.open(ROOT / f'art/registered/tile-sets/{pack}/0.png').convert('RGBA')
     ratio, spans = silhouette(image.getchannel('A'))
     assert abs(ratio / board_ratio - 1) < .08, f'{pack}: hex must match board aspect'
     assert all(abs(a - b) < .14 for a, b in zip(spans, board_spans)), f'{pack}: six-sided flat-top contour must match board'
@@ -182,38 +189,38 @@ tiles = manifest["tiles"]
 spec = json.loads((ROOT.parents[1] / tiles["spec"]).read_text())
 declaration = re.search(r"A\.floor_tiles = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == tiles["frames"] == list(spec["tiles"])
-assert "games/relic-rush/data/board-tiles" in spec["outputs"]
+assert "games/relic-rush/art/registered/board-tiles" in spec["outputs"]
 for name in spec["tiles"]:
-    assert f"data/board-tiles/{name}.png" in actual and f"`tile-{name}`" in doc, name
+    assert f"art/registered/board-tiles/{name}.png" in shipped and f"`tile-{name}`" in doc, name
 subprocess.run([sys.executable, str(ROOT.parents[1] / tiles["generator"]), "--check"], check=True)
 frame = manifest["board_frame"]
 for review in ("review", "decoration_review", "reference", "decorations"):
     assert (ROOT.parents[1] / frame[review]).is_file()
-assert frame["stone"] in actual and (ROOT / frame["layout"]).is_file()
+assert frame["stone"] in shipped and (ROOT / frame["layout"]).is_file()
 assert 'require("board_frame_atlas")' in art
 subprocess.run([sys.executable, str(ROOT.parents[1] / frame["generator"]),
                 "--game", ROOT.name, "--check", str(ROOT / frame["stone"])], check=True)
 finale = manifest["finale"]
 for name, item in finale["assets"].items():
     assert f'`{name}`' in doc and f'"{name}"' in art
-    assert item["runtime"] in actual
+    assert item["runtime"] in shipped
     assert all((ROOT / item[key]).is_file() for key in ("source", "prompt"))
 subprocess.run([sys.executable, str(ROOT / finale["registration"]), "--check"], check=True)
 
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
 assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian'}
-assert all(path in actual for path in manifest['story']['cast'].values())
+assert all(path in shipped for path in manifest['story']['cast'].values())
 assert manifest['story']['states'] == ['speaking','listening','thought','shout']
 assert 'A.story=' in art and '31.5' in doc
 
 quest = manifest["quest_objects"]
-assert quest["runtime"] in actual
+assert quest["runtime"] in shipped
 declaration = re.search(r"A\.quest_objects = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == quest["slots"]
 for key in quest["slots"]:
     assert "`" + key + "`" in doc
-    path = quest["shared_rewards"].get(key, f"data/finds/{key}.png")
-    assert path in actual
+    path = quest["shared_rewards"].get(key, f"art/registered/finds/{key}.png")
+    assert path in shipped
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
 assert all((ROOT / quest["gear_reward"][key]).is_file() for key in ("source", "prompt"))
@@ -223,7 +230,7 @@ rewards = quest["separate_rewards"]
 declaration = re.search(r"A\.separate_rewards = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == list(rewards)
 for name, reward in rewards.items():
-    assert reward["runtime"] == f"data/finds/{name}.png" and reward["runtime"] in actual
+    assert reward["runtime"] == f"art/registered/finds/{name}.png" and reward["runtime"] in shipped
     assert all((ROOT / reward[key]).is_file() for key in ("source", "prompt"))
 campaign = (ROOT / "lua/campaign.lua").read_text()
 sheets = quest["story_pieces"]["atlases"]
@@ -233,7 +240,7 @@ board_slots = {}
 for sheet in sheets:
     assert all((ROOT / sheet[key]).is_file() for key in ("source", "prompt"))
     for name, item in sheet["items"].items():
-        assert item["runtime"] == f"data/story-pieces/{name}.png" and item["runtime"] in actual
+        assert item["runtime"] == f"art/registered/story-pieces/{name}.png" and item["runtime"] in shipped
         for board in item["boards"]:
             assert board not in board_slots, f"Multiple story pieces on board {board}"
             board_slots[board] = name, item["kind"]
@@ -251,7 +258,7 @@ subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], c
 subprocess.run([sys.executable, str(ROOT / "tools/prepare_resource_pieces.py"), "--check"], check=True)
 
 result_icons = manifest["result_icons"]
-assert result_icons["runtime"] in actual
+assert result_icons["runtime"] in shipped
 declaration = re.search(r"A\.result_icons = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == list(result_icons["icons"])
 for key in result_icons["icons"]:

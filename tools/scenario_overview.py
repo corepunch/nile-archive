@@ -75,7 +75,7 @@ def quest_icons(game):
     """Relic Rush's recovered-object icons for the scenario cards."""
     art = (ROOT / f'games/{game}/lua/art.lua').read_text()
     m = re.search(r'A\.quest_objects = \{([^}]*)\}', art)
-    atlas = ROOT / f'games/{game}/data/quest-objects.png'
+    atlas = ROOT / f'games/{game}/art/registered/quest-objects.png'
     if not m or not atlas.is_file():
         return {}
     sheet = Image.open(atlas)
@@ -95,6 +95,7 @@ class Page:
         self.d = data
         self.game = data['game']
         self.data_dir = ROOT / f'games/{self.game}/data'
+        self.registered_dir = ROOT / f'games/{self.game}/art/registered'   # sprites packed into atlases
         self.cast = {c['id']: c for c in data['cast']}
         self.portraits = {c['id']: picture(self.data_dir / c['portrait'], 160, 'PNG') if c.get('portrait') else None
                           for c in data['cast']}
@@ -161,7 +162,7 @@ def match3_section(data, title):
         if collection := lv.get('collection'):
             key = collection['key']
             folder = 'resource-pieces' if collection['resource'] else 'story-pieces'
-            icon = picture(page.data_dir / f'{folder}/{key}.png', 96, 'PNG')
+            icon = picture(page.registered_dir / f'{folder}/{key}.png', 96, 'PNG')
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip">{img}Collect <b>{collection["count"]} {STORY_PIECE_NAMES[key]}</b></span>')
             palette = f' · {collection["regular"]} regular types'
@@ -169,7 +170,7 @@ def match3_section(data, title):
                 palette += ' + 1 story type'
         if lv.get('quest'):
             key = lv['quest']['key']
-            icon = icons.get(key) or picture(page.data_dir / f'finds/{key}.png', 96, 'PNG')
+            icon = icons.get(key) or picture(page.registered_dir / f'finds/{key}.png', 96, 'PNG')
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip award">{img}Recovers <b>{esc(lv["quest"]["name"])}</b></span>')
         if lv.get('wonder'):
@@ -191,7 +192,7 @@ def match3_section(data, title):
                 key = item['key']
                 if key not in resources:
                     path = 'tile-sets/resources/4.png' if key == 'cut-blocks' else f'resource-pieces/{key}.png'
-                    resources[key] = picture(page.data_dir / path, 44, 'PNG')
+                    resources[key] = picture(page.registered_dir / path, 44, 'PNG')
                 img = f'<img src="{resources[key]}" alt="">' if resources[key] else ''
                 chips.append(f'<span class="chip">{img}{esc(item["name"])} <b>+{item["yield"]} {esc(item["currency"])}</b></span>')
         if lv.get('resource_unlock') == 'water':
@@ -210,7 +211,7 @@ def match3_section(data, title):
             src = picture(FRAMES / f'scenario-{game}-find-{n:02d}.png', 300)
             if not src:
                 name = reveal_spec['picture'].removeprefix('find-')
-                src = picture(page.data_dir / f'finds/{name}.png', 300, 'PNG')
+                src = picture(page.registered_dir / f'finds/{name}.png', 300, 'PNG')
             if src:
                 name = esc(lv['quest']['name'])
                 reveal = (f'<figure class="reveal"><img src="{src}" alt="{name} uncovered">'
@@ -231,7 +232,7 @@ def match3_section(data, title):
         elif lv.get('signal') == 'landing':
             scene = picture(FRAMES / 'scenario-relic-rush-landing.png', 360)
             if not scene:
-                scene = picture(page.data_dir / 'safe-landing.jpg', 360)
+                scene = picture(page.data_dir / 'story/finale/safe-landing.jpg', 360)
             if scene:
                 reveal += (f'<figure class="reveal"><img src="{scene}" alt="Ines lifting her lantern on the safe landing">'
                            '<figcaption>First clear: Ines waits and answers from the landing with the same three flashes.</figcaption></figure>')

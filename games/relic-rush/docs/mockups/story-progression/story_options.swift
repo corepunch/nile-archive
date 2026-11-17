@@ -131,14 +131,14 @@ struct Art {
     let portraits: [String: CGImage]
     let buildings: [String: CGImage]
     init() throws {
-        island = try load("data/island.jpg")
+        island = try load("data/city/island.jpg")
         board = try load("docs/screenshots/hex-first.jpg")
         town = try load("docs/screenshots/phone-island.jpg")
         portraits = try Dictionary(uniqueKeysWithValues: ["mara", "elena", "tomas", "adrian"].map {
-            ($0, try load("data/characters/\($0).png"))
+            ($0, try load("data/story/characters/\($0).png"))
         })
         buildings = try Dictionary(uniqueKeysWithValues: ["well", "map_room", "camp", "archive"].map {
-            ($0, try load("data/buildings/\($0).png"))
+            ($0, try load("data/city/buildings/\($0).png"))
         })
     }
 }

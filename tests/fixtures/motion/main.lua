@@ -7,7 +7,7 @@ local bars, badge, counter = {}, {pos = vec2(760, 760), scale = 1}, {shown = 0, 
 local label, big
 
 local function init()
-    local sans, bold = font.load("fonts/PT_Sans-Web-Regular.ttf"), font.load("fonts/PT_Sans-Web-Bold.ttf")
+    local sans, bold = font.load("common/fonts/PT_Sans-Web-Regular.ttf"), font.load("common/fonts/PT_Sans-Web-Bold.ttf")
     label = style{font = sans, size = 22, fill = color.hex(0x12393B)}
     big = style{font = bold, size = 46, fill = color.hex(0xF4E8CA)}
     for i = 1, 6 do bars[i] = {y = 110 + (i - 1) * 86, x = -560, alpha = 0} end

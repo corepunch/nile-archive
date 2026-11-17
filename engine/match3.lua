@@ -65,19 +65,40 @@ function E.expedition_form(title, intro, close, detail_color, paint_level)
     }}
 end
 
--- Every named image borrows the atlas's GPU texture.
-local atlases = {}
+-- A skin is one flat table of named images. Its definition lists typed
+-- atlases ({path=, frames=}, each a set drawn together in one style) under
+-- sheets, and standalone images such as backgrounds under images; a plain
+-- {path=, frames=} is a definition of one sheet. engine=true reads every path
+-- from the engine's resource directory. Every named image borrows its sheet's
+-- GPU texture.
+local atlases, sheets = {}, {}
+local function load_sheet(sheet, engine)
+    local id = (engine and "engine:" or "") .. sheet.path
+    if not sheets[id] then
+        sheets[id] = (engine and texture.load_engine or texture.load)(sheet.path)
+        assert(sheets[id].tex, "cannot load match3 atlas: " .. sheet.path)
+    end
+    return sheets[id]
+end
 function E.atlas(definition)
     local key = definition or "default"
     if atlases[key] then return atlases[key] end
-    local atlas = definition and texture.load(definition.path) or texture.match3_default()
-    assert(atlas.tex, "cannot load match3 atlas")
-    local frames = definition and definition.frames or require("match3.frames")
-    local images = {atlas=atlas}
-    for name, box in pairs(frames) do
-        local image = texture.region(atlas, rect(box[1], box[2], box[3], box[4]))
-        assert(image.tex, "invalid match3 frame: " .. name)
-        images[name] = image
+    definition = definition or require("match3.frames")
+    local images, load = {}, definition.engine and texture.load_engine or texture.load
+    for _, sheet in ipairs(definition.sheets or {definition}) do
+        local atlas = load_sheet(sheet, definition.engine)
+        for name, box in pairs(sheet.frames) do
+            local image = texture.region(atlas, rect(box[1], box[2], box[3], box[4]))
+            assert(image.tex, "invalid match3 frame: " .. name)
+            images[name] = image
+        end
+    end
+    for name, path in pairs(definition.images or {}) do
+        images[name] = load(path)
+        assert(images[name].tex, "cannot load match3 image: " .. path)
+    end
+    for name, target in pairs(definition.aliases or {}) do
+        images[name] = assert(images[target], "match3 alias of a missing frame: " .. target)
     end
     atlases[key] = images
     return images
@@ -104,7 +125,7 @@ function E.hud(override)
 end
 
 -- Both campaign skins use the same generated action atlas.
-local action_atlas = {path="campaign-buttons.png", frames={}}
+local action_atlas = {path="common/buttons.png", frames={}}
 local action_states = {"normal", "selected", "pressed", "hover", "disabled"}
 for col, name in ipairs{"build", "play", "levels", "pause"} do
     for row, state in ipairs(action_states) do

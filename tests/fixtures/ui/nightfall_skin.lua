@@ -1,6 +1,6 @@
 -- A night skin: square navy panels, teal buttons, a filled-square checkbox.
 return ui.skin{
-    fonts = {display = "fonts/LilitaOne-Regular.ttf"},
+    fonts = {display = "common/fonts/LilitaOne-Regular.ttf"},
     colors = {
         ink = "#E6F6F6", navy = "#142D42", edge = "#398B9B", deep = "#234A60",
         hot = "#38738B", teal = "#40BDB6", glow = "#77E2DC",

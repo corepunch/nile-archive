@@ -4,25 +4,25 @@
     "tools/board_grain.py": "c3c3000f33a3db12df3395290e9f562f8a1f6115874a4db6ff640f78928b947d"
   },
   "inputs": {
-    "engine/art/board-tiles/tiles.json": "ada7066bb5124c41d61be64aa310a9ac3e1555ad053c081c20cf7c0e569d4ea9",
+    "engine/art/board-tiles/tiles.json": "ca384d83d174674adc6623626f46bfc56038d2d9ee27b90c44b160ceb6ecb7ea",
     "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0"
   },
   "outputs": {
-    "games/relic-rush/data/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
-    "games/relic-rush/data/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
-    "games/relic-rush/data/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
-    "games/relic-rush/data/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",
-    "games/relic-rush/data/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
-    "games/relic-rush/data/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
-    "games/relic-rush/data/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
-    "games/relic-rush/data/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b",
-    "games/christmas-market/data/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
-    "games/christmas-market/data/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
-    "games/christmas-market/data/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
-    "games/christmas-market/data/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",
-    "games/christmas-market/data/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
-    "games/christmas-market/data/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
-    "games/christmas-market/data/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
-    "games/christmas-market/data/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b"
+    "games/relic-rush/art/registered/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
+    "games/relic-rush/art/registered/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
+    "games/relic-rush/art/registered/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
+    "games/relic-rush/art/registered/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",
+    "games/relic-rush/art/registered/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
+    "games/relic-rush/art/registered/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
+    "games/relic-rush/art/registered/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
+    "games/relic-rush/art/registered/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b",
+    "games/christmas-market/art/registered/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
+    "games/christmas-market/art/registered/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
+    "games/christmas-market/art/registered/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
+    "games/christmas-market/art/registered/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",
+    "games/christmas-market/art/registered/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
+    "games/christmas-market/art/registered/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
+    "games/christmas-market/art/registered/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
+    "games/christmas-market/art/registered/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b"
   }
 }

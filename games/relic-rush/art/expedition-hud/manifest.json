@@ -16,7 +16,7 @@
         512,
         512
       ],
-      "runtime": "data/expedition-hud/pause-normal.png",
+      "runtime": "art/registered/expedition-hud/pause-normal.png",
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Settings gear: normal (legacy pause API key)"
     },
@@ -27,7 +27,7 @@
         512,
         1024
       ],
-      "runtime": "data/expedition-hud/pause-selected.png",
+      "runtime": "art/registered/expedition-hud/pause-selected.png",
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Settings gear: selected (legacy pause API key)"
     },
@@ -38,7 +38,7 @@
         1536,
         512
       ],
-      "runtime": "data/expedition-hud/pause-pressed.png",
+      "runtime": "art/registered/expedition-hud/pause-pressed.png",
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Settings gear: pressed (legacy pause API key)"
     },
@@ -49,7 +49,7 @@
         1024,
         512
       ],
-      "runtime": "data/expedition-hud/pause-hover.png",
+      "runtime": "art/registered/expedition-hud/pause-hover.png",
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Settings gear: hover (legacy pause API key)"
     },
@@ -60,7 +60,7 @@
         1024,
         1024
       ],
-      "runtime": "data/expedition-hud/pause-disabled.png",
+      "runtime": "art/registered/expedition-hud/pause-disabled.png",
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Settings gear: disabled (legacy pause API key)"
     },
@@ -71,7 +71,7 @@
         417,
         765
       ],
-      "runtime": "data/expedition-hud/score.png",
+      "runtime": "art/registered/expedition-hud/score.png",
       "meaning": "Remaining score goal"
     },
     "complete": {
@@ -81,7 +81,7 @@
         811,
         765
       ],
-      "runtime": "data/expedition-hud/complete.png",
+      "runtime": "art/registered/expedition-hud/complete.png",
       "meaning": "Completed objective"
     },
     "life": {
@@ -91,7 +91,7 @@
         1536,
         1024
       ],
-      "runtime": "data/expedition-hud/life.png",
+      "runtime": "art/registered/expedition-hud/life.png",
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Life count; regenerates one life per 30 minutes"
     }

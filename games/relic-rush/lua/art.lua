@@ -27,9 +27,10 @@ A.campaign_pieces = {
     "silver-coin", "ring", "scarab", "harp", "sandal",
 }
 A.campaign_resources = {"apple", "helmet", "shrimp", "silver-coin", "ring", "scarab", "harp", "sandal"}
+-- Upgraded resources reuse pieces of the optional packs: their pieces-atlas frames.
 A.resource_upgrades = {
-    ["cut-blocks"]="tile-sets/resources/4.png",
-    grain="tile-sets/resources/5.png", quartz="tile-sets/relics/4.png",
+    ["cut-blocks"]="resources-4",
+    grain="resources-5", quartz="relics-4",
 }
 -- Local comparison art uses the exact source crops and the same board states.
 A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
@@ -59,28 +60,21 @@ function A.skin()
     return match3.skin(require("match3_skin"))
 end
 
--- Row 1 holds the board gems. The next five hold the generated toolbar states.
-local function bonus_frames()
-    local frames = {}
-    for col, key in ipairs(A.bonus_atlas_order) do
-        frames[key] = {(col - 1) * 128, 0, 128, 128}
-        for row, state in ipairs(A.states) do
-            frames[key .. "-" .. state] = {(col - 1) * 128, row * 128, 128, 128}
-        end
-    end
-    return {path="bonus-gems.png", frames=frames}
-end
-local bonus_atlas = bonus_frames()
+-- The game's own atlases, even when the board borrows the engine's neutral skin.
+local function own_board() return require("match3").skin(require("match3_skin")) end
+local function own_hud() return require("match3").hud(require("match3_hud")) end
 
 function A.load_hud()
     local match3 = require("match3")
     local neutral = app.arg("default-match3")
     local theme = match3.hud(not neutral and require("match3_hud") or nil)
     assert(neutral or theme.signboard, "missing jade signboard")
-    local hud = {}
+    local hud, bonus = {}, own_hud()
     for key, image in pairs(theme) do hud[key] = image end
-    local bonus = match3.atlas(bonus_atlas)
-    for key in pairs(bonus_atlas.frames) do hud[key] = bonus[key] end
+    -- Every bonus column's toolbar states, from the boosters atlas.
+    for _, key in ipairs(A.bonus_atlas_order) do
+        for _, state in ipairs(A.states) do hud[key .. "-" .. state] = bonus[key .. "-" .. state] end
+    end
     return hud
 end
 
@@ -107,49 +101,33 @@ end
 function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
-    local bonus = require("match3").atlas(bonus_atlas)
-    for _, key in ipairs(A.bonus_atlas_order) do textures[key] = bonus[key] end
+    local own, hud = own_board(), own_hud()
+    local function piece(name) return assert(own[name], "missing pieces frame: " .. name) end
+    for _, key in ipairs(A.bonus_atlas_order) do textures[key] = piece(key) end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    elements_view.load(textures, require("match3").skin(require("match3_skin")))
-    for _, key in ipairs(A.floor_tiles) do
-        textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
-    end
+    elements_view.load(textures, own)
+    for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
     elements_view.load_frame(textures, A.board_frame)
-    local result_atlas = texture.load("result-icons.png")
-    for i, key in ipairs(A.result_icons) do
-        textures[key] = texture.region(result_atlas, rect((i - 1) * 128, 0, 128, 128))
-    end
+    for _, key in ipairs(A.result_icons) do textures[key] = assert(hud[key], "missing hud frame: " .. key) end
     for _, key in ipairs(A.quest_objects) do
-        if key ~= "timber" then textures["find-" .. key] = texture.load("finds/" .. key .. ".png") end
+        if key ~= "timber" then textures["find-" .. key] = piece("find-" .. key) end
     end
-    for _, key in ipairs(A.separate_rewards) do
-        textures["find-" .. key] = texture.load("finds/" .. key .. ".png")
-    end
-    for _, key in ipairs(A.story_pieces) do
-        textures["story-" .. key] = texture.load("story-pieces/" .. key .. ".png")
-    end
-    for _, key in ipairs(A.resource_pieces) do
-        textures["resource-" .. key] = texture.load("resource-pieces/" .. key .. ".png")
-    end
-    local campaign = texture.load("campaign-pieces.png")
-    for i, key in ipairs(A.campaign_pieces) do
-        local col, row = (i - 1) % 5, (i - 1) // 5
-        textures["campaign-" .. key] = texture.region(campaign, rect(col * 128, row * 128, 128, 128))
-    end
+    for _, key in ipairs(A.separate_rewards) do textures["find-" .. key] = piece("find-" .. key) end
+    for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
+    for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
+    for _, key in ipairs(A.campaign_pieces) do textures["campaign-" .. key] = piece("campaign-" .. key) end
     for _, key in ipairs(A.campaign_resources) do
         textures["resource-" .. key] = textures["campaign-" .. key]
     end
     for _, key in ipairs(A.atlas_quest_pieces) do
-        local piece = textures["campaign-" .. key]
-        textures["story-" .. key], textures["find-" .. key] = piece, piece
+        local image = textures["campaign-" .. key]
+        textures["story-" .. key], textures["find-" .. key] = image, image
     end
     for _, key in pairs(A.wallet_icons) do
         local name = "resource-" .. key
-        textures[name] = textures[name] or texture.load("resource-pieces/" .. key .. ".png")
+        textures[name] = textures[name] or piece(name)
     end
-    for key, path in pairs(A.resource_upgrades) do
-        textures["resource-" .. key] = texture.load(path)
-    end
+    for key, frame in pairs(A.resource_upgrades) do textures["resource-" .. key] = piece(frame) end
     local rome_reference = app.arg("rome-reference-art")
     if rome_reference then
         for key, id in pairs(A.rome_reference) do
@@ -160,8 +138,8 @@ function A.load()
         end
     end
     textures["find-timber"] = textures["resource-timber"]
-    textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
-    textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")
+    textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
+    textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
     for _, name in ipairs(A.layers) do load(name) end
     return textures
 end

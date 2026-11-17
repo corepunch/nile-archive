@@ -10,7 +10,7 @@ The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pa
 | `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
-Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild `data/match3.png` with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
+Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild the `data/board/` atlases with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
 The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet uses the `resource-coin` sprite. Built-in ImageGen authored the preview idol's [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
 
@@ -58,7 +58,7 @@ Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
 measured row bands, columns and revision boxes, trim the transparent exterior and
 uniformly fit each object into a centered 128 px cell with a 112 px maximum
 extent (108 px for the winged sandal). The runtime atlas is
-`data/campaign-pieces.png`. The same sprite appears
+`art/registered/campaign-pieces.png`. The same sprite appears
 in matches, refills, resource flights and the guide. The existing selection,
 hint and chain overlays supply their respective states. The game's shop and
 wallet use their own currency artwork. The level 8 first-clear card also uses the
@@ -79,7 +79,7 @@ registration. Resources are trimmed with a four-pixel margin and centred on a
 transparent square. The Rome treasures atlas also supplies the standalone
 Emerald, fitted inside 114 px on a 128 px canvas, and the timber for the
 reward card, fitted inside 285 px on a 320 px canvas. Standalone sprites live in
-`data/resource-pieces/`. Selected, hinted and falling pieces reuse the same
+`art/registered/resource-pieces/`. Selected, hinted and falling pieces reuse the same
 authored sprite with existing motion and separate indicators. Specials use
 their own authored art. The original scenario sheet is still the source of
 the other story pieces below, alongside the trail arrow from the outlined atlas.
@@ -100,15 +100,15 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `scarab` | Bronze beetle with a jade inset, 8 Coins | Board from 21 after the Beached schooner, and guide |
 | `sandal` | Roman leather sandal with a silver wing, 9 Coins | Board from 25 after the Great aviary, and guide |
 | `harp` | Gold lyre with a turquoise inset, 10 Coins | Board from 28 after the Relic museum, and guide |
-| `grain` | Existing Resources wheat bundle (`data/tile-sets/resources/5.png`), 5 Food | Board and guide from 17 |
-| `quartz` | Existing Relics purple crystal (`data/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
+| `grain` | Existing Resources wheat bundle (`art/registered/tile-sets/resources/5.png`), 5 Food | Board and guide from 17 |
+| `quartz` | Existing Relics purple crystal (`art/registered/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
 | `shrimp` | Curled red-orange shrimp, 6 Food | Replaces the water bucket from 27 after the Fountain |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 Leaves and flowers use the same board match and scoring behavior as other
 pieces. Their authored slots carry no wallet yield. The amphora asset serves
 legacy art previews.
-Cut blocks use `data/tile-sets/resources/4.png` (Resources atlas, row 3,
+Cut blocks use `art/registered/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The alternate packs still supply separate grain and quartz sprites at their
 authored orientation and alpha. Selected, hinted and falling pieces use the normal chip
@@ -135,8 +135,8 @@ bucket in its live slot alongside the original story marker.
 
 | Asset | Rule meaning and states | Source and runtime |
 | --- | --- | --- |
-| `signal-plate` | On board 30’s first clear, the recovered signal plate appears at the cleared site before the scene cuts to the landing. | ImageGen [source](../art/finale/signal-plate.png) and [prompt](../art/finale/signal-plate.prompt.txt). Cropped and uniformly fitted into a 128 px sprite with its painted alpha. Runtime `data/signal-plate.png`. |
-| `safe-landing` | After the plate arrives, the first win cuts to Ines holding a lantern on the safe landing. She answers with the three flashes first seen on board 3. Reduced motion shows a steady light. | ImageGen [source](../art/finale/safe-landing.png) and [prompt](../art/finale/safe-landing.prompt.txt). Uncropped 864×1152 JPEG at `data/safe-landing.jpg`. The manifest records the lantern coordinates for the glow. |
+| `signal-plate` | On board 30’s first clear, the recovered signal plate appears at the cleared site before the scene cuts to the landing. | ImageGen [source](../art/finale/signal-plate.png) and [prompt](../art/finale/signal-plate.prompt.txt). Cropped and uniformly fitted into a 128 px sprite with its painted alpha. Runtime `data/story/finale/signal-plate.png`. |
+| `safe-landing` | After the plate arrives, the first win cuts to Ines holding a lantern on the safe landing. She answers with the three flashes first seen on board 3. Reduced motion shows a steady light. | ImageGen [source](../art/finale/safe-landing.png) and [prompt](../art/finale/safe-landing.prompt.txt). Uncropped 864×1152 JPEG at `data/story/finale/safe-landing.jpg`. The manifest records the lantern coordinates for the glow. |
 
 Run `python3 games/relic-rush/tools/prepare_finale_art.py` to register both assets.
 The amber pulses reuse the board’s additive glow, with a shared delay and rhythm.
@@ -171,8 +171,8 @@ the weathered bronze reward. The new board gear uses the same open square bore. 
 record the source and crops.
 
 Run `python3 games/relic-rush/tools/relic_quest_art.py` after the resource registration to build
-the scenario index in `data/quest-objects.png` and the item card props in
-`data/finds/`. Camp Timber uses `data/resource-pieces/timber.png` directly.
+the scenario index in `art/registered/quest-objects.png` and the item card props in
+`art/registered/finds/`. Camp Timber uses `art/registered/resource-pieces/timber.png` directly.
 Separate card props fit within 256 px on a 320×320 canvas. Board 8 uses its
 `pliers` atlas region on the card and in alternate board previews. The intact
 relay cable for board 3 is coiled with two plugs.
@@ -199,7 +199,7 @@ trail arrow chip and marker recovery card use the
 [outlined source sheet](../art/resource-pieces/outlined-atlas.png).
 The manifest records each crop, the boards it appears on and its colour slot.
 Run `python3 games/relic-rush/tools/relic_quest_art.py` to register the individual
-`data/story-pieces/*.png` files. Each crop fits inside 108 px on a centred
+`art/registered/story-pieces/*.png` files. Each crop fits inside 108 px on a centred
 128 × 128 canvas. The [new board review](screenshots/review/expedition-economy/README.md)
 covers both cable silhouettes. The [earlier review](screenshots/review/story-collection/README.md)
 records the preceding sprites and the item cards.
@@ -211,7 +211,7 @@ The collectible sprite shows the outside of the folded note. On the first-clear
 card the open paper reads “WALL UNSAFE” and “I. R.” before the courtyard scene.
 The card uses the exposed crop of the [original sheet](../art/quest-objects/ines-note-states.png)
 and [prompt](../art/quest-objects/ines-note-states.prompt.txt). The manifest
-registers it as `data/finds/note.png` within 228 px on a 320×320 canvas.
+registers it as `art/registered/finds/note.png` within 228 px on a 320×320 canvas.
 
 The earlier excavation art is documented in
 [the silhouette review](screenshots/review/compact-silhouettes/README.md) and
@@ -310,7 +310,7 @@ results stars as the visual reference. The [generation prompt](../art/result-ico
 and [crop bounds and slot order](../art/board-states/manifest.json) record the
 source. Run `python3 games/relic-rush/tools/prepare_result_icons.py` to crop
 both sprites, fit them to 120 px preserving aspect ratio and alpha, and center
-them in two 128 px cells in `data/result-icons.png`. Add `--check` to verify
+them in two 128 px cells in `art/registered/result-icons.png`. Add `--check` to verify
 the exported pixels. The wallet capsule retains its skin-painted feedback.
 See the [results and wallet captures](screenshots/review/discovery-stars/README.md)
 for both phone sizes and reproduction commands.
@@ -359,7 +359,7 @@ the game does not recolour one gem into other kinds.
 | 5 / AMPHORA | Amber amphora | Orange star | Wheat | Ordinary matching kind |
 
 Source: `art/tile-sets/source.png`, six columns × three packs. Runtime:
-`data/tile-sets/{relics,jewels,resources}/{0..5}.png`. Import:
+`art/registered/tile-sets/{relics,jewels,resources}/{0..5}.png`. Import:
 `python3 games/relic-rush/tools/prepare_assets.py` from the repository root.
 Largest-component isolation removes neighbouring sprite fragments before centring
 and resizing; it does not create new colours or states.
@@ -376,7 +376,7 @@ in one built-in ImageGen call. The exact prompt is
 actual generated dimensions and explicit crop boxes; the importer does not assume
 the generator produced a mathematically uniform grid.
 
-Runtime pattern: `data/board-states/<name>.png`, RGBA 128 × 128.
+Runtime pattern: `art/registered/board-states/<name>.png`, RGBA 128 × 128.
 Terrain and ice use the slot's **flat-top** mask. Special gems are
 free-standing artwork.
 The replacement set is authored together in
@@ -442,7 +442,7 @@ blue plaque. Ice textures are recorded here for shared engine diagnostics.
 The eight tiles follow the slots of Cradle of Rome's board sheet and are
 shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
 from [`engine/art/board-tiles/tiles.json`](../../../engine/art/board-tiles/tiles.json)
-into each game's `data/board-tiles/`. Colours and lighting are sampled from the
+into each game's `art/registered/board-tiles/`. Colours and lighting are sampled from the
 first Cradle of Rome's tile sheet: faces lit from the upper left, a thin edge
 light on the parchment, wide cut bevels on the blue and green tablets (lit on
 the upper-left edges, dark on the lower-right) so they read as thick stones,
@@ -455,7 +455,7 @@ Regenerate with `python3 tools/board_tiles.py`; `tools/check_art_catalogue.py`
 fails if a tile is stale. The `--art-states dressing` screen shows all eight, and
 `--level 6 --cell-states` shows them in use on a board.
 
-`frame-stone` (`data/board-frame/stone.png`) trims the active board silhouette
+`frame-stone` (`data/board/frame/stone.png`) trims the active board silhouette
 with six straight runs, six outward joins and six inward joins. Its
 `frame-entrance` region follows the incoming cells. The starter bakes the
 previous frame's bands, seeded grain and cracks with
@@ -513,7 +513,7 @@ timing, arc, trail and landing flash. The socket updates as each gem lands.
 Reduce Motion credits the whole match immediately.
 
 Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to generate
-`data/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
+`art/registered/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
 records the base crop, registration and state recipes. Board gems fit in
 112 × 112 px, with an 88 px limit for the Hammer. Button glyphs are centered
 by their visible shape and scaled to clear the circular inset. The Hammer
@@ -552,7 +552,7 @@ The importer spatially registers each measured button body (plus eight source
 pixels of padding) into a 120×120 area on the existing 128×128 runtime canvas,
 preserving authored alpha and all five painted states. This corrects the source's
 roughly 4% width excess; no visual state is generated by processing.
-Runtime paths remain `data/board-states/{pickaxe,dynamite,sunburst}-{state}.png`.
+Runtime paths remain `art/registered/board-states/{pickaxe,dynamite,sunburst}-{state}.png`.
 `lua/art.lua` specifies 76×76 touch targets, and `lua/board.lua` draws each texture
 into a square with equal padding. The row begins at y=784 plus tall-phone offset;
 labels sit below the buttons and counters stay at their upper-right corners.
@@ -580,7 +580,7 @@ shows its low-move state when needed.
 Resource counts include pending earnings, and matched pieces land on their
 currency icons. [Current board](screenshots/bonus-toolbar-phone.jpg)
 
-The earlier jade `signboard` is a static backplate packed in `data/match3-hud.png`.
+The earlier jade `signboard` is a static backplate packed in `data/board/hud.png`.
 Moves, goal counts and Settings share its face. A green check replaces a
 completed count. Collected idol icons bounce on landing, and the Moves
 medallion turns red over the last five moves. Settings retains the existing
@@ -605,7 +605,7 @@ goals reserve 64 units beside the button; city currency pills use 76-unit spacin
 and 72-unit widths to stay clear of it. The smoke run opens board Pause at the
 new left edge and city Pause at the new lower edge, outside the old touch area.
 [Reviewed headers at both phone sizes](review/larger-pause/README.md).
-Runtime: `data/expedition-hud/<name>.png`, 128×128 RGBA.
+Runtime: `art/registered/expedition-hud/<name>.png`, 128×128 RGBA.
 
 `art/expedition-hud/elena-investigating.png` is a separate ImageGen identity edit
 of the existing Elena portrait: she examines a sun fragment through a magnifying
@@ -641,7 +641,7 @@ pause, guide and the island.
 | REJECT | Existing artwork moves and returns with zero moves spent. Against a chain only the incoming gem moves (`engine/match3.lua`). Capture with `build/test/all --suite=relic-rush 'reel chain-reject'`. |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
 | FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
-| Last tablets | Cradle of Rome 2's original `Star_02_16.png` and `Star_16.png` are packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in `data/match3.png`. `engine/match3_vfx.lua` sweeps them clockwise along the bevel over a soft blue wash. One to three tablets receive the first pulse with the move suggestion. The cue repeats every nine seconds until board input. Reduce Motion hides it. Reproduce the phone captures with `build/test/all --suite=relic-rush 'reel relic-rush-tablet-hints'`. [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow). |
+| Last tablets | Cradle of Rome 2's original `Star_02_16.png` and `Star_16.png` are packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in `data/board/fx.png`. `engine/match3_vfx.lua` sweeps them clockwise along the bevel over a soft blue wash. One to three tablets receive the first pulse with the move suggestion. The cue repeats every nine seconds until board input. Reduce Motion hides it. Reproduce the phone captures with `build/test/all --suite=relic-rush 'reel relic-rush-tablet-hints'`. [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow). |
 | Layer break | A hit that removes ice, a double tablet's green face or a blue tablet breaks that layer's own art (`tile-ice`, `tile-tablet-double`, `tile-tablet-single` levels) into about eight Voronoi shards (`engine/match3_shatter.lua`). Cracks glow, then shards burst, tumble with a darker side face and fall over about 0.55 s, above billowing smoke: four Kenney puff sprites per cell (`fx-smoke-0..3`, below), turning slowly, tinted pale earth and fading over about 1.25 s, after the shards. The shards are procedural cut-outs of existing art with no new states; Reduce Motion hides it. Capture with `build/test/all --suite=relic-rush 'reel fx-shatter'` (`--fx shatter`). [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg); smoke [before](screenshots/review/shatter/smoke-before.jpg) and [after](screenshots/review/shatter/smoke-after.jpg) (24 reel frames, 2 apart). |
 | Collection | Removed resources fly to their matching wallet capsule with a trail; story pieces do not earn resources |
 | Reduced motion | Suppresses trails, shake, squash and effect spawns; the board's entrance becomes a short fade; rule resolution stays active |
@@ -659,7 +659,7 @@ Seven sprites from Kenney's CC0 [Particle Pack](https://opengameart.org/content/
 texture the impact, spark and bomb effects. The original black-background PNGs
 and `License.txt` are retained in `art/particles/kenney/`;
 `python3 tools/match3_atlas.py` packs the seven `fx-*` frames into
-`data/match3.png`. Registration resizes the sources and uses their brightness as
+`data/board/fx.png`. Registration resizes the sources and uses their brightness as
 alpha on white. `engine/match3_vfx.lua` draws them additively, tinted with each piece's effect colour.
 They are transient effect sprites with no interaction states. Ray beams,
 prism links, special births and the bomb's leading ring stay procedural.
@@ -709,13 +709,13 @@ These families plus the board assets above cover every file in `data/`;
 
 | Runtime files | Source / ownership | Supported states |
 | --- | --- | --- |
-| `data/buildings/<key>.png` | Blender master; `make buildings GAME=relic-rush` | Authored restored sprite; valid placement reuses it, blocked placement uses the existing engine red ghost, held placement lifts it; cards/rewards use it alone |
-| `data/building-shadows/<key>.png` | Blender master; `make buildings GAME=relic-rush` | Separate grounded shadow for restored/valid/blocked/held states; own crop/pivot and shared pixel scale; all shadows below all buildings; omitted in cards/rewards |
-| `data/characters/{elena,mara,tomas,adrian}.png` | `art/art-direction/expedition-cast.png`; prepare_assets.py | One authored bust each; engine supplies speech/thought/shout bubbles |
+| `data/city/buildings/<key>.png` | Blender master; `make buildings GAME=relic-rush` | Authored restored sprite; valid placement reuses it, blocked placement uses the existing engine red ghost, held placement lifts it; cards/rewards use it alone |
+| `data/city/building-shadows/<key>.png` | Blender master; `make buildings GAME=relic-rush` | Separate grounded shadow for restored/valid/blocked/held states; own crop/pivot and shared pixel scale; all shadows below all buildings; omitted in cards/rewards |
+| `data/story/characters/{elena,mara,tomas,adrian}.png` | `art/art-direction/expedition-cast.png`; prepare_assets.py | One authored bust each; engine supplies speech/thought/shout bubbles |
 | `data/{island,jungle,scene-lagoon,scene-temple}.jpg` | Corresponding paintings in `art/` | Island, fallback jungle, and the board scenes. As in Cradle of Rome, a board shows the scene of the latest restoration in force on it (the same restored-and-reached gate as its pieces, `backdrop` in `economy.unlocks`): camp, well, workshop, market, lodge and fountain bring the lagoon; courtyard, archive, observatory and temple bring the temple. Before any, a board uses its authored `background`. Only two scenes exist, so restorations share them; per-building scenes are not yet painted |
-| `data/board-states/cell-mask.png` | Actual `gfx.ngon` capture in `art/board-states/cell-mask.png` | Shared flat-top slot silhouette; clip mask, not an icon/state |
-| `data/title.png` | `art/title.png` | Retained title asset; the current minimal HUD does not draw it |
-| `data/fonts/LilitaOne-Regular.ttf`, `lilitaone-OFL.txt` | Bundled licensed font | Dynamic labels, counters, outlined/gradient typography |
+| `art/registered/board-states/cell-mask.png` | Actual `gfx.ngon` capture in `art/board-states/cell-mask.png` | Shared flat-top slot silhouette; clip mask, not an icon/state |
+| `art/registered/title.png` | `art/title.png` | Retained title asset; the current minimal HUD does not draw it |
+| `data/common/fonts/LilitaOne-Regular.ttf`, `lilitaone-OFL.txt` | Bundled licensed font | Dynamic labels, counters, outlined/gradient typography |
 
 The reusable engine UI now owns form layout, input, focus, data exchange and modal
 Gaussian blur; the game supplies its skin and templates for pause, building and
@@ -775,7 +775,7 @@ between icon-only round Expeditions and Shop buttons. The side-button centres
 share the Play/Build button’s centre line; captions beneath them are removed.
 The round buttons are engine geometry
 (gold rim, jade face) around existing artwork: the procedural compass icon and the
-Jungle market sprite (`data/buildings/3.png`). Their pressed state shifts the face
+Jungle market sprite (`data/city/buildings/3.png`). Their pressed state shifts the face
 2 units, as menu buttons do; there is no hover, selected or disabled state because
 they are always available. The EXPAND pill is gone: a region that can open now
 shows "+" and a glow on its fog marker, and its name is outlined text without a
@@ -848,15 +848,17 @@ in [the road removal comparison](review/no-auto-roads/README.md).
 
 ## Engine match-3 atlas and trickling
 
-`data/match3.png` holds the backgrounds, piece packs, power-ups, blockers,
-materials, selection/hint frames and additive effects. `lua/match3_skin.lua`
-gives each frame's pixel rectangle. The HUD uses `data/match3-hud.png` and
-`lua/match3_hud.lua` for all five states of each tool and Pause, goal and
-wallet counters, and the shop icons. `art/match3-atlas.json` records both atlases
-and their source images. Board pieces and objectives also supply their own
+`data/board/` holds one atlas per kind of art: `pieces.png`, `blockers.png`,
+`cells.png` (floors and selection/hint frames), `boosters.png` (all five states
+of each tool and bonus), `hud.png` (Pause, goal and wallet counters, shop
+icons) and `fx.png` (additive effects). Backgrounds are separate files in
+`data/board/backs/`. `lua/match3_atlases.lua` gives each frame's pixel
+rectangle; `lua/match3_skin.lua` and `lua/match3_hud.lua` choose the atlases for
+the board and its HUD. `art/match3-atlas.json` records every atlas and its
+source images. Board pieces and objectives also supply their own
 icons to the goal display.
 
-The shop's built and locked tiles use `data/expedition-hud/shop-built.png`
+The shop's built and locked tiles use `art/registered/expedition-hud/shop-built.png`
 (checkmark) and `shop-locked.png` (padlock), packed into the HUD atlas as
 `shop-built` and `shop-locked`. Relic Rush and Christmas Market ship the same
 two files. Their source, prompt and per-game styling are not yet recorded:
@@ -988,7 +990,7 @@ recolouring or procedural icon overlays. Each manifest box is a 324×324
 square centred on its atlas column's and row's visible art (the earlier
 equal-fifths grid cut the art off-centre and clipped some rims); the row-wide
 vertical centre keeps the pressed drop. The crop is scaled evenly into a
-160×160 RGBA image under `data/navigation/`, so the visible buttons are
+160×160 RGBA image under `art/registered/navigation/`, so the visible buttons are
 centred in their slots and `town.json`'s `bottom` puts Play's lower edge as
 far from the screen edge as Build and Levels are from the sides.
 
@@ -1018,7 +1020,7 @@ Straight-line match-3 rules: ordinary triples, four-in-line rays on all three ax
 
 ## Three-episode story presentation
 
-All 46 scenes / 120 lines reuse the authored cast sheet `art/art-direction/expedition-cast.png` and its four RGBA crops `data/characters/{elena,mara,tomas,adrian}.png`. Original prompts and crop reproduction are in [art direction](art-direction-v2.md) and `python3 games/relic-rush/tools/prepare_assets.py`. No character is missing: Elena investigates, Mara pilots the Marigold, Tomas is the archivist, and Adrian funds the expedition. Cornelius is an off-screen missing person, not a speaking fifth portrait. Kessler, the Meridian Society's man, speaks but is deliberately never seen: his radio and loudhailer lines are engine captions with a name tag and no bust, which is the intended final state, not a missing asset.
+All 46 scenes / 120 lines reuse the authored cast sheet `art/art-direction/expedition-cast.png` and its four RGBA crops `data/story/characters/{elena,mara,tomas,adrian}.png`. Original prompts and crop reproduction are in [art direction](art-direction-v2.md) and `python3 games/relic-rush/tools/prepare_assets.py`. No character is missing: Elena investigates, Mara pilots the Marigold, Tomas is the archivist, and Adrian funds the expedition. Cornelius is an off-screen missing person, not a speaking fifth portrait. Kessler, the Meridian Society's man, speaks but is deliberately never seen: his radio and loudhailer lines are engine captions with a name tag and no bust, which is the intended final state, not a missing asset.
 
 The runtime cast all face right. The portrait import mirrors Adrian’s crop from the original lineup to match the other three. It also isolates Mara’s bust from a stray fragment of the neighboring portrait while keeping her canvas and anchors. Run `python3 games/relic-rush/tools/prepare_assets.py --portraits-only` to reproduce the exports. The story renderer mirrors the portrait on the right side and keeps partners facing one another across turns. [Phone captures](review/portrait-facing/README.md) show the staging. Body text is 31.5 points, names/building bubbles 22.5 points, retaining the cream/ink palette. All thirty boards use the existing packs and the Lagoon/Temple paintings; the island and all ten wonder sprites/registration remain unchanged. Narrative-specific building bubbles reveal only clues the player has reached. The implementation intentionally stages scenes over existing paintings rather than adding cinematic panel assets.
 
@@ -1028,4 +1030,4 @@ Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.jso
 
 | Asset | Source | Runtime | States and use |
 |---|---|---|---|
-| Old stone paths | `python3 tools/roads.py relic-rush` (Scener model; palette in `art/roads.json`) | `data/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): worn, uneven flagstones of weathered limestone in keeping with the valley's ruins: no kerb and no bed, wide joints and the odd missing stone, so the grass shows between them (`rough`, `gap`, `missing` in the palette). The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); they replace the curved connectors removed in [the earlier review](review/no-auto-roads/README.md). No interaction states. Captures: `screenshots/island-village.jpg` (`--showcase`), `screenshots/phone-island.jpg` (`--city 3`) |
+| Old stone paths | `python3 tools/roads.py relic-rush` (Scener model; palette in `art/roads.json`) | `data/city/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): worn, uneven flagstones of weathered limestone in keeping with the valley's ruins: no kerb and no bed, wide joints and the odd missing stone, so the grass shows between them (`rough`, `gap`, `missing` in the palette). The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); they replace the curved connectors removed in [the earlier review](review/no-auto-roads/README.md). No interaction states. Captures: `screenshots/island-village.jpg` (`--showcase`), `screenshots/phone-island.jpg` (`--city 3`) |
