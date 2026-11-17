@@ -91,8 +91,9 @@ for flags=0,31 do
         g.chain[above]=1
         g.tiles[center]=R.tile(-1);g.tiles[side]=R.tile(2)
         from=R.game_collapse(g)
-        t:check(flags&E.NO_TRICKLE~=0 and from[center]<0 or flags&E.NO_TRICKLE==0 and from[center]==side,
-            'NO_TRICKLE controls diagonal fallback around a lock')
+        t:check(flags&E.NO_TRICKLE~=0 and from[center]==center and g.tiles[center].kind<0
+            or flags&E.NO_TRICKLE==0 and from[center]==side,
+            'trickling feeds around a lock; without it the lock gates the cell')
     end)
     t:case('flags='..flags..' exposed top inlets',function()
         local g=H.board(R)

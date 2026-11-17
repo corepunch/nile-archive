@@ -29,8 +29,8 @@ for _, flags in ipairs({0, match3.NO_TRICKLE}) do
     check(steps[1].from[center]==above, "straight fall has priority with either flag")
     g.chain[above],g.tiles[center]=1,r.tile(-1)
     _, steps = r.game_collapse(g)
-    check(flags==0 and steps[1].from[center]==left or flags~=0 and steps[1].from[center]<0,
-          "integer flag controls diagonal fallback")
+    check(flags==0 and steps[1].from[center]==left or flags~=0 and #steps==0 and g.tiles[center].kind<0,
+          "trickling feeds around a chain; without it the chain is a gate and the cell waits")
 end
 do
     local g,m=empty(b),b.new_match()
@@ -78,6 +78,33 @@ do
         check(#shards >= shatter.SITES - 2, "a fracture has its shards")
         near(area, 3 * math.sqrt(3) / 2, "shards cover the hex once")
     end
+end
+
+-- A chained bottleneck is a gate: the cells it feeds start empty and get no
+-- new pieces until the chain breaks; then pieces trickle through.
+do
+    local r = match3.new{radius=2}
+    local g = r.game_start(0, 5)
+    for i = 0, r.CELLS - 1 do g.active[i], g.chain[i], g.ice[i], g.stone_hp[i], g.tiles[i] = false, 0, 0, 0, r.tile(-1) end
+    -- A one-cell neck at (0,0) between an upper and a lower chamber.
+    local neck, above, below = r.hex_index(0, 0), r.hex_index(0, -1), r.hex_index(0, 1)
+    for _, i in ipairs{r.hex_index(0, -2), above, neck, below, r.hex_index(0, 2)} do g.active[i] = true end
+    for _, i in ipairs{above, r.hex_index(0, -2)} do g.tiles[i] = r.tile(1) end
+    g.tiles[neck], g.chain[neck] = r.tile(2), 1
+    local fed = r.game_fed_cells(g)
+    check(fed[above] and not fed[neck] and not fed[below], "a chain gates the cells below it")
+    r.game_collapse(g)
+    check(g.tiles[below].kind == -1 and g.tiles[r.hex_index(0, 2)].kind == -1, "nothing refills behind a closed gate")
+    g.chain[neck] = 0
+    r.game_collapse(g)
+    check(g.tiles[r.hex_index(0, 2)].kind == 2 and g.tiles[below].kind >= 0 and g.tiles[neck].kind >= 0,
+          "an open gate lets pieces fall through and the inlet refills")
+    local s = r.game_start(0, 5)
+    for i = 0, r.CELLS - 1 do s.tiles[i] = r.tile(i % 3) end
+    s.tiles[r.hex_index(0, 1)] = r.tile(-1)
+    local before = s.tiles[r.hex_index(0, 1)]
+    r.game_shuffle(s)
+    check(s.tiles[r.hex_index(0, 1)] == before, "a shuffle leaves empty cells where they are")
 end
 
 print("match3 engine: independent games, configurable minimum, integer behavior/kind flags passed")

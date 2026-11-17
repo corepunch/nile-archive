@@ -179,11 +179,13 @@ local function test_holes_and_shapes()
         end
         check(n == n_active, "shape is connected")
         rules.game_collapse(g)
+        local fed = rules.game_fed_cells(g)
         for i = 0, CELLS - 1 do
             local kind = g.tiles[i].kind
             local fixed = g.stone_hp[i] > 0
-            check(g.active[i] and (fixed and kind == -1 or not fixed and kind >= 0)
-                or not g.active[i] and kind == -1, "collapse fills playable cells and leaves solids and voids empty")
+            local locked = g.chain[i] > 0 or g.ice[i] > 0
+            check(g.active[i] and (fixed and kind == -1 or (fed[i] or locked) and kind >= 0 or not fed[i] and not locked and not fixed)
+                or not g.active[i] and kind == -1, "collapse fills fed cells, gated cells wait, solids and voids stay empty")
         end
     end
     check(family_count >= 4, "campaign has at least four recognizable board families")

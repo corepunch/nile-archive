@@ -903,10 +903,45 @@ function E.new(config)
         return ay == by and a < b or ay > by
     end)
 
+    local rise_order = {}   -- top row first
+    for k = #fall_order, 1, -1 do rise_order[#rise_order + 1] = fall_order[k] end
+
+    -- Cells gravity can feed: an inlet (no active cell above), or a cell below
+    -- a fed, unlocked donor straight above or (with trickling) on an upper
+    -- diagonal. Chains, ice and stones are gates: cells reachable only through
+    -- them get no new pieces until they break.
+    local function fed_cells(g)
+        local fed = {}
+        local function open(i) return cell_active(g, i) and not locked(g, i) end
+        for _, i in ipairs(rise_order) do
+            if open(i) then
+                local above = hex_neighbor(i, 4)
+                local yes = not cell_active(g, above) or fed[above]
+                if not yes and flags & E.NO_TRICKLE == 0 then
+                    local left, right = hex_neighbor(i, 3), hex_neighbor(i, 5)
+                    yes = fed[left] or fed[right]
+                end
+                fed[i] = yes or nil
+            end
+        end
+        return fed
+    end
+    M.game_fed_cells = fed_cells
+
+    -- Empty every unlocked cell no gate-free path can feed.
+    local function clear_unfed(g)
+        local fed = fed_cells(g)
+        for i = 0, CELLS - 1 do
+            if cell_active(g, i) and not locked(g, i) and not fed[i] then g.tiles[i] = tile(-1) end
+        end
+    end
+    M.game_clear_unfed = clear_unfed
+
     local damp_refills   -- defined with shape_at below
     function M.game_collapse(g)
         local from, steps, spawned = {}, {}, 0
         for i = 0, CELLS - 1 do from[i] = i end
+        local fed = fed_cells(g)
         local function movable(i) return cell_active(g, i) and not locked(g, i) end
         local function donor(i) return movable(i) and g.tiles[i].kind ~= -1 end
         local function side_donor(i)
@@ -938,7 +973,7 @@ function E.new(config)
                         step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]
                         step.tiles[source], next_from[source], used[source] = tile(-1), source, true
                         progress = true
-                    elseif inlet or not movable(left) and not movable(right) and not movable(above) then
+                    elseif inlet then
                         spawned = spawned + 1
                         step.tiles[i], step.from[i], next_from[i] = tile(spawn_kind(g)), -1, -spawned
                         progress = true
@@ -947,14 +982,16 @@ function E.new(config)
             end
             if empty == 0 then break end
             if not progress then
-                -- A whole pass moved and made nothing, so no neighbour will ever give these
-                -- holes a piece. Fill them as blocked cells do.
+                -- A whole pass moved and made nothing: the rest wait behind gates.
+                -- A fed hole no neighbour can reach still takes a new piece.
+                local filled = false
                 for _, i in ipairs(fall_order) do
-                    if movable(i) and g.tiles[i].kind == -1 then
-                        spawned = spawned + 1
+                    if movable(i) and fed[i] and g.tiles[i].kind == -1 then
+                        spawned, filled = spawned + 1, true
                         step.tiles[i], step.from[i], next_from[i] = tile(spawn_kind(g)), -1, -spawned
                     end
                 end
+                if not filled then break end
             end
             steps[#steps + 1] = step
             g.tiles, from = step.tiles, next_from
@@ -1095,6 +1132,7 @@ function E.new(config)
         local m = new_match()
         for _ = 1, 2000 do
             if fill_without_matches(g) then
+                clear_unfed(g)
                 game_matches(g, m)
                 if m.hits == 0 and game_hint(g) then return end
             end
@@ -1106,7 +1144,7 @@ function E.new(config)
     function M.game_shuffle(g)
         local cells, pieces, original = {}, {}, {}
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and not locked(g, i) then
+            if cell_active(g, i) and not locked(g, i) and g.tiles[i].kind >= 0 then
                 cells[#cells + 1], pieces[#pieces + 1] = i, g.tiles[i]
                 original[i] = g.tiles[i]
             end
@@ -1240,6 +1278,7 @@ function E.new(config)
             assert(g.oil[cell] == 1, "double tablet outside the level's oil cells")
             g.oil[cell] = 2
         end
+        clear_unfed(g)   -- cells behind a gate start empty
         local m = new_match()
         game_matches(g, m)
         if m.hits > 0 or not game_hint(g) then generate_board(g) end

@@ -18,6 +18,7 @@ function M.game_start(level, seed, restored)
         for i = 0, M.CELLS - 1 do
             if g.active[i] then g.tiles[i] = M.tile(tonumber(spec.opening:sub(i + 1, i + 1))) end
         end
+        M.game_clear_unfed(g)
     end
     g.bonus, g.bonus_debut = bonus, debut
     g.bonus_preview = restored and restored.preview

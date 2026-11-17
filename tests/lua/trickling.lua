@@ -161,7 +161,7 @@ for level = 0, rules.LEVELS - 1 do
                         if rules.game_cell_active(old, rules.hex_neighbor(i, 4)) then
                             for _, d in ipairs({3, 4, 5}) do
                                 local p = rules.hex_neighbor(i, d)
-                                check(not rules.game_cell_active(old, p) or old.chain[p] > 0 or old.ice[p] > 0, "interior spawns only when all donors are blocked")
+                                check(not rules.game_cell_active(old, p), "only inlets spawn")
                             end
                         end
                     end
@@ -171,7 +171,9 @@ for level = 0, rules.LEVELS - 1 do
         end
         local origins = {}
         for i = 0, rules.CELLS - 1 do
-            check(g.tiles[i].kind >= 0 == not not g.active[i], "only the mask fills")
+            local fed = rules.game_fed_cells(g)
+            local held = g.chain[i] > 0 or g.ice[i] > 0
+            check((g.tiles[i].kind >= 0) == (g.active[i] and (fed[i] or held) or false), "only fed mask cells fill")
             check(from[i] == again[i] and g.tiles[i].kind == repeat_g.tiles[i].kind, "repeated source and tile agree")
             if g.active[i] then
                 check(not origins[from[i]], "no duplicate original or spawned gems")
