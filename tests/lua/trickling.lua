@@ -75,6 +75,7 @@ do
     check(steps[1].from[center] == above, "straight fall when no diagonal can feed")
 end
 -- The whole stepped top edge refills together, rather than from one apex.
+-- A hole inside the board is a roof: the cells below it are fed from the sides.
 for level = 0, rules.LEVELS - 1 do
     local g = ordinary_gravity(rules.game_start(level, 123))
     for i = 0, rules.CELLS - 1 do
@@ -82,8 +83,10 @@ for level = 0, rules.LEVELS - 1 do
     end
     local _, steps = rules.game_collapse(g)
     for i = 0, rules.CELLS - 1 do
-        if g.active[i] and not rules.game_cell_active(g, rules.hex_neighbor(i, 4)) then
-            check(steps[1].from[i] < 0 and steps[1].tiles[i].kind >= 0, "every top cell spawns in the first step")
+        if g.active[i] and rules.game_inlet(g, i) then
+            check(steps[1].from[i] < 0 and steps[1].tiles[i].kind >= 0, "every cell open to the sky spawns in the first step")
+        elseif g.active[i] and not rules.game_cell_active(g, rules.hex_neighbor(i, 4)) then
+            check(steps[1].from[i] >= 0 or steps[1].tiles[i].kind < 0, "a cell under a roof never spawns")
         end
     end
 end

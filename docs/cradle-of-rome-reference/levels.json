@@ -1,0 +1,5252 @@
+[
+ {
+  "level": 1,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 10,
+  "height": 8,
+  "active": 72,
+  "plaques": 6,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    72,
+    6,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "  ......",
+   "..........",
+   "....pp....",
+   "..........",
+   "..pp..pp..",
+   "..........",
+   "..........",
+   "  ......"
+  ]
+ },
+ {
+  "level": 2,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 12,
+  "height": 9,
+  "active": 80,
+  "plaques": 8,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 6,
+  "groups": [
+   [
+    80,
+    8,
+    6
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "   ......",
+   "  ....p...",
+   " ....p.....",
+   "...  .....p.",
+   "..p......p..",
+   ".p.....  ...",
+   " .....p....",
+   "  ...p....",
+   "   ......"
+  ]
+ },
+ {
+  "level": 3,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 13,
+  "height": 10,
+  "active": 99,
+  "plaques": 27,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 11,
+  "groups": [
+   [
+    99,
+    27,
+    11
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "  .........",
+   " ...........",
+   " .pp.   .pp.",
+   " .pp.   .pp.",
+   " .pp.. ..pp.",
+   " ...p...p...",
+   "   ..ppp..",
+   "  ...ppp...",
+   "...ppppppp...",
+   "............."
+  ]
+ },
+ {
+  "level": 4,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 62,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    100,
+    62,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   ". . . .. . . .",
+   "..p.p.pp.p.p..",
+   ".pppppppppppp.",
+   ".pppppppppppp.",
+   ".p.pppppppp.p.",
+   ".. .pppppp. ..",
+   "   .pppppp.",
+   "    .pppp.",
+   "    .pppp.",
+   "     .pp."
+  ]
+ },
+ {
+  "level": 5,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 13,
+  "height": 10,
+  "active": 92,
+  "plaques": 58,
+  "double_plaques": 0,
+  "single_locks": 1,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 11,
+  "groups": [
+   [
+    92,
+    58,
+    11
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 5,
+  "map": [
+   " ...........",
+   ".ppp.ppp.ppp.",
+   ".ppp.ppp.ppp.",
+   ".ppp.ppp.ppp.",
+   " ppp  c  ppp",
+   "     .p.",
+   "    .ppp.",
+   "   .ppppp.",
+   "  .ppppppp.",
+   " .ppppppppp."
+  ]
+ },
+ {
+  "level": 6,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 9,
+  "active": 94,
+  "plaques": 80,
+  "double_plaques": 0,
+  "single_locks": 12,
+  "double_locks": 0,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    94,
+    80,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 30,
+  "map": [
+   "...        ...",
+   ".pp..    ..pp.",
+   " ppppp..ppppp",
+   " pppppppppppp",
+   " pppppppppppp",
+   " kkkkkkkkkkkk",
+   " pppppppppppp",
+   "  pppppppppp",
+   "   pppppppp"
+  ]
+ },
+ {
+  "level": 7,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 12,
+  "height": 10,
+  "active": 80,
+  "plaques": 68,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    80,
+    68,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "..pppppppp..",
+   " .pppppppp.",
+   "  pppppppp",
+   "   pppppp",
+   "    pppp",
+   "    pppp",
+   "   pppppp",
+   "  pppppppp",
+   " .pppppppp.",
+   "..pppppppp.."
+  ]
+ },
+ {
+  "level": 8,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 124,
+  "plaques": 52,
+  "double_plaques": 0,
+  "single_locks": 12,
+  "double_locks": 0,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    124,
+    52,
+    16
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 10,
+  "map": [
+   "......  ......",
+   "..............",
+   "  pppppppppp",
+   "..pp......pp..",
+   "..pp.kkkk.pp..",
+   "..pp.kkkk.pp..",
+   "  pp.kkkk.pp",
+   "..pp......pp..",
+   "..pppppppppp..",
+   " ...  ..  ..."
+  ]
+ },
+ {
+  "level": 9,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 62,
+  "plaques": 39,
+  "double_plaques": 0,
+  "single_locks": 1,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 9,
+  "groups": [
+   [
+    31,
+    20,
+    9
+   ],
+   [
+    31,
+    19,
+    0
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "     ..ppppp..",
+   "      .ppppp.",
+   "      .ppppp.",
+   "      cppppp..",
+   "     .",
+   "    .p.",
+   "   .ppp.",
+   "  .pppp.",
+   " .ppppp.",
+   ".pppppp.."
+  ]
+ },
+ {
+  "level": 10,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 92,
+  "plaques": 88,
+  "double_plaques": 88,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 2,
+  "groups": [
+   [
+    92,
+    88,
+    2
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "      PP",
+   "     PPPP",
+   "    PPPPPP",
+   "   PPPPPPPP",
+   "  PPPPPPPPPP",
+   "  PPPPPPPPPP",
+   " PPPPPPPPPPPP",
+   " PPPPPPPPPPPP",
+   ".PPPPPPPPPPPP.",
+   ".PPPPPPPPPPPP."
+  ]
+ },
+ {
+  "level": 11,
+  "range": "adventure",
+  "time": 300,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 70,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    104,
+    70,
+    14
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "..............",
+   " . . .  . . .",
+   " . . .  . . .",
+   "..pppppppppp..",
+   "  pppppppppp",
+   " .pppppppppp.",
+   "  pppppppppp",
+   " .pppppppppp.",
+   "  pppppppppp",
+   "  pppppppppp"
+  ]
+ },
+ {
+  "level": 12,
+  "range": "adventure",
+  "time": 480,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 98,
+  "plaques": 94,
+  "double_plaques": 0,
+  "single_locks": 4,
+  "double_locks": 0,
+  "locked_plaques": 4,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    98,
+    94,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 20,
+  "map": [
+   "   pp.  .pp",
+   "  ppp    ppp",
+   " pppppppppppp",
+   ".pppppppppppp.",
+   " kk pppppp kk",
+   " pp pppppp pp",
+   " pp pppppp pp",
+   " pppppppppppp",
+   " ppppp  ppppp",
+   " pppp    pppp"
+  ]
+ },
+ {
+  "level": 13,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 16,
+  "height": 10,
+  "active": 106,
+  "plaques": 76,
+  "double_plaques": 0,
+  "single_locks": 12,
+  "double_locks": 0,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    104,
+    76,
+    8
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": false,
+  "gated_cells": 10,
+  "map": [
+   " ....      ....",
+   ". .. .    . .. .",
+   ".. .. .  . .. ..",
+   " .ppppp..ppppp.",
+   "  ppkpp  pkppp",
+   "  pppkp  ppkpp",
+   "  ppkpp  pkppp",
+   "  pppkpppppkpp",
+   "  ppkpppppkppp",
+   "  pppkpppppkpp"
+  ]
+ },
+ {
+  "level": 14,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 74,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    88,
+    74,
+    10
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   " . ........ .",
+   ". . pppppp . .",
+   " . pppppppp .",
+   "  pppppppppp",
+   ".ppppp  ppppp.",
+   ".ppppp  ppppp.",
+   "  pppppppppp",
+   " . pppppppp .",
+   ". . pppppp . .",
+   " . .pppppp. ."
+  ]
+ },
+ {
+  "level": 15,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 86,
+  "plaques": 70,
+  "double_plaques": 0,
+  "single_locks": 2,
+  "double_locks": 0,
+  "locked_plaques": 2,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    86,
+    70,
+    14
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 10,
+  "map": [
+   "  ..pppppp..",
+   "  . pppppp .",
+   "    pppppp",
+   "    pppppp",
+   "     k  k",
+   " .  pp  pp  .",
+   " .pppppppppp.",
+   "  pppppppppp",
+   ". pppppppppp .",
+   "..pppppppppp.."
+  ]
+ },
+ {
+  "level": 16,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 82,
+  "plaques": 78,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 6,
+  "groups": [
+   [
+    82,
+    78,
+    6
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   " ppp      ppp",
+   ".pppp    pppp.",
+   " ppppp  ppppp",
+   ".pppppppppppp.",
+   " pppppppppppp",
+   "  pppppppppp",
+   "   pppppppp",
+   "    pppppp",
+   "     pppp",
+   "      pp"
+  ]
+ },
+ {
+  "level": 17,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 74,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 6,
+  "groups": [
+   [
+    90,
+    74,
+    0
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   ".  . .  . .  .",
+   " .  . pp .  .",
+   "  .  pppp  .",
+   " pppppppppppp",
+   ".pppp.p.p.ppp.",
+   ".ppp.p.p.pppp.",
+   " pppppppppppp",
+   "  pppppppppp",
+   " pppp    pppp",
+   ".pppp.  .pppp."
+  ]
+ },
+ {
+  "level": 18,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 92,
+  "plaques": 92,
+  "double_plaques": 0,
+  "single_locks": 2,
+  "double_locks": 0,
+  "locked_plaques": 2,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    42,
+    42,
+    12
+   ],
+   [
+    25,
+    25,
+    0
+   ],
+   [
+    25,
+    25,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   " pppppppppppp",
+   " pppppppppppp",
+   " pppppppppppp",
+   " ppk      kpp",
+   "    p    p",
+   "   ppp  ppp",
+   "  pppp  pppp",
+   " ppppp  ppppp",
+   "pppppp  pppppp",
+   "pppppp  pppppp"
+  ]
+ },
+ {
+  "level": 19,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 100,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    100,
+    100,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "   pppppppp",
+   "  pppppppppp",
+   " ppppp  ppppp",
+   "pppppp  pppppp",
+   "ppppp    ppppp",
+   "ppppp    ppppp",
+   "pppppp  pppppp",
+   " ppppp  ppppp",
+   "  pppppppppp",
+   "   pppppppp"
+  ]
+ },
+ {
+  "level": 20,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 116,
+  "plaques": 116,
+  "double_plaques": 116,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    116,
+    116,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   " PPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   " PPPPPPPPPPPP",
+   "  PPPPPPPPPP",
+   "   PPPPPPPP",
+   "     PPPP"
+  ]
+ },
+ {
+  "level": 21,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 93,
+  "plaques": 86,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    93,
+    86,
+    12
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   " pppp",
+   " pppp",
+   "ppppppp.",
+   "ppppppp",
+   "ppppppppp.",
+   "ppppppppp",
+   "ppppppppppp.",
+   "ppppppppppp",
+   "pppppppppppp..",
+   "pppppppppppp.."
+  ]
+ },
+ {
+  "level": 22,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 116,
+  "plaques": 88,
+  "double_plaques": 0,
+  "single_locks": 20,
+  "double_locks": 0,
+  "locked_plaques": 20,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    116,
+    88,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 6,
+  "map": [
+   "    ......",
+   "   ..pppp..",
+   "  ..pppppp..",
+   "  .pppkkppp.",
+   ". pppkkkkppp .",
+   ".ppppkkkkpppp.",
+   ".ppppkkkkpppp.",
+   ".ppppkkkkpppp.",
+   ".pppppkkppppp.",
+   ".pppppppppppp."
+  ]
+ },
+ {
+  "level": 23,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 124,
+  "plaques": 92,
+  "double_plaques": 0,
+  "single_locks": 26,
+  "double_locks": 0,
+  "locked_plaques": 26,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    124,
+    92,
+    14
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 24,
+  "map": [
+   "......  ......",
+   ".pppp.  .pppp.",
+   ".pkkp.  .pkkp.",
+   ".pkkp.  .pkkp.",
+   ".pppp.  .pppp.",
+   " .pp.    .pp.",
+   "pppppppppppppp",
+   "ppppkkkkkkpppp",
+   "ppppkkkkkkpppp",
+   "ppppkkkkkkpppp"
+  ]
+ },
+ {
+  "level": 24,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 108,
+  "plaques": 90,
+  "double_plaques": 0,
+  "single_locks": 20,
+  "double_locks": 0,
+  "locked_plaques": 20,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    104,
+    90,
+    8
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": false,
+  "gated_cells": 12,
+  "map": [
+   "    pppppp",
+   "   pppppppp",
+   ". ppppkkpppp .",
+   " .ppppkkpppp.",
+   "  ppp.kkp.pp",
+   ". pp.ppp.ppp .",
+   " .ppkkppkkpp.",
+   "  ppkkkkkkpp",
+   ". ppkkppkkpp .",
+   "..pppppppppp.."
+  ]
+ },
+ {
+  "level": 25,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 86,
+  "plaques": 48,
+  "double_plaques": 0,
+  "single_locks": 2,
+  "double_locks": 0,
+  "locked_plaques": 2,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    46,
+    46,
+    0
+   ],
+   [
+    40,
+    2,
+    14
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "..............",
+   " ............",
+   "  ..........",
+   "   .k    k.",
+   "     p  p",
+   "    pppppp",
+   "   pppppppp",
+   "  pppppppppp",
+   "  pppppppppp",
+   "  pppppppppp"
+  ]
+ },
+ {
+  "level": 26,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 108,
+  "plaques": 88,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    108,
+    88,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "  pppppppppp",
+   " .pppppppppp.",
+   "..pppppppppp..",
+   "  pppppppppp",
+   " .pppp  pppp.",
+   "  pppppppppp",
+   "...pppppppp...",
+   " ..pppppppp..",
+   "  .pppppppp.",
+   "   p pppp p"
+  ]
+ },
+ {
+  "level": 27,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 88,
+  "plaques": 78,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    82,
+    78,
+    12
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "        pppppp",
+   "       ppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "ppppp     p p",
+   " p p      . .",
+   " . .     . . .",
+   ". . ."
+  ]
+ },
+ {
+  "level": 28,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 114,
+  "plaques": 105,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    114,
+    105,
+    10
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "  pppppppppp",
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "ppp  ppp  ppp",
+   " ppp  ppp  ppp",
+   " ppp  ppp  ppp",
+   "...  ...  ..."
+  ]
+ },
+ {
+  "level": 29,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 122,
+  "plaques": 114,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    122,
+    114,
+    16
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "..pppppppppp..",
+   " .pppppppppp.",
+   "  pppppppppp",
+   ".   pppppp   .",
+   "pp  pppppp  pp",
+   "ppp pppppp ppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 30,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 110,
+  "plaques": 106,
+  "double_plaques": 106,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    110,
+    106,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "  .PPPPPPPP.",
+   "   PPPPPPPP",
+   "  PPPPPPPPPP",
+   " PPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   " PPPPPPPPPPPP",
+   "   PPPPPPPP",
+   "  PPPPPPPPPP",
+   " .PPPPPPPPPP."
+  ]
+ },
+ {
+  "level": 31,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 32,
+  "double_locks": 0,
+  "locked_plaques": 32,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    112,
+    104,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 24,
+  "map": [
+   "   pppppppp",
+   "  .pppppppp.",
+   " pppppppppppp",
+   " ppkkkkkkkkpp",
+   ".ppkkkkkkkkpp.",
+   ".ppkkkkkkkkpp.",
+   " ppkkkkkkkkpp",
+   " pppppppppppp",
+   "  .pppppppp.",
+   "   pppppppp"
+  ]
+ },
+ {
+  "level": 32,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 94,
+  "plaques": 86,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    86,
+    86,
+    4
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "   . pppp .",
+   "    pppppp",
+   "  . pppppp .",
+   "   pppppppp",
+   " . pppppppp .",
+   "  pppppppppp",
+   ". pppppppppp .",
+   " pppppppppppp",
+   " ppppp  ppppp",
+   " pppppppppppp"
+  ]
+ },
+ {
+  "level": 33,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 102,
+  "plaques": 92,
+  "double_plaques": 0,
+  "single_locks": 16,
+  "double_locks": 0,
+  "locked_plaques": 16,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    102,
+    92,
+    14
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 28,
+  "map": [
+   " ..pppppppp..",
+   "  .pppppppp.",
+   "   pppppppp",
+   "   pppkkppp",
+   "  kkpp  ppkk",
+   " pkkpp  ppkkp",
+   ".pppp    pppp.",
+   ".pppkkkkkkppp.",
+   " pppppppppppp",
+   "  pppppppppp"
+  ]
+ },
+ {
+  "level": 34,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 94,
+  "plaques": 78,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    78,
+    78,
+    6
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   ". . pppppp . .",
+   " . . pppp . .",
+   "  . pppppp .",
+   "   pppppppp",
+   "   pppppppp",
+   "  pppppppppp",
+   " .  pppppp  .",
+   ".  pppppppp  .",
+   ". pppppppppp .",
+   " pppppppppppp"
+  ]
+ },
+ {
+  "level": 35,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 110,
+  "plaques": 66,
+  "double_plaques": 0,
+  "single_locks": 22,
+  "double_locks": 0,
+  "locked_plaques": 22,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 11,
+  "groups": [
+   [
+    60,
+    36,
+    6
+   ],
+   [
+    50,
+    30,
+    5
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 43,
+  "map": [
+   "  ..... ......",
+   " ..... ......",
+   "ppppp pppppp",
+   " kkkkk kkkkkk",
+   "  ppppp pppppp",
+   " ..... ......",
+   "ppppp pppppp",
+   " kkkkk kkkkkk",
+   "  ppppp pppppp",
+   " ..... ......"
+  ]
+ },
+ {
+  "level": 36,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 106,
+  "plaques": 34,
+  "double_plaques": 0,
+  "single_locks": 24,
+  "double_locks": 0,
+  "locked_plaques": 24,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    100,
+    34,
+    12
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 33,
+  "map": [
+   "......... ...",
+   " kkk....pp.. .",
+   " .kkk....pp  .",
+   " ..kkk ...p .",
+   " ...k   ....",
+   " ....k k... .",
+   " .....kkk..  .",
+   " .p....kkk.. .",
+   "  pp....kkk..",
+   "   pp....kkk"
+  ]
+ },
+ {
+  "level": 37,
+  "range": "adventure",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 74,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    100,
+    74,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   " . pppppppp .",
+   " .p.pppppp.p.",
+   "  p..pppp..p",
+   "  pp..pp..pp",
+   " ppp......ppp",
+   "pppp..pp..pppp",
+   "pppppppppppppp",
+   "  pppppppppp",
+   "    p pp p",
+   "    . pp ."
+  ]
+ },
+ {
+  "level": 38,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 124,
+  "plaques": 124,
+  "double_plaques": 0,
+  "single_locks": 16,
+  "double_locks": 0,
+  "locked_plaques": 16,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    124,
+    124,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 46,
+  "map": [
+   "ppppp    ppppp",
+   "pppppp  pppppp",
+   "ppppp    ppppp",
+   "pkkkpp  ppkkkp",
+   "ppppp    ppppp",
+   "pppppkkkkppppp",
+   "pppppppppppppp",
+   "pkkkppppppkkkp",
+   "pppppppppppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 39,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 97,
+  "plaques": 96,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 15,
+  "groups": [
+   [
+    96,
+    96,
+    14
+   ],
+   [
+    1,
+    0,
+    1
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "  ppppppppppp",
+   " ppppppppppppp",
+   "ppppp  pppppp",
+   "pppp    pppppp",
+   "pppp .  ppppp",
+   "ppppp  ppppp",
+   " ppp  pppp",
+   "     ppppppppp",
+   "      ppppppp",
+   "     ppppppppp"
+  ]
+ },
+ {
+  "level": 40,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 112,
+  "double_plaques": 112,
+  "single_locks": 8,
+  "double_locks": 0,
+  "locked_plaques": 8,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    112,
+    112,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 30,
+  "map": [
+   "PPPPP    PPPPP",
+   "PPPPPP  PPPPPP",
+   "PPPPPPPPPPPPPP",
+   " PPPPPPPPPPPP",
+   "  kk PPPP kk",
+   "  PP kkkk PP",
+   " PPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPP  PPPPPP",
+   "PPPPP    PPPPP"
+  ]
+ },
+ {
+  "level": 41,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 96,
+  "double_plaques": 0,
+  "single_locks": 16,
+  "double_locks": 0,
+  "locked_plaques": 16,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    100,
+    96,
+    16
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 20,
+  "map": [
+   "   pppppppp",
+   "   pppppppp",
+   "  ppppkkpppp",
+   "  ppppkkpppp",
+   "   p      p",
+   " ppppkkkkpppp",
+   " pppppppppppp",
+   "  pkkppppkkp",
+   ".ppkkppppkkpp.",
+   ".pppppppppppp."
+  ]
+ },
+ {
+  "level": 42,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 110,
+  "plaques": 110,
+  "double_plaques": 0,
+  "single_locks": 10,
+  "double_locks": 0,
+  "locked_plaques": 10,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 9,
+  "groups": [
+   [
+    110,
+    110,
+    9
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 15,
+  "map": [
+   " ppppppppp",
+   "ppppppppppp",
+   "ppppp pppppp",
+   "ppppk  pppppp",
+   "ppppkk  pppppp",
+   "pppppkk  ppppp",
+   " pppppkk ppppp",
+   "  pppppkkppppp",
+   "   pppppkppppp",
+   "    ppppppppp"
+  ]
+ },
+ {
+  "level": 43,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 106,
+  "plaques": 106,
+  "double_plaques": 0,
+  "single_locks": 8,
+  "double_locks": 0,
+  "locked_plaques": 8,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    106,
+    106,
+    16
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 16,
+  "map": [
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppp pppp pppp",
+   "pp p  pp  p pp",
+   "   pkkppkkp",
+   " p pppppppp p",
+   " pppppppppppp",
+   " pppppkkppppp",
+   " ppppkppkpppp",
+   " pp        pp"
+  ]
+ },
+ {
+  "level": 44,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 96,
+  "plaques": 88,
+  "double_plaques": 0,
+  "single_locks": 12,
+  "double_locks": 0,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    88,
+    88,
+    6
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 2,
+  "map": [
+   "     .  .",
+   " pppp pp pppp",
+   " pppppppppppp",
+   ". pppppppppp .",
+   " pppppppppppp",
+   ". pppkkkkppp .",
+   " ppppkkkkpppp",
+   " ppppkkkkpppp",
+   " pppp pp pppp",
+   "     .  ."
+  ]
+ },
+ {
+  "level": 45,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 118,
+  "plaques": 76,
+  "double_plaques": 0,
+  "single_locks": 12,
+  "double_locks": 0,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 20,
+  "groups": [
+   [
+    118,
+    76,
+    20
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 30,
+  "map": [
+   "..............",
+   "..............",
+   " .....  .....",
+   "  kkk    kkk",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   " pppppppppppp",
+   "  kk  kk  kk",
+   ".pppppppppppp.",
+   ".pppppppppppp."
+  ]
+ },
+ {
+  "level": 46,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 110,
+  "plaques": 110,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    72,
+    72,
+    10
+   ],
+   [
+    38,
+    38,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "  pppppppppp",
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppppp  pppppp",
+   "ppppp pp ppppp",
+   "pp p pppp p pp",
+   "ppp pppppp ppp",
+   "p  pppppppp  p",
+   "   pppppppp",
+   "  pppppppppp"
+  ]
+ },
+ {
+  "level": 47,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 106,
+  "plaques": 88,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    106,
+    88,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "   ppp..ppp",
+   "  pppp  pppp",
+   "  ppp pp ppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppp pppp pppp",
+   " p p pppp p p",
+   ".... pppp ....",
+   "....      ...."
+  ]
+ },
+ {
+  "level": 48,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 96,
+  "plaques": 96,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 6,
+  "groups": [
+   [
+    96,
+    96,
+    6
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "    pppppp",
+   "   ppp  ppp",
+   "  pppppppppp",
+   " pppp pp pppp",
+   "pppppppppppppp",
+   " pppppppppppp",
+   " pppp pp pppp",
+   " pppppppppppp",
+   "  pppp  pppp",
+   "   pppppppp"
+  ]
+ },
+ {
+  "level": 49,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 100,
+  "double_plaques": 0,
+  "single_locks": 12,
+  "double_locks": 0,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 13,
+  "groups": [
+   [
+    100,
+    100,
+    13
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 2,
+  "map": [
+   "ppppppp",
+   "ppppppp",
+   "ppkkpppppppppp",
+   "ppkkpppppppppp",
+   "ppkkpppppppppp",
+   "pppppp p p p p",
+   "      ppppppp",
+   "     ppppppppp",
+   "     pppkkkppp",
+   "     pppkkkppp"
+  ]
+ },
+ {
+  "level": 50,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 100,
+  "double_plaques": 100,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    100,
+    100,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "PPPPPP  PPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   " P PPPPPPPP P",
+   " P PPPPPPPP P",
+   "   P PPPP P",
+   "     PPPP",
+   "      PP"
+  ]
+ },
+ {
+  "level": 51,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 108,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 20,
+  "locked_plaques": 20,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    110,
+    108,
+    8
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 26,
+  "map": [
+   "pppp   .ppp",
+   "pKppp . pppp",
+   "pKKppp  ppppp",
+   "pKKKppp pppppp",
+   "pKKKKppppppppp",
+   "pppppppppKKKKp",
+   "pppppp pppKKKp",
+   " ppppp  pppKKp",
+   "  pppp . pppKp",
+   "   ppp.   pppp"
+  ]
+ },
+ {
+  "level": 52,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 106,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    106,
+    104,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "    pppppp",
+   "   pppppppp",
+   "  pppppppppp",
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "  pppppppppp",
+   "  ppp    ppp",
+   "ppppp .. ppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 53,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 118,
+  "plaques": 110,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 20,
+  "locked_plaques": 20,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 18,
+  "groups": [
+   [
+    114,
+    110,
+    18
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    2,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 6,
+  "map": [
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppKppppppKppp",
+   "pppKKppppKKppp",
+   " ppKKKppKKKpp",
+   "     pppp",
+   " .pppppppppp.",
+   ". pppppppppp .",
+   ". pppKKKKppp .",
+   " .pppKKKKppp."
+  ]
+ },
+ {
+  "level": 54,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 92,
+  "plaques": 80,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    84,
+    80,
+    6
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   ".  p p  p p  .",
+   " pppppppppppp",
+   "  pppp  pppp",
+   ". pppppppppp .",
+   "pppppppppppppp",
+   ". pppppppppp .",
+   "  pppp  pppp",
+   " pppppppppppp",
+   ".   p    p   .",
+   "   . .  . ."
+  ]
+ },
+ {
+  "level": 55,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 115,
+  "plaques": 115,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 16,
+  "locked_plaques": 16,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    115,
+    115,
+    14
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 41,
+  "map": [
+   "  pppppppppppp",
+   "  pppppppppppp",
+   "  pppppppppppp",
+   "KKKKK  KK  KK",
+   "ppppppppppppp",
+   "ppppppppppppp",
+   "ppppppppppppp",
+   "KKK  KK  KK",
+   "pppppppppppp",
+   "pppppppppppp"
+  ]
+ },
+ {
+  "level": 56,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 102,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 28,
+  "locked_plaques": 28,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    112,
+    102,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 10,
+  "map": [
+   "     .pp.",
+   "  pp  pp  pp",
+   " pppppppppppp",
+   "pppppKppKppppp",
+   "ppppppKKpppppp",
+   "pKKKpp  ppKKKp",
+   "pKKKp .. pKKKp",
+   "pKKKp .. pKKKp",
+   "pKKKp .. pKKKp",
+   "pppppp..pppppp"
+  ]
+ },
+ {
+  "level": 57,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 106,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    112,
+    106,
+    12
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   ".p pppppppp p.",
+   "pppppppp ppppp",
+   " p. ppp   ppp",
+   "pp   ppp ppppp",
+   "ppp pppppppppp",
+   "pppppppppp ppp",
+   "ppppp ppp   pp",
+   " ppp   ppp .p",
+   "ppppp pppppppp",
+   ".p pppppppp p."
+  ]
+ },
+ {
+  "level": 58,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 14,
+  "locked_plaques": 14,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 18,
+  "groups": [
+   [
+    104,
+    104,
+    18
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 40,
+  "map": [
+   "  pppppppppp",
+   "  pppppppppp",
+   "pppppp  pppppp",
+   "ppppp    ppppp",
+   "pppp      pppp",
+   "KKK        KKK",
+   "pppKKKKKKKKppp",
+   "pppppppppppppp",
+   "  pppppppppp",
+   "  pppppppppp"
+  ]
+ },
+ {
+  "level": 59,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 112,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    112,
+    112,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "   p pppp p",
+   " p p pppp p p",
+   " p pppppppp p",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppp  pppppp",
+   " pppp    pppp",
+   "pppppp  pppppp"
+  ]
+ },
+ {
+  "level": 60,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 94,
+  "double_plaques": 94,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    102,
+    94,
+    8
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "   .PPPPPP.",
+   "  .  PPPP  .",
+   " P  PPPPPP  P",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PP  PPPPPP  PP",
+   "P  PPPPPPPP  P",
+   "...        ..."
+  ]
+ },
+ {
+  "level": 61,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 113,
+  "plaques": 94,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 28,
+  "locked_plaques": 28,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    113,
+    94,
+    14
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 38,
+  "map": [
+   "      pppppppp",
+   " .....KKKKKKKp",
+   " .    ppppppKp",
+   " . ...KKKKKpKp",
+   " . .  ppppKpKp",
+   " . . pppppKpKp",
+   "pKpKppppppKpKp",
+   "pKpKppppppp .",
+   "pKpKpppppp  .",
+   "pKpKpppppp..."
+  ]
+ },
+ {
+  "level": 62,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 110,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 28,
+  "locked_plaques": 28,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 6,
+  "groups": [
+   [
+    112,
+    110,
+    6
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 14,
+  "map": [
+   "  p.  pp  .p",
+   " pp  pppp  pp",
+   " pp pppppp pp",
+   "pppppKKKKppppp",
+   "pppp KKKK pppp",
+   "Kpppp KK ppppK",
+   "KKppppppppppKK",
+   "pKKppppppppKKp",
+   " pKKppppppKKp",
+   "  pKKppppKKp"
+  ]
+ },
+ {
+  "level": 63,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 124,
+  "plaques": 120,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 26,
+  "locked_plaques": 26,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    124,
+    120,
+    16
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 18,
+  "map": [
+   "pppppppppppppp",
+   "pppppKKKKppppp",
+   "pppppKKKKppppp",
+   " pppppppppppp",
+   "  pp pppp pp",
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppKKK  KKKppp",
+   "ppKKK    KKKpp",
+   "pKKKp....pKKKp"
+  ]
+ },
+ {
+  "level": 64,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 98,
+  "plaques": 98,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 24,
+  "locked_plaques": 24,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    98,
+    98,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 6,
+  "map": [
+   "  pppppppppp",
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "KKKK pppp KKKK",
+   "KK  ppKKpp  KK",
+   "   ppKKKKpp",
+   "   ppKKKKpp",
+   "    ppKKpp",
+   "     pppp"
+  ]
+ },
+ {
+  "level": 65,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 116,
+  "plaques": 96,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 8,
+  "locked_plaques": 8,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 18,
+  "groups": [
+   [
+    116,
+    96,
+    18
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 20,
+  "map": [
+   "pppppppppppppp",
+   "pppppppppppppp",
+   " ppp pppp ppp",
+   "  K   KK   K",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "  K   KK   K",
+   "..p...pp...p..",
+   "..p...pp...p.."
+  ]
+ },
+ {
+  "level": 66,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 114,
+  "plaques": 114,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 5,
+  "groups": [
+   [
+    114,
+    114,
+    5
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "p  p  p  p  p",
+   "pp pp pp pp pp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pp pp pp pp pp",
+   " p  p  p  p  p"
+  ]
+ },
+ {
+  "level": 67,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 83,
+  "plaques": 75,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 11,
+  "groups": [
+   [
+    83,
+    75,
+    11
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "          ...",
+   "         p....",
+   "ppppppppppp  .",
+   "pppppppppp",
+   "pp ppppp pp",
+   "ppppppppppp",
+   "pp ppppp pp",
+   "ppppppppppp",
+   "pp ppppp pp",
+   "pp       pp"
+  ]
+ },
+ {
+  "level": 68,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 108,
+  "plaques": 108,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 6,
+  "groups": [
+   [
+    108,
+    108,
+    6
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   " p p p  p p p",
+   "pppppppppppppp",
+   "ppppppp pppppp",
+   "pppppppppppppp",
+   " p pp    pp p",
+   "p p pp  pp p p",
+   "pppppppppppppp",
+   "pppppp ppppppp",
+   "pppppppppppppp",
+   " p p p  p p p"
+  ]
+ },
+ {
+  "level": 69,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 116,
+  "plaques": 96,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 20,
+  "locked_plaques": 20,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    116,
+    96,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 14,
+  "map": [
+   "pppppp  pppppp",
+   "ppKKpp..ppKKpp",
+   "ppKKpp  ppKKpp",
+   "pppppp..pppppp",
+   " . . .  . . .",
+   " . . .  . . .",
+   "pppppp..pppppp",
+   "pKpppp  ppppKp",
+   "pKKppp..pppKKp",
+   "pKKKpp  ppKKKp"
+  ]
+ },
+ {
+  "level": 70,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 88,
+  "double_plaques": 88,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    102,
+    88,
+    12
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "  PPPPPPPPPP",
+   " PPPPP  PPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   " P PPPPPPPP P",
+   ".PPPPPPPPPPPP.",
+   ".    P  P    .",
+   " .   P  P   .",
+   "  .........."
+  ]
+ },
+ {
+  "level": 71,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 110,
+  "plaques": 110,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 22,
+  "locked_plaques": 22,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 15,
+  "groups": [
+   [
+    110,
+    110,
+    15
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 26,
+  "map": [
+   "pppKpppp",
+   "KppppppK",
+   "pppppppp",
+   "pppKpppp",
+   "KK    KKpppppp",
+   "ppppppKKpppppp",
+   "pppKppp pppKKp",
+   "KppppKp pppKKp",
+   "pppppppKpppKKp",
+   "ppKppppKpppppp"
+  ]
+ },
+ {
+  "level": 72,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 12,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    104,
+    104,
+    16
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 36,
+  "map": [
+   "pppp      pppp",
+   "ppppKKKKKKpppp",
+   " pppppppppppp",
+   "  pppppppppp",
+   "   pppppppp",
+   "   p      p",
+   "  ppKKKKKKpp",
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 73,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 124,
+  "plaques": 124,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 14,
+  "locked_plaques": 14,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 13,
+  "groups": [
+   [
+    124,
+    124,
+    13
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 51,
+  "map": [
+   "  pppppppppppp",
+   "KKppppppp  ppp",
+   "ppp  ppppKKppp",
+   "pppKKppppppppp",
+   "ppppppppppp  p",
+   "pppppp  pppKKp",
+   "p  pppKKpppppp",
+   "pKKppppppp  pp",
+   "ppppppppppKKpp",
+   "ppppp  ppppppp"
+  ]
+ },
+ {
+  "level": 74,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 106,
+  "plaques": 84,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 16,
+  "locked_plaques": 16,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 22,
+  "groups": [
+   [
+    106,
+    84,
+    22
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 16,
+  "map": [
+   " pppppppppppp",
+   "  pppppppppp",
+   ". .pKKKKKKp. .",
+   "...pK    Kp...",
+   ". .pppppppp. .",
+   "   pppppppp",
+   "...pK    Kp...",
+   ".  pKKKKKKp  .",
+   "  pppppppppp",
+   " pppppppppppp"
+  ]
+ },
+ {
+  "level": 75,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 102,
+  "plaques": 102,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 12,
+  "locked_plaques": 12,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    102,
+    102,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 18,
+  "map": [
+   "   KKppppKK",
+   "  pp pppp pp",
+   " ppp pppp ppp",
+   "pppp pppp pppp",
+   "pppp  KK  pppp",
+   "ppp  pppp  ppp",
+   "pppKppppppKppp",
+   "pppKppppppKppp",
+   "  pKppppppKp",
+   "    pppppp"
+  ]
+ },
+ {
+  "level": 76,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 100,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    100,
+    100,
+    14
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "   pppppppp",
+   "   ppp  ppp",
+   "   ppp  ppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "  pp p  p pp",
+   " ppp      ppp",
+   "ppppp pp ppppp",
+   "pppppppppppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 77,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 124,
+  "plaques": 124,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    124,
+    124,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "pppp pppp pppp",
+   "pppp pppp pppp",
+   "pppppppppppppp",
+   "pppp pppp pppp",
+   "pppp pppp pppp",
+   "pppp pppp pppp",
+   "pppp pppp pppp",
+   "pppppppppppppp",
+   "pppp pppp pppp",
+   "pppp pppp pppp"
+  ]
+ },
+ {
+  "level": 78,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 94,
+  "plaques": 94,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 9,
+  "groups": [
+   [
+    94,
+    94,
+    9
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "   ppp",
+   "  ppppppppppp",
+   " pppppppppp p",
+   "pppp pppppppp",
+   "ppp   ppp pppp",
+   "pppp ppp   ppp",
+   " pppppppp pppp",
+   " p pppppppppp",
+   " ppppppppppp",
+   "        ppp"
+  ]
+ },
+ {
+  "level": 79,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 101,
+  "plaques": 93,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 20,
+  "locked_plaques": 20,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 7,
+  "groups": [
+   [
+    96,
+    93,
+    7
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 11,
+  "map": [
+   "      .ppppp",
+   "     .  ppppp",
+   "    . pppKpppp",
+   "   . Kpppppppp",
+   "  . p KppKpKpp",
+   " . ppp  pppppp",
+   ". pppp  KppKpK",
+   ". ppKppp Kpppp",
+   "KppKKKppppKppK",
+   "pppKKKpppp Kpp"
+  ]
+ },
+ {
+  "level": 80,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 84,
+  "plaques": 72,
+  "double_plaques": 72,
+  "single_locks": 0,
+  "double_locks": 6,
+  "locked_plaques": 6,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    72,
+    72,
+    4
+   ],
+   [
+    8,
+    0,
+    2
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 2,
+  "map": [
+   ".     ..     .",
+   " PPP .... PPP",
+   "  PPP .. PPP",
+   "  PPPP  PPPP",
+   "  PPPPKKPPPP",
+   ". PPPP  PPPP .",
+   " PPPPPKKPPPPP",
+   "  PPPP  PPPP",
+   "   PPPKKPPP",
+   "    PPPPPP"
+  ]
+ },
+ {
+  "level": 81,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 112,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 25,
+  "locked_plaques": 25,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 15,
+  "groups": [
+   [
+    112,
+    112,
+    15
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 27,
+  "map": [
+   "pp   KppppppKp",
+   "pp   KppppppKp",
+   "pppp KpKppKp",
+   "pKpppKpppppp",
+   "ppppp ppppppKp",
+   "pKpKp  pppKpKp",
+   "ppppp   pppp",
+   "   KKKKKKKKK",
+   "  ppppppppppKp",
+   "  ppppppppppKp"
+  ]
+ },
+ {
+  "level": 82,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 18,
+  "locked_plaques": 18,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    104,
+    104,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 30,
+  "map": [
+   "   pp    pp",
+   "  pppp  pppp",
+   "   pp    pp",
+   "pppppKKKKppppp",
+   "pppppppppppppp",
+   "p  pKKppKKp  p",
+   "pp  pp  pp  pp",
+   "ppKKKKKKKKKKpp",
+   "pppppppppppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 83,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 110,
+  "plaques": 110,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 20,
+  "locked_plaques": 20,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    110,
+    110,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 24,
+  "map": [
+   "  pppppppppp",
+   "  KppppppppK",
+   " p pppppppp p",
+   "pp pppppppp pp",
+   "ppKKKKKKKKKKpp",
+   "pp  pppppp  pp",
+   "pppKKKKKKKKppp",
+   "pp  pppppp  pp",
+   "pp pppppppp pp",
+   "   pppppppp"
+  ]
+ },
+ {
+  "level": 84,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 108,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 7,
+  "groups": [
+   [
+    112,
+    108,
+    7
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "   pppp   .  .",
+   "  ppppp  p. p.",
+   " pppppp pp pp",
+   "ppp pppppppppp",
+   "pppp ppppppppp",
+   "pppppppppppppp",
+   "  pppppppppppp",
+   "p  pppppppp pp",
+   "ppppp  ppp ppp",
+   "pppppp ppppppp"
+  ]
+ },
+ {
+  "level": 85,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 113,
+  "plaques": 113,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 8,
+  "locked_plaques": 8,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 13,
+  "groups": [
+   [
+    113,
+    113,
+    13
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 17,
+  "map": [
+   "ppppp pppppppp",
+   "pppppKpppppppp",
+   " ppp  pppppppp",
+   "  K  ppppp  K",
+   " pppKppppp ppp",
+   "ppppKppppp ppp",
+   "pppp  K  K ppp",
+   "ppp  ppp pp K",
+   "ppp pppppppppp",
+   "ppp pppp ppppp"
+  ]
+ },
+ {
+  "level": 86,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 102,
+  "plaques": 96,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 16,
+  "locked_plaques": 16,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    50,
+    48,
+    12
+   ],
+   [
+    24,
+    24,
+    1
+   ],
+   [
+    24,
+    24,
+    1
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 20,
+  "map": [
+   "pppppp  pppppp",
+   "pKKKppppppKKKp",
+   "ppKppp  pppKpp",
+   " pppp    pppp",
+   "p   p.  .p   p",
+   "Kppp  ..  pppK",
+   "pppp .  . pppp",
+   "ppKpp    ppKpp",
+   "ppppp    ppppp",
+   "KpppK    KpppK"
+  ]
+ },
+ {
+  "level": 87,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 108,
+  "plaques": 104,
+  "double_plaques": 18,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    108,
+    104,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "   ppp..ppp",
+   " pppp .. pppp",
+   " pPppp  pppPp",
+   "ppPppp  pppPpp",
+   "ppp  pPPp  ppp",
+   "ppp pPppPp ppp",
+   "pp pPppppPp pp",
+   "p  PppppppP  p",
+   " pPppp  pppPp",
+   "pPppppPPppppPp"
+  ]
+ },
+ {
+  "level": 88,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 108,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    108,
+    108,
+    16
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "pppppppppppppp",
+   "ppppp    ppppp",
+   "pppp .  . pppp",
+   "pppp  ..  pppp",
+   "pppppp  pppppp",
+   " p  p    p  p",
+   "pppppppppppppp",
+   "pppppp  pppppp",
+   "pppppp  pppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 89,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 108,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    104,
+    104,
+    14
+   ],
+   [
+    2,
+    0,
+    0
+   ],
+   [
+    2,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "    pppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "p  p pppp p  p",
+   " ..   pp   ..",
+   "p  pppppppp  p",
+   "pppppppppppppp",
+   "ppppp pp ppppp",
+   "pppp  pp  pppp"
+  ]
+ },
+ {
+  "level": 90,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 114,
+  "plaques": 114,
+  "double_plaques": 114,
+  "single_locks": 0,
+  "double_locks": 8,
+  "locked_plaques": 8,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    114,
+    114,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 24,
+  "map": [
+   "  PPPPPPPPPP",
+   " PPPPP  PPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   "PPP P PP P PPP",
+   "K K K KK K K K",
+   "PPPPPPPPPPPPPP",
+   "PPPPPPPPPPPPPP",
+   " PPPPP  PPPPP",
+   "  PPPPPPPPPP"
+  ]
+ },
+ {
+  "level": 91,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 106,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 22,
+  "locked_plaques": 22,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    104,
+    104,
+    16
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 5,
+  "map": [
+   "ppppppppp",
+   " ppppppp",
+   "  ppppp  ppppp",
+   " . KKK . ppppp",
+   "p   K   pppppp",
+   "ppppppppp ppp",
+   "pppppppp  pppp",
+   "pKKKKpp pppKKp",
+   "pKKKpp  ppKKKp",
+   "pKKpp pppKKKKp"
+  ]
+ },
+ {
+  "level": 92,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 92,
+  "plaques": 76,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 18,
+  "locked_plaques": 18,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    76,
+    76,
+    0
+   ],
+   [
+    6,
+    0,
+    2
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    1
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 6,
+  "map": [
+   "  .  .  .  .",
+   "   .  pp  .",
+   ".   p pp p   .",
+   " . pppppppp .",
+   "p pppppppppp p",
+   "KppppppppppppK",
+   "KKpppp  ppppKK",
+   "KKKpp    ppKKK",
+   "KKpp .... ppKK",
+   "Kpp   ..   ppK"
+  ]
+ },
+ {
+  "level": 93,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 109,
+  "plaques": 109,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 18,
+  "locked_plaques": 18,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    109,
+    109,
+    14
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 15,
+  "map": [
+   "ppppp    ppppp",
+   "KKKpp    ppKKK",
+   "KKppp    pppKK",
+   "Kppppppp ppppK",
+   " p    pppp  p",
+   "ppppppppp  ppp",
+   "pppppp  pppppK",
+   "pppppp pppppKK",
+   "pppppppppppKKK",
+   "pppppp ppp"
+  ]
+ },
+ {
+  "level": 94,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 120,
+  "plaques": 118,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 24,
+  "locked_plaques": 24,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    118,
+    118,
+    16
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 14,
+  "map": [
+   "pppp pppp pppp",
+   "pKKKppppppKKKp",
+   "pKKKppppppKKKp",
+   "pKKKppppppKKKp",
+   " p  pppppp  p",
+   "  . pppppp .",
+   "   pppppppp",
+   "KKKppppppppKKK",
+   "pppppppppppppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 95,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 118,
+  "plaques": 118,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 18,
+  "locked_plaques": 18,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    118,
+    118,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 40,
+  "map": [
+   "ppp pp  pp ppp",
+   "ppp pppppp ppp",
+   "pppppppppppppp",
+   "ppp pppppp ppp",
+   "ppp  KKKK  ppp",
+   "KKK  pppp  KKK",
+   "ppp pppppp ppp",
+   "pppKKKKKKKKppp",
+   "ppp  pppp  ppp",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 96,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 112,
+  "plaques": 112,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    112,
+    112,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   " ppppp  ppppp",
+   " pppp pp pppp",
+   "pppp pppp pppp",
+   "ppp pppppp ppp",
+   "pppppp  pppppp",
+   "pppppp  pppppp",
+   "ppp pppppp ppp",
+   "pppp pppp pppp",
+   " pppp pp pppp",
+   " ppppp  ppppp"
+  ]
+ },
+ {
+  "level": 97,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 84,
+  "plaques": 84,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    84,
+    84,
+    10
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "        ppp",
+   " ppp   ppp",
+   "  ppp ppp",
+   " ppp   ppp ppp",
+   "ppppppppppppp",
+   "  pppppppppp",
+   " pppppppppp",
+   "pppp   ppppp",
+   " pppp   ppppp",
+   "  pppp ppppp"
+  ]
+ },
+ {
+  "level": 98,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 126,
+  "plaques": 126,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 38,
+  "locked_plaques": 38,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 16,
+  "groups": [
+   [
+    126,
+    126,
+    16
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 34,
+  "map": [
+   " pppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppKKKKKKKKppp",
+   "KKK KKKKKK KKK",
+   "KKK pppppp KKK",
+   "KKKp      pKKK",
+   "ppppKKKKKKpppp",
+   "pppppppppppppp",
+   " pppppppppppp"
+  ]
+ },
+ {
+  "level": 99,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 93,
+  "plaques": 93,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 2,
+  "locked_plaques": 2,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 11,
+  "groups": [
+   [
+    93,
+    93,
+    11
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 2,
+  "map": [
+   " pppppp",
+   "ppp  pppppppp",
+   "ppppppppp  ppp",
+   "pppppppppppppp",
+   "ppppp pppppppp",
+   " ppppppp ppppp",
+   "  K ppppppppp",
+   "  p pppppp K",
+   "     pppp  p",
+   "      pp"
+  ]
+ },
+ {
+  "level": 100,
+  "range": "adventure",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 118,
+  "plaques": 118,
+  "double_plaques": 118,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    118,
+    118,
+    10
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   " PPP PPP PPP",
+   "PPPPPPPPPPPPPP",
+   "PPP PPP PPP PP",
+   "PPPPPPPPPPPPPP",
+   "PP PPP PPP PPP",
+   "PPPPPPPPPPPPPP",
+   "P PPP PPP PPP",
+   "PPPPPPPPPPPPPP",
+   "PPP PPP PPP P",
+   "  PPPPPPPPPPP"
+  ]
+ },
+ {
+  "level": 101,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 106,
+  "plaques": 98,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    106,
+    98,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   ".p.p.p  p.p.p.",
+   ".p p p  p p p.",
+   " ppppp  ppppp",
+   " pppppppppppp",
+   " pppppppppppp",
+   " pppp pp pppp",
+   "pppp  pp  pppp",
+   "ppp  pppp  ppp",
+   "p p pppppp p p",
+   "ppp pppppp ppp"
+  ]
+ },
+ {
+  "level": 102,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 15,
+  "height": 10,
+  "active": 82,
+  "plaques": 82,
+  "double_plaques": 0,
+  "single_locks": 34,
+  "double_locks": 0,
+  "locked_plaques": 34,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 17,
+  "groups": [
+   [
+    82,
+    82,
+    17
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 18,
+  "map": [
+   "      pkp",
+   "     pkkkp",
+   "    pppkppp",
+   " kk ppppppp kk",
+   "kkkkpppppppkkkk",
+   "kkkkpppppppkkkk",
+   " kk ppppppp kk",
+   "    pppkppp",
+   "     pkkkp",
+   "      pkp"
+  ]
+ },
+ {
+  "level": 103,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 4,
+  "width": 13,
+  "height": 10,
+  "active": 90,
+  "plaques": 90,
+  "double_plaques": 51,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 7,
+  "groups": [
+   [
+    90,
+    90,
+    7
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "   pppppPP",
+   "  pppppp PP",
+   " p  pppp PPP",
+   "pp  ppp PPPPP",
+   "pppppp PPPPPP",
+   "ppppp PPPPPPP",
+   "pppp PPP  PPP",
+   " pp PPPP  PP",
+   "  p PPPPPPP",
+   "   PPPPPPP"
+  ]
+ },
+ {
+  "level": 104,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 88,
+  "plaques": 88,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 9,
+  "groups": [
+   [
+    88,
+    88,
+    9
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "pp pp pp",
+   "pp pp pp",
+   "pp pp pp p p p",
+   "pp pp pppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "p p p pp pp pp",
+   "      pp pp pp",
+   "      pp pp pp",
+   "      pp pp pp"
+  ]
+ },
+ {
+  "level": 105,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 115,
+  "plaques": 114,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 14,
+  "disabled": 17,
+  "generators": 21,
+  "groups": [
+   [
+    115,
+    114,
+    21
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 17,
+  "map": [
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "pppppppppppppp",
+   "ppp ppp ppp p",
+   "i i i i i i i",
+   "# #p# #p# #p#p",
+   "#p#p#p#p#p#p#p",
+   " p#p p#p p#p p",
+   " p p p p p p p",
+   ".ipipipipipipi"
+  ]
+ },
+ {
+  "level": 106,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 120,
+  "plaques": 120,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 22,
+  "locked_plaques": 22,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 8,
+  "groups": [
+   [
+    120,
+    120,
+    8
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 26,
+  "map": [
+   " pppp    pppp",
+   "pppppp  pppppp",
+   "ppKKppppppKKpp",
+   "ppKKppppppKKpp",
+   " ppppKppKpppp",
+   " pppppKKppppp",
+   "pppppKppKppppp",
+   "ppKKppppppKKpp",
+   "ppKKpp  ppKKpp",
+   " pppp    pppp"
+  ]
+ },
+ {
+  "level": 107,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 96,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    100,
+    96,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   " ppppp  ppppp",
+   ".p pppppppp p.",
+   "pppp  pp  pppp",
+   " ppp pppp ppp",
+   "  pppp  pppp",
+   "  pppp  pppp",
+   " ppp pppp ppp",
+   ".p p  pp  p p.",
+   "pppppppppppppp",
+   " ppppp  ppppp"
+  ]
+ },
+ {
+  "level": 108,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 109,
+  "plaques": 109,
+  "double_plaques": 0,
+  "single_locks": 40,
+  "double_locks": 1,
+  "locked_plaques": 41,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 11,
+  "groups": [
+   [
+    109,
+    109,
+    11
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 24,
+  "map": [
+   "ppppppppppp",
+   "p pppp ppppp",
+   "pp pppp ppppp",
+   "ppp kkkk kkkkk",
+   "pppp pppp pppp",
+   "kkkkk kkkk kkk",
+   " ppppp pppp pp",
+   "  kkkkk kkkk k",
+   "   ppppp ppppp",
+   "    kkkkkKkkkk"
+  ]
+ },
+ {
+  "level": 109,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 5,
+  "width": 14,
+  "height": 9,
+  "active": 86,
+  "plaques": 86,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 10,
+  "groups": [
+   [
+    86,
+    86,
+    10
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "     pppp",
+   "  pppp  pppp",
+   "  p  pppp  p",
+   "  pppppppppp",
+   "pppp pppp pppp",
+   "pp pppppppp pp",
+   "ppppp    ppppp",
+   "p pppp  pppp p",
+   "pppppppppppppp"
+  ]
+ },
+ {
+  "level": 110,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 114,
+  "plaques": 114,
+  "double_plaques": 114,
+  "single_locks": 0,
+  "double_locks": 28,
+  "locked_plaques": 28,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    114,
+    114,
+    12
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 16,
+  "map": [
+   "PPPPPP  PPPPPP",
+   " PPPPP  PPPPP",
+   " PPPPP  PPPPP",
+   " K   K  K   K",
+   "PP PPPPPPPP PP",
+   "PP PPPPPPPP PP",
+   "PPPPKKKKKKPPPP",
+   "PPPPKKKKKKPPPP",
+   "PP PKKKKKKP PP",
+   "PPPPKKKKKKPPPP"
+  ]
+ },
+ {
+  "level": 111,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 100,
+  "plaques": 88,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    88,
+    76,
+    12
+   ],
+   [
+    12,
+    12,
+    0
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 0,
+  "map": [
+   "  ..pppppp..",
+   "   pppppppp",
+   ". pppp  pppp .",
+   ". ppp pp ppp .",
+   "pppp pppp pppp",
+   "pppp pppp pppp",
+   ". ppp pp ppp .",
+   ". pppp  pppp .",
+   "   pppppppp",
+   "  pppppppppp"
+  ]
+ },
+ {
+  "level": 112,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 108,
+  "plaques": 108,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 22,
+  "disabled": 24,
+  "generators": 20,
+  "groups": [
+   [
+    108,
+    108,
+    20
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": true,
+  "gated_cells": 24,
+  "map": [
+   "pp pppppppp pp",
+   "pppppppppppppp",
+   "ppppp pp ppppp",
+   "   ii ii ii",
+   "   ## ## ##",
+   "   ii ii ii",
+   "ppp##p##p##ppp",
+   "ppp##p##p##ppp",
+   "ppp##p##p##ppp",
+   "iii  iiii  iii"
+  ]
+ },
+ {
+  "level": 113,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 5,
+  "width": 14,
+  "height": 10,
+  "active": 104,
+  "plaques": 104,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 0,
+  "locked_plaques": 0,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 12,
+  "groups": [
+   [
+    104,
+    104,
+    12
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 0,
+  "map": [
+   "pppppppppppp",
+   "pp  pppp  ppp",
+   "ppp  pppp  ppp",
+   " ppp  pppp  pp",
+   "  pppppppppppp",
+   "  pppppppppppp",
+   " ppp  pppp  pp",
+   "ppp  pppp  ppp",
+   "pp  pppp  ppp",
+   "pppppppppppp"
+  ]
+ },
+ {
+  "level": 114,
+  "range": "extras",
+  "time": 660,
+  "piece_types": 5,
+  "puzzle_ball_probability": 4,
+  "width": 14,
+  "height": 10,
+  "active": 118,
+  "plaques": 118,
+  "double_plaques": 0,
+  "single_locks": 0,
+  "double_locks": 23,
+  "locked_plaques": 23,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 14,
+  "groups": [
+   [
+    118,
+    118,
+    14
+   ]
+  ],
+  "mirror_shape": false,
+  "mirror_layout": false,
+  "gated_cells": 20,
+  "map": [
+   "    ppp pppppp",
+   "ppp pKp pKKppp",
+   "pKp pppppKKppp",
+   "pKp  pKpppppp",
+   "ppppppKp  ppKp",
+   "  pKpppppppppp",
+   "pppKp  pKKKp p",
+   "pKppppppKKKp p",
+   "pKp pKKppppppp",
+   "ppp ppppp ppKp"
+  ]
+ },
+ {
+  "level": 115,
+  "range": "extras",
+  "time": 770,
+  "piece_types": 5,
+  "puzzle_ball_probability": 0,
+  "width": 14,
+  "height": 10,
+  "active": 102,
+  "plaques": 102,
+  "double_plaques": 102,
+  "single_locks": 0,
+  "double_locks": 28,
+  "locked_plaques": 28,
+  "frozen": 0,
+  "disabled": 0,
+  "generators": 24,
+  "groups": [
+   [
+    102,
+    102,
+    24
+   ]
+  ],
+  "mirror_shape": true,
+  "mirror_layout": false,
+  "gated_cells": 45,
+  "map": [
+   " P    PP    P",
+   "KPKPKKPPKPKKPK",
+   "PPPPPPPPPPPPPP",
+   "   P      P",
+   "KKPPKKKKKKPPKK",
+   "PPPPPPPPPPPPPP",
+   " P          P",
+   "PPKKKKKKKKKKPP",
+   "PPPPPPPPPPPPPP",
+   "PP PP PP PP PP"
+  ]
+ }
+]

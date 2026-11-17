@@ -906,7 +906,19 @@ function E.new(config)
     local rise_order = {}   -- top row first
     for k = #fall_order, 1, -1 do rise_order[#rise_order + 1] = fall_order[k] end
 
-    -- Cells gravity can feed: an inlet (no active cell above), or a cell below
+    -- An inlet is open to the sky: no active cell anywhere above it in its
+    -- column. A hole inside the board is a roof, not an inlet.
+    local function inlet_of(g, i)
+        local above = hex_neighbor(i, 4)
+        while above >= 0 do
+            if cell_active(g, above) then return false end
+            above = hex_neighbor(above, 4)
+        end
+        return true
+    end
+    M.game_inlet = inlet_of
+
+    -- Cells gravity can feed: an inlet, or a cell below
     -- a fed, unlocked donor straight above or (with trickling) on an upper
     -- diagonal. Chains, ice and stones are gates: cells reachable only through
     -- them get no new pieces until they break.
@@ -916,7 +928,7 @@ function E.new(config)
         for _, i in ipairs(rise_order) do
             if open(i) then
                 local above = hex_neighbor(i, 4)
-                local yes = not cell_active(g, above) or fed[above]
+                local yes = inlet_of(g, i) or fed[above]
                 if not yes and flags & E.NO_TRICKLE == 0 then
                     local left, right = hex_neighbor(i, 3), hex_neighbor(i, 5)
                     yes = fed[left] or fed[right]
@@ -963,7 +975,7 @@ function E.new(config)
                     if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, 3), hex_neighbor(i, 5) end
                     if (hex_q(i) + hex_r(i)) % 2 == 0 then left, right = right, left end
                     local above, source = hex_neighbor(i, 4), nil
-                    local inlet = not cell_active(g, above)
+                    local inlet = inlet_of(g, i)
                     if not inlet then
                         if donor(above) and not used[above] then source = above
                         elseif side_donor(left) and not used[left] then source = left
@@ -1239,9 +1251,16 @@ function E.new(config)
         end
         local taken = {}
         for cell in pairs(used) do taken[cell] = true end
+        -- `chain_cells` places authored chains: {cell=id, hits=1 or 2}. They
+        -- are counted apart from the scalar `chains`, which terrain rank places.
+        for _, entry in ipairs(l.chain_cells or {}) do
+            valid_cell(entry.cell)
+            assert(not taken[entry.cell], "overlapping chains")
+            g.chain[entry.cell], taken[entry.cell] = entry.hits or 1, true
+        end
         local chain_count = 0
         for k = 0, n * 3 - 1 do
-            if chain_count >= l.chains then break end
+            if chain_count >= (l.chains or 0) then break end
             local cell = order[(k * 3 + 1) % n + 1]
             if not taken[cell] then
                 -- The first double_chains strands placed take two hits.
@@ -1249,7 +1268,7 @@ function E.new(config)
                 taken[cell], chain_count = true, chain_count + 1
             end
         end
-        assert(chain_count == l.chains, "not enough chain cells")
+        assert(chain_count == (l.chains or 0), "not enough chain cells")
         assert((l.double_chains or 0) <= l.chains, "double chains are counted within chains")
         local count = 0
         for k = 0, n - 1 do
