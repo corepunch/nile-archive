@@ -227,7 +227,12 @@ def summarize(number, head, layout, problems):
         for dq, dr in NEIGHBORS[:3]:
             for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2)):
                 cells = [(c[0] + k * dq, c[1] + k * dr) for k in ks]
-                if all(x == c or x in filled for x in cells):
+                others = [x for x in cells if x != c]
+                # A swap must be able to bring the colour in: one of the other
+                # two cells needs a filled neighbour off the line.
+                partner = any((x[0] + a, x[1] + b) in filled and (x[0] + a, x[1] + b) not in cells
+                              for x in others for a, b in NEIGHBORS)
+                if all(x in filled for x in others) and partner:
                     return True
         return False
     while True:

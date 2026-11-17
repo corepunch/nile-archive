@@ -7,7 +7,7 @@ return {
     [4] = 19,   -- tutorial
     [5] = 39,   -- easy
     [6] = 26,   -- easy
-    [7] = 250,   -- easy
+    [7] = 111,   -- easy
     [8] = 250,   -- normal
     [9] = 25,   -- normal
     [10] = 44,   -- boss

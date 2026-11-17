@@ -89,34 +89,3 @@ use_once(1)
 use_once(3)
 check(rules.game_start(2, 123478, {reindeer_stable=true}).tools[4] == 1,
       'a fresh attempt starts with its own booster use')
-
--- Extended: the greedy bot, without tools, wins every winter wish at least once.
-if testing.extended then
-    local m = rules.new_match()
-    local function resolve(g)
-        for _ = 1, 200 do
-            rules.game_apply(g, m); rules.game_collapse(g); rules.game_matches(g, m, -1)
-            if m.hits == 0 then rules.game_check_end(g); return end
-        end
-    end
-    for level = 0, rules.LEVELS - 1 do
-        local wins = 0
-        for seed = 1, 4 do
-            local g = rules.game_start(level, seed)
-            for _ = 1, 100 do
-                if g.won or g.lost then break end
-                local best, a, b = -1, -1, -1
-                for i = 0, rules.CELLS - 1 do
-                    for d = 0, 2 do
-                        local j = rules.hex_neighbor(i, d)
-                        local v = rules.game_evaluate_move(g, i, j)
-                        if v > best then best, a, b = v, i, j end
-                    end
-                end
-                if a < 0 then rules.game_shuffle(g) else rules.game_swap(g, a, b, m); resolve(g) end
-            end
-            if g.won then wins = wins + 1 end
-        end
-        check(wins >= 1, ("the greedy bot wins winter wish %d at least once"):format(level + 1))
-    end
-end

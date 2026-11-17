@@ -24,7 +24,7 @@ return {
     [21] = 44,   -- easy
     [22] = 17,   -- easy
     [23] = 81,   -- normal
-    [24] = 250,   -- normal
+    [24] = 185,   -- normal
     [25] = 24,   -- hard
     [26] = 58,   -- easy
     [27] = 74,   -- normal

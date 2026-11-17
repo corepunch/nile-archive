@@ -54,13 +54,13 @@
   "wins": 40
  },
  {
-  "fastest": -1,
+  "fastest": 3,
   "level": 7,
-  "median": -1,
-  "moves": 250,
+  "median": 40,
+  "moves": 111,
   "seeds": 40,
   "tier": "easy",
-  "wins": 0
+  "wins": 40
  },
  {
   "fastest": 4,

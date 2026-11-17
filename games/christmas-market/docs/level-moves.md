@@ -13,7 +13,7 @@ boss 50%). The bot orders and spaces the boards; its rates are not human win rat
 | 4 | Gingerbread House | tutorial | 19 | 7 | 2 | 40/40 |
 | 5 | Hidden Stall | easy | 39 | 13 | 5 | 40/40 |
 | 6 | Tinsel Garlands | easy | 26 | 14 | 4 | 40/40 |
-| 7 | Row of Stalls | easy | 250 | -1 | -1 | 0/40 |
+| 7 | Row of Stalls | easy | 111 | 40 | 3 | 40/40 |
 | 8 | Sack of Gifts | normal | 250 | -1 | 4 | 10/40 |
 | 9 | Star Over the Market | normal | 25 | 10 | 1 | 40/40 |
 | 10 | Snowflake | boss | 44 | 44 | 9 | 40/40 |

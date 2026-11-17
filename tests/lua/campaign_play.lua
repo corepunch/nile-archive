@@ -62,7 +62,10 @@ local function play(g)
     end
 end
 
-for level = 1, rules.LEVELS do
+-- The story and the building ladder end at the finale's board; the boards
+-- after it are covered by the move tuner and the balance runner.
+local STORY_LEVELS = journey.beats[#journey.beats].level
+for level = 1, STORY_LEVELS do
     R.on_island, R.overlay = false, R.OV_NONE
     R.g = rules.game_start(level - 1, 1)
     local next_beat = journey.next(R.prog, function(kind) return island.owned(R.island, kind) > 0 end, level - 1)

@@ -30,7 +30,7 @@ boss 50%). The bot orders and spaces the boards; its rates are not human win rat
 | 21 | The Great Well | easy | 44 | 13 | 6 | 40/40 |
 | 22 | Overgrown Stair | easy | 17 | 10 | 4 | 40/40 |
 | 23 | Triple Terrace Gate | normal | 81 | 36 | 16 | 39/40 |
-| 24 | Moat Gate | normal | 250 | -1 | 14 | 2/40 |
+| 24 | Moat Gate | normal | 185 | 92 | 9 | 36/40 |
 | 25 | Sentinel Walls | hard | 24 | 21 | 9 | 39/40 |
 | 26 | Lintel Door | easy | 58 | 19 | 7 | 40/40 |
 | 27 | Twin Obelisks | normal | 74 | 30 | 6 | 39/40 |

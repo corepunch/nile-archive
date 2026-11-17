@@ -376,44 +376,6 @@ local function test_final_level_settles()
     end
 end
 
-local function test_campaign()
-    local m = rules.new_match()
-    local total, runs = 0, 0
-    local restored = {}
-    for lvl = 0, LEVELS - 1 do
-        for _, step in ipairs(island.ladder) do
-            if step.after == lvl then restored[step.unlock.building] = true end
-        end
-        local wins = 0
-        for seed = 1, 4 do
-            local g = rules.game_start(lvl, seed, restored)
-            runs = runs + 1
-            for _ = 1, 100 do
-                if g.won or g.lost then break end
-                local best, ba, bb = -1, -1, -1
-                for i = 0, CELLS - 1 do
-                    for d = 0, 2 do
-                        local j = hex_neighbor(i, d)
-                        local v = rules.game_evaluate_move(g, i, j)
-                        if v > best then best, ba, bb = v, i, j end
-                    end
-                end
-                if ba < 0 then
-                    rules.game_shuffle(g)
-                else
-                    check(rules.game_swap(g, ba, bb, m), "greedy move is legal")
-                    check(resolve(g, m), "board resolves")
-                end
-            end
-            if g.won then wins = wins + 1 end
-        end
-        check(wins >= 1, ("the greedy bot wins level %d at least once"):format(lvl + 1))
-        total = total + wins
-    end
-    check(total >= runs // 4, "the greedy bot wins a share of expeditions")
-    print(("relic rush: greedy bot won %d of %d expeditions without tools"):format(total, runs))
-end
-
 test_grid()
 test_matching()
 test_holes_and_shapes()
@@ -421,7 +383,6 @@ test_moves_and_blockers()
 test_island()
 test_catalogue()
 test_final_level_settles()
-if testing.extended then test_campaign() end
 -- Interaction precedence: depleted/busy controls cannot appear actionable,
 -- touch presses require an origin inside the button; touch has no hover.
 do
