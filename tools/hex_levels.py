@@ -25,6 +25,10 @@ LINES, COLUMNS = 2 * BOARD_ROWS, BOARD_COLUMNS   # 24 half-row lines, 9 columns
 MIN_CELLS = 60         # of the 81-108 a 9-12 row board offers
 MIN_ROWS = 9           # boards are 9 to 12 rows tall
 TIERS = ('tutorial', 'easy', 'normal', 'hard', 'boss')
+# Tablet layers (a double tablet is two) a tier may hold. Levels count moves,
+# not Cradle of Rome's time, so boards carry a fraction of its plaques.
+MAX_LAYERS = {'tutorial': 16, 'easy': 24, 'normal': 30, 'hard': 34, 'boss': 40}
+MIN_LAYERS = 6
 # Symbol -> (tablet layers, chain hits, ice layers, stone). 'x' is a hole;
 # every in-hexagon slot has a symbol.
 SYMBOLS = {'.': (0, 0, 0, 0), 'p': (1, 0, 0, 0), 'P': (2, 0, 0, 0),
@@ -170,6 +174,10 @@ def summarize(number, head, layout, problems):
         problems.append(f'{len(layout)} cells, needs at least {MIN_CELLS}')
     if not tablets:
         problems.append('no tablets: every board is won by clearing its tablets')
+    layers = len(tablets) + len(doubles)
+    cap = MAX_LAYERS.get(head.get('tier'), 40)
+    if not MIN_LAYERS <= layers <= cap:
+        problems.append(f'{layers} tablet layers (a double counts two); a {head.get("tier")} board holds {MIN_LAYERS} to {cap}')
     # A tablet must sit on runs of three matchable cells (not stones) along
     # two axes. With one, three fixed pieces can deadlock it for good.
     play = {c for c, s in layout.items() if not SYMBOLS[s][3]}

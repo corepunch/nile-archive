@@ -52,9 +52,14 @@ of every level). Regenerate both with
    down a diagonal tunnel one cell at a time when nothing lies straight above
    them, so a tunnel from one chamber to another trickles pieces at an angle.
    Put a few such boards in every ten.
-5. **Tablets win the board.** Every board has tablets (`oil` in the engine).
-   Clear them all to win. The move budget is set later by the tuner, not by
-   you.
+5. **Tablets win the board, and there are few of them.** Every board has
+   tablets (`oil` in the engine); clear them all to win. Our levels count
+   moves, not time: Cradle covers 80–95% of a board because its levels run on
+   a timer. Count a board's tablet layers (a double tablet is two) and stay
+   within its tier: tutorial 6–16, easy up to 24, normal up to 30, hard up to
+   34, boss up to 40. The validator enforces the ceilings. Put the tablets
+   where they make the board's point: behind the gate, in the far corner of
+   the vault, along the tunnel. The move budget is set later by the tuner.
 6. **Chains guard tablets.** In Cradle of Rome 869 of 871 chains sit on
    plaques; the other two are teaching gates. Put every chain and every ice
    on a tablet (`k K g G j J`). A chain or ice on a plain cell (`c C i I`) is
@@ -78,23 +83,23 @@ of every level). Regenerate both with
 Level N follows Cradle of Rome's Adventure level N: use the same features it
 uses (read its row in `levels.json`). Its boards are about as big as ours.
 
-| Levels | Tablets (share of cells) | Chains | What is new |
+| Levels | Tablet layers | Chains | What is new |
 | --- | --- | --- | --- |
-| 1–4 | 10–20% → 40% | none | Matching over tablets. Grow the area each board. |
-| 5 | 30–50% | 1–2 single, as a gate | The first chain blocks the way into a lower chamber. |
-| 6 | 50–60% | several, over tablets | Chained pieces sit on tablets. |
-| 7 | 40–60% | optional | **Ice** on plain cells: it holds its piece, a match on the cell breaks it, and it gates the fall below it like a chain. Use 2–6, mirrored. |
-| 8 | 40–60% | optional | Practice, one breather. |
-| 9 | 50–70% | optional | Two wings joined by a narrow bridge (Cradle's first two-area board; ours stay one board). |
-| 10 | 70–90%, nearly all double | none | The first double-tablet board: a test. |
-| 11 | 60–80% | optional | **Ice on tablets:** the ice breaks first, then the tablet. |
-| 12–14 | 60–90% | about half the boards, mostly gates | Combine known rules. Ice on about one board in three. |
-| 15 | 60–80% | optional | **Carved stones:** a solid cell with no piece. An adjacent match breaks it. It also gates the fall below it. Use 2–6, mirrored. |
-| 16–24 | 60–90% | about half the boards | Stones on about one board in four, ice on about one in three. |
-| 25 | 60–90% | optional | **Double ice:** two hits. |
-| 26–50 | 60–90% | about half the boards | Mix everything known; about one double-tablet board in ten. |
-| 51 | 60–90% | double chains | The first double chain (Cradle). |
-| 52–100 | 70–95% | about half the boards; most use double chains | Late combinations of every feature. Stones on about one board in four, ice on about one board in three, about one double-tablet board in ten. Bosses combine several. |
+| 1–4 | 6 → 16 | none | Matching over tablets. Grow the area each board. |
+| 5 | 12–18 | 1–2 single, as a gate | The first chain blocks the way into a lower chamber; most tablets sit behind it. |
+| 6 | 14–20 | several, over tablets | Chained pieces sit on tablets. |
+| 7 | 14–20 | optional | **Ice** on plain cells: it holds its piece, a match on the cell breaks it, and it gates the fall below it like a chain. Use 2–6, symmetric. |
+| 8 | 14–20 | optional | Practice, one breather. |
+| 9 | 16–24 | optional | Two wings joined by a narrow bridge (Cradle's first two-area board; ours stay one board). |
+| 10 | 30–40, nearly all double | none | The first double-tablet board: a test. |
+| 11 | 16–24 | optional | **Ice on tablets:** the ice breaks first, then the tablet. |
+| 12–14 | up to the tier | about half the boards, mostly gates | Combine known rules. Ice on about one board in three. |
+| 15 | up to the tier | optional | **Carved stones:** a solid cell with no piece. An adjacent match breaks it. It also gates the fall below it. Use 2–6, symmetric. |
+| 16–24 | up to the tier | about half the boards | Stones on about one board in four, ice on about one in three. |
+| 25 | up to the tier | optional | **Double ice:** two hits. |
+| 26–50 | up to the tier | about half the boards | Mix everything known; about one double-tablet board in ten. |
+| 51 | up to the tier | double chains | The first double chain (Cradle). |
+| 52–100 | up to the tier | about half the boards; most use double chains | Late combinations of every feature. Stones on about one board in four, ice on about one board in three, about one double-tablet board in ten. Bosses combine several. |
 
 **Rhythm.** Inside every ten levels after the first ten, use the tiers
 `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`. Levels
