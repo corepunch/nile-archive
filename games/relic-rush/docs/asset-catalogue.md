@@ -531,8 +531,9 @@ Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to generate
 `data/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
 records the base crop, registration and state recipes. Board gems fit in
 112 × 112 px, with an 88 px limit for the Hammer. Button glyphs are centered
-by their visible shape and scaled to clear the circular inset. The board
-and button atlases use 128 px cells.
+by their visible shape and scaled to clear the circular inset. The Hammer
+uses the midpoint from its visible head to handle so both ends have room.
+The board and button atlases use 128 px cells.
 [Clearance review](../../../art/match3-buttons/glyph-clearance.png)
 
 [Rendered states](screenshots/bonus-states.jpg) ·

@@ -152,14 +152,19 @@ def engrave(plate, mask, floor, style):
     return Image.composite(recess, stone, mask).resize(plate.size, Image.Resampling.LANCZOS)
 
 
-def button_glyph(source, max_size, radius):
-    """Center by visible alpha and register both faces within the same circle."""
+def button_glyph(source, max_size, radius, alignment="alpha"):
+    """Register ready and engraved faces inside the same circle."""
     w, h = source.size
     pixels = [(i % w + .5, i // w + .5, a)
               for i, a in enumerate(source.getchannel("A").getdata()) if a >= 32]
-    mass = sum(a for _, _, a in pixels)
-    cx = sum(x * a for x, _, a in pixels) / mass
-    cy = sum(y * a for _, y, a in pixels) / mass
+    if alignment == "bounds":
+        cx = (min(x for x, _, _ in pixels) + max(x for x, _, _ in pixels)) / 2
+        cy = (min(y for _, y, _ in pixels) + max(y for _, y, _ in pixels)) / 2
+    else:
+        assert alignment == "alpha", f"Unknown glyph alignment: {alignment}"
+        mass = sum(a for _, _, a in pixels)
+        cx = sum(x * a for x, _, a in pixels) / mass
+        cy = sum(y * a for _, y, a in pixels) / mass
     extent = max(math.hypot(x - cx, y - cy) for x, y, _ in pixels)
     # Reserve coverage for resampling and the engraved edge's optical softness.
     scale = min(1, max_size / max(w, h), (radius - .75) / extent) * ENGRAVE_SCALE
@@ -206,7 +211,7 @@ def pack(spec, root=ROOT, icons=None):
         chip = source.copy()
         chip.thumbnail((board_size, board_size), Image.Resampling.LANCZOS)
         atlas.paste(center(chip), (x * SLOT_SIZE, 0))
-        icon, cut = button_glyph(source, min(button_size, board_size), radius)
+        icon, cut = button_glyph(source, min(button_size, board_size), radius, bounds.get("center", "alpha"))
         visible = cut.point(lambda a: 255 if a >= 32 else 0)
         assert not ImageChops.multiply(visible, outside_inset).getbbox(), f"{key} crowds the inner rim"
         assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), f"{key} extends beyond the button"

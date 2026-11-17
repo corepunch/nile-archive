@@ -10,7 +10,7 @@
   },
   "columns": ["build", "play", "levels", "pause"],
   "icon_sizes": {
-    "build": {"button": 72},
+    "build": {"button": 72, "center": "bounds"},
     "play": {"button": 65},
     "levels": {"button": 70},
     "pause": {"button": 62}
