@@ -120,7 +120,7 @@ shot("economy-wallet", "390x844", "--city 2 --safe-area 0,47,0,34")
 shot("economy-price-phone", "390x844", "--card 3 --safe-area 0,47,0,34")
 shot("economy-shop", "480x900", "--catalogue building")
 shot("economy-result", "480x900", "--victory 9")
-reel("relic-rush-plaques", 25, 15, "480x900", "--level 10 --floor-reel oil --reel")
+reel("relic-rush-plaques", 25, 15, "480x900", "--level 3 --floor-reel oil --reel")
 shot("phone-element-states", "390x844", "--element-states --safe-area 0,47,0,34")
 shot("floating-hud", "480x900", "--level 9")
 shot("phone-floating-hud", "390x844", "--level 9 --safe-area 0,47,0,34")
@@ -211,7 +211,7 @@ frame("portrait-same-side-390x844", "390x844", "--lua tests/fixtures/dialogue;ga
 reel("relic-rush-board-intro", 18, 6, "480x900", "--level 5 --present --reel")
 reel("relic-rush-town-dive", 48, 4, "480x900", "--city 3 --dive --dive-back 120 --reel")   -- Play: the town dives into the board and back
 reel("relic-rush-phone-board-intro", 12, 8, "390x844", "--level 9 --present --reel --safe-area 0,47,0,34")
-local chain_review = "--lua tests/fixtures/chain-reject;games/relic-rush/lua;. --level 4 --reel"
+local chain_review = "--lua tests/fixtures/chain-reject;games/relic-rush/lua;. --level 6 --reel"   -- the first board with chains over plaques
 reel("chain-reject", 8, 4, "480x900", chain_review)
 reel("chain-reject-phone", 8, 4, "390x844", chain_review .. " --safe-area 0,47,0,34")
 reel("dialogue-to-board", 30, 8, "480x900", "--dialog intro --talk-through 45 --reel")

@@ -361,7 +361,7 @@ function D.bind(R, W)
             local cells = {rules.hex_index(-3,0),rules.hex_index(-2,0),rules.hex_index(-1,0),rules.hex_index(0,0),rules.hex_index(1,0),rules.hex_index(2,0)}
             for _,cell in ipairs(cells) do R.g.active[cell]=true;R.g.stone_hp[cell]=0 end
             for k, cell in ipairs(cells) do
-                R.g.tiles[cell] = rules.tile(k - 1)
+                R.g.tiles[cell] = rules.tile((k - 1) % rules.COLORS)
                 R.g.chain[cell], R.g.ice[cell] = 0, 0
             end
             for hits = 1, 2 do

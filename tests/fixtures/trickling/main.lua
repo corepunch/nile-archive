@@ -18,12 +18,12 @@ function desc.init()
     R.g.obstacles = 0   -- keep initial_obstacles: the level names locks as a goal, shown here as done
     if not app.arg("review-top-edge") then
         R.g.tiles[rules.hex_index(-1, 2)] = rules.tile(4)
-        R.g.tiles[rules.hex_index(1, 1)] = rules.tile(5)
+        R.g.tiles[rules.hex_index(1, 1)] = rules.tile(rules.COLORS - 1)
     end
     R.pending = rules.new_match()
     R.old_tiles = rules.game_copy(R.g).tiles
     local flags = app.arg("review-gravity") == "vertical" and match3.NO_TRICKLE or 0
-    local gravity = match3.new{flags=flags, colors=rules.COLORS, match_min=rules.MATCH_MIN}
+    local gravity = match3.new{flags=flags, columns=rules.COLUMNS, rows=rules.ROWS, colors=rules.COLORS, match_min=rules.MATCH_MIN}
     R.fall_from, R.fall_steps = gravity.game_collapse(R.g)
     R.phase, R.phase_time = R.PH_FALL, tonumber(app.arg("fall-time")) or .04
     R.on_island, R.art_review, R.toast_time = false, true, 0

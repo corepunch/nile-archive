@@ -168,7 +168,7 @@ function A.draw_catalogue(R)
     local packs = {"relics", "jewels", "resources"}
     for row, pack in ipairs(packs) do
         R.say_at(pack:upper(), vec2(240, 175 + (row - 1) * 60), 13, R.PAL_CREAM, 0)
-        for k = 0, 5 do
+        for k = 0, #R.art_packs[pack] - 1 do
             gfx.image(R.art_packs[pack][k + 1], rect(43 + k * 68, 190 + (row - 1) * 60, 38, 38), color.WHITE)
         end
     end

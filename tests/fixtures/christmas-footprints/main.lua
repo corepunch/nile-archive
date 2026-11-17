@@ -9,7 +9,7 @@ function desc.init()
     local firs, bench = 10, 11
     c.count, c.open = 0, 63
     local first = c:snap(vec2(760, 1650), firs)
-    local wallet = purse(2000)
+    local wallet = purse(2000, 2000, 2000)   -- decorations cost Coins and Supplies
     c:begin_place(firs, first)
     local event
     event, wallet = c:confirm(wallet, 0)
