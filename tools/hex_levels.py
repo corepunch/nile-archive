@@ -208,6 +208,21 @@ def summarize(number, head, layout, problems):
     if idle:
         problems.append(f'{len(idle)} chains or ice sit on plain cells and gate nothing; put them on tablets: '
                         + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(idle, key=lambda c: slot(*c))))
+    # A chain or ice must be breakable as the board starts: on some line of
+    # three, the other two cells are filled while it still holds. Otherwise it
+    # waits for pieces only it can let in, and the board deadlocks.
+    def matchable(c):
+        for dq, dr in NEIGHBORS[:3]:
+            for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2)):
+                cells = [(c[0] + k * dq, c[1] + k * dr) for k in ks]
+                others = [x for x in cells if x != c]
+                if all(x in layout for x in cells) and all(x in now_fed or (x in layout and not SYMBOLS[layout[x]][3] and blocker(layout[x])) for x in others):
+                    return True
+        return False
+    locked = [c for c, sym in layout.items() if (SYMBOLS[sym][1] or SYMBOLS[sym][2]) and not matchable(c)]
+    if locked:
+        problems.append(f'{len(locked)} chains or ice have no line of three that is filled while they hold, so they never break: '
+                        + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(locked, key=lambda c: slot(*c))))
     # Every gated cell must open once its chains break.
     open_board = {c: ('.' if blocker(s) else s) for c, s in layout.items()}
     never = [c for c in layout if c not in fed(open_board)]
