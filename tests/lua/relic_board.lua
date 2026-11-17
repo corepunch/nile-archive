@@ -50,7 +50,7 @@ for level = 0, rules.LEVELS - 1 do
     local gems = inventory(g)
     R.board_update(.02)
     same_inventory(g,gems)
-    check(rules.game_hint(g), "idle board recovers without a tool or player move")
+    check(rules.game_hint(g), "idle board recovers without a tool or player move: level " .. level + 1)
     rules.game_matches(g, R.pending, -1)
     check(R.pending.hits == 0, "recovered board has no free matches")
     check(R.selected == -1 and R.tool == -1 and R.hint_a == -1 and R.hint_b == -1,

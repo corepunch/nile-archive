@@ -1214,13 +1214,32 @@ function E.new(config)
         end
         if not distinct then return false end -- every permutation would be identical
         local m = new_match()
-        for _ = 1, 2000 do
+        -- A random deal on a large board with five kinds nearly always holds a
+        -- line somewhere, so each deal is repaired: a piece in a line swaps with
+        -- a random piece whenever that leaves fewer matched cells.
+        local function repair()
+            game_matches(g, m)
+            for _ = 1, #cells * 4 do
+                if m.hits == 0 then return end
+                local hits, matched = m.hits, {}
+                for _, cell in ipairs(cells) do if m.mask[cell] then matched[#matched + 1] = cell end end
+                local a = matched[randn(g, #matched) + 1]
+                local b = cells[randn(g, #cells) + 1]
+                g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a]
+                game_matches(g, m)
+                if m.hits >= hits then
+                    g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a]
+                    game_matches(g, m)
+                end
+            end
+        end
+        for _ = 1, 200 do
             for i = #pieces, 2, -1 do
                 local j = randn(g, i) + 1
                 pieces[i], pieces[j] = pieces[j], pieces[i]
             end
             for i, cell in ipairs(cells) do g.tiles[cell] = pieces[i] end
-            game_matches(g, m)
+            repair()
             if m.hits == 0 and game_hint(g) then return true end
         end
         for cell, piece in pairs(original) do g.tiles[cell] = piece end

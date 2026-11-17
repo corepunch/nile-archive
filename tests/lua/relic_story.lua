@@ -71,14 +71,14 @@ end
 local collections = {
     [1]={"Camp timber",3}, [2]={"Lamp lens",3}, [3]={"Relay cable",4},
     [4]={"Tide chart",0}, [5]={"Quay marker",2}, [6]={"Shore marker",2},
-    [7]={"Tool roll",1}, [8]={"Relay pliers",5}, [9]={"Supply crate",3}, [10]={"Shutter gear",5},
+    [7]={"Tool roll",1}, [8]={"Relay pliers",2}, [9]={"Supply crate",3}, [10]={"Shutter gear",2},
     [13]={"Folded note",0},
 }
 
 -- Story pieces occupy one palette slot and remain distinct through refills.
 for board, spec in pairs(collections) do
     local _, target, omitted = table.unpack(spec)
-    local expected_count = 6   -- every board spawns all six kinds
+    local expected_count = 5   -- every board spawns all five kinds
     local g = rules.game_start(board-1,123)
     R.g = g
     local kinds, free = {}, {}

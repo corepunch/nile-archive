@@ -25,7 +25,7 @@ end
 -- A board with no straight triple anywhere.
 local function pattern()
     local g = blank()
-    for i = 0, CELLS - 1 do g.tiles[i].kind = (hex_q(i) + 2 * hex_r(i) + 12) % 6 end
+    for i = 0, CELLS - 1 do g.tiles[i].kind = (hex_q(i) + 2 * hex_r(i) + 12) % COLORS end
     return g
 end
 

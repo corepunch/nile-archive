@@ -14,6 +14,10 @@ local E = {
         {key="stone", name="Dressed stone", slot=3, amount=3},
     },
     WELL_KIND=1, WORKSHOP_KIND=2,
+    -- Boards spawn five kinds, as in Cradle of Rome. The green apple's slot
+    -- (1 Food, never upgraded) carries the bonus gem, a story item or a score
+    -- piece; the red slot takes the bonus when a story item holds it.
+    SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
     CAMPAIGN_VERSION=5,
 }
 -- Presentation order is independent of the persisted purse slots.
@@ -151,9 +155,9 @@ function E.board_loadout(level, number, restored, seed)
         end
     end
     local bonus = debut or (#available > 0 and available[(seed or 1) % #available + 1])
-    -- Use the score slot or the red slot when a story item uses orange.
+    -- Use the special slot, or the red slot when a story item holds it.
     -- Give a newly unlocked resource (such as board 10's rations) its debut.
-    local kind = level.goal_kind == 5 and 1 or 5
+    local kind = level.goal_kind == E.SPECIAL_KIND and E.SPECIAL_FALLBACK or E.SPECIAL_KIND
     if not debut and yields[kind] and yields[kind].first_level == number then bonus = nil end
     if bonus then yields[kind] = bonus end
     return yields, {tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,

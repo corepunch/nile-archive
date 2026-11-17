@@ -96,7 +96,7 @@ do
         check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
         check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
         check(g.backdrop==(level>=1 and 1 or spec.background),'the latest restoration in force picks the lagoon')
-        check(g.spawn_kinds==nil and rules.COLORS==6,'every expedition spawns all six kinds')
+        check(g.spawn_kinds==nil and rules.COLORS==5,'every expedition spawns all five kinds, as in Cradle of Rome')
         local charge_kinds = 0
         for _, piece in pairs(g.resource_yields) do
             if piece.tool then charge_kinds = charge_kinds + 1 end
@@ -119,9 +119,9 @@ do
         'the courtyard brings the temple to boards from its first expedition')
 end
 
--- The Shore Marker board has two different score pieces. A matching line of
--- either uses the normal scoring path, while a green apple still earns Food.
-for _, entry in ipairs{{6, 1, 'flower'}, {6, 5, 'leaf'}, {1, 2, 'apple'}} do
+-- Score pieces (the Shore Marker's flower, the cable board's leaf) use the
+-- normal scoring path, while a green apple still earns Food.
+for _, entry in ipairs{{6, 1, 'flower'}, {3, 2, 'leaf'}, {1, 2, 'apple'}} do
     local level, kind, name = table.unpack(entry)
     local g = rules.game_start(level-1,123)
     local spec = rules.level_of(g)
@@ -264,7 +264,7 @@ do
     local B = economy.bonuses
     local restored = {camp=true, bonus_charge={}}
     local g, m = rules.game_start(1, 73, restored), rules.new_match()
-    local kind = rules.level_of(g).goal_kind == 5 and 1 or 5
+    local kind = rules.level_of(g).goal_kind == economy.SPECIAL_KIND and economy.SPECIAL_FALLBACK or economy.SPECIAL_KIND
     check(g.bonus_debut == B.hammer and g.resource_yields[kind] == B.hammer, 'the Camp debuts Hammer')
     local mid = open_cell(g)
     local line = {rules.hex_neighbor(mid, 4), mid, rules.hex_neighbor(mid, 1)}

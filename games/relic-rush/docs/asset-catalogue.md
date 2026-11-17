@@ -356,7 +356,7 @@ the game does not recolour one gem into other kinds.
 | 2 / LEAF | Jade leaf | Green square gem | Timber | Ordinary matching kind; reused Wood purse icon |
 | 3 / SCARAB | Turquoise scarab | Blue teardrop | Water | Ordinary matching kind |
 | 4 / CRYSTAL | Purple crystal cluster | Purple diamond | Stone | Ordinary matching kind; reused Stone purse icon |
-| 5 / AMPHORA | Amber amphora | Orange star | Wheat | Ordinary matching kind |
+| 5 / AMPHORA | Amber amphora | Orange star | Wheat | Not spawned: boards use five kinds (0–4); art kept for previews |
 
 Source: `art/tile-sets/source.png`, six columns × three packs. Runtime:
 `art/registered/tile-sets/{relics,jewels,resources}/{0..5}.png`. Import:

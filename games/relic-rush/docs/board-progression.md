@@ -16,14 +16,20 @@ double tablets from 10, carved stones from 15 and double chains from 51.
 fitted by `python3 tools/tune_moves.py relic-rush` and listed with each
 board's tier in [level-moves.md](level-moves.md).
 
-Every board spawns all six kinds. With five on a hex board, where each cell
-sits on three lines, refills chained so often that one move could clear a board.
-Refills are also damped from the second cascade wave (`refill_damping=2`).
+Every board spawns five kinds, as Cradle of Rome does on all 100 of its
+levels. With six, lines of three were so rare on the 108-cell boards that the
+reference bot needed about 200 moves a board. Refills are damped from the
+second cascade wave (`refill_damping=2`), so one move rarely clears a board.
+
+The green apple's slot (kind 2, 1 Food, never upgraded) is the special slot:
+the bonus gem, a story item or a score piece takes it, and the bonus moves to
+the red slot when a story item holds it (`SPECIAL_KIND` in
+[economy.lua](../lua/economy.lua)).
 
 | Boards | Palette |
 | --- | --- |
-| 1, 11, 12, 14–30 | Six resource kinds, some of them score pieces |
-| 2–10, 13 | Five resource or score kinds and one story piece |
+| 1, 11, 12, 14–30 | Five resource kinds, the apple slot often a bonus or score piece |
+| 2–10, 13 | Four resource or score kinds and one story piece |
 
 Set `story_piece` and `goal_kind` in [the campaign data](../lua/campaign.lua)
 to choose a story sprite and the colour slot it replaces. `omit_kind` is
@@ -35,7 +41,7 @@ Green apples earn 1 Food each.
 Confirming the Spring Well replaces blue timber with a water
 bucket worth 3 Food from board 5. The Artisan Workshop replaces dressed
 stone with cut blocks worth 5 Supplies from board 8. The relay pliers occupy
-the orange slot on that board. The Jungle Market
+the apple slot on that board. The Jungle Market
 replaces red berries with ration jars worth 4 Food from board 10.
 From board 14 the Courtyard improves Coins, from board 17 the Lodge replaces
 ration jars with grain, and from board 20 the Archive improves Supplies.
@@ -43,11 +49,10 @@ The Fountain upgrades the blue water slot from board 27 and the Temple
 upgrades the Coins slot on board 30. These resources persist wherever their slot
 is available. A confirmed restoration can also add a bonus piece family.
 
-Leaves appear on boards 3, 6, 9, 12, 18 and 24. Flowers appear on boards 4, 6,
-7, 15, 21 and 27. They award score only. Earlier introductions use the score
-slot. Board 6 also uses the berries' slot for the flower and gets Food from
-the Well. Later appearances use the apple slot while rations or grain and
-water still pay Food. A bonus may take the earlier score slot.
+Leaves appear on boards 3, 9, 12, 18 and 24. Flowers appear on boards 4, 6,
+7, 15, 21 and 27. They award score only and use the apple slot, except on
+board 6, where the shore marker holds it and the flower takes the berries'
+slot (Food comes from the Well). A bonus may take the apple slot instead.
 
 ### Bonus pieces
 
@@ -68,9 +73,10 @@ meters are already full.
 
 The debut board features its newly unlocked or upgraded gem. Later boards
 draw one eligible slot by seed and use its current gem. The bonus takes an
-existing slot so the expedition keeps six kinds. Dynamite uses red on
-board 8, where the relay pliers occupy orange. Expedition 10 introduces
-the market's ration jars and gives orange to the Shutter Gear quest piece.
+existing slot so the expedition keeps five kinds. Dynamite uses red on
+board 8, where the relay pliers occupy the apple slot. Expedition 10
+introduces the market's ration jars and gives the apple slot to the Shutter
+Gear quest piece.
 
 Six matched gems fill one use. Each gem flies into its own socket and adds
 a sixth of a meter. Reduce Motion fills it immediately. Using a bonus costs
