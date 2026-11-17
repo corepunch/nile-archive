@@ -1,28 +1,28 @@
 name: The Little Fir
 tier: tutorial
-teaches: The board is bigger now: light the tablets down the middle of the little fir.
+teaches: A little fir with zigzag boughs: light the tablets in its middle.
 
-x x x x x
- x x x x
-x . . . x
- . . . .
-x . . . x
- x . . x
-x . . . x
+. . . . .
  . . . .
 . . . . .
  . . . .
-x . . . x
+. . . . .
  . . . .
 . . . . .
  . . . .
 . p p p .
  . p p .
-x . p . x
+. p p p .
+ . p p .
+. p p p .
+ . p p .
+. p p p .
  x p p x
-x . p . x
- x p p x
-x . p . x
- x p p x
+x x p x x
+ x . . x
+x x . x x
+ x x x x
+x x x x x
+ x x x x
 x x x x x
  x x x x

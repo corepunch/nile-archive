@@ -11,18 +11,18 @@ p p p p p
 p p x p p
  p x x p
 p p x p p
- i x x i
+ j x x j
 p p x p p
  p x x p
 p p x p p
  p x x p
 p p x p p
- i x x i
+ j x x j
 p p x p p
  p p p p
 p p p p p
  p p p p
-x p I p x
+x p J p x
  p p p p
 x p p p x
  x p p x

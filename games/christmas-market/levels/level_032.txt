@@ -1,15 +1,13 @@
 name: Mittens
 tier: easy
-teaches: Two mittens side by side: each is its own area, so work both, and a patch of ice sits in each cuff.
+teaches: Two mittens tied by one string: the cuffs are joined, and a patch of ice sits in each cuff.
 
+x x x x x
+ x x x x
+x . x . x
+ x x x x
 x p x p x
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
+ p p p p
 p p x p p
  p p p p
 p p x p p
@@ -18,11 +16,13 @@ p p x p p
  p p p p
 p p x p p
  p p p p
-. . x . .
- . . . .
-p p x p p
- i p p i
-p p x p p
- p p p p
-. . x . .
- . . . .
+x p x p x
+ x p p x
+x j x j x
+ x p p x
+x . p . x
+ x . . x
+x p p p x
+ . p p .
+x x x x x
+ x x x x

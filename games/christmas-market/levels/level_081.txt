@@ -2,8 +2,8 @@ name: Gingerbread House
 tier: easy
 teaches: Break the tinsel doorway across the middle of the house to fill the cellar below it.
 
-x x . x x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  p p p p
 p p p p p

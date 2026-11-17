@@ -2,10 +2,10 @@ name: Star Over the Market
 tier: normal
 teaches: A star hangs over the market, joined to it by a narrow bridge: pieces trickle down the bridge into the stalls.
 
-x x p x x
+x x . x x
  x x x x
 x p p p x
- p p p p
+ . p p .
 x p p p x
  p p p p
 x p p p x

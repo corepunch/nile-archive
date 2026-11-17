@@ -3,7 +3,7 @@ tier: hard
 teaches: A small sealed room at the foot of the ruins holds the last tablets behind two gates.
 
 x x x x x
- . p p .
+ x x x x
 p x p x p
  p p p p
 p p p p p

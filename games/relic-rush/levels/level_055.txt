@@ -2,8 +2,8 @@ name: Sunken Vault
 tier: hard
 teaches: Two layers of chain guard a deep vault: break the gate, then the chains inside.
 
-x . . . x
- x . . x
+x x x x x
+ x x x x
 p p p p p
  p p p p
 p p p p p

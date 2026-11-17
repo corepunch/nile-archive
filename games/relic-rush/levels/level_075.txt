@@ -2,8 +2,8 @@ name: Lost Sanctum
 tier: hard
 teaches: Two chained doors and an open eye guard the lost sanctum.
 
-x . . . x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  p p p p
 p p p p p

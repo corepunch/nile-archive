@@ -2,8 +2,8 @@ name: Star Chamber
 tier: hard
 teaches: Two stacked chains guard the star chamber; plain cells give room but the deep rooms need clearing.
 
-x . . . x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  p p p p
 p p p p p

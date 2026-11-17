@@ -2,10 +2,10 @@ name: Gingerbread House
 tier: easy
 teaches: Two small doors shut with double tinsel, and snowdrift stones along the walls.
 
-x x . x x
+x x x x x
  x x x x
-x x . x x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  x p p x
 x p p p x

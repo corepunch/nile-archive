@@ -1,14 +1,14 @@
 name: Sunken Court
 tier: boss
-teaches: Double tablets in two courts: break the chains to feed each crypt and fight on both sides.
+teaches: Double tablets in two courts joined by an arch overhead: break the chains to feed each crypt.
 
-x P x P x
+x P P P x
  P P P P
-P P x P P
+P P P P P
  P P P P
-P J x J P
+P J P J P
  P P P P
-. P x P .
+. P P P .
  x P P x
 . . x . .
  x P P x

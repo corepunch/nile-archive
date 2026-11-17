@@ -18,7 +18,7 @@ G G G G G
  G G G G
 P P P P P
  P P P P
-P I P I P
+P J P J P
  P P P P
 P P P P P
  P P P P

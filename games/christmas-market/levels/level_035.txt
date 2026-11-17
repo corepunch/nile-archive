@@ -1,28 +1,28 @@
 name: Ribboned Presents
 tier: hard
-teaches: Two gift boxes tied with tinsel: cut the ribbon rows before the lower halves fill.
+teaches: One gift box with a ribbon down its middle: cut the tinsel ribbon rows before the lower half fills.
 
 x . x . x
  . x x .
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-k k x k k
+k k k k k
  k k k k
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p

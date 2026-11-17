@@ -1,28 +1,28 @@
 name: Wishing Star
 tier: normal
-teaches: A little star floats alone above the market; two chained lanterns wait below.
+teaches: A wishing star trails a slanted comet tail down to its twin: pieces slide diagonally along the tail, and a chain sits in its middle.
 
-x x . x x
- x . . x
-x p p p x
- . p p .
-x p p p x
- x p p x
-x . . . x
- x x x x
 x x x x x
  x x x x
-. x x x .
- . x x .
-p p x p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p k p k p
- p p p p
-p p p p p
- p p p p
-x . . . x
- . . . .
+p p p x x
+ p p p x
+p p p x x
+ p p p x
+p p p x x
+ p p p x
+p p p x x
+ p p p x
+p p p x x
+ p k p x
+x p . p x
+ x p k p
+x x p p p
+ x p p p
+x x p p p
+ x p p p
+x x p p p
+ x p p p
+x x p p p
+ x p p p
+x x p p p
+ x x x x

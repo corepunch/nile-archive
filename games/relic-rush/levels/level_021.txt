@@ -2,8 +2,6 @@ name: The Great Well
 tier: easy
 teaches: A wide well sits at the heart of the ruins; carved stones rim it, and a match beside a stone breaks it.
 
-x . . . x
- . . . .
 . . . . .
  p p p p
 p p p p p
@@ -26,3 +24,5 @@ p p p p p
  p p p p
 x p p p x
  x p p x
+x x x x x
+ x x x x

@@ -4,11 +4,9 @@ teaches: Pieces funnel through the waist of the hourglass; iced cells guard each
 
 . . . . .
  . . . .
-. . . . .
- . . . .
 p p p p p
  p p p p
-p i p i p
+p j p j p
  p p p p
 p p p p p
  p p p p
@@ -20,9 +18,11 @@ x p p p x
  p p p p
 p p p p p
  p p p p
-p i p i p
+p j p j p
  p p p p
 p p p p p
  p p p p
 . . . . .
  . . . .
+x x x x x
+ x x x x

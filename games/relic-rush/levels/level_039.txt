@@ -1,28 +1,28 @@
 name: Broken Causeway
 tier: hard
-teaches: The causeway is broken in two; clear both banks, each fed from its own sky.
+teaches: A causeway zigzags between two pillars; pieces trickle down the slanting span.
 
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+x x x x x
+ x x x x
 p p x p p
  p x x p
 p p x p p
  p x x p
 p p x p p
+ p p x p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p x p p
+p p x p p
  p x x p
 p p x p p
  p x x p
 p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+ x x x x

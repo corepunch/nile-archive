@@ -1,28 +1,28 @@
 name: Jaguar Court
 tier: easy
-teaches: Ice holds its piece: match on an iced cell to break it, and nothing falls through until it does.
+teaches: Ice holds its piece: break the ice at the base of the court and the pieces trickle into the chamber below.
 
-x . . . x
- . . . .
 . . . . .
  . . . .
 . . p . .
  . p p .
 . p p p .
  p p p p
-p i p i p
+p p p p p
+ p p p p
+p p p p p
  p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
-p i p i p
- p p p p
 p p p p p
  p p p p
-. p p p .
- . p p .
-. . p . .
- . . . .
+. p i p .
+ . i i .
+x x p x x
+ x . . x
 x . . . x
  x . . x
+x x x x x
+ x x x x

@@ -10,11 +10,11 @@ x p x p x
  p p p p
 x p x p x
  p p p p
-x p x p x
+x p p p x
  x p p x
-x p x p x
+x p p p x
  p p p p
-p p x p p
+p p p p p
  p p p p
 s p x p s
  p p p p

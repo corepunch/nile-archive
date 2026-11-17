@@ -10,11 +10,11 @@ P P x P P
  P P P P
 P P x P P
  J P P J
-P J x J P
+P J P J P
  P P P P
-G P x P G
+G P P P G
  P G G P
-P P x P P
+P P P P P
  s P P s
 P s x s P
  P P P P

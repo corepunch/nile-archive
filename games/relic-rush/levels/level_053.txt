@@ -1,20 +1,14 @@
 name: Cellar Door
 tier: normal
-teaches: Twin towers stand apart above the hall; break the double chains stacked over the cellar door.
+teaches: Twin towers rise from one hall; break the double chains stacked over the cellar door.
 
-. . x . .
- . . . .
 p p x p p
  p p p p
 p p x p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-x x x x x
- x x x x
-x x p x x
- x p p x
-x p p p x
+p p p p p
  p p p p
 p p p p p
  p p p p
@@ -26,3 +20,9 @@ x K K K x
  x K K x
 x p p p x
  x p p x
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x x x x x
+ x x x x

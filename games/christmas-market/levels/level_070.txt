@@ -2,11 +2,11 @@ name: Stocking Pair
 tier: boss
 teaches: A boss: double panes, double frost, stones and chains on two stockings.
 
-P P x P P
+P P P P P
  P P P P
-P P x P P
+P P P P P
  P P P P
-P P x P P
+P P P P P
  P P P P
 x P x P x
  P P P P

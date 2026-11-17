@@ -2,8 +2,8 @@ name: Snowman
 tier: hard
 teaches: Three snowballs with coal buttons: seal the base pocket and free it with a single tinsel break.
 
-x x . x x
- x . . x
+x x x x x
+ x x x x
 x . . . x
  x p p x
 x p p p x

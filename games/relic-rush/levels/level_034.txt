@@ -1,28 +1,28 @@
 name: Sundered Gallery
 tier: normal
-teaches: A gallery cut in two by a fallen column; each half has its own sky, and the plain aisles are worth saving.
+teaches: An S-shaped gallery with a slanting corridor; stones block the bends until you break them.
 
-p p x p p
- p . . p
-p p x p p
- p . . p
-p p x p p
- p . . p
-p p x p p
- p . . p
-p s x s p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p s x s p
- p x x p
-p p x p p
- p . . p
-p p x p p
- p . . p
-p p x p p
- p . . p
-p p x p p
- p . . p
+x x x x x
+ x x x x
+. . . . .
+ . . . .
+p p p p x
+ p s p x
+p s p x x
+ p p x x
+p p x x x
+ p p x x
+p p p x x
+ p p p x
+x p p p x
+ x p p p
+x x p p p
+ x x p p
+x x x p p
+ x x p p
+x x p s p
+ x p s p
+x p p p p
+ . . . .
+. . . . .
+ x x x x

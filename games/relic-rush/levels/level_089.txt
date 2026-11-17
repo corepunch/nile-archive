@@ -1,6 +1,6 @@
 name: Twin Obelisks
 tier: hard
-teaches: Two separate obelisk courts under a clipped skyline; every move counts on each side.
+teaches: Two obelisk courts rise from a shared hall under a clipped skyline; every move counts on each side.
 
 x . x . x
  x p p x
@@ -14,15 +14,15 @@ p s x s p
  p p p p
 p p x p p
  p p p p
-p I x I p
+p J x J p
  p p p p
 p p x p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p

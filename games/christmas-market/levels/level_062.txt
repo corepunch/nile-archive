@@ -2,10 +2,10 @@ name: Market Tent
 tier: easy
 teaches: A tent roof of tinsel: break the ridge and the eaves to open the awning.
 
-x x . x x
+x x x x x
  x x x x
-x x . x x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  p p p p
 p p p p p

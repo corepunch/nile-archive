@@ -1,28 +1,28 @@
 name: Moss Bridge
 tier: normal
-teaches: The moss bridge is gone: two separate cliffs, each fed from the sky on its own.
+teaches: A Z-shaped bridge: pieces slide down the slanting span from the upper bank to the lower one.
 
 x x x x x
- x . . x
-x x x x x
- x . . x
-x . x . x
- x . . x
-x . x . x
- x . . x
-. . x . .
- p . . p
-p p x p p
- p . . p
-p p x p p
- p . . p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+ x x x x
+. . . . .
+ . . . .
+x p p p p
+ x p p p
+x x p p p
+ x x p p
+x x x p p
+ x x p p
+x x p p p
+ x p p p
+x p p p x
+ p p p x
+p p p x x
+ p p x x
+p p x x x
+ p p x x
+p p p x x
+ p p p x
+p p p p x
+ . . . .
+. . . . .
+ x x x x

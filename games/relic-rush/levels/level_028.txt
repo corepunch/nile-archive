@@ -1,28 +1,28 @@
 name: Ziggurat Steps
 tier: normal
-teaches: A stepped temple widens from the summit, and the terraces at the edges are easy to leave for last.
+teaches: A chevron of steps; ice sits on tablets of the inner stairs.
 
-x x p x x
- x p p x
-x p p p x
- x p p x
-x p p p x
- p p p p
-x p p p x
- p p p p
-p p p p p
- p p p p
-i p p p i
- p p p p
-i p p p i
+x x x x x
+ x x x x
+x x . x x
+ x . . x
+x . p . x
+ . p p .
+. p p p .
  p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
-p p p p p
+p j p j p
+ p p p p
+p j p j p
  p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
+p p x p p
+ p x x p
+p x x x p
+ x x x x

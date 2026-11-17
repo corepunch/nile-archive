@@ -3,8 +3,6 @@ tier: normal
 teaches: The roof is open at the top, but the hall has two pillars to match around.
 
 p p x p p
- p x x p
-p p x p p
  p p p p
 p p p p p
  p p p p
@@ -26,3 +24,5 @@ p p p p p
  p p p p
 p p p p p
  p p p p
+x x x x x
+ x x x x

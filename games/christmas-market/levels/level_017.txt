@@ -1,28 +1,28 @@
 name: Jingle Bells
 tier: normal
-teaches: Two bells hang side by side along a seam: keep pieces flowing on both sides of the gap.
+teaches: Two bells hang from one bar: keep pieces flowing down both bells and across the bar between them.
 
-x . x . x
- . x x .
-x . x . x
- . x x .
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-. . x . .
+. . . . .
  . . . .
 x . x . x
- . x x .
+ x x x x
+x p x p x
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+x p x p x
+ x p p x
 x . x . x
- . x x .
+ x x x x
+x . x . x
+ x x x x
+x x x x x
+ x x x x

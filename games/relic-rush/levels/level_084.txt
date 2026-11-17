@@ -1,28 +1,28 @@
 name: The Bridge
 tier: normal
-teaches: Tablets on both banks; the short bridge keeps the two sides fed.
+teaches: Tablets on both banks; the slanted bridge keeps the two sides fed.
 
-p p x p p
- . p p .
-p J x J p
+x x x x x
+ p p p x
+p p p p x
  p p p p
-p p x p p
+p J p p x
+ p p p x
+p p p x x
+ p J x x
+p p p x x
+ p p p x
+p p p p x
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
- p . . p
-p p . p p
+x p p p p
+ x p p p
+x x p p p
+ x x J p
+x x p p p
+ x p p p
+x p p J p
  p p p p
-p p . p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p J x J p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p . . p
+x p p p p
+ x p p p

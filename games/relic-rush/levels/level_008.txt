@@ -2,8 +2,6 @@ name: Overgrown Arches
 tier: normal
 teaches: Chains guard tablets on the arches; break any vine on the arcade to pour pieces into the vault.
 
-x x . x x
- x . . x
 x . . . x
  . . . .
 . . . . .
@@ -26,3 +24,5 @@ p p p p p
  p p p p
 p p p p p
  p p p p
+x x x x x
+ x x x x

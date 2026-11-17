@@ -2,8 +2,8 @@ name: Hanging Gardens
 tier: normal
 teaches: Two chained terraces hang over the garden below; open both to fill it.
 
-x . . . x
- . . . .
+x x x x x
+ x x x x
 p p p p p
  p p p p
 p p p p p

@@ -2,10 +2,6 @@ name: Overgrown Terraces
 tier: tutorial
 teaches: The whole hexagon is open: clear tablets on every terrace from top to bottom.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
 p p p p p
  p p p p
 p p p p p
@@ -26,3 +22,7 @@ p p p p p
  . . . .
 x . . . x
  x . . x
+x x x x x
+ x x x x
+x x x x x
+ x x x x

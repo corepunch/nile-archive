@@ -1,18 +1,16 @@
 name: Gatehouse
 tier: easy
-teaches: Chains here take two hits: break the double chains at the gatehouse to let pieces fall into the cellar; a tower stands apart on top.
+teaches: Chains here take two hits: break the double chains below the tower to let pieces fall into the cellar.
 
-x . . . x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  x p p x
 x p p p x
  x p p x
 x p p p x
  x p p x
-p x x x p
- p x x p
-p p x p p
+p p p p p
  p p p p
 p p p p p
  p p p p
@@ -21,8 +19,10 @@ p p p p p
 x K K K x
  x K K x
 x p p p x
- p p p p
+ x p p x
 x p p p x
  p p p p
 x p p p x
- . . . .
+ x p p x
+x p p p x
+ x p p x

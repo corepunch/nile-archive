@@ -1,6 +1,6 @@
 name: Twin Sanctums
 tier: hard
-teaches: Two sanctums stand apart, and each hides tablets behind its own chains and ice.
+teaches: Two sanctums share a base; break the chains and ice to reach the inner tablets.
 
 x p x p x
  p p p p
@@ -22,7 +22,7 @@ p p x p p
  j j j j
 p p x p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p

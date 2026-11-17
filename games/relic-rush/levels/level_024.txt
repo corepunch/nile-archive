@@ -3,8 +3,6 @@ tier: normal
 teaches: Two halves of the court sit apart; break the gate chains at their feet to drain pieces into the moat below.
 
 x . x . x
- x . . x
-x . x . x
  . . . .
 . . x . .
  p p p p
@@ -26,3 +24,5 @@ p p p p p
  p p p p
 p p p p p
  p p p p
+x x x x x
+ x x x x

@@ -1,28 +1,28 @@
 name: Overgrown Stair
 tier: easy
-teaches: The stair descends to a sunken floor; ice sits on the tablets of the lower steps, so match twice to clear them.
+teaches: A slanting stair descends to the sunken floor; ice sits on tablets of the middle steps.
 
-. x x x .
+x x x x x
  x x x x
-. x x x .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . . . .
+x x x . .
+ x x . .
+x x . . p
+ x . . p
+x . . p p
+ . . p p
+. . j p p
+ . p p p
+. p p j p
+ p p j p
 p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- j p p j
-p j p j p
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
+ p j p p
+p j p p .
+ p p p .
+p p j . .
+ p p . .
+p p . . x
+ p . . x
+p . . x x
+ . . x x
+. . x x x
+ x x x x

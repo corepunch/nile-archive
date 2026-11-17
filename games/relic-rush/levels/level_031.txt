@@ -2,8 +2,6 @@ name: Flooded Vault
 tier: easy
 teaches: Break the chains across the vault door so pieces can pour into the tablet chamber below.
 
-x p p p x
- p p p p
 p p p p p
  p p p p
 p p p p p
@@ -26,3 +24,5 @@ p p p p p
  p p p p
 x p p p x
  p p p p
+x x x x x
+ x x x x

@@ -1,28 +1,28 @@
 name: Candy Canes
 tier: easy
-teaches: Two candy canes, two areas: plain matching on full tablets.
+teaches: A candy cane bends into an S: stripes of tablets and plain cells wind from the hook to the foot, so match along the curve.
 
-x . x . x
- p . . p
-p p x p p
- p p p p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-. . x . .
- . x x .
+x x x x x
+ p p x x
+p p x x x
+ . . x x
+. . x x x
+ p p x x
+p p x x x
+ . . x x
+. . x x x
+ p p . .
+p p p p x
+ . . p p
+. . . . .
+ p p . .
+x p p p p
+ . . p p
+x x x . .
+ x x . .
+x x x p p
+ x x p p
+x x x . .
+ x x . .
+x x x p p
+ x x p p

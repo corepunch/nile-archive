@@ -2,8 +2,8 @@ name: Crossroads
 tier: normal
 teaches: Four roads meet at the old crossing; tablets line every arm.
 
-x p . p x
- x . . x
+x x x x x
+ x x x x
 x j p j x
  x p p x
 x p p p x

@@ -1,12 +1,10 @@
 name: Twin Wells
 tier: normal
-teaches: Two courts, a well in each: a carved stone sits at its heart, and a vine holds the rim.
+teaches: One well is bridged at top and bottom; break the chains to feed the lower floor.
 
-x . x . x
- x . . x
-. . x . .
+. . . . .
  . . . .
-p p x p p
+p p . p p
  p p p p
 p p x p p
  p p p p
@@ -22,7 +20,9 @@ p p x p p
  p p p p
 p p x p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-x . x . x
+x . p . x
  . . . .
+x x x x x
+ x x x x

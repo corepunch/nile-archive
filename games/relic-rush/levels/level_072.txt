@@ -4,7 +4,7 @@ teaches: One chain seals a deep plaza; break it and clear the whole lower court.
 
 . . . . .
  . . . .
-p i p i p
+p j p j p
  p p p p
 p p p p p
  p p p p

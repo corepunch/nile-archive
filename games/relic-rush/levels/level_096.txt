@@ -1,28 +1,28 @@
 name: Terraces
 tier: easy
-teaches: Stepped terraces of tablets, plain and open.
+teaches: Stepped terraces slant across the ruins; mind the double ice and the stone.
 
-x x . x x
- x . . x
-x x p x x
- x p p x
-x p p p x
+x x x x x
+ x x x x
+p p p p p
  p p p p
-x p p p x
- x p p x
-x p p p x
- x p p x
-. p p p .
+p p p p p
+ p p J p
+p p p p p
+ p s p p
+p p p p p
  p p p p
-x p p p x
- p p p p
-x p p p x
+x p p p p
  p p p p
 p p p p p
  p p p p
-p I p I p
- p p p p
-. p s p .
+p p p p x
  p p p p
 p p p p p
+ p p s p
+p p p p p
+ p J p p
+p p p p p
  p p p p
+p p p p p
+ x x x x

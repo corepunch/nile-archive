@@ -1,28 +1,28 @@
 name: Fallen Columns
 tier: normal
-teaches: Two broken pillars stand apart from the main hall; plan around the stones and the narrowing floor.
+teaches: Fallen columns lie slantwise from corner to corner; plan around the stones as the floor narrows.
 
-p s x s p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p x p p
- p x x p
-p p s p p
- s x x s
-x x p x x
- x p p x
+x x x x x
+ x p p p
+x p p p p
+ p p p p
+x p p p p
+ x p s p
+x x p s p
+ x x p p
+x x x p p
+ x x p p
+x x p p p
+ x p p p
 x p p p x
+ p p p x
+p p p x x
+ p p x x
+p p x x x
+ p p x x
+p s p x x
+ p s p x
+p p p p x
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+p p p p x
+ p p p x

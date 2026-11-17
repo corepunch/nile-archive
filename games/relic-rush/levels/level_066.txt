@@ -10,13 +10,13 @@ p p j p p
  p p p p
 p p p p p
  p p p p
-p i p i p
+p j p j p
  p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
-p i p i p
+p j p j p
  p p p p
 p p p p p
  p p p p

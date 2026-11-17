@@ -4,13 +4,11 @@ teaches: Two separate stalls, each open to the sky, share no pieces; the ice sit
 
 x . x . x
  x . . x
-. p x p .
+. p p p .
  p p p p
-I p x p I
+J p p p J
  p p p p
-x p x p x
- p p p p
-x p x p x
+x p p p x
  p p p p
 x p x p x
  p p p p
@@ -20,7 +18,9 @@ x p x p x
  p p p p
 x p x p x
  p p p p
-I p x p I
+x p x p x
+ p p p p
+J p x p J
  p p p p
 . p x p .
  . . . .

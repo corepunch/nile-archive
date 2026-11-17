@@ -2,10 +2,10 @@ name: Fir Tree
 tier: easy
 teaches: Clear the tree; frosted ornament panes need a second look.
 
-x x . x x
+x x x x x
  x x x x
-x x . x x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  x p p x
 x p p p x

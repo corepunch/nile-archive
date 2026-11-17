@@ -2,8 +2,8 @@ name: Barred Gate
 tier: normal
 teaches: Chains bar every door of the gatehouse; open them to flood the lower hall.
 
-x p p p x
- x p p x
+x x x x x
+ x x x x
 p p p p p
  p p p p
 p p p p p

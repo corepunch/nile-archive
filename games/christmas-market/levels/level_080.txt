@@ -8,11 +8,11 @@ teaches: Double panes in two separate areas, with the lower stalls sealed by dou
  P P P P
 s P x P s
  P P P P
-J P x P J
+J P P P J
  P P P P
-P P x P P
+P P P P P
  P P P P
-J P x P J
+J P P P J
  P P P P
 s P x P s
  P P P P

@@ -1,9 +1,7 @@
 name: Hall of Pillars
 tier: normal
-teaches: Two separate halls: the lower hall is fed from its flanks. Iced tablets guard each; match twice to clear them.
+teaches: Pillars stand in two halls linked by a narrow passage; break the ice to clear the tablets.
 
-x . . . x
- x . . x
 x . . . x
  x . . x
 x . . . x
@@ -13,9 +11,9 @@ x p p p x
 x p p p x
  x p p x
 x x x x x
- x x x x
-. x x x .
- . x x .
+ x . . x
+. . . . .
+ . . . .
 . . x . .
  . . . .
 p j p j p
@@ -26,3 +24,5 @@ p j p j p
  p p p p
 p p p p p
  p p p p
+x x x x x
+ x x x x

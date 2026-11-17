@@ -1,28 +1,28 @@
 name: Cloven Colonnade
 tier: easy
-teaches: A colonnade split into two halves, each fed from its own sky; ice sits in each shaft.
+teaches: A cleft splits the colonnade at the top; both wings feed the broad floor below.
 
+x x x x x
+ x x x x
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
 p p x p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p j p j p
  p p p p
-p i x i p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p i x i p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
+p p p p p
  p p p p

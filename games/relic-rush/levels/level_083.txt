@@ -2,8 +2,8 @@ name: The Well
 tier: normal
 teaches: A narrow chained shaft is the only way down to the water room.
 
-x p p p x
- x p p x
+x x x x x
+ x x x x
 p p p p p
  p p p p
 p . p . p

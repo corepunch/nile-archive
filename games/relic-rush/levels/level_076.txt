@@ -1,28 +1,28 @@
 name: Ziggurat
 tier: easy
-teaches: Learn the stepped temple front: clear tablets on each broad terrace of the ziggurat.
+teaches: Learn the slanted temple front: the ziggurat steps down one way and climbs back the other.
 
-x x . x x
- x . . x
-x x p x x
- x p p x
-x p p p x
- x p p x
-x p p p x
- x p p x
-x p p p x
- p p p p
-x p p p x
+x x x x x
  p p p p
 p p p p p
  p p p p
 p p p p p
- p . . p
-p p . p p
- p p p p
-p . p . p
  p p p p
 p p p p p
- p . . p
+ p p p p
+x p p p p
+ p p p p
+x x p p p
+ p p p p
+p p p p p
+ p p p p
+p p p x x
+ p p p p
+p p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
 p p p p p
  p p p p

@@ -10,7 +10,7 @@ p p p p p
  p p p p
 p p p p p
  p p p p
-p I p I p
+p J p J p
  p p p p
 p p x p p
  p p p p
@@ -18,7 +18,7 @@ p p J p p
  p p p p
 p p x p p
  p p p p
-p I p I p
+p J p J p
  p p p p
 p p p p p
  p p p p

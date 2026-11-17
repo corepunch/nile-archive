@@ -1,21 +1,21 @@
 name: Snowmen
 tier: easy
-teaches: Two snowmen, each with a tinsel scarf: open the chains and the bodies fill, and a cracked ice patch hides in each belly.
+teaches: Two snowmen share one long scarf: open the chains and the bodies fill, and a cracked double ice patch hides in each belly.
 
 x . x . x
  p p p p
 x p x p x
  p p p p
-x p x p x
+x p p p x
  p p p p
-k k x k k
+k k k k k
  k k k k
-p p x p p
+p p p p p
+ p p p p
+p p p p p
  p p p p
 p p x p p
- p p p p
-p p x p p
- I p p I
+ J p p J
 p p x p p
  p p p p
 p p x p p

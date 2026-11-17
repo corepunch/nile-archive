@@ -2,17 +2,17 @@ name: Cocoa Cart
 tier: easy
 teaches: Two separate cocoa carts, each with a small pocket at its wheel sealed by tinsel.
 
-x . x . x
- . x x .
-x . x . x
- p p p p
+x x x x x
+ x x x x
+x x x x x
+ x x x x
 p p x p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-p p x p p
+p p p p p
  p p p p
-K p x p K
+K p p p K
  p p p p
 p p x p p
  p p p p

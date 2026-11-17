@@ -1,10 +1,8 @@
 name: The Weir
 tier: easy
-teaches: Three chained sluices hold back the lower pool; break any one to let pieces flow.
+teaches: The weir narrows to three chains; break one to let pieces flow into the pool below.
 
-x . . . x
- . . . .
-p p p p p
+p p x p p
  p p p p
 p p p p p
  p p p p
@@ -16,9 +14,9 @@ p p p p p
  p p p p
 p p p p p
  p p p p
-K x K x K
+x K K K x
  x x x x
-p x p x p
+x p p p x
  p p p p
 p p p p p
  p p p p
@@ -26,3 +24,5 @@ p p p p p
  p p p p
 p p p p p
  p p p p
+x x x x x
+ x x x x

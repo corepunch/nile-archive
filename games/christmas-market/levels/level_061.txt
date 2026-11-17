@@ -2,8 +2,8 @@ name: Snowman
 tier: easy
 teaches: Break the scarf of tinsel to reach the body; stones for the snowman's buttons.
 
-x x . x x
- x . . x
+x x x x x
+ x x x x
 x p p p x
  x p p x
 x p p p x
