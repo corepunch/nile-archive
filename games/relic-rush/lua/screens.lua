@@ -12,7 +12,7 @@ local island = require("island")
 local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
 local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local rgba = color
-local P, pp, pc = R.P, R.pp, R.pc
+local pp, pc = R.pp, R.pc
 local rrect, disc, picture, picture_fit = R.rrect, R.disc, R.picture, R.picture_fit
 local say, say_left, button, panel = R.say, R.say_left, R.button, R.panel
 local set_paint, section = R.set_paint, R.section
@@ -98,14 +98,13 @@ local function result_screen()
         set_paint(s)
     end
     local bonuses = ("Move bonus +%d Coins"):format(breakdown.bonus)
-    if breakdown.happiness > 0 then bonuses = bonuses .. ("  ·  Happiness +%d Coins"):format(breakdown.happiness) end
+    if breakdown.decoration_bonus > 0 then
+        bonuses = bonuses .. ("  ·  Decorations +%d Coins"):format(breakdown.decoration_bonus)
+    end
     for _, part in ipairs(breakdown.citizens and economy.price_parts(breakdown.citizens) or {}) do   -- user_events.lua
         bonuses = bonuses .. ("  ·  Citizens +%d %s"):format(part.amount, part.name)
     end
     say(bonuses, l.bonus, 11, PAL_CREAM)
-    s = section(.93, .24, 8)
-    if not breakdown.first then say("STORY FINDS ARE FIRST-CLEAR ONLY",l.progress,13,PAL_CREAM) end
-    set_paint(s)
     s = section(1.01, .26, 8)
     rrect(l.next, 12, rgba(240, 225, 180))
     local next_icon = rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10)
@@ -135,46 +134,6 @@ local function result_screen()
     set_paint(s)
 end
 R.dialogs[R.OV_RESULT] = result_screen
-
--- The quest object a first clear recovers, big on its own card before the
--- story beat that talks about it (engine: R.award_for, R.OV_AWARD).
-function R.award_for(g)
-    local object = rules.levels[g.level + 1].quest_object
-    local textures = R.board_art or {}   -- window-free tests play the campaign without art
-    if not object then return end
-    return {image = textures["find-" .. object.key], name = object.name, level = g.level + 1}
-end
-
-local function award_screen()
-    local a = R.award
-    local l = match3.award_rects(SCREEN_W, SCREEN_H)
-    local header = l.header
-    panel(l.card)
-    rrect(header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
-    rrect(header, 18, rgba(31, 83, 69))
-    rrect(header:inflate(-3), 15, rgba(44, 108, 84))
-    say("Item recovered!", rect(header.x + 14, header.y + 9, header.w - 28, 34), 31, PAL_GOLD)
-    say(("EXPEDITION %d"):format(a.level), rect(header.x + 12, header.y + 48, header.w - 24, 15), 14, PAL_GOLD)
-    local at = l.image:center()
-    local s, part = section(.1, .45, 0)
-    local pop = 1 + math.sin(part.u * math.pi) * .12
-    R.vfx_halo(pp(at), 150 * P.scale, rgba(255, 201, 77, 110 * P.alpha))
-    R.vfx_halo(pp(at), 95 * P.scale, rgba(255, 236, 170, 90 * P.alpha))
-    picture_fit(a.image, rect.centered(at, size2.splat(l.image.h * pop * part.f)), 255)
-    set_paint(s)
-    s = section(.4, .3, 10)
-    say(a.name, l.name, 36, PAL_GOLD)
-    say("FOR YOUR QUEST", l.subtitle, 13, PAL_CREAM)
-    set_paint(s)
-    s = section(.55, .25, 8)
-    R.award_continue = l.claim   -- the smoke taps it
-    if button(R.award_continue, "CONTINUE", true) then
-        if not R.dialog_settled() then R.dialog_skip()   -- first tap fast-forwards
-        else R.overlay = R.OV_RESULT end
-    end
-    set_paint(s)
-end
-R.dialogs[R.OV_AWARD] = award_screen
 
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.

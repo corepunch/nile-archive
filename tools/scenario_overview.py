@@ -33,10 +33,9 @@ MATCH3 = {'relic-rush', 'christmas-market'}
 PHASES = {'before': 'Before the level', 'after': 'After the first clear', 'restore': 'After the building is restored'}
 PHASE_ORDER = {'before': 0, 'after': 1, 'restore': 2}
 STORY_PIECE_NAMES = {
-    'timber': 'timber pieces', 'lens': 'lenses', 'cable': 'cable coils',
-    'chart': 'map pieces', 'marker': 'marker pieces', 'tools': 'tool rolls',
-    'supplies': 'supply packs', 'gear': 'gears', 'note': 'folded notes',
-    'pliers': 'relay pliers',
+    'lens': 'Lamp lens', 'cable': 'Relay cable', 'chart': 'Tide chart',
+    'marker': 'Trail marker', 'tools': 'Tool roll', 'supplies': 'Supply pack',
+    'gear': 'Shutter gear', 'note': 'Folded note', 'pliers': 'Relay pliers',
 }
 
 
@@ -69,21 +68,6 @@ def embed(image, width, fmt='JPEG'):
 def picture(path, width, fmt='JPEG'):
     path = Path(path)
     return embed(Image.open(path), width, fmt) if path.is_file() else None
-
-
-def quest_icons(game):
-    """Relic Rush's recovered-object icons for the scenario cards."""
-    art = (ROOT / f'games/{game}/lua/art.lua').read_text()
-    m = re.search(r'A\.quest_objects = \{([^}]*)\}', art)
-    atlas = ROOT / f'games/{game}/art/registered/quest-objects.png'
-    if not m or not atlas.is_file():
-        return {}
-    sheet = Image.open(atlas)
-    icons = {}
-    for i, key in enumerate(re.findall(r'"([^"]+)"', m.group(1))):
-        box = (i % 4 * 128, i // 4 * 128, i % 4 * 128 + 128, i // 4 * 128 + 128)
-        icons.setdefault(key, embed(sheet.crop(box), 96, 'PNG'))
-    return icons
 
 
 def esc(s):
@@ -144,7 +128,6 @@ class Page:
 def match3_section(data, title):
     page = Page(data)
     game = data['game']
-    icons = quest_icons(game)
     resources = {}
     by_level = {}
     for b in data['beats']:
@@ -159,20 +142,11 @@ def match3_section(data, title):
         palette = ''
         if lv.get('plaques'):
             chips.append(f'<span class="chip">Clear <b>{lv["plaques"]} blue plaques</b></span>')
-        if collection := lv.get('collection'):
-            key = collection['key']
-            folder = 'resource-pieces' if collection['resource'] else 'story-pieces'
-            icon = picture(page.registered_dir / f'{folder}/{key}.png', 96, 'PNG')
-            img = f'<img src="{icon}" alt="">' if icon else ''
-            chips.append(f'<span class="chip">{img}Collect <b>{collection["count"]} {STORY_PIECE_NAMES[key]}</b></span>')
-            palette = f' · {collection["regular"]} regular types'
-            if not collection['resource']:
-                palette += ' + 1 story type'
-        if lv.get('quest'):
-            key = lv['quest']['key']
-            icon = icons.get(key) or picture(page.data_dir / f'story/finds/{key}.png', 96, 'PNG')
-            img = f'<img src="{icon}" alt="">' if icon else ''
-            chips.append(f'<span class="chip award">{img}Recovers <b>{esc(lv["quest"]["name"])}</b></span>')
+        story_piece = lv.get('story_piece')
+        if isinstance(story_piece, str):
+            chips.append(f'<span class="chip">Story piece <b>{esc(STORY_PIECE_NAMES[story_piece])}</b></span>')
+        elif story_piece:
+            chips.append(f'<span class="chip">Story find <b>{esc(story_piece["name"])}</b></span>')
         if lv.get('wonder'):
             w = lv['wonder']
             sprite = picture(page.data_dir / w['sprite'], 120, 'PNG') if w.get('sprite') else None
@@ -186,7 +160,7 @@ def match3_section(data, title):
         reveal = ''
         if lv.get('resources'):
             palette = ' · ' + str(len(lv['resources'])) + ' resource types'
-            if lv.get('collection') and not lv['collection']['resource']:
+            if isinstance(story_piece, str):
                 palette += ' + 1 story type'
             for item in lv['resources']:
                 key = item['key']
@@ -207,26 +181,13 @@ def match3_section(data, title):
             reveal += (f'<figure class="reveal"><img src="{result}" alt="Resources and three-currency market price">'
                        '<figcaption>The resources banked on clear and the market restoration price.</figcaption></figure>')
         reveal_spec = lv.get('reveal') or {}
-        if reveal_spec.get('covered_picture'):
-            src = picture(FRAMES / f'scenario-{game}-find-{n:02d}.png', 300)
-            if not src:
-                name = reveal_spec['picture'].removeprefix('find-')
-                src = picture(page.data_dir / f'story/finds/{name}.png', 300, 'PNG')
-            if src:
-                name = esc(lv['quest']['name'])
-                reveal = (f'<figure class="reveal"><img src="{src}" alt="{name} uncovered">'
-                          f'<figcaption>{name} uncovered across {reveal_spec["cells"]} cells.</figcaption></figure>')
-        elif reveal_spec.get('picture'):
+        if reveal_spec.get('picture'):
             # Each game keeps its story pictures in its own folder under data/.
             found = sorted(page.data_dir.rglob(f'{lv["reveal"]["picture"]}.jpg'))
             src = picture(found[0], 360) if found else None
             if src:
                 floor = f' ({esc(lv["reveal"]["floor"])} floor)' if lv['reveal'].get('floor') else ''
                 reveal = f'<figure class="reveal"><img src="{src}" alt=""><figcaption>Story picture revealed on the board{floor}</figcaption></figure>'
-        if lv.get('quest') and (award := picture(FRAMES / f'scenario-{game}-award-{n:02d}.png', 300)):
-            name = esc(lv['quest']['name'])
-            reveal += (f'<figure class="reveal"><img src="{award}" alt="{name} recovery card">'
-                       f'<figcaption>{name} on the first-clear item card.</figcaption></figure>')
         if lv.get('signal') == 'cliff':
             reveal += '<p class="meta">First clear: the light under the cliff waits, then flashes three times.</p>'
         elif lv.get('signal') == 'landing':

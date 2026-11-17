@@ -344,16 +344,7 @@
     "data/story/characters/mara.png",
     "data/story/characters/tomas.png",
     "data/story/finale/safe-landing.jpg",
-    "data/story/finale/signal-plate.png",
-    "data/story/finds/cable.png",
-    "data/story/finds/chart.png",
-    "data/story/finds/gear.png",
-    "data/story/finds/lens.png",
-    "data/story/finds/marker.png",
-    "data/story/finds/note.png",
-    "data/story/finds/supplies.png",
-    "data/story/finds/timber.png",
-    "data/story/finds/tools.png"
+    "data/story/finale/signal-plate.png"
   ],
   "hex_slot": {
     "orientation": "flat-top",
@@ -774,216 +765,145 @@
     "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask. No recoloring or derived damage states.",
     "retired": "Crate, tunnel, hidden-object, growth and delivery cells stay in the master but are not registered: the engine no longer has those mechanics."
   },
-  "quest_objects": {
-    "source": "art/quest-objects/source.png",
-    "prompt": "art/quest-objects/prompt.txt",
-    "runtime": "art/registered/quest-objects.png",
-    "registration": "tools/relic_quest_art.py",
-    "slots": [
-      "timber",
-      "lens",
-      "cable",
-      "chart",
-      "marker",
-      "tools",
-      "supplies",
-      "gear"
-    ],
-    "cell": [
+  "story_pieces": {
+    "registration": "tools/prepare_story_pieces.py",
+    "generator": "Built-in ImageGen, each matching set authored together",
+    "canvas": [
       128,
       128
     ],
-    "states": [
-      "first-clear award",
-      "scenario icon"
+    "paint_size": [
+      108,
+      108
     ],
-    "award_runtime": "data/story/finds/<slot>.png",
-    "shared_rewards": {
-      "timber": "data/story/finds/timber.png"
-    },
-    "transform": "Compact props uniformly resized to fit 256 px inside a 320 px transparent canvas.",
-    "gear_reward": {
-      "source": "art/quest-objects/shutter-gear-states.png",
-      "prompt": "art/quest-objects/shutter-gear-states.prompt.txt",
-      "crop": [
-        969,
-        83,
-        1680,
-        821
-      ]
-    },
-    "reward_sources": {
-      "marker": {
-        "source": "art/resource-pieces/outlined-atlas.png",
-        "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
-        "crop": [
-          1330,
-          443,
-          1774,
-          887
-        ]
-      }
-    },
-    "separate_rewards": {
-      "note": {
-        "source": "art/quest-objects/ines-note-states.png",
-        "prompt": "art/quest-objects/ines-note-states.prompt.txt",
-        "runtime": "data/story/finds/note.png",
-        "crop": [
-          67,
-          99,
-          788,
-          787
-        ],
-        "canvas": [
-          320,
-          320
-        ],
-        "paint_size": [
-          228,
-          228
-        ]
-      }
-    },
-    "story_pieces": {
-      "generator": "Built-in ImageGen, each matching set authored together",
-      "canvas": [
-        128,
-        128
-      ],
-      "paint_size": [
-        108,
-        108
-      ],
-      "states": [
-        "board",
-        "selected",
-        "hint",
-        "falling",
-        "goal",
-        "collection flight"
-      ],
-      "atlases": [
-        {
-          "source": "art/resource-pieces/scenario-atlas.png",
-          "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
-          "items": {
-            "chart": {
-              "boards": [
-                4
-              ],
-              "kind": 0,
-              "crop": [
-                320,
-                653,
-                619,
-                910
-              ],
-              "runtime": "art/registered/story-pieces/chart.png"
-            },
-            "supplies": {
-              "boards": [
-                9
-              ],
-              "kind": 3,
-              "crop": [
-                326,
-                952,
-                613,
-                1229
-              ],
-              "runtime": "art/registered/story-pieces/supplies.png"
-            },
-            "lens": {
-              "boards": [
-                2
-              ],
-              "kind": 3,
-              "crop": [
-                959,
-                343,
-                1230,
-                612
-              ],
-              "runtime": "art/registered/story-pieces/lens.png"
-            },
-            "cable": {
-              "boards": [
-                3
-              ],
-              "kind": 4,
-              "crop": [
-                12,
-                649,
-                300,
-                929
-              ],
-              "runtime": "art/registered/story-pieces/cable.png"
-            },
-            "tools": {
-              "boards": [
-                7
-              ],
-              "kind": 1,
-              "crop": [
-                934,
-                671,
-                1245,
-                899
-              ],
-              "runtime": "art/registered/story-pieces/tools.png"
-            },
-            "note": {
-              "boards": [
-                13
-              ],
-              "kind": 0,
-              "crop": [
-                970,
-                979,
-                1243,
-                1206
-              ],
-              "runtime": "art/registered/story-pieces/note.png"
-            },
-            "gear": {
-              "boards": [
-                10
-              ],
-              "kind": 2,
-              "crop": [
-                638,
-                954,
-                924,
-                1236
-              ],
-              "runtime": "art/registered/story-pieces/gear.png"
-            }
-          }
-        },
-        {
-          "source": "art/resource-pieces/outlined-atlas.png",
-          "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
-          "items": {
-            "marker": {
-              "boards": [
-                5,
-                6
-              ],
-              "kind": 2,
-              "crop": [
-                1376,
-                517,
-                1739,
-                795
-              ],
-              "runtime": "art/registered/story-pieces/marker.png"
-            }
+    "states": [
+      "board",
+      "selected",
+      "hint",
+      "falling",
+      "goal",
+      "collection flight"
+    ],
+    "atlases": [
+      {
+        "source": "art/resource-pieces/scenario-atlas.png",
+        "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
+        "items": {
+          "chart": {
+            "boards": [
+              4
+            ],
+            "kind": 0,
+            "crop": [
+              320,
+              653,
+              619,
+              910
+            ],
+            "runtime": "art/registered/story-pieces/chart.png"
+          },
+          "supplies": {
+            "boards": [
+              9
+            ],
+            "kind": 3,
+            "crop": [
+              326,
+              952,
+              613,
+              1229
+            ],
+            "runtime": "art/registered/story-pieces/supplies.png"
+          },
+          "lens": {
+            "boards": [
+              2
+            ],
+            "kind": 3,
+            "crop": [
+              959,
+              343,
+              1230,
+              612
+            ],
+            "runtime": "art/registered/story-pieces/lens.png"
+          },
+          "cable": {
+            "boards": [
+              3
+            ],
+            "kind": 4,
+            "crop": [
+              12,
+              649,
+              300,
+              929
+            ],
+            "runtime": "art/registered/story-pieces/cable.png"
+          },
+          "tools": {
+            "boards": [
+              7
+            ],
+            "kind": 1,
+            "crop": [
+              934,
+              671,
+              1245,
+              899
+            ],
+            "runtime": "art/registered/story-pieces/tools.png"
+          },
+          "note": {
+            "boards": [
+              13
+            ],
+            "kind": 0,
+            "crop": [
+              970,
+              979,
+              1243,
+              1206
+            ],
+            "runtime": "art/registered/story-pieces/note.png"
+          },
+          "gear": {
+            "boards": [
+              10
+            ],
+            "kind": 2,
+            "crop": [
+              638,
+              954,
+              924,
+              1236
+            ],
+            "runtime": "art/registered/story-pieces/gear.png"
           }
         }
-      ]
-    },
-    "atlas_pieces": {
+      },
+      {
+        "source": "art/resource-pieces/outlined-atlas.png",
+        "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
+        "items": {
+          "marker": {
+            "boards": [
+              5,
+              6
+            ],
+            "kind": 2,
+            "crop": [
+              1376,
+              517,
+              1739,
+              795
+            ],
+            "runtime": "art/registered/story-pieces/marker.png"
+          }
+        }
+      }
+    ],
+    "campaign_frames": {
       "pliers": {
         "boards": [
           8
@@ -1099,7 +1019,7 @@
           94,
           80
         ],
-        "reference": "art/registered/quest-objects.png"
+        "reference": "art/quest-objects/scenario-icons.png"
       },
       "safe-landing": {
         "source": "art/finale/safe-landing.png",
@@ -1247,12 +1167,6 @@
       "emerald": [
         128,
         114
-      ]
-    },
-    "reward_pictures": {
-      "timber": [
-        320,
-        285
       ]
     }
   },

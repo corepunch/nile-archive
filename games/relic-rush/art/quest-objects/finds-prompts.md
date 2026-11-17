@@ -2,14 +2,14 @@
 
 These are the original excavation prompts and registration notes. The
 excavation commands refer to commit `78fbe020`. The
-[current catalogue](../../docs/asset-catalogue.md#collectible-story-pieces)
+[current catalogue](../../docs/asset-catalogue.md#story-pieces)
 records the collection sprites.
 
 The [board dressing atlas](../../docs/asset-catalogue.md#story-materials) now supplies the dig
 surfaces from section 1. The laid-out timber and cable use their own footprints in section 2.
 [Issue #102](https://github.com/corepunch/nile-archive/issues/102) tracks the broader long-find work.
-The [selected crank](../../docs/asset-catalogue.md#chapter-1-quest-objects) has its
-own four-option source sheet and uses its existing excavation footprint.
+The [selected crank's four-option source sheet](crank-choices.png) accompanied
+its excavation footprint.
 
 Style references for the original production requests: [source.png](source.png) (the eight existing props)
 and a current board capture, [find-half.jpg](../../docs/screenshots/find-half.jpg).
@@ -47,8 +47,7 @@ Acceptance:
 
 See the [footprint guide](laid-finds-guide.png) and [exact production prompt](laid-finds-states.prompt.txt).
 One master sheet contains the painted and charcoal states for both finds. Registration places
-each state on a separate transparent board canvas. Run `python3 games/relic-rush/tools/relic_quest_art.py --overlay-dir /tmp/relic-finds`
-from the repository root and compare the overlays with the game. The goal and recovered-item
-cards keep the compact original props.
+each state on a separate transparent board canvas. The goal and recovered-item
+cards used the compact original props.
 
 The selected shutter crank remains on its compact excavation footprint.

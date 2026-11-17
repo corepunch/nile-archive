@@ -15,8 +15,6 @@
 --
 -- Game hooks the shared code calls (set on R by the game's modules):
 --   R.dialogs[R.OV_RESULT], R.dialogs[R.OV_GUIDE]   the results card and guide
---   R.award_for(g), R.dialogs[R.OV_AWARD]   an item a first clear recovers (nil for none),
---                           shown big on its own card before the win's story beat and results
 --   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
 --   R.wallet_icons()        three icons: unused, gold, unused (the gold capsule's is the second)
 --   R.town_middle_icon(at)  the round middle button's icon in the town
@@ -64,7 +62,7 @@ G.DEFAULTS = {
         category = "all",
         build = "BUILD", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
         cleared = "CLEAR %d LEVELS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
-        row = "%d x %d tiles  ·  Owned %d", build_points = "  ·  +%d decoration points",
+        row = "%d x %d tiles  ·  Owned %d",
     },
     expeditions = {
         title = "Levels", close = "BACK TO TOWN",
@@ -110,7 +108,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_AWARD = 12,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -128,7 +126,6 @@ function G.state()
         toast = nil,
         toast_time = 0, now = 0,
         quiet = false,       -- no story (stills for the docs)
-        award = nil, award_game = nil,   -- the recovered item's card, and the game it was shown for
 
         -- animated readouts
         score_display = 0, score_pulse = 0, goal_display = 0, goal_pulse = 0,
@@ -846,11 +843,7 @@ function G.bind(R, over)
                 elseif R.island.count >= 160 then action, state = C.full, "poor" end
                 local parts = price_parts(def.cost)
                 for _, part in ipairs(parts) do part.short = wallet[part.slot or rules.GOLD] < part.amount end
-                local note = meta.unlock_text
-                if not note then
-                    note = C.row:format(meta.size.w, meta.size.h, owned)
-                    if R.quest_build_points then note = note .. C.build_points:format(R.quest_build_points(i - 1)) end
-                end
+                local note = meta.unlock_text or C.row:format(meta.size.w, meta.size.h, owned)
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts, state=state,
                     note=note, available=available, action=action, slim=state == "built"}
                 records[#records + 1], tiles[meta.key] = record, record
@@ -1014,7 +1007,6 @@ function G.bind(R, over)
             bubble_text = function() return R.speech_style(15) end,
             reduced_motion = function() return R.reduced_motion end,
             overlay = R.vfx_particles,
-            extras = R.draw_quest,
         })
         R.placement_form = R.town.placement_form
     end
@@ -1096,11 +1088,6 @@ function G.bind(R, over)
         if R.overlay == R.OV_RESULT and R.g then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
             if R.clear_scene and R.clear_scene() then return end
-            -- A first clear's item comes first, then the talk about it, then the results.
-            if R.award_for and R.award_game ~= R.g and R.g.won and R.g.level == R.prog.level then
-                R.award_game, R.award = R.g, R.award_for(R.g)
-                if R.award then R.overlay = R.OV_AWARD; return end
-            end
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
             if b then R.queue_story(b, false, true) end
             return
@@ -1161,7 +1148,6 @@ function G.bind(R, over)
         if lvl > R.prog.level then return false end
         if lvl == R.prog.level and owes_building() then R.notice(W.notices.build_first); return false end
         if lvl == R.prog.level and journey.awaiting_return(R.prog) then R.notice(W.notices.story_waiting); return false end
-        if lvl == R.prog.level and R.quest_allows_board and not R.quest_allows_board(lvl + 1) then return false end
         R.reset_board(R.make_board(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
         R.on_island = false
         R.overlay = R.OV_NONE
@@ -1178,7 +1164,6 @@ function G.bind(R, over)
     function R.play_level(level)
         if R.g and R.g.level == level and not R.g.won and not R.g.lost then
             if level == R.prog.level and (owes_building() or journey.awaiting_return(R.prog)) then return false end
-            if level == R.prog.level and R.quest_allows_board and not R.quest_allows_board(level + 1) then return false end
             if R.refresh_board_bonuses then R.refresh_board_bonuses() end
             R.on_island = false; R.overlay = R.OV_NONE
             if R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT then R.present_board() end
@@ -1211,7 +1196,7 @@ function G.bind(R, over)
         return true
     end
 
-    function R.debug_complete_task()
+    function R.debug_advance_town()
         if not R.on_island or R.overlay ~= R.OV_NONE then return false end
         if R.island.placing >= 0 then return R.town:confirm() ~= nil end
         -- A game with an ordered ladder may also have an optional building open.
@@ -1409,13 +1394,13 @@ function G.app(R)
         end
         if app.arg("debug-walkthrough") and not talking and not board and not dive
             and R.overlay == R.OV_NONE then
-            local label = R.on_island and "Complete task" or "Skip level"
+            local label = R.on_island and "Advance" or "Skip level"
             local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
             local state = ui.hit(bounds, 0)
             R.paint_button(bounds, state, true)
             R.say(label, bounds:inflate(-8), 18, R.PAL_CREAM)
             if state.clicked then
-                if R.on_island then R.debug_complete_task() else R.debug_skip_level() end
+                if R.on_island then R.debug_advance_town() else R.debug_skip_level() end
             end
         end
         R.draw_toast()
@@ -1430,7 +1415,7 @@ function G.app(R)
         story.frame(dt)
         -- Keep the HUD above ordinary dialogs. Results, the guide and
         -- leaderboard own the whole foreground.
-        local hud_above = R.overlay ~= R.OV_RESULT and R.overlay ~= R.OV_AWARD and R.overlay ~= R.OV_GUIDE and not board
+        local hud_above = R.overlay ~= R.OV_RESULT and R.overlay ~= R.OV_GUIDE and not board
         if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end

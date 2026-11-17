@@ -21,7 +21,6 @@ local played = {}
 
 local function scene(expected, before_reward)
     R.story_tick()
-    if R.overlay == R.OV_AWARD then R.overlay = R.OV_RESULT; R.story_tick() end   -- CONTINUE on the Item recovered card
     check(R.story_current and R.story_current.key == expected, 'expected story scene ' .. expected)
     if not R.story_current then error('missing story scene ' .. expected) end
     played[#played + 1] = R.story_current.key
@@ -86,10 +85,10 @@ for level = 1, STORY_LEVELS do
     if first_exchange then
         R.overlay = R.OV_RESULT
         -- Allow the headless clock to advance through any object reveal or
-        -- signal scene. Some boards have both before the Item recovered card.
+        -- signal scene before the first-clear exchange.
         for _ = 1, 8 do
             R.story_tick()
-            if R.story_current or R.overlay == R.OV_AWARD then break end
+            if R.story_current then break end
             R.now = R.now + 1
         end
         scene(after, true)

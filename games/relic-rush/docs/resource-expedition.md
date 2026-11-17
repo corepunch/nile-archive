@@ -1,8 +1,8 @@
 # Relic Rush resource expedition
 
-Clear the marked ground or complete the crew's task. The matches made along the
+Clear all blue plaques to win the expedition. The matches made along the
 way bring back Coins, Supplies and Food to restore the valley. The story
-campaign runs across boards 1-30 (three episodes) with twenty restorations, nine quests and
+campaign runs across boards 1-30 (three episodes) with twenty restorations and
 the signal finale; boards 31-100 are playable without story yet. Each restoration should feel like spending what the crew
 just brought home.
 
@@ -120,7 +120,7 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 
 Each new piece pays a currency the next restoration on the ladder needs.
 Where two restorations share a clear (7, 9, 13 and 19), the story restoration
-comes second. Board 10 features the Shutter Gear quest piece alongside the
+comes second. Board 10 features the Shutter Gear story piece alongside the
 market's new ration jars.
 
 One slot pays Coins. Expedition 3 uses the silver coin at 3 Coins. From there
@@ -174,7 +174,7 @@ The reports are in `build/test/relic-rush.log`.
 
 A piece earns its base amount when a match, cascade or tool clears it.
 Breaking a chain leaves its piece in place. A later hit clears the piece and
-earns its resources. The first clear awards the story item (boards 1-30) and counts as a cleared board.
+earns its resources. Each first clear advances progress. Boards 1–30 also play a first-clear scene.
 The result card shows the three resource totals and what is still due for the next restoration.
 
 Record attempt earnings until a successful clear. Claim persists the first
@@ -185,10 +185,8 @@ When a restoration costs more than is in the wallet, replay a cleared board
 with the missing resource and bank the earnings. Optional purchases reserve
 the price of any earned restoration. Confirmed placement debits the price
 once and Cancel returns the preview. Boards cleared remain access requirements for land and shop stock.
-Confirmed restorations add four Happiness. Each confirmed optional building
-or decoration adds one Happiness and earns one bonus Coins per win, capped at
-ten Coins. Moving items preserves the score and bonus. Both derive from saved
-placements.
+Each placed optional building or decoration adds one coin per win, up to ten coins.
+The bonus comes from saved placements and is preserved when buildings move.
 
 A save version identifies the Food and Supplies slots. Existing Coins,
 placements, unlocks, claimed levels and story checkpoints are

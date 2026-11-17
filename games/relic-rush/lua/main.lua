@@ -10,7 +10,6 @@ require("screens")
 require("board")
 require("finale")
 require("narrative")
-require("quests")
 require("progress")
 require("smoke")
 require("user_events_runtime")   -- after every hook it wraps

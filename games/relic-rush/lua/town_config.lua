@@ -24,7 +24,7 @@ return {
         pause = true,
         middle = {kind = "button"},
     },
-    bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "quest_face", edge = "quest_edge"},
+    bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "bubble_face", edge = "bubble_edge"},
     texts = {
         placing = "Drag the building to choose a spot, or scroll the land.",
         unchanged = "Your island is unchanged.",

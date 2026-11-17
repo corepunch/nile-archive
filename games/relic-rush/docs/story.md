@@ -1,6 +1,6 @@
 # Relic Rush: A Light Below
 
-**Status:** The first 20 expeditions restore the old harbor across two playable chapters. Chapter 3 carries the repair and ownership dispute to the existing finale. The town tracks quests and Happiness.
+**Status:** The first 20 expeditions restore the old harbor across two playable chapters. Chapter 3 carries the repair and ownership dispute to the existing finale.
 
 **Play fantasy:** Bring a working harbor back to life with a present-day expedition crew and find the keeper signalling from under the cliff. The feeling is curious, warm-hearted pulp adventure. Each repair gives the crew something they can use on the next leg of the search.
 
@@ -29,11 +29,11 @@ The light in the opening poses the question **Who is signalling back?** The firs
 | Kessler | Distant claim holder's agent → presses for the records → loses the claim | Polite radio voice; no new portrait. |
 | Ines | Absent signal sender → identified by note → answers from the safe landing | Acts through the relay and signed notes, then returns Tomas's trust with the chart. |
 
-## Quest and task map
+## Campaign milestones
 
-Each row identifies a concrete request, first-clear progress, the confirmed island placement where applicable, reaction and next goal. Boards are the existing numbered boards; actions such as examining a chart are narrative framing, not implemented inventory. Builds happen at 1/4/7/9, 13/16/19 and 23/26/29; a board clear and a build are distinct events. Each milestone has a separate confirmed placement scene. The nine quests require cumulative decoration totals of 8, 12, 16, 20, 24, 28, 32, 36 and 40. Wonders earn 4 points and other confirmed purchases earn 1. The required upgrades cover each threshold.
+Each row connects a character’s request with the expedition clears and confirmed island restoration that advance it. Story restorations follow clears 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Each has its own scene after confirmed placement.
 
-| Chapter / quest and requester | Board-linked tasks and confirmed placement | Outcome / next request |
+| Chapter and story objective | Expeditions and confirmed placement | Outcome and next request |
 | --- | --- | --- |
 | 1. Get the camp talking — Mara needs a safe landing and a working lookout | 1 gather camp timber; **confirm Expedition camp**. 2 recover the lamp lens; 3 find the relay cable. 4 gather the tide chart pieces; **confirm Spring well**. | A changed flash and the chart lead to the quay. The crew fills buckets for the walk. |
 | 1. Find the lower quay — Elena needs to follow the chart | 5 recover the quay marker; 6 recover the shore marker; 7 recover the tool roll; **confirm Artisan workshop**. | The markers lead to slipped steps. Tomas agrees to guide the crew and uses the tools to cut blocks for the approach. |
@@ -73,13 +73,13 @@ Elena tries a reflection as an explanation at 2. A delayed reply and the severed
 
 ## Delivery and choices
 
-Board 1 uses the regular timber log, which earns Supplies. Boards 2–10 and 13 show a story piece in place of one resource kind. The first clear awards the corresponding quest object. The characters then talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Clearing all blue plaques opens the site for the first-clear scene. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
+Board 1 uses the regular timber log, which earns Supplies. Boards 2–10 and 13 show a story piece in place of one resource kind. The characters talk about the find in the first-clear exchange. The tide-room reveal plays after Claim and leads into a choice of who answers the signal. Confirmed placements play their own scene. Replays bank matched resources and the capped move bonus. Clearing all blue plaques opens the site for the first-clear scene. On reload, the next unread scene or selected reply resumes, while completed boards and placed buildings stay credited. Older saves receive a recap at their current progress.
 
 ## Chains and blue plaques
 
 The blue plaques mark the crew’s work site. A chain holds a piece in place
 until a match or tool breaks it. Blue plaques beneath chains take a separate
-hit after the piece is free. Each first-clear item or scene pays off the work
+hit after the piece is free. Each first-clear scene pays off the work
 at that site. See [board progression](board-progression.md) for the starting
 counts and the [asset catalogue](asset-catalogue.md#story-materials) for the art.
 
@@ -422,6 +422,7 @@ hand-operated warning across the flooded gap.
 
 ## Changelog
 
+- 2026-11-17: Removed the quest tracker, Happiness gates and item cards. Expedition clears, dialogue and required restorations carry the campaign.
 - 2026-11-16: Board 8 recovers Tomas’s relay pliers at the storm break. A cold reader followed the severed relay to the hand shutter and asked what the crew would use the pliers for. Mara asks for them while rigging the market hoist.
 
 - 2026-11-16: Set levels 1–20 at an ancient harbor in present-day use. The Well

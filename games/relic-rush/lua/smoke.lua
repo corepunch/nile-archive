@@ -33,7 +33,6 @@ end
 -- before one real swap, so this checks the flow; the extended greedy-bot
 -- rules test checks that the boards themselves can be won.
 local played = {}
-local awards = 0   -- recovered-item cards stepped through
 local function campaign()
     local journey = require("journey")
     if frames > 32000 then   -- 108-cell boards take longer to present than the old 61
@@ -54,7 +53,6 @@ local function campaign()
     end
     local c = R.island
     if R.overlay == R.OV_FINALE then
-        assert(awards == 11, "campaign smoke: expected eleven recovered-item cards, saw " .. awards)
         local want = {}
         for _, b in ipairs(journey.beats) do want[#want + 1] = b.key end
         assert(table.concat(played, " ") == table.concat(want, " "),
@@ -69,16 +67,6 @@ local function campaign()
     elseif R.overlay == R.OV_STORY_CHOICE then
         local box = R.choice_form.boxes["1"]
         if box then app.inject_click(box:center()); wait = 10 end
-    elseif R.overlay == R.OV_AWARD then
-        if R.modal_for == R.OV_AWARD and R.dialog_settled() then
-            if R.award.level == 13 then
-                assert(R.award.name == "Folded note" and not R.prog.story_seen["after-13"],
-                    "campaign smoke: board 13 presents the note before Elena reads it")
-            end
-            awards = awards + 1
-            app.inject_click(R.award_continue:center() + vec2(0, R.drop / 2))
-            wait = 20
-        end
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_ZONE then
@@ -164,16 +152,12 @@ function R.smoke()
         assert(done and guide_laid_out(), "smoke: guide data source was not laid out")
         app.inject_click(done:center() + vec2(0, R.drop / 2)); stage = 0
     elseif stage == 0 then
-        if R.overlay == R.OV_AWARD then   -- level one recovers the camp timber before its talk
-            if R.modal_for == R.OV_AWARD and R.dialog_settled() then app.inject_click(R.award_continue:center() + vec2(0, R.drop / 2)) end
-            return
-        end
         if R.overlay == R.OV_RESULT then
             if R.modal_for == R.OV_RESULT and R.dialog_settled() then
                 shop.replay_reward = shop.replay and rules.level_reward(R.g,R.wonders,R.prog,R.island) or nil
                 if shop.replay then
                     local base = rules.level_reward(R.g,R.wonders,R.prog)
-                    assert(shop.replay_reward[1] == base[1] + 1, "one placed decoration earns one Happiness Gold")
+                    assert(shop.replay_reward[1] == base[1] + 1, "one placed decoration earns one bonus coin")
                 end
                 app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1
             end
@@ -248,8 +232,7 @@ function R.smoke()
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 23
     elseif stage == 23 and R.island.placing < 0 then
         assert(R.island.count == 1 and R.prog.wallet[1] == shop.gold, "cancelled purchase changed save state")
-        assert(island.happiness(R.island)==4 and island.happiness_gold(R.island)==0,
-            "cancelling a decoration leaves Happiness unchanged")
+        assert(island.decoration_bonus(R.island)==0, "cancelling a decoration leaves the bonus unchanged")
         R.open_catalogue(); stage = 24
     elseif stage == 24 and R.overlay == R.OV_SHOP then
         if press_tile("shrub") then stage = 25 end
@@ -258,8 +241,7 @@ function R.smoke()
     elseif stage == 26 and R.island.placing < 0 then
         assert(R.island.count == 2 and island.wonder_count(R.island) == 1, "decoration changed campaign restoration count")
         assert(R.prog.wallet[1] == shop.gold - 15, "purchase must charge once")
-        assert(island.happiness(R.island)==5 and island.happiness_gold(R.island)==1,
-            "confirmed decoration adds Happiness and earns a Gold bonus")
+        assert(island.decoration_bonus(R.island)==1, "a confirmed decoration earns one bonus coin")
         local c = R.island
         app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5, .65))); stage = 27
     elseif stage==27 and R.overlay==R.OV_NONE then

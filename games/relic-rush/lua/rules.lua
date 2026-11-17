@@ -33,12 +33,12 @@ function M.reward_breakdown(g, wonders, progress, town)
     local kind=M.wonder_at(g.level+1)
     local w=kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    local happiness = island.happiness_gold(town)
-    local reward = matched + purse(bonus + happiness, 0, 0, first and 1 or 0)
+    local decoration_bonus = island.decoration_bonus(town)
+    local reward = matched + purse(bonus + decoration_bonus, 0, 0, first and 1 or 0)
     if first and w and app.arg("debug-walkthrough") then
         reward = reward + economy.shortfall(w.cost, (progress and progress.wallet or purse()) + reward)
     end
-    return {first=first, bonus=bonus, happiness=happiness, total=reward}
+    return {first=first, bonus=bonus, decoration_bonus=decoration_bonus, total=reward}
 end
 
 function M.level_reward(g, wonders, progress, town)

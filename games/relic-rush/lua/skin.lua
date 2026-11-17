@@ -24,8 +24,8 @@ return ui.skin{
         moves_low = "#702218",
         moves_low_glow = "#B24028",
         board_face = "#C3A87D",
-        quest_face = "#102D26F0",
-        quest_edge = "#D7BB76AA",
+        bubble_face = "#102D26F0",
+        bubble_edge = "#D7BB76AA",
     },
 
     -- Every palette shares a dark rim and a drop shadow cast by the rimmed silhouette.
@@ -48,11 +48,7 @@ return ui.skin{
                 {fill = "#FFEFBC", radius = 13, inset = 5},
             }},
             -- A recessed well that groups related settings inside a dialog.
-            variants = {quest = {normal = {layers = {
-                {shadow = "#00000060", radius = 13, blur = 6, offset = {0, 3}},
-                {fill = "quest_face", radius = 13},
-                {border = "quest_edge", width = 1.5, radius = 13},
-            }}}, group = {normal = {layers = {
+            variants = {group = {normal = {layers = {
                 {fill = "#E8CC8E", fill2 = "#F6E2B0", radius = 14},
                 {border = "#C9A464", width = 1.5, radius = 14},
             }}}},

@@ -147,29 +147,25 @@ else
             if l.dress.floor then materials[#materials + 1] = l.dress.floor.covered
             elseif l.oil then materials[#materials + 1] = "river-silt" end
         end
-        local resources, goal_resource
+        local resources
         if economy then
             resources = {}
-            local yields = economy.board_yields(l, restored)
-            goal_resource = l.goal_kind ~= nil and yields[l.goal_kind] or nil
+            local yields = economy.board_loadout(l, i, restored, 123478)
             for k = 0, campaign.colors - 1 do
                 local piece = yields[k]
-                if piece then
+                if piece and piece.slot then
                     resources[#resources + 1] = {key=piece.key, name=piece.name, yield=piece.amount,
                         currency=economy.currencies[piece.slot].name}
                 end
             end
         end
         out.levels[i] = {n = i, name = l.name, lesson = l.lesson, moves = l.moves, score = l.score,
-                         quest = l.quest_object, wonder = funds[i], materials = materials,
+                         wonder = funds[i], materials = materials,
                          resources = resources, resource_unlock = l.resource_unlock,
-                         collection = (l.story_piece or goal_resource) and {
-                             key = l.story_piece or goal_resource.key, count = l.relics, resource = goal_resource ~= nil,
-                             regular = campaign.colors - (l.omit_kind ~= nil and 1 or 0) - (l.story_piece and 1 or 0)} or nil,
+                         story_piece = l.story_piece,
                          plaques = l.dress and l.dress.floor and l.dress.floor.covered == "tile-tablet-single" and #l.oil or nil,
                          signal = l.signal,
-                         reveal = reveal and {picture = reveal.picture, mosaic = reveal.mosaic, floor = reveal.floor,
-                             covered_picture = reveal.covered_picture, cells = reveal.object and #l.oil or nil}}
+                         reveal = reveal and {picture = reveal.picture, floor = reveal.floor}}
     end
     out.beats = {}
     for i, b in ipairs(require("story_content")) do

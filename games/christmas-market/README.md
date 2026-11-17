@@ -185,7 +185,7 @@ and Levels buttons, with simplified authored icons and five interaction states.
 
 For a local story walkthrough, launch `./build/christmas-market --debug-walkthrough`.
 Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.
-On the island, **Complete task** places an earned story building or starts the next board.
+On the island, **Advance** places an earned story building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
 Theo’s workshop introduces Hammer pieces and the Candlelight shop introduces

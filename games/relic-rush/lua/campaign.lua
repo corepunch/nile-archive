@@ -15,16 +15,6 @@ for i, b in ipairs(boards) do
         goals={"oil"}, dress=dress, background=(i - 1) // 5 % 2 + 1}
 end
 
--- The first clear hands recovered quest objects to the story.
-local quest_objects = {
-    {key="timber", name="Camp timber"}, {key="lens", name="Lamp lens"},
-    {key="cable", name="Relay cable"}, {key="chart", name="Tide chart"},
-    {key="marker", name="Quay marker"}, {key="marker", name="Shore marker"},
-    {key="tools", name="Tool roll"}, {key="pliers", name="Relay pliers"},
-    {key="supplies", name="Supply crate"}, {key="gear", name="Shutter gear"},
-}
-for i, object in ipairs(quest_objects) do levels[i].quest_object = object end
-levels[13].quest_object = {key="note", name="Folded note"}
 -- goal_kind registers the slot the story piece replaces. Every board spawns
 -- five kinds, as in Cradle of Rome; refill damping keeps cascades rare.
 levels[1].goal_kind = 3                                 -- ordinary timber

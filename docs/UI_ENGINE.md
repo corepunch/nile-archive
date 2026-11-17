@@ -521,4 +521,4 @@ Play and Wishes. Play is the largest control. Both surfaces use the same
 `town_config.lua` can select skin text palettes with `bubble.title` and
 `bubble.text`. Set `bubble.em` to size the configured subtitle. The title
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex
-values. Relic Rush shares those colors with its quest panel.
+values.
