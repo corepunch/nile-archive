@@ -197,7 +197,7 @@ local function modal()
 end
 local function smoke()
     S.smoke_frames=(S.smoke_frames or 0)+1
-    if S.smoke_frames>130000 then error('Emergency smoke timed out at chapter '..S.chapter) end
+    if S.smoke_frames>(app.arg("quick") and 360 or 130000) then error('Emergency smoke timed out at chapter '..S.chapter) end
     if S.smoke_frames%5~=0 then return end
     S.smoke_stage=S.smoke_stage or 0
     if story.active() then app.inject_click(vec2(680,510));return end
@@ -239,6 +239,10 @@ local function smoke()
     elseif S.smoke_stage==5 then
         assert(not S.modal and S.g.cleared==0 and S.g.wallet.food==40,'restart did not reset the district')
         S.smoke_stage=6
+    end
+    if app.arg('quick') and S.g.cleared>0 then
+        print('Emergency smoke: started the first district, restarted and cleared a road')
+        app.quit();return
     end
     local e=sim.suggest(S.g)
     if e then app.inject_click(S.cam:to_screen(vec2(e.x,e.y))) end

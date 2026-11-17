@@ -17,7 +17,7 @@ rules("relic_wallet")
 rules("relic_user_events")
 rules("relic_leaderboard")
 smoke()
-smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/relic-rush/lua;. --review-game relic-rush", "walkthrough-pointer")
+smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/relic-rush/lua;. --review-game relic-rush", "walkthrough-pointer", "quick")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 

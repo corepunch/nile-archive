@@ -5,6 +5,7 @@ rules("archive_walkthrough")
 rules("building_economy")
 rules("archive_motion")
 rules("haptics_archive")
+smoke("--quick --size 600x450", "first-find", "quick")
 smoke()
 smoke("--size 1368x1026", "chapter-ipad")
 

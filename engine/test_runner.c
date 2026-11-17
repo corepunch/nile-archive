@@ -277,12 +277,13 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
     static test_job jobs[MAX_JOBS];
     static char failures[4096];
     char spec[128], log[160];
-    bool list = false;
+    bool list = false, with_quick_smoke = false;
     bool fast = false, checks_only = false, full = false, with_smoke = false, named = false;
     for (int i = 1; i < argc; i++) list |= !strcmp(argv[i], "--list");
     for (int i = 1; i < argc; i++) {
         named |= argv[i][0] != '-';
         full |= !strcmp(argv[i], "--full");
+        with_quick_smoke |= !strcmp(argv[i], "--with-quick-smoke");
         with_smoke |= !strcmp(argv[i], "--with-smoke");
         fast |= !strcmp(argv[i], "--fast");
         checks_only |= !strcmp(argv[i], "--check");
@@ -308,8 +309,8 @@ int test_main(const char *suite, const char *lua_dir, const char *data_dir, int 
         const char *kind = j ? j->kind : "", *name = j ? j->name : c_tests[i].name;
         if (!j && shared_instance && strcmp(suite, "engine")) continue;   /* the C tests are the engine suite's */
         /* CI opts into gameplay smoke; captures need a name filter or --full. */
-        if (j && strcmp(kind, "rules") && (fast || checks_only ||
-            !(full || named || (with_smoke && !strcmp(kind, "smoke"))))) continue;
+        bool smoke_selected = j && !strcmp(kind, "smoke") && (with_smoke || (with_quick_smoke && j->quick_smoke));
+        if (j && strcmp(kind, "rules") && (fast || checks_only || !(full || named || smoke_selected))) continue;
         if (fast && !j && (
             !strcmp(name, "platform") || !strcmp(name, "platform_safe_area") ||
             !strcmp(name, "backdrop") || !strcmp(name, "story_layouts") ||

@@ -20,7 +20,7 @@ unrelated captures: `phone-board` also matches an entrance reel, whereas
 Use before/after pairs at the two relevant sizes for a uniform visual change;
 add state boards or reels when the behaviour they cover changes. Run full local
 coverage for shared engine changes or a concrete unresolved concern. Native CI
-runs the extended rules, renderer, audio and gameplay smoke tests. See [AGENTS.md](../AGENTS.md) for scope rules.
+runs the extended rules, renderer, audio and one quick gameplay smoke test per game. See [AGENTS.md](../AGENTS.md) for scope rules.
 
 When reporting timings, use measured elapsed seconds and distinguish builds,
 tests/captures and lint. Label estimates and do not compare a full-task duration
@@ -56,16 +56,20 @@ board tile check reads recorded hashes instead of re-rendering (`--render-check`
 in `make test-assets` re-renders).
 
 Native CI uses `make test-ci` after preflight. It runs audio and then one
-`build/test/all --with-smoke --extended` process for the engine and every game.
+`build/test/all --with-quick-smoke --extended` process for the engine and every game.
 For a visual review, `make shots` exports screenshots, animation reels, frames
 and long-press captures. Screenshots check dimensions and non-flat pixels.
-`make smoke` runs just the gameplay scenarios.
+Each push checks a pointer-driven reward, building placement and next-board
+transition in Relic Rush and Christmas Market. Nile Archive finds the first
+hidden item. Emergency clears the first road. For all gameplay scenarios,
+including the full campaigns, run `make smoke` locally or select **Full gameplay
+smoke tests** and **Run workflow** in GitHub Actions.
 
 `build/test/all` and the per-suite binaries run only rules and C tests by default.
 Screenshots, frames, reels, gestures and smoke runs never run unasked: they run
 when a name filter selects them (`"shot phone-board"`, `smoke`) or with `--full`,
-which `make test-full` passes. `--with-smoke` adds gameplay smoke scenarios to
-the default selection. `--suite=<name>` (repeatable) keeps only those suites. A binary per suite still builds on request:
+which `make test-full` passes. `--with-quick-smoke` adds the smoke scenarios tagged
+`quick` to the default selection. `--with-smoke` adds every gameplay scenario. `--suite=<name>` (repeatable) keeps only those suites. A binary per suite still builds on request:
 
 | Binary | Runs |
 |---|---|
@@ -123,7 +127,7 @@ that runs longer than ten minutes fails as timed out. The exit code is non-zero 
 rules("relic")                                  -- tests/lua/relic.lua, with this game's modules
 rules("progression", "games/nile-archive/lua")  -- with another game's too
 smoke()                                         -- plays the game's --smoke run
-smoke("--size 456x342", "small")                -- with options, under its own name
+smoke("--quick --size 456x342", "first-road", "quick") -- short scenario included on pushes
 shot("island-village", "480x900", "--showcase") -- a screen: docs/screenshots/island-village.jpg
 frame("tiles-relics", "480x900", "--tiles relics") -- a picture other images are built from
 reel("fx-shatter", 24, 2, "480x900", "--fx shatter --reel") -- 24 pictures, 2 frames apart, from one run
@@ -197,7 +201,7 @@ The full run uses ten seeds per board. Override the local sample size with
 `make test-balance BALANCE_RUNS=40`. The local report is in
 `build/test/relic-rush.log`, and the workflow prints it in the job log.
 
-The two 30-board UI campaigns render a 240×450 window at the logical phone
+The two on-demand 30-board UI campaigns render a 240×450 window at the logical phone
 layout and advance the test clock by 0.1 seconds per frame.
 
 For Relic Rush and Christmas Market, `build/test/<game> --extended 'rules campaign_play'`

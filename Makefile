@@ -192,7 +192,7 @@ test test-fast: build/test/all $(TEST_AUX_BINS)
 .PHONY: test-ci
 test-ci: build/test/all $(TEST_AUX_BINS)
 	./build/test-audio
-	BALANCE_RUNS= ./build/test/all --with-smoke --extended
+	BALANCE_RUNS= ./build/test/all --with-quick-smoke --extended
 
 .PHONY: test-balance
 test-balance: export BALANCE_RUNS ?= 10

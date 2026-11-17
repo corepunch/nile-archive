@@ -15,7 +15,7 @@ rules("christmas")
 rules("christmas_story")
 rules("christmas_leaderboard")
 smoke()
-smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer")
+smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer", "quick")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 
 shot("debug-board", "480x900", "--debug-walkthrough --level 4 --frames 180")

@@ -37,7 +37,7 @@ jobs:
         run: |
           make -j2 CFLAGS="-O2 -g -Werror" all
           make -j2 build/test/all build/test-audio
-      - name: Native rules, renderer, audio and gameplay smoke tests
+      - name: Native rules, renderer, audio and quick gameplay smoke tests
         run: xvfb-run -a make test-ci
 
   xcode:
