@@ -24,9 +24,7 @@
     "quit": "Your board is saved. Tap LEVEL %d or Winter wishes to continue."
   },
   "capsules": {
-    "notes": ["A life returns every 30 minutes, up to five.",
-              "Matched resources buy stalls and decorations.",
-              "Christmas Stars unlock shop items and land. First clears only."]
+    "currencies_only": true
   },
   "pause": {"guide": "MARKET GUIDE", "quit": "QUIT TO MARKET", "town": "Your Christmas market", "leaderboard": "LEADERBOARD"},
   "leaderboard": {"board": "stars", "title": "Merriest markets", "level_board": "level_%02d", "level_title": "Winter wish %d"},
