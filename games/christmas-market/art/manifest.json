@@ -33,11 +33,11 @@
   "runtime": {
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
     "data/board/blockers.png": "544e7c4108a5b77ceb000ebbba4703faddfdc66ab3df4180bb056c72c464c3e4",
-    "data/board/boosters.png": "7128cd28170dda111fa7db27a1ee0951aba57e4f5c9e898d42797310162d6eed",
+    "data/board/boosters.png": "75a02e61b52fc9fbd97f897281e01c1be18aebc6e4997d4bbb0cd342e2217108",
     "data/board/cells.png": "03df4c3cb3011133df1031e4939e323d43d27489a2cf3d9b30e0f5f60eec8f29",
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "d2a75c3c72131432d591907f44c96ca2e252c2c60f032b698aaa2f2810b96567",
-    "data/board/hud.png": "c4f7ba61fa8cee23038f45fb1fd0af3d5245e9c8816356f51f2d3b91e9f7ae79",
+    "data/board/hud.png": "93101afafc2e354079c774be82f589ea28769eb0d55c4a70343c56ffbb449e26",
     "data/board/pieces.png": "4ceab2df117cc0da725546a934373f02aa38a1f0045e00a7f07a530af0210629",
     "data/city/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/city/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",

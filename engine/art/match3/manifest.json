@@ -2095,7 +2095,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "ff9e54791be81167e3cd1e2a36fe7fbc66001df9dc5e5bba1c867ba1c1ae6504",
+    "recipe": "2179cb84bc6e8b497bcead01c4cda6faa47e976c65c0aeda031a83a92653272f",
     "inputs": {
       "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
       "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",

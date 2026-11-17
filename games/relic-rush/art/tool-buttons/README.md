@@ -1,4 +1,7 @@
-# Square power-up buttons
+# Square power-up buttons (retired)
+
+The game no longer registers or ships these buttons: every board uses the
+bonus toolbar. The sheet stays as provenance.
 
 `source.png` is the selected transparent RGBA ImageGen output, created on
 31 October 2026 in one built-in call containing all three tools and all five
@@ -8,7 +11,7 @@ identities. The exact request is in [prompt.txt](prompt.txt).
 The atlas has five columns (normal, selected, pressed, hover, disabled) and three
 rows (pickaxe, dynamite, sunburst). The output is 1619×971; measured crop boxes
 are recorded in `../board-states/manifest.json`, rather than assuming an even
-grid. That manifest's `tool_buttons.registration` records the spatial resize
+grid. That manifest's `retired_tool_buttons.registration` records the spatial resize
 used to fit the subtly wide authored bodies to one square footprint. Authored
 alpha, colors, tool glyphs and state differences are retained.
 

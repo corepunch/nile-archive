@@ -11,7 +11,7 @@ manifest = json.loads((ROOT / "art/board-states/manifest.json").read_text())
 doc = (ROOT / "docs/asset-catalogue.md").read_text()
 rules = (ROOT / "lua/rules.lua").read_text()
 art = (ROOT / "lua/art.lua").read_text()
-for field, key in [("tools", "tools"), ("states", "tool_states")]:
+for field, key in [("states", "tool_states")]:
     declaration = re.search(r"A\." + field + r" = \{([^}]+)\}", art).group(1)
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
@@ -86,10 +86,6 @@ assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', m
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
 assert kinds == manifest["kinds"], "Rule kinds need artwork and catalogue entries"
 expected = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
-for tool in manifest["tools"]:
-    for state in manifest["tool_states"]:
-        expected.add(tool + "-" + state)
-        assert '"' + tool + '"' in art and '"' + state + '"' in art
 assert expected == set(manifest["assets"]), "Missing or uncatalogued atlas state"
 for name, asset in manifest["assets"].items():
     assert "`" + name + "`" in doc, f"Undocumented atlas state: {name}"
@@ -108,15 +104,10 @@ for name, asset in manifest["assets"].items():
                    for y in range(40, 89, 8)), f"Ice must cover the whole face: {name}"
 for name in [manifest["source"], manifest["prompt"]]:
     assert (ROOT / name).is_file()
-buttons = manifest["tool_buttons"]
-assert (ROOT / buttons["source"]).is_file() and (ROOT / buttons["prompt"]).is_file()
-assert buttons["runtime_button_size"] == [int(re.search(r"E\.TOOL_SIZE = (\d+)", match3).group(1))] * 2
-for tool in manifest["tools"]:
-    for state in manifest["tool_states"]:
-        key = tool + "-" + state
-        asset = manifest["assets"][key]
-        assert asset["source"] == buttons["source"] and asset["fit"] == "square-button"
-        assert atlas["frames"][key]["atlas"] == "boosters" and "boosters" in atlas["hud"]
+# The square tool buttons are retired: every board has bonus slots.
+retired = manifest["retired_tool_buttons"]
+assert (ROOT / retired["source"]).is_file() and (ROOT / retired["prompt"]).is_file()
+assert not any(name.startswith(("pickaxe-", "dynamite-", "sunburst-")) for name in atlas["frames"]), "Retired tool buttons packed"
 assert (ROOT / manifest["cell_mask"]["source"]).is_file(), "Missing renderer-authored cell mask"
 assert (ROOT / manifest["cell_mask"]["runtime"]).is_file(), "Missing runtime cell mask"
 for pack in manifest["packs"]:

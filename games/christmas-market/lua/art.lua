@@ -7,7 +7,6 @@ A.board_frame = require("board_frame_atlas")
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = elements_view.assets
-A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_levels","navigation_pause"}, states=A.states}
 A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
@@ -30,12 +29,7 @@ function A.load_hud()
     local match3 = require("match3")
     local neutral = app.arg("default-match3")
     local hud = match3.hud(not neutral and require("match3_hud") or nil)
-    if not neutral then
-        assert(hud.signboard, "missing spruce signboard")
-        for _, state in ipairs(A.states) do
-            assert(hud["board-pause-" .. state], "missing board Settings state: " .. state)
-        end
-    end
+    if not neutral then assert(hud.signboard, "missing spruce signboard") end
     local bonus = own_hud()
     local images = setmetatable({}, {__index=hud})
     if neutral then images.score = hud.complete end

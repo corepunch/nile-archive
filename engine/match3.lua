@@ -116,10 +116,9 @@ end
 function E.hud(override)
     local hud = E.atlas(override)
     assert(hud.score and hud.complete, "missing match3 HUD icons")
-    for _, tool in ipairs({"pickaxe", "dynamite", "sunburst", "pause"}) do
-        for _, state in ipairs({"normal", "selected", "pressed", "hover", "disabled"}) do
-            assert(hud[tool .. "-" .. state], "missing authored match3 control state")
-        end
+    -- Toolbar buttons come with the game's booster slots; only Pause is shared.
+    for _, state in ipairs({"normal", "selected", "pressed", "hover", "disabled"}) do
+        assert(hud["pause-" .. state], "missing authored match3 control state")
     end
     return hud
 end
@@ -169,7 +168,10 @@ local goal_icon_adjustments = {
     ["stone-1"] = {scale = .9},
 }
 
+-- tool_art names the toolbar buttons of a board without booster slots; the
+-- engine's default skin draws pickaxe, dynamite and sunburst.
 function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
+    tool_art = tool_art or {"pickaxe", "dynamite", "sunburst"}
     local rgba, PI = color, math.pi
     local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
     function R.goal_entries()

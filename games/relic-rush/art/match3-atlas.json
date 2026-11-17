@@ -25,7 +25,7 @@
       "runtime": "data/board/boosters.png",
       "size": [
         1024,
-        2048
+        1024
       ]
     },
     "hud": {
@@ -1220,141 +1220,6 @@
         128
       ]
     },
-    "dynamite-disabled": {
-      "atlas": "boosters",
-      "box": [
-        134,
-        662,
-        128,
-        128
-      ]
-    },
-    "dynamite-hover": {
-      "atlas": "boosters",
-      "box": [
-        266,
-        662,
-        128,
-        128
-      ]
-    },
-    "dynamite-normal": {
-      "atlas": "boosters",
-      "box": [
-        398,
-        662,
-        128,
-        128
-      ]
-    },
-    "dynamite-pressed": {
-      "atlas": "boosters",
-      "box": [
-        530,
-        662,
-        128,
-        128
-      ]
-    },
-    "dynamite-selected": {
-      "atlas": "boosters",
-      "box": [
-        662,
-        662,
-        128,
-        128
-      ]
-    },
-    "pickaxe-disabled": {
-      "atlas": "boosters",
-      "box": [
-        794,
-        662,
-        128,
-        128
-      ]
-    },
-    "pickaxe-hover": {
-      "atlas": "boosters",
-      "box": [
-        2,
-        794,
-        128,
-        128
-      ]
-    },
-    "pickaxe-normal": {
-      "atlas": "boosters",
-      "box": [
-        134,
-        794,
-        128,
-        128
-      ]
-    },
-    "pickaxe-pressed": {
-      "atlas": "boosters",
-      "box": [
-        266,
-        794,
-        128,
-        128
-      ]
-    },
-    "pickaxe-selected": {
-      "atlas": "boosters",
-      "box": [
-        398,
-        794,
-        128,
-        128
-      ]
-    },
-    "sunburst-disabled": {
-      "atlas": "boosters",
-      "box": [
-        530,
-        794,
-        128,
-        128
-      ]
-    },
-    "sunburst-hover": {
-      "atlas": "boosters",
-      "box": [
-        662,
-        794,
-        128,
-        128
-      ]
-    },
-    "sunburst-normal": {
-      "atlas": "boosters",
-      "box": [
-        794,
-        794,
-        128,
-        128
-      ]
-    },
-    "sunburst-pressed": {
-      "atlas": "boosters",
-      "box": [
-        2,
-        926,
-        128,
-        128
-      ]
-    },
-    "sunburst-selected": {
-      "atlas": "boosters",
-      "box": [
-        134,
-        926,
-        128,
-        128
-      ]
-    },
     "complete": {
       "atlas": "hud",
       "box": [
@@ -1613,24 +1478,9 @@
     "resources-4": "art/registered/tile-sets/resources/4.png",
     "resources-5": "art/registered/tile-sets/resources/5.png",
     "cell-mask": "art/registered/board-states/cell-mask.png",
-    "dynamite-disabled": "art/registered/board-states/dynamite-disabled.png",
-    "dynamite-hover": "art/registered/board-states/dynamite-hover.png",
-    "dynamite-normal": "art/registered/board-states/dynamite-normal.png",
-    "dynamite-pressed": "art/registered/board-states/dynamite-pressed.png",
-    "dynamite-selected": "art/registered/board-states/dynamite-selected.png",
     "guide": "art/registered/board-states/guide.png",
     "hint": "art/registered/board-states/hint.png",
-    "pickaxe-disabled": "art/registered/board-states/pickaxe-disabled.png",
-    "pickaxe-hover": "art/registered/board-states/pickaxe-hover.png",
-    "pickaxe-normal": "art/registered/board-states/pickaxe-normal.png",
-    "pickaxe-pressed": "art/registered/board-states/pickaxe-pressed.png",
-    "pickaxe-selected": "art/registered/board-states/pickaxe-selected.png",
     "selected": "art/registered/board-states/selected.png",
-    "sunburst-disabled": "art/registered/board-states/sunburst-disabled.png",
-    "sunburst-hover": "art/registered/board-states/sunburst-hover.png",
-    "sunburst-normal": "art/registered/board-states/sunburst-normal.png",
-    "sunburst-pressed": "art/registered/board-states/sunburst-pressed.png",
-    "sunburst-selected": "art/registered/board-states/sunburst-selected.png",
     "complete": "art/registered/expedition-hud/complete.png",
     "life": "art/registered/expedition-hud/life.png",
     "pause-disabled": "art/registered/expedition-hud/pause-disabled.png",
@@ -1984,7 +1834,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "ff9e54791be81167e3cd1e2a36fe7fbc66001df9dc5e5bba1c867ba1c1ae6504",
+    "recipe": "2179cb84bc6e8b497bcead01c4cda6faa47e976c65c0aeda031a83a92653272f",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -2026,24 +1876,9 @@
       "games/relic-rush/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
       "games/relic-rush/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
       "games/relic-rush/art/registered/board-states/cell-mask.png": "e51da6f444ca0f877436eb32bb3d3de943f8a1739a39a333c02ab7cff73ad719",
-      "games/relic-rush/art/registered/board-states/dynamite-disabled.png": "044c73d5f9394cb0c038cb7059614d0b54a3061abe6576d000a3389f055405a3",
-      "games/relic-rush/art/registered/board-states/dynamite-hover.png": "d19bfef9723f1dabdc09faa5b931a7d53a61cbf121cba9518895873b5e3d82dc",
-      "games/relic-rush/art/registered/board-states/dynamite-normal.png": "8a139567b07701863eac4b899e8870d6dbbbbefcc78091cbfbab95eaf3ef221b",
-      "games/relic-rush/art/registered/board-states/dynamite-pressed.png": "070c346a769abb6cdc9c5fae7d6d5a10b555b9ad7d8d4829c0e76221137d02ef",
-      "games/relic-rush/art/registered/board-states/dynamite-selected.png": "013ed3be9fad54679cd9bb19697582114a9d89b853e4fd5c917b8336ab561e49",
       "games/relic-rush/art/registered/board-states/guide.png": "3c3dfce86d4833b5fd71b2bed2d012fd4d4f0c45d8c41fffc42b182bcf1f7306",
       "games/relic-rush/art/registered/board-states/hint.png": "07cf83ac91b4b02f3ea076455a4116326cfcbf0b0ad0345afead940828142777",
-      "games/relic-rush/art/registered/board-states/pickaxe-disabled.png": "e057ca4f7f940a275b7091dceb057d995644d549842d47587d3f031faf656286",
-      "games/relic-rush/art/registered/board-states/pickaxe-hover.png": "fd1839b7ac73671b2bd014150e41374b05912cc511f660dd570192fe3900bae6",
-      "games/relic-rush/art/registered/board-states/pickaxe-normal.png": "2d57379ec71ebdac40a36a21427ab1a19e66ebcf0280a004517d9f50155739d2",
-      "games/relic-rush/art/registered/board-states/pickaxe-pressed.png": "b0cb481075dd812e188ae8682aeadc3b63d5d72296918c18358a2afc99c64734",
-      "games/relic-rush/art/registered/board-states/pickaxe-selected.png": "59052520ed696b81fca7ce8a0cd3d85c9260bca94bfbcd339b1c874f23b8db00",
       "games/relic-rush/art/registered/board-states/selected.png": "a7c3541a46c33606fd8ef2ce5a46e71db51b2eae814822a7a3ba2a4de47a9aff",
-      "games/relic-rush/art/registered/board-states/sunburst-disabled.png": "6abfe7ade16df5949594fc18bd286e4d748828cf1d772cf913fbb50f2f407652",
-      "games/relic-rush/art/registered/board-states/sunburst-hover.png": "77491e89d7ff54452131d86754c1b4a6e3eba297f724eacb75ecf7c3744ab172",
-      "games/relic-rush/art/registered/board-states/sunburst-normal.png": "e275397437e2538fa765a0faa644a69568efc71bafcb99bd7cc90747beef46cf",
-      "games/relic-rush/art/registered/board-states/sunburst-pressed.png": "a5064eb46874e6ac5fbccc89fab171b3f8506f21c494cc943ba7f7d741f38976",
-      "games/relic-rush/art/registered/board-states/sunburst-selected.png": "6db450213241f00a69e0b59af0081cf01bbcee59789ac39934d942323654d1bc",
       "games/relic-rush/art/registered/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b",
       "games/relic-rush/art/registered/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
       "games/relic-rush/art/registered/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
@@ -2116,12 +1951,12 @@
       "games/relic-rush/art/registered/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/art/registered/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
       "games/relic-rush/data/board/blockers.png": "39e66c17702357faacf3d5722daabb6e642d973ac35bf879bbe8762b73180845",
-      "games/relic-rush/data/board/boosters.png": "5810c989caf5fd48d84fb93d82367460fe6cff699e3bc4214dbb6278e25a5fa3",
+      "games/relic-rush/data/board/boosters.png": "b4fc7abcdd251189250713be4c3d302dab34fe9315938add48f2fa5d36e8e3a4",
       "games/relic-rush/data/board/cells.png": "e6341b1c80682c7b994ced006031f3744427dc61f61578484fad4f9a3358eecc",
       "games/relic-rush/data/board/fx.png": "d2a75c3c72131432d591907f44c96ca2e252c2c60f032b698aaa2f2810b96567",
       "games/relic-rush/data/board/hud.png": "086366f5b0c59aef2d67854634b3bcf5db94f362698d7fd2a273be807e03c1ce",
       "games/relic-rush/data/board/pieces.png": "d6bbfdb698d82e4fb272de32b273dbfe5614f77384a31415bd7c78ffc409ee01",
-      "games/relic-rush/lua/match3_atlases.lua": "97e655d19d0b3d0a36d6fd5c260477d0239270217d601511f298b2bd45e6a393",
+      "games/relic-rush/lua/match3_atlases.lua": "47250d4b1ed52bf9d9986d8f9b341feec7d335c961e7c509daaf115bc9f0ec9a",
       "games/relic-rush/lua/match3_hud.lua": "4bea82ff82b4a64cc5ca3c2b4a6aec2ce45520eef4424f1af073791c3ea232df",
       "games/relic-rush/lua/match3_skin.lua": "aee4d68c46b4446e7a71b665e8a2947f2de38a096613283da3f96e3f7b0e44a6"
     }

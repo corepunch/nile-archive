@@ -23,7 +23,7 @@ R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or 
 R.locked_notice = words.locked
 board_intro.bind(R, rules)
 local match3 = require("match3")
-match3.bind_board_ui(R, rules, art.tools)
+match3.bind_board_ui(R, rules)
 match3.bind_town_board_hud(R)
 
 local CELLS, HEX_R = rules.CELLS, R.HEX_R

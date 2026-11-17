@@ -30,7 +30,7 @@ def main():
     for path in manifest['prompts']:
         assert (ROOT/path).is_file(), path
     registration = json.loads((ROOT/'art/registration.json').read_text())
-    assert 'buildings' not in registration and len(registration['icons']) == 34
+    assert 'buildings' not in registration and len(registration['icons']) == 19
     atlas = json.loads((ROOT/'art/match3-atlas.json').read_text())
     pieces = manifest['festive_pieces']
     assert png(ROOT/pieces['source']) == ((1536,1024),6)
@@ -43,7 +43,7 @@ def main():
         assert atlas['frames'][name]['atlas'] == 'pieces' and pieces['runtime'] == 'data/board/pieces.png', name
     for entry in registration['icons']:
         assert png(ROOT/'art/registered'/entry['path']) == ((128,128),6), entry['path']
-    for tool, folder in [('pickaxe','board-states'),('dynamite','board-states'),('sunburst','board-states'),('pause','expedition-hud')]:
+    for tool, folder in [('pause','expedition-hud')]:
         hashes = {digest(ROOT/'art/registered'/folder/f'{tool}-{state}.png') for state in STATES}
         assert len(hashes) == 5, f'{tool}: every state must have its own authored artwork'
         for state in STATES:
@@ -106,7 +106,7 @@ def main():
         assert (ROOT/path).is_file(), source
         assert atlas['effects'][f'fx-{name}'] == path
         assert '`' + name + '`' in doc, f'Undocumented particle sprite: {name}'
-    print(f'Christmas Market: {len(inventory)} runtime files, 34 atlas crops, {len(buildings)} Blender buildings, 11 native icon slots verified')
+    print(f'Christmas Market: {len(inventory)} runtime files, 19 atlas crops, {len(buildings)} Blender buildings, 11 native icon slots verified')
 
 if __name__ == '__main__':
     main()

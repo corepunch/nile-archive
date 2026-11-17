@@ -56,8 +56,8 @@ and registered by key, and a picture is too large to pack usefully.
 | `pieces` | `kind-N` aliases, `<pack>-N`, `campaign-*`, `resource-*`, `story-*`, `find-*`, `market-N` |
 | `blockers` | `chain*`, `ice-1`, `ice-2`, `stone-*` |
 | `cells` | `tile-*`, `selected`, `hint`, `guide`, `cell-mask` |
-| `boosters` | `pickaxe-*`, `dynamite-*`, `sunburst-*`, `booster-*`, `bonus-*` |
-| `hud` | `pause-*`, `board-pause-*`, `score`, `complete`, `life`, `shop-*`, `signboard`, result icons |
+| `boosters` | `booster-*`, `bonus-*` (the engine's default skin: `pickaxe-*`, `dynamite-*`, `sunburst-*`) |
+| `hud` | `pause-*`, `score`, `complete`, `life`, `shop-*`, `signboard`, result icons |
 | `fx` | `fx-*`, `glow`, `spark-*`, `ice-puff-*`, `impact-*` |
 
 It writes `lua/match3_atlases.lua` (one `{path, frames}` per atlas), the board

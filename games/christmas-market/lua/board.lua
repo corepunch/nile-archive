@@ -22,7 +22,7 @@ local words = require("match3.game").config().board   -- data/game.json
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
 board_intro.bind(R, rules)
-match3.bind_board_ui(R, rules, art.tools)
+match3.bind_board_ui(R, rules)
 match3.bind_town_board_hud(R)
 
 function R.board_goal_icon(level, goal)

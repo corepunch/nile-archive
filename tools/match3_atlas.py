@@ -399,14 +399,6 @@ def build_game(game, check):
         hud_images['character'] = 'story/characters/noelle.png'
         hud_aliases['score'] = 'complete'
     loaded = {name: Image.open(path).convert('RGBA') for name, path in sources.items()}
-    # One authored Settings set goes on both signboards. Christmas Market's
-    # town continues to use its own Pause states.
-    board_pause_sources = {
-        f'board-pause-{state}': ROOT / f'games/relic-rush/art/registered/expedition-hud/pause-{state}.png'
-        for state in STATES
-    } if game == 'christmas-market' else {}
-    for name, path in board_pause_sources.items():
-        loaded[name] = Image.open(path).convert('RGBA')
     signboard_source = SIGNBOARD_DIR / 'source.png'
     signboard_crop = SIGNBOARD_CROPS[game]
     with Image.open(signboard_source) as sheet:
@@ -455,7 +447,7 @@ def build_game(game, check):
                 'images': {name: 'data/' + path for name, path in (images | hud_images).items()},
                 'aliases': aliases | hud_aliases,
                 'frames': frame_index(packed),
-                'sources': {name: relpath(path, root) for name, path in (sources | board_pause_sources).items()},
+                'sources': {name: relpath(path, root) for name, path in sources.items()},
                 'effects': {name: relpath(path, root) for name, path in effect_sources.items()},
                 'signboard': {'source': '../../art/match3-signboards/source.png',
                               'prompt': '../../art/match3-signboards/prompt.txt',
@@ -466,7 +458,7 @@ def build_game(game, check):
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
-    inputs = list(sources.values()) + list(board_pause_sources.values()) + list(effect_sources.values()) + extra_inputs
+    inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
     inputs += ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
     inputs += [root / 'data' / path for path in (images | hud_images).values()]

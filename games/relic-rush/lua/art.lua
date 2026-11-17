@@ -35,7 +35,6 @@ A.resource_upgrades = {
 -- Local comparison art uses the exact source crops and the same board states.
 A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
     ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
-A.tools = {"pickaxe", "dynamite", "sunburst"}
 A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-shield", "bonus-lightning", "bonus-star", "bonus-plus"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
@@ -189,9 +188,10 @@ function A.draw_catalogue(R)
     for col, state in ipairs(A.states) do
         R.say_at(state, vec2(62 + (col - 1) * 88, 571), 12, R.PAL_GOLD, 86)
     end
-    for row, tool in ipairs(A.tools) do
+    for row = 1, 3 do   -- the first three bonuses' toolbar states
+        local bonus = A.bonus_atlas_order[row]
         for col, state in ipairs(A.states) do
-            gfx.image(R.hud_art[tool .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
+            gfx.image(R.hud_art[bonus .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
         end
     end
     R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)

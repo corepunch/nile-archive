@@ -118,6 +118,9 @@ def fit_board_art(sheet, registration):
 # keep their places in the reading order but are no longer registered.
 UNREGISTERED = {'board-states/sand'} | {'board-states/' + name for name in
                 ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism')}
+# The square tool buttons: every board now has the round booster toolbar.
+UNREGISTERED |= {f'board-states/{tool}-{state}' for tool in ('pickaxe', 'dynamite', 'sunburst')
+                 for state in ('normal', 'selected', 'pressed', 'hover', 'disabled')}
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

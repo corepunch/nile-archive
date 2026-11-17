@@ -182,8 +182,9 @@ one-sheet definition, and `engine=true` reads paths with `texture.load_engine`.
 `match3.atlas(definition)` flattens all of it into one table of named images,
 loading each sheet once. `match3.skin(override)` loads the board: pieces,
 blockers, cells, effects and boosters, with the backgrounds. `match3.hud(override)`
-loads the HUD and boosters atlases: score, completion and the normal, selected,
-pressed, hover and disabled states of pickaxe, dynamite, sunburst and Pause.
+loads the HUD and boosters atlases: score, completion, the five states of Pause
+and the game's booster buttons. A board without booster slots falls back to the
+default skin's pickaxe, dynamite and sunburst buttons.
 The engine neutral preview uses its built-in skin for both. The loaders check
 frame bounds and required names. [Asset layout](ASSET_LAYOUT.md) lists which
 frames go in which atlas.

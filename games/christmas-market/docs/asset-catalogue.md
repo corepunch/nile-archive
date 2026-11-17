@@ -91,7 +91,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Snowfall and feedback | Lua renderer | Procedural | Two world-anchored layers of village snowfall, mission banner, kudos, collection particles, beams, lift and placement feedback |
 | Effect sprites | CC0 Kenney Particle Pack, `art/particles/kenney/` | `data/board/fx.png` | Seven tinted additive sprites for impacts, sparks, shards and the bomb's bloom; see [Particle sprites](#particle-sprites) |
 
-Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved for the original free-standing artwork and controls. The additional full-cell states use the canonical mask as described above. Control states are directly cropped from the authored atlas. The six pieces, the three tools' states, Pause and the goal star are cropped square around their own artwork, with one side per family, and scaled evenly to 128×128. That keeps their authored proportions: the earlier unequal source cells stretched them tall. Hex board states keep their whole source cell, because it registers them to the board slot.
+Built-in ImageGen generated all new paintings except the buildings, which are Blender renders. `art/prompts.json` records the exact source prompts; `art/reference-sheet-prompt.txt` records the labeled-sheet prompt. `art/registration.json` records the icon atlas crops and output sizing; building registration lives in `art/building-catalogue/`. Original source RGB and alpha are preserved for the original free-standing artwork and controls. The additional full-cell states use the canonical mask as described above. Control states are directly cropped from the authored atlas. The six pieces, Pause and the goal star are cropped square around their own artwork, with one side per family, and scaled evenly to 128×128. That keeps their authored proportions: the earlier unequal source cells stretched them tall. The sheet's square pickaxe, dynamite and sunburst states are no longer registered: every board uses the round booster toolbar. Hex board states keep their whole source cell, because it registers them to the board slot.
 
 Reproduce draft runtime extraction with `python3 games/christmas-market/tools/prepare_assets.py`; launch previews with `make run-christmas-market ARGS="--showcase --fresh --mute"` or `ARGS="--level 4 --fresh --mute"`. The PR captures all screens at 480×900, plus the market, board and dialogue at 390×844 with safe areas. All twelve directional building footprints are included across three review pages. Every building footprint is now projected from the Blender scene and checked in the ten review pages.
 
@@ -262,8 +262,9 @@ of the cell hex. The 128px source rectangle is `18,14,96,95` for Christmas and
 `32,35,63,58` for the embedded fallback. The atlas and its source alpha stay intact.
 Slate-blue wells shade from light at the top to dark at the bottom. The
 spruce `signboard` in `data/board/hud.png` is one static backplate for Moves,
-goal counts and Settings. Its `board-pause-*` frames reuse the five authored
-jade-and-gold Settings states from Relic Rush. The tinsel objective uses a
+goal counts. Settings is the round Pause at the end of the booster toolbar;
+the board never draws a Settings button on the signboard, so none is packed.
+The tinsel objective uses a
 12% larger icon shifted 2 logical units right, and Lanternlight sits 2 units
 farther left. The [ImageGen source](../../../art/match3-signboards/source.png),
 [prompt](../../../art/match3-signboards/prompt.txt) and
