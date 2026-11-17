@@ -504,13 +504,14 @@ cover a zero-charge ring at both phone sizes.
 The six standalone pieces are Hammer, Dynamite, Shield, Lightning, Star and
 Plus. Their effects and restoration unlocks are documented in
 [board progression](board-progression.md#bonus-pieces). The four 108 px
-toolbar targets stay in one row. Blast swaps the Hammer sprite for Dynamite
+circular buttons stay in one row. Blast swaps the Hammer sprite for Dynamite
 at level II, and Sweep swaps Shield for Lightning. Star II and Plus II use
 the same generated button art as their first tiers. Every level II button
 shows a small runtime II label even when its charge is empty.
 
 The generator uses one [painted button base](../art/bonus-gems/button-base.png)
 and a [strip of six standalone gems](../art/bonus-gems/six-bonuses.png).
+It maps the painted rim to a 57 px radius and uses a 47 px circular inset.
 The strip comes from the first row of the previous atlas at commit
 `20ad450b`. Its [original prompt](../art/bonus-gems/six-bonuses.prompt.txt)
 records where the gem paintings came from.
@@ -519,7 +520,7 @@ The five generated faces are normal gold, selected jade, pressed amber,
 brighter gold on hover, and carved sandstone for locked and empty sockets.
 The engraver casts the inner shadow from each gem's own silhouette. The
 shadow offset is 3.5 × 4.5 px, half the original 7 × 9 px. All five states
-share the base's alpha. Partial charge reveals the normal face from the
+share the circular base's alpha. Partial charge reveals the normal face from the
 bottom. Matched gems fly to their sockets using the same standalone board
 sprite. Reduce Motion fills the meter immediately.
 

@@ -2,6 +2,7 @@
 import argparse
 import io
 import json
+import math
 import random
 from pathlib import Path
 
@@ -18,6 +19,55 @@ def center(image):
     frame = Image.new(image.mode, (SLOT_SIZE, SLOT_SIZE))
     frame.paste(image, ((SLOT_SIZE - image.width) // 2, (SLOT_SIZE - image.height) // 2))
     return frame
+
+
+def circular_plate(base, radius):
+    """Map the painted rim to a circle while keeping its directional lighting."""
+    width, height = base.size
+    center_x, center_y = width / 2, height / 2
+    opacity = base.getchannel("A").getpixel
+    directions = 720
+    max_radius = math.ceil(math.hypot(center_x, center_y))
+
+    def sample_alpha(x, y):
+        left, top = math.floor(x), math.floor(y)
+        if not (0 <= left < width - 1 and 0 <= top < height - 1):
+            return 0
+        u, v = x - left, y - top
+        upper = (1 - u) * opacity((left, top)) + u * opacity((left + 1, top))
+        lower = (1 - u) * opacity((left, top + 1)) + u * opacity((left + 1, top + 1))
+        return (1 - v) * upper + v * lower
+
+    # Find the painted rim along each ray at the midpoint of its soft alpha edge.
+    contour = []
+    for i in range(directions):
+        angle = math.tau * i / directions
+        dx, dy = math.cos(angle), math.sin(angle)
+        lo, hi = 0, max_radius
+        for _ in range(16):
+            mid = (lo + hi) / 2
+            if sample_alpha(center_x + dx * mid - .5, center_y + dy * mid - .5) >= 128:
+                lo = mid
+            else:
+                hi = mid
+        contour.append((lo + hi) / 2)
+
+    def source_point(x, y):
+        dx, dy = x - center_x, y - center_y
+        angle = math.atan2(dy, dx) * directions / math.tau
+        i = math.floor(angle)
+        blend = angle - i
+        boundary = (1 - blend) * contour[i % directions] + blend * contour[(i + 1) % directions]
+        return center_x + dx * boundary / radius, center_y + dy * boundary / radius
+
+    # Inverse mapping keeps the alpha edge and painted texture in one resample.
+    mesh = []
+    for y in range(0, height, 2):
+        for x in range(0, width, 2):
+            quad = (source_point(x, y) + source_point(x, y + 2)
+                    + source_point(x + 2, y + 2) + source_point(x + 2, y))
+            mesh.append(((x, y, x + 2, y + 2), quad))
+    return base.transform(base.size, Image.Transform.MESH, mesh, Image.Resampling.BICUBIC)
 
 
 def rounded_mask(size, bounds, radius):
@@ -107,6 +157,7 @@ def pack(spec):
     side = spec["cell_size"]
     assert chips.mode == base.mode == "RGBA" and base.size == (SLOT_SIZE, SLOT_SIZE)
     assert chips.size == (cols * side, side), "Expected a single strip of standalone gems"
+    base = circular_plate(base, spec["button_outer_radius"])
     base_alpha = base.getchannel("A")
     outside_button = base_alpha.point(lambda a: 255 if a < 128 else 0)
     mask = rounded_mask(base.size, **spec["button_inset"])

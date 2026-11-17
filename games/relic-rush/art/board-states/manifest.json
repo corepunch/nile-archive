@@ -2096,7 +2096,7 @@
   "bonus_gems": {
     "source": "art/bonus-gems/six-bonuses.png",
     "prompt": "art/bonus-gems/six-bonuses.prompt.txt",
-    "generator": "prepare_bonus_gems.py generates all five button states from one painted base and the existing standalone gems",
+    "generator": "prepare_bonus_gems.py maps one painted base to a circle and generates all five button states with the existing standalone gems",
     "runtime": "data/bonus-gems.png",
     "review": "docs/screenshots/bonus-states.jpg",
     "columns": [
@@ -2115,7 +2115,7 @@
       "hover",
       "disabled"
     ],
-    "registration": "Crop each standalone gem from the strip, fit to 112 px for the board and 84 px for the buttons, then center on a 128 px cell. Derive all button faces from the painted base and use the gem silhouette for disabled recesses.",
+    "registration": "Fit the standalone gems to 112 px for the board and 84 px for the buttons. Map the source plate alpha contour to a 57 px radius, and use a 47 px inset radius and the gem silhouettes for the state recipes. All atlas cells are 128 px.",
     "bonuses": {
       "hammer": {
         "slot": "blast",
@@ -2204,12 +2204,12 @@
     },
     "button_inset": {
       "bounds": [
-        18,
-        18,
-        110,
-        110
+        17,
+        17,
+        111,
+        111
       ],
-      "radius": 18
+      "radius": 47
     },
     "button_states": {
       "normal": {},
@@ -2318,7 +2318,9 @@
         "recharge"
       ],
       "button_size": 108,
-      "rank_label": "Level II overlays a small II badge on its generated button."
-    }
+      "rank_label": "Level II overlays a small II badge on its generated button.",
+      "shape": "circle"
+    },
+    "button_outer_radius": 57
   }
 }

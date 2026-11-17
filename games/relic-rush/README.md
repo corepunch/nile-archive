@@ -112,7 +112,7 @@ The island and the board share one wallet and Settings bar. The board shows
 Moves at the left of the resource balances. The medallion turns red at five
 moves. Blue plaques mark the board objective. Winning banks the resources
 earned in the three slots.
-Four large bonus sockets sit in one row below the centered board from the first
+Four large circular bonus sockets sit in one row below the centered board from the first
 expedition. Settings opens the Explorer's Guide,
 and Results shows the score and rewards. Dialogs reuse the engine's forms and
 cached blur. See the [top bar review](docs/screenshots/review/top-bar-moves/README.md)
