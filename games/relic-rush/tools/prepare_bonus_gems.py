@@ -16,9 +16,9 @@ BUTTON_ICON_SIZE = 84
 ENGRAVE_SCALE = 4
 
 
-def center(image, side=SLOT_SIZE):
-    frame = Image.new(image.mode, (side, side))
-    frame.paste(image, ((side - image.width) // 2, (side - image.height) // 2))
+def center(image):
+    frame = Image.new(image.mode, (SLOT_SIZE, SLOT_SIZE))
+    frame.paste(image, ((SLOT_SIZE - image.width) // 2, (SLOT_SIZE - image.height) // 2))
     return frame
 
 
@@ -152,6 +152,26 @@ def engrave(plate, mask, floor, style):
     return Image.composite(recess, stone, mask).resize(plate.size, Image.Resampling.LANCZOS)
 
 
+def button_glyph(source, max_size, radius):
+    """Center by visible alpha and register both faces within the same circle."""
+    w, h = source.size
+    pixels = [(i % w + .5, i // w + .5, a)
+              for i, a in enumerate(source.getchannel("A").getdata()) if a >= 32]
+    mass = sum(a for _, _, a in pixels)
+    cx = sum(x * a for x, _, a in pixels) / mass
+    cy = sum(y * a for _, y, a in pixels) / mass
+    extent = max(math.hypot(x - cx, y - cy) for x, y, _ in pixels)
+    # Reserve coverage for resampling and the engraved edge's optical softness.
+    scale = min(1, max_size / max(w, h), (radius - .75) / extent) * ENGRAVE_SCALE
+    size = (max(1, round(w * scale)), max(1, round(h * scale)))
+    side = SLOT_SIZE * ENGRAVE_SCALE
+    origin = (round(side / 2 - cx * size[0] / w), round(side / 2 - cy * size[1] / h))
+    fitted = Image.new("RGBA", (side, side))
+    fitted.paste(source.resize(size, Image.Resampling.LANCZOS), origin)
+    cut = fitted.getchannel("A").filter(ImageFilter.GaussianBlur(.28 * ENGRAVE_SCALE))
+    return fitted.resize((SLOT_SIZE, SLOT_SIZE), Image.Resampling.LANCZOS), cut
+
+
 def pack(spec, root=ROOT, icons=None):
     base = Image.open(root / spec["button_base"])
     cols, rows = len(spec["columns"]), len(spec["rows"])
@@ -166,6 +186,11 @@ def pack(spec, root=ROOT, icons=None):
     base_alpha = base.getchannel("A")
     outside_button = base_alpha.point(lambda a: 255 if a < 128 else 0)
     mask = rounded_mask(base.size, **spec["button_inset"])
+    radius = spec["button_inset"]["radius"] - spec["button_glyph_clearance"]
+    side = SLOT_SIZE * ENGRAVE_SCALE
+    edge = (SLOT_SIZE / 2 - radius) * ENGRAVE_SCALE
+    outside_inset = Image.new("L", (side, side), 255)
+    ImageDraw.Draw(outside_inset).ellipse((edge, edge, side - edge - 1, side - edge - 1), fill=0)
     plates = {state: button_face(base, mask, spec["button_states"][state]) for state in spec["rows"][1:]}
     disabled_style = spec["button_states"]["disabled"]
     floor = cutout_floor(plates["disabled"], disabled_style["cutout"])
@@ -181,15 +206,10 @@ def pack(spec, root=ROOT, icons=None):
         chip = source.copy()
         chip.thumbnail((board_size, board_size), Image.Resampling.LANCZOS)
         atlas.paste(center(chip), (x * SLOT_SIZE, 0))
-        chip.thumbnail((button_size, button_size), Image.Resampling.LANCZOS)
-        icon = center(chip)
-        # Keep subpixel alpha coverage through the engraving and inner shadow.
-        # The small optical softness also smooths outlines from prepacked glyphs.
-        size = (chip.width * ENGRAVE_SCALE, chip.height * ENGRAVE_SCALE)
-        outline = source.getchannel("A").resize(size, Image.Resampling.LANCZOS)
-        outline = outline.filter(ImageFilter.GaussianBlur(.28 * ENGRAVE_SCALE))
-        cut = center(outline, SLOT_SIZE * ENGRAVE_SCALE)
-        assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), "Icon extends beyond the button"
+        icon, cut = button_glyph(source, min(button_size, board_size), radius)
+        visible = cut.point(lambda a: 255 if a >= 32 else 0)
+        assert not ImageChops.multiply(visible, outside_inset).getbbox(), f"{key} crowds the inner rim"
+        assert not ImageChops.multiply(icon.getchannel("A"), outside_button).getbbox(), f"{key} extends beyond the button"
         for y, (state, plate) in enumerate(plates.items(), 1):
             face = engrave(plate, cut, floor, disabled_style) if state == "disabled" else Image.alpha_composite(plate, icon)
             face.putalpha(base_alpha)

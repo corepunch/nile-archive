@@ -529,10 +529,11 @@ Reduce Motion credits the whole match immediately.
 
 Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to generate
 `data/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
-records the base crop, registration and state recipes. The gems fit in
-112 × 112 px on the board and 84 × 84 px on buttons. The Hammer fits within
-88 px on the board and 74 px on the button to clear the hex and engraved
-inset. Both use 128 px atlas cells.
+records the base crop, registration and state recipes. Board gems fit in
+112 × 112 px, with an 88 px limit for the Hammer. Button glyphs are centered
+by their visible shape and scaled to clear the circular inset. The board
+and button atlases use 128 px cells.
+[Clearance review](../../../art/match3-buttons/glyph-clearance.png)
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·

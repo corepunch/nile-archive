@@ -2122,7 +2122,7 @@
         "button": 74
       }
     },
-    "registration": "Fit the standalone gems to 112 px for the board and 84 px for the buttons, with a smaller Hammer to clear the hex and inset edges. Map the source plate alpha contour to a 57 px radius, and use a 47 px inset radius and the gem silhouettes for the state recipes. All atlas cells are 128 px.",
+    "registration": "Fit the standalone gems to 112 px for the board and 84 px for the buttons, with a smaller Hammer to clear the hex and inset edges. Map the source plate alpha contour to a 57 px radius, and use a 47 px inset radius for the state recipes. Center the button glyphs by visible alpha and fit them inside a 41 px radius. All atlas cells are 128 px.",
     "bonuses": {
       "hammer": {
         "slot": "blast",
@@ -2312,6 +2312,7 @@
       "rank_label": "Level II overlays a small II badge on its generated button.",
       "shape": "circle"
     },
+    "button_glyph_clearance": 6,
     "button_outer_radius": 57
   }
 }

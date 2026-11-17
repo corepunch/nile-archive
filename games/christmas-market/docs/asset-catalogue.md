@@ -121,7 +121,8 @@ Play is the largest control.
 
 The four circular boosters and the Build, Play, Wishes and Pause actions use the same [painted Pause base and state generator](../../../art/match3-buttons/README.md) as Relic Rush. The [manifest](../art/manifest.json) records the toy hammer and lantern star from the market goods atlas, plus the bomb and rocket from the shared board artwork. The generator fits each silhouette into the same circular socket and packs normal, selected, pressed, hover and engraved disabled states beneath the standalone icons.
 
-The toy hammer fits within 76 px on the board and 74 px on the button.
+The toy hammer fits within 76 px on the board. All button glyphs are centered
+by their visible shape and inset from the rim in every state.
 Matched toy hammers and lantern stars use the engine's resource flight arc,
 trail and landing flash. They follow the same timing as currency and land in
 their respective booster buttons. The meter or stored-use badge updates on

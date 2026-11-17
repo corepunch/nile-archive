@@ -14,7 +14,12 @@ hover and disabled states for both the actions and the boosters. It keeps
 soft alpha at the engraved edges, renders highlights and inner shadows at
 4× resolution, and downsamples the finished recess to the 128 px atlas
 cell. The plate's alpha fixes the outer silhouette across every state.
-[Compare the engravings at enlarged scale](engraving-review.png).
+The generator centers each glyph on the circle using its visible alpha
+coverage. A 41 px radius limits the glyph on the 128 px atlas cell, leaving
+6 px inside the 47 px inset for clearance. Ready art and engravings share
+the same placement. The radius applies to every button and leaves the
+standalone board sprites unchanged.
+[Glyph clearance review](glyph-clearance.png) · [Engraving edge review](engraving-review.png)
 
 ## Regeneration
 
