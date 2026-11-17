@@ -217,16 +217,17 @@ def summarize(number, head, layout, problems):
         problems.append(f'{len(idle)} chains or ice sit on plain cells and gate nothing; put them on tablets: '
                         + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(idle, key=lambda c: slot(*c))))
     # Every chain and ice must break at some point. Simulate: a blocker breaks
-    # once it sits on a line of three whose other cells hold pieces (fed cells
-    # or other blockers); a broken blocker opens the fall below it, and gates
-    # behind it may break next. A blocker left at the end waits for pieces
+    # once it sits on a line of three whose other two cells refill (fed, so a
+    # swap or a fall can bring the matching colour; another blocker's piece is
+    # stuck in its colour). A broken blocker opens the fall below it, and
+    # gates behind it may break next. A blocker left at the end waits for pieces
     # only it can let in, so the board deadlocks.
     work = dict(layout)
     def breaks(c, filled):
         for dq, dr in NEIGHBORS[:3]:
             for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2)):
                 cells = [(c[0] + k * dq, c[1] + k * dr) for k in ks]
-                if all(x in work and not SYMBOLS[work[x]][3] and (x == c or x in filled or blocker(work[x])) for x in cells):
+                if all(x == c or x in filled for x in cells):
                     return True
         return False
     while True:
