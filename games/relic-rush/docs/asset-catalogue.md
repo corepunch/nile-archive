@@ -172,7 +172,7 @@ record the source and crops.
 
 Run `python3 games/relic-rush/tools/relic_quest_art.py` after the resource registration to build
 the scenario index in `art/registered/quest-objects.png` and the item card props in
-`art/registered/finds/`. Camp Timber uses `art/registered/resource-pieces/timber.png` directly.
+`data/story/finds/`. Camp Timber's card uses `data/story/finds/timber.png`, the 320px registration of the campaign timber piece; the board piece is the 128px `resource-timber`.
 Separate card props fit within 256 px on a 320×320 canvas. Board 8 uses its
 `pliers` atlas region on the card and in alternate board previews. The intact
 relay cable for board 3 is coiled with two plugs.
@@ -211,7 +211,7 @@ The collectible sprite shows the outside of the folded note. On the first-clear
 card the open paper reads “WALL UNSAFE” and “I. R.” before the courtyard scene.
 The card uses the exposed crop of the [original sheet](../art/quest-objects/ines-note-states.png)
 and [prompt](../art/quest-objects/ines-note-states.prompt.txt). The manifest
-registers it as `art/registered/finds/note.png` within 228 px on a 320×320 canvas.
+registers it as `data/story/finds/note.png` within 228 px on a 320×320 canvas.
 
 The earlier excavation art is documented in
 [the silhouette review](screenshots/review/compact-silhouettes/README.md) and

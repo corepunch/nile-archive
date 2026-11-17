@@ -170,7 +170,7 @@ def match3_section(data, title):
                 palette += ' + 1 story type'
         if lv.get('quest'):
             key = lv['quest']['key']
-            icon = icons.get(key) or picture(page.registered_dir / f'finds/{key}.png', 96, 'PNG')
+            icon = icons.get(key) or picture(page.data_dir / f'story/finds/{key}.png', 96, 'PNG')
             img = f'<img src="{icon}" alt="">' if icon else ''
             chips.append(f'<span class="chip award">{img}Recovers <b>{esc(lv["quest"]["name"])}</b></span>')
         if lv.get('wonder'):
@@ -211,7 +211,7 @@ def match3_section(data, title):
             src = picture(FRAMES / f'scenario-{game}-find-{n:02d}.png', 300)
             if not src:
                 name = reveal_spec['picture'].removeprefix('find-')
-                src = picture(page.registered_dir / f'finds/{name}.png', 300, 'PNG')
+                src = picture(page.data_dir / f'story/finds/{name}.png', 300, 'PNG')
             if src:
                 name = esc(lv['quest']['name'])
                 reveal = (f'<figure class="reveal"><img src="{src}" alt="{name} uncovered">'

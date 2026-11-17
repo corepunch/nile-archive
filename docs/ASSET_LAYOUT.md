@@ -23,7 +23,7 @@ data/
     backs/         background.jpg, scene-1.jpg, scene-2.jpg: separate files, never packed
     frame/         the board's stone rim (lua/board_frame_atlas.lua)
     pieces.png     everything that sits in a cell: gem packs, campaign, resource,
-                   story and quest pieces, market goods, finds
+                   story and quest pieces, market goods
     blockers.png   chains, ice and stone over a cell
     cells.png      floor tiles and the selected, hint, guide and mask overlays
     boosters.png   tools and bonus buttons, in all five states, with their board gems
@@ -31,6 +31,7 @@ data/
     fx.png         particles and glows
   story/
     characters/    dialogue portraits
+    finds/         320px reward pictures for the award card (Relic Rush)
     floors/  scenes/  finale/   story pictures
 ```
 
@@ -49,11 +50,17 @@ Two kinds never share an atlas, and backgrounds, portraits, story pictures and
 buildings stay separate files. A building is rendered per Blender collection
 and registered by key, and a picture is too large to pack usefully.
 
+Every piece, blocker, cell, booster and HUD icon is a 128x128 canvas, and the
+atlases lay them out on an even 128-pixel grid in name order, so each sheet
+reads as rows of same-sized cells. Only odd sizes (the signboard, effects) are
+shelved below the grid. Art drawn much larger than a cell, such as a find on
+the award card, is a picture, not a piece.
+
 `tools/match3_atlas.py` packs every registered sprite by its frame name:
 
 | Atlas | Frames |
 | --- | --- |
-| `pieces` | `kind-N` aliases, `<pack>-N`, `campaign-*`, `resource-*`, `story-*`, `find-*`, `market-N` |
+| `pieces` | `kind-N` aliases, `<pack>-N`, `campaign-*`, `resource-*`, `story-*`, `market-N` |
 | `blockers` | `chain*`, `ice-1`, `ice-2`, `stone-*` |
 | `cells` | `tile-*`, `selected`, `hint`, `guide`, `cell-mask` |
 | `boosters` | `booster-*`, `bonus-*` (the engine's default skin: `pickaxe-*`, `dynamite-*`, `sunburst-*`) |
@@ -76,7 +83,7 @@ python3 tools/match3_atlas.py --check  # provenance of every input and output
 `games/<game>/art/registered/` holds the cropped, masked and resized sprites
 that each game's registration tools write and the packer reads, in folders
 named after their source sets: `board-states/`, `board-tiles/`, `tile-sets/`,
-`expedition-hud/`, `navigation/`, `story-pieces/`, `resource-pieces/`, `finds/`,
+`expedition-hud/`, `navigation/`, `story-pieces/`, `resource-pieces/`,
 and grid sheets such as `campaign-pieces.png`, `bonus-gems.png`,
 `market-goods.png`, `bonus-buttons.png` and `result-icons.png`. Each set's
 `--check` script verifies these files, and the game's asset check verifies that

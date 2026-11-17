@@ -108,10 +108,11 @@ function A.load()
     for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
     elements_view.load_frame(textures, A.board_frame)
     for _, key in ipairs(A.result_icons) do textures[key] = assert(hud[key], "missing hud frame: " .. key) end
+    -- Finds are reward pictures for the award card, separate 320px files.
     for _, key in ipairs(A.quest_objects) do
-        if key ~= "timber" then textures["find-" .. key] = piece("find-" .. key) end
+        textures["find-" .. key] = texture.load("story/finds/" .. key .. ".png")
     end
-    for _, key in ipairs(A.separate_rewards) do textures["find-" .. key] = piece("find-" .. key) end
+    for _, key in ipairs(A.separate_rewards) do textures["find-" .. key] = texture.load("story/finds/" .. key .. ".png") end
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
     for _, key in ipairs(A.campaign_pieces) do textures["campaign-" .. key] = piece("campaign-" .. key) end
@@ -136,7 +137,6 @@ function A.load()
             textures["resource-" .. key] = image
         end
     end
-    textures["find-timber"] = textures["resource-timber"]
     textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
     for _, name in ipairs(A.layers) do load(name) end

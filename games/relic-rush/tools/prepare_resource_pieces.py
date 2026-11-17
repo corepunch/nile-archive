@@ -23,9 +23,9 @@ def fit_sprite(tile, name, size, extent):
     return canvas
 
 
-def register_piece(tile, name, size, extent, check):
+def register_piece(tile, name, size, extent, check, folder=ROOT / 'art/registered/resource-pieces'):
     canvas = fit_sprite(tile, name, size, extent)
-    target = ROOT / 'art/registered/resource-pieces' / f'{name}.png'
+    target = folder / f'{name}.png'
     if check:
         assert Image.open(target).tobytes() == canvas.tobytes(), f'Outdated sprite: {target.name}'
     else:
@@ -54,6 +54,9 @@ def register_campaign(spec, check):
             replacements.update({key: revised.crop(box) for key, box in revision['boxes'].items()})
     for key, (size, extent) in SPEC['from_campaign'].items():
         register_piece(replacements[key], key, size, extent, check)
+    # A piece that is also a find's reward card gets its large picture beside the finds.
+    for key, (size, extent) in SPEC.get('reward_pictures', {}).items():
+        register_piece(replacements[key], key, size, extent, check, ROOT / 'data/story/finds')
     edges = spec['row_edges']
     assert atlas.mode == 'RGBA' and edges[0] == 0 and edges[-1] == atlas.height
     rows, size = spec['rows'], spec['cell_size']

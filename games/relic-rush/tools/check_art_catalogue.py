@@ -210,7 +210,7 @@ declaration = re.search(r"A\.quest_objects = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == quest["slots"]
 for key in quest["slots"]:
     assert "`" + key + "`" in doc
-    path = quest["shared_rewards"].get(key, f"art/registered/finds/{key}.png")
+    path = quest["shared_rewards"].get(key, f"data/story/finds/{key}.png")
     assert path in shipped
 for key in ["source", "prompt", "registration"]:
     assert (ROOT / quest[key]).is_file()
@@ -221,7 +221,7 @@ rewards = quest["separate_rewards"]
 declaration = re.search(r"A\.separate_rewards = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == list(rewards)
 for name, reward in rewards.items():
-    assert reward["runtime"] == f"art/registered/finds/{name}.png" and reward["runtime"] in shipped
+    assert reward["runtime"] == f"data/story/finds/{name}.png" and reward["runtime"] in shipped
     assert all((ROOT / reward[key]).is_file() for key in ("source", "prompt"))
 campaign = (ROOT / "lua/campaign.lua").read_text()
 sheets = quest["story_pieces"]["atlases"]

@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'art/quest-objects/source.png'
 OUTPUT = ROOT / 'art/registered/quest-objects.png'
 # The props used on the Item recovered card.
-FINDS = ROOT / 'art/registered/finds'
+FINDS = ROOT / 'data/story/finds'
 KEYS = ['timber', 'lens', 'cable', 'chart', 'marker', 'tools', 'supplies', 'gear']
 FIND_SIZE, FIND_PAINT = 320, 256
 # Pixel boxes separate the two props whose painted silhouettes straddle the grid.

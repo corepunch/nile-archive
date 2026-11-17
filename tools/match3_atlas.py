@@ -77,6 +77,22 @@ def group_of(name):
     return 'pieces'
 
 
+CELL = 128   # pieces, blockers, cells, boosters and HUD icons are all 128x128
+
+
+def grid_layout(sprites, columns):
+    """128x128 frames on an even grid in name order, then other sizes shelved below."""
+    cells = sorted(name for name, sprite in sprites.items() if sprite.size == (CELL, CELL))
+    frames = {name: [i % columns * CELL, i // columns * CELL, CELL, CELL] for i, name in enumerate(cells)}
+    top = (len(cells) + columns - 1) // columns * CELL
+    rest = {name: sprite for name, sprite in sprites.items() if name not in frames}
+    bottom = top
+    if rest:
+        shelved, bottom = frame_layout(rest, columns * CELL, top + 2)
+        frames |= shelved
+    return frames, bottom
+
+
 def pack_groups(sprites):
     """{group: (image, frames)}: each group in the smallest power-of-two sheet."""
     groups = {}
@@ -91,7 +107,7 @@ def pack_groups(sprites):
         for width in (256, 512, 1024, 2048, 4096):
             if any(sprite.width + 4 > width for sprite in members.values()):
                 continue
-            frames, bottom = frame_layout(members, width)
+            frames, bottom = grid_layout(members, width // CELL)
             height = 1 << (bottom - 1).bit_length()
             key = (width * height, max(width, height))
             if height <= 4096 and (best is None or key < best[0]):
@@ -343,7 +359,6 @@ def game_sprites(game, root):
     if game == 'relic-rush':
         manifest = json.loads((root / 'art/board-states/manifest.json').read_text())
         files |= folder_sprites(registered / 'resource-pieces', 'resource-')
-        files |= folder_sprites(registered / 'finds', 'find-')
         campaign = [f'campaign-{key}' for row in manifest['campaign_pieces']['rows'] for key in row]
         sprites |= grid_sprites(registered / 'campaign-pieces.png', campaign, 5)
         sprites |= grid_sprites(registered / 'result-icons.png', list(manifest['result_icons']['icons']), 2)

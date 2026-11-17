@@ -346,7 +346,16 @@
     "data/story/characters/mara.png",
     "data/story/characters/tomas.png",
     "data/story/finale/safe-landing.jpg",
-    "data/story/finale/signal-plate.png"
+    "data/story/finale/signal-plate.png",
+    "data/story/finds/cable.png",
+    "data/story/finds/chart.png",
+    "data/story/finds/gear.png",
+    "data/story/finds/lens.png",
+    "data/story/finds/marker.png",
+    "data/story/finds/note.png",
+    "data/story/finds/supplies.png",
+    "data/story/finds/timber.png",
+    "data/story/finds/tools.png"
   ],
   "hex_slot": {
     "orientation": "flat-top",
@@ -790,9 +799,9 @@
       "first-clear award",
       "scenario icon"
     ],
-    "award_runtime": "art/registered/finds/<slot>.png",
+    "award_runtime": "data/story/finds/<slot>.png",
     "shared_rewards": {
-      "timber": "art/registered/resource-pieces/timber.png"
+      "timber": "data/story/finds/timber.png"
     },
     "transform": "Compact props uniformly resized to fit 256 px inside a 320 px transparent canvas.",
     "gear_reward": {
@@ -821,7 +830,7 @@
       "note": {
         "source": "art/quest-objects/ines-note-states.png",
         "prompt": "art/quest-objects/ines-note-states.prompt.txt",
-        "runtime": "art/registered/finds/note.png",
+        "runtime": "data/story/finds/note.png",
         "crop": [
           67,
           99,
@@ -1234,12 +1243,18 @@
     "generator": "built-in ImageGen, full-atlas revision with a sun engraving",
     "from_campaign": {
       "timber": [
-        320,
-        285
+        128,
+        114
       ],
       "emerald": [
         128,
         114
+      ]
+    },
+    "reward_pictures": {
+      "timber": [
+        320,
+        285
       ]
     }
   },

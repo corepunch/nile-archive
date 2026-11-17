@@ -3,14 +3,14 @@
     "pieces": {
       "runtime": "data/board/pieces.png",
       "size": [
-        1024,
+        512,
         1024
       ]
     },
     "blockers": {
       "runtime": "data/board/blockers.png",
       "size": [
-        512,
+        256,
         512
       ]
     },
@@ -18,13 +18,13 @@
       "runtime": "data/board/cells.png",
       "size": [
         512,
-        1024
+        512
       ]
     },
     "boosters": {
       "runtime": "data/board/boosters.png",
       "size": [
-        1024,
+        512,
         1024
       ]
     },
@@ -73,8 +73,8 @@
     "festive-0": {
       "atlas": "pieces",
       "box": [
-        2,
-        2,
+        0,
+        0,
         128,
         128
       ]
@@ -82,8 +82,8 @@
     "festive-1": {
       "atlas": "pieces",
       "box": [
-        134,
-        2,
+        128,
+        0,
         128,
         128
       ]
@@ -91,8 +91,8 @@
     "festive-2": {
       "atlas": "pieces",
       "box": [
-        266,
-        2,
+        256,
+        0,
         128,
         128
       ]
@@ -100,8 +100,8 @@
     "festive-3": {
       "atlas": "pieces",
       "box": [
-        398,
-        2,
+        384,
+        0,
         128,
         128
       ]
@@ -109,8 +109,8 @@
     "festive-4": {
       "atlas": "pieces",
       "box": [
-        530,
-        2,
+        0,
+        128,
         128,
         128
       ]
@@ -118,8 +118,8 @@
     "festive-5": {
       "atlas": "pieces",
       "box": [
-        662,
-        2,
+        128,
+        128,
         128,
         128
       ]
@@ -127,8 +127,8 @@
     "market-0": {
       "atlas": "pieces",
       "box": [
-        794,
-        2,
+        256,
+        128,
         128,
         128
       ]
@@ -136,8 +136,8 @@
     "market-1": {
       "atlas": "pieces",
       "box": [
-        2,
-        134,
+        384,
+        128,
         128,
         128
       ]
@@ -145,8 +145,8 @@
     "market-10": {
       "atlas": "pieces",
       "box": [
-        134,
-        134,
+        0,
+        256,
         128,
         128
       ]
@@ -154,8 +154,8 @@
     "market-11": {
       "atlas": "pieces",
       "box": [
-        266,
-        134,
+        128,
+        256,
         128,
         128
       ]
@@ -163,8 +163,8 @@
     "market-12": {
       "atlas": "pieces",
       "box": [
-        398,
-        134,
+        256,
+        256,
         128,
         128
       ]
@@ -172,8 +172,8 @@
     "market-13": {
       "atlas": "pieces",
       "box": [
-        530,
-        134,
+        384,
+        256,
         128,
         128
       ]
@@ -181,8 +181,8 @@
     "market-14": {
       "atlas": "pieces",
       "box": [
-        662,
-        134,
+        0,
+        384,
         128,
         128
       ]
@@ -190,8 +190,8 @@
     "market-15": {
       "atlas": "pieces",
       "box": [
-        794,
-        134,
+        128,
+        384,
         128,
         128
       ]
@@ -199,8 +199,8 @@
     "market-2": {
       "atlas": "pieces",
       "box": [
-        2,
-        266,
+        256,
+        384,
         128,
         128
       ]
@@ -208,8 +208,8 @@
     "market-3": {
       "atlas": "pieces",
       "box": [
-        134,
-        266,
+        384,
+        384,
         128,
         128
       ]
@@ -217,8 +217,8 @@
     "market-4": {
       "atlas": "pieces",
       "box": [
-        266,
-        266,
+        0,
+        512,
         128,
         128
       ]
@@ -226,8 +226,8 @@
     "market-5": {
       "atlas": "pieces",
       "box": [
-        398,
-        266,
+        128,
+        512,
         128,
         128
       ]
@@ -235,8 +235,8 @@
     "market-6": {
       "atlas": "pieces",
       "box": [
-        530,
-        266,
+        256,
+        512,
         128,
         128
       ]
@@ -244,8 +244,8 @@
     "market-7": {
       "atlas": "pieces",
       "box": [
-        662,
-        266,
+        384,
+        512,
         128,
         128
       ]
@@ -253,8 +253,8 @@
     "market-8": {
       "atlas": "pieces",
       "box": [
-        794,
-        266,
+        0,
+        640,
         128,
         128
       ]
@@ -262,8 +262,8 @@
     "market-9": {
       "atlas": "pieces",
       "box": [
-        2,
-        398,
+        128,
+        640,
         128,
         128
       ]
@@ -271,8 +271,8 @@
     "story-cocoa": {
       "atlas": "pieces",
       "box": [
-        134,
-        398,
+        256,
+        640,
         128,
         128
       ]
@@ -280,8 +280,8 @@
     "story-lantern": {
       "atlas": "pieces",
       "box": [
-        266,
-        398,
+        384,
+        640,
         128,
         128
       ]
@@ -289,8 +289,8 @@
     "story-letter": {
       "atlas": "pieces",
       "box": [
-        398,
-        398,
+        0,
+        768,
         128,
         128
       ]
@@ -298,8 +298,8 @@
     "story-ribbon": {
       "atlas": "pieces",
       "box": [
-        530,
-        398,
+        128,
+        768,
         128,
         128
       ]
@@ -307,8 +307,8 @@
     "story-scarf": {
       "atlas": "pieces",
       "box": [
-        662,
-        398,
+        256,
+        768,
         128,
         128
       ]
@@ -316,8 +316,8 @@
     "story-telegram": {
       "atlas": "pieces",
       "box": [
-        794,
-        398,
+        384,
+        768,
         128,
         128
       ]
@@ -325,8 +325,8 @@
     "chain": {
       "atlas": "blockers",
       "box": [
-        2,
-        2,
+        0,
+        0,
         128,
         128
       ]
@@ -334,8 +334,8 @@
     "chain-1": {
       "atlas": "blockers",
       "box": [
-        134,
-        2,
+        128,
+        0,
         128,
         128
       ]
@@ -343,8 +343,8 @@
     "chain-1-mirror": {
       "atlas": "blockers",
       "box": [
-        266,
-        2,
+        0,
+        128,
         128,
         128
       ]
@@ -352,8 +352,8 @@
     "chain-2": {
       "atlas": "blockers",
       "box": [
-        2,
-        134,
+        128,
+        128,
         128,
         128
       ]
@@ -361,8 +361,8 @@
     "chain-board": {
       "atlas": "blockers",
       "box": [
-        134,
-        134,
+        0,
+        256,
         128,
         128
       ]
@@ -370,8 +370,8 @@
     "ice-1": {
       "atlas": "blockers",
       "box": [
-        266,
-        134,
+        128,
+        256,
         128,
         128
       ]
@@ -379,8 +379,8 @@
     "ice-2": {
       "atlas": "blockers",
       "box": [
-        2,
-        266,
+        0,
+        384,
         128,
         128
       ]
@@ -388,8 +388,8 @@
     "stone-1": {
       "atlas": "blockers",
       "box": [
-        134,
-        266,
+        128,
+        384,
         128,
         128
       ]
@@ -397,8 +397,8 @@
     "cell-mask": {
       "atlas": "cells",
       "box": [
-        2,
-        2,
+        0,
+        0,
         128,
         128
       ]
@@ -406,8 +406,8 @@
     "guide": {
       "atlas": "cells",
       "box": [
-        134,
-        2,
+        128,
+        0,
         128,
         128
       ]
@@ -415,8 +415,8 @@
     "hint": {
       "atlas": "cells",
       "box": [
-        266,
-        2,
+        256,
+        0,
         128,
         128
       ]
@@ -424,8 +424,8 @@
     "selected": {
       "atlas": "cells",
       "box": [
-        2,
-        134,
+        384,
+        0,
         128,
         128
       ]
@@ -433,8 +433,8 @@
     "tile-bonus-area": {
       "atlas": "cells",
       "box": [
-        134,
-        134,
+        0,
+        128,
         128,
         128
       ]
@@ -442,8 +442,8 @@
     "tile-cell-normal": {
       "atlas": "cells",
       "box": [
-        266,
-        134,
+        128,
+        128,
         128,
         128
       ]
@@ -451,8 +451,8 @@
     "tile-hover": {
       "atlas": "cells",
       "box": [
-        2,
-        266,
+        256,
+        128,
         128,
         128
       ]
@@ -460,8 +460,8 @@
     "tile-ice": {
       "atlas": "cells",
       "box": [
-        134,
-        266,
+        384,
+        128,
         128,
         128
       ]
@@ -469,8 +469,8 @@
     "tile-light-wave": {
       "atlas": "cells",
       "box": [
-        266,
-        266,
+        0,
+        256,
         128,
         128
       ]
@@ -478,8 +478,8 @@
     "tile-selected": {
       "atlas": "cells",
       "box": [
-        2,
-        398,
+        128,
+        256,
         128,
         128
       ]
@@ -487,8 +487,8 @@
     "tile-tablet-double": {
       "atlas": "cells",
       "box": [
-        134,
-        398,
+        256,
+        256,
         128,
         128
       ]
@@ -496,8 +496,8 @@
     "tile-tablet-single": {
       "atlas": "cells",
       "box": [
-        266,
-        398,
+        384,
+        256,
         128,
         128
       ]
@@ -505,8 +505,8 @@
     "booster-firework-disabled": {
       "atlas": "boosters",
       "box": [
-        2,
-        2,
+        0,
+        0,
         128,
         128
       ]
@@ -514,8 +514,8 @@
     "booster-firework-hover": {
       "atlas": "boosters",
       "box": [
-        134,
-        2,
+        128,
+        0,
         128,
         128
       ]
@@ -523,8 +523,8 @@
     "booster-firework-icon": {
       "atlas": "boosters",
       "box": [
-        266,
-        2,
+        256,
+        0,
         128,
         128
       ]
@@ -532,8 +532,8 @@
     "booster-firework-normal": {
       "atlas": "boosters",
       "box": [
-        398,
-        2,
+        384,
+        0,
         128,
         128
       ]
@@ -541,8 +541,8 @@
     "booster-firework-pressed": {
       "atlas": "boosters",
       "box": [
-        530,
-        2,
+        0,
+        128,
         128,
         128
       ]
@@ -550,8 +550,8 @@
     "booster-firework-selected": {
       "atlas": "boosters",
       "box": [
-        662,
-        2,
+        128,
+        128,
         128,
         128
       ]
@@ -559,8 +559,8 @@
     "booster-hammer-disabled": {
       "atlas": "boosters",
       "box": [
-        794,
-        2,
+        256,
+        128,
         128,
         128
       ]
@@ -568,8 +568,8 @@
     "booster-hammer-hover": {
       "atlas": "boosters",
       "box": [
-        2,
-        134,
+        384,
+        128,
         128,
         128
       ]
@@ -577,8 +577,8 @@
     "booster-hammer-normal": {
       "atlas": "boosters",
       "box": [
-        134,
-        134,
+        0,
+        256,
         128,
         128
       ]
@@ -586,8 +586,8 @@
     "booster-hammer-pressed": {
       "atlas": "boosters",
       "box": [
-        266,
-        134,
+        128,
+        256,
         128,
         128
       ]
@@ -595,8 +595,8 @@
     "booster-hammer-selected": {
       "atlas": "boosters",
       "box": [
-        398,
-        134,
+        256,
+        256,
         128,
         128
       ]
@@ -604,8 +604,8 @@
     "booster-lantern-disabled": {
       "atlas": "boosters",
       "box": [
-        530,
-        134,
+        384,
+        256,
         128,
         128
       ]
@@ -613,8 +613,8 @@
     "booster-lantern-hover": {
       "atlas": "boosters",
       "box": [
-        662,
-        134,
+        0,
+        384,
         128,
         128
       ]
@@ -622,8 +622,8 @@
     "booster-lantern-normal": {
       "atlas": "boosters",
       "box": [
-        794,
-        134,
+        128,
+        384,
         128,
         128
       ]
@@ -631,8 +631,8 @@
     "booster-lantern-pressed": {
       "atlas": "boosters",
       "box": [
-        2,
-        266,
+        256,
+        384,
         128,
         128
       ]
@@ -640,8 +640,8 @@
     "booster-lantern-selected": {
       "atlas": "boosters",
       "box": [
-        134,
-        266,
+        384,
+        384,
         128,
         128
       ]
@@ -649,8 +649,8 @@
     "booster-star-disabled": {
       "atlas": "boosters",
       "box": [
-        266,
-        266,
+        0,
+        512,
         128,
         128
       ]
@@ -658,8 +658,8 @@
     "booster-star-hover": {
       "atlas": "boosters",
       "box": [
-        398,
-        266,
+        128,
+        512,
         128,
         128
       ]
@@ -667,8 +667,8 @@
     "booster-star-icon": {
       "atlas": "boosters",
       "box": [
-        530,
-        266,
+        256,
+        512,
         128,
         128
       ]
@@ -676,8 +676,8 @@
     "booster-star-normal": {
       "atlas": "boosters",
       "box": [
-        662,
-        266,
+        384,
+        512,
         128,
         128
       ]
@@ -685,8 +685,8 @@
     "booster-star-pressed": {
       "atlas": "boosters",
       "box": [
-        794,
-        266,
+        0,
+        640,
         128,
         128
       ]
@@ -694,8 +694,8 @@
     "booster-star-selected": {
       "atlas": "boosters",
       "box": [
-        2,
-        398,
+        128,
+        640,
         128,
         128
       ]
@@ -703,8 +703,8 @@
     "complete": {
       "atlas": "hud",
       "box": [
-        2,
-        167,
+        0,
+        0,
         128,
         128
       ]
@@ -712,8 +712,8 @@
     "life": {
       "atlas": "hud",
       "box": [
-        134,
-        167,
+        128,
+        0,
         128,
         128
       ]
@@ -721,8 +721,8 @@
     "pause-disabled": {
       "atlas": "hud",
       "box": [
-        266,
-        167,
+        256,
+        0,
         128,
         128
       ]
@@ -730,8 +730,8 @@
     "pause-hover": {
       "atlas": "hud",
       "box": [
-        398,
-        167,
+        384,
+        0,
         128,
         128
       ]
@@ -739,8 +739,8 @@
     "pause-normal": {
       "atlas": "hud",
       "box": [
-        530,
-        167,
+        512,
+        0,
         128,
         128
       ]
@@ -748,8 +748,8 @@
     "pause-pressed": {
       "atlas": "hud",
       "box": [
-        662,
-        167,
+        640,
+        0,
         128,
         128
       ]
@@ -757,8 +757,8 @@
     "pause-selected": {
       "atlas": "hud",
       "box": [
-        794,
-        167,
+        768,
+        0,
         128,
         128
       ]
@@ -766,8 +766,8 @@
     "shop-built": {
       "atlas": "hud",
       "box": [
-        2,
-        299,
+        896,
+        0,
         128,
         128
       ]
@@ -775,8 +775,8 @@
     "shop-locked": {
       "atlas": "hud",
       "box": [
-        134,
-        299,
+        0,
+        128,
         128,
         128
       ]
@@ -785,7 +785,7 @@
       "atlas": "hud",
       "box": [
         2,
-        2,
+        258,
         960,
         161
       ]
@@ -794,7 +794,7 @@
       "atlas": "fx",
       "box": [
         2,
-        2,
+        130,
         256,
         256
       ]
@@ -803,7 +803,7 @@
       "atlas": "fx",
       "box": [
         262,
-        2,
+        130,
         256,
         256
       ]
@@ -811,8 +811,8 @@
     "fx-glint": {
       "atlas": "fx",
       "box": [
-        782,
-        2,
+        0,
+        0,
         128,
         128
       ]
@@ -820,8 +820,8 @@
     "fx-ring": {
       "atlas": "fx",
       "box": [
-        2,
-        262,
+        128,
+        0,
         128,
         128
       ]
@@ -830,7 +830,7 @@
       "atlas": "fx",
       "box": [
         522,
-        2,
+        130,
         256,
         256
       ]
@@ -838,8 +838,8 @@
     "fx-smoke-0": {
       "atlas": "fx",
       "box": [
-        134,
-        262,
+        256,
+        0,
         128,
         128
       ]
@@ -847,8 +847,8 @@
     "fx-smoke-1": {
       "atlas": "fx",
       "box": [
-        266,
-        262,
+        384,
+        0,
         128,
         128
       ]
@@ -856,8 +856,8 @@
     "fx-smoke-2": {
       "atlas": "fx",
       "box": [
-        398,
-        262,
+        512,
+        0,
         128,
         128
       ]
@@ -865,8 +865,8 @@
     "fx-smoke-3": {
       "atlas": "fx",
       "box": [
-        530,
-        262,
+        640,
+        0,
         128,
         128
       ]
@@ -874,8 +874,8 @@
     "fx-streak": {
       "atlas": "fx",
       "box": [
-        662,
-        262,
+        768,
+        0,
         128,
         128
       ]
@@ -883,8 +883,8 @@
     "fx-tablet-glow": {
       "atlas": "fx",
       "box": [
-        994,
-        262,
+        850,
+        130,
         16,
         16
       ]
@@ -892,8 +892,8 @@
     "fx-tablet-spark": {
       "atlas": "fx",
       "box": [
-        2,
-        394,
+        870,
+        130,
         16,
         16
       ]
@@ -901,8 +901,8 @@
     "fx-twinkle": {
       "atlas": "fx",
       "box": [
-        794,
-        262,
+        896,
+        0,
         128,
         128
       ]
@@ -910,8 +910,8 @@
     "glow": {
       "atlas": "fx",
       "box": [
-        926,
-        262,
+        782,
+        130,
         64,
         64
       ]
@@ -1335,7 +1335,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "2179cb84bc6e8b497bcead01c4cda6faa47e976c65c0aeda031a83a92653272f",
+    "recipe": "9f50b2b4263f0d69ce76cfb4c5a986507380bf26410d06921167d6a214468065",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1415,13 +1415,13 @@
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
-      "games/christmas-market/data/board/blockers.png": "544e7c4108a5b77ceb000ebbba4703faddfdc66ab3df4180bb056c72c464c3e4",
-      "games/christmas-market/data/board/boosters.png": "75a02e61b52fc9fbd97f897281e01c1be18aebc6e4997d4bbb0cd342e2217108",
-      "games/christmas-market/data/board/cells.png": "03df4c3cb3011133df1031e4939e323d43d27489a2cf3d9b30e0f5f60eec8f29",
-      "games/christmas-market/data/board/fx.png": "d2a75c3c72131432d591907f44c96ca2e252c2c60f032b698aaa2f2810b96567",
-      "games/christmas-market/data/board/hud.png": "93101afafc2e354079c774be82f589ea28769eb0d55c4a70343c56ffbb449e26",
-      "games/christmas-market/data/board/pieces.png": "4ceab2df117cc0da725546a934373f02aa38a1f0045e00a7f07a530af0210629",
-      "games/christmas-market/lua/match3_atlases.lua": "46d38499cc2ad122248b3323a62e305ae17f1ef007c863f254810101c7b5c89b",
+      "games/christmas-market/data/board/blockers.png": "7cdb71ae145aff3536efc78f1f09d3f47b3e7fef283c43b2e7cbef791fac68a9",
+      "games/christmas-market/data/board/boosters.png": "5bb9bfef444188e1a12847458c27efd8dacf76b3aa26a202ee452f795e987608",
+      "games/christmas-market/data/board/cells.png": "fa56306b5707dd8ce4c62f2e1e39ba168e473e71d0709e560927f77968c788cf",
+      "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
+      "games/christmas-market/data/board/hud.png": "473c4d40500965198387807978ec1f2bb2f48e42ef2c3f3ce4c0036076bea729",
+      "games/christmas-market/data/board/pieces.png": "79313189ab731bea2bb8f395a1c1487acaba94ac16d340c24d827b0540feedee",
+      "games/christmas-market/lua/match3_atlases.lua": "7e11640effa9dc0ea532c9c459347a45ee1b35bfd437bb5e59de8211d74cd281",
       "games/christmas-market/lua/match3_hud.lua": "50a72119aa753c6842ad486ac0e3a15903c6b54b451bbea91f1b5158b3c60e14",
       "games/christmas-market/lua/match3_skin.lua": "ab7b09e1d65c4b6e23e25431a24a3cf785da93ee8c7eaa66f67672dfddef84f8"
     }
