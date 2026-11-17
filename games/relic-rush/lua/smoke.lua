@@ -1,5 +1,6 @@
 -- smoke.lua — the --smoke run: opens and closes the guide, plays level one
--- through injected clicks, claims the reward, builds the first wonder, runs
+-- through injected clicks, claims the reward (replaying level one while the
+-- wallet is short, as a player would), builds the first wonder, runs
 -- the engine's pickup-and-move check, buys and cancels a decoration through
 -- the catalogue, replays an expedition for resources, checks that an
 -- unfinished board hides the island, and enters level two.
@@ -208,7 +209,19 @@ function R.smoke()
                    "replay cannot change discoveries or restoration")
             app.inject_click(R.town.buttons.play); stage = 5; return
         end
+        -- A short wallet replays the cleared board for resources, as a player would.
+        local camp, short = R.buildings[1].cost, false
+        for slot = 1, 3 do short = short or R.prog.wallet[slot] < camp[slot] end
+        if short then
+            shop.topups = (shop.topups or 0) + 1
+            assert(shop.topups <= 4, "smoke: four replays of expedition one still cannot pay for the camp")
+            app.inject_click(R.town.buttons.middle); stage = 60; return
+        end
         app.inject_click(R.town.buttons.build); stage = 2   -- CHOOSE A LOCATION
+    elseif stage == 60 and R.overlay == R.OV_EXPEDITIONS then
+        local node = press_row(R.expedition_form, "0", "play")
+        assert(node and node.enabled, "smoke: a cleared expedition can be replayed for resources")
+        shop.skipped = false; stage = 0
     elseif stage == 2 and R.overlay == R.OV_SHOP then
         press_tile("camp");stage=3
     elseif stage == 3 and R.island.placing >= 0 then
