@@ -32,7 +32,7 @@ def main():
                 x, y, w, h = frames[source["special"]]
             icons.append(image.crop((x, y, x + w, y + h)))
     path = ROOT / spec["runtime"]
-    data = pack({**recipe, "columns": spec["columns"]}, root=RELIC, icons=icons)
+    data = pack({**recipe, **spec}, root=RELIC, icons=icons)
     if args.check:
         assert path.read_bytes() == data, f"Run {spec['generator']}"
     else:

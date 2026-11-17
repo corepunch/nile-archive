@@ -30,6 +30,11 @@ local booster_review = "--lua tests/fixtures/christmas-boosters;games/christmas-
 shot("booster-toolbar", "480x900", booster_review .. "--frames 10")
 shot("booster-toolbar-phone", "390x844", booster_review .. "--frames 10 --safe-area 0,47,0,34")
 shot("booster-spent", "390x844", booster_review .. "--spend-booster --frames 16 --safe-area 0,47,0,34")
+local booster_flight = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. --fly-bonus "
+local booster_safe = " --safe-area 0,47,0,34"
+reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 5" .. booster_safe)
+reel("booster-lantern-flight", 23, 4, "390x844", booster_flight .. "--level 20" .. booster_safe)
+shot("booster-reduced-motion", "480x900", booster_flight .. "--level 5 --flight-no-motion --frames 86")
 shot("campaign-access", "480x900", "--level 13")
 shot("campaign-thaw", "480x900", "--level 19")
 shot("phone-campaign-thaw", "390x844", "--level 19 --safe-area 0,47,0,34")

@@ -358,9 +358,10 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
             local r = R.board_tool_bounds(k)
             local x, y = r:center().x, r.y
             local charges = R.g.tools[i]
-            if slots and R.g.single_charge_tools and meter then
-                meter = R.bonus_display_charge(i)
-                charges = meter // R.g.tool_threshold
+            if meter then
+                local points = R.bonus_display_charge(i)
+                charges = points // R.g.tool_threshold
+                meter = points % R.g.tool_threshold
             end
             local state = E.tool_state(charges, R.tool == k, r:contains(inp.pos), inp.down,
                                        inp.press_pos ~= nil and r:contains(inp.press_pos), inp.hover,
@@ -985,12 +986,13 @@ function E.new(config)
                                         g.earnings[resource.slot] = g.earnings[resource.slot] + amount
                                     elseif resource.tool and m.ordinary[i] and g.tool_meter and g.tool_meter[resource.tool] then
                                         local tool = resource.tool
-                                        local charge = g.tool_meter[tool] + amount
+                                        local meter = g.tool_meter[tool]
+                                        if g.single_charge_tools then amount = math.min(amount, g.tool_threshold - meter) end
+                                        m.bonus_charge_by_cell = m.bonus_charge_by_cell or {}
+                                        m.bonus_charge_by_cell[i] = amount
+                                        local charge = meter + amount
                                         if g.single_charge_tools then
-                                            local capped = math.min(charge, g.tool_threshold)
-                                            m.bonus_charge_by_cell = m.bonus_charge_by_cell or {}
-                                            m.bonus_charge_by_cell[i] = capped - g.tool_meter[tool]
-                                            g.tool_meter[tool], g.tools[tool] = capped, capped // g.tool_threshold
+                                            g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
                                         else
                                             g.tools[tool] = g.tools[tool] + charge // g.tool_threshold
                                             g.tool_meter[tool] = charge % g.tool_threshold

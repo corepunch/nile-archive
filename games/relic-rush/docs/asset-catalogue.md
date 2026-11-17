@@ -521,14 +521,16 @@ brighter gold on hover, and carved sandstone for locked and empty sockets.
 The engraver casts the inner shadow from each gem's own silhouette. The
 shadow offset is 3.5 × 4.5 px, half the original 7 × 9 px. All five states
 share the circular base's alpha. Partial charge reveals the normal face from the
-bottom. Matched gems fly to their sockets using the same standalone board
-sprite. Reduce Motion fills the meter immediately.
+bottom. Matched gems fly to their sockets with the engine's resource flight
+timing, arc, trail and landing flash. The socket updates as each gem lands.
+Reduce Motion credits the whole match immediately.
 
 Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to generate
 `data/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
 records the base crop, registration and state recipes. The gems fit in
-112 × 112 px on the board and 84 × 84 px on buttons. Both use 128 px
-atlas cells.
+112 × 112 px on the board and 84 × 84 px on buttons. The Hammer fits within
+88 px on the board and 74 px on the button to clear the hex and engraved
+inset. Both use 128 px atlas cells.
 
 [Rendered states](screenshots/bonus-states.jpg) ·
 [480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
@@ -538,6 +540,7 @@ atlas cells.
 [Workshop card](screenshots/bonus-workshop-card.jpg) ·
 [Water mill on the results screen](screenshots/bonus-building-result.jpg) ·
 [Hammer debut](screenshots/bonus-hammer-debut.jpg) ·
+[Hammer debut on phone](screenshots/bonus-hammer-debut-phone.jpg) ·
 [Plus debut](screenshots/bonus-plus-debut.jpg) ·
 [Shutter Gear board](screenshots/bonus-gear.jpg) ·
 [Recovered gear](screenshots/bonus-gear-award.jpg).

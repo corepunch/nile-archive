@@ -4,6 +4,7 @@
 Rows 1-3 are the market goods source. Row 4 reuses earlier painted festive
 pieces for the later stalls' treasures and candy cane (kinds 12-15)."""
 import argparse
+import json
 from pathlib import Path
 import sys
 
@@ -27,6 +28,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
+    goods = json.loads((ROOT / 'art/manifest.json').read_text())['market_goods']
+    sizes = goods['piece_max_side']
     source = Image.open(ROOT / 'art/market-goods/source.png')
     assert source.mode == 'RGBA' and source.getchannel('A').getextrema() == (0, 255)
     mask = silhouette(Image.open(ROOT.parents[1] / 'engine/art/hex-tile/hex-mask-128.png')).filter(ImageFilter.MinFilter(5))
@@ -36,7 +39,8 @@ def main():
             sprite = source.crop((col * source.width // COLUMNS, row * source.height // ROWS,
                                   (col + 1) * source.width // COLUMNS, (row + 1) * source.height // ROWS))
             sprite = sprite.crop(sprite.getchannel('A').getbbox())
-            frame, _, _ = fit_object(sprite, mask, 112, None)
+            name = goods['frames'][row * COLUMNS + col]
+            frame, _, _ = fit_object(sprite, mask, sizes.get(name, 112), None)
             atlas.paste(frame, (col * SLOT, row * SLOT))
     for col, (path, box) in enumerate(REUSED):
         sheet = Image.open(ROOT / path).convert('RGBA')

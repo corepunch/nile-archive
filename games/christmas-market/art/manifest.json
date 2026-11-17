@@ -73,7 +73,7 @@
     "data/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
     "data/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
     "data/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
-    "data/bonus-buttons.png": "6fa8cbdb7f94b812b9b4bfe0842e328f7382f61c0962e46029e8a39ce4ad9f51",
+    "data/bonus-buttons.png": "04d19363ca7bcb3284b00411cfe9cd9684b3645a8bcc5bff340a9b5c1d802513",
     "data/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -167,7 +167,7 @@
     "data/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/game.json": "917f57af6fec289e405df9f654704e95864032d8651fc2bdd4e3944184b7320a",
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
-    "data/market-goods.png": "123c6e25cfc302e5c061243c141dbd5b176e3ccc7117fef102b1b355fc970b3d",
+    "data/market-goods.png": "7158aae3eabf4a2b11343ff23f9d9c0b82256017fb4ad388c48c5a41f0151640",
     "data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
     "data/match3.png": "4def7ec0289f5c49f3518334c7a99ef98b1ba5c99502e087fdf734a9b79e8ac4",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
@@ -667,6 +667,11 @@
       "booster-lantern",
       "booster-star"
     ],
+    "icon_sizes": {
+      "booster-hammer": {
+        "button": 74
+      }
+    },
     "icons": {
       "booster-hammer": {
         "good": 5
@@ -688,6 +693,9 @@
     "runtime": "data/market-goods.png",
     "registration": "tools/prepare_market_goods.py",
     "review": "docs/screenshots/review/cradle-market/atlas.jpg",
+    "piece_max_side": {
+      "toy hammer": 76
+    },
     "frames": [
       "holly",
       "mitten",

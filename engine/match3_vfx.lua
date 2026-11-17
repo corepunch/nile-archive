@@ -127,10 +127,12 @@ function V.bind(R, rules)
     ------------------------------------------------------------------ particles
 
 
-    -- Rules bank charge immediately. Only the gold fill waits for the gems.
+    -- Rules bank charge immediately. The meter and stored-use badge update on arrival.
     function R.bonus_display_charge(tool)
-        local meter = R.g.tool_meter[tool]
-        return meter - (not R.reduced_motion and bonus_in_flight[tool] or 0)
+        local g = R.g
+        local points = g.tool_meter[tool]
+        if not g.single_charge_tools then points = points + g.tools[tool] * g.tool_threshold end
+        return math.max(0, points - (not R.reduced_motion and bonus_in_flight[tool] or 0))
     end
 
     function R.vfx_emit(at, kind, flying, count, target, tool, charge)
@@ -143,7 +145,6 @@ function V.bind(R, rules)
             p.at, p.vel, p.to = at, vec2.polar(a, speed) + vec2(0, -35), to
             p.age = flying and -rng_float() * .14 or 0
             p.life = flying and .75 + rng_float() * .2 or .35 + rng_float() * .32
-            if tool then p.life, p.age = .43, p.age / 2 end
             p.kind, p.flying, p.tool, p.charge = kind, flying, tool, charge
         end
     end
@@ -172,7 +173,7 @@ function V.bind(R, rules)
                     local at = flight(p, t)
                     for k = 4, 1, -1 do vfx_halo(flight(p, math.max(0, t - k * .025)), 9 - k, vfx_color(p.kind, 70 * (1 - k / 5))) end
                     vfx_halo(at, 19, vfx_color(p.kind, 125))
-                    local size = p.tool and 36 - 17 * t or 18 + 7 * math.sin(t * PI)
+                    local size = 18 + 7 * math.sin(t * PI)
                     local piece = R.board_piece_texture and R.board_piece_texture(p.kind) or R.relics[p.kind + 1]
                     gfx.image(piece, rect.centered(at, size2.splat(size)), color.WHITE)
                 else

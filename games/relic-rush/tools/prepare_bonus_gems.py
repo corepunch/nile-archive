@@ -168,14 +168,18 @@ def pack(spec, root=ROOT, icons=None):
     disabled_style = spec["button_states"]["disabled"]
     floor = cutout_floor(plates["disabled"], disabled_style["cutout"])
     atlas = Image.new("RGBA", (SLOT_SIZE * cols, SLOT_SIZE * rows))
-    for x, source in enumerate(icons):
+    sizes = spec.get("icon_sizes", {})
+    for x, (key, source) in enumerate(zip(spec["columns"], icons)):
+        bounds = sizes.get(key, {})
+        board_size = bounds.get("board", BOARD_ICON_SIZE)
+        button_size = bounds.get("button", BUTTON_ICON_SIZE)
         # Preserve the board glyph's existing visible bounds and soft alpha.
         l, t, r, b = source.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox()
         source = source.crop((l - 2, t - 2, r + 2, b + 2))
         chip = source.copy()
-        chip.thumbnail((BOARD_ICON_SIZE, BOARD_ICON_SIZE), Image.Resampling.LANCZOS)
+        chip.thumbnail((board_size, board_size), Image.Resampling.LANCZOS)
         atlas.paste(center(chip), (x * SLOT_SIZE, 0))
-        chip.thumbnail((BUTTON_ICON_SIZE, BUTTON_ICON_SIZE), Image.Resampling.LANCZOS)
+        chip.thumbnail((button_size, button_size), Image.Resampling.LANCZOS)
         icon = center(chip)
         # Sample the cut once so the surrounding glow leaves a sharp outline.
         outline = source.getchannel("A").point(lambda a: 255 if a >= 128 else 0)

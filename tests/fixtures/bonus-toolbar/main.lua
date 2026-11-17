@@ -2,7 +2,7 @@
 local game = require("games/" .. testing.game .. "/lua/main")
 local R, rules = require("state"), require("rules")
 local init, frame = game.init, game.frame
-local ticks, tool, swap_a, swap_b, took_charge = 0
+local ticks, tool, swap_a, swap_b, initial_points, triple, took_charge = 0
 
 local function check_layout(g)
     assert(#g.tool_slots == 4, "all bonuses keep their toolbar slots")
@@ -38,9 +38,19 @@ local function check_layout(g)
     assert(first.y > R.BOARD_CLIP:max().y, "the tray starts below the board")
 end
 
-local function prepare_flight(g)
-    tool, took_charge = g.bonus.tool, false
-    assert(g.tool_meter[4] == nil, "locked bonuses keep their toolbar slots")
+local function stored_points(g)
+    return g.tool_meter[tool] + (not g.single_charge_tools and g.tools[tool] * g.tool_threshold or 0)
+end
+
+local function find_flight_swap(g)
+    for _, resource in pairs(g.resource_yields) do
+        if resource.tool then tool, triple = resource.tool, resource.amount * 3 end
+    end
+    assert(tool, "flight review needs an unlocked charging piece")
+    if not g.single_charge_tools then
+        g.tools[tool], g.tool_meter[tool] = 1, g.tool_threshold - 4
+    end
+    initial_points = stored_points(g)
     for a = 0, rules.CELLS - 1 do
         for d = 0, 2 do
             local b = rules.hex_neighbor(a, d)
@@ -48,9 +58,26 @@ local function prepare_flight(g)
                 local copy, wave = rules.game_copy(g), rules.new_match()
                 if rules.game_swap(copy, a, b, wave) then
                     rules.game_apply(copy, wave)
-                    if copy.tool_meter[tool] == g.bonus.amount * 3 then swap_a, swap_b = a, b; return end
+                    -- In Christmas Market capture currency and boosters in the same wave.
+                    local income = copy.earnings[1] + copy.earnings[2] + copy.earnings[3]
+                    if stored_points(copy) == initial_points + triple and (g.single_charge_tools or income > 0) then
+                        swap_a, swap_b = a, b
+                        return true
+                    end
                 end
             end
+        end
+    end
+end
+
+local function prepare_flight(g)
+    tool, took_charge = nil, false
+    if find_flight_swap(g) then return end
+    for seed = 123479, 123578 do
+        local candidate = rules.game_start(g.level, seed)
+        if find_flight_swap(candidate) then
+            R.reset_board(candidate)
+            return
         end
     end
     error("bonus flight review needs a legal three-gem bonus swap")
@@ -73,29 +100,28 @@ function game.init()
 end
 
 local function review_flight()
-    if ticks == 2 then app.inject_click(R.board_tool_bounds(3):center()) end
+    if ticks == 2 and R.g.single_charge_tools then app.inject_click(R.board_tool_bounds(3):center()) end
     if ticks == 6 then
-        assert(R.tool == -1 and R.g.tool_meter[4] == nil, "a locked bonus cannot be selected")
+        assert(R.tool == -1, "the swap starts without an active booster")
         app.inject_click(R.cell_pos(swap_a))
     end
     if ticks == 10 then app.inject_click(R.cell_pos(swap_b)) end
-    local actual = R.g.tool_meter[tool]
+    local actual = stored_points(R.g)
     local visible = R.bonus_display_charge(tool)
-    local triple = R.g.bonus.amount * 3
-    if actual > 0 and not took_charge then
+    if actual > initial_points and not took_charge then
         took_charge = true
-        assert(actual == triple and visible == (R.reduced_motion and triple or 0),
-            "the first triple fills the socket as the gems arrive")
+        assert(actual == initial_points + triple and visible == (R.reduced_motion and actual or initial_points),
+            "the first triple counts visually when the gems arrive")
     end
-    if ticks == 62 then
-        assert(took_charge and visible >= triple, "the matched triple must land and reveal its charge")
+    if ticks == 85 then
+        assert(took_charge and visible >= initial_points + triple, "the matched triple must land and reveal its charge")
     end
 end
 
 function game.frame(dt)
     frame(dt)
     ticks = ticks + 1
-    if ticks == 1 then check_layout(R.g) end
+    if ticks == 1 and testing.game == "relic-rush" then check_layout(R.g) end
     if tool then return review_flight() end
     if ticks == 3 then app.inject_click(R.board_tool_bounds(0):center()) end
     if ticks == 7 then

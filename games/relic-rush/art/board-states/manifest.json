@@ -2115,7 +2115,13 @@
       "hover",
       "disabled"
     ],
-    "registration": "Fit the standalone gems to 112 px for the board and 84 px for the buttons. Map the source plate alpha contour to a 57 px radius, and use a 47 px inset radius and the gem silhouettes for the state recipes. All atlas cells are 128 px.",
+    "icon_sizes": {
+      "hammer": {
+        "board": 88,
+        "button": 74
+      }
+    },
+    "registration": "Fit the standalone gems to 112 px for the board and 84 px for the buttons, with a smaller Hammer to clear the hex and inset edges. Map the source plate alpha contour to a 57 px radius, and use a 47 px inset radius and the gem silhouettes for the state recipes. All atlas cells are 128 px.",
     "bonuses": {
       "hammer": {
         "slot": "blast",

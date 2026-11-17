@@ -104,7 +104,13 @@ local function charge_match(g)
     end
     rules.game_matches(g, R.pending, -1)
     check(R.pending.hits == 3, 'bonus pieces form an ordinary match')
+    local previous = g.tool_meter[tool]
     R.finish_wave()
+    local airborne = 0
+    for _, points in pairs(R.pending.bonus_charge_by_cell) do airborne = airborne + points end
+    local expected_charge = first_tool.amount * 3
+    if relic then expected_charge = math.min(expected_charge, g.tool_threshold - previous) end
+    check(airborne == expected_charge, 'the cleared cells carry the full awarded charge to their booster')
 end
 R.reduced_motion, R.sound = true, false
 R.vfx_wave = function() end
