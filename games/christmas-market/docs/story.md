@@ -93,7 +93,7 @@ Noelle and the five supporting speakers have painted busts. Bramble the goat doe
 
 **Who knows what.** Pip delivers the notes, works out who Someone is by level 14 and nearly bursts. Mr Wren knows everything or seems to. Theo learns from Noelle's signature at level 18. Noelle makes the connection at level 30. The player can guess by level 11. Only Agnes and Henrik know what the quarrel looked like from their own side, and only level 20 joins the two.
 
-**Knock-on check.** Days count in events, down to Christmas Eve, so lives and replays do not contradict them. Beats never say where a building stands, because the player chooses. Theo's lines are never at a level where he has another story beat to be in.
+**Knock-on check.** Days count in events, down to Christmas Eve, so replays do not contradict them. Beats never say where a building stands, because the player chooses. Theo's lines are never at a level where he has another story beat to be in.
 
 ## How beats play
 
@@ -424,7 +424,7 @@ Shown after the level 30 turn. The market stays open and lit behind it, with sno
 
 ## Small lines
 
-**Pip, when a region opens** (replacing today's one repeated line). Each region opens at its scheduled Christmas Star threshold.
+**Pip, when a region opens** (replacing today's one repeated line). Each region opens at its scheduled number of wishes cleared.
 
 - **Lantern Lane, level 6. Pip:** Lantern Lane's clear! There's a lamp post that still works if you kick it.
 - **Gingerbread Green, level 9. Pip:** Gingerbread Green's open! It doesn't smell of gingerbread yet. Give it a week.
@@ -478,8 +478,8 @@ against the two Rome references.
 
 ## Implementation
 
-- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. Every win banks matched Gold, Food and Supplies. A first clear also pays Christmas Stars.
-- **Regions** now need 18, 27, 45, 63 and 81 Stars, so they open at levels 6, 9, 15, 21 and 27. Players open regions from their markers and keep their Stars. Pip's region lines replace Noelle's one repeated line.
+- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. Every win banks matched Gold, Food and Supplies. Regions and decorations open by wishes cleared (the purse's fourth slot, `CLEARED`).
+- **Regions** open after 6, 9, 15, 21 and 27 wishes cleared. Players open regions from their markers. Pip's region lines replace Noelle's one repeated line.
 - **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). Most scenes play over the live market.
 - **Story floors:** The first clears of 24, 25 and 28 show the finished board painting, then play the existing scene over it before the reward card. Collecting the reward acknowledges the scene. Replaying the wish uses the ordinary floor. The paintings and stage captures are in the [asset catalogue](asset-catalogue.md#story-floors).
 - **The cast** is in `lua/narrative.lua`. Noelle's automatic line when a stall is placed is gone; the tap card and bubble carry `about`, and the five changing bubbles above.

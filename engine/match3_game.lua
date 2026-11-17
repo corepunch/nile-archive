@@ -46,7 +46,7 @@ G.DEFAULTS = {
         quit = "Your board is saved. Tap LEVEL %d or the level list to continue.",
     },
     capsules = {
-        notes = {"", "Gold buys buildings.", "Stars unlock shop items and land."},
+        notes = {"", "Gold buys buildings.", ""},
     },
     pause = {guide = "GUIDE", quit = "QUIT", town = "Your town", leaderboard = "LEADERBOARD"},
     confirm = {title = "Restart this level?", body = "The board starts over: moves, goals and tools reset. Retrying is always free.",
@@ -1230,7 +1230,7 @@ function G.bind(R, over)
     end
 
     -- Game Center (engine/gamecenter.lua docs: docs/GAMECENTER.md). game_config.lua's
-    -- "leaderboard" block turns it on: `board` holds the lifetime Discovery Stars,
+    -- "leaderboard" block turns it on: `board` holds the boards cleared,
     -- `level_board` (a format with the level number, e.g. "level_%02d") each
     -- expedition's best score. Scores are reported when a reward is claimed.
     local boards = require("leaderboard").boards{skin = skin, width = 400, texts = W.leaderboard and W.leaderboard.texts}

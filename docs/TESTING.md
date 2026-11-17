@@ -190,11 +190,11 @@ the budget to 60 seconds for the larger deterministic sample. CI runs
 greedy campaign simulation and complete integration captures.
 
 For Relic Rush and Christmas Market, `build/test/<game> --extended 'rules campaign_play'`
-plays all 30 boards without a window using a deterministic greedy player and up
+plays the boards the story covers (the first 30 of 100) without a window using a deterministic greedy player and up
 to four fixed starting boards per level. It applies real wins to the game's
 reward and story coordinators, places the funded buildings and checks the scene
 order. Its per-campaign totals are printed to `build/test/<game>.log`. These
-independent retries do not simulate lives, time, real player choices, purchases
+independent retries do not simulate time, real player choices, purchases
 or UI input. The separate `smoke campaign` runs the real interface and checks
 all scenes and building/region controls, but satisfies board goals artificially;
 neither test alone is a complete human playthrough. On macOS a hidden OpenGL
@@ -237,7 +237,7 @@ Puzzle assertions live once in `tests/lua/contracts/puzzle.lua`, accepting a
 configured rules instance; `match_matrix.lua` selects the game's public adapter.
 There are roughly 10,000 board cases per game: every straight run/direction/colour,
 an independent component oracle, every tool mask, all 512 isolated central-lane
-occupancies, holes/locks, special pairs, blocker strengths, materials and final
+occupancies, holes/locks, blocker strengths, materials and final
 move precedence. Lane tests isolate side cells so they allow diagonal trickling
 when it is enabled on a wider board. Both games also exercise real animation
 phases, paused waves, cascades and dead-board recovery.

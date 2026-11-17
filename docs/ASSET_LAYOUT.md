@@ -25,7 +25,7 @@ data/
     blockers.png   chains, ice and stone over a cell
     cells.png      floor tiles and the selected, hint, guide and mask overlays
     boosters.png   tools and bonus buttons, in all five states, with their board gems
-    hud.png        settings, score, stars, lives, shop marks, signboard, result icons
+    hud.png        settings, score, moves, shop marks, signboard, result icons
     fx.png         particles and glows
   story/
     characters/    dialogue portraits

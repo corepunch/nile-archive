@@ -13,7 +13,7 @@ Open <http://127.0.0.1:8766>. Pass `--port 8767` to choose another port or
 `--data /path/to/junes-journey-analysis` to use another extraction. The server
 binds to loopback and reads only its UI and extracted scene images and data.
 The existing extraction is in `reference/junes-journey-analysis/`. To recreate
-the scene files from the local app, follow [the extraction notes](../../docs/JUNES_JOURNEY_ANALYSIS.md).
+the scene files from the local app, follow [the extraction notes](../../../docs/JUNES_JOURNEY_ANALYSIS.md).
 The viewer also needs the extracted `story/` files described there.
 
 Select a region in the scene or a card in the object list to inspect an object.

@@ -2,10 +2,10 @@
 
 ## Reference study
 
-- [Gardenscapes: stars and garden renovation](https://playrix.helpshift.com/hc/en/5-gardenscapes/faq/61-what-are-stars/): the closest reference for the level → reward → restoration loop. Our Star/Compass economy remains its own implementation.
+- [Gardenscapes: stars and garden renovation](https://playrix.helpshift.com/hc/en/5-gardenscapes/faq/61-what-are-stars/): the closest reference for the level → reward → restoration loop. Relic Rush has no stars: regions and decorations open by the number of boards cleared.
 - [Homescapes: rewards](https://playrix.helpshift.com/hc/en/14-homescapes/faq/16357-getting-in-game-rewards/): completing puzzles and restoring areas are linked progression actions.
 - [Playrix game portfolio](https://apps.apple.com/us/developer/playrix/id1162116447): Gardenscapes, Homescapes and Fishdom are presentation references for a focused reward, short labels and a clear continuation action.
-- [Candy Crush: Sugar Stars](https://candycrush.zendesk.com/hc/en-us/articles/360002087578-How-do-I-collect-Sugar-Stars): a reference for animated star/reward presentation, not the source of our reward rules.
+- [Candy Crush: Sugar Stars](https://candycrush.zendesk.com/hc/en-us/articles/360002087578-How-do-I-collect-Sugar-Stars): a reference for animated reward presentation, not the source of our reward rules.
 - [Material motion choreography](https://m1.material.io/motion/choreography.html): staggered reveals and continuity around a stable focal point.
 - [FreeType glyph conventions](https://freetype.org/freetype2/docs/glyphs/glyphs-3.html): bearings, advances, baselines and visible bounds are distinct measurements.
 - [SVG text anchoring](https://www.w3.org/TR/SVG/text.html): a reference for explicit start/middle/end placement semantics.
@@ -24,16 +24,15 @@ Paragraphs use a cached balanced wrap layout, minimizing short orphan lines. The
 
 ## Result choreography
 
-The result layout has named bounds shared by painting and input: header, stars, score, treasures, progress, next restoration and claim button.
+The result layout has named bounds shared by painting and input: header, score, treasures, progress, next restoration and claim button.
 
 1. The dimmer and card fade/raise into place.
-2. Three actual star shapes appear with short staggered reveals.
-3. The score counts up; resource cards follow in sequence.
-4. The Star/Compass rewards and the next restoration become visible.
-5. The primary button appears. A tap during the intro completes the reveal without collecting anything.
-6. Collecting closes the card, then commits the reward exactly once and returns to the island.
+2. The score counts up; resource cards follow in sequence.
+3. The next restoration becomes visible.
+4. The primary button appears. A tap during the intro completes the reveal without collecting anything.
+5. Collecting closes the card, then commits the reward exactly once and returns to the island.
 
-The result card focuses on stars, score, earned resources and the next restoration. Decorative torch sconces and their flame effects have been removed. Reduced motion presents the same content with stable placement and immediate reveals.
+The result card focuses on score, earned resources and the next restoration. Decorative torch sconces and their flame effects have been removed. Reduced motion presents the same content with stable placement and immediate reveals.
 
 Modal motion is a parent paint transform. It never changes SDL logical size or the mouse/touch coordinate conversion. `screens.lua` owns these components and transitions; the independent gameplay rules remain in `rules.lua`.
 

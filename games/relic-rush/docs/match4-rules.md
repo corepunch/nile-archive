@@ -1,4 +1,4 @@
-# Hex straight-line match-3 rules and varied boards
+# Hex straight-line matching rules and boards
 
 This supersedes the prototype's connected-group match-4 rules.
 
@@ -6,36 +6,21 @@ This supersedes the prototype's connected-group match-4 rules.
 
 - Exchange two side-adjacent movable relics, by swiping or tapping both.
 - A contiguous **straight line of three or more identical relics** matches along any of the three hex axes. Bends, triangles, diamonds and rings do not count on their own. Side branches are not part of a line.
-- A swap without a line through either swapped cell returns without spending a move. Special combinations retain their existing swap behavior.
-- Any line clears normally, whatever its length. Matches never create special pieces: like Cradle of Rome, power is earned, by charging the bonus tools along the bottom edge with matched resource pieces. Four or five in a line give no rocket, bomb, plane or rainbow ball.
+- A swap without a line through either swapped cell returns without spending a move.
+- Any line clears normally, whatever its length. There are no special pieces of any kind: like Cradle of Rome, power comes only from the bonus tools along the bottom edge (Hammer/Dynamite, Shield/Lightning, Star/Star II, Plus/Plus II), charged by matching bonus gems and unlocked by restoring buildings.
 - Crossing lines clear their union once. There are no T/L or ring recipes.
-- Fire thawing, ice layers, chains, excavation and tools retain their respective effects.
+- Ice layers, chains, carved stones, blue tablets and tools each keep their own effects.
 - A ready group is checked on the idle board before hints/input and after every completed fall. All cascade waves finish before victory/failure is checked. Automatic waves do not spend additional moves.
-- The expedition's top bar shows the hexagonal Moves medallion, Coins, Supplies, Food and Settings. Blue plaques mark the objective on the board. Tools sit along the bottom edge. Settings opens the Explorer's Guide and lets the player resume, restart after confirmation, or quit to the island and resume the same board from Expeditions. See the [top bar review](screenshots/review/top-bar-moves/README.md).
+- The expedition's top bar shows the hexagonal Moves medallion, Coins, Supplies, Food and Settings. Blue tablets mark the objective on the board. Tools sit along the bottom edge. Settings opens the Explorer's Guide and lets the player resume, restart after confirmation, or quit to the island and resume the same board from Expeditions. See the [top bar review](screenshots/review/top-bar-moves/README.md).
 - Hints highlight a legal swap after five idle seconds. If the hint search finds no swap, idle boards use the same free reshuffle as boards settling after a fall, with a “No moves. Board reshuffled.” notice. Recovery resets selection/tool targeting and stale hints, preserving move/tool budgets, objective progress, holes, sand, ice, chains and their locked relics. Victory and exhausted moves take precedence over reshuffling.
 
 The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. The engine has no special pieces at all. Generation, hints, reshuffling and cascades use the same rule in both games.
 
-## Original ten board masks
+## Board shape
 
-| Level | Shape | Active cells |
-| --- | --- | ---: |
-| 1 | Hexagon | 61 |
-| 2 | Crescent | 54 |
-| 3 | Diamond | 43 |
-| 4 | Butterfly | 45 |
-| 5 | Hourglass | 49 |
-| 6 | Lotus | 43 |
-| 7 | Ring | 54 |
-| 8 | Twin courts | 55 |
-| 9 | Crossroads | 55 |
-| 10 | Sun crown | 53 |
+Every board is authored on a 9 x 12 rectangle of flat-top hexes; holes and the outline make its shape ([level design guide](../../../docs/LEVEL_DESIGN.md), [board progression](board-progression.md)). Missing cells are excluded from rendering, matching, tile selection, swapping, tool targeting, obstacle placement and refill. Matching never crosses a gap. Gravity moves gems straight down whenever the cell beneath them is empty. Diagonal movement is allowed only when that cell is occupied, locked or missing. Every active cell with no active cell directly above spawns vertically before considering side donors, so the whole stepped top edge refills together. Interior cells spawn only when all upstream donors are blocked. Gems flow around holes and immovable blockers through real neighboring cells; they never jump a gap or consume a locked gem. The shared engine animates each edge and waits for the complete fall before checking a cascade. Tool hits may travel across gaps but only affect actual cells.
 
-![All ten actual SDL boards](screenshots/level-shapes-overview.jpg)
-
-Each mask is a distinct connected graph within the common axial-coordinate envelope. Missing cells are excluded from rendering, matching, tile selection, swapping, booster targeting, obstacle placement and refill. Matching never crosses a gap. Gravity moves gems straight down whenever the cell beneath them is empty. Diagonal movement is allowed only when that cell is occupied, locked or missing. Every active cell with no active cell directly above spawns vertically before considering side donors, so the whole stepped top edge refills together. Interior cells spawn only when all upstream donors are blocked. Gems flow around holes and immovable blockers through real neighboring cells; they never jump a gap or consume a locked gem. The shared engine animates each edge and waits for the complete fall before checking a cascade. Directional special attacks may travel across gaps but only affect actual cells. The silhouette follows the active cells rather than a permanently painted large hexagonal frame.
-
-The three-episode campaign adds twenty connected, rotated lane variants with trimmed exposed corners. Each remains a distinct mask, checked for connectivity, empty holes, match-free generation and legal opening moves. The full thirty-level configuration is in [the README](../README.md#campaign-thirty-hex-levels).
+All 100 boards are won by clearing their blue tablets; green double tablets take two hits. Blockers are chains (single and double), ice (single and double) and carved stones, and they gate the fall below them. Boards spawn five piece kinds. The story and the twenty restorations run across boards 1-30; boards 31-100 are playable without story yet.
 
 ## Idol
 
@@ -45,10 +30,10 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 
 ## Validation
 
-- Seeded startup boards across all thirty masks: no pre-existing straight match and at least one legal opening move.
+- Seeded startup boards across all 100 boards: no pre-existing straight match and at least one legal opening move.
 - Three/four/five/six runs on all axes, rejected triangles/diamonds/rings, excluded branches, crossing triples, swap rollback, and hole-separated runs.
 - Independent coordinate-based line oracle and exhaustive runs in both directions for every color and length.
-- Existing blockers, gravity, tools, special combinations, update-loop cascades, hints and reshuffles.
+- Existing blockers, gravity, tools, update-loop cascades, hints and reshuffles.
 
 ## Reference research
 
@@ -57,4 +42,4 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 - [Match 4 – Hex, developer page](https://dimcairion.itch.io/match-4-hex): an independent hex swap/match-4 prototype demonstrating the genre. No code or assets were imported.
 - [Candy Crush official modes guide](https://candycrush.zendesk.com/hc/en-us/articles/360000754897-Which-game-modes-will-I-find): varying objectives and mixed modes complement level-layout variety.
 
-The hexagonal grid does not mandate a four-piece minimum. Relic Rush uses three in a straight line, with four/five rewards inspired by Candy Crush.
+The hexagonal grid does not mandate a four-piece minimum. Relic Rush uses three in a straight line; longer lines earn no extra piece.

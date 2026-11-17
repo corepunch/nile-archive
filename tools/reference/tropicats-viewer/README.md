@@ -1,6 +1,6 @@
 # Tropicats level atlas
 
-Local browser for the data described in [the analysis](../../docs/TROPICATS_ANALYSIS.md).
+Local browser for the data described in [the analysis](../../../docs/TROPICATS_ANALYSIS.md).
 No build step or network access is needed for viewing. Requires Python 3 and
 the already extracted `reference/tropicats-analysis/` directory.
 

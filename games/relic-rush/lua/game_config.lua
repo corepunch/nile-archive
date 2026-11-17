@@ -100,8 +100,8 @@ return {
         new = "PLAY",
         earlier = "DISCOVER EARLIER LEVELS",
         replay_note = "Bank resources from matches and Coins for unused moves.",
-        building_note = "First clear: a new restoration, 3 Stars and resources.",
-        story_note = "First clear: the next clue, 3 Stars and resources.",
+        building_note = "First clear: a new restoration and resources.",
+        story_note = "First clear: the next clue and resources.",
     },
     debug = {victory = 1, catalogue_card = 37, narrator = "tomas"},
 }

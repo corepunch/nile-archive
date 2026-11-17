@@ -506,7 +506,7 @@ centers the group. With `header.interactive = false`, the figures are
 display-only. Hit and flight targets come from the same layout boxes.
 
 Match-3 towns list what the wallet row holds, in order, in `capsules.show` in
-`game_config.lua`: `"lives"`, `"stars"` or a currency capsule's `id` (`"gold"` when
+`game_config.lua`: a currency capsule's `id` (`"gold"` when
 the game has one currency), for example `["coins", "supplies", "food"]`.
 Without the list the row holds them all. Campaign boards center a display-only row of Moves
 and currency capsules. Each capsule identifies its currency slot so matched

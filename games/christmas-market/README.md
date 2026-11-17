@@ -24,7 +24,7 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-Each of Bellmere’s thirty winter wishes asks you to light every marked pane.
+The game has 100 winter wishes, authored boards of 9 x 12 hexes (text files in `levels/`, validated by `tools/hex_levels.py`). Each one asks you to light every marked pane, and the story and twenty buildings run across the first thirty; wishes 31 to 100 are playable without story yet.
 Blue panes clear in one hit. Green panes first turn blue. A tinsel tie
 absorbs a hit before the piece and its pane can clear. The lamps lead from the market
 arch to Agnes's bakery and along the station walk for Pip's mum. See the
@@ -81,9 +81,9 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 
 Silver coins pay 3 Gold and gold coins pay 5. Holly and mittens earn score.
 The arch adds firewood for Supplies. Later stalls add more materials,
-Food and chargeable tools. Longer lines multiply the yield. Each win
-banks the goods cleared on the board. A first clear also grants three
-Christmas Stars for land and shop access.
+Food and chargeable tools. Longer lines multiply the yield (a longer line just clears; there are no special pieces). Each win
+banks the goods cleared on the board. Regions and decorations open by
+wishes cleared (the purse's fourth slot, `CLEARED`).
 
 Confirmed placement spends Gold, Supplies and Food from that wallet.
 If a stall is beyond the current balance, replay any completed wish to
@@ -91,11 +91,11 @@ earn more. The [first 20 wishes](docs/resource-prototype.md) compare both
 Cradle of Rome editions and record prices, unlocks and a measured payout
 for every board in the prototype.
 
-A failed wish uses a life. One returns every 30 minutes up to five.
+There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
 flakes still.
 
-`make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has thirty puzzles in three story episodes, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
+`make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has 100 puzzles, the first thirty in three story episodes, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or
 use the mouse wheel. Both are full-screen sheets under the wallet row. The shop
@@ -106,7 +106,7 @@ templates with Relic Rush.
 
 Pause offers Resume, Restart (it asks first) and Quit to the market, which
 keeps the unfinished board for LEVEL or Winter Wishes. Popups open and close
-at once. With no lives left, Try Again waits and says when one returns.
+at once.
 
 The game is the same as Relic Rush with other data and art
 ([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)): every word of the
@@ -132,17 +132,17 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 | --- | --- | --- |
 | ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/spruce-palette/letter.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
 
-Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all twenty ladder stalls fit the land open by their levels, in order, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays all thirty levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board’s panes and the scheduled building’s test wallet are prepared before one real swap. The separate extended campaign run earns its own wallet through actual play. All 36 scenes must play once, in script order, and the run must end on the end screen with twenty stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
+Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all twenty ladder stalls fit the land open by their levels, in order, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty story levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays the thirty story levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board’s panes and the scheduled building’s test wallet are prepared before one real swap. The separate extended campaign run earns its own wallet through actual play. All 36 scenes must play once, in script order, and the run must end on the end screen with twenty stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 
 ## Leaderboards
 
 Game Center comes from the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)) and is switched on by the
-`leaderboard` block of `lua/game_config.lua`: a **stars** board for the lifetime Christmas Stars (never spent)
-and one board per winter wish (`level_01` to `level_30`) for its best score. Scores are reported when a
-reward is claimed. Settings has a LEADERBOARD link for the stars board (the results card has no leaderboard
-button); it opens the shared dialog in this game's red and green skin. Create 31
+`leaderboard` block of `lua/game_config.lua`: a board ranked by wishes cleared (its Game Center id is still `stars`)
+and one board per winter wish (`level_01` to `level_100`) for its best score. Scores are reported when a
+reward is claimed. Settings has a LEADERBOARD link for the main board (the results card has no leaderboard
+button); it opens the shared dialog in this game's red and green skin. Create 101
 leaderboards in App Store Connect (high to low) as `com.corepunch.christmasmarket.stars` and
-`com.corepunch.christmasmarket.level_01` ... `level_30`. Try it with `--gamecenter-demo --dialog leaderboard`.
+`com.corepunch.christmasmarket.level_01` ... `level_100`. Try it with `--gamecenter-demo --dialog leaderboard`.
 
 | Settings | Merriest markets | Results card | Winter wish board |
 | --- | --- | --- | --- |

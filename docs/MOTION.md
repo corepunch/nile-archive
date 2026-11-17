@@ -188,7 +188,7 @@ needs no second code path.
 
 - **Christmas Market and Relic Rush** (`screens.lua`): a dialog's entrance and
   exit are two tweens on `R.dialog` (`entry`, `exit`), started by `R.open_dialog()`
-  and `R.close_dialog()`. The parts of the result screen (stars, score, rewards,
+  and `R.close_dialog()`. The parts of the result screen (score, rewards,
   buttons) join one timeline through `R.dialog_part(delay, duration)`, keyed by
   draw order like controls; the first tap calls `R.dialog_skip()`, which completes
   the timeline, and the smoke runs wait on `R.dialog_settled()`. `R.open_dialog(true)`

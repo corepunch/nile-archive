@@ -58,7 +58,7 @@ Genre films are a good source of technique. Take the mechanism, not the plot: st
 
 ## Writing lines
 
-- **The screen shows only the story.** Dialogue never names moves, amulets, stars or tiles. Mechanics go in the level `lesson`, a separate slot. The simulation stays underneath.
+- **The screen shows only the story.** Dialogue never names moves, amulets, boards cleared or tiles. Mechanics go in the level `lesson`, a separate slot. The simulation stays underneath.
 - **Text and picture divide the work.** Over an illustrated panel, do not describe what is drawn: say what it means or what happens next. Busts over a blurred island have no scene behind them, so there a line needs one strong concrete anchor: "Twelve bunks. Plates still on the table."
 - **Short and concrete.** Aim for under 100 characters per line, and one idea per line. Name a thing rather than a feeling: not "she looked sad", but a character changing the subject.
 - **One beat, one change.** Each beat leaves something different from how it found it: a new fact, a changed relationship or a new problem. If two beats could swap without anyone noticing, one is redundant.
@@ -100,7 +100,7 @@ Do these before calling a script done.
   - **Queued beats:** a region opening and a wonder in the same moment must not collide or spoil each other.
   - **Skip:** a player who skips a line must still have what they need, so restate key facts once, later.
   - **Saves from older versions** have beats they will never see, and need migrating or a recap.
-  - **Waiting:** a story deadline must not be contradicted by lives, gates or replays. Count time in story events ("two days out", moved on by beats) rather than real time.
+  - **Waiting:** a story deadline must not be contradicted by gates or replays. Count time in story events ("two days out", moved on by beats) rather than real time.
   - **Placement order:** a beat tied to a building must fit any place the player can put it, so never say where it stands.
   - **Unavailable characters:** a character who has left the story cannot speak at a wonder.
 - **Check in the game** on the primary and alternate phone sizes: longest lines, longest scene, and every new speaker.

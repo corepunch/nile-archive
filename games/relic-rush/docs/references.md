@@ -27,9 +27,10 @@ Paths on our island are painted scenery. There is no road-connectivity requireme
 
 ## Match-3 mechanics
 
-Relic Rush uses Cradle of Rome’s straight matches, fixed target cells, chains
-and three tool effects. Pickaxe is the Hammer, Dynamite is the Bomb over
-neighboring hexes, and Sunburst is the Star that hits one kind across the
+Relic Rush uses Cradle of Rome’s straight matches, fixed target cells, blockers
+(chains, ice, carved stones) and bonus tools charged by matching bonus gems.
+There are no special pieces. Pickaxe became the Hammer (Dynamite upgrades it to
+hit the neighboring hexes), and Sunburst became the Star that hits one kind across the
 board. See the [original game page](https://store.steampowered.com/app/38170/)
 and the [published walkthrough of the original game](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/).
 
@@ -60,7 +61,7 @@ SDL2 is the selected game runtime. No Orion or Orca code is required. Gameplay i
 
 ## Territory model: June's Journey / Pearl's Peril / Settlers II
 
-- June's Journey opens clouded land regions by Star and Compass requirements: https://wooga.theymes.com/hc/en/junes-journey/articles/how-do-i-get-more-space-on-orchid-island-331
+- June's Journey (a reference only; Relic Rush gates land by boards cleared) opens clouded land regions by Star and Compass requirements: https://wooga.theymes.com/hc/en/junes-journey/articles/how-do-i-get-more-space-on-orchid-island-331
 - Compass currency is spent on region unlocks: https://wooga.theymes.com/hc/en/junes-journey/articles/what-are-the-compasses-for-and-how-do-i-find-them-332
 - Pearl's Peril requires badges, coins and compasses for its manually opened land areas: https://wooga.theymes.com/hc/en/pearls-peril/articles/can-i-expand-the-island-164
 - Pearl's Peril placement uses green/red feedback and allows later moves confirmed with a tick: https://wooga.theymes.com/hc/en/pearls-peril/articles/how-do-i-place-decorations-251
@@ -71,7 +72,7 @@ For the Settlers II comparison, inspected the primary source of Return to the Ro
 - https://github.com/Return-To-The-Roots/s25client/blob/master/libs/s25main/gameTypes/MapNode.h
 - https://github.com/Return-To-The-Roots/s25client/blob/master/libs/s25main/world/TerritoryRegion.h
 
-Our original model: a hidden axial land graph, terrain membership, regionId, open-region bitset, independent building world coordinates and footprints. Multi-source flood fill creates six connected natural regions. A new region must touch open land, meet its cumulative Star requirement and be affordable in Compasses. Confirmation consumes Compasses, never Stars. Winning each prototype level awards three of each; region Star gates are 6 / 9 / 15 / 21 / 27 and Compass costs are 2 / 3 / 4 / 5 / 6. These are prototype balancing values, not copied June's Journey prices. The puzzle board has its own separate 61-cell radius-four hex graph; the island and puzzle coordinate systems are not shared. Expansion is immediate after confirmation; no waiting timer or paid bypass exists in this prototype.
+Our original model: a hidden axial land graph, terrain membership, regionId, open-region bitset, independent building world coordinates and footprints. Multi-source flood fill creates six connected natural regions. A new region must touch open land and meet its boards-cleared requirement (6 / 9 / 15 / 21 / 27 boards for the five clouded regions). Relic Rush has no stars or compasses, and opening a region spends nothing. These are prototype balancing values, not copied June's Journey prices. The puzzle board has its own separate 9 x 12 hex grid; the island and puzzle coordinate systems are not shared. Expansion is immediate after confirmation; no waiting timer or paid bypass exists in this prototype.
 
 ## Match-3 level HUD
 

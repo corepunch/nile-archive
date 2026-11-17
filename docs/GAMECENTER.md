@@ -6,7 +6,7 @@ per game in code: sign-in starts by itself at launch, and a game only names its
 boards and achievements.
 
 ```lua
-gamecenter.submit('stars', total_stars)       -- higher is better; non-records are dropped
+gamecenter.submit('stars', boards_cleared)     -- higher is better; non-records are dropped
 gamecenter.unlock('first_island')             -- or gamecenter.unlock('builder', 40) for progress
 gamecenter.load('stars', gamecenter.FRIENDS)  -- start a fetch (GLOBAL by default, 10 rows)
 
@@ -46,7 +46,7 @@ The full reference is in [LUA_API.md](LUA_API.md#gamecenter).
 1. In App Store Connect open the app, then Services > Game Center, and add
    leaderboards and achievements. **The identifier must be
    `<bundle id>.<name>`**, for example `com.corepunch.relicrush.stars`, where
-   `stars` is the name the game passes to Lua. Sort leaderboards high to low.
+   `stars` is the name the game passes to Lua (the match-3 games keep that id for their boards-cleared leaderboard). Sort leaderboards high to low.
 2. Nothing else: `tools/xcode/generate.py` links GameKit and writes the
    `com.apple.developer.game-center` entitlement for every iOS target
    (`Generated/ios.entitlements`). Automatic signing adds the capability to the
@@ -88,7 +88,7 @@ A game that already has a `ui.modals` stack passes it in
 
 Options: `board` (required), `title`, `count` (rows requested, up to 25),
 `rows` (rows visible before scrolling, default 8), `width`, `format(score)`
-(default thousands separators; use it for times or stars), `texts` (every
+(default thousands separators; use it for times or scores), `texts` (every
 caption, for translation) and `id`. A skin may define the optional roles
 `leaderboard_row`, `leaderboard_me` and `leaderboard_note` to style the rows
 and the status line; without them the labels use the skin's default text.
@@ -100,8 +100,8 @@ capture with `--gamecenter-demo`.
 
 | Game | Boards | Opened from |
 | --- | --- | --- |
-| Relic Rush | `stars`, `level_01`..`level_30` | Settings, results card |
-| Christmas Market | `stars`, `level_01`..`level_30` | Settings, results card |
+| Relic Rush | `stars` (boards cleared), `level_01`..`level_100` | Settings, results card |
+| Christmas Market | `stars` (boards cleared), `level_01`..`level_100` | Settings, results card |
 | Nile Archive | `influence`, `search_1`..`search_5` | Chapter list, search result |
 | Emergency | `rescue`, `district_01`..`district_05` (time as a speed score) | Menu, district results |
 

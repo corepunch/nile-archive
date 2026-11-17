@@ -143,10 +143,10 @@ Representative before/after captures are kept in `docs/review/tropicats-viewer/`
 
 | Size | Previous schematic | Original sprites |
 | --- | --- | --- |
-| Desktop 1368×1026 viewport | [desktop.jpg](../../docs/review/tropicats-viewer/desktop.jpg) | [sprites-desktop.png](../../docs/review/tropicats-viewer/sprites-desktop.png) |
-| Narrow 390×844 viewport | [narrow.jpg](../../docs/review/tropicats-viewer/narrow.jpg) | [sprites-narrow.png](../../docs/review/tropicats-viewer/sprites-narrow.png) |
+| Desktop 1368×1026 viewport | [desktop.jpg](../../../docs/review/tropicats-viewer/desktop.jpg) | [sprites-desktop.png](../../../docs/review/tropicats-viewer/sprites-desktop.png) |
+| Narrow 390×844 viewport | [narrow.jpg](../../../docs/review/tropicats-viewer/narrow.jpg) | [sprites-narrow.png](../../../docs/review/tropicats-viewer/sprites-narrow.png) |
 
-[Dense special-piece view](../../docs/review/tropicats-viewer/sprites-specials.png).
+[Dense special-piece view](../../../docs/review/tropicats-viewer/sprites-specials.png).
 Captures include the full scrollable page. No new game or engine art path is
 changed, so renderer/game builds are outside this tool's verification scope.
 
@@ -162,8 +162,8 @@ alpha plane and verify horizontal/vertical mesh orientation.
 
 | Viewport | Before badges | After materials |
 | --- | --- | --- |
-| 1368×1026 | [Before](../../docs/review/tropicats-viewer/materials-before-desktop.png) | [After](../../docs/review/tropicats-viewer/materials-after-desktop.png) |
-| 390×844 | [Before](../../docs/review/tropicats-viewer/materials-before-narrow.png) | [After](../../docs/review/tropicats-viewer/materials-after-narrow.png) |
+| 1368×1026 | [Before](../../../docs/review/tropicats-viewer/materials-before-desktop.png) | [After](../../../docs/review/tropicats-viewer/materials-after-desktop.png) |
+| 390×844 | [Before](../../../docs/review/tropicats-viewer/materials-before-narrow.png) | [After](../../../docs/review/tropicats-viewer/materials-after-narrow.png) |
 
 Verification: 12 Node tests (2.93 s), 7 Python material/HTTP tests (0.85 s),
 repository lint (1.48 s), measured wall time. All campaign artwork references and
@@ -235,7 +235,7 @@ Review covered level 2422's red/purple charge differences and reduced wheels,
 and 2726's opposite-facing chameleons and wheel compositions. No broken images
 or browser errors; row flip moves complete wheel groups, schematic toggle removes
 them, difference highlighting remains source-based, and random markers still work.
-The complete [state review sheet](../../docs/review/tropicats-viewer/mechanics-states.png)
+The complete [state review sheet](../../../docs/review/tropicats-viewer/mechanics-states.png)
 was inspected, including full charge, all 49 chameleon pairs, every wheel segment
 count and every color column. Reproduce it after extraction:
 
@@ -245,9 +245,9 @@ count and every color column. Reproduce it after extraction:
 
 | View | Before | After |
 | --- | --- | --- |
-| 2422 · 1368×1026 | [Before](../../docs/review/tropicats-viewer/mechanics-before-desktop.png) | [After](../../docs/review/tropicats-viewer/mechanics-after-desktop.png) |
-| 2422 · 390×844 | [Before](../../docs/review/tropicats-viewer/mechanics-before-narrow.png) | [After](../../docs/review/tropicats-viewer/mechanics-after-narrow.png) |
-| 2726 · chameleon facing/colors | [Before](../../docs/review/tropicats-viewer/mechanics-before-chameleons.png) | [After](../../docs/review/tropicats-viewer/mechanics-after-chameleons.png) |
+| 2422 · 1368×1026 | [Before](../../../docs/review/tropicats-viewer/mechanics-before-desktop.png) | [After](../../../docs/review/tropicats-viewer/mechanics-after-desktop.png) |
+| 2422 · 390×844 | [Before](../../../docs/review/tropicats-viewer/mechanics-before-narrow.png) | [After](../../../docs/review/tropicats-viewer/mechanics-after-narrow.png) |
+| 2726 · chameleon facing/colors | [Before](../../../docs/review/tropicats-viewer/mechanics-before-chameleons.png) | [After](../../../docs/review/tropicats-viewer/mechanics-after-chameleons.png) |
 
 Focused verification: 15 Node tests **2.38 s**, 10 material/HTTP tests **0.89 s**,
 repository lint **1.10 s**, measured wall time. No build step; no game or shared
@@ -270,13 +270,13 @@ The climber and resistant blocker use the original Spine skeletons, atlas textur
 
 Controller 453 names all three blocker idle clips and defaults to the 3-HP state; controller 456 defaults to the climber idle clip. All skeleton attachment paths and source hashes are recorded in the catalogue.
 
-The source textures, bridge sprites and [four character idle renders](../../docs/review/tropicats-viewer/native-idle-states.png) were inspected directly. Browser review covered level 1764's water theme, vertical window bridges, ice and portals at desktop and narrow sizes, plus level 892's climber, resistant eggs and growing windows. There were no broken images, console warnings/errors or horizontal page overflow at either checked size. Row flip and schematic fallback were exercised; returning to sprites restored the native poses and original theme.
+The source textures, bridge sprites and [four character idle renders](../../../docs/review/tropicats-viewer/native-idle-states.png) were inspected directly. Browser review covered level 1764's water theme, vertical window bridges, ice and portals at desktop and narrow sizes, plus level 892's climber, resistant eggs and growing windows. There were no broken images, console warnings/errors or horizontal page overflow at either checked size. Row flip and schematic fallback were exercised; returning to sprites restored the native poses and original theme.
 
 | View | Before | After |
 | --- | --- | --- |
-| 1764 · 1368×1026 | [Before](../../docs/review/tropicats-viewer/themes-before-desktop.jpg) | [After](../../docs/review/tropicats-viewer/themes-after-desktop.jpg) |
-| 1764 · 390×844 | [Before](../../docs/review/tropicats-viewer/themes-before-narrow.jpg) | [After](../../docs/review/tropicats-viewer/themes-after-narrow.jpg) |
-| 892 · native creatures | [Before](../../docs/review/tropicats-viewer/creatures-before-desktop.jpg) | [After](../../docs/review/tropicats-viewer/creatures-after-desktop.jpg) |
+| 1764 · 1368×1026 | [Before](../../../docs/review/tropicats-viewer/themes-before-desktop.jpg) | [After](../../../docs/review/tropicats-viewer/themes-after-desktop.jpg) |
+| 1764 · 390×844 | [Before](../../../docs/review/tropicats-viewer/themes-before-narrow.jpg) | [After](../../../docs/review/tropicats-viewer/themes-after-narrow.jpg) |
+| 892 · native creatures | [Before](../../../docs/review/tropicats-viewer/creatures-before-desktop.jpg) | [After](../../../docs/review/tropicats-viewer/creatures-after-desktop.jpg) |
 
 Before captures use viewer commit `c6322df` with the same extracted level data.
 Focused verification: 18 Node tests **2.52 s**, 12 Python material/HTTP tests

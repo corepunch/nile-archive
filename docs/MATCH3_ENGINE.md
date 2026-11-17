@@ -13,7 +13,7 @@ and integer flags. There are no game-supplied behavior callbacks.
 local match3 = require("match3")
 local rules = match3.new{
     flags = 0,          -- all standard engine behaviors
-    radius = 4, colors = 6, match_min = 4,
+    columns = 9, rows = 12, colors = 5, match_min = 3,
     levels = require("campaign").levels,
     kind_flags = {[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE},
 }
@@ -61,17 +61,22 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `WOOD` | Count the piece toward the second resource total |
 | `STONE` | Count it toward the third resource total |
 
-The current topology is an axial hexagon, configurable from radius 1 to 16,
-with arbitrary missing cells. The default is `match_min=3` with `LINE_MATCHES`;
-explicit `flags=0` retains legacy connected-group matching.
-Matches only clear. As in Cradle of Rome, no line length or shape creates a
-power-up (no rockets, bombs, planes or rainbow balls); a player's extra power
+Both games use a `columns` x `rows` rectangle of flat-top hexes (9 x 12, odd
+columns half a cell lower) with arbitrary missing cells. The hexagon mode
+(`radius`, 1 to 16) still exists and the engine tests use it. The default is
+`match_min=3` with `LINE_MATCHES`; explicit `flags=0` retains legacy
+connected-group matching. A match is a straight line of three or more pieces
+of one kind along the three hex axes. Matches only clear. As in Cradle of
+Rome, no line length or shape creates a special piece; a player's extra power
 comes from the game's tools and boosters. Overlapping runs form one group and
 count each cell once. Longer runs can still pay more through
 `resource_multipliers`.
 
-Level descriptors are content: name/lesson, moves, score, collection target
-(`relics`), chains and ice counts. Optional `mask`
+Level descriptors are content. Each game's boards are text files in
+`games/<game>/levels`, validated by `tools/hex_levels.py` (see
+[Level design](LEVEL_DESIGN.md)), which generates `lua/boards.lua`; move
+budgets come from `tools/tune_moves.py`. A descriptor holds the name, lesson,
+moves, tablets (`oil`), chains and ice. Optional `mask`
 is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits
 strong ice, and `double_chains=N` makes the first N of `chains` take two hits. Each entry in `stones` reserves a cell for one carved hex stone.
@@ -79,7 +84,7 @@ An adjacent match or a direct hit clears that stone. Optional `goals` lists
 the HUD goals that win the level, in order,
 from `score`, `idols`, `locks` (every blocker) and `oil` (tablets). Without
 it, every counter on the board must be finished. Relic Rush and Christmas
-Market name one to three per level and never `score`. The
+Market win every board by clearing its tablets. The
 games' `campaign.lua` files contain these data; their
 `rules.lua` modules only configure the engine, name kinds and handle the
 restoration economy. Matching and input do not live in either game.
@@ -314,8 +319,8 @@ python3 tools/capture_trickling.py
 Use Xvfb on Linux for the renderer/smoke commands. `make test` checks generated
 code, the atlas registrations and per-pixel preservation of every override
 source. Engine tests cover independent instances, radius/minimum/flag
-configuration; shared gravity tests run against both games across all ten
-masks, including holes, locks, piece identity, donor competition,
+configuration; shared gravity tests run against both games across every
+board mask, including holes, locks, piece identity, donor competition,
 conservation, deterministic replay and inlet spawning. The actual update
 loop checks normal/reduced-motion timing. `build/test-platform` verifies
 nested UVs, partial drawing, additive views and ownership with real pixels.

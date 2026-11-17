@@ -173,7 +173,7 @@ typedef struct { const char *name, *about, *sprite_path; texture sprite;
 ```
 
 - `cost` is paid on placement, `reward` granted once, `needs` must be owned
-  (Nile's influence, Relic Rush's stars are never spent), `income` is
+  (Nile's influence, Relic Rush's boards cleared are never spent), `income` is
   collected by tapping once `income_period` seconds of wall-clock time have
   passed (offline progress included; time comes from `app_clock()`).
 - **Terrain and regions come from the game.** `buildable(c, vec2)` says where
@@ -306,7 +306,7 @@ game's `lua/town_config.lua`. See [Shared town screen](TOWN.md).
 
 Relic Rush and Christmas Market share the whole game around the board:
 `require("match3.game")` (`engine/match3_game.lua`) owns progress and saving,
-the level flow and lives, every dialog, the shop, the level list, the town
+the level flow, every dialog, the shop, the level list, the town
 hooks and story delivery; `match3.vfx` the effects and `match3.debug` the
 screenshot entry points. Each game's words are `lua/game_config.lua`, read while
 `main.lua` loads (the launcher sets the data root before it runs the script).
@@ -318,7 +318,7 @@ See [PORTRAIT_GAMES.md](PORTRAIT_GAMES.md).
 16 voices after `delay` seconds, so chords and jingles are a few calls; when
 all voices are busy the one nearest its end is reused, and the mix is soft
 clipped. `sfx_tone(hz, seconds)` is a note with no delay at volume 1. The
-match-3 module's sound bank (`R.play`) builds swaps, matches, specials, kudos,
+match-3 module's sound bank (`R.play`) builds swaps, matches, kudos,
 wins and losses from these notes. The 44.1 kHz stereo device opens on the first
 note. `--mute` prevents playback and `sfx_enable(false)` silences and clears
 every voice. Sampled audio belongs to the standalone Clayfight runtime.

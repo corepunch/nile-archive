@@ -9,7 +9,7 @@ Reference images are research material, not bundled game assets.
 | June's Journey | [Official game](https://www.wooga.com/junes-journey), [island and lighthouse screenshot](https://wooga.helpshift.com/hc/pt/27-june-s-journey/faq/2248-what-is-the-boat-for-and-how-do-i-visit-friends/) | Layered coastal gardens, organic settlement clusters, paths, atmosphere and adult adventure presentation |
 | Pearl's Peril | [Official art and game](https://www.wooga.com/games/pearls-peril), [placement screenshot and instructions](https://wooga.theymes.com/hc/en/pearls-peril/articles/how-do-i-place-decorations-251) | Detailed building silhouettes, planting around structures, elegant character costumes, green/red placement feedback |
 | Tropicats | [Official game and art](https://www.wooga.com/games/tropicats), [board screenshot](https://images.sftcdn.net/images/t_app-cover-l%2Cf_auto/p/01fdb834-d5b4-11e7-9759-ad9bee2d2fcb/2977677014/tropicats-build-decorate-play-match-3-paradise-screenshot.png) | Welcoming tropical framing, saturated foreground pieces against a quieter background, compact objectives and boosters |
-| Candy Crush Saga | [Publisher game page](https://www.king.com/game), [official mobile listing and screenshots](https://apps.apple.com/gb/app/candy-crush-saga/id553834731) | Clear value separation, rounded tactile pieces, readable special pieces and strong reward feedback |
+| Candy Crush Saga | [Publisher game page](https://www.king.com/game), [official mobile listing and screenshots](https://apps.apple.com/gb/app/candy-crush-saga/id553834731) | Clear value separation, rounded tactile pieces, readable pieces and strong reward feedback |
 
 The visual observations above are our art-direction interpretation of the references. Characters, paintings and architecture created for Relic Rush are original; no reference game's artwork is imported into the runtime.
 
@@ -44,7 +44,7 @@ These names, relationships and story hooks are design material. Dialogue, charac
 
 ## Production rules
 
-- Portrait backgrounds reserve the center for the existing 61-cell hex board; painted tile grids and baked-in UI are avoided.
+- Portrait backgrounds reserve the center for the existing 9 x 12 hex board; painted tile grids and baked-in UI are avoided.
 - Original source paintings remain full resolution. The reproducible Pillow pipeline exports 768 × 1152 RGBA runtime layers; SDL draws the real board and interface above them.
 - Keep foliage, bright ornaments and warm lights near the outside edges. The title, counters and moving resources remain renderer-controlled.
 - Use the existing whole-string gradient/outline text compositor; lettering is not baked into these backgrounds.

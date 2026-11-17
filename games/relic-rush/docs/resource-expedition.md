@@ -1,9 +1,9 @@
 # Relic Rush resource expedition
 
 Clear the marked ground or complete the crew's task. The matches made along the
-way bring back Coins, Supplies and Food to restore the valley. The launch
-campaign uses the existing 30 expeditions, twenty restorations, nine quests and
-the signal finale. Each restoration should feel like spending what the crew
+way bring back Coins, Supplies and Food to restore the valley. The story
+campaign runs across boards 1-30 (three episodes) with twenty restorations, nine quests and
+the signal finale; boards 31-100 are playable without story yet. Each restoration should feel like spending what the crew
 just brought home.
 
 ## What the reference games do
@@ -54,10 +54,10 @@ The original chips are available locally for comparison with `--rome-reference-a
 ## Board rules and palette
 
 A beige cell is open ground. Clear the piece on a blue cell once to expose
-the pale stone. A chained piece takes one hit to free and a later hit to clear
-the plaque beneath it. Each blue cell marks a target on the board.
+the pale stone; a green double tablet takes two hits. A chained piece takes one hit to free and a later hit to clear
+the tablet beneath it. Ice and carved stones also gate the cells below them. Each blue cell marks a target on the board.
 
-Every expedition marks the work site with blue plaques. Clearing all of
+Every expedition marks the work site with blue tablets. Clearing all of
 them wins. The first clear can recover a story item shown in an ordinary
 colour slot, and board 30 reveals the signal plate and Ines’s reply.
 Move limits fit short portrait play and give deliberate resource matches a
@@ -77,13 +77,12 @@ separate kinds within Food. The town and board show Coins, Supplies and Food
 with a sun coin, a timber-and-stone bundle and a food basket. Pending earnings
 are visible on the board and bank on a win. The completion dialog shows score.
 
-Five types is the normal palette. A 4+1 recovery has four regular kinds and a
-story kind in the fifth slot. A 5+1 recovery has six total kinds and should
-earn that complexity through layout and enough legal opening swaps. Board 1
-uses five regular resources. Boards 4 and 9 use 5+1. Board 8 puts the relay
-pliers in the orange slot and omits red berries, leaving room for cut blocks in
-a 4+1 palette. Leaves and flowers add score in their authored slots and clear
-plaques just like other matches. Board 4 takes
+Every board spawns five kinds. A story board (2-10 and 13) has four regular
+kinds and a story kind in the fifth slot; see
+[board progression](board-progression.md). Board 1 uses five regular
+resources. Board 8 puts the relay pliers in the orange slot and omits red
+berries, leaving room for cut blocks. Leaves and flowers add score in their authored slots and clear
+tablets just like other matches. Board 4 takes
 the Coins slot for the tide chart. The Well purchase that follows uses Coins
 banked on earlier boards or earned from unused moves and replays.
 
@@ -135,8 +134,8 @@ restorations before its latest earned story restoration become optional:
 they stay on sale and never hold an expedition.
 
 An arrival message credits the restored building and names the new piece's
-yield. The authored hint on board 5 trades one swap for three cleared plaques
-and 9 Food. Board 9 pairs three plaques with 15 Supplies while leaving
+yield. The authored hint on board 5 trades one swap for three cleared tablets
+and 9 Food. Board 9 pairs three tablets with 15 Supplies while leaving
 the supply crate as the first-clear find. Coins pay for labor and materials,
 Food keeps the workers supplied, and Supplies go into repairs.
 
@@ -161,7 +160,7 @@ campaign bot, one start per board, needs five replays and ends with 647 / 701
 shortfalls.
 
 The bot wins many boards in fewer than half its attempts (board 28 in 8 of
-40), since matches no longer make special pieces. Win rates and moves left are
+40), since matches make no special pieces. Win rates and moves left are
 in the same report.
 
 ```sh
@@ -175,24 +174,24 @@ The reports are in `build/test/relic-rush.log`.
 
 A piece earns its base amount when a match, cascade or tool clears it.
 Breaking a chain leaves its piece in place. A later hit clears the piece and
-earns its resources. The first clear awards the story item and Discovery Stars.
+earns its resources. The first clear awards the story item (boards 1-30) and counts as a cleared board.
 The result card shows the three resource totals and what is still due for the next restoration.
 
 Record attempt earnings until a successful clear. Claim persists the first
-clear, resources, story progress and discovery stars together. A resumed result
+clear, resources and story progress together. A resumed result
 can be claimed once. Restart and loss discard unbanked matches. Quitting to the island keeps the active board available for the current session.
 Optional replays bank the matches from each won attempt and advance no story.
 When a restoration costs more than is in the wallet, replay a cleared board
 with the missing resource and bank the earnings. Optional purchases reserve
 the price of any earned restoration. Confirmed placement debits the price
-once and Cancel returns the preview. Stars remain access requirements.
+once and Cancel returns the preview. Boards cleared remain access requirements for land and shop stock.
 Confirmed restorations add four Happiness. Each confirmed optional building
 or decoration adds one Happiness and earns one bonus Coins per win, capped at
 ten Coins. Moving items preserves the score and bonus. Both derive from saved
 placements.
 
 A save version identifies the Food and Supplies slots. Existing Coins,
-stars, placements, lives, unlocks, claimed levels and story checkpoints are
+placements, unlocks, claimed levels and story checkpoints are
 preserved. Legacy Wood and Stone are combined into Supplies. Migration covers
 any gap on a restoration already earned before the price changes. The wallet, catalogue and result
 screen should all use the same ordering and amount formatting. Use resource
@@ -204,17 +203,17 @@ Eight seeded runs through level 20 funded all 56 restoration purchases from
 first clears after the Camp price was lowered to 3 Food. The sample used
 greedy matches and allowed expedition tools when four moves remained.
 
-All 30 boards use pale stone with fixed blue targets. They share the
+All 100 boards use pale stone with fixed blue targets. They share the
 same clear condition. The [current review](review/blue-plaque-campaign/README.md)
 shows the board, new resource artwork and common wallet at both phone sizes.
 
 For release balancing, play the first restoration through a fresh save on
 both supported phone sizes and sample a migrated save midway through chapter two.
 Verify that matching every resource kind, including through a cascade or
-special, agrees with the result and the wallet after a restart. Confirm the
+tool, agrees with the result and the wallet after a restart. Confirm the
 shop's price and reserve through Confirm, Cancel, exhausted tool counts, replay
-and claim interruption. The seeded campaign test plays all 30 boards with
+and claim interruption. The seeded campaign test plays the 30 story boards with
 the live wallet and confirms all ten purchases. For release tuning, record
 wallet shortfalls across more seeds and watch people play on both phone sizes.
-Review plaque and story piece recognition with Reduce Motion enabled at
+Review tablet and story piece recognition with Reduce Motion enabled at
 390×844 and 480×900.

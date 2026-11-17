@@ -5,8 +5,8 @@ story wonders and ten ladder buildings, each placed once) and 76 repeatable
 buildings and decorations. Open **SHOP** on the island. Browse
 categories with the arrows and pages with Prev/Next. Each measured row shows its
 sprite, tile footprint, owned count, price and unlock requirement. Choose a
-location, move the preview to open grass and confirm. Confirmation spends the listed resources once. Cancellation is free. Stars
-unlock stock and remain in the wallet.
+location, move the preview to open grass and confirm. Confirmation spends the listed resources once. Cancellation is free. Boards
+cleared unlock stock.
 Purchased objects use the same hold-to-move, Confirm/Cancel and save system as
 story wonders. There is a 160-object island limit.
 
@@ -14,8 +14,8 @@ The twenty restorations follow the [campaign ladder](resource-expedition.md#rest
 the ten wonders unlock at the story milestones and the other ten between them.
 The Trapper's cabin, Cartographer's house, Trading post, Water mill, Clock
 tower, Valley lighthouse, Great aviary, Beached schooner, Stone amphitheatre
-and Relic museum were shop buildings; they are now campaign rows with no star
-requirement. Optional purchases can use
+and Relic museum were shop buildings; they are now campaign rows with no
+boards-cleared requirement. Optional purchases can use
 the Coins, Food and Supplies left after reserving the cost of unlocked
 restorations. The shop shows prices and marks an item unavailable when buying
 it would spend reserved funds. Replays bank resources from matches and the
@@ -112,7 +112,7 @@ needs only Blender.
 
 All entries support the presentation/interaction contract above. `manifest.json`
 records sources, costs, requirements and registration; `art/building-catalogue/registration.json`
-holds each sprite's pivot and base width. Category and Star unlocks come from the
+holds each sprite's pivot and base width. Category and boards-cleared unlocks (the Stars column below) come from the
 supplied study catalogue; its June's Journey names are design references only. The
 sprite file is always `data/city/buildings/<key>.png`.
 

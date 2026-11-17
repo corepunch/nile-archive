@@ -101,7 +101,7 @@ return {
         earlier = "COMPLETE EARLIER WISHES",
         replay_note = "Bank the goods you match when you win.",
         building_note = "Match goods to pay for the next stall.",
-        story_note = "First clear: a new story scene, matched resources and 3 Stars.",
+        story_note = "First clear: a new story scene and matched resources.",
     },
     debug = {victory = 3, catalogue_card = 10, narrator = "noelle"},
 }

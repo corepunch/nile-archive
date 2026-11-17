@@ -40,8 +40,8 @@ data. The earnings below come from running Christmas Market.
 
 The reference sizes are the smallest rectangles that contain the **active**
 cells. The XML allocates 30×20 storage in both releases. Christmas Market
-uses its existing portrait hex field, nine coordinates across, with a
-maximum of 61 active cells before shape cutouts. The Roman 10th and 20th
+uses its portrait hex field, a 9 x 12 rectangle of flat-top hexes (at most
+108 active cells before shape cutouts). The Roman 10th and 20th
 levels introduce and repeat all-double plaques in both versions. Christmas
 Market mirrors that rhythm. [Board progression](board-progression.md)
 
@@ -95,8 +95,8 @@ Market mirrors that rhythm. [Board progression](board-progression.md)
   Replays provide a route to any shortfall. There is no bonus for unused
   moves, delivery top-up during normal play, timed completion bonus or
   extra combo multiplier on currency.
-- Construction produces goods by adding pieces to future boards. Stars
-  from first clears still mark access to land and decorations. Visitor
+- Construction produces goods by adding pieces to future boards. Boards
+  cleared still mark access to land and decorations. Visitor
   happiness, passive stall income, Roman citizen perks and blueprint
   puzzles are outside this prototype.
 
@@ -148,7 +148,7 @@ partial charges between wishes. Shooting Star clears the chosen row and
 Firework Bomb hits the chosen cell and its neighbors. Their stalls grant
 one use at the start of each eligible wish, and the sleigh and the
 Christmas tree add a second Shooting Star and Firework Bomb. Matches never
-make special pieces: as in Cradle of Rome, power comes only from tools. The
+make special pieces (a longer line just clears): as in Cradle of Rome, power comes only from tools. The
 gingerbread house adds moves and the post office doubles charge speed.
 The rink and presents earn income on every win, including replays.
 

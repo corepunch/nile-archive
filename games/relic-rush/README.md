@@ -6,7 +6,7 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Clear all blue plaques within the move budget, claim resources, restore the next building on the island, and set out again. Thirty hex stages across three episodes restore the ten existing wonders and end with the valley singing and five lights answering at sea. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
+Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Clear all blue tablets within the move budget, claim resources, restore the next building on the island, and set out again. The story runs across the first thirty of the hundred boards, in three episodes: it restores the ten wonders and ends with the valley singing and five lights answering at sea. Boards 31-100 are playable without story yet. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
@@ -25,8 +25,8 @@ The top wallet shows Coins, Supplies and Food on both screens. Matches
 preview in the wallet during an expedition and bank after a successful clear.
 The completion dialog shows the expedition score.
 The Well costs Coins. The Workshop, Market, Archive and Temple use all three
-resources. Discovery stars unlock shop stock and land. The five lives regenerate
-one at a time every 30 minutes, including offline.
+resources. Boards cleared unlock shop stock and land. There are no lives: a failed
+board can be retried at once.
 
 Tap a placed building for its name and subtitle above it. The label uses the quest panel's dark green and gold palette. Only one stays open. The next press dismisses it. A stationary hold picks up a building through the shared mover, with Confirm/Cancel preserving saved state.
 
@@ -36,9 +36,9 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-Every expedition ends when all of its blue plaques are clear. Match on a blue
-cell to reveal the pale stone below. A chain absorbs the first hit on its piece.
-With three or fewer blue plaques left, sparks trace their edges after the same idle delay as the move suggestion.
+Every expedition ends when all of its blue tablets are clear. Match on a blue
+cell to reveal the pale stone below; a green double tablet takes two hits. A chain absorbs the first hit on its piece.
+With three or fewer tablets left, sparks trace their edges after the same idle delay as the move suggestion.
 Swipe or tap a gem toward a chain and it slides toward the chain and back,
 with the same haptic as a rejected swap and zero moves spent.
 See the [board progression](docs/board-progression.md) for the pattern and move budget of each expedition.
@@ -48,7 +48,7 @@ See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.m
 and [current board review](docs/review/chains-only/README.md).
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
-swaps, blockers, specials, trickling gravity, cascades, hints, tools and board
+swaps, blockers, trickling gravity, cascades, hints, tools and board
 input/timing. This game provides campaign data, graphics and integer behavior
 flags. Every exposed column top (no active cell directly above) spawns gems
 vertically. Interior gems fall straight down whenever their cell below is
@@ -71,37 +71,35 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | Hexagonal expeditions | Restored island |
 | --- | --- |
 | ![First hex match-3 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
-| ![Chains and blue plaques on board 22](docs/review/chains-only/board-after-480x900.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
-| ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Stars and compasses required to expand](docs/screenshots/island-unlock.jpg) |
+| ![Chains and blue tablets on board 22](docs/review/chains-only/board-after-480x900.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
+| ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Boards required to open land](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
 ## Leaderboards
 
 Game Center is in every game through the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)).
-Relic Rush turns it on with the `leaderboard` block of `lua/game_config.lua`: one **stars** board holds
-the lifetime Discovery Stars (they are never spent), and one board per expedition (`level_01`
-to `level_30`) holds its best score. Scores are reported when a reward is claimed, so a
+Relic Rush turns it on with the `leaderboard` block of `lua/game_config.lua`: one board ranks players by boards cleared (its Game Center id is still `stars`), and one board per expedition (`level_01`
+to `level_100`) holds its best score. Scores are reported when a reward is claimed, so a
 replay that beats the old score raises that board, and a weaker one changes nothing. Settings
-has a LEADERBOARD link for the stars board. The results card has no leaderboard button; the
+has a LEADERBOARD link for the boards-cleared board. The results card has no leaderboard button; the
 expedition boards still receive scores. The link opens the shared dialog with Everyone / Friends tabs, player portraits and the
 player's own row marked; without Game Center it shows the player's own best.
 
-| Settings | Stars board | Results card | Expedition board |
+| Settings | Boards-cleared board | Results card | Expedition board |
 | --- | --- | --- | --- |
-| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The stars board](docs/screenshots/leaderboard.jpg) | ![Results card](docs/screenshots/victory.jpg) | ![One expedition's board](docs/screenshots/level-leaderboard.jpg) |
+| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The boards-cleared board](docs/screenshots/leaderboard.jpg) | ![Results card](docs/screenshots/victory.jpg) | ![One expedition's board](docs/screenshots/level-leaderboard.jpg) |
 
-![The stars board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
+![The boards-cleared board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
 
-To publish them, create 31 leaderboards in App Store Connect (Game Center, high to low) with the
+To publish them, create 101 leaderboards in App Store Connect (Game Center, high to low) with the
 identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_01` ...
-`com.corepunch.relicrush.level_30`, ideally grouped in a leaderboard set. `--gamecenter-demo`
+`com.corepunch.relicrush.level_100`, ideally grouped in a leaderboard set. `--gamecenter-demo`
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
 Board 1 uses five regular kinds, including the timber log that earns Supplies.
 Boards 2–10 and 13 show a story piece in place of one matching colour.
-Boards 2, 5, 8, 10 and 13 use four regular kinds plus the story piece. Boards
-3, 4, 6, 7 and 9 use five regular kinds plus the story piece.
+Every board spawns five kinds, so those boards use four regular kinds plus the story piece.
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
 
 A first clear of boards 1 to 10 or board 13 recovers a quest object. It shows big on its own **Item
@@ -112,7 +110,7 @@ results (`--victory clue --dialog award` previews it).
 
 The island and the board share one wallet and Settings bar. The board shows
 Moves at the left of the resource balances. The medallion turns red at five
-moves. Blue plaques mark the board objective. Winning banks the resources
+moves. Blue tablets mark the board objective. Winning banks the resources
 earned in the three slots.
 Four large circular bonus sockets sit in one row below the centered board from the first
 expedition. Settings opens the Explorer's Guide,
@@ -123,7 +121,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The result screen reveals Discovery Stars, score, rewards and what's next in sequence, with a short animated return to the island. The next step shows the building to restore, a sealed papyrus for the next clue, or the Build hammer after a replay. See the [results and wallet captures](docs/screenshots/review/discovery-stars/README.md).
+The result screen reveals the score, rewards and what's next in sequence, with a short animated return to the island. The next step shows the building to restore, a sealed papyrus for the next clue, or the Build hammer after a replay. See the [results and wallet captures](docs/screenshots/review/discovery-stars/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 
@@ -141,25 +139,23 @@ Coloured match fragments, resource trails and cascade chimes follow each clear. 
 
 See [effect reference study](docs/effects.md). The reel uses deterministic test boards; actual iPhone/Android performance still needs device testing.
 
-## Current match-3 rules and board shapes
+## Current match-3 rules and boards
 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
-The pale limestone and blue plaques meet at hairline seams on one continuous
+The pale limestone and blue tablets meet at hairline seams on one continuous
 board surface. [Before and after at both phone sizes](../../docs/review/match3-board-seams/README.md).
 
-The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are thirty different board silhouettes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
+The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are no special pieces: a longer line just clears. The 100 boards sit on a 9 x 12 rectangle of flat-top hexes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
-After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue plaques in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
+After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue tablets in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
-Matched bonus gems fly into their sockets and fill them with gold from the bottom.
+Power comes only from the bonus tools: matched bonus gems fly into their sockets and fill them with gold from the bottom.
 With Reduce Motion on, the gold fills immediately.
 Empty buttons show their tool carved into sandstone.
 See the [bonus artwork and state review](docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets).
 
-![All ten playable level shapes, actual SDL captures](docs/screenshots/level-shapes-overview.jpg)
-
-See [rules, shape list, implementation notes and reference sources](docs/match4-rules.md).
+See [matching rules, board shape, implementation notes and reference sources](docs/match4-rules.md).
 
 ## New art direction
 
@@ -209,11 +205,11 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 ## Expedition and restoration loop
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
-2. Clear all blue plaques within the move budget.
-3. Claim the matched resources, up to 40 Coins for saved moves, and three discovery stars on a first clear.
+2. Clear all blue tablets within the move budget.
+3. Claim the matched resources and up to 40 Coins for saved moves. A first clear counts as a cleared board.
 4. Return to the island. At a wonder milestone, check the price and replay an expedition if you need more resources.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
-6. Read the discovery, then set out again. Thirty stages support ten restored buildings; level 30 delivers the final hook.
+6. Read the discovery, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
 
 A matched sun coin earns 4 Coins. Red berries and green apples pay 1 Food.
 Leaves and flowers add score only.
@@ -225,7 +221,7 @@ matched resources and up to 40 Coins for unused moves.
 
 The Well adds water buckets on level 5. The Workshop adds cut blocks on level 8,
 alongside the relay pliers. An arrival message names the building and the piece's
-value. The first hint on level 5 earns 9 Food while clearing plaques. Level 9
+value. The first hint on level 5 earns 9 Food while clearing tablets. Level 9
 offers a similar cut-block match for 15 Supplies toward the Market.
 
 ### Tutorials and citizens (`lua/user_events.lua`)
@@ -238,8 +234,8 @@ condition and effect it supports. Each event fires once per profile, and the
 save keeps which events are done.
 
 - **Tutorials.** The move hint repeats with the board's 1st, 2nd, 3rd and
-  5th suggestion until the first line of three. Toasts introduce plaques,
-  double plaques, chains, double chains, ice, the low-moves warning, each
+  5th suggestion until the first line of three. Toasts introduce tablets,
+  double tablets, chains, double chains, ice, the low-moves warning, each
   charged bonus and the catalogue.
 - **Citizens.** Placing one of eleven buildings opens its citizen's
   challenge. Examples: a line of five after the Workshop, 120 Supplies on
@@ -253,42 +249,9 @@ save keeps which events are done.
 The citizen amounts are a first pass. The building upgrade is recorded but
 has no art yet.
 
-## Campaign: thirty hex levels
+## Campaign: one hundred hex boards
 
-Every stage uses its own connected active-cell mask within a radius-four hex grid. Chain placements shape seams and approaches, and [board progression](docs/board-progression.md) records the decisions and exact starting terrain. Each row gives the starting number of blue plaques, including plaques under chains.
-
-| # | Expedition | Moves | Blue plaques | Chains |
-| --- | --- | ---: | ---: | ---: |
-| 1 | First Light | 24 | 7 | 0 |
-| 2 | The Lamp Lens | 29 | 9 | 0 |
-| 3 | The Relay Cable | 32 | 10 | 0 |
-| 4 | Under the Pump | 35 | 11 | 4 |
-| 5 | The Quay Marker | 35 | 10 | 4 |
-| 6 | The Shore Marker | 37 | 11 | 0 |
-| 7 | The Tool Roll | 40 | 12 | 3 |
-| 8 | The Relay Pliers | 40 | 12 | 4 |
-| 9 | The Supply Crate | 43 | 12 | 5 |
-| 10 | The Shutter Gear | 46 | 12 | 6 |
-| 11 | The Long Terrace | 33 | 12 | 0 |
-| 12 | Twelve Crates | 36 | 12 | 5 |
-| 13 | Names in the Stone | 37 | 10 | 6 |
-| 14 | Static | 38 | 13 | 7 |
-| 15 | The Cracked Wall | 39 | 12 | 4 |
-| 16 | Supper for Twelve | 40 | 13 | 4 |
-| 17 | The Torn Log | 42 | 13 | 5 |
-| 18 | Lantern Steps | 40 | 14 | 2 |
-| 19 | Under the Vines | 45 | 12 | 4 |
-| 20 | The Archivist's Key | 46 | 9 | 5 |
-| 21 | Tomas's Trail | 35 | 12 | 0 |
-| 22 | The Alternate Landing | 40 | 13 | 2 |
-| 23 | The Star Road | 40 | 12 | 3 |
-| 24 | Noon Shadow | 41 | 12 | 4 |
-| 25 | Smoke on the Water | 38 | 14 | 6 |
-| 26 | The Jade Deep | 43 | 10 | 4 |
-| 27 | Six Sun Gates | 45 | 12 | 7 |
-| 28 | The Last Terrace | 42 | 13 | 2 |
-| 29 | The Silent Temple | 47 | 16 | 8 |
-| 30 | The Warning Returns | 49 | 16 | 8 |
+Every board is authored on a 9 x 12 rectangle of flat-top hexes, with holes and blockers that shape the seams and approaches. [Board progression](docs/board-progression.md) records the feature schedule and [level-moves.md](docs/level-moves.md) lists every board's name, tier and move budget. [Level design](../../docs/LEVEL_DESIGN.md) is the authoring guide. Every board is won by clearing its blue tablets; green double tablets take two hits. The story and the twenty restorations run across boards 1-30 (three episodes); boards 31-100 are playable without story yet.
 
 ## Buildings
 
@@ -328,8 +291,8 @@ lists the first expedition and currency for each payoff.
 The island's **SHOP** adds 76 repeatable buildings and decorations to these
 twenty restorations: buildings, trees, shrubs, flowers, monuments, water gardens,
 furniture, supplies, wildlife and rocks. Browse categories and pages, check the
-resource price and cumulative star requirement, then choose a location and
-confirm. Cancelling is free. Stars remain in the wallet and the resources
+resource price and the number of boards cleared it needs, then choose a location and
+confirm. Cancelling is free. The resources
 needed for an earned restoration are reserved until placement. Purchases save
 and move like wonders, with a 160-object island limit. See the complete
 [building catalogue](docs/building-catalogue.md) and
@@ -340,7 +303,7 @@ and move like wonders, with a 160-object island limit. See the complete
 
 The 1920 × 2880 world scrolls beyond the phone screen. Hidden six-neighbor land tiles define connected regions, while placement itself uses continuous world coordinates. The puzzle grid and island territory graph are separate systems.
 
-| Region | Required discovery stars |
+| Region | Boards cleared to open |
 | --- | ---: |
 | Harbor glade | 0 |
 | Sunlit coast | 6 |
@@ -349,21 +312,21 @@ The 1920 × 2880 world scrolls beyond the phone screen. Hidden six-neighbor land
 | Ancient heights | 21 |
 | Temple ridge | 27 |
 
-A region must touch opened land and meet its discovery-star gate. Expansion does not spend stars or require compasses. Regions do not open on a timer, and players do not need to build roads.
+A region must touch opened land and meet its boards-cleared gate. Expansion spends nothing. Regions do not open on a timer, and players do not need to build roads.
 
 ## Play
 
-- Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. Longer lines and crossings clear more pieces but make no special pieces: as in Cradle of Rome, power is earned by charging the bonus tools with matched resources.
-- Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue plaque on that cell.
+- Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
+- Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Coins bonus and any remaining cost of the next restoration.
 - Restore buildings to unlock Hammer, Shield, Star and Plus. A later restoration
   upgrades each of the four slots and carries its charge forward. An expedition
   can feature one bonus gem family. Matching six fills one use, and activation
   costs zero moves. [Bonus effects and restorations](docs/board-progression.md#bonus-pieces)
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
-- Each won attempt banks what the crew brings back. First clears add discovery stars and advance the story.
+- Each won attempt banks what the crew brings back. First clears count towards boards cleared and, on boards 1-30, advance the story.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
-- Adjacent clouded regions require cumulative discovery stars, which stay with the expedition. Compasses are retired.
+- Adjacent clouded regions open by the number of boards cleared. There are no stars or compasses.
 - The settings gear sits beside the three resource balances. Buildings, Play and Expeditions occupy the town's bottom row. Both catalogues scroll continuously. The building shop shows three cards per row.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
@@ -374,7 +337,7 @@ A region must touch opened land and meet its discovery-star gate. Expansion does
 The [artwork and state catalogue](docs/asset-catalogue.md) inventories every gem
 pack, chain, tool and animation state, with source and runtime paths.
 `--art-states` shows the collection and `--art-board` previews the shared
-engine’s special pieces for development. Catalogue coverage runs in `make test`.
+engine’s board pieces for development. Catalogue coverage runs in `make test`.
 
 The campaign uses one [painted atlas](docs/asset-catalogue.md#campaign-piece-atlas)
 for resources, upgrades and story pieces. The **Jewels** and **Resources**
@@ -412,9 +375,9 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 ## Verification
 
-- `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every one of the thirty levels at least once in its four seeds, without tools.
+- `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every board at least once in its seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
-- `--smoke --campaign` plays all thirty expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap. All 47 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
+- `--smoke --campaign` plays the thirty story expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap. All 47 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.
 
@@ -447,7 +410,7 @@ effects and the debug entry points are the engine's (`engine/match3_game.lua`,
 - `lua/narrative.lua`: the cast.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
 - `lua/board.lua`: how cells, resource pieces and chains are painted.
-- `lua/screens.lua`: the results card, the guide's rows and icons, and the wallet, star and compass icons.
+- `lua/screens.lua`: the results card, the guide's rows and icons, and the wallet and compass icons.
 - `lua/skin.lua`: the look as data (`ui.skin`).
 - `lua/main.lua`: loads the modules and returns the engine's app descriptor.
 - `lua/smoke.lua`: the `--smoke` run through injected input, including the engine's `city.move_test`.
@@ -475,7 +438,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-Current scope is an offline prototype: thirty hex levels, twenty campaign restorations plus 76 purchasable buildings/decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
+Current scope is an offline prototype: one hundred hex boards, twenty campaign restorations plus 76 purchasable buildings/decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
 
 ## Fast rule tests
 
@@ -493,12 +456,9 @@ Popups (Pause, results, guide, cards) and their backdrops appear and close
 immediately, with no entrance or exit motion; only `--reel` captures still play
 the results parts.
 
-Ray gems retain their matching artwork with broad engine-rendered cream stripes
-masked to the gem's alpha. Stripe direction identifies the cleared board axis.
-Bombs are full-size bombs replacing the gem; prisms remain whole crystals.
 Frozen pieces retain a centred **1**/**2** counter above the board layers. Selection uses
 a soft mint glow; hints use gold light and sparkles. See the updated Explorer’s
-guide and [visual review](../../docs/review/striped-specials/README.md).
+guide.
 
 While moving or placing a building, cream outlines around other buildings show
 their occupied ground and clearance for quick alignment. The mover's old spot is

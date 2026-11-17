@@ -1,11 +1,11 @@
 # Match-3 elements and board design
 
 The engine follows Cradle of Rome. A board has chains, ice, carved stones and
-tablets (blue plaques). Matches only clear; power comes from tools.
+tablets (blue plaques). Matches only clear and there are no special pieces; power comes from tools.
 
 Relic Rush and Christmas Market share rules, but author their own shapes,
 terrain priorities, element placements and teaching order. The playable
-campaigns are in each game's `lua/campaign.lua`; their design notes are in
+campaigns are 100 boards each, text files in `games/<game>/levels` validated by `tools/hex_levels.py` (see [Level design](LEVEL_DESIGN.md)); their design notes are in
 [Relic Rush](../games/relic-rush/docs/board-progression.md) and
 [Christmas Market](../games/christmas-market/docs/board-progression.md).
 
@@ -68,8 +68,8 @@ repeat it with a changed constraint, then combine known rules.
 
 ## Level schema and runtime
 
-Optional descriptor fields use **zero-based engine cell IDs**. The campaign's
-`cell(q,r)` helper converts authored axial coordinates. Omitted fields are empty.
+Optional descriptor fields use **zero-based engine cell IDs**. The generated
+`lua/boards.lua` holds them, written from the level text files. Omitted fields are empty.
 
 ```lua
 stones = {{cell=stone_cell}}
