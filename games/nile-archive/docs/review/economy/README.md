@@ -53,7 +53,6 @@ minimum-income route. Existing art and shared control states are reused.
 ```sh
 make CFLAGS="-O2 -g -Werror"
 make test
-python3 tools/economy_audit.py
 python3 tools/capture_economy_review.py --before-ref ac69ea7
 ```
 

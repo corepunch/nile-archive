@@ -68,7 +68,7 @@ Level 1's active footprint and plaque positions, cropped from source origin
 ```
 
 For any example, run
-`python3 tools/cradle-of-rome-reference/analyze.py --level 35` with its
+`python3 tools/reference/cradle-of-rome/analyze.py --level 35` with its
 number. The inspector separates the terrain and piece layers and lists
 four-neighbor group sizes, plaque counts, and generator counts. For example,
 level 18 is three substantial groups of 42, 25 and 25 cells, all covered in

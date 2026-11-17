@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hex-edge remapping shared by the board art tools (Christmas tinsel ring)."""
+"""Hex-edge remapping for the Christmas tinsel ring (used by prepare_assets.py)."""
 from math import sqrt
 
 from PIL import Image

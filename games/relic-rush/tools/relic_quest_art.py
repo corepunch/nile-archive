@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PIL import Image
 
-ROOT = Path(__file__).resolve().parents[1] / 'games/relic-rush'
+ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'art/quest-objects/source.png'
 OUTPUT = ROOT / 'data/quest-objects.png'
 # The props used on the Item recovered card.

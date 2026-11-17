@@ -15,7 +15,7 @@ kinds of evidence:
 
 The complete campaign configuration and full chapter dialogue were not
 recovered. Do not fill those gaps with assumptions. The opening artwork and
-object layout can be explored in the [local scene viewer](../../tools/junes-viewer/README.md).
+object layout can be explored in the [local scene viewer](../../tools/reference/junes-viewer/README.md).
 See [opening analysis](../JUNES_JOURNEY_OPENING.md), [extraction notes](../JUNES_JOURNEY_ANALYSIS.md),
 and the earlier [story](../../research_notes/Прогрессия%20June%20Journey%20и%20Tropicats/junes_journey_story.md)
 and [economy](../../research_notes/Прогрессия%20June%20Journey%20и%20Tropicats/junes_journey_economy.md)

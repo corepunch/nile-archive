@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 from scene_data import build_scene
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_DATA = HERE.parents[1] / 'reference/junes-journey-analysis'
+DEFAULT_DATA = HERE.parents[2] / 'reference/junes-journey-analysis'
 
 
 def handler_for(root, scene):
@@ -63,7 +63,7 @@ def main():
     try:
         scene = build_scene(args.data)
     except (OSError, ValueError) as error:
-        parser.error(f'Extracted scene data is missing or invalid: {error}. See tools/junes-viewer/README.md.')
+        parser.error(f'Extracted scene data is missing or invalid: {error}. See tools/reference/junes-viewer/README.md.')
     server = ThreadingHTTPServer(('127.0.0.1', args.port), handler_for(args.data, scene))
     print(f"June's Journey viewer: http://127.0.0.1:{server.server_port}", flush=True)
     try:

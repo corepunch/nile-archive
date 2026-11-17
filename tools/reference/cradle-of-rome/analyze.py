@@ -9,7 +9,7 @@ import re
 from xml.etree import ElementTree as ET
 
 
-DEFAULT_ROOT = Path(__file__).resolve().parents[2] / "reference/cradle-of-rome/resources"
+DEFAULT_ROOT = Path(__file__).resolve().parents[3] / "reference/cradle-of-rome/resources"
 
 
 def legacy_xml(path):

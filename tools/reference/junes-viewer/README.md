@@ -6,7 +6,7 @@ June's Journey 4.17.7 extraction. Python 3 is the only runtime dependency.
 From the repository root, run:
 
 ```sh
-python3 tools/junes-viewer/serve.py
+python3 tools/reference/junes-viewer/serve.py
 ```
 
 Open <http://127.0.0.1:8766>. Pass `--port 8767` to choose another port or

@@ -6,7 +6,7 @@ how to check it. The data behind it comes from Cradle of Rome's own level files:
 [LEVELS.md](cradle-of-rome-reference/LEVELS.md) (tables, first appearances and
 sample maps) and [levels.json](cradle-of-rome-reference/levels.json) (every field
 of every level). Regenerate both with
-`python3 tools/cradle-of-rome-reference/level_data.py`.
+`python3 tools/reference/cradle-of-rome/level_data.py`.
 
 ## What Cradle of Rome does
 

@@ -2,7 +2,7 @@
   "matching_rules": "Campaign matches clear straight lines of three or more and never create special pieces (Cradle of Rome rules). Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
-    "export": "tools/cradle-of-rome-reference/export_art.py --board-only",
+    "export": "tools/reference/cradle-of-rome/export_art.py --board-only",
     "option": "--rome-reference-art",
     "pieces": {
       "coin": 4,
@@ -1074,7 +1074,7 @@
     "source": "art/quest-objects/source.png",
     "prompt": "art/quest-objects/prompt.txt",
     "runtime": "data/quest-objects.png",
-    "registration": "../../tools/relic_quest_art.py",
+    "registration": "tools/relic_quest_art.py",
     "slots": [
       "timber",
       "lens",

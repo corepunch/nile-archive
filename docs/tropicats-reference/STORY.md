@@ -144,12 +144,12 @@ The last configured chapter starts at level 2691; its final quest includes tier 
 The chapter pages work from a checkout. For exact dialogue wording and board files, the commands below use the ignored local extraction listed in the [source inventory](README.md#source-inventory). Run from the repository root.
 
 ```sh
-python3 tools/tropicats_story_reference.py --level 32
-python3 tools/tropicats_story_reference.py --scene t1chp3_q3
+python3 tools/reference/tropicats_story_reference.py --level 32
+python3 tools/reference/tropicats_story_reference.py --scene t1chp3_q3
 ```
 
 The level lookup returns `32b`, the matching task `chp3_q3.1`, its other tier gates and the chapter and board paths. Use that chapter's configured scene list to pick a scene. The scene lookup keeps every setup row and the staging rows in serialized order. It resolves numbered sentences through the English localization table, retaining the localization key. `localized_text: null` means the key is absent. Rows without a sentence are staging commands. A scene ID or an English string can survive from an older version, so use its trigger and task match before treating it as a current story event.
 
 ## Reproduce and verify
 
-Run `python3 tools/tropicats_story_reference.py --check` from the repository root. It recomputes the pages, checks every source quest appears once, verifies parallel task arrays, compares generated files and checks the chapter-file count. It does not validate narrative truth against a playthrough or prove that every localization and scene is used. Remove `--check` to regenerate.
+Run `python3 tools/reference/tropicats_story_reference.py --check` from the repository root. It recomputes the pages, checks every source quest appears once, verifies parallel task arrays, compares generated files and checks the chapter-file count. It does not validate narrative truth against a playthrough or prove that every localization and scene is used. Remove `--check` to regenerate.

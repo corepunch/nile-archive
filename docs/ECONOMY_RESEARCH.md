@@ -232,7 +232,7 @@ reference game has them.
 ```sh
 make CFLAGS="-O2 -g -Werror"
 make test
-python3 tools/economy_audit.py
+BALANCE_RUNS=10 build/test/relic-rush --extended "rules relic_balance"   # bot plays every board; fits prices
 ./build/relic-rush --headless --fresh --mute --size 480x900 --smoke
 ./build/relic-rush --headless --fresh --mute --size 390x844 --safe-area 0,47,0,34 --smoke
 ./build/nile-archive --headless --fresh --mute --size 1200x900 --smoke

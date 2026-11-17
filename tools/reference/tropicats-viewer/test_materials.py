@@ -8,7 +8,7 @@ try:
 except ImportError:
     Image = None
 
-ART = Path(__file__).resolve().parents[2] / 'reference/tropicats-analysis/art'
+ART = Path(__file__).resolve().parents[3] / 'reference/tropicats-analysis/art'
 
 
 @unittest.skipIf(Image is None, 'Run in the UnityPy extraction environment for material checks')

@@ -461,8 +461,8 @@ Show the goal on the building card, do not expire it after one attempt, make the
 For source inspection, use the analyzer, not screenshots alone:
 
 ```sh
-python3 tools/cradle-of-rome-reference/analyze.py --level 35
-python3 tools/cradle-of-rome-reference/analyze.py > /tmp/cradle-of-rome.json
+python3 tools/reference/cradle-of-rome/analyze.py --level 35
+python3 tools/reference/cradle-of-rome/analyze.py > /tmp/cradle-of-rome.json
 ```
 
 For the sequel, add `--root reference/cradle-of-rome-2/resources` **after extracting the copyrighted pack locally** according to [README.md](README.md). The unpacked original assets are research inputs and are not included in this Markdown.

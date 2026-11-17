@@ -101,7 +101,7 @@ test('wheel uses native wedges for the tier palette, including coins and reduced
   assert.equal(boardObjects(l)[0].name,'material_wheel_frame_5');
 });
 
-const root=new URL('../../reference/tropicats-analysis/',import.meta.url);
+const root=new URL('../../../reference/tropicats-analysis/',import.meta.url);
 const available=fs.existsSync(new URL('art/sprites.json',root));
 test('all 8,190 campaign variants resolve artwork and keep wheels inside the board', {skip:!available}, () => {
   const art=JSON.parse(fs.readFileSync(new URL('art/sprites.json',root)));

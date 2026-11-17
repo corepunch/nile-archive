@@ -170,7 +170,7 @@ the weathered bronze reward. The new board gear uses the same open square bore. 
 [prompt](../art/quest-objects/shutter-gear-states.prompt.txt) and manifest
 record the source and crops.
 
-Run `python3 tools/relic_quest_art.py` after the resource registration to build
+Run `python3 games/relic-rush/tools/relic_quest_art.py` after the resource registration to build
 the scenario index in `data/quest-objects.png` and the item card props in
 `data/finds/`. Camp Timber uses `data/resource-pieces/timber.png` directly.
 Separate card props fit within 256 px on a 320×320 canvas. Board 8 uses its
@@ -198,7 +198,7 @@ from the [expedition atlas](../art/resource-pieces/scenario-atlas.png). The
 trail arrow chip and marker recovery card use the
 [outlined source sheet](../art/resource-pieces/outlined-atlas.png).
 The manifest records each crop, the boards it appears on and its colour slot.
-Run `python3 tools/relic_quest_art.py` to register the individual
+Run `python3 games/relic-rush/tools/relic_quest_art.py` to register the individual
 `data/story-pieces/*.png` files. Each crop fits inside 108 px on a centred
 128 × 128 canvas. The [new board review](screenshots/review/expedition-economy/README.md)
 covers both cable silhouettes. The [earlier review](screenshots/review/story-collection/README.md)

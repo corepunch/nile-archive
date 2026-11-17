@@ -5,7 +5,7 @@ import json
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[3]
 BASE = ROOT / 'reference/tropicats-analysis'
 OUT = ROOT / 'docs/tropicats-reference/story'
 

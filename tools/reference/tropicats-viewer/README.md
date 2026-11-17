@@ -7,7 +7,7 @@ the already extracted `reference/tropicats-analysis/` directory.
 From the repository root:
 
 ```sh
-python3 tools/tropicats-viewer/serve.py
+python3 tools/reference/tropicats-viewer/serve.py
 ```
 
 Open <http://127.0.0.1:8765>. Use `--port 8766` for another port or
@@ -68,8 +68,8 @@ values remain numeric. `Field.TILE_AMOUNT_FOR_WATERED` is 3.
 ## Verification
 
 ```sh
-node --test tools/tropicats-viewer/model.test.mjs tools/tropicats-viewer/art.test.mjs
-/tmp/tropicats-inspect-venv/bin/python -m unittest discover -s tools/tropicats-viewer -p 'test_*.py'
+node --test tools/reference/tropicats-viewer/model.test.mjs tools/reference/tropicats-viewer/art.test.mjs
+/tmp/tropicats-inspect-venv/bin/python -m unittest discover -s tools/reference/tropicats-viewer -p 'test_*.py'
 make lint
 ```
 

@@ -14,8 +14,8 @@ are tracked. This is a local inspection tool, not a repackaging of the game.
 Use the existing inspection environment (UnityPy 1.25.4 with Pillow):
 
 ```sh
-/tmp/tropicats-inspect-venv/bin/python tools/tropicats-viewer/extract_art.py --catalogue tools/tropicats-viewer/art-catalogue.json
-python3 tools/tropicats-viewer/serve.py
+/tmp/tropicats-inspect-venv/bin/python tools/reference/tropicats-viewer/extract_art.py --catalogue tools/reference/tropicats-viewer/art-catalogue.json
+python3 tools/reference/tropicats-viewer/serve.py
 ```
 
 Alternatively provide a Python environment with `UnityPy==1.25.4` and run the same
@@ -240,7 +240,7 @@ was inspected, including full charge, all 49 chameleon pairs, every wheel segmen
 count and every color column. Reproduce it after extraction:
 
 ```sh
-/tmp/tropicats-inspect-venv/bin/python tools/tropicats-viewer/mechanics.py reference/tropicats-analysis/art/sprites docs/review/tropicats-viewer/mechanics-states.png
+/tmp/tropicats-inspect-venv/bin/python tools/reference/tropicats-viewer/mechanics.py reference/tropicats-analysis/art/sprites docs/review/tropicats-viewer/mechanics-states.png
 ```
 
 | View | Before | After |

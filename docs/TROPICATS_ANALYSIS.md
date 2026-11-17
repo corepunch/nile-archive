@@ -9,9 +9,9 @@ The [design reference](tropicats-reference/README.md) expands this overview into
 an element dictionary, board-design examples, all 70 chapters and 1,217 story
 tasks, and concrete adaptation guidance for Relic Rush and Christmas Market.
 
-Browse the extracted puzzles with the [local level atlas](../tools/tropicats-viewer/README.md):
-run `python3 tools/tropicats-viewer/serve.py` and open <http://127.0.0.1:8765>.
-The viewer also supports [original sprites extracted from the installed app](../tools/tropicats-viewer/ART.md),
+Browse the extracted puzzles with the [local level atlas](../tools/reference/tropicats-viewer/README.md):
+run `python3 tools/reference/tropicats-viewer/serve.py` and open <http://127.0.0.1:8765>.
+The viewer also supports [original sprites extracted from the installed app](../tools/reference/tropicats-viewer/ART.md),
 with an explicit random-fruit preview and exact data inspection.
 It compares all three tiers, displays objectives and board layers, and provides
 cell-level inspection and changes relative to easy.
@@ -247,7 +247,7 @@ audio, models or large art bundles were downloaded.
 To recount using the retained inputs:
 
 ```sh
-/tmp/tropicats-inspect-venv/bin/python tools/inspect_tropicats.py \
+/tmp/tropicats-inspect-venv/bin/python tools/reference/inspect_tropicats.py \
   reference/Tropicats.app reference/tropicats-analysis/bundles \
   > reference/tropicats-analysis/audit.json
 ```

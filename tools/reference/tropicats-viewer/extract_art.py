@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import re
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 # Static illustrations are deliberate: animated meshes are not single sprites.
 NAMES = set('''board_recipe ui_icon_climber hiddenItem water_field
 window window_bridge growing_window growing_window_bridge_01 growing_window_bridge_02 portal_entrance portal_exit drop_item_exit climber_exit

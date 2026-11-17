@@ -5,7 +5,7 @@ from pathlib import Path
 from scene_data import build_scene
 
 
-DATA = Path(__file__).resolve().parents[2] / 'reference/junes-journey-analysis'
+DATA = Path(__file__).resolve().parents[3] / 'reference/junes-journey-analysis'
 
 
 @unittest.skipUnless((DATA / 'scenes/scene-001-01/objects.json').exists(),

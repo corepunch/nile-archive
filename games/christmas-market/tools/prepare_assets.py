@@ -2,7 +2,6 @@
 """Register ImageGen artwork using spatial crops, resizes and board masks."""
 import argparse
 import json
-import sys
 from math import sqrt
 from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageOps
@@ -10,8 +9,7 @@ from prepare_character import main as prepare_character
 from prepare_story_cast import prepare as prepare_story_cast
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
-from fit_match3_edges import thin_ring
+from fit_match3_edges import thin_ring   # beside this script
 
 DATA = ROOT / 'data'
 REGISTRATION = ROOT / 'art' / 'registration.json'

@@ -47,7 +47,7 @@ Acceptance:
 
 See the [footprint guide](laid-finds-guide.png) and [exact production prompt](laid-finds-states.prompt.txt).
 One master sheet contains the painted and charcoal states for both finds. Registration places
-each state on a separate transparent board canvas. Run `python3 tools/relic_quest_art.py --overlay-dir /tmp/relic-finds`
+each state on a separate transparent board canvas. Run `python3 games/relic-rush/tools/relic_quest_art.py --overlay-dir /tmp/relic-finds`
 from the repository root and compare the overlays with the game. The goal and recovered-item
 cards keep the compact original props.
 

@@ -55,7 +55,7 @@ hashes and download URL are recorded in
 
 ## Browse the artwork
 
-With Pillow available, run `python3 tools/cradle-of-rome-reference/export_art.py`
+With Pillow available, run `python3 tools/reference/cradle-of-rome/export_art.py`
 after unpacking the APK and resource pack. Open `board-pieces.png` and
 `board-backgrounds.png` in the resulting `reference/cradle-of-rome/visuals/`
 directory for an overview.
@@ -86,7 +86,7 @@ and a nine-second repeat period. `particles/cell_hint_blue.ptc` and
 `particles/cell_hint_green.ptc` define the color variants and contain identical
 `Star_02_16.png` and `Star_16.png` images. The original 16×16 PNGs sit at byte
 offsets 16873 and 20199. Extract them with
-`python3 tools/cradle-of-rome-reference/export_cell_hint_particles.py`, then
+`python3 tools/reference/cradle-of-rome/export_cell_hint_particles.py`, then
 pack them with `python3 tools/match3_atlas.py`.
 
 The supplied screen recording shows an electric-blue wash under the piece,
@@ -107,8 +107,8 @@ Run from the repository root with `innoextract` 1.9 or later and Pillow availabl
 curl -fL https://cdn7.gametop.com/games/Cradle-of-Rome-2.exe -o /tmp/Cradle-of-Rome-2.exe
 printf '%s  %s\n' 6413521557996b116fd83605944225931164f7748039dd925d0a2e8f1948d767 /tmp/Cradle-of-Rome-2.exe | shasum -a 256 -c
 innoextract --extract --lowercase --include app/resources.pak --include app/splashes --output-dir reference/cradle-of-rome-2 /tmp/Cradle-of-Rome-2.exe
-python3 tools/cradle-of-rome-reference/extract_pak.py reference/cradle-of-rome-2/app/resources.pak reference/cradle-of-rome-2/resources
-python3 tools/cradle-of-rome-reference/export_art.py --root reference/cradle-of-rome-2/resources --board-only
+python3 tools/reference/cradle-of-rome/extract_pak.py reference/cradle-of-rome-2/app/resources.pak reference/cradle-of-rome-2/resources
+python3 tools/reference/cradle-of-rome/export_art.py --root reference/cradle-of-rome-2/resources --board-only
 ```
 
 The extracted pack's SHA-256 is
@@ -135,7 +135,7 @@ then lumber supplies the Village. Relic Rush uses this purchase-to-tile loop
 with its own three wallets, expedition lengths and story milestones.
 
 ```sh
-python3 tools/cradle-of-rome-reference/export_economy.py reference/cradle-of-rome-2/resources > docs/cradle-of-rome-reference/rome-2-economy.json
+python3 tools/reference/cradle-of-rome/export_economy.py reference/cradle-of-rome-2/resources > docs/cradle-of-rome-reference/rome-2-economy.json
 ```
 
 ## Reproduce the counts
@@ -144,12 +144,12 @@ Run these commands from the repository root with the downloaded APK and fresh ou
 
 ```sh
 unzip -q reference/cradle-of-rome/cradle-of-rome-beta-0.9.0.apk -d reference/cradle-of-rome/apk
-python3 tools/cradle-of-rome-reference/extract_pak.py reference/cradle-of-rome/apk/assets/resources.pak reference/cradle-of-rome/resources
-python3 tools/cradle-of-rome-reference/analyze.py > /tmp/cradle-of-rome.json
-python3 tools/cradle-of-rome-reference/analyze.py --level 35
+python3 tools/reference/cradle-of-rome/extract_pak.py reference/cradle-of-rome/apk/assets/resources.pak reference/cradle-of-rome/resources
+python3 tools/reference/cradle-of-rome/analyze.py > /tmp/cradle-of-rome.json
+python3 tools/reference/cradle-of-rome/analyze.py --level 35
 ```
 
-The [analyzer](../../tools/cradle-of-rome-reference/analyze.py) emits per-level
+The [analyzer](../../tools/reference/cradle-of-rome/analyze.py) emits per-level
 metrics, feature lists by mode, piece credits and joined city tables as JSON.
 The level option prints terrain and piece layers side by side. It runs with
 Python's standard library. The notes and analyzer work from the repository,

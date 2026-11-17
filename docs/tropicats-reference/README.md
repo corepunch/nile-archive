@@ -12,8 +12,8 @@ and **1,217 story tasks**. Story spoilers throughout.
 | [Board design](BOARD_DESIGN.md) | How shape, placement, supply, objectives and constraints make different decisions; concrete level examples and easy/medium/hard comparisons |
 | [Applying it to our games](ADAPTATION.md) | Current capabilities and campaign overlap, proposed mechanic translations, board authoring briefs and story/reward pacing |
 | [Implemented elements and board shapes](../MATCH3_ELEMENTS.md) | Current six-family implementation, King counterparts, original artwork, shared tile mask and campaign progressions |
-| [Local level viewer](../../tools/tropicats-viewer/README.md) | Browse the extracted boards and inspect all three variants with original game artwork |
-| [Artwork catalogue and limitations](../../tools/tropicats-viewer/ART.md) | Which sprites, shaders and skeletons supply the viewer; disclosed reconstruction limits |
+| [Local level viewer](../../tools/reference/tropicats-viewer/README.md) | Browse the extracted boards and inspect all three variants with original game artwork |
+| [Artwork catalogue and limitations](../../tools/reference/tropicats-viewer/ART.md) | Which sprites, shaders and skeletons supply the viewer; disclosed reconstruction limits |
 | [Initial technical analysis](../TROPICATS_ANALYSIS.md) | Asset delivery, progression implementation, content counts and source inventory |
 
 For a story rewrite, start at the story handoff and follow its reading order.
@@ -58,7 +58,7 @@ that directory. Use the original source when a summary and a raw value differ.
 | Separate puzzle sets | `config/singletierareasconfig.json`, `bundled/107_endofcontentlevelsconfig`, `level-inventory.json` | Keep alternate and post-story selection data separate from chapter counts. The inventory lists all decoded board assets. |
 | Village, building and rank context | `config/buildingconfiglist.json`, `config/startbuildingconfig.json`, `config/villagerconfig.json`, `config/villagerbehaviorconfig.json`, `bundled/111_islandareaconfig`, `bundled/113_villagerankconfig` | Start from the task target or scene place and compare identifiers. Look up rank thresholds independently of the task's puzzle tiers. |
 | Default rewards and other bundled systems | `bundled/116_level_rewards`, `bundled/inventory.json` | The inventory indexes the bundled text assets, including events, collection rewards and feature settings. The level rewards table and quest claim reward describe different layers of progression. |
-| Board art and reconstruction | `art/sprites.json`, `art/provenance.json`, `art/sprites/` | Use the artwork catalogue and viewer for mappings and limits. [Artwork catalogue](../../tools/tropicats-viewer/ART.md) |
+| Board art and reconstruction | `art/sprites.json`, `art/provenance.json`, `art/sprites/` | Use the artwork catalogue and viewer for mappings and limits. [Artwork catalogue](../../tools/reference/tropicats-viewer/ART.md) |
 | Provenance and implementation clues | `audit.json`, `download-sizes.json`, `bundles/`, `metadata-symbols.txt`, `metadata-literals.json` | The audit lists bundle URLs and fingerprints. Metadata identifies classes and fields. [Technical analysis](../TROPICATS_ANALYSIS.md) |
 
 ## Reproduce the reference
@@ -68,9 +68,9 @@ The original application and decoded third-party content remain in ignored
 captures. See the viewer's extraction instructions for local prerequisites.
 
 ```sh
-python3 tools/tropicats_board_analysis.py
-python3 tools/tropicats_story_reference.py --check
-python3 tools/tropicats-viewer/serve.py
+python3 tools/reference/tropicats_board_analysis.py
+python3 tools/reference/tropicats_story_reference.py --check
+python3 tools/reference/tropicats-viewer/serve.py
 ```
 
 Open <http://127.0.0.1:8765>. The story tool uses the extracted tables. Run it

@@ -24,7 +24,7 @@ scene.
 To reproduce the scene extraction with UnityPy 1.25.4 installed:
 
 ```sh
-/tmp/tropicats-inspect-venv/bin/python tools/extract_junes_scenes.py \
+/tmp/tropicats-inspect-venv/bin/python tools/reference/extract_junes_scenes.py \
   /Users/igor/Developer/nile-archive/reference/junesjourney.app \
   reference/junes-journey-analysis/scenes
 ```

@@ -2,7 +2,7 @@
 
 These observations describe the extracted 2.5.11 campaign, not verified play outcomes. A variant is a numbered level plus a/b/c tier; these are 8,190 authored configurations of 2,730 numbered levels, plus 500 unsuffixed assets excluded from the statistics. Every tier has a 9×9 array envelope, with field value 0 making holes. Nonzero fields include windows, so “field cells” below is a serialized mask count, not guaranteed ordinary matchable space. Layer counts count occupied cells, not HP, independent obstacles, or moves to clear. [Mechanics and evidence limits](MECHANICS.md) explains each layer.
 
-Run `python3 tools/tropicats-viewer/serve.py` from the repository root to open the level links. The atlas is a static inspector; it does not simulate gravity, randomness or play. Raw examples are `reference/tropicats-analysis/levels/0001a`, `0001b`, `0001c`, etc. Those extracted inputs are ignored local files.
+Run `python3 tools/reference/tropicats-viewer/serve.py` from the repository root to open the level links. The atlas is a static inspector; it does not simulate gravity, randomness or play. Raw examples are `reference/tropicats-analysis/levels/0001a`, `0001b`, `0001c`, etc. Those extracted inputs are ignored local files.
 
 ## What changes a board's problem
 
@@ -39,10 +39,10 @@ For a new board, first pick the goal and sketch a readable route or region for i
 
 ## Measured vocabulary and presentation sequence
 
-The generator [tools/tropicats_board_analysis.py](../../tools/tropicats_board_analysis.py) reads all tier files and reports counts and first serialized appearances, with no external dependency:
+The generator [tools/reference/tropicats_board_analysis.py](../../tools/reference/tropicats_board_analysis.py) reads all tier files and reports counts and first serialized appearances, with no external dependency:
 
 ```sh
-python3 tools/tropicats_board_analysis.py > /tmp/tropicats-board-analysis.json
+python3 tools/reference/tropicats_board_analysis.py > /tmp/tropicats-board-analysis.json
 ```
 
 It requires exactly 8,190 filenames matching four digits plus a/b/c and checks every field mask has 81 entries. Counts are variants containing at least one nonzero value, not counts of levels, objects or hits. It does not include unsuffixed assets, interpret goals, or execute the game.

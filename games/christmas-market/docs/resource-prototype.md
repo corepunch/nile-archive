@@ -212,5 +212,5 @@ build/test/christmas-market --check --extended "rules campaign_play"
 
 The runner writes each payout to `build/test/christmas-market.log`.
 Reference layouts can be reproduced with
-`python3 tools/cradle-of-rome-reference/analyze.py --level 3`.
+`python3 tools/reference/cradle-of-rome/analyze.py --level 3`.
 Pass `--root reference/cradle-of-rome-2/resources` for the sequel.

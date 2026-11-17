@@ -5,7 +5,7 @@ from hashlib import sha256
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 SOURCE = ROOT / 'reference/cradle-of-rome-2/resources/particles/cell_hint_blue.ptc'
 OUTPUT = ROOT / 'engine/art/match3/rome-2-cell-hint'
 SPRITES = {'Star_02_16.png': (16873, 3101), 'Star_16.png': (20199, 3150)}

@@ -9,7 +9,7 @@ import re
 from urllib.parse import urlsplit
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_DATA = HERE.parents[1] / "reference/tropicats-analysis"
+DEFAULT_DATA = HERE.parents[2] / "reference/tropicats-analysis"
 
 
 def read_json(path):
