@@ -377,10 +377,10 @@ and resizing; it does not create new colours or states.
 
 ## Special pieces
 
-Live expeditions make rockets (four in a line), bombs (crossing lines) and
-rainbow balls (five or more in a line). Expeditions accept straight lines only,
-so the plane, made from a four-cell rhombus, appears only on reference boards
-and in art previews.
+Live expeditions make no special pieces: matches of any length or shape only
+clear, and power comes from the charged bonus tools (Cradle of Rome rules).
+Rockets, bombs, planes and rainbow balls appear only on Homescapes reference
+boards (`--homescapes`), in art previews and in effect captures (`--fx`).
 
 Source for every new sprite below: `art/board-states/source.png`, generated together
 in one built-in ImageGen call. The exact prompt is

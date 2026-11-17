@@ -7,14 +7,14 @@ This supersedes the prototype's connected-group match-4 rules.
 - Exchange two side-adjacent movable relics, by swiping or tapping both.
 - A contiguous **straight line of three or more identical relics** matches along any of the three hex axes. Bends, triangles, diamonds and rings do not count on their own. Side branches are not part of a line.
 - A swap without a line through either swapped cell returns without spending a move. Special combinations retain their existing swap behavior.
-- Three clears normally; four leaves a directional ray along the matched axis; five or more leaves a sun prism. Swap the prism with a relic to clear that color.
-- Crossing lines clear their union once. Their combined size does not create a bomb; there are no T/L or ring recipes. Bombs already present and dynamite tools retain their blast effects.
-- Existing specials, combos, fire thawing, ice layers, chains, excavation and tools retain their respective effects.
+- Any line clears normally, whatever its length. Matches never create special pieces: like Cradle of Rome, power is earned, by charging the bonus tools along the bottom edge with matched resource pieces. Four or five in a line give no rocket, bomb, plane or rainbow ball.
+- Crossing lines clear their union once. There are no T/L or ring recipes.
+- Fire thawing, ice layers, chains, excavation and tools retain their respective effects.
 - A ready group is checked on the idle board before hints/input and after every completed fall. All cascade waves finish before victory/failure is checked. Automatic waves do not spend additional moves.
 - The expedition's top bar shows the hexagonal Moves medallion, Coins, Supplies, Food and Settings. Blue plaques mark the objective on the board. Tools sit along the bottom edge. Settings opens the Explorer's Guide and lets the player resume, restart after confirmation, or quit to the island and resume the same board from Expeditions. See the [top bar review](screenshots/review/top-bar-moves/README.md).
 - Hints highlight a legal swap after five idle seconds. If the hint search finds no swap, idle boards use the same free reshuffle as boards settling after a fall, with a “No moves. Board reshuffled.” notice. Recovery resets selection/tool targeting and stale hints, preserving move/tool budgets, objective progress, holes, sand, ice, chains and their locked relics. Victory and exhausted moves take precedence over reshuffling.
 
-The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. Generation, hints, reshuffling and cascades use the same rule in both games.
+The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market, and both set `NO_SPECIALS`. Special pieces remain only on Homescapes reference boards (`--homescapes`) and in art previews. Generation, hints, reshuffling and cascades use the same rule in both games.
 
 ## Original ten board masks
 
