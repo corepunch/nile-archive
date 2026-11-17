@@ -19,8 +19,8 @@ unrelated captures: `phone-board` also matches an entrance reel, whereas
 `"shot phone-board"` selects just the screenshot. Check `--list` when unsure.
 Use before/after pairs at the two relevant sizes for a uniform visual change;
 add state boards or reels when the behaviour they cover changes. Run full local
-coverage for shared engine changes or a concrete unresolved concern. CI always
-runs the complete suite. See [AGENTS.md](../AGENTS.md) for scope rules.
+coverage for shared engine changes or a concrete unresolved concern. Native CI
+runs the extended rules, renderer, audio and gameplay smoke tests. See [AGENTS.md](../AGENTS.md) for scope rules.
 
 When reporting timings, use measured elapsed seconds and distinguish builds,
 tests/captures and lint. Label estimates and do not compare a full-task duration
@@ -55,16 +55,17 @@ Emergency 0.2 s and Nile Archive 0.1 s; the engine's instance runs beside the ga
 board tile check reads recorded hashes instead of re-rendering (`--render-check`
 in `make test-assets` re-renders).
 
-Bulk screenshot/reel exports and long game smoke scenarios are explicit
-integration checks. `make test-full` retains them all and is used by cloud CI;
-`make shots` and `make smoke` select those workflows independently. Screenshots
-check dimensions and non-flat pixels; repeatedly exporting them adds little to
-the rule and renderer assertions on every local edit.
+Native CI uses `make test-ci` after preflight. It runs audio and then one
+`build/test/all --with-smoke --extended` process for the engine and every game.
+For a visual review, `make shots` exports screenshots, animation reels, frames
+and long-press captures. Screenshots check dimensions and non-flat pixels.
+`make smoke` runs just the gameplay scenarios.
 
 `build/test/all` and the per-suite binaries run only rules and C tests by default.
 Screenshots, frames, reels, gestures and smoke runs never run unasked: they run
 when a name filter selects them (`"shot phone-board"`, `smoke`) or with `--full`,
-which `make test-full` passes. `--suite=<name>` (repeatable) keeps only those suites. A binary per suite still builds on request:
+which `make test-full` passes. `--with-smoke` adds gameplay smoke scenarios to
+the default selection. `--suite=<name>` (repeatable) keeps only those suites. A binary per suite still builds on request:
 
 | Binary | Runs |
 |---|---|
@@ -81,6 +82,7 @@ now live in the [standalone repository](https://github.com/corepunch/clayfight).
 ```sh
 make test                       # correctness + renderer + preflight, two instances, budget 10s
 make test-fast                  # same checks without a window/GPU
+make test-ci                    # native CI checks after preflight
 make test-full                  # complete smoke/capture integration, deliberately slow
 make test-full ONLY=smoke        # only smoke jobs, in every suite
 make test TEST_BUDGET=30         # explicit allowance for slower hardware
@@ -185,9 +187,10 @@ build/test/relic-rush --fast     # same executable used for full screenshots and
 Fast mode runs Lua rules and the engine's CPU tests, skipping renderer tests,
 smoke, screenshots, reels and gestures. The aggregate target also retains
 preflight and native audio checks. `make test-extended` deliberately raises
-the budget to 60 seconds for the larger deterministic sample. CI runs
-`make test-full TEST_ARGS=--extended`, keeping the thousand opening boards,
-greedy campaign simulation and complete integration captures.
+the budget to 60 seconds for the larger deterministic sample. Native CI runs
+the thousand opening boards, greedy campaign simulations and gameplay smokes.
+The two 30-board UI campaigns render a 240×450 window at the logical phone
+layout and advance the test clock by 0.1 seconds per frame.
 
 For Relic Rush and Christmas Market, `build/test/<game> --extended 'rules campaign_play'`
 plays the boards the story covers (the first 30 of 100) without a window using a deterministic greedy player and up

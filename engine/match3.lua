@@ -619,6 +619,7 @@ function E.new(config)
     assert(M.LEVELS > 0, "match3 needs a level")
     local LEVELS, COLORS, MATCH_MIN = M.LEVELS, M.COLORS, M.MATCH_MIN
     local shapes = require("match3.shapes")
+    local lines = flags & E.LINE_MATCHES ~= 0 and shapes.lines(M, MATCH_MIN)
     function M.level_of(g) return M.levels[g.level + 1] end
     function M.is_goal_kind(g, kind)
         if g.goal_kind ~= nil then return kind == g.goal_kind end
@@ -655,9 +656,16 @@ function E.new(config)
     local function cell_active(g, cell) return cell >= 0 and cell < CELLS and g.active[cell] end
     M.game_cell_active = cell_active
 
+    local function match_kind(g, cell)
+        if g.active[cell] and not solid(g, cell) then
+            local kind = g.tiles[cell].kind
+            if kind >= 0 then return kind end
+        end
+    end
+
     local function equal(g, a, b)
-        return cell_active(g, a) and cell_active(g, b) and not solid(g,a) and not solid(g,b)
-            and g.tiles[a].kind >= 0 and g.tiles[a].kind == g.tiles[b].kind
+        local kind = match_kind(g, a)
+        return kind ~= nil and kind == match_kind(g, b)
     end
 
     -- An empty match: which cells clear (mask), which a match cleared
@@ -689,20 +697,6 @@ function E.new(config)
                     n = n + 1
                     cells[n] = b
                 end
-            end
-        end
-        return n
-    end
-
-    -- Count a contiguous run through a cell; holes and other colours stop it.
-    local function run_length(g, cell, axis)
-        local n = 1
-        for sign = 0, 1 do
-            local d = axis + sign * 3
-            local c = hex_neighbor(cell, d)
-            while equal(g, cell, c) do
-                n = n + 1
-                c = hex_neighbor(c, d)
             end
         end
         return n
@@ -740,8 +734,12 @@ function E.new(config)
     function M.game_matches(g, m)
         reset_match(m)
         m.match_lengths = g.resource_multipliers and {}
-        if flags & E.LINE_MATCHES ~= 0 then
-            shapes.matches(M, g, m, MATCH_MIN, equal)
+        if lines then
+            local kinds = {}
+            for i = 0, CELLS - 1 do
+                kinds[i] = match_kind(g, i)
+            end
+            shapes.matches(lines, kinds, m, MATCH_MIN)
             return
         end
         local seen = {}
@@ -1019,9 +1017,20 @@ function E.new(config)
 
     -- Only lines through a swapped cell can validate its move. Avoid a
     -- whole-board scan for each hint candidate and each generated gem.
-    local function shape_at(g,i)
-        if not equal(g,i,i) then return false end
-        for axis=0,2 do if run_length(g,i,axis)>=MATCH_MIN then return true end end
+    local function shape_at(g, cell)
+        local kind = match_kind(g, cell)
+        if not kind then return false end
+        for axis = 0, 2 do
+            local length = 1
+            for dir = axis, axis + 3, 3 do
+                local side = neighbors[cell][dir]
+                while match_kind(g, side) == kind do
+                    length = length + 1
+                    if length >= MATCH_MIN then return true end
+                    side = neighbors[side][dir]
+                end
+            end
+        end
         return false
     end
 
@@ -1419,10 +1428,11 @@ function E.new(config)
     end
 
     -- How good a move is for a greedy player: score plus weighted goal progress.
-    function M.game_evaluate_move(g, a, b)
+    -- A caller that also needs the matched cells can supply its own probe.
+    function M.game_evaluate_move(g, a, b, probe)
         if not M.game_swap_matches(g, a, b) then return -1 end
         local c = game_copy(g)
-        local m = new_match()
+        local m = probe or new_match()
         if not game_swap(c, a, b, m) then return -1 end
         game_apply(c, m)
         local level = M.levels[g.level + 1]
