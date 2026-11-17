@@ -14,6 +14,7 @@ function D.bind(R, W)
     local island = require("island")
     local journey = require("journey")
     local LEVELS, WONDERS, ISLAND_ZONES = rules.LEVELS, island.WONDERS, island.ISLAND_ZONES
+    local function wonder_kind(i) return island.wonder_kinds and island.wonder_kinds[i + 1] or i end
     local debug = W.debug
     local function wallet(gold, stars)
         local extras = R.currency_prices and 160 or 0
@@ -34,7 +35,7 @@ function D.bind(R, W)
         R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
         R.island.open = R.island.open | 1
         local spend = purse(100000, 100000, 100000)
-        for _ = 1, n do island.island_place_next(R.island, spend, cleared, 0) end
+        while island.wonder_count(R.island) < n and island.island_place_next(R.island, spend, cleared, 0) do end
     end
     R.island_with = island_with
 
@@ -175,12 +176,13 @@ function D.bind(R, W)
             R.island.count = 0
             R.island.open = 63
             for i = 0, WONDERS - 1 do
-                local p = R.island:snap(spots[i + 1], i)
-                if not R.island:can_place(p, i, -1) then
-                    local _, spot = R.island:find_spot(i, p)
+                local kind = wonder_kind(i)
+                local p = R.island:snap(spots[i + 1], kind)
+                if not R.island:can_place(p, kind, -1) then
+                    local _, spot = R.island:find_spot(kind, p)
                     p = spot
                 end
-                R.island:add(p, i, 0)
+                R.island:add(p, kind, 0)
             end
             local decor = tonumber(app.arg("decorations") or "")   -- --decorations N: N decorations among the buildings
             if decor then
@@ -205,9 +207,10 @@ function D.bind(R, W)
             local x, y = a:match("(%d+),(%d+)")
             if x then R.island_focus(vec2(tonumber(x), tonumber(y)), R.island.cam.zoom) end
         end
-        if app.arg("placing") and R.island.count < WONDERS then
-            R.prog.level = journey.wonder_levels[R.island.count + 1]
-            R.island_begin(R.island.count, true)
+        local built = island.wonder_count(R.island)
+        if app.arg("placing") and built < WONDERS then
+            R.prog.level = journey.wonder_levels[built + 1]
+            R.island_begin(wonder_kind(built), true)
             local c = R.island
             if app.arg("placing") == "blocked" and c.count > 0 then   -- over a built building: the red ghost
                 c.ghost = c.items[c.count].pos
@@ -240,7 +243,7 @@ function D.bind(R, W)
             island_with(i)
             R.prog.level = journey.wonder_levels[i + 1]
             R.prog.wallet = wallet(142, R.prog.level * 3)
-            R.inspect = i
+            R.inspect = wonder_kind(i)
             R.overlay = R.OV_WONDER
             R.on_island = true
             R.toast_time = 0
@@ -389,7 +392,9 @@ function D.bind(R, W)
             R.toast_time = 0
             if a == "intro" then R.queue_story({key = journey.beats[1].key, lines = R.intro_lines}, true); R.present_board()   -- no board behind the talk yet
             elseif a == "adrian" then island_with(WONDERS); R.on_island = true; R.queue_story({key = "finale", lines = R.finale}, true)
-            elseif a == "mara" then island_with(3); R.on_island = true; story.add({W.region_speaker, journey.regions[2], story.SHOUT})
+            elseif a == "mara" then
+                island_with(3); R.on_island = true
+                story.add({W.region_speaker, journey.regions[2] or R.intro_lines[1][2], story.SHOUT})
             elseif a == "tomas" then island_with(2); R.on_island = true; story.say(debug.narrator, R.wonders[2].about)
             elseif a == "bubble" then
                 island_with(2); R.on_island = true

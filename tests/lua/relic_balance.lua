@@ -59,7 +59,7 @@ for level = 1, rules.LEVELS do
         local g = rules.game_start(level - 1, seed_of(1000 * level + run), restored)
         play(g)
         if g.won then
-            local reward = rules.reward_breakdown(g, {}, nil).total
+            local reward = rules.reward_breakdown(g).total
             stats.wins, stats.moves = stats.wins + 1, stats.moves + g.moves
             for slot = 1, CURRENCIES do stats.income[slot] = stats.income[slot] + reward[slot] end
         end

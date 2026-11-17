@@ -1,4 +1,4 @@
-# Relic Rush's 96 buildings, as procedural Blender geometry on the game's grid.
+# Relic Rush's buildings, as procedural Blender geometry on the game's grid.
 #
 # tools/building_kit.py holds the toolbox and the conventions. Rebuild the master and
 # re-render with: python3 tools/buildings.py relic-rush --rebuild
@@ -85,6 +85,24 @@ def well(k):
     k.lathe("gold", 0, .14, G + 1.04, [(.178, 0), (.19, .07)], GOLD, 18)
     k.puff(-.82, -.82, G, .19)
     k.puff(.82, .8, G, .21)
+
+
+def quay_steps(k):
+    # Ships approach the low landing on the visible -Y side. Wide worn
+    # treads rise to the dry landing, flanked by low stone retaining walls.
+    for i in range(5):
+        y = -.75 + .31 * i
+        k.box("stone", 0, y, G, 1.22, .33, .12 + .135 * i, sand())
+        k.box("stone", 0, y - .14, G + .085 + .135 * i, 1.26, .11, .06, sand())
+    k.box("stone", 0, .78, G, 1.22, .42, .66, sand())
+    for x in (-.73, .73):
+        for i in range(4):
+            y = -.68 + .47 * i
+            h = .21 + .17 * i
+            k.box("stone", x, y, G, .28, .46, h, sand())
+            k.box("stone", x, y, G + h, .32, .46, .08, SAND_PALE)
+    k.box("glaze", .89, .70, G + .47, .025, .24, .19, TEAL)
+    k.puff(-.78, .83, G, .16)
 
 
 def workshop(k):

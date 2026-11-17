@@ -325,7 +325,7 @@ elseif action and action.kind == "cancel" then modals:close(action.modal) end
 
 Each layer's backdrop fades in over 0.2 s on the engine's tween module
 ([MOTION.md](MOTION.md)); `reduced_motion` shows it at once.
-`open(id,form,model,options)` pushes model values and a layer. Options include
+`open(id,form,model,options)` pushes model values and a layer. The form must have a `column` root. Rows within it can hold side-by-side content such as the three resource totals. Options include
 `bounds`, `width`, `height`, `blur`, `dim`, `snap_backdrop` (default false), `close_on_background` (default true), and a `cancel` command ID (default
 `cancel`). Set `snap_backdrop=true` to apply the full blur and dim on the first frame, independently of entrance animation. Automatic bounds centre the measured form within the logical screen.
 Each layer blurs/dims all earlier drawing; the next layer can blur the previous
@@ -335,6 +335,20 @@ A newly opened modal paints once with input disabled, so the release or
 key that opened it cannot also press a newly appeared button or cancel it. The
 next draw accepts input normally; lower layers remain inactive. This is covered
 by the form test and Relic Rush's 390 x 844 expedition-browser input smoke test.
+
+The shared match-3 popup renderer also requires a column-root form. It owns
+measurement, centering, hit testing and dismissal for Results, Settings, the
+Guide, restart confirmation, building details, the out-of-moves prompt, region
+unlock and finale. Games supply data or a vertical form. Results use three equal
+columns in one row. Optional content participates in the measured stack only
+when visible, so the Collect button follows the last row. The building shop,
+expeditions, story choice and leaderboard use the same root contract through
+`ui.modals`.
+
+`form:draw` accepts a `paint_scope(group, draw)` option. A node with
+`paint_group` hands its subtree's painting to that scope, which must call
+`draw()` and return its event. The results reel uses this to fade and lift
+sections inside their measured layout while input uses the final boxes.
 
 Custom painted dialogs share `ui.modal_dismiss(visible_bounds, options)`. It
 registers the full bleed area for capture and returns true for Back or an eligible

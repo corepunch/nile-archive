@@ -68,7 +68,7 @@ local function campaign()
         local box = R.choice_form.boxes["1"]
         if box then app.inject_click(box:center()); wait = 10 end
     elseif R.overlay == R.OV_RESULT then
-        if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
+        if R.dialog_settled() and R.result_form.boxes.claim then app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_ZONE then
         if R.dialog_settled() then app.inject_click(rect(72, 487, 336, 47):center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif c.placing >= 0 then
@@ -154,12 +154,11 @@ function R.smoke()
     elseif stage == 0 then
         if R.overlay == R.OV_RESULT then
             if R.modal_for == R.OV_RESULT and R.dialog_settled() then
+                local boxes = R.result_form.boxes
+                assert(boxes.claim.y - (boxes.next_step or boxes.resources):max().y <= 20,
+                    "claim follows the last visible result row without a reserved gap")
                 shop.replay_reward = shop.replay and rules.level_reward(R.g,R.wonders,R.prog,R.island) or nil
-                if shop.replay then
-                    local base = rules.level_reward(R.g,R.wonders,R.prog)
-                    assert(shop.replay_reward[1] == base[1] + 1, "one placed decoration earns one bonus coin")
-                end
-                app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); stage = 1
+                app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); stage = 1
             end
             return
         end
@@ -232,7 +231,6 @@ function R.smoke()
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 23
     elseif stage == 23 and R.island.placing < 0 then
         assert(R.island.count == 1 and R.prog.wallet[1] == shop.gold, "cancelled purchase changed save state")
-        assert(island.decoration_bonus(R.island)==0, "cancelling a decoration leaves the bonus unchanged")
         R.open_catalogue(); stage = 24
     elseif stage == 24 and R.overlay == R.OV_SHOP then
         if press_tile("shrub") then stage = 25 end
@@ -241,7 +239,6 @@ function R.smoke()
     elseif stage == 26 and R.island.placing < 0 then
         assert(R.island.count == 2 and island.wonder_count(R.island) == 1, "decoration changed campaign restoration count")
         assert(R.prog.wallet[1] == shop.gold - 15, "purchase must charge once")
-        assert(island.decoration_bonus(R.island)==1, "a confirmed decoration earns one bonus coin")
         local c = R.island
         app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5, .65))); stage = 27
     elseif stage==27 and R.overlay==R.OV_NONE then

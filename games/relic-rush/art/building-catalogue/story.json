@@ -5,7 +5,20 @@
   },
   "well": {
     "about": "Water buckets earn 3 Food each from expedition 5.",
-    "cost": [125, 0, 0]
+    "cost": [125, 0, 0],
+    "fixed_site": [610, 1840]
+  },
+  "quay_steps": {
+    "about": "Repair the old steps to reach the tide room below the cliff.",
+    "cost": [75, 0, 100],
+    "fixed_site": [925, 2195],
+    "paint": {
+      "geometry": "art/building-catalogue/painted-v1/quay-steps-geometry.png",
+      "source": "art/building-catalogue/painted-v1/quay-steps-output.png",
+      "prompt": "art/building-catalogue/painted-v1/quay-steps-prompt.txt",
+      "from": [[13, 826], [789, 1124], [1297, 609]],
+      "to": [[1.54, 175.54], [174.74, 239.81], [274.74, 128.48]]
+    }
   },
   "workshop": {
     "about": "Cut blocks earn 5 Supplies each from expedition 8.",
@@ -56,7 +69,7 @@
     "cost": [170, 215, 290]
   },
   "water_mill": {
-    "about": "Restore the Water mill before rebuilding the Jungle market.",
+    "about": "Put the Water mill back to work before repairing the quay steps.",
     "cost": [65, 35, 60]
   },
   "clock_tower": {

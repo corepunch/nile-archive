@@ -155,6 +155,7 @@
 ---@field income purse Collected by tapping when ready.
 ---@field income_period number Seconds; 0 = no income.
 ---@field decoration boolean A tree, statue, garden...: it keeps roads off its base, but no road leads to it.
+---@field fixed_site vec2 World position of an immovable restoration. Its snapped footprint is reserved even before construction. Zero allows free placement.
 
 ---@class building A placed building.
 ---@field pos vec2

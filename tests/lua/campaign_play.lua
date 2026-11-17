@@ -16,8 +16,12 @@ R.wonders = island.wonders
 R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
-local attempts, wins, earned, bonus, replays = 0, 0, 0, 0, 0
+local attempts, wins, earned, replays = 0, 0, 0, 0
 local played = {}
+local user_events = testing.game == 'relic-rush' and require('user_events_runtime')
+local function owns_wonder(index)
+    return island.owned(R.island, island.wonder_kinds and island.wonder_kinds[index + 1] or index) > 0
+end
 
 local function scene(expected, before_reward)
     R.story_tick()
@@ -67,7 +71,7 @@ local STORY_LEVELS = journey.beats[#journey.beats].level
 for level = 1, STORY_LEVELS do
     R.on_island, R.overlay = false, R.OV_NONE
     R.g = rules.game_start(level - 1, 1)
-    local next_beat = journey.next(R.prog, function(kind) return island.owned(R.island, kind) > 0 end, level - 1)
+    local next_beat = journey.next(R.prog, owns_wonder, level - 1)
     if next_beat and next_beat.phase == 'before' then scene(next_beat.key) end
     local won
     -- Fixed independent starts permit a failed board to be retried. They are
@@ -93,20 +97,20 @@ for level = 1, STORY_LEVELS do
         end
         scene(after, true)
     end
-    local reward = rules.reward_breakdown(R.g, R.wonders, R.prog)
+    local reward = rules.reward_breakdown(R.g, R.prog)
     local before = R.prog.wallet[1]
     R.claim_reward()
     check(R.prog.level == level and R.prog.wallet[1] == before + reward.total[1], 'win pays once and advances')
-    earned, bonus = earned + reward.total[1], bonus + (reward.bonus or 0)
+    earned = earned + reward.total[1]
     if rules.FOOD then
         local income, wallet = reward.total, R.prog.wallet
         print(("wish %02d · earned %d/%d/%d · stock %d/%d/%d · %d moves left"):format(
             level, income[1], income[3], income[2], wallet[1], wallet[3], wallet[2], R.g.moves))
     end
-    if journey.clear_before_result and not first_exchange then scene(after) end
+    if journey.clear_before_result and not first_exchange and journey.find(after) and journey.find(after).phase == 'after' then scene(after) end
     local kind = journey.wonder_at(level)
     if kind then
-        check(not journey.next(R.prog, function(k) return island.owned(R.island, k) > 0 end, nil), 'story waits for construction')
+        check(not journey.next(R.prog, owns_wonder, nil), 'story waits for construction')
     end
     for z = 1, 5 do R.island:unlock(z, R.prog.wallet) end
     if island.next_step then
@@ -143,12 +147,16 @@ for level = 1, STORY_LEVELS do
     elseif kind then
         assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
     end
-    if kind and journey.clear_before_result then scene(('restore-%02d'):format(level)) end
-    if not journey.clear_before_result and not first_exchange then scene(after) end
+    if user_events then user_events.emit('island') end
+    local pending = journey.next(R.prog, owns_wonder, nil)
+    while pending do
+        scene(pending.key)
+        pending = journey.next(R.prog, owns_wonder, nil)
+    end
 end
 check(#played == #journey.beats, 'every story beat played')
 for i, beat in ipairs(journey.beats) do check(played[i] == beat.key, 'story order: ' .. beat.key) end
 check(island.wonder_count(R.island) == island.WONDERS, 'all story buildings placed')
 if island.ladder then check(island.campaign_count(R.island) == #island.ladder, 'every ladder restoration placed') end
-print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d total earned, %d move bonus, %d remaining, %d stars, %d scenes'):format(
-    wins, attempts-wins, replays, earned, bonus, R.prog.wallet[1], R.prog.wallet[4], #played))
+print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d total earned, %d remaining, %d stars, %d scenes'):format(
+    wins, attempts-wins, replays, earned, R.prog.wallet[1], R.prog.wallet[4], #played))

@@ -9,6 +9,7 @@ R.cast={
     -- Heard, never seen: the radio or a loudhailer. No bust, so the engine captions his lines.
     {id='kessler',name='Kessler',role='Meridian Society',color=color(60,62,70)},
     {id='ines',name='Ines Reed',role='Keeper of the tide warning',color=color(51,93,84)},
+    {id='keeper',name='Ancient keeper',role='Keeper of the first harbor',portrait_path='story/characters/keeper.png',color=color(94,72,46),mouth=vec2(.54,.51)},
 }
 
 return R

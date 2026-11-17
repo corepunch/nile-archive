@@ -2309,6 +2309,30 @@
     63.415
    ],
    "shadow_base_width": 232.224
+  },
+  "quay_steps": {
+   "title": "Quay steps",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/quay_steps.png",
+   "image": [
+    276,
+    240
+   ],
+   "pivot": [
+    138.138,
+    152.009
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/quay_steps.png",
+   "shadow_pivot": [
+    116.435,
+    86.657
+   ],
+   "shadow_base_width": 232.224
   }
  },
  "generator": "tools/buildings.py",
@@ -2415,12 +2439,13 @@
   "capybara",
   "boulder",
   "crystal",
-  "mossy_rocks"
+  "mossy_rocks",
+  "quay_steps"
  ],
  "paintover": {
   "version": "painted-v1",
   "importer": "tools/import_painted_buildings.py",
   "sources": "art/building-catalogue/painted-v1"
  },
- "renderer": "Scener"
+ "renderer": "Blender"
 }

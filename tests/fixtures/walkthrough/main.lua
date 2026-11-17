@@ -21,12 +21,17 @@ function R.smoke()
         app.inject_click(vec2(394, R.hud_rect.y - 30)); stage = 1
     elseif stage == 1 and R.overlay == R.OV_RESULT and R.dialog_settled() then
         assert(R.g.won and R.prog.level == 0, 'skip must open results before paying')
-        app.inject_click(vec2(240, 688 + R.drop / 2)); stage = 2
+        app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); stage = 2
     elseif stage == 2 and R.on_island and R.overlay == R.OV_NONE then
         assert(R.prog.level == 1 and island.wonder_count(R.island) == 0, 'result must pay before placement')
         app.inject_click(vec2(394, 136)); stage = 3
     elseif stage == 3 and island.wonder_count(R.island) == 1 then
         assert(R.island.placing < 0, 'town action must confirm placement')
+        if game == 'relic-rush' then
+            R.quiet = false
+            if story.active() then story.next() end
+            if not R.prog.story_seen['restore-01'] then return end
+        end
         app.inject_click(vec2(394, 136)); stage = 4
     elseif stage == 4 and not R.on_island then
         assert(R.g.level == 1, 'town action must start the next board')

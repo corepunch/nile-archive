@@ -1,4 +1,4 @@
--- The same delayed three flashes first come from the cliff and later from Ines.
+-- The three-flash answer returns from the safe landing in the finale.
 local R = require("state")
 local rules = require("rules")
 local art = require("art").finale
@@ -22,8 +22,7 @@ function R.clear_scene()
     end
     local scene = R.signal_scene
     scene.elapsed = R.now - scene.time
-    local duration = scene.key == "landing" and 3.8 or 2.25
-    if not scene.skipped and scene.elapsed < duration then return scene end
+    if not scene.skipped and scene.elapsed < 3.8 then return scene end
 end
 
 local function lamp(at, radius, amount)
@@ -35,11 +34,6 @@ end
 function R.draw_clear_scene(scene, inp)
     local t, still = scene.elapsed, R.reduced_motion
     if t > .4 and (inp.released or inp.back) then scene.skipped = true end
-    if scene.key == "cliff" then
-        lamp(vec2(R.SCREEN_W * .56, R.hud_rect.y - 29), 32, still and .45 or flash(t))
-        return
-    end
-
     -- The recovered plate appears at the signal site before we cut across the bay.
     local join = still and 0 or .68
     local incoming = still and 1 or num.saturate((t - join) / .25)

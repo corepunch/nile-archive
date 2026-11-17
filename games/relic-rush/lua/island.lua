@@ -21,15 +21,25 @@ M.TILE = 56   -- a tile's side on the ground, in world units
 -- The catalogue owns sprite registration, prices, descriptions and unlocks.
 M.catalogue = require("buildings")
 M.buildings, M.wonders = M.catalogue, {}
+M.kinds = {}
 -- Roads lead to buildings, and to any catalogue row marked road=true (big pieces
 -- on a foundation); trees, statues, camp props and the rest are decorations.
 local HOUSES = {wonder = true, building = true}
-for _, d in ipairs(M.buildings) do d.decoration = not (HOUSES[d.category] or d.road) end
-for i = 1, WONDERS do M.wonders[i] = M.buildings[i] end
+for i, d in ipairs(M.buildings) do
+    d.decoration = not (HOUSES[d.category] or d.road)
+    M.kinds[d.key] = i - 1
+end
+M.wonder_kinds = {M.kinds.camp, M.kinds.well, M.kinds.workshop, M.kinds.quay_steps,
+    M.kinds.gateway, M.kinds.lodge, M.kinds.archive, M.kinds.observatory, M.kinds.fountain, M.kinds.temple}
+local story_kind = {}
+for i, kind in ipairs(M.wonder_kinds) do
+    M.wonders[i] = M.buildings[kind + 1]
+    story_kind[kind] = true
+end
 
 function M.wonder_count(c)
     local n=0
-    for _,b in ipairs(c.items) do if b.type < WONDERS then n=n+1 end end
+    for _,b in ipairs(c.items) do if story_kind[b.type] then n=n+1 end end
     return n
 end
 
@@ -42,13 +52,9 @@ end
 -- The twenty-step campaign ladder (economy.unlocks), after Cradle of Rome:
 -- order, gate, reserve, shop order and older saves are the engine's.
 require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
-for _, step in ipairs(M.ladder) do
-    local unlock = economy.building_unlock_text(step.unlock)
-    if unlock then M.buildings[step.kind + 1].unlock_text = "Unlocks " .. unlock end
-end
-
-function M.decoration_bonus(c)
-    return c and math.min(10, #c.items - M.campaign_count(c)) or 0
+for _, entry in ipairs(economy.unlocks) do
+    local unlock = economy.building_unlock_text(entry)
+    if unlock then M.buildings[M.kinds[entry.building] + 1].unlock_text = "Unlocks " .. unlock end
 end
 
 function M.migrate_wallet(progress, c)
@@ -60,14 +66,14 @@ function M.migrate_wallet(progress, c)
     wallet[economy.GOLD] = math.max(wallet[economy.GOLD], reserved[economy.GOLD])
 end
 
-function M.restore_saved(c,level)
+function M.restore_saved(c)
     -- Purchased decorations do not count toward campaign restoration progress.
     -- Rehome saved buildings whose footprints no longer fit without charging again.
     local items,seen=c.items,{}
     local needs_relocation=false
     c.count=0
     for _,b in ipairs(items) do
-        local valid=b.type>=WONDERS or (b.type>=0 and not seen[b.type])
+        local valid=M.buildings[b.type+1] and (not story_kind[b.type] or not seen[b.type])
         if valid then
             local spot=c:snap(b.pos,b.type)
             local ok=c:can_place(spot,b.type,-1)
@@ -185,6 +191,8 @@ end
 
 -- A ladder restoration is suggested beside the story restoration after it.
 function M.island_suggestion(kind)
+    local site = M.buildings[kind + 1].fixed_site
+    if site then return site end
     local n = M.ladder_position[kind]
     if n and kind >= WONDERS then
         for k = n, #M.ladder do

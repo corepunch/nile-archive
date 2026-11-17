@@ -3,7 +3,7 @@
 local elements_view = require("match3.elements_view")
 local A = {}
 A.board_frame = require("board_frame_atlas")
-A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
+A.story={cast={"elena","mara","tomas","adrian","keeper"},keeper_source="art/art-direction/ancient-keeper.png",source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}

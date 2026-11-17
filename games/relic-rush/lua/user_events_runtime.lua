@@ -4,7 +4,7 @@
 -- An event is checked only while it is available and not done. When its If
 -- is met it runs each Then and is done for good. Progress (available, done,
 -- the few lasting counters) is saved with the campaign. Lasting effects (per
--- expedition income, piece yields, building upgrades, trophies) are derived
+-- piece yields, building upgrades, trophies) are derived
 -- from the done events, never stored, so retuning user_events.lua applies to
 -- old saves too.
 --
@@ -46,7 +46,6 @@
 --       scene; campaign boards here keep no banner).
 --   THEN_PLAYER_ADD_TROPHY id                   a trophy (names in user_events.lua)
 --   THEN_PLAYER_ADD_RESOURCE id amount          once, into the wallet
---   THEN_PLAYER_ADD_RESOURCE_PER_LEVEL id amount        with every claim from now on
 --   THEN_GAME_CHANGE_CHIP_WEIGHT id amount      a piece pays (a bonus gem charges) amount
 --   THEN_CITY_UPGRADE_BUILDING id               the building's upgrade level rises
 --   THEN_PLAYER_ADD_GAME_CENTER_TROPHY id       a Game Center achievement
@@ -114,16 +113,6 @@ local function each_done_effect(kind, fn)
     end
 end
 
--- The purse every claim adds from now on.
-function U.per_level()
-    local add = purse()
-    each_done_effect("THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", function(t)
-        local slot = assert(SLOTS[t.id], "unknown resource " .. tostring(t.id))
-        add[slot] = add[slot] + t.amount
-    end)
-    return add
-end
-
 -- Piece key -> amount it pays (a bonus gem: the charge it gives).
 function U.chip_weights()
     local weights = {}
@@ -186,7 +175,6 @@ U.THEN = {
         add[assert(SLOTS[t.id], "unknown resource " .. tostring(t.id))] = t.amount
         R.prog.wallet = R.prog.wallet + add
     end,
-    THEN_PLAYER_ADD_RESOURCE_PER_LEVEL = function() end,   -- derived: U.per_level()
     THEN_GAME_CHANGE_CHIP_WEIGHT = function()   -- derived; the current board changes at once
         if R.g then U.apply_weights(R.g) end
     end,
@@ -367,7 +355,7 @@ local function runs_of(g, m)
 end
 U.runs_of = runs_of
 
--- Board starts use the citizens' weights; claims add their income.
+-- Board starts use the citizens' weights for pieces the player matches.
 local game_start = rules.game_start
 function rules.game_start(...)
     local g = game_start(...)
@@ -392,14 +380,6 @@ function rules.game_apply(g, m)
     local cleared = game_apply(g, m)
     for kind, piece in pairs(saved) do g.resource_yields[kind] = piece end
     return cleared
-end
-
-local breakdown = rules.reward_breakdown
-function rules.reward_breakdown(g, ...)
-    local reward = breakdown(g, ...)
-    reward.citizens = U.per_level()
-    reward.total = reward.total + reward.citizens
-    return reward
 end
 
 local finish_wave = R.finish_wave

@@ -128,6 +128,19 @@ static bool open_land(const city *c, vec2 p)
     return c->zone_count == 0 || city_zone_open(c, city_zone_at(c, p));
 }
 
+static bool fixed_site(const city *c, int type)
+{
+    vec2 p = c->defs[type].fixed_site;
+    return p.x != 0 || p.y != 0;
+}
+
+static bool footprints_overlap(const city *c, vec2 t, size2 f, int other, vec2 p)
+{
+    size2 g = tiles_of(c, other);
+    vec2 d = vec2_sub(t, to_tile(c, p));
+    return fabsf(d.x) < (f.w + g.w) * .5f - 1e-3f && fabsf(d.y) < (f.h + g.h) * .5f - 1e-3f;
+}
+
 bool city_can_place(const city *c, vec2 p, int type, int ignore)
 {
     if (type < 0 || type >= c->def_count) return false;
@@ -135,6 +148,7 @@ bool city_can_place(const city *c, vec2 p, int type, int ignore)
     bool sized = c->defs[type].size.w > 0;
     size2 f = tiles_of(c, type);
     vec2 t = to_tile(c, p);
+    if (fixed_site(c, type) && vec2_dist(p, city_snap(c, c->defs[type].fixed_site, type)) > .01f) return false;
     if (!open_land(c, p)) return false;
     if (sized) {
         /* every tile centre and, just inside them, the footprint's corners */
@@ -154,15 +168,24 @@ bool city_can_place(const city *c, vec2 p, int type, int ignore)
             continue;
         }
         /* footprints may share an edge but not overlap */
-        size2 g = tiles_of(c, other);
-        vec2 d = vec2_sub(t, to_tile(c, c->items[i].pos));
-        if (fabsf(d.x) < (f.w + g.w) * .5f - 1e-3f && fabsf(d.y) < (f.h + g.h) * .5f - 1e-3f) return false;
+        if (footprints_overlap(c, t, f, other, c->items[i].pos)) return false;
+    }
+    for (int other = 0; other < c->def_count; other++) {
+        if (other == type || !fixed_site(c, other)) continue;
+        if (footprints_overlap(c, t, f, other, city_snap(c, c->defs[other].fixed_site, other))) return false;
     }
     return true;
 }
 
 bool city_find_spot(const city *c, int type, vec2 hint, vec2 *out)
 {
+    if (type < 0 || type >= c->def_count) return false;
+    if (fixed_site(c, type)) {
+        vec2 p = city_snap(c, c->defs[type].fixed_site, type);
+        if (!city_can_place(c, p, type, -1)) return false;
+        *out = p;
+        return true;
+    }
     vec2 t = to_tile(c, city_snap(c, hint, type));
     int rings = (int)((c->cam.world.w + c->cam.world.h / ground_y()) / tile_side(c)) + 1;
     for (int ring = 0; ring <= rings; ring++)
@@ -246,12 +269,12 @@ void city_begin_place(city *c, int type, vec2 at)
     c->held = false;
     c->press_target = 0;
     c->press_time = 0;
-    c->ghost = city_snap(c, at, type);
+    c->ghost = city_snap(c, fixed_site(c, type) ? c->defs[type].fixed_site : at, type);
 }
 
 void city_begin_move(city *c, int index)
 {
-    if (index < 0 || index >= c->count) return;
+    if (index < 0 || index >= c->count || fixed_site(c, c->items[index].type)) return;
     c->placing = c->items[index].type;
     c->moving = index;
     c->held = false;
@@ -338,10 +361,11 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
         vec2 p = camera_to_world(c->cam, in.pos);
         int i = city_building_at(c, p);
         c->press_target = 0;
-        if (c->placing >= 0 && rect_contains(city_sprite_rect(c, (building){c->ghost, c->placing, 0}), p)) {
+        if (c->placing >= 0 && !fixed_site(c, c->placing) &&
+            rect_contains(city_sprite_rect(c, (building){c->ghost, c->placing, 0}), p)) {
             c->press_target = 1;
             c->grab = vec2_sub(c->ghost, p);
-        } else if (c->placing < 0 && c->selected < 0 && c->movable && i >= 0) {
+        } else if (c->placing < 0 && c->selected < 0 && c->movable && i >= 0 && !fixed_site(c, c->items[i].type)) {
             c->press_target = 2 + i;
             c->grab = vec2_sub(c->items[i].pos, p);
         }

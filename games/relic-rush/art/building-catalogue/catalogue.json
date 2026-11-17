@@ -2,7 +2,7 @@
 ["camp", "Expedition camp", "wonder", 2, 2, 60, 0, "story restoration, as a landmark"],
 ["well", "Spring well", "wonder", 2, 2, 80, 0, "story restoration, as a landmark"],
 ["workshop", "Artisan workshop", "wonder", 3, 2, 100, 0, "story restoration, as a landmark"],
-["market", "Jungle market", "wonder", 3, 2, 120, 0, "Farmers Market"],
+["market", "Jungle market", "building", 3, 2, 120, 30, "Farmers Market"],
 ["gateway", "Sunstone courtyard", "wonder", 3, 2, 140, 0, "Original dry gathering plaza"],
 ["lodge", "Explorer's lodge", "wonder", 3, 3, 160, 0, "Estate"],
 ["archive", "Lost-world archive", "wonder", 3, 3, 180, 0, "Lavish Library"],
@@ -104,5 +104,6 @@
 
 ["boulder", "Boulder", "rock", 1, 1, 15, 0, "Hyacinth Rockery"],
 ["crystal", "Crystal cluster", "rock", 1, 1, 120, 18, "Lovely Lily Pads"],
-["mossy_rocks", "Mossy boulders", "rock", 2, 2, 60, 3, "Hyacinth Rockery"]
+["mossy_rocks", "Mossy boulders", "rock", 2, 2, 60, 3, "Hyacinth Rockery"],
+["quay_steps", "Quay steps", "wonder", 2, 2, 75, 0, "A Light Below"]
 ]

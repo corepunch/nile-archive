@@ -72,7 +72,7 @@ function R.smoke()
         if R.overlay == R.OV_RESULT then
             if R.dialog_settled() then
                 if smoke_move.replay then smoke_move.replay_reward = rules.level_reward(R.g, R.wonders, R.prog) end
-                app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); smoke_stage = 1
+                app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); smoke_stage = 1
             end
             return
         end

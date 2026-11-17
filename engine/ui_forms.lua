@@ -347,7 +347,8 @@ function Form:measure(width, skin) return measure(self.root,width,skin or defaul
 function Form:layout(box,skin)
     self.boxes={};arrange(self.root,box,skin or default_skin,self);return self.boxes
 end
-local function paint(n,skin,form,options,event)
+local paint
+local function paint_node(n,skin,form,options,event)
     if not visible(n,form.values) then return event end
     local box=n.box; local theme=skin.theme or ui.theme()
     if options.clip then local visible_box=box:intersect(options.clip);if visible_box.w<=0 or visible_box.h<=0 then return event end end
@@ -431,6 +432,12 @@ local function paint(n,skin,form,options,event)
         for _,child in ipairs(n.children) do event=paint(child,skin,form,options,event) end
     end
     return event
+end
+paint = function(n,skin,form,options,event)
+    if options.paint_scope and n.paint_group and visible(n,form.values) then
+        return options.paint_scope(n.paint_group,function() return paint_node(n,skin,form,options,event) end)
+    end
+    return paint_node(n,skin,form,options,event)
 end
 function Form:draw(box,skin,options)
     skin,options=skin or default_skin,options or {}; options.input=options.input or input.get()
@@ -543,6 +550,7 @@ function Stack:begin()
     return not self:active()
 end
 function Stack:open(id,form,model,options)
+    if getmetatable(form)~=Form or form.root.kind~='column' then return false,'modal requires a vertical form' end
     for _,layer in ipairs(self.layers) do if layer.id==id then fail('modal already open: '..id) end end
     local ok,message=form:push(model or {});if not ok then return false,message end
     local layer={id=id,form=form,model=model or {},options=options or {},fade=0,fresh=true}

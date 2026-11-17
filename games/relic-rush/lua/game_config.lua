@@ -30,9 +30,9 @@ return {
     },
     notices = {
         build_first = "Restore the next wonder. Replay an expedition to gather missing resources.",
-        story_waiting = "A new clue awaits on your island.",
+        story_waiting = "Finish the conversation on your island.",
         reward_building = "Resources banked. Check the next restoration in the Build Shop.",
-        reward_story = "A new clue awaits on your island.",
+        reward_story = "Resources banked. Spend them in the Build Shop.",
         reward_replay = "Resources banked. Spend them in the Build Shop.",
         all_open = "Your whole island is open to explore.",
         quit = "Your board is saved. Tap LEVEL %d or Expeditions to continue.",
@@ -55,8 +55,8 @@ return {
     finale = {
         title = "To be continued...",
         lines = {
-            {"THE QUAY IS SAFE. OTHER LIGHTS ARE WAITING.", 386, 16},
-            {"Your island and replay expeditions stay open.", 422, 16},
+            {"THE QUAY IS SAFE. OTHER LIGHTS ARE WAITING.", 16},
+            {"Your island and replay expeditions stay open.", 16},
         },
         button = "BACK TO MY ISLAND",
     },
@@ -98,9 +98,9 @@ return {
         pending = "RESTORE FIRST",
         new = "PLAY",
         earlier = "DISCOVER EARLIER LEVELS",
-        replay_note = "Bank resources from matches and Coins for unused moves.",
-        building_note = "First clear: a new restoration and resources.",
-        story_note = "First clear: the next clue and resources.",
+        replay_note = "Bank resources from matches.",
+        building_note = "Bank resources. A restoration opens on first clear.",
+        story_note = "Bank resources from matches.",
     },
     debug = {victory = 1, catalogue_card = 37, narrator = "tomas"},
 }

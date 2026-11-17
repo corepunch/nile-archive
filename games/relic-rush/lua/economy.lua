@@ -19,7 +19,7 @@ local E = {
     -- (1 Food, never upgraded) carries the bonus gem, a story item or a score
     -- piece; the red slot takes the bonus when a story item holds it.
     SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
-    CAMPAIGN_VERSION=5,
+    CAMPAIGN_VERSION=6,
 }
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
@@ -70,7 +70,8 @@ E.unlocks = {
     {building="log_cabin", first_level=8, bonus=B.dynamite},
     {building="workshop", key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
     {building="water_mill", first_level=10},
-    {building="market", key="rations", backdrop=1, name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=10},
+    {building="quay_steps", first_level=11},
+    {building="market", key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=11, optional=true},
     {building="clock_tower", first_level=12, bonus=B.star},
     {building="amphitheater", first_level=14, bonus=B.shield},
     {building="gateway", key="helmet", backdrop=2, name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14},
@@ -98,8 +99,8 @@ function E.unlock_of(building)
     end
 end
 
-function E.unlock_text(unlock)
-    return ("%s earn +%d %s each."):format(unlock.name, unlock.amount, E.currencies[unlock.slot].name)
+function E.unlock_text(unlock, amount)
+    return ("%s earn +%d %s each."):format(unlock.name, amount or unlock.amount, E.currencies[unlock.slot].name)
 end
 
 function E.building_unlock_text(unlock)
@@ -161,7 +162,7 @@ function E.board_loadout(level, number, restored, seed)
     local kind = level.goal_kind == E.SPECIAL_KIND and E.SPECIAL_FALLBACK or E.SPECIAL_KIND
     if not debut and yields[kind] and yields[kind].first_level == number then bonus = nil end
     if bonus then yields[kind] = bonus end
-    return yields, {tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,
+    return yields, {match_only_resources=true, tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,
         tool_slots=slots, single_charge_tools=true}, bonus, debut
 end
 

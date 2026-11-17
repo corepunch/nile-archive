@@ -31,11 +31,12 @@ check(form:layout(rect(0,0,200,160)).sound.w==90,"reflow in narrower parent")
 check(not pcall(ui.form,{kind="mystery"}),"unknown controls rejected")
 check(not pcall(ui.form,{kind="row",children={{kind="button",id="x"},{kind="button",id="x"}}}),"duplicate IDs rejected")
 check(not pcall(ui.form,{kind="button"}),"interactive control needs ID")
-local readonly=ui.form{root={kind="label",id="x"},bindings={{id="x",field="name",readonly=true}}}
+local readonly=ui.form{root={kind="column",children={{kind="label",id="x"}}},bindings={{id="x",field="name",readonly=true}}}
 check(readonly:push(model),"readonly push")
 readonly:set("x","changed");check(readonly:pull(model) and model.name=="Mara","readonly model field preserved")
 local stack=ui.modals()
 check(not stack:active(),"empty modal stack")
+check(not stack:open("row",ui.form{kind="row"}),"modal roots must be vertical columns")
 check(stack:open("one",form,model),"first modal")
 check(stack:open("two",readonly,model),"nested modal")
 check(not stack:close("one") and stack:active(),"only top modal can close")
@@ -96,7 +97,7 @@ check(event and event.id=="sound" and form:get("sound")~=was,"Return activates a
 check(not form:draw(rect(0,0,300,160),skin,{interactive=false,input={key=input.KEY_RETURN}}),"lower modal cannot activate via keyboard")
 -- Data source replacement, row ownership and stable-key keyboard focus.
 local builds=0
-local list=ui.form{kind="list",id="topics",gap=8,item=function(item)
+local list=ui.form{kind="column",children={{kind="list",id="topics",gap=8,item=function(item)
     builds=builds+1
     if item.bad then error("invalid row payload") end
     return {kind="row",gap=12,align="center",children={
@@ -107,7 +108,7 @@ local list=ui.form{kind="list",id="topics",gap=8,item=function(item)
         }},
         {kind="button",id="open",text="Open",width=40,height=40,action="choose"},
     }}
-end}
+end}}}
 local data={{id="a",title="First"},{id="b",title="Second",icon=false}}
 check(list:set_items("topics",data),"populate data source")
 local function item_node(key,id)

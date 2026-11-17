@@ -3,16 +3,30 @@ local rules = require("rules")
 local island = require("island")
 local economy = require("economy")
 
+function R.debug_fill_earnings(g)
+    if g.level ~= R.prog.level then return end
+    local level = g.level + 1
+    local matched = purse(table.unpack(g.earnings))
+    local cost = island.reserved_cost(R.island, level)
+    local next_kind = island.next_step(R.island, level)
+    if next_kind then
+        local next_cost = island.buildings[next_kind + 1].cost
+        if not cost:covers(next_cost) then cost = next_cost end
+    end
+    local needed = economy.shortfall(cost, R.prog.wallet + matched)
+    for i = 1, #g.earnings do g.earnings[i] = g.earnings[i] + needed[i] end
+end
+
 -- Which ladder restorations are in force, by building key. A preview counts
 -- every one unless --before-<key> names it.
 function R.board_context(preview)
     local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
-    for _, step in ipairs(island.ladder) do
-        local key = island.buildings[step.kind + 1].key
+    for _, unlock in ipairs(economy.unlocks) do
+        local key = unlock.building
         if preview then
             restored[key] = not app.arg("before-" .. key)
         else
-            restored[key] = island.owned(R.island, step.kind) > 0
+            restored[key] = island.owned(R.island, island.kinds[key]) > 0
         end
     end
     return restored
@@ -57,8 +71,8 @@ end
 
 local function opening_unlock(g)
     local level = rules.level_of(g)
-    for n, unlock in ipairs(economy.unlocks) do
-        local building = island.buildings[island.ladder[n].kind + 1].name
+    for _, unlock in ipairs(economy.unlocks) do
+        local building = island.buildings[island.kinds[unlock.building] + 1].name
         if g.bonus_debut and unlock.bonus == g.bonus_debut then
             local text = economy.bonus_lesson(g.bonus_debut)
             if unlock.kind and g.resource_yields[unlock.kind] == unlock then
@@ -67,7 +81,8 @@ local function opening_unlock(g)
             return text, building
         elseif unlock.kind and (g.level + 1 == unlock.first_level or level.featured_resource == unlock.key) then
             if g.resource_yields and g.resource_yields[unlock.kind] == unlock then
-                return economy.unlock_text(unlock), building
+                local amount = g.yield_amounts and g.yield_amounts[unlock.kind]
+                return economy.unlock_text(unlock, amount), building
             end
         end
     end
@@ -101,6 +116,12 @@ function R.serialize_campaign(s)
     -- Version 4 added the twenty-step ladder. Restorations an older save had
     -- already passed stay optional rather than holding its next expedition.
     island.serialize_waivers(s, R.island, R.prog.level, reading and version < 4)
+    -- Legacy expeditions after the quay chapter already reached the tide room.
+    local steps = island.kinds.quay_steps
+    if reading and version < 6 and R.prog.level >= 10 and island.owned(R.island, steps) == 0 then
+        local ok, spot = R.island:find_spot(steps, island.island_suggestion(steps))
+        if ok then R.island:add(spot, steps, 0) end
+    end
     if reading and version < 1 then
         island.migrate_wallet(R.prog, R.island)
     elseif reading and version < 3 then

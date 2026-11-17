@@ -96,4 +96,5 @@ return {
     boulder={sprite_path="city/buildings/boulder.png", size=size2(1,1), pivot=vec2(39.924,57.332), base_width=136.603, shadow_path="city/building-shadows/boulder.png", shadow_pivot=vec2(26.9,32.183), shadow_base_width=116.112},
     crystal={sprite_path="city/buildings/crystal.png", size=size2(1,1), pivot=vec2(29.48,67.944), base_width=136.603, shadow_path="city/building-shadows/crystal.png", shadow_pivot=vec2(14.064,25.052), shadow_base_width=116.112},
     mossy_rocks={sprite_path="city/buildings/mossy_rocks.png", size=size2(2,2), pivot=vec2(93.425,107.018), base_width=273.205, shadow_path="city/building-shadows/mossy_rocks.png", shadow_pivot=vec2(69.351,63.415), shadow_base_width=232.224},
+    quay_steps={sprite_path="city/buildings/quay_steps.png", size=size2(2,2), pivot=vec2(138.138,152.009), base_width=273.205, shadow_path="city/building-shadows/quay_steps.png", shadow_pivot=vec2(116.435,86.657), shadow_base_width=232.224},
 }

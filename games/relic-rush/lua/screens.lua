@@ -9,13 +9,9 @@ local economy = require("economy")
 local art = require("art")
 local wallet_art = art.wallet_icons
 local island = require("island")
-local SCREEN_W, SCREEN_H = R.SCREEN_W, R.SCREEN_H
-local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
 local rgba = color
+local disc, picture = R.disc, R.picture
 local pp, pc = R.pp, R.pc
-local rrect, disc, picture, picture_fit = R.rrect, R.disc, R.picture, R.picture_fit
-local say, say_left, button, panel = R.say, R.say_left, R.button, R.panel
-local set_paint, section = R.set_paint, R.section
 
 function R.compass_icon(center, radius)
     disc(center, radius, rgba(112, 81, 40))
@@ -60,80 +56,32 @@ end
 
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
-local function result_screen()
-    local l = match3.result_rects(SCREEN_W, SCREEN_H)
-    local breakdown = rules.reward_breakdown(R.g,R.wonders,R.prog,R.island)
+R.register_result(function()
+    local breakdown = rules.reward_breakdown(R.g, R.prog)
     local reward = breakdown.total
-    -- The next ladder restoration this result opens, or one still waiting.
+    local resources = {}
+    for _, slot in ipairs(economy.currency_order) do
+        local kind = economy.currencies[slot]
+        resources[#resources+1] = {id=kind.key, name=kind.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
+    end
     local next_kind = island.next_step(R.island, breakdown.first and R.g.level + 1 or R.prog.level)
     local w = next_kind and R.buildings[next_kind + 1]
-    local s
-    panel(l.card)
-    rrect(l.header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
-    rrect(l.header, 18, rgba(31, 83, 69))
-    rrect(l.header:inflate(-3), 15, rgba(44, 108, 84))
-    say(breakdown.first and "Expedition complete" or "Replay complete", rect(l.header.x + 14, l.header.y + 9, l.header.w - 28, 34), 31, PAL_GOLD)
-    say(("LEVEL %d  -  WELL EXPLORED"):format(R.g.level + 1), rect(l.header.x + 12, l.header.y + 48, l.header.w - 24, 15), 14, PAL_GOLD)
-    s = section(.24, .32, 13)
-    say(breakdown.first and "SITE CLEARED" or "SUPPLY RUN", l.stars, 23, PAL_GOLD)
-    set_paint(s)
-    s = section(.43, .3, 9)
-    say("EXPEDITION SCORE", l.score_label, 12, PAL_CREAM)
-    local count = R.dialog_part(.43, .65).f   -- the score counts up
-    say(tostring(math.floor(R.g.score * count + .5)), l.score, 46, PAL_GOLD)
-    set_paint(s)
-    s = section(.62, .25, 8)
-    say("RESOURCES TO BANK", l.treasure_label, 12, PAL_CREAM)
-    set_paint(s)
-    local columns = #economy.currency_order
-    for i, slot in ipairs(economy.currency_order) do
-        local k = i - 1
-        local r = l.rewards:col(columns, k, 10)
-        s = section(.66 + k * .1, .28, 10)
-        rrect(r, 12, rgba(241, 218, 157))
-        rrect(r:inflate(-2), 10, rgba(255, 242, 201))
-        picture_fit(currency_icon(slot), rect(r.x + (r.w - 36) / 2, r.y + 4, 36, 36), 255)
-        say(("+%d"):format(reward[slot]), rect(r.x + 6, r.y + 40, r.w - 12, 27), 25, PAL_GOLD)
-        say(economy.currencies[slot].name, rect(r.x + 3, r.y + 70, r.w - 6, 14), 13, PAL_CREAM)
-        set_paint(s)
-    end
-    local bonuses = ("Move bonus +%d Coins"):format(breakdown.bonus)
-    if breakdown.decoration_bonus > 0 then
-        bonuses = bonuses .. ("  ·  Decorations +%d Coins"):format(breakdown.decoration_bonus)
-    end
-    for _, part in ipairs(breakdown.citizens and economy.price_parts(breakdown.citizens) or {}) do   -- user_events.lua
-        bonuses = bonuses .. ("  ·  Citizens +%d %s"):format(part.amount, part.name)
-    end
-    say(bonuses, l.bonus, 11, PAL_CREAM)
-    s = section(1.01, .26, 8)
-    rrect(l.next, 12, rgba(240, 225, 180))
-    local next_icon = rect(l.next.x + 8, l.next.y + 5, 60, l.next.h - 10)
-    local heading, next_step = "BUILD SHOP", "Choose your next treasure"
+    local next_step
     if w then
-        picture_fit(w.sprite, next_icon, 255)
         local missing = R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward))
         local unlock = island.buildings[next_kind + 1].unlock_text
-        heading = #missing == 0 and (unlock or "NEXT RESTORATION") or "REPLAY TO EARN THE REST"
-        next_step = w.name
-        local price = #missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)
-        say_left(price, rect(l.next.x+78,l.next.y+47,l.next.w-88,14), 11, PAL_GOLD)
-    elseif breakdown.first then
-        picture_fit(R.board_art["next-clue"], next_icon, 255)
-        heading, next_step = "THE INVESTIGATION CONTINUES", "Return for the next clue"
-    else
-        R.skin:paint_button(next_icon, nil, {role = "navigation_build"})
+        next_step = {
+            icon=w.sprite, title=w.name,
+            heading=#missing == 0 and (unlock or "NEXT RESTORATION") or "REPLAY TO EARN THE REST",
+            detail=#missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing),
+        }
     end
-    say_left(heading, rect(l.next.x + 78, l.next.y + 9, l.next.w - 88, 18), 11, PAL_CREAM)
-    say_left(next_step, rect(l.next.x + 78, l.next.y + 24, l.next.w - 88, 24), 22, PAL_GOLD)
-    set_paint(s)
-    s = section(1.12, .22, 8)
-    if button(l.claim, "COLLECT & RETURN", not R.modal_closing) and not R.modal_closing then
-        if not R.dialog_settled() then R.dialog_skip()   -- first tap fast-forwards
-        else R.close_dialog() end
-    end
-    set_paint(s)
-end
-R.dialogs[R.OV_RESULT] = result_screen
+    return {
+        title=breakdown.first and "Expedition complete" or "Replay complete",
+        subtitle=("LEVEL %d · %s"):format(R.g.level + 1, rules.level_of(R.g).name),
+        resources=resources, next_step=next_step, action="COLLECT & RETURN",
+    }
+end)
 
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
@@ -156,8 +104,8 @@ local function guide_piece(unlock, title, availability)
         description=description, icon={front=chip_prefix .. unlock.key}}
 end
 guide_piece(economy.silver_coin, "Silver coins", ("On expedition %d."):format(economy.silver_coin.first_level))
-for n, unlock in ipairs(economy.unlocks) do
-    local building = island.buildings[island.ladder[n].kind + 1].name
+for _, unlock in ipairs(economy.unlocks) do
+    local building = island.buildings[island.kinds[unlock.building] + 1].name
     if unlock.kind then guide_piece(unlock, building, ("From expedition %d."):format(unlock.first_level)) end
     local bonus = unlock.bonus
     if bonus then
@@ -178,7 +126,6 @@ local guide_form = match3.guide_form({
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))
 R.guide_form,R.guide_entries=guide_form,guide_entries -- measured bounds and the source rows are checked by the input smoke test
-local function guide_screen() match3.draw_guide(R, guide_form) end
-R.dialogs[R.OV_GUIDE] = guide_screen
+R.register_guide(guide_form)
 
 return R

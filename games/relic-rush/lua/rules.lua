@@ -2,7 +2,6 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
-local island = require("island")
 local M = match3.new{flags=match3.LINE_MATCHES | match3.COLOR_TOOL, columns=9, rows=12, colors=campaign.colors, match_min=3,
     refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
@@ -26,28 +25,20 @@ M.wonder_at=require("journey").wonder_at
 
 M.GOLD, M.PROVISIONS, M.SUPPLIES, M.CLEARED = economy.GOLD, economy.PROVISIONS, economy.SUPPLIES, economy.CLEARED
 M.COMPASSES = 5   -- reserved slot retained in old saves
-M.MOVE_GOLD, M.MAX_MOVE_GOLD = 2, 40
-function M.reward_breakdown(g, wonders, progress, town)
+function M.reward_breakdown(g, progress)
     local first = not progress or g.level == progress.level
-    local bonus = math.min(M.MAX_MOVE_GOLD, math.max(0, g.moves) * M.MOVE_GOLD)
-    local kind=M.wonder_at(g.level+1)
-    local w=kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    local decoration_bonus = island.decoration_bonus(town)
-    local reward = matched + purse(bonus + decoration_bonus, 0, 0, first and 1 or 0)
-    if first and w and app.arg("debug-walkthrough") then
-        reward = reward + economy.shortfall(w.cost, (progress and progress.wallet or purse()) + reward)
-    end
-    return {first=first, bonus=bonus, decoration_bonus=decoration_bonus, total=reward}
+    local reward = matched + purse(0, 0, 0, first and 1 or 0)
+    return {first=first, total=reward}
 end
 
-function M.level_reward(g, wonders, progress, town)
-    return M.reward_breakdown(g,wonders,progress,town).total
+function M.level_reward(g, wonders, progress)
+    return M.reward_breakdown(g,progress).total
 end
 
-function M.progress_reward(p, g, wonders, town)
+function M.progress_reward(p, g)
     if not g.won or g.reward_claimed or g.level < 0 or g.level >= LEVELS or g.level > p.level then return false end
-    local reward = M.reward_breakdown(g,wonders,p,town)
+    local reward = M.reward_breakdown(g,p)
     p.wallet = p.wallet + reward.total
     if reward.first then p.level = p.level + 1 end
     p.seed = g.rng

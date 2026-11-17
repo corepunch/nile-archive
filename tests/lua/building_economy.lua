@@ -50,7 +50,8 @@ for kind, def in ipairs(defs) do
         t:check(c:confirm(w,123).result==city.NONE and c.count==1 and H.same(w,paid), 'double confirm is inert')
         c:begin_move(0)
         c.ghost=spot+vec2(1000,500)
-        t:check(c:confirm(w,124).result==city.MOVED and H.same(w,paid), 'moving neither charges nor regrants reward')
+        local expected = def.fixed_site and city.NONE or city.MOVED
+        t:check(c:confirm(w,124).result==expected and H.same(w,paid), 'movement obeys the site rule without charging')
     end)
 end
 return t:finish()

@@ -10,27 +10,30 @@ return require("match3.game").journey{
     wonder_levels = require("campaign").wonder_levels,
     version = 5,
     clear_before_result = true,
+    ready = function(p, beat)
+        return beat.key ~= "restore-04" or p.user_events and p.user_events.done.city_well
+    end,
     recap = {
         {"elena", "Back at the old harbor. It began with a light under the cliff."},
         {30, {"mara", "The quay is safe and the warning works. Ines left a chart of the other stations."}},
         {20, {"tomas", "Ines came back to warn boats away. Her repair plan can make the quay safe."},
              {"adrian", "My agreement gave Kessler a claim on the discoveries. We need those plans here."}},
         {10, {"elena", "Someone at the tide room changed the old warning. We need to learn who."}},
-        {4, {"mara", "The light answered my lamp. The chart from the well shows a route to the lower quay."}},
+        {4, {"mara", "The light answered my lamp. Tomas knows the steps to the lower quay."}},
         {0, {"mara", "The landing is clear. Keep an eye on the light below the cliff."}},
     },
     regions = {
-        "Sunlit coast is clear. We can see where the old quay meets the water.",
-        "Fern meadow's open. Watch for old shore marks under the leaves.",
+        false,
+        false,
         "Sun garden's open. There is room here to lay out the repair plans.",
         "The heights are open. From here we can see the boats before they turn in.",
         "Temple ridge is open. We can get to the old warning station from here.",
     },
     -- {kind, from level, line}: the latest reached replaces the catalogue line.
     about = {
-        {0, 1, "Mara's lamp fits the bracket. The light under the cliff can see it."},
+        {0, 1, "The lookout under the cliff can see Mara's lamp."},
         {economy.WELL_KIND, 4, economy.unlock_text(economy.unlock_of("well"))},
-        {economy.WELL_KIND, 6, "The chart from the pump traces the old cable to the tide room."},
+        {economy.WELL_KIND, 6, "Tomas helps keep the well running for the expedition."},
         {economy.WORKSHOP_KIND, 7, economy.unlock_text(economy.unlock_of("workshop"))},
         {economy.WORKSHOP_KIND, 9, "We cut the blocks for the tide-room approach here."},
         {3, 9, economy.unlock_text(economy.unlock_of("market"))},

@@ -102,7 +102,7 @@ Boards 2–10 and 13 show a story piece in place of one matching colour.
 Every board spawns five kinds, so those boards use four regular kinds plus the story piece.
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
 
-First-clear dialogue tells the crew’s discoveries. Clear every blue plaque to finish the expedition.
+Clear every blue plaque to finish the expedition. The opening chapter’s dialogue follows island construction.
 
 ## Shared UI and dialog layers
 
@@ -119,7 +119,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The result screen reveals the score, rewards and what's next in sequence, with a short animated return to the island. The next step shows the building to restore, a sealed papyrus for the next clue, or the Build hammer after a replay. See the [results and wallet captures](docs/screenshots/review/discovery-stars/README.md).
+The result card fits its contents. Score, a row of three resource totals, an available restoration and Collect stack vertically. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 
@@ -167,24 +167,11 @@ Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, T
 
 ## Story and world
 
-Mara radios from the Marigold when she spots a light under the cliff. The
-present-day crew is restoring an ancient harbor whose keepers ran an electric
-relay along the original stone channel. The opening chapter, **A Light Below**,
-uses boards 1–10 and four island upgrades to lead to the tide room. The player chooses
-whether Mara or Tomas answers the signal. Their replies differ, and both advance the expedition.
+In **A Light Below** (levels 1–10), placing the Expedition Camp lets Mara answer a light under the cliff. Restoring the Spring Well brings Tomas to camp, and the Artisan Workshop cuts blocks for the quay. Confirming the Quay Steps repair triggers a brief flashback to the ancient keeper and the player’s choice of who answers the signal. Camp and Workshop are freely placed. Well and Steps are restored at fixed sites. The Jungle Market is an optional purchase.
 
-In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard,
-Lodge and Archive to use. Ines’s note identifies the signaler, and her signed
-plan gives the crew a way to repair the quay wall.
+In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard, Lodge and Archive to use. Ines’s note identifies the signaler, and her signed plan gives the crew a way to repair the quay wall. Chapter 3 carries the repair and ownership dispute to the finale. The signal plate and Ines’s reply on board 30 pay off the three flashes at the restored steps.
 
-Clear expeditions in order and confirm the required story restorations to advance.
-Each placed optional building or decoration adds one coin per win, up to ten coins.
-The results card lists the decoration bonus.
-
-First-clear dialogue leads into Results. Board 30 reveals the signal plate at the cleared site, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
-wonder has a separate scene after confirmed placement. Replays bank matched resources.
-Existing saves retain clears, currency, land and buildings and receive a recap at their
-current level. Chapter 3 carries the quay repair and ownership dispute to the finale.
+A first clear advances the expedition counter. Successful expeditions and replays bank their matched resources. Construction, currency and story progress persist across saves.
 
 `lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/match3_game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
 
@@ -202,23 +189,18 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all blue tablets within the move budget.
-3. Claim the matched resources and up to 40 Coins for saved moves. A first clear counts as a cleared board.
+3. Claim the matched resources. A first clear counts as a cleared board.
 4. Return to the island. At a wonder milestone, check the price and replay an expedition if you need more resources.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
-6. Read the discovery, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
+6. See how the crew uses what you built, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
 
 A matched sun coin earns 4 Coins. Red berries and green apples pay 1 Food.
 Leaves and flowers add score only.
 Timber and dressed stone pay 2 and 3 Supplies. Each confirmed
 restoration unlocks a higher-yield chip or a tool on eligible expeditions.
-Authored story pieces keep their slots. The result shows what the next
-restoration unlocks or what is still needed to afford it. Replays earn
-matched resources and up to 40 Coins for unused moves.
+The result shows what the next restoration unlocks or what is still needed to afford it. Matches and cascades earn resources. Direct tool hits can clear plaques and start cascades.
 
-The Well adds water buckets on level 5. The Workshop adds cut blocks on level 8,
-alongside the relay pliers. An arrival message names the building and the piece's
-value. The first hint on level 5 earns 9 Food while clearing tablets. Level 9
-offers a similar cut-block match for 15 Supplies toward the Market.
+The Well adds water buckets on level 5. Water buckets earn 3 Food each. The Workshop adds cut blocks on level 8. An arrival message names the building and piece. Boards 5 and 9 introduce these resources in the opening match.
 
 ### Tutorials and citizens (`lua/user_events.lua`)
 
@@ -233,12 +215,9 @@ save keeps which events are done.
   5th suggestion until the first line of three. Toasts introduce tablets,
   double tablets, chains, double chains, ice, the low-moves warning, each
   charged bonus and the catalogue.
-- **Citizens.** Placing one of eleven buildings opens its citizen's
-  challenge. Examples: a line of five after the Workshop, 120 Supplies on
+- **Citizens.** Tomas joins as soon as the Well is restored. Other building events open a citizen’s challenge. Examples: a line of five after the Workshop, 120 Supplies on
   one expedition after the Archive. Meeting the challenge upgrades the
-  building and adds a lasting reward. The reward is either income on every
-  claim, itemized as "Citizens" on the results card, or a faster charge for
-  a bonus gem.
+  building and improves the yield of a matched resource or the charge from a matched bonus gem.
 - **Test flag.** `--user-events-test` fires the `test=true` events at once,
   like Rome's F5 cheat.
 
@@ -251,7 +230,7 @@ Every board is authored on a 9 x 12 rectangle of flat-top hexes, with holes and 
 
 ## Buildings
 
-Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Positions are chosen by the player; the order does not impose fixed plots or a road layout.
+Buildings unlock in this order at clear milestones 1, 4, 7, 10, 13, 16, 19, 23, 26 and 29. The Spring Well and Quay Steps have fixed sites. The player chooses the plot for other buildings.
 
 | # | Restoration | Price | Board payoff |
 | --- | --- | --- | --- |
@@ -259,8 +238,8 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 9, 13, 16, 19, 23, 2
 | 2 | ★ Spring well | 125 Coins | Water buckets worth 3 Food each. |
 | 3 | Trapper's cabin | 65 Coins + 45 Supplies + 40 Food | Dynamite upgrades Hammer. |
 | 4 | ★ Artisan workshop | 120 Coins + 90 Supplies + 80 Food | Cut blocks worth 5 Supplies each. |
-| 5 | Water mill | 65 Coins + 60 Supplies + 35 Food | Opens the Jungle market restoration. |
-| 6 | ★ Jungle market | 125 Coins + 125 Supplies + 70 Food | Ration jars worth 4 Food each. |
+| 5 | Water mill | 65 Coins + 60 Supplies + 35 Food | Prepares the quay repair. |
+| 6 | ★ Quay Steps | 75 Coins + 100 Supplies | Opens Chapter 2 and the shore expeditions. |
 | 7 | Clock tower | 150 Coins + 150 Supplies + 200 Food | Star gems. |
 | 8 | Stone amphitheatre | 35 Coins + 35 Supplies + 50 Food | Shield gems. |
 | 9 | ★ Sunstone courtyard | 55 Coins + 65 Supplies + 95 Food | Helmets worth 6 Coins. |
@@ -284,8 +263,7 @@ table above.
 Construction makes the next story beat available. The [economy table](docs/resource-expedition.md#board-rules-and-palette)
 lists the first expedition and currency for each payoff.
 
-The island's **SHOP** adds 76 repeatable buildings and decorations to these
-twenty restorations: buildings, trees, shrubs, flowers, monuments, water gardens,
+The island’s **SHOP** adds the optional Jungle Market and 76 repeatable buildings and decorations to these twenty restorations. The market introduces ration jars from board 11. Other shop stock includes buildings, trees, shrubs, flowers, monuments, water gardens,
 furniture, supplies, wildlife and rocks. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
 confirm. Cancelling is free. The resources
@@ -314,13 +292,13 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 
 - Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
-- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the unused-move Coins bonus and any remaining cost of the next restoration.
+- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and any remaining cost of the next restoration.
 - Restore buildings to unlock Hammer, Shield, Star and Plus. A later restoration
   upgrades each of the four slots and carries its charge forward. An expedition
   can feature one bonus gem family. Matching six fills one use, and activation
   costs zero moves. [Bonus effects and restorations](docs/board-progression.md#bonus-pieces)
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
-- Each won attempt banks what the crew brings back. First clears count towards boards cleared and, on boards 1-30, advance the story.
+- Each won attempt banks what the crew brings back. First clears count toward boards cleared. Chapter 1 story progress follows island actions.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - Adjacent clouded regions open by the number of boards cleared. There are no stars or compasses.
 - The settings gear sits beside the three resource balances. Buildings, Play and Expeditions occupy the town's bottom row. Both catalogues scroll continuously. The building shop shows three cards per row.
@@ -384,7 +362,7 @@ current painted sprites. The courtyard and all 86 repeatable catalogue entries
 are preserved. See [building registration](docs/BUILDINGS.md) and the
 [reviewed captures](docs/review/painted-buildings/README.md).
 
-Original generated environment paintings, the legacy 10-building sprite sheet and the 6 × 3 tile sheet (`art/tile-sets/source.png`: the Relics, Jewels and Resources packs) are kept as editable sources in `art/`. The 96 current building sprites use the Blender-guided ImageGen atlas and `tools/prepare_buildings.py` (see the building catalogue). `tools/prepare_assets.py` cuts the other sprites out of their sheets (largest opaque component, so neighbouring paintings never leak in), scales backgrounds to what the screen needs and writes PNG/JPG files the engine loads directly. `docs/references.md` records reference research and provenance. Generated art is a prototype asset set and needs an art consistency / IP review before a commercial release.
+Original generated environment paintings, the legacy 10-building sprite sheet and the 6 × 3 tile sheet (`art/tile-sets/source.png`: the Relics, Jewels and Resources packs) are kept as editable sources in `art/`. The 97 current building sprites use the Blender-guided ImageGen atlas and `tools/prepare_buildings.py` (see the building catalogue). `tools/prepare_assets.py` cuts the other sprites out of their sheets (largest opaque component, so neighbouring paintings never leak in), scales backgrounds to what the screen needs and writes PNG/JPG files the engine loads directly. `docs/references.md` records reference research and provenance. Generated art is a prototype asset set and needs an art consistency / IP review before a commercial release.
 
 Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueType with outline, gradient and drop shadow, any Unicode — Cyrillic localisation no longer needs a new atlas); **Lobster** made the gold `title.png` logo and stays in `art/fonts`. Both are unmodified SIL OFL 1.1 fonts with their license text.
 
@@ -434,7 +412,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-Current scope is an offline prototype: one hundred hex boards, twenty campaign restorations plus 76 purchasable buildings/decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
+Current scope is an offline prototype: one hundred hex boards, twenty campaign restorations plus the optional Jungle Market and 76 repeatable buildings and decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
 
 ## Fast rule tests
 

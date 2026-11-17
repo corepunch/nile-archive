@@ -90,7 +90,11 @@
           79.255
         ],
         "base_width": 232.224
-      }
+      },
+      "fixed_site": [
+        610,
+        1840
+      ]
     },
     {
       "id": 2,
@@ -136,7 +140,7 @@
       "id": 3,
       "key": "market",
       "name": "Jungle market",
-      "category": "wonder",
+      "category": "building",
       "size": [
         3,
         2
@@ -147,7 +151,7 @@
       ],
       "base_width": 359.808,
       "gold": 125,
-      "stars": 0,
+      "stars": 30,
       "runtime": "data/city/buildings/market.png",
       "image": [
         374,
@@ -720,7 +724,7 @@
         35,
         60
       ],
-      "about": "Restore the Water mill before rebuilding the Jungle market.",
+      "about": "Put the Water mill back to work before repairing the quay steps.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/water_mill.png",
@@ -3850,6 +3854,83 @@
           63.415
         ],
         "base_width": 232.224
+      }
+    },
+    {
+      "id": 96,
+      "key": "quay_steps",
+      "name": "Quay steps",
+      "category": "wonder",
+      "size": [
+        2,
+        2
+      ],
+      "pivot": [
+        138.138,
+        152.009
+      ],
+      "base_width": 273.205,
+      "gold": 75,
+      "stars": 0,
+      "runtime": "data/city/buildings/quay_steps.png",
+      "image": [
+        276,
+        240
+      ],
+      "source": "art/building-catalogue/relic_rush_buildings.blend",
+      "reference": "A Light Below",
+      "cost": [
+        75,
+        0,
+        100
+      ],
+      "about": "Repair the old steps to reach the tide room below the cliff.",
+      "road": false,
+      "shadow": {
+        "runtime": "data/city/building-shadows/quay_steps.png",
+        "source": "art/building-catalogue/relic_rush_buildings.blend",
+        "pivot": [
+          116.435,
+          86.657
+        ],
+        "base_width": 232.224
+      },
+      "fixed_site": [
+        925,
+        2195
+      ],
+      "paint": {
+        "geometry": "art/building-catalogue/painted-v1/quay-steps-geometry.png",
+        "source": "art/building-catalogue/painted-v1/quay-steps-output.png",
+        "prompt": "art/building-catalogue/painted-v1/quay-steps-prompt.txt",
+        "from": [
+          [
+            13,
+            826
+          ],
+          [
+            789,
+            1124
+          ],
+          [
+            1297,
+            609
+          ]
+        ],
+        "to": [
+          [
+            1.54,
+            175.54
+          ],
+          [
+            174.74,
+            239.81
+          ],
+          [
+            274.74,
+            128.48
+          ]
+        ]
       }
     }
   ]

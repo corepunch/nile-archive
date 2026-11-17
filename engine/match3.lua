@@ -471,49 +471,6 @@ function E.bind_town_board_hud(R)
     end
 end
 
--- The results and Item recovered cards are vertical stacks: groups sit one
--- equal gap apart, so no part can crowd the next. The game paints into the
--- boxes; the header tab rides 26 above the card's top edge.
-local function slot(id, height, side)
-    return {kind="column", padding={side, 0, side, 0}, children={{kind="custom", id=id, height=height}}}
-end
-local function group(gap, children) return {kind="column", gap=gap, children=children} end
-local card_layouts = {}
-local function card_layout(name, screen_w, screen_h, gap, children)
-    local w = math.min(408, screen_w - 48)
-    local key = ("%s:%g:%g"):format(name, w, screen_h)
-    local cached = card_layouts[key]
-    if cached then return cached end
-    local function build(g) return ui.form{kind="column", padding={0, 0, 0, 24}, gap=g, children=children} end
-    local form = build(gap)
-    local _, h = form:measure(w)
-    local spare = screen_h - 80 - h   -- short screens close the gaps up, never the parts
-    if spare < 0 then
-        local count = #children - 1
-        gap = math.max(6, gap + spare / count)
-        form = build(gap)
-        _, h = form:measure(w)
-    end
-    local x, y = (screen_w - w) / 2, (screen_h - h) / 2 + 8
-    local boxes = form:layout(rect(x, y, w, h))
-    local out = {card = rect(x, y + 26, w, h - 26)}
-    for id, box in pairs(boxes) do out[id] = box end
-    card_layouts[key] = out
-    return out
-end
-
-function E.result_rects(screen_w, screen_h)
-    return card_layout("result", screen_w, screen_h, 16, {
-        slot("header", 74, 22),
-        slot("stars", 64, 70),
-        group(0, {slot("score_label", 18, 66), slot("score", 53, 60)}),
-        group(4, {slot("treasure_label", 18, 30), slot("rewards", 91, 22), slot("bonus", 16, 22)}),
-        slot("progress", 36, 44),
-        slot("next", 65, 28),
-        slot("claim", 56, 40),
-    })
-end
-
 function E.guide_form(copy, guide_icon)
     return ui.form{kind="column",panel=true,padding=20,children={
         {kind="label",text=copy.title,height=44,em=34},
@@ -555,35 +512,6 @@ function E.pause_form(guide_label, quit_label, leaderboard_label)
         }},
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
     }
-end
-
-local function draw_dialog_form(R, form, width, y)
-    local _, height = form:measure(width, R.skin)
-    local bounds = rect.centered(vec2(R.SCREEN_W / 2, y), size2(width, height))
-    R.modal_bounds = R.pr(bounds)
-    return form:draw(bounds, R.skin, {hit_offset=vec2(0, R.hit_dy)})
-end
-
-function E.draw_guide(R, form)
-    local event = draw_dialog_form(R, form, 432, R.SCREEN_H / 2 + 10)
-    if event and event.id == "done" then R.overlay = R.OV_NONE end
-end
-
-function E.draw_pause(R, form, level)
-    local ok, message = form:push(R)
-    assert(ok, message)
-    form.values.expedition = not R.on_island
-    form:set("level", level)
-    -- the leaderboard link makes the card taller: sit lower so its top clears the gear
-    local event = draw_dialog_form(R, form, 396, R.SCREEN_H / 2 + (R.words.leaderboard and 24 or 0))
-    if not event then return end
-    if event.kind == "change" then
-        ok, message = form:pull(R)
-        assert(ok, message)
-        sfx.enable(R.sound)
-    elseif event.id == "resume" then R.overlay = R.OV_NONE
-    elseif event.id == "guide" then R.overlay = R.OV_GUIDE
-    else return event.id end   -- restart, quit, leaderboard: the game decides
 end
 
 function E.new(config)
@@ -886,7 +814,7 @@ function E.new(config)
                                 if resource then
                                     local length = m.match_lengths and m.match_lengths[i]
                                     local amount = resource.amount * (length and g.resource_multipliers[length] or 1)
-                                    if resource.slot then
+                                    if resource.slot and (not g.match_only_resources or not m.direct[i] or m.ordinary[i]) then
                                         g.earnings[resource.slot] = g.earnings[resource.slot] + amount
                                     elseif resource.tool and m.ordinary[i] and g.tool_meter and g.tool_meter[resource.tool] then
                                         local tool = resource.tool
@@ -1244,6 +1172,7 @@ function E.new(config)
         g.resource_yields = resource_yields
         if g.resource_yields then g.earnings = {0, 0, 0} end
         if loadout then
+            g.match_only_resources = loadout.match_only_resources
             g.spawn_kinds = loadout.kinds
             g.resource_multipliers = loadout.multipliers
             g.tool_threshold, g.tool_meter = loadout.tool_threshold, loadout.tool_meter

@@ -14,7 +14,7 @@
 --   -- main.lua, last:       return require("match3.game").app(R)
 --
 -- Game hooks the shared code calls (set on R by the game's modules):
---   R.dialogs[R.OV_RESULT], R.dialogs[R.OV_GUIDE]   the results card and guide
+--   R.register_result, R.register_guide   the results data and guide form
 --   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
 --   R.wallet_icons()        three icons: unused, gold, unused (the gold capsule's is the second)
 --   R.town_middle_icon(at)  the round middle button's icon in the town
@@ -54,7 +54,7 @@ G.DEFAULTS = {
     zone = {subtitle = "A NEW PLACE TO DISCOVER", cleared = "LEVELS CLEARED  %d / %d", earn = "CLEAR NEW LEVELS TO OPEN IT",
             open = "OPEN THIS AREA", wait = "KEEP EXPLORING", close = "CLOSE"},
     finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
-    card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", back = "BACK TO TOWN",
+    card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
@@ -145,17 +145,29 @@ end
 -- ladder_position, catalogue_order, next_step, next_build, ladder_blocked,
 -- campaign_count, reserved_cost, can_spend, can_buy, waived, set_waived and
 -- waive_passed. `slots` is the number of spendable wallet slots.
+local function wonder_kind(island, index)
+    if island.wonder_kinds then return island.wonder_kinds[index] end
+    return index - 1
+end
+
 function G.campaign_ladder(island, unlocks, journey, slots)
     local M, WONDERS = island, island.WONDERS
     M.ladder, M.ladder_position = {}, {}
     local type_of = {}
     for i, d in ipairs(M.buildings) do type_of[d.key] = i - 1 end
-    for n, unlock in ipairs(unlocks) do
+    local story_index, optional = {}, {}
+    for i = 1, WONDERS do story_index[wonder_kind(island, i)] = i end
+    for _, unlock in ipairs(unlocks) do
         local kind = assert(type_of[unlock.building], unlock.building)
-        local story = kind < WONDERS
-        assert(not story or unlock.after == journey.wonder_levels[kind + 1], unlock.building .. " follows the story schedule")
-        M.ladder[n] = {kind=kind, unlock=unlock, after=unlock.after, story=story}
-        M.ladder_position[kind] = n
+        local index = story_index[kind]
+        assert(not index or unlock.after == journey.wonder_levels[index], unlock.building .. " follows the story schedule")
+        if unlock.optional then
+            optional[kind] = unlock.after
+        else
+            local n = #M.ladder + 1
+            M.ladder[n] = {kind=kind, unlock=unlock, after=unlock.after, story=index ~= nil}
+            M.ladder_position[kind] = n
+        end
     end
     -- The shop lists the ladder in purchase order, then everything else.
     M.catalogue_order = {}
@@ -181,14 +193,20 @@ function G.campaign_ladder(island, unlocks, journey, slots)
         end
     end
 
-    function M.next_build(c, level) return M.next_step(c, level) or M.wonder_count(c) end
+    function M.next_build(c, level) return M.next_step(c, level) or wonder_kind(island, M.wonder_count(c) + 1) end
 
     -- Why a ladder building cannot be placed now: "built", "later" (with the
     -- clear it waits for) or "earlier" (another comes first). False when it
     -- can, nil for shop items.
     function M.ladder_blocked(c, level, kind)
         local n = M.ladder_position[kind]
-        if not n then return nil end
+        if not n then
+            if optional[kind] then
+                if M.owned(c, kind) > 0 then return "built" end
+                if optional[kind] > level then return "later", optional[kind] end
+            end
+            return nil
+        end
         local step = M.ladder[n]
         if M.owned(c, kind) > 0 then return "built" end
         if step.after > level then return "later", step.after end
@@ -201,7 +219,7 @@ function G.campaign_ladder(island, unlocks, journey, slots)
     local function required_through(level)
         local earned, last = journey.earned(level), 0
         for n, step in ipairs(M.ladder) do
-            if step.story and step.kind < earned then last = n end
+            if step.story and story_index[step.kind] <= earned then last = n end
         end
         return last
     end
@@ -327,7 +345,8 @@ function G.journey(content)
                     if before_level == b.level - 1 and p.level >= b.level - 1 then return b end
                 elseif p.level >= b.level then
                     local wonder = M.wonder_at(b.level)
-                    if (b.phase == "after" and M.clear_before_result) or not wonder or owns(wonder - 1) then return b end
+                    if ((b.phase == "after" and M.clear_before_result) or not wonder or owns(wonder - 1))
+                        and (not M.ready or M.ready(p, b)) then return b end
                 end
                 return nil
             end
@@ -383,7 +402,6 @@ function G.bind(R, over)
     local match3 = require("match3")
     local LEVELS = rules.LEVELS
     local rgba = color
-    R.dialogs = R.dialogs or {}
 
     -------------------------------------------------------------- paint
 
@@ -426,19 +444,9 @@ function G.bind(R, over)
     end
     function R.paragraph(s, box, em, palette) text.box(pal(palette, em), pr(box), vec2(.5, .5), s) end
     local say_at = R.say_at
-    function R.panel(r) skin:paint("panel", r) end
-    function R.tapped(r) return ui.hit(r:offset(vec2(0, R.hit_dy)), 0).clicked end
-    -- Buttons respond even when drawn disabled, so the game can explain why not.
     function R.paint_button(r, st, enabled)
         skin:paint("button", r, {hot = st.hot, held = st.held, disabled = not enabled})
     end
-    function R.button(r, label, enabled)
-        local st = ui.hit(r:offset(vec2(0, R.hit_dy)), 0)
-        R.paint_button(r, st, enabled)
-        R.say(label, (st.held and r:offset(vec2(0, 2)) or r):inflate(-12), 25, R.PAL_CREAM)
-        return st.clicked
-    end
-    local panel, button, tapped = R.panel, R.button, R.tapped
     local PAL_GOLD, PAL_CREAM, PAL_WHITE = R.PAL_GOLD, R.PAL_CREAM, R.PAL_WHITE
 
     -- Dialogue text: the skin's font, scaled by speech.scale, in dark ink.
@@ -587,16 +595,78 @@ function G.bind(R, over)
         return false
     end
 
+    local popups = {}
+    local function popup(id, form, config)
+        assert(form.root.kind == "column" and not popups[id], "popup requires a unique vertical form")
+        popups[id] = config
+        config.form = form
+    end
+
+    function R.register_result(model)
+        local form = ui.form{kind="column",panel=true,padding={21,20,21,23},gap=15,children={
+            {kind="column",panel=true,role="result_heading",padding={12,8,12,10},gap=2,children={
+                {kind="label",id="title",wrap=true,em=31,text_style="gold"},
+                {kind="label",id="subtitle",wrap=true,em=14,text_style="cream"},
+            }},
+            {kind="column",gap=1,paint_group={.24,.32,9},children={
+                {kind="label",text="SCORE",em=13,text_style="cream"},
+                {kind="label",id="score",em=44,text_style="gold"},
+            }},
+            {kind="column",gap=7,paint_group={.62,.28,10},children={
+                {kind="label",text="RESOURCES TO BANK",em=13,text_style="cream"},
+                {kind="list",id="resources",direction="row",gap=9,item=function(entry)
+                    return {kind="column",grow=1,panel=true,role="result_resource",padding={4,5,4,7},gap=1,children={
+                        {kind="image",image=entry.icon,height=36},
+                        {kind="label",text=entry.amount,em=25,text_style="gold"},
+                        {kind="label",text=entry.name,em=13,text_style="cream"},
+                    }}
+                end},
+            }},
+            {kind="row",id="next_step",visible_field="show_next",panel=true,role="group",
+                padding={9,8,10,8},gap=10,align="center",paint_group={.9,.26,8},children={
+                    {kind="image",id="next_icon",width=58,height=58,visible_field="show_next_icon"},
+                    {kind="column",grow=1,gap=2,children={
+                        {kind="label",id="next_heading",wrap=true,text_align="start",em=12,text_style="cream"},
+                        {kind="label",id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
+                        {kind="label",id="next_detail",visible_field="show_next_detail",
+                            wrap=true,text_align="start",em=12,text_style="gold"},
+                    }},
+                }},
+            {kind="button",id="claim",height=54,paint_group={1.02,.22,8}},
+        }}
+        R.result_form = form
+        popup(R.OV_RESULT, form, {width=408, dismiss=false, prepare=function(d)
+            local count = R.dialog_part(.43, .65).f
+            form:set("score", tostring(math.floor(R.g.score * count + .5)))
+            if not d.fresh then return end
+            local data = model()
+            local next_step = data.next_step
+            form:set("title", data.title):set("subtitle", data.subtitle):set("claim", data.action)
+            assert(form:set_items("resources", data.resources))
+            form.values.show_next = next_step ~= nil
+            form.values.show_next_icon = next_step and next_step.icon ~= nil
+            form.values.show_next_detail = next_step and next_step.detail ~= nil
+            if next_step then
+                form:set("next_icon", next_step.icon):set("next_heading", next_step.heading)
+                    :set("next_title", next_step.title):set("next_detail", next_step.detail)
+            end
+        end, handle=function(event)
+            if event.id ~= "claim" or R.modal_closing then return end
+            if R.dialog_settled() then R.close_dialog() else R.dialog_skip() end
+        end})
+    end
+
+    function R.register_guide(form)
+        popup(R.OV_GUIDE, form, {width=432, shift=10, handle=function() R.overlay = R.OV_NONE end})
+    end
+
     -- The building card: a story building or a shop item, to build or move.
     local wonder_form = ui.form{
-        root = {kind="column", panel=true, padding={24,20,24,13}, children={
+        root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
             {kind="label", id="name", height=44, em=34},
-            {kind="spacer", height=19},
             {kind="image", id="sprite", height=205},
-            {kind="spacer", height=18},
-            {kind="label", id="about", height=62, wrap=true, em=22, text_style=PAL_CREAM},
-            {kind="label", id="unlock", height=38, wrap=true, em=17, text_style=PAL_GOLD, visible_field="show_unlock"},
-            {kind="spacer", height=14},
+            {kind="label", id="about", wrap=true, em=22, text_style=PAL_CREAM},
+            {kind="label", id="unlock", wrap=true, em=17, text_style=PAL_GOLD, visible_field="show_unlock"},
             {kind="row", height=78, align="center", visible_field="show_price", children={
                 {kind="spacer",grow=1},
                 {kind="list",id="price",direction="row",gap=10,item=function(entry)
@@ -608,10 +678,8 @@ function G.bind(R, over)
                 end},
                 {kind="spacer",grow=1},
             }},
-            {kind="label",id="notice",height=78,wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
-            {kind="spacer",height=18},
+            {kind="label",id="notice",wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
             {kind="button",id="action",height=56},
-            {kind="spacer",height=17},
             {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16},
         }},
         bindings={
@@ -620,14 +688,17 @@ function G.bind(R, over)
         },
     }
     R.wonder_form = wonder_form
-    R.dialogs[R.OV_WONDER] = function()
+    local wonder_action
+    popup(R.OV_WONDER, wonder_form, {width=420, prepare=function()
         local i = R.inspect >= 0 and R.inspect or next_build()
-        if i < 0 or i >= #R.buildings then return end
+        if not i or i < 0 or i >= #R.buildings then return false end
         local w = R.buildings[i + 1]
         local unlock_text = island.buildings[i + 1].unlock_text
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
+        local fixed = w.fixed_site and (w.fixed_site.x ~= 0 or w.fixed_site.y ~= 0)
+        local movable = built and not fixed
         local ok, message = wonder_form:push{name=w.name, sprite=w.sprite, about=journey.building_about(i, R.prog.level, w.about),
-            action=built and W.card.move or can_build and W.card.build or W.card.back}
+            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or W.card.back}
         assert(ok, message)
         local show_price = not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
@@ -635,92 +706,92 @@ function G.bind(R, over)
         wonder_form.values.show_unlock = unlock_text ~= nil
         wonder_form:set("unlock", unlock_text or "")
         assert(wonder_form:set_items("price", price_parts(w.cost)))
-        wonder_form:set("notice", built and W.card.moving or W.card.locked)
-        local bounds = rect.centered(vec2(240, 450), size2(math.min(420, R.SCREEN_W - 48), unlock_text and 630 or 592))
-        R.modal_bounds = pr(bounds)
-        local event = wonder_form:draw(bounds, skin, {hit_offset=vec2(0, R.hit_dy)})
-        if event and event.id == "action" then
-            if can_build or built then R.island_begin(i, true, built and R.inspect_item or nil) else R.overlay = R.OV_NONE end
-        elseif event and event.id == "close" then R.overlay = R.OV_NONE end
-    end
+        wonder_form:set("notice", built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
+        wonder_action = (can_build or movable) and {kind=i, item=movable and R.inspect_item or nil} or nil
+    end, handle=function(event)
+        local action = wonder_action
+        if event.id == "action" and action then R.island_begin(action.kind, true, action.item)
+        else R.overlay = R.OV_NONE end
+    end})
 
-    -- Pause: the settings grouped in one well, then Resume and the secondary
-    -- actions. Restart asks first; Quit keeps the board, which LEVEL or the
-    -- level list resume later. From the town only Resume applies.
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard)
     R.pause_form = pause_form
-    R.dialogs[R.OV_PAUSE] = function()
+    popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         local level = R.on_island and W.pause.town or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
-        local action = match3.draw_pause(R, pause_form, level)
-        if action == "restart" then R.overlay = R.OV_CONFIRM
+        assert(pause_form:push(R))
+        pause_form.values.expedition = not R.on_island
+        pause_form:set("level", level)
+    end, handle=function(event)
+        local action = event.id
+        if event.kind == "change" then
+            assert(pause_form:pull(R))
+            sfx.enable(R.sound)
+        elseif action == "resume" then R.overlay = R.OV_NONE
+        elseif action == "guide" then R.overlay = R.OV_GUIDE
+        elseif action == "restart" then R.overlay = R.OV_CONFIRM
         elseif action == "leaderboard" then R.open_leaderboard()
         elseif action == "quit" then   -- the unfinished board waits in town
             R.on_island, R.overlay = true, R.OV_NONE
             R.notice(W.notices.quit:format(R.g.level + 1))
         end
-    end
+    end})
 
-    -- Restart throws the board away, so it asks first. Retrying is always free.
-    local confirm_form = ui.form{
-        root={kind="column",panel=true,padding={36,22,36,18},gap=14,children={
-            {kind="label",text=W.confirm.title,height=40,em=28},
-            {kind="label",text=W.confirm.body,height=56,wrap=true,em=18,text_style=PAL_CREAM},
-            {kind="button",id="confirm",text=W.confirm.restart,height=50},
-            {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
-        }},
-    }
+    local confirm_form = ui.form{kind="column",panel=true,padding={36,22,36,18},gap=14,children={
+        {kind="label",text=W.confirm.title,wrap=true,em=28},
+        {kind="label",text=W.confirm.body,wrap=true,em=18,text_style=PAL_CREAM},
+        {kind="button",id="confirm",text=W.confirm.restart,height=50},
+        {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
+    }}
     R.confirm_form = confirm_form
-    R.dialogs[R.OV_CONFIRM] = function()
-        local _, height = confirm_form:measure(396, skin)
-        local bounds = rect.centered(vec2(240, 450), size2(396, height))
-        R.modal_bounds = pr(bounds)
-        local event = confirm_form:draw(bounds, skin, {hit_offset=vec2(0, R.hit_dy)})
-        if event and event.id == "confirm" then R.start_level(R.g.level); R.overlay = R.OV_NONE
-        elseif event and event.id == "cancel" then R.overlay = R.OV_PAUSE end
-    end
+    popup(R.OV_CONFIRM, confirm_form, {width=396, handle=function(event)
+        if event.id == "confirm" then R.start_level(R.g.level); R.overlay = R.OV_NONE
+        else R.overlay = R.OV_PAUSE end
+    end})
 
-    -- Out of moves: try again at once, as often as the player likes.
-    R.dialogs[R.OV_FAILED] = function()
-        local f = W.failed
-        panel(rect(38, 272, 404, 333))
-        say_at(f.title, vec2(240, 317), 32, PAL_GOLD, 0)
-        say_at(f.subtitle, vec2(240, 366), 16, PAL_WHITE, 0)
-        say_at(f.hint, vec2(240, 404), 17, PAL_CREAM, 0)
-        if button(rect(83, 448, 314, 50), f.retry, true) then R.start_level(R.g.level) end
-        if button(rect(115, 520, 250, 42), f.town, true) then R.on_island, R.overlay = true, R.OV_NONE end
-    end
+    local failed = W.failed
+    popup(R.OV_FAILED, ui.form{kind="column",panel=true,padding={32,24,32,22},gap=14,children={
+        {kind="label",text=failed.title,wrap=true,em=32,text_style=PAL_GOLD},
+        {kind="label",text=failed.subtitle,wrap=true,em=16,text_style=PAL_WHITE},
+        {kind="label",text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
+        {kind="button",id="retry",text=failed.retry,height=50},
+        {kind="button",id="town",text=failed.town,height=42,role="secondary"},
+    }}, {width=404, dismiss=false, handle=function(event)
+        if event.id == "retry" then R.start_level(R.g.level) else R.on_island, R.overlay = true, R.OV_NONE end
+    end})
 
-    -- A closed region: what it needs, and the button to open it.
-    R.dialogs[R.OV_ZONE] = function()
-        local z, t = R.zone_card, W.zone
+    local region = W.zone
+    local zone_form = ui.form{kind="column",panel=true,padding={32,24,32,20},gap=14,children={
+        {kind="label",id="name",wrap=true,em=34,text_style=PAL_GOLD},
+        {kind="label",text=region.subtitle,wrap=true,em=16,text_style=PAL_CREAM},
+        {kind="label",id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
+        {kind="label",text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
+        {kind="button",id="open",height=47},
+        {kind="button",id="close",text=region.close,height=32,role="link",em=16},
+    }}
+    popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
+        local z = R.zone_card
         local zone = R.island.zones[z + 1]
-        local ready = R.island:zone_available(z, R.prog.wallet)
-        R.modal_bounds = pr(rect(30, 263, 420, 365))
-        panel(rect(30, 263, 420, 365))
-        say_at(zone.name, vec2(240, 304), 34, PAL_GOLD, 380)
-        say_at(t.subtitle, vec2(240, 349), 16, PAL_CREAM, 0)
-        say_at(t.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED]), vec2(240, 397), 24, PAL_GOLD, 0)
-        say_at(t.earn, vec2(240, 441), 19, PAL_CREAM, 0)
-        if button(rect(72, 487, 336, 47), ready and t.open or t.wait, true) then
-            if R.island:unlock(z, R.prog.wallet) then
-                R.island_focus(zone.marker, R.island.cam.zoom)
-                R.save_progress()
-                story.add({W.region_speaker, journey.regions[z], story.SHOUT})
-                R.tone(820)
-            end
-            R.overlay = R.OV_NONE
+        zone_form:set("name", zone.name)
+            :set("cleared", region.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED]))
+            :set("open", R.island:zone_available(z, R.prog.wallet) and region.open or region.wait)
+    end, handle=function(event)
+        local z = R.zone_card
+        if event.id == "open" and R.island:unlock(z, R.prog.wallet) then
+            R.island_focus(R.island.zones[z + 1].marker, R.island.cam.zoom)
+            R.save_progress()
+            if journey.regions[z] then story.add({W.region_speaker, journey.regions[z], story.SHOUT}) end
+            R.tone(820)
         end
-        say_at(t.close, vec2(240, 592), 15, PAL_WHITE, 0)
-        if tapped(rect(180, 575, 120, 38)) then R.overlay = R.OV_NONE end
-    end
+        R.overlay = R.OV_NONE
+    end})
 
-    -- The end of the campaign. Lines are {text, y, em, style}.
-    R.dialogs[R.OV_FINALE] = function()
-        panel(rect(32, 285, 416, 305))
-        say_at(W.finale.title, vec2(240, 330), 31, PAL_GOLD, 0)
-        for _, line in ipairs(W.finale.lines) do say_at(line[1], vec2(240, line[2]), line[3], line[4] or PAL_WHITE, 0) end
-        if button(rect(82, 489, 316, 50), W.finale.button, true) then R.overlay = R.OV_NONE end
+    local finale = {{kind="label",text=W.finale.title,wrap=true,em=31,text_style=PAL_GOLD}}
+    for _, line in ipairs(W.finale.lines) do
+        finale[#finale+1] = {kind="label",text=line[1],wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
     end
+    finale[#finale+1] = {kind="button",id="back",text=W.finale.button,height=50}
+    popup(R.OV_FINALE, ui.form{kind="column",panel=true,padding=24,gap=14,children=finale},
+        {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
 
     -- Draws the open dialog over everything; it alone receives input.
     function R.overlays(dt)
@@ -741,13 +812,22 @@ function G.bind(R, over)
         R.hit_dy = R.drop / 2
         P.scale, P.offset, P.alpha = scale, vec2(240 * (1 - scale), 450 * (1 - scale) + 22 * (1 - entry) + 18 * exit + R.hit_dy), entry * (1 - exit)
         local before = R.overlay
-        R.modal_bounds = nil
-        local draw = R.dialogs[R.overlay]
+        local modal = assert(popups[before], "overlay has no vertical popup form")
+        if modal.prepare and modal.prepare(d) == false then R.overlay = R.OV_NONE; reset_paint(); R.hit_dy = 0; return end
+        local width = math.min(modal.width, R.SCREEN_W - 32)
+        local _, height = modal.form:measure(width, skin)
+        local bounds = rect.centered(vec2(240, 450 + (modal.shift or 0)), size2(width, height))
+        R.modal_bounds = pr(bounds)
         local covered = R.leaderboard_active()   -- a board above this dialog owns the input
-        if covered then ui.set_enabled(false) end
-        if draw then draw() end
-        if covered then ui.set_enabled(true) end
-        if R.overlay == before and R.modal_bounds and not R.modal_closing and not covered
+        local event = modal.form:draw(bounds, skin, {hit_offset=vec2(0, R.hit_dy), interactive=not covered and not d.fresh, dt=dt,
+            paint_scope=function(group, draw)
+                local previous = R.section(table.unpack(group))
+                local action = draw()
+                set_paint(previous)
+                return action
+            end})
+        if event then modal.handle(event) end
+        if R.overlay == before and modal.dismiss ~= false and not R.modal_closing and not covered
                 and ui.modal_dismiss(R.modal_bounds, {fresh=d.fresh}) then R.overlay = R.OV_NONE end
         d.fresh = false
         reset_paint()
@@ -1099,7 +1179,7 @@ function G.bind(R, over)
             return
         end
         local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
-        local b = journey.next(R.prog, function(kind) return island.owned(R.island, kind) > 0 end, before)
+        local b = journey.next(R.prog, function(index) return island.owned(R.island, wonder_kind(island, index + 1)) > 0 end, before)
         if b then
             if b.phase ~= "before" then R.on_island = true end
             local reply = R.prog.story_choices and R.prog.story_choices[b.key]
@@ -1188,6 +1268,7 @@ function G.bind(R, over)
     function R.debug_skip_level()
         if R.on_island or not R.g or R.g.won or R.g.lost or R.overlay ~= R.OV_NONE then return false end
         local g = R.g
+        if R.debug_fill_earnings and app.arg("debug-walkthrough") then R.debug_fill_earnings(g) end
         g.score = math.max(g.score, rules.level_of(g).score)
         for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
         g.oil_left = 0
@@ -1459,7 +1540,7 @@ function G.app(R)
         R.buildings = R.island.defs   -- with the sprites loaded
         R.town_setup()
         R.wonders = {}
-        for i = 1, island.WONDERS do R.wonders[i] = R.buildings[i] end
+        for i = 1, island.WONDERS do R.wonders[i] = R.buildings[wonder_kind(island, i) + 1] end
 
         R.sound = true
         R.inspect, R.zone_card = -1, -1

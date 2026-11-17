@@ -144,11 +144,18 @@ See the [finale and sand review](screenshots/review/signal-finale/README.md).
 The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived with its
 [historical review](review/story-mosaic/README.md).
 
+## Ancient keeper portrait
+
+The Quay Steps dialogue shows the ancient keeper during the flashback. The
+static portrait has transparent edges and uses the standard story speaker slot.
+The [ImageGen original](../art/art-direction/ancient-keeper.png) and [prompt](../art/art-direction/ancient-keeper-prompt.txt)
+are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-only`
+to register `data/story/characters/keeper.png`. See the native review at
+[480 × 900](review/chapter-one/keeper-480.jpg) and [390 × 844](review/chapter-one/keeper-390.jpg).
+
 ## Story pieces
 
-Boards 2–10 and 13 replace one colour's sprite with a story piece. Selection,
-hints and refills use the board's usual overlays and animations. First-clear
-dialogue reveals what the crew found.
+Board 13 still uses the folded note. Selection, hints and refills use the standard board overlays. The earlier Chapter 1 atlas slots are retained for asset review. The assignments below record where the art debuted.
 
 | Slot | Boards | Story sprite |
 | --- | --- | --- |
@@ -229,9 +236,9 @@ Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot 
 
 ## Buildings and decorations
 
-The [building catalogue](building-catalogue.md) covers **96** registered sprites,
+The [building catalogue](building-catalogue.md) covers **97** registered sprites,
 including twenty campaign restorations (ten story wonders and ten ladder
-buildings, all placed once) and 76 repeatable shop items. It records the full
+buildings, all placed once), the optional Jungle Market and 76 repeatable shop items. It records the full
 source/prompt history, runtime paths, whole-tile measurements, supported states,
 import commands and reviewed in-game captures. The board manifest links the
 building manifest and inventories every new runtime file.
@@ -247,12 +254,12 @@ prompt and reviewed game captures are recorded in the
 The [economy review](review/economy/README.md) records the first-clear and replay
 flows, expedition list and build shop. Board matches contribute to score and
 objectives. The results card and wallet use the three resource icons. First clears award
-three Discovery Stars. Replays bank matched resources and the move bonus.
+the progress count used by the shop and regions. Replays bank matched resources.
 
 | Sprite | Presentation |
 | --- | --- |
 | `discovery-star` | Faceted gold star in a turquoise setting. The celebration scales and fades the same artwork, and the Discovery Stars reward row and island wallet use it at smaller sizes. |
-| `next-clue` | Sealed papyrus when the investigation continues after a first clear. Restoration milestones show the building sprite, and replay results show the normal Build hammer. |
+| `next-clue` | Sealed papyrus retained in the atlas from the earlier first-clear presentation. Results show the pending restoration or the Build hammer. |
 
 Both static icons were authored together with built-in ImageGen in a
 [transparent atlas](../art/result-icons/source.png), using the Christmas Market
@@ -647,10 +654,10 @@ closed-land mask stays fixed, and unlocking clears it immediately. Open land sta
 is a continuous procedural effect, with no icon or interaction-state atlas. See the
 [review](review/cloud-fog/README.md).
 
-`building-shadows` is a separate Blender-rendered RGBA layer for all 96 objects, drawn below the
+`building-shadows` is a separate Blender-rendered RGBA layer for all 97 objects, drawn below the
 fog and every sprite; see [registration](BUILDINGS.md).
 
-The current [96-entry catalogue](building-catalogue.md), including the dry Sunstone
+The current [97-entry catalogue](building-catalogue.md), including the dry Sunstone
 courtyard, is rendered directly from its Blender master with the shared
 [city camera](../../../docs/BUILDINGS.md#the-camera). The earlier
 [ImageGen paint-over](../art/isometric-paintover/README.md), the

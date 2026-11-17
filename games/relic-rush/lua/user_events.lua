@@ -85,6 +85,8 @@ local events = {
 
     ---------------------------------------------------------------- the city
     -- Placing a building lets its citizen arrive (Rome: city_view.xml).
+    {id="city_well", citizen="Tomas Reed", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="well"},
+        Then={{"THEN_CITY_UPGRADE_BUILDING", id="well"}}},
     {id="city_workshop", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="workshop"},
         Then={{"THEN_USER_EVENT_AVAILABLE", id="man_01", available=true}}},
     {id="city_log_cabin", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="log_cabin"},
@@ -110,16 +112,16 @@ local events = {
 
     ---------------------------------------------------------------- citizens
     -- A citizen comes for a feat of play and stays: they upgrade their
-    -- building and pay something on every later expedition.
+    -- building and improve the pieces matched on later expeditions.
 
     -- Rome: carpenter, Saw-Mill, first match of five.
     {id="man_01", available=false, test=true, citizen="The carpenter",
         If={"IF_PLAYER_MAKE_MATCH", length=5},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the workshop: +5 Supplies per expedition."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the workshop: cut blocks earn 6 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_01"},
             {"THEN_CITY_UPGRADE_BUILDING", id="workshop"},
-            {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id="supplies", amount=5},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="cut-blocks", amount=6},
         }},
     -- Rome: smith, Forge, 10,000 points within levels 0–10.
     {id="man_02", available=false, citizen="The trapper", to_level=12,
@@ -134,37 +136,37 @@ local events = {
     {id="man_03", available=false, citizen="The stonecutter",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=120},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the archive: +10 Supplies per expedition."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the archive: carved quartz earns 8 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_03"},
             {"THEN_CITY_UPGRADE_BUILDING", id="archive"},
-            {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id="supplies", amount=10},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="quartz", amount=8},
         }},
     -- Rome: miller, Mill, 15 matches in rapid succession.
     {id="man_04", available=false, citizen="The trader",
         If={"IF_PLAYER_MAKE_MATCH_IN_TIME", min_length=3, amount=15, time=90},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="15 lines in 90 seconds! The trader opens a stall: +5 Food per expedition."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="15 lines in 90 seconds! The trader opens a stall: ration jars earn 5 Food each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_04"},
             {"THEN_CITY_UPGRADE_BUILDING", id="market"},
-            {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id="food", amount=5},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="rations", amount=5},
         }},
     -- Rome: peasant, Field, 3,000 food in a level.
     {id="man_05", available=false, citizen="The forager",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=80},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="80 Food in one go! The forager joins the lodge: +8 Food per expedition."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="80 Food in one go! The forager joins the lodge: grain bundles earn 6 Food each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_05"},
             {"THEN_CITY_UPGRADE_BUILDING", id="lodge"},
-            {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id="food", amount=8},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="grain", amount=6},
         }},
     -- Rome: wine maker, Tavern, a combo of two.
     {id="man_06", available=false, citizen="The miller",
         If={"IF_PLAYER_MAKE_COMBO", length=2},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="A cascade! The miller turns the wheel: +3 Food per expedition."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="A cascade! The miller turns the wheel: water buckets earn 4 Food each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_06"},
             {"THEN_CITY_UPGRADE_BUILDING", id="water_mill"},
-            {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id="food", amount=3},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="water", amount=4},
         }},
     -- Rome: priest, Pantheon, a level in under three minutes.
     {id="man_07", available=false, citizen="The astronomer",
@@ -189,10 +191,10 @@ local events = {
     {id="man_09", available=false, citizen="The fisher",
         If={"IF_PLAYER_MAKE_MATCH_IN_LEVEL", min_length=5, amount=2},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Two lines of five! The fisher works the fountain pool: +10 Food per expedition."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Two lines of five! The fisher works the fountain pool: shrimp earn 7 Food each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_09"},
             {"THEN_CITY_UPGRADE_BUILDING", id="fountain"},
-            {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id="food", amount=10},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shrimp", amount=7},
         }},
     -- Rome: gladiator, Colosseum, a chain reaction of 15 blows. Relic Rush's
     -- refill damps long cascades, so two follow-up waves is the feat.

@@ -647,6 +647,7 @@ typedef struct {
     purse income;        /* collected by tapping when ready */
     float income_period; /* seconds; 0 = no income */
     bool decoration;     /* trees, statues, gardens...: no road leads to it */
+    vec2 fixed_site;     /* world position before snapping; zero allows free placement */
 } building_def;
 
 typedef struct { vec2 pos; int type; double stamp; } building;

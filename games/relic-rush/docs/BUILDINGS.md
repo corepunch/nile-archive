@@ -1,6 +1,6 @@
 # Building registration and shadows
 
-The [96-entry catalogue](building-catalogue.md) owns names, prices, unlocks and whole-tile
+The [97-entry catalogue](building-catalogue.md) owns names, prices, unlocks and whole-tile
 sizes. Every object has its own Blender-rendered sprite and ground shadow, registered by
 `make buildings GAME=relic-rush` and merged by key from the generated
 `lua/building_sprites.lua`. `city.tile = 56` is one tile side for the entire catalogue.

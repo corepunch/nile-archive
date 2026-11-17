@@ -48,7 +48,17 @@ return ui.skin{
                 {fill = "#FFEFBC", radius = 13, inset = 5},
             }},
             -- A recessed well that groups related settings inside a dialog.
-            variants = {group = {normal = {layers = {
+            variants = {
+                result_heading = {normal = {layers = {
+                    {fill = "#4D3A1F", radius = 16, offset = {0, 4}},
+                    {fill = "#1F5345", radius = 16},
+                    {fill = "#2C6C54", radius = 13, inset = 3},
+                }}},
+                result_resource = {normal = {layers = {
+                    {fill = "#F1DA9D", radius = 12},
+                    {fill = "#FFF2C9", radius = 10, inset = 2},
+                }}},
+                group = {normal = {layers = {
                 {fill = "#E8CC8E", fill2 = "#F6E2B0", radius = 14},
                 {border = "#C9A464", width = 1.5, radius = 14},
             }}}},

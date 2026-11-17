@@ -212,7 +212,9 @@ function V.bind(R, rules)
                     if tool then
                         to = R.board_tool_bounds(tool - 1):center()
                     elseif R.resource_target and R.g.earnings then
-                        to = R.resource_target(was.kind)
+                        if not R.g.match_only_resources or not R.pending.direct[i] or R.pending.ordinary[i] then
+                            to = R.resource_target(was.kind)
+                        end
                     elseif rules.is_goal_kind(R.g, was.kind) or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL then
                         to = R.goal_target(was.kind)
                     end

@@ -53,6 +53,7 @@ local DEFAULTS = {
     focus = {lift = 90, min_zoom = .65},
     texts = {
         placing = "Drag the building to choose a spot, or scroll the land.",
+        restoring = "Confirm to restore this building at its original site.",
         unchanged = "Nothing changed.",
         blocked = "Choose open ground clear of other buildings.",
         cant_afford = "Not enough to build this yet.",
@@ -198,6 +199,7 @@ function View:begin(kind, focus, item)
     if item and item >= 0 then
         if item >= c.count then return false end
         c:begin_move(item)
+        if c.moving ~= item then return false end
     else
         if h.can_buy and not h.can_buy(kind) then notice(self, "cant_buy"); return false end
         local ok, spot = c:find_spot(kind, h.suggest and h.suggest(kind) or c.cam.center)
@@ -206,7 +208,8 @@ function View:begin(kind, focus, item)
     end
     self.bubble = nil
     if focus then self:focus(c.ghost - vec2(0, self.cfg.focus.lift), math.max(self.cfg.focus.min_zoom, c.cam.zoom)) end
-    notice(self, "placing")
+    local site = c.defs[kind + 1].fixed_site
+    notice(self, (site.x ~= 0 or site.y ~= 0) and "restoring" or "placing")
     return true
 end
 

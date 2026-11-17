@@ -130,8 +130,8 @@ assert not (ROOT / "data/story/characters/elena-investigating.png").exists(), "r
 buildings = json.loads((ROOT / manifest['buildings']).read_text())
 assert (ROOT / buildings['source']).is_file()
 assert (ROOT / buildings['registration']).is_file()
-assert len(buildings['items']) == 96
-assert len({b['key'] for b in buildings['items']}) == 96
+count = len(json.loads((ROOT / 'art/building-catalogue/catalogue.json').read_text()))
+assert len(buildings['items']) == len({b['key'] for b in buildings['items']}) == count
 definitions = (ROOT / 'lua/buildings.lua').read_text()
 building_doc = (ROOT / 'docs/building-catalogue.md').read_text()
 for i, b in enumerate(buildings['items']):
@@ -144,12 +144,13 @@ for i, b in enumerate(buildings['items']):
     assert list(struct.unpack('>II',data[16:24])) == b['image'], b['key']
     assert (ROOT / b['shadow']['runtime']).is_file(), b['key']
     assert 'key="'+b['key']+'"' in definitions and '`'+b['key']+'`' in building_doc
-    assert (ROOT / f'docs/review/building-catalogue/footprints-{i//4+1:02d}.jpg').is_file()
-assert '96' in doc and 'building-catalogue.md' in doc
+    review = 'docs/review/chapter-one/quay-footprint.jpg' if b['key']=='quay_steps' else f'docs/review/building-catalogue/footprints-{i//4+1:02d}.jpg'
+    assert (ROOT / review).is_file()
+assert str(count) in doc and 'building-catalogue.md' in doc
 assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows', 'placement-guides'}
 for name in manifest['island_layers']:
     assert '"'+name+'"' in art and '`'+name+'`' in doc
-print(f"Relic Rush catalogue: {len(actual)} runtime files, {len(slots)} campaign pieces, 26 board states, 7 HUD icons, 96 buildings covered")
+print(f"Relic Rush catalogue: {len(actual)} runtime files, {len(slots)} campaign pieces, 26 board states, 7 HUD icons, {count} buildings covered")
 
 # Compare actual piece silhouettes with the renderer-authored cell. The sun
 # face remains upright: geometry is authored, not a runtime sprite rotation.
@@ -199,8 +200,9 @@ for name, item in finale["assets"].items():
 subprocess.run([sys.executable, str(ROOT / finale["registration"]), "--check"], check=True)
 
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
-assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian'}
+assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian','keeper'}
 assert all(path in shipped for path in manifest['story']['cast'].values())
+assert all((ROOT / manifest['story']['keeper'][key]).is_file() for key in ('source', 'prompt', 'review'))
 assert manifest['story']['states'] == ['speaking','listening','thought','shout']
 assert 'A.story=' in art and '31.5' in doc
 

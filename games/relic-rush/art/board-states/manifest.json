@@ -215,6 +215,7 @@
     "data/city/building-shadows/pergola.png",
     "data/city/building-shadows/picnic.png",
     "data/city/building-shadows/pump.png",
+    "data/city/building-shadows/quay_steps.png",
     "data/city/building-shadows/rainbow_bed.png",
     "data/city/building-shadows/reeds.png",
     "data/city/building-shadows/rowboat.png",
@@ -311,6 +312,7 @@
     "data/city/buildings/pergola.png",
     "data/city/buildings/picnic.png",
     "data/city/buildings/pump.png",
+    "data/city/buildings/quay_steps.png",
     "data/city/buildings/rainbow_bed.png",
     "data/city/buildings/reeds.png",
     "data/city/buildings/rowboat.png",
@@ -341,6 +343,7 @@
     "data/common/fonts/lilitaone-OFL.txt",
     "data/story/characters/adrian.png",
     "data/story/characters/elena.png",
+    "data/story/characters/keeper.png",
     "data/story/characters/mara.png",
     "data/story/characters/tomas.png",
     "data/story/finale/safe-landing.jpg",
@@ -695,7 +698,8 @@
       "elena": "data/story/characters/elena.png",
       "mara": "data/story/characters/mara.png",
       "tomas": "data/story/characters/tomas.png",
-      "adrian": "data/story/characters/adrian.png"
+      "adrian": "data/story/characters/adrian.png",
+      "keeper": "data/story/characters/keeper.png"
     },
     "states": [
       "speaking",
@@ -706,7 +710,13 @@
     "presentation": "Existing island and two board paintings, shared engine portrait staging and bubbles; body text 31.5 points, names/building bubbles 22.5 points. No new bitmap states or tint-authored variants.",
     "script": "docs/story.md",
     "compile": "python3 games/relic-rush/tools/prepare_story.py",
-    "review": "docs/review/story/README.md"
+    "review": "docs/review/story/README.md",
+    "keeper": {
+      "source": "art/art-direction/ancient-keeper.png",
+      "prompt": "art/art-direction/ancient-keeper-prompt.txt",
+      "import": "python3 games/relic-rush/tools/prepare_assets.py --keeper-only",
+      "review": "docs/review/chapter-one/keeper-480.jpg"
+    }
   },
   "particle_sprites": {
     "source": "art/particles/kenney/",
@@ -790,9 +800,7 @@
         "prompt": "art/resource-pieces/scenario-atlas.prompt.txt",
         "items": {
           "chart": {
-            "boards": [
-              4
-            ],
+            "boards": [],
             "kind": 0,
             "crop": [
               320,
@@ -803,9 +811,7 @@
             "runtime": "art/registered/story-pieces/chart.png"
           },
           "supplies": {
-            "boards": [
-              9
-            ],
+            "boards": [],
             "kind": 3,
             "crop": [
               326,
@@ -816,9 +822,7 @@
             "runtime": "art/registered/story-pieces/supplies.png"
           },
           "lens": {
-            "boards": [
-              2
-            ],
+            "boards": [],
             "kind": 3,
             "crop": [
               959,
@@ -829,9 +833,7 @@
             "runtime": "art/registered/story-pieces/lens.png"
           },
           "cable": {
-            "boards": [
-              3
-            ],
+            "boards": [],
             "kind": 4,
             "crop": [
               12,
@@ -842,9 +844,7 @@
             "runtime": "art/registered/story-pieces/cable.png"
           },
           "tools": {
-            "boards": [
-              7
-            ],
+            "boards": [],
             "kind": 1,
             "crop": [
               934,
@@ -868,9 +868,7 @@
             "runtime": "art/registered/story-pieces/note.png"
           },
           "gear": {
-            "boards": [
-              10
-            ],
+            "boards": [],
             "kind": 2,
             "crop": [
               638,
@@ -887,10 +885,7 @@
         "prompt": "art/resource-pieces/outlined-atlas.prompt.txt",
         "items": {
           "marker": {
-            "boards": [
-              5,
-              6
-            ],
+            "boards": [],
             "kind": 2,
             "crop": [
               1376,
@@ -905,9 +900,7 @@
     ],
     "campaign_frames": {
       "pliers": {
-        "boards": [
-          8
-        ],
+        "boards": [],
         "kind": 2
       }
     }

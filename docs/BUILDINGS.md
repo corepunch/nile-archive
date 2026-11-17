@@ -111,6 +111,12 @@ previewing. Existing explicit `begin_move` commands still enter a preview;
 programmatic placement and short-tap income/details retain their own behavior.
 Nile Archive uses an engine form for Confirm/Cancel; Relic Rush anchors round ×/✓ controls below the preview sprite’s left/right edges. Emergency has no city-building relocation mode.
 
+A building definition can set `fixed_site` to a world-space point. The engine
+snaps the point to the building’s grid footprint and reserves it before the
+building is restored. Restore opens the preview there. A drag pans the map,
+and the Confirm and Cancel controls use the same transaction as free placement.
+The finished building stays at its site and can be tapped for details.
+
 Reviewed native-input comparisons are in [the gesture review](review/city-long-press/README.md).
 
 ## Rendering buildings

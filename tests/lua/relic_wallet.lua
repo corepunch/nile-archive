@@ -14,17 +14,17 @@ local function open_cell(g)
         if ok then return i end
     end
 end
--- Optional purchases add Coins to a win, up to the decoration bonus cap.
+-- A win banks the ledger of matched resources. Unspent moves and town
+-- decorations never change it, and replay claims stay idempotent.
 do
     local town={items={{type=0},{type=37}}}
-    local p={level=1,seed=1,wallet=purse(0,0,0,3)}
-    local g=rules.game_start(0,99);g.won=true;g.moves=0
-    local reward=rules.reward_breakdown(g,island.wonders,p,town)
-    check(reward.decoration_bonus==1 and reward.total[1]==1,'only the optional placement earns a bonus coin')
-    check(rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'a replay banks the decoration bonus')
-    check(not rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'cannot claim the decoration bonus twice')
-    for _=1,12 do town.items[#town.items+1]={type=37} end
-    check(island.decoration_bonus(town)==10,'the decoration bonus is capped at ten coins')
+    local p={level=1,seed=1,wallet=purse(0,0,0,1)}
+    local g=rules.game_start(0,99);g.won=true;g.moves=99;g.earnings={7,6,5}
+    local reward=rules.reward_breakdown(g,p)
+    check(reward.total[1]==7 and reward.total[2]==6 and reward.total[3]==5 and reward.total[4]==0,
+        'only matched resources go into replay payouts')
+    check(rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==7,'a replay banks its matches')
+    check(not rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==7,'cannot claim twice')
 end
 
 -- Confirmed restorations persist across eligible boards without taking story slots.
@@ -67,20 +67,34 @@ do
     c:cancel()
     check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
     check(island.island_place_next(c,bank,7,0),'confirm the earned workshop')
-    local before_market = R.make_board(9,19)
-    check(before_market.resource_yields[1] ~= economy.unlock_of("market"),
-        'rations are locked before restoring the market')
-    check(not island.can_buy(c,bank,9,island.ladder[6].kind),'the market waits for the water mill')
-    check(island.island_place_next(c,bank,9,0) and island.island_place_next(c,bank,9,0),
-        'confirm the water mill and then the earned market')
+    c:unlock(1,bank)
+    check(island.island_place_next(c,bank,9,0), 'confirm the water mill')
+    check(not island.island_place_next(c,bank,9,0), 'the quay repair opens after expedition ten')
+    local steps = island.kinds.quay_steps
+    local restored, site = c:find_spot(steps, vec2(640,1900))
+    check(restored and not c:can_place(site, 0, -1), 'the fixed steps reserve their footprint')
+    check(not c:can_place(site + vec2(500,0), steps, -1), 'the steps use the original location')
+    c:begin_place(steps, vec2(640,1900))
+    check((c.ghost-site):len()<.01, 'the repair preview stays at the site')
+    c:cancel()
+    check(island.owned(c,steps)==0, 'cancelling keeps the site unrestored')
+    check(island.island_place_next(c,bank,10,0), 'confirm the fixed quay repair')
+    c:begin_move(c.count-1)
+    check(c.placing<0, 'the repaired stairs cannot be moved')
+    local market=island.kinds.market
+    check(island.can_buy(c,bank,10,market), 'the market is optional after the quay chapter')
+    local market_fits, market_site=c:find_spot(market, vec2(770,1900))
+    check(market_fits, 'the market has a free placement')
+    c:begin_place(market,market_site)
+    check(c:confirm(bank,0).result==city.BUILT, 'confirm the optional market')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
         local spec=rules.level_of(g)
         local water=g.resource_yields[3]==economy.unlock_of("well")
         local blocks=g.resource_yields[4]==economy.unlock_of("workshop")
         local rations=g.resource_yields[1]==economy.unlock_of("market")
-        check(water==(level>=4 and level~=8), 'water persists after its introduction except in the supply crate slot')
-        check(blocks==(level>=7) and rations==(level>=9), 'workshop and market pieces stay unlocked')
+        check(water==(level>=4), 'water persists after its introduction')
+        check(blocks==(level>=7) and rations==(level>=10), 'workshop and market pieces stay unlocked')
         check(g.backdrop==(level>=1 and 1 or spec.background),'the latest restoration in force picks the lagoon')
         check(g.spawn_kinds==nil and rules.COLORS==5,'every expedition spawns all five kinds, as in Cradle of Rome')
         local charge_kinds = 0
@@ -162,7 +176,8 @@ do
 end
 
 -- Like Cradle of Rome's ladder, each new piece pays toward the next purchase.
-for n, unlock in ipairs(economy.unlocks) do
+for n, step in ipairs(island.ladder) do
+    local unlock=step.unlock
     local following=island.ladder[n+1]
     local next_building=following and island.buildings[following.kind+1]
     if unlock.slot and next_building then
@@ -175,8 +190,8 @@ do
     local c=R.island
     local wallet=purse(5000,5000,5000,90)
     for z=1,5 do c:unlock(z,wallet) end
-    for i=7,#economy.unlocks do
-        local unlock=economy.unlocks[i]
+    for i=7,#island.ladder do
+        local unlock=island.ladder[i].unlock
         local building=island.buildings[island.ladder[i].kind+1]
         local before=R.make_board(unlock.first_level-1,41)
         if unlock.bonus then
@@ -223,21 +238,6 @@ do
         end
     end
     for _, bonus in ipairs(final.tool_slots) do check(seen[bonus], 'seeded rotation includes ' .. bonus.name) end
-end
-
--- The Shutter Gear advances the story while the market's rations make their debut.
-do
-    local g, m = R.make_board(9, 73), rules.new_match()
-    check(g.bonus == nil and g.resource_yields[1] == economy.unlock_of("market") and not g.resource_yields[g.goal_kind],
-        'expedition 10 keeps both the story gear slot and newly unlocked ration jars')
-    local mid = open_cell(g)
-    for _, cell in ipairs{rules.hex_neighbor(mid, 4), mid, rules.hex_neighbor(mid, 1)} do
-        g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0
-        g.tiles[cell] = rules.tile(g.goal_kind)
-    end
-    rules.game_matches(g, m, -1)
-    rules.game_apply(g, m)
-    check(g.relics >= 3 and not m.bonus_charge_by_cell, 'a shutter gear match adds no bonus charge')
 end
 
 local function charge(g, bonus)
@@ -353,6 +353,10 @@ do
     end
     check(not island.can_buy(c, bank, 13, 4), 'without a waiver the courtyard waits for the earlier ladder')
     island.waive_passed(c, 13)
+    local steps = island.kinds.quay_steps
+    local can_restore, site = c:find_spot(steps, island.island_suggestion(steps))
+    check(can_restore, 'the migration can grant the earlier quay repair')
+    c:add(site, steps, 0)
     check(island.next_step(c, 13) == 4 and island.can_buy(c, bank, 13, 4), 'the waived save builds its courtyard')
     local reserved, courtyard = island.reserved_cost(c, 13), island.buildings[5].cost
     check(reserved:covers(courtyard) and courtyard:covers(reserved), 'waived restorations are not reserved')
@@ -403,19 +407,12 @@ do
     rules.game_apply(g,m)
     check(g.earnings[2]==3,'credit the water once when actually removed')
 
-    local supply_run=R.make_board(8,19)
-    local free={}
-    for i=0,rules.CELLS-1 do
-        if rules.game_cell_active(supply_run,i) and supply_run.chain[i]==0 and supply_run.ice[i]==0 then
-            free[#free+1]=i
-        end
-    end
-    local block,pack=free[1],free[2]
-    supply_run.tiles[block],supply_run.tiles[pack]=rules.tile(4),rules.tile(3)
-    m=rules.new_match();m.mask[block],m.mask[pack]=true,true
-    rules.game_apply(supply_run,m)
-    check(supply_run.relics==1 and supply_run.earnings[economy.SUPPLIES]==5,
-        'one cut block pays five Supplies and only the blue pack advances the crate goal')
+    local direct = rules.new_match()
+    local cash = g.earnings[1]
+    g.tiles[b] = rules.tile(0)
+    direct.mask[b], direct.direct[b] = true, true
+    rules.game_apply(g,direct)
+    check(g.earnings[1]==cash, 'tool-only clears do not earn match resources')
 end
 
 -- Story progress earns building access. Players can replay to pay the price.
@@ -430,8 +427,8 @@ do
     local camp=island.wonders[1].cost
     g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={8,camp[2]+2,camp[3]+4}
     check(rules.progress_reward(p,g,island.wonders),'replay resources bank')
-    check(p.wallet[1]==48 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==1 and p.level==1,
-        'replay pays matched resources and capped move bonus without discoveries')
+    check(p.wallet[1]==8 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==1 and p.level==1,
+        'replay pays the matched resources exactly')
     check(island.island_place_next(c,p.wallet,p.level,0) and island.wonder_count(c)==1,'replay can fund the camp')
     check(not rules.progress_reward(p,{won=false},island.wonders),'failed attempt pays nothing')
     local future=rules.game_start(4,887);future.won=true
@@ -507,4 +504,23 @@ do
     check(R.g.tool_meter[1] == R.g.tool_threshold // 2, 'partial charge survives writing, loading and resuming an award')
     check(rules.progress_reward(R.prog,R.g,R.wonders) and not R.prog.completed,'claim consumes the pending award')
     check(not rules.progress_reward(R.prog,R.g,R.wonders),'loaded award cannot bank twice')
+
+    local market, steps = island.kinds.market, island.kinds.quay_steps
+    local _, plot = R.island:find_spot(market, island.island_suggestion(market))
+    R.island:add(plot, market, 0)
+    check(save.write('relic-old-quay', function(s)
+        s:int('version', require('journey').version)
+        s:int('resource_version', 5)
+        s:int('level', 10)
+        s:ints('wallet', purse(12, 34, 56, 10))
+        s:int('narrative.v1.after-10', 1)
+        s:int('narrative.choice.after-10', 2)
+        R.island:serialize(s)
+    end), 'write a pre-repair save after the chapter-one choice')
+    check(save.read('relic-old-quay', R.serialize), 'load the pre-repair save')
+    w = R.prog.wallet
+    check(island.owned(R.island, market) == 1 and island.owned(R.island, steps) == 1
+        and w[1] == 12 and w[2] == 34 and w[3] == 56, 'keep the market and restore the steps at no expense')
+    check(R.prog.story_seen['after-10'] and R.prog.story_choices['after-10'] == 2,
+        'keep the chosen reply and acknowledged scene')
 end

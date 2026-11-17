@@ -10,7 +10,7 @@ R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.g = rules.game_start(0, 1)
 check(R.debug_skip_level() and R.g.won and R.overlay == R.OV_RESULT, 'skip opens the normal result')
 check(not R.debug_skip_level(), 'a completed board cannot be skipped twice')
-local expected = rules.reward_breakdown(R.g, R.wonders, R.prog).total
+local expected = rules.level_reward(R.g, R.wonders, R.prog)
 R.claim_reward()
 check(R.prog.level == 1 and R.prog.wallet[1] == expected[1], 'first clear grants the normal reward')
 local wallet = R.prog.wallet[1]

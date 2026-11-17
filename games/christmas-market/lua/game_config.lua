@@ -62,9 +62,9 @@ return {
     finale = {
         title = "To be continued",
         lines = {
-            {"There's a light in Noelle's window.", 380, 16},
-            {"Fernhollow has asked for a few lights of its own.", 404, 16},
-            {"THE ROAD TO FERNHOLLOW", 446, 13, "cream"},
+            {"There's a light in Noelle's window.", 16},
+            {"Fernhollow has asked for a few lights of its own.", 16},
+            {"THE ROAD TO FERNHOLLOW", 13, "cream"},
         },
         button = "BACK TO MY MARKET",
     },

@@ -6,16 +6,7 @@ local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")
 local economy = require("economy")
-local PAL_GOLD, PAL_CREAM = R.PAL_GOLD, R.PAL_CREAM
-local rgba = color
-local rrect, picture, picture_fit = R.rrect, R.picture, R.picture_fit
-local say, say_left, button, panel = R.say, R.say_left, R.button, R.panel
-local set_paint, section = R.set_paint, R.section
-
-function R.star_icon(center, radius)
-    picture(R.hud_art.complete, rect.centered(center, size2(radius*2.6,radius*2.6)), 255)
-end
-local star_icon = R.star_icon
+local picture = R.picture
 
 function R.wallet_icons() return {R.life_art, R.board_art["market-3"], R.hud_art.complete} end
 function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
@@ -51,69 +42,29 @@ function R.cost_text(parts)
     return table.concat(prices, " + ")
 end
 
-local RESULT = {card = rect(40, 238, 400, 534), header = rect(64, 210, 352, 72), stars = rect(110, 310, 260, 74),
-                score = rect(90, 388, 300, 62), chips = rect(68, 462, 344, 92), next = rect(64, 572, 352, 72),
-                claim = rect(70, 676, 340, 60)}
-local function reward_chip(box, icon, value, label)
-    rrect(box:offset(vec2(0, 3)), 16, rgba(201, 164, 100))
-    rrect(box, 16, rgba(255, 246, 214))
-    rrect(box:inflate(-3), 13, rgba(255, 238, 190))
-    picture_fit(icon, rect.centered(vec2(box:center().x, box.y + 24), size2.splat(42)), 255)
-    say(value, rect(box.x + 4, box.y + 43, box.w - 8, 25), 24, PAL_GOLD)
-    say(label, rect(box.x + 4, box.y + 70, box.w - 8, 15), 12, PAL_CREAM)
-end
-local function result_screen()
-    local l = RESULT
+R.register_result(function()
     local spec = rules.level_of(R.g)
     local breakdown = rules.reward_breakdown(R.g, R.wonders, R.prog)
-    local w = breakdown.wonder
-    local reward = breakdown.total
-    local first = breakdown.first
-    local s
-    panel(l.card)
-    rrect(l.header:offset(vec2(0, 5)), 18, rgba(77, 58, 31))
-    rrect(l.header, 18, rgba(31, 83, 69))
-    rrect(l.header:inflate(-3), 15, rgba(44, 108, 84))
-    say(first and "Wish granted!" or "Replay complete", rect(l.header.x + 14, l.header.y + 8, l.header.w - 28, 36), 32, PAL_GOLD)
-    say(("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name), rect(l.header.x + 12, l.header.y + 46, l.header.w - 24, 16), 15, PAL_CREAM)
-    s = section(.24, .32, 13)
-    say(first and "EVERY PANE IS LIT" or "SUPPLIES FOR YOUR MARKET", l.stars, 21, PAL_GOLD)
-    set_paint(s)
-    s = section(.43, .3, 9)
-    say("SCORE", rect(l.score.x, l.score.y, l.score.w, 16), 13, PAL_CREAM)
-    local count = R.dialog_part(.43, .65).f   -- the score counts up
-    say(tostring(math.floor(R.g.score * count + .5)), rect(l.score.x, l.score.y + 16, l.score.w, 46), 42, PAL_GOLD)
-    set_paint(s)
-    s = section(.62, .28, 10)
+    local w, reward, first = breakdown.wonder, breakdown.total, breakdown.first
+    local resources = {}
     for slot, currency in ipairs(economy.currencies) do
-        reward_chip(l.chips:col(#economy.currencies, slot - 1, 8), currency_icon(slot),
-            ("+%d"):format(reward[slot]), currency.name)
+        resources[slot] = {id=currency.name, name=currency.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
     end
-    set_paint(s)
-    s = section(.9, .26, 8)
-    rrect(l.next, 14, rgba(240, 225, 180))
     local find = first and spec.story_piece
-    local next_icon = find and R.board_art["story-" .. find.key] or first and w and w.sprite
-    if next_icon then picture_fit(next_icon, rect(l.next.x + 8, l.next.y + 4, 66, l.next.h - 8), 255)
-    else star_icon(vec2(l.next.x + 40, l.next:center().y), 22) end
-    local heading = find and "RECOVERED  ·  " .. find.name or first and (w and "NEXT: BUILD" or "NEXT") or "SPEND IT IN THE"
-    local next_name = first and (w and w.name or "The market has news") or "Build shop"
+    local next_step = {
+        icon=find and R.board_art["story-" .. find.key] or first and w and w.sprite or R.hud_art.complete,
+        heading=find and "RECOVERED · " .. find.name or first and (w and "NEXT: BUILD" or "NEXT") or "SPEND IT IN THE",
+        title=first and (w and w.name or "The market has news") or "Build shop",
+    }
     if first and w then
-        local stock = R.prog.wallet + reward
-        local value = stock:covers(w.cost) and "Ready to build" or "Replay a wish for more goods"
-        say(value, rect(l.chips.x, 554, l.chips.w, 16), 13, PAL_CREAM)
+        next_step.detail = (R.prog.wallet + reward):covers(w.cost) and "Ready to build" or "Replay a wish for more goods"
     end
-    say_left(heading, rect(l.next.x + 84, l.next.y + 10, l.next.w - 96, 18), 13, PAL_CREAM)
-    say_left(next_name, rect(l.next.x + 84, l.next.y + 31, l.next.w - 96, 30), 24, PAL_GOLD)
-    set_paint(s)
-    s = section(1.02, .22, 8)
-    if button(l.claim, "COLLECT", not R.modal_closing) and not R.modal_closing then
-        if not R.dialog_settled() then R.dialog_skip()   -- first tap fast-forwards
-        else R.close_dialog() end
-    end
-    set_paint(s)
-end
-R.dialogs[R.OV_RESULT] = result_screen
+    return {
+        title=first and "Wish granted!" or "Replay complete",
+        subtitle=("%d. %s"):format(R.g.level + 1, spec.name),
+        resources=resources, next_step=next_step, action="COLLECT",
+    }
+end)
 
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
@@ -152,7 +103,6 @@ local guide_form = match3.guide_form({
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))
 R.guide_form,R.guide_entries=guide_form,guide_entries -- measured bounds and the source rows are checked by the input smoke test
-local function guide_screen() match3.draw_guide(R, guide_form) end
-R.dialogs[R.OV_GUIDE] = guide_screen
+R.register_guide(guide_form)
 
 return R

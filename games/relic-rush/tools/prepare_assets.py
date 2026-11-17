@@ -111,9 +111,16 @@ def prepare_portraits():
         if name == 'adrian':
             im = im.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
         im.save(DATA / 'story/characters' / f'{name}.png', optimize=True)
+def prepare_keeper():
+    keeper = Image.open(ART / 'art-direction' / 'ancient-keeper.png').convert('RGBA')
+    keeper.thumbnail((264, 324), Image.Resampling.LANCZOS)
+    keeper.save(DATA / 'story/characters/keeper.png', optimize=True)
 
 
 def main():
+    if sys.argv[1:] == ['--keeper-only']:
+        prepare_keeper()
+        return
     if sys.argv[1:] == ['--portraits-only']:
         prepare_portraits()
         return
@@ -131,6 +138,7 @@ def main():
         image.save(REGISTERED / 'tile-sets' / pack / f'{kind}.png', optimize=True)
 
     prepare_portraits()
+    prepare_keeper()
     print('relic-rush data ready')
     subprocess.run([sys.executable, str(ROOT / 'tools/board_assets.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'tools/prepare_hud.py')], check=True)

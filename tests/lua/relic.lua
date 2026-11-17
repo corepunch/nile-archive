@@ -289,7 +289,7 @@ local function test_island()
     check(c:confirm(wallet, 0).result == city.BLOCKED and c.count == 0 and wallet[1] == 5000, "water blocks")
     c:begin_place(0, vec2(760, 2030))
     check(c:confirm(wallet, 0).result == city.BUILT, "lawn builds")
-    c:begin_place(1, vec2(760, 2030))
+    c:begin_place(0, vec2(760, 2030))
     check(c:confirm(wallet, 0).result == city.BLOCKED, "overlap blocks")
     c:cancel()
     local gold = wallet[1]
@@ -313,7 +313,7 @@ local function test_island()
 end
 
 local function test_catalogue()
-    check(#island.catalogue==96 and #island.buildings==96,"complete building catalogue")
+    check(#island.catalogue==97 and #island.buildings==97,"complete building catalogue")
     local c=city.new();island.island_setup(c);c.open=63
     local wallet=purse(1000,500,500,30,10)
     local shrub=37

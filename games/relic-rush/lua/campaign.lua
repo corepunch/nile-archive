@@ -15,29 +15,15 @@ for i, b in ipairs(boards) do
         goals={"oil"}, dress=dress, background=(i - 1) // 5 % 2 + 1}
 end
 
--- goal_kind registers the slot the story piece replaces. Every board spawns
--- five kinds, as in Cradle of Rome; refill damping keeps cascades rare.
-levels[1].goal_kind = 3                                 -- ordinary timber
-levels[2].story_piece, levels[2].goal_kind = "lens", 3   -- blue replaces the scarab
-levels[3].story_piece, levels[3].goal_kind = "cable", 4  -- purple replaces the crystal
-levels[4].story_piece, levels[4].goal_kind = "chart", 0  -- gold replaces the sun idol
-levels[5].story_piece, levels[5].goal_kind = "marker", 2 -- green replaces the leaf
-levels[6].story_piece, levels[6].goal_kind = "marker", 2
-levels[7].story_piece, levels[7].goal_kind = "tools", 1  -- red replaces the flame
-levels[8].story_piece, levels[8].goal_kind = "pliers", 2   -- the apple slot
-levels[9].story_piece, levels[9].goal_kind = "supplies", 3 -- blue replaces the scarab
-levels[10].story_piece, levels[10].goal_kind = "gear", 2 -- the apple slot
+-- Later chapters still use a story piece in one of the five colour slots.
 levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
--- Score pieces occupy existing palette slots. Level 6 has both kinds,
--- with the restored Well supplying Food on that expedition.
 levels[3].score_pieces = {[2]="leaf"}
 levels[4].score_pieces = {[2]="flower"}
-levels[6].score_pieces = {[1]="flower"}   -- the marker holds the apple slot
+levels[6].score_pieces = {[1]="flower"}
 levels[7].score_pieces = {[2]="flower"}
 levels[9].score_pieces = {[2]="leaf"}
 for _, i in ipairs{12,18,24} do levels[i].score_pieces = {[2]="leaf"} end
 for _, i in ipairs{15,21,27} do levels[i].score_pieces = {[2]="flower"} end
-levels[3].signal = "cliff"
 levels[30].signal = "landing"
 -- The final board's signal plate is its tablet nearest the centre, a bare
 -- single one when the board has one.
@@ -66,4 +52,4 @@ levels[30].signal_cell = signal_plate(levels[30])
 local shapes = {}
 for i, l in ipairs(levels) do shapes[i] = l.name end
 
-return {levels=levels, colors=5, shapes=shapes, wonder_levels={1,4,7,9,13,16,19,23,26,29}}
+return {levels=levels, colors=5, shapes=shapes, wonder_levels={1,4,7,10,13,16,19,23,26,29}}

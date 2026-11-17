@@ -58,12 +58,11 @@ the pale stone; a green double tablet takes two hits. A chained piece takes one 
 the tablet beneath it. Ice and carved stones also gate the cells below them. Each blue cell marks a target on the board.
 
 Every expedition marks the work site with blue tablets. Clearing all of
-them wins. The first clear can recover a story item shown in an ordinary
-colour slot, and board 30 reveals the signal plate and Ines’s reply.
+them wins. Chapter 1 tells its story through island construction. Board 13 features a story item, and board 30 shows the signal plate and Ines’s reply.
 Move limits fit short portrait play and give deliberate resource matches a
 visible cost.
 
-| Regular piece | Family | Yield per removed piece |
+| Regular piece | Family | Yield per matched piece |
 | --- | --- | ---: |
 | Gold sun coin | Coins | 4 |
 | Red berries | Food | 1 |
@@ -77,14 +76,9 @@ separate kinds within Food. The town and board show Coins, Supplies and Food
 with a sun coin, a timber-and-stone bundle and a food basket. Pending earnings
 are visible on the board and bank on a win. The completion dialog shows score.
 
-Every board spawns five kinds. A story board (2-10 and 13) has four regular
-kinds and a story kind in the fifth slot; see
-[board progression](board-progression.md). Board 1 uses five regular
-resources. Board 8 puts the relay pliers in the orange slot and omits red
-berries, leaving room for cut blocks. Leaves and flowers add score in their authored slots and clear
-tablets just like other matches. Board 4 takes
-the Coins slot for the tide chart. The Well purchase that follows uses Coins
-banked on earlier boards or earned from unused moves and replays.
+Every board spawns five kinds. Board 13 keeps a story kind in one slot; see
+[board progression](board-progression.md). Leaves and flowers add score and clear
+tablets. The Well costs Coins banked by matching sun or silver coins.
 
 Confirmed placements change openings and refills from the listed expedition
 onward. Authored story pieces keep their slots. The four bonus families debut
@@ -101,8 +95,8 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 | 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 125 / 0 / 0 |
 | 3 | Trapper's cabin | 7 | 8 | Dynamite upgrades Hammer | 65 / 40 / 45 |
 | 4 | ★ Artisan Workshop | 7 | 8 | Cut blocks replace dressed stone, 5 Supplies each | 120 / 80 / 90 |
-| 5 | Water mill | 9 | — | Opens the Jungle Market restoration | 65 / 35 / 60 |
-| 6 | ★ Jungle Market | 9 | 10 | Ration jars replace red berries, 4 Food each | 125 / 70 / 125 |
+| 5 | Water mill | 9 | — | Prepares the quay repair | 65 / 35 / 60 |
+| 6 | ★ Quay Steps | 10 | 11 | Reaches the viewing shutter and opens Chapter 2 | 75 / 0 / 100 |
 | 7 | Clock tower | 11 | 12 | Star gems | 150 / 200 / 150 |
 | 8 | Stone amphitheatre | 13 | 14 | Shield gems | 35 / 50 / 35 |
 | 9 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 55 / 95 / 65 |
@@ -119,9 +113,7 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 | 20 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 435 / 450 / 260 |
 
 Each new piece pays a currency the next restoration on the ladder needs.
-Where two restorations share a clear (7, 9, 13 and 19), the story restoration
-comes second. Board 10 features the Shutter Gear story piece alongside the
-market's new ration jars.
+Where two restorations share a clear (7, 13 and 19), the story restoration comes second. The optional Jungle Market becomes available after board 10 and adds ration jars worth 4 Food each from board 11.
 
 One slot pays Coins. Expedition 3 uses the silver coin at 3 Coins. From there
 the slot climbs one treasure per restoration: helmet (6), ring (7), scarab (8),
@@ -134,9 +126,7 @@ restorations before its latest earned story restoration become optional:
 they stay on sale and never hold an expedition.
 
 An arrival message credits the restored building and names the new piece's
-yield. The authored hint on board 5 trades one swap for three cleared tablets
-and 9 Food. Board 9 pairs three tablets with 15 Supplies while leaving
-the supply crate as the first-clear find. Coins pay for labor and materials,
+yield. The opening water match on board 5 earns Food and the opening cut-block match on board 9 earns Supplies. Coins pay for labor and materials,
 Food keeps the workers supplied, and Supplies go into repairs.
 
 ## Restoration prices and earnings
@@ -152,12 +142,7 @@ board's win rate, moves left and mean income per won board, then walks the
 expected campaign: bank each board's mean income and, at each stop, spend 80%
 of what the wallet holds in every currency the stop's restorations use, split
 by their previous prices. The rest carries over, so every currency runs low
-somewhere and none piles up unused. With these prices the expected campaign
-needs no replays, its lowest wallets after a purchase are 23 Coins, 0 Food and
-3 Supplies, and it ends with 284 Coins, 319 Food and 180 Supplies. The seeded
-campaign bot, one start per board, needs five replays and ends with 647 / 701
-/ 195. The bot is not a human player; human sessions should confirm the
-shortfalls.
+somewhere and none piles up unused. The current seeded campaign check uses the live match ledger, plays the story expeditions and replays boards when a building needs more resources.
 
 The bot wins many boards in fewer than half its attempts (board 28 in 8 of
 40), since matches make no special pieces. Win rates and moves left are
@@ -172,9 +157,7 @@ build/test/relic-rush --extended "rules campaign_play"                  # one se
 
 The reports are in `build/test/relic-rush.log`.
 
-A piece earns its base amount when a match, cascade or tool clears it.
-Breaking a chain leaves its piece in place. A later hit clears the piece and
-earns its resources. Each first clear advances progress. Boards 1–30 also play a first-clear scene.
+A piece earns its resource amount when a match or cascade clears it. A direct tool hit can clear a piece, and any resulting matches earn their normal yields. Breaking a chain leaves its piece in place until a later hit. Each first clear advances progress. Chapter 1 scenes wait for confirmed island work.
 The result card shows the three resource totals and what is still due for the next restoration.
 
 Record attempt earnings until a successful clear. Claim persists the first
@@ -185,8 +168,7 @@ When a restoration costs more than is in the wallet, replay a cleared board
 with the missing resource and bank the earnings. Optional purchases reserve
 the price of any earned restoration. Confirmed placement debits the price
 once and Cancel returns the preview. Boards cleared remain access requirements for land and shop stock.
-Each placed optional building or decoration adds one coin per win, up to ten coins.
-The bonus comes from saved placements and is preserved when buildings move.
+Citizen events can improve what an individual resource match yields. Wallet totals on Results come from the board’s match ledger.
 
 A save version identifies the Food and Supplies slots. Existing Coins,
 placements, unlocks, claimed levels and story checkpoints are
@@ -197,18 +179,13 @@ shapes and readable labels alongside color in the guide and price rows.
 
 ## Release status and checks
 
-Eight seeded runs through level 20 funded all 56 restoration purchases from
-first clears after the Camp price was lowered to 3 Food. The sample used
-greedy matches and allowed expedition tools when four moves remained.
-
 All 100 boards use pale stone with fixed blue targets. They share the
 same clear condition. The [current review](review/blue-plaque-campaign/README.md)
 shows the board, new resource artwork and common wallet at both phone sizes.
 
 For release balancing, play the first restoration through a fresh save on
 both supported phone sizes and sample a migrated save midway through chapter two.
-Verify that matching every resource kind, including through a cascade or
-tool, agrees with the result and the wallet after a restart. Confirm the
+Verify that matching every resource kind, including through a cascade, agrees with the result and the wallet after a restart. Confirm the
 shop's price and reserve through Confirm, Cancel, exhausted tool counts, replay
 and claim interruption. The seeded campaign test plays the 30 story boards with
 the live wallet and confirms all ten purchases. For release tuning, record
