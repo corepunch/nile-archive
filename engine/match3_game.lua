@@ -54,7 +54,7 @@ G.DEFAULTS = {
     pause = {guide = "GUIDE", quit = "QUIT", town = "Your town", leaderboard = "LEADERBOARD"},
     confirm = {title = "Restart this level?", body = "The board starts over: moves, goals and tools reset. Retrying is always free.",
                restart = "RESTART", cancel = "KEEP PLAYING"},
-    failed = {title = "One more try?", subtitle = "THE TOWN WILL WAIT FOR YOU.", hint = "Try a special combo or use a tool.",
+    failed = {title = "One more try?", subtitle = "THE TOWN WILL WAIT FOR YOU.", hint = "Look for longer lines or use a tool.",
               no_lives = "A life returns every 30 minutes.", retry = "TRY AGAIN", town = "VISIT TOWN"},
     zone = {subtitle = "A NEW PLACE TO DISCOVER", stars = "STARS  %d / %d", earn = "EARN STARS IN NEW LEVELS",
             open = "OPEN THIS AREA", wait = "KEEP EXPLORING", keep = "STARS STAY WITH YOU.", close = "CLOSE"},
@@ -140,7 +140,6 @@ function G.state()
 
         -- animated readouts
         score_display = 0, score_pulse = 0, goal_display = 0, goal_pulse = 0,
-        fx_combo = 0, fx_origin = -1,
     }
 end
 

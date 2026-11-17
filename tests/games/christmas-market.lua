@@ -51,7 +51,6 @@ shot("story-floor-train-half", "480x900", "--level 28 --reveal .5 --frames 95")
 shot("story-floor-train-scene", "480x900", "--level 28 --reveal 1 --frames 270")
 reel("story-floor-train-win", 12, 12, "480x900", "--level 28 --reveal 1 --reel")
 shot("element-states", "480x900", "--element-states")
-shot("specials-and-stone", "480x900", "--element-states specials")
 reel("christmas-market-welcome-panes", 25, 15, "480x900", "--level 3 --floor-reel oil --reel")
 frame("christmas-market-tablet-hints", "480x900",
     "--lua tests/fixtures/tablet-hints;games/christmas-market/lua;. --level 10 --frames 55")
@@ -106,7 +105,7 @@ shot("adjacent-foundations", "480x900", footprints)
 shot("phone-adjacent-foundations", "390x844", footprints .. " --safe-area 0,47,0,34")
 shot("art-states", "480x900", "--art-states")
 shot("hud-states", "480x900", "--hud-states")
-shot("specials-board", "480x900", "--art-board")
+shot("pieces-board", "480x900", "--art-board")
 shot("building-card", "480x900", "--card 2")
 reel("christmas-market-board-intro", 18, 6, "480x900", "--level 4 --present --reel")
 for page = 1, 10 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
@@ -120,7 +119,7 @@ for _, size in ipairs{"480x900", "390x844"} do
     end
 end
 -- Board/HUD states reuse the art-states and hud-states shots above.
-frame("atlas-christmas-market-effects", "480x900", "--fx bomb --frames 8")
+frame("atlas-christmas-market-effects", "480x900", "--fx shatter --frames 8")
 
 reel("christmas-market-phone-board-intro", 12, 8, "390x844", "--level 4 --present --reel --safe-area 0,47,0,34")
 frame("entrance-settled-christmas-market-480x900", "480x900", "--level 4 --present --frames 180")
@@ -159,9 +158,8 @@ shot("homescapes-queue", "480x900", "--homescapes st0065")
 shot("homescapes-chains", "480x900", "--homescapes contest_005_06")
 shot("phone-homescapes-queue", "390x844", "--homescapes st0065 --safe-area 0,47,0,34")
 shot("homescapes-generator", "390x844", "--homescapes st0255 --safe-area 0,47,0,34")
-reel("fx-plane",18,2,"480x900","--fx plane --reel")
 reel("fx-shatter",24,2,"480x900","--fx shatter --reel")
-shot("phone-specials-board","390x844","--art-board --safe-area 0,47,0,34")
+shot("phone-pieces-board","390x844","--art-board --safe-area 0,47,0,34")
 
 shot("homescapes-art", "480x900", "--homescapes-art")
 shot("phone-homescapes-art", "390x844", "--homescapes-art --safe-area 0,47,0,34")

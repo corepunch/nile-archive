@@ -23,11 +23,12 @@ do
     local g=R.game_start(0, 351)
     for i=0,R.CELLS-1 do if g.tiles[i].kind~=R.DELIVERY then g.tiles[i]=R.tile(-1) end end
     local a,b=cell(0,0),cell(0,-1)
-    g.tiles[a],g.tiles[b]=R.tile(2,R.PRISM),R.tile(3,R.BOMB)
+    g.tiles[a],g.tiles[b]=R.tile(3),R.tile(2)
+    g.tiles[cell(1,0)],g.tiles[cell(2,0)]=R.tile(2),R.tile(2)
     local before=R.game_copy(g)
-    check(R.game_hint(g), 'hint finds a prism and bomb combination')
+    check(R.game_hint(g), 'hint finds the swap that completes a line')
     for i=0,R.CELLS-1 do
-        check(g.tiles[i].kind==before.tiles[i].kind and g.tiles[i].special==before.tiles[i].special
+        check(g.tiles[i].kind==before.tiles[i].kind
             and g.chain[i]==before.chain[i] and g.ice[i]==before.ice[i] and g.stone_hp[i]==before.stone_hp[i],
             'hint cannot mutate tiles or elements')
     end
@@ -54,7 +55,7 @@ do
     g.tiles[token]=R.tile(R.DELIVERY)
     m=R.new_match();m.mask[token],m.direct[token]=true,true
     R.game_apply(g,m)
-    check(g.tiles[token].kind==R.DELIVERY, 'delivery token survives direct special damage')
+    check(g.tiles[token].kind==R.DELIVERY, 'delivery token survives a direct hit')
 end
 
 do
@@ -66,7 +67,7 @@ do
     local m = ruleset.new_match()
     m.mask[stone], m.direct[stone] = true, true
     ruleset.game_apply(g, m)
-    check(g.stone_hp[stone] == 0, 'a direct special hit breaks the stone')
+    check(g.stone_hp[stone] == 0, 'a direct tool hit breaks the stone')
     check(g.stone_hp[neighbor] == 1 and g.obstacles == 1, 'the neighbouring stone remains in the goal')
 end
 

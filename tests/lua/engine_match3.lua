@@ -29,8 +29,8 @@ t:case('default engine uses match-3',function()
     local R=E.new()
     local g,m=H.board(R),R.new_match()
     for q=-1,1 do g.tiles[R.hex_index(q,0)]=R.tile(0) end
-    R.game_matches(g,m,R.hex_center())
-    t:check(R.MATCH_MIN==3 and m.hits==3 and next(m.make)==nil,'three pieces clear without a special')
+    R.game_matches(g,m)
+    t:check(R.MATCH_MIN==3 and m.hits==3,'three pieces clear')
 end)
 for threshold=3,6 do
     for colors=3,8 do
@@ -39,43 +39,40 @@ for threshold=3,6 do
             for count=threshold-1,threshold+2 do
                 local g,m=H.board(R),R.new_match()
                 for offset=0,count-1 do g.tiles[R.hex_index(-4+offset,0)]=R.tile(colors-1) end
-                R.game_matches(g,m,R.hex_index(-4,0))
+                R.game_matches(g,m)
                 t:check(m.hits==(count>=threshold and count or 0),'configured threshold')
-                local special=m.make[R.hex_index(-4,0)]
-                if count==threshold+1 then t:check(special==R.ROW,'one extra makes ray')
-                elseif count==threshold+2 then t:check(special==R.PRISM,'two extras in line make prism')
-                else t:check(next(m.make)==nil,'small group makes no special') end
+                R.game_apply(g,m)
+                local left=0
+                for i=0,R.CELLS-1 do if g.tiles[i].kind>=0 then left=left+1 end end
+                t:check(left==(count>=threshold and 0 or count),'a longer group only clears')
             end
         end)
     end
 end
-for _, extra in ipairs({0,E.NO_SPECIALS}) do
-    t:case('straight matching flags='..extra,function()
-        local R=E.new{flags=E.LINE_MATCHES|extra,match_min=3}
-        local g,m=H.board(R),R.new_match()
-        local c=R.hex_center()
-        for q=-2,1 do g.tiles[R.hex_index(q,0)]=R.tile(0) end
-        local branch=R.hex_index(0,1)
-        g.tiles[branch]=R.tile(0)
-        R.game_matches(g,m,c)
-        t:check(m.hits==4 and not m.mask[branch],'branch excluded from line and reward length')
-        t:check(m.make[c]==(extra==0 and R.ROW or nil),'line reward respects NO_SPECIALS')
-        for seed=1,8 do
-            g=R.game_start(0,seed)
-            R.game_matches(g,m,-1)
-            t:check(m.hits==0 and R.game_hint(g),'line-mode generator produces stable playable boards')
-        end
-    end)
-end
+t:case('straight matching',function()
+    local R=E.new{flags=E.LINE_MATCHES,match_min=3}
+    local g,m=H.board(R),R.new_match()
+    for q=-2,1 do g.tiles[R.hex_index(q,0)]=R.tile(0) end
+    local branch=R.hex_index(0,1)
+    g.tiles[branch]=R.tile(0)
+    R.game_matches(g,m)
+    t:check(m.hits==4 and not m.mask[branch],'branch excluded from the line')
+    for seed=1,8 do
+        g=R.game_start(0,seed)
+        R.game_matches(g,m)
+        t:check(m.hits==0 and R.game_hint(g),'line-mode generator produces stable playable boards')
+    end
+end)
 -- Every combination exercises interactions between all six behavior bits.
 for flags=0,31 do
     local R=E.new(config(flags))
-    t:case('flags='..flags..' special creation',function()
+    t:case('flags='..flags..' five in a line',function()
         local g,m=H.board(R),R.new_match()
         for q=-2,2 do g.tiles[R.hex_index(q,0)]=R.tile(0) end
-        R.game_matches(g,m,R.hex_center())
+        R.game_matches(g,m)
         t:check(m.hits==5,'flag does not change the configured match threshold')
-        t:check((next(m.make)==nil)==(flags&E.NO_SPECIALS~=0),'NO_SPECIALS controls creation')
+        R.game_apply(g,m)
+        t:check(g.tiles[R.hex_center()].kind==-1,'no flag makes a power-up')
     end)
     t:case('flags='..flags..' tool charges',function()
         local g,m=H.board(R),R.new_match()
@@ -88,11 +85,11 @@ for flags=0,31 do
         for i=0,R.CELLS-1 do g.active[i]=false end
         local center,side,above=R.hex_center(),R.hex_index(-1,0),R.hex_index(0,-1)
         g.active[center],g.active[side],g.active[above]=true,true,true
-        g.tiles[side],g.tiles[above]=R.tile(2,R.BOMB),R.tile(4,R.ROW)
+        g.tiles[side],g.tiles[above]=R.tile(2),R.tile(4)
         local from=R.game_collapse(g)
         t:check(from[center]==above,'straight down wins with every flag combination')
         g.chain[above]=1
-        g.tiles[center]=R.tile(-1);g.tiles[side]=R.tile(2,R.BOMB)
+        g.tiles[center]=R.tile(-1);g.tiles[side]=R.tile(2)
         from=R.game_collapse(g)
         t:check(flags&E.NO_TRICKLE~=0 and from[center]<0 or flags&E.NO_TRICKLE==0 and from[center]==side,
             'NO_TRICKLE controls diagonal fallback around a lock')
@@ -102,10 +99,10 @@ for flags=0,31 do
         for i=0,R.CELLS-1 do g.active[i]=false end
         local center,side=R.hex_center(),R.hex_index(-1,0)
         g.active[center],g.active[side]=true,true
-        g.tiles[side]=R.tile(2,R.BOMB)
+        g.tiles[side]=R.tile(2)
         local _,steps=R.game_collapse(g)
         t:check(steps[1].from[center]<0,'top cell spawns instead of borrowing diagonally')
-        t:check(g.tiles[side].kind==2 and g.tiles[side].special==R.BOMB,'side donor stays put')
+        t:check(g.tiles[side].kind==2,'side donor stays put')
     end)
     t:case('flags='..flags..' dead-board recovery',function()
         local g=H.board(R)
@@ -126,54 +123,38 @@ for flags=0,31 do
         t:check((view.idle_time>6)==(flags&E.NO_HINTS~=0),'NO_HINTS stops the automatic idle search')
     end)
 end
--- A played swap must create its power-up at the matched swapped gem, not
--- whichever end of the run happens to be visited first in board order.
+-- A swap that completes a long line, or two crossing runs, clears them and
+-- leaves no piece behind on either swapped cell.
 for _, mode in ipairs({{name='straight lines',flags=E.LINE_MATCHES},
                        {name='connected groups',flags=0}}) do
     for length=4,5 do
-        for _, direction in ipairs({'into match','out of match'}) do
-            t:case(('%s: match %d %s'):format(mode.name,length,direction),function()
-                local R=E.new{flags=mode.flags}
-                local g,m=H.board(R),R.new_match()
-                local matched,other=R.hex_index(0,0),R.hex_index(0,1)
-                for q=-2,length-3 do
-                    if q~=0 then g.tiles[R.hex_index(q,0)]=R.tile(1) end
-                end
-                g.tiles[matched],g.tiles[other]=R.tile(2),R.tile(1)
-                local a,b=other,matched
-                if direction=='out of match' then a,b=matched,other end
-                t:check(R.game_swap(g,a,b,m),'the swap completes the line')
-                local special=length==4 and R.ROW or R.PRISM
-                t:check(m.hits==length and m.make[matched]==special,
-                    'special appears on the swapped gem in the match')
-                for i=0,R.CELLS-1 do
-                    if i~=matched then t:check(m.make[i]==nil,'no power-up at the end of the run') end
-                end
-                R.game_apply(g,m)
-                t:check(g.tiles[matched].kind==1 and g.tiles[matched].special==special,
-                    'the matched swapped gem retains the power-up after clearing')
-            end)
-        end
-    end
-    for _, reverse in ipairs({false,true}) do
-        t:case(('%s: two matches from one swap, reverse=%s'):format(mode.name,tostring(reverse)),function()
+        t:case(('%s: match %d'):format(mode.name,length),function()
             local R=E.new{flags=mode.flags}
             local g,m=H.board(R),R.new_match()
-            local center,side=R.hex_index(0,0),R.hex_index(0,1)
-            for q=-2,1 do
+            local matched,other=R.hex_index(0,0),R.hex_index(0,1)
+            for q=-2,length-3 do
                 if q~=0 then g.tiles[R.hex_index(q,0)]=R.tile(1) end
             end
-            for r=2,4 do g.tiles[R.hex_index(0,r)]=R.tile(2) end
-            g.tiles[center],g.tiles[side]=R.tile(2),R.tile(1)
-            local a,b=reverse and side or center,reverse and center or side
-            t:check(R.game_swap(g,a,b,m),'both crossing directions form a match')
-            t:check(m.hits==8 and m.make[center]==R.ROW and m.make[side]==R.COLUMN,
-                'each run leaves its special on its own swapped endpoint')
+            g.tiles[matched],g.tiles[other]=R.tile(2),R.tile(1)
+            t:check(R.game_swap(g,other,matched,m),'the swap completes the line')
+            t:check(m.hits==length,'the whole line clears')
             R.game_apply(g,m)
-            t:check(g.tiles[center].special==R.ROW and g.tiles[side].special==R.COLUMN,
-                'both swapped gems survive with their respective specials')
+            t:check(g.tiles[matched].kind==-1,'the swapped gem clears with its line')
         end)
     end
+    t:case(('%s: two matches from one swap'):format(mode.name),function()
+        local R=E.new{flags=mode.flags}
+        local g,m=H.board(R),R.new_match()
+        local center,side=R.hex_index(0,0),R.hex_index(0,1)
+        for q=-2,1 do
+            if q~=0 then g.tiles[R.hex_index(q,0)]=R.tile(1) end
+        end
+        for r=2,4 do g.tiles[R.hex_index(0,r)]=R.tile(2) end
+        g.tiles[center],g.tiles[side]=R.tile(2),R.tile(1)
+        t:check(R.game_swap(g,center,side,m),'both crossing directions form a match')
+        R.game_apply(g,m)
+        t:check(m.hits==8 and g.tiles[center].kind==-1 and g.tiles[side].kind==-1,'both runs clear completely')
+    end)
 end
 t:case('refill damping spawns no completed matches',function()
     t:check(not pcall(E.new,{refill_damping=0}),'damping starts at wave one or later')
@@ -185,7 +166,7 @@ t:case('refill damping spawns no completed matches',function()
             local g=H.board(R)
             g.rng,g.combo=seed,combo
             R.game_collapse(g)
-            R.game_matches(g,m,-1)
+            R.game_matches(g,m)
             if combo==1 then undamped=undamped+(m.hits>0 and 1 or 0)
             else t:check(m.hits==0,'a damped refill completes no line') end
         end

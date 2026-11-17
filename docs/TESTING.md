@@ -29,7 +29,7 @@ documentation-only workflow edits do not require rerunning game tests.
 
 Review exporters reuse canonical captures. `capture_match3_default.py` takes
 board/HUD states from each game's existing state shots and Relic Rush's effect
-from `effect-bomb`; `capture_resource_icons.py` reuses the pack, guide and phone
+from `effect-shatter`; `capture_resource_icons.py` reuses the pack, guide and phone
 shots. Only the engine's default skin needs separate resource-icon frames.
 Use either script's `--existing` option to export a completed run without
 rendering again. Avoid adding another manifest entry just to give an existing
@@ -124,7 +124,7 @@ smoke()                                         -- plays the game's --smoke run
 smoke("--size 456x342", "small")                -- with options, under its own name
 shot("island-village", "480x900", "--showcase") -- a screen: docs/screenshots/island-village.jpg
 frame("tiles-relics", "480x900", "--tiles relics") -- a picture other images are built from
-reel("fx-ray", 18, 2, "480x900", "--fx ray --reel") -- 18 pictures, 2 frames apart, from one run
+reel("fx-shatter", 24, 2, "480x900", "--fx shatter --reel") -- 24 pictures, 2 frames apart, from one run
 hold("long-press", "480x900", "240,440", "--city 3") -- a real pointer press and hold
 ```
 

@@ -9,7 +9,7 @@ local function empty(rules)
     return g
 end
 local a = match3.new{radius=2}
-local b = match3.new{radius=3, match_min=4, flags=match3.NO_SPECIALS | match3.NO_TOOLS | match3.NO_TRICKLE}
+local b = match3.new{radius=3, match_min=4, flags=match3.NO_TOOLS | match3.NO_TRICKLE}
 check(a.CELLS==19 and b.CELLS==37 and a.MATCH_MIN==3 and b.MATCH_MIN==4)
 check(a.hex_center()==9 and a.hex_index(3,0)==-1 and b.hex_index(3,0)>=0, "independent geometry")
 for _, r in ipairs({a,b}) do
@@ -36,7 +36,10 @@ do
     local g,m=empty(b),b.new_match()
     for q=-2,2 do g.tiles[b.hex_index(q,0)]=b.tile(1) end
     b.game_matches(g,m,-1)
-    check(m.hits==5 and next(m.make)==nil, "NO_SPECIALS disables births")
+    b.game_apply(g,m)
+    local births=0
+    for i=0,b.CELLS-1 do if g.tiles[i].kind>=0 then births=births+1 end end
+    check(m.hits==5 and births==0, "a long line only clears: no piece is born in its place")
     local charges=g.tools[1]
     check(not b.game_tool(g,0,b.hex_center(),m) and g.tools[1]==charges, "NO_TOOLS preserves charges")
 end
@@ -51,29 +54,13 @@ end
 for _, config in ipairs({{flags=1.5},{flags=512},{radius=0},{colors=1},{match_min=2}}) do
     check(not pcall(match3.new,config), "invalid descriptor is rejected")
 end
--- A loadout adds moves and opens with specials on seeded cells, leaving a legal swap.
+-- A loadout adds moves to the level's budget.
 do
-    local r = match3.new{radius=4, flags=match3.NO_SPECIALS}
-    local function loadout(extra)
-        local l = {kinds={0, 1, 2, 3, 4}, multipliers={}, tool_threshold=200, tool_meter={}}
-        for k, v in pairs(extra or {}) do l[k] = v end
-        return l
-    end
-    local specials = {"rocket", "bomb", "prism", "plane"}
-    local plain = r.game_start(0, 77, {}, loadout())
-    local g = r.game_start(0, 77, {}, loadout{extra_moves=3, opening_specials=specials})
-    local again = r.game_start(0, 77, {}, loadout{extra_moves=3, opening_specials=specials})
-    check(g.moves == plain.moves + 3, "extra_moves adds to the level's budget")
-    local seen, changed, same = {}, 0, true
-    for i = 0, r.CELLS - 1 do
-        local t = g.tiles[i]
-        if t.special ~= r.NORMAL then seen[t.special], changed = true, changed + 1 end
-        same = same and t.special == again.tiles[i].special and t.kind == plain.tiles[i].kind
-    end
-    local ray = seen[r.ROW] or seen[r.COLUMN] or seen[r.DIAGONAL]
-    check(changed == 4 and ray and seen[r.BOMB] and seen[r.PRISM] and seen[r.PLANE], "each opening special is placed once")
-    check(same, "opening specials replace only the special, the same seed gives the same cells")
-    check(r.game_hint(g), "the opening keeps a legal swap")
+    local r = match3.new{radius=4}
+    local loadout = {kinds={0, 1, 2, 3, 4}, multipliers={}, tool_threshold=200, tool_meter={}}
+    local plain = r.game_start(0, 77, {}, loadout)
+    loadout.extra_moves = 3
+    check(r.game_start(0, 77, {}, loadout).moves == plain.moves + 3, "extra_moves adds to the level's budget")
 end
 
 -- A fracture must tile the cell exactly, or a hole shows as the layer cracks.

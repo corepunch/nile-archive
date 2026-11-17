@@ -2,18 +2,13 @@
 
 ![Actual SDL effects reel](screenshots/effects-reel.gif)
 
-This is a capture of the actual renderer using deterministic ray, bomb and prism test boards. The effects run in the game; this is not a generated animation or a claim of measured mobile performance.
+This reel was captured from the actual renderer before special pieces were removed from the engine, so it still shows the retired ray, bomb and prism effects. `tools/make_reels.py` now builds it from the `fx-shatter` reel (`make test-full`).
 
 ## Implemented feedback
 
 | Event | Presentation |
 | --- | --- |
 | Normal match | Brief piece expansion, shrink and fade, local light bloom, colored shards and four-point sparkles |
-| Directional ray | Travelling head, colored light envelope, bright narrow core and a fading trail along its attack axis |
-| Bomb | Expanding double shockwave, warm center flare and radial sparkles |
-| Prism | Staggered branching light links from the prism to affected targets |
-| Special combination | Broader bomb shockwaves or rays along all three board axes |
-| Special creation | Delayed birth halo, an expanding ring and orbiting sparkles |
 | Landing | Shared engine one-edge trickling steps and a short squash/stretch after the final step |
 | Resource collection | Staggered curved flights, light trails and a small HUD landing pulse; locked pieces do not send unearned resource icons |
 | Score | Smooth count-up, progress-bar interpolation, a small number pulse and one floating score per cascade wave |
@@ -40,4 +35,4 @@ strength are no longer supplied by procedural glyphs.
 
 Effects only read the board; the ported rule tests (`make test`) and the `--smoke` run cover gameplay with effects active.
 
-Capture single moments with `--fx ray|bomb|prism --frames N --shot file.png` (N frames after the special fires); `tools/screenshots.py` renders the reel frames and assembles `screenshots/effects-reel.gif`. These modes do not write player progress.
+Capture single moments with `--fx shatter --frames N --shot file.png` (N frames after a blast across tablets); `tools/screenshots.py` renders the reel frames and assembles `screenshots/effects-reel.gif`. These modes do not write player progress.

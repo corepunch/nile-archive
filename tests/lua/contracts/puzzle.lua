@@ -31,12 +31,8 @@ return function(R, options)
                     t:case(('line start=%d dir=%d n=%d colour=%d'):format(start,dir,length,kind),function()
                         local g,m=blank(),R.new_match()
                         for k=1,length do g.tiles[cells[k]]=R.tile(kind) end
-                        local pick=cells[(length+1)//2]
-                        R.game_matches(g,m,pick)
+                        R.game_matches(g,m)
                         t:check(m.hits==(length>=R.MATCH_MIN and length or 0),'exact match threshold')
-                        local special=length>=R.MATCH_MIN+2 and R.PRISM or length==R.MATCH_MIN+1 and dir%3+1 or nil
-                        if R.flags & engine.NO_SPECIALS ~= 0 then special=nil end
-                        t:check(m.make[pick]==special,'correct special and preferred cell')
                         local group,wrong={},nil
                         if length>=R.MATCH_MIN then for k=1,length do group[cells[k]]=true end end
                         for i=0,N-1 do
@@ -109,21 +105,7 @@ return function(R, options)
                 end
             end
             end
-            if R.flags & engine.LINE_MATCHES~=0 and R.flags & engine.NO_RHOMBI==0 and R.MATCH_MIN==3 then
-                -- Independent coordinate oracle for the three axial rhombi.
-                for q=-R.HEX_RADIUS,R.HEX_RADIUS do for r=-R.HEX_RADIUS,R.HEX_RADIUS do
-                    for _,d in ipairs{{1,0,0,1},{0,1,-1,1},{-1,1,-1,0}} do
-                        local cells={R.hex_index(q,r),R.hex_index(q+d[1],r+d[2]),R.hex_index(q+d[3],r+d[4]),R.hex_index(q+d[1]+d[3],r+d[2]+d[4])}
-                        local valid,kind=true,nil
-                        for _,i in ipairs(cells) do
-                            if i<0 or not g.active[i] or g.tiles[i].kind<0 or kind and g.tiles[i].kind~=kind then valid=false;break end
-                            kind=g.tiles[i].kind
-                        end
-                        if valid then for _,i in ipairs(cells) do expected[i]=true end end
-                    end
-                end end
-            end
-            R.game_matches(g,m,-1)
+            R.game_matches(g,m)
             local count=0
             for i=0,N-1 do
                 t:check((not not m.mask[i])==(not not expected[i]), 'component membership cell='..i)
@@ -179,7 +161,7 @@ return function(R, options)
             for r=-4,4 do
                 local cell=R.hex_index(0,r)
                 if mask&(1<<(r+4))~=0 then
-                    g.tiles[cell]=R.tile((r+4)%R.COLORS,(r+4)%6)
+                    g.tiles[cell]=R.tile((r+4)%R.COLORS)
                     survivors[#survivors+1]={cell=cell,tile=g.tiles[cell]}
                 end
             end
@@ -191,8 +173,8 @@ return function(R, options)
             end
             for r=-4,first-1 do
                 local cell=R.hex_index(0,r)
-                t:check(from[cell]<0 and g.tiles[cell].kind>=0 and g.tiles[cell].kind<R.COLORS
-                    and g.tiles[cell].special==R.NORMAL,'new ordinary piece spawns above survivors')
+                t:check(from[cell]<0 and g.tiles[cell].kind>=0 and g.tiles[cell].kind<R.COLORS,
+                    'new ordinary piece spawns above survivors')
             end
         end)
     end
@@ -201,10 +183,10 @@ return function(R, options)
             t:case(('gravity barrier %s r=%d'):format(mode,barrier),function()
                 local g=blank();local at=R.hex_index(0,barrier)
                 for i=0,N-1 do g.active[i]=R.hex_q(i)==0 end
-                g.tiles[at]=R.tile(4,R.BOMB)
+                g.tiles[at]=R.tile(4)
                 if mode=='hole' then g.active[at]=false else g[mode][at]=1 end
                 local upper=R.hex_index(0,barrier-1)
-                g.tiles[upper]=R.tile(3,R.ROW)
+                g.tiles[upper]=R.tile(3)
                 local old,stop=g.tiles[upper],g.tiles[at]
                 local from=R.game_collapse(g)
                 t:check(g.tiles[at]==stop and from[at]==at,'barrier stays fixed')
@@ -221,7 +203,7 @@ return function(R, options)
                     g.tiles[cell]=R.tile(kind)
                     g.ice[cell],g.chain[cell],g.obstacles=ice,chain,ice+chain
                     for hit=1,ice+chain do
-                        m.mask={[cell]=true};m.make={}
+                        m.mask={[cell]=true}
                         t:check(R.game_apply(g,m)==0 and g.tiles[cell].kind==kind,'blocker absorbs hit before relic')
                         t:check(g.obstacles==ice+chain-hit,'one blocker layer per hit')
                     end
@@ -237,28 +219,12 @@ return function(R, options)
         end
     end
 
-    -- Every ordered special pair, all axes, both swap orders; chains fire once.
-    for sa=R.ROW,R.PRISM do
-        for sb=R.ROW,R.PRISM do
-            t:case(('special pair %d + %d'):format(sa,sb),function()
-                local g,m=blank(),R.new_match()
-                local a,b=R.hex_center(),R.hex_neighbor(R.hex_center(),0)
-                for i=0,N-1 do g.tiles[i]=R.tile((R.hex_q(i)+2*R.hex_r(i)+18)%6) end
-                g.tiles[a],g.tiles[b]=R.tile(2,sa),R.tile(4,sb)
-                t:check(R.game_swap(g,a,b,m) and g.moves==19,'special combination uses one move')
-                t:check(m.mask[a] and m.mask[b] and m.hits>0,'both specials participate')
-                R.game_apply(g,m)
-                t:check(g.cleared>0 and g.cleared<=N and g.score==g.cleared*50,'each hit cell scores once')
-                if sa==R.PRISM and sb==R.PRISM then t:check(g.cleared==N,'double prism clears whole board') end
-            end)
-        end
-    end
-
     for _,terminal in ipairs({'won','lost'}) do
         for tool=-1,3 do
             t:case(terminal..' rejects actions '..tool,function()
                 local g,m=blank(),R.new_match();g[terminal]=true
-                g.tiles[30],g.tiles[31]=R.tile(0,R.PRISM),R.tile(1,R.BOMB)
+                g.tiles[30],g.tiles[31]=R.tile(0),R.tile(0)
+                g.tiles[32]=R.tile(0)
                 local old=R.game_copy(g)
                 t:check(not R.game_tool(g,tool,30,m),'terminal tool rejected')
                 t:check(not R.game_swap(g,30,31,m) and H.same(g,old),'terminal swap is inert')

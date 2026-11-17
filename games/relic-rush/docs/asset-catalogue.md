@@ -697,8 +697,8 @@ The smoke puffs come from Kenney's CC0 [Smoke particle assets](https://opengamea
 their own colour and alpha, since the grey fringe is the billow's shading, are centred on a
 square and reduced to 128 px.
 
-Review: [kenney-particles](review/kenney-particles/README.md) (bomb and ray frames before and after,
-`--fx bomb|ray --frames N`).
+Review: [kenney-particles](review/kenney-particles/README.md) (bomb and ray frames before and after;
+those special pieces and their `--fx` modes have since been removed, only `--fx shatter` remains).
 
 ## Remaining runtime asset families
 

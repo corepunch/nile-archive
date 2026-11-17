@@ -18,18 +18,19 @@ local function board(cells)
     end
     for _, p in ipairs(cells) do
         local i = index(p[1], p[2])
-        g.active[i], g.tiles[i] = true, tile(p[3] or -1, p[4])
+        g.active[i], g.tiles[i] = true, tile(p[3] or -1)
     end
     return g
 end
 local center, left, right, above = index(0, 0), index(-1, 0), index(1, -1), index(0, -1)
 -- A gem directly above falls before either diagonal donor.
 for _, side in ipairs({{-1, 0}, {1, -1}}) do
-    local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4, rules.BOMB}})
-    local _, steps = rules.game_collapse(g)
+    local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4}})
     local source = index(side[1], side[2])
+    local donor = g.tiles[source]
+    local _, steps = rules.game_collapse(g)
     check(steps[1].from[center] == above, "straight down beats either diagonal")
-    check(g.tiles[center].kind == 2 and g.tiles[source].special == rules.BOMB, "side special stays put")
+    check(g.tiles[center].kind == 2 and g.tiles[source] == donor, "side piece stays put")
 end
 -- A distant diagonal donor must not delay an available straight fall.
 do
@@ -43,22 +44,24 @@ end
 for _, side in ipairs({{-1, 0}, {1, -1}}) do
     local source = index(side[1], side[2])
     local down = rules.hex_neighbor(source, 1)
-    local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4, rules.BOMB},
+    local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4},
                      {rules.hex_q(down), rules.hex_r(down)}})
     g.chain[above] = 1
+    local donor = g.tiles[source]
     local _, steps = rules.game_collapse(g)
     check(steps[1].from[down] == source, "donor takes its own empty cell below")
     check(steps[1].tiles[center].kind < 0, "diagonal waits while donor can fall straight")
-    check(steps[1].tiles[down].special == rules.BOMB, "fall preserves special")
+    check(steps[1].tiles[down] == donor, "fall moves the donor itself")
     -- Occupied and locked cells below both allow the donor to slide sideways.
     for _, blocker in ipairs({"gem", "chain", "ice"}) do
-        g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4, rules.BOMB},
+        g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4},
                    {rules.hex_q(down), rules.hex_r(down), 1}})
         g.chain[above] = 1
         if blocker ~= "gem" then g[blocker][down] = 1 end
+        donor = g.tiles[source]
         _, steps = rules.game_collapse(g)
         check(steps[1].from[center] == source, blocker .. " below allows diagonal")
-        check(steps[1].tiles[center].special == rules.BOMB, "slide preserves special")
+        check(steps[1].tiles[center] == donor, "slide moves the donor itself")
     end
 end
 -- Every exposed column top spawns vertically, even beside an occupied diagonal.
@@ -177,8 +180,8 @@ for level = 0, rules.LEVELS - 1 do
             if g.active[i] then
                 check(not origins[from[i]], "no duplicate original or spawned gems")
                 origins[from[i]] = true
-                if from[i] >= 0 then check(g.tiles[i] == old.tiles[from[i]] or g.tiles[i].kind == old.tiles[from[i]].kind
-                    and g.tiles[i].special == old.tiles[from[i]].special, "original tile survives") end
+                if from[i] >= 0 then check(g.tiles[i] == old.tiles[from[i]] or g.tiles[i].kind == old.tiles[from[i]].kind,
+                    "original tile survives") end
             end
             if not g.active[i] or g.chain[i] > 0 or g.ice[i] > 0 then
                 check(from[i] == i and g.tiles[i].kind == old.tiles[i].kind, "locks and holes stay fixed")

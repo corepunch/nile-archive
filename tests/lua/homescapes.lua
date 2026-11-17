@@ -20,49 +20,28 @@ for axis=0,2 do
     for count=3,5 do t:case('straight '..axis..' count '..count,function()
         local g,m=H.board(R),R.new_match();local i=R.hex_neighbor(center,axis+3)
         for _=1,count do g.tiles[i]=R.tile(2);i=R.hex_neighbor(i,axis) end
-        R.game_matches(g,m,center)
-        t:check(m.hits==count,'exact line clear')
-        t:check(m.make[center]==(count==4 and axis+1 or count==5 and R.PRISM or nil),'source reward')
+        R.game_matches(g,m);R.game_apply(g,m)
+        t:check(m.hits==count and g.tiles[center].kind==-1,'a line of any length only clears')
     end) end
     t:case('rhombus '..axis,function()
         local g,m=H.board(R),R.new_match()
         local a,b=R.hex_neighbor(center,axis),R.hex_neighbor(center,axis+1)
         for _,i in ipairs{center,a,b,R.hex_neighbor(a,axis+1)} do g.tiles[i]=R.tile(3) end
-        R.game_matches(g,m,center)
-        t:check(m.hits==4 and m.make[center]==R.PLANE,'rhombus creates plane')
+        R.game_matches(g,m)
+        t:check(m.hits==0,'a four-cell rhombus is not a match')
     end)
 end
-t:case('cross makes bomb; powerups have no match color',function()
+t:case('crossing lines clear their union once',function()
     local g,m=H.board(R),R.new_match()
     for d=0,4 do if d~=2 then g.tiles[R.hex_neighbor(center,d)]=R.tile(2) end end
-    g.tiles[center]=R.tile(2);R.game_matches(g,m,center)
-    t:check(m.hits==5 and m.make[center]==R.BOMB,'intersecting threes make bomb')
-    g.tiles[center]=R.tile(2,R.ROW);R.game_matches(g,m,center)
-    t:check(m.hits==0,'rocket cannot complete a colored line')
+    g.tiles[center]=R.tile(2);R.game_matches(g,m);R.game_apply(g,m)
+    t:check(m.hits==5 and g.tiles[center].kind==-1,'crossing threes clear without a bomb')
 end)
-for a=1,6 do for b=a,6 do t:case('combination '..a..' + '..b,function()
-    local g,m=H.board(R),R.new_match();local n=R.hex_neighbor(center,0)
-    for i=0,R.CELLS-1 do g.tiles[i]=R.tile(i%6) end
-    g.tiles[center],g.tiles[n]=R.tile(0,a),R.tile(1,b)
-    t:check(R.game_swap(g,center,n,m),'special pair is legal without color match')
-    R.game_apply(g,m)
-    t:check(g.moves==19 and g.tiles[center].kind==-1 and g.tiles[n].kind==-1,'both consumed for one move')
-    if (a==6 or b==6) and a~=5 and b~=5 then
-        t:check(#m.flights==(a==6 and b==6 and 3 or 1),'plane combination flight count')
+t:case('source power-ups load as ordinary pieces',function()
+    local g=fixture({[center]={{modelId='BOMB'}},[R.hex_neighbor(center,0)]={{modelId='LINE',line_orient='0'}}})
+    for _,i in ipairs{center,R.hex_neighbor(center,0)} do
+        t:check(g.tiles[i].kind>=0 and g.tiles[i].kind<=2 and next(g.tiles[i],next(g.tiles[i]))==nil,'plain colored piece')
     end
-end) end end
-t:case('rainbow conversion reaches the effect controller',function()
-    local g,m=H.board(R),R.new_match();local n=R.hex_neighbor(center,0)
-    for i=0,R.CELLS-1 do g.tiles[i]=R.tile(2) end
-    g.tiles[center],g.tiles[n]=R.tile(0,R.PRISM),R.tile(1,R.ROW)
-    t:check(R.game_swap(g,center,n,m),'rainbow and rocket combine');R.game_apply(g,m)
-    local count=0;for _,special in pairs(m.activations) do if special==R.ROW then count=count+1 end end
-    t:check(count==R.CELLS-2,'every converted rocket emits its activation for animation')
-end)
-t:case('activation does not need adjacent match',function()
-    local g,m=H.board(R),R.new_match();g.tiles[center]=R.tile(4,R.PLANE)
-    t:check(R.game_activate(g,center,m),'plane activates');R.game_apply(g,m)
-    t:check(g.moves==19 and #m.flights==1,'single move and visible flight event')
 end)
 t:case('queue repeats, independent cursors, finite fallback',function()
     local model={id='0',pattern='[t1][c6][lh]',isLooped='0'}
@@ -70,7 +49,7 @@ t:case('queue repeats, independent cursors, finite fallback',function()
     local a,b=P.queue(model,spec),P.queue(model,spec)
     t:check(P.next(a).element=='cookie' and P.next(a).element=='cookie','repeat count')
     t:check(P.next(a).color==5 and P.next(b).element=='cookie','independent cursors and one-based color')
-    t:check(P.next(a).special=='lh' and P.next(a)==nil,'finite exhausted')
+    t:check(P.next(a).random and P.next(a)==nil,'power-up token queues an ordinary piece; finite exhausted')
     for _,bad in ipairs{'[c]tail','[bad]','[[c]]',''} do
         model.pattern=bad;spec.bornPatterns[1].str=bad
         t:check(not pcall(P.queue,model,spec),'unknown syntax rejected')

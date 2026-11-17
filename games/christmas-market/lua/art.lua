@@ -4,8 +4,6 @@ local elements_view = require("match3.elements_view")
 local economy = require("economy")
 local A = {}
 A.board_frame = require("board_frame_atlas")
-A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
--- Standalone power-ups, with one authored rocket per hex axis.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = elements_view.assets
@@ -94,7 +92,6 @@ function A.load()
         textures["tile-" .. key] = texture.load("board-tiles/" .. key .. ".png")
     end
     elements_view.load_frame(textures, A.board_frame)
-    for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
     return textures
@@ -115,10 +112,9 @@ function A.draw_catalogue(R)
         gfx.image(R.board_art["tile-" .. name], rect(x, 327, 48, 48), color.WHITE)
         R.say_at(name, vec2(x + 24, 380), 11, R.PAL_CREAM, 88)
     end
-    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
-                   "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+    local names = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
-        local x, y = 39 + (i - 1) % 6 * 68, 385 + math.floor((i - 1) / 6) * 85
+        local x, y = 39 + (i - 1) % 6 * 68, 385
         gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end

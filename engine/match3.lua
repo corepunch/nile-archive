@@ -1,8 +1,7 @@
 -- Reusable deterministic hex match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
 local E = {
-    NO_TRICKLE=1, NO_SPECIALS=2, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, LINE_MATCHES=64,
-    NO_RHOMBI=128, COLOR_TOOL=256,
+    NO_TRICKLE=1, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, LINE_MATCHES=64, COLOR_TOOL=256,
     GOAL=1, WOOD=4, STONE=8, -- per-kind behavior bits
 }
 
@@ -601,7 +600,6 @@ function E.new(config)
     assert(math.type(flags) == "integer" and flags >= 0 and flags < 512, "invalid match3 flags")
     assert(not config.radius or math.type(config.radius) == "integer" and config.radius >= 1 and config.radius <= 16, "invalid hex radius")
     local M = {flags=flags}
-    local rhombus_matches = flags & E.NO_RHOMBI == 0
     -- Axial hex grid; neighbours are
     -- numbered 0..5 and opposite directions differ by 3.
     M.HEX_RADIUS = config.radius or 4
@@ -657,9 +655,7 @@ function E.new(config)
     M.LEVELS, M.level_shapes = #M.levels, config.level_shapes or {}
     assert(M.LEVELS > 0, "match3 needs a level")
     local LEVELS, COLORS, MATCH_MIN = M.LEVELS, M.COLORS, M.MATCH_MIN
-    M.NORMAL, M.ROW, M.COLUMN, M.DIAGONAL, M.BOMB, M.PRISM, M.PLANE = 0, 1, 2, 3, 4, 5, 6
     M.DELIVERY = -2
-    local NORMAL, ROW, COLUMN, DIAGONAL, BOMB, PRISM = 0, 1, 2, 3, 4, 5
     local shapes = require("match3.shapes")
     function M.level_of(g) return M.levels[g.level + 1] end
     function M.is_goal_kind(g, kind)
@@ -687,7 +683,9 @@ function E.new(config)
     end
     local home = require("match3.homescapes").bind(M,randn)
 
-    local function tile(kind, special) return {kind = kind, special = special or NORMAL} end
+    -- Matches only clear. As in Cradle of Rome, power is earned through tools,
+    -- never made by a longer line, so a piece is just its kind.
+    local function tile(kind) return {kind = kind} end
     M.tile = tile
 
     local function swap_tiles(g, a, b) g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a] end
@@ -699,16 +697,13 @@ function E.new(config)
 
     local function equal(g, a, b)
         return cell_active(g, a) and cell_active(g, b) and not solid(g,a) and not solid(g,b)
-            and g.tiles[a].special == NORMAL and g.tiles[b].special == NORMAL
             and not g.tiles[a].element and not g.tiles[b].element
             and g.tiles[a].kind >= 0 and g.tiles[a].kind == g.tiles[b].kind
     end
 
-    local function ray_for_axis(axis) return axis == 0 and ROW or axis == 1 and COLUMN or DIAGONAL end
-    local function axis_of_ray(sp) return sp == ROW and 0 or sp == COLUMN and 1 or 2 end
-
-    -- An empty match: which cells clear (mask) and which specials appear (make).
-    local function new_match() return {mask = {}, make = {}, direct = {}, ordinary = {}, hits = 0} end
+    -- An empty match: which cells clear (mask), which a match cleared
+    -- (ordinary) and which a tool hit directly (direct).
+    local function new_match() return {mask = {}, direct = {}, ordinary = {}, spread = {}, hits = 0} end
     M.new_match = new_match
 
     local function count_hits(m)
@@ -779,54 +774,16 @@ function E.new(config)
         end
     end
 
-    local function common_color(g)
-        local counts,best={},0
-        for i=0,CELLS-1 do if equal(g,i,i) then
-            local k=g.tiles[i].kind;counts[k]=(counts[k] or 0)+1
-        end end
-        for k=0,COLORS-1 do if (counts[k] or 0)>(counts[best] or 0) then best=k end end
-        return best
-    end
-    local function plane(g,m,cell,payload,count)
-        for d=0,5 do
-            local i=hex_neighbor(cell,d)
-            if cell_active(g,i) then m.mask[i],m.direct[i]=true,true end
-        end
-        for _=1,count or 1 do
-            local target,priority=-1,-1
-            for i=0,CELLS-1 do if cell_active(g,i) and not m.mask[i] then
-                local score=locked(g,i) and 4 or M.is_goal_kind(g,g.tiles[i].kind) and 2 or 1
-                if g.hs and g.hs.cells[i] and next(g.hs.cells[i]) then score=5 end
-                if score>priority then target,priority=i,score end
-            end end
-            if target>=0 then
-                m.mask[target],m.direct[target]=true,true
-                m.flights=m.flights or {};m.flights[#m.flights+1]={from=cell,to=target,payload=payload}
-                if payload==BOMB then mark_area(g,m,target,1)
-                elseif payload and payload>=ROW and payload<=DIAGONAL then mark_line(g,m,target,axis_of_ray(payload)) end
-            end
-        end
+    local function reset_match(m)
+        m.mask, m.direct, m.ordinary, m.spread, m.hits = {}, {}, {}, {}, 0
+        m.match_lengths, m.pierce_kind = nil, nil
     end
 
-    -- A swap can complete a line at either endpoint. Prefer the cell the
-    -- player moved into, then the other swapped cell if its gem matched.
-    -- For cascades (no swap), keep the deterministic first eligible cell.
-    local function choose_match_special(g, pick, cell, preferred, alternate)
-        if g.tiles[cell].special ~= NORMAL or locked(g, cell) then return pick end
-        if cell == preferred then return cell end
-        if cell == alternate and pick ~= preferred then return cell end
-        if pick < 0 then return cell end
-        return pick
-    end
-
-    function M.game_matches(g, m, preferred, alternate)
-        m.pierce_kind = nil
-        m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
-        m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
+    function M.game_matches(g, m)
+        reset_match(m)
         m.match_lengths = g.resource_multipliers and {}
         if flags & E.LINE_MATCHES ~= 0 then
-            shapes.matches(M,g,m,preferred,alternate,MATCH_MIN,flags & E.NO_SPECIALS ~= 0,rhombus_matches,
-                function(board,i) return not locked(board,i) end,equal)
+            shapes.matches(M, g, m, MATCH_MIN, equal)
             return
         end
         local seen = {}
@@ -834,29 +791,13 @@ function E.new(config)
         for i = 0, CELLS - 1 do
             if cell_active(g, i) and g.tiles[i].kind >= 0 and not seen[i] then
                 local n = collect_group(g, i, cells)
-                local pick, longest, long_axis = -1, 0, 0
                 for k = 1, n do seen[cells[k]] = true end
                 if n >= MATCH_MIN then
                     for k = 1, n do
                         local a = cells[k]
                         m.mask[a], m.ordinary[a] = true, true
                         m.hits = m.hits + 1
-                        pick = choose_match_special(g, pick, a, preferred, alternate)
-                        for axis = 0, 2 do
-                            if not equal(g, a, hex_neighbor(a, axis + 3)) then   -- count each run from its start
-                                local run, c = 0, a
-                                while c >= 0 and equal(g, a, c) do
-                                    run = run + 1
-                                    c = hex_neighbor(c, axis)
-                                end
-                                if run > longest then longest, long_axis = run, axis end
-                            end
-                        end
                     end
-                    -- Larger groups reward combinations beyond the configured minimum.
-                    local sp = flags & E.NO_SPECIALS == 0 and (n >= MATCH_MIN + 2 and (longest >= MATCH_MIN + 2 and PRISM or BOMB)
-                        or n == MATCH_MIN + 1 and ray_for_axis(long_axis)) or NORMAL
-                    if pick >= 0 and sp ~= NORMAL then m.make[pick] = sp end
                 end
             end
         end
@@ -877,50 +818,10 @@ function E.new(config)
     function M.game_swap(g, a, b, m)
         if g.won or g.lost or not game_can_swap(g, a, b) then return false end
         swap_tiles(g, a, b)
-        m.pierce_kind = nil
-        m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
-        m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
-        local sa, sb = g.tiles[a].special, g.tiles[b].special
-        m.carrycarpet=g.hs and ((g.hs.cells[a] or {}).carpet or (g.hs.cells[b] or {}).carpet)
-            or g.carpet and ((g.carpet[a] or 0) > 0 or (g.carpet[b] or 0) > 0) or false
-        if sa == PRISM or sb == PRISM then
-            local p=sa==PRISM and a or b
-            local o=p==a and b or a
-            if sa==PRISM and sb==PRISM then
-                for i=0,CELLS-1 do if cell_active(g,i) then m.mask[i],m.direct[i]=true,true end end
-            elseif g.tiles[o].special~=NORMAL then
-                local kind,replacement=common_color(g),g.tiles[o].special
-                for i=0,CELLS-1 do if equal(g,i,i) and g.tiles[i].kind==kind and not locked(g,i) then
-                    g.tiles[i]=tile(kind,replacement);m.mask[i],m.direct[i]=true,true
-                end end
-            else mark_color(g,m,g.tiles[o].kind) end
-            m.mask[p],m.mask[o],m.direct[p],m.direct[o]=true,true,true,true
-            m.consumed[p],m.consumed[o]=true,true
-        elseif sa~=NORMAL and sb~=NORMAL then
-            m.mask[a],m.mask[b],m.direct[a],m.direct[b]=true,true,true,true
-            m.consumed[a],m.consumed[b]=true,true
-            if sa==M.PLANE or sb==M.PLANE then
-                local payload=sa==M.PLANE and sb or sa
-                plane(g,m,b,payload,payload==M.PLANE and 3 or 1)
-            elseif sa==BOMB and sb==BOMB then mark_area(g,m,b,2)
-            elseif sa==BOMB or sb==BOMB then
-                for d=0,5 do
-                    local i=hex_neighbor(b,d)
-                    if i>=0 then for axis=0,2 do mark_line(g,m,i,axis) end end
-                end
-                for axis=0,2 do mark_line(g,m,b,axis) end
-            else for axis=0,2 do mark_line(g,m,b,axis) end end
-        elseif sa~=NORMAL or sb~=NORMAL then
-            local p=sa~=NORMAL and a or b
-            m.mask[p],m.direct[p]=true,true
-        else
-            game_matches(g,m,b,a)
-            if not m.mask[a] and not m.mask[b] then
-                swap_tiles(g,a,b);m.mask,m.make,m.hits={},{},0;return false
-            end
-        end
-        if count_hits(m) == 0 then
+        game_matches(g, m)
+        if not m.mask[a] and not m.mask[b] then
             swap_tiles(g, a, b)
+            reset_match(m)
             return false
         end
         g.moves = g.moves - 1
@@ -928,16 +829,6 @@ function E.new(config)
         return true
     end
     local game_swap = M.game_swap
-    function M.game_activate(g,cell,m)
-        if g.won or g.lost or not cell_active(g,cell) or locked(g,cell) or g.tiles[cell].special==NORMAL then return false end
-        m.pierce_kind = nil
-        m.mask,m.make,m.direct,m.ordinary,m.hits={[cell]=true},{},{[cell]=true},{},1
-        m.consumed,m.flights,m.spread={},{},{}
-        m.carrycarpet=g.hs and (g.hs.cells[cell] or {}).carpet or g.carpet and (g.carpet[cell] or 0) > 0 or false
-        g.moves,g.combo,g.turn_pending,g.oil_cleared=g.moves-1,0,true,false
-        return true
-    end
-
     local function hit_gem_protection(g, i)
         local layers = g.ice[i] > 0 and g.ice or g.chain
         if layers[i] == 0 then return false end
@@ -945,27 +836,11 @@ function E.new(config)
         return true
     end
 
-    -- Clear one wave, fire specials; returns the relics cleared.
+    -- Clear one wave; returns the relics cleared.
     function M.game_apply(g, m)
-        local fired, pierce_kind = {}, m.pierce_kind
-        m.activations, m.bonus_charge_by_cell, m.pierce_kind = {}, nil, nil
+        local pierce_kind = m.pierce_kind
+        m.bonus_charge_by_cell, m.pierce_kind = nil, nil
         m.direct, m.ordinary = m.direct or {}, m.ordinary or {}
-        local more = true
-        while more do   -- specials hit by the wave fire, possibly hitting more specials
-            more = false
-            for i = 0, CELLS - 1 do
-                if cell_active(g, i) and m.mask[i] and not m.make[i] and not fired[i] and not (m.consumed or {})[i] and g.tiles[i].special ~= NORMAL and not locked(g, i) then
-                    fired[i] = true
-                    more = true
-                    local sp = g.tiles[i].special
-                    m.activations[i]=sp
-                    if sp == ROW or sp == COLUMN or sp == DIAGONAL then mark_line(g, m, i, axis_of_ray(sp))
-                    elseif sp == BOMB then mark_area(g, m, i, 1)
-                    elseif sp == M.PLANE then plane(g,m,i)
-                    else mark_color(g, m, common_color(g)) end
-                end
-            end
-        end
         -- A wave deals at most one hit per blocker, even when several matches touch it.
         local damage = {}
         for i = 0, CELLS - 1 do
@@ -990,7 +865,7 @@ function E.new(config)
             if cell_active(g, i) then
                 -- A match touching carpet, or a move begun on it, carpets every cell it hits.
                 if not g.hs and g.carpet and m.mask[i] and g.carpet[i] == 0 and not solid(g, i)
-                    and (m.carrycarpet or (m.spread or {})[i]) then
+                    and (m.spread or {})[i] then
                     g.carpet[i], g.carpeted = 1, g.carpeted + 1
                 end
                 if m.mask[i] and not protected[i] and not solid(g, i) and g.tiles[i].kind ~= M.DELIVERY then
@@ -1004,8 +879,7 @@ function E.new(config)
                         end
                         local k = g.tiles[i].kind
                         if k >= 0 then
-                            local normal = g.tiles[i].special == NORMAL
-                            if normal and g.resource_yields then
+                            if g.resource_yields then
                                 local resource = g.resource_yields[k]
                                 if resource then
                                     local length = m.match_lengths and m.match_lengths[i]
@@ -1028,13 +902,12 @@ function E.new(config)
                                     end
                                 end
                             end
-                            if normal and M.is_goal_kind(g,k) then g.relics, g.last_gold = g.relics + 1, g.last_gold + 1 end
-                            if normal and (kind_flags[k] or 0) & E.WOOD ~= 0 then g.wood, g.last_wood = g.wood + 1, g.last_wood + 1 end
-                            if normal and (kind_flags[k] or 0) & E.STONE ~= 0 then g.stone, g.last_stone = g.stone + 1, g.last_stone + 1 end
+                            if M.is_goal_kind(g,k) then g.relics, g.last_gold = g.relics + 1, g.last_gold + 1 end
+                            if (kind_flags[k] or 0) & E.WOOD ~= 0 then g.wood, g.last_wood = g.wood + 1, g.last_wood + 1 end
+                            if (kind_flags[k] or 0) & E.STONE ~= 0 then g.stone, g.last_stone = g.stone + 1, g.last_stone + 1 end
                             g.score = g.score + 50 * g.combo
                             cleared = cleared + 1
-                            if m.make[i] then g.tiles[i].special = m.make[i]
-                            else g.tiles[i] = tile(-1, NORMAL) end
+                            g.tiles[i] = tile(-1)
                         end
                     end
                 end
@@ -1178,27 +1051,11 @@ function E.new(config)
     end
     local game_copy = M.game_copy
 
-    -- Only shapes containing a swapped cell can validate its move. Avoid a
+    -- Only lines through a swapped cell can validate its move. Avoid a
     -- whole-board scan for each hint candidate and each generated gem.
-    local rhombi={}
-    for i=0,CELLS-1 do rhombi[i]={}
-        for d=0,2 do
-            local back=(d+4)%6
-            local a=hex_neighbor(i,d+3)
-            local origins={i,a,hex_neighbor(i,back),hex_neighbor(a,back)}
-            for _,origin in ipairs(origins) do if origin>=0 then
-                local x,y=hex_neighbor(origin,d),hex_neighbor(origin,d+1)
-                local z=hex_neighbor(x,d+1)
-                if x>=0 and y>=0 and z>=0 then rhombi[i][#rhombi[i]+1]={origin,x,y,z} end
-            end end
-        end
-    end
     local function shape_at(g,i)
         if not equal(g,i,i) then return false end
         for axis=0,2 do if run_length(g,i,axis)>=MATCH_MIN then return true end end
-        if rhombus_matches and MATCH_MIN==3 then for _,cells in ipairs(rhombi[i]) do
-            if equal(g,i,cells[1]) and equal(g,i,cells[2]) and equal(g,i,cells[3]) and equal(g,i,cells[4]) then return true end
-        end end
         return false
     end
 
@@ -1215,7 +1072,7 @@ function E.new(config)
         for _, i in ipairs(fall_order) do
             local t = g.tiles[i]
             if from[i] < 0 and cell_active(g, i) and not locked(g, i) and t.kind >= 0
-                and t.special == NORMAL and not t.element then
+                and not t.element then
                 local matches = flags & E.LINE_MATCHES ~= 0 and shape_at(g, i)
                     or flags & E.LINE_MATCHES == 0 and collect_group(g, i, cells) >= MATCH_MIN
                 if matches then
@@ -1243,8 +1100,6 @@ function E.new(config)
             for d = 0, 2 do
                 local j = hex_neighbor(i, d)
                 if game_can_swap(g, i, j) then
-                    local sa, sb = g.tiles[i].special, g.tiles[j].special
-                    if sa ~= NORMAL or sb ~= NORMAL then return true, i, j end
                     swap_tiles(g, i, j)
                     local matched
                     if flags & E.LINE_MATCHES ~= 0 then
@@ -1262,7 +1117,7 @@ function E.new(config)
     local function fill_without_matches(g)
         local cells, kinds = {}, g.spawn_kinds or default_kinds
         for i = 0, CELLS - 1 do
-            if not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then g.tiles[i] = tile(-1, NORMAL) end
+            if not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then g.tiles[i] = tile(-1) end
         end
         for i = 0, CELLS - 1 do
             if cell_active(g, i) and not locked(g, i) and g.tiles[i].kind ~= M.DELIVERY then
@@ -1276,17 +1131,10 @@ function E.new(config)
                         local a,b=hex_neighbor(i,axis),hex_neighbor(i,axis+3)
                         forbid(a,b);forbid(a,hex_neighbor(a,axis));forbid(b,hex_neighbor(b,axis+3))
                     end
-                    if rhombus_matches then for _,shape in ipairs(rhombi[i]) do
-                        local first,valid=nil,true
-                        for _,cell in ipairs(shape) do if cell~=i then
-                            if not first then first=cell elseif not equal(g,first,cell) then valid=false;break end
-                        end end
-                        if valid and first and equal(g,first,first) then forbidden[g.tiles[first].kind]=true end
-                    end end
                     for _, k in ipairs(kinds) do if not forbidden[k] then n=n+1;choices[n]=k end end
                 else
                     for _, k in ipairs(kinds) do
-                        g.tiles[i] = tile(k, NORMAL)
+                        g.tiles[i] = tile(k)
                         local valid
                         if flags & E.LINE_MATCHES ~= 0 then valid=not shape_at(g,i)
                         else valid = collect_group(g, i, cells) < MATCH_MIN end
@@ -1294,7 +1142,7 @@ function E.new(config)
                     end
                 end
                 if n == 0 then return false end
-                g.tiles[i] = tile(choices[randn(g, n) + 1], NORMAL)
+                g.tiles[i] = tile(choices[randn(g, n) + 1])
             end
         end
         return true
@@ -1305,13 +1153,13 @@ function E.new(config)
         local m = new_match()
         for _ = 1, 2000 do
             if fill_without_matches(g) then
-                game_matches(g, m, -1)
+                game_matches(g, m)
                 if m.hits == 0 and game_hint(g) then return end
             end
         end
     end
 
-    -- Recovery moves whole pieces, including earned specials. Locked pieces
+    -- Recovery moves whole pieces. Locked pieces
     -- and terrain stay put; an unsuccessful search restores the original board.
     function M.game_shuffle(g)
         local cells, pieces, original = {}, {}, {}
@@ -1323,7 +1171,7 @@ function E.new(config)
         end
         local distinct=false
         for i=2,#pieces do
-            if pieces[i].kind~=pieces[1].kind or pieces[i].special~=pieces[1].special then distinct=true;break end
+            if pieces[i].kind~=pieces[1].kind then distinct=true;break end
         end
         if not distinct then return false end -- every permutation would be identical
         local m = new_match()
@@ -1333,46 +1181,13 @@ function E.new(config)
                 pieces[i], pieces[j] = pieces[j], pieces[i]
             end
             for i, cell in ipairs(cells) do g.tiles[cell] = pieces[i] end
-            game_matches(g, m, -1)
+            game_matches(g, m)
             if m.hits == 0 and game_hint(g) then return true end
         end
         for cell, piece in pairs(original) do g.tiles[cell] = piece end
         return false
     end
     local game_shuffle = M.game_shuffle
-
-    -- A loadout's opening_specials ("rocket", "bomb", "prism" or "plane") turn
-    -- ordinary pieces into those specials when the board opens. The cells come
-    -- from the seed without drawing on it, avoid goals and blockers where
-    -- possible, and always leave a legal swap.
-    local OPENING = {bomb=BOMB, prism=PRISM, plane=M.PLANE}
-    local function place_opening_specials(g, specials)
-        if #specials == 0 then return end
-        local open, any = {}, {}
-        for i = 0, CELLS - 1 do
-            local t = g.tiles[i]
-            if cell_active(g, i) and not solid(g, i) and g.chain[i] == 0 and g.ice[i] == 0 and t.special == NORMAL
-                and t.kind >= 0 and not t.element and t.kind ~= g.goal_kind then
-                any[#any + 1] = i
-                if g.oil[i] == 0 and g.carpet[i] == 0 then open[#open + 1] = i end
-            end
-        end
-        local cells = #open >= #specials and open or any
-        local start = (g.rng * 2654435761) % math.max(1, #cells)
-        local used = 0
-        for n, name in ipairs(specials) do
-            local special = OPENING[name] or ray_for_axis((g.rng + n) % 3)
-            for step = 0, #cells - 1 do
-                local cell = cells[(start + used + step * 7) % #cells + 1]
-                local t = g.tiles[cell]
-                if t.special == NORMAL then
-                    t.special = special
-                    if game_hint(g) then used = used + step + 1; break end
-                    t.special = NORMAL
-                end
-            end
-        end
-    end
 
     function M.game_start(lvl, seed, resource_yields, loadout)
         lvl = math.max(0, math.min(lvl, LEVELS - 1))
@@ -1416,7 +1231,7 @@ function E.new(config)
         local order, n = {}, 0
         for i = 0, CELLS - 1 do
             g.active[i] = not l.mask or l.mask:sub(i + 1, i + 1) == "1"
-            g.tiles[i] = tile(-1, NORMAL)
+            g.tiles[i] = tile(-1)
             g.chain[i], g.ice[i], g.stone_hp[i], g.carpet[i], g.oil[i] = 0, 0, 0, 0, 0
             if g.active[i] then n = n + 1; order[n] = i end
         end
@@ -1512,12 +1327,9 @@ function E.new(config)
         end
         if l.homescapes then home.init(g,l.homescapes); return g end
         local m = new_match()
-        game_matches(g, m, -1)
+        game_matches(g, m)
         if m.hits > 0 or not game_hint(g) then generate_board(g) end
-        if loadout then
-            g.moves = g.moves + (loadout.extra_moves or 0)
-            place_opening_specials(g, loadout.opening_specials or {})
-        end
+        if loadout then g.moves = g.moves + (loadout.extra_moves or 0) end
         return g
     end
 
@@ -1632,9 +1444,7 @@ function E.new(config)
     function M.game_tool(g, tool, cell, m)
         if not tool_ready(g, tool) then return false end
         local effect = M.game_tool_effect(tool, g)
-        m.mask, m.make, m.direct, m.ordinary, m.hits = {}, {}, {}, {}, 0
-        m.consumed,m.flights,m.spread,m.carrycarpet = {},{},{},false
-        m.match_lengths, m.pierce_kind = nil, nil
+        reset_match(m)
         if effect == "shuffle" then
             if not game_shuffle(g) then return false end
         elseif effect == "moves" then g.moves = g.moves + (config.extra_moves or 5)
@@ -1864,7 +1674,6 @@ function E.new(config)
             return
         end
         if R.selected >= 0 and R.selected~=cell and hex_distance(R.selected,cell)==1 then R.attempt_swap(R.selected,cell)
-        elseif rules.game_activate(R.g,cell,R.pending) then R.selected=-1;R.finish_wave()
         elseif R.selected == cell then R.selected=-1
         else R.selected = cell; R.play("select") end
     end
@@ -1918,8 +1727,6 @@ function E.new(config)
         select = {{880, .05, 0, .45}},
         swap = {{392, .07, 0, .6}, {587.33, .09, .045, .6}},
         reject = {{311.13, .09, 0, .75}, {233.08, .15, .08, .75}},
-        special = {{E5, .1, 0, .7}, {G5, .1, .05, .7}, {C6, .12, .1, .7}, {E6, .22, .15, .6}},
-        blast = {{98, .3, 0, 1.4}, {196, .22, .01, .9}, {G6, .12, .04, .35}, {C6, .18, .07, .35}},
         tool = {{C5, .07, 0, .6}, {G5, .1, .05, .6}},
         mission = {{C5, .5, 0, .35}, {E5, .5, .04, .35}, {G5, .55, .08, .35}},
         win = {{C5, .14, 0, .8}, {E5, .14, .12, .8}, {G5, .14, .24, .8}, {C6, .5, .36, .9}, {E6, .5, .36, .45}, {G5, .5, .36, .45}},
@@ -1943,7 +1750,7 @@ function E.new(config)
         for _, n in ipairs(bank or {}) do sfx.note(n[1], n[2], n[3], n[4]) end
     end
 
-    -- Praise for long cascades and special combos. Games may replace the words.
+    -- Praise for long cascades. Games may replace the words.
     R.kudos_words = R.kudos_words or {"Nice!", "Great!", "Amazing!", "Spectacular!"}
     local function kudos(level)
         level = math.min(level, #R.kudos_words)
@@ -1962,23 +1769,12 @@ function E.new(config)
         elements.maker_observe(R)
         R.phase = PH_CLEAR
         R.phase_time = 0
-        R.flight_targets = {}
-        if not R.reduced_motion then
-            for _, path in ipairs(R.pending.flights or {}) do R.flight_targets[path.to] = true end
-        end
         R.shake = R.reduced_motion and 0 or R.g.combo > 1 and .13 or .06
-        local fx_combo = R.fx_combo or 0   -- vfx_wave consumes the combo swap's effect
         R.vfx_wave(old_score)
-        local special, made = false, false
-        for i = 0, CELLS - 1 do
-            if R.pending.mask[i] and R.old_tiles[i].special ~= NORMAL then special = true end
-            if R.pending.make[i] then made = true end
-        end
-        R.play(special and "blast" or made and "special" or "match", R.g.combo)
-        -- Cascades earn praise from the third wave, a special combo swap at once;
-        -- the word waits until the whole cascade has settled (see settle).
+        R.play("match", R.g.combo)
+        -- Cascades earn praise from the third wave; the word waits until the
+        -- whole cascade has settled (see settle).
         local praise = R.g.combo >= 3 and R.g.combo - 2 or 0
-        if fx_combo > 0 and R.g.combo == 1 then praise = math.max(praise, fx_combo == 3 and 3 or 2) end
         R.kudos_level = math.max(R.kudos_level or 0, praise)
         -- Breaking ice or a blue/green tablet layer lands harder than a plain match.
         local broke = false
@@ -1987,7 +1783,7 @@ function E.new(config)
         end
         if broke then haptic.play(haptic.COMBO, 1)
         else
-            haptic.play((R.g.combo > 1 or special) and haptic.COMBO or haptic.MATCH,
+            haptic.play(R.g.combo > 1 and haptic.COMBO or haptic.MATCH,
                 math.min(1, .6 + .1 * R.g.combo))
         end
     end
@@ -2006,9 +1802,6 @@ function E.new(config)
         snapshot()
         local g = R.g
         if rules.game_swap(g, a, b, R.pending) then
-            local sa, sb = R.old_tiles[a].special, R.old_tiles[b].special
-            R.fx_origin = sa == PRISM and b or sb == PRISM and a or b
-            R.fx_combo = (sa == PRISM or sb == PRISM) and 3 or (sa ~= NORMAL and sb ~= NORMAL) and ((sa == BOMB or sb == BOMB) and 2 or 1) or 0
             R.phase = PH_SWAP
             R.phase_time = 0
             R.play("swap")
@@ -2024,7 +1817,7 @@ function E.new(config)
     end
 
     local function settle()
-        rules.game_matches(R.g, R.pending, -1)
+        rules.game_matches(R.g, R.pending)
         if R.pending.hits > 0 then
             R.finish_wave()
             return
@@ -2057,7 +1850,7 @@ function E.new(config)
         elements.maker_update(R,dt)
         R.idle_time = R.idle_time + dt
         if R.phase == PH_IDLE and not R.g.won and not R.g.lost then   -- ready groups resolve before any input
-            rules.game_matches(R.g, R.pending, -1)
+            rules.game_matches(R.g, R.pending)
             if R.pending.hits > 0 then
                 R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
                 R.finish_wave()
@@ -2073,7 +1866,7 @@ function E.new(config)
         local speed = R.reduced_motion and .35 or 1
         if R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
         elseif R.phase == PH_REJECT and R.phase_time >= 2 * REJECT_LEG * speed then R.phase = PH_IDLE
-        elseif R.phase == PH_CLEAR and R.phase_time > (.24 + (next(R.flight_targets or {}) and .48 or 0)) * speed and not elements.maker_busy(R) then
+        elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed and not elements.maker_busy(R) then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
             elements.maker_observe(R)
             R.phase = PH_FALL
@@ -2111,9 +1904,8 @@ function E.new(config)
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]
         if ((R.wave_chain[i] == 0 and R.wave_ice[i] == 0) or g.tiles[i].kind < 0)
-            and not R.pending.make[i] and t.kind ~= M.DELIVERY then   -- a small pop, then shrink away
-            local delay = (R.flight_targets or {})[i] and .48 or 0
-            local f = num.saturate((R.phase_time - delay) / .24)
+            and t.kind ~= M.DELIVERY then   -- a small pop, then shrink away
+            local f = num.saturate(R.phase_time / .24)
             scale = f < .22 and 1 + .18 * math.sin(f / .22 * PI) or 1 - .92 * ease.out_cubic((f - .22) / .78)
             alpha = 255 * (1 - f * f)
         end

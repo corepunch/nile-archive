@@ -180,7 +180,7 @@ end
 function board_intro.bind(R, rules)
     local update, input_board, pose, reset = R.board_update, R.board_input, R.piece_pose, R.reset_board
     R.PH_PRESENT = 5
-    local no_tile = {kind = -1, special = 0}
+    local no_tile = {kind = -1}
     local notes = {392, 493.88, 587.33, 739.99, 880}
     function R.reset_board(g)
         reset(g)

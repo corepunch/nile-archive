@@ -14,7 +14,7 @@ This supersedes the prototype's connected-group match-4 rules.
 - The expedition's top bar shows the hexagonal Moves medallion, Coins, Supplies, Food and Settings. Blue plaques mark the objective on the board. Tools sit along the bottom edge. Settings opens the Explorer's Guide and lets the player resume, restart after confirmation, or quit to the island and resume the same board from Expeditions. See the [top bar review](screenshots/review/top-bar-moves/README.md).
 - Hints highlight a legal swap after five idle seconds. If the hint search finds no swap, idle boards use the same free reshuffle as boards settling after a fall, with a “No moves. Board reshuffled.” notice. Recovery resets selection/tool targeting and stale hints, preserving move/tool budgets, objective progress, holes, sand, ice, chains and their locked relics. Victory and exhausted moves take precedence over reshuffling.
 
-The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market, and both set `NO_SPECIALS`. Special pieces remain only on Homescapes reference boards (`--homescapes`) and in art previews. Generation, hints, reshuffling and cascades use the same rule in both games.
+The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. The engine has no special pieces at all, including on Homescapes reference boards (`--homescapes`). Generation, hints, reshuffling and cascades use the same rule in both games.
 
 ## Original ten board masks
 

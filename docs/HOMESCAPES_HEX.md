@@ -1,10 +1,10 @@
 # Homescapes mechanics in the shared hex engine
 
-The shared engine uses the Homescapes rules for color-independent power-ups.
-Relic Rush and Christmas Market use their own chips and themed sprites based
-on the original power-up silhouettes. The existing swap/reject, pop, fall, landing,
-cascade, score-flight, particle, sound, haptic and reduced-motion paths remain.
-A plane adds a flight to that same effects pool. Towns, campaigns, restoration
+The shared engine plays imported Homescapes boards with Cradle of Rome rules:
+matches only clear and never create power-ups. Rockets, bombs, planes and
+rainbow balls do not exist in the engine; power comes from each game's tools.
+The existing swap/reject, pop, fall, landing, cascade, score-flight, particle,
+sound, haptic and reduced-motion paths remain. Towns, campaigns, restoration
 rewards, tools and the campaigns' carpet and oil floors remain available.
 
 This is a source-based starting point, **not verified 1:1 original gameplay**.
@@ -14,31 +14,18 @@ lab remains the reference for supported model semantics; this port does not
 make its 5,179 unsupported boards playable. See the full source inventory and
 unresolved models in [Homescapes features](homescapes-reference/FEATURES.md).
 
-## Matching, activation and combinations
+## Matching
 
 | Pattern/action | Result |
 | --- | --- |
-| Three in a straight line | Clear, on any of the three hex axes |
-| Four in a straight line | Standalone multicolor rocket, aligned to that axis |
-| Five or more in a straight line | Rainbow ball |
-| Intersecting qualifying lines | Bomb, unless a five-line awards a rainbow |
-| Four-cell rhombus | Paper plane, all three orientations |
-| Tap a power-up / swap it with a neighbor | Activate for one move without a color match |
-| Rocket + rocket | All three axes through the destination |
-| Bomb + bomb | Radius-two hex blast |
-| Bomb + rocket | Three-axis bands through the center and its neighbors |
-| Plane + rocket/bomb | Nearby hit, flight, payload at the destination |
-| Plane + plane | Three distinct targeted flights |
-| Rainbow + ordinary piece | Clear that piece's color |
-| Rainbow + power-up | Convert the most common ordinary color and trigger it |
-| Rainbow + rainbow | Hit every active cell |
+| Three or more in a straight line | Clear, on any of the three hex axes |
+| Intersecting qualifying lines | Clear their union once |
+| Bends, triangles and four-cell rhombi | No match |
 
-Power-ups cannot complete color matches. Swapped matched cells take precedence
-for reward placement; cascade rewards use deterministic cell order. The source
-rocket's two orientations become three. A bomb's adjacent blast becomes seven
-hexes, and a double bomb becomes nineteen. A plane hits all six neighbors;
-target preference is deterministic (source cells, blockers, objectives, pieces).
-These are explicit hex adaptation choices, not original replay results.
+Longer lines and crossings make no power-up. Source power-up cells (`BOMB`,
+`LINE`, `LIGHTNING`, `FISH`) and power-up tokens in `BornPatterns` load as
+ordinary pieces of a source color. Blockers that only take direct hits
+(statues, hazelnuts, two-layer membranes) are cleared with tools.
 
 ## Ported models and goals
 
@@ -52,15 +39,15 @@ These are explicit hex adaptation choices, not original replay results.
 | `LOCK` | Holds pieces. One chain layer per direct hit, after ice. Includes a mirrored single-chain state. The [painted chains](../art/match3-chain-paint/README.md) attach to the sloped hex edges. |
 | `HONEY`, `CHERRY` | Jelly covering a stationary cherry; neighboring clears/blasts strip jelly and release cherry goal. All six original layer appearances and both visible cherry variants |
 | `OIL` | One layer under a piece (`TunerUnder`), cleared by a match on its cell or a blast; after a move that clears none it spreads to one neighbouring cell (`GrowsByInactivity`). Drawn as one SDF patch of engine-made golden liquid with two drifting bubble layers, after Homescapes' `oil.fsh`; goal `CELL_OIL` uses `goal-oil`. Levels 161 and 162 are in the reference pack |
-| `JELLY` | Carpet floor spreads through a matching group or carried power-up wave. All carpeted cells draw as one rounded patch: a signed distance field of their hexes (`texture.hex_field`) masks the tiled source swatch (`gfx.sdf_mask`). The goal uses `goal-carpet` |
+| `JELLY` | Carpet floor spreads through a matching group. All carpeted cells draw as one rounded patch: a signed distance field of their hexes (`texture.hex_field`) masks the tiled source swatch (`gfx.sdf_mask`). The goal uses `goal-carpet` |
 | `CARRY`, `CARRY_EXIT` | Donut falls to an exit and credits collection. Original donut and animated white exit arrow |
 | `TARGET_GEN` | Shared four-cell apple platter footprint; one apple per wave even when multiple cells hit; original platter/apple components, once per footprint |
-| `STATUE` | Fixed, power-up-only layered statue; original raw/cut/carved states |
+| `STATUE` | Fixed layered statue that only direct (tool) hits damage; original raw/cut/carved states |
 | `COOKIE_BOX` | Fixed stack releases three movable cookies when destroyed; original bow/strap/plain stack states, then original cookies |
 | `CARRY_GEN`, `CARRY_GEN_CELLS` | Shared donut maker, hit threshold, batch size, designated destinations and remaining-goal cap. Original shell and source layers for all five held charge stages |
 | `BUBBLE_MEMBRANE` | Two layers require a direct hit first; single layer accepts a match; held cells protect the floor; original intact/cracked ceramic fills |
 | `SHUTTERS` | Shared vertical blind opens one bottom cell per wave; original shutter fabric and header, sized to remaining covered cells |
-| `BOMB`, `LINE`, `LIGHTNING`, `FISH` | Bomb, rocket, rainbow and plane, each original standalone sprite |
+| `BOMB`, `LINE`, `LIGHTNING`, `FISH` | Loaded as an ordinary piece; power-ups are not part of the engine |
 | `BORN`, `ARTIFACT_GEN`, `PATTERN_COLOR_BORN` | Ordinary refill inlet, per-cell queue and restricted palette; visible inlets use an original shell and next queued original object |
 | `NONE_CHIP` | Initially empty cell, filled through its permitted source |
 

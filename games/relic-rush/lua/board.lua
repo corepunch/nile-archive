@@ -27,14 +27,12 @@ match3.bind_board_ui(R, rules, art.tools)
 match3.bind_town_board_hud(R)
 
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
-local NORMAL = rules.NORMAL
 local cell_active = rules.game_cell_active
 local rgba = color
 
 -- Preserve the guide's icon size; only live board pieces follow the board's geometry.
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
-local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local CELL_FACE_SIZE = 2 * (HEX_R - .65)
 local cell_pos = R.cell_pos
 
@@ -68,12 +66,9 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     -- Filling the cell with the opaque interior makes pieces crowd its edges.
     local draw_scale = scale * (board and BOARD_SCALE or 1)
     local s = ART_CELL_SIZE * .95 * draw_scale
-    local frame = ART_STATE_SIZE * draw_scale
-    local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
     local tex, area = board and R.board_piece_texture(t.kind) or R.relics[t.kind+1],
         rect.centered(at,size2(s*aspect,s/aspect))
-    if t.special ~= NORMAL then tex, area = R.board_art[art.specials[t.special]], dst end
     if board then elements.piece_shadow(tex, area, alpha, s) end
     gfx.image(tex, area, tint)
 end
@@ -169,7 +164,6 @@ function R.board_screen(inp, dt)
     if app.arg("art-states") == "bonuses" then art.draw_bonus_catalogue(R)
     elseif app.arg("art-states") == "dressing" then art.draw_dressing_catalogue(R)
     elseif app.arg("art-states") then art.draw_catalogue(R) end
-    if app.arg("stripe-states") then art.draw_stripe_catalogue(R) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     R.board_input(inp)
 end

@@ -77,13 +77,6 @@ R.finish_wave()
 pulse(haptic.COMBO, 'cascade escalates feedback')
 
 g = setup()
-local center = rules.hex_center()
-g.tiles[center] = rules.tile(0, rules.BOMB)
-R.pending.mask[center], R.pending.hits = true, 1
-R.finish_wave()
-pulse(haptic.COMBO, 'special activation escalates the first wave')
-
-g = setup()
 for q=-2,1 do g.tiles[rules.hex_index(q,0)] = rules.tile(0) end
 g.ice[rules.hex_index(0,0)] = 1
 rules.game_matches(g,R.pending,-1)

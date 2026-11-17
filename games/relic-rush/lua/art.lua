@@ -5,8 +5,6 @@ local A = {}
 A.board_frame = require("board_frame_atlas")
 A.story={cast={"elena","mara","tomas","adrian"},source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
-A.specials = {[1] = "ray-row", [2] = "ray-column", [3] = "ray-diagonal", [4] = "bomb", [5] = "prism", [6] = "plane"}
--- Standalone power-ups, with one authored rocket per hex axis.
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
@@ -164,7 +162,6 @@ function A.load()
     textures["find-timber"] = textures["resource-timber"]
     textures[A.finale.plate] = texture.load(A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load(A.finale.landing .. ".jpg")
-    for _, name in pairs(A.specials) do load(name) end
     for _, name in ipairs(A.layers) do load(name) end
     return textures
 end
@@ -205,13 +202,10 @@ function A.draw_catalogue(R)
         local name = key == "emerald" and "apple" or key
         gfx.image(R.board_art[prefix .. name], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
-    local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
-                   "chain", "tile-cell-normal", "tile-tablet-single", "selected", "hint", "guide"}
+    local names = {"chain", "tile-cell-normal", "tile-tablet-single", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
-        local x, y = 39 + (i - 1) % 6 * 68, 414 + math.floor((i - 1) / 6) * 75
-        if i <= 6 then
-            R.draw_relic({kind=i-1,special=i},vec2(x+24,y+24),1,255,1)
-        else gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE) end
+        local x, y = 39 + (i - 1) % 6 * 68, 414
+        gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end
     for col, state in ipairs(A.states) do
@@ -242,17 +236,6 @@ function A.draw_dressing_catalogue(R)
     gfx.image(R.board_art["tile-tablet-single"], area, color.WHITE)
     gfx.image(R.board_art["resource-coin"], area:inflate(-5), color.WHITE)
     gfx.image(R.board_art.chain, area, color.WHITE)
-end
-
--- Actual game rendering, all kinds and axes at board size; no replacement art.
-function A.draw_stripe_catalogue(R)
-    gfx.round_rect(rect(16,130,448,640),18,color(12,47,41,250))
-    R.say_at("SPECIAL PIECES",vec2(240,160),25,R.PAL_GOLD,420)
-    local labels={"NORMAL","30 DEGREE ROCKET","VERTICAL ROCKET","150 DEGREE ROCKET","BOMB"}
-    for row=0,4 do
-        R.say_at(labels[row+1],vec2(240,205+row*106),13,R.PAL_CREAM,420)
-        for kind=0,5 do R.draw_relic({kind=kind,special=row},vec2(62+kind*71,252+row*106),1,255,1,true) end
-    end
 end
 
 return A

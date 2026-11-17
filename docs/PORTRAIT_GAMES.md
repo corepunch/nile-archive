@@ -103,7 +103,7 @@ Fixed in the engine, so both games now behave the same way:
 | A lost board costs its life in the frame it is lost, after the board update | Christmas Market | Relic Rush (one frame later) | Both |
 | `--empty-lives` keeps the story quiet for stills | Relic Rush | Christmas Market | Both |
 | Per-level backdrop scene (`level.background`) | Relic Rush | Christmas Market (hard-coded "level 5 and on") | Both read `level.background` with the same fallback |
-| `--talk-through`, `--scroll-review`, `--stripe-states`, `--placing focused`, `--dialog confirm` debug entry points | Relic Rush | Christmas Market | Both |
+| `--talk-through`, `--scroll-review`, `--placing focused`, `--dialog confirm` debug entry points | Relic Rush | Christmas Market | Both |
 | `--present`, `--goals-met`, `--dialog bubble` with the story's words, `--victory clue`, debug wallets without legacy slots | Christmas Market | Relic Rush | Both (Relic Rush's `--showcase` now shows the 90 Stars thirty clears earn, not 30) |
 | `R.expand()` (open the next region from code) | Relic Rush | Christmas Market | Both |
 | Board entrance haptics (`R.intro_haptics`) | Relic Rush | Christmas Market | Both (fixed earlier in `engine/board_intro.lua`) |

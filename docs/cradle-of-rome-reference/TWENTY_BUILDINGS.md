@@ -177,11 +177,9 @@ but doubles the construction stops and the replays for shortfalls.
 Items 1 and 2 are for Christmas Market; Relic Rush's Hourglass and Plus
 are bonus effects in its bonus-gem system instead.
 
-1. **Opening specials.** A loadout field, for example
-   `opening_specials={"ray"}`, places that special on the opening board, on a
-   seeded open cell that is neither chained nor under a plaque. It needs
-   C/Lua tests for placement, refill and the hint, and a reset under
-   `ENGINE_TEST`.
+1. **Opening boosters.** Superseded: the engine has no special pieces, so
+   the sleigh and Christmas tree grant a second Shooting Star and Firework
+   Bomb booster per wish through `opening_tool` instead.
 2. **Move bonus.** A loadout `extra_moves`, applied once at board start,
    shown in the HUD count and covered by the existing restart path.
 3. **Starting charge.** Christmas Market's `tool_meter` can already start

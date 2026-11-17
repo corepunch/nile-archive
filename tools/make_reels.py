@@ -16,7 +16,7 @@ def gif(name, images, ms):
     pal[0].save(out / name, save_all=True, append_images=pal[1:], duration=ms, loop=0, optimize=True)
 
 
-gif('effects-reel.gif', frames('fx-ray', 18) + frames('fx-bomb', 18) + frames('fx-prism', 18), 66)
+gif('effects-reel.gif', frames('fx-shatter', 24), 66)
 gif('ui-result-reel.gif', frames('result', 36), 50)
 
 shapes = [Image.open(src / f'shape-{i}.png').convert('RGB').crop((0, 270, 480, 720)).resize((240, 225), Image.LANCZOS) for i in range(1, 11)]

@@ -13,7 +13,7 @@ parser.add_argument('--existing', action='store_true', help='Copy a completed su
 args = parser.parse_args()
 if not args.existing:
     subprocess.run([str(ROOT/'build/test/relic-rush'), 'frame resource-icons-default',
-        'shot art-catalogue', 'shot hud-states', 'shot effect-bomb'], cwd=ROOT, check=True)
+        'shot art-catalogue', 'shot hud-states', 'shot effect-shatter'], cwd=ROOT, check=True)
     subprocess.run([str(ROOT/'build/test/christmas-market'), 'shot art-states',
         'shot hud-states', 'frame atlas-christmas-market-effects'], cwd=ROOT, check=True)
 out = ROOT/'docs/review/match3'
@@ -27,7 +27,7 @@ for destination, source in {
     shutil.copy2(FRAMES/(source+'.png'), out/(destination+'.png'))
 sources = {
     'relic-rush': {'board': 'relic-rush/art-catalogue', 'hud': 'relic-rush/hud-states',
-                   'effects': 'relic-rush/effect-bomb'},
+                   'effects': 'relic-rush/effect-shatter'},
     'christmas-market': {'board': 'christmas-market/art-states', 'hud': 'christmas-market/hud-states',
                         'effects': 'frames/atlas-christmas-market-effects'},
 }

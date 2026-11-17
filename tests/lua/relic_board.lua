@@ -50,35 +50,15 @@ local function inventory(g)
     local counts = {}
     for i=0,rules.CELLS-1 do
         local t = g.tiles[i]
-        local key = t.kind .. ":" .. t.special
+        local key = tostring(t.kind)
         counts[key] = (counts[key] or 0) + 1
     end
     return counts
 end
 local function same_inventory(g, before)
     local after = inventory(g)
-    for key, count in pairs(before) do check(after[key] == count, "reshuffle retains every gem and special: "..key) end
+    for key, count in pairs(before) do check(after[key] == count, "reshuffle retains every gem: "..key) end
     for key, count in pairs(after) do check(before[key] == count, "reshuffle creates no gems: "..key) end
-end
-
--- Every special, including each ray axis, survives recovery as a whole piece.
-for seed=1,12 do
-    local g = dead_board(seed % rules.LEVELS)
-    g.rng = seed
-    local sp = 1
-    for i=0,rules.CELLS-1 do
-        if g.active[i] and g.chain[i]==0 and g.ice[i]==0 and g.stone_hp[i]==0
-            and g.tiles[i].kind>=0 and sp<=rules.PRISM then
-            g.tiles[i].special = sp
-            sp = sp+1
-        end
-    end
-    local before = inventory(g)
-    check(rules.game_shuffle(g), "special inventory can be rearranged into a playable board")
-    same_inventory(g,before)
-    local m = rules.new_match()
-    rules.game_matches(g,m,-1)
-    check(m.hits==0 and rules.game_hint(g), "special reshuffle has a move and no free match")
 end
 
 -- If the inventory cannot form a match-free playable board, never replace it.
@@ -113,7 +93,7 @@ for level = 0, rules.LEVELS - 1 do
               and g.stone_hp[i] == before.stone_hp[i], "terrain survives recovery")
         if g.chain[i] > 0 or g.ice[i] > 0 or g.stone_hp[i] > 0
             or g.tiles[i].kind == rules.DELIVERY or not g.active[i] then
-            check(g.tiles[i].kind == before.tiles[i].kind and g.tiles[i].special == before.tiles[i].special,
+            check(g.tiles[i].kind == before.tiles[i].kind,
                   "locked relics and holes survive recovery")
         end
     end
@@ -316,10 +296,9 @@ do
             gfx.image_striped = function() end -- luacheck: ignore 122
             local function draw(t, board) R.draw_relic(t, pos, scale, 255, aspect, board); boxes[#boxes + 1] = last end
             for kind = 0, 5 do draw(rules.tile(kind), true) end
-            draw(rules.tile(0, rules.PRISM), false)
             gfx.image, gfx.image_striped, R.hex_piece_kind = image, striped, hex_kind -- luacheck: ignore 122
             R.board_art = board_art
-            check(#boxes == 7, "all six resting pieces and a state panel are drawn")
+            check(#boxes == 6, "all six resting pieces are drawn")
             local pitch = math.sqrt(3) * R.HEX_R
             for i = 1, 6 do
                 local box = boxes[i]
@@ -327,8 +306,6 @@ do
                       "resting piece fills its cell while preserving a gutter")
                 near((box:center()-pos):len(), 0, "resting piece artwork stays centred")
             end
-            check(boxes[7].w < 2 * R.HEX_R and boxes[7].h < 2 * R.HEX_R,
-                  "state panel retains an inset from neighbouring cells")
         end
         R.present_board(); R.reset_board(g)
         check(not R.intro and R.phase == R.PH_IDLE, "reset clears pending entrance")
@@ -376,30 +353,6 @@ do
     testing.reset()
 end
 
--- A real release/tap starts the existing clearing phase without selecting twice.
-do
-    local g=rules.game_start(0,123);local cell=rules.hex_center()
-    g.active[cell]=true;g.chain[cell],g.ice[cell],g.stone_hp[cell]=0,0,0
-    g.tiles[cell]=rules.tile(0,rules.PLANE)
-    setup(g);R.selected,R.tool=-1,-1;R.sound=false;R.reduced_motion=false
-    local moves=g.moves;local at=R.cell_pos(cell)
-    R.board_input{released=true,pos=at,press_pos=at}
-    check(g.moves==moves-1 and R.phase==R.PH_CLEAR,"one tap activates and enters the preserved clear phase")
-    check(#R.pending.flights==1,"plane activation reaches the animated effect event")
-    local target=R.pending.flights[1].to
-    check(g.tiles[target].kind==-1,"plane target is removed by the rules")
-    local _,_,before_scale,before_alpha=R.piece_pose(target,0)
-    R.board_update(.3)
-    local _,_,during_scale,during_alpha=R.piece_pose(target,0)
-    check(R.phase==R.PH_CLEAR and before_scale==1 and before_alpha==255 and during_scale==1 and during_alpha==255,
-        "target stays visible during the flight and refill waits")
-    R.board_update(.3)
-    local _,_,impact_scale,impact_alpha=R.piece_pose(target,0)
-    check(R.phase==R.PH_CLEAR and impact_scale<1 and impact_alpha<255,"target clears after the plane arrives")
-    R.board_update(.13)
-    check(R.phase==R.PH_FALL,"refill starts after the impact")
-end
-
 -- More source mechanic rows must remain reachable without pushing Done offscreen.
 do
     local _,height=R.guide_form:measure(432,R.skin)
@@ -439,7 +392,7 @@ do
     g.delivery_exits[rules.hex_index(3,1)] = true
     local cherry_cell, empty_jelly = rules.hex_index(-2,1), rules.hex_index(-2,2)
     g.hs.cells[cherry_cell].jelly, g.hs.cells[empty_jelly].jelly = 2, 2
-    g.tiles[cherry_cell] = {kind=0, special=rules.NORMAL, element="cherry", hp=1}
+    g.tiles[cherry_cell] = {kind=0, element="cherry", hp=1}
     g.tiles[empty_jelly] = rules.tile(-1)
     g.hs.goals = {{type="BOX", max=3, current=1}}
     local draws={}

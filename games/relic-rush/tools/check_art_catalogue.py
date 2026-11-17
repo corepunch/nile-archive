@@ -75,9 +75,8 @@ assert set(variant_art.values()) == set(gems["columns"])
 assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", levels=\{', economy)
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
-special_line = re.search(r"M\.NORMAL[^\n]+", match3).group()
-specials = re.findall(r"M\.([A-Z_]+)", special_line)
-assert specials == list(manifest["specials"]), "Rule specials need artwork and catalogue entries"
+# The engine has no special pieces; their retired frames stay catalogued until the art is deleted.
+assert "M.NORMAL" not in match3 and "A.specials" not in art, "Special pieces were removed from the engine"
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
 assert kinds == manifest["kinds"], "Rule kinds need artwork and catalogue entries"
 expected = {v for v in manifest["specials"].values() if v}
@@ -87,8 +86,6 @@ for tool in manifest["tools"]:
         expected.add(tool + "-" + state)
         assert '"' + tool + '"' in art and '"' + state + '"' in art
 assert expected == set(manifest["assets"]), "Missing or uncatalogued atlas state"
-special_declaration = re.search(r"A\.specials = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', special_declaration) == [v for v in manifest["specials"].values() if v]
 atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
 for name, asset in manifest["assets"].items():
     assert "`" + name + "`" in doc, f"Undocumented atlas state: {name}"

@@ -29,18 +29,13 @@ function R.board_goal_icon(level, goal)
     if goal == "oil" and level.floor_marks then return lantern_floor.covered end
 end
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
-local NORMAL = rules.NORMAL
 local cell_active = rules.game_cell_active
 local rgba = color
 
 -- Keep the guide's icon size; only live board pieces use the enlarged board scale.
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
 local BOARD_SCALE = HEX_R / ART_HEX_R
-local ART_STATE_SIZE = (ART_HEX_R - .8) * 2
 local CELL_FACE_R = HEX_R - .65
--- Registered edge sprites have a centreline radius of 46 px on a 128px canvas.
-local FESTIVE = not neutral
-local BOARD_FRAME_SIZE = FESTIVE and 2 * CELL_FACE_R / BOARD_SCALE or 2 * ART_HEX_R
 local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
@@ -56,12 +51,9 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     -- Same piece size as Relic Rush: the whole 128px canvas, gutter included,
     -- spans 95% of the authored cell, so pieces never crowd the cell edges.
     local s = ART_CELL_SIZE * .95 * scale
-    local frame = (board and BOARD_FRAME_SIZE or ART_STATE_SIZE) * scale
-    local dst = rect.centered(at, size2(frame * aspect, frame / aspect))
     local tint = rgba(255, 255, 255, alpha)
     local tex = board and R.board_piece_texture(t.kind) or R.relics[t.kind + 1]
     local area = rect.centered(at, size2(s * aspect, s / aspect))
-    if t.special ~= NORMAL then tex, area = R.board_art[art.specials[t.special]], dst end
     if board then elements.piece_shadow(tex, area, alpha, s) end
     gfx.image(tex, area, tint)
 end

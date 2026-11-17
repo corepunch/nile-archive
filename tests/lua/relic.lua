@@ -1,10 +1,9 @@
--- Relic Rush rules: hex grid, straight-line match-3 detection, specials, blockers, gravity,
+-- Relic Rush rules: hex grid, straight-line match-3 detection, blockers, gravity,
 -- tools, the campaign's boards and economy, and the island on the engine
 -- city. Ported from the original tests/test_relic.c.
 local rules = require("rules")
 local island = require("island")
 local CELLS, LEVELS, COLORS = rules.CELLS, rules.LEVELS, rules.COLORS
-local NORMAL, ROW, COLUMN, DIAGONAL, PRISM = rules.NORMAL, rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.PRISM
 local hex_index, hex_q, hex_r, hex_neighbor, hex_distance, hex_center =
     rules.hex_index, rules.hex_q, rules.hex_r, rules.hex_neighbor, rules.hex_distance, rules.hex_center
 local tile = rules.tile
@@ -18,7 +17,7 @@ local function blank()
                last_stone = 0, wood = 0, stone = 0, rng = 123, won = false, lost = false, tools = {0, 0, 0}}
     for i = 0, CELLS - 1 do
         g.active[i] = true
-        g.tiles[i] = tile(-1, NORMAL)
+        g.tiles[i] = tile(-1)
         g.chain[i], g.ice[i], g.stone_hp[i], g.carpet[i], g.oil[i] = 0, 0, 0, 0, 0
     end
     return g
@@ -47,13 +46,13 @@ end
 local function line(g, start, axis, n, kind)
     local cell = start
     for k = 1, n do
-        g.tiles[cell] = tile(kind, NORMAL)
+        g.tiles[cell] = tile(kind)
         if k < n then cell = hex_neighbor(cell, axis) end
     end
     return cell
 end
 
-local function same_tile(a, b) return a.kind == b.kind and a.special == b.special end
+local function same_tile(a, b) return a.kind == b.kind end
 
 local function test_grid()
     local c = hex_center()
@@ -90,34 +89,28 @@ local function test_matching()
         local g = blank()
         line(g, start, axis, 3, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 3 and next(m.make) == nil, "three in a line clear normally")
+        check(m.hits == 3, "three in a line clear normally")
         check(rules.game_apply(g, m) == 3, "triple clears all three")
         g = blank()
         line(g, start, axis, 4, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 4 and next(m.make) == nil, "four only clear: specials are earned, not matched")
+        check(m.hits == 4, "four only clear: power is earned, not matched")
         rules.game_apply(g, m)
-        check(g.tiles[c].kind < 0 and g.tiles[c].special == NORMAL, "a long line leaves no rocket")
+        check(g.tiles[c].kind < 0, "a long line leaves no rocket")
         g = blank()
         line(g, hex_neighbor(start, axis + 3), axis, 6, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 6 and next(m.make) == nil, "longer lines make no rainbow ball")
-        g = pattern()   -- a ray clears exactly its axis
-        g.tiles[c] = tile(3, axis == 0 and ROW or axis == 1 and COLUMN or DIAGONAL)
-        m = rules.new_match()
-        m.mask[c] = true
+        check(m.hits == 6, "longer lines clear")
         rules.game_apply(g, m)
-        for i = 0, CELLS - 1 do
-            local q, r = hex_q(i), hex_r(i)
-            local on = axis == 0 and r == 0 or axis == 1 and q == 0 or axis == 2 and q + r == 0
-            check((g.tiles[i].kind < 0) == on, "ray clears its axis")
-        end
+        check(g.tiles[c].kind < 0, "longer lines make no rainbow ball")
     end
     local g = blank()
     line(g, hex_neighbor(c, 3), 0, 3, 0)
     line(g, hex_neighbor(c, 4), 1, 3, 0)
     rules.game_matches(g, m, c)
-    check(m.hits == 5 and next(m.make) == nil, "crossing lines make no bomb")
+    check(m.hits == 5, "crossing lines clear their union")
+    rules.game_apply(g, m)
+    check(g.tiles[c].kind < 0, "crossing lines make no bomb")
     for d = 0, 5 do
         g = blank()
         local a, b = hex_neighbor(c, d), hex_neighbor(c, (d + 1) % 6)
@@ -127,7 +120,7 @@ local function test_matching()
         local e = hex_neighbor(a, d)
         g.tiles[e].kind = 0
         rules.game_matches(g, m, c)
-        check(m.hits == 3 and not m.mask[b] and next(m.make) == nil, "side branch does not extend a triple")
+        check(m.hits == 3 and not m.mask[b], "side branch does not extend a triple")
     end
     g = blank()
     for _, at in ipairs({c, hex_index(1,0), hex_index(0,1), hex_index(1,1)}) do g.tiles[at].kind = 2 end
@@ -247,14 +240,6 @@ local function test_moves_and_blockers()
     check(rules.game_tool(g, 2, c, m), "sunburst can target a chained piece")
     rules.game_apply(g, m)
     check(g.chain[c] == 0 and g.tiles[c].kind == target_kind, "sunburst breaks a matching chain first")
-
-    g = pattern()   -- prism + relic clears that colour
-    g.tiles[c].special = PRISM
-    b = hex_neighbor(c, 0)
-    local colour = g.tiles[b].kind
-    check(rules.game_swap(g, c, b, m), "prism swap")
-    rules.game_apply(g, m)
-    for i = 0, CELLS - 1 do check(g.tiles[i].kind ~= colour, "prism clears the colour") end
 
     g = pattern()   -- gravity stops at a chained relic
     g.chain[c] = 1

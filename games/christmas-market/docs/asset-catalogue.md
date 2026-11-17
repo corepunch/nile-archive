@@ -168,8 +168,8 @@ pieces rather than new paintings: the golden handbell, candy cane and plum
 bauble from [the festive pieces](../art/festive-pieces/source.png) and the
 snowflake bauble from cell 3 of [the icon sheet](../art/icons.png).
 `tools/prepare_market_goods.py` registers them with the same mask and fit.
-The shooting star, firework bomb, paper plane and rainbow ball that later
-stalls place on every opening board are the existing special frames.
+The Shooting Star and Firework Bomb that later stalls grant are toolbar
+boosters with their own button art; no stall places a piece on the board.
 
 The runtime atlas is `data/market-goods.png`. The Gold coin, firewood and
 cocoa sprites identify their wallets and appear on prices and result
@@ -583,7 +583,8 @@ bomb's leading ring stay procedural.
 | `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Smoke of a breaking layer, alpha-blended; Kenney CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets) in `engine/art/match3/kenney-smoke/` |
 
 Review: [kenney-particles](review/kenney-particles/README.md) (bomb and shooting-star frames
-before and after, `--fx bomb|ray --frames N`).
+before and after; those special pieces and their `--fx` modes have since been removed, only
+`--fx shatter` remains).
 
 ## Board entrance
 

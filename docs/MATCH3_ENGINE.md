@@ -3,7 +3,7 @@
 The current default rules and original-art atlas are documented in [Homescapes on hexes](HOMESCAPES_HEX.md). Legacy opt-in flags below remain supported; board elements are limited to those in Homescapes' story levels.
 
 `require("match3")` is built into the engine on native, iOS and WebAssembly.
-`engine/match3.lua` owns the hex grid, matching, specials, swaps, blockers,
+`engine/match3.lua` owns the hex grid, matching, swaps, blockers,
 collection, seeded refill, free reshuffle, hints, tools, objectives and move
 budget. It also owns board selection, tap/swipe input, phase transitions,
 cascade timing and piece animation poses. Games provide graphics, level data
@@ -29,14 +29,14 @@ slides away; a tap sends it on, and it blocks board input while shown. Games
 call it from their level start and draw it with `R.draw_board_banners(dt)`
 after the board's effects.
 
-Cascades from the third wave and special-combo swaps award kudos once per
+Cascades from the third wave award kudos once per
 move at their highest level once the move has fully resolved (the board is
 idle again): a word from `R.kudos_words` (four, game-supplied)
 pops over the board with a rising arpeggio and a combo haptic.
 `R.award_kudos(level)` shows one directly (`--kudos N` in the portrait games).
 
 `R.play(name, level)` is the board's sound bank on `sfx.note`: `select`,
-`swap`, `reject`, `match` (climbs with the cascade), `special`, `blast`,
+`swap`, `reject`, `match` (climbs with the cascade),
 `tool`, `mission`, `kudos`, `win` and `lose`. It is silent while `R.sound` is
 false or sfx is disabled.
 
@@ -49,12 +49,10 @@ flags are a separate integer bitmask and may be combined for one kind.
 | Board flag | Behavior |
 | --- | --- |
 | `NO_TRICKLE` | Use vertical column segments instead of diagonals |
-| `NO_SPECIALS` | Do not create new specials from large matches |
 | `NO_TOOLS` | Disable tool use and preserve charges |
 | `NO_HINTS` | Suppress idle hint search/highlighting |
 | `NO_RESHUFFLE` | Do not automatically reshuffle a dead board at settlement |
-| `LINE_MATCHES` | Default: straight runs along three hex axes, plus four-cell rhombi at minimum three |
-| `NO_RHOMBI` | With `LINE_MATCHES`, accept only straight runs. Hints and refill use the same shape rule. |
+| `LINE_MATCHES` | Default: straight runs along three hex axes. Hints and refill use the same shape rule. |
 | `COLOR_TOOL` | Sunburst hits all pieces of the tapped kind. A chain absorbs a hit on its piece. |
 
 | Kind flag | Meaning |
@@ -66,13 +64,11 @@ flags are a separate integer bitmask and may be combined for one kind.
 The current topology is an axial hexagon, configurable from radius 1 to 16,
 with arbitrary missing cells. The default is `match_min=3` with `LINE_MATCHES`;
 explicit `flags=0` retains legacy connected-group matching.
-Straight four creates an axis rocket, a four-cell rhombus creates a plane,
-intersecting runs of at least five cells create a bomb, and straight five or
-more creates a rainbow ball. Overlapping shapes form one group, count each
-cell once, and use rainbow > bomb > rocket > plane reward priority. The swapped
-cell is preferred for the reward. Power-ups are separate activatable objects
-and do not participate in ordinary color matches. See the current
-[shape and combination contract](HOMESCAPES_HEX.md) for the hex adaptation.
+Matches only clear. As in Cradle of Rome, no line length or shape creates a
+power-up (no rockets, bombs, planes or rainbow balls); a player's extra power
+comes from the game's tools and boosters. Overlapping runs form one group and
+count each cell once. Longer runs can still pay more through
+`resource_multipliers`.
 
 Level descriptors are content: name/lesson, moves, score, collection target
 (`relics`), chains and ice counts. Optional `mask`
@@ -117,11 +113,7 @@ charge. Legacy `extra_tools` names the effects after the first three tools.
 `game_tool` returns the effect's name for an action that clears nothing, so
 the view can display `R.tool_done_notes[name]` without starting a clear wave.
 
-A loadout's `extra_moves` adds moves to the level's budget, and its
-`opening_specials` (`"rocket"`, `"bomb"`, `"prism"`, `"plane"`) turn ordinary
-pieces into those specials when the board opens. The cells come from the seed
-without drawing on it, avoid goals and blockers where possible, and always
-leave a legal swap.
+A loadout's `extra_moves` adds moves to the level's budget.
 
 `match3.game.campaign_ladder(island, unlocks, journey, slots)` gives a game a
 Cradle of Rome ladder: catalogue buildings bought in order, with optional
@@ -179,7 +171,7 @@ schedule and omits the rebound.
 ## Graphics and the one-atlas skin
 
 `match3.skin()` loads `engine/data/match3.png` from its resource directory.
-The six pieces, rockets, bomb, rainbow ball, plane and available blocker states
+The six pieces and available blocker states
 come from the original Homescapes resources. Existing controls, HUD and effect
 frames remain in the same atlas. The [registration manifest](../engine/art/match3/manifest.json)
 records source hashes and transforms; the retired original-art
@@ -314,7 +306,7 @@ Use Xvfb on Linux for the renderer/smoke commands. `make test` checks generated
 code, the atlas registrations and per-pixel preservation of every override
 source. Engine tests cover independent instances, radius/minimum/flag
 configuration; shared gravity tests run against both games across all ten
-masks, including holes, locks, special identity, donor competition,
+masks, including holes, locks, piece identity, donor competition,
 conservation, deterministic replay and inlet spawning. The actual update
 loop checks normal/reduced-motion timing. `build/test-platform` verifies
 nested UVs, partial drawing, additive views and ownership with real pixels.

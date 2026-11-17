@@ -1,5 +1,5 @@
 {
-  "matching_rules": "Campaign matches clear straight lines of three or more. Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
+  "matching_rules": "Campaign matches clear straight lines of three or more and never create special pieces (Cradle of Rome rules). Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/cradle-of-rome-reference/export_art.py --board-only",
@@ -1018,7 +1018,7 @@
     "prompt": "art/board-states/clear-indicators-prompt.txt",
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
     "review": "docs/review/striped-specials/README.md",
-    "specials": "Standalone original Homescapes power-ups from data/match3.png. Legacy stripe rendering retired.",
+    "specials": "Retired: the engine has no special pieces. The rocket, bomb, prism and plane frames are no longer drawn and wait to be deleted from the art pipeline.",
     "ice": "archived filled frost sheets; live ice uses the translucent hex overlays in ../../art/match3-ice/source.png",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   },

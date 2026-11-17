@@ -137,17 +137,18 @@ passed stay optional. [Ladder design](../../../docs/cradle-of-rome-reference/TWE
 | 13 | Snowy chapel | 20 | Golden bells replace gold coins, 6 Gold | 120 / 250 / 40 |
 | 14 | Igloo | 21 | Snowflake baubles replace golden bells, 7 Gold | 130 / 300 / 40 |
 | 15 | ★ Reindeer carousel | 23 | Gingerbread replaces cocoa, 5 Food | 700 / 600 / 700 |
-| 16 | Santa's sleigh | 24 | Every wish opens with a paper plane | 150 / 350 / 50 |
+| 16 | Santa's sleigh | 24 | A second Shooting Star booster per wish | 150 / 350 / 50 |
 | 17 | Giant bauble | 25 | Plum baubles replace snowflake baubles, 8 Gold | 160 / 400 / 50 |
 | 18 | ★ Winter skating rink | 26 | +25 Gold on every win | 180 / 450 / 60 |
 | 19 | Pile of presents | 27 | +20 Supplies on every win | 200 / 500 / 60 |
-| 20 | ★ Christmas tree | 29 | Every wish opens with a rainbow ball | 250 / 600 / 80 |
+| 20 | ★ Christmas tree | 29 | A second Firework Bomb booster per wish | 250 / 600 / 80 |
 
 Four boosters share one toolbar. Hammer and Lantern Lightning bank uses and
 partial charges between wishes. Shooting Star clears the chosen row and
 Firework Bomb hits the chosen cell and its neighbors. Their stalls grant
-one use at the start of each eligible wish. The sleigh's paper plane and
-the tree's rainbow ball still start on seeded ordinary cells. The
+one use at the start of each eligible wish, and the sleigh and the
+Christmas tree add a second Shooting Star and Firework Bomb. Matches never
+make special pieces: as in Cradle of Rome, power comes only from tools. The
 gingerbread house adds moves and the post office doubles charge speed.
 The rink and presents earn income on every win, including replays.
 

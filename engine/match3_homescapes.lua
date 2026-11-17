@@ -26,8 +26,7 @@ function Base.bind(M,random)
     local H=setmetatable({}, {__index=Base})
     local function active(g,i) return i and i>=0 and M.game_cell_active(g,i) end
     local function unheld(g,i) return active(g,i) and not H.solid(g,i) and g.ice[i]==0 and g.chain[i]==0 end
-    local function gem(t) return t.kind>=0 and t.special==M.NORMAL and not t.element end
-    local specials={b=M.BOMB,f=M.PLANE,z=M.PRISM,lh=M.ROW,lv=M.COLUMN}
+    local function gem(t) return t.kind>=0 and not t.element end
     local function choose(g,weights)
         local total=0
         for k=0,M.COLORS-1 do total=total+(weights and weights[k] or not weights and 100 or 0) end
@@ -38,7 +37,7 @@ function Base.bind(M,random)
             if value<0 then return k end
         end
     end
-    local function object(name,hp) return {kind=0,special=M.NORMAL,element=name,hp=hp or 1} end
+    local function object(name,hp) return {kind=0,element=name,hp=hp or 1} end
     function H.init(g,spec)
         if not spec then return end
         g.hs={cells={},groups={},queues={},palettes={},sources={},goals=H.copy(spec.goals or {}),
@@ -60,10 +59,8 @@ function Base.bind(M,random)
                     local colors=assert((spec.randomPatterns or {})[tonumber(model.id)+1],'missing RANDOM_CHIP pattern')
                     local weights={};for _,k in ipairs(colors) do weights[k]=(spec.colors or {})[k] or 100 end
                     g.tiles[i]=M.tile(choose(g,weights))
-                elseif id=='BOMB' then g.tiles[i]=M.tile(0,M.BOMB)
-                elseif id=='FISH' then g.tiles[i]=M.tile(0,M.PLANE)
-                elseif id=='LIGHTNING' then g.tiles[i]=M.tile(0,M.PRISM)
-                elseif id=='LINE' then g.tiles[i]=M.tile(0,model.line_orient=='0' and M.ROW or M.COLUMN)
+                elseif id=='BOMB' or id=='FISH' or id=='LIGHTNING' or id=='LINE' then
+                    g.tiles[i]=M.tile(choose(g,g.hs.colors)) -- source power-ups become ordinary pieces
                 elseif id=='BOX' or id=='COLOR_BOX' then c.box=n -- imported colored boxes become plain ones
                 elseif id=='HONEY' then c.jelly=n
                 elseif id=='STATUE' then c.statue=n
@@ -137,7 +134,6 @@ function Base.bind(M,random)
         local unit=queue and patterns.next(queue)
         if unit then
             if unit.element then return object(unit.element,unit.hp)
-            elseif unit.special then return M.tile(0,unit.special=='l' and (random(g,3)+1) or specials[unit.special])
             else return M.tile(unit.color or choose(g,unit.weights or g.hs.palettes[i] or g.hs.colors)) end
         end
         for _,rule in ipairs(g.hs.refill) do

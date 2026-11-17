@@ -17,8 +17,8 @@ function desc.init()
     end
     R.g.obstacles = 0   -- keep initial_obstacles: the level names locks as a goal, shown here as done
     if not app.arg("review-top-edge") then
-        R.g.tiles[rules.hex_index(-1, 2)] = rules.tile(4, rules.BOMB)
-        R.g.tiles[rules.hex_index(1, 1)] = rules.tile(5, rules.COLUMN)
+        R.g.tiles[rules.hex_index(-1, 2)] = rules.tile(4)
+        R.g.tiles[rules.hex_index(1, 1)] = rules.tile(5)
     end
     R.pending = rules.new_match()
     R.old_tiles = rules.game_copy(R.g).tiles

@@ -36,7 +36,7 @@ function P.queue(model,spec)
         local unit={count=1}
         if token=='c' then unit.random=true
         elseif token:match('^c[1-6]$') then unit.color=tonumber(token:sub(2))-1
-        elseif token=='b' or token=='f' or token=='z' or token=='l' or token=='lh' or token=='lv' then unit.special=token
+        elseif token=='b' or token=='f' or token=='z' or token=='l' or token=='lh' or token=='lv' then unit.random=true -- source power-ups queue ordinary pieces
         elseif token:match('^[tT][1-3]$') then unit.element=token:sub(1,1)=='t' and 'cookie' or 'hazelnut';unit.hp=tonumber(token:sub(2))
         else error('unsupported BornPatterns token ['..token..']') end
         local seen={}

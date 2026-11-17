@@ -1,11 +1,10 @@
 -- match3_debug.lua — the entry points tools/screenshots.py, the test manifests
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
--- --level, --city, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx,
+-- --level, --city, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
--- --element-states reviews the authored surfaces. Add "specials" to show
--- all power-ups beside a connected stone formation.
+-- --element-states reviews the authored surfaces.
 -- --floor-reel carpet|oil plays three swaps on the chosen campaign level.
 -- Nothing here runs in a normal game.
 local D = {}
@@ -51,7 +50,7 @@ function D.bind(R, W)
         for a = 0, rules.CELLS - 1 do
             for d = 0, 2 do
                 local b = rules.hex_neighbor(a, d)
-                if rules.game_can_swap(g, a, b) and g.tiles[a].special == rules.NORMAL and g.tiles[b].special == rules.NORMAL then
+                if rules.game_can_swap(g, a, b) then
                     local copy, match = rules.game_copy(g), rules.new_match()
                     if rules.game_swap(copy, a, b, match) then
                         local duration = .17
@@ -60,7 +59,7 @@ function D.bind(R, W)
                             local _, falls = rules.game_collapse(copy)
                             -- Clear, fall, and one frame of slack at each phase boundary.
                             duration = duration + .36 + #falls * rules.FALL_STEP
-                            rules.game_matches(copy, match, -1)
+                            rules.game_matches(copy, match)
                         until match.hits == 0 or duration > 1.7
                         if match.hits == 0 and duration <= 1.7 then
                             rules.game_end_turn(copy)
@@ -143,7 +142,6 @@ function D.bind(R, W)
         talk_frames, scroll_frames, dive_frames, maker_frames = 0, 0, 0, 0
         floor_frames, floor_turn, floor_expected = 0, 0, nil
         R.cell_state_review = nil
-        if app.arg("stripe-states") then R.art_review = true end
         R.island.show_footprints = app.arg("footprints") ~= nil
         local a = app.arg("level")
         if a then R.g = R.make_board(tonumber(a) - 1, 123478, true); R.pending = rules.new_match(); R.on_island = false; R.toast_time = 0 end
@@ -275,10 +273,10 @@ function D.bind(R, W)
             R.toast_time = 0
         end
         a = app.arg("fx")
-        if a then   -- fire one special in the middle of level nine
-            local mode = a == "ray" and 0 or (a == "bomb" or a == "shatter") and 1 or 2
+        if a then   -- `--fx shatter`: a blast across double and single tablets on level five
+            assert(a == "shatter", "--fx takes shatter")
             local c = rules.hex_center()
-            R.g = rules.game_start(a == "shatter" and 4 or 8, 123478)
+            R.g = rules.game_start(4, 123478)
             R.pending = rules.new_match()
             R.on_island = false
             R.vfx_reset()
@@ -286,7 +284,7 @@ function D.bind(R, W)
                 local d = (R.cell_pos(i) - R.cell_pos(c)):len() / (2 * R.HEX_R)
                 return d < r and rules.game_cell_active(R.g, i), d
             end
-            if a == "shatter" then   -- aim at the busiest part of level five
+            do   -- aim at the busiest part of the board
                 local best, most = c, -1
                 for i = 0, rules.CELLS - 1 do
                     c = i
@@ -298,7 +296,7 @@ function D.bind(R, W)
             end
             R.g.obstacles = R.g.obstacles - R.g.chain[c] - R.g.ice[c]
             R.g.chain[c], R.g.ice[c] = 0, 0
-            if a == "shatter" and R.g.oil then   -- a bomb in double (inner) and single tablets
+            if R.g.oil then   -- double (inner) and single tablets
                 for i = 0, rules.CELLS - 1 do
                     local inside, d = near(i, 2.2)
                     if inside and R.g.chain[i] == 0 and R.g.ice[i] == 0 then
@@ -308,12 +306,11 @@ function D.bind(R, W)
                 end
             end
             R.g.active[c]=true;R.g.stone_hp[c]=0
-            R.g.tiles[c] = rules.tile(mode == 2 and 0 or 3, mode == 0 and rules.ROW or mode == 1 and rules.BOMB or a=="plane" and rules.PLANE or rules.PRISM)
-            R.pending.mask[c] = true
+            for i = 0, rules.CELLS - 1 do
+                if near(i, 1.2) then R.pending.mask[i], R.pending.direct[i] = true, true end
+            end
             R.pending.hits = 1
             R.finish_wave()
-            assert(R.pending.hits>0,"effect review must hit active cells")
-            if a=="plane" then assert(#R.pending.flights>0,"plane review must emit a flight") end
             R.toast_time = 0
         end
         if app.arg("catalogue") then
@@ -363,7 +360,6 @@ function D.bind(R, W)
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
         if app.arg("element-states") then
             -- Review neighbouring stones, both floor materials and a delivery.
-            local with_specials = app.arg("element-states") == "specials"
             R.g = rules.game_start(0, 123478)
             R.pending, R.on_island, R.toast_time, R.art_review = rules.new_match(), false, 0, true
             local g = R.g
@@ -374,31 +370,21 @@ function D.bind(R, W)
             end
             for q = -2, 0 do
                 local cell = rules.hex_index(q, -1)
-                g.stone_hp[cell], g.tiles[cell] = 1, rules.tile(-1, rules.NORMAL)
+                g.stone_hp[cell], g.tiles[cell] = 1, rules.tile(-1)
             end
-            if with_specials then
-                local specials = {rules.ROW, rules.COLUMN, rules.DIAGONAL, rules.BOMB, rules.PRISM, rules.PLANE}
-                for i, special in ipairs(specials) do
-                    local q = ((i - 1) % 3 - 1) * 2
-                    local r = 1 + (i - 1) // 3 - q // 2
-                    g.tiles[rules.hex_index(q, r)] = rules.tile(i - 1, special)
-                end
-                g.initial_obstacles, g.obstacles = 3, 3
-            else
-                g.stone_hp[rules.hex_index(-2, 0)] = 1
-                g.tiles[rules.hex_index(-2, 0)] = rules.tile(-1, rules.NORMAL)
-                g.carpet, g.oil = {}, {}
-                for _, cell in ipairs({rules.hex_index(-2,1), rules.hex_index(-1,1), rules.hex_index(-1,2)}) do
-                    g.carpet[cell] = 1
-                end
-                for _, cell in ipairs({rules.hex_index(1,0), rules.hex_index(2,0), rules.hex_index(2,1)}) do
-                    g.oil[cell] = 1
-                end
-                g.carpet_total, g.carpeted, g.oil_left = 6, 3, 3
-                g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 4, 4, 1, 0
-                g.delivery_exits[rules.hex_index(3, -2)] = true
-                g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY, rules.NORMAL)
+            g.stone_hp[rules.hex_index(-2, 0)] = 1
+            g.tiles[rules.hex_index(-2, 0)] = rules.tile(-1)
+            g.carpet, g.oil = {}, {}
+            for _, cell in ipairs({rules.hex_index(-2,1), rules.hex_index(-1,1), rules.hex_index(-1,2)}) do
+                g.carpet[cell] = 1
             end
+            for _, cell in ipairs({rules.hex_index(1,0), rules.hex_index(2,0), rules.hex_index(2,1)}) do
+                g.oil[cell] = 1
+            end
+            g.carpet_total, g.carpeted, g.oil_left = 6, 3, 3
+            g.initial_obstacles, g.obstacles, g.delivery_total, g.delivered = 4, 4, 1, 0
+            g.delivery_exits[rules.hex_index(3, -2)] = true
+            g.tiles[rules.hex_index(3, -1)] = rules.tile(rules.DELIVERY)
         end
         if app.arg("art-board") then
             R.g = rules.game_start(8, 123478)
@@ -406,7 +392,7 @@ function D.bind(R, W)
             local cells = {rules.hex_index(-3,0),rules.hex_index(-2,0),rules.hex_index(-1,0),rules.hex_index(0,0),rules.hex_index(1,0),rules.hex_index(2,0)}
             for _,cell in ipairs(cells) do R.g.active[cell]=true;R.g.stone_hp[cell]=0 end
             for k, cell in ipairs(cells) do
-                R.g.tiles[cell] = rules.tile(k - 1, k)
+                R.g.tiles[cell] = rules.tile(k - 1)
                 R.g.chain[cell], R.g.ice[cell] = 0, 0
             end
             for hits = 1, 2 do
@@ -437,7 +423,7 @@ function D.bind(R, W)
                 local nut=rules.hex_index(hp-2,-1)
                 local stack=rules.hex_index(hp-2,0)
                 g.hs.cells[statue].statue=hp;g.tiles[statue]=rules.tile(-1)
-                g.tiles[nut]={kind=0,special=rules.NORMAL,element="hazelnut",hp=hp}
+                g.tiles[nut]={kind=0,element="hazelnut",hp=hp}
                 g.hs.cells[stack].stack=hp;g.tiles[stack]=rules.tile(-1)
             end
             for hp=1,2 do
@@ -449,7 +435,7 @@ function D.bind(R, W)
                 for hp=1,6 do
                     local i=rules.hex_index(3-hp,0)
                     g.hs.cells[i].jelly=hp
-                    g.tiles[i]={kind=0,special=rules.NORMAL,element="cherry",hp=1}
+                    g.tiles[i]={kind=0,element="cherry",hp=1}
                 end
                 for hp=1,2 do
                     local i=rules.hex_index(1-hp,2)

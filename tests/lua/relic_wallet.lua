@@ -402,7 +402,7 @@ do
     g.chain[a],g.chain[b],g.chain[c]=1,0,0
     g.tiles[a],g.tiles[b],g.tiles[c]=rules.tile(3),rules.tile(0),rules.tile(4)
     local m=rules.new_match()
-    m.mask[a],m.mask[b],m.mask[c],m.make[b]=true,true,true,rules.ROW
+    m.mask[a],m.mask[b],m.mask[c]=true,true,true
     rules.game_apply(g,m)
     check(g.earnings[1]==4 and g.earnings[2]==0 and g.earnings[3]==3,'credit paid-once gold and stone, protected water waits')
     local copy=rules.game_copy(g)

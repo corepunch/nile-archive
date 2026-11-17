@@ -190,7 +190,7 @@ charge carry between wishes.
 
 ### Homescapes board mechanics
 
-The shared hex board uses original Homescapes pieces and standalone rockets, bombs, planes and rainbow balls, with the existing animations and effects. See [the complete mechanic and atlas reference](../../docs/HOMESCAPES_HEX.md) for generators, blockers, source previews, verification and known art gaps.
+The shared hex board uses original Homescapes pieces and blockers. Homescapes power-ups (rockets, bombs, planes and rainbow balls) are not part of the engine: matches only clear, and imported power-up cells and generator tokens become ordinary pieces. See [the complete mechanic and atlas reference](../../docs/HOMESCAPES_HEX.md) for generators, blockers, source previews, verification and known art gaps.
 
 The field uses the market's slate-blue hex palette.
 

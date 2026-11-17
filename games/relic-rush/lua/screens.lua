@@ -229,7 +229,6 @@ local function guide_icon(box, icon)
     if icon.floor then picture(R.board_art[icon.floor], layer, 255) end
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
-    if icon.special then R.draw_relic(rules.tile(0, icon.special), pp(box:center()), P.scale, 255 * P.alpha, 1) end
 end
 local guide_form = match3.guide_form({
     title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",
