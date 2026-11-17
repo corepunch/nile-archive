@@ -18,7 +18,7 @@ if not neutral then
     elements.cradle_ground(R)
     R.GROUND.face = skin:color("board_face")
 end
-local words = require("match3.game").config().board   -- data/game.json
+local words = require("match3.game").config().board   -- lua/game_config.lua
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
 board_intro.bind(R, rules)

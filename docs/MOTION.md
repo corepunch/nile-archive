@@ -219,7 +219,7 @@ switches at once, the screen being left is covered, then the other screen is
 uncovered while the board's entrance plays. It takes no input (`R.diving()`),
 and reduced motion skips it. The styles live in `engine/match3_dive.lua`:
 `flash` (the engine's default: the town zooms into its newest building and
-blurs into a warm flash), `hex`, `drift`, `iris`, `bands` and `wipe`. game.json's `dive`
+blurs into a warm flash), `hex`, `drift`, `iris`, `bands` and `wipe`. game_config.lua's `dive`
 block picks one (`style`) and dresses it in the game's theme: a `motif` (`snow`,
 `leaves`) and its colours. Christmas Market and Relic Rush use `wipe`, a cinematic
 cut: both screens show at once and a diagonal edge sweeps left to right over 1.4

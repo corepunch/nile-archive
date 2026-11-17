@@ -110,7 +110,7 @@ at once. With no lives left, Try Again waits and says when one returns.
 
 The game is the same as Relic Rush with other data and art
 ([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)): every word of the
-shared screens is in [`data/game.json`](data/game.json), and the flow, dialogs,
+shared screens is in [`lua/game_config.lua`](lua/game_config.lua), and the flow, dialogs,
 shop, level list, effects and debug entry points are the engine's
 (`engine/match3_game.lua`). `lua/board.lua` and `lua/screens.lua` paint only
 the market's own art: cells, treats, the results card and guide icons.
@@ -137,7 +137,7 @@ Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market -
 ## Leaderboards
 
 Game Center comes from the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)) and is switched on by the
-`leaderboard` block of `data/game.json`: a **stars** board for the lifetime Christmas Stars (never spent)
+`leaderboard` block of `lua/game_config.lua`: a **stars** board for the lifetime Christmas Stars (never spent)
 and one board per winter wish (`level_01` to `level_30`) for its best score. Scores are reported when a
 reward is claimed. Settings has a LEADERBOARD link for the stars board (the results card has no leaderboard
 button); it opens the shared dialog in this game's red and green skin. Create 31
@@ -173,7 +173,7 @@ Guides hide after Confirm/Cancel; the mover's old spot is omitted. See the
 ## Town screen
 
 The market is the engine's [shared town screen](../../docs/TOWN.md), laid out by
-`data/city/town.json`. Tapping a building shows its name in a word bubble; holding
+`lua/town_config.lua`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
 
 Build and Play use authored winter-market navigation badges with five interaction

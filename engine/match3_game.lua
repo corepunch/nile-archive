@@ -5,7 +5,7 @@
 -- card, finale), the build shop, the level list, the town hooks, story
 -- delivery, the journey's bookkeeping and the debug entry points.
 --
--- A game is data: words in data/game.json (merged over DEFAULTS below), its
+-- A game is data: words in lua/game_config.lua (merged over DEFAULTS below), its
 -- campaign and story, its skin and art tables. Its own Lua paints only what is
 -- art: the board's cells and pieces (board.lua), the results card and guide
 -- rows (screens.lua), the cast (narrative.lua).
@@ -22,9 +22,8 @@
 --   R.town_middle_icon(at)  the round middle button's icon in the town
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
---   data/game.json "leaderboard" {board, title, level_board, level_title}   Game Center boards (below)
+--   game_config.lua "leaderboard" {board, title, level_board, level_title}   Game Center boards (below)
 -- See docs/PORTRAIT_GAMES.md.
-local json = require("json")
 local G = {}
 
 ------------------------------------------------------------------- words
@@ -79,27 +78,20 @@ G.DEFAULTS = {
 }
 
 local function merge(base, over)
-    if type(over) ~= "table" or over == json.null then return base end
+    if type(over) ~= "table" then return base end
     if #over > 0 or type(base) ~= "table" then return over end   -- arrays replace
     local out = {}
     for k, v in pairs(base) do out[k] = v end
     for k, v in pairs(over) do
-        if v == json.null then out[k] = nil
-        elseif type(v) == "table" and type(base[k]) == "table" and #v == 0 then out[k] = merge(base[k], v)
+        if type(v) == "table" and type(base[k]) == "table" and #v == 0 then out[k] = merge(base[k], v)
         else out[k] = v end
     end
     return out
 end
 G.merge = merge
 
--- data/game.json over the defaults; nil or a table also works (tests).
-function G.config(over)
-    if over == nil then
-        local text = app.read_text("game.json")
-        over = text and json.decode(text) or {}
-    end
-    return merge(G.DEFAULTS, over)
-end
+-- The game's lua/game_config.lua over the defaults; a table also works (tests).
+function G.config(over) return merge(G.DEFAULTS, over or require("game_config")) end
 
 local function hex(s)
     local h = s:gsub("^#", "")
@@ -476,7 +468,7 @@ function G.bind(R, over)
         end
     end
 
-    -- The wallet row. capsules.show in game.json lists what it holds, in order:
+    -- The wallet row. capsules.show in game_config.lua lists what it holds, in order:
     -- "lives", "stars" or a currency's id (its capsule's `id`; "gold" when the
     -- game has one currency). Without the list it holds them all. A board with
     -- several currencies shows only those, at the shared row's width.
@@ -1010,7 +1002,7 @@ function G.bind(R, over)
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
 
     function R.town_setup()
-        R.town = town.new(R.island, town.load("city/town.json"), {
+        R.town = town.new(R.island, require("town_config"), {
             skin = skin,
             wallet = function() return R.prog.wallet end,
             notice = R.notice,
@@ -1252,7 +1244,7 @@ function G.bind(R, over)
         return false
     end
 
-    -- Game Center (engine/gamecenter.lua docs: docs/GAMECENTER.md). game.json's
+    -- Game Center (engine/gamecenter.lua docs: docs/GAMECENTER.md). game_config.lua's
     -- "leaderboard" block turns it on: `board` holds the lifetime Discovery Stars,
     -- `level_board` (a format with the level number, e.g. "level_%02d") each
     -- expedition's best score. Scores are reported when a reward is claimed.

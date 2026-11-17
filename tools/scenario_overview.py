@@ -338,8 +338,8 @@ def main():
         if args.capture and game in MATCH3:
             capture(game)
         data = dump(game)
-        title = json.loads((ROOT / f'games/{game}/data/game.json').read_text()).get('app', {}).get('title') \
-            if (ROOT / f'games/{game}/data/game.json').is_file() else 'Nile Archive'
+        config = ROOT / f'games/{game}/lua/game_config.lua'   # app = {title = "...", ...}
+        title = re.search(r'\bapp = \{title = "([^"]*)"', config.read_text()).group(1) if config.is_file() else 'Nile Archive'
         sections.append(match3_section(data, title) if data['kind'] == 'match3' else nile_section(data, title))
         links.append(f'<a href="#{game}">{esc(title)}</a>')
     page = (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'

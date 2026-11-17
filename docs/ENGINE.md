@@ -300,7 +300,7 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
 ## Town screen
 
 The city games share one town screen, `require("town")`, configured by each
-game's `data/city/town.json`. See [Shared town screen](TOWN.md).
+game's `lua/town_config.lua`. See [Shared town screen](TOWN.md).
 
 ## Portrait match-3 game
 
@@ -308,7 +308,7 @@ Relic Rush and Christmas Market share the whole game around the board:
 `require("match3.game")` (`engine/match3_game.lua`) owns progress and saving,
 the level flow and lives, every dialog, the shop, the level list, the town
 hooks and story delivery; `match3.vfx` the effects and `match3.debug` the
-screenshot entry points. Each game's words are `data/game.json`, read while
+screenshot entry points. Each game's words are `lua/game_config.lua`, read while
 `main.lua` loads (the launcher sets the data root before it runs the script).
 See [PORTRAIT_GAMES.md](PORTRAIT_GAMES.md).
 

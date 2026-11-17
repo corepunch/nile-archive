@@ -78,7 +78,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 ## Leaderboards
 
 Game Center is in every game through the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)).
-Relic Rush turns it on with the `leaderboard` block of `data/game.json`: one **stars** board holds
+Relic Rush turns it on with the `leaderboard` block of `lua/game_config.lua`: one **stars** board holds
 the lifetime Discovery Stars (they are never spent), and one board per expedition (`level_01`
 to `level_30`) holds its best score. Scores are reported when a reward is claimed, so a
 replay that beats the old score raises that board, and a weaker one changes nothing. Settings
@@ -437,8 +437,8 @@ board, every dialog, the shop, the level list, the town hooks, story delivery,
 effects and the debug entry points are the engine's (`engine/match3_game.lua`,
 `engine/match3_vfx.lua`, `engine/match3_debug.lua`); this folder is data and art.
 
-- `data/game.json`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop, level list), the piece packs and the dialogue scale.
-- `data/city/town.json`: the town screen's layout and notices.
+- `lua/game_config.lua`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop, level list), the piece packs and the dialogue scale.
+- `lua/town_config.lua`: the town screen's layout and notices.
 - `lua/state.lua`: the shared state table (`R`) from the engine.
 - `lua/art.lua`: named authored states, control-state selection and the in-game catalogue.
 - `lua/rules.lua`: piece identities, the economy slots and rewards over the engine's match-3 rules.
@@ -508,7 +508,7 @@ free; guides remain until Confirm/Cancel. See the
 ## Town screen
 
 The island is the engine's [shared town screen](../../docs/TOWN.md), laid out by
-`data/city/town.json`. Tapping a building shows its name in a word bubble; holding
+`lua/town_config.lua`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
 
 The town bottom row has a large central Play button and equal smaller Build

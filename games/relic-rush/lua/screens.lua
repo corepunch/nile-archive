@@ -1,7 +1,7 @@
 -- screens.lua — Relic Rush's art in the shared dialogs: the results card, the
 -- guide's rows and icons, and the wallet and town icons. The dialogs, their
 -- motion, the paint helpers and every other popup are the engine's
--- (engine/match3_game.lua); words are data/game.json.
+-- (engine/match3_game.lua); words are lua/game_config.lua.
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")

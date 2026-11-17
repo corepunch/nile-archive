@@ -281,7 +281,7 @@ end
 -------------------------------------------------------------------- frame
 
 -- The island on the engine's shared town screen (engine/town.lua), laid out
--- by data/city/town.json like Relic Rush and Christmas Market. The archive adds its
+-- by lua/town_config.lua like Relic Rush and Christmas Market. The archive adds its
 -- player plate, the cast button and the goal card between Build and Play.
 local function shore(z)
     if G.island:unlock(z, G.wallet) then
@@ -305,7 +305,7 @@ end
 
 function M.town_setup()
     local town = require("town")
-    M.town = town.new(G.island, town.load("city/town.json"), {
+    M.town = town.new(G.island, require("town_config"), {
         skin = K.skin,
         wallet = function() return G.wallet end,
         notice = function(text)

@@ -9,7 +9,6 @@ in `art/registered/` beside the source paintings and prompts they come from.
 
 ```
 data/
-  game.json
   common/          shared by every screen
     fonts/
     buttons.png    town navigation and pause: four actions x five states
@@ -17,7 +16,6 @@ data/
   city/            the island
     island.jpg     ground painting
     roads.png      road tiles (roads-<look>.png for a second look)
-    town.json      the town screen's layout
     buildings/  building-shadows/   one sprite per Blender building key
   board/           the match-3 board
     backs/         background.jpg, scene-1.jpg, scene-2.jpg: separate files, never packed

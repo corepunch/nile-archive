@@ -6,12 +6,12 @@
 --
 -- Layout and wording come from a JSON file in the game's data root, merged
 -- over the defaults below, so every game lays the town out the same way.
--- Behaviour the JSON cannot express arrives as hooks; the look is the game's
+-- Behaviour the table cannot express arrives as hooks; the look is the game's
 -- ui.skin (roles navigation_build, navigation_play, navigation_levels, placement_cancel,
 -- placement_confirm and the resource role named in header.role).
 --
 --   local town = require("town")
---   local view = town.new(c, town.load("city/town.json"), hooks)
+--   local view = town.new(c, require("town_config"), hooks)
 --   view:frame(inp, dt, active)   -- once per frame; active = no dialog or story
 --
 -- Hooks (all optional unless marked):
@@ -36,8 +36,8 @@
 --   overlay()               drawing between the map and the HUD (particles)
 --   extras(screen)          game-only HUD (Nile Archive's player plate, ...)
 --   hide_bottom()           true while a game panel (Nile Archive's build tray) replaces the bottom row
-local json = require("json")
 local T = {}
+T.none = {}   -- in a game's town_config.lua, clears a default
 
 local DEFAULTS = {
     background = "#16707A",
@@ -62,11 +62,11 @@ local DEFAULTS = {
 }
 
 local function merge(base, over)
-    if type(over) ~= "table" or over == json.null then return base end
+    if type(over) ~= "table" or over == T.none then return base end
     local out = {}
     for k, v in pairs(base) do out[k] = v end
     for k, v in pairs(over) do
-        if v == json.null then out[k] = nil   -- null clears a default
+        if v == T.none then out[k] = nil   -- town.none clears a default
         elseif type(v) == "table" and type(base[k]) == "table" and #v == 0 then out[k] = merge(base[k], v)
         else out[k] = v end
     end
@@ -111,7 +111,6 @@ local function bubble_draw(tip, utf8, sub, fill, edge, max_width, title_style)
     text.box(sub, inside:bottom(b.h), vec2(.5, .5), rest)
 end
 
-function T.load(path) return json.load(path) end
 function T.config(over) return merge(DEFAULTS, over) end
 
 local View = {}

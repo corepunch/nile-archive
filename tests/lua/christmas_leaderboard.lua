@@ -13,7 +13,7 @@ R.wonders = island.wonders
 R.prog = {level = 0, seed = 1, wallet = purse(), lives = rules.LIVES, life_at = 0, story_seen = {}}
 R.notice = function() end
 local config = R.words.leaderboard
-check(config and config.board == 'stars' and config.level_board == 'level_%02d' and rules.LEVELS == 100, 'game.json names the boards')
+check(config and config.board == 'stars' and config.level_board == 'level_%02d' and rules.LEVELS == 100, 'game_config.lua names the boards')
 
 -- first clear: lifetime stars and this expedition's score
 R.g = rules.game_start(0, 1)

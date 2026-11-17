@@ -226,6 +226,6 @@ Run `make test-nile-archive` from the repository root for this game's tests in o
 ## Town screen
 
 The estate uses the engine's [shared town screen](../../docs/TOWN.md), laid out
-by `data/city/town.json`, like Relic Rush and Christmas Market: Build and Play
+by `lua/town_config.lua`, like Relic Rush and Christmas Market: Build and Play
 badges, the goal card between them, region markers to open shores, Cancel and
 Confirm under a lifted building, and a word bubble when a building is tapped.

@@ -997,7 +997,7 @@ square centred on its atlas column's and row's visible art (the earlier
 equal-fifths grid cut the art off-centre and clipped some rims); the row-wide
 vertical centre keeps the pressed drop. The crop is scaled evenly into a
 160×160 RGBA image under `art/registered/navigation/`, so the visible buttons are
-centred in their slots and `town.json`'s `bottom` puts Play's lower edge as
+centred in their slots and `town_config.lua`'s `bottom` puts Play's lower edge as
 far from the screen edge as Build and Levels are from the sides.
 
 | Role | Runtime state names (all `.png`) |

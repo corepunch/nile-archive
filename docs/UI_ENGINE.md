@@ -488,7 +488,7 @@ The engine animation clock supplies one timeline to shared tweens, scroll decele
 
 ## Town bottom navigation
 
-`town.json` can opt into `bottom.layout = "play-primary"`: a centered large
+`town_config.lua` can opt into `bottom.layout = "play-primary"`: a centered large
 `navigation_play` button flanked by equally sized `navigation_build` and
 `navigation_levels` buttons. `bottom.build` and `bottom.secondary_height` size
 both secondary controls; `bottom.play` and `bottom.height` size Play. The Levels
@@ -506,7 +506,7 @@ centers the group. With `header.interactive = false`, the figures are
 display-only. Hit and flight targets come from the same layout boxes.
 
 Match-3 towns list what the wallet row holds, in order, in `capsules.show` in
-`game.json`: `"lives"`, `"stars"` or a currency capsule's `id` (`"gold"` when
+`game_config.lua`: `"lives"`, `"stars"` or a currency capsule's `id` (`"gold"` when
 the game has one currency), for example `["coins", "supplies", "food"]`.
 Without the list the row holds them all. Campaign boards center a display-only row of Moves
 and currency capsules. Each capsule identifies its currency slot so matched
@@ -518,7 +518,7 @@ Play and Wishes. Play is the largest control. Both surfaces use the same
 ## Town building popups
 
 `engine/town.lua` draws the label above a tapped building. The game's
-`town.json` can select skin text palettes with `bubble.title` and
+`town_config.lua` can select skin text palettes with `bubble.title` and
 `bubble.text`. Set `bubble.em` to size the configured subtitle. The title
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex
 values. Relic Rush shares those colors with its quest panel.

@@ -7,7 +7,7 @@ only a JSON file, a skin and hooks.
 
 ```lua
 local town = require("town")
-R.town = town.new(R.island, town.load("town.json"), hooks)
+R.town = town.new(R.island, require("town_config"), hooks)
 R.town:frame(inp, dt, R.overlay == R.OV_NONE)   -- once per frame
 ```
 
@@ -33,10 +33,10 @@ R.town:frame(inp, dt, R.overlay == R.OV_NONE)   -- once per frame
 - `view.buttons` (`build`, `play`, `middle`, `menu`) and `view.placement_form`
   give tests real control positions.
 
-## data/city/town.json
+## lua/town_config.lua
 
-Every field is optional; the engine defaults are in `engine/town.lua`, and
-`null` clears a default.
+The file returns one table. Every field is optional; the engine defaults are in
+`engine/town.lua`, and `town.none` clears a default.
 
 | Key | Meaning |
 |---|---|
@@ -50,6 +50,4 @@ Every field is optional; the engine defaults are in `engine/town.lua`, and
 | `weather.snow` | `height`, `fade_from` and `layers` (`count`, `radius`, `fall`, `drift`, `opacity`). |
 | `texts` | The notices: `placing`, `unchanged`, `blocked`, `cant_afford`, `cant_buy`, `no_room`. |
 
-`app.read_text(path)` reads the file from the data root, and `json.decode`
-(`engine/json.lua`) parses it. `tests/lua/town.lua` covers the decoder, the
-merge and every game's file.
+`tests/lua/town.lua` covers the merge and every game's file.

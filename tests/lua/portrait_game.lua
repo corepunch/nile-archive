@@ -1,11 +1,11 @@
 -- The shared portrait match-3 game (engine/match3_game.lua): each game's
--- data/game.json reaches the engine, and its journey content keeps the
+-- lua/game_config.lua reaches the engine, and its journey content keeps the
 -- story's meaning as data. Runs in Relic Rush and Christmas Market.
 local game = require("match3.game")
 local journey = require("journey")
 
 local W = game.config()
-check(W.app.id == testing.game, "data/game.json is read at load time and names its game")
+check(W.app.id == testing.game, "game_config.lua is read at load time and names its game")
 check(#W.packs >= 1 and #W.catalogue.categories >= 3, "packs and shop categories come from the game")
 for _, cat in ipairs(W.catalogue.categories) do check(#cat == 2, "a category is {key, label}") end
 check(W.notices.no_lives ~= game.DEFAULTS.notices.no_lives, "the game words replace the engine defaults")

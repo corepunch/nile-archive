@@ -8,8 +8,8 @@ tables, and PNGs. Behaviour belongs to the engine:
 |---|---|
 | `engine/match3.lua` (`match3`) | Rules, the board layout, HUD, tools, swaps, waves, the guide and pause forms |
 | `engine/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
-| `engine/town.lua` (`town`) | The town screen (`data/city/town.json`) |
-| `engine/match3_game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, lives, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`data/game.json`) |
+| `engine/town.lua` (`town`) | The town screen (`lua/town_config.lua`) |
+| `engine/match3_game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, lives, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
 | `engine/match3_vfx.lua` (`match3.vfx`) | Effects: impacts, rays, blasts, links, births, score pop-ups and particles |
 | `engine/match3_debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--dialog`, ...) |
 
@@ -28,9 +28,9 @@ Each game's `lua/` keeps only:
 - **Tests:** `smoke.lua` and Christmas Market's `campaign_smoke.lua`, keyed
   to each game's content.
 
-Words live in `data/game.json`, merged over `match3.game`'s defaults the way
-`town.json` is (objects merge field by field, arrays replace). The launcher
-sets the data root before `main.lua` runs, so modules read it while loading.
+Words live in `lua/game_config.lua`, a module returning one table, merged over
+`match3.game`'s defaults the way `town_config.lua` is (tables merge field by
+field, lists replace).
 A game wires itself up in three lines:
 
 ```lua
@@ -43,7 +43,7 @@ plus the art hooks `R.wallet_icons()`, `R.town_middle_icon(at)` and `R.cast`.
 
 Games with several currencies supply `R.currency_capsules(balance)` and
 `R.currency_prices(cost)`. A capsule's `id` is the name `capsules.show` in
-`game.json` uses to place it in the wallet row. Relic Rush and Christmas Market supply price entries
+`game_config.lua` uses to place it in the wallet row. Relic Rush and Christmas Market supply price entries
 with a stable ID, name, icon and amount. The shared town and board wallet
 targets the appropriate capsule when a match earns a resource.
 `R.board_context(preview)` selects a match palette variant from the game state.
@@ -121,7 +121,7 @@ Kept per game, as data or painting code:
   piece lift (`art.piece_lift`) and drifting snow instead of sun motes.
 - `screens.lua`: the results card (Relic Rush's breakdown vs Christmas
   Market's chips), guide rows and icons, star and compass icons, wallet icons.
-- Speech style: Relic Rush's dialogue is 1.5× (`speech.scale` in game.json)
+- Speech style: Relic Rush's dialogue is 1.5× (`speech.scale` in game_config.lua)
   with a 22.5 name plate; Christmas Market uses 1× and 15.
 - `art.lua`: review sheets, packs (`relics`/`jewels`/`resources` vs
   `festive`), the hud catalogue, `piece_lift`, `snow_source`.
@@ -132,7 +132,7 @@ Kept per game, as data or painting code:
 ### Content and data
 
 - Words: every notice, dialog title, button label, catalogue and level-list
-  line, pause title, failed, region and finale text (now `data/game.json`).
+  line, pause title, failed, region and finale text (now `lua/game_config.lua`).
 - `campaign.lua`, `story_content.lua`, `narrative.lua` cast, `journey.lua`
   recap/regions/building lines, `buildings.lua`, `building_sprites.lua`,
   `match3_skin.lua`, `match3_hud.lua`, zone names and positions.
