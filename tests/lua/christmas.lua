@@ -68,6 +68,28 @@ check(old_save.lives == 4, 'No life returns before thirty minutes')
 rules.refill_lives(old_save, 1900)
 check(old_save.lives == 5 and old_save.life_at == 0, 'A life returns after thirty minutes')
 
+local first_wish = rules.game_start(0, 123478, {})
+check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,0,0,0",
+      'locked boosters keep all four slots')
+local star_wish = rules.game_start(2, 123478, {reindeer_stable=true})
+check(star_wish.tools[4] == 1 and star_wish.tools[2] == 0 and next(star_wish.tool_meter) == nil,
+      'the stable grants one Shooting Star on its first eligible wish')
+local boosters = rules.game_start(19, 123478, {reindeer_stable=true, lumber=true, santa_workshop=true, candles=true})
+local center = rules.hex_center()
+check(boosters.tools[1] == 0 and boosters.tool_meter[1] == 0 and boosters.tool_meter[3] == 0
+      and boosters.tools[2] == 1 and boosters.tools[4] == 1, 'banked and per-wish boosters use separate stock')
+local wave = rules.new_match()
+local function use_once(slot)
+    local area = rules.game_tool_area(boosters, slot, center)
+    check(area and area[center] and rules.game_tool(boosters, slot, center, wave), 'the booster targets the board')
+    for cell in pairs(area) do check(wave.mask[cell], 'the effect follows its aiming preview') end
+    check(not rules.game_tool(boosters, slot, center, wave), 'the per-wish booster has been spent')
+end
+use_once(1)
+use_once(3)
+check(rules.game_start(2, 123478, {reindeer_stable=true}).tools[4] == 1,
+      'a fresh attempt starts with its own booster use')
+
 -- Extended: the greedy bot, without tools, wins every winter wish at least once.
 if testing.extended then
     local m = rules.new_match()

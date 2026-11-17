@@ -16,6 +16,13 @@ A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
 
+local bonus_atlas = {path="bonus-buttons.png", frames={}}
+for col, booster in ipairs(economy.tool_slots) do
+    for row, state in ipairs(A.states) do
+        bonus_atlas.frames[booster.icon .. "-" .. state] = {(col - 1) * 128, row * 128, 128, 128}
+    end
+end
+
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
 function A.skin()
@@ -26,16 +33,19 @@ end
 
 function A.load_hud()
     local match3 = require("match3")
-    if app.arg("default-match3") then
-        local hud = match3.hud()
-        return setmetatable({score=hud.complete}, {__index=hud})
+    local neutral = app.arg("default-match3")
+    local hud = match3.hud(not neutral and require("match3_hud") or nil)
+    if not neutral then
+        assert(hud.signboard, "missing spruce signboard")
+        for _, state in ipairs(A.states) do
+            assert(hud["board-pause-" .. state], "missing board Settings state: " .. state)
+        end
     end
-    local hud = match3.hud(require("match3_hud"))
-    assert(hud.signboard, "missing spruce signboard")
-    for _, state in ipairs(A.states) do
-        assert(hud["board-pause-" .. state], "missing board Settings state: " .. state)
-    end
-    return hud
+    local bonus = match3.atlas(bonus_atlas)
+    local images = setmetatable({}, {__index=hud})
+    if neutral then images.score = hud.complete end
+    for key in pairs(bonus_atlas.frames) do images[key] = bonus[key] end
+    return images
 end
 
 function A.draw_hud_catalogue(R)
@@ -102,8 +112,8 @@ function A.draw_catalogue(R)
     end
     for i, name in ipairs{"cell-normal", "tablet-single", "tablet-double"} do
         local x = 104 + (i - 1) * 112
-        gfx.image(R.board_art["tile-" .. name], rect(x, 272, 48, 48), color.WHITE)
-        R.say_at(name, vec2(x + 24, 330), 11, R.PAL_CREAM, 88)
+        gfx.image(R.board_art["tile-" .. name], rect(x, 327, 48, 48), color.WHITE)
+        R.say_at(name, vec2(x + 24, 380), 11, R.PAL_CREAM, 88)
     end
     local names = {"ray-row", "ray-column", "ray-diagonal", "bomb", "prism", "plane",
                    "chain", "ice-2", "ice-1", "selected", "hint", "guide"}
@@ -115,12 +125,11 @@ function A.draw_catalogue(R)
     for col, state in ipairs(A.states) do
         R.say_at(state, vec2(62 + (col - 1) * 88, 571), 12, R.PAL_GOLD, 86)
     end
-    for row, tool in ipairs(A.tools) do
+    for row, booster in ipairs(economy.tool_slots) do
         for col, state in ipairs(A.states) do
-            gfx.image(R.hud_art[tool .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
+            gfx.image(R.hud_art[booster.icon .. "-" .. state], rect(30 + (col - 1) * 88, 584 + (row - 1) * 67, 66, 66), color.WHITE)
         end
     end
-    R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)
 end
 
 return A

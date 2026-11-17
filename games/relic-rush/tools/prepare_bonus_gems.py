@@ -150,13 +150,16 @@ def engrave(plate, mask, floor, style):
     return Image.composite(recess, stone, mask)
 
 
-def pack(spec):
-    chips = Image.open(ROOT / spec["source"])
-    base = Image.open(ROOT / spec["button_base"])
+def pack(spec, root=ROOT, icons=None):
+    base = Image.open(root / spec["button_base"])
     cols, rows = len(spec["columns"]), len(spec["rows"])
-    side = spec["cell_size"]
-    assert chips.mode == base.mode == "RGBA" and base.size == (SLOT_SIZE, SLOT_SIZE)
-    assert chips.size == (cols * side, side), "Expected a single strip of standalone gems"
+    if icons is None:
+        side = spec["cell_size"]
+        with Image.open(root / spec["source"]) as chips:
+            assert chips.size == (cols * side, side), "Expected a single strip of standalone gems"
+            icons = [chips.crop((col * side, 0, (col + 1) * side, side)) for col in range(cols)]
+    assert base.mode == "RGBA" and base.size == (SLOT_SIZE, SLOT_SIZE)
+    assert len(icons) == cols and all(icon.mode == "RGBA" for icon in icons)
     base = circular_plate(base, spec["button_outer_radius"])
     base_alpha = base.getchannel("A")
     outside_button = base_alpha.point(lambda a: 255 if a < 128 else 0)
@@ -165,8 +168,7 @@ def pack(spec):
     disabled_style = spec["button_states"]["disabled"]
     floor = cutout_floor(plates["disabled"], disabled_style["cutout"])
     atlas = Image.new("RGBA", (SLOT_SIZE * cols, SLOT_SIZE * rows))
-    for x in range(cols):
-        source = chips.crop((x * side, 0, (x + 1) * side, side))
+    for x, source in enumerate(icons):
         # Preserve the board glyph's existing visible bounds and soft alpha.
         l, t, r, b = source.getchannel("A").point(lambda a: 255 if a >= 128 else 0).getbbox()
         source = source.crop((l - 2, t - 2, r + 2, b + 2))

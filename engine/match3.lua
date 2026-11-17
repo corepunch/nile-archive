@@ -358,7 +358,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
             local r = R.board_tool_bounds(k)
             local x, y = r:center().x, r.y
             local charges = R.g.tools[i]
-            if slots and meter then
+            if slots and R.g.single_charge_tools and meter then
                 meter = R.bonus_display_charge(i)
                 charges = meter // R.g.tool_threshold
             end
@@ -386,6 +386,11 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
                     local rank = rect(drawn:max().x - 33, drawn.y + 10, 23, 20)
                     gfx.round_rect(rank, 5, rgba(59, 41, 23, 242))
                     R.say("II", rank, 14, PAL_CREAM)
+                elseif charges > 1 then
+                    local at = vec2(drawn.x + drawn.w * .78, drawn.y + drawn.h * .22)
+                    gfx.circle(at, 13, rgba(116, 74, 33))
+                    gfx.circle(at, 11, rgba(46, 112, 70))
+                    R.say(tostring(charges), rect.centered(at, size2(26, 26)), 14, PAL_CREAM)
                 end
             else
                 gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
@@ -1809,6 +1814,8 @@ function E.new(config)
             R.tool = R.tool == k and -1 or k
             local descriptor = tool_slot(R.g, k)
             R.notice(R.tool < 0 and "Tool put away." or descriptor and descriptor.effect or R.tool_notes[k + 1])
+        elseif R.g.opening_tools and R.g.opening_tools[k + 1] then
+            R.notice("This booster has been used for this wish.")
         elseif R.g.tool_meter then
             R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Restore its building to unlock this tool.")
         else R.notice("No charges left. More tools next expedition.") end

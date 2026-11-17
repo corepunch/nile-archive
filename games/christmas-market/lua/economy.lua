@@ -28,6 +28,13 @@ local E = {
     CAMPAIGN_VERSION=3,
 }
 
+E.tool_slots = {
+    {icon="booster-hammer", action="hit", effect="Tap a cell to hit it with the Hammer."},
+    {icon="booster-firework", action="blast", effect="Tap a cell to blast it and its neighbors."},
+    {icon="booster-lantern", action="sunburst", effect="Tap a cell to strike across 15 cells."},
+    {icon="booster-star", action="row", effect="Tap a cell to clear its row with Shooting Star."},
+}
+
 -- Every wish's five ordinary kinds sit on five lines; a stall's new piece
 -- takes the place of the one below it on its line. The fifth line opens with
 -- the arch's firewood.
@@ -36,16 +43,17 @@ local BASE = {0, 1, 2, 3}
 -- The twenty-stall ladder after Cradle of Rome: each stall adds one piece or
 -- one bonus, from the wish after it is placed. `building` is the catalogue
 -- key and `after` the clear it opens on. Pieces name a `line`; tools charge
--- from their own `piece`; `special` opens every wish with that special;
+-- from their own `piece`; `opening_tool` grants one use per wish;
+-- `special` places the named special on the opening board;
 -- `moves` adds moves; `charge` speeds tool charge; `income` pays every win.
 E.unlocks = {
     {building="arch", after=1, line=5, kind=4},
-    {building="reindeer_stable", after=2, special="rocket", name="Shooting star"},
+    {building="reindeer_stable", after=2, opening_tool=4, name="Shooting Star"},
     {building="lumber", after=4, tool=1, piece=5},
     {building="gingerbread_house", after=5, moves=3},
     {building="bakery", after=7, line=3, kind=6},
     {building="cocoa", after=9, line=5, kind=11},
-    {building="santa_workshop", after=11, special="bomb", name="Firework bomb"},
+    {building="santa_workshop", after=11, opening_tool=2, name="Firework Bomb"},
     {building="toys", after=13, line=2, kind=8},
     {building="post_office", after=14, charge=2},
     {building="gifts", after=16, line=2, kind=9},
@@ -74,12 +82,13 @@ local multipliers = {[3]=1, [4]=2, [5]=4, [6]=6, [7]=6, [8]=6, [9]=6}
 -- what was in force by its number: a replay keeps its own pool.
 function E.loadout(restored, number, seed)
     local lines = {table.unpack(BASE)}
-    local meter, tools, specials, income = {}, {}, {}, purse()
+    local meter, tools, opening_tools, specials, income = {}, {}, {}, {}, purse()
     local moves, charge = 0, 1
     for _, unlock in ipairs(E.unlocks) do
         if restored[unlock.building] and number >= unlock.first_level then
             if unlock.kind then lines[unlock.line] = unlock.kind
             elseif unlock.tool then meter[unlock.tool], tools[#tools + 1] = 0, unlock
+            elseif unlock.opening_tool then opening_tools[unlock.opening_tool] = 1
             elseif unlock.special then specials[#specials + 1] = unlock.special
             elseif unlock.moves then moves = moves + unlock.moves
             elseif unlock.charge then charge = charge * unlock.charge
@@ -99,7 +108,8 @@ function E.loadout(restored, number, seed)
     end
     -- Faster charge lowers the meter a use needs; stored points convert with it.
     return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=200 // charge, tool_meter=meter,
-        charge_tool=charging and charging.tool, extra_moves=moves, opening_specials=specials, win_income=income}
+        tool_slots=E.tool_slots, opening_tools=opening_tools, charge_tool=charging and charging.tool,
+        extra_moves=moves, opening_specials=specials, win_income=income}
 end
 
 -- Rome I Beta lightning hits 15 cells and reserves one hit for a plaque.
@@ -129,6 +139,7 @@ function E.unlock_text(unlock)
         local piece = E.pieces[unlock.kind or unlock.piece]
         local unit = piece.tool and "tool charge" or E.currencies[piece.slot].name
         return ("%s · +%d %s per piece"):format(piece.name, piece.amount, unit)
+    elseif unlock.opening_tool then return ("One %s booster per wish"):format(unlock.name)
     elseif unlock.special then return ("Every wish opens with a %s"):format(unlock.name:lower())
     elseif unlock.moves then return ("Every wish gets %d more moves"):format(unlock.moves)
     elseif unlock.charge then return "Tool pieces charge twice as fast"

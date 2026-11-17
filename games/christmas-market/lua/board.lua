@@ -152,8 +152,8 @@ function R.board_screen(inp, dt)
     draw_blockers(sx)
     elements.blockers(R, rules, sx)
     if intro then draw_sheen(sx) end
-    R.draw_board_tools(inp)
-    if app.arg("art-states") then art.draw_catalogue(R) end
+    if app.arg("art-states") then art.draw_catalogue(R)
+    else R.draw_board_tools(inp) end
     if app.arg("hud-states") then art.draw_hud_catalogue(R) end
     R.board_input(inp)
 end

@@ -107,6 +107,13 @@ Reproduce draft runtime extraction with `python3 games/christmas-market/tools/pr
 
 The font and its license are inherited unmodified from Relic Rush in `data/fonts/`. Gameplay modules were adapted locally from Relic Rush; its original archaeological paintings are not used in this draft.
 
+## Campaign booster buttons
+
+The four circular buttons use the same [painted base and five state recipes](../../relic-rush/docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets) as Relic Rush. The [manifest](../art/manifest.json) records the toy hammer and lantern star from the market goods atlas, plus the bomb and rocket from the shared board artwork. The generator fits each silhouette into the same circular socket and packs normal, selected, pressed, hover and engraved disabled states beneath the standalone icons.
+
+Run `python3 games/christmas-market/tools/prepare_bonus_buttons.py` to rebuild the atlas.
+[Desktop toolbar](screenshots/booster-toolbar.jpg) · [Phone toolbar](screenshots/booster-toolbar-phone.jpg) · [Five interaction states](screenshots/art-states.jpg)
+
 ## Market goods and tools
 
 The first twelve pieces were authored together in one transparent ImageGen

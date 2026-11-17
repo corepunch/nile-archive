@@ -122,7 +122,7 @@ visible in one row.
 > asked for six new pieces, a cracker charge piece and two new buildings.
 > As built, the ten new stalls are existing Blender renders and the four new
 > pieces reuse the game's earlier painted festive pieces. The Firecracker
-> tool, which had no charge piece, became an opening firework bomb. Two of
+> tool, which had no charge piece, became the Firework Bomb. Two of
 > Rome's Gold treasures became citizen-style income, which Rome pays per level.
 
 Christmas Market's first eight stalls already followed Rome I's first eight
@@ -133,12 +133,12 @@ which places all twenty with one replay for income.
 | # | Build after | Stall | From wish | Adds | Price G / F / S |
 | ---: | ---: | --- | ---: | --- | ---: |
 | 1 | 1 | ★ Welcome arch | 2 | Firewood, 5 Supplies | 50 / 0 / 0 |
-| 2 | 2 | Reindeer stable | 3 | Opening shooting star (Rome's Shield) | 60 / 0 / 20 |
+| 2 | 2 | Reindeer stable | 3 | One Shooting Star booster per wish (Rome's Shield) | 60 / 0 / 20 |
 | 3 | 4 | ★ Lumber workshop | 5 | Hammer | 100 / 0 / 100 |
 | 4 | 5 | Gingerbread house | 6 | +3 moves (Rome's Hourglass) | 150 / 0 / 80 |
 | 5 | 7 | ★ Gingerbread bakery | 8 | Packing blocks, 7 Supplies | 300 / 0 / 200 |
 | 6 | 9 | ★ Hot cocoa kiosk | 10 | Cocoa, 4 Food | 400 / 0 / 500 |
-| 7 | 11 | Santa's workshop | 12 | Opening firework bomb (Rome's Bomb) | 200 / 150 / 100 |
+| 7 | 11 | Santa's workshop | 12 | One Firework Bomb booster per wish (Rome's Bomb) | 200 / 150 / 100 |
 | 8 | 13 | ★ Toymaker's workshop | 14 | Milk, 3 Food | 300 / 200 / 300 |
 | 9 | 14 | North Pole post office | 15 | Tools charge twice as fast (Rome's Plus) | 250 / 250 / 100 |
 | 10 | 16 | ★ Gift wrapping pavilion | 17 | Winter apple, 6 Food | 500 / 400 / 400 |

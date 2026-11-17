@@ -123,12 +123,12 @@ passed stay optional. [Ladder design](../../../docs/cradle-of-rome-reference/TWE
 | # | Stall | Placed after | Adds | Price G / F / S |
 | ---: | --- | ---: | --- | ---: |
 | 1 | ★ Welcome arch | 1 | Firewood, 5 Supplies | 50 / 0 / 0 |
-| 2 | Reindeer stable | 2 | Every wish opens with a shooting star | 60 / 0 / 20 |
+| 2 | Reindeer stable | 2 | One Shooting Star booster per wish | 60 / 0 / 20 |
 | 3 | ★ Lumber workshop | 4 | Toy hammers charge the Hammer | 100 / 0 / 100 |
 | 4 | Gingerbread house | 5 | 3 more moves on every wish | 150 / 0 / 80 |
 | 5 | ★ Gingerbread bakery | 7 | Packing blocks replace silver coins, 7 Supplies | 300 / 0 / 200 |
 | 6 | ★ Hot cocoa kiosk | 9 | Cocoa replaces firewood, 4 Food | 400 / 0 / 500 |
-| 7 | Santa's workshop | 11 | Every wish opens with a firework bomb | 200 / 150 / 100 |
+| 7 | Santa's workshop | 11 | One Firework Bomb booster per wish | 200 / 150 / 100 |
 | 8 | ★ Toymaker's workshop | 13 | Milk replaces mittens, 3 Food | 300 / 200 / 300 |
 | 9 | North Pole post office | 14 | Tools charge twice as fast (a use needs 100) | 250 / 250 / 100 |
 | 10 | ★ Gift wrapping pavilion | 16 | Winter apples replace milk, 6 Food | 500 / 400 / 400 |
@@ -143,12 +143,13 @@ passed stay optional. [Ladder design](../../../docs/cradle-of-rome-reference/TWE
 | 19 | Pile of presents | 27 | +20 Supplies on every win | 200 / 500 / 60 |
 | 20 | ★ Christmas tree | 29 | Every wish opens with a rainbow ball | 250 / 600 / 80 |
 
-The bonuses follow Rome's tools on a move-limited board. The shooting star,
-firework bomb, paper plane and rainbow ball are the board's existing
-specials, placed on seeded ordinary cells when a wish opens; Christmas
-Market still makes no specials from matches. The gingerbread house is Rome's
-Hourglass and the post office its Plus. The rink and presents pay like
-Rome's citizens, on every win including replays.
+Four boosters share one toolbar. Hammer and Lantern Lightning bank uses and
+partial charges between wishes. Shooting Star clears the chosen row and
+Firework Bomb hits the chosen cell and its neighbors. Their stalls grant
+one use at the start of each eligible wish. The sleigh's paper plane and
+the tree's rainbow ball still start on seeded ordinary cells. The
+gingerbread house adds moves and the post office doubles charge speed.
+The rink and presents earn income on every win, including replays.
 
 The new pieces reuse the game's earlier painted festive pieces: the golden
 handbell, candy cane and plum bauble from `art/festive-pieces/source.png`

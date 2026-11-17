@@ -73,6 +73,7 @@
     "data/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
     "data/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
     "data/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
+    "data/bonus-buttons.png": "6fa8cbdb7f94b812b9b4bfe0842e328f7382f61c0962e46029e8a39ce4ad9f51",
     "data/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -654,6 +655,32 @@
     "decoration_review": "docs/review/board-frame-decorations/front.md",
     "layout": "lua/board_frame_atlas.lua",
     "reference": "engine/art/board-frame/rim-attachment-guide.png"
+  },
+  "bonus_buttons": {
+    "generator": "games/christmas-market/tools/prepare_bonus_buttons.py",
+    "recipe": "../relic-rush/art/board-states/manifest.json#bonus_gems",
+    "runtime": "data/bonus-buttons.png",
+    "review": "docs/screenshots/booster-toolbar-phone.jpg",
+    "columns": [
+      "booster-hammer",
+      "booster-firework",
+      "booster-lantern",
+      "booster-star"
+    ],
+    "icons": {
+      "booster-hammer": {
+        "good": 5
+      },
+      "booster-firework": {
+        "special": "bomb"
+      },
+      "booster-lantern": {
+        "good": 10
+      },
+      "booster-star": {
+        "special": "ray-row"
+      }
+    }
   },
   "market_goods": {
     "source": "art/market-goods/source.png",

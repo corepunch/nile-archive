@@ -68,6 +68,10 @@ def main():
     assert (ROOT/goods['prompt']).is_file() and (ROOT/goods['review']).is_file()
     assert png(ROOT/goods['runtime']) == ((512, 512), 6) and len(set(goods['frames'])) == 16
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
+    buttons = manifest['bonus_buttons']
+    assert len(set(buttons['columns'])) == 4 and set(buttons['columns']) == set(buttons['icons'])
+    assert png(ROOT/buttons['runtime']) == ((512, 768), 6)
+    subprocess.run([sys.executable, str(ROOT.parents[1]/buttons['generator']), '--check'], check=True)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}
     for kind in ('build', 'play', 'levels'):
