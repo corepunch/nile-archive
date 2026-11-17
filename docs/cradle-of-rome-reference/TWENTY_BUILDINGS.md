@@ -73,29 +73,29 @@ listed clear and come before the next story restoration.
 | ---: | ---: | --- | ---: | --- | ---: |
 | **I. The landing** |
 | 1 | 1 | ★ Expedition camp | 2 | Hammer gems | 0 / 10 / 20 |
-| 2 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | 130 / 0 / 0 |
-| 3 | 7 | Trapper's cabin | 8 | Dynamite upgrades Hammer | 80 / 55 / 75 |
-| 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 145 / 105 / 150 |
+| 2 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | 125 / 0 / 0 |
+| 3 | 7 | Trapper's cabin | 8 | Dynamite upgrades Hammer | 65 / 40 / 45 |
+| 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 120 / 80 / 90 |
 | **II. The quay** |
-| 5 | 9 | Water mill | — | Opens the Jungle market restoration | 75 / 50 / 75 |
-| 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 145 / 95 / 150 |
-| 7 | 11 | Clock tower | 12 | Star gems | 180 / 140 / 200 |
-| 8 | 13 | Stone amphitheatre | 14 | Shield gems *(from the Courtyard)* | 60 / 80 / 80 |
+| 5 | 9 | Water mill | — | Opens the Jungle market restoration | 65 / 35 / 60 |
+| 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 125 / 70 / 125 |
+| 7 | 11 | Clock tower | 12 | Star gems | 150 / 200 / 150 |
+| 8 | 13 | Stone amphitheatre | 14 | Shield gems *(from the Courtyard)* | 35 / 50 / 35 |
 | **III. The terraces** |
-| 9 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | 90 / 150 / 160 |
-| 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | 300 / 340 / 0 |
-| 11 | 17 | Trading post | 18 | Ring, 7 Coins *(from the Courtyard)* | 250 / 290 / 360 |
-| 12 | 19 | Valley lighthouse | 20 | Lightning upgrades Shield | 100 / 110 / 120 |
+| 9 | 13 | ★ Sunstone courtyard | 14 | Helmet, 6 Coins | 55 / 95 / 65 |
+| 10 | 16 | ★ Explorer's lodge | 17 | Grain bundle, 5 Food | 330 / 325 / 0 |
+| 11 | 17 | Trading post | 18 | Ring, 7 Coins *(from the Courtyard)* | 170 / 215 / 290 |
+| 12 | 19 | Valley lighthouse | 20 | Lightning upgrades Shield | 70 / 70 / 55 |
 | **IV. The wreck** |
-| 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 195 / 230 / 240 |
-| 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 190 / 190 / 190 |
-| 15 | 22 | Cartographer's house | 23 | Plus gems give a quarter charge to other sockets | 285 / 250 / 270 |
-| 16 | 23 | ★ Star observatory | 24 | Star II upgrades Star | 205 / 0 / 200 |
+| 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 140 / 145 / 110 |
+| 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 145 / 140 / 125 |
+| 15 | 22 | Cartographer's house | 23 | Plus gems give a quarter charge to other sockets | 275 / 230 / 180 |
+| 16 | 23 | ★ Star observatory | 24 | Star II upgrades Star | 120 / 0 / 85 |
 | **V. The temple** |
-| 17 | 24 | Great aviary | 25 | Winged sandal, 9 Coins *(from the Courtyard)* | 200 / 240 / 180 |
-| 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | 280 / 0 / 300 |
-| 19 | 27 | Relic museum | 28 | Harp, 10 Coins. Plus II upgrades Plus | 220 / 420 / 220 |
-| 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | 330 / 430 / 330 |
+| 17 | 24 | Great aviary | 25 | Winged sandal, 9 Coins *(from the Courtyard)* | 210 / 285 / 175 |
+| 18 | 26 | ★ Jade fountain | 27 | Shrimp, 6 Food | 315 / 0 / 225 |
+| 19 | 27 | Relic museum | 28 | Harp, 10 Coins. Plus II upgrades Plus | 205 / 420 / 115 |
+| 20 | 29 | ★ Temple of the sun | 30 | Emerald, 11 Coins | 435 / 450 / 260 |
 
 When two restorations unlock on the same clear (7, 9, 13 and 19), the
 story restoration comes second. Expedition 10 introduces ration jars

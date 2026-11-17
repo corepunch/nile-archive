@@ -99,25 +99,25 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 | # | Restoration | Placed after | First board | Board payoff | Price C / F / S |
 | ---: | --- | ---: | ---: | --- | ---: |
 | 1 | ★ Expedition Camp | 1 | 2 | Hammer gems | 0 / 10 / 20 |
-| 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 130 / 0 / 0 |
-| 3 | Trapper's cabin | 7 | 8 | Dynamite upgrades Hammer | 80 / 55 / 75 |
-| 4 | ★ Artisan Workshop | 7 | 8 | Cut blocks replace dressed stone, 5 Supplies each | 145 / 105 / 150 |
-| 5 | Water mill | 9 | — | Opens the Jungle Market restoration | 75 / 50 / 75 |
-| 6 | ★ Jungle Market | 9 | 10 | Ration jars replace red berries, 4 Food each | 145 / 95 / 150 |
-| 7 | Clock tower | 11 | 12 | Star gems | 180 / 140 / 200 |
-| 8 | Stone amphitheatre | 13 | 14 | Shield gems | 60 / 80 / 80 |
-| 9 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 90 / 150 / 160 |
-| 10 | ★ Explorer's Lodge | 16 | 17 | Grain bundles replace ration jars, 5 Food each | 300 / 340 / 0 |
-| 11 | Trading post | 17 | 18 | Rings replace helmets, 7 Coins each | 250 / 290 / 360 |
-| 12 | Valley lighthouse | 19 | 20 | Lightning upgrades Shield | 100 / 110 / 120 |
-| 13 | ★ Lost-world Archive | 19 | 20 | Carved quartz replaces cut blocks, 7 Supplies each | 195 / 230 / 240 |
-| 14 | Beached schooner | 20 | 21 | Scarabs replace rings, 8 Coins each | 190 / 190 / 190 |
-| 15 | Cartographer's house | 22 | 23 | Plus gems give a quarter charge to other unlocked bonuses | 285 / 250 / 270 |
-| 16 | ★ Star Observatory | 23 | 24 | Star II upgrades Star | 205 / 0 / 200 |
-| 17 | Great aviary | 24 | 25 | Sandals replace scarabs, 9 Coins each | 200 / 240 / 180 |
-| 18 | ★ Jade Fountain | 26 | 27 | Shrimp replace water buckets, 6 Food each | 280 / 0 / 300 |
-| 19 | Relic museum | 27 | 28 | Harps replace sandals, 10 Coins each. Plus II upgrades Plus | 220 / 420 / 220 |
-| 20 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 330 / 430 / 330 |
+| 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 125 / 0 / 0 |
+| 3 | Trapper's cabin | 7 | 8 | Dynamite upgrades Hammer | 65 / 40 / 45 |
+| 4 | ★ Artisan Workshop | 7 | 8 | Cut blocks replace dressed stone, 5 Supplies each | 120 / 80 / 90 |
+| 5 | Water mill | 9 | — | Opens the Jungle Market restoration | 65 / 35 / 60 |
+| 6 | ★ Jungle Market | 9 | 10 | Ration jars replace red berries, 4 Food each | 125 / 70 / 125 |
+| 7 | Clock tower | 11 | 12 | Star gems | 150 / 200 / 150 |
+| 8 | Stone amphitheatre | 13 | 14 | Shield gems | 35 / 50 / 35 |
+| 9 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 55 / 95 / 65 |
+| 10 | ★ Explorer's Lodge | 16 | 17 | Grain bundles replace ration jars, 5 Food each | 330 / 325 / 0 |
+| 11 | Trading post | 17 | 18 | Rings replace helmets, 7 Coins each | 170 / 215 / 290 |
+| 12 | Valley lighthouse | 19 | 20 | Lightning upgrades Shield | 70 / 70 / 55 |
+| 13 | ★ Lost-world Archive | 19 | 20 | Carved quartz replaces cut blocks, 7 Supplies each | 140 / 145 / 110 |
+| 14 | Beached schooner | 20 | 21 | Scarabs replace rings, 8 Coins each | 145 / 140 / 125 |
+| 15 | Cartographer's house | 22 | 23 | Plus gems give a quarter charge to other unlocked bonuses | 275 / 230 / 180 |
+| 16 | ★ Star Observatory | 23 | 24 | Star II upgrades Star | 120 / 0 / 85 |
+| 17 | Great aviary | 24 | 25 | Sandals replace scarabs, 9 Coins each | 210 / 285 / 175 |
+| 18 | ★ Jade Fountain | 26 | 27 | Shrimp replace water buckets, 6 Food each | 315 / 0 / 225 |
+| 19 | Relic museum | 27 | 28 | Harps replace sandals, 10 Coins each. Plus II upgrades Plus | 205 / 420 / 115 |
+| 20 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 435 / 450 / 260 |
 
 Each new piece pays a currency the next restoration on the ladder needs.
 Where two restorations share a clear (7, 9, 13 and 19), the story restoration
@@ -146,21 +146,32 @@ The Camp uses Supplies and Food. Buying the Well with Coins unlocks a Food
 source. Every restoration after it uses at least two currencies. The prices
 are in the ladder table above.
 
-**Prices come from a measured run.** The extended campaign run plays every
-board with a greedy bot, places each restoration when it can afford it, and
-replays the latest board when the story needs one it cannot. Each stop's price
-is about 80% of what the boards since the previous stop pay (smoothed over five
-boards), in the building's own mix of currencies, then rounded. With these
-prices the bot places all twenty in thirty clears with three replays: two at
-clear 13, whose board pays almost no Coins, and one at clear 23. Every currency
-runs low at some stop, and it ends with 334 Coins, 229 Supplies and 299 Food.
-It also builds the Beached schooner a clear late, after saving for it. The bot
-is not a human player; human sessions should confirm the shortfalls.
+**Prices come from averaged board income.** The balance runner plays every
+board 40 times with the greedy bot and the unlocks the ladder has delivered by
+then, using only the rules: no screen, story or animation. It reports each
+board's win rate, moves left and mean income per won board, then walks the
+expected campaign: bank each board's mean income and, at each stop, spend 80%
+of what the wallet holds in every currency the stop's restorations use, split
+by their previous prices. The rest carries over, so every currency runs low
+somewhere and none piles up unused. With these prices the expected campaign
+needs no replays, its lowest wallets after a purchase are 23 Coins, 0 Food and
+3 Supplies, and it ends with 284 Coins, 319 Food and 180 Supplies. The seeded
+campaign bot, one start per board, needs five replays and ends with 647 / 701
+/ 195. The bot is not a human player; human sessions should confirm the
+shortfalls.
+
+The bot wins many boards in fewer than half its attempts (board 28 in 8 of
+40), since matches no longer make special pieces. Win rates and moves left are
+in the same report.
 
 ```sh
 make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush
-build/test/relic-rush --extended "rules campaign_play"   # per-board wallet in build/test/relic-rush.log
+build/test/relic-rush --extended "rules relic_balance"                  # 10 plays per board, about 10 s
+BALANCE_RUNS=40 build/test/relic-rush --extended "rules relic_balance"  # the fitted prices, about 40 s
+build/test/relic-rush --extended "rules campaign_play"                  # one seeded campaign
 ```
+
+The reports are in `build/test/relic-rush.log`.
 
 A piece earns its base amount when a match, cascade or tool clears it.
 Breaking a chain leaves its piece in place. A later hit clears the piece and

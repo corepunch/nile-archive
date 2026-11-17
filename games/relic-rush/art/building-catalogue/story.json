@@ -5,84 +5,84 @@
   },
   "well": {
     "about": "Water buckets earn 3 Food each from expedition 5.",
-    "cost": [130, 0, 0]
+    "cost": [125, 0, 0]
   },
   "workshop": {
     "about": "Cut blocks earn 5 Supplies each from expedition 8.",
-    "cost": [145, 105, 150]
+    "cost": [120, 80, 90]
   },
   "market": {
     "about": "Adds ration jars to later expeditions.",
-    "cost": [145, 95, 150]
+    "cost": [125, 70, 125]
   },
   "gateway": {
     "about": "Helmets replace sun coins, 6 Coins each.",
-    "cost": [90, 150, 160]
+    "cost": [55, 95, 65]
   },
   "lodge": {
     "about": "Adds grain bundles worth 5 Food each.",
-    "cost": [300, 340, 0]
+    "cost": [330, 325, 0]
   },
   "archive": {
     "about": "Adds carved quartz worth 7 Supplies each.",
-    "cost": [195, 230, 240]
+    "cost": [140, 145, 110]
   },
   "observatory": {
     "about": "Upgrades Star to Star II so it can hit through one layer of chain or ice.",
-    "cost": [205, 0, 200]
+    "cost": [120, 0, 85]
   },
   "fountain": {
     "about": "Adds shrimp worth 6 Food each.",
-    "cost": [280, 0, 300]
+    "cost": [315, 0, 225]
   },
   "temple": {
     "about": "Adds emeralds worth 11 Coins each.",
-    "cost": [330, 430, 330]
+    "cost": [435, 450, 260]
   },
   "log_cabin": {
     "about": "Upgrades Hammer to Dynamite. The Blast slot keeps its charge.",
-    "cost": [80, 55, 75]
+    "cost": [65, 40, 45]
   },
   "apothecary": {"cost": [220, 15, 0]},
   "mess_hall": {"cost": [240, 0, 16]},
   "stilt_house": {"cost": [260, 0, 17]},
   "map_room": {
     "about": "Match Plus gems to add a quarter charge to your other unlocked bonuses.",
-    "cost": [285, 250, 270]
+    "cost": [275, 230, 180]
   },
   "greenhouse": {"cost": [300, 20, 0]},
   "trading_post": {
     "about": "Rings replace helmets, 7 Coins each.",
-    "cost": [250, 290, 360]
+    "cost": [170, 215, 290]
   },
   "water_mill": {
     "about": "Restore the Water mill before rebuilding the Jungle market.",
-    "cost": [75, 50, 75]
+    "cost": [65, 35, 60]
   },
   "clock_tower": {
     "about": "Match Star gems to charge a hit on every piece of one kind.",
-    "cost": [180, 140, 200]
+    "cost": [150, 200, 150]
   },
   "lighthouse": {
     "about": "Upgrades Shield to Lightning. Hit a row and strike up to 20 cells in total.",
-    "cost": [100, 110, 120]
+    "cost": [70, 70, 55]
   },
   "treehouse": {"cost": [400, 0, 27]},
   "aviary": {
     "about": "Sandals replace scarabs, 9 Coins each.",
-    "cost": [200, 240, 180]
+    "cost": [210, 285, 175]
   },
   "beached_ship": {
     "about": "Scarabs replace rings, 8 Coins each.",
-    "cost": [190, 190, 190]
+    "cost": [145, 140, 125]
   },
   "amphitheater": {
     "about": "Shield gems join later expeditions. Match them to charge a row strike.",
-    "cost": [60, 80, 80]
+    "cost": [35, 50, 35]
   },
   "museum": {
     "about": "Harps replace sandals and earn 10 Coins each. Plus II gives the other unlocked bonuses a half charge.",
-    "cost": [220, 420, 220]
+    "cost": [205, 420, 115]
   },
   "hanging_gardens": {"cost": [550, 37, 0]}
 }
