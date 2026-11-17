@@ -52,7 +52,7 @@ Safe-area insets: 47 top, 34 bottom.
 ```sh
 make CFLAGS="-O2 -g -Werror"
 make test
-BALANCE_RUNS=10 build/test/relic-rush --extended "rules relic_balance"   # bot plays every board; fits prices
+make test-balance   # bot plays every board; fits prices
 python3 tools/capture_economy_review.py --before-ref ac69ea7
 ```
 

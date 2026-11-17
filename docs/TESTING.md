@@ -189,6 +189,14 @@ smoke, screenshots, reels and gestures. The aggregate target also retains
 preflight and native audio checks. `make test-extended` deliberately raises
 the budget to 60 seconds for the larger deterministic sample. Native CI runs
 the thousand opening boards, greedy campaign simulations and gameplay smokes.
+For Relic Rush balance, CI plays one fixed seed on each of boards 1, 47 and 98,
+checking that the bot wins and earns all three currencies. To measure win
+rates and fit restoration prices across all 100 boards, run `make test-balance`
+or select **Relic Rush balance** and **Run workflow** in GitHub Actions.
+The full run uses ten seeds per board. Override the local sample size with
+`make test-balance BALANCE_RUNS=40`. The local report is in
+`build/test/relic-rush.log`, and the workflow prints it in the job log.
+
 The two 30-board UI campaigns render a 240×450 window at the logical phone
 layout and advance the test clock by 0.1 seconds per frame.
 

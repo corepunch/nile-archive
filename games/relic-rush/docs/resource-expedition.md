@@ -135,7 +135,7 @@ The Camp uses Supplies and Food. Buying the Well with Coins unlocks a Food
 source. Every restoration after it uses at least two currencies. The prices
 are in the ladder table above.
 
-**Prices come from averaged board income.** The balance runner plays every
+**Prices come from averaged board income.** For the price fit, the balance runner played every
 board 40 times with the greedy bot and the unlocks the ladder has delivered by
 then, using only the rules: no screen, story or animation. It reports each
 board's win rate, moves left and mean income per won board, then walks the
@@ -150,8 +150,8 @@ in the same report.
 
 ```sh
 make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush
-build/test/relic-rush --extended "rules relic_balance"                  # 10 plays per board, about 10 s
-BALANCE_RUNS=40 build/test/relic-rush --extended "rules relic_balance"  # the fitted prices, about 40 s
+make test-balance                       # 10 plays per board and the full economy report
+make test-balance BALANCE_RUNS=40       # 40 plays per board for price tuning
 build/test/relic-rush --extended "rules campaign_play"                  # one seeded campaign
 ```
 

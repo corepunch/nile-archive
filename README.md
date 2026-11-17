@@ -65,6 +65,7 @@ make run-nile     # or: make run-relic / make run-emergency
 make test         # all rule/renderer/preflight checks, 5s test budget after builds
 make test-fast    # same checks without a window/GPU
 make test-ci      # native CI rules, renderer, audio and gameplay smokes
+make test-balance # on demand: 1,000 Relic Rush games and the restoration price report
 make test-full    # complete smoke runs, screenshots and reels on demand
 make test-relic-rush # one game's fast suite; substitute another game name
 make test-extended # larger seeds and greedy campaign, using the same test binaries
