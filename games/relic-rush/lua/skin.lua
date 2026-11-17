@@ -35,6 +35,7 @@ return ui.skin{
         cream = {extends = "base", fill = "#FFF9E2", fill2 = "#F4DDA6"},
         green = {extends = "base", fill = "#C7FFC9", fill2 = "#5BC682"},
         white = {extends = "base", fill = "#FFFFFF", fill2 = "#C4E8DC"},
+        short = {extends = "base", fill = "#FFD9CC", fill2 = "#F0705A"},   -- a price the wallet cannot cover
     },
 
     controls = {

@@ -44,17 +44,15 @@
   "card": {"back": "BACK TO MARKET", "moving": "HOLD AND DRAG IN THE MARKET TO MOVE",
            "locked": "COMPLETE MORE PUZZLES TO BUILD THIS STALL"},
   "catalogue": {
-    "title": "Build your market", "hint": "Choose Christmas magic for the market.", "close": "BACK TO MARKET",
+    "title": "Build your market", "close": "BACK TO MARKET",
     "categories": [["all", "All Christmas magic"], ["wonder", "Market wishes"], ["building", "Decorations"],
                    ["tree", "Snowy trees"], ["cottage", "Cottages"]],
     "category": "all",
     "built": "BUILT", "complete": "COMPLETE WISH %d", "earlier": "BUILD EARLIER STALLS",
-    "poor": "MORE RESOURCES NEEDED", "reserved": "RESERVED FOR STALLS", "full": "MARKET IS FULL",
-    "price": "%d gold"
+    "poor": "MORE RESOURCES NEEDED", "reserved": "RESERVED FOR STALLS", "full": "MARKET IS FULL"
   },
   "expeditions": {
     "title": "Winter wishes",
-    "intro": "Bank the resources you match on every win.\nFirst clears also earn three Christmas Stars.",
     "close": "BACK TO MARKET",
     "resume": "RESUME", "replay": "REPLAY", "pending": "BUILD FIRST",
     "new": "PLAY", "earlier": "COMPLETE EARLIER WISHES",

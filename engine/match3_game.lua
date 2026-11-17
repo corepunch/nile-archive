@@ -62,16 +62,15 @@ G.DEFAULTS = {
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", back = "BACK TO TOWN",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     catalogue = {
-        title = "Build your town", hint = "Choose a building, then place it.", close = "BACK TO TOWN",
+        title = "Build your town", close = "BACK TO TOWN",
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
         category = "all",
-        choose = "CHOOSE LOCATION", tap = "Tap to build", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
+        build = "BUILD", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
         stars = "REQUIRES %d STARS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
-        price = "%d gold", unlock = "  /  %d stars to unlock",
-        details = "%d x %d tiles  /  Owned %d\n%s", build_points = "  /  +%d decoration points",
+        row = "%d x %d tiles  ·  Owned %d", build_points = "  ·  +%d decoration points",
     },
     expeditions = {
-        title = "Levels", intro = "First clear: the story, Stars and building funding.\nReplay: gold.", close = "BACK TO TOWN",
+        title = "Levels", close = "BACK TO TOWN",
         locked = "LOCKED", resume = "RESUME", replay = "REPLAY", pending = "BUILD FIRST", new = "NEW LEVEL", earlier = "COMPLETE EARLIER LEVELS",
         resume_note = "Continue the unfinished board. Rewards come with a win.",
         replay_note = "Gold only.", building_note = "First clear: building funded.", story_note = "First clear: the next scene.",
@@ -122,7 +121,7 @@ function G.state()
 
         -- overlays and board phases
         OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_AWARD = 12,
-        PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white",   -- text styles in skin.lua
+        PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
         font = nil,
@@ -771,40 +770,67 @@ function G.bind(R, over)
 
     -- Modal lists: the engine owns measured rows, focus, hit testing and
     -- input capture. Backdrops snap in, like every popup.
-    local MODAL = {width=448, snap_backdrop=true, blur=7, dim=color(5, 22, 22, 185), cancel="close"}
+    -- Both lists are full-screen sheets from under the wallet row to the
+    -- bottom of the safe screen; a tap on the strip around them closes.
+    local function sheet(screen)
+        local header = R.town.cfg.header
+        local top = screen.y + header.y + (header.band_height or header.height)
+        return rect(screen.x + 8, top, screen.w - 16, screen:max().y - 10 - top)
+    end
+    local MODAL = {bounds=sheet, snap_backdrop=true, blur=7, dim=color(5, 22, 22, 185), cancel="close"}
     local C = W.catalogue
     local categories, category = C.categories, 1
     for i, cat in ipairs(categories) do if cat[1] == C.category then category = i end end
     local shop = ui.modals(skin)
-    local function paint_tile(box, record)
-        local locked = record.state == "locked"
-        R.rrect(box:offset(vec2(0, 3)), 13, rgba(201, 164, 100))
-        R.rrect(box, 13, record.selected and rgba(184, 60, 60) or locked and rgba(243, 229, 192) or rgba(255, 246, 214))
-        if record.selected then R.rrect(box:inflate(-3), 11, rgba(255, 246, 214)) end
-        R.picture_fit(record.sprite, rect(box.x + 4, box.y + 4, box.w - 8, box.h - 34), locked and 110 or 255)
-        local line = rect(box.x, box.y + box.h - 28, box.w, 24)
-        if record.state == "built" or locked then   -- icons from the game's atlas
-            R.picture_fit(record.state == "built" and R.shop_built_art or R.shop_locked_art, rect.centered(line:center(), size2(30, 30)), 255)
-        else
-            local parts = record.prices
-            local width = math.min(55, line.w / #parts)
-            for k, part in ipairs(parts) do
-                local x = line:center().x + (k - 1 - #parts / 2) * width
-                R.picture_fit(part.icon, rect(x, line.y + 2, 18, 19), 255)
-                R.say_left(tostring(part.amount), rect(x+18, line.y, width-18, 24),
-                    #parts == 3 and 13 or 17, record.state == "ready" and PAL_GOLD or PAL_CREAM)
-            end
-        end
+    local ACTION_W = 100   -- the right-hand column: the action pill or why it waits
+    local function row_card(box, face)
+        R.rrect(box:offset(vec2(0, 2)), 13, rgba(201, 164, 100))
+        R.rrect(box, 13, face)
     end
-    local catalogue_form = match3.catalogue_form(C.title, C.hint, C.close, PAL_CREAM, paint_tile)
+    local ROW_FACE, ROW_DIM, ROW_CURRENT = rgba(255, 246, 214), rgba(243, 229, 192), rgba(255, 228, 150)
+    -- The row's action in the skin's own button, so each game keeps its colours.
+    local function action_pill(box, label, on)
+        skin:paint("button", box, {disabled = not on})
+        R.say(label, box, 14, PAL_CREAM)
+    end
+    -- One building: art, name, what it brings, the whole price (an amount the
+    -- wallet cannot cover is in the skin's "short" style) and the action.
+    local function paint_row(box, record)
+        local locked = record.state == "locked"
+        row_card(box, record.state == "ready" and ROW_FACE or ROW_DIM)
+        local right = rect(box.x + box.w - ACTION_W - 6, box.y, ACTION_W, box.h)
+        local side = box.h - 12
+        R.picture_fit(record.sprite, rect(box.x + 6 + (72 - side) / 2, box.y + 6, side, side), locked and 130 or 255)
+        local x = box.x + 88   -- every row's text starts after the tall rows' art
+        if record.slim then   -- built: its art, its name and a tick
+            R.say_left(record.name, rect(x, box.y, right.x - x - 4, box.h), 17, PAL_CREAM)
+            R.picture_fit(R.shop_built_art, rect(right.x + 2, box.y + (box.h - 26) / 2, 26, 26), 255)
+            R.say_left(record.action, rect(right.x + 32, box.y, right.w - 32, box.h), 12, PAL_CREAM)
+            return
+        end
+        local w = right.x - x - 4
+        R.say_left(record.name, rect(x, box.y + 6, w, 24), 18, PAL_GOLD)
+        R.say_left(record.note, rect(x, box.y + 31, w, 16), 12, PAL_CREAM)
+        local step = math.min(64, w / #record.prices)
+        for k, part in ipairs(record.prices) do
+            local px = x + (k - 1) * step
+            R.picture_fit(part.icon, rect(px, box.y + 52, 22, 22), 255)
+            R.say_left(tostring(part.amount), rect(px + 25, box.y + 51, step - 25, 24), 16, part.short and R.PAL_SHORT or PAL_CREAM)
+        end
+        if record.available then action_pill(rect.centered(right:center(), size2(ACTION_W - 8, 34)), C.build, true)
+        elseif locked then
+            R.picture_fit(R.shop_locked_art, rect.centered(vec2(right:center().x, box.y + 22), size2(26, 26)), 255)
+            R.paragraph(record.action, rect(right.x, box.y + 36, right.w, box.h - 42), 11, PAL_CREAM)
+        else R.paragraph(record.action, right:inflate(-2), 11, PAL_CREAM) end
+    end
+    local catalogue_form = match3.catalogue_form(C.title, C.close, paint_row)
     R.catalogue_form = catalogue_form
 
-    local tiles = {}   -- building key -> its tile record
+    local tiles = {}   -- building key -> its row record
     local catalogue_rows = {}
     for i in ipairs(island.catalogue) do catalogue_rows[i] = i end
-    local selected   -- the tile the footer explains
     local function refresh_catalogue()
-        local records, rows = {}, {}
+        local records = {}
         local cat = categories[category][1]
         local wallet = R.prog.wallet
         -- A game may list its catalogue in another order (rows stay save data).
@@ -814,7 +840,7 @@ function G.bind(R, over)
                 local def = R.buildings[i]
                 local owned = island.owned(R.island, i - 1)
                 local available = island.can_buy(R.island, wallet, R.prog.level, i - 1)
-                local action, state = C.choose, "ready"
+                local action, state = C.build, "ready"
                 local blocked, at = ladder_blocked(i - 1, owned)
                 if blocked ~= nil then
                     local reason = blocked == "built" and C.built or blocked == "later" and C.complete:format(at) or
@@ -828,42 +854,27 @@ function G.bind(R, over)
                     action, state = C.reserved, "poor"
                 elseif R.island.count >= 160 then action, state = C.full, "poor" end
                 local parts = price_parts(def.cost)
-                local price = R.currency_prices and R.cost_text(parts) or C.price:format(def.cost[1])
-                if blocked == nil then price = price .. C.unlock:format(meta.stars) end
-                local details = C.details:format(meta.size.w, meta.size.h, owned, price):gsub("\n", "  /  ")
-                if R.quest_build_points then details = details .. C.build_points:format(R.quest_build_points(i - 1)) end
+                for _, part in ipairs(parts) do part.short = wallet[part.slot or rules.GOLD] < part.amount end
+                local note = meta.unlock_text
+                if not note then
+                    note = C.row:format(meta.size.w, meta.size.h, owned)
+                    if R.quest_build_points then note = note .. C.build_points:format(R.quest_build_points(i - 1)) end
+                end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts, state=state,
-                    details=details, available=available, action=action}
+                    note=note, available=available, action=action, slim=state == "built"}
                 records[#records + 1], tiles[meta.key] = record, record
             end
         end
-        local in_category = false
-        for _, record in ipairs(records) do if record.id == selected then in_category = true end end
-        if not in_category then
-            selected = records[1] and records[1].id
-            for _, record in ipairs(records) do if record.available then selected = record.id; break end end
-        end
-        for n, record in ipairs(records) do
-            record.selected = record.id == selected
-            local r = (n - 1) // match3.CATALOGUE_COLUMNS + 1
-            rows[r] = rows[r] or {id="r" .. r, cells={}}
-            rows[r].cells[#rows[r].cells + 1] = record
-        end
-        assert(catalogue_form:set_items("stock", rows))
+        assert(catalogue_form:set_items("stock", records))
         catalogue_form:set("category", categories[category][2])
-        local record = tiles[selected]
-        catalogue_form:set("info_name", record and record.name or "")
-        catalogue_form:set("info_note", record and (record.details .. "\n" .. (record.available and C.tap or record.action)) or "")
-        return #rows
+        return records
     end
 
-    -- The tile node and record for a building key, for smoke tests that press it.
+    -- The row's button node and record for a building key, for smoke tests that press it.
     function R.catalogue_tile(key)
         for _, node in pairs(catalogue_form.nodes) do
-            if node.local_id and node.local_id:find("^pick") then
-                local row = catalogue_form:get_item("stock", node.item_key)
-                local record = row and row.cells[tonumber(node.local_id:sub(5))]
-                if record and record.id == key then return node, record end
+            if node.local_id == "pick" and node.item_key == key and catalogue_form:get_item("stock", key) then
+                return node, tiles[key]
             end
         end
     end
@@ -874,10 +885,9 @@ function G.bind(R, over)
             for i, cat in ipairs(categories) do if cat[1] == filter then category = i end end
         end
         if shop:active() then shop:close() end
-        local row_count = refresh_catalogue()
-        if review_page and row_count > 0 then
-            local row = num.clampi(math.floor(review_page), 1, row_count)
-            catalogue_form:scroll_to("stock", "r" .. row)
+        local records = refresh_catalogue()
+        if review_page and #records > 0 then   -- review pages are six rows apart
+            catalogue_form:scroll_to("stock", records[num.clampi((math.floor(review_page) - 1) * 6 + 1, 1, #records)].id)
         elseif category ~= old_category then catalogue_form:scroll_to("stock") end
         assert(shop:open("catalogue", catalogue_form, {}, MODAL))
         R.overlay = R.OV_SHOP
@@ -892,10 +902,8 @@ function G.bind(R, over)
             refresh_catalogue()
             catalogue_form:scroll_to("stock")
         elseif event.source == "stock" then
-            local row = catalogue_form:get_item("stock", event.key)
-            local record = row and row.cells[tonumber(tostring(event.id):sub(5)) or 0]
-            if record and record.available then shop:close(); R.island_begin(record.kind, true)
-            elseif record then selected = record.id; refresh_catalogue() end   -- the footer says why it cannot be built
+            local record = catalogue_form:get_item("stock", event.key)
+            if record and record.available then shop:close(); R.island_begin(record.kind, true) end
         end
     end
 
@@ -903,25 +911,22 @@ function G.bind(R, over)
     local E = W.expeditions
     local levels = ui.modals(skin)
     local function paint_level(box, e)
-        local current = e.state == "current"
-        R.rrect(box:offset(vec2(0, 2)), 13, rgba(201, 164, 100))
-        R.rrect(box, 13, current and rgba(255, 228, 150) or e.state == "locked" and rgba(243, 229, 192) or rgba(255, 246, 214))
-        local c = vec2(box.x + 30, box.y + (current and 33 or box.h / 2))
+        local current, locked = e.state == "current", e.state == "locked"
+        row_card(box, current and ROW_CURRENT or locked and ROW_DIM or ROW_FACE)
+        local c = vec2(box.x + 30, box:center().y)
         gfx.circle(c, 19, rgba(77, 58, 31))
-        gfx.circle(c, 17, current and rgba(184, 60, 60) or e.state == "locked" and rgba(140, 150, 136) or rgba(44, 108, 84))
+        gfx.circle(c, 17, current and rgba(184, 60, 60) or locked and rgba(140, 150, 136) or rgba(44, 108, 84))
         R.say(tostring(e.number), rect.centered(c, size2(34, 24)), 17, PAL_CREAM)
-        local title = rect(box.x + 58, box.y + (current and 7 or 0), box.w - 168, current and 26 or box.h)
-        R.say_left(e.name, title, 18, e.state == "locked" and PAL_CREAM or PAL_GOLD)
-        if current then R.say_left(e.note, rect(box.x + 58, box.y + 34, box.w - 70, 24), 12, PAL_CREAM) end
-        local right = rect(box.x + box.w - 106, box.y + (current and 7 or (box.h - 28) / 2), 96, 28)
-        if e.state == "current" or e.resume then
-            R.rrect(right:offset(vec2(0, 2)), 14, rgba(120, 36, 36))
-            R.rrect(right, 14, e.available and rgba(184, 60, 60) or rgba(125, 140, 126))
-            R.say(e.action, right, 14, PAL_CREAM)
-        elseif e.state == "done" then R.say(e.action, right, 13, PAL_CREAM)
-        else R.say(E.locked, right, 13, PAL_CREAM) end
+        local right = rect(box.x + box.w - ACTION_W - 14, box.y + 6, ACTION_W + 8, 25)
+        R.say_left(e.name, rect(box.x + 58, box.y + 7, right.x - box.x - 62, 26), 18, locked and PAL_CREAM or PAL_GOLD)
+        R.say_left(e.note, rect(box.x + 58, box.y + 36, box.w - 66, 18), 12, PAL_CREAM)
+        if e.available or current then action_pill(right, e.action, e.available)
+        else
+            R.picture_fit(R.shop_locked_art, rect(right.x, right.y + 1, 26, 26), 255)
+            R.say_left(E.locked, rect(right.x + 30, right.y + 1, right.w - 30, 26), 13, PAL_CREAM)
+        end
     end
-    local expedition_form = match3.expedition_form(E.title, E.intro, E.close, PAL_CREAM, paint_level)
+    local expedition_form = match3.expedition_form(E.title, E.close, paint_level)
     R.expedition_form = expedition_form
 
     local function refresh_levels()
@@ -941,10 +946,11 @@ function G.bind(R, over)
         assert(expedition_form:set_items("levels", entries))
     end
 
-    -- Opens at the current level (or a review page of three).
+    -- Opens near the current level (or a review page of three).
     function R.open_expeditions(review_page)
         refresh_levels()
-        local level = review_page and (math.floor(review_page) - 1) * 3 or math.min(R.prog.level, LEVELS - 1) // 3 * 3
+        -- The current level opens with the last two clears above it.
+        local level = review_page and (math.floor(review_page) - 1) * 3 or math.min(R.prog.level, LEVELS - 1) - 2
         expedition_form:scroll_to("levels", tostring(num.clampi(level, 0, LEVELS - 1)))
         if levels:active() then levels:close() end
         assert(levels:open("expeditions", expedition_form, {}, MODAL))

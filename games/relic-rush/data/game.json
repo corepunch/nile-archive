@@ -39,19 +39,17 @@
   "card": {"back": "BACK TO ISLAND", "moving": "HOLD AND DRAG ON THE ISLAND TO MOVE",
            "locked": "COMPLETE MORE LEVELS TO RESTORE THIS WONDER"},
   "catalogue": {
-    "title": "Build your valley", "hint": "Choose a treasure, then place it on open grass.", "close": "BACK TO ISLAND",
+    "title": "Build your valley", "close": "BACK TO ISLAND",
     "categories": [["all", "All treasures"], ["wonder", "Story wonders"], ["building", "Buildings"],
                    ["tree", "Trees"], ["bush", "Shrubs"], ["flower", "Flowers"], ["statue", "Monuments"],
                    ["water", "Water gardens"], ["garden", "Garden furniture"], ["camp", "Expedition supplies"],
                    ["animal", "Wildlife"], ["rock", "Rocks & crystals"]],
     "category": "building",
     "built": "RESTORED", "complete": "COMPLETE EXPEDITION %d", "earlier": "RESTORE EARLIER WONDERS",
-    "poor": "MORE RESOURCES NEEDED", "reserved": "RESOURCES RESERVED FOR RESTORATION", "full": "ISLAND IS FULL",
-    "price": "%d Coins", "build_points": "  /  +%d Happiness"
+    "poor": "MORE RESOURCES NEEDED", "reserved": "RESOURCES RESERVED FOR RESTORATION", "full": "ISLAND IS FULL", "build_points": "  ·  +%d Happiness"
   },
   "expeditions": {
     "title": "Expeditions",
-    "intro": "Match pieces to bring Coins, Supplies and Food home. First clears also unlock clues and Discovery Stars.",
     "close": "BACK TO ISLAND",
     "resume": "RESUME", "replay": "REPLAY", "pending": "RESTORE FIRST",
     "new": "PLAY", "earlier": "DISCOVER EARLIER LEVELS",

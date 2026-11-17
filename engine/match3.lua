@@ -19,44 +19,36 @@ end
 
 -- The two match-3 cities share the same view templates. Game code supplies
 -- localized copy, skin colors, and records with stable keys via set_items.
-E.CATALOGUE_COLUMNS = 3
+E.CATALOGUE_ROW, E.CATALOGUE_SLIM, E.EXPEDITION_ROW = 84, 56, 62
 
-function E.catalogue_form(title, hint, close, detail_color, paint_tile)
-    -- A record is one row, {id, cells={building records}}. Each tile is its
-    -- painted icon under a flat button.
-    return ui.form{kind='column',panel=true,padding=18,gap=8,children={
-        {kind='label',text=title,height=40,em=32},
+-- Full-screen sheets under the wallet row. One building per row: the whole
+-- row is the button (id 'pick') and paint_row draws its art, name, price and
+-- action. A record marked slim (already built) takes a short row.
+function E.catalogue_form(title, close, paint_row)
+    return ui.form{kind='column',panel=true,padding={14,12,14,14},gap=8,children={
+        {kind='label',text=title,height=34,em=28},
         {kind='row',height=38,gap=8,children={
             {kind='button',id='category_prev',text='<',width=42,em=22},
             {kind='label',id='category',grow=1,em=21},
             {kind='button',id='category_next',text='>',width=42,em=22},
         }},
-        {kind='label',text=hint,height=24,em=14,text_style=detail_color},
-        {kind='list',id='stock',scroll=true,height=350,gap=8,item=function(row)
-            local cells = {}
-            for j = 1, E.CATALOGUE_COLUMNS do
-                local record = row.cells[j]
-                cells[j] = record and {kind='overlay',grow=1,height=100,children={
-                    {kind='custom',paint=function(box) paint_tile(box, record) end},
-                    {kind='button',id='pick'..j,text='',flat=true},
-                }} or {kind='spacer',grow=1}
-            end
-            return {kind='row',height=100,gap=8,children=cells}
+        {kind='list',id='stock',scroll=true,grow=1,gap=6,item=function(record)
+            return {kind='overlay',height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,children={
+                {kind='custom',paint=function(box) paint_row(box, record) end},
+                {kind='button',id='pick',text='',flat=true,enabled=record.available},
+            }}
         end},
-        {kind='label',id='info_name',height=26,em=20},
-        {kind='label',id='info_note',height=40,wrap=true,em=14,text_style=detail_color},
         {kind='button',id='close',text=close,height=42,em=21},
     }}
 end
 
--- Slim rows: the whole row is the button (id 'play'); paint_level draws its
--- medallion, name and state.
-function E.expedition_form(title, intro, close, detail_color, paint_level)
-    return ui.form{kind='column',panel=true,padding=20,gap=12,children={
-        {kind='label',text=title,height=42,em=34},
-        {kind='label',text=intro,wrap=true,em=14,text_style=detail_color},
-        {kind='list',id='levels',scroll=true,height=430,gap=6,item=function(e)
-            return {kind='overlay',height=e.state == 'current' and 66 or 50,children={
+-- One level per row: the whole row is the button (id 'play'); paint_level
+-- draws its number, name, note and action.
+function E.expedition_form(title, close, paint_level)
+    return ui.form{kind='column',panel=true,padding={14,12,14,14},gap=8,children={
+        {kind='label',text=title,height=34,em=28},
+        {kind='list',id='levels',scroll=true,grow=1,gap=6,item=function(e)
+            return {kind='overlay',height=E.EXPEDITION_ROW,children={
                 {kind='custom',paint=function(box) paint_level(box, e) end},
                 {kind='button',id='play',text='',flat=true,enabled=e.available},
             }}

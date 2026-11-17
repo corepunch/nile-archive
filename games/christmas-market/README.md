@@ -98,7 +98,9 @@ flakes still.
 `make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has thirty puzzles in three story episodes, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or
-use the mouse wheel. The shop shows three cards per row and keeps its category
+use the mouse wheel. Both are full-screen sheets under the wallet row. The shop
+lists one building per row with its whole price, an amount you cannot yet cover
+in red, and a BUILD button or the reason it waits; it keeps its category
 arrows. Winter Wishes opens near the current puzzle. Both screens share row
 templates with Relic Rush.
 

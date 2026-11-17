@@ -474,10 +474,14 @@ record, or `form:scroll_to(id)` to reset to the top on a category change.
 `node.scroll_state.offset` and `node.scroll_max` expose the measured position
 for integration checks.
 
-Relic Rush and Christmas Market share `match3.catalogue_form` (building icons in
-rows of four: one record per row, each tile a flat `pick1`-`pick4` button over a
-painted icon; a footer explains the tapped tile) and `match3.expedition_form` (one
-slim row per level, the whole row the `play` button). Nile Archive uses the same list contract with wider
+Relic Rush and Christmas Market share `match3.catalogue_form` (one building per
+row, the whole row a flat `pick` button over its painted art, name, price and
+action; a record marked `slim` takes a short row) and `match3.expedition_form` (one
+row per level, the whole row the `play` button). Both open as full-screen sheets
+under the wallet row: a modal's `bounds` option may be a function of the screen,
+called every frame, and a `list` with `grow` takes the height the sheet leaves.
+A price the wallet cannot cover is drawn in the skin's `short` text style, and
+row actions use the skin's `button`. Nile Archive uses the same list contract with wider
 templates for its build tray and chapter browser.
 
 The engine animation clock supplies one timeline to shared tweens, scroll deceleration and painting. On iOS it reads the host clock with `CACurrentMediaTime()`. UIKit's display link stops driving game frames while the app is inactive. The first frame after a long gap advances by one 60 Hz step, so a board in the middle of a move can finish settling when play resumes. Other platforms keep using `axGetMilliseconds()`.

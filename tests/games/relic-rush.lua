@@ -233,7 +233,7 @@ shot("catalogue", "480x900", "--catalogue building")
 shot("phone-catalogue", "390x844", "--catalogue building --safe-area 0,47,0,34")
 
 reel("expeditions-scroll",24,3,"480x900","--expeditions --scroll-review")
-reel("phone-catalogue-scroll",24,3,"390x844","--catalogue building --scroll-review --safe-area 0,47,0,34")
+reel("phone-catalogue-scroll",24,3,"390x844","--catalogue all --scroll-review --safe-area 0,47,0,34")
 shot("phone-island-bubble","390x844","--dialog bubble --safe-area 0,47,0,34")
 
 -- Full-script representative reads: longest line, thought, shout and the finale.
