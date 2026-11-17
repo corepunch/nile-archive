@@ -1,27 +1,25 @@
-# Four purchases per epoch, stories by chapter
+# Each epoch tells one chapter in four purchases
 
-**Design proposal for Relic Rush and Christmas Market.** The purchase ladders and the scenes used as examples below already exist. The epoch strip, build card and keepsake box are proposed UI. Nile Archive keeps its June's Journey structure.
+**Design proposal for Relic Rush and Christmas Market.** The purchase ladders and scenes already exist. The four-purchase story grouping below is proposed. The epoch strip, build card and keepsake box are proposed UI. Nile Archive keeps its June's Journey structure.
 
-## Purchases and chapters
+## The epoch is the chapter
 
 Keep the rhythm of Cradle of Rome. The player matches pieces, banks resources and spends them on the next building. A purchase has a practical consequence worth showing on the build card. The Spring Well puts water buckets on future boards. Repairing the Quay Steps opens a route the crew could see from camp but couldn't reach. [Rome's twenty purchases](cradle-of-rome-reference/GAME_DESIGN.md#5-every-building-in-the-original-20-purchase-ladder)
 
-- **An epoch counts four confirmed campaign purchases.** Twenty required purchases make five epochs in each game. The ordered ladder includes workaday buildings as well as story landmarks. Optional buildings such as the Jungle Market, citizen arrivals and decorations sit outside the count. The existing ladder supplies the order and availability. [Relic Rush ladder](../games/relic-rush/lua/economy.lua) · [Christmas Market ladder](../games/christmas-market/lua/economy.lua)
-- **A chapter follows a question or wish.** Open it when a character wants something and close it when the player's actions have changed what that character can do. A chapter can cross an epoch boundary or end partway through one. Its closing scene belongs to an authored event, such as restoring the steps. The fourth purchase fills the epoch strip.
+- **Tell one story in four required purchases.** Give the epoch a question or wish. The first purchase sets it up, the middle two move it forward, and confirming the fourth pays it off. Twenty required purchases give each game five story epochs. Optional buildings, decorations and citizen arrivals do not fill a slot. [Relic Rush ladder](../games/relic-rush/lua/economy.lua) · [Christmas Market ladder](../games/christmas-market/lua/economy.lua)
+- **Let citizens add scenes between purchases.** Use the building and play conditions that already bring someone to town. Their arrival gives the writer an occasion for an exchange with another character. The player can finish the epoch whether or not an optional resident has arrived.
 - **The next level funds the next purchase.** Design prices around forward play and reserve the resources needed for required purchases before offering optional spending. In Relic Rush Chapter 1, Claim banks only the resources actually matched. A first clear can make a purchase available. The story moves when the player confirms a build or repair, or a citizen arrives. Use this rule when revising later Relic Rush chapters, which still have first-clear scenes. [Relic Rush campaign milestones](../games/relic-rush/docs/story.md#campaign-milestones)
 
-## Worked example · Relic Rush Chapter 1, A Light Below
+## Worked example · Relic Rush Epoch 1, A Light Below
 
-**Who's answering Mara's lamp?** The chapter takes six purchases. Four of them carry scenes. Clearing the listed board makes the purchase eligible once earlier required work is complete. The player still has to spend the resources and confirm it. [Chapter 1 script](../games/relic-rush/docs/story.md#chapter-1-a-light-below)
+**Is someone answering Mara’s lamp?** Keep the four existing story scenes and make their buildings the first four required purchases. The live ladder puts the Trapper’s Cabin before the Workshop and the Water Mill before the Quay Steps. In this proposal both move to the start of epoch two, with their upgrades and citizen events. [Current purchase order](../games/relic-rush/lua/economy.lua) · [Chapter 1 script](../games/relic-rush/docs/story.md#chapter-1-a-light-below)
 
-| Epoch · purchase | After clear | What the player does | What follows |
+| Purchase | Eligible after clear | What the player does | What follows |
 | --- | --- | --- | --- |
-| 1 · 1 | 1 | Choose a site for the Expedition Camp. | Hammer gems become available. Mara signals from the lookout and gets two flashes back. The crew needs drinking water. |
-| 1 · 2 | 4 | Restore the Spring Well on its original site. | Water buckets enter the board. Tomas accepts a place at camp and tells Mara the electric relay is dead. What sent the flashes? |
-| 1 · 3 | 7 | Build the Trapper's Cabin. | Hammer upgrades to Dynamite. The next board lets the player use the upgrade. |
-| 1 · 4 | 7 | Choose a site for the Artisan Workshop. | Cut blocks enter the board. Tomas shows Mara how to size a replacement tread to fit the old cuts. Epoch one is complete and the steps still need repairing. |
-| 2 · 1 | 9 | Put the Water Mill back to work. | The crew can proceed to the quay repair after clear 10. |
-| 2 · 2 | 10 | Restore the Quay Steps where they stood. | The tread seats in the old notch. Cut to the ancient keeper setting that height so the night watch will have dry footing at high tide. Back in the present, the crew reaches the viewing shutter. Three flashes come back. The player chooses who answers. Chapter 1 ends here. |
+| 1 · Expedition Camp | 1 | Choose a site for the camp. | Hammer gems become available. Mara signals from the lookout and gets two flashes back. It could be a reflection. |
+| 2 · Spring Well | 4 | Restore the well on its original site. | Water buckets enter the board. Tomas accepts a place at camp and tells Mara the electric relay is dead. |
+| 3 · Artisan Workshop | 7 | Choose a site for the workshop. | Cut blocks enter the board. Tomas shows Mara how to size a replacement tread to fit the old cuts. The carpenter can now join if the player makes a match of five. |
+| 4 · Quay Steps | 10 | Restore the steps where they stood. | The new tread fits the notch. Cut to the ancient keeper setting that height for dry footing at high tide. Back in the present, the crew opens the viewing shutter and sees the signal change to three flashes. Someone is working the far shutter by hand. The player chooses who answers, and the epoch closes. |
 
 The keeper appears at the instant the player can understand his decision by looking at their own repair. His scene belongs to the past. The crew learns what it can observe from the newly accessible shutter. Future repairs should likewise open a route, enable someone's work or bring people together. The present-day town is the one the player builds.
 
@@ -30,10 +28,10 @@ The keeper appears at the instant the player can understand his decision by look
 Give each citizen a name, a workplace, a reason to stay and someone they have business with. Introduce them doing their job. Bring them back when another resident or a later purchase gives them something new to do. A short exchange at a stall or a detail the player can tap on a return visit can carry a relationship between the larger scenes.
 
 - **People the chapter depends on arrive reliably.** Restoring the well brings Tomas into camp. At the workshop, Mara needs his knowledge of the old cuts. By the quay, the player can choose him to answer the signal. His arrival and the well repair share one scene.
-- **Optional specialists can be earned through play.** Follow Rome's building-and-feat pattern. A citizen can arrive once they have a workplace and the player has accomplished a relevant board feat. Give their trade a lasting effect, such as a better yield on a matched piece or faster tool charge. Give them a later exchange with a neighbour, available when both are present. The main chapter must still make sense if that specialist never arrives. [Rome's citizen challenges](cradle-of-rome-reference/GAME_DESIGN.md#7-citizen-challenges-buildings-can-have-a-second-payoff)
+- **Give Rome-style citizen feats a scene.** Rome pairs an owned building with a feat such as a five-piece match, two successive combos, or collecting a resource in one level. Relic Rush already uses these conditions at its own scale. With the Workshop built, a match of five brings the carpenter and raises matched cut blocks from five Supplies to six. Let Mara welcome the carpenter at the bench when the player returns to town. With the Water Mill built, a two-stage cascade brings the miller. Use the same arrival event for the exchange and the existing perk. [Rome’s citizen challenges](cradle-of-rome-reference/GAME_DESIGN.md#7-citizen-challenges-buildings-can-have-a-second-payoff) · [Relic Rush citizen events](../games/relic-rush/lua/user_events.lua)
 - **Christmas Market already shows how this can feel.** When Agnes opens the bakery, Henrik sends Pip with a penny for a bun he insists he doesn't want. Agnes saves one at the back of the tray. Later, Henrik's workshop gives him a window facing hers. Still later, a tap at the bakery reveals two cups on the sill. The player gets to see a relationship change through the ordinary business of running the market. Use the existing cast, stalls and tap bubbles for more of these encounters. [Christmas Market script](../games/christmas-market/docs/story.md)
 
-Christmas Market's three written episodes can keep their own pace. Lighting an Advent candle can mark a Sunday or a Christmas Eve scene. Choose that moment from the market's calendar and the neighbours' wishes. The twenty purchases already supply five construction epochs.
+For Christmas Market, group the existing wishes and scenes into five four-purchase stories. Four Advent Sundays followed by Christmas Eve give those five epochs a natural shape. Each Sunday’s fourth purchase can bring the neighbours together to light a candle. The fifth epoch pays off their preparations on Christmas Eve.
 
 ## Decorations
 
@@ -44,19 +42,19 @@ Christmas Market's three written episodes can keep their own pace. Lighting an A
 ## UI
 
 1. **One build card shows the next required purchase.** Show its picture, name, price and practical effect. For a story landmark, add one line from the person who needs it. While funding, show the shortfall and the next level. When affordable, Build starts placement or Restore previews the original site. Confirm spends the resources and applies the change. The card can use the existing next-restoration slot. [Relic Rush results screen](../games/relic-rush/lua/screens.lua)
-2. **Four slots show the current epoch.** Fill a slot for each confirmed required purchase, outline the current one and show the rest as silhouettes. Later epochs stay hidden. A chapter title or an Advent candle follows its own story event.
+2. **Four slots show the current epoch.** Fill a slot for each confirmed required purchase, outline the current one and show the rest as silhouettes. Later epochs stay hidden. The epoch title names the story. Filling the fourth slot triggers its closing scene.
 3. **The decoration shop holds the keepsake box and items for sale.** In Christmas Market the gift button can show the number of unplaced gifts.
 4. **A chapter-end card follows the closing scene.** Show what has changed on the island and, when the occasion brings a keepsake, offer Place now and Later.
 
 ### Mockup
 
-The [Christmas Market wireframe](mockups/chapter-progression.svg) illustrates the build card's ready and funding states, placement with Confirm and Cancel, a candle-lighting scene, and the gift box. Its original Advent strip combines purchases and candles. In the revised design the four slots track purchases, while candle lighting follows the story calendar.
+The [Christmas Market wireframe](mockups/chapter-progression.svg) illustrates the build card's ready and funding states, placement with Confirm and Cancel, a candle-lighting scene, and the gift box. The four slots track purchases within one Advent story. The candle marks its conclusion.
 
 ![Christmas Market build, placement, Advent and decoration wireframes](mockups/chapter-progression.svg)
 
 ## Implementation sketch
 
-- Derive the epoch and its four slots from the ordered required purchases. Preserve waived ladder positions in existing saves. Keep the game's authored chapter-ending event separate from completing the fourth slot. Test both boundaries using the Workshop and Quay Steps.
+- Derive the epoch and its four slots from the ordered required purchases. Preserve waived ladder positions in existing saves. Use confirmation of the fourth purchase to trigger the closing scene once. For the proposed Relic Rush reorder, check funding, Dynamite’s later introduction and the trapper’s early arrival window. Verify that the Quay Steps close epoch one with or without the carpenter.
 - Use shared engine forms for the card and strip with each game's skin. Verify funding, placement, fixed-site repair and chapter-end states at 480 × 900 and 390 × 844. [Engine skins](UI_ENGINE.md#skins)
 - Keep arrivals and scenes in each game's campaign data. Record an arrival once, resume an unread scene on reload, and condition optional exchanges on the residents present. Track who takes part and what changes in the game's story sheet. [Story writing guide](STORY_WRITING.md)
 - Record dressing sets in the building catalogue and the wreath and strip states in the asset catalogue. [Building art](BUILDING_ART.md) · [Building registration](BUILDINGS.md)
