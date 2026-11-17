@@ -1661,8 +1661,7 @@ function E.new(config)
     local function kudos(level)
         level = math.min(level, #R.kudos_words)
         R.kudos = {text = R.kudos_words[level], level = level, t = 0}
-        R.play("kudos", level)
-        haptic.play(haptic.COMBO, 1)
+        R.play("kudos", level)   -- sound only: the cascade's waves already buzzed
     end
     R.award_kudos = kudos
 
