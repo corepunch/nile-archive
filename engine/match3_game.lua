@@ -476,28 +476,41 @@ function G.bind(R, over)
         end
     end
 
-    -- Campaign boards use the shared wallet row's width for each currency.
+    -- The wallet row. capsules.show in game.json lists what it holds, in order:
+    -- "lives", "stars" or a currency's id (its capsule's `id`; "gold" when the
+    -- game has one currency). Without the list it holds them all. A board with
+    -- several currencies shows only those, at the shared row's width.
     function R.header_capsules(board)
         local currencies = R.currency_capsules and R.currency_capsules(R.prog.wallet)
-        if currencies then
-            for i, cap in ipairs(currencies) do
-                cap.slot = cap.slot or i
-                if board then cap.width = nil end
-            end
-            if board or W.capsules.currencies_only then return currencies end
+        local icons, notes = R.wallet_icons(), W.capsules.notes
+        local all, by_id = {}, {}
+        local function add(id, capsule)
+            capsule.id = id
+            all[#all + 1], by_id[id] = capsule, capsule
         end
-        local remaining = math.max(0, math.ceil((R.prog.life_at or 0) - app.clock()))
-        local lives = (R.prog.lives or rules.LIVES) == rules.LIVES and W.capsules.lives_full
-            or ("%d %d:%02d"):format(R.prog.lives, remaining // 60, remaining % 60)
-        local values = {lives, tostring(R.prog.wallet[rules.GOLD]), tostring(R.prog.wallet[rules.STARS])}
-        local icons = R.wallet_icons()
-        local out = {}
+        local extras = not (board and currencies)
+        if extras then
+            local remaining = math.max(0, math.ceil((R.prog.life_at or 0) - app.clock()))
+            local lives = (R.prog.lives or rules.LIVES) == rules.LIVES and W.capsules.lives_full
+                or ("%d %d:%02d"):format(R.prog.lives, remaining // 60, remaining % 60)
+            add("lives", {icon=icons[1], value=lives, note=notes[1], width=currencies and 78 or nil})
+        end
         if currencies then
-            out[1] = {icon=icons[1], value=lives, note=W.capsules.notes[1], width=78}
-            for _, capsule in ipairs(currencies) do out[#out+1] = capsule end
-            out[#out+1] = {icon=icons[3], value=values[3], note=W.capsules.notes[3], width=65}
-        else
-            for k = 1, 3 do out[k] = {icon = icons[k], value = values[k], note = W.capsules.notes[k]} end
+            for i, capsule in ipairs(currencies) do
+                capsule.slot = capsule.slot or i
+                if board then capsule.width = nil end
+                add(capsule.id or tostring(capsule.slot), capsule)
+            end
+        else add("gold", {icon=icons[2], value=tostring(R.prog.wallet[rules.GOLD]), note=notes[2]}) end
+        if extras then
+            add("stars", {icon=icons[3], value=tostring(R.prog.wallet[rules.STARS]), note=notes[3], width=currencies and 65 or nil})
+        end
+        local show = W.capsules.show
+        if not show then return all end
+        local out = {}
+        for _, id in ipairs(show) do
+            assert(by_id[id] or id == "lives" or id == "stars", "capsules.show names no capsule: " .. id)
+            out[#out + 1] = by_id[id]
         end
         return out
     end

@@ -22,7 +22,7 @@
     "quit": "Your board is saved. Tap LEVEL %d or Expeditions to continue."
   },
   "capsules": {
-    "currencies_only": true
+    "show": ["coins", "supplies", "food"]
   },
   "pause": {"guide": "EXPLORER'S GUIDE", "quit": "QUIT TO ISLAND", "town": "Your valley", "leaderboard": "LEADERBOARD"},
   "leaderboard": {"board": "stars", "title": "Top explorers", "level_board": "level_%02d", "level_title": "Expedition %d"},

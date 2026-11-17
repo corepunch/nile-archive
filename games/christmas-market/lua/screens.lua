@@ -29,7 +29,7 @@ function R.currency_capsules(balance)
     local out = {}
     local earned = not R.on_island and R.g and not R.g.lost and not R.g.reward_claimed and R.g.earnings
     for slot, currency in ipairs(economy.currencies) do
-        out[slot] = {icon=currency_icon(slot), value=tostring(balance[slot] + (earned and earned[slot] or 0)), width=90,
+        out[slot] = {id=currency.name:lower(), icon=currency_icon(slot), value=tostring(balance[slot] + (earned and earned[slot] or 0)), width=90,
             note=earned and currency.name .. " from matches is banked on a win."
                 or currency.name .. " from matches pays for stalls and decorations."}
     end

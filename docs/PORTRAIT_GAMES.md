@@ -42,7 +42,8 @@ return require("match3.game").app(R)                       -- last line of main.
 plus the art hooks `R.wallet_icons()`, `R.town_middle_icon(at)` and `R.cast`.
 
 Games with several currencies supply `R.currency_capsules(balance)` and
-`R.currency_prices(cost)`. Relic Rush and Christmas Market supply price entries
+`R.currency_prices(cost)`. A capsule's `id` is the name `capsules.show` in
+`game.json` uses to place it in the wallet row. Relic Rush and Christmas Market supply price entries
 with a stable ID, name, icon and amount. The shared town and board wallet
 targets the appropriate capsule when a match earns a resource.
 `R.board_context(preview)` selects a match palette variant from the game state.

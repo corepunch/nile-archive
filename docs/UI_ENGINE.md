@@ -505,8 +505,10 @@ optional menu on one center line. With `header.align = "center"`, the row
 centers the group. With `header.interactive = false`, the figures are
 display-only. Hit and flight targets come from the same layout boxes.
 
-Match-3 towns can set `capsules.currencies_only` in `game.json` to show only
-their currency balances. Campaign boards center a display-only row of Moves
+Match-3 towns list what the wallet row holds, in order, in `capsules.show` in
+`game.json`: `"lives"`, `"stars"` or a currency capsule's `id` (`"gold"` when
+the game has one currency), for example `["coins", "supplies", "food"]`.
+Without the list the row holds them all. Campaign boards center a display-only row of Moves
 and currency capsules. Each capsule identifies its currency slot so matched
 pieces land on its icon. The centered board keeps four boosters and Pause
 in one bottom row. The town's `bottom.pause` option adds Pause to Build,
