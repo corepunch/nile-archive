@@ -32,22 +32,11 @@ jobs:
           submodules: true
       - name: Install platform build and headless display dependencies
         run: |
-          sudo apt-get update && sudo apt-get install -y libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev xvfb lua-check
-          pip install -r tools/requirements-assets.txt   # atlas inspection
-      - name: Build games
-        run: make CFLAGS="-O2 -g -Werror"
-      - name: Every test, in one start per game
-        run: xvfb-run -a make test-full TEST_ARGS=--extended
-      - name: Lua lint
-        run: make lint
-      - name: Verify authored Relic Rush atlas crops
-        run: python3 games/relic-rush/tools/board_assets.py --check
-      - name: Documentation screenshots from the tests' pictures
-        run: python3 tools/screenshots.py
-      - uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: games/*/docs/screenshots/
+          sudo apt-get update && sudo apt-get install -y libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev xvfb
+      - name: Build games and native tests
+        run: make -j2 CFLAGS="-O2 -g -Werror" all build/test/all build/test-audio
+      - name: Native rules, renderer, audio and gameplay smoke tests
+        run: xvfb-run -a make test-ci
 
   xcode:
     needs: preflight

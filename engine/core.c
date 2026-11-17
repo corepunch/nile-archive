@@ -356,6 +356,10 @@ void app_step(void)
     float dt = maxf(0,(float)(now - A.last_counter));
     A.last_counter = now;
     if (A.shot_path || app_arg("smoke") || dt > .1f) dt = 1.0f / 60;
+#ifdef ENGINE_TEST
+    /* Campaign checks drive controls through settled screens across thirty boards. */
+    if (!A.shot_path && app_arg("smoke") && app_arg("campaign")) dt = 1.0f / 10;
+#endif
     A.time += dt;
     A.dt = dt;
 

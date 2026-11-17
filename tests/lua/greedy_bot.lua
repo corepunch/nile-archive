@@ -21,14 +21,15 @@ return function(rules)
         for i = 0, rules.CELLS - 1 do
             for d = 0, 2 do
                 local j = rules.hex_neighbor(i, d)
-                local value = rules.game_evaluate_move(g, i, j)
+                local value = rules.game_evaluate_move(g, i, j, probe)
                 if value >= 0 then
-                    local copy = rules.game_copy(g)
-                    rules.game_swap(copy, i, j, probe)
                     local stirred = 0
                     for c in pairs(probe.mask) do
-                        for _, r in ipairs(goals[rules.hex_q(c)] or {}) do
-                            if r <= rules.hex_r(c) then stirred = stirred + 1 end
+                        local column = goals[rules.hex_q(c)]
+                        if column then
+                            for _, r in ipairs(column) do
+                                if r <= rules.hex_r(c) then stirred = stirred + 1 end
+                            end
                         end
                     end
                     value = value + 40 * stirred

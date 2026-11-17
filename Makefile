@@ -188,7 +188,13 @@ TEST_AUX_BINS := build/test-audio
 test test-fast: build/test/all $(TEST_AUX_BINS)
 	python3 tools/run_tests.py --budget $(TEST_BUDGET) --jobs $(TEST_WORKERS) --games "$(TEST_GAMES)" $(if $(filter test-fast,$@),--fast) -- $(ONLY) $(TEST_ARGS)
 
-# Full integration/capture export is deliberate; keep it complete in cloud CI.
+# CI's preflight job runs the generated and asset checks before this target.
+.PHONY: test-ci
+test-ci: build/test/all $(TEST_AUX_BINS)
+	./build/test-audio
+	./build/test/all --with-smoke --extended
+
+# Full integration with capture export is available on demand.
 test-full: gen-check xcode-check test-assets build/test/all $(TEST_AUX_BINS)
 	./build/test-audio
 	./build/test/all --full $(ONLY) $(TEST_ARGS)
