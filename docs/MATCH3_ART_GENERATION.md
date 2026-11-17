@@ -40,73 +40,26 @@ and [hex rules](HOMESCAPES_HEX.md). Keep the game's own silhouettes and material
 | Violet | Bauble | Crystal cluster |
 | Orange | Gingerbread person | Amphora |
 
-## Rocket, bomb and plane briefs
+## Booster icons from the retired power-ups
 
-| Sprite | Homescapes shape and color placement | Christmas Market | Relic Rush |
-| --- | --- | --- | --- |
-| Rocket | A short, symmetric cylinder with a narrow waist, two thick rounded collars and two long cone tips. Wind contrasting diagonal bands round the waist so two show from any side. The tips use the band color. Keep the whole set consistent across +30°, vertical and −30°. Target 65% primary and 35% secondary. | Cranberry red `#B9243D` on the body and collars. Vanilla ivory `#F5D89A` on the tips and band. | Terracotta red `#A8362D` on the body and collars. Old gold `#E6AE47` on the tips and band. |
-| Bomb | A round sphere seen from near its pole, with a narrow belt just above the equator. At the pole a raised ring of the body color surrounds an inset disc, where a short rope fuse with a lit tip stands. The belt and disc share one secondary hue. Keep the body about 70% of the visible area. | Evergreen `#177449` body, warm gold `#E8A940` fittings. | Petrol teal `#126D70` body, ochre gold `#E8AC43` fittings. |
-| Plane | A plain folded paper plane angled up-right, with a center crease and one wing panel folded under. One hue, shaded by the folds alone. Both games use the same painting. | Icy blue. | The same painting in parchment: `#EAC985` midtones, `#96622C` shadows. |
-
-The hex colors specify midtones. Model the surfaces with light and dark values
-within those two hue families. Read the rocket axis from the line joining its
-two tips. Distinguish the bomb by its spherical outline and short fuse, and
-the plane by its broad folded wing.
-
-## Model the power-ups
-
-The rockets, bomb and rainbow ball are solids of revolution and tiles on a
-sphere, so `tools/match3_specials.py` models them for
-[Scener](https://github.com/corepunch/orion-ui) and renders them. The renders
-set the geometry and camera for the paint-over. Relic Rush registers Christmas Market's painted plane with its blues
-remapped by luminance to parchment (`PLANE_SHADES` in
-`tools/match3_theme_art.py`), at the user's request. The drawing and alpha
-are unchanged.
-
-- **Rocket.** One lathe with cone tips, collars and a banded waist. Each board
-  axis is the same model turned about the view direction, so the three
-  sprites are identical apart from the rotation. The upper tip leans 8°
-  towards the viewer.
-- **Bomb.** A sphere whose pole points up and to the left, 36° off the view
-  direction. The belt is a band of latitude standing proud of the sphere. The
-  ring, inset disc, rope fuse and lit tip sit on the pole.
-- **Rainbow ball.** Each tile is a rounded square in the sphere's own
-  latitude and longitude, raised along a bevel profile. A tile narrows towards
-  the pole and foreshortens at the edge as the sphere does.
-
-A game supplies its palette, gloss and tile bevel in `THEMES`. Christmas
-Market's tiles are pillows and Relic Rush's have a flat face and a chamfer.
-The lighting is a bright ambient with a key from the upper left, so midtones
-match the briefs above. No light casts shadows. The rocket waist is cut into
-rings that darken under each collar, since a Scener shape takes one gradient.
-
-```sh
-python3 tools/match3_specials.py                 # both games; needs scener on PATH
-python3 tools/match3_specials.py relic-rush --sheet /tmp/specials.png
-python3 tools/match3_specials.py --check         # the committed scenes are current
-python3 tools/match3_atlas.py                    # register and pack the paint-over
-```
-
-Each game keeps the generated scene and its five 512 px transparent renders in
-`art/board-theme/specials/`. Commit them with the tool. `--check` compares the
-scene text only, so `make test` needs no Scener. Change the tool to change a
-model, and review the sheet against the
-[Homescapes sprites](../engine/art/homescapes/sprites/) before the board.
-
-The [power-up paint sheet](../art/match3-power-up-paint/source.png) was authored
-in one built-in ImageGen edit with both games' three rocket axes, bomb and
-rainbow gem. Its [Scener target](../art/match3-power-up-paint/scener-strip.png)
-uses 336 px square cells with each render cropped to its alpha bounds, resized
-to fit within 244 px and centered. The top row is Relic Rush and the bottom row
-is Christmas Market. The [prompt](../art/match3-power-up-paint/prompt.txt) records
-the materials and pose constraints. Recreate the edit from current Scener renders
-when the geometry changes.
+The engine has no special pieces, so no rocket, bomb, plane or rainbow ball is
+drawn on a board. Two paintings survive as booster icons. Christmas Market's
+Shooting Star and Firework Bomb buttons use the painted row rocket and bomb from
+the bottom row of the [power-up paint sheet](../art/match3-power-up-paint/source.png).
+`tools/match3_theme_art.py` registers them as `booster-star-icon` and
+`booster-firework-icon`, sized to the extracted Homescapes rocket and bomb
+silhouettes, which stay unregistered in
+[the Homescapes sprites](../engine/art/homescapes/sprites/).
+`games/christmas-market/tools/prepare_bonus_buttons.py` bakes them into the
+booster buttons. The sheet's [prompt](../art/match3-power-up-paint/prompt.txt)
+and [edit target](../art/match3-power-up-paint/scener-strip.png) are the
+provenance. The Scener models that set its geometry have been deleted.
 
 ## Author the atlas
 
 1. Inventory the names and states used by the rules, the board, the HUD and the
    guide. The game catalogues are the starting point. Keep all states of a
-   family together, including all three rocket axes,
+   family together, including
    one and two layers of restraints, and any mirrored layout the rules use.
 2. Use one ImageGen call per game atlas. Give it a row-by-row slot list, the
    local Homescapes shapes as reference and the palette above. Request true

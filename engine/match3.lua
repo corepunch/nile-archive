@@ -85,8 +85,8 @@ end
 
 function E.skin(override)
     local skin = E.atlas(override)
-    for _, name in ipairs({"kind-0", "kind-1", "kind-2", "kind-3", "kind-4", "kind-5", "ray-row", "ray-column", "ray-diagonal",
-        "bomb", "prism", "chain", "ice-1", "ice-2", "selected", "hint", "guide", "cell-mask", "background", "glow"}) do
+    for _, name in ipairs({"kind-0", "kind-1", "kind-2", "kind-3", "kind-4", "kind-5",
+        "chain", "ice-1", "ice-2", "selected", "hint", "guide", "cell-mask", "background", "glow"}) do
         assert(skin[name], "missing match3 frame: " .. name)
     end
     return skin

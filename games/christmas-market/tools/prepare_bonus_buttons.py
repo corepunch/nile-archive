@@ -21,15 +21,15 @@ def main():
     recipe = json.loads((RELIC / "art/board-states/manifest.json").read_text())["bonus_gems"]
     frames = json.loads((ROOT / "art/match3-atlas.json").read_text())["frames"]
     icons = []
-    with Image.open(ROOT / "data/market-goods.png") as goods, Image.open(ROOT / "data/match3.png") as specials:
+    with Image.open(ROOT / "data/market-goods.png") as goods, Image.open(ROOT / "data/match3.png") as board:
         for key in spec["columns"]:
             source = spec["icons"][key]
             if "good" in source:
                 kind = source["good"]
                 image, x, y, w, h = goods, kind % 4 * 128, kind // 4 * 128, 128, 128
             else:
-                image = specials
-                x, y, w, h = frames[source["special"]]
+                image = board
+                x, y, w, h = frames[source["frame"]]
             icons.append(image.crop((x, y, x + w, y + h)))
     path = ROOT / spec["runtime"]
     data = pack({**recipe, **spec}, root=RELIC, icons=icons)

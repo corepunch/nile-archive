@@ -2,7 +2,7 @@
   "runtime": "data/match3.png",
   "size": [
     2048,
-    4096
+    2048
   ],
   "frames": {
     "background": [
@@ -101,463 +101,463 @@
       128,
       128
     ],
-    "bomb": [
+    "booster-firework-icon": [
       926,
+      906,
+      128,
+      128
+    ],
+    "booster-star-icon": [
+      1058,
       906,
       128,
       128
     ],
     "box-1": [
-      1058,
+      1190,
       906,
       128,
       128
     ],
     "box-2": [
-      1190,
+      1322,
       906,
       128,
       128
     ],
     "box-3": [
-      1322,
+      1454,
       906,
       128,
       128
     ],
     "box-4": [
-      1454,
+      1586,
       906,
       128,
       128
     ],
     "box-5": [
-      1586,
+      1718,
       906,
       128,
       128
     ],
     "box-6": [
-      1718,
+      1850,
       906,
       128,
       128
     ],
     "carpet-roll": [
-      1850,
-      906,
+      2,
+      1038,
       128,
       128
     ],
     "carpet-swatch": [
-      2,
+      134,
       1038,
       128,
       128
     ],
     "carry-exit-arrow": [
-      134,
+      266,
       1038,
       128,
       128
     ],
     "cell-mask": [
-      266,
+      398,
       1038,
       128,
       128
     ],
     "ceramic-tile-1": [
-      398,
+      530,
       1038,
       128,
       128
     ],
     "ceramic-tile-2": [
-      530,
+      662,
       1038,
       128,
       128
     ],
     "chain": [
-      662,
+      794,
       1038,
       128,
       128
     ],
     "chain-1": [
-      794,
+      926,
       1038,
       128,
       128
     ],
     "chain-1-mirror": [
-      926,
+      1058,
       1038,
       128,
       128
     ],
     "chain-2": [
-      1058,
+      1190,
       1038,
       128,
       128
     ],
     "chain-board": [
-      1190,
+      1322,
       1038,
       128,
       128
     ],
     "cherry": [
-      1322,
+      1454,
       1038,
       128,
       128
     ],
     "chip-0": [
-      1454,
+      1586,
       1038,
       128,
       128
     ],
     "chip-1": [
-      1586,
+      1718,
       1038,
       128,
       128
     ],
     "chip-2": [
-      1718,
+      1850,
       1038,
       128,
       128
     ],
     "chip-3": [
-      1850,
-      1038,
+      2,
+      1170,
       128,
       128
     ],
     "chip-4": [
-      2,
+      134,
       1170,
       128,
       128
     ],
     "chip-5": [
-      134,
+      266,
       1170,
       128,
       128
     ],
     "cookie-1": [
-      266,
+      398,
       1170,
       128,
       128
     ],
     "cookie-2": [
-      398,
+      530,
       1170,
       128,
       128
     ],
     "cookie-3": [
-      530,
+      662,
       1170,
       128,
       128
     ],
     "cookie-stack-1": [
-      662,
+      794,
       1170,
       128,
       128
     ],
     "cookie-stack-2": [
-      794,
+      926,
       1170,
       128,
       128
     ],
     "cookie-stack-3": [
-      926,
+      1058,
       1170,
       128,
       128
     ],
     "delivery": [
-      1058,
+      1190,
       1170,
       128,
       128
     ],
     "delivery-exit": [
-      1190,
+      1322,
       1170,
       128,
       128
     ],
     "donut": [
-      1322,
+      1454,
       1170,
       128,
       128
     ],
     "donut-maker-0": [
-      1454,
+      1586,
       1170,
       128,
       128
     ],
     "donut-maker-1": [
-      1586,
+      1718,
       1170,
       128,
       128
     ],
     "donut-maker-2": [
-      1718,
+      1850,
       1170,
       128,
       128
     ],
     "donut-maker-3": [
-      1850,
-      1170,
+      2,
+      1302,
       128,
       128
     ],
     "donut-maker-4": [
-      2,
+      134,
       1302,
       128,
       128
     ],
     "donut-maker-5": [
-      134,
+      266,
       1302,
       128,
       128
     ],
     "donut-maker-base": [
-      266,
+      398,
       1302,
       128,
       128
     ],
     "donut-maker-dome": [
-      398,
+      530,
       1302,
       128,
       128
     ],
     "donut-maker-dough-1": [
-      530,
+      662,
       1302,
       128,
       128
     ],
     "donut-maker-dough-2": [
-      662,
+      794,
       1302,
       128,
       128
     ],
     "donut-maker-dough-3": [
-      794,
+      926,
       1302,
       128,
       128
     ],
     "donut-maker-legacy-progress-back-source": [
-      926,
+      1058,
       1302,
       128,
       128
     ],
     "festive-0": [
-      1058,
+      1190,
       1302,
       128,
       128
     ],
     "festive-1": [
-      1190,
+      1322,
       1302,
       128,
       128
     ],
     "festive-2": [
-      1322,
+      1454,
       1302,
       128,
       128
     ],
     "festive-3": [
-      1454,
+      1586,
       1302,
       128,
       128
     ],
     "festive-4": [
-      1586,
+      1718,
       1302,
       128,
       128
     ],
     "festive-5": [
-      1718,
+      1850,
       1302,
       128,
       128
     ],
     "fx-glint": [
-      1850,
-      1302,
+      2,
+      1434,
       128,
       128
     ],
     "fx-ring": [
-      2,
+      134,
       1434,
       128,
       128
     ],
     "fx-smoke-0": [
-      134,
+      266,
       1434,
       128,
       128
     ],
     "fx-smoke-1": [
-      266,
+      398,
       1434,
       128,
       128
     ],
     "fx-smoke-2": [
-      398,
+      530,
       1434,
       128,
       128
     ],
     "fx-smoke-3": [
-      530,
+      662,
       1434,
       128,
       128
     ],
     "fx-streak": [
-      662,
+      794,
       1434,
       128,
       128
     ],
     "fx-twinkle": [
-      794,
+      926,
       1434,
       128,
       128
     ],
     "generator-shell": [
-      926,
-      1434,
-      128,
-      128
-    ],
-    "goal-box": [
       1058,
       1434,
       128,
       128
     ],
-    "goal-carpet": [
+    "goal-box": [
       1190,
       1434,
       128,
       128
     ],
-    "goal-carry": [
+    "goal-carpet": [
       1322,
       1434,
       128,
       128
     ],
-    "goal-chip-0": [
+    "goal-carry": [
       1454,
       1434,
       128,
       128
     ],
-    "goal-chip-1": [
+    "goal-chip-0": [
       1586,
       1434,
       128,
       128
     ],
-    "goal-chip-2": [
+    "goal-chip-1": [
       1718,
       1434,
       128,
       128
     ],
-    "goal-chip-3": [
+    "goal-chip-2": [
       1850,
       1434,
       128,
       128
     ],
-    "goal-chip-4": [
+    "goal-chip-3": [
       2,
       1566,
       128,
       128
     ],
-    "goal-chip-5": [
+    "goal-chip-4": [
       134,
       1566,
       128,
       128
     ],
-    "goal-jelly": [
+    "goal-chip-5": [
       266,
       1566,
       128,
       128
     ],
-    "goal-lock": [
+    "goal-jelly": [
       398,
       1566,
       128,
       128
     ],
-    "goal-oil": [
+    "goal-lock": [
       530,
       1566,
       128,
       128
     ],
-    "goal-piggy": [
+    "goal-oil": [
       662,
       1566,
       128,
       128
     ],
-    "goal-target-generator": [
+    "goal-piggy": [
       794,
       1566,
       128,
       128
     ],
-    "goal-trash": [
+    "goal-target-generator": [
       926,
       1566,
       128,
       128
     ],
-    "gold-rainbow-ball": [
+    "goal-trash": [
       1058,
       1566,
       128,
@@ -725,140 +725,92 @@
       128,
       128
     ],
-    "plane": [
+    "selected": [
       794,
       1830,
       128,
       128
     ],
-    "prism": [
+    "statue-1": [
       926,
       1830,
       128,
       128
     ],
-    "rainbow-ball": [
+    "statue-2": [
       1058,
       1830,
       128,
       128
     ],
-    "ray-column": [
+    "statue-3": [
       1190,
       1830,
       128,
       128
     ],
-    "ray-diagonal": [
+    "stone-1": [
       1322,
       1830,
       128,
       128
     ],
-    "ray-row": [
+    "web-2": [
       1454,
       1830,
       128,
       128
     ],
-    "rocket-horizontal": [
+    "glow": [
       1586,
       1830,
-      128,
-      128
-    ],
-    "rocket-vertical": [
-      1718,
-      1830,
-      128,
-      128
-    ],
-    "selected": [
-      1850,
-      1830,
-      128,
-      128
-    ],
-    "statue-1": [
-      2,
-      1962,
-      128,
-      128
-    ],
-    "statue-2": [
-      134,
-      1962,
-      128,
-      128
-    ],
-    "statue-3": [
-      266,
-      1962,
-      128,
-      128
-    ],
-    "stone-1": [
-      398,
-      1962,
-      128,
-      128
-    ],
-    "web-2": [
-      530,
-      1962,
-      128,
-      128
-    ],
-    "glow": [
-      662,
-      1962,
       64,
       64
     ],
     "fx-tablet-glow": [
-      730,
-      1962,
+      1654,
+      1830,
       16,
       16
     ],
     "fx-tablet-spark": [
-      750,
-      1962,
+      1674,
+      1830,
       16,
       16
     ],
     "kind-0": [
-      1058,
+      1190,
       1302,
       128,
       128
     ],
     "kind-1": [
-      1190,
-      1302,
-      128,
-      128
-    ],
-    "kind-2": [
       1322,
       1302,
       128,
       128
     ],
-    "kind-3": [
+    "kind-2": [
       1454,
       1302,
       128,
       128
     ],
-    "kind-4": [
+    "kind-3": [
       1586,
       1302,
       128,
       128
     ],
-    "kind-5": [
+    "kind-4": [
       1718,
+      1302,
+      128,
+      128
+    ],
+    "kind-5": [
+      1850,
       1302,
       128,
       128
@@ -1814,20 +1766,6 @@
       ],
       "mask": false
     },
-    "gold-rainbow-ball": {
-      "source": "engine/art/homescapes/sprites/gold-rainbow-ball.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        111,
-        109
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "hazelnut-1": {
       "source": "engine/art/homescapes/sprites/hazelnut-1.png",
       "rotation": 0,
@@ -2023,48 +1961,6 @@
         128
       ],
       "mask": true
-    },
-    "rainbow-ball": {
-      "source": "engine/art/homescapes/sprites/rainbow-ball.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        109
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "rocket-horizontal": {
-      "source": "engine/art/homescapes/sprites/rocket-horizontal.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        87
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "rocket-vertical": {
-      "source": "engine/art/homescapes/sprites/rocket-vertical.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        91,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
     },
     "statue-1": {
       "source": "engine/art/homescapes/sprites/statue-1.png",
@@ -3344,153 +3240,6 @@
       "homescapes_target_area_px": 6273,
       "silhouette_area_px": 6203
     },
-    "ray-row": {
-      "source": "../../art/match3-power-up-paint/source.png",
-      "prompt": "../../art/match3-power-up-paint/prompt.txt",
-      "crop": [
-        0,
-        396,
-        396,
-        793
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        70,
-        69
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
-      "geometry": "art/board-theme/specials/ray-row.png",
-      "offset": [
-        29,
-        29
-      ],
-      "homescapes_target_area_px": 2960,
-      "silhouette_area_px": 2922
-    },
-    "ray-column": {
-      "source": "../../art/match3-power-up-paint/source.png",
-      "prompt": "../../art/match3-power-up-paint/prompt.txt",
-      "crop": [
-        396,
-        396,
-        793,
-        793
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        56,
-        79
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
-      "geometry": "art/board-theme/specials/ray-column.png",
-      "offset": [
-        36,
-        24
-      ],
-      "homescapes_target_area_px": 2960,
-      "silhouette_area_px": 2927
-    },
-    "ray-diagonal": {
-      "source": "../../art/match3-power-up-paint/source.png",
-      "prompt": "../../art/match3-power-up-paint/prompt.txt",
-      "crop": [
-        793,
-        396,
-        1189,
-        793
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        71,
-        69
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
-      "geometry": "art/board-theme/specials/ray-diagonal.png",
-      "offset": [
-        28,
-        29
-      ],
-      "homescapes_target_area_px": 2960,
-      "silhouette_area_px": 2939
-    },
-    "bomb": {
-      "source": "../../art/match3-power-up-paint/source.png",
-      "prompt": "../../art/match3-power-up-paint/prompt.txt",
-      "crop": [
-        1189,
-        396,
-        1586,
-        793
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        83,
-        83
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
-      "geometry": "art/board-theme/specials/bomb.png",
-      "offset": [
-        22,
-        22
-      ],
-      "homescapes_target_area_px": 5180,
-      "silhouette_area_px": 5162
-    },
-    "prism": {
-      "source": "../../art/match3-power-up-paint/source.png",
-      "prompt": "../../art/match3-power-up-paint/prompt.txt",
-      "crop": [
-        1586,
-        396,
-        1983,
-        793
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        89,
-        83
-      ],
-      "generator": "built-in ImageGen",
-      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
-      "geometry": "art/board-theme/specials/prism.png",
-      "offset": [
-        19,
-        23
-      ],
-      "homescapes_target_area_px": 5606,
-      "silhouette_area_px": 5532
-    },
-    "plane": {
-      "source": "art/board-theme/source.png",
-      "prompt": "art/board-theme/prompt.txt",
-      "crop": [
-        251,
-        502,
-        502,
-        752
-      ],
-      "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
-      "fitted_size": [
-        84,
-        73
-      ],
-      "offset": [
-        22,
-        27
-      ],
-      "homescapes_target_area_px": 5089,
-      "silhouette_area_px": 3190
-    },
     "delivery": {
       "source": "art/board-theme/source.png",
       "prompt": "art/board-theme/prompt.txt",
@@ -3615,6 +3364,56 @@
         4
       ]
     },
+    "booster-star-icon": {
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
+      "crop": [
+        0,
+        396,
+        396,
+        793
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        70,
+        69
+      ],
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "painted_as": "ray-row",
+      "offset": [
+        29,
+        29
+      ],
+      "homescapes_target_area_px": 2960,
+      "silhouette_area_px": 2922
+    },
+    "booster-firework-icon": {
+      "source": "../../art/match3-power-up-paint/source.png",
+      "prompt": "../../art/match3-power-up-paint/prompt.txt",
+      "crop": [
+        1189,
+        396,
+        1586,
+        793
+      ],
+      "rotation": 0,
+      "fit": "centered inside canonical hex with authored alpha",
+      "fitted_size": [
+        83,
+        83
+      ],
+      "generator": "built-in ImageGen",
+      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
+      "painted_as": "bomb",
+      "offset": [
+        22,
+        22
+      ],
+      "homescapes_target_area_px": 5180,
+      "silhouette_area_px": 5162
+    },
     "ice-1": {
       "source": "art/match3-ice/source.png",
       "prompt": "art/match3-ice/filled-pane-prompt.txt",
@@ -3671,7 +3470,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "99f4a8f4234dede5bce3481c314d6bfe8506c88e65f41e8c6d6e939dd9827f34",
+    "recipe": "4c3144a346efc8aae08fc64836bb9c650cf6ee9826f065326b0d4b20ca51c640",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -3763,7 +3562,6 @@
       "engine/art/homescapes/sprites/goal-piggy.png": "58cd8577712c2848fcd69420bec28b2addeee6c20b2ff7a41f3537e26d01494e",
       "engine/art/homescapes/sprites/goal-target-generator.png": "b97acb65fcdfc08b8a33a87843066b92db845a7559ba6cea920b6febf4a7fc88",
       "engine/art/homescapes/sprites/goal-trash.png": "5804ad34c6701fc9870145d91c0a7306d9a8c308e19c167eb5008a684577923a",
-      "engine/art/homescapes/sprites/gold-rainbow-ball.png": "2d69d32439257dd62bb7c410397e51f8124e7b135f146f48cd5814632cb3641b",
       "engine/art/homescapes/sprites/hazelnut-1.png": "0216a9ac530146be7b9d272a6c68a31a73743cb522157c566bc4e1d217d89aeb",
       "engine/art/homescapes/sprites/hazelnut-2.png": "0656948a81190c39e141b7a95bdb34dd69f0b7310d11a7eaa75df8e1cde54fa0",
       "engine/art/homescapes/sprites/hazelnut-3.png": "fcdc99550be5fd2bc6e9243d9fc0864ef6c71d2e477f432ec26fd5b202efd062",
@@ -3778,8 +3576,6 @@
       "engine/art/homescapes/sprites/jelly-square-source.png": "9242a1db622d53b6b0dfb9f84f347d32151789db119b5c5798b089cd893249c4",
       "engine/art/homescapes/sprites/membrane-fill-1.png": "2f37cbeb76261c777210e3091f0608ef5fa081eabdabc4dfe23bf0ee2733c2bf",
       "engine/art/homescapes/sprites/membrane-fill-2.png": "2867f3b6c61ccc4c5cb1d9add33e704f5922c98cb2e70649c77965a37e1231e5",
-      "engine/art/homescapes/sprites/plane.png": "5986a288603f4d5e711620092ee74bfd1ace896861aed046fefb58441bf6aa4b",
-      "engine/art/homescapes/sprites/rainbow-ball.png": "7f7e33828421498f3658e0588c37712b12a72344ac15aa597e96a3fba796a04b",
       "engine/art/homescapes/sprites/rocket-horizontal.png": "634ae885dfb7be9f17adf1a4ac9dcb2af86a5fbb32028c24b373d7015fbd9ae6",
       "engine/art/homescapes/sprites/rocket-vertical.png": "f4910c53b06207d53b234533edf4f7dd8cdb7f8e971048e6fc75f86d53a583e5",
       "engine/art/homescapes/sprites/statue-1.png": "aa2402e3f3ea88ad0d0aaaa94c70a460a0fa27a98b659c7d44165854b2da8818",
@@ -3800,12 +3596,6 @@
       "games/christmas-market/art/board-theme/accent-revision.png": "a90785b9ced29a203a0f8ace5dfd2fd7a4f62fbb367a3b349ff4767070eb2ac7",
       "games/christmas-market/art/board-theme/prompt.txt": "bfab7d3f1308d3564a354e4ef2feda166846ddb195c1c482ccaa1a24f8b6ad3e",
       "games/christmas-market/art/board-theme/source.png": "a2a4bc81ba3a816350a823447dd1149c899b1a80d0b7f47d1768e116c288f6c2",
-      "games/christmas-market/art/board-theme/specials/bomb.png": "7b1a0a03c39c1d0f0931e859610c10edc365122511a4b94c7d3f8eb2b7896d71",
-      "games/christmas-market/art/board-theme/specials/prism.png": "789de46177684960292a53bf94b1cd7c4cd0ea13bc43123fb8abb2f41210bcd0",
-      "games/christmas-market/art/board-theme/specials/ray-column.png": "89e699ed14428b41a1ea824a087a2db32b4b184e1f8df8568c4f34949099c7af",
-      "games/christmas-market/art/board-theme/specials/ray-diagonal.png": "69d0094b295284b8d18c81fae02ac5e6b94ee7e4ddecdfb07c57ac44854c9cfa",
-      "games/christmas-market/art/board-theme/specials/ray-row.png": "baa4d6cd2e7f2306b8de9f510199ce40553f9c85621b927780c5fbef34d39496",
-      "games/christmas-market/art/board-theme/specials/specials.blks": "dec93d1c21683fd548384193ae6986770e59ddbddc6568d512f192fa1e6f4147",
       "games/christmas-market/art/festive-pieces/layout.png": "8e0ea557bb32ff76100ee09e850c7c8bd538d4c4d90dfc15d9fa6c6ac9693a6a",
       "games/christmas-market/art/festive-pieces/prompt.txt": "740899d16730527edf59023796c35591ee62840a7e722d7d9552279e20cd2500",
       "games/christmas-market/art/festive-pieces/source.png": "a1f7ba39db73656b70bfe9ba4ae306a2c5e7088001f860fd010f7ab781c80875",
@@ -3854,17 +3644,16 @@
       "games/relic-rush/data/expedition-hud/pause-pressed.png": "7dadd55d19a536806f7a1a2a9054ad91d2cf96b3a6ed71d302943aa6ca6c665b",
       "games/relic-rush/data/expedition-hud/pause-selected.png": "f2965d9787498392b6c23a1120a0cf33e96ab2e95c218878061ca778cd306861",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "62d81d3b160d84e6831e98a28281ff303c6fc21a264eb6cd365247ea14e511b4",
+      "tools/homescapes_atlas.py": "cc0360737285d2bfc209e42fad85a9082c4951465d85b89b322d60554a8ce5c5",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_specials.py": "59a118aab70b342d3dce7aeae436615919b83f8a4a09a71d6fb11aba4ba64b72",
-      "tools/match3_theme_art.py": "c4aed4c24d6ad5222e715526e2f694c0af813aed53d4a17e9a326413379734f2",
+      "tools/match3_theme_art.py": "12b67bcf496e3f5ce12242e84bdfb69eac9785864c7318e5f76989d91570ba74",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
       "games/christmas-market/data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-      "games/christmas-market/data/match3.png": "4def7ec0289f5c49f3518334c7a99ef98b1ba5c99502e087fdf734a9b79e8ac4",
+      "games/christmas-market/data/match3.png": "b42fb80a6ecf3c963713cd22518df9531f7f8f76fb0f2cfcd3eaec0a28c64d11",
       "games/christmas-market/lua/match3_hud.lua": "5f0d6292396bfecd5c4a3f7aa81158d679a054fb51565caf6e6a1974cff93427",
-      "games/christmas-market/lua/match3_skin.lua": "9b17246f4d3af7aad24a2e743f7013f2de72da8955bd8d2216c5e94c386af948"
+      "games/christmas-market/lua/match3_skin.lua": "eefa2bd0309f822656436df7cc5e9a6e3a9810af1c5f6199aa51315d8e7deaf7"
     }
   }
 }

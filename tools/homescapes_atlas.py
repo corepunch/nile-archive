@@ -1,6 +1,7 @@
 """Register original decoded Homescapes sprites for the shared hex atlas.
 No recoloring or derived damage states: only uniform sizing/rotation and the
-canonical ground mask. Each power-up is a standalone, color-independent piece.
+canonical ground mask. The engine has no power-ups; their extracted originals
+stay on disk unregistered.
 """
 import json
 from pathlib import Path
@@ -13,14 +14,15 @@ SOURCE = ROOT / 'engine/art/homescapes/sprites'
 ENGINE_MADE = {'goal-carpet': 'python3 tools/carpet_goal_icon.py', 'goal-oil': 'python3 tools/oil_art.py',
                'oil-material': 'python3 tools/oil_art.py', 'oil-bubbles': 'python3 tools/oil_art.py'}
 def engine_made(name): return ROOT / 'engine/art/match3' / f'{name}.png'
-ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)},
-           'ray-row': 'rocket-horizontal', 'ray-column': 'rocket-vertical',
-           'ray-diagonal': 'rocket-horizontal', 'prism': 'rainbow-ball', 'delivery': 'donut'}
+ALIASES = {**{f'kind-{i}': f'chip-{i}' for i in range(6)}, 'delivery': 'donut'}
 # Extracted originals no board draws: the portals (the engine has no tunnels),
 # honey (HONEY draws as jelly-N), the carpet hex (carpet draws as one patch of
-# carpet-swatch), ice and chains (the live atlases use painted sets).
+# carpet-swatch), ice and chains (the live atlases use painted sets) and the
+# power-ups (the engine has none; match3_theme_art reads the rocket and bomb
+# silhouettes to size Christmas Market's booster icons).
+POWER_UPS = {'rocket-horizontal', 'rocket-vertical', 'bomb', 'rainbow-ball', 'gold-rainbow-ball', 'plane'}
 UNREGISTERED = {'portal-entrance-source', 'portal-output-source', 'honey-material', 'carpet',
-                'ice-1', 'ice-2', 'chain-1', 'chain-1-mirror', 'chain-2'}
+                'ice-1', 'ice-2', 'chain-1', 'chain-1-mirror', 'chain-2'} | POWER_UPS
 
 
 def registered():
@@ -32,8 +34,8 @@ def registered():
         for name in [path.stem] + [alias for alias, original in ALIASES.items() if original == path.stem]:
             crop = [13,0,115,128] if name == 'blind-body' else None
             original = source.crop(crop) if crop else source
-            angle = {'ray-row': -30, 'ray-diagonal': -150}.get(name, 0)
-            sprite = original.rotate(angle, Image.Resampling.BICUBIC, expand=True) if angle else original.copy()
+            angle = 0
+            sprite = original.copy()
             # Keep freestanding authored alpha entirely inside the canonical hex.
             side = 112
             while True:

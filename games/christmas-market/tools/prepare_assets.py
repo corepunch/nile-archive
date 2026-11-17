@@ -73,11 +73,6 @@ SIZE = 128
 APOTHEM = sqrt(3) / 2
 # Source boxes span the six tips of the painted frames in their 128px crops.
 GOLD_FRAMES = {
-    'ray-row': (5, 32, 118, 113),
-    'ray-column': (7, 31, 117, 113),
-    'ray-diagonal': (12, 10, 121, 111),
-    'bomb': (11, 10, 123, 110),
-    'prism': (11, 10, 121, 110),
     'selected': (9, 12, 116, 109),
     'hint': (13, 11, 119, 107),
 }
@@ -114,9 +109,11 @@ def fit_board_art(sheet, registration):
                         'radius': 46, 'radial_thickness_scale': .5},
     }
 
-# The sheet's excavation tile served the engine's former snow layer; its cell
-# keeps its place in the reading order but is no longer registered.
-UNREGISTERED = {'board-states/sand'}
+# The sheet's excavation tile served the engine's former snow layer, and the
+# five power-ups served special pieces the engine no longer has; their cells
+# keep their places in the reading order but are no longer registered.
+UNREGISTERED = {'board-states/sand'} | {'board-states/' + name for name in
+                ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism')}
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

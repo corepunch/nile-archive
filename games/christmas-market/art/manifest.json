@@ -32,7 +32,6 @@
   ],
   "runtime": {
     "data/board-frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
-    "data/board-states/bomb.png": "ed81b5bdc22716892ea1510be38c268e2580908002ff35a0be630f9868907d6e",
     "data/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
     "data/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
     "data/board-states/chain.png": "ae805d47172a2179d0840850ed5e171e98298044f36fa1d6f73d7a158cf77339",
@@ -52,10 +51,6 @@
     "data/board-states/pickaxe-normal.png": "4a804a5c510e6e64bbfacdeea8f6132561f07eed4dd69f7a3e21ecc67777c26a",
     "data/board-states/pickaxe-pressed.png": "4b83f6178205a2c612fbb7687fc398db6049d44bcc02ac71e8d9420e3b5fe8a2",
     "data/board-states/pickaxe-selected.png": "e4440120fd9947f4ebf459e74c9cdaee44fd455ef13dee80a741d4c9d0b42b70",
-    "data/board-states/prism.png": "5bc3624172d49cc776e32e1e68ecca6104632f825b5a2c45daca6194213bedb7",
-    "data/board-states/ray-column.png": "5628424a1bc0ce7219b7b0791676ecbfe0eeda56ee4ebcd7e5839f977b4c6283",
-    "data/board-states/ray-diagonal.png": "e9959eea0f179eadf7d8548c98b6517709903dce1a37830dc8bc60c8bcd0face",
-    "data/board-states/ray-row.png": "3c84a1bb62c99558a442c222f0ecb91d835ebec33eafc6169de51cf29909da67",
     "data/board-states/selected.png": "3fce0d388034f7d7b45a83e66a46f32bbb83ac5f73500a8b0a50f3f5d7e61fd5",
     "data/board-states/stone-1.png": "5878a8835b6a159be473b2aeb2f044512453fa1fa97df7c3fb7c1512e37dafa0",
     "data/board-states/stone-2.png": "e74589be9e08c844e52f5e438e0ed1f9093f7f63119dc5441100746a2d79c337",
@@ -170,7 +165,7 @@
     "data/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/market-goods.png": "7158aae3eabf4a2b11343ff23f9d9c0b82256017fb4ad388c48c5a41f0151640",
     "data/match3-hud.png": "23f55d8bdedbfc7a564d4a82c6c95e8dee07bc8096a4e760d6eb2ae6a4caa9eb",
-    "data/match3.png": "4def7ec0289f5c49f3518334c7a99ef98b1ba5c99502e087fdf734a9b79e8ac4",
+    "data/match3.png": "b42fb80a6ecf3c963713cd22518df9531f7f8f76fb0f2cfcd3eaec0a28c64d11",
     "data/navigation/build-disabled.png": "d4a1fe9291bb465c3082c1b44c312b66757e9eb6fce9b5dec9d59b60df2af948",
     "data/navigation/build-hover.png": "87ffd7bb55616076b87b47c9cd7df642c4b3cc46bae186cb5f9eaf0e4e09e9a5",
     "data/navigation/build-normal.png": "4fc096d735377f58bf227e79d075227420b07e3c6fc98cdbc831f7dbf5e100de",
@@ -206,7 +201,7 @@
     "data/town.json": "1888c40c3263cb115de966ee6587d224b6e423b4104ef343eb5ce46190420d20",
     "data/winter.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7"
   },
-  "matching_rules": "Three hex axes: straight 3 clears, 4 makes an axis rocket, 5+ makes a rainbow ball, crossing lines make a bomb, and a four-cell rhombus makes a plane.",
+  "matching_rules": "Three hex axes: straight lines of three or more clear. Matches never create special pieces; power comes from boosters and tools.",
   "particle_sprites": {
     "source": "art/particles/kenney/",
     "license": "art/particles/kenney/License.txt",
@@ -413,20 +408,6 @@
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/screenshots/review/board-palette/README.md",
     "states": {
-      "rocket": [
-        "ray-row",
-        "ray-column",
-        "ray-diagonal"
-      ],
-      "bomb": [
-        "bomb"
-      ],
-      "rainbow": [
-        "prism"
-      ],
-      "plane": [
-        "plane"
-      ],
       "carpet": [
         "carpet-swatch",
         "goal-carpet"
@@ -453,37 +434,27 @@
         "chain",
         "chain-2",
         "chain-1-mirror"
+      ],
+      "booster_icons": [
+        "booster-star-icon",
+        "booster-firework-icon"
       ]
     },
     "accent_source": "art/board-theme/accent-revision.png",
     "accent_prompt": "art/board-theme/accent-prompt.txt",
     "power_up_review": "docs/screenshots/review/power-up-paint/README.md",
-    "power_up_models": {
-      "generator": "tools/match3_specials.py",
-      "scene": "art/board-theme/specials/specials.blks",
-      "renders": [
-        "art/board-theme/specials/ray-row.png",
-        "art/board-theme/specials/ray-column.png",
-        "art/board-theme/specials/ray-diagonal.png",
-        "art/board-theme/specials/bomb.png",
-        "art/board-theme/specials/prism.png"
-      ],
-      "reproduction": "python3 tools/match3_specials.py christmas-market"
-    },
     "power_up_paint": {
       "generator": "built-in ImageGen",
       "source": "../../art/match3-power-up-paint/source.png",
       "prompt": "../../art/match3-power-up-paint/prompt.txt",
       "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
       "frames": [
-        "ray-row",
-        "ray-column",
-        "ray-diagonal",
-        "bomb",
-        "prism"
+        "booster-star-icon",
+        "booster-firework-icon"
       ],
       "registration": "art/match3-atlas.json",
-      "reproduction": "python3 tools/match3_atlas.py"
+      "reproduction": "python3 tools/match3_atlas.py",
+      "note": "The engine has no power-ups. Only the painted row rocket and bomb are registered, as the Shooting Star and Firework Bomb booster icons."
     },
     "chain_paint": {
       "generator": "built-in ImageGen",
@@ -680,13 +651,13 @@
         "good": 5
       },
       "booster-firework": {
-        "special": "bomb"
+        "frame": "booster-firework-icon"
       },
       "booster-lantern": {
         "good": 10
       },
       "booster-star": {
-        "special": "ray-row"
+        "frame": "booster-star-icon"
       }
     }
   },

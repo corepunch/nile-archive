@@ -116,8 +116,7 @@ requirements. The following paragraph describes the initial source set.
 
 The 32 extracted original PNGs are preserved byte-for-byte in
 `engine/art/homescapes/sprites/`; `source-regions.json` records their original
-atlas regions. `tools/homescapes_atlas.py` uniformly resizes and, for the two
-sloped rocket axes, rotates them. Object alpha stays authored. Carpet and jelly
+atlas regions. `tools/homescapes_atlas.py` uniformly resizes them. Object alpha stays authored. Carpet and jelly
 material previews use the canonical hex mask, without filling transparent
 pixels or inventing damage artwork. `carpet-swatch` is the exception: it is
 resized full-bleed so the board can tile it. `goal-carpet` is engine-made from
@@ -127,15 +126,17 @@ sprite (Homescapes paints it in a shader), so `oil-material`, `oil-bubbles` and
 full-bleed hex art. All transforms and input/output hashes are recorded in the
 engine and games' `match3-atlas.json` manifests.
 
-`python3 tools/match3_atlas.py` packs chips, specials, blockers and interface
+`python3 tools/match3_atlas.py` packs chips, blockers and interface
 controls into **one board atlas per active skin**. The game atlases include
 the original themed chip packs and the authored board-theme sprites. The
 engine default atlas retains the Homescapes sprites and source materials.
 
 Original source artwork covers nuts, statues, stacks, ceramic tiles, blinds,
 visible queues, six jelly strengths and the donut exit arrow. The extracted
-portal, honey and carpet-hex sprites stay in `engine/art/homescapes/sprites`
-but are not registered: no board draws them.
+portal, honey, carpet-hex and power-up (rocket, bomb, rainbow ball, plane)
+sprites stay in `engine/art/homescapes/sprites` but are not registered: no
+board draws them. The rocket and bomb silhouettes still size Christmas
+Market's booster icons.
 The maker uses the original shared-frame alignment for the base and both glass
 layers. Its five held poses use original charge components and the source
 client's per-hit groups. The goal icons use

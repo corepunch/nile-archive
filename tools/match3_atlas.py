@@ -46,9 +46,10 @@ NAMES = ([f'kind-{i}' for i in range(8)] +
          [f'{tool}-{state}' for tool in ['pickaxe', 'dynamite', 'sunburst', 'pause'] for state in STATES] +
          ['hud-panel', 'tool-tray', 'board-frame', 'background'] +
          [f'spark-{i}' for i in range(8)] + [f'ice-puff-{i}' for i in range(4)] + [f'impact-{i}' for i in range(4)])
-# Cells of the authored source in grid order. The excavation tile ('sand')
-# served a mechanic the engine no longer has; its cell stays, unregistered.
-UNREGISTERED = {'sand'}
+# Cells of the authored source in grid order. The excavation tile ('sand') and
+# the power-ups served mechanics the engine no longer has; their cells stay,
+# unregistered.
+UNREGISTERED = {'sand', 'ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism'}
 HEX = {'chain', 'ice-2', 'ice-1', 'selected', 'hint', 'cell-mask', 'board-frame'}
 
 

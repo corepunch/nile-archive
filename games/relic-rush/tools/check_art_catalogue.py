@@ -1,4 +1,4 @@
-"""Fail CI for uncatalogued runtime files, rule specials/kinds, or authored states."""
+"""Fail CI for uncatalogued runtime files, rule kinds, or authored states."""
 import json
 import re
 import struct
@@ -75,12 +75,9 @@ assert set(variant_art.values()) == set(gems["columns"])
 assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", levels=\{', economy)
 match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
 assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
-# The engine has no special pieces; their retired frames stay catalogued until the art is deleted.
-assert "M.NORMAL" not in match3 and "A.specials" not in art, "Special pieces were removed from the engine"
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
 assert kinds == manifest["kinds"], "Rule kinds need artwork and catalogue entries"
-expected = {v for v in manifest["specials"].values() if v}
-expected |= {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
+expected = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 for tool in manifest["tools"]:
     for state in manifest["tool_states"]:
         expected.add(tool + "-" + state)

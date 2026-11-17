@@ -8,11 +8,10 @@ The earlier festive set remains available to the inherited preview surfaces.
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `festive-0` through `festive-5` | Bell, candy cane, holly, knitted mitten, bauble and gingerbread, in atlas order. |
-| `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Cranberry-red collars and waist, with vanilla-ivory long cone tips and diagonal bands. |
-| `bomb`, `prism`, `plane` | Evergreen bomb with a warm-gold belt and inset socket disc, a rope fuse and a lit tip. The folded paper plane is icy blue, painted in the base sheet. The rainbow ball has pillowed enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
+| `booster-star-icon`, `booster-firework-icon` | The Shooting Star and Firework Bomb booster icons: the painted cranberry-red row rocket with vanilla-ivory tips, and the evergreen bomb with a warm-gold belt, rope fuse and lit tip. Never drawn on the board: the engine has no special pieces. |
 | `carpet-swatch`, `goal-carpet` | Warm apricot light spreads across the paving when a match touches a lit cell. A bronze lantern identifies the goal. |
 | `oil-material`, `goal-oil` | Pale matte snow drifts beneath treats. Matching on it clears it. If the turn clears none, snow drifts into a neighbouring cell. A snow mound identifies the goal. |
-| `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
+| `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | The campaign's red parcel. Source boards use the original donut. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
@@ -32,9 +31,7 @@ The [earlier base sheet](../art/board-theme/source.png) and
 festive palette. The base sheet remains the source for certain reference elements.
 [Earlier in-game art review](screenshots/review/board-palette/README.md).
 
-Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
-
-`python3 tools/match3_specials.py christmas-market` reproduces the five geometry renders used to make the edit target. [Scener models and original board review](screenshots/review/scener-power-ups/README.md).
+Built-in ImageGen painted the rocket axes, bomb and rainbow gem together for both games. Only this game's row rocket and bomb are still registered, as the two booster icons above. The [painted sheet](../../../art/match3-power-up-paint/source.png), its [prompt](../../../art/match3-power-up-paint/prompt.txt) and [edit target](../../../art/match3-power-up-paint/scener-strip.png) are their provenance. The [atlas manifest](../art/match3-atlas.json) records each icon's crop, fitted size and position inside the canonical inset hex, and `tools/prepare_bonus_buttons.py` bakes them into the booster buttons. Rebuild with `python3 tools/match3_atlas.py`. The [painted power-up](screenshots/review/power-up-paint/README.md) and [Scener model](screenshots/review/scener-power-ups/README.md) reviews are historical.
 
 One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
 

@@ -175,7 +175,6 @@ test-assets:
 	python3 games/relic-rush/tools/prepare_hud.py --check
 	python3 games/relic-rush/tools/prepare_story.py --check
 	python3 tools/buildings.py --check
-	python3 tools/match3_specials.py --check
 	python3 tools/match3_atlas.py --check
 	python3 tools/carpet_goal_icon.py --check
 	python3 tools/oil_art.py --check

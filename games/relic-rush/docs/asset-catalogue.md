@@ -7,11 +7,9 @@ The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pa
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `relics-0` through `relics-5` | Round gold sun coin, red flame, jade leaf, blue scarab, violet crystal and orange amphora. Source and preview boards use these older frames. |
-| `ray-row`, `ray-column`, `ray-diagonal` | One capped rocket modelled in Scener and rendered on the +30°, 90° and −30° axes. Terracotta-red collars and waist, with old-gold long cone tips and diagonal bands. |
-| `bomb`, `prism`, `plane` | Petrol-teal bomb with an ochre-gold belt and inset socket disc, a rope fuse and a lit tip. Parchment paper plane: Christmas Market's painted plane with its blues remapped by luminance to parchment shades. The rainbow ball has chamfered enamel tiles in three rows of six on a dark violet sphere. The bomb and rainbow gem are painted over Scener renders. |
 | `carpet-swatch`, `goal-carpet` | Dusty blue tesserae and a limestone chevron mark restored floor. Matching on the mosaic restores the cells it clears. The goal shows a fragment of the restored pattern. |
 | `oil-material`, `goal-oil` | Matte rose-brown sediment gathers in shallow banks. Matching on it clears it. If the turn clears none, silt spreads to a neighbouring cell. A silt bank icon identifies the goal. |
-| `stone-1` | One front-facing carved hex stone. An adjacent match or direct power-up hit clears it. The HUD and guide reuse the board sprite. |
+| `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
 | `delivery` | Carved tablet from the earlier delivery boards. Imported boards use their own tokens. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
@@ -19,9 +17,7 @@ Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and t
 
 The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet uses the `resource-coin` sprite. Built-in ImageGen authored the preview idol's [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
 
-Built-in ImageGen painted the three rocket axes, bomb and rainbow gem together for both games. The [painted sheet](../../../art/match3-power-up-paint/source.png) and its [prompt](../../../art/match3-power-up-paint/prompt.txt) are saved with the [Scener edit target](../../../art/match3-power-up-paint/scener-strip.png). The [atlas manifest](../art/match3-atlas.json) records the crop, fitted size and position of each frame inside the canonical inset hex. Rebuild with `python3 tools/match3_atlas.py`. [Before and after at both phone sizes](screenshots/review/power-up-paint/README.md).
-
-`python3 tools/match3_specials.py relic-rush` reproduces the five geometry renders used to make the edit target. [Scener models and original board review](screenshots/review/scener-power-ups/README.md).
+The engine has no special pieces, so the atlas carries no rocket, bomb, plane or rainbow-ball frames. Their earlier reviews ([painted power-ups](screenshots/review/power-up-paint/README.md), [Scener models](screenshots/review/scener-power-ups/README.md)) are historical.
 
 One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
 

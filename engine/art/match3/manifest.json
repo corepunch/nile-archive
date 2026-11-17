@@ -137,76 +137,6 @@
         128
       ]
     },
-    "ray-row": {
-      "source": "engine/art/homescapes/sprites/rocket-horizontal.png",
-      "rotation": -30,
-      "crop": null,
-      "registered_size": [
-        112,
-        104
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "ray-column": {
-      "source": "engine/art/homescapes/sprites/rocket-vertical.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        91,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "ray-diagonal": {
-      "source": "engine/art/homescapes/sprites/rocket-horizontal.png",
-      "rotation": -150,
-      "crop": null,
-      "registered_size": [
-        112,
-        104
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "bomb": {
-      "source": "engine/art/homescapes/sprites/bomb.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        110
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "prism": {
-      "source": "engine/art/homescapes/sprites/rainbow-ball.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        109
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "chain": {
       "source": "art/match3-chain-paint/edge-anchors.png",
       "prompt": "art/match3-chain-paint/edge-anchors-prompt.txt",
@@ -2759,20 +2689,6 @@
       ],
       "mask": false
     },
-    "gold-rainbow-ball": {
-      "source": "engine/art/homescapes/sprites/gold-rainbow-ball.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        111,
-        109
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "hazelnut-1": {
       "source": "engine/art/homescapes/sprites/hazelnut-1.png",
       "rotation": 0,
@@ -3199,62 +3115,6 @@
       ],
       "generator": "python3 tools/oil_art.py"
     },
-    "plane": {
-      "source": "engine/art/homescapes/sprites/plane.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        110
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "rainbow-ball": {
-      "source": "engine/art/homescapes/sprites/rainbow-ball.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        109
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "rocket-horizontal": {
-      "source": "engine/art/homescapes/sprites/rocket-horizontal.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        112,
-        87
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
-    "rocket-vertical": {
-      "source": "engine/art/homescapes/sprites/rocket-vertical.png",
-      "rotation": 0,
-      "crop": null,
-      "registered_size": [
-        91,
-        112
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "mask": false
-    },
     "statue-1": {
       "source": "engine/art/homescapes/sprites/statue-1.png",
       "rotation": 0,
@@ -3315,7 +3175,7 @@
       "source": "games/relic-rush/art/particles/kenney/star_09.png",
       "runtime": [
         2,
-        3074,
+        2946,
         256,
         256
       ]
@@ -3324,7 +3184,7 @@
       "source": "games/relic-rush/art/particles/kenney/light_01.png",
       "runtime": [
         262,
-        3074,
+        2946,
         256,
         256
       ]
@@ -3333,7 +3193,7 @@
       "source": "games/relic-rush/art/particles/kenney/circle_03.png",
       "runtime": [
         522,
-        3074,
+        2946,
         256,
         256
       ]
@@ -3342,7 +3202,7 @@
       "source": "games/relic-rush/art/particles/kenney/star_07.png",
       "runtime": [
         782,
-        3074,
+        2946,
         128,
         128
       ]
@@ -3351,7 +3211,7 @@
       "source": "games/relic-rush/art/particles/kenney/circle_02.png",
       "runtime": [
         2,
-        3334,
+        3206,
         128,
         128
       ]
@@ -3360,7 +3220,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff00.png",
       "runtime": [
         134,
-        3334,
+        3206,
         128,
         128
       ]
@@ -3369,7 +3229,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff04.png",
       "runtime": [
         266,
-        3334,
+        3206,
         128,
         128
       ]
@@ -3378,7 +3238,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff08.png",
       "runtime": [
         398,
-        3334,
+        3206,
         128,
         128
       ]
@@ -3387,7 +3247,7 @@
       "source": "engine/art/match3/kenney-smoke/whitePuff12.png",
       "runtime": [
         530,
-        3334,
+        3206,
         128,
         128
       ]
@@ -3396,7 +3256,7 @@
       "source": "games/relic-rush/art/particles/kenney/trace_06.png",
       "runtime": [
         662,
-        3334,
+        3206,
         128,
         128
       ]
@@ -3405,7 +3265,7 @@
       "source": "games/relic-rush/art/particles/kenney/star_06.png",
       "runtime": [
         794,
-        3334,
+        3206,
         128,
         128
       ]
@@ -3414,7 +3274,7 @@
       "source": "engine/art/match3/rome-2-cell-hint/Star_02_16.png",
       "runtime": [
         926,
-        3334,
+        3206,
         16,
         16
       ]
@@ -3423,7 +3283,7 @@
       "source": "engine/art/match3/rome-2-cell-hint/Star_16.png",
       "runtime": [
         946,
-        3334,
+        3206,
         16,
         16
       ]
@@ -3432,7 +3292,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "99f4a8f4234dede5bce3481c314d6bfe8506c88e65f41e8c6d6e939dd9827f34",
+    "recipe": "4c3144a346efc8aae08fc64836bb9c650cf6ee9826f065326b0d4b20ca51c640",
     "inputs": {
       "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
       "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
@@ -3465,7 +3325,6 @@
       "engine/art/homescapes/sprites/apple-platter-base.png": "9f255fb0c7b602ca501f1072fd5a2a0dd48ed97372b4cd99ca1c8129f7243050",
       "engine/art/homescapes/sprites/blind-body.png": "c25d99b31eadce8e84cebf5d6af366ac4b51d6afa0ca92145797fac1b9cffbb4",
       "engine/art/homescapes/sprites/blind-top.png": "f9148124ea1c5df62cb53e55cc0947cc9575afab822d9f575c0264ece0a31d8a",
-      "engine/art/homescapes/sprites/bomb.png": "db835621cea3c59746f28699df2c1464c958843d7aff634dad231f661b3260cb",
       "engine/art/homescapes/sprites/box-1.png": "c1fc6d424c43ee5e4c6a2ae59c61f35f39762597535296cbfeabf63040bb5244",
       "engine/art/homescapes/sprites/box-2.png": "3a712a3f569ea4dc84df51e15e1e1faed536d903d6b17acde91fc3b9800f300a",
       "engine/art/homescapes/sprites/box-3.png": "c205d253ddbb6f62952c292497a156f045946b0e2fd777cd23f1547ceb0025fe",
@@ -3511,7 +3370,6 @@
       "engine/art/homescapes/sprites/goal-piggy.png": "58cd8577712c2848fcd69420bec28b2addeee6c20b2ff7a41f3537e26d01494e",
       "engine/art/homescapes/sprites/goal-target-generator.png": "b97acb65fcdfc08b8a33a87843066b92db845a7559ba6cea920b6febf4a7fc88",
       "engine/art/homescapes/sprites/goal-trash.png": "5804ad34c6701fc9870145d91c0a7306d9a8c308e19c167eb5008a684577923a",
-      "engine/art/homescapes/sprites/gold-rainbow-ball.png": "2d69d32439257dd62bb7c410397e51f8124e7b135f146f48cd5814632cb3641b",
       "engine/art/homescapes/sprites/hazelnut-1.png": "0216a9ac530146be7b9d272a6c68a31a73743cb522157c566bc4e1d217d89aeb",
       "engine/art/homescapes/sprites/hazelnut-2.png": "0656948a81190c39e141b7a95bdb34dd69f0b7310d11a7eaa75df8e1cde54fa0",
       "engine/art/homescapes/sprites/hazelnut-3.png": "fcdc99550be5fd2bc6e9243d9fc0864ef6c71d2e477f432ec26fd5b202efd062",
@@ -3526,10 +3384,6 @@
       "engine/art/homescapes/sprites/jelly-square-source.png": "9242a1db622d53b6b0dfb9f84f347d32151789db119b5c5798b089cd893249c4",
       "engine/art/homescapes/sprites/membrane-fill-1.png": "2f37cbeb76261c777210e3091f0608ef5fa081eabdabc4dfe23bf0ee2733c2bf",
       "engine/art/homescapes/sprites/membrane-fill-2.png": "2867f3b6c61ccc4c5cb1d9add33e704f5922c98cb2e70649c77965a37e1231e5",
-      "engine/art/homescapes/sprites/plane.png": "5986a288603f4d5e711620092ee74bfd1ace896861aed046fefb58441bf6aa4b",
-      "engine/art/homescapes/sprites/rainbow-ball.png": "7f7e33828421498f3658e0588c37712b12a72344ac15aa597e96a3fba796a04b",
-      "engine/art/homescapes/sprites/rocket-horizontal.png": "634ae885dfb7be9f17adf1a4ac9dcb2af86a5fbb32028c24b373d7015fbd9ae6",
-      "engine/art/homescapes/sprites/rocket-vertical.png": "f4910c53b06207d53b234533edf4f7dd8cdb7f8e971048e6fc75f86d53a583e5",
       "engine/art/homescapes/sprites/statue-1.png": "aa2402e3f3ea88ad0d0aaaa94c70a460a0fa27a98b659c7d44165854b2da8818",
       "engine/art/homescapes/sprites/statue-2.png": "0c9a604b6eeea9dd14171860dcfc46168d03aa00e59cb4e75648089b8dd3446d",
       "engine/art/homescapes/sprites/statue-3.png": "38cb145d2b8e8cd7f34fca18f1a8ec17a1bd0f158d45f6cd256fb12377b7691c",
@@ -3561,14 +3415,14 @@
       "games/relic-rush/data/board-states/stone-2.png": "d673b53e95bcbc13f591f09a137ce4935127c14b62605e804844cacbbc7a2d37",
       "games/relic-rush/data/board-states/stone-3.png": "a7633b00bddb8dfc51f95fa15ce1653e079994e09b3c93b23301509f4edafb19",
       "tools/homescapes-reference/maker-named-regions.json": "2e17e51c2d6a2cc4673d0844646c0a2a2c53ea9acf5639a20571f6ba2a682c41",
-      "tools/homescapes_atlas.py": "62d81d3b160d84e6831e98a28281ff303c6fc21a264eb6cd365247ea14e511b4",
+      "tools/homescapes_atlas.py": "cc0360737285d2bfc209e42fad85a9082c4951465d85b89b322d60554a8ce5c5",
       "tools/homescapes_composites.py": "7809feca5a6523b1cc597204ef07f174c4ad905ea64a6edccfbda9e36201b0d2",
-      "tools/match3_theme_art.py": "c4aed4c24d6ad5222e715526e2f694c0af813aed53d4a17e9a326413379734f2",
+      "tools/match3_theme_art.py": "12b67bcf496e3f5ce12242e84bdfb69eac9785864c7318e5f76989d91570ba74",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
-      "engine/data/match3.png": "2e202e95f8fcc86a8110e7d765f8de4a24e76293f5aade9796aeb3fa2c8ac97a",
-      "engine/match3_frames.lua": "d1c0cd21237d07c47a82b57a6647824ffe794a17926af5fc26dda3c66968a297"
+      "engine/data/match3.png": "c1ec1e70145f83c6c7b18a4194e6c27b3f9d5278692ca86e9ca039e184b00777",
+      "engine/match3_frames.lua": "65fae562c5747397e345fba43af83c0008ca71801d315f1fdfd8d9a2353c75c8"
     }
   }
 }

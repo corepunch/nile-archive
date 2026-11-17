@@ -37,76 +37,6 @@
     1145
   ],
   "assets": {
-    "ray-diagonal": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/match3.png",
-      "atlas_frame": "ray-diagonal",
-      "fit": "free-object",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-power-up-paint/source.png",
-      "atlas_section": "board_theme"
-    },
-    "ray-column": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/match3.png",
-      "atlas_frame": "ray-column",
-      "fit": "free-object",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-power-up-paint/source.png",
-      "atlas_section": "board_theme"
-    },
-    "ray-row": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/match3.png",
-      "atlas_frame": "ray-row",
-      "fit": "free-object",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-power-up-paint/source.png",
-      "atlas_section": "board_theme"
-    },
-    "bomb": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/match3.png",
-      "atlas_frame": "bomb",
-      "fit": "free-object",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-power-up-paint/source.png",
-      "atlas_section": "board_theme"
-    },
-    "prism": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/match3.png",
-      "atlas_frame": "prism",
-      "fit": "free-object",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-power-up-paint/source.png",
-      "atlas_section": "board_theme"
-    },
     "chain": {
       "box": [
         0,
@@ -344,20 +274,6 @@
       "runtime": "data/board-states/sunburst-disabled.png",
       "source": "art/tool-buttons/source.png",
       "fit": "square-button"
-    },
-    "plane": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/match3.png",
-      "atlas_frame": "plane",
-      "source": "../christmas-market/art/board-theme/source.png",
-      "fit": "free-object",
-      "atlas_section": "board_theme",
-      "registration": "art/match3-atlas.json"
     }
   },
   "packs": [
@@ -373,15 +289,6 @@
     "CRYSTAL",
     "AMPHORA"
   ],
-  "specials": {
-    "NORMAL": null,
-    "ROW": "ray-row",
-    "COLUMN": "ray-column",
-    "DIAGONAL": "ray-diagonal",
-    "BOMB": "bomb",
-    "PRISM": "prism",
-    "PLANE": "plane"
-  },
   "tools": [
     "pickaxe",
     "dynamite",
@@ -396,7 +303,6 @@
   ],
   "runtime_inventory": [
     "data/board-frame/stone.png",
-    "data/board-states/bomb.png",
     "data/board-states/cell-mask.png",
     "data/board-states/chain.png",
     "data/board-states/delivery-exit.png",
@@ -415,10 +321,6 @@
     "data/board-states/pickaxe-normal.png",
     "data/board-states/pickaxe-pressed.png",
     "data/board-states/pickaxe-selected.png",
-    "data/board-states/prism.png",
-    "data/board-states/ray-column.png",
-    "data/board-states/ray-diagonal.png",
-    "data/board-states/ray-row.png",
     "data/board-states/selected.png",
     "data/board-states/stone-1.png",
     "data/board-states/stone-2.png",
@@ -1018,7 +920,7 @@
     "prompt": "art/board-states/clear-indicators-prompt.txt",
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
     "review": "docs/review/striped-specials/README.md",
-    "specials": "Retired: the engine has no special pieces. The rocket, bomb, prism and plane frames are no longer drawn and wait to be deleted from the art pipeline.",
+    "specials": "Deleted: the engine has no special pieces, and their frames and runtime files are gone.",
     "ice": "archived filled frost sheets; live ice uses the translucent hex overlays in ../../art/match3-ice/source.png",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   },
@@ -1032,7 +934,7 @@
     "review": "docs/review/painted-buildings/current-camera/README.md"
   },
   "striped_specials": {
-    "status": "retired; superseded by original Homescapes rockets",
+    "status": "retired with all special pieces; the engine has none",
     "documentation": "../../docs/HOMESCAPES_HEX.md"
   },
   "settings_and_wallet": {
@@ -1508,20 +1410,6 @@
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/screenshots/review/board-palette/README.md",
     "states": {
-      "rocket": [
-        "ray-row",
-        "ray-column",
-        "ray-diagonal"
-      ],
-      "bomb": [
-        "bomb"
-      ],
-      "rainbow": [
-        "prism"
-      ],
-      "plane": [
-        "plane"
-      ],
       "carpet": [
         "carpet-swatch",
         "goal-carpet"
@@ -1568,38 +1456,6 @@
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/sun-coin/README.md"
-    },
-    "power_up_review": "docs/screenshots/review/power-up-paint/README.md",
-    "power_up_models": {
-      "generator": "tools/match3_specials.py",
-      "scene": "art/board-theme/specials/specials.blks",
-      "renders": [
-        "art/board-theme/specials/ray-row.png",
-        "art/board-theme/specials/ray-column.png",
-        "art/board-theme/specials/ray-diagonal.png",
-        "art/board-theme/specials/bomb.png",
-        "art/board-theme/specials/prism.png"
-      ],
-      "reproduction": "python3 tools/match3_specials.py relic-rush"
-    },
-    "plane": {
-      "source": "../christmas-market/art/board-theme/source.png",
-      "recolor": "tools/match3_theme_art.py PLANE_SHADES, by luminance"
-    },
-    "power_up_paint": {
-      "generator": "built-in ImageGen",
-      "source": "../../art/match3-power-up-paint/source.png",
-      "prompt": "../../art/match3-power-up-paint/prompt.txt",
-      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
-      "frames": [
-        "ray-row",
-        "ray-column",
-        "ray-diagonal",
-        "bomb",
-        "prism"
-      ],
-      "registration": "art/match3-atlas.json",
-      "reproduction": "python3 tools/match3_atlas.py"
     },
     "chain_paint": {
       "generator": "built-in ImageGen",

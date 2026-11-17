@@ -79,71 +79,6 @@
       ]
     },
     {
-      "path": "board-states/ray-row.png",
-      "crop": [
-        1190,
-        0,
-        1388,
-        232
-      ],
-      "output": [
-        128,
-        128
-      ]
-    },
-    {
-      "path": "board-states/ray-column.png",
-      "crop": [
-        1388,
-        0,
-        1586,
-        232
-      ],
-      "output": [
-        128,
-        128
-      ]
-    },
-    {
-      "path": "board-states/ray-diagonal.png",
-      "crop": [
-        0,
-        232,
-        198,
-        422
-      ],
-      "output": [
-        128,
-        128
-      ]
-    },
-    {
-      "path": "board-states/bomb.png",
-      "crop": [
-        198,
-        232,
-        396,
-        422
-      ],
-      "output": [
-        128,
-        128
-      ]
-    },
-    {
-      "path": "board-states/prism.png",
-      "crop": [
-        396,
-        232,
-        595,
-        422
-      ],
-      "output": [
-        128,
-        128
-      ]
-    },
-    {
       "path": "board-states/chain.png",
       "crop": [
         793,
@@ -511,36 +446,6 @@
   "board_fit": {
     "mask": "128px regular flat-top hex, radius 64px",
     "gold_frame_source_boxes": {
-      "ray-row": [
-        5,
-        32,
-        118,
-        113
-      ],
-      "ray-column": [
-        7,
-        31,
-        117,
-        113
-      ],
-      "ray-diagonal": [
-        12,
-        10,
-        121,
-        111
-      ],
-      "bomb": [
-        11,
-        10,
-        123,
-        110
-      ],
-      "prism": [
-        11,
-        10,
-        121,
-        110
-      ],
       "selected": [
         9,
         12,

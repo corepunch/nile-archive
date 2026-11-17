@@ -8,11 +8,14 @@ from statistics import median
 from PIL import Image, ImageChops, ImageFilter
 
 from homescapes_atlas import SOURCE as HOMESCAPES
-from match3_specials import SPRITES as RENDERED
 
 ART = Path(__file__).resolve().parents[1] / 'art'
 POWER_UP_PAINT = ART / 'match3-power-up-paint'
-PAINTED_SPECIALS = RENDERED  # The paint sheet follows the Scener render order, one row per game.
+# The engine has no power-ups. Christmas Market's painted bomb and row rocket
+# survive as the Firework Bomb and Shooting Star booster icons. The paint sheet
+# has one row per game and five columns in the retired render order.
+PAINT_COLUMNS = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism')
+BOOSTER_ICONS = {'booster-star-icon': 'ray-row', 'booster-firework-icon': 'bomb'}
 CHAIN_PAINT = ART / 'match3-chain-paint'
 PAINTED_CHAINS = ('chain', 'chain-1-mirror', 'chain-2')
 # Square viewports within each bay, measured at the outside edges of the mounting plates.
@@ -30,16 +33,9 @@ FESTIVE_ATLAS = 'art/festive-pieces'
 
 SLOTS = (
     'chip-0', 'chip-1', 'chip-2', 'chip-3', 'chip-4',
-    'chip-5', 'ray-row', 'ray-column', 'ray-diagonal', 'bomb',
-    'prism', 'plane', 'delivery',
+    'chip-5', 'delivery',
 ) + PAINTED_FLOORS + ('stone-1',)
-# Longest side in px. The plane is a thin shape: at its Homescapes area it would span the whole cell.
-OBJECT_SIZE = {'plane': 84}
 SIZE = 128
-# Relic Rush flies Christmas Market's painted plane, its blues remapped by luminance to these parchment
-# shades (shadow, midtone, highlight). The drawing, shading and alpha are unchanged.
-PLANE_FROM = 'christmas-market'
-PLANE_SHADES = ((150, 98, 44), (234, 201, 133), (255, 240, 200))
 
 
 def silhouette(image):
@@ -47,11 +43,11 @@ def silhouette(image):
 
 
 def reference_areas():
-    """Use native masks so the three rocket axes start with the same target."""
+    """Size painted objects to the native Homescapes silhouettes they replace."""
     groups = {
         'chip': tuple(f'chip-{i}' for i in range(6)),
         'rocket': ('rocket-horizontal', 'rocket-vertical'),
-        'bomb': ('bomb',), 'prism': ('rainbow-ball',), 'plane': ('plane',),
+        'bomb': ('bomb',),
         'delivery': ('donut',),
     }
     result = {}
@@ -60,7 +56,7 @@ def reference_areas():
         for name in names:
             with Image.open(HOMESCAPES / f'{name}.png') as original:
                 areas.append(silhouette(original).histogram()[255])
-        # Chips and deliveries already draw on a smaller quad than specials.
+        # Chips and deliveries already draw on a smaller quad than standalone objects.
         scale = .86 if family in ('chip', 'delivery') else .80
         if family == 'rocket':
             scale *= .80  # Reduce the painted rockets' width and height by 20%.
@@ -135,34 +131,9 @@ def register_stone(sprite, mask):
     return canvas, list(face.size), list(offset)
 
 
-def repaint(sprite, shades):
-    """Remap a one-hue sprite's luminance onto three shades: its 5th, 50th and 95th percentiles."""
-    grey, alpha = sprite.convert('L'), sprite.getchannel('A')
-    levels = sorted(g for g, a in zip(grey.getdata(), alpha.getdata()) if a >= 128)
-    low, mid, high = (levels[len(levels) * k // 100] for k in (5, 50, 95))
-    def ramp(channel):
-        dark, base, light = (shade[channel] for shade in shades)
-        def at(g):
-            if g <= mid:
-                return round(base + (dark - base) * min(1.3, (mid - g) / max(1, mid - low)))
-            return round(base + (light - base) * min(1., (g - mid) / max(1, high - mid)))
-        return grey.point([max(0, min(255, at(g))) for g in range(256)])
-    return Image.merge('RGBA', (ramp(0), ramp(1), ramp(2), alpha))
-
-
-def borrowed_plane(root):
-    theme = root.parent / PLANE_FROM / 'art/board-theme'
-    return [theme / 'source.png', theme / 'prompt.txt']
-
-
 def painted(root):
     return [root / 'art/board-theme' / name for name in (
         'source.png', 'prompt.txt', 'accent-revision.png', 'accent-prompt.txt')]
-
-
-def rendered(root):
-    specials = root / 'art/board-theme/specials'
-    return [specials / 'specials.blks'] + [specials / f'{name}.png' for name in RENDERED]
 
 
 def chain_inputs():
@@ -195,16 +166,16 @@ def registered_chains(game, manifest_root):
 
 
 def inputs(root):
-    borrowed = borrowed_plane(root) if root.name != PLANE_FROM else []
     sun_coin = [root / 'art/board-theme/sun-coin' / name for name in (
         'source.png', 'prompt.txt', 'concept.png')] if root.name == 'relic-rush' else []
     festive = [root / FESTIVE_ATLAS / name for name in (
         'source.png', 'prompt.txt', 'layout.png')] if root.name == 'christmas-market' else []
-    paint = [folder / name for folder, target in ((POWER_UP_PAINT, 'scener-strip.png'),
-            (BLOCKER_PAINT, 'reference.png'))
-             for name in ('source.png', 'prompt.txt', target)]
+    paint = [BLOCKER_PAINT / name for name in ('source.png', 'prompt.txt', 'reference.png')]
+    if root.name == 'christmas-market':
+        paint += [POWER_UP_PAINT / name for name in ('source.png', 'prompt.txt', 'scener-strip.png')]
+        paint += [HOMESCAPES / f'{name}.png' for name in ('rocket-horizontal', 'rocket-vertical', 'bomb')]
     paint += [FLOOR_PAINT / name for name in ('source.png', 'prompt.txt', 'relic-rush-concepts.png', 'christmas-market-concepts.png')]
-    return painted(root) + borrowed + sun_coin + festive + rendered(root) + paint + chain_inputs() + [Path(__file__).with_name('match3_specials.py')]
+    return painted(root) + sun_coin + festive + paint + chain_inputs()
 
 
 def registered(root, mask):
@@ -224,10 +195,11 @@ def registered(root, mask):
             assert sheet.mode == 'RGBA', sheet.filename
         assert source.mode == 'RGBA' and source.size == (1254, 1254), source.filename
         frames, records = registered_chains(root.name, root)
-        for i, slot in enumerate(SLOTS):
+        slots = list(SLOTS) + (list(BOOSTER_ICONS) if root.name == 'christmas-market' else [])
+        for i, slot in enumerate(slots):
             name = f'{pack}-{i}' if i < 6 else slot
             row, col = divmod(i, 5)
-            is_power_up_paint = name in PAINTED_SPECIALS
+            is_power_up_paint = name in BOOSTER_ICONS
             is_floor_paint = name in PAINTED_FLOORS
             is_blocker_paint = name == 'stone-1'
             is_festive_piece = festive is not None and i < 6
@@ -243,10 +215,10 @@ def registered(root, mask):
                 crop = (0, 0, *sheet.size)
             elif is_power_up_paint:
                 sheet, sprite_prompt = power_ups, POWER_UP_PAINT / 'prompt.txt'
-                row = int(root.name == 'christmas-market')
-                col = PAINTED_SPECIALS.index(name)
+                row = 1
+                col = PAINT_COLUMNS.index(BOOSTER_ICONS[name])
                 w, h = sheet.size
-                cols = len(PAINTED_SPECIALS)
+                cols = len(PAINT_COLUMNS)
                 crop = (col * w // cols, row * h // 2, (col + 1) * w // cols, (row + 1) * h // 2)
             elif is_blocker_paint:
                 sheet, sprite_prompt = blockers, BLOCKER_PAINT / 'prompt.txt'
@@ -275,14 +247,9 @@ def registered(root, mask):
                     round((col + 1) * source.width / 5), 270 if row == 0 else round((row + 1) * source.height / 5),
                 )
                 sheet, sprite_prompt = source, prompt
-                if name == 'plane' and root.name != PLANE_FROM:
-                    plane_path, sprite_prompt = borrowed_plane(root)
-                    sheet = stack.enter_context(Image.open(plane_path))
-                    assert sheet.mode == 'RGBA' and sheet.size == source.size, plane_path
             sprite = sheet.crop(crop)
-            if name == 'plane' and root.name != PLANE_FROM:
-                sprite = repaint(sprite, PLANE_SHADES)
-            family = 'chip' if i < 6 else 'rocket' if name.startswith('ray-') else name
+            painted_as = BOOSTER_ICONS.get(name, name)
+            family = 'chip' if i < 6 else 'rocket' if painted_as.startswith('ray-') else painted_as
             target = areas.get(family)
             if name in MATERIALS:
                 # The live board SDF supplies the alpha at the patch boundary.
@@ -301,9 +268,9 @@ def registered(root, mask):
                                       min(sprite.width, right + 5), min(sprite.height, bottom + 5)))
                 fit = 'centered inside canonical hex with authored alpha'
                 if target:
-                    frame, fitted_size, offset = fit_object(sprite, inset, OBJECT_SIZE.get(name, SIZE), target)
+                    frame, fitted_size, offset = fit_object(sprite, inset, SIZE, target)
                 else:
-                    frame, fitted_size, offset = fit_object(sprite, mask, OBJECT_SIZE.get(name, 120), None)
+                    frame, fitted_size, offset = fit_object(sprite, mask, 120, None)
             frames[name] = frame
             records[name] = {'source': os.path.relpath(sheet.filename, root),
                              'prompt': os.path.relpath(sprite_prompt, root),
@@ -318,7 +285,7 @@ def registered(root, mask):
             if is_power_up_paint:
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['edit_target'] = os.path.relpath(POWER_UP_PAINT / 'scener-strip.png', root)
-                records[name]['geometry'] = f'art/board-theme/specials/{name}.png'
+                records[name]['painted_as'] = BOOSTER_ICONS[name]
             if is_floor_paint or is_blocker_paint:
                 records[name]['generator'] = 'built-in ImageGen'
                 if is_blocker_paint:
@@ -327,8 +294,6 @@ def registered(root, mask):
                     records[name]['reference'] = os.path.relpath(FLOOR_PAINT / f'{root.name}-concepts.png', root)
                 if name not in MATERIALS:
                     records[name]['offset'] = offset
-            if name == 'plane' and root.name != PLANE_FROM:
-                records[name]['recolor'] = {'luminance_percentiles': [5, 50, 95], 'shades': [list(c) for c in PLANE_SHADES]}
             if target:
                 records[name]['offset'] = offset
                 records[name]['homescapes_target_area_px'] = target
