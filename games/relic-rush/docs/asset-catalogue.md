@@ -41,7 +41,7 @@ The [Rome treasures revision](../art/campaign-pieces/rome-treasures.png) paints
 nine motifs together in built-in ImageGen. The [prompt](../art/campaign-pieces/rome-treasures.prompt.txt)
 uses the extracted Cradle of Rome 2 pieces for motif reference and the
 existing campaign artwork for style. The three-log bundle replaces the old
-single log in both matches and the first-clear award.
+single log in matches.
 [Side-by-side sheet](../../../docs/cradle-of-rome-reference/gem-correspondence.html) ·
 [In-game review](screenshots/review/rome-treasures/README.md)
 
@@ -89,7 +89,7 @@ the other story pieces below, alongside the trail arrow from the outlined atlas.
 | `coin` | Round gold coin engraved with an eight-ray sun, 4 Coins | Coins icon |
 | `berries` | Red berries, 1 Food | Board only |
 | `emerald` | Bright green faceted emerald, 11 Coins | Board and guide from 30 after the Temple |
-| `timber` | Three bark-covered logs with visible end grain, 2 Supplies | Board and Camp Timber award |
+| `timber` | Three bark-covered logs with visible end grain, 2 Supplies | Board |
 | `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
 | `water` | Teal water bucket, 3 Food. Replaces timber from board 5 after the Well is restored. | Board and guide |
 | `rations` | Orange ration jar, 4 Food in the Market slot from board 10 | Board and guide |
@@ -144,78 +144,28 @@ See the [finale and sand review](screenshots/review/signal-finale/README.md).
 The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived with its
 [historical review](review/story-mosaic/README.md).
 
-## Chapter 1 quest objects
+## Story pieces
 
-The [single ImageGen atlas](../art/quest-objects/source.png) and its [prompt](../art/quest-objects/prompt.txt)
-contain eight recognizable objects. A first clear shows its object (the board-size file) at 210 px, centred on an
-**Item recovered!** card (the results card's panel, jade header and glow; the name and a
-CONTINUE button below), before the story exchange in which the characters find it and before
-the results. Reviewed capture: `build/relic-rush --victory clue --dialog award`.
-They are independent of the selected match piece pack.
+Boards 2–10 and 13 replace one colour's sprite with a story piece. Selection,
+hints and refills use the board's usual overlays and animations. First-clear
+dialogue reveals what the crew found.
 
-| Atlas slot | Quest object | Board and use |
+| Slot | Boards | Story sprite |
 | --- | --- | --- |
-| `timber` | Camp timber | 1, put up the Expedition camp |
-| `lens` | Lamp lens | 2, answer the light below the cliff |
-| `cable` | Relay cable | 3, trace the route |
-| `chart` | Tide chart | 4, read the route after restoring the Spring well |
-| `marker` | Green painted brass trail arrow | 5 and 6, locate the steps below the quay |
-| `tools` | Tool roll | 7, equip the Artisan workshop |
-| `pliers` | Relay pliers | 8, recover Tomas’s tool at the severed cable and use it on the market hoist |
-| `supplies` | Supply crate | 9, stock the Jungle market supply point |
-| `gear` | Shutter gear | 10, operate the near shutter and read the tide-room warning |
-
-The [shutter gear sheet](../art/quest-objects/shutter-gear-states.png) supplies
-the weathered bronze reward. The new board gear uses the same open square bore. The
-[prompt](../art/quest-objects/shutter-gear-states.prompt.txt) and manifest
-record the source and crops.
-
-Run `python3 games/relic-rush/tools/relic_quest_art.py` after the resource registration to build
-the scenario index in `art/registered/quest-objects.png` and the item card props in
-`data/story/finds/`. Camp Timber's card uses `data/story/finds/timber.png`, the 320px registration of the campaign timber piece; the board piece is the 128px `resource-timber`.
-Separate card props fit within 256 px on a 320×320 canvas. Board 8 uses its
-`pliers` atlas region on the card and in alternate board previews. The intact
-relay cable for board 3 is coiled with two plugs.
-
-### Collectible story pieces
-
-The board uses the story sprite for the replaced colour slot. Selection, hints
-and refill use the existing animation and overlays. Power-ups use their own
-sprites. The first clear recovers the story item.
-
-| Slot | Boards | Collectible sprite |
-| --- | --- | --- |
-| Gold | 4, 13 | Tide map, folded note |
+| Gold | 4, 13 | Tide chart, folded note |
 | Red | 7 | Rolled leather tool wrap |
-| Green | 5, 6 | Painted brass trail arrow |
+| Green | 5, 6, 8, 10 | Painted brass trail arrow, relay pliers, bronze shutter gear |
 | Blue | 2, 9 | Lamp lens, supply pack |
 | Purple | 3 | Coiled relay cable |
-| Orange | 8, 10 | Relay pliers, bronze shutter gear |
 
-Board 1 uses the ordinary timber chip. The campaign atlas includes all nine
-story sprites. In alternate art previews most story sprites come
-from the [expedition atlas](../art/resource-pieces/scenario-atlas.png). The
-trail arrow chip and marker recovery card use the
-[outlined source sheet](../art/resource-pieces/outlined-atlas.png).
-The manifest records each crop, the boards it appears on and its colour slot.
-Run `python3 games/relic-rush/tools/relic_quest_art.py` to register the individual
-`art/registered/story-pieces/*.png` files. Each crop fits inside 108 px on a centred
-128 × 128 canvas. The [new board review](screenshots/review/expedition-economy/README.md)
-covers both cable silhouettes. The [earlier review](screenshots/review/story-collection/README.md)
-records the preceding sprites and the item cards.
-
-
-### Board 13 warning note
-
-The collectible sprite shows the outside of the folded note. On the first-clear
-card the open paper reads “WALL UNSAFE” and “I. R.” before the courtyard scene.
-The card uses the exposed crop of the [original sheet](../art/quest-objects/ines-note-states.png)
-and [prompt](../art/quest-objects/ines-note-states.prompt.txt). The manifest
-registers it as `data/story/finds/note.png` within 228 px on a 320×320 canvas.
-
-The earlier excavation art is documented in
-[the silhouette review](screenshots/review/compact-silhouettes/README.md) and
-[the footprint review](screenshots/review/laid-finds/README.md).
+Board 1 uses the ordinary `timber` piece. The campaign atlas includes all nine
+story sprites. Alternate packs share its `pliers` frame. The other alternate
+sprites come from the [expedition atlas](../art/resource-pieces/scenario-atlas.png)
+and the [outlined source sheet](../art/resource-pieces/outlined-atlas.png).
+The manifest records the crops, boards and colour slots. Run
+`python3 games/relic-rush/tools/prepare_story_pieces.py` to register the individual
+`art/registered/story-pieces/*.png` files. Each crop fits inside 108 px on a
+centred 128 × 128 canvas. [Board captures](screenshots/review/expedition-economy/README.md)
 
 ## Additional board elements
 
@@ -531,8 +481,7 @@ The board and button atlases use 128 px cells.
 [Hammer debut](screenshots/bonus-hammer-debut.jpg) ·
 [Hammer debut on phone](screenshots/bonus-hammer-debut-phone.jpg) ·
 [Plus debut](screenshots/bonus-plus-debut.jpg) ·
-[Shutter Gear board](screenshots/bonus-gear.jpg) ·
-[Recovered gear](screenshots/bonus-gear-award.jpg).
+[Shutter Gear board](screenshots/bonus-gear.jpg).
 Reproduce the views and the real tap-to-spend check with
 `build/test/relic-rush 'shot bonus-' 'reel bonus-gem-flight' 'shot workshop-card-phone'`.
 

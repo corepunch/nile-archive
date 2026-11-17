@@ -204,27 +204,9 @@ assert all(path in shipped for path in manifest['story']['cast'].values())
 assert manifest['story']['states'] == ['speaking','listening','thought','shout']
 assert 'A.story=' in art and '31.5' in doc
 
-quest = manifest["quest_objects"]
-assert quest["runtime"] in shipped
-declaration = re.search(r"A\.quest_objects = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == quest["slots"]
-for key in quest["slots"]:
-    assert "`" + key + "`" in doc
-    path = quest["shared_rewards"].get(key, f"data/story/finds/{key}.png")
-    assert path in shipped
-for key in ["source", "prompt", "registration"]:
-    assert (ROOT / quest[key]).is_file()
-assert all((ROOT / quest["gear_reward"][key]).is_file() for key in ("source", "prompt"))
-for name, reward in quest["reward_sources"].items():
-    assert name in quest["slots"] and all((ROOT / reward[key]).is_file() for key in ("source", "prompt"))
-rewards = quest["separate_rewards"]
-declaration = re.search(r"A\.separate_rewards = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == list(rewards)
-for name, reward in rewards.items():
-    assert reward["runtime"] == f"data/story/finds/{name}.png" and reward["runtime"] in shipped
-    assert all((ROOT / reward[key]).is_file() for key in ("source", "prompt"))
+story = manifest["story_pieces"]
 campaign = (ROOT / "lua/campaign.lua").read_text()
-sheets = quest["story_pieces"]["atlases"]
+sheets = story["atlases"]
 declaration = re.search(r"A\.story_pieces = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == [name for sheet in sheets for name in sheet["items"]]
 board_slots = {}
@@ -235,17 +217,17 @@ for sheet in sheets:
         for board in item["boards"]:
             assert board not in board_slots, f"Multiple story pieces on board {board}"
             board_slots[board] = name, item["kind"]
-atlas_pieces = quest["atlas_pieces"]
-declaration = re.search(r"A\.atlas_quest_pieces = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == list(atlas_pieces)
-for name, item in atlas_pieces.items():
+campaign_frames = story["campaign_frames"]
+declaration = re.search(r"A\.story_campaign_frames = \{([^}]+)\}", art).group(1)
+assert re.findall(r'"([^"]+)"', declaration) == list(campaign_frames)
+for name, item in campaign_frames.items():
     assert name in slots and f"`{name}`" in doc
     for board in item["boards"]:
         assert board not in board_slots, f"Multiple story pieces on board {board}"
         board_slots[board] = name, item["kind"]
 declarations = re.findall(r'levels\[(\d+)\]\.story_piece, levels\[\1\]\.goal_kind = "([^"]+)", (\d+)', campaign)
 assert {int(board): (name, int(kind)) for board, name, kind in declarations} == board_slots
-subprocess.run([sys.executable, str(ROOT / quest["registration"]), "--check"], check=True)
+subprocess.run([sys.executable, str(ROOT / story["registration"]), "--check"], check=True)
 subprocess.run([sys.executable, str(ROOT / "tools/prepare_resource_pieces.py"), "--check"], check=True)
 
 result_icons = manifest["result_icons"]

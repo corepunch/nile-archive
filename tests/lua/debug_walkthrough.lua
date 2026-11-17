@@ -24,8 +24,8 @@ check(R.prog.level == 1 and R.prog.wallet[4] == expected[4], 'replay does not ad
 R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
-check(R.debug_complete_task() and island.owned(R.island, 0) == 1, 'town action confirms the earned building')
-check(not R.debug_complete_task() or island.owned(R.island, 0) == 1, 'repeated action does not duplicate the building')
+check(R.debug_advance_town() and island.owned(R.island, 0) == 1, 'town action confirms the earned building')
+check(not R.debug_advance_town() or island.owned(R.island, 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
 
 local relic = economy.bonuses ~= nil
@@ -40,12 +40,12 @@ end
 local function place_due(level)
     R.prog.level = level
     if not island.next_step then
-        check(R.debug_complete_task(), 'place the intervening restoration')
+        check(R.debug_advance_town(), 'place the intervening restoration')
         return
     end
     while island.next_step(R.island, level) do
         local count = R.island.count
-        local placed = R.debug_complete_task() and R.island.count == count + 1
+        local placed = R.debug_advance_town() and R.island.count == count + 1
         check(placed, 'place the intervening restoration')
         if not placed then break end
     end
@@ -59,7 +59,7 @@ local function check_unlock(index, reward, already_placed)
         R.prog.level = level
         local before = R.make_board(level, 2)
         check(reward_piece(before, reward) == nil, 'the reward waits for confirmed construction')
-        check(R.debug_complete_task(), 'the walkthrough confirms the earned building')
+        check(R.debug_advance_town(), 'the walkthrough confirms the earned building')
     end
     if reward.rank ~= 2 then
         check(reward_piece(R.make_board(level - 1, 2), reward) == nil, 'older boards keep their original palette')

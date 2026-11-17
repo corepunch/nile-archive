@@ -28,7 +28,7 @@ The Well costs Coins. The Workshop, Market, Archive and Temple use all three
 resources. Boards cleared unlock shop stock and land. There are no lives: a failed
 board can be retried at once.
 
-Tap a placed building for its name and subtitle above it. The label uses the quest panel's dark green and gold palette. Only one stays open. The next press dismisses it. A stationary hold picks up a building through the shared mover, with Confirm/Cancel preserving saved state.
+Tap a placed building for its name and subtitle above it. Only one stays open. The next press dismisses it. A stationary hold picks up a building through the shared mover, with Confirm/Cancel preserving saved state.
 
 See the [building label comparisons at both phone sizes](docs/screenshots/review/town-labels/README.md).
 
@@ -102,9 +102,7 @@ Boards 2–10 and 13 show a story piece in place of one matching colour.
 Every board spawns five kinds, so those boards use four regular kinds plus the story piece.
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
 
-A first clear of boards 1 to 10 or board 13 recovers a quest object. It shows big on its own **Item
-recovered!** card, styled like the results card, before the story exchange about it and the
-results (`--victory clue --dialog award` previews it).
+First-clear dialogue tells the crew’s discoveries. Clear every blue plaque to finish the expedition.
 
 ## Shared UI and dialog layers
 
@@ -179,11 +177,9 @@ In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard,
 Lodge and Archive to use. Ines’s note identifies the signaler, and her signed
 plan gives the crew a way to repair the quay wall.
 
-The island shows the active chapter, quest, next task and Happiness. Each confirmed
-wonder adds four Happiness and each optional building or decoration adds one.
-Optional placements also add one Coins to every won expedition, up to ten Coins.
-The shop previews the Happiness gain and the results show the Coins bonus.
-Required restorations cover quest thresholds. Moving a building preserves its Happiness.
+Clear expeditions in order and confirm the required story restorations to advance.
+Each placed optional building or decoration adds one coin per win, up to ten coins.
+The results card lists the decoration bonus.
 
 First-clear dialogue leads into Results. Board 30 reveals the signal plate at the cleared site, then shows Ines answering from the safe landing with the three flashes first seen on board 3. The tide-room choice follows Claim, and each
 wonder has a separate scene after confirmed placement. Replays bank matched resources.
@@ -364,7 +360,7 @@ make web && python3 -m http.server 8080 --directory dist   # http://localhost:80
 
 The game is laid out for a 480 × 900 portrait screen inside the device's safe area. It is `fixed` with `max_aspect = 2.2`, so on taller phones the screen keeps its width and grows taller (`R.layout()` moves the bottom group down by the extra height, `R.drop`). Its jungle backdrop, the island and the HUD bands run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`). Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
-Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--catalogue [category]`, `--catalogue-page N`, `--catalogue-item ID`, `--catalogue-card ID`, `--building-review N` (four catalogue objects per footprint review page), `--footprints` (every building's footprint and pivot over its sprite), `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble|leaderboard|level-leaderboard|award` (`award` with `--victory clue`), `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx shatter`, `--smoke` (plays level one through injected clicks, claims, builds, checks pan/long-press move/cancel/confirm and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
+Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--catalogue [category]`, `--catalogue-page N`, `--catalogue-item ID`, `--catalogue-card ID`, `--building-review N` (four catalogue objects per footprint review page), `--footprints` (every building's footprint and pivot over its sprite), `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble|leaderboard|level-leaderboard`, `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx shatter`, `--smoke` (plays level one through injected clicks, claims, builds, checks pan/long-press move/cancel/confirm and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 
 ## Controls and saved progress
 
@@ -476,7 +472,7 @@ and Levels buttons, with simplified authored icons and five interaction states.
 
 For a local story walkthrough, launch `./build/relic-rush --debug-walkthrough`.
 Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.
-On the island, **Complete task** places an earned story building or starts the next board.
+On the island, **Advance** places an earned story building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
 ### Board

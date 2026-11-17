@@ -89,7 +89,6 @@ return {
         poor = "MORE RESOURCES NEEDED",
         reserved = "RESOURCES RESERVED FOR RESTORATION",
         full = "ISLAND IS FULL",
-        build_points = "  ·  +%d Happiness",
     },
     expeditions = {
         title = "Expeditions",

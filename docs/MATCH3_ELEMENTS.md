@@ -30,8 +30,7 @@ more than four goals uses two HUD rows.
 draws one image across the level's tablet cells (each uncovered cell shows its part beneath the
 piece), uses `icon` for the tablet goal, speaks `bark` once half the cells are clear, and on a first
 clear fades the pieces and holds the whole object before the result. The picture carries its own
-transparent margin so every covering cell samples inside it. Relic Rush boards 1-7, 9 and 10 use it
-for their quest objects. Without `object`, the picture covers the whole board and peeks through
+transparent margin so every covering cell samples inside it. Without `object`, the picture covers the whole board and peeks through
 the cleared tablets. On the win the game fades pieces and blockers by
 `elements.reveal_cover(R, rules)`, and the first-clear beat waits for
 `elements.reveal_holding(R, rules)`, so the finished picture is seen before anyone speaks. Replays

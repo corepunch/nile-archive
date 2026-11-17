@@ -14,18 +14,17 @@ local function open_cell(g)
         if ok then return i end
     end
 end
--- Happiness is derived from placed items, and only optional purchases earn Gold.
+-- Optional purchases add Coins to a win, up to the decoration bonus cap.
 do
     local town={items={{type=0},{type=37}}}
     local p={level=1,seed=1,wallet=purse(0,0,0,3)}
     local g=rules.game_start(0,99);g.won=true;g.moves=0
-    check(island.happiness(town)==5,'wonder and decoration Happiness add together')
     local reward=rules.reward_breakdown(g,island.wonders,p,town)
-    check(reward.happiness==1 and reward.total[1]==1,'Happiness Gold is itemized as part of the claim')
-    check(rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'a replay banks Happiness Gold')
-    check(not rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'cannot claim Happiness twice')
+    check(reward.decoration_bonus==1 and reward.total[1]==1,'only the optional placement earns a bonus coin')
+    check(rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'a replay banks the decoration bonus')
+    check(not rules.progress_reward(p,g,island.wonders,town) and p.wallet[1]==1,'cannot claim the decoration bonus twice')
     for _=1,12 do town.items[#town.items+1]={type=37} end
-    check(island.happiness(town)==17 and island.happiness_gold(town)==10,'Happiness continues above the Gold cap')
+    check(island.decoration_bonus(town)==10,'the decoration bonus is capped at ten coins')
 end
 
 -- Confirmed restorations persist across eligible boards without taking story slots.
@@ -238,7 +237,7 @@ do
     end
     rules.game_matches(g, m, -1)
     rules.game_apply(g, m)
-    check(g.relics >= 3 and not m.bonus_charge_by_cell, 'a shutter gear match counts only toward the quest')
+    check(g.relics >= 3 and not m.bonus_charge_by_cell, 'a shutter gear match adds no bonus charge')
 end
 
 local function charge(g, bonus)

@@ -514,15 +514,6 @@ function E.result_rects(screen_w, screen_h)
     })
 end
 
-function E.award_rects(screen_w, screen_h)
-    return card_layout("award", screen_w, screen_h, 20, {
-        slot("header", 74, 22),
-        slot("image", 210, 20),
-        group(2, {slot("name", 42, 20), slot("subtitle", 18, 20)}),
-        slot("claim", 56, 40),
-    })
-end
-
 function E.guide_form(copy, guide_icon)
     return ui.form{kind="column",panel=true,padding=20,children={
         {kind="label",text=copy.title,height=44,em=34},

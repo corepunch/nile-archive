@@ -5,7 +5,7 @@ pieces in place. A match or tool hit removes a chain (crossed double chains
 take two), and a later hit
 clears the plaque beneath it. A chain on plain stone can be left in place if
 it is out of the way. Boards 2–10 and 13 show a story piece in one colour slot.
-**Item recovered!** follows the first clear.
+First-clear scenes tell the crew’s discoveries.
 
 The 100 boards are authored, one file each, in [../levels](../levels), on Cradle
 of Rome's feature schedule: chains from 5, ice from 7, two areas from 9,
@@ -76,13 +76,11 @@ draw one eligible slot by seed and use its current gem. The bonus takes an
 existing slot so the expedition keeps five kinds. Dynamite uses red on
 board 8, where the relay pliers occupy the apple slot. Expedition 10
 introduces the market's ration jars and gives the apple slot to the Shutter
-Gear quest piece.
+Gear story piece.
 
 Six matched gems fill one use. Each gem flies into its own socket and adds
 a sixth of a meter. Reduce Motion fills it immediately. Using a bonus costs
 no moves. Old saves combine each pair of separate meters into one slot at
 their original charge fractions, capped at one use.
 
-The market hoist makes the tide-room approach possible. The Shutter Gear
-counts toward the expedition 10 recovery objective, and the first clear
-still awards the gear. The Tide Chart is recovered on expedition 4.
+The market hoist makes the tide-room approach possible. The crew finds the Shutter Gear on expedition 10 and the Tide Chart on expedition 4.

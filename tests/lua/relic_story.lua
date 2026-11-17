@@ -1,7 +1,6 @@
 local journey=require('journey')
 local rules=require('rules')
 local island=require('island')
-local quests=require('quests')
 local R=require('state')
 require('main')
 local function empty_queue() while story.active() do story.next() end end
@@ -68,16 +67,10 @@ do
     check(rules.game_tool_area(g,0,b)==nil, 'no area without a charge')
 end
 
-local collections = {
-    [1]={"Camp timber",3}, [2]={"Lamp lens",3}, [3]={"Relay cable",4},
-    [4]={"Tide chart",0}, [5]={"Quay marker",2}, [6]={"Shore marker",2},
-    [7]={"Tool roll",1}, [8]={"Relay pliers",2}, [9]={"Supply crate",3}, [10]={"Shutter gear",2},
-    [13]={"Folded note",0},
-}
-
 -- Story pieces occupy one palette slot and remain distinct through refills.
-for board, spec in pairs(collections) do
-    local _, target, omitted = table.unpack(spec)
+local story_slots = {3, 3, 4, 0, 2, 2, 1, 2, 3, 2, [13]=0}
+for board, target in pairs(story_slots) do
+    local omitted = rules.levels[board].omit_kind
     local expected_count = 5   -- every board spawns all five kinds
     local g = rules.game_start(board-1,123)
     R.g = g
@@ -99,7 +92,7 @@ for board, spec in pairs(collections) do
     local m=rules.new_match()
     m.mask[a],m.mask[b]=true,true
     rules.game_apply(g,m)
-    check(g.relics==1 and g.tiles[a].kind<0, 'the quest piece matches like an ordinary piece')
+    check(g.relics==1 and g.tiles[a].kind<0, 'the story piece matches like an ordinary piece')
     if board==1 then check(g.earnings[3]==2,'ordinary camp timber earns two Supplies') end
     rules.game_collapse(g)
     for i=0,rules.CELLS-1 do
@@ -111,6 +104,7 @@ end
 -- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
+R.prog, R.island, R.quiet = p, c, true
 check(rules.LEVELS==100 and #journey.beats==47,'all chapters and their restoration scenes are playable')
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
@@ -119,9 +113,7 @@ for _,b in ipairs(journey.beats) do
     end
 end
 for level=1,30 do
-    local quest, task=quests.current(p,c)
-    check(quest and task.board==level and quests.points(c)>=quests.required_points(level),
-        'each actual board has a funded quest and its own task')
+    check(R.start_level(level-1), 'the next board opens once its story and restorations are complete')
     local before=journey.next(p,owned(c),level-1)
     if before then
         check(before.phase=='before' and before.level==level,'opening comes before its excavation')
@@ -145,9 +137,6 @@ for level=1,30 do
     end
     rules.game_check_end(g)
     check(not g.won, 'a board cannot win before its plaques are cleared')
-    if collections[level] then
-        check(R.award_for(g).name==collections[level][1], 'the story object remains the first-clear reward')
-    end
     for _, i in ipairs(specs.oil) do g.oil[i]=0 end
     g.oil_left=0
     rules.game_check_end(g)
@@ -179,10 +168,9 @@ for level=1,30 do
     p.story_seen[after.key]=true
     for z=1,5 do c:unlock(z,p.wallet) end
     for _, step in ipairs(opened) do
-        local _, next_task=quests.current(p,c)
-        check(next_task and next_task.kind==step.kind,'the funded restoration is the next quest task')
         check(island.next_step(c,p.level)==step.kind,'restorations open in ladder order')
         if step.story then
+            check(not R.start_level(level),'the next board waits for required construction')
             check(not journey.next(p,owned(c),nil),'restoration story waits for confirmed construction')
             local reserve,cost=island.reserved_cost(c,p.level),island.buildings[step.kind+1].cost
             check(reserve:covers(cost) and cost:covers(reserve),'reserve covers all costs of the earned building')
@@ -197,13 +185,12 @@ for level=1,30 do
         p.story_seen[placed.key]=true
     end
     local replay=rules.game_start(level-1,100+level);replay.won=true;replay.moves=0
-    local stars=p.wallet[4]
-    check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
+    local cleared=p.wallet[rules.CLEARED]
+    check(rules.progress_reward(p,replay,island.wonders) and p.wallet[rules.CLEARED]==cleared,'replay does not advance the clear count')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(c.count==20 and c.open==63 and p.wallet[4]==30 and quests.points(c)==80,
-    'thirty clears restore twenty buildings, fund every region and award 80 points')
-check(not quests.current(p,c),'all nine quests finish')
+check(c.count==20 and c.open==63 and p.wallet[rules.CLEARED]==30,
+    'thirty clears restore twenty buildings and open every region')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth wonder')
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
@@ -257,6 +244,16 @@ empty_queue();R.story_tick()
 check(R.prog.story_seen['after-10'] and journey.next(R.prog,owned(c),10).key=='before-11',
     'finishing the reply unlocks chapter two')
 empty_queue()
+
+-- The first clear hands straight to the scene that reveals the note.
+R.prog.level=12
+R.g=rules.game_start(12,1)
+R.g.won=true
+R.on_island,R.overlay=false,R.OV_RESULT
+R.story_tick()
+check(story.active() and R.story_current.key=='after-13','the note scene begins as soon as the clear is ready')
+empty_queue(); R.story_tick()
+check(R.g.story_clear=='after-13','the note scene is ready to record when the reward is claimed')
 
 -- The final plaque reveals the signal plate and plays the landing scene
 -- before the first-clear dialogue.

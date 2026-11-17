@@ -54,9 +54,6 @@ def register_campaign(spec, check):
             replacements.update({key: revised.crop(box) for key, box in revision['boxes'].items()})
     for key, (size, extent) in SPEC['from_campaign'].items():
         register_piece(replacements[key], key, size, extent, check)
-    # A piece that is also a find's reward card gets its large picture beside the finds.
-    for key, (size, extent) in SPEC.get('reward_pictures', {}).items():
-        register_piece(replacements[key], key, size, extent, check, ROOT / 'data/story/finds')
     edges = spec['row_edges']
     assert atlas.mode == 'RGBA' and edges[0] == 0 and edges[-1] == atlas.height
     rows, size = spec['rows'], spec['cell_size']

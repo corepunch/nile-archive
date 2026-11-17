@@ -47,15 +47,7 @@ for _, step in ipairs(M.ladder) do
     if unlock then M.buildings[step.kind + 1].unlock_text = "Unlocks " .. unlock end
 end
 
-function M.happiness_points(kind) return M.ladder_position[kind] and 4 or 1 end
-
-function M.happiness(c)
-    local points = 0
-    for _, item in ipairs(c.items) do points = points + M.happiness_points(item.type) end
-    return points
-end
-
-function M.happiness_gold(c)
+function M.decoration_bonus(c)
     return c and math.min(10, #c.items - M.campaign_count(c)) or 0
 end
 
