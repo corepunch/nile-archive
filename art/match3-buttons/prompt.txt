@@ -2,3 +2,6 @@ Paint an original 2 by 2 transparent PNG sprite atlas of FOUR campaign action ic
 
 Play revision on the complete atlas:
 Edit the supplied complete 2 by 2 transparent RGBA atlas of game action icons. Change only the top-right Play glyph. Remove the golden bracket and both rivets completely, reconstructing the uninterrupted lower edge and bottom-left corner of the loose emerald gemstone. The entire solitary right-pointing triangle is green gemstone, including every edge. Keep the same painterly facets, proportions and upper-left light. Center it in its own quadrant, equal open space above and below, clear transparent background, no mount, metal, pedestal, button, text, lines, or cast shadow. Keep the cottage top left, parchment map bottom left, and paired blue pause bars bottom right exactly as supplied, all four icons in the single output atlas.
+
+Options revision on the complete atlas:
+Replace the bottom-right pause bars with one straight-on eight-tooth sapphire enamel and blued-steel cog. Give it broad blunt teeth, a narrow brass bushing around a transparent axle hole, upper-left highlights and ample clearance. Match the painted resource pieces. Return all four icons together on real alpha. Register the edited fourth quadrant alongside the three approved originals.

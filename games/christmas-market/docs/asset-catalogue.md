@@ -267,7 +267,7 @@ of the cell hex. The 128px source rectangle is `18,14,96,95` for Christmas and
 `32,35,63,58` for the embedded fallback. The atlas and its source alpha stay intact.
 Slate-blue wells shade from light at the top to dark at the bottom. The
 spruce `signboard` in `data/board/hud.png` is one static backplate for Moves,
-goal counts. Settings is the round Pause at the end of the booster toolbar;
+goal counts. Settings is the blue gear at the end of the booster toolbar;
 the board never draws a Settings button on the signboard, so none is packed.
 The tinsel objective uses a
 12% larger icon shifted 2 logical units right, and Lanternlight sits 2 units
