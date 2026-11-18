@@ -426,7 +426,7 @@ The eight standalone pieces each have their own silhouette. Board pieces, reward
 
 The shared enamel painter draws the five states and exposes the ready face from
 the bottom as each matched gem lands. The house, Play triangle, expedition map
-and pause bars come from the [shared action atlas](../../../art/match3-buttons/README.md).
+and pause bars use softly rounded shapes without outlines in the [shared action atlas](../../../art/match3-buttons/README.md).
 [Toolbar at both sizes](screenshots/enamel-toolbar.jpg) · [All bonus states](screenshots/bonus-states.jpg).
 
 Earlier gameplay captures follow.

@@ -2126,7 +2126,7 @@
   "provenance": {
     "recipe": "f9708261dadfee516650f1d4010c98917ef7ae81559d58923ef62b365e496116",
     "inputs": {
-      "art/match3-buttons/actions.png": "fabbe46cd2c8810c89aedeb3aff3bc6740a4746c68af275c1f84c09db63e5df2",
+      "art/match3-buttons/actions.png": "9803af4a547cec25cc515cfe50020496a393602dbcad3690014ad1984301a791",
       "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
       "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
       "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
@@ -2169,7 +2169,7 @@
       "engine/data/board/cells.png": "210ee992667cbddfc3bb1d5f628eaf7c71d1b025891f2f4f03efd36f6b588c43",
       "engine/data/board/fx.png": "29b866ee817abc39b233daab7ccf2ff1da65f6511e7eecb21ccc2ba605387f15",
       "engine/data/board/hud.png": "406e7e59399217618ba68c378041ba48c1ffc64a74bed4a9e7a43b6934df615d",
-      "engine/data/board/pieces.png": "bdefe4b9db7e99219f00092b0bac13baed641ff903bc651a856091dc4f354b3d",
+      "engine/data/board/pieces.png": "84bbda5cde96aa03f459c8a192234c3c4f1a6060ae5f91d8071f86c8a16ab5ea",
       "engine/lua/match3/frames.lua": "83604d853c839db0a4147b6a560da784a872d04165f2ea4327a5067674b81001"
     }
   }

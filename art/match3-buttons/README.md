@@ -11,15 +11,15 @@ button from the bottom of the same box.
 
 | Action | Painted icon |
 | --- | --- |
-| Build | Terracotta-roof cottage |
-| Play | Green enamel triangle |
-| Levels / Wishes | Folded map marked with a red X |
-| Pause | Two blue bars |
+| Build | Coral roof, cream walls and a single teal doorway |
+| Play | Rounded green triangle with a soft highlight |
+| Levels / Wishes | Cream folded map with one teal landmass and a coral X |
+| Pause | Two softly rounded blue bars |
 
-The four illustrations were drawn together with built-in ImageGen.
+Both ImageGen passes used the full set. The final master keeps the approved house from the first pass and registers the other three glyphs from the second.
 The [master](actions-source.png), [prompt](prompt.txt) and [registration
 manifest](manifest.json) reproduce the shared [512×128 strip](actions.png).
-Each quadrant is trimmed to its alpha bounds, fitted to 110 px, and centered in
+Each registered crop is trimmed to its alpha bounds, fitted to 110 px, and centered in
 its own 128×128 frame. The same illustration is used in all five states.
 Bonus buttons take their image directly from the game's board atlas.
 
