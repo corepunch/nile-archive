@@ -10,7 +10,7 @@ The 100 boards are authored, one file each, in [../levels](../levels), on Cradle
 of Rome's feature schedule: chains from 5, ice from 7, two areas from 9,
 double tablets from 10, carved stones from 15 and double chains from 51.
 [docs/LEVEL_DESIGN.md](../../../docs/LEVEL_DESIGN.md) is the guide;
-`make level-sheets` draws every board on
+`make levels-preview` draws every board on
 [one sheet](../../../docs/review/level-sheets/relic-rush.png). Move budgets are
 fitted by `python3 tools/tune_moves.py relic-rush` and listed with each
 board's tier in [level-moves.md](level-moves.md).

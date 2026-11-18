@@ -253,14 +253,16 @@ Empty template (all 108 cells plain):
 python3 tools/hex_levels.py relic-rush --levels 1-20      # validate and summarize
 python3 tools/hex_levels.py relic-rush --show 5           # print a board; ~ marks gated cells (The Neck: 31)
 python3 tools/hex_levels.py relic-rush --lua              # write lua/boards.lua once all 100 pass
-make level-sheets                                         # every board of both games on one image each
-make level-sheets SHEET_GAMES=relic-rush LEVELS=41-60     # one game, a range
+make levels-preview                                        # 100 boards per game, one image each
+make levels-preview SHEET_GAMES=relic-rush                 # one game, all 100 boards
+make levels-preview SHEET_GAMES=relic-rush LEVELS=41-60    # one game, a range
 ```
 
-`make level-sheets` writes `docs/review/level-sheets/<game>.png`: tablets blue
-(green when double), chains as gold rings (thick when double), ice as pale
-rings, stones grey, holes outlined and gated cells marked with a red dot.
-Regenerate it after changing boards and look at it before committing.
+`make levels-preview` writes `docs/review/level-sheets/<game>.png`. Each sheet
+shows blue tablets, green double tablets, gold chain rings, pale ice rings,
+grey stones, outlined holes and red dots on gated cells. Regenerate the sheet
+after changing boards and look at it before committing. `make level-sheets`
+is an alias.
 
 The validator checks the format, the mirror, the 60-cell minimum, tablets with a full match line
 on two axes, every playable cell on at least one full line, one connected board 9 to 12 rows tall, cells that stay unfed even with every

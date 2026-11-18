@@ -76,7 +76,7 @@ are the guides.
 
 | Script | What it does | Run |
 | --- | --- | --- |
-| `hex_levels.py` | Validates the hex level files, prints a board, writes `lua/boards.lua` and the overview sheets | `python3 tools/hex_levels.py relic-rush --lua`; `make level-sheets` |
+| `hex_levels.py` | Validates the hex level files, prints a board, writes `lua/boards.lua` and the overview sheets | `python3 tools/hex_levels.py relic-rush --lua`; `make levels-preview` |
 | `tune_moves.py` | Fits each board's move budget to its tier with the reference bot; writes `lua/level_moves.lua` and `docs/level-moves.md` | `python3 tools/tune_moves.py relic-rush` |
 | `tests/lua/tune_moves.lua` | The bot side of `tune_moves.py` | run by `tune_moves.py` |
 | `tests/lua/greedy_bot.lua` | The reference bot shared by the tuner and the balance runner | required |
