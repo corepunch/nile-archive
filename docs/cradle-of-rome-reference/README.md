@@ -12,6 +12,7 @@ restoration, with a board that gives the changed piece a reason to matter.
 | [Complete game-design reference](GAME_DESIGN.md) | Core loop, economy, all 20 Rome I buildings, all eight tool-building links, citizen tasks, version caveats and Christmas Market/Relic Rush implications. |
 | [Gem correspondence sheet](gem-correspondence.html) | Side-by-side tile art, original names, Relic Rush counterparts and gaps for both editions. Open in a browser. |
 | [Board design](BOARD_DESIGN.md) | All 115 numbered layouts, feature counts and worked examples of plaque placement, locks and supply. |
+| [Adventure comparison sheets](#adventure-comparison-sheets) | 100 board diagrams per game, aligned by level number. |
 | [Resources and city](ECONOMY_AND_CITY.md) | Piece yields, the finish bonus, all 20 purchases across five epochs, and examples of citizen rewards. |
 | [Twenty campaign buildings](TWENTY_BUILDINGS.md) | Proposal: a 20-building ladder for Relic Rush and Christmas Market, with each building's piece or bonus. |
 | [Applying it to Relic Rush](ADAPTATION.md) | What the game already does, which changes to prototype first, and how to check them. |
@@ -52,6 +53,25 @@ hashes and download URL are recorded in
 | Time, scoring and bonuses | `settings/scenes/game/game_settings.xml` → `Adventure`; `game.xml` builds the results view and `bonuses.xml` configures tool effects. |
 | Prices, plan access and building payoff | `settings/scenes/shop/epochs.xml` → `Epoch/Construction`. Read `Price`, `PlanAccess` and `Ball type` separately. `shop.xml` describes shop, plan and epoch-completion UI. |
 | Location, name and citizen | Join construction `id` to `settings/scenes/city/city_view.xml` for position and `enable_user_events`, to `city_info_dialog.xml` page `<id>_0` for the localized title, and to `settings/user_events.xml` for predicates and effects. |
+
+## Adventure comparison sheets
+
+Both reference sheets share the 10-by-10 grid and plaque colors of the hex
+previews. The Cradle of Rome sheets use square cells at a common scale, with
+board width, height and active cell count on each label. Gold rings mark
+chains, pale outlines mark ice, and grey crosses mark disabled cells. Markers
+sit over the plaque color when the two layers overlap.
+
+| Game | Adventure boards 1–100 |
+| --- | --- |
+| Cradle of Rome, Android beta 0.9.0 | [Overview](../review/level-sheets/cradle-of-rome.png) |
+| Cradle of Rome 2, GameTop Windows | [Overview](../review/level-sheets/cradle-of-rome-2.png) |
+| Relic Rush | [Overview](../review/level-sheets/relic-rush.png) |
+| Christmas Market | [Overview](../review/level-sheets/christmas-market.png) |
+
+Run `make reference-levels-preview` to regenerate both square sheets from the
+locally extracted `reference/cradle-of-rome*/resources/settings/scenes/game/levels/`
+directories. Run `make levels-preview` for the hex sheets.
 
 ## Browse the artwork
 

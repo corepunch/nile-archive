@@ -264,6 +264,10 @@ grey stones, outlined holes and red dots on gated cells. Regenerate the sheet
 after changing boards and look at it before committing. `make level-sheets`
 is an alias.
 
+`make reference-levels-preview` renders the same grid for
+[both Cradle of Rome Adventure campaigns](cradle-of-rome-reference/README.md#adventure-comparison-sheets)
+from the local reference extractions.
+
 The validator checks the format, the mirror, the 60-cell minimum, tablets with a full match line
 on two axes, every playable cell on at least one full line, one connected board 9 to 12 rows tall, cells that stay unfed even with every
 chain broken, and the schedule's first levels. It prints each board's cells,

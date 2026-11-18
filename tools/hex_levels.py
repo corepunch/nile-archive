@@ -293,39 +293,66 @@ def lua(game, levels):
     return '\n'.join(out) + '\n'
 
 
-def sheet(levels, path, title):
-    """Every board on one image: tablets blue (green when double), chains as
-    rings, ice pale cyan, stones grey, gated cells dotted, holes empty."""
+SHEET_HEX_RADIUS = 11
+SHEET_THEME = {
+    'background': (30, 34, 40),
+    'hole': (55, 60, 68),
+    'tiles': ((205, 190, 150), (40, 110, 200), (60, 160, 80)),
+    'chain': (250, 200, 40),
+    'ice': (200, 245, 255),
+    'stone': (120, 120, 120),
+    'gated': (250, 80, 80),
+}
+
+
+def sheet_grid(boards, path, title, draw_board):
+    """Use the same numbered panels for hex campaigns and square references."""
     from PIL import Image, ImageDraw
     import math
-    size, columns = 11, 10
-    cell_w, cell_h = int(size * 1.5 * 9 + size * 2), int(size * math.sqrt(3) * (BOARD_ROWS + .5) + 46)
-    rows = (len(levels) + columns - 1) // columns
-    image = Image.new('RGB', (columns * cell_w + 20, rows * cell_h + 50), (30, 34, 40))
+    size, columns = SHEET_HEX_RADIUS, 10
+    panel_w = int(size * 1.5 * BOARD_COLUMNS + size * 2)
+    board_height = size * math.sqrt(3) * (BOARD_ROWS + .5)
+    panel_h = int(board_height + 46)
+    rows = (len(boards) + columns - 1) // columns
+    image = Image.new('RGB', (columns * panel_w + 20, rows * panel_h + 50), SHEET_THEME['background'])
     draw = ImageDraw.Draw(image)
     draw.text((10, 12), title, fill=(240, 240, 240))
-    for n, (number, head, layout) in enumerate(levels):
-        ox = 10 + (n % columns) * cell_w + cell_w // 2
-        oy = 40 + (n // columns) * cell_h + 26 + size * math.sqrt(3) * (BOARD_ROWS + .5) / 2
-        draw.text((ox - cell_w // 2 + 4, oy - size * math.sqrt(3) * (BOARD_ROWS + .5) / 2 - 24), f"{number} {head.get('tier', '')[:4]} {head.get('name', '')[:18]}", fill=(220, 220, 220))
-        gated = {c for c in layout if c not in fed(layout) and not blocker(layout[c])}
-        for (q, r) in CELLS:
-            x, y = ox + size * 1.5 * q, oy + size * math.sqrt(3) * (r + q / 2 + .25)
-            hexagon = [(x + size * math.cos(math.pi / 3 * k), y + size * math.sin(math.pi / 3 * k)) for k in range(6)]
-            if (q, r) not in layout:
-                draw.polygon(hexagon, outline=(55, 60, 68))
-                continue
-            tablet, chain, ice, stone = SYMBOLS[layout[q, r]]
-            fill = (120, 120, 120) if stone else (40, 110, 200) if tablet == 1 else (60, 160, 80) if tablet == 2 else (205, 190, 150)
-            draw.polygon(hexagon, fill=fill, outline=(30, 34, 40))
-            if ice:
-                inner = [(x + size * .7 * math.cos(math.pi / 3 * k), y + size * .7 * math.sin(math.pi / 3 * k)) for k in range(6)]
-                draw.polygon(inner, outline=(200, 245, 255), width=3 if ice == 2 else 2)
-            if chain:
-                draw.ellipse((x - size * .45, y - size * .45, x + size * .45, y + size * .45), outline=(250, 200, 40), width=3 if chain == 2 else 2)
-            if (q, r) in gated:
-                draw.ellipse((x - 2, y - 2, x + 2, y + 2), fill=(250, 80, 80))
+    for n, (label, layout) in enumerate(boards):
+        ox = 10 + (n % columns) * panel_w + panel_w // 2
+        oy = 40 + (n // columns) * panel_h + 26 + board_height / 2
+        draw.text((ox - panel_w // 2 + 4, oy - board_height / 2 - 24), label, fill=(220, 220, 220))
+        draw_board(draw, ox, oy, layout)
     image.save(path)
+
+
+def draw_hex_board(draw, ox, oy, layout):
+    import math
+    size = SHEET_HEX_RADIUS
+    theme = SHEET_THEME
+    reachable = fed(layout)
+    gated = {c for c in layout if c not in reachable and not blocker(layout[c])}
+    for (q, r) in CELLS:
+        x, y = ox + size * 1.5 * q, oy + size * math.sqrt(3) * (r + q / 2 + .25)
+        hexagon = [(x + size * math.cos(math.pi / 3 * k), y + size * math.sin(math.pi / 3 * k)) for k in range(6)]
+        if (q, r) not in layout:
+            draw.polygon(hexagon, outline=theme['hole'])
+            continue
+        tablet, chain, ice, stone = SYMBOLS[layout[q, r]]
+        fill = theme['stone'] if stone else theme['tiles'][tablet]
+        draw.polygon(hexagon, fill=fill, outline=theme['background'])
+        if ice:
+            inner = [(x + size * .7 * math.cos(math.pi / 3 * k), y + size * .7 * math.sin(math.pi / 3 * k)) for k in range(6)]
+            draw.polygon(inner, outline=theme['ice'], width=3 if ice == 2 else 2)
+        if chain:
+            draw.ellipse((x - size * .45, y - size * .45, x + size * .45, y + size * .45), outline=theme['chain'], width=3 if chain == 2 else 2)
+        if (q, r) in gated:
+            draw.ellipse((x - 2, y - 2, x + 2, y + 2), fill=theme['gated'])
+
+
+def sheet(levels, path, title):
+    boards = [(f"{number} {head.get('tier', '')[:4]} {head.get('name', '')[:18]}", layout)
+              for number, head, layout in levels]
+    sheet_grid(boards, path, title, draw_hex_board)
 
 
 def lua_string(text):

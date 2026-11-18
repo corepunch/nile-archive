@@ -16,6 +16,7 @@
 #                        render city buildings by name from the game's Blender master
 #   make shots           regenerate docs/screenshots (headless, software renderer)
 #   make levels-preview regenerate one 100-level overview sheet per match-3 game
+#   make reference-levels-preview regenerate both Cradle of Rome comparison sheets
 #   make smoke           every game's smoke run
 #   make web             WebAssembly builds into dist/<game>/ (needs Emscripten's emcc)
 #   make clean
@@ -65,7 +66,7 @@ game_lua    = $(wildcard games/$(1)/lua/*.lua)
 # the engine's own Lua, shared by every game (the web build serves it from /engine)
 ENGINE_LUA  := $(wildcard engine/lua/*.lua engine/lua/match3/*.lua)
 
-.PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings levels-preview level-sheets web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
+.PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings levels-preview level-sheets reference-levels-preview web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)
 
 build/engine/%.o: $(ENGINE_DEPS)
@@ -243,6 +244,9 @@ levels-preview:
 			--sheet "docs/review/level-sheets/$$game.png") || { printf '%s\n' "$$report" >&2; exit 1; }; \
 		printf '%s\n' "$$report" | tail -2; \
 	done
+
+reference-levels-preview:
+	python3 tools/reference/cradle-of-rome/level_previews.py --output-dir docs/review/level-sheets
 
 # --- WebAssembly (Emscripten) ------------------------------------------------
 # gnu11 rather than c11: Emscripten's EM_JS/EM_ASM macros need GNU extensions.
