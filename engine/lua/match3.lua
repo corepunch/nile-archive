@@ -11,7 +11,7 @@ function E.view(state)
     state = state or {}
     state.SCREEN_W, state.SCREEN_H = state.SCREEN_W or 480, state.SCREEN_H or 900
     state.HEX_R, state.drop = state.HEX_R or 32, 0
-    state.PH_IDLE, state.PH_SWAP, state.PH_REJECT, state.PH_CLEAR, state.PH_FALL = 0, 1, 2, 3, 4
+    state.PH_IDLE, state.PH_SWAP, state.PH_REJECT, state.PH_CLEAR, state.PH_FALL, state.PH_SHUFFLE = 0, 1, 2, 3, 4, 6
     state.old_tiles, state.fall_from, state.wave_ice, state.wave_chain, state.wave_oil = {}, {}, {}, {}, {}
     state.phase, state.phase_time, state.idle_time, state.shake = 0, 0, 0, 0
     state.selected, state.swap_a, state.swap_b, state.tool, state.hint_a, state.hint_b = -1, -1, -1, -1, -1, -1
@@ -1146,8 +1146,8 @@ function E.new(config)
         end
     end
 
-    -- Recovery moves whole pieces. Locked pieces
-    -- and terrain stay put; an unsuccessful search restores the original board.
+    -- Recovery moves whole pieces. Locked pieces and terrain stay put.
+    -- Return source cells by destination on success; restore every cell on failure.
     function M.game_shuffle(g)
         local cells, pieces, original = {}, {}, {}
         for i = 0, CELLS - 1 do
@@ -1188,7 +1188,15 @@ function E.new(config)
             end
             for i, cell in ipairs(cells) do g.tiles[cell] = pieces[i] end
             repair()
-            if m.hits == 0 and game_hint(g) then return true end
+            if m.hits == 0 and game_hint(g) then
+                local source, from = {}, {}
+                for cell, piece in pairs(original) do source[piece] = cell end
+                for _, cell in ipairs(cells) do
+                    local previous = source[g.tiles[cell]]
+                    if previous ~= cell then from[cell] = previous end
+                end
+                return true, from
+            end
         end
         for cell, piece in pairs(original) do g.tiles[cell] = piece end
         return false
@@ -1412,8 +1420,11 @@ function E.new(config)
         if not tool_ready(g, tool) then return false end
         local effect = M.game_tool_effect(tool, g)
         reset_match(m)
+        local shuffle_from
         if effect == "shuffle" then
-            if not game_shuffle(g) then return false end
+            local shuffled
+            shuffled, shuffle_from = game_shuffle(g)
+            if not shuffled then return false end
         elseif effect == "moves" then g.moves = g.moves + (config.extra_moves or 5)
         elseif effect == "replenish" then
             local piece = cell and cell_active(g, cell) and g.resource_yields[g.tiles[cell].kind]
@@ -1439,7 +1450,7 @@ function E.new(config)
         count_hits(m)
         -- Effects that clear nothing skip the clearing animation.
         local still = (effect == "shuffle" or effect == "moves" or effect == "charge" or effect == "replenish") and effect or nil
-        return true, still
+        return true, still, shuffle_from
     end
 
     -- Preview the same cells a targeted tool will hit without advancing the RNG.
@@ -1483,6 +1494,7 @@ function E.new(config)
         R.swap_a, R.swap_b, R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1, -1, -1
         R.hover_cell, R.aim_cell = -1, -1
         R.fall_steps, R.fall_from = nil, {}
+        R.shuffle_from = nil
         R.kudos, R.kudos_level, R.mission_banner = nil, 0, nil
     end
     local rules = M
@@ -1555,9 +1567,12 @@ function E.new(config)
     layout()
     local CELL_SIZE = R.piece_width or HEX_DY
     local PI = math.pi
-    local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL = 0, 1, 2, 3, 4
+    local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE = 0, 1, 2, 3, 4, 6
     local REJECT_LEG = .16
-    R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL = PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL
+    local SHUFFLE_FLIGHT, SHUFFLE_STAGGER, SHUFFLE_GROUPS = .49, .015, 7
+    local SHUFFLE_DURATION = SHUFFLE_FLIGHT + SHUFFLE_STAGGER * (SHUFFLE_GROUPS - 1)
+    R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL, R.PH_SHUFFLE =
+        PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE
     function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * 1.5 * HEX_R, (hex_r(i) + hex_q(i) * .5) * HEX_DY) end
     local cell_pos = R.cell_pos
 
@@ -1577,14 +1592,22 @@ function E.new(config)
         return cell_active(R.g, cell) and cell or -1
     end
 
+    local function animate_shuffle(from)
+        R.hover_cell, R.aim_cell = -1, -1
+        if R.reduced_motion then return end
+        R.shuffle_from = from
+        R.phase, R.phase_time = PH_SHUFFLE, 0
+    end
+
     local function use_tool(k, cell, other_slot)
-        local used, still = rules.game_tool(R.g, k, cell, R.pending, other_slot)
+        local used, still, shuffle_from = rules.game_tool(R.g, k, cell, R.pending, other_slot)
         if used then
             R.tool = -1
             R.play("tool")
             if R.g.single_charge_tools then R.toast_time = 0 end
             if still then
                 R.hint_a, R.hint_b, R.idle_time = -1, -1, 0
+                if shuffle_from then animate_shuffle(shuffle_from) end
                 R.notice(R.tool_done_notes[still])
                 if R.update_bonus_charges then R.update_bonus_charges() end
             else R.finish_wave() end
@@ -1777,8 +1800,10 @@ function E.new(config)
         end
         R.phase = PH_IDLE
         if (R.kudos_level or 0) > 0 then kudos(R.kudos_level); R.kudos_level = 0 end   -- the move has resolved
-        if rules.game_check_end(R.g) then
+        local shuffled, from = rules.game_check_end(R.g)
+        if shuffled then
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
+            animate_shuffle(from)
             R.notice("No moves. Board reshuffled.")
         end
         if R.g.won then
@@ -1816,7 +1841,11 @@ function E.new(config)
         if R.phase == PH_IDLE then return end
         R.phase_time = R.phase_time + dt
         local speed = R.reduced_motion and .35 or 1
-        if R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
+        if R.phase == PH_SHUFFLE then
+            if R.reduced_motion or R.phase_time >= SHUFFLE_DURATION then
+                R.phase, R.phase_time, R.idle_time, R.shuffle_from = PH_IDLE, 0, 0, nil
+            end
+        elseif R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
         elseif R.phase == PH_REJECT and R.phase_time >= 2 * REJECT_LEG * speed then R.phase = PH_IDLE
         elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
@@ -1842,7 +1871,24 @@ function E.new(config)
     local scale, alpha, aspect = 1, 255, 1
     local t = g.tiles[i]
     local clip = nil
-    if R.phase == PH_SWAP or R.phase == PH_REJECT then
+    if R.phase == PH_SHUFFLE then
+        local from = R.shuffle_from[i]
+        if from then
+            local delay = from % SHUFFLE_GROUPS * SHUFFLE_STAGGER
+            local f = num.saturate((R.phase_time - delay) / SHUFFLE_FLIGHT)
+            local u = ease.in_out_sine(f)
+            local start = cell_pos(from) + vec2(sx, 0)
+            local delta = at - start
+            local bend = math.min(HEX_R * 1.9, delta:len() * .5) * (from % 2 == 0 and 1 or -1)
+            local control = start:lerp(at, .5) + vec2(-delta.y, delta.x):norm():scale(bend)
+            local bounds = R.BOARD_CLIP:inflate(-CELL_SIZE / 2)
+            local limit = bounds:max()
+            control.x = num.clamp(control.x, bounds.x, limit.x)
+            control.y = num.clamp(control.y, bounds.y, limit.y)
+            at = start:lerp(control, u):lerp(control:lerp(at, u), u)
+            scale = 1 - .24 * math.sin(PI * f)
+        end
+    elseif R.phase == PH_SWAP or R.phase == PH_REJECT then
         t = R.old_tiles[i]
         local blocked = R.phase == PH_REJECT and R.reject_blocked
         if i == R.swap_a or (i == R.swap_b and not blocked) then

@@ -9,12 +9,11 @@ R.notice = function(message) R.toast = message end
 R.tone = function() end
 R.vfx_wave = function() end
 local function setup(g)
-    R.g, R.pending = g, rules.new_match()
-    R.phase, R.phase_time, R.idle_time = R.PH_IDLE, 0, 5
+    R.reset_board(g)
+    R.idle_time = 5
     R.overlay, R.on_island, R.art_review = R.OV_NONE, false, false
     R.selected, R.tool, R.hint_a, R.hint_b = 0, 0, -1, -1
     R.toast = nil
-    R.fall_steps = nil
 end
 
 local function inventory(g)
@@ -68,6 +67,69 @@ for level = 0, rules.LEVELS - 1 do
         end
     end
     check(g.tools[1] == 0 and g.tools[2] == 0 and g.tools[3] == 0, "recovery needs no charges")
+end
+
+-- Both ways to shuffle use the actual permutation of piece objects, including
+-- same-kind pieces, and preserve the identity of pieces held by blockers.
+local modes = testing.game == "relic-rush" and {"recovery", "mixer"} or {"recovery"}
+for _, mode in ipairs(modes) do
+    local g, slot
+    if mode == "mixer" then
+        g = rules.game_start(29, 3, {map_room=true,lodge=true,observatory=true})
+        slot = require("economy").bonuses.mixer.tool
+        g.tools[slot], g.tool_meter[slot] = 1, g.tool_threshold
+        g.bonus_preview = true
+    else g = dead_board() end
+    setup(g)
+    local before, moves = {}, g.moves
+    for i = 0, rules.CELLS - 1 do before[g.tiles[i]] = i end
+    if slot then R.select_tool(slot - 1)
+    else R.board_update(.02) end
+    check(R.phase == R.PH_SHUFFLE and g.moves == moves, mode .. " starts flights without spending a move")
+    check(not slot or (g.tools[slot] == 0 and g.tool_meter[slot] == 0), "Mixer spends exactly one charge")
+    local destination
+    R.phase_time = 0
+    for i = 0, rules.CELLS - 1 do
+        local t, at = R.piece_pose(i, 0)
+        local source = before[t]
+        near((at - R.cell_pos(source)):len(), 0, "every piece starts at its own source")
+        if source ~= i then destination = i end
+        if g.chain[i] > 0 or g.ice[i] > 0 or g.stone_hp[i] > 0 or not g.active[i] then
+            check(source == i, "shuffle never moves a fixed piece or hole")
+        end
+    end
+    check(destination ~= nil, "successful shuffle moves pieces")
+    R.board_update(.25)
+    local _, at, scale = R.piece_pose(destination, 0)
+    check((at - R.cell_pos(before[g.tiles[destination]])):len() > 0 and
+          (at - R.cell_pos(destination)):len() > 0 and scale < 1, "in-flight piece is between its endpoints")
+    local _, a, b = rules.game_hint(g)
+    R.attempt_swap(a, b)
+    check(g.moves == moves and R.phase == R.PH_SHUFFLE, "flight holds back swaps")
+    R.overlay = R.OV_PAUSE
+    R.board_update(1)
+    check(R.phase_time == .25, "pause freezes the flight")
+    R.overlay = R.OV_NONE
+    R.board_update(1)
+    local _, landed = R.piece_pose(destination, 0)
+    near((landed - R.cell_pos(destination)):len(), 0, "piece lands in its shuffled cell")
+    check(R.phase == R.PH_IDLE and not R.shuffle_from and R.idle_time == 0, "flight restores board input and hint timing")
+    R.attempt_swap(a, b)
+    check(R.phase == R.PH_SWAP and g.moves == moves - 1, "the landed board accepts the next swap")
+end
+
+do
+    local g = dead_board()
+    setup(g)
+    R.reduced_motion = true
+    R.board_update(.02)
+    check(R.phase == R.PH_IDLE and not R.shuffle_from and rules.game_hint(g), "reduced motion settles the shuffle immediately")
+    R.reduced_motion = false
+    setup(dead_board())
+    R.board_update(.02)
+    local next_board = rules.game_start(0, 123)
+    R.reset_board(next_board)
+    check(R.g == next_board and R.phase == R.PH_IDLE and not R.shuffle_from, "reset discards a shuffle in progress")
 end
 
 -- Pausing and visiting the island must not change the suspended board.

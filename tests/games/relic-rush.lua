@@ -208,6 +208,9 @@ frame("portrait-same-side-390x844", "390x844", "--lua tests/fixtures/dialogue;ga
 reel("relic-rush-board-intro", 18, 6, "480x900", "--level 5 --present --reel")
 reel("relic-rush-town-dive", 48, 4, "480x900", "--city 3 --dive --dive-back 120 --reel")   -- Play: the town dives into the board and back
 reel("relic-rush-phone-board-intro", 12, 8, "390x844", "--level 9 --present --reel --safe-area 0,47,0,34")
+local shuffle_review = "--lua tests/fixtures/shuffle;games/relic-rush/lua;tests/lua;. --reel"
+reel("relic-rush-board-shuffle", 16, 4, "480x900", shuffle_review .. " --level 7")
+reel("relic-rush-mixer-shuffle", 16, 4, "390x844", shuffle_review .. " --level 24 --shuffle-mixer --safe-area 0,47,0,34")
 -- A swipe into a blocker: the free gem slides halfway and back.
 local reject_review = "--lua tests/fixtures/swap-reject;games/relic-rush/lua;. --reel"
 local chain_review = reject_review .. " --level 6"   -- the first board with chains over plaques

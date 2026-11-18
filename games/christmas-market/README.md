@@ -33,6 +33,8 @@ arch to Agnes's bakery and along the station walk for Pip's mum. See the
 With three or fewer panes left, blue or green sparks trace their edges after the same idle delay as the move suggestion.
 A treat moved toward a tinsel tie, ice or a carved stone slides toward it and
 back, with the same haptic as a rejected swap and zero moves spent.
+When the board runs out of legal swaps, movable treats fly to their new cells
+in a free shuffle. Reduce Motion settles them immediately.
 
 Mrs Alder sets aside a cup of cocoa for the next person who comes in cold.
 The guests who share it return with lamps when the wind takes the lights out.

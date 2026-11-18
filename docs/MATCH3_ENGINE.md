@@ -119,6 +119,10 @@ fills the other unlocked meters by their threshold divided by its descriptor's
 charge. Legacy `extra_tools` names the effects after the first three tools.
 `game_tool` returns the effect's name for an action that clears nothing, so
 the view can display `R.tool_done_notes[name]` without starting a clear wave.
+`game_shuffle` returns the source cell of each moved piece, keyed by destination,
+alongside its success flag. Automatic recovery passes that map through
+`game_check_end`; the Mixer passes it as the third result of `game_tool`.
+The view uses it for the staggered flights in `PH_SHUFFLE`.
 
 A loadout's `extra_moves` adds moves to the level's budget.
 

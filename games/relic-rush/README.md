@@ -150,7 +150,7 @@ The minimum match is **four identical relics in a straight line** along any of t
 
 All 100 expeditions use five piece kinds. The first four take a median of six moves each in 40 bot deals per board. Each later board has its own move limit fitted to its difficulty tier. See the [campaign balance and board comparisons](docs/board-progression.md#match-four-difficulty).
 
-After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue tablets in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
+After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades. Movable pieces fly to their new cells during either a free shuffle or a Mixer use. Locked pieces and blue tablets stay put. Reduce Motion settles the pieces immediately. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
 Power comes only from the bonus tools: matched bonus gems fly into their sockets and reveal the colored pieces from the bottom.
 With Reduce Motion on, the charge appears immediately.

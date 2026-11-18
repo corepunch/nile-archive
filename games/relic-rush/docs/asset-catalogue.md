@@ -416,11 +416,12 @@ archived salt, rubble, vine, rope, cable and excavation artwork.
 
 Hint opacity pulses; reduced motion uses a steady frame. There are no hover/pressed
 states for individual pieces: a touch selects a piece or initiates a swap.
-If idle hint search finds no legal swap, the existing reshuffle now also recovers
-idle boards and shows the text-only notice “No moves. Board reshuffled.” No new
-sprites or derived artwork are used. The existing hint artwork still marks only
-legal swaps; [review captures and reproduction](review/dead-board/README.md)
-cover a zero-charge ring at both phone sizes.
+Automatic dead-board recovery shows the notice “No moves. Board reshuffled.”
+Recovery and the Mixer fly the existing board pieces along staggered curves
+(`engine/lua/match3.lua`), using their atlas frames and existing shadows.
+Fixed pieces and floor artwork stay put. Reduce Motion settles the permutation
+immediately. Review with `build/test/all --suite=relic-rush shuffle` at 480×900
+for recovery and 390×844 for the Mixer. Frames go to `build/shots/frames/`.
 
 ## Campaign bonus pieces and sockets
 

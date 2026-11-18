@@ -424,3 +424,15 @@ clears its entrance.
 Reproduce both phone sizes with `build/test/relic-rush board-intro` and
 `build/test/christmas-market board-intro`. The manifests own all frames, so each
 game starts once. Reviewed captures live in each game's `docs/review/entrance/`.
+
+## Board shuffle
+
+The shared match-3 engine keeps the source cell of every moved piece when it
+finds a playable permutation. Automatic dead-board recovery and Relic Rush's
+Mixer use that mapping to fly the pieces along staggered curves to their new
+cells. Fixed pieces, holes and floor layers stay put. The board accepts swaps
+again once the pieces land. Reduce Motion settles them immediately. Resetting
+the board clears any flight.
+
+Capture the flights with `build/test/all --suite=relic-rush --suite=christmas-market shuffle`.
+The manifest records both games' automatic shuffles and the Mixer press.

@@ -600,6 +600,12 @@ new assets. A tap skips it and reduced motion makes it a short fade. Capture:
 `build/test/christmas-market board-intro` (`--level 4 --present --reel`), frames
 in `build/shots/frames/`.
 
+When no move is available, the shared shuffle (`engine/lua/match3.lua`) flies
+the existing treat sprites and their shadows along staggered curves to their new
+cells. Tinsel, ice and floor artwork stay put. Reduce Motion settles the
+permutation immediately. Review with `build/test/all --suite=christmas-market shuffle`
+at 390×844. Frames go to `build/shots/frames/`.
+
 Pressing Play in the market (and returning to it) runs the shared town <-> board
 transition (`wipe` in `engine/lua/match3/dive.lua`): a diagonal edge sweeps left to
 right over 1.4 seconds, the market on one side and the board on the other. It is
