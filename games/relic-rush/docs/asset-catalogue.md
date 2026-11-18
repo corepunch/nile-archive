@@ -973,11 +973,11 @@ build/relic-rush --headless --fresh --mute --size 480x900 --level 9 --lua 'games
 ```
 
 The [eight-variant comparison](review/moves-capsule/variants.jpg) shows all
-icons at wallet scale on the expedition backdrop. ImageGen used the Moves and
-wallet coins as references and painted all eight in a single [transparent atlas](review/moves-capsule/variants-atlas.png).
-Reading order follows the 4 × 2 grid. The designs use broad recessed arrows,
-thin tapered arrows, oversized wedge tips, rounded tips, angular arrows,
-nearly closed arcs, raised gold arrows, and diagonal tapered arrows. The preview
-reads cells directly as texture regions and uses the same capsule and count for
-each. Add `--moves-variants` to the command above and crop the top 141 logical
-pixels for the comparison sheet.
+icons at wallet scale on the expedition backdrop. ImageGen painted eight round
+badges with two curved arrows in a single [transparent atlas](review/moves-capsule/variants-atlas.png).
+Reading order follows the 4 × 2 grid. Materials are hammered gold, cobalt glass,
+sandstone with terracotta inlay, jade, painted clay, carved wood, silver, and
+amethyst. The preview reads the authored cells directly as texture regions and
+uses the same icon scale, capsule, and count for all eight. Add
+`--moves-variants` to the command above and crop the top 141 logical pixels for
+the comparison sheet.

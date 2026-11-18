@@ -14,14 +14,18 @@ local function draw_variants(header)
         for col = 0, 3 do
             local label = tostring(row * 4 + col + 1)
             local icon = texture.region(atlas, rect(col * cell_width, row * cell_height, cell_width, cell_height))
-            caps[col + 1] = {icon = icon, value = "32", decorate = function(box)
-                local caption = rect(box.x - header.overhang, box:max().y + 4, box.w + header.overhang, 16)
-                text.inside(caption_style, caption, vec2(.5, .5), label)
-            end}
+            caps[col + 1] = {
+                icon = function(box) gfx.image(icon, box:inflate(-box.h * .06), color.WHITE) end,
+                value = "32",
+                decorate = function(box)
+                    local caption = rect(box.x - header.overhang, box:max().y + 4, box.w + header.overhang, 16)
+                    text.inside(caption_style, caption, vec2(.5, .5), label)
+                end,
+            }
         end
         local layout = {}
         for key, value in pairs(header) do layout[key] = value end
-        layout.y = header.y + row * 72
+        layout.y = header.y + row * 68
         rows[row + 1] = {caps = caps, layout = layout}
     end
     return function()
