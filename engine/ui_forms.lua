@@ -3,7 +3,20 @@
 local Form, Stack = {}, {}
 local default_skin = {}
 Form.__index, Stack.__index = Form, Stack
-local kinds = {column=true, row=true, list=true, overlay=true, label=true, image=true, button=true, toggle=true, checkbox=true, progress=true, spacer=true, custom=true}
+-- Every node kind is an element class, and layout is two passes, as in WPF and
+-- Orion's evMeasure/evArrange. Measure offers a node a width and gets back the
+-- size it wants; Arrange gives it its final box. The engine's share (visibility,
+-- explicit and minimum sizes, the inset, the ID's box) is measure/arrange below;
+-- a class adds what its kind does:
+--   measure_override(node, width, skin, form) -> w, h   the content's size within `width`
+--   arrange_override(node, inner, skin, form)           place the children in the content box
+--   paint(node, box, skin, form, options, event)        draw; return an action event, if any
+--   inset(node) -> left, top, right, bottom             around the content (default: padding)
+--   check(node, source)                                 reject a bad node at construction
+--   items = true                                        children may come from Form:set_items
+-- A prefab is a named template: a node of that kind is replaced by what its
+-- builder returns, so a repeated part is written once and used as one node.
+local classes, prefabs, builtin = {}, {}, {}
 local function fail(message) error('ui.form: ' .. message, 3) end
 local function padding(p)
     if type(p) == 'number' then return p,p,p,p end
@@ -40,9 +53,22 @@ local function valid(value, binding)
     if type(value) == 'number' and ((binding.min and value < binding.min) or (binding.max and value > binding.max)) then return false end
     return true
 end
+-- Sizes and placement belong to the instance; everything else is the prefab's.
+local INSTANCE = {'id','width','height','min_width','min_height','grow','visible','visible_field','paint_group'}
+local function expand(props, build)
+    local root = build(props)
+    if type(root) ~= 'table' then fail('prefab ' .. props.kind .. ' must return a node') end
+    local node = {}
+    for k,v in pairs(root) do node[k] = v end
+    for _,key in ipairs(INSTANCE) do if props[key] ~= nil then node[key] = props[key] end end
+    return node
+end
 local function copy_node(source, ids, depth, prefix, source_id, item_key, row_index)
     if depth > 32 then fail('template nesting exceeds 32') end
-    if type(source) ~= 'table' or not kinds[source.kind] then fail('unknown node kind ' .. tostring(source and source.kind)) end
+    local build = type(source) == 'table' and prefabs[source.kind]
+    if build then return copy_node(expand(source, build), ids, depth+1, prefix, source_id, item_key, row_index) end
+    local class = type(source) == 'table' and classes[source.kind]
+    if not class then fail('unknown node kind ' .. tostring(type(source) == 'table' and source.kind or source)) end
     local n = {}
     for k,v in pairs(source) do if k ~= 'children' then n[k] = v end end
     n._depth=depth
@@ -56,17 +82,30 @@ local function copy_node(source, ids, depth, prefix, source_id, item_key, row_in
         if ids[n.id] then fail('duplicate control ID ' .. n.id) end
         ids[n.id] = n
     end
-    if (n.kind == 'button' or n.kind == 'toggle' or n.kind == 'checkbox') and type(n.id) ~= 'string' then fail('interactive controls require an ID') end
-    if n.kind=='list' and (type(n.id)~='string' or type(n.item)~='function' or #(source.children or {})>0) then fail('list requires an ID and item builder; children come from its data source') end
-    if n.kind=='list' and n.direction and n.direction~='row' and n.direction~='column' then fail('invalid list direction') end
+    if class.items and (n.item ~= nil or class.items == 'required')
+        and (type(n.id)~='string' or type(n.item)~='function' or #(source.children or {})>0) then
+        fail(n.kind .. ' requires an ID and item builder; children come from its data source')
+    end
     if n.text_align and not ({start=true,center=true,['end']=true})[n.text_align] then fail('invalid text_align') end
     for _, key in ipairs({'width','height','grow','gap','min_width','min_height'}) do
         if n[key] and (type(n[key]) ~= 'number' or n[key] < 0 or n[key] ~= n[key] or n[key] == math.huge) then fail('invalid ' .. key) end
     end
     if n.scroll and (n.kind~='list' or n.direction=='row') then fail('scroll requires a vertical list') end
+    if class.check then class.check(n, source) end
     n.children = {}
     for _, child in ipairs(source.children or {}) do n.children[#n.children+1] = copy_node(child, ids, depth+1, prefix, source_id, item_key, row_index) end
     return n
+end
+-- Add an element kind (a panel with its own measure_override/arrange_override,
+-- a painted leaf) or a prefab. Names are shared: a node's kind is one or the
+-- other, and the engine's own kinds cannot be replaced.
+function ui.element(kind, class)
+    if type(kind) ~= 'string' or type(class) ~= 'table' or prefabs[kind] or builtin[kind] then fail('invalid element ' .. tostring(kind)) end
+    classes[kind] = class
+end
+function ui.prefab(kind, build)
+    if type(kind) ~= 'string' or type(build) ~= 'function' or classes[kind] then fail('invalid prefab ' .. tostring(kind)) end
+    prefabs[kind] = build
 end
 function ui.form(template)
     assert(type(template) == 'table', 'ui.form expects a template')
@@ -99,7 +138,7 @@ function Form:get(id) return self.values[id] end
 -- Build/validate the entire replacement before touching the live list.
 function Form:set_items(id, items)
     local list=self.nodes[id]
-    if not list or list.kind~='list' then fail('unknown list ID '..tostring(id)) end
+    if not list or not classes[list.kind].items or not list.item then fail('unknown list ID '..tostring(id)) end
     local removed={}
     local function collect(n)
         if n.id then removed[n.id]=true end
@@ -189,8 +228,43 @@ end
 local function style_for(n, skin)
     return n.style or (skin.style and skin.style(n)) or (skin.styles and skin.styles[n.role or n.kind]) or (skin.theme or ui.theme())[n.role == 'title' and 'title' or (n.kind == 'button' or n.kind == 'toggle') and (n.accent and 'accent_text' or 'button') or 'text']
 end
+local function inset(n)
+    local class=classes[n.kind]
+    if class.inset then return class.inset(n) end
+    return padding(n.padding)
+end
+-- Measure: the width on offer in, the size wanted out. Heights are never
+-- constrained here; a parent hands out the height it has in Arrange.
+local function measure(n, width, skin, form)
+    if not visible(n, form.values) then return 0,0 end
+    width=n.width or width
+    local l,t,r,b = inset(n)
+    local class,w,h = classes[n.kind],0,0
+    if class.measure_override then w,h=class.measure_override(n,math.max(0,width-l-r),skin,form) end
+    return math.max(n.min_width or 0,n.width or w+l+r),math.max(n.min_height or 0,n.height or h+t+b)
+end
+-- Arrange: the final box in. The class places its children inside the inset.
+local function arrange(n, box, skin, form)
+    n.box=box
+    if n.id then form.boxes[n.id]=box end
+    local class=classes[n.kind]
+    if not class.arrange_override or (#n.children == 0 and not n.scroll) then return end
+    local l,t,r,b=inset(n)
+    class.arrange_override(n,rect(box.x+l,box.y+t,math.max(0,box.w-l-r),math.max(0,box.h-t-b)),skin,form)
+end
+-- A child in a slot of its own (a border's inside, a grid's cell): it fills
+-- the slot, or is centred in it at its own width and/or height.
+local function fill(child, slot, skin, form)
+    local w,h=math.min(child.width or slot.w,slot.w),math.min(child.height or slot.h,slot.h)
+    arrange(child,rect(slot.x+(slot.w-w)/2,slot.y+(slot.h-h)/2,w,h),skin,form)
+end
+
+---------------------------------------------------------------- panels
+
+-- column, row, list: a stack along one axis with gaps, fixed lengths and
+-- weighted `grow`; `align` places children across it.
+local StackPanel={}
 local function horizontal(n) return n.kind=='row' or (n.kind=='list' and n.direction=='row') end
-local measure
 local function row_metrics(n, width, skin, form)
     local m=n.row_metrics
     if m and m.width==width and m.skin==skin and m.revision==form.layout_revision then return m end
@@ -209,56 +283,40 @@ local function row_metrics(n, width, skin, form)
     n.row_metrics=m
     return m
 end
-
-measure = function(n, width, skin, form)
-    local values=form.values
-    if not visible(n, values) then return 0,0 end
-    width=n.width or width
-    local l,t,r,b = padding(n.padding)
-    local w,h = 0,0
-    if n.scroll then
-        local rows=row_metrics(n,math.max(0,width-l-r),skin,form)
-        w,h=rows.w,rows.h+rows.gaps
-    elseif n.kind == 'row' or n.kind == 'column' or n.kind == 'list' or n.kind == 'overlay' then
-        local count = 0
-        local fixed,weight=0,0
-        if horizontal(n) then
-            for _,child in ipairs(n.children) do if visible(child,values) then
-                count=count+1
-                if (child.grow or 0)>0 then weight=weight+child.grow
-                else local cw=measure(child,math.max(0,width-l-r),skin,form);fixed=fixed+cw end
-            end end
-        end
-        local remaining=math.max(0,width-l-r-fixed-math.max(0,count-1)*(n.gap or 0))
-        count=0
-        for _, child in ipairs(n.children) do
-            if visible(child, values) then
-                local child_width=horizontal(n) and (child.grow or 0)>0 and remaining*child.grow/weight or math.max(0,width-l-r)
-                local cw,ch = measure(child, child_width, skin, form)
-                if horizontal(n) then w,h = w+(child.grow and child.grow>0 and child_width or cw),math.max(h,ch)
-                elseif n.kind == 'column' or n.kind=='list' then w,h = math.max(w,cw),h+ch
-                else w,h = math.max(w,cw),math.max(h,ch) end
-                count=count+1
-            end
-        end
-        local gaps = math.max(0,count-1)*(n.gap or 0)
-        if horizontal(n) then w=w+gaps elseif n.kind == 'column' or n.kind=='list' then h=h+gaps end
-    elseif n.kind == 'label' then
-        local s = style_for(n,skin)
-        if n.wrap then
-            local measured = text.box_size(s, math.max(1,(n.width or width)-l-r), caption(n,values)); w,h=measured.w,measured.h
-        else local measured = text.measure(s,caption(n,values)); w,h=measured.w,measured.h end
-    elseif n.kind == 'image' then
-        local image = values[n.id] or n.image; w,h=image and image.w or 0,image and image.h or 0
-    elseif n.kind == 'button' or n.kind == 'toggle' then
-        local s=style_for(n,skin); local measured=text.measure(s,caption(n,values)); w,h=measured.w+24,math.max(44,measured.h+16)
-    elseif n.kind == 'checkbox' then
-        if skin.measure_checkbox then w,h=skin.measure_checkbox(n,caption(n,values))
-        else local measured=text.measure(style_for(n,skin),caption(n,values)); w,h=measured.w+38,math.max(44,measured.h) end
-    elseif n.kind == 'progress' then w,h=100,20 end
-    return math.max(n.min_width or 0,n.width or w+l+r),math.max(n.min_height or 0,n.height or h+t+b)
+function StackPanel.check(n)
+    if n.direction and n.direction~='row' and n.direction~='column' then fail('invalid list direction') end
 end
-local arrange
+function StackPanel.measure_override(n, width, skin, form)
+    local values=form.values
+    if n.scroll then
+        local rows=row_metrics(n,width,skin,form)
+        return rows.w,rows.h+rows.gaps
+    end
+    local across,gap=horizontal(n),n.gap or 0
+    local count,fixed,weight=0,0,0
+    if across then
+        for _,child in ipairs(n.children) do if visible(child,values) then
+            count=count+1
+            if (child.grow or 0)>0 then weight=weight+child.grow
+            else local cw=measure(child,width,skin,form);fixed=fixed+cw end
+        end end
+    end
+    local remaining=math.max(0,width-fixed-math.max(0,count-1)*gap)
+    local w,h=0,0
+    count=0
+    for _, child in ipairs(n.children) do
+        if visible(child, values) then
+            local share=across and (child.grow or 0)>0 and remaining*child.grow/weight
+            local cw,ch = measure(child, share or width, skin, form)
+            if across then w,h = w+(share or cw),math.max(h,ch)
+            else w,h = math.max(w,cw),h+ch end
+            count=count+1
+        end
+    end
+    local gaps = math.max(0,count-1)*gap
+    if across then return w+gaps,h end
+    return w,h+gaps
+end
 local function arrange_scroll(n, inner, skin, form)
     local m=row_metrics(n,inner.w,skin,form)
     if m.height~=inner.h then
@@ -300,20 +358,14 @@ local function arrange_scroll(n, inner, skin, form)
     end
     n.first_row,n.last_row=first,last
 end
-
-arrange = function(n, box, skin, form)
-    n.box=box
-    if n.id then form.boxes[n.id]=box end
-    if #n.children == 0 and not n.scroll then return end
-    local l,t,r,b=padding(n.padding)
-    local inner=rect(box.x+l,box.y+t,math.max(0,box.w-l-r),math.max(0,box.h-t-b))
+function StackPanel.arrange_override(n, inner, skin, form)
     if n.scroll then arrange_scroll(n,inner,skin,form);return end
     local across=horizontal(n)
     local total,weight,count=0,0,0
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
             local cw,ch=measure(child,inner.w,skin,form)
-            child.measured={cw,ch}; count=count+1
+            child.desired={cw,ch}; count=count+1
             if child.grow and child.grow>0 then weight=weight+child.grow else total=total+(across and cw or ch) end
         end
     end
@@ -323,34 +375,225 @@ arrange = function(n, box, skin, form)
     local cursor=across and inner.x or inner.y
     for _,child in ipairs(n.children) do
         if visible(child,form.values) then
-            local cw,ch=child.measured[1],child.measured[2]
+            local cw,ch=child.desired[1],child.desired[2]
             if across and (child.grow or 0)>0 then
                 cw,ch=measure(child,remaining*child.grow/weight,skin,form)
             end
-            if n.kind=='overlay' then arrange(child,inner,skin,form)
-            else
-                local main=across and cw or ch
-                if child.grow and child.grow>0 then main=remaining*child.grow/weight end
-                main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor))
-                local cross=(n.align or 'stretch')=='stretch' and (across and inner.h or inner.w) or math.min(across and ch or cw,across and inner.h or inner.w)
-                local explicit=across and child.height or child.width
-                if explicit then cross=math.min(cross,explicit) end
-                local free=(across and inner.h or inner.w)-cross
-                local offset=n.align=='center' and free/2 or n.align=='end' and free or 0
-                local cb=across and rect(cursor,inner.y+offset,main,cross) or rect(inner.x+offset,cursor,cross,main)
-                arrange(child,cb,skin,form); cursor=cursor+main+gap
-            end
+            local main=across and cw or ch
+            if child.grow and child.grow>0 then main=remaining*child.grow/weight end
+            main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor))
+            local cross=(n.align or 'stretch')=='stretch' and (across and inner.h or inner.w) or math.min(across and ch or cw,across and inner.h or inner.w)
+            local explicit=across and child.height or child.width
+            if explicit then cross=math.min(cross,explicit) end
+            local free=(across and inner.h or inner.w)-cross
+            local offset=n.align=='center' and free/2 or n.align=='end' and free or 0
+            local cb=across and rect(cursor,inner.y+offset,main,cross) or rect(inner.x+offset,cursor,cross,main)
+            arrange(child,cb,skin,form); cursor=cursor+main+gap
         end
     end
 end
+classes.column,classes.row=StackPanel,StackPanel
+classes.list=setmetatable({items='required'},{__index=StackPanel})
+
+-- overlay: every child takes the whole content box.
+classes.overlay={
+    measure_override=function(n, width, skin, form)
+        local w,h=0,0
+        for _,child in ipairs(n.children) do
+            local cw,ch=measure(child,width,skin,form)
+            w,h=math.max(w,cw),math.max(h,ch)
+        end
+        return w,h
+    end,
+    arrange_override=function(n, inner, skin, form)
+        for _,child in ipairs(n.children) do
+            if visible(child,form.values) then arrange(child,inner,skin,form) end
+        end
+    end,
+}
+
+-- border: one child inside a rounded box, as WPF's Border. Its look is the
+-- skin's `border` control (a `role` picks a variant) or, set on the node,
+-- `background`, `border_color`, `border_width` and `radius`. The child sits
+-- inside the border's width plus `padding`.
+classes.border={
+    check=function(n, source)
+        if #(source.children or {})>1 then fail('border takes one child') end
+        for _,key in ipairs({'border_width','radius'}) do
+            if n[key]~=nil and (type(n[key])~='number' or n[key]<0 or n[key]~=n[key] or n[key]==math.huge) then fail('invalid '..key) end
+        end
+    end,
+    inset=function(n)
+        local l,t,r,b=padding(n.padding)
+        local edge=n.border_color and (n.border_width or 1) or 0
+        return l+edge,t+edge,r+edge,b+edge
+    end,
+    measure_override=function(n, width, skin, form)
+        if not n.children[1] then return 0,0 end
+        return measure(n.children[1],width,skin,form)
+    end,
+    arrange_override=function(n, inner, skin, form) fill(n.children[1],inner,skin,form) end,
+    paint=function(n, box, skin)
+        if skin.border then skin.border(box,n);return end
+        -- The native look takes engine colours; a compiled skin also reads "#hex" and palette names.
+        if n.background then gfx.round_rect(box,n.radius or 0,n.background) end
+        if n.border_color then
+            local width=n.border_width or 1
+            gfx.round_rect_line(box:inflate(-width/2),math.max(0,(n.radius or 0)-width/2),width,n.border_color)
+        end
+    end,
+}
+
+-- uniform_grid: equal cells that fill the box, as WPF's UniformGrid. `columns`
+-- and/or `rows` fix its shape and the other follows the number of visible
+-- children (neither: a square). A child fills its cell; one with its own width
+-- or height is centred in it. With an `item` builder the cells come from
+-- Form:set_items, as a list's rows do.
+local function grid_cells(n, form)
+    local cells={}
+    for _,child in ipairs(n.children) do if visible(child,form.values) then cells[#cells+1]=child end end
+    local columns=n.columns or n.rows and math.ceil(#cells/n.rows) or math.ceil(math.sqrt(#cells))
+    columns=math.max(1,columns)
+    return cells,columns,math.max(1,n.rows or 0,math.ceil(#cells/columns))
+end
+classes.uniform_grid={
+    items=true,
+    check=function(n)
+        for _,key in ipairs({'columns','rows'}) do
+            if n[key]~=nil and (math.type(n[key])~='integer' or n[key]<1) then fail('invalid '..key) end
+        end
+    end,
+    measure_override=function(n, width, skin, form)
+        local cells,columns,rows=grid_cells(n,form)
+        local gap=n.gap or 0
+        local cell=math.max(0,(width-gap*(columns-1))/columns)
+        local w,h=0,0
+        for _,child in ipairs(cells) do
+            local cw,ch=measure(child,cell,skin,form)
+            w,h=math.max(w,math.min(cw,cell)),math.max(h,ch)
+        end
+        return w*columns+gap*(columns-1),h*rows+gap*(rows-1)
+    end,
+    arrange_override=function(n, inner, skin, form)
+        local cells,columns,rows=grid_cells(n,form)
+        local gap=n.gap or 0
+        local cw=math.max(0,(inner.w-gap*(columns-1))/columns)
+        local ch=math.max(0,(inner.h-gap*(rows-1))/rows)
+        for i,child in ipairs(cells) do
+            fill(child,rect(inner.x+(i-1)%columns*(cw+gap),inner.y+(i-1)//columns*(ch+gap),cw,ch),skin,form)
+        end
+    end,
+}
+
+-------------------------------------------------------------- controls
+
+classes.spacer={}
+classes.custom={paint=function(n, box, _, form, options)
+    if n.paint then n.paint(box,form.values[n.id],options) end
+end}
+classes.label={
+    measure_override=function(n, width, skin, form)
+        local s,value=style_for(n,skin),caption(n,form.values)
+        local measured=n.wrap and text.box_size(s,math.max(1,width),value) or text.measure(s,value)
+        return measured.w,measured.h
+    end,
+    paint=function(n, box, skin, form)
+        local align=vec2(n.text_align=='start' and 0 or n.text_align=='end' and 1 or .5,.5)
+        if skin.label then skin.label(box,caption(n,form.values),n,style_for(n,skin))
+        elseif n.wrap then text.box(style_for(n,skin),box,align,caption(n,form.values))
+        else text.inside(style_for(n,skin),box,align,caption(n,form.values)) end
+    end,
+}
+classes.image={
+    measure_override=function(n, _, _, form)
+        local image=form.values[n.id] or n.image
+        return image and image.w or 0,image and image.h or 0
+    end,
+    paint=function(n, box, skin, form)
+        local im=form.values[n.id] or n.image
+        if im and im.tex then
+            if skin.image then skin.image(box,im,n)
+            else gfx.image(im,n.cover and box or box:fit(texture.size(im)),color.WHITE) end
+        end
+    end,
+}
+classes.progress={
+    measure_override=function() return 100,20 end,
+    paint=function(n, box, skin, form)
+        local fraction=tonumber(form.values[n.id]) or n.value or 0
+        if skin.progress then skin.progress(box,fraction,n) else ui.progress(box,fraction,n.text) end
+    end,
+}
+-- button, toggle, checkbox: one press/focus/keyboard path; the skin paints the state.
+local Control={}
+function Control.check(n)
+    if type(n.id)~='string' then fail('interactive controls require an ID') end
+end
+function Control.measure_override(n, _, skin, form)
+    local value=caption(n,form.values)
+    if n.kind=='checkbox' then
+        if skin.measure_checkbox then return skin.measure_checkbox(n,value) end
+        local measured=text.measure(style_for(n,skin),value)
+        return measured.w+38,math.max(44,measured.h)
+    end
+    local measured=text.measure(style_for(n,skin),value)
+    return measured.w+24,math.max(44,measured.h+16)
+end
+function Control.paint(n, box, skin, form, options, event)
+    local theme=skin.theme or ui.theme()
+    local enabled=options.interactive~=false and n.enabled~=false and (not n.enabled_field or form.values[n.enabled_field])
+    local selected=(n.kind=='toggle' or n.kind=='checkbox') and not not form.values[n.id]
+    local flags=(enabled and 0 or ui.DISABLED)|(n.accent and ui.ACCENT or 0)|(selected and ui.ACTIVE or 0)|(n.flat and ui.FLAT or 0)
+    local hitbox=options.hit_offset and box:offset(options.hit_offset) or box
+    if options.clip then hitbox=hitbox:intersect(options.hit_offset and options.clip:offset(options.hit_offset) or options.clip) end
+    local st=ui.hit(hitbox,flags)
+    if options.suppress_hit then st.clicked,st.held,st.hot=false,false,false end
+    local checkbox=n.kind=='checkbox'
+    if not checkbox and not skin.button and not skin.button_states then ui.button_paint(box,flags,st) end
+    st.disabled,st.selected,st.focused=not enabled,selected,form.focus==n.id
+    if checkbox then
+        if skin.checkbox then skin.checkbox(box,caption(n,form.values),n,st)
+        else   -- the native look: a themed box, a tick when checked, then the caption
+            local side=rect(box.x,box.y+(box.h-28)/2,28,28)
+            gfx.round_rect(side,6,enabled and theme.button_bg or color.alpha(theme.button_bg,.45))
+            gfx.round_rect_line(side,6,1.5,st.hot and theme.active or theme.button_border)
+            if selected then gfx.polyline({side:point(vec2(.2,.52)),side:point(vec2(.42,.74)),side:point(vec2(.8,.28))},3,theme.active) end
+            text.inside(style_for(n,skin),rect(box.x+38,box.y,math.max(0,box.w-38),box.h),vec2(0,.5),caption(n,form.values))
+        end
+    elseif skin.button then skin.button(box,st,n)
+    elseif skin.button_states then
+        local state=not enabled and 'disabled' or st.held and 'pressed' or selected and 'selected' or st.hot and 'hover' or 'normal'
+        local im=skin.button_states[state] or skin.button_states.normal
+        if im then gfx.image(im,box,color.WHITE) end
+    end
+    if not checkbox then   -- a checkbox paints its own caption beside the box
+        if skin.button_text then skin.button_text(box,caption(n,form.values),n,st)
+        else text.inside(style_for(n,skin),box:inflate(-8),vec2(.5,.5),caption(n,form.values)) end
+    end
+    if st.focused and form.focus_visible and options.interactive~=false then
+        if skin.focus then skin.focus(box,n) else gfx.round_rect_line(box:inflate(3),theme.radius or 8,2,theme.active) end
+    end
+    local keyboard=options.interactive~=false and form.focus==n.id and (options.input.key==input.KEY_RETURN or options.input.key==input.KEY_SPACE)
+    if enabled and (st.clicked or keyboard) and not event then
+        form.focus=n.id
+        if n.kind=='toggle' or checkbox then form:set(n.id,not selected) end
+        return {id=n.action or n.local_id or n.id,kind=(n.kind=='toggle' or checkbox) and 'change' or 'click',value=form.values[n.id],source=n.source_id,key=n.item_key}
+    end
+end
+classes.button,classes.toggle,classes.checkbox=Control,Control,Control
+for kind in pairs(classes) do builtin[kind]=true end
+
 function Form:measure(width, skin) return measure(self.root,width,skin or default_skin,self) end
 function Form:layout(box,skin)
     self.boxes={};arrange(self.root,box,skin or default_skin,self);return self.boxes
 end
+-- For a class's overrides: measure or arrange one of the node's children.
+function Form:measure_node(node,width,skin) return measure(node,width,skin or default_skin,self) end
+function Form:arrange_node(node,box,skin) arrange(node,box,skin or default_skin,self) end
 local paint
 local function paint_node(n,skin,form,options,event)
     if not visible(n,form.values) then return event end
-    local box=n.box; local theme=skin.theme or ui.theme()
+    local box=n.box
     if options.clip then local visible_box=box:intersect(options.clip);if visible_box.w<=0 or visible_box.h<=0 then return event end end
     if n.panel then
         if skin.panel then skin.panel(box,n) else ui.panel(box) end
@@ -362,62 +605,8 @@ local function paint_node(n,skin,form,options,event)
         options=opts
         gfx.clip(opts.clip);ui.block(opts.clip)
     end
-    if n.kind=='label' then
-        local align=vec2(n.text_align=='start' and 0 or n.text_align=='end' and 1 or .5,.5)
-        if skin.label then skin.label(box,caption(n,form.values),n,style_for(n,skin))
-        elseif n.wrap then text.box(style_for(n,skin),box,align,caption(n,form.values))
-        else text.inside(style_for(n,skin),box,align,caption(n,form.values)) end
-    elseif n.kind=='image' then
-        local im=form.values[n.id] or n.image
-        if im and im.tex then
-            if skin.image then skin.image(box,im,n)
-            else gfx.image(im,n.cover and box or box:fit(texture.size(im)),color.WHITE) end
-        end
-    elseif n.kind=='progress' then
-        local fraction=tonumber(form.values[n.id]) or n.value or 0
-        if skin.progress then skin.progress(box,fraction,n) else ui.progress(box,fraction,n.text) end
-    elseif n.kind=='custom' then
-        if n.paint then n.paint(box,form.values[n.id],options) end
-    elseif n.kind=='button' or n.kind=='toggle' or n.kind=='checkbox' then
-        local enabled=options.interactive~=false and n.enabled~=false and (not n.enabled_field or form.values[n.enabled_field])
-        local selected=(n.kind=='toggle' or n.kind=='checkbox') and not not form.values[n.id]
-        local flags=(enabled and 0 or ui.DISABLED)|(n.accent and ui.ACCENT or 0)|(selected and ui.ACTIVE or 0)|(n.flat and ui.FLAT or 0)
-        local hitbox=options.hit_offset and box:offset(options.hit_offset) or box
-        if options.clip then hitbox=hitbox:intersect(options.hit_offset and options.clip:offset(options.hit_offset) or options.clip) end
-        local st=ui.hit(hitbox,flags)
-        if options.suppress_hit then st.clicked,st.held,st.hot=false,false,false end
-        local checkbox=n.kind=='checkbox'
-        if not checkbox and not skin.button and not skin.button_states then ui.button_paint(box,flags,st) end
-        st.disabled,st.selected,st.focused=not enabled,selected,form.focus==n.id
-        if checkbox then
-            if skin.checkbox then skin.checkbox(box,caption(n,form.values),n,st)
-            else   -- the native look: a themed box, a tick when checked, then the caption
-                local side=rect(box.x,box.y+(box.h-28)/2,28,28)
-                gfx.round_rect(side,6,enabled and theme.button_bg or color.alpha(theme.button_bg,.45))
-                gfx.round_rect_line(side,6,1.5,st.hot and theme.active or theme.button_border)
-                if selected then gfx.polyline({side:point(vec2(.2,.52)),side:point(vec2(.42,.74)),side:point(vec2(.8,.28))},3,theme.active) end
-                text.inside(style_for(n,skin),rect(box.x+38,box.y,math.max(0,box.w-38),box.h),vec2(0,.5),caption(n,form.values))
-            end
-        elseif skin.button then skin.button(box,st,n)
-        elseif skin.button_states then
-            local state=not enabled and 'disabled' or st.held and 'pressed' or selected and 'selected' or st.hot and 'hover' or 'normal'
-            local im=skin.button_states[state] or skin.button_states.normal
-            if im then gfx.image(im,box,color.WHITE) end
-        end
-        if not checkbox then   -- a checkbox paints its own caption beside the box
-            if skin.button_text then skin.button_text(box,caption(n,form.values),n,st)
-            else text.inside(style_for(n,skin),box:inflate(-8),vec2(.5,.5),caption(n,form.values)) end
-        end
-        if st.focused and form.focus_visible and options.interactive~=false then
-            if skin.focus then skin.focus(box,n) else gfx.round_rect_line(box:inflate(3),theme.radius or 8,2,theme.active) end
-        end
-        local keyboard=options.interactive~=false and form.focus==n.id and (options.input.key==input.KEY_RETURN or options.input.key==input.KEY_SPACE)
-        if enabled and (st.clicked or keyboard) and not event then
-            form.focus=n.id
-            if n.kind=='toggle' or checkbox then form:set(n.id,not selected) end
-            event={id=n.action or n.local_id or n.id,kind=(n.kind=='toggle' or checkbox) and 'change' or 'click',value=form.values[n.id],source=n.source_id,key=n.item_key}
-        end
-    end
+    local class=classes[n.kind]
+    if class.paint then event=class.paint(n,box,skin,form,options,event) or event end
     if n.scroll then
         for i=n.first_row,n.last_row do event=paint(n.row_metrics.rows[i].node,skin,form,options,event) end
         local length=n.scroll_max or 0

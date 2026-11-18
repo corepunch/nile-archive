@@ -37,7 +37,7 @@ def main():
             im.save(out / f'{png.stem}.jpg', quality=LOGICAL.get(game, 86))
     frames = SHOTS / 'frames'
     if frames.is_dir():
-        for mode in ('skins', 'layers'):
+        for mode in ('skins', 'layers', 'layout'):
             im = Image.open(frames / f'ui-{mode}.png').convert('RGB')
             im.thumbnail((1200, 1000))
             im.save(ROOT / f'docs/screenshots/ui-{mode}.jpg', quality=86)

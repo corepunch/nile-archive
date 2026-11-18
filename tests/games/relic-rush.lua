@@ -175,6 +175,7 @@ reel("fx-shatter", 24, 2, "480x900", "--fx shatter --reel")
 reel("result", 36, 3, "480x900", "--victory --reel")
 frame("ui-skins", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --frames 3")
 frame("ui-layers", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --nested --frames 3")
+frame("ui-layout", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --layout --frames 3")
 
 hold("relic-long-press", "480x900", "240,440", "--city 3 --look 760,1980")
 hold("relic-phone-long-press", "390x844", "240,440", "--city 3 --look 760,1980 --safe-area 0,47,0,34")

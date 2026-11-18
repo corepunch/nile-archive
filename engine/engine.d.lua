@@ -1744,6 +1744,19 @@ function ui_form:set_items(id, items) end
 function ui_form:measure(width, skin) end
 ---@return table<string,rect>
 function ui_form:layout(bounds, skin) end
+---For a class's measure_override: the size a child wants within width
+---@return number, number
+function ui_form:measure_node(node, width, skin) end
+---For a class's arrange_override: give a child its final box
+function ui_form:arrange_node(node, bounds, skin) end
+---Add a form element kind: {measure_override, arrange_override, paint, inset, check, items}
+---@param kind string
+---@param class table
+function ui.element(kind, class) end
+---Add a named template: a node of this kind is replaced by what build(node) returns
+---@param kind string
+---@param build fun(props: table): table
+function ui.prefab(kind, build) end
 ---@return table?
 function ui_form:draw(bounds, skin, options) end
 ---A compiled skin file (engine/ui_skin.lua): fonts, colours, images, text styles and per-state control looks

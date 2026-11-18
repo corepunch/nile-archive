@@ -612,12 +612,9 @@ function G.bind(R, over)
             }},
             {kind="column",gap=7,paint_group={.62,.28,10},children={
                 {kind="label",text="RESOURCES TO BANK",em=13,text_style="cream"},
-                {kind="list",id="resources",direction="row",gap=9,item=function(entry)
-                    return {kind="column",grow=1,panel=true,role="result_resource",padding={4,5,4,7},gap=1,children={
-                        {kind="image",image=entry.icon,height=36},
-                        {kind="label",text=entry.amount,em=25,text_style="gold"},
-                        {kind="label",text=entry.name,em=13,text_style="cream"},
-                    }}
+                -- One row of equal cells, however many currencies the game banks.
+                {kind="uniform_grid",id="resources",rows=1,gap=9,item=function(entry)
+                    return {kind="resource_indicator",icon=entry.icon,amount=entry.amount,name=entry.name}
                 end},
             }},
             {kind="row",id="next_step",visible_field="show_next",panel=true,role="group",

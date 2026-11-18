@@ -207,3 +207,76 @@ do
     check(f.nodes.rows.scroll_max==0, "an empty scrolling source handles input")
     check(not pcall(ui.form,{kind="row",scroll=true}),'scrolling is a vertical measured list capability')
 end
+
+-- Element classes: every kind measures and arranges itself, so a border, a
+-- uniform grid, a prefab and a game's own panel all compose.
+do
+    local card=ui.form{kind="border",id="card",padding={4,6,8,10},children={{kind="custom",id="content",width=40,height=20}}}
+    local w,h=card:measure(200)
+    check(w==52 and h==36,"a border wants its child plus its padding")
+    card:layout(rect(10,10,100,60))
+    check(card.boxes.content.w==40 and card.boxes.content.h==20 and card.boxes.content.x==38 and card.boxes.content.y==28,
+        "a sized child is centred inside the border's padding")
+    local edged=ui.form{kind="border",border_color=color.WHITE,border_width=3,padding=5,children={{kind="custom",id="content"}}}
+    edged:layout(rect(0,0,100,50))
+    check(edged.boxes.content.x==8 and edged.boxes.content.w==84 and edged.boxes.content.h==34,"the border's width insets its child with the padding")
+    check(not pcall(ui.form,{kind="border",children={{kind="spacer"},{kind="spacer"}}}),"a border takes one child")
+    local painted
+    card:draw(rect(10,10,100,60),{border=function(box,node) painted=box.w==100 and node.id=="card" end},{input={}})
+    check(painted,"the skin paints a border in its whole box")
+
+    local cells={}
+    for i=1,5 do cells[i]={kind="custom",id="c"..i,height=20} end
+    local grid=ui.form{kind="uniform_grid",columns=3,gap=10,children=cells}
+    local _,grid_h=grid:measure(320)
+    check(grid_h==50,"five cells in three columns measure as two rows and a gap")
+    grid:layout(rect(0,0,320,90))
+    local grid_box=grid.boxes
+    check(grid_box.c1.w==100 and grid_box.c2.x==110 and grid_box.c3.x==220 and grid_box.c3.x+grid_box.c3.w==320,"equal columns fill the whole row")
+    check(grid_box.c4.x==0 and grid_box.c4.y==60 and grid_box.c5.x==110 and grid_box.c1.h==20 and grid_box.c1.y==10,"cells wrap to the next row; a sized child is centred in its cell")
+    grid.nodes.c2.visible=false;grid:invalidate_layout()
+    grid:layout(rect(0,0,320,90))
+    check(grid.boxes.c3.x==110 and grid.boxes.c4.x==220 and grid.boxes.c5.y==60,"a hidden child gives up its cell")
+    check(not pcall(ui.form,{kind="uniform_grid",columns=0}) and not pcall(ui.form,{kind="uniform_grid",rows=1.5}),"grid shape is whole and positive")
+
+    ui.prefab("test_chip",function(p)
+        return {kind="border",padding=2,children={{kind="column",children={
+            {kind="custom",width=p.size,height=p.size},
+            {kind="button",id="pick",text=p.caption,height=30},
+        }}}}
+    end)
+    local row=ui.form{kind="uniform_grid",id="chips",rows=1,gap=6,item=function(record)
+        return {kind="test_chip",size=record.size,caption=record.id}
+    end}
+    check(row:set_items("chips",{{id="a",size=10},{id="b",size=30}}),"a grid takes a data source of prefabs")
+    row:layout(rect(0,0,206,80))
+    local first,second
+    for id,node in pairs(row.nodes) do
+        if node.local_id=="pick" then if node.item_key=="a" then first=row.boxes[id] else second=row.boxes[id] end end
+    end
+    check(first and second and first.w==96 and second.x==108 and second.w==96,"one row follows the number of records; prefab IDs are scoped per record")
+    check(row:set_items("chips",{{id="a",size=10},{id="b",size=30},{id="c",size=5}}),"refresh the grid's source")
+    row:layout(rect(0,0,216,80))
+    local third=row.nodes.chips.children[3].box
+    check(third.w==68 and third.x==148,"a third record makes a third equal column")
+    local placed=ui.form{kind="row",children={{kind="test_chip",id="chip",grow=1,size=8,caption="x"},{kind="spacer",width=50}}}
+    placed:layout(rect(0,0,200,60))
+    check(placed.boxes.chip.w==150 and placed.nodes.chip.kind=="border","an instance places its prefab: id and grow go to the root")
+    check(not pcall(ui.prefab,"label",function() return {kind="spacer"} end) and not pcall(ui.element,"test_chip",{})
+        and not pcall(ui.element,"label",{}),"prefabs and element kinds share one namespace; engine kinds stay the engine's")
+
+    -- A game's own panel: children side by side, each as wide as the panel is tall.
+    ui.element("test_squares",{
+        measure_override=function(n,width) return math.min(width,#n.children*n.side),n.side end,
+        arrange_override=function(n,inner,look,owner)
+            for i,child in ipairs(n.children) do owner:arrange_node(child,rect(inner.x+(i-1)*inner.h,inner.y,inner.h,inner.h),look) end
+        end,
+    })
+    local squares=ui.form{kind="column",align="start",children={
+        {kind="test_squares",id="panel",side=24,padding=3,children={{kind="custom",id="s1"},{kind="custom",id="s2"}}}}}
+    w,h=squares:measure(300)
+    check(w==54 and h==30,"measure adds the padding to a class's measure_override")
+    squares:layout(rect(0,0,300,30))
+    check(squares.boxes.panel.w==54 and squares.boxes.s2.x==27 and squares.boxes.s2.w==24 and squares.boxes.s2.y==3,
+        "arrange hands a class its content box for arrange_override")
+end
