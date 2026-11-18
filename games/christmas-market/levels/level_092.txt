@@ -1,28 +1,28 @@
 name: Cocoa Cart
 tier: easy
-teaches: Two separate cocoa carts, each with a small pocket at its wheel sealed by tinsel.
+teaches: Light every pane of the Cocoa Cart; the narrow corners take the longest.
 
 x x x x x
  x x x x
 x x x x x
  x x x x
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-K . p . K
- . . . .
-. . x . .
- . . . .
-K K x K K
- K K K K
-x p x p x
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+. p x p .
  p p p p
 x p x p x
- p p p p
-x s x s x
+ p . . p
+x p x p x
+ . . . .
+x . x . x
  . . . .
 x . x . x
  x x x x

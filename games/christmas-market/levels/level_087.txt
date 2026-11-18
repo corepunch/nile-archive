@@ -1,28 +1,28 @@
 name: Carousel
 tier: normal
-teaches: Green double panes ring the carousel pole under the canopy; hit the middle twice.
+teaches: Untangle the rows of tinsel ties across the Carousel and light the panes beneath them.
 
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . p . x
- . p p .
-x . P . x
- . p p .
-. p p p .
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+k p p p k
+ p p p p
+p p p p p
+ k k k k
+x p p p x
+ p p p p
+x k p k x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
  p p p p
 . p p p .
  p p p p
-s s p s s
+. p p p .
+ p p p p
+. p p p .
  x x x x

@@ -6,7 +6,8 @@ cleared each plaque. A plaque that goes last in most games, or never goes, is
 what a long board waits for. This tool lists those plaques and, with `--trim`,
 removes them in symmetric pairs until the bot's median game is at most
 `--high` times the level's Homescapes move budget
-(docs/homescapes-reference/first-100-levels.md). A chain or ice left on a
+(docs/homescapes-reference/first-100-levels.md) and it clears the board
+within the 250-move ceiling in nine games of ten. A chain or ice left on a
 plain cell goes with its plaque unless it still gates a plaque below it.
 
     make build/test/relic-rush
@@ -32,6 +33,7 @@ import hex_levels as H
 ROOT = Path(__file__).resolve().parents[1]
 CAP = 250            # tests/lua/tune_moves.lua
 MIN_PLAQUES = 8      # cells; a board keeps a field worth playing
+MAX_LOST = .1        # share of the bot's games that may end at the ceiling
 S = H.SYMBOLS
 SLOT = {cell: H.slot(*cell) for cell in H.CELLS}
 AT = {slot: cell for cell, slot in SLOT.items()}
@@ -121,6 +123,11 @@ def projected(plaques, games):
     return statistics.median(max(game.get(cell, CAP) for cell in plaques) for game in games)
 
 
+def lost(plaques, games):
+    """Games that end at the ceiling with one of `plaques` uncleared."""
+    return sum(any(cell not in game for cell in plaques) for game in games)
+
+
 def strip(layout, cells):
     for cell in cells:
         _, chain, ice, _ = S[layout[cell]]
@@ -150,6 +157,12 @@ def trim(board, games, goal):
     for cell in sorted(late, key=late.get, reverse=True):
         if projected(left, games) <= goal or len(left) <= MIN_PLAQUES:
             break
+        pair = {cell, partner(cell, board['symmetry'])} & left
+        left -= pair
+        removed += pair
+    # Then the plaques the bot left standing at the ceiling in too many games.
+    while lost(left, games) > len(games) * MAX_LOST and len(left) > MIN_PLAQUES:
+        cell = max(left, key=lambda c: sum(c not in game for game in games))
         pair = {cell, partner(cell, board['symmetry'])} & left
         left -= pair
         removed += pair
@@ -186,7 +199,8 @@ def main():
             where = ', '.join(f'line {SLOT[c][0] + 1} col {SLOT[c][1] + 1} ({late[c]:.0f})' for c in worst)
             if not args.trim:
                 print(f"{number:3d} median {median:3d} target {budget[number] * 1.5:.0f}-{high:.0f} plaques {len(late):2d}  latest: {where}")
-            elif median > high and len(late) > MIN_PLAQUES and number > 4:   # tutorials stay as authored
+            elif ((median > high or lost(late, games) > len(games) * MAX_LOST)
+                  and len(late) > MIN_PLAQUES and number > 4):   # tutorials stay as authored
                 # Halfway each round: with fewer plaques to chase the bot plays faster than projected.
                 removed = trim(board, games, max(args.aim * budget[number], .6 * median))
                 if removed:

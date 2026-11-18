@@ -1,28 +1,28 @@
 name: Fir Tree
 tier: easy
-teaches: Match over the tablets on a tall fir tree; no blockers yet, just clear every pane from the tiers down to the trunk.
+teaches: Light every pane of the Fir Tree; the narrow corners take the longest.
 
 x x x x x
  x x x x
 x x x x x
  x x x x
-x . . . x
- . . . .
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+x p p p x
+ x p p x
 x . p . x
- . p p .
-. p . p .
- p . . p
-x . . . x
- p . . p
-. . . . .
- p . . p
-. . . . .
- p . . p
-. p . p .
- x . . x
-x . . . x
- x . . x
-x . . . x
  x . . x
 x x x x x
  x x x x

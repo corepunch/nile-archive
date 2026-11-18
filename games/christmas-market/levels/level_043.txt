@@ -1,28 +1,28 @@
 name: Market Stall
 tier: normal
-teaches: A row of latches along the counter gates the stock below the awning; break them, then clear the shelves.
+teaches: Untangle the tinsel at the gate to let treats into the empty part of the Market Stall.
 
 x . . . x
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- x x x x
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-k k k k k
- k k k k
 . . p . .
+ p p p p
+. k k k .
  . p p .
 . p p p .
+ x x x x
+x c c c x
+ . p p .
+x p p p x
+ . k k .
+x p p p x
+ k p p k
+. . . . .
+ . k k .
+. p p p .
+ p p p p
+. k k k .
  p p p p
 . p p p .
- . . . .
+ p k k p
 x . . . x
  . . . .

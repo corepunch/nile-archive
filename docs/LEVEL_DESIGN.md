@@ -81,8 +81,10 @@ of every level). Regenerate both with
 
 ## The default 100-level schedule
 
-The default schedule follows the first Cradle of Rome's Adventure boards in
-`levels.json`. Relic Rush follows the Windows sequel.
+The table follows the first Cradle of Rome's Adventure boards in
+`levels.json` and is the validator's default for a new game. Relic Rush and
+Christmas Market follow the Windows sequel instead; see **Both campaigns**
+below the table.
 
 | Levels | Tablet layers | Chains | What is new |
 | --- | --- | --- | --- |

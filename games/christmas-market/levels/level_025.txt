@@ -1,24 +1,24 @@
 name: Tree Topper
 tier: hard
-teaches: A star crowns the fir and is part of the same board: double ice guards the middle boughs.
+teaches: Break the frost row so treats can fall into the empty part of the Tree Topper, then light the panes there.
 
 x x . x x
  x x x x
 x . . . x
  . . . .
-. . . . .
- . . . .
-x . p . x
- x p p x
-x x p x x
- x p p x
-x p p p x
- x p p x
-x p p p x
+. p . p .
  p p p p
-p p p p p
+x p p p x
+ x j j x
+x x j x x
  x p p x
-. J J J .
+x p j p x
+ x j j x
+x p j p x
+ p p p p
+. . . . .
+ x . . x
+. . . . .
  . . . .
 . . . . .
  . . . .

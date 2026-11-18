@@ -1,27 +1,27 @@
 name: Reindeer Pair
 tier: boss
-teaches: Double panes in two separate areas, with the lower stalls sealed by double tinsel and a few stones and ice on the way.
+teaches: Every pane of the Reindeer Pair is double: light each one twice.
 
 . . x . .
  x . . x
 . . x . .
- . . . .
-s . x . s
- . . . .
-J . . . J
- . . . .
-. . . . .
- . . . .
-J . p . J
- . . . .
-s . x . s
- . . . .
-G G x G G
- G G G G
-P P x P P
+ P . . P
+. P x P .
  P P P P
-. . x . .
- p . . p
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+. P P P .
+ P P P P
+. P x P .
+ P P P P
+. P x P .
+ P . . P
+. P x P .
+ P . . P
+. P x P .
+ . . . .
 x . x . x
  x . . x
 x . x . x

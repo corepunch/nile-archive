@@ -1,6 +1,6 @@
 name: Carousel
 tier: normal
-teaches: Tinsel rings the carousel: break the outer ring to reach its heart.
+teaches: Light every pane of the Carousel; the narrow corners take the longest.
 
 x x . x x
  x x x x
@@ -9,20 +9,20 @@ x x . x x
 x . . . x
  x . . x
 x . . . x
- . . . .
-. . K . .
- . K K .
-. K p K .
  . p p .
-. K s K .
- . p p .
-. K p K .
- . K K .
-. p K p .
- . . . .
-x . . . x
- . . . .
-x . . . x
- x . . x
-x x . x x
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x x p x x
  x . . x

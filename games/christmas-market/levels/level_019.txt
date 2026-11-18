@@ -1,6 +1,6 @@
 name: Gift Stack
 tier: hard
-teaches: Two stacked gift boxes with ribbon: keep every corner supplied.
+teaches: Untangle the rows of tinsel ties across the Gift Stack and light the panes beneath them.
 
 x . x . x
  x . . x
@@ -8,21 +8,21 @@ x . . . x
  x . . x
 x . . . x
  . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
+x . p . x
+ k k k k
+x p p p x
+ p p p p
+x k k k x
+ p p p p
+p p p p p
+ k k k k
+p p p p p
+ p p p p
+k k k k k
+ p p p p
+p p p p p
+ k k k k
+p p p p p
+ p p p p
+. p p p .
  . p p .
-p p . p p
- p p p p
-p p . p p
- p p p p
-p p . p p
- p p p p
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .

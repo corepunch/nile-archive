@@ -1,28 +1,28 @@
 name: Twin Lanterns
 tier: easy
-teaches: Two tinsel chains guard each lantern's bottom: break either to let pieces down into the cellar.
+teaches: Break the frost row so treats can fall into the empty part of the Twin Lanterns, then light the panes there.
 
 x . x . x
  . x x .
 . . x . .
  . . . .
 . . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-x k x k x
- x k k x
-x p p p x
  p p p p
-p p p p p
+. p x p .
+ p p p p
+. p x p .
+ p p p p
+. p x p .
+ p p p p
+x p x p x
+ x p p x
+x i p i x
+ . j j .
+. p p p .
  . p p .
-. . . . .
- . . . .
-x . . . x
+. p p p .
+ . p p .
+x . p . x
  . . . .
 x x x x x
  x x x x

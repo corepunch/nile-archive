@@ -1,28 +1,28 @@
 name: Gift Mountain
 tier: boss
-teaches: Double panes everywhere and a double tinsel curtain across the middle of the pile.
+teaches: Every pane of the Gift Mountain is double: light each one twice. Untangle the tinsel ties on the way.
 
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-x J . J x
- . . . .
-x . . . x
- . . . .
-G G G G G
- G G G G
-P . P . P
- . . . .
-J . . . J
+x x P x x
+ x P P x
+x P P P x
+ x g g x
+x P P P x
+ x P P x
+x g g g x
+ . P P .
+x P P P x
+ . g g .
+x P P P x
+ P P P P
+c g g g c
+ c g g c
+. P P P .
+ P P P P
+. P g P .
+ P P P P
+. g P g .
+ P P P P
+. P P P .
  . . . .
 . . . . .
- . . . .
-. J . J .
- P . . P
-s . p . s
  x x x x

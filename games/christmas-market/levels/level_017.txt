@@ -1,23 +1,23 @@
 name: Jingle Bells
 tier: normal
-teaches: Two bells hang from one bar: keep pieces flowing down both bells and across the bar between them.
+teaches: Light every pane of the Jingle Bells; the narrow corners take the longest.
 
 . . . . .
  . . . .
-x . x . x
+x p x p x
  x x x x
-x . x . x
- . . . .
-. . x . .
- . . . .
-. . x . .
+x p x p x
  . p p .
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
 . p x p .
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
+ . . . .
+. p x p .
+ . . . .
 x . x . x
  x . . x
 x . x . x

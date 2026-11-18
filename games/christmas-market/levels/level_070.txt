@@ -1,28 +1,28 @@
 name: Stocking Pair
 tier: boss
-teaches: A boss: double panes, double frost, stones and chains on two stockings.
+teaches: Every pane of the Stocking Pair is double: light each one twice. Untangle the tinsel ties on the way.
 
-. . . . .
+. . P . .
  . . . .
-. . . . .
- . . . .
-. . p . .
- . . . .
-x . x . x
- . . . .
-x . x . x
- J J J J
-x g x g x
+. P g P .
  P P P P
+. g P g .
+ P P P P
+x P x P x
+ . . . .
 x . x . x
- J J J J
-x g x g x
- . P P .
-K P x P K
- p . . p
+ . . . .
+x . x . x
+ . . . .
+x . x . x
+ . . . .
+x . x . x
+ . . . .
 . . x . .
  . . . .
-. s x s .
- s . . s
+. . x . .
+ . . . .
+. . x . .
+ . . . .
 x x x x x
  x x x x

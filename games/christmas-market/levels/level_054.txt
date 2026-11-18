@@ -1,28 +1,28 @@
 name: Snowflake Pair
 tier: normal
-teaches: Frost sits on each snowflake's heart: break it, then clear the panes.
+teaches: Light every pane of the Snowflake Pair; the narrow corners take the longest.
 
 x x x x x
  x x x x
 x x . x x
  x . . x
 x x . x x
- x . . x
-. x . x .
- . . . .
-. . p . .
+ x p p x
+p x p x p
  p p p p
-. p J p .
- . j j .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
 x p p p x
- . j j .
-. p J p .
  p p p p
-. p p p .
- . . . .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
 . x p x .
- x . . x
-x x . x x
+ x p p x
+x x p x x
  x . . x
 x x . x x
  x x x x

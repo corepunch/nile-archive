@@ -1,28 +1,28 @@
 name: Holly Wreath
 tier: normal
-teaches: Light the whole wreath ring and mind the hole in the middle.
+teaches: Untangle the rows of tinsel ties across the Holly Wreath and light the panes beneath them.
 
 x . . . x
  x . . x
 x . . . x
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . x x .
-. . x . .
- . x x .
+. . p . .
+ p p p p
+p p p p p
+ k k k k
 p p x p p
  p x x p
-p p x p p
+k k x k k
  p x x p
 p p x p p
+ k x x k
+p p x p p
+ p x x p
+. p x p .
  p p p p
 . p p p .
- . . . .
-x . . . x
- . . . .
-x . . . x
+ p p p p
+x k p k x
+ . p p .
+x . p . x
  x . . x

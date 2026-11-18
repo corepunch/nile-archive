@@ -1,28 +1,28 @@
 name: Market Row
 tier: normal
-teaches: Three awnings top a row of stalls; the tinsel awning below them feeds a broad square once it breaks.
+teaches: Light every pane of the Market Row; the narrow corners take the longest.
 
-. x . x .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-K K K K K
- K K K K
+. x p x .
+ p p p p
+. p p p .
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
 p p p p p
  p p p p
 p p p p p
  p p p p
-. . p . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+. p p p .
  . . . .
 x x x x x
  x x x x

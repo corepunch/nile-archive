@@ -1,28 +1,28 @@
 name: Candle Tower
 tier: hard
-teaches: A tinsel gate high up shuts off almost the whole tower below the flame; open it first.
+teaches: Break the frost row so treats can fall into the empty part of the Candle Tower, then light the panes there.
 
-x x . x x
- x . . x
-x . . . x
- x . . x
-x K K K x
- K K K K
+x x p x x
+ x p p x
+x p p p x
+ x p p x
+x j p j x
+ i j j i
 x p p p x
  p p p p
 x p p p x
  p p p p
 x p p p x
  p p p p
-x . p . x
- . p p .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-. . . . .
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x j j j x
+ i j j i
+x p p p x
+ p p p p
+. p p p .
  . . . .

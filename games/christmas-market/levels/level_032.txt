@@ -1,28 +1,28 @@
 name: Mittens
 tier: easy
-teaches: Two mittens tied by one string: the cuffs are joined, and a patch of ice sits in each cuff.
+teaches: Light every pane of the Mittens; the narrow corners take the longest.
 
 x x x x x
  x x x x
 x . x . x
  x x x x
-x . x . x
- . . . .
-. . x . .
- . . . .
-. . x . .
+x p x p x
  p p p p
 p p x p p
  p p p p
 p p x p p
  p p p p
-x . x . x
- x . . x
-x j x j x
- x . . x
-x . . . x
- x . . x
-x . . . x
+. p x p .
+ p p p p
+. p x p .
+ p p p p
+x p x p x
+ x p p x
+x p x p x
+ x p p x
+x . p . x
+ x p p x
+x . p . x
  . . . .
 x x x x x
  x x x x

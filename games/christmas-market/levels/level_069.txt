@@ -1,28 +1,28 @@
 name: Candy Cane
 tier: hard
-teaches: Striped tinsel everywhere, single and double.
+teaches: Untangle the tinsel at the gate to let treats into the empty part of the Candy Cane.
 
 x x x x x
  x . . .
-x . . . .
- . . . .
-. . p p x
- . . p x
-. k k x x
- . . x x
-p . x x x
- K K x x
+x . p . .
+ . . p .
+. p p . x
+ p p . x
+p k . x x
+ . p x x
+. p x x x
+ k k x x
 p p p x x
- p . p x
-x . . . x
- x p . p
+ p p p x
+x p p p x
+ x p p p
 x x p p p
- x x K K
-x x x . p
- x x . .
-x x k k .
- x p . .
-x p p . .
- . . . .
-. . . . x
+ x x k k
+x x x p .
+ x x p .
+x x . k p
+ x . p p
+x . p p .
+ . p . .
+. . p . x
  . . . x

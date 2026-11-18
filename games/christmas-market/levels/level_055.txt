@@ -1,28 +1,28 @@
 name: Silver Bell
 tier: hard
-teaches: One double tinsel guards the clapper; frost and chains protect the panes below.
+teaches: Break the frost across the Silver Bell and light the panes under it.
 
 x x . x x
  x . . x
 x . . . x
  x . . x
-x p . p x
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+p . . . p
+ p . . p
+p p . p p
+ p j j p
+p j p j p
+ p j j p
+p p j p p
  p p p p
-x j . j x
- . p p .
-x p . p x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. p . p .
- p p p p
-. K . K .
- . . . .
 . p p p .
- . . . .
-x x K x x
+ . p p .
+x x p x x
  x p p x
-x x j x x
- x p p x
+x x p x x
+ x . . x

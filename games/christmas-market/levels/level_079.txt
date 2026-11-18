@@ -1,26 +1,26 @@
 name: Twin Lanterns
 tier: hard
-teaches: Two lanterns hang apart, each hiding a room of panes behind double tinsel; break the curtain to refill it.
+teaches: Untangle the tinsel at the gate to let treats into the empty part of the Twin Lanterns.
 
 x . x . x
  x . . x
+. . x . .
+ . . . .
+. . x . .
+ . p p .
+C C x C C
+ C C C C
+. . p . .
+ . p p .
+. C K C .
+ p p p p
+. p p p .
+ C . . C
 . p x p .
- . . . .
-p p x p p
  p p p p
-K K x K K
- K K K K
-p p p p p
+. . x . .
  p p p p
-p . . . p
- p . . p
-. . . . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
+. p x p .
  . . . .
 x . x . x
  x . . x

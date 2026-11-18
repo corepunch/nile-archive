@@ -1,24 +1,24 @@
 name: Fir Tree
 tier: easy
-teaches: A fir with zigzag boughs: match across the steps, and break the ice on the middle bough.
+teaches: Untangle the rows of tinsel ties across the Fir Tree and light the panes beneath them.
 
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . p . .
- . p p .
+. p k p .
+ p p p p
+. k p k .
+ p p p p
+p p p p p
+ k k k k
+p p p p p
+ p p p p
+. k k k .
+ p p p p
 . p p p .
- p p p p
-p j p j p
- p p p p
-. . p . .
  . . . .
-. . . . .
- x . . x
-x x . x x
+. k k k .
+ x p p x
+x x p x x
  x . . x
 x x . x x
  x x x x

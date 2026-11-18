@@ -1,18 +1,18 @@
 name: Snowflake
 tier: hard
-teaches: Six arms and a packed heart: every cell holds a tablet, and two stones sit in the waist.
+teaches: Light every pane of the Snowflake; the narrow corners take the longest.
 
 x x . x x
  x . . x
-x . . . x
- x . . x
-. x . x .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x s p s x
+x p p p x
+ x p p x
+p x p x p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
  x p p x
 x p p p x
  p p p p
@@ -22,7 +22,7 @@ p p p p p
  p p p p
 . x p x .
  . p p .
-x . p . x
- x . . x
-x x . x x
+x p p p x
+ x p p x
+x x p x x
  x . . x

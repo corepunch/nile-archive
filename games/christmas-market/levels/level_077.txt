@@ -1,26 +1,26 @@
 name: Silver Bell
 tier: normal
-teaches: Work around the narrow crown of the bell and keep the wide mouth clear; the clapper hangs free in the middle.
+teaches: Untangle the rows of tinsel ties across the Silver Bell and light the panes beneath them.
 
-x x . x x
- x . . x
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . p . x
- . p p .
-. p p p .
+x x p x x
+ x k k x
+x p p p x
  p p p p
-. p p p .
+x k k k x
  p p p p
-. p p p .
- . p p .
-. . p . .
- . p p .
-. . p . .
- . x x .
-. . . . .
+x p p p x
+ k k k k
+p p p p p
+ p p p p
+. k k k .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p x x p
+. p . p .
  . . . .
 . x . x .
  x x x x

@@ -1,28 +1,28 @@
 name: Chapel Bells
 tier: hard
-teaches: Snow stones and a tinsel roof: free the bells.
+teaches: Break the frost row so treats can fall into the empty part of the Chapel Bells, then light the panes there.
 
 x x . x x
  x x x x
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . j j .
-x . . . x
- . . . .
-x j . j x
- . . . .
-x . . . x
- . j j .
-x K K K x
- K K K K
+x x p x x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ p j j p
 x p p p x
  p p p p
-. p . p .
- . p p .
+x j j j x
+ i j j i
+x p p p x
+ p j j p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+. p p p .
+ p p p p
 . s s s .
- . . . .
-. . . . .
+ p p p p
+. p p p .
  . . . .

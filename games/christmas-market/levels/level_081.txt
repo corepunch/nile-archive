@@ -1,28 +1,28 @@
 name: Gingerbread House
 tier: easy
-teaches: Break the tinsel doorway across the middle of the house to fill the cellar below it.
+teaches: Break the frost row so treats can fall into the empty part of the Gingerbread House, then light the panes there.
 
 x x x x x
  x x x x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. x . x .
- x . . x
-. . . . .
- . . . .
-K K K K K
- K K K K
+x p p p x
+ p p p p
+p p j p p
+ p p p p
 p p p p p
- p . . p
-. . p . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+ p p p p
+. x p x .
+ x p p x
+. p p p .
+ p j j p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+j j j j j
+ j j j j
+p p p p p
+ p p p p
+. p p p .
+ . p p .
 x x x x x
  x x x x

@@ -1,28 +1,28 @@
 name: Reindeer Duo
 tier: normal
-teaches: Two reindeer pull one sleigh by a shared harness: tinsel is scattered on their coats and ice sits in the antlers.
+teaches: Untangle the rows of tinsel ties across the Reindeer Duo and light the panes beneath them.
 
 x . x . x
  . . . .
 x . x . x
  . . . .
 x . x . x
- . . . .
-x k x k x
- . . . .
-. . . . .
- . . . .
-. . . . .
- k p p k
-. p p p .
  p p p p
-. p p p .
+x k x k x
+ p p p p
+. p k p .
+ p p p p
+p p p p p
+ k k k k
+p p p p p
+ p p p p
+p p p p p
+ k k k k
+p p p p p
+ p p p p
+. . k . .
  k p p k
-. . p . .
- . j j .
-. k . k .
- . . . .
-. . x . .
+. p x p .
  . x x .
 . . x . .
  . x x .

@@ -1,28 +1,28 @@
 name: Sleigh Slide
 tier: normal
-teaches: Break the slanted tinsel on each side to open the slide below.
+teaches: Untangle the rows of tinsel ties across the Sleigh Slide and light the panes beneath them.
 
 x x x x x
  . x x x
 . . x x x
- . . x x
-. . . x x
- . . x x
-. . . x x
- . . p x
-. . p x x
- . p p x
-. . p K x
+ p p x x
+. p p x x
+ p p x x
+p p p x x
+ p k p x
+p p p x x
+ p p p x
+p k p . x
  p p k p
-x p K p x
+x p k p x
  p k p p
-x K p . .
- x p p .
-x x p . .
- x p . .
-x x . . .
- x x . .
-x x . . .
- x x . .
+x . p k p
+ x p p p
+x x p p p
+ x p k p
+x x p p p
+ x x p p
+x x p p .
+ x x p p
 x x x . .
  x x x .

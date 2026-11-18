@@ -1,28 +1,28 @@
 name: Twin Trees
 tier: normal
-teaches: Two small fir trees share the ground; each has a tinsel band across the middle that gates its lower half.
+teaches: Light every pane of the Twin Trees; the narrow corners take the longest.
 
 x . x . x
- . . . .
+ . p p .
+x . x . x
+ p p p p
+. p x p .
+ x p p x
 x . x . x
  . . . .
-. . x . .
+. p x p .
  x . . x
 x . x . x
  . . . .
 . . x . .
- x . . x
+ . . . .
+. . x . .
+ . . . .
 x . x . x
  . . . .
-K K x K K
- K K K K
-K p x p K
- p p p p
 x . x . x
- p p p p
-x . x . x
- . . . .
-. . p . .
  . . . .
 . . . . .
+ . p p .
+. . p . .
  x x x x

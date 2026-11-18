@@ -1,28 +1,28 @@
 name: Ribbon Box
 tier: easy
-teaches: The ribbon around the box is tinsel: break it and the pieces fall into the gift below.
+teaches: Light every pane of the Ribbon Box; the narrow corners take the longest.
 
-. x x x .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . . . .
-. p x p .
+p x x x p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
+ p x x p
+p p x p p
  p p p p
-. K . K .
- p . . p
-x K . K x
- . . . .
-x p . p x
- x K K x
-x p K p x
- x . . x
-x . . . x
- x . . x
-x x . x x
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x x p x x
  x x x x
 x x x x x
  x x x x

@@ -1,25 +1,25 @@
 name: Twin Snowmen
 tier: hard
-teaches: Two snowmen with pinched waists: each area needs its own matches through the narrow middle, and the coal buttons are stones.
+teaches: Break the frost across the Twin Snowmen and light the panes under it.
 
-x . x . x
+x p x p x
+ p . . p
+. p x p .
+ p p p p
+x j x j x
+ p p p p
+x j x j x
+ p . . p
+x p . p x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . p p .
+s . x . s
  . . . .
 . . x . .
  . . . .
-x . x . x
- . . . .
-x . x . x
- . p p .
-x p p p x
- x p p x
-x p p p x
- p p p p
-. p p p .
- p p p p
-s p x p s
- p p p p
-. . x . .
- . p p .
 . s x s .
  . . . .
 . . x . .

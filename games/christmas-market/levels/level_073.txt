@@ -1,28 +1,28 @@
 name: Chimney Top
 tier: normal
-teaches: A sloped tinsel roof, with frosted panes under it.
+teaches: Untangle the tinsel at the gate to let treats into the empty part of the Chimney Top.
 
 x x . x x
- x . . x
-x x . x x
- x . . x
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-K K K K K
- K K K K
+ x p p x
+x x p x x
+ x p p x
+x x p x x
+ x p p x
 x p p p x
- . . . .
-x j . j x
- . . . .
-x . . . x
- . . . .
-x j . j x
- . p p .
-x . . . x
- . p p .
-x j . j x
+ x k k x
+x p p p x
+ p p p p
+. k k k .
+ k k k k
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
  . p p .

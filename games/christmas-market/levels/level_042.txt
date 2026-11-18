@@ -1,28 +1,28 @@
 name: Cocoa Mug
 tier: easy
-teaches: A short row of chains under the rim keeps the bottom of the mug empty until it breaks.
+teaches: Untangle the tinsel at the gate to let treats into the empty part of the Cocoa Mug.
 
-x . . . x
- . . . .
-x . . . x
- . p p .
+x p p p x
+ k k k k
+x p p p x
+ p p p p
 x k x k x
  k k k k
 x p p p x
  p p p p
-. p p p .
- . p p .
-. . p . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- x . . x
-x s . s x
+k k k k k
+ p p p p
+p p p p p
+ k k k k
+p p p p p
+ p p p p
+. k k k .
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x . p . x
  x . . x

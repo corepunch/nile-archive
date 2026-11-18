@@ -1,28 +1,28 @@
 name: Market Stalls
 tier: easy
-teaches: Frost on the awnings: break the ice, then clear the stalls.
+teaches: Light every pane of the Market Stalls; the narrow corners take the longest.
 
 x x x x x
  x x x x
-i i . i i
- i i i i
-. . . . .
- . . . .
-. x . x .
- . . . .
-. x . x .
- . . . .
-. x . x .
- . . . .
-. x . x .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p x p x p
  . p p .
+. x p x .
+ . p p .
+. x p x .
+ . p p .
+p x p x p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
 . p p p .
  p p p p
 x p p p x
- p p p p
+ . . . .

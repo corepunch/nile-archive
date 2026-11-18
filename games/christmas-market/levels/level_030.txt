@@ -1,26 +1,26 @@
 name: Golden Star
 tier: boss
-teaches: Every cell of the star holds a double tablet; ice and stones guard the points.
+teaches: Every pane of the Golden Star is double: light each one twice.
 
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-s . . . s
- . . . .
-. . . . .
- . . . .
-x . j . x
+x x P x x
+ x P P x
+x P P P x
+ x P P x
+x P P P x
+ P P P P
+. P P P .
+ P P P P
+. P P P .
+ P P P P
+x P P P x
  . P P .
 x P P P x
  x P P x
-x J P J x
- P . . P
-P J . J P
- P . . P
-P . x . P
+x P P P x
+ . P P .
+. P P P .
+ . P P .
+. . x . .
  . x x .
 . . x . .
  . x x .

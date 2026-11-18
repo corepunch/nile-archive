@@ -1,28 +1,28 @@
 name: Reindeer Stable
 tier: normal
-teaches: Open the stable door at the chain; more chained lanterns wait inside.
+teaches: Light every pane of the Reindeer Stable; the narrow corners take the longest.
 
 x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x x c x x
- x c c x
-x . . . x
- . . . .
-. . p . .
+ x p p x
+x p p p x
+ x p p x
+x p p p x
  p p p p
-p k k k p
- p k k p
 p p p p p
  p p p p
 . p p p .
+ p p p p
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
  . p p .
-x . p . x
- . . . .

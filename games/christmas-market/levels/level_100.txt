@@ -1,28 +1,28 @@
 name: The Great Tree
 tier: boss
-teaches: The finale: the great tree, lit with double panes on every light, with a double tinsel band across its skirt.
+teaches: Every pane of the Great Tree is double: light each one twice. Tinsel and frost guard the last of them.
 
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-x J . J x
- . . . .
-s . . . s
- . . . .
-x . . . x
- . . . .
-. J p J .
- . . . .
-G G G G G
- G G G G
+x x P x x
+ x P P x
 x P P P x
- P . . P
-s . . . s
- . p p .
-. . . . .
- . . . .
+ x f f x
+x P G P x
+ . P P .
+x P P P x
+ . G G .
+s P P P s
+ P P P P
+x f G f x
+ . P P .
+. P P P .
+ P P P P
+. P P P .
+ P P P P
+x P P P x
+ P G G P
+s P P P s
+ P P P P
+. P P P .
+ . P P .
 x . . . x
  x . . x

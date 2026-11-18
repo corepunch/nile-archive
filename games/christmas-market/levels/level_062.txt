@@ -1,26 +1,26 @@
 name: Market Tent
 tier: easy
-teaches: A tent roof of tinsel: break the ridge and the eaves to open the awning.
+teaches: Double tinsel ties take two hits each: untangle the rows across the Market Tent.
 
 x x x x x
  x x x x
 x x x x x
  x x x x
-x . . . x
- . . . .
-. . p . .
- . p p .
-x p K p x
- . p p .
-. k p k .
+x p p p x
+ p K K p
+. p p p .
  p p p p
-p . . . p
- K . . K
-. . . . .
- p . . p
-. . x . .
- . x x .
-. . x . .
+x K K K x
+ p p p p
+. . p . .
+ p K K p
+p p p p p
+ . . . .
+p K p K p
+ p p p p
+p p x p p
+ p x x p
+p . x . p
  . x x .
 . . x . .
  . x x .

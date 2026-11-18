@@ -1,28 +1,28 @@
 name: Tall Candle
 tier: normal
-teaches: Snowed-in stones sit in the wax: break them with adjacent matches.
+teaches: Break the frost row so treats can fall into the empty part of the Tall Candle, then light the panes there.
 
 x x . x x
  x x x x
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-x . . . x
- . . . .
-x s . s x
- . . . .
-x . . . x
- . . . .
-x s . s x
- . . . .
-x . p . x
- . p p .
-. p p p .
- p p p p
-p p p p p
+x x p x x
+ x p p x
+x j p j x
+ x p p x
+x p p p x
  p p p p
 x p p p x
  p p p p
+x s p s x
+ p p p p
+x p p p x
+ p p p p
+x s p s x
+ p p p p
+x p p p x
+ p p p p
+i j j j i
+ j j j j
+. p p p .
+ p p p p
+x p p p x
+ . p p .

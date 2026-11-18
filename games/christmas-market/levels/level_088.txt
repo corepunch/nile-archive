@@ -1,28 +1,28 @@
 name: Two Stalls
 tier: normal
-teaches: Two separate stalls, each open to the sky, share no pieces; the ice sits on the awning ends and the counters.
+teaches: Break the frost row so treats can fall into the empty part of the Two Stalls, then light the panes there.
 
-x . x . x
- x . . x
-. p . p .
- p . . p
-J . . . J
- p . . p
-x p p p x
- p . . p
-x . x . x
- . . . .
-x . x . x
- . . . .
-x . x . x
- . . . .
-x . x . x
- p . . p
 x p x p x
+ x p p x
+. p p p .
+ p p p p
+. . I . .
+ p I I p
+x j p j x
+ p p p p
+x i x i x
+ p p p p
+x i x i x
+ p p p p
+x i x i x
  p . . p
-J p x p J
- p . . p
-. p x p .
+x i x i x
+ . . . .
+x . x . x
+ . . . .
+. . x . .
+ . . . .
+. . x . .
  . . . .
 x x x x x
  x x x x

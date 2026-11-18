@@ -1,28 +1,28 @@
 name: Wrapped Present
 tier: normal
-teaches: The ribbon is tinsel stretched over plain cells; break it to open the gift.
+teaches: Break the frost row so treats can fall into the empty part of the Wrapped Present, then light the panes there.
 
 x . x . x
- . x x .
-x . . . x
+ p x x p
+x p p p x
+ p p p p
+p p j p p
+ p p p p
+p j p j p
+ p j j p
+p p j p p
+ p j j p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+i j j j i
+ i j j i
+. p p p .
+ p p p p
+. . . . .
  . . . .
-. . K . .
+. p p p .
  . p p .
-. . K . .
- . p p .
-. . K . .
- . p p .
-. . K . .
- . p p .
-. . K . .
- . . . .
-. . K . .
- . p p .
-. . K . .
- . p p .
-. . K . .
- . p p .
-. . K . .
- . p p .
-. . p . .
+. . . . .
  . . . .

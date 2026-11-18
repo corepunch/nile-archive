@@ -1,28 +1,28 @@
 name: Pine Cone
 tier: normal
-teaches: Chains at the stem hold the whole cone: break them and the scales below fill with pieces.
+teaches: Untangle the tinsel at the gate to let treats into the empty part of the Pine Cone.
 
 x x . x x
  x . . x
 x . . . x
  x . . x
-x k k k x
- x k k x
-x p p p x
- p p p p
+x c c c x
+ x c c x
+x . . . x
+ p . . p
+. c . c .
+ p . . p
+p p p p p
+ k k k k
 p p p p p
  p p p p
-. . p . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- x . . x
-x x . x x
- x . . x
+x k k k x
+ p p p p
+x p p p x
+ . k k .
+x p p p x
+ x p p x
+x x k x x
+ x p p x
 x x . x x
  x . . x

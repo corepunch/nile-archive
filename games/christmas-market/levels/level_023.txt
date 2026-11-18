@@ -1,27 +1,27 @@
 name: Santa's Workshop
 tier: normal
-teaches: A wide chained gate seals the whole workshop floor: break a chain to get pieces to it.
+teaches: Untangle the rows of tinsel ties across the Santa's Workshop and light the panes beneath them.
 
 x x . x x
  x . . x
 x . . . x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-k k k k k
- k k k k
-. . . . .
- . . . .
-. . p . .
- . p p .
-. p p p .
+ x p p x
+x p p p x
  p p p p
 . p p p .
- . p p .
-. . p . .
- . . . .
+ p k k p
+. p p p .
+ p p p p
+. k k k .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ p . . p
 . . x . .
  . x x .
 . . x . .

@@ -1,28 +1,28 @@
 name: Advent Calendar
 tier: hard
-teaches: Twelve locked doors and one tinsel latch at the foot guarding the last cells.
+teaches: Light every pane of the Advent Calendar; the narrow corners take the longest.
 
 . . . . .
  . . . .
 . . . . .
- k k k k
-. . . . .
- . . . .
-. . . . .
- k k k k
-. . . . .
- . . . .
-. . . . .
- k k k k
-. . p . .
+ . p p .
+p p p p p
  p p p p
-. . p . .
- . . . .
-. . . . .
- . . . .
-x x k x x
- x k k x
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ . p p .
+x x p x x
+ x p p x
 x p p p x
- p p p p
-. . . . .
+ . p p .
+. . p . .
  . . . .

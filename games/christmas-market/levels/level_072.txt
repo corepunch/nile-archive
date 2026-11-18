@@ -1,27 +1,27 @@
 name: Icicle Row
 tier: easy
-teaches: Single tinsel along the eaves: break it to let snow fall into the icicles.
+teaches: Light every pane of the Icicle Row; the narrow corners take the longest.
 
 x x x x x
  x x x x
 x x x x x
- x . . x
-. x . x .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . p p .
-. k . k .
- . . . .
-. p . p .
- . p p .
-x K x K x
- K k k K
-x p x p x
+ x p p x
+p x p x p
  p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ p p p p
+x p x p x
+ p . . p
+x . x . x
+ . . . .
 x x x x x
  x x x x
 x x x x x

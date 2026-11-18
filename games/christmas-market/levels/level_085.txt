@@ -1,28 +1,28 @@
 name: Glass Ornament
 tier: hard
-teaches: A round glass ornament with a tinsel ring around its lower half; open the ring to fill the bottom.
+teaches: Break the frost row so treats can fall into the empty part of the Glass Ornament, then light the panes there.
 
-x . . . x
- x . . x
-x . . . x
- x . . x
-x x . x x
- x . . x
-x . . . x
- . . . .
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-K K K K K
- K K K K
+x . p . x
+ x p p x
+x p p p x
+ x p p x
+x x j x x
+ x p p x
+x p p p x
+ p p p p
+x p j p x
+ p p p p
+i j p j i
+ j j j j
 p p p p p
  p p p p
-x p . p x
+. j p j .
+ j j j j
+p p p p p
  p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
 x . p . x
- x . . x
-x . . . x
  x . . x

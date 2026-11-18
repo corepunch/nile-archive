@@ -1,28 +1,28 @@
 name: Sleigh
 tier: normal
-teaches: Two tinsel locks hold the runners shut; break them to reach the presents in the runners below.
+teaches: Untangle the rows of tinsel ties across the Sleigh and light the panes beneath them.
 
 x . . . x
  x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
+x p p p x
+ k k k k
+p p p p p
+ p p p p
+. k k k .
+ p p p p
+p p p p p
+ k k k k
+x p p p x
+ p p p p
 x . . . x
  . . . .
 x x x x x
- k x x k
+ . x x .
 . . x . .
- . p p .
-p p x p p
- p p p p
-p p x p p
- p p p p
-. p x p .
- . p p .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .

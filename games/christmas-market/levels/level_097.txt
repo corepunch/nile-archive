@@ -1,28 +1,28 @@
 name: Sleigh Ride
 tier: normal
-teaches: Curled sleigh ends are narrow; clear them before the long body, and mind the ice under the gifts.
+teaches: Double tinsel ties take two hits each: untangle the rows across the Sleigh Ride.
 
 x x x x x
  x x x x
-s x x x s
+. x x x .
  . x x .
 . . x . .
+ p x x p
+p p x p p
  . x x .
-. . x . .
- . x x .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+p K p K p
+ p p p p
+. . K . .
+ p p p p
+p K p K p
  . . . .
 p p p p p
- . p p .
-p p j p p
  p p p p
-j . p . j
- p . . p
-p p . p p
- p . . p
+. K K K .
+ p p p p
+. p p p .
+ . . . .
+. p p p .
+ . p p .
 . . . . .
  x x x x

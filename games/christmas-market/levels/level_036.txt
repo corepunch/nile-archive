@@ -1,28 +1,28 @@
 name: Snowmen
 tier: easy
-teaches: Two snowmen share one long scarf: open the chains and the bodies fill, and a cracked double ice patch hides in each belly.
+teaches: Light every pane of the Snowmen; the narrow corners take the longest.
 
 x . x . x
- . . . .
-x . x . x
- . . . .
-x . . . x
- . . . .
-k k k k k
- k k k k
-. . . . .
- . . . .
-. . . . .
- . . . .
+ p p p p
+x p x p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p . . p
 . p x p .
- J p p J
-. p x p .
- . p p .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
  . . . .
 . . x . .
  . . . .

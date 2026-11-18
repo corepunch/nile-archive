@@ -1,28 +1,28 @@
 name: Gold Star
 tier: hard
-teaches: A dense star with frosted lantern panes and no chains.
+teaches: Break the frost row so treats can fall into the empty part of the Gold Star, then light the panes there.
 
 x x . x x
  x x x x
 x x . x x
- x . . x
-x x . x x
- x . . x
-x . . . x
- x . . x
-. . . . .
- . j j .
-. p j p .
- . p p .
-. p p p .
- j . . j
-. . . . .
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ x j j x
+p p j p p
+ p j j p
+p j j j p
+ j p p j
+p p p p p
+ j p p j
+i p p p i
+ j p p j
+. j p j .
  p p p p
-. j . j .
- . p p .
 . p x p .
- . . . .
-p p x p p
- j x x j
+ p . . p
+. . x . .
+ . x x .
 x x x x x
  x x x x

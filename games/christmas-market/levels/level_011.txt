@@ -1,28 +1,28 @@
 name: Skating Rink
 tier: easy
-teaches: Frost over lanterns: break the ice first, then light the tablet beneath.
+teaches: Untangle the rows of tinsel ties across the Skating Rink and light the panes beneath them.
 
 x x x x x
  x x x x
 . . . . .
  . . . .
 . . . . .
- . . . .
-. j p j .
  . p p .
-. p p p .
+p p p p p
  p p p p
-. p p p .
+p p p p p
+ p p p p
+p p k p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
  . p p .
-. j p j .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
+x p p p x
  x . . x
 x x x x x
  x x x x

@@ -1,27 +1,27 @@
 name: Twin Lanterns
 tier: easy
-teaches: Each lantern hangs behind double tinsel; break it so new pieces drop in.
+teaches: Light every pane of the Twin Lanterns; the narrow corners take the longest.
 
 x x x x x
  x x x x
 x . x . x
  . x x .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . . . .
-K K x K K
- K K K K
 p p x p p
- . p p .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
 . p x p .
- . . . .
+ p . . p
 x . x . x
  . . . .
 x . x . x

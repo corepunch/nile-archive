@@ -1,28 +1,28 @@
 name: Bright Star
 tier: normal
-teaches: Clear the five points of the star, where few neighbours make matches rare, and melt the ice on the tips.
+teaches: Light every pane of the Bright Star; the narrow corners take the longest.
 
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- p . . p
-p . . . p
- p . . p
-j p . p j
- p . . p
-x p . p x
- p . . p
-x . p . x
- . . . .
-. . . . .
+x x p x x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p x x p
+. p x p .
+ p x x p
+. . x . .
  . x x .
 . . x . .
  . x x .
-p . x . p
- . x x .
-p p x p p
- p x x p
-j p x p j
+. . x . .
  x x x x

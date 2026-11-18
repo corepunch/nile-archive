@@ -1,28 +1,28 @@
 name: Sack of Gifts
 tier: normal
-teaches: Open the chain at the sack's mouth, then clear the gifts piled inside.
+teaches: Light every pane of the Sack of Gifts; the narrow corners take the longest.
 
 x . . . x
  . . . .
-x . c . x
- x c c x
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
+x p p p x
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ p p p p
 p p p p p
  p p p p
 p p p p p
- . p p .
-. . p . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- x . . x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
 x x x x x
  x x x x

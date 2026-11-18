@@ -1,28 +1,28 @@
 name: Crown Jewel
 tier: boss
-teaches: A crown of double tablets with a notch cut from the top: no chains, only brute persistence.
+teaches: Every pane of the Crown Jewel is double: light each one twice. Untangle the tinsel ties on the way.
 
 . . x . .
  x x x x
-. . . . .
- . . . .
-. . . . .
- . . . .
-. J . J .
- . . . .
-. . . . .
- . . . .
-. . P . .
- P j j P
+. P P P .
+ P P P P
 P P P P P
  P P P P
-. J P J .
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+g g P g g
+ P P P P
+P P P P P
+ P P P P
+. P P P .
+ P P P P
+x P P P x
+ . P P .
+x P P P x
  . P P .
 x . P . x
  . . . .
-x . . . x
- . . . .
-x . . . x
- s . . s
 x x x x x
  x x x x

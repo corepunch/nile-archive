@@ -1,26 +1,26 @@
 name: Tinsel Curtain
 tier: normal
-teaches: Two tinsel curtains stack: the upper one opens the middle of the stage, the lower one the base.
+teaches: Double tinsel ties take two hits each: untangle the rows across the Tinsel Curtain.
 
 x x x x x
  x x x x
-. x x x .
- . x x .
-. . x . .
- . . . .
-. . x . .
- K . . K
-. K . K .
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+p p x p p
+ K p p K
+p p p p p
+ p p p p
+. K K K .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
  p K K p
-. p K p .
- . . . .
-. . K . .
- . . . .
-p . . . p
- K . . K
-x K . K x
- p K K p
-x p K p x
+x p p p x
+ p p p p
+x p p p x
  x p p x
 x x p x x
  x . . x

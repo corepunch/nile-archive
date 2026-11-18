@@ -1,28 +1,28 @@
 name: Star Over the Market
 tier: normal
-teaches: A star hangs over the market, joined to it by a narrow bridge: pieces trickle down the bridge into the stalls.
+teaches: Untangle the rows of tinsel ties across the Star Over the Market and light the panes beneath them.
 
 x x . x x
  x x x x
 x . . . x
  . . . .
 x . . . x
- . . . .
-x . . . x
- x . . x
-x x . x x
- x . . x
-x x . x x
- x . . x
+ . p p .
+x p . p x
+ x k k x
+x x p x x
+ x p p x
+x x p x x
+ x p p x
 p p p p p
  p p p p
 p p p p p
  p p p p
-. . p . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
 x x x x x
  x x x x

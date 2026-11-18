@@ -1,28 +1,28 @@
 name: Gingerbread House
 tier: easy
-teaches: Two small doors shut with double tinsel, and snowdrift stones along the walls.
+teaches: Untangle the rows of tinsel ties across the Gingerbread House and light the panes beneath them.
 
 x x x x x
  x x x x
 x x x x x
  x x x x
-x . . . x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- s . . s
-x . . . x
- . . . .
-x . . . x
- s p p s
-x p . p x
+x p p p x
+ x p p x
+x p k p x
  p p p p
-x K p K x
+. p p p .
+ p p p p
+x p p p x
+ k k k k
+x p p p x
+ p p p p
+x k p k x
+ p p p p
+x p p p x
+ k k k k
+x p p p x
+ p p p p
+x k k k x
  p p p p
 x p p p x
  . . . .

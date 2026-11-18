@@ -1,26 +1,26 @@
 name: Gingerbread House
 tier: easy
-teaches: Break the chains on the doorstep so pieces can fall into the cosy rooms below.
+teaches: Untangle the tinsel at the gate to let treats into the empty part of the Gingerbread House.
 
 x x . x x
  x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
+x p p p x
+ x k k x
+x p p p x
+ p p p p
+. k k k .
+ p p p p
+x p p p x
+ . k k .
+x p p p x
+ . p p .
 x x k x x
  x k k x
-x . . . x
- . p p .
-x . p . x
+x p p p x
  p p p p
-x . p . x
+x k p k x
+ p p p p
+x p k p x
  p p p p
 x p p p x
  . p p .

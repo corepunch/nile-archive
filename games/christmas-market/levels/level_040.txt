@@ -1,28 +1,28 @@
 name: Grand Lantern
 tier: boss
-teaches: Double panes behind a tinsel gate: break the chains, then hit every pane twice.
+teaches: Every pane of the Grand Lantern is double: light each one twice. Untangle the tinsel ties on the way.
 
-x x . x x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- J . . J
-. . . . .
- . . . .
-x g . g x
+x x P x x
+ x P P x
+x P P P x
+ x P P x
+x P P P x
+ P P P P
+. P P P .
+ P P P P
+. P P P .
+ P P P P
+. P P P .
+ P P P P
+x g P g x
  x g g x
 x P P P x
- P . . P
-P . . . P
- J . . J
-P s . s P
- P . . P
-P . . . P
- . . . .
-x . . . x
+ P P P P
+. P P P .
+ P P P P
+. P P P .
+ P P P P
+. P P P .
+ . P P .
+x . P . x
  x . . x

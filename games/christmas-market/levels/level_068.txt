@@ -1,28 +1,28 @@
 name: Cocoa Mug
 tier: normal
-teaches: Frosted steam rises from the mug.
+teaches: Double tinsel ties take two hits each: untangle the rows across the Cocoa Mug.
 
 x x x x x
  x x x x
 x x . x x
- x j j x
-x x . x x
- x . . x
-x . p . x
- . . . .
-. p . p .
- p . . p
-x p . p x
+ x p p x
+x x K x x
+ x p p x
+x p p p x
+ . K K .
+. p p p .
  p p p p
-x j p j x
+x K K K x
  p p p p
 x p p p x
+ . K K .
+x p p p x
  . p p .
-x p . p x
- . . . .
-x . . . x
- . . . .
-. . . . .
- . . . .
-x . . . x
+x . K . x
+ p p p p
+x p p p x
+ p K K p
+. p p p .
+ p p p p
+x . p . x
  x . . x

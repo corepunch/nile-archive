@@ -1,28 +1,28 @@
 name: Twin Baubles
 tier: boss
-teaches: A boss with double panes, double frost, stones and double tinsel at once.
+teaches: Every pane of the Twin Baubles is double: light each one twice. Untangle the tinsel ties on the way.
 
 x . x . x
  . x x .
 x . x . x
  . x x .
 . . x . .
+ P . . P
+. P x P .
+ g P P g
+. P P P .
+ P g g P
+. P P P .
+ g . . g
+. P P P .
+ P . . P
+. g x g .
+ P . . P
+. . x . .
  . . . .
 . . x . .
- J . . J
-. J . J .
- . . . .
-G P p P G
- P G G P
-. . . . .
- s . . s
-. s x s .
  . . . .
 . . x . .
  . . . .
-G . x . G
- . G G .
-. I x I .
- I P P I
-x P x P x
+x . x . x
  . x x .
