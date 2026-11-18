@@ -7,7 +7,7 @@ boss 50%). The bot orders and spaces the boards; its rates are not human win rat
 
 | # | Board | Tier | Moves | Median | Fastest | Bot clears |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
-| 1 | Welcome Lights | tutorial | 3 | 1 | 1 | 40/40 |
+| 1 | Welcome Lights | tutorial | 3 | 2 | 1 | 40/40 |
 | 2 | The Little Fir | tutorial | 5 | 4 | 2 | 40/40 |
 | 3 | Silver Bell | tutorial | 6 | 4 | 1 | 40/40 |
 | 4 | Gingerbread House | tutorial | 19 | 7 | 2 | 40/40 |
