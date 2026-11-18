@@ -18,7 +18,7 @@ Raw frames are under `build/shots/christmas-market/`. Preview any scene with `--
 | Last finale line | ![Finale](story-finale.jpg) | ![Finale phone](phone-story-finale.jpg) |
 | End screen (before: [old finale](finale-before.jpg)) | ![End](story-end.jpg) | ![End phone](phone-story-end.jpg) |
 
-Results: [a stall-funding wish](reward.jpg) and [a story-only wish](reward-story.jpg). The story-only result shows spare Gold and "The market has news" instead of a stall. Later boards: [level 20, the ring](story-level-20.jpg), and [level 30, the star, on the phone](phone-story-level-30.jpg).
+Results: [a stall-funding wish](reward.jpg) and [a story-only wish](reward-story.jpg). These two captures predate the simplified result card, which now shows what the next stall still needs as icon amounts. Later boards: [level 20, the ring](story-level-20.jpg), and [level 30, the star, on the phone](phone-story-level-30.jpg).
 
 Busts are drawn without a frame or plate behind them. Each alpha cutout stands on the dialogue box, which hides the hard cut along the bottom of the image (the engine's unframed `story_style`). The after captures above show this.
 

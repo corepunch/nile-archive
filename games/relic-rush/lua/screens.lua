@@ -48,15 +48,9 @@ function R.currency_prices(cost)
     return parts
 end
 
-function R.cost_text(parts)
-    local amounts = {}
-    for i, part in ipairs(parts) do amounts[i] = ("%d %s"):format(part.amount, part.name) end
-    return table.concat(amounts, " + ")
-end
-
+-- What the wallet still lacks of a price, as resource amounts.
 function R.funding_shortfall(cost)
-    local missing = R.currency_prices(economy.shortfall(cost, R.prog.wallet))
-    if #missing > 0 then return "Need " .. R.cost_text(missing) end
+    return R.currency_prices(economy.shortfall(cost, R.prog.wallet))
 end
 
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
@@ -73,17 +67,7 @@ R.register_result(function()
     local quest, step = island.next_quest(R.island, level)
     local next_kind = quest and step.kind or island.next_step(R.island, level)
     local w = next_kind and R.buildings[next_kind + 1]
-    local next_step
-    if w then
-        local missing = R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward))
-        local unlock = island.buildings[next_kind + 1].unlock_text
-        next_step = {
-            icon=w.sprite, title=w.name,
-            heading=quest and quest.title or #missing == 0 and (unlock or "NEXT RESTORATION") or "REPLAY TO EARN THE REST",
-            detail=(quest and quest.request .. "\n" or "") ..
-                (#missing == 0 and R.cost_text(R.currency_prices(w.cost)) or "Need " .. R.cost_text(missing)),
-        }
-    end
+    local next_step = w and R.result_next(w, R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward)))
     return {
         title=breakdown.first and "Expedition complete" or "Replay complete",
         subtitle=("LEVEL %d · %s"):format(R.g.level + 1, rules.level_of(R.g).name),
