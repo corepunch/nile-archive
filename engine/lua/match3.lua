@@ -261,6 +261,14 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     end
     local hud_form, hud_second = goal_form(), goal_form()
 
+    -- The row vertically centres the column by its visible lettering.
+    local moves_form = ui.form{kind="row", align="center", children={
+        {kind="column", id="stack", grow=1, children={
+            {kind="label", id="caption", text="MOVES", text_style=PAL_CREAM, em=9},
+            {kind="label", id="count", text_style=PAL_GOLD},
+        }},
+    }}
+
     -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
     -- remaining moves large inside. It warms to red over the last five moves.
     function R.draw_moves(c, arrive, radius)
@@ -283,9 +291,14 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         gfx.ngon(c, r - 7 * scale, 6, a, face)
         gfx.glow(c + vec2(0, -4 * scale), r - 12 * scale, glow, color.alpha(face, 0))
         if arrive < .8 then return end   -- the numbers come with the settled medallion
-        text.inside(R.pal(PAL_CREAM, 9), rect.centered(c + vec2(0, -17 * arrive * scale), size2(56, 12)), vec2(.5, .5), "MOVES")
-        local s = R.pal(urgent and PAL_WHITE or PAL_GOLD, 29 * arrive * scale)
-        text.inside(s, rect.centered(c + vec2(0, 5 * arrive * scale), size2(62, 34)), vec2(.5, .5), tostring(moves))
+        local caption, count = moves_form.nodes.caption, moves_form.nodes.count
+        count.em, count.text_style = 29 * arrive * scale, urgent and PAL_WHITE or PAL_GOLD
+        local value = tostring(moves)
+        caption.height = text.ink(R.skin:measure_text(caption.text_style, caption.em), caption.text).h
+        count.height = text.ink(R.skin:measure_text(count.text_style, count.em), value).h
+        moves_form.nodes.stack.gap = 6 * arrive * scale
+        moves_form:set("count", value)
+        moves_form:draw(rect.centered(c, size2(r * 1.5, r * math.sqrt(3))), R.skin, {interactive=false})
     end
 
     function R.goal_target(kind)
