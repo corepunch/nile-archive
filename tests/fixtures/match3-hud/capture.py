@@ -27,7 +27,7 @@ island_cases={"island":(["--city","6"],30),"wonder":(["--city","3","--pending-wo
               "placing":(["--city","6","--placing"],30),"blocked":(["--city","6","--placing","blocked"],30),
               "fog":(["--city","3","--rich"],30),"overview":(["--city","3","--overview","--rich"],30),
               "showcase":(["--showcase"],30),"unlock":(["--city","3","--zone","1"],30),
-              "shop":(["--catalogue","bush"],30),"expeditions":(["--expeditions"],30)}
+              "shop":(["--catalogue","bush"],30)}
 cases=board_cases if args.suite=="board" else island_cases
 fixture=ROOT/"tests/fixtures/expedition-header/main.lua"
 with tempfile.TemporaryDirectory(prefix="relic-hud-") as directory:

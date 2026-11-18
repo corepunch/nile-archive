@@ -22,9 +22,7 @@ relic = {
     'expansion': ['--city', '2', '--open', '1', '--zone', '1'],
     'finale-island': ['--city', '10'],
 }
-new_relic = {'replay-result': ['--replay-victory', '--frames', '120'],
-             'expeditions-resume': ['--expeditions', '--expedition-page', '1', '--resume-expedition'],
-             **{f'expeditions-{n}': ['--expeditions', '--expedition-page', str(n)] for n in range(1, 5)}}
+new_relic = {'replay-result': ['--replay-victory', '--frames', '120']}
 nile = {n: ['--screen', n] for n in ['win', 'chapters', 'build', 'island']}
 new_nile = {n: ['--screen', n] for n in ['purchase', 'opening', 'first-build', 'first-win']}
 sets = [

@@ -1,9 +1,9 @@
 -- smoke.lua — the --smoke run: opens Pause (Sound, Restart and Quit present),
 -- the guide, plays level one through injected clicks, claims the reward,
 -- builds the first stall, runs the engine's pickup-and-move check, buys and
--- cancels a decoration through the catalogue, taps it for its bubble, replays
--- a winter wish for resources, checks that an unfinished board hides the
--- market, and enters level two. --smoke --campaign is campaign_smoke.lua.
+-- cancels a decoration through the catalogue, taps it for its bubble, starts
+-- level two from Play and checks that an unfinished board hides the market.
+-- --smoke --campaign is campaign_smoke.lua.
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
@@ -71,7 +71,6 @@ function R.smoke()
     elseif smoke_stage == 0 then
         if R.overlay == R.OV_RESULT then
             if R.dialog_settled() then
-                if smoke_move.replay then smoke_move.replay_reward = rules.level_reward(R.g, R.wonders, R.prog) end
                 app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); smoke_stage = 1
             end
             return
@@ -92,12 +91,7 @@ function R.smoke()
         end
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        if smoke_move.replay then
-            assert(same_wallet(R.prog.wallet, smoke_move.replay_wallet + smoke_move.replay_reward)
-                and R.prog.wallet[4]==1 and island.wonder_count(R.island)==1,
-                "replay must bank matched resources without changing Stars or restoration")
-            app.inject_click(R.town.buttons.play);smoke_stage=5;return
-        end
+        assert(R.town.navigation:get("play") == "2", "smoke: Play names the next wish")
         app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
     elseif smoke_stage == 2 and R.overlay == R.OV_SHOP then
         assert(press_tile("arch"), "smoke: the earned stall is in the shop"); smoke_stage = 3
@@ -173,17 +167,9 @@ function R.smoke()
         assert(R.island.moving==1 and R.island.placing==smoke_move.shop_kind,"move must lift the purchased instance")
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=29
     elseif smoke_stage==29 and R.island.placing<0 then
-        app.inject_click(R.town.buttons.middle);smoke_stage=30
-    elseif smoke_stage==30 and R.overlay==R.OV_EXPEDITIONS then
-        local f=R.expedition_form
-        for _,node in pairs(f.nodes) do
-            if node.item_key=='0' and node.local_id=='play' then
-                assert(node.enabled,'completed expedition must be replayable')
-                smoke_move.replay_wallet=R.prog.wallet+purse();smoke_move.replay=true
-                app.inject_click(f.boxes[node.id]:center());smoke_stage=31;break
-            end
-        end
-    elseif smoke_stage==31 and not R.on_island then
+        app.inject_click(R.town.buttons.play);smoke_stage=31
+    elseif smoke_stage==31 and not R.on_island and R.overlay==R.OV_NONE then
+        if R.g.level ~= 1 then error("smoke: level two did not start") end
         smoke_move.resume_game=R.g;smoke_move.resume_moves=R.g.moves
         app.inject_click(vec2(40,38));smoke_stage=32
     elseif smoke_stage==32 then
@@ -194,10 +180,7 @@ function R.smoke()
     elseif smoke_stage==34 and R.overlay==R.OV_NONE then
         assert(not R.on_island and R.g==smoke_move.resume_game and R.g.moves==smoke_move.resume_moves,
                'background dismissal must resume the same unfinished board')
-        smoke_stage=0
-    elseif smoke_stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
-        if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay -> no island escape -> pause/background resume -> replay resources -> level 2")
+        print("smoke test passed: guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> level 2 from Play -> no island escape -> pause/background resume")
         app.quit()
     end
 end

@@ -69,8 +69,8 @@ bakes from `engine/art/board-tiles/tiles.json`.
 [Asset catalogue](docs/asset-catalogue.md#lantern-panes).
 
 The market keeps Relic Rush's bottom controls in its own skin: Build (the
-shop) in the left corner, Play in the right and the winter wishes medallion
-between them. A placement shows Cancel and Confirm beside the building. Snow
+shop) on the left, a large Play in the middle showing the number of the next
+wish, and Settings on the right. A placement shows Cancel and Confirm beside the building. Snow
 falls over the village and moves with it when you pan. Dialogue stands the
 speaker (and listener) on a full-width bubble in the middle of the screen.
 
@@ -88,7 +88,7 @@ banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).
 
 Confirmed placement spends Gold, Supplies and Food from that wallet.
-If a stall is beyond the current balance, replay any completed wish to
+If a stall is beyond the current balance, play the next wish to
 earn more. The [first 20 wishes](docs/resource-prototype.md) compare both
 Cradle of Rome editions and record prices, unlocks and a measured payout
 for every board in the prototype.
@@ -113,7 +113,7 @@ at once.
 The game is the same as Relic Rush with other data and art
 ([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)): every word of the
 shared screens is in [`lua/game_config.lua`](lua/game_config.lua), and the flow, dialogs,
-shop, level list, effects and debug entry points are the engine's
+shop, effects and debug entry points are the engine's
 (`engine/lua/match3/game.lua`). `lua/board.lua` and `lua/screens.lua` paint only
 the market's own art: cells, treats, the results card and guide icons.
 

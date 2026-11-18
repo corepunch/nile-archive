@@ -2,7 +2,7 @@
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
 -- --level, --city, --epoch, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
--- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
+-- --catalogue, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces.
 -- --floor-reel oil plays three swaps that clear tablets on the chosen campaign level.
@@ -44,7 +44,7 @@ function D.bind(R, W)
     R.island_with = island_with
 
     -- --talk-through N moves the dialogue on every N frames, to film it;
-    -- --scroll-review drags the open shop or level list.
+    -- --scroll-review drags the open shop.
     local talk_frames, scroll_frames, dive_frames = 0, 0, 0
     local floor_reel = app.arg("floor-reel")
     local floor_frames, floor_turn = 0, 0
@@ -108,16 +108,14 @@ function D.bind(R, W)
         end
         if app.arg("scroll-review") then
             scroll_frames = scroll_frames + 1
-            local form = app.arg("catalogue") and R.catalogue_form or R.expedition_form
-            local id = app.arg("catalogue") and "stock" or "levels"
-            local box = form.boxes[id]
+            local box = R.catalogue_form.boxes.stock
             if box then
                 local start = vec2(box:center().x, box:max().y - 24)
                 if scroll_frames == 10 then app.inject_press(start)
                 elseif scroll_frames >= 12 and scroll_frames <= 21 then app.inject_move(start - vec2(0, (scroll_frames - 11) * 24))
                 elseif scroll_frames == 22 then app.inject_release(start - vec2(0, 240))
                 elseif scroll_frames == 30 then
-                    assert(R.on_island and form.nodes[id].scroll_state.offset > 0, "a list drag must scroll without activating an entry")
+                    assert(R.on_island and R.catalogue_form.nodes.stock.scroll_state.offset > 0, "a list drag must scroll without activating an entry")
                 end
             end
         end
@@ -303,11 +301,6 @@ function D.bind(R, W)
         if app.arg("catalogue") then
             island_with(4); R.on_island = true
             R.open_catalogue(app.arg("catalogue"), tonumber(app.arg("catalogue-page")) or 1); R.toast_time = 0
-        end
-        if app.arg("expeditions") then
-            island_with(4); R.on_island = true; R.g.won = true
-            if app.arg("resume-expedition") then R.g = rules.game_start(1, 123478); R.g.moves = 12 end
-            R.open_expeditions(tonumber(app.arg("expedition-page"))); R.toast_time = 0
         end
         if app.arg("replay-victory") then
             island_with(4); R.g = rules.game_start(1, 123478); R.g.won = true; R.g.score = 5860; R.g.moves = 12

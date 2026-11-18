@@ -16,7 +16,7 @@ out=ROOT/"games/relic-rush/docs/review/expedition-header"
 out.mkdir(parents=True,exist_ok=True)
 cases={"first":[],"late":["--level","7"],"pause":["--dialog","pause"],
        "guide":["--dialog","guide"],"island":["--city","3"],
-       "shop":["--catalogue","bush"],"browser":["--expeditions"],
+       "shop":["--catalogue","bush"],
        "details":["--card","1"],"zone":["--city","3","--zone","1"]}
 with tempfile.TemporaryDirectory(prefix="relic-header-") as directory:
     scripts=Path(directory)

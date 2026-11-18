@@ -176,8 +176,7 @@
     ],
     "roles": [
       "navigation_build",
-      "navigation_play",
-      "navigation_levels"
+      "navigation_play"
     ]
   },
   "additional_board_elements": {

@@ -278,7 +278,7 @@ Reproduce and inspect both contexts at both phone sizes with
 `python3 tests/fixtures/pause-actions/capture.py`; reviewed captures and exact
 commands are in the [pause menu review](review/pause-actions/README.md).
 The game's `--smoke` run exercises Restart, Quit to Island, hidden island actions,
-resuming through the expedition browser, and unchanged banked rewards.
+resuming through Play, and unchanged banked rewards.
 
 ## Piece kinds and optional packs
 
@@ -893,10 +893,12 @@ The larger Buildings and Play actions reuse the existing jade button skin in all
 
 ## Archived island image actions and prominent resources
 
-The **bottom of the town screen** now has Build (left), a large Play (center),
-and Levels (right). Build and Levels have equal 88×88 slots; Play has a 144×144
-slot. The shared `town` form centers the controls and routes Levels to the
-existing expedition / winter-wishes level-selection action. Game boards and
+The **bottom of the town screen** has Build (left), a large Play (center)
+and Settings (right). Build and Settings have equal slots; Play is larger and
+carries the number of the level it starts as its caption (the skin's `cream`
+figure style, set on the `navigation_play` variant). There is no level list:
+the `navigation_levels` role and its button were removed. Its `action-levels`
+frame is still packed in the pieces atlas, unused. Game boards and
 other menus keep their existing controls.
 
 The replacement artwork is deliberately simple: one hammer, one Play triangle,
@@ -922,7 +924,7 @@ far from the screen edge as Build and Levels are from the sides.
 |---|---|
 | `navigation_build` | `build-normal`, `build-hover`, `build-pressed`, `build-selected`, `build-disabled` |
 | `navigation_play` | `play-normal`, `play-hover`, `play-pressed`, `play-selected`, `play-disabled` |
-| `navigation_levels` | `levels-normal`, `levels-hover`, `levels-pressed`, `levels-selected`, `levels-disabled` |
+| retired with the level list (archived art, no role) | `levels-normal`, `levels-hover`, `levels-pressed`, `levels-selected`, `levels-disabled` |
 
 Reproduce: `python3 games/relic-rush/tools/prepare_hud.py --navigation-only`;
 append `--check` to verify exact exported pixels. Runtime inventory and asset

@@ -20,7 +20,7 @@ end
 
 -- The two match-3 cities share the same view templates. Game code supplies
 -- localized copy, skin colors, and records with stable keys via set_items.
-E.CATALOGUE_ROW, E.CATALOGUE_SLIM, E.EXPEDITION_ROW = 84, 56, 62
+E.CATALOGUE_ROW, E.CATALOGUE_SLIM = 84, 56
 
 -- The subtitle value also owns its row's visibility. Hidden rows take no gap.
 local function header_title(title)
@@ -95,21 +95,6 @@ function E.catalogue_form(title, close, paint_row)
             return {kind='overlay',height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,children={
                 {kind='custom',paint=function(box) paint_row(box, record) end},
                 {kind='button',id='pick',text='',flat=true,enabled=record.available},
-            }}
-        end},
-        {kind='button',id='close',text=close,height=42,em=21},
-    }}
-end
-
--- One level per row: the whole row is the button (id 'play'); paint_level
--- draws its number, name, note and action.
-function E.expedition_form(title, close, paint_level)
-    return ui.form{kind='column',panel=true,padding={14,12,14,14},gap=8,children={
-        E.popup_header(title),
-        {kind='list',id='levels',scroll=true,grow=1,gap=6,item=function(e)
-            return {kind='overlay',height=E.EXPEDITION_ROW,children={
-                {kind='custom',paint=function(box) paint_level(box, e) end},
-                {kind='button',id='play',text='',flat=true,enabled=e.available},
             }}
         end},
         {kind='button',id='close',text=close,height=42,em=21},

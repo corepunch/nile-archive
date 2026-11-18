@@ -68,8 +68,11 @@ function B.paint(box, image, state, alpha)
     end
 end
 
-function B.navigation(name)
+-- `caption` adds the control's caption keys (text, em, text_align, text_fit)
+-- for a button that also shows a figure, as Play shows its level.
+function B.navigation(name, caption)
     local spec = {}
+    for key, value in pairs(caption or {}) do spec[key] = value end
     for state in pairs(faces) do
         spec[state] = {offset={0, 0}, layers={{paint=function(_, _, _, skin, out, alpha)
             B.paint(out, skin.images["action-" .. name], state, alpha)

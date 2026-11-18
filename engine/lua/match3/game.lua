@@ -2,7 +2,7 @@
 -- Relic Rush and Christmas Market (`require("match3.game")`): progress and
 -- saving, the level flow, the frame, the paint helpers and every
 -- dialog (pause and its Restart confirmation, failed, region card, building
--- card, finale), the build shop, the level list, the town hooks, story
+-- card, finale), the build shop, the town hooks, story
 -- delivery, the journey's bookkeeping and the debug entry points.
 --
 -- A game is data: words in lua/game_config.lua (merged over DEFAULTS below), its
@@ -39,7 +39,7 @@ G.DEFAULTS = {
         reward_replay = "Replay gold collected. Choose something in the shop.",
         relocate = "Some buildings need a new spot. Hold one to move it.",
         all_open = "The whole town is open.",
-        quit = "Your board is saved. Tap LEVEL %d or the level list to continue.",
+        quit = "Your board is saved. Tap Play to continue level %d.",
     },
     capsules = {
         notes = {"", "Gold buys buildings.", ""},
@@ -53,7 +53,7 @@ G.DEFAULTS = {
             open = "OPEN THIS AREA", wait = "KEEP EXPLORING", close = "CLOSE"},
     finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
-            gets = "YOU GET", price = "PRICE",
+            gets = "YOU GET", price = "PRICE", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
@@ -62,12 +62,6 @@ G.DEFAULTS = {
         build = "BUILD", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
         cleared = "CLEAR %d LEVELS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
         row = "%d x %d tiles  ·  Owned %d",
-    },
-    expeditions = {
-        title = "Levels", close = "BACK TO TOWN",
-        locked = "LOCKED", resume = "RESUME", replay = "REPLAY", new = "NEW LEVEL", earlier = "COMPLETE EARLIER LEVELS",
-        resume_note = "Continue the unfinished board. Rewards come with a win.",
-        replay_note = "Gold only.", building_note = "First clear: building funded.", story_note = "First clear: the next scene.",
     },
     debug = {victory = 1, catalogue_card = 10, narrator = ""},
 }
@@ -107,7 +101,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_EXPEDITIONS = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -713,7 +707,7 @@ function G.bind(R, over)
         local subtitle = quest and W.card.quest_subtitle:format(w.name, island.ladder_position[i])
         match3.set_popup_header(wonder_form, quest and quest.title or w.name, subtitle)
         local ok, message = wonder_form:push{sprite=w.sprite, about=quest and quest.request or journey.building_about(i, R.prog.level, w.about),
-            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or quest_funding and W.expeditions.title or W.card.back}
+            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or quest_funding and W.card.play or W.card.back}
         assert(ok, message)
         local show_price = quest ~= nil or not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
@@ -744,7 +738,7 @@ function G.bind(R, over)
     end, handle=function(event)
         local action = wonder_action
         if event.id == "action" and action then R.island_begin(action.kind, true, action.item)
-        elseif event.id == "action" and quest_funding then R.open_expeditions()
+        elseif event.id == "action" and quest_funding then R.overlay = R.OV_NONE; R.play_next()
         elseif event.id == "shop" then R.open_catalogue("all")
         else R.overlay = R.OV_NONE end
     end})
@@ -834,7 +828,6 @@ function G.bind(R, over)
         end
         if R.overlay == R.OV_NONE then return end
         if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
-        if R.overlay == R.OV_EXPEDITIONS then R.draw_expeditions(dt); return end
         if R.overlay == R.OV_STORY_CHOICE then R.draw_story_choice(dt); return end
         local d = R.dialog
         d.n = 0
@@ -888,7 +881,7 @@ function G.bind(R, over)
         R.rrect(box:offset(vec2(0, 2)), 13, rgba(201, 164, 100))
         R.rrect(box, 13, face)
     end
-    local ROW_FACE, ROW_DIM, ROW_CURRENT = rgba(255, 246, 214), rgba(243, 229, 192), rgba(255, 228, 150)
+    local ROW_FACE, ROW_DIM = rgba(255, 246, 214), rgba(243, 229, 192)
     -- The row's action in the skin's own button, so each game keeps its colours.
     local function action_pill(box, label, on)
         skin:paint("button", box, {disabled = not on})
@@ -1004,69 +997,6 @@ function G.bind(R, over)
         end
     end
 
-    -- Repeatable earning and the one-time story track share one level list.
-    local E = W.expeditions
-    local levels = ui.modals(skin)
-    local function paint_level(box, e)
-        local current, locked = e.state == "current", e.state == "locked"
-        row_card(box, current and ROW_CURRENT or locked and ROW_DIM or ROW_FACE)
-        local c = vec2(box.x + 30, box:center().y)
-        gfx.circle(c, 19, rgba(77, 58, 31))
-        gfx.circle(c, 17, current and rgba(184, 60, 60) or locked and rgba(140, 150, 136) or rgba(44, 108, 84))
-        R.say(tostring(e.number), rect.centered(c, size2(34, 24)), 17, PAL_CREAM)
-        local right = rect(box.x + box.w - ACTION_W - 14, box.y + 6, ACTION_W + 8, 25)
-        R.say_left(e.name, rect(box.x + 58, box.y + 7, right.x - box.x - 62, 26), 18, locked and PAL_CREAM or PAL_GOLD)
-        R.say_left(e.note, rect(box.x + 58, box.y + 36, box.w - 66, 18), 12, PAL_CREAM)
-        if e.available or current then action_pill(right, e.action, e.available)
-        else
-            R.picture_fit(R.shop_locked_art, rect(right.x, right.y + 1, 26, 26), 255)
-            R.say_left(E.locked, rect(right.x + 30, right.y + 1, right.w - 30, 26), 13, PAL_CREAM)
-        end
-    end
-    local expedition_form = match3.expedition_form(E.title, E.close, paint_level)
-    R.expedition_form = expedition_form
-
-    local function refresh_levels()
-        local entries = {}
-        for i = 0, LEVELS - 1 do
-            local done = i < R.prog.level
-            local current = i == R.prog.level
-            local available = done or current
-            local active = R.g and R.g.level == i and not R.g.won and not R.g.lost
-            entries[#entries + 1] = {id=tostring(i), level=i, number=i + 1, name=rules.levels[i + 1].name, available=available,
-                state=done and "done" or current and "current" or "locked", resume=active and available,
-                action=active and available and E.resume or done and E.replay or current and E.new or E.earlier,
-                note=active and available and E.resume_note or done and E.replay_note or
-                    (journey.wonder_at(i + 1) and E.building_note or E.story_note)}
-        end
-        assert(expedition_form:set_items("levels", entries))
-    end
-
-    -- Opens near the current level (or a review page of three).
-    function R.open_expeditions(review_page)
-        refresh_levels()
-        -- The current level opens with the last two clears above it.
-        local level = review_page and (math.floor(review_page) - 1) * 3 or math.min(R.prog.level, LEVELS - 1) - 2
-        expedition_form:scroll_to("levels", tostring(num.clampi(level, 0, LEVELS - 1)))
-        if levels:active() then levels:close() end
-        assert(levels:open("expeditions", expedition_form, {}, MODAL))
-        R.overlay = R.OV_EXPEDITIONS
-    end
-
-    function R.draw_expeditions(dt)
-        local ev = levels:draw(dt, {reduced_motion=R.reduced_motion})
-        if not ev then return end
-        if ev.id == "close" or ev.kind == "cancel" then levels:close(); R.overlay = R.OV_NONE
-        elseif ev.source == "levels" then
-            local entry = expedition_form:get_item("levels", ev.key)
-            if entry and entry.available then
-                levels:close()
-                R.overlay = R.OV_NONE   -- a refused start must not leave the list's overlay behind
-                R.play_level(entry.level)
-            end
-        end
-    end
-
     ------------------------------------------------------------- town
 
     local town = require("town")
@@ -1103,6 +1033,11 @@ function G.bind(R, over)
         R.open_catalogue(filter)
     end
 
+    -- Play starts the next level, or resumes it. With every level cleared it
+    -- replays the last one, so the town keeps an income.
+    local function next_level() return math.min(R.prog.level, LEVELS - 1) end
+    function R.play_next() return R.play_level(next_level()) end
+
     function R.town_setup()
         R.town = town.new(R.island, require("town_config"), {
             skin = skin,
@@ -1110,13 +1045,10 @@ function G.bind(R, over)
             notice = R.notice,
             capsules = R.header_capsules,
             pause = function() R.overlay = R.OV_PAUSE end,
-            middle = R.open_expeditions,
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function() open_building(owes_building() and "wonder" or "building") end,
-            play = function()
-                if R.prog.level >= LEVELS then R.open_expeditions()
-                else R.play_level(R.prog.level) end
-            end,
+            play = R.play_next,
+            play_label = function() return tostring(next_level() + 1) end,
             about = R.building_words,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
@@ -1560,7 +1492,7 @@ function G.app(R)
                                       edge_to_edge = true, skip = "SKIP"})
         local art = require("art")
         local board_skin = art.skin()
-        for _, action in ipairs{"action-build", "action-play", "action-levels", "action-pause"} do
+        for _, action in ipairs{"action-build", "action-play", "action-pause"} do
             R.skin.images[action] = assert(board_skin[action], "missing campaign icon: " .. action)
         end
         R.backdrop = board_skin.background

@@ -598,8 +598,7 @@ for integration checks.
 
 Relic Rush and Christmas Market share `match3.catalogue_form` (one building per
 row, the whole row a flat `pick` button over its painted art, name, price and
-action; a record marked `slim` takes a short row) and `match3.expedition_form` (one
-row per level, the whole row the `play` button). Both open as full-screen sheets
+action; a record marked `slim` takes a short row). It opens as a full-screen sheet
 under the wallet row: a modal's `bounds` option may be a function of the screen,
 called every frame, and a `list` with `grow` takes the height the sheet leaves.
 A price the wallet cannot cover is drawn in the skin's `short` text style, and
@@ -612,11 +611,13 @@ The engine animation clock supplies one timeline to shared tweens, scroll decele
 
 `town_config.lua` can opt into `bottom.layout = "play-primary"`: a centered large
 `navigation_play` button flanked by equally sized `navigation_build` and
-`navigation_levels` buttons. `bottom.build` and `bottom.secondary_height` size
-both secondary controls; `bottom.play` and `bottom.height` size Play. The Levels
-button dispatches the existing `middle()` hook and exposes both `buttons.levels`
-and the compatible `buttons.middle` center for input tests. Other town layouts
-retain their existing middle control. All three roles use authored skin states.
+`navigation_pause` buttons. `bottom.build` and `bottom.secondary_height` size
+both secondary controls; `bottom.play` and `bottom.height` size Play. Play's
+caption comes from the `play_label()` hook: the match-3 games write the number
+of the level it starts, and the skin's `navigation_play` variant places it
+(`text`, `em`, `text_align`, `text_inset`). There is no level list; this layout
+has no middle control. Other town layouts retain theirs. All three roles use
+authored skin states.
 In this layout `bottom.bottom` is measured from the physical display edge
 (`app.bleed()`, which includes the home-indicator inset), and the row draws
 with `gfx.bleed(true)`. That lets Play's gap below match Build's gap beside it

@@ -19,7 +19,7 @@ add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 ## Island navigation and resources
 
-The town actions show a cottage for Buildings, a green triangle for Play, a folded map for Expeditions and a blue gear for Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are full-screen sheets under the wallet row: continuous measured scrolling lists with bounded inertia, one entry per row. A building's row shows its art, what it unlocks, its whole price in Coins, Supplies and Food (an amount the wallet cannot cover is red) and a BUILD button or the reason it waits; restored buildings keep their art on a shorter ticked row. An expedition's row shows its number, name, what a win brings and PLAY, REPLAY or RESUME. During epoch one, Buildings opens the current quest card with a short narrated reason for the building in flat ink, then its price and what it brings side by side as icons with figures. A new piece shows the resource and amount each match banks, and a bonus gem shows its icon. Its shop link opens the full catalogue and category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The two lists share templates with Christmas Market and lay out only the rows in view.
+The town actions show a cottage for Buildings, a green triangle for Play and a blue gear for Settings. Play carries the number of the expedition it starts or resumes; there is no expedition list, and once all 100 are cleared it replays the last one. Resource icons protrude beyond their counter bars for readability. The building catalogue is a full-screen sheet under the wallet row: a continuous measured scrolling list with bounded inertia, one entry per row. A building's row shows its art, what it unlocks, its whole price in Coins, Supplies and Food (an amount the wallet cannot cover is red) and a BUILD button or the reason it waits; restored buildings keep their art on a shorter ticked row. During epoch one, Buildings opens the current quest card with a short narrated reason for the building in flat ink, then its price and what it brings side by side as icons with figures. A new piece shows the resource and amount each match banks, and a bonus gem shows its icon. Its shop link opens the full catalogue and category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The list shares its template with Christmas Market and lays out only the rows in view.
 
 The top wallet shows Coins, Supplies and Food on both screens. Matches
 preview in the wallet during an expedition and bank after a successful clear.
@@ -175,7 +175,7 @@ In **A Light Below** (levels 1–10), the crew lands, restores the water supply 
 
 In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard, Lodge and Archive to use. Ines’s note identifies the signaler, and her signed plan gives the crew a way to repair the quay wall. Chapter 3 carries the repair and ownership dispute to the finale. The signal plate and Ines’s reply on board 30 pay off the three flashes at the restored steps.
 
-A first clear advances the expedition counter. Successful expeditions and replays bank their matched resources. Construction, currency and story progress persist across saves.
+A first clear advances the expedition counter. Every won expedition banks its matched resources. Construction, currency and story progress persist across saves.
 
 `lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/lua/match3/game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
 
@@ -194,7 +194,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 1. Start directly in the first match-4 level; there is no title-screen or friend-road detour.
 2. Clear all blue tablets within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Return to the island. At a restoration milestone, check the price and replay an expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. You can finish all 100 with an empty island. If you build later, the island story picks up where you left it.
+4. Return to the island. At a restoration milestone, check the price and play the next expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. You can finish all 100 with an empty island. If you build later, the island story picks up where you left it.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. See how the crew uses what you built, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
 
@@ -363,11 +363,11 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 
 Relic Rush and Christmas Market are one game with two skins
 ([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)). The flow around the
-board, every dialog, the shop, the level list, the town hooks, story delivery,
+board, every dialog, the shop, the town hooks, story delivery,
 effects and the debug entry points are the engine's (`engine/lua/match3/game.lua`,
 `engine/lua/match3/vfx.lua`, `engine/lua/match3/debug.lua`); this folder is data and art.
 
-- `lua/game_config.lua`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop, level list), the piece packs and the dialogue scale.
+- `lua/game_config.lua`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop), the piece packs and the dialogue scale.
 - `lua/town_config.lua`: the town screen's layout and notices.
 - `lua/state.lua`: the shared state table (`R`) from the engine.
 - `lua/art.lua`: named authored states, control-state selection and the in-game catalogue.

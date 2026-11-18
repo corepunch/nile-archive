@@ -111,6 +111,12 @@ while drawing what sits under the dialog.
 ## Drawing
 
 - **Textures** load through `stb_image` (PNG/JPG/BMP) and are drawn with a tint.
+- **Batches** merge consecutive triangles that use the same texture and blend
+  mode, including sprites from different regions of the same atlas. The
+  renderer keeps submission order for transparent layers. Stripe phase, width
+  and ink travel with each sprite, so a match-3 piece and its shadow taps can
+  share one draw. Clip and mask changes, insets, backdrop capture, texture
+  updates and frame presentation submit any pending geometry first.
 - **Shapes** (`draw_round_rect_grad`, `draw_ring`, `draw_line`, `draw_glow`,
   `draw_shadow`, `draw_poly`) are triangle meshes sent to the shared triangle renderer.
   Each outline gets a one-device-pixel ring fading to transparent, which gives
@@ -306,7 +312,7 @@ game's `lua/town_config.lua`. See [Shared town screen](TOWN.md).
 
 Relic Rush and Christmas Market share the whole game around the board:
 `require("match3.game")` (`engine/lua/match3/game.lua`) owns progress and saving,
-the level flow, every dialog, the shop, the level list, the town
+the level flow, every dialog, the shop, the town
 hooks and story delivery; `match3.vfx` the effects and `match3.debug` the
 screenshot entry points. Each game's words are `lua/game_config.lua`, read while
 `main.lua` loads (the launcher sets the data root before it runs the script).

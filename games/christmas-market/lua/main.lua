@@ -2,7 +2,7 @@
 --
 -- The game is data: lua/game_config.lua (words), lua/town_config.lua (the town), the
 -- campaign, story and building tables, skin.lua, art.lua and the PNGs. The
--- flow around the board, every dialog, the shop, the level list, saving and
+-- flow around the board, every dialog, the shop, saving and
 -- the debug entry points are the engine's (engine/lua/match3/game.lua); board.lua
 -- and screens.lua paint the game's own art. See docs/PORTRAIT_GAMES.md.
 local R = require("state")

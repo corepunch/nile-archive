@@ -9,7 +9,7 @@ A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 -- Authored element states shared by live boards, goals and the guide.
 A.elements = elements_view.assets
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
-A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_levels","navigation_pause"}, states=A.states}
+A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_pause"}, states=A.states}
 A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
 -- Shared engine land fog; painted directional buildings await Blender renders.
 A.island_layers = {"land-fog"}
@@ -50,7 +50,7 @@ function A.draw_hud_catalogue(R)
     R.say_at("goal met",vec2(273,502),14,R.PAL_CREAM,90)
     local portrait = R.hud_art.character
     if portrait then gfx.image(portrait,rect(318,398,124,125):fit(texture.size(portrait)),color.WHITE) end
-    for row,kind in ipairs{"build","play","levels"} do
+    for row,kind in ipairs{"build","play","pause"} do
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
             R.skin:paint_button(rect(28+(i-1)*89,540+(row-1)*88,72,72),st,{role="navigation_"..kind})

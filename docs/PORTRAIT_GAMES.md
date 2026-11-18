@@ -10,7 +10,7 @@ tables, and PNGs. Behaviour belongs to the engine:
 | `engine/lua/match3.lua` (`match3`) | Rules, the board layout, HUD, tools, swaps, waves, the guide and pause forms |
 | `engine/lua/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
 | `engine/lua/town.lua` (`town`) | The town screen (`lua/town_config.lua`) |
-| `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
+| `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
 | `engine/lua/match3/vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
 | `engine/lua/match3/debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--epoch`, `--dialog`, ...) |
 
@@ -92,9 +92,9 @@ Fixed in the engine, so both games now behave the same way:
 
 | Behaviour | Was in | Missing from | Now |
 |---|---|---|---|
-| Popups open and close at once, with no entrance or exit tween (a stalled clock on device left Pause's dim with no panel, commit 7122d63); modal backdrops snap in (`snap_backdrop`), so the shop and level list are dimmed on their first frame | Relic Rush | Christmas Market (tweened every dialog; its lists showed an undimmed first frame) | Both, `match3.game` dialogs and lists |
-| Pause shows Restart (asks first) and Quit, which keeps the unfinished board for the level list | Relic Rush | Christmas Market (the smoke test even asserted they were absent) | Both; Christmas Market's skin gains an evergreen `secondary` button |
-| The level list opens scrolled to the current board | Christmas Market | Relic Rush (always opened at level one) | Both |
+| Popups open and close at once, with no entrance or exit tween (a stalled clock on device left Pause's dim with no panel, commit 7122d63); modal backdrops snap in (`snap_backdrop`), so the shop is dimmed on its first frame | Relic Rush | Christmas Market (tweened every dialog; its lists showed an undimmed first frame) | Both, `match3.game` dialogs and lists |
+| Pause shows Restart (asks first) and Quit, which keeps the unfinished board for Play to resume | Relic Rush | Christmas Market (the smoke test even asserted they were absent) | Both; Christmas Market's skin gains an evergreen `secondary` button |
+| Play shows the number of the level it starts; there is no level list, so a cleared level is not replayed (the last one is, once the campaign is done) | New | Both had a Levels button and list | Both |
 | Choosing a level clears the overlay before `play_level`, so a refused start does not leave a dead overlay state | Christmas Market | Relic Rush | Both |
 | The building card shows the story's current line for the building (`journey.building_about`), as the tap bubble does | Christmas Market | Relic Rush (showed the static catalogue line) | Both |
 | Per-level backdrop scene (`level.background`) | Relic Rush | Christmas Market (hard-coded "level 5 and on") | Both read `level.background` with the same fallback |
@@ -125,7 +125,7 @@ Kept per game, as data or painting code:
 
 ### Content and data
 
-- Words: every notice, dialog title, button label, catalogue and level-list
+- Words: every notice, dialog title, button label and catalogue
   line, pause title, failed, region and finale text (now `lua/game_config.lua`).
 - `campaign.lua`, `story_content.lua`, `narrative.lua` cast, `journey.lua`
   recap/regions/building lines, `buildings.lua`, `building_sprites.lua`,

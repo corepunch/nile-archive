@@ -21,8 +21,6 @@ Reproduce, from the repository root:
 ```sh
 ./build/christmas-market --headless --mute --fresh --size 480x900 --level 4 --dialog pause --shot out.png
 ./build/christmas-market --headless --mute --fresh --size 480x900 --level 4 --dialog confirm --shot out.png
-./build/christmas-market --headless --mute --fresh --size 480x900 --expeditions --shot out.png
-./build/relic-rush --headless --mute --fresh --size 480x900 --expeditions --shot out.png
 ./build/relic-rush --headless --mute --fresh --size 480x900 --level 4 --dialog failed --empty-lives --shot out.png
 ./build/relic-rush --headless --mute --fresh --size 480x900 --showcase --shot out.png
 ```

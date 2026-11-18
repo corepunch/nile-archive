@@ -66,11 +66,7 @@ game.frame=function(dt)
     elseif stage==15 then background()
     elseif stage==16 then
         assert(R.overlay==R.OV_NONE,"catalogue background closes through engine stack")
-        R.open_expeditions()
-    elseif stage==17 then background()
-    elseif stage==18 then
-        assert(R.overlay==R.OV_NONE,"expedition browser background closes through engine stack")
-        R.on_island,R.overlay=false,R.OV_RESULT
+        R.on_island,R.overlay=false,R.OV_RESULT;stage=18
     elseif stage==19 then background()
     elseif stage==20 then
         assert(R.overlay==R.OV_RESULT,"required result cannot be dismissed")

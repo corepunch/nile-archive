@@ -7,7 +7,7 @@
 -- Layout and wording come from a JSON file in the game's data root, merged
 -- over the defaults below, so every game lays the town out the same way.
 -- Behaviour the table cannot express arrives as hooks; the look is the game's
--- ui.skin (roles navigation_build, navigation_play, navigation_levels, placement_cancel,
+-- ui.skin (roles navigation_build, navigation_play, placement_cancel,
 -- placement_confirm and the resource role named in header.role).
 --
 --   local town = require("town")
@@ -22,6 +22,7 @@
 --                             reserve=n, decorate=fn(box)}, ...}
 --   menu(bounds)            draw and handle an optional header menu
 --   build(), play(), middle(), pause()   bottom actions
+--   play_label()            the caption on Play (the next level's number)
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
 --   about(item)             the bubble's words for a placed building (0-based item)
@@ -137,7 +138,6 @@ function T.new(c, config, hooks)
             {kind = "spacer", grow = 1},
             {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
             {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
-            {kind = "button", id = "levels", text = "", role = "navigation_levels", width = b.build, height = b.secondary_height},
             {kind = "button", id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height},
             {kind = "spacer", grow = 1},
         }}
@@ -147,7 +147,7 @@ function T.new(c, config, hooks)
             {kind = "spacer", grow = 1},
             {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
             {kind = "spacer", grow = 1},
-            {kind = "button", id = "levels", text = "", role = "navigation_levels", width = b.build, height = b.secondary_height},
+            {kind = "spacer", width = b.build},   -- balances Build, so Play stays centred
         }}
     end
     v.placement_form = ui.form{kind = "row", children = {
@@ -172,15 +172,14 @@ function View:layout()
         or vec2(row:center().x, s:max().y - m.from_bottom)
     if b.layout == "play-primary" then
         if not b.pause then
-            -- The three-button variant extends to the physical edge.
+            -- The variant without Pause extends to the physical edge.
             row = rect(row.x, app.bleed():max().y - b.bottom - b.height, row.w, b.height)
         end
         self.bottom_row = row
         local boxes = self.navigation:layout(row, self.hooks.skin)
         self.buttons.build = boxes.build:center()
         self.buttons.play = boxes.play:center()
-        self.buttons.levels = boxes.levels:center()
-        self.buttons.middle = self.buttons.levels
+        self.buttons.middle = nil   -- this layout has no middle control
         self.buttons.pause = boxes.pause and boxes.pause:center()
     end
     self:header_layout({})
@@ -415,14 +414,15 @@ function View:bottom()
     elseif self.cfg.bottom.layout ~= "play-primary" and h.draw_middle then h.draw_middle(self.buttons.middle) end
     local primary = self.cfg.bottom.layout == "play-primary"
     if primary then gfx.bleed(true) end
+    -- Play's caption is the game's: the number of the level it starts.
+    if h.play_label then self.navigation:set("play", h.play_label()) end
     local event = self.navigation:draw(self.bottom_row, skin)
     if primary then gfx.bleed(false) end
-    if event and (event.id == "build" or event.id == "play" or event.id == "levels" or event.id == "pause") then
+    if event and (event.id == "build" or event.id == "play" or event.id == "pause") then
         haptic.play(haptic.TICK, .6)
     end
     if event and event.id == "build" and h.build then h.build()
     elseif event and event.id == "play" and h.play then h.play()
-    elseif event and event.id == "levels" and h.middle then h.middle()
     elseif event and event.id == "pause" and h.pause then h.pause() end
 end
 

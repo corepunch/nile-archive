@@ -42,7 +42,7 @@ A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
 A.wallet_icons={coins="coin", supplies="wallet-supplies", food="wallet-food"}
 A.result_icons = {"discovery-star", "next-clue"}
-A.navigation={source="../../art/match3-buttons/manifest.json",roles={"navigation_build","navigation_play", "navigation_levels","navigation_pause"},states=A.states}
+A.navigation={source="../../art/match3-buttons/manifest.json",roles={"navigation_build","navigation_play", "navigation_pause"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
 
 function A.use_campaign_pieces()
@@ -81,7 +81,7 @@ function A.draw_hud_catalogue(R)
     gfx.image(R.hud_art.complete,rect(148,397,46,46),color.WHITE)
     R.say_at("score",vec2(79,464),14,R.PAL_CREAM,90)
     R.say_at("complete",vec2(171,464),14,R.PAL_CREAM,90)
-    for row,kind in ipairs{"build","play","levels"} do
+    for row,kind in ipairs{"build","play","pause"} do
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
             R.skin:paint_button(rect(28+(i-1)*89,505+(row-1)*94,72,72),st,{role="navigation_"..kind})

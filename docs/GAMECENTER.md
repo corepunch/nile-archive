@@ -136,7 +136,7 @@ A board is only a name, so a game may keep one per level: `gamecenter.submit("le
 Connect under `<bundle id>.level_07` (Game Center allows 500 per app, and
 boards can be grouped into a leaderboard set), and a board nobody has played
 looks empty. Prefer one overall board as the main screen and per-level boards
-reached from the level result or the level list, opened on the Friends tab.
+reached from the level result, opened on the Friends tab.
 
 ## Engine and platform boundary
 

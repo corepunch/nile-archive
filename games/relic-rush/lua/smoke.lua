@@ -1,9 +1,8 @@
 -- smoke.lua — the --smoke run: opens and closes the guide, plays level one
--- through injected clicks, claims the reward (replaying level one while the
--- wallet is short, as a player would), builds the first wonder, runs
+-- through injected clicks, claims the reward, builds the first wonder, runs
 -- the engine's pickup-and-move check, buys and cancels a decoration through
--- the catalogue, replays an expedition for resources, checks that an
--- unfinished board hides the island, and enters level two.
+-- the catalogue, starts level two from Play, checks that an unfinished board
+-- hides the island, and resumes it from Play after Quit.
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
@@ -11,21 +10,13 @@ local island = require("island")
 local stage, frames, wait, partner = -2, 0, 0, -1
 local smoke_sound   -- the sound setting before the smoke run toggles it
 local move             -- the engine's pickup/move check, while it runs
-local shop = {}        -- what the catalogue and replay stages remember
+local shop = {}        -- what the catalogue and resume stages remember
 
 -- Press a list row's button by its stable item key.
 local function press_tile(key)
     local node = R.catalogue_tile(key)
     if node then app.inject_click(R.catalogue_form.boxes[node.id]:center()) end
     return node
-end
-local function press_row(form, key, id)
-    for _, node in pairs(form.nodes) do
-        if node.item_key == key and node.local_id == id then
-            app.inject_click(form.boxes[node.id]:center())
-            return node
-        end
-    end
 end
 
 -- --smoke --campaign: the thirty story expeditions, to the finale, through the real result, Claim,
@@ -161,7 +152,6 @@ function R.smoke()
                 local boxes = R.result_form.boxes
                 assert(boxes.claim.y - (boxes.next_step or boxes.resources):max().y <= 20,
                     "claim follows the last visible result row without a reserved gap")
-                shop.replay_reward = shop.replay and rules.level_reward(R.g,R.wonders,R.prog,R.island) or nil
                 app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); stage = 1
             end
             return
@@ -182,27 +172,12 @@ function R.smoke()
         end
     elseif stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        if shop.replay then
-            for slot = 1, 3 do
-                assert(R.prog.wallet[slot] == shop.replay_wallet[slot] + shop.replay_reward[slot], "replay must pay its matched resources")
-            end
-            assert(R.prog.wallet[4] == 1 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
-                   "replay cannot change discoveries or restoration")
-            app.inject_click(R.town.buttons.play); stage = 5; return
-        end
-        -- A short wallet replays the cleared board for resources, as a player would.
-        local cost, short = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost, false
-        for slot = 1, 3 do short = short or R.prog.wallet[slot] < cost[slot] end
-        if short then
-            shop.topups = (shop.topups or 0) + 1
-            assert(shop.topups <= 4, "smoke: four replays of expedition one still cannot pay for the well and shrub")
-            app.inject_click(R.town.buttons.middle); stage = 60; return
-        end
+        assert(R.town.navigation:get("play") == "2", "smoke: Play names the next expedition")
+        -- The balance tests measure income; this run only needs the flow, so a
+        -- short wallet is topped up to the price of the well and the shrub.
+        local cost = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost
+        for slot = 1, 3 do R.prog.wallet[slot] = math.max(R.prog.wallet[slot], cost[slot]) end
         app.inject_click(R.town.buttons.build); stage = 2   -- CHOOSE A LOCATION
-    elseif stage == 60 and R.overlay == R.OV_EXPEDITIONS then
-        local node = press_row(R.expedition_form, "0", "play")
-        assert(node and node.enabled, "smoke: a cleared expedition can be replayed for resources")
-        shop.skipped = false; stage = 0
     elseif stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         app.inject_click(R.wonder_form.boxes.action:center()); stage = 3
     elseif stage == 3 and R.island.placing >= 0 then
@@ -254,14 +229,10 @@ function R.smoke()
         assert(R.island.moving == 1 and R.island.placing == 37, "details must move the purchased instance")
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 29
     elseif stage == 29 and R.island.placing < 0 then
-        app.inject_click(R.town.buttons.middle); stage = 30
-    elseif stage == 30 and R.overlay == R.OV_EXPEDITIONS then
-        shop.replay_wallet = purse(table.unpack(R.prog.wallet))
-        local node = press_row(R.expedition_form, "0", "play")
-        assert(node and node.enabled, "completed expedition must be replayable")
-        shop.replay = true
-        stage = 31
-    elseif stage == 31 and not R.on_island then
+        shop.wallet = purse(table.unpack(R.prog.wallet))
+        app.inject_click(R.town.buttons.play); stage = 31
+    elseif stage == 31 and not R.on_island and R.overlay == R.OV_NONE then
+        assert(R.g.level == 1, "smoke: Play starts the next expedition")
         shop.resume_game, shop.resume_moves = R.g, R.g.moves
         app.inject_click(vec2(40, 38)); stage = 32
     elseif stage == 32 then
@@ -287,7 +258,7 @@ function R.smoke()
             and boxes.leading:center().y == boxes.cap3:center().y,
             "the board header only shows Moves and resources")
         for i, slot in ipairs{rules.GOLD, rules.SUPPLIES, rules.PROVISIONS} do
-            assert(capsules[i].slot == slot and R.prog.wallet[slot] == shop.replay_wallet[slot]
+            assert(capsules[i].slot == slot and R.prog.wallet[slot] == shop.wallet[slot]
                 and tonumber(capsules[i].value) == R.prog.wallet[slot] + R.g.earnings[slot],
                 "smoke: the shared header previews live match earnings without banking them")
             local box = boxes["cap" .. i]
@@ -312,13 +283,13 @@ function R.smoke()
     elseif stage == 38 and R.overlay == R.OV_CONFIRM and R.dialog_settled() then
         app.inject_click(R.confirm_form.boxes.confirm:center() + vec2(0, R.drop / 2)); stage = 39
     elseif stage == 39 and R.overlay == R.OV_NONE then
-        assert(not R.on_island and R.g ~= shop.resume_game and R.g.level == 0 and R.g.score == 0
+        assert(not R.on_island and R.g ~= shop.resume_game and R.g.level == 1 and R.g.score == 0
                and R.g.moves == rules.level_of(R.g).moves and R.selected < 0 and R.tool < 0
                and R.phase == R.PH_IDLE and R.shake == 0,
                "restart must create a fresh attempt of the same expedition")
         shop.resume_game, shop.resume_moves = R.g, R.g.moves
         app.inject_click(R.board_pause:center()); stage = 40
-    -- Pause > Quit to island keeps the board and pays nothing; the browser resumes it.
+    -- Pause > Quit to island keeps the board and pays nothing; Play resumes it.
     elseif stage == 40 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         app.inject_click(R.pause_form.boxes.quit:center() + vec2(0, R.drop / 2)); stage = 41
     elseif stage == 41 and R.on_island and R.overlay == R.OV_NONE then
@@ -331,15 +302,11 @@ function R.smoke()
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
-        app.inject_click(R.town.buttons.middle); stage = 44
-    elseif stage == 44 and R.overlay == R.OV_EXPEDITIONS then
-        assert(press_row(R.expedition_form, "0", "play"), "the expedition row must offer to continue"); stage = 45
+        assert(R.town.navigation:get("play") == "2", "smoke: Play still names the unfinished expedition")
+        app.inject_click(R.town.buttons.play); stage = 45
     elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and R.g.moves == shop.resume_moves, "returning from island must preserve the suspended attempt")
-        stage = 0
-    elseif stage == 5 and not R.on_island and R.overlay == R.OV_NONE then
-        if R.g.level ~= 1 then error("smoke: level two did not start") end
-        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> replay resources -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> resume expedition -> level 2")
+        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> level 2 from Play -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> resume expedition")
         app.quit()
     end
 end

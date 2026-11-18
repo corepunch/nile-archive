@@ -35,7 +35,7 @@ return {
         reward_story = "Something's happening in the market square.",
         reward_replay = "Resources collected. Visit the build shop.",
         all_open = "The whole market is open.",
-        quit = "Your board is saved. Tap LEVEL %d or Winter wishes to continue.",
+        quit = "Your board is saved. Tap Play to continue wish %d.",
     },
     capsules = {show = {"gold", "food", "supplies"}},
     pause = {
@@ -88,18 +88,6 @@ return {
         poor = "MORE RESOURCES NEEDED",
         reserved = "RESERVED FOR STALLS",
         full = "MARKET IS FULL",
-    },
-    expeditions = {
-        title = "Winter wishes",
-        close = "BACK TO MARKET",
-        resume = "RESUME",
-        replay = "REPLAY",
-        pending = "BUILD FIRST",
-        new = "PLAY",
-        earlier = "COMPLETE EARLIER WISHES",
-        replay_note = "Bank the goods you match when you win.",
-        building_note = "Match goods to pay for the next stall.",
-        story_note = "First clear: a new story scene and matched resources.",
     },
     debug = {victory = 3, catalogue_card = 10, narrator = "noelle"},
 }
