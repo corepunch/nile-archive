@@ -1,27 +1,27 @@
 name: Sunken Courtyard
 tier: tutorial
-teaches: Use the open courtyard to approach the blue tablets from either diagonal.
+teaches: Follow the rim of the sunken courtyard to clear the blue tablets.
 
+x x x x x
+ x x x x
+x . . . x
+ x . . x
 x . . . x
  . . . .
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. p x p .
  . p p .
 . . p . .
  . p p .
 . . . . .
- . p p .
-. . . . .
  . . . .
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- x . . x
 x . . . x
  x . . x
 x x x x x

@@ -8,8 +8,8 @@ boss 50%). The bot orders and spaces the boards; its rates are not human win rat
 | # | Board | Tier | Moves | Median | Fastest | Bot clears |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
 | 1 | The Landing | tutorial | 11 | 6 | 3 | 40/40 |
-| 2 | Temple Steps | tutorial | 18 | 6 | 2 | 40/40 |
-| 3 | Sunken Courtyard | tutorial | 22 | 6 | 2 | 40/40 |
+| 2 | Temple Steps | tutorial | 17 | 7 | 3 | 40/40 |
+| 3 | Sunken Courtyard | tutorial | 24 | 9 | 2 | 40/40 |
 | 4 | Overgrown Terraces | tutorial | 12 | 6 | 2 | 40/40 |
 | 5 | Vault Door | easy | 49 | 15 | 5 | 40/40 |
 | 6 | Vine-Bound Terraces | normal | 19 | 14 | 5 | 40/40 |

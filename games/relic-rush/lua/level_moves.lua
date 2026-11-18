@@ -2,8 +2,8 @@
 -- Do not edit by hand; rerun the tuner after changing a board.
 return {
     [1] = 11,   -- tutorial
-    [2] = 18,   -- tutorial
-    [3] = 22,   -- tutorial
+    [2] = 17,   -- tutorial
+    [3] = 24,   -- tutorial
     [4] = 12,   -- tutorial
     [5] = 49,   -- easy
     [6] = 19,   -- normal

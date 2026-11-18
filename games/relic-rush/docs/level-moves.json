@@ -9,10 +9,10 @@
   "wins": 40
  },
  {
-  "fastest": 2,
+  "fastest": 3,
   "level": 2,
-  "median": 6,
-  "moves": 18,
+  "median": 7,
+  "moves": 17,
   "seeds": 40,
   "tier": "tutorial",
   "wins": 40
@@ -20,8 +20,8 @@
  {
   "fastest": 2,
   "level": 3,
-  "median": 6,
-  "moves": 22,
+  "median": 9,
+  "moves": 24,
   "seeds": 40,
   "tier": "tutorial",
   "wins": 40
