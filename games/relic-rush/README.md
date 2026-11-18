@@ -119,7 +119,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The result card fits its contents. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Score, a row of three resource totals (icon and figure), an available restoration and Collect stack vertically. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
+The result card fits its contents. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Score, a row of three resource totals (icon and figure), one line about the next restoration and Collect stack vertically. That line is what the restoration still needs after this win, as the same icon-and-figure amounts, or its picture under READY TO BUILD once the wallet covers it. The quest title, story sentence and price stay on the building card. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 
@@ -197,7 +197,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
 The first building, the camp, costs 60 Coins. Food and Supplies come from the Well's water buckets and the Workshop's timber, then the Archive's dressed stone. Each confirmed
 restoration unlocks a higher-yield chip or a tool on eligible expeditions.
-The result shows what the next restoration unlocks or what is still needed to afford it. Matches and cascades earn resources. Direct tool hits can clear plaques and start cascades.
+The result shows what the next restoration still needs, or that it is ready to build. Matches and cascades earn resources. Direct tool hits can clear plaques and start cascades.
 
 The Well adds water buckets on level 5. Water buckets earn 3 Food each. The Workshop adds timber bundles on level 8. An arrival message names the building and piece.
 
@@ -290,7 +290,7 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 
 - Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
-- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and any remaining cost of the next restoration.
+- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and, as icon amounts, what the next restoration still needs.
 - Restore buildings to unlock Hammer, Shield, Star and Plus. A later restoration
   upgrades each of the four slots and carries its charge forward. An expedition
   can feature one bonus gem family. Matching six fills one use, and activation
