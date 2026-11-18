@@ -308,7 +308,7 @@ asked for stripes instead of shooting stars on 2026-11-09. No new artwork.
 
 ## Market navigation
 
-The four town glyphs use softly rounded shapes without outlines on the [shared 128 px action icons and enamel faces](../../../art/match3-buttons/README.md).
+The four town glyphs use painted stone, brass and parchment on the [shared 128 px action icons and enamel faces](../../../art/match3-buttons/README.md).
 
 ### Archived painted badges
 

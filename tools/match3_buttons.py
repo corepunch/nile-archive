@@ -22,7 +22,8 @@ def main():
         for col, icon in enumerate(spec["icons"]):
             crop = source.crop(icon["box"])
             crop = crop.crop(crop.getchannel("A").getbbox())
-            crop.thumbnail((spec["fit"], spec["fit"]), Image.Resampling.LANCZOS)
+            fit = icon.get("fit", spec["fit"])
+            crop.thumbnail((fit, fit), Image.Resampling.LANCZOS)
             atlas.paste(crop, (side * col + (side - crop.width) // 2, (side - crop.height) // 2))
     path = ROOT / spec["registered"]
     if args.check:

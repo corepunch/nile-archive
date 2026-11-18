@@ -11,16 +11,14 @@ button from the bottom of the same box.
 
 | Action | Painted icon |
 | --- | --- |
-| Build | Coral roof, cream walls and a single teal doorway |
-| Play | Rounded green triangle with a soft highlight |
-| Levels / Wishes | Cream folded map with one teal landmass and a coral X |
-| Pause | Two softly rounded blue bars |
+| Build | Ivory cottage with clay roof tiles and a blue-green timber door |
+| Play | Faceted emerald triangle in a brass setting |
+| Levels / Wishes | Rolled parchment chart with a red destination mark |
+| Pause | Two sapphire bars with brass end caps |
 
-Both ImageGen passes used the full set. The final master keeps the approved house from the first pass and registers the other three glyphs from the second.
-The [master](actions-source.png), [prompt](prompt.txt) and [registration
-manifest](manifest.json) reproduce the shared [512×128 strip](actions.png).
-Each registered crop is trimmed to its alpha bounds, fitted to 110 px, and centered in
-its own 128×128 frame. The same illustration is used in all five states.
+ImageGen painted the set together using the [campaign resource pieces](../../games/relic-rush/art/registered/campaign-pieces.png) as the material and lighting reference.
+The [master](actions-source.png), [prompt](prompt.txt) and [registration manifest](manifest.json) reproduce the shared [512×128 strip](actions.png).
+Within each 128 px square, Build and Play fit inside 110 px. Levels and Pause fit inside 90 px, leaving at least 19 transparent pixels on each side for clearance inside the circular face. The same illustration is used in all five states.
 Bonus buttons take their image directly from the game's board atlas.
 
 Run `python3 tools/match3_buttons.py` to register the icons or pass `--check`
