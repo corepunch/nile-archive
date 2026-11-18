@@ -4,9 +4,9 @@ return {
     sheets={atlases.pieces, atlases.blockers, atlases.cells, atlases.fx},
     button_centers={
         ["bonus-bomb"]={0.4757180,0.5762849},
-        ["bonus-hammer"]={0.4950052,0.4838808},
+        ["bonus-hammer"]={0.4987818,0.4817098},
         ["bonus-hourglass"]={0.4982855,0.5017298},
-        ["bonus-lightning"]={0.4739382,0.4475542},
+        ["bonus-lightning"]={0.4740730,0.4559854},
         ["bonus-mixer"]={0.4961388,0.4590196},
         ["bonus-plus"]={0.4957312,0.4973252},
         ["bonus-shield"]={0.5032678,0.4744947},

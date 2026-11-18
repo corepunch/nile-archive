@@ -95,6 +95,9 @@ function A.load()
     local own = own_board()
     local function piece(name) return assert(own[name], "missing pieces frame: " .. name) end
     for _, key in ipairs(A.bonus_atlas_order) do textures[key] = piece(key) end
+    -- The packed Hammer bounds are centered. Its heavier head pulls the
+    -- opacity anchor upward, making the whole silhouette sit low on the face.
+    buttons.centers[textures["bonus-hammer"]] = nil
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     elements_view.load(textures, own)
     for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end

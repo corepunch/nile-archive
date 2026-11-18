@@ -1542,8 +1542,8 @@
       "games/relic-rush/art/registered/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
       "games/relic-rush/art/registered/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
       "games/relic-rush/art/registered/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
-      "games/relic-rush/art/registered/bonus-gems.png": "3a94843329d4b3e7b5708cdbc0d91dd4638aaa6c65cab3b93a5ff49ce2078faa",
-      "games/relic-rush/art/registered/campaign-pieces.png": "2af737b42415768ba7a75909f1d933781f690163f577cf6631fc5bd07c85f893",
+      "games/relic-rush/art/registered/bonus-gems.png": "2a319615c2ffe3ee484d7ebf27b798e5cdaac0259932386b4a8d3913d37229da",
+      "games/relic-rush/art/registered/campaign-pieces.png": "a6349c29625156125efc65ed646658a597446144554d2895c1cf48de173ef3c9",
       "games/relic-rush/art/registered/expedition-hud/complete.png": "8f2db8c6941dd8a717741555329734e7bf6ced57249c397d8dda982e26f0120c",
       "games/relic-rush/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
       "games/relic-rush/art/registered/expedition-hud/score.png": "8e395c4ae507674be6669e43d4a37a404886fed5acd70d1adac4c07e14818f65",
@@ -1597,10 +1597,10 @@
       "games/relic-rush/data/board/cells.png": "f51ae923c801eb2dd8ce2f001870e8588cc30d1975ac4122c11c2e279bdd4d1a",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
-      "games/relic-rush/data/board/pieces.png": "71e0e07324370f42b7ee28985ae98e3ba485de1d38ace94de3707f94b7acc282",
+      "games/relic-rush/data/board/pieces.png": "60033d9dbe51d3a0864ca070566870933f438be26f039ed0a1658af24a6499f8",
       "games/relic-rush/lua/match3_atlases.lua": "8070c6e523179091ce21de010e2a32f2e006c05ff205fd13bdf59fc5a9004196",
       "games/relic-rush/lua/match3_hud.lua": "0525d0783e4ff80f06d488507903c04b685b3017445414f0b0779af9a848bf11",
-      "games/relic-rush/lua/match3_skin.lua": "15aae9be64b2c79f63881e3cd1887611db131af1bc06c87ea58a96df284b3f6c"
+      "games/relic-rush/lua/match3_skin.lua": "8f808605b0cc29149eefa9e51fda795e94d7c2554a65f145f3433e69a16ba05f"
     }
   }
 }

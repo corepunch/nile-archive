@@ -57,8 +57,8 @@ single log in matches.
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
 measured row bands, columns and revision boxes, trim the transparent exterior and
 uniformly fit each object into a centered 128 px cell with a 112 px maximum
-extent (108 px for the winged sandal). The runtime atlas is
-`art/registered/campaign-pieces.png`. The same sprite appears
+extent (108 px for the winged sandal and 94 px for the diagonal leaf). The
+runtime atlas is `art/registered/campaign-pieces.png`. The same sprite appears
 in matches, refills, resource flights and the guide. The existing selection,
 hint and chain overlays supply their respective states. The game's shop and
 wallet use their own currency artwork. The level 8 first-clear card also uses the
@@ -67,6 +67,8 @@ The sprites are free-standing objects. At the board's actual draw size the
 30 pieces fit the canonical face in strict object mode.
 [Fruit and score review](screenshots/review/fruit-and-score/README.md).
 [Relay pliers review](screenshots/review/relay-pliers/README.md).
+[Board fit at 480 × 900](screenshots/review/piece-fit/board-480x900.jpg) ·
+[Board fit at 390 × 844](screenshots/review/piece-fit/board-390x844.jpg).
 
 ## Resource pieces
 
@@ -425,8 +427,13 @@ cover a zero-charge ring at both phone sizes.
 The eight standalone pieces each have their own silhouette. Board pieces, rewards and toolbar buttons use the same 128 px frames in `data/board/pieces.png`. The four painted navigation icons also live in this atlas. The [board progression](board-progression.md#bonus-pieces) lists each construction reward and effect. All eight items are drawn together in the [painted source](../art/bonus-gems/rome-eight.png). The [manifest](../art/board-states/manifest.json) records source positions and registration. Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` and `python3 tools/match3_atlas.py` to reproduce the frames.
 
 The shared enamel painter draws the five states and exposes the ready face from
-the bottom as each matched gem lands. The inset and the colored piece use the same center of opacity on the button face. The house, Play triangle, expedition map
-and settings gear use the painted materials of the resource pieces in the [shared action atlas](../../../art/match3-buttons/README.md).
+the bottom as each matched gem lands. The inset and the colored piece share an
+anchor on the button face. Hammer uses the center of its silhouette bounds and
+a 100 px fit. Lightning uses a 94 px fit for more clearance around the bolt.
+The other bonus anchors use the center of opacity. The house, Play triangle,
+expedition map and settings gear use the painted materials of the resource
+pieces in the [shared action atlas](../../../art/match3-buttons/README.md).
+[Hammer and Lightning across five states](screenshots/review/piece-fit/bonus-states.jpg).
 [Toolbar at both sizes](screenshots/enamel-toolbar.jpg) · [All bonus states](screenshots/bonus-states.jpg).
 
 Earlier gameplay captures follow.

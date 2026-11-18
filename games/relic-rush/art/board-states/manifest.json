@@ -1315,6 +1315,7 @@
     "cell_size": 128,
     "extent": 112,
     "extent_overrides": {
+      "leaf": 94,
       "sandal": 108
     },
     "row_edges": [
@@ -1449,10 +1450,14 @@
     ],
     "icon_sizes": {
       "hammer": {
-        "board": 88
+        "board": 100
+      },
+      "lightning": {
+        "board": 94
       }
     },
-    "registration": "Center the visible board pieces on 128 px cells, at 112 px or 88 px for Hammer. The atlas builder measures each frame's center of opacity for the silhouette and color on round buttons.",
+    "registration": "Center the visible board pieces on 128 px cells. The default fit is 112 px; Hammer fits 100 px and Lightning fits 94 px. Round buttons use each frame's center of opacity, with Hammer centered by its silhouette bounds in lua/art.lua.",
+    "fit_review": "docs/screenshots/review/piece-fit/bonus-states.jpg",
     "bonuses": {
       "hammer": {
         "slot": "impact",
