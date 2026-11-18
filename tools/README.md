@@ -62,7 +62,7 @@ are the guides.
 | `match3_elements_art.py` | Registers the authored 48-state blocker and tablet atlas | `--check` in `make test-assets` |
 | `match3_theme_art.py` | Registers each portrait game's board-theme sheet | imported by `match3_atlas.py` |
 | `pack_particles.py` | Registers particle frames for the `fx` atlas | imported by `match3_atlas.py` |
-| `match3_buttons.py` | Registers the four painted campaign icons on a 128 px grid | `python3 tools/match3_buttons.py` |
+| `match3_buttons.py` | Centers each campaign action icon in its 128 px button cell using the silhouette's pixel opacity | `python3 tools/match3_buttons.py`, then `python3 tools/match3_atlas.py` to repack |
 | `board_tiles.py` | Bakes the shared board tiles into hex sprites for every game | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
 | `board_frame.py` | Bakes the hex border atlas and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |

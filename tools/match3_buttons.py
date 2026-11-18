@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Register the four painted action icons in the shared 128px grid."""
+"""Center the painted campaign actions on their circular button faces."""
 import argparse
 import json
 from pathlib import Path
@@ -8,6 +8,34 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "art/match3-buttons/manifest.json"
+
+
+def centered_icon(image, side, fit):
+    """Place the alpha-weighted center of the visible artwork at the cell center."""
+    bounds = image.getchannel("A").getbbox()
+    if not bounds:
+        raise ValueError("The icon is completely transparent")
+    artwork = image.crop(bounds)
+    center = (side - 1) / 2
+    for limit in range(min(fit, side, max(artwork.size)), 0, -1):
+        icon = artwork.copy()
+        icon.thumbnail((limit, limit), Image.Resampling.LANCZOS)
+        alpha = icon.getchannel("A").tobytes()
+        mass = sum(alpha)
+        if not mass:
+            continue
+        moment_x = moment_y = 0
+        for y in range(icon.height):
+            row = alpha[y * icon.width:(y + 1) * icon.width]
+            moment_x += sum(x * weight for x, weight in enumerate(row))
+            moment_y += y * sum(row)
+        x = round(center - moment_x / mass)
+        y = round(center - moment_y / mass)
+        if 0 <= x <= side - icon.width and 0 <= y <= side - icon.height:
+            cell = Image.new("RGBA", (side, side))
+            cell.paste(icon, (x, y))
+            return cell
+    raise ValueError("The icon cannot fit visibly in the requested cell")
 
 
 def main():
@@ -21,12 +49,8 @@ def main():
         assert source.mode == "RGBA"
         for col, icon in enumerate(spec["icons"]):
             crop = source.crop(icon["box"])
-            crop = crop.crop(crop.getchannel("A").getbbox())
             fit = icon.get("fit", spec["fit"])
-            crop.thumbnail((fit, fit), Image.Resampling.LANCZOS)
-            x = (side - crop.width) // 2 + icon.get("offset_x", 0)
-            assert 0 <= x <= side - crop.width, icon["key"]
-            atlas.paste(crop, (side * col + x, (side - crop.height) // 2))
+            atlas.paste(centered_icon(crop, side, fit), (side * col, 0))
     path = ROOT / spec["registered"]
     if args.check:
         with Image.open(path) as actual:

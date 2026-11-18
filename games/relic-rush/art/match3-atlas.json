@@ -1492,7 +1492,7 @@
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
-      "art/match3-buttons/actions.png": "1da79234c9d3d5744aa35ce9804e44d2aec65cf26f04476fd3f9839495bb7530",
+      "art/match3-buttons/actions.png": "442071230e7773777a02a7913a998079114003ed599f13ae18f04c783978a109",
       "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
       "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
       "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
@@ -1595,7 +1595,7 @@
       "games/relic-rush/data/board/cells.png": "f51ae923c801eb2dd8ce2f001870e8588cc30d1975ac4122c11c2e279bdd4d1a",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "054af85871a43684d502ac55289a05a3ae786d2d74f8c7d993914ea20368126d",
-      "games/relic-rush/data/board/pieces.png": "a09c90172da4f8c47d17ed8b280e0e6d714f622d033e6ddc1bc9f6580bcfa385",
+      "games/relic-rush/data/board/pieces.png": "f6167e9e7ce8780e37c29237f148f302e7b2b564c6b426914345b52eed50a61d",
       "games/relic-rush/lua/match3_atlases.lua": "7acd7cc415c3cee7c8ff9fae925beffa73ebb39f380d817d41d64aa42653c6b6",
       "games/relic-rush/lua/match3_hud.lua": "19591300f7e87746c4e7dd8b978f1538a4b3d39ac3b3e7e24b332163489c6c58",
       "games/relic-rush/lua/match3_skin.lua": "49781922bd1559bc9f1ec5db4c6249e824a838f68f47eb8549ffa5c7446ac596"
