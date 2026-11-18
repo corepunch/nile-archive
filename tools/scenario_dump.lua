@@ -27,7 +27,12 @@ vec2 = ctor(function(x, y) return {x = x, y = y} end)
 size2 = ctor(function(w, h) return {w = w, h = h} end)
 color = ctor(function(r, g, b, a) return {r, g, b, a} end)
 rect = ctor(function(x, y, w, h) return {x = x, y = y, w = w, h = h} end)
-rawset(_G, "purse", ctor(function(...) return {...} end))
+local purse_mt = {__add = function(a, b)   -- wallets add slot by slot
+    local sum = setmetatable({}, getmetatable(a))
+    for slot = 1, math.max(#a, #b) do sum[slot] = (a[slot] or 0) + (b[slot] or 0) end
+    return sum
+end}
+rawset(_G, "purse", ctor(function(...) return setmetatable({...}, purse_mt) end))
 -- Dialogue modes (story.THOUGHT, story.SHOUT) become their lowercase names.
 story = setmetatable({}, {__index = function(_, k) return type(k) == "string" and k:lower() or stub end})
 setmetatable(_G, {__index = function() return stub end})
@@ -36,9 +41,12 @@ package.path = ("games/%s/lua/?.lua;"):format(game) .. package.path
 local loaded = {state = {}}
 function require(name)
     if loaded[name] ~= nil then return loaded[name] end
-    local file = package.searchpath(name, package.path)
+    -- match3.game defines the ladder and the journey's bookkeeping as plain
+    -- functions, so the real file loads here; the rest of the engine is a stub.
+    local engine = name == "match3.game"
+    local file = engine and "engine/lua/match3/game.lua" or package.searchpath(name, package.path)
     local value = stub
-    if file and not name:match("^match3") then
+    if file and (engine or not name:match("^match3")) then
         local ok, result = pcall(dofile, file)
         if ok and result ~= nil then value = result
         elseif not ok then io.stderr:write(("scenario_dump: %s skipped (%s)\n"):format(name, tostring(result))) end
@@ -119,23 +127,82 @@ if game == "nile-archive" then
     end
     table.sort(out.beats, function(a, b) return a.key < b.key end)
 else
-    local campaign, buildings = require("campaign"), require("buildings")
-    local economy = game == "relic-rush" and require("economy") or nil
+    local campaign, economy = require("campaign"), require("economy")
+    local island, journey = require("island"), require("journey")
     require("narrative")
     out.kind = "match3"
     out.cast = cast_of(loaded.state.cast)
-    local wonders = {}
-    for _, b in ipairs(buildings) do
-        if b.category == "wonder" then
-            wonders[#wonders + 1] = {key = b.key, name = b.name, about = b.about, sprite = b.sprite_path,
-                price = economy and economy.price_parts(b.cost)}
+
+    -- Icons are atlas frames; the page crops the ones named here.
+    out.frames = {}
+    local atlases = dofile(("games/%s/lua/match3_atlases.lua"):format(game))
+    local function icon(...)
+        for _, name in ipairs{...} do
+            for _, atlas in pairs(atlases) do
+                local f = atlas.frames[name]
+                if f then
+                    out.frames[name] = {path = atlas.path, rect = f}
+                    return name
+                end
+            end
         end
     end
-    local funds, restored = {}, {}
-    for i, level in ipairs(campaign.wonder_levels or {}) do funds[level] = wonders[i] end
-    if economy then
-        for _, piece in pairs(economy.unlocks) do restored[piece.building] = true end
+    local function piece_icon(piece, kind) return icon("campaign-" .. (piece.key or ""), "market-" .. kind) end
+    out.currencies = {}   -- in the order the games show them
+    local order = economy.currency_order or {1, 2, 3}
+    for i, slot in ipairs(order) do out.currencies[i] = economy.currencies[slot].name end
+    local function price_of(cost)
+        local parts = {}
+        for _, slot in ipairs(order) do
+            if (cost[slot] or 0) > 0 then
+                parts[#parts + 1] = {name = economy.currencies[slot].name, amount = cost[slot]}
+            end
+        end
+        return parts
     end
+
+    -- What a ladder purchase puts on later boards, from its economy.unlocks row.
+    local function gets_of(unlock)
+        local gets = {}
+        local bonus = unlock.bonus   -- Relic Rush: a bonus gem, or the upgrade of one
+        if bonus then
+            local first = economy.bonus_slots[bonus.tool].levels[1]
+            gets[#gets + 1] = {type = "bonus", icon = icon(bonus.icon), name = bonus.name, effect = bonus.effect,
+                               upgrades = bonus.rank > 1 and first.name or nil}
+        end
+        if unlock.kind then
+            local piece = unlock.slot and unlock or economy.pieces[unlock.kind]
+            gets[#gets + 1] = {type = "piece", icon = piece_icon(piece, unlock.kind), name = piece.name,
+                               amount = piece.amount, currency = economy.currencies[piece.slot].name}
+        elseif unlock.tool then   -- Christmas Market: a piece that charges a booster
+            local piece, slot = economy.pieces[unlock.piece], economy.tool_slots[unlock.tool]
+            gets[#gets + 1] = {type = "charge", icon = piece_icon(piece, unlock.piece), name = piece.name, effect = slot.effect}
+        elseif unlock.opening_tool then
+            local slot = economy.tool_slots[unlock.opening_tool]
+            gets[#gets + 1] = {type = "opening", icon = icon(slot.icon .. "-normal"), name = unlock.name, effect = slot.effect}
+        elseif unlock.moves then gets[#gets + 1] = {type = "moves", amount = unlock.moves}
+        elseif unlock.charge then gets[#gets + 1] = {type = "faster", amount = unlock.charge}
+        elseif unlock.income then
+            for _, part in ipairs(price_of(unlock.income)) do
+                gets[#gets + 1] = {type = "income", amount = part.amount, currency = part.name}
+            end
+        end
+        return gets
+    end
+
+    -- The ladder in purchase order, as the engine builds it (match3.game
+    -- campaign_ladder). Optional purchases fill no position.
+    local story_key = {}   -- the story building each wonder level waits for
+    out.ladder = {}
+    for position, step in ipairs(island.ladder) do
+        local b, unlock = island.buildings[step.kind + 1], step.unlock
+        if step.story then story_key[step.after] = b.key end
+        out.ladder[position] = {position = position, key = b.key, kind = step.kind, name = b.name, about = b.about,
+            sprite = b.sprite_path, price = price_of(b.cost), after = step.after, story = step.story,
+            from = math.max(unlock.first_level or 0, step.after + 1),   -- the first board it changes
+            quest = economy.quests and economy.quests[b.key], gets = gets_of(unlock)}
+    end
+
     out.levels = {}
     for i, l in ipairs(campaign.levels) do
         local reveal = type(l.reveal) == "table" and not is_stub(l.reveal) and l.reveal or nil
@@ -147,21 +214,28 @@ else
             if l.dress.floor then materials[#materials + 1] = l.dress.floor.covered
             elseif l.oil then materials[#materials + 1] = "river-silt" end
         end
-        local resources
-        if economy then
-            resources = {}
-            local yields = economy.board_loadout(l, i, restored, 123478)
-            for k = 0, campaign.colors - 1 do
-                local piece = yields[k]
-                if piece and piece.slot then
-                    resources[#resources + 1] = {key=piece.key, name=piece.name, yield=piece.amount,
-                        currency=economy.currencies[piece.slot].name}
-                end
+        -- The pieces a player who bought every purchase as it opened sees on
+        -- this board, with the seed the captures use.
+        local restored = {}
+        for _, step in ipairs(island.ladder) do
+            if step.after < i then restored[island.buildings[step.kind + 1].key] = true end
+        end
+        local yields
+        if economy.board_loadout then yields = economy.board_loadout(l, i, restored, 123478)
+        else yields = economy.loadout(restored, i, 123478) end
+        local resources = {}
+        for kind = 0, 15 do
+            local piece = yields[kind]
+            if piece and piece.slot then
+                resources[#resources + 1] = {icon = piece_icon(piece, kind), name = piece.name, yield = piece.amount,
+                    currency = economy.currencies[piece.slot].name}
+            elseif piece and piece.tool then   -- a bonus gem or a booster's charging piece
+                resources[#resources + 1] = {icon = piece.icon and icon(piece.icon) or piece_icon(piece, kind),
+                    name = piece.name, charges = piece.icon and "bonus" or "booster"}
             end
         end
         out.levels[i] = {n = i, name = l.name, lesson = l.lesson, moves = l.moves, score = l.score,
-                         wonder = funds[i], materials = materials,
-                         resources = resources, resource_unlock = l.resource_unlock,
+                         materials = materials, resources = resources,
                          story_piece = l.story_piece,
                          plaques = l.dress and l.dress.floor and l.dress.floor.covered == "tile-tablet-single" and #l.oil or nil,
                          signal = l.signal,
@@ -171,7 +245,10 @@ else
     for i, b in ipairs(require("story_content")) do
         local choices = {}
         for k, c in ipairs(b.choices or {}) do choices[k] = {label = c.label, lines = lines_of(c.lines)} end
-        out.beats[i] = {key = b.key, phase = b.phase, level = b.level, prompt = b.prompt,
+        -- As journey.next schedules it: a scene after a wonder level waits for
+        -- that level's story building, unless it plays on the clear itself.
+        local waits = b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]
+        out.beats[i] = {key = b.key, phase = b.phase, level = b.level, prompt = b.prompt, waits_for = waits or nil,
                         lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
     end
 end

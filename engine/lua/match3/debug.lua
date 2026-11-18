@@ -1,7 +1,7 @@
 -- match3/debug.lua — the entry points tools/screenshots.py, the test manifests
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
--- --level, --city, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
+-- --level, --city, --epoch, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
 -- --catalogue, --expeditions, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces.
@@ -23,9 +23,11 @@ function D.bind(R, W)
 
     -- A town after n story buildings: n buildings at their suggested spots and
     -- the regions a player would have opened by then, with Stars to match.
-    local function island_with(n)
+    -- With `purchases`, a town after that many ladder purchases instead.
+    local function island_with(n, purchases)
         local opened_at = {0, 6, 9, 15, 21, 27}
-        local cleared = n > 0 and journey.wonder_levels[n] or 0
+        local last = purchases and island.ladder[purchases]
+        local cleared = last and last.after or n > 0 and journey.wonder_levels[n] or 0
         R.prog.level, R.prog.wallet = cleared, wallet(340, cleared * 3)
         R.island.count = 0
         local open = 1
@@ -35,7 +37,9 @@ function D.bind(R, W)
         R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
         R.island.open = R.island.open | 1
         local spend = purse(100000, 100000, 100000)
-        while island.wonder_count(R.island) < n and island.island_place_next(R.island, spend, cleared, 0) do end
+        local placed = 0
+        while (purchases and placed < purchases or not purchases and island.wonder_count(R.island) < n)
+            and island.island_place_next(R.island, spend, cleared, 0) do placed = placed + 1 end
     end
     R.island_with = island_with
 
@@ -169,6 +173,8 @@ function D.bind(R, W)
         end
         a = app.arg("city")
         if a then island_with(num.clampi(tonumber(a), 0, WONDERS)); R.on_island = true; R.toast_time = 0 end
+        a = app.arg("epoch")   -- --epoch N: the town once N epochs of four ladder purchases are bought
+        if a then island_with(0, num.clampi(4 * tonumber(a), 0, #island.ladder)); R.on_island = true; R.toast_time = 0 end
         if app.arg("showcase") then
             local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),
                            vec2(1180, 1800), vec2(760, 1700), vec2(1040, 1620), vec2(620, 1550), vec2(920, 1400)}

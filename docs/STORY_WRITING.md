@@ -119,3 +119,11 @@ read from the games' own Lua tables (`tools/scenario_dump.lua`, under the host `
 match-3 boards come from one start of each game's test binary. Without `--capture` the page
 reuses the boards already in `build/shots/frames`. Images are embedded, so the file can be
 shared on its own.
+
+`python3 tools/scenario_overview.py --epoch 1 --capture` writes `build/scenarios/epoch-1.html`
+instead: one [epoch](CHAPTER_PROGRESSION.md) of Relic Rush and Christmas Market. It shows the
+epoch's four ladder purchases with their build-card text, price and what each changes on later
+boards, the town once the fourth is confirmed, the levels played up to it with the pieces that
+pay on each, and every scene where it plays: on a first clear, or once the story building it
+waits for is placed. The purchases come from the engine's own ladder (`campaign_ladder`) and the
+town from `--epoch N`, so the page changes with the game.

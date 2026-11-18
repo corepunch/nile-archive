@@ -11,7 +11,7 @@ tables, and PNGs. Behaviour belongs to the engine:
 | `engine/lua/town.lua` (`town`) | The town screen (`lua/town_config.lua`) |
 | `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
 | `engine/lua/match3/vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
-| `engine/lua/match3/debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--dialog`, ...) |
+| `engine/lua/match3/debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--epoch`, `--dialog`, ...) |
 
 Each game's `lua/` keeps only:
 

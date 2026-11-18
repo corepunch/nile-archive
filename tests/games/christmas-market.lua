@@ -159,9 +159,11 @@ shot("phone-pieces-board","390x844","--art-board --safe-area 0,47,0,34")
 
 
 
--- tools/scenario_overview.py --capture: every board as it opens, for the scenario overview.
+-- tools/scenario_overview.py --capture: every board as it opens and the town after each
+-- epoch of four purchases, for the scenario and epoch overviews.
 -- Only with SPRITE_SCENARIO=1, so make test, test-full and shots never run them.
 if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-christmas-market-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
+    for epoch = 1, 5 do frame("scenario-christmas-market-town-epoch-" .. epoch, "480x900", "--epoch " .. epoch .. " --frames 3") end
 end
 rules("tune_moves")

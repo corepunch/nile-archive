@@ -90,8 +90,8 @@ are the guides.
 | `capture_resource_icons.py` | Captures resource and hex review cases | `python3 tools/capture_resource_icons.py` |
 | `capture_trickling.py` | Captures vertical and diagonal refill reviews | `python3 tools/capture_trickling.py` |
 | `capture_economy_review.py` | Captures economy before/after comparisons with the native renderer | `python3 tools/capture_economy_review.py --before-ref <sha>` |
-| `scenario_overview.py` | One HTML page of every game's cast, boards and story beats | `python3 tools/scenario_overview.py --capture` |
-| `scenario_dump.lua` | Prints a game's scenario data as JSON for `scenario_overview.py` | run by `scenario_overview.py` |
+| `scenario_overview.py` | One HTML page of every game's cast, boards and story beats; with `--epoch N`, one epoch of the match-3 games: its four purchases, levels, scenes and town | `python3 tools/scenario_overview.py --capture`, `python3 tools/scenario_overview.py --epoch 1 --capture` |
+| `scenario_dump.lua` | Prints a game's scenario data (cast, levels, purchase ladder, story beats) as JSON for `scenario_overview.py` | run by `scenario_overview.py` |
 
 ## Studying other games: `tools/reference/`
 

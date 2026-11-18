@@ -254,12 +254,12 @@ shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
 
 
 
--- tools/scenario_overview.py --capture: every board as it opens, for the scenario overview.
+-- tools/scenario_overview.py --capture: every board as it opens and the town after each
+-- epoch of four purchases, for the scenario and epoch overviews.
 -- Only with SPRITE_SCENARIO=1, so make test, test-full and shots never run them.
 if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-relic-rush-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
+    for epoch = 1, 5 do frame("scenario-relic-rush-town-epoch-" .. epoch, "480x900", "--epoch " .. epoch .. " --frames 3") end
     frame("scenario-relic-rush-landing", "480x900", "--level 30 --reveal 1 --frames 89")
-    frame("scenario-relic-rush-before-well-05", "480x900", "--level 5 --before-well --frames 3")
-    frame("scenario-relic-rush-before-well-06", "480x900", "--level 6 --before-well --frames 3")
     frame("scenario-relic-rush-resources", "480x900", "--victory 9 --frames 150")
 end
