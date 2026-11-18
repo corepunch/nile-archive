@@ -49,7 +49,15 @@ return {
         title = "To be continued...",
         lines = {
             {"THE QUAY IS SAFE. OTHER LIGHTS ARE WAITING.", 16},
-            {"Your island and its last expedition stay open.", 16},
+            {"Your island stays open to build and explore.", 16},
+        },
+        button = "BACK TO MY ISLAND",
+    },
+    complete = {
+        title = "You won!",
+        lines = {
+            {"YOU COMPLETED ALL %d EXPEDITIONS.", 16},
+            {"Your island stays open to build and explore.", 16},
         },
         button = "BACK TO MY ISLAND",
     },

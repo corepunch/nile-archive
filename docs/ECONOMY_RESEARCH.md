@@ -128,7 +128,7 @@ Indicative saving goals at the minimum replay payout:
 These are optional goals, not a requirement to buy the entire catalogue. Early
 first-clear surplus covers several small decorative choices immediately. Play
 always starts the next stage, so income comes from new clears; once every stage
-is cleared, Play replays the last one as a play-for-Gold route.
+is cleared, Play opens the "You won" card and no further income is earned.
 Pause resumes the same board and moves, restarts it after a confirmation (a
 free retry, like a failure), or quits to the island keeping the unfinished board
 for the next LEVEL / Expeditions visit; neither pays anything. An unfinished board still restarts after closing the

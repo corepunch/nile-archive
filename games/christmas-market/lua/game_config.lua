@@ -65,6 +65,14 @@ return {
         },
         button = "BACK TO MY MARKET",
     },
+    complete = {
+        title = "You did it!",
+        lines = {
+            {"ALL %d WINTER WISHES CAME TRUE.", 16},
+            {"Your market stays open to decorate.", 16},
+        },
+        button = "BACK TO MY MARKET",
+    },
     card = {
         back = "BACK TO MARKET",
         moving = "HOLD AND DRAG IN THE MARKET TO MOVE",

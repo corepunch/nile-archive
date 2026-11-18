@@ -52,6 +52,10 @@ G.DEFAULTS = {
     zone = {subtitle = "A NEW PLACE TO DISCOVER", cleared = "LEVELS CLEARED  %d / %d", earn = "CLEAR NEW LEVELS TO OPEN IT",
             open = "OPEN THIS AREA", wait = "KEEP EXPLORING", close = "CLOSE"},
     finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
+    -- Every level is cleared: shown after the last win, and by Play from then on.
+    -- A line's %d is the number of levels.
+    complete = {title = "You won!", lines = {{"YOU COMPLETED ALL %d LEVELS.", 16}, {"Your town stays open to build.", 16}},
+        button = "BACK TO TOWN"},
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
             gets = "YOU GET", price = "PRICE", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
@@ -101,7 +105,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -703,7 +707,7 @@ function G.bind(R, over)
         local quest, step
         if not built and island.next_quest then quest, step = island.next_quest(R.island, R.prog.level) end
         if quest and step.kind ~= i then quest = nil end
-        quest_funding = quest ~= nil and not can_build
+        quest_funding = quest ~= nil and not can_build and R.prog.level < rules.LEVELS
         local subtitle = quest and W.card.quest_subtitle:format(w.name, island.ladder_position[i])
         match3.set_popup_header(wonder_form, quest and quest.title or w.name, subtitle)
         local ok, message = wonder_form:push{sprite=w.sprite, about=quest and quest.request or journey.building_about(i, R.prog.level, w.about),
@@ -812,13 +816,16 @@ function G.bind(R, over)
         R.overlay = R.OV_NONE
     end})
 
-    local finale = {match3.popup_header(W.finale.title)}
-    for _, line in ipairs(W.finale.lines) do
-        finale[#finale+1] = {kind="label",text=line[1],wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
+    -- The story's last scene (finale) and the last level (complete) close on the same card.
+    for overlay, words in pairs{[R.OV_FINALE] = W.finale, [R.OV_COMPLETE] = W.complete} do
+        local card = {match3.popup_header(words.title)}
+        for _, line in ipairs(words.lines) do
+            card[#card+1] = {kind="label",text=line[1]:format(rules.LEVELS),wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
+        end
+        card[#card+1] = {kind="button",id="back",text=words.button,height=50}
+        popup(overlay, ui.form{kind="column",panel=true,padding=24,gap=14,children=card},
+            {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
     end
-    finale[#finale+1] = {kind="button",id="back",text=W.finale.button,height=50}
-    popup(R.OV_FINALE, ui.form{kind="column",panel=true,padding=24,gap=14,children=finale},
-        {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
 
     -- Draws the open dialog over everything; it alone receives input.
     function R.overlays(dt)
@@ -1033,10 +1040,14 @@ function G.bind(R, over)
         R.open_catalogue(filter)
     end
 
-    -- Play starts the next level, or resumes it. With every level cleared it
-    -- replays the last one, so the town keeps an income.
-    local function next_level() return math.min(R.prog.level, LEVELS - 1) end
-    function R.play_next() return R.play_level(next_level()) end
+    -- Play starts the next level, or resumes it. With every level cleared
+    -- there is none, and it opens the "You won" card instead.
+    local function can_play() return R.prog.level < LEVELS end
+    function R.play_next()
+        if can_play() then return R.play_level(R.prog.level) end
+        R.overlay = R.OV_COMPLETE
+        return false
+    end
 
     function R.town_setup()
         R.town = town.new(R.island, require("town_config"), {
@@ -1048,7 +1059,7 @@ function G.bind(R, over)
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function() open_building(owes_building() and "wonder" or "building") end,
             play = R.play_next,
-            play_label = function() return tostring(next_level() + 1) end,
+            play_label = function() return can_play() and tostring(R.prog.level + 1) or "" end,
             about = R.building_words,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
@@ -1239,7 +1250,8 @@ function G.bind(R, over)
         if not app.arg("debug-walkthrough") then R.submit_scores() end
         R.save_progress()
         R.on_island = true
-        R.overlay = first and R.g.story_clear == journey.beats[#journey.beats].key and R.OV_FINALE or R.OV_NONE
+        R.overlay = first and R.g.story_clear == journey.beats[#journey.beats].key and R.OV_FINALE
+            or first and R.prog.level >= rules.LEVELS and R.OV_COMPLETE or R.OV_NONE
         R.notice(first and (journey.wonder_at(R.prog.level) and W.notices.reward_building or W.notices.reward_story) or W.notices.reward_replay)
     end
 

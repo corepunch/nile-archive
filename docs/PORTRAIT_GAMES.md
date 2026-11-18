@@ -94,7 +94,7 @@ Fixed in the engine, so both games now behave the same way:
 |---|---|---|---|
 | Popups open and close at once, with no entrance or exit tween (a stalled clock on device left Pause's dim with no panel, commit 7122d63); modal backdrops snap in (`snap_backdrop`), so the shop is dimmed on its first frame | Relic Rush | Christmas Market (tweened every dialog; its lists showed an undimmed first frame) | Both, `match3.game` dialogs and lists |
 | Pause shows Restart (asks first) and Quit, which keeps the unfinished board for Play to resume | Relic Rush | Christmas Market (the smoke test even asserted they were absent) | Both; Christmas Market's skin gains an evergreen `secondary` button |
-| Play shows the number of the level it starts; there is no level list, so a cleared level is not replayed (the last one is, once the campaign is done) | New | Both had a Levels button and list | Both |
+| Play shows the number of the level it starts; there is no level list, so a cleared level is not replayed, and once every level is cleared the "You won" card opens after the last win and from Play | New | Both had a Levels button and list | Both |
 | Choosing a level clears the overlay before `play_level`, so a refused start does not leave a dead overlay state | Christmas Market | Relic Rush | Both |
 | The building card shows the story's current line for the building (`journey.building_about`), as the tap bubble does | Christmas Market | Relic Rush (showed the static catalogue line) | Both |
 | Per-level backdrop scene (`level.background`) | Relic Rush | Christmas Market (hard-coded "level 5 and on") | Both read `level.background` with the same fallback |
