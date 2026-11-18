@@ -5,7 +5,7 @@ teaches: Break the ice and carved stones around the sanctum.
 x x x x x
  x x x x
 x . p . x
- . p p .
+ p p p p
 x p j p x
  p j j p
 x p j p x
@@ -13,16 +13,16 @@ x p j p x
 . s j s .
  p j j p
 . p p p .
- . j j .
-x . p . x
+ p p p p
+x . j . x
  x . . x
-x . p . x
- . . . .
+x . j . x
+ . p p .
 . . p . .
  . . . .
-. . . . .
- . . . .
-x . . . x
+. . p . .
+ . p p .
+x . p . x
  x . . x
 x . x . x
  x x x x

@@ -5,19 +5,19 @@ teaches: Break the vault’s ice and stones before clearing the floor.
 x x x x x
  x . . x
 x x p x x
- x . . x
-x p . p x
+ x j j x
+x p j p x
+ p p p p
+. . j . .
+ p j j p
+x j j j x
+ p j j p
+. x j x .
  p . . p
-. . . . .
- p . . p
-x . . . x
- . . . .
-. x . x .
- . . . .
 x . x . x
- . p p .
+ p p p p
 . x p x .
- . . . .
+ . p p .
 x . . . x
  . . . .
 x . . . x

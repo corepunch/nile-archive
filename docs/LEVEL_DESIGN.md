@@ -140,8 +140,13 @@ python3 tools/balance_plaques.py relic-rush --trim           # remove the latest
 `--trim` plays every board, removes the plaques cleared last in symmetric
 pairs, and repeats until the median is at most twice the Homescapes figure. A
 chain or ice whose plaque goes stays only if it still holds back a plaque
-below it. Tutorials 1–4 are left as authored. To keep chains and ice on a
-trimmed board, put them on plaques the report shows the bot clears early.
+below it. Tutorials 1–4 are left as authored.
+
+Chained and frozen plaques are the slowest on a board, so a plain trim removes
+them first. Boards that should keep them get more room and a trim that takes
+plain plaques first: `--trim --keep-blockers --high 3 --levels 44,99`. Put
+chains and ice on plaques the report shows the bot clears early. Relic Rush
+allows three times the Homescapes budget on its 55 chain and ice boards.
 
 ## The level file
 

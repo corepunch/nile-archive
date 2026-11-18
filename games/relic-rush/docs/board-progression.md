@@ -15,14 +15,18 @@ focuses on the story expeditions.
 
 ## Length
 
-An expedition is sized by moves. The reference bot's median game on board N is
-at most twice the move budget of [Homescapes level N](../../../docs/homescapes-reference/first-100-levels.md):
-28.6 moves on average across the campaign, against 18.5 in Homescapes, and
-between 13 and 63 after the four tutorials. Cradle of Rome 2 covers 80–100% of
-a board with plaques because its levels run on a timer; at that coverage the
-bot needed about 110 moves a board with four-piece matches. Each board
-therefore keeps the plaques the bot clears soonest, 27–44% of its cells per
-ten levels, and the rest of the board is plain floor.
+An expedition is sized by moves, against the move budget of
+[Homescapes level N](../../../docs/homescapes-reference/first-100-levels.md).
+On a board without chains or ice the reference bot's median game is at most
+twice that budget. The 55 boards the reference chains or freezes may run to
+three times, so they can keep their blockers. The campaign's median is 39
+moves on average, against 18.5 in Homescapes: 30 on plain boards and 47 on
+chain and ice boards.
+
+Cradle of Rome 2 covers 80–100% of a board with plaques because its levels run
+on a timer; at that coverage the bot needed about 110 moves a board with
+four-piece matches. Each board therefore keeps the plaques the bot clears
+soonest, 29–48% of its cells per ten levels, and the rest is plain floor.
 `python3 tools/balance_plaques.py relic-rush` lists the plaques that hold a
 board up, and `--trim` removes them.
 
@@ -50,16 +54,21 @@ Double chains arrive on the Jungle Bridge (62), following the sequel's schedule.
 
 ## Blocker density
 
-Chains and ice sit on plaques the bot clears early, because a chained or
-frozen plaque needs two or three matches of four on one cell. Every board the
-reference chains still has chains; they cover 1–4% of all cells per ten
-levels (reference 3–9%). Ice covers up to 4% (reference up to 8%), on 13 of
-the reference's 18 ice boards. A gate stays only where it holds back a
-plaque. Compare any range with
+A chained or frozen plaque needs two or three matches of four on one cell, so
+chains and ice sit on plaques the bot clears early, and a trim removes plain
+plaques before it touches them (`--keep-blockers`). Chains cover 1–7% of all
+cells per ten levels (reference 3–9%) and ice up to 7% (reference up to 8%),
+on the same boards as the reference. Ice has one layer, as in the reference.
+A gate stays only where it holds back a plaque. Compare any range with
 `python3 tools/reference/cradle-of-rome/compare_levels.py relic-rush`.
 
-Every plaque on a boss board is green. The final board keeps ice over green
-plaques.
+The chain and ice boards were built from the full-density boards in three
+steps: trim to three times the Homescapes budget, put chains and ice on the
+plaques the bot then cleared soonest, and trim again with
+`--trim --keep-blockers --high 3`.
+
+Every plaque on a boss board is green. The final board keeps double chains
+and ice over green plaques.
 
 ## Board checks and captures
 

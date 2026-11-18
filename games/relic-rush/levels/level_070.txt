@@ -12,13 +12,13 @@ x . . . x
  . . . .
 . . g . .
  . P P .
-x . P . x
+x g P g x
  . . . .
 x . g . x
  . P P .
-x . P . x
+x g P g x
  . . . .
-x . . . x
+x . g . x
  . . . .
 x . . . x
  . . . .

@@ -2,10 +2,10 @@ name: The Great Well
 tier: easy
 teaches: Sweep the blue ring around the well and free the two chained pieces.
 
-x . . . x
- . . . .
 x p p p x
- . p p .
+ p p p p
+x p p p x
+ p p p p
 . p p p .
  p . . p
 . . x . .
@@ -13,16 +13,16 @@ x p p p x
 . . x . .
  . x x .
 . . x . .
- . x x .
-x . x . x
- . p p .
+ p x x p
+x p x p x
+ p p p p
 x p p p x
- . p p .
+ p p p p
 . k p k .
  p p p p
 . p p p .
  . p p .
-x . . . x
+x . p . x
  x . . x
 x x x x x
  x x x x

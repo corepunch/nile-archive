@@ -3,13 +3,13 @@ tier: normal
 teaches: Break ice and stone near the wells, then clear the connecting floor.
 
 . . p . .
- . p p .
-x p . p x
+ . j j .
+x p j p x
+ . j j .
+. . x . .
+ . . . .
+. . x . .
  p . . p
-. . x . .
- . . . .
-. . x . .
- . . . .
 . x x x .
  . . . .
 . x x x .

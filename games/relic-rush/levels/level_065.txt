@@ -3,26 +3,26 @@ tier: hard
 teaches: Break the ice beside the arms of the chamber.
 
 x x x x x
- x . . x
+ x p p x
 x x p x x
- . p p .
+ p j j p
 x p . p x
  p p p p
-. s j s .
+p s j s p
  p j j p
 . p j p .
  p j j p
-x p j p x
+x p p p x
  x j j x
 x x j x x
  x . . x
 x . p . x
+ . p p .
+. . p . .
  . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
+x . p . x
+ . p p .
+x . p . x
  x . . x
 x x . x x
  x . . x

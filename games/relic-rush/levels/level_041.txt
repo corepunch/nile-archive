@@ -7,21 +7,21 @@ x x x x x
 x x x x x
  x . . x
 x x . x x
- x p p x
-x . . . x
+ x . . x
+x . p . x
+ . k k .
+. p p p .
+ . p p .
+. k x k .
+ p p p p
+. . x . .
+ . p p .
+. p p p .
  . k k .
 . . p . .
  . p p .
-. . x . .
- . . . .
-. . x . .
- . p p .
-. . p . .
- . . . .
-. . . . .
- . p p .
-x . . . x
- x . . x
+x . p . x
+ x k k x
 x . . . x
  x . . x
 x x x x x

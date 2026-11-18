@@ -6,15 +6,15 @@ x x x x x
  x x x x
 x x . x x
  x . . x
-x p . p x
- p . . p
-. . . . .
+x . . . x
  . . . .
+. j . j .
+ j j j j
 . . . . .
- p p p p
-. . x . .
+ p . . p
+p . x . p
  . x x .
-. x x x .
+p x x x p
  . x x .
 . . x . .
  . . . .

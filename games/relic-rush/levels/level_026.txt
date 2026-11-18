@@ -3,19 +3,19 @@ tier: easy
 teaches: Work from the wide lintel through the two chained approaches below.
 
 . . . . .
- . p p .
+ . k k .
+. . . . .
+ . . . .
+. k k k .
+ . . . .
 . . p . .
  . k k .
-. p p p .
+x . p . x
  . p p .
-. p k p .
+x k k k x
  . . . .
-x k p k x
- . p p .
-x . k . x
- . p p .
 . . p . .
- . . . .
+ . k k .
 . . . . .
  . . . .
 . x . x .

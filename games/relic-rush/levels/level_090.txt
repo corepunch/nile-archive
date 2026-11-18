@@ -8,19 +8,19 @@ x x x x x
  . x x .
 x . x . x
  . . . .
-x . . . x
- . . . .
-. . P . .
- . . . .
-x . g . x
+x P P P x
+ . g g .
+. P P P .
+ . g g .
+x g P g x
  x P P x
 x P P P x
- x . . x
+ x g g x
 x P P P x
  . P P .
-. . . . .
- . . . .
-x . P . x
+. . P . .
+ . g g .
+x P P P x
  . . . .
 x . . . x
  . . . .

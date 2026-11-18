@@ -16,95 +16,95 @@ it orders and spaces the boards and is not a human win rate.
 | 6 | Vine-Bound Terraces | normal | 38 | 27 | 15 | 32/40 |
 | 7 | Jaguar Court | easy | 52 | 26 | 13 | 39/40 |
 | 8 | Overgrown Arches | normal | 41 | 29 | 13 | 31/40 |
-| 9 | Twin Terraces | hard | 58 | 48 | 25 | 28/40 |
+| 9 | Twin Terraces | hard | 107 | 89 | 37 | 27/40 |
 | 10 | Jaguar Throne | boss | 28 | 28 | 18 | 20/40 |
-| 11 | Fallen Colonnade | easy | 52 | 26 | 13 | 37/40 |
-| 12 | Choked Gateway | easy | 36 | 18 | 9 | 37/40 |
-| 13 | The Spire Keep | normal | 37 | 26 | 13 | 31/40 |
-| 14 | Hall of Pillars | normal | 62 | 44 | 23 | 31/40 |
+| 11 | Fallen Colonnade | easy | 78 | 39 | 16 | 37/40 |
+| 12 | Choked Gateway | easy | 50 | 25 | 11 | 29/40 |
+| 13 | The Spire Keep | normal | 34 | 24 | 12 | 37/40 |
+| 14 | Hall of Pillars | normal | 83 | 59 | 23 | 28/40 |
 | 15 | Broken Aqueduct | hard | 36 | 30 | 9 | 27/40 |
 | 16 | The Overlook | easy | 40 | 20 | 12 | 39/40 |
 | 17 | Moss Bridge | normal | 34 | 24 | 12 | 31/40 |
-| 18 | Twin Wells | normal | 24 | 17 | 3 | 32/40 |
-| 19 | Sun Court | hard | 58 | 48 | 19 | 30/40 |
+| 18 | Twin Wells | normal | 48 | 34 | 16 | 30/40 |
+| 19 | Sun Court | hard | 68 | 56 | 25 | 25/40 |
 | 20 | Heart of the Temple | boss | 25 | 25 | 16 | 21/40 |
-| 21 | The Great Well | easy | 70 | 35 | 14 | 39/40 |
-| 22 | Overgrown Stair | easy | 92 | 46 | 28 | 38/40 |
-| 23 | Triple Terrace Gate | normal | 24 | 17 | 11 | 29/40 |
+| 21 | The Great Well | easy | 88 | 44 | 24 | 39/40 |
+| 22 | Overgrown Stair | easy | 154 | 77 | 26 | 40/40 |
+| 23 | Triple Terrace Gate | normal | 45 | 32 | 20 | 31/40 |
 | 24 | Moat Gate | normal | 52 | 37 | 22 | 26/40 |
-| 25 | Sentinel Walls | hard | 33 | 27 | 11 | 29/40 |
-| 26 | Lintel Door | easy | 44 | 22 | 9 | 39/40 |
-| 27 | Twin Obelisks | normal | 52 | 37 | 21 | 32/40 |
+| 25 | Sentinel Walls | hard | 48 | 40 | 18 | 30/40 |
+| 26 | Lintel Door | easy | 76 | 38 | 20 | 38/40 |
+| 27 | Twin Obelisks | normal | 138 | 98 | 61 | 35/40 |
 | 28 | Ziggurat Steps | normal | 37 | 26 | 14 | 32/40 |
 | 29 | The Dry Well | hard | 48 | 40 | 20 | 25/40 |
 | 30 | Hall of Pillars | boss | 17 | 17 | 9 | 20/40 |
-| 31 | Flooded Vault | easy | 46 | 23 | 14 | 38/40 |
+| 31 | Flooded Vault | easy | 96 | 48 | 21 | 39/40 |
 | 32 | Cloven Colonnade | easy | 52 | 26 | 15 | 38/40 |
-| 33 | Sealed Stair | normal | 31 | 22 | 13 | 33/40 |
-| 34 | Sundered Gallery | normal | 56 | 40 | 15 | 34/40 |
-| 35 | Twin Sanctums | hard | 30 | 25 | 13 | 30/40 |
+| 33 | Sealed Stair | normal | 61 | 43 | 28 | 35/40 |
+| 34 | Sundered Gallery | normal | 104 | 74 | 43 | 30/40 |
+| 35 | Twin Sanctums | hard | 69 | 57 | 26 | 29/40 |
 | 36 | Bridge Footings | easy | 126 | 63 | 35 | 37/40 |
 | 37 | Arch of Echoes | normal | 49 | 35 | 15 | 32/40 |
-| 38 | Nested Vaults | normal | 34 | 24 | 11 | 33/40 |
+| 38 | Nested Vaults | normal | 58 | 41 | 27 | 33/40 |
 | 39 | Broken Causeway | hard | 42 | 35 | 14 | 28/40 |
-| 40 | Jade Reliquary | boss | 26 | 26 | 13 | 20/40 |
-| 41 | Needle Gate | easy | 38 | 19 | 10 | 37/40 |
-| 42 | Twin Arches | easy | 62 | 31 | 14 | 37/40 |
-| 43 | The Cistern | normal | 49 | 35 | 18 | 32/40 |
-| 44 | Chained Cloisters | normal | 49 | 35 | 20 | 30/40 |
-| 45 | Locked Courtyard | hard | 46 | 38 | 18 | 27/40 |
+| 40 | Jade Reliquary | boss | 44 | 44 | 29 | 20/40 |
+| 41 | Needle Gate | easy | 72 | 36 | 19 | 40/40 |
+| 42 | Twin Arches | easy | 130 | 65 | 30 | 40/40 |
+| 43 | The Cistern | normal | 49 | 35 | 18 | 34/40 |
+| 44 | Chained Cloisters | normal | 63 | 45 | 23 | 31/40 |
+| 45 | Locked Courtyard | hard | 65 | 54 | 32 | 29/40 |
 | 46 | Parted Cloister | easy | 66 | 33 | 19 | 39/40 |
 | 47 | Mirror Pool | normal | 31 | 22 | 10 | 29/40 |
 | 48 | Skylight Hall | normal | 26 | 18 | 9 | 32/40 |
 | 49 | Warden's Colonnade | hard | 39 | 32 | 16 | 28/40 |
-| 50 | Throne of the Valley | boss | 39 | 39 | 23 | 20/40 |
+| 50 | Throne of the Valley | boss | 62 | 62 | 35 | 20/40 |
 | 51 | Gatehouse | easy | 38 | 19 | 9 | 40/40 |
 | 52 | Sun Terraces | easy | 56 | 28 | 12 | 39/40 |
-| 53 | Cellar Door | normal | 42 | 30 | 16 | 38/40 |
+| 53 | Cellar Door | normal | 76 | 54 | 18 | 33/40 |
 | 54 | Fallen Columns | normal | 61 | 43 | 23 | 33/40 |
-| 55 | Sunken Vault | hard | 40 | 33 | 19 | 31/40 |
-| 56 | The Weir | easy | 50 | 25 | 16 | 36/40 |
-| 57 | Lost Courtyard | normal | 19 | 13 | 7 | 27/40 |
-| 58 | Temple Eye | normal | 28 | 20 | 8 | 31/40 |
-| 59 | Citadel Keep | hard | 39 | 32 | 16 | 27/40 |
-| 60 | Hall of Idols | boss | 25 | 25 | 13 | 20/40 |
+| 55 | Sunken Vault | hard | 59 | 49 | 29 | 28/40 |
+| 56 | The Weir | easy | 100 | 50 | 27 | 35/40 |
+| 57 | Lost Courtyard | normal | 66 | 47 | 23 | 31/40 |
+| 58 | Temple Eye | normal | 48 | 34 | 17 | 30/40 |
+| 59 | Citadel Keep | hard | 63 | 52 | 26 | 27/40 |
+| 60 | Hall of Idols | boss | 47 | 47 | 25 | 20/40 |
 | 61 | Temple Stairs | easy | 56 | 28 | 13 | 40/40 |
-| 62 | Jungle Bridge | easy | 54 | 27 | 14 | 34/40 |
-| 63 | Hanging Gardens | normal | 40 | 28 | 15 | 30/40 |
+| 62 | Jungle Bridge | easy | 84 | 42 | 22 | 39/40 |
+| 63 | Hanging Gardens | normal | 70 | 50 | 19 | 30/40 |
 | 64 | Overgrown Well | normal | 47 | 33 | 18 | 32/40 |
-| 65 | Star Chamber | hard | 35 | 29 | 14 | 29/40 |
+| 65 | Star Chamber | hard | 60 | 50 | 31 | 31/40 |
 | 66 | Triumphal Arch | easy | 70 | 35 | 19 | 35/40 |
 | 67 | Ruined Colonnade | normal | 59 | 42 | 23 | 27/40 |
-| 68 | Quarry Pit | normal | 42 | 30 | 23 | 35/40 |
-| 69 | Star Gallery | hard | 33 | 27 | 13 | 25/40 |
-| 70 | Grand Observatory | boss | 18 | 18 | 8 | 21/40 |
+| 68 | Quarry Pit | normal | 62 | 44 | 22 | 36/40 |
+| 69 | Star Gallery | hard | 58 | 48 | 27 | 27/40 |
+| 70 | Grand Observatory | boss | 30 | 30 | 15 | 20/40 |
 | 71 | Cistern Locks | easy | 54 | 27 | 15 | 37/40 |
 | 72 | Sunken Plaza | easy | 46 | 23 | 15 | 36/40 |
-| 73 | Flooded Crypt | normal | 35 | 25 | 13 | 35/40 |
+| 73 | Flooded Crypt | normal | 68 | 48 | 27 | 33/40 |
 | 74 | Moon Well | normal | 31 | 22 | 12 | 34/40 |
-| 75 | Lost Sanctum | hard | 39 | 32 | 21 | 28/40 |
+| 75 | Lost Sanctum | hard | 52 | 43 | 25 | 26/40 |
 | 76 | Ziggurat | easy | 64 | 32 | 17 | 40/40 |
-| 77 | Twin Towers | normal | 34 | 24 | 12 | 33/40 |
+| 77 | Twin Towers | normal | 70 | 50 | 33 | 29/40 |
 | 78 | Arch Gate | normal | 61 | 43 | 21 | 32/40 |
-| 79 | Twin Shrines | hard | 21 | 17 | 6 | 27/40 |
+| 79 | Twin Shrines | hard | 46 | 38 | 16 | 29/40 |
 | 80 | Sunken Court | boss | 26 | 26 | 14 | 23/40 |
-| 81 | Sunken Stair | easy | 72 | 36 | 17 | 37/40 |
+| 81 | Sunken Stair | easy | 78 | 39 | 21 | 37/40 |
 | 82 | Colonnade | easy | 90 | 45 | 21 | 40/40 |
 | 83 | The Well | normal | 27 | 19 | 7 | 31/40 |
 | 84 | The Bridge | normal | 35 | 25 | 12 | 35/40 |
-| 85 | Portcullis | hard | 40 | 33 | 18 | 25/40 |
+| 85 | Portcullis | hard | 57 | 47 | 22 | 28/40 |
 | 86 | Twin Gardens | easy | 56 | 28 | 12 | 39/40 |
-| 87 | Pillared Hall | normal | 34 | 24 | 13 | 33/40 |
-| 88 | Twin Courts | normal | 55 | 39 | 18 | 29/40 |
-| 89 | Twin Obelisks | hard | 28 | 23 | 8 | 24/40 |
-| 90 | The Altar | boss | 26 | 26 | 14 | 21/40 |
+| 87 | Pillared Hall | normal | 69 | 49 | 22 | 29/40 |
+| 88 | Twin Courts | normal | 79 | 56 | 24 | 29/40 |
+| 89 | Twin Obelisks | hard | 53 | 44 | 21 | 32/40 |
+| 90 | The Altar | boss | 42 | 42 | 24 | 22/40 |
 | 91 | Split Stair | easy | 58 | 29 | 15 | 40/40 |
 | 92 | Rope Bridges | easy | 44 | 22 | 11 | 36/40 |
 | 93 | Barred Gate | normal | 41 | 29 | 20 | 35/40 |
-| 94 | Twin Wells | normal | 42 | 30 | 16 | 32/40 |
-| 95 | Sealed Vault | hard | 22 | 18 | 8 | 23/40 |
+| 94 | Twin Wells | normal | 76 | 54 | 28 | 29/40 |
+| 95 | Sealed Vault | hard | 54 | 45 | 30 | 26/40 |
 | 96 | Terraces | easy | 48 | 24 | 12 | 38/40 |
-| 97 | Crossroads | normal | 31 | 22 | 14 | 36/40 |
-| 98 | Terrace Gate | normal | 37 | 26 | 16 | 33/40 |
-| 99 | Last Door | hard | 29 | 24 | 9 | 25/40 |
-| 100 | The Valley Temple | boss | 26 | 26 | 15 | 22/40 |
+| 97 | Crossroads | normal | 56 | 40 | 23 | 32/40 |
+| 98 | Terrace Gate | normal | 72 | 51 | 33 | 29/40 |
+| 99 | Last Door | hard | 38 | 31 | 16 | 23/40 |
+| 100 | The Valley Temple | boss | 48 | 48 | 31 | 20/40 |

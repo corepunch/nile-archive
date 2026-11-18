@@ -3,17 +3,17 @@ tier: hard
 teaches: Clear through the frost beside the stone sentinels on both walls.
 
 . . . . .
- x . . x
-. . . . .
- . . . .
-. . x . .
+ x j j x
+. p p p .
+ . j j .
+. p x p .
  p . . p
 . p x p .
  s p p s
-. . x . .
- p p p p
-. . x . .
+. j x j .
  p . . p
+. j x j .
+ . . . .
 . p x p .
  . . . .
 x . x . x

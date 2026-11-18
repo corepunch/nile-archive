@@ -5,21 +5,21 @@ teaches: Break through the frozen portcullis and the stones at its feet.
 x x x x x
  x x x x
 x x x x x
- x . . x
+ x p p x
 . . p . .
- . p p .
-. . x . .
- . p p .
+ p p p p
+i . x . i
+ i p p i
 . s x s .
- . j j .
-. p j p .
- . j j .
+ p p p p
+p p j p p
+ p j j p
 . . j . .
  p j j p
-. j p j .
- . j j .
-. . . . .
- . . . .
+p p p p p
+ p p p p
+p i i i p
+ i i i i
 . . . . .
  . . . .
 . . . . .

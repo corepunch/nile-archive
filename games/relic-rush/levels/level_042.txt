@@ -5,23 +5,23 @@ teaches: Free the opposing locks and clear across the twin arches.
 x x x x x
  x x x x
 x x x x x
+ k k k k
+x . . . x
+ . p p .
+. k k k .
  . p p .
 x . p . x
- p p p p
-. . k . .
- . p p .
-x p p p x
- . p p .
-x c x c x
+ . . . .
+x k x k x
  x x x x
 x . x . x
  . . . .
 . . . . .
- . p p .
-. p p p .
  . k k .
-. . p . .
- . p p .
+. . . . .
+ . . . .
+. k k k .
+ . . . .
 . . . . .
  . . . .
 x x x x x

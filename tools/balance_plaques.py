@@ -13,6 +13,7 @@ plain cell goes with its plaque unless it still gates a plaque below it.
     make build/test/relic-rush
     python3 tools/balance_plaques.py relic-rush --levels 31-40          # report
     python3 tools/balance_plaques.py relic-rush --trim                  # rewrite level files
+    python3 tools/balance_plaques.py relic-rush --trim --keep-blockers --high 3 --levels 44,99
     python3 tools/hex_levels.py relic-rush --lua && python3 tools/tune_moves.py relic-rush
 
 The bot plays private copies of the boards; level files change only at the end.
@@ -33,6 +34,7 @@ import hex_levels as H
 ROOT = Path(__file__).resolve().parents[1]
 CAP = 250            # tests/lua/tune_moves.lua
 MIN_PLAQUES = 8      # cells; a board keeps a field worth playing
+PLAIN_FLOOR = 6      # plain plaques a board keeps before its chains and ice are trimmed
 MAX_LOST = .1        # share of the bot's games that may end at the ceiling
 S = H.SYMBOLS
 SLOT = {cell: H.slot(*cell) for cell in H.CELLS}
@@ -148,14 +150,26 @@ def strip(layout, cells):
             layout[cell] = '.'
 
 
-def trim(board, games, goal):
-    """Remove the latest plaques, a symmetric pair at a time, until the projected median reaches `goal`."""
+def trim(board, games, goal, keep_blockers=False):
+    """Remove the latest plaques, a symmetric pair at a time, until the projected median reaches `goal`.
+
+    With `keep_blockers`, plain plaques go first, a quarter of them a round, so the
+    bot's next games show what that bought; chained and frozen plaques go only
+    once PLAIN_FLOOR plain ones are left."""
     layout = board['layout']
     late = lateness(layout, games)
     left = set(late)
     removed = []
-    for cell in sorted(late, key=late.get, reverse=True):
-        if projected(left, games) <= goal or len(left) <= MIN_PLAQUES:
+    order = sorted(late, key=late.get, reverse=True)
+    quota = len(order)
+    if keep_blockers:
+        plain = [cell for cell in order if not H.blocker(layout[cell])]
+        order = plain if len(plain) > PLAIN_FLOOR else [cell for cell in order if H.blocker(layout[cell])]
+        quota = max(2, len(order) // 4)
+        if order is plain:
+            quota = min(quota, len(plain) - PLAIN_FLOOR)
+    for cell in order:
+        if projected(left, games) <= goal or len(left) <= MIN_PLAQUES or len(removed) >= quota:
             break
         pair = {cell, partner(cell, board['symmetry'])} & left
         left -= pair
@@ -177,7 +191,9 @@ def main():
     parser.add_argument('--seeds', type=int, default=40)
     parser.add_argument('--high', type=float, default=2.0, help='most the median may be, in Homescapes budgets')
     parser.add_argument('--aim', type=float, default=1.8, help='what a trim aims for, in Homescapes budgets')
-    parser.add_argument('--rounds', type=int, default=10)
+    parser.add_argument('--rounds', type=int, default=16)
+    parser.add_argument('--keep-blockers', action='store_true',
+                        help='trim plain plaques before chained and frozen ones')
     parser.add_argument('--trim', action='store_true', help='remove the latest plaques and rewrite the level files')
     args = parser.parse_args()
     budget = targets()
@@ -202,7 +218,7 @@ def main():
             elif ((median > high or lost(late, games) > len(games) * MAX_LOST)
                   and len(late) > MIN_PLAQUES and number > 4):   # tutorials stay as authored
                 # Halfway each round: with fewer plaques to chase the bot plays faster than projected.
-                removed = trim(board, games, max(args.aim * budget[number], .6 * median))
+                removed = trim(board, games, max(args.aim * budget[number], .6 * median), args.keep_blockers)
                 if removed:
                     changed.add(number)
                     again.append(number)
