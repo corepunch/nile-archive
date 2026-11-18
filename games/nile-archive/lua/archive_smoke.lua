@@ -59,7 +59,7 @@ local search, cache_coins
 
 function M.step()
     frames = frames + 1
-    if frames > 6000 then error("Nile smoke timed out at step " .. tostring(step)) end
+    if frames > (app.arg("quick") and 360 or 6000) then error("Nile smoke timed out at step " .. tostring(step)) end
     if frames % 6 ~= 0 then return end
     if story.active() then story.next() return end
     if step == 0 then
@@ -106,6 +106,11 @@ function M.step()
         assert(G.modal == MODAL_NONE and G.scene == 1, "Продолжить did not resume the scene")
         step = 4
     elseif step == 4 then
+        if app.arg("quick") and scene.found_count() == 1 then
+            print("Nile smoke: opened chapter one, resumed the scene and found the first item")
+            app.quit()
+            return
+        end
         if not find_next(1) then step = 5 end
     elseif step == 5 then
         assert(G.modal == MODAL_WIN and G.result and G.result.stars >= 1, "no result after every item")

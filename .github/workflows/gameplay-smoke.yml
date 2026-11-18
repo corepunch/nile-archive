@@ -1,0 +1,15 @@
+name: Full gameplay smoke tests
+
+on: workflow_dispatch
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Install native build and headless display dependencies
+        run: sudo apt-get update && sudo apt-get install -y libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev xvfb
+      - name: Run gameplay scenarios for every game
+        run: xvfb-run -a make -j2 smoke

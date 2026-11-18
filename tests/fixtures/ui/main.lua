@@ -21,6 +21,7 @@ local models={
 local forms={ui.form(template),ui.form(template)}
 -- Each look is one data file: fonts, colours, text styles and per-state control looks.
 local skins={require('sunstone_skin'),require('nightfall_skin')}
+local layout=app.arg('layout') and require('layout')   -- borders, uniform grids and a prefab
 local stack,stage,clock,clicked_under=nil,0,0,0
 local function init()
     for i=1,2 do assert(forms[i]:push(models[i])) end
@@ -37,7 +38,7 @@ local function frame(dt)
         gfx.rect(rect(x*30,y*30,30,30),(x+y)%2==0 and color.hex(0x466A56) or color.hex(0x1D3F43))
     end end
     local label=style{font=skins[1]:font('display'),size=30,fill=color.WHITE}
-    text.inside(label,rect(0,24,900,50),vec2(.5,.5),stack and 'MODAL LAYERS' or 'ONE TEMPLATE / TWO SKIN FILES')
+    text.inside(label,rect(0,24,900,50),vec2(.5,.5),stack and 'MODAL LAYERS' or layout and 'BORDER / UNIFORM GRID / PREFAB' or 'ONE TEMPLATE / TWO SKIN FILES')
     local event
     if stack then
         if ui.button(rect(20,600,200,60),'UNDERLYING',ui.FLAT) then clicked_under=clicked_under+1 end
@@ -46,6 +47,7 @@ local function frame(dt)
             local i=event.modal=='second' and 2 or 1
             assert(forms[i]:pull(models[i]));assert(stack:close(event.modal))
         end
+    elseif layout then layout(skins)
     else
         for i=1,2 do
             local e=forms[i]:draw(rect(70+(i-1)*400,96,360,540),skins[i])

@@ -618,7 +618,7 @@ building being moved is free. Confirm or Cancel hides the guides. Debug
 ## Stall card: what a stall adds
 
 The stall card lists its price and what the stall adds side by side as the
-engine's icon-and-figure amounts (`match3.resource_amount`). It reuses existing
+engine's icon-and-figure amounts (the `resource_indicator` prefab). It reuses existing
 art and adds none. `R.building_gets` in `lua/screens.lua` maps each ladder
 unlock:
 

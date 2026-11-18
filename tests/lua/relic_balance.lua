@@ -1,18 +1,18 @@
 -- Relic Rush balance runner: rules and the greedy bot only, no screen, story
--- or animation. Every board is played BALANCE_RUNS times (default 10) with the
+-- or animation. CI plays three fixed boards. With BALANCE_RUNS set, every
+-- board is played that many times (make test-balance defaults to 10) with the
 -- unlocks the ladder has delivered by then. The report gives the win rate,
 -- moves left and mean income per won board in each currency, then fits every
 -- restoration price to that income as docs/resource-expedition.md describes.
 --
---   build/test/relic-rush --extended "rules relic_balance"
---   BALANCE_RUNS=40 build/test/relic-rush --extended "rules relic_balance"
+--   make test-balance
+--   make test-balance BALANCE_RUNS=40
 if not testing.extended then return end
 
 local rules = require('rules')
 local economy = require('economy')
 local island = require('island')
 
-local RUNS = testing.balance_runs or 10
 local SHARE = .8   -- a stop spends 80% of the expected wallet in the currencies it uses
 local CURRENCIES = #economy.currencies
 local m = rules.new_match()
@@ -50,14 +50,32 @@ local function restored_by(number)
     return restored
 end
 
+local function play_board(level, run, restored)
+    local g = rules.game_start(level - 1, seed_of(1000 * level + run), restored)
+    play(g)
+    return g
+end
+
+local RUNS = testing.balance_runs
+if not RUNS then
+    for _, level in ipairs{1, 47, 98} do
+        local g = play_board(level, 1, restored_by(level))
+        assert(g.won, ('balance sample: bot lost board %d'):format(level))
+        local reward = rules.reward_breakdown(g).total
+        for slot, currency in ipairs(economy.currencies) do
+            check(reward[slot] > 0, ('board %d pays %s'):format(level, currency.name))
+        end
+    end
+    return
+end
+
 local boards = {}
 for level = 1, rules.LEVELS do
     local stats = {wins = 0, moves = 0, income = {}}
     for slot = 1, CURRENCIES do stats.income[slot] = 0 end
     local restored = restored_by(level)
     for run = 1, RUNS do
-        local g = rules.game_start(level - 1, seed_of(1000 * level + run), restored)
-        play(g)
+        local g = play_board(level, run, restored)
         if g.won then
             local reward = rules.reward_breakdown(g).total
             stats.wins, stats.moves = stats.wins + 1, stats.moves + g.moves

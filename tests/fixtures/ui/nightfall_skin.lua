@@ -4,6 +4,7 @@ return ui.skin{
     colors = {
         ink = "#E6F6F6", navy = "#142D42", edge = "#398B9B", deep = "#234A60",
         hot = "#38738B", teal = "#40BDB6", glow = "#77E2DC",
+        card_face = "deep", card_edge = "edge",
     },
     text = {
         body = {font = "display", em = 23, fill = "ink"},
@@ -53,6 +54,11 @@ return ui.skin{
             fill = {normal = {layers = {{fill = "teal", fill2 = "#2A8F8A", radius = 2}}}},
         },
         label = {text = "body"},
+        -- A border node's styles, one per role.
+        border = {variants = {card = {normal = {layers = {
+            {fill = "deep", radius = 4},
+            {border = "edge", width = 1.5, radius = 4},
+        }}}}},
         focus = {normal = {layers = {{border = "glow", width = 2, radius = 6, inset = -3}}}},
     },
     theme = {dim = "#040F1996", backdrop_blur = 7, radius = 4},

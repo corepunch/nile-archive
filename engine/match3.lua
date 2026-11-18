@@ -44,32 +44,39 @@ function E.set_popup_header(form, title, subtitle)
     form:set("title", header_title(title)):set("subtitle", header_subtitle(subtitle))
 end
 
--- One resource amount: the icon above its figure. The icon names the
--- resource, so there is no caption. Results, prices and what a building
--- brings all list these. `unit` is a second icon beside the figure (a new
--- piece and the resource each match of it banks); without an amount the icon
--- stands alone. Only an amount with no art of its own takes a `label`: a
--- larger figure over one word. A width fixes the element, and a narrow one
--- sets a smaller figure; without a width it shares its row.
-function E.resource_amount(entry, width)
-    local narrow = width and width < 76
-    local figure = entry.amount and {kind="label",text=tostring(entry.amount),em=narrow and 21 or 25,text_style="gold"}
+-- One resource amount: the icon above its figure, in the skin's
+-- resource_indicator border. The icon names the resource, so there is no
+-- caption. Results, prices and what a building brings all list these. `unit`
+-- is a second icon beside the figure (a new piece and the resource each match
+-- of it banks); without an amount the icon stands alone. Only an amount with
+-- no art of its own takes a `label`: a larger figure over one word. A width
+-- fixes the element, and a narrow one sets a smaller figure; without a width
+-- it fills its cell.
+ui.prefab("resource_indicator", function(p)
+    local narrow = p.width and p.width < 76
+    local figure = p.amount and {kind="label",text=tostring(p.amount),em=narrow and 21 or 25,text_style="gold"}
     local children = {}
-    if entry.icon then
-        children[1] = {kind="image",image=entry.icon,height=figure and 36 or 62}
-        if figure and entry.unit then
+    if p.icon then
+        children[1] = {kind="image",image=p.icon,height=figure and 36 or 62}
+        if figure and p.unit then
             local side = narrow and 18 or 24
             figure = {kind="row",gap=narrow and 2 or 3,align="center",children={
-                {kind="spacer",grow=1},{kind="image",image=entry.unit,width=side,height=side},figure,{kind="spacer",grow=1},
+                {kind="spacer",grow=1},{kind="image",image=p.unit,width=side,height=side},figure,{kind="spacer",grow=1},
             }}
         end
     elseif figure then
         figure.em, figure.height = narrow and 28 or 34, 46
     end
     children[#children + 1] = figure
-    if entry.label then children[#children + 1] = {kind="label",text=entry.label,height=15,em=12,text_style="caption"} end
-    return {kind="column",width=width,grow=not width and 1 or nil,panel=true,role="resource_amount",
-        padding={4,5,4,7},gap=1,children=children}
+    if p.label then children[#children + 1] = {kind="label",text=p.label,height=15,em=12,text_style="caption"} end
+    return {kind="border",role="resource_indicator",padding={4,5,4,7},children={
+        {kind="column",gap=1,children=children},
+    }}
+end)
+
+-- A resource record ({icon, amount, unit, label}) as that element.
+function E.resource_indicator(entry, width)
+    return {kind="resource_indicator",width=width,icon=entry.icon,amount=entry.amount,unit=entry.unit,label=entry.label}
 end
 
 -- Full-screen sheets under the wallet row. One building per row: the whole

@@ -80,7 +80,7 @@ are the guides.
 | `tune_moves.py` | Fits each board's move budget to its tier with the reference bot; writes `lua/level_moves.lua` and `docs/level-moves.md` | `python3 tools/tune_moves.py relic-rush` |
 | `tests/lua/tune_moves.lua` | The bot side of `tune_moves.py` | run by `tune_moves.py` |
 | `tests/lua/greedy_bot.lua` | The reference bot shared by the tuner and the balance runner | required |
-| `tests/lua/relic_balance.lua` | Plays every Relic Rush board, reports income and fits restoration prices | `BALANCE_RUNS=10 build/test/relic-rush --extended "rules relic_balance"` |
+| `tests/lua/relic_balance.lua` | Plays every Relic Rush board, reports income and fits restoration prices | `make test-balance` |
 
 ## Review captures and story
 

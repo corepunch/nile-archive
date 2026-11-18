@@ -997,7 +997,7 @@ Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.jso
 ## Building card: what a building brings
 
 The building card lists its price and what the building brings side by side as
-the engine's icon-and-figure amounts (`match3.resource_amount`). It reuses
+the engine's icon-and-figure amounts (the `resource_indicator` prefab). It reuses
 existing art and adds none. `R.building_gets` in `lua/screens.lua` maps each
 ladder unlock: a new piece shows its board art above `+N` beside the currency a
 match banks, and a bonus shows its `bonus-<key>` gem alone. Reproduce with

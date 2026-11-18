@@ -613,8 +613,9 @@ function G.bind(R, over)
             }},
             {kind="column",gap=7,paint_group={.62,.28,10},children={
                 {kind="label",text="RESOURCES TO BANK",em=13,text_style="caption"},
-                {kind="list",id="resources",direction="row",gap=9,item=function(entry)
-                    return match3.resource_amount(entry)
+                -- One row of equal cells, however many currencies the game banks.
+                {kind="uniform_grid",id="resources",rows=1,gap=9,item=function(entry)
+                    return match3.resource_indicator(entry)
                 end},
             }},
             {kind="row",id="next_step",visible_field="show_next",panel=true,role="group",
@@ -665,7 +666,7 @@ function G.bind(R, over)
         return {kind="column", gap=5, visible_field=visible, children={
             {kind="label", id=id .. "_caption", text=caption, em=13, text_style="caption"},
             {kind="list",id=id,direction="row",gap=AMOUNT_GAP,item=function(entry)
-                return match3.resource_amount(entry, amount_width)
+                return match3.resource_indicator(entry, amount_width)
             end},
         }}
     end

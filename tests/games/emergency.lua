@@ -2,6 +2,7 @@
 rules("emergency_transactions")
 rules("emergency")
 rules("haptics_emergency")
+smoke("--quick --size 456x342", "first-road", "quick")
 smoke("--size 456x342")
 
 shot("menu", "1368x1026")

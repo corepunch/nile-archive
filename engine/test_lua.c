@@ -84,7 +84,7 @@ static const char test_spec_prelude[] =
     "    add{kind = kind, name = name, size = size, opts = opts}\n"
     "end\n"
     "function rules(file, roots) add{kind = 'rules', name = file, file = file, roots = roots} end\n"
-    "function smoke(opts, name) add{kind = 'smoke', name = name or 'game', opts = '--smoke ' .. (opts or '')} end\n"
+    "function smoke(opts, name, tier) add{kind = 'smoke', name = name or 'game', opts = '--smoke ' .. (opts or ''), quick = tier == 'quick'} end\n"
     "function shot(name, size, opts) picture('shot', name, size, opts) end\n"
     "function frame(name, size, opts) picture('frame', name, size, opts) end\n"
     "function reel(name, count, step, size, opts)\n"
@@ -134,6 +134,7 @@ int test_read_jobs(const char *path, test_job *jobs, int max)
     for (int i = 0; i < n; i++) {
         test_job *j = &jobs[i];
         lua_rawgeti(S, -1, i + 1);
+        lua_getfield(S, -1, "quick"), j->quick_smoke = lua_toboolean(S, -1), lua_pop(S, 1);
         test_copy_field(S, "kind", j->kind, sizeof j->kind);
         test_copy_field(S, "name", j->name, sizeof j->name);
         test_copy_field(S, "file", j->file, sizeof j->file);

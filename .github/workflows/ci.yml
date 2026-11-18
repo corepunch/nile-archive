@@ -34,8 +34,10 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y libx11-dev libegl1-mesa-dev libgl-dev libasound2-dev xvfb
       - name: Build games and native tests
-        run: make -j2 CFLAGS="-O2 -g -Werror" all build/test/all build/test-audio
-      - name: Native rules, renderer, audio and gameplay smoke tests
+        run: |
+          make -j2 CFLAGS="-O2 -g -Werror" all
+          make -j2 build/test/all build/test-audio
+      - name: Native rules, renderer, audio and quick gameplay smoke tests
         run: xvfb-run -a make test-ci
 
   xcode:

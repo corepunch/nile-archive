@@ -52,6 +52,8 @@ also holds visibility/enabled predicates.
 | `column`, `row` | Automatic flow with padding, gaps, fixed lengths and weighted `grow` |
 | `list` | Data-backed row/column stack, populated with `form:set_items(id,records)` |
 | `overlay` | Children share the same content bounds |
+| `border` | One child inside a rounded box: skin look by `role`, or its own `background`, `border_color`, `border_width`, `radius` |
+| `uniform_grid` | Equal cells that fill the box: `columns` and/or `rows`, `gap`; children or `form:set_items` |
 | `label` | Text/formatting, optional wrap, style or semantic role |
 | `image` | Bound/authored texture, fitted to its allocated bounds |
 | `button` | Command ID; pointer, disabled, focus and keyboard activation |
@@ -68,6 +70,95 @@ Every node may have `width`, `height`, `min_width`, `min_height`, `grow`, `paddi
 IDs. Templates reject duplicate IDs, unknown kinds, invalid sizes/bindings and
 excessive nesting. Construction copies the node tree so instances have independent
 layout, values and focus.
+
+### Measure and arrange
+
+Every kind is an element class, and layout is two passes, as in WPF and
+Orion's `evMeasure`/`evArrange`. **Measure** offers a node a width and gets back
+the size it wants. **Arrange** gives it its final box. The engine's share is the
+same for every kind: visibility, `width`/`height`/`min_*`, the inset (padding)
+and the ID's rectangle. A class adds only what its kind does:
+
+| Class member | Purpose |
+| --- | --- |
+| `measure_override(node, width, skin, form) -> w, h` | The content's size within `width`; the engine adds the inset |
+| `arrange_override(node, inner, skin, form)` | Place the children inside the content box |
+| `paint(node, box, skin, form, options, event)` | Draw; an interactive control returns its action |
+| `inset(node) -> left, top, right, bottom` | Space around the content when it isn't just `padding` |
+| `check(node, source)` | Reject a bad node when the form is built |
+| `items = true` | Children may come from `form:set_items` |
+
+Measure constrains width only. A parent hands out height in Arrange, so text
+wraps to the width it is offered and a `grow` child takes the height that is
+left. `column`, `row` and `list` are one stack class; `overlay`, `border` and
+`uniform_grid` are the others that own children.
+
+`ui.element(kind, class)` adds a kind, for a panel the engine doesn't have (the
+engine's own kinds cannot be replaced). Its
+overrides measure and place children with `form:measure_node(child, width, skin)`
+and `form:arrange_node(child, box, skin)`:
+
+```lua
+ui.element("squares", {   -- children side by side, each as wide as the panel is tall
+    measure_override = function(n, width) return math.min(width, #n.children * n.side), n.side end,
+    arrange_override = function(n, inner, skin, form)
+        for i, child in ipairs(n.children) do
+            form:arrange_node(child, rect(inner.x + (i - 1) * inner.h, inner.y, inner.h, inner.h), skin)
+        end
+    end,
+})
+```
+
+### Border and uniform grid
+
+`border` is WPF's `Border`: one child inside a box with rounded corners. Give
+it a `role` and the skin's `border` control paints that variant, or set
+`background`, `border_color`, `border_width` and `radius` on the node. The
+child sits inside `padding` plus the node's own `border_width`. A child with
+its own `width` or `height` is centred; otherwise it fills the box.
+
+`uniform_grid` is WPF's `UniformGrid`: equal cells that fill the whole box.
+`columns` and/or `rows` fix the shape and the other follows the number of
+visible children; with neither the grid is square. `gap` separates cells both
+ways. A hidden child gives up its cell. A cell is as tall as the tallest child,
+and a child fills its cell or is centred in it, as in a border.
+With an `item` builder the cells come from `form:set_items`, like a list's rows.
+
+```lua
+{kind="uniform_grid", columns=3, gap=9, children={
+    {kind="border", role="card", padding=8, children={{kind="label", text="One"}}},
+    {kind="border", background="#FFF2C9", border_color="rim", border_width=2, radius=12, padding=8,
+     children={{kind="label", text="Two"}}},
+    {kind="border", role="card", padding=8, children={{kind="label", text="Three"}}},
+}}
+```
+
+![Borders in uniform grids: three columns, a wrapped grid, one data-backed row](screenshots/ui-layout.jpg)
+
+### Prefabs
+
+A prefab is a named template. `ui.prefab(kind, build)` registers it, and a node
+of that kind is replaced by what `build(node)` returns, so a repeated part is
+written once and used like any other node. The instance keeps what places it:
+`id`, `width`, `height`, `min_width`, `min_height`, `grow`, `visible`,
+`visible_field` and `paint_group` go to the prefab's root. Every other field is
+the prefab's own property. Prefab and element names share one namespace.
+
+```lua
+ui.prefab("resource_indicator", function(p)   -- engine/match3.lua, abridged
+    return {kind="border", role="resource_indicator", padding={4,5,4,7}, children={
+        {kind="column", gap=1, children={
+            {kind="image", image=p.icon, height=36},
+            {kind="label", text=p.amount, em=25, text_style="gold"},
+        }},
+    }}
+end)
+
+-- The results dialog: one row of equal cells, one per banked currency.
+{kind="uniform_grid", id="resources", rows=1, gap=9, item=function(entry)
+    return {kind="resource_indicator", icon=entry.icon, amount=entry.amount}
+end}
+```
 
 Labels support `text_align="start|center|end"` (default `center`). Icon-and-copy
 rows use `start` for both title and wrapped description. A row measures fixed
@@ -196,6 +287,8 @@ Disabled controls never show hover or press. Keyboard focus is its own control,
 `focus`, drawn around the focused one after Tab navigation. Pointer presses
 hide that ring while retaining focus for activation. `variants` apply for `flat`, `accent` or a
 node's `role` and merge the same way. `extends` reuses another control.
+A `border` node paints the `border` control, where a variant per `role` is the
+style of one kind of card: `border = {variants = {resource_indicator = {normal = {layers = {...}}}}}`.
 A checkbox has `box` and `mark` looks (each with its own states), `size` and `gap`;
 a progress bar has `track`, `fill` and an optional `over` (a rim drawn on top).
 A control's caption takes `text`, `em`, `text_inset` (a number or `{x, y}`),
@@ -260,7 +353,7 @@ the icon's box, for effects that fly to it.
 look for a state the game tracks itself, and `skin:text(name, em)` gives a text
 style (following the transform) for free text.
 
-**The paint contract.** Forms call `style(node)`, `panel(bounds, node)`,
+**The paint contract.** Forms call `style(node)`, `panel(bounds, node)`, `border(bounds, node)`,
 `button(bounds, state, node)`, `button_text(bounds, caption, node, state)`,
 `label(bounds, caption, node, style)`, `image(bounds, texture, node)`,
 `focus(bounds, node)`, `checkbox(bounds, caption, node, state)`, `measure_checkbox(node, caption)` and
@@ -339,14 +432,16 @@ by the form test and Relic Rush's 390 x 844 expedition-browser input smoke test.
 The shared match-3 popup renderer also requires a column-root form. It owns
 measurement, centering, hit testing and dismissal for Results, Settings, the
 Guide, restart confirmation, building details, the out-of-moves prompt, region
-unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form. Results use three equal
-columns in one row. Each is `match3.resource_amount(entry, width)`: an icon above
+unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form. Results show the
+banked currencies as `resource_indicator` prefabs in a one-row `uniform_grid`: equal
+columns across the dialog, however many currencies the game has. Each is an icon above
 its figure, with no caption because the icon names the resource. The building
 card lists its price and what the building brings with the same element, side
-by side under PRICE and YOU GET captions. `entry.unit` puts a second icon beside
+by side under PRICE and YOU GET captions. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
-shows its icon alone, and `entry.label` adds one word under a larger figure only
-for an amount that has no art of its own. A game lists what a building brings in
+shows its icon alone, and `label` adds one word under a larger figure only
+for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
+builds the node from a resource record. A game lists what a building brings in
 `R.building_gets(kind)`, which may return a second value to replace the YOU GET
 caption when the gift recurs (Christmas Market's EVERY WISH and EVERY WIN);
 without it the card shows the building's unlock text.
@@ -402,7 +497,8 @@ test only. This is a desktop measurement; mobile hardware performance is not yet
 measured. `tests/test_backdrop.c` checks clip restoration, full-screen coverage,
 sharp later drawing, nested blur, dim-only composition and resize/reallocation.
 `tests/lua/forms.lua` checks binding transactions, layout/reflow, focus and
-validation. `tests/lua/ui_skin.lua` checks skin compilation: colours, text
+validation, and the element classes: border insets, grid cells, prefab
+expansion and a custom measure/arrange class. `tests/lua/ui_skin.lua` checks skin compilation: colours, text
 style inheritance and scaling, state merging and precedence, variants, the paint
 transform, checkbox binding and keyboard input, immediate widgets and the audit. The real-window fixture checks bound toggles, deferred commit and
 nested modal input.
@@ -417,7 +513,8 @@ make test-platform               # prefix with xvfb-run -a on Linux
 ```
 
 The fixture accepts `--nested --shot file.png`; without `--nested` it shows the
-same template in two skin files (`tests/fixtures/ui/*_skin.lua`). `make shots` captures both. The runtime loads
+same template in two skin files (`tests/fixtures/ui/*_skin.lua`). `--layout` shows
+borders, uniform grids and a prefab. `make shots` captures both. The runtime loads
 `engine/ui_forms.lua` and `engine/ui_skin.lua` from the engine's resource directory; native,
 iOS and web games use the same implementation without extra game resources.
 

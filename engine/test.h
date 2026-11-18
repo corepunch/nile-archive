@@ -44,6 +44,7 @@ void test_check_picture(const unsigned char *rgba, int width, int height);
 typedef struct {
     char kind[8], name[80], file[64], roots[160], size[16], press[24], opts[400];
     int count, step;
+    bool quick_smoke;
 } test_job;
 int test_read_jobs(const char *path, test_job *jobs, int max);
 
