@@ -5,24 +5,24 @@ teaches: Clear the narrow gate and release the plaques beside its opening.
 x x x x x
  x x x x
 x x x x x
+ x . . x
+x x . x x
  x p p x
-x x p x x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p x p p
- p p p p
-k k x k k
- p p p p
-p p p p p
- p p p p
-k k p k k
- p p p p
-x p p p x
- x p p x
-x p p p x
- x p p x
+x . . . x
+ . k k .
+. . p . .
+ . p p .
+. . x . .
+ . . . .
+. . x . .
+ . p p .
+. . p . .
+ . . . .
+. . . . .
+ . p p .
+x . . . x
+ x . . x
+x . . . x
+ x . . x
 x x x x x
  x x x x

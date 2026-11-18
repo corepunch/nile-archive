@@ -5,23 +5,23 @@ teaches: Break the ice along the inner edge of the lost courtyard.
 x x x x x
  x x x x
 x x x x x
+ . . . .
+x . p . x
+ . . . .
+x . . . x
+ p . . p
+. . . . .
  p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
-p p p p p
- p p p p
-p j x j p
- p p p p
-p p x p p
- p j j p
-p j x j p
- p p p p
-p j p j p
- i p p i
-x s p s x
- . p p .
+. . x . .
+ p . . p
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+x s . s x
+ . . . .
 x x . x x
  x . . x
 x x x x x

@@ -2,27 +2,27 @@ name: Overgrown Arches
 tier: normal
 teaches: Follow the plaque fields between the arch openings.
 
-x . p . x
- p p p p
+x . . . x
+ . . . .
 . p x p .
  p p p p
-p p p p p
+. p p p .
  p p p p
 x p p p x
- p p p p
-p p p p p
+ . p p .
+. . p . .
  x x x x
 . x . x .
+ . . . .
+. x p x .
  . p p .
-p x p x p
+. p p p .
  p p p p
-p p p p p
+. p p p .
  p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
+. p p p .
+ . p p .
+. . p . .
+ . . . .
 x x x x x
  x x x x

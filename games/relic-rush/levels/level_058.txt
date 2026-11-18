@@ -4,25 +4,25 @@ teaches: Circle the eye of the temple through ice and stone.
 
 x x x x x
  x x x x
-x x p x x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p j p j p
- p p p p
-p p x p p
- j x x j
-p x x x p
- j x x j
-p p x p p
- p p p p
-i j p j i
- j p p j
-p p p p p
- p s s p
-x p . p x
+x x . x x
  x . . x
-x x p x x
+x p . p x
+ p . . p
+. . . . .
+ . . . .
+. . . . .
+ p p p p
+. . x . .
+ . x x .
+. x x x .
+ . x x .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . s s .
+x . . . x
+ x . . x
+x x . x x
  x x x x

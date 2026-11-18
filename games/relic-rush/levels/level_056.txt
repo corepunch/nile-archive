@@ -6,23 +6,23 @@ x x x x x
  x x x x
 x x x x x
  x x x x
-p x x x p
+. x x x .
+ . . . .
+. p p p .
+ . k k .
+. . . . .
  p p p p
-p p p p p
- p p p p
-k k k k k
- p p p p
-p x p x p
- p p p p
-x k x k x
- p p p p
-p x p x p
- p p p p
-x k p k x
- p p p p
-p p p p p
- k k k k
-x p p p x
- x p p x
-x x p x x
+. x p x .
+ c c c c
+x . x . x
+ . . . .
+. x . x .
+ . p p .
+x . p . x
+ . k k .
+. . p . .
+ . . . .
+x . . . x
+ x . . x
+x x . x x
  x x x x

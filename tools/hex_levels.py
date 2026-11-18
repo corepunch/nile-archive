@@ -43,7 +43,10 @@ HOLE = 'x'
 # into its gaps (docs/LEVEL_DESIGN.md).
 FIRST = {'chain': 5, 'chain_on_tablet': 6, 'gate': 5, 'ice': 7, 'double_tablet': 10,
          'ice_on_tablet': 11, 'stone': 15, 'double_ice': 25, 'double_chain': 51}
-# Relic Rush follows the Windows sequel's denser arc.
+# Both campaigns follow the Windows sequel's feature order. Relic Rush also
+# follows its plaque coverage; Christmas Market sizes each plaque field so the
+# bot's median game matches a Homescapes move budget (docs/LEVEL_DESIGN.md).
+SEQUEL_GAMES = ('relic-rush', 'christmas-market')
 RELIC_INTRO_CAPS = {'tutorial': 24, 'easy': 40, 'normal': 45}
 RELIC_FIRST = {**FIRST, 'chain': 4, 'chain_on_tablet': 4, 'ice': 12, 'ice_on_tablet': 12,
                'stone': 12, 'double_chain': 62}
@@ -155,6 +158,7 @@ def areas(layout):
 
 def summarize(number, head, layout, problems, match_min, *, game=None):
     relic_rush = game == 'relic-rush'
+    sequel = game in SEQUEL_GAMES
     tablets = [c for c, s in layout.items() if SYMBOLS[s][0] >= 1]
     doubles = [c for c, s in layout.items() if SYMBOLS[s][0] == 2]
     chains = [c for c, s in layout.items() if SYMBOLS[s][1] >= 1]
@@ -181,11 +185,11 @@ def summarize(number, head, layout, problems, match_min, *, game=None):
     if not tablets:
         problems.append('no tablets: every board is won by clearing its tablets')
     layers = len(tablets) + len(doubles)
-    if relic_rush and number >= 7:
-        if len(tablets) * 5 < len(layout) * 4:
-            problems.append('plaques must cover at least 80% of the board')
-        if number % 10 == 0 and len(doubles) != len(layout):
-            problems.append('every boss cell must be a double plaque')
+    if sequel:
+        if layers < MIN_LAYERS:
+            problems.append(f'{layers} tablet layers (a double counts two); a board holds at least {MIN_LAYERS}')
+        if number % 10 == 0 and len(doubles) != len(tablets):
+            problems.append('every boss plaque must be a double plaque')
     else:
         caps = RELIC_INTRO_CAPS if relic_rush else MAX_LAYERS
         cap = caps.get(head.get('tier'), 40)
@@ -268,7 +272,7 @@ def summarize(number, head, layout, problems, match_min, *, game=None):
     used = {'chain': chains, 'chain_on_tablet': on_tablets, 'gate': gated, 'double_tablet': doubles,
             'double_chain': double_chains, 'stone': stones, 'ice': ice,
             'ice_on_tablet': ice_on_tablets, 'double_ice': double_ice}
-    introductions = RELIC_FIRST if relic_rush else FIRST
+    introductions = RELIC_FIRST if sequel else FIRST
     for feature, first in introductions.items():
         if used[feature] and number < first:
             problems.append(f'{feature.replace("_", " ")} appears on level {number}; the campaign introduces it on {first}')

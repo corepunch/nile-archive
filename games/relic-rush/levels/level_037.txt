@@ -3,25 +3,25 @@ tier: normal
 teaches: Clear both feet of the arch and work up to its crown.
 
 x x x x x
- x p p x
+ x . . x
 x x p x x
  x p p x
 x p p p x
  x p p x
 x p p p x
  p p p p
-p p p p p
+. p p p .
  p p p p
-p p p p p
+. p p p .
  p p p p
-p p p p p
+. p p p .
  p p p p
-p p p p p
+. p p p .
  p p p p
-p p p p p
- p p p p
-p p x p p
- p x x p
+. p p p .
+ . p p .
+. . x . .
+ . x x .
 . x x x .
  x x x x
 x x x x x

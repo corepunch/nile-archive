@@ -3,26 +3,26 @@ tier: easy
 teaches: Sweep the two broad platforms on either side of the overlook’s narrow waist.
 
 x x x x x
- p p p p
+ . . . .
+. . p . .
+ . p p .
 . p p p .
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p p p x
+ . p p .
+. p p p .
+ . p p .
+x . p . x
  x p p x
 x x p x x
  x p p x
-x p p p x
+x . p . x
  . p p .
 . p p p .
- p p p p
-. p p p .
- p p p p
-. p p p .
- p p p p
-x p p p x
  . p p .
+. . p . .
+ . p p .
+. . p . .
+ . . . .
+x . . . x
+ . . . .
 x x x x x
  x x x x

@@ -4,25 +4,25 @@ teaches: Free the chains along the crossing and clear both plaque layers around 
 
 x x x x x
  x x x x
-P x x x x
- P P x x
-P P x P x
- P P P x
-P P P P x
- P P P x
-P x g P x
- P P P P
-x P P g x
- P g P P
-P x P x P
- P P g P
-x g P P x
- P P P P
-x P g x P
- x P P P
-x P P P P
- x P P P
-x P x P P
- x x P P
-x x x x P
+. x x x x
+ . . x x
+. . x . x
+ . P . x
+. . . . x
+ . . . x
+. x . . x
+ . P P .
+x . . . x
+ . . P .
+. x g x .
+ . P . .
+x . . . x
+ . P P .
+x . . x .
+ x . . .
+x . . . .
+ x . P .
+x . x . .
+ x x . .
+x x x x .
  x x x x

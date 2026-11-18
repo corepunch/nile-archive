@@ -4,25 +4,25 @@ teaches: Follow the diagonal causeway around its broken edges.
 
 x x x x x
  x x x x
-x p p x x
- p p x x
-x p p p x
- p p p x
-x p p p x
- p p p x
-p p p p x
+x . . x x
+ . . x x
+x . . . x
+ . p p x
+x p p . x
+ . p p x
+. p p p x
+ p p p .
+x p p p .
  p p p p
-x p p p p
+. p p p .
  p p p p
-p p p p p
- p p p p
-p p p p x
- p p p p
-x p p p p
- x p p p
-x p p p x
- x p p p
-x p p p x
- x x p p
-x x p p x
+. p p p x
+ . p p p
+x p p p .
+ x p p .
+x . p p x
+ x p p .
+x . . . x
+ x x . .
+x x . . x
  x x x x

@@ -7,22 +7,22 @@ x x x x x
 x x x x x
  . p p .
 x p p p x
- p p p p
-. p j p .
  p j j p
-. x p x .
- p p p p
-. p p p .
- p p p p
-s j p j s
- p p p p
-. p p p .
- j j j j
-j x j x j
- j j j j
 . p . p .
- p p p p
-x p p p x
- x p p x
+ p . . p
+. x . x .
+ . . . .
+. p . p .
+ . j j .
+s . j . s
+ . . . .
+. . . . .
+ . . . .
+. x . x .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ x . . x
 x x x x x
  x x x x

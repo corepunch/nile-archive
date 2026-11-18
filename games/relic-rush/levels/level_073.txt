@@ -5,24 +5,24 @@ teaches: Free the locks and clear the lower chamber of the crypt.
 x x x x x
  x x x x
 x x x x x
- x p p x
+ x . . x
 x x p x x
- p p p p
+ . k k .
 x p p p x
  p p p p
-p k p k p
+. k k k .
  p p p p
-p p p p p
- p p p p
-p k p k p
- p p p p
-p p p p p
- k x x k
-p x p x p
- p p p p
-p p p p p
- p p p p
-p p p p p
- x p p x
+. p p p .
+ . p p .
+. . k . .
+ . p p .
+. . p . .
+ . x x .
+. x . x .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ x . . x
 x x x x x
  x x x x

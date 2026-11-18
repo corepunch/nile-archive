@@ -3,26 +3,26 @@ tier: normal
 teaches: Work down from the spire to the two chained approaches and the lower hall.
 
 x . . . x
+ x . . x
+x . p . x
  x p p x
-x p p p x
- x p p x
-x k p k x
+x . k . x
  x p p x
 . p p p .
- p k k p
-k k p k k
- p p p p
-. p p p .
+ . k k .
+. . p . .
+ . p p .
+. p . p .
  . p p .
 x p x p x
  x x x x
-x p x p x
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
-. x p x .
- . p p .
+x . x . x
+ . . . .
+x . p . x
+ . . . .
+x . . . x
+ . . . .
+. x . x .
+ . . . .
 x x x x x
  x x x x

@@ -4,25 +4,25 @@ teaches: Follow the offsets of the sun terraces from corner to corner.
 
 x x x x x
  x x x x
-x p x p x
- p p p x
+x . x . x
+ . . . x
+x . . . x
+ . p . x
+x p p . x
+ . p p x
+. p p p x
+ p p p .
 x p p p x
- p p p x
+ p p p .
 x p p p x
- p p p x
-p p p p x
- p p p p
+ . p p p
 x p p p x
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
-x p p p p
- x p p p
-x p p p x
- x p p p
-x p p p x
- x p p p
-x p x p x
+ . p p p
+x p p p .
+ x p p .
+x . p p x
+ x . p .
+x . . . x
+ x . . .
+x . x . x
  x x x x

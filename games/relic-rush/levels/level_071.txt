@@ -4,25 +4,25 @@ teaches: Clear the cistern floor around its recessed centre.
 
 x x x x x
  x x x x
-x p p p x
+x . p . x
  x p p x
 x p p p x
  p p p p
 x p p p x
  p p p p
-p p p p p
+. p p p .
  p p p p
-p p p p p
+. . p . .
  p x x p
-p x x x p
- p x x p
-p p x p p
- p p p p
-x p p p x
+. x x x .
+ . x x .
+. . x . .
+ . . . .
+x . p . x
  x p p x
-x p p p x
- x p p x
-x p p p x
- x p p x
-x p x p x
+x . p . x
+ x . . x
+x . . . x
+ x . . x
+x . x . x
  x x x x

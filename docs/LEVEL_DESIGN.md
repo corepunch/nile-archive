@@ -55,10 +55,9 @@ of every level). Regenerate both with
 5. **Tablets win the board.** Every board has
    tablets (`oil` in the engine); clear them all to win. Our levels count
    moves, not time: Cradle covers 80–95% of a board because its levels run on
-   a timer. Count a board's tablet layers (a double tablet is two) and stay
-   within its tier on Christmas Market. Tutorial boards
-   have 6–16 layers, with ceilings of 24 for easy, 30 for normal, 34 for hard
-   and 40 for boss. The validator enforces the campaign's limits. Put the tablets
+   a timer. A board holds at least 6 tablet layers (a double tablet is two)
+   and as many as its length allows; see
+   [How long a board is](#how-long-a-board-is). Put the tablets
    where they make the board's point: behind the gate, in the far corner of
    the vault, along the tunnel. The move budget is set later by the tuner.
 6. **Chains guard tablets.** In Cradle of Rome 869 of 871 chains sit on
@@ -116,12 +115,31 @@ silhouettes: a fir tree, a bell, a star, a snowflake, a sleigh, stalls in a
 row. Reuse a family with a changed task instead of inventing an arbitrary
 notch. Give every board a one-sentence intent (`teaches:`).
 
-**Relic Rush.** The first six boards introduce small plaque fields. Levels
-7–100 cover at least four fifths of the board with plaques. Every cell on a boss
-board has two layers. Chains debut on level 4. Ice and carved stones arrive on
-level 12. Level 62 brings double chains, following the sequel's Adventure
-schedule. The first six boards allow up to 24 tutorial, 40 easy or 45 normal
-plaque layers. See the [Relic Rush board progression](../games/relic-rush/docs/board-progression.md).
+**Both campaigns** follow the Windows sequel's schedule: chains debut on
+level 4, ice and carved stones on level 12 and double chains on level 62.
+Every plaque on a tenth-level boss is a green double. The sequel covers
+80–100% of a board with plaques because it is timed; our boards count moves,
+so each keeps the share of plaques that fits its length (next section). See the
+[Relic Rush board progression](../games/relic-rush/docs/board-progression.md).
+
+## How long a board is
+
+The bot's median game on level N should be 1.5 to 2 times the move budget of
+[Homescapes level N](homescapes-reference/first-100-levels.md): about 28 to
+37 moves on average, since our boards are less casual. A board that runs
+longer has plaques the bot reaches late: under chains or ice, behind a gate,
+in a corner with one match line. Find and remove them:
+
+```sh
+python3 tools/balance_plaques.py relic-rush --levels 31-40   # each board's median and its latest plaques
+python3 tools/balance_plaques.py relic-rush --trim           # remove the latest plaques, pair by pair
+```
+
+`--trim` plays every board, removes the plaques cleared last in symmetric
+pairs, and repeats until the median is at most twice the Homescapes figure. A
+chain or ice whose plaque goes stays only if it still holds back a plaque
+below it. Tutorials 1–4 are left as authored. To keep chains and ice on a
+trimmed board, put them on plaques the report shows the bot clears early.
 
 ## The level file
 

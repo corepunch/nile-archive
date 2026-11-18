@@ -6,12 +6,25 @@ hit breaks the chain. A later hit clears the plaque beneath it. Ice and carved
 stones can also cut off the route that feeds a chamber.
 
 The campaign uses the [GameTop Windows edition of Cradle of Rome 2](../../../docs/cradle-of-rome-reference/README.md#adventure-comparison-sheets)
-as its progression reference. The authored layouts use Relic Rush’s hex
-geometry and four-piece matches. Plaque coverage tracks the reference after
-level 6, with a minimum of 80% of all board cells. Each tenth expedition is a
-boss with green double plaques on every cell. The [full sheet](../../../docs/review/level-sheets/relic-rush.png)
-shows all 100 boards, and the [30-level sheet](../../../docs/review/level-sheets/relic-rush-1-30.png)
+as its progression reference: the order of features, which boards carry
+chains, ice and green plaques, and the tenth-board bosses. The authored
+layouts use Relic Rush's hex geometry and four-piece matches. The
+[full sheet](../../../docs/review/level-sheets/relic-rush.png) shows all 100
+boards, and the [30-level sheet](../../../docs/review/level-sheets/relic-rush-1-30.png)
 focuses on the story expeditions.
+
+## Length
+
+An expedition is sized by moves. The reference bot's median game on board N is
+at most twice the move budget of [Homescapes level N](../../../docs/homescapes-reference/first-100-levels.md):
+28.6 moves on average across the campaign, against 18.5 in Homescapes, and
+between 13 and 63 after the four tutorials. Cradle of Rome 2 covers 80–100% of
+a board with plaques because its levels run on a timer; at that coverage the
+bot needed about 110 moves a board with four-piece matches. Each board
+therefore keeps the plaques the bot clears soonest, 27–44% of its cells per
+ten levels, and the rest of the board is plain floor.
+`python3 tools/balance_plaques.py relic-rush` lists the plaques that hold a
+board up, and `--trim` removes them.
 
 ## Match-four difficulty
 
@@ -22,7 +35,7 @@ an open court. Overgrown Terraces introduces a single chained plaque on level 4.
 Vault Door expands the clearing area, then Vine-Bound Terraces brings back
 chains on smaller target fields.
 
-Jaguar Court and Overgrown Arches introduce dense clearing on levels 7 and 8.
+Jaguar Court and Overgrown Arches widen the plaque field on levels 7 and 8.
 On level 9, Twin Terraces starts with 40 empty cells below a chained entrance.
 The upper terrace has lines of four that can open the chain and start the fall.
 Level 12 introduces ice and carved stones. Later boards vary the shape of the
@@ -33,45 +46,20 @@ low armrests. Heart of the Temple (20) has two lobes that taper to the base.
 Hall of Pillars (30) frames an open courtyard and ends in two pillars. Its
 centre plaque covers the signal plate used by the story scene.
 
-The Sundered Gallery (34) brings back an empty lower chamber. From Twin Sanctums
-(35) onward, ice or carved stones punctuate the sequence of chained boards.
-The Jungle Bridge (62) introduces double chains. Twin Shrines (79) holds the
-lower chamber until both links on the gate chains have been broken. The Valley
-Temple (100) combines double chains and ice over green plaques.
+Double chains arrive on the Jungle Bridge (62), following the sequel's schedule.
 
 ## Blocker density
 
-Boards with chains or ice carry about the reference's share of them. Chained
-plaques run in dotted rows, with a free piece between two chains so every
-chain keeps a line of four. Ice runs in rows, and the chamber under an ice row
-starts empty, as the cells under a Cradle of Rome 2 ice tablet start frozen.
-Per ten levels chains cover 3–7% of all cells (reference 3–9%) and ice up to
-7% (reference up to 8%). Compare any range with
+Chains and ice sit on plaques the bot clears early, because a chained or
+frozen plaque needs two or three matches of four on one cell. Every board the
+reference chains still has chains; they cover 1–4% of all cells per ten
+levels (reference 3–9%). Ice covers up to 4% (reference up to 8%), on 13 of
+the reference's 18 ice boards. A gate stays only where it holds back a
+plaque. Compare any range with
 `python3 tools/reference/cradle-of-rome/compare_levels.py relic-rush`.
 
-Twelve boards stay below the reference because the bot's games ran past the
-250-move ceiling at full density: 23, 25, 26, 38, 53, 65, 70, 73, 75, 81, 89, 98
-and 99 carry between the earlier count and 60% of the reference's share.
-
-## Boss blockers
-
-The sequel leaves bosses 10, 20, 30 and 80 free of blockers. Bosses 40, 50 and
-60 step up the chain count. The Observatory (70) and the Altar (90) chain
-about a fifth of the field. The final boss mixes double chains and ice.
-Relic Rush scales the counts by board area and groups blockers symmetrically.
-
-| Boss | Cradle of Rome 2 | Relic Rush |
-| --- | --- | --- |
-| 10, 20, 30, 80 | No chains or ice | No chains or ice |
-| 40 | 4 chains | 2 chains |
-| 50 | 6 chains | 3 chains |
-| 60 | 12 chains | 6 chains |
-| 70 | 44 chains | 14 chains |
-| 90 | 32 chains | 14 chains |
-| 100 | 10 double chains and 8 frozen cells | 4 double chains and 3 frozen cells |
-
-The final board uses cutouts for open space. Its ice and chains sit over
-green plaques and absorb hits before the plaque layers.
+Every plaque on a boss board is green. The final board keeps ice over green
+plaques.
 
 ## Board checks and captures
 

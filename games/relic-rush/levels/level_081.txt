@@ -4,25 +4,25 @@ teaches: Clear around the ice and stone on the diagonal steps.
 
 x x x x x
  x x x x
-x p p . x
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
-x j p s x
- p p p p
-x p p p x
- p p p p
-x j j j x
- p p p p
-x p p p x
- p p p p
-x s p j x
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
+x . . . x
+ . . . .
+x . p . x
+ . p p .
 x . p p x
+ . p j .
+x . p s x
+ . p j .
+x p j p x
+ p p j .
+x . j . x
+ . j p p
+x p j p x
+ . j p .
+x s p . x
+ . j p .
+x p p . x
+ . p p .
+x . p . x
+ . . . .
+x . . . x
  x x x x

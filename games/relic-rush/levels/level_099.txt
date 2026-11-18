@@ -4,25 +4,25 @@ teaches: Break ice and stones on both sides of the last door.
 
 x x x x x
  x x x x
-x x p x x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p J J J p
- I J J I
-x s p s x
- p p p p
-x p . p x
- x p p x
-x x p x x
+x x . x x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ p . . p
+. . . . .
+ p . . p
+. j x j .
+ p . . p
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+x s . s x
+ . . . .
+x . . . x
+ x . . x
+x x . x x
  x x x x

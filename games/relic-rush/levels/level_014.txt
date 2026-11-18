@@ -5,24 +5,24 @@ teaches: Clear the chained plaques between the pillared galleries.
 x . . . x
  x . . x
 x . p . x
- x p p x
+ x k k x
 x p p p x
  x p p x
 x p p p x
  x p p x
 x x x x x
+ x c c x
+. . . . .
+ . . . .
+. p x p .
+ x c c x
+. c p c .
  x p p x
-p k p k p
+. . p . .
  p p p p
-p p x p p
- x k k x
-. k p k .
- x p p x
-p p p p p
- p p p p
-. p p p .
- k k k k
-x p p p x
+. p . p .
+ . c c .
+x . p . x
  . p p .
 x x x x x
  x x x x

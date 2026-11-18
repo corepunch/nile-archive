@@ -2,27 +2,27 @@ name: Choked Gateway
 tier: easy
 teaches: Match over ice and beside the carved stones to open room around the gate.
 
-x x p x x
- x p p x
+x x . x x
+ x . . x
+x . p . x
+ . p p .
+. p . p .
+ . p p .
+. p j p .
+ . i i .
 x p p p x
- p p p p
-. p p p .
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
-x p p p x
+ . . . .
+x . . . x
  x x x x
-x p x p x
- . p p .
-. p p p .
- . p p .
-x p p p x
- s p p s
-x j p j x
- p j j p
-x p p p x
- . p p .
-. p p p .
- . p p .
+x . x . x
+ . . . .
+. . . . .
+ . . . .
+x . p . x
+ s . . s
+x . . . x
+ . . . .
+x . . . x
+ . . . .
+. . . . .
+ . . . .

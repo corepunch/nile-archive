@@ -2,27 +2,27 @@ name: Twin Wells
 tier: normal
 teaches: Break ice and stone near the wells, then clear the connecting floor.
 
-. p p p .
- p p p p
-x p p p x
- p p p p
-p j x j p
- j p p j
-p j x j p
- p p p p
-p x x x p
- . . . .
-p x x x p
+. . p . .
+ . p p .
+x p . p x
  p . . p
-. p x p .
- s p p s
-j j x j j
- p j j p
-p p x p p
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. x x x .
+ . . . .
+. x x x .
+ . . . .
+. . x . .
+ s . . s
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
 x x x x x
  x x x x

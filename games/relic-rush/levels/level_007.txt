@@ -4,25 +4,25 @@ teaches: Sweep both sides of the wide court, including the foot of the board.
 
 x x x x x
  . . . .
-x p x p x
- p p p p
-p p p p p
- p p p p
-p p p p p
- p x x p
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
+x . x . x
+ . . . .
 . p p p .
- p p p p
+ . . . .
+. p . p .
+ p x x p
+. p p p .
+ . p p .
+. p p p .
+ . p p .
 x p p p x
- x p p x
+ . p p .
 x p p p x
- x p p x
+ . p p .
+. p p p .
+ . p p .
+x . p . x
+ x . . x
+x . . . x
+ x . . x
 x x x x x
  x x x x

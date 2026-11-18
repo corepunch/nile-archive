@@ -7,20 +7,20 @@ x x x x x
 x x x x x
  x x x x
 x . x . x
+ . . . .
+x . . . x
+ . k k .
+. p p p .
+ p p p p
+. . p . .
+ k k k k
+. p p p .
+ p p p p
+. . p . .
+ . k k .
+. p p p .
  . p p .
-x k k k x
- p p p p
-p p p p p
- p p p p
-k k p k k
- p p p p
-p p p p p
- p p p p
-k k p k k
- p p p p
-p p p p p
- p p p p
-x k p k x
+x . k . x
  . p p .
 x . . . x
  x . . x

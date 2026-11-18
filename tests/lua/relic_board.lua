@@ -312,20 +312,26 @@ if testing.game == "relic-rush" then
         check(terraces.tiles[i].kind >= 0, "opening the chain feeds the lower terrace")
     end
 
-    local shrines = rules.game_start(78, 982)
-    local gates, gated = {}, {}
+    -- The same gate with two links: the terrace stays empty until the second hit.
+    local links
+    for _, entry in ipairs(rules.levels[9].chain_cells) do
+        if entry.cell == entrance then links = entry end
+    end
+    links.hits = 2
+    local shrines = rules.game_start(8, 982)
+    links.hits = 1
+    local gated = {}
     for i = 0, rules.CELLS - 1 do
-        if shrines.chain[i] == 2 then gates[#gates+1] = i end
         if shrines.active[i] and shrines.tiles[i].kind < 0 then gated[#gated+1] = i end
     end
-    check(#gates > 0 and #gated >= 20, "the double chains hold back the lower shrines")
+    check(shrines.chain[entrance] == 2 and #gated >= 30, "a double chain holds back the lower terrace")
     for hit = 1, 2 do
         local strike = rules.new_match()
-        for _, i in ipairs(gates) do strike.mask[i] = true end
+        strike.mask[entrance] = true
         rules.game_apply(shrines, strike)
         rules.game_collapse(shrines)
         for _, i in ipairs(gated) do
-            check((shrines.tiles[i].kind >= 0) == (hit == 2), "the shrines refill after the second hit")
+            check((shrines.tiles[i].kind >= 0) == (hit == 2), "the terrace refills after the second hit")
         end
     end
 

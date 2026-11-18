@@ -2,24 +2,24 @@ name: Hall of Pillars
 tier: boss
 teaches: Clear the double plaques around the open courtyard and uncover the central signal plate.
 
-P x x x P
- P P P P
-P P P P P
- P P P P
-P P P P P
- P P P P
-P P x P P
- P x x P
-x P x P x
- P P P P
+. x x x .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . x x .
+x . x . x
+ . . . .
 x P P P x
- P P P P
-P P P P P
- P P P P
-x P P P x
- P P P P
-x P x P x
- P x x P
+ . P P .
+. P P P .
+ . . . .
+x . . . x
+ . . . .
+x . x . x
+ . x x .
 x x x x x
  x x x x
 x x x x x

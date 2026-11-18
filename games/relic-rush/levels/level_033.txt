@@ -3,25 +3,25 @@ tier: normal
 teaches: Follow the stepped approach and clear the chained plaques below it.
 
 x x x x x
- x p p x
+ x . . x
 x x . x x
- x p p x
+ x . . x
+x . k . x
+ . . . .
 x p p p x
- k k k k
-x p p p x
+ . k k .
+. . . . .
  p p p p
-k k k k k
+. k p k .
  p p p p
-p p p p p
- p p p p
-k k p k k
- p p p p
-p p p p p
- p p p p
-k k p k k
- p p p p
-x p x p x
+. . k . .
  . p p .
+. . p . .
+ . p p .
+. . . . .
+ . . . .
+x . x . x
+ . . . .
 x x x x x
  x x x x
 x x x x x

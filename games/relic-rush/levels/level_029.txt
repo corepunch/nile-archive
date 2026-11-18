@@ -2,27 +2,27 @@ name: The Dry Well
 tier: hard
 teaches: Clear the two sides of the well and the basin underneath.
 
-. . p . .
- p p p p
+. . . . .
+ . . . .
 . p x p .
  p p p p
 x p p p x
  p p p p
 x p p p x
  p p p p
-p p p p p
+. p p p .
  p p p p
-p p x p p
- p p p p
-p p x p p
- p p p p
-p x x x p
+. p x p .
+ p . . p
+. . x . .
+ p . . p
+. x x x .
+ . . . .
+. x . x .
+ . . . .
+. . . . .
  . p p .
-p x p x p
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
+x . . . x
+ . . . .
 x x x x x
  x x x x

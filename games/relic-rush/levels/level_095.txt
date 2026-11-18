@@ -3,26 +3,26 @@ tier: hard
 teaches: Break the vault’s ice and stones before clearing the floor.
 
 x x x x x
- x p p x
+ x . . x
 x x p x x
- x p p x
-x p p p x
- p p p p
-p p p p p
- p p p p
-x j p j x
- p p p p
-p x p x p
- p p p p
-x j x j x
- p p p p
-p x p x p
- p p p p
-x j j j x
- j j j j
-x . p . x
- p s s p
+ x . . x
+x p . p x
+ p . . p
+. . . . .
+ p . . p
 x . . . x
  . . . .
-x x p x x
+. x . x .
+ . . . .
+x . x . x
+ . p p .
+. x p x .
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ . s s .
+x . . . x
+ . . . .
+x x . x x
  x . . x

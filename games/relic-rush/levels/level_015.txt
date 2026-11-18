@@ -4,25 +4,25 @@ teaches: Follow the plaque fields across both sides of the broken aqueduct.
 
 x x . x x
  x . . x
-. p . p .
+. . . . .
  x p p x
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p p p x
+. p p p .
+ . p p .
+. p p p .
+ . p p .
+. p p p .
+ . p p .
+x . p . x
  x p p x
 x x x x x
  x p p x
-x s p s x
- p p p p
-x p p p x
- p p p p
-x p p p x
- p p p p
-p p p p p
- p p p p
-. p p p .
+x s . s x
  . p p .
+x p p p x
+ . p p .
+x p p p x
+ . p p .
+. . p . .
+ . . . .
+. . . . .
+ . . . .

@@ -2,24 +2,24 @@ name: Lintel Door
 tier: easy
 teaches: Work from the wide lintel through the two chained approaches below.
 
-p p . p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p k k p
-x p p p x
- p p p p
-x p p p x
- p p p p
-p k p k p
- p p p p
-p p p p p
- p p p p
-p x p x p
+. . . . .
  . p p .
+. . p . .
+ . k k .
+. p p p .
+ . p p .
+. p k p .
+ . . . .
+x k p k x
+ . p p .
+x . k . x
+ . p p .
+. . p . .
+ . . . .
+. . . . .
+ . . . .
+. x . x .
+ . . . .
 . x . x .
  . . . .
 x x x x x

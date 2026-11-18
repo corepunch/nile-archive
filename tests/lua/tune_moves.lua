@@ -4,7 +4,8 @@
 -- tier's margin (tutorial 2.5, easy 2, normal 1.4, hard 1.2, boss 1). The
 -- median is stable where the bot's slowest games are not: a budget read from
 -- that tail gave one easy board 12 moves and the next 48. Prints one
--- MOVES_JSON line per board.
+-- MOVES_JSON line per board, and one CELLS_JSON line per game with the move
+-- each plaque was cleared on.
 if not testing.tune_levels then return end
 
 local rules = require('rules')
@@ -18,11 +19,15 @@ local best_move = require('greedy_bot')(rules)
 
 local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 end
 
--- Base moves the bot needed to clear the board, or nil.
-local function play(level, seed)
+-- Base moves the bot needed to clear the board, or nil. `cleared` receives
+-- the move on which each plaque went: the plaques that go last, or never,
+-- are the ones that make a board long (tools/balance_plaques.py).
+local function play(level, seed, cleared)
     rules.levels[level].moves = CAP
     local g = rules.game_start(level - 1, seed)
     local shuffles = 0
+    local pending = {}
+    for i = 0, rules.CELLS - 1 do if g.active[i] and g.oil[i] > 0 then pending[i] = true end end
     while not g.won and not g.lost do
         local a, b = best_move(g)
         if a < 0 then
@@ -35,6 +40,9 @@ local function play(level, seed)
                 if m.hits == 0 then break end
             end
             rules.game_check_end(g)
+            for i in pairs(pending) do
+                if g.oil[i] == 0 then pending[i] = nil; cleared[#cleared + 1] = ('[%d,%d]'):format(i, CAP - g.moves) end
+            end
         end
     end
     return g.won and math.max(1, CAP - g.moves) or nil   -- loadout extra moves come on top
@@ -44,7 +52,11 @@ for level = first, last do
     local spec = rules.levels[level]
     local tier = spec.tier or 'normal'
     local used = {}
-    for n = 1, SEEDS do used[n] = play(level, seed_of(1000 * level + n)) or math.huge end
+    for n = 1, SEEDS do
+        local cleared = {}
+        used[n] = play(level, seed_of(1000 * level + n), cleared) or math.huge
+        print(('CELLS_JSON {"level":%d,"seed":%d,"cleared":[%s]}'):format(level, n, table.concat(cleared, ',')))
+    end
     table.sort(used)
     local median = used[(SEEDS + 1) // 2]
     check(median < math.huge, ('the bot clears board %d within %d moves in half its games'):format(level, CAP))
