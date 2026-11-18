@@ -1,7 +1,7 @@
 {
   "camp": {
     "about": "Unlocks Bomb. Hit a cell and its six neighbors.",
-    "cost": [495, 190, 205]
+    "cost": [480, 180, 210]
   },
   "well": {
     "about": "Water buckets earn 3 Food each.",
@@ -29,19 +29,19 @@
   },
   "workshop": {
     "about": "Timber bundles earn 5 Supplies each.",
-    "cost": [455, 175, 0]
+    "cost": [360, 135, 0]
   },
   "market": {
     "about": "Ration jars earn 4 Food each.",
-    "cost": [170, 70, 90]
+    "cost": [165, 70, 90]
   },
   "gateway": {
     "about": "Shrimp earn 6 Food each.",
-    "cost": [10, 65, 45]
+    "cost": [10, 60, 45]
   },
   "lodge": {
     "about": "Unlocks Hourglass. Add five moves.",
-    "cost": [175, 410, 220]
+    "cost": [180, 410, 230]
   },
   "archive": {
     "about": "Rings earn 7 Coins each.",
@@ -49,19 +49,19 @@
   },
   "observatory": {
     "about": "Unlocks Mixer. Shuffle the pieces.",
-    "cost": [185, 280, 175]
+    "cost": [175, 260, 160]
   },
   "fountain": {
     "about": "Emeralds earn 11 Coins each.",
-    "cost": [480, 595, 375]
+    "cost": [485, 625, 410]
   },
   "temple": {
     "about": "Unlocks Star. Clear all pieces of a chosen kind.",
-    "cost": [140, 175, 115]
+    "cost": [135, 175, 115]
   },
   "log_cabin": {
     "about": "Unlocks Hammer. Hit one cell.",
-    "cost": [135, 50, 0]
+    "cost": [195, 75, 0]
   },
   "apothecary": {
     "cost": [220, 15, 0]
@@ -74,7 +74,7 @@
   },
   "map_room": {
     "about": "Unlocks Lightning. Strike up to fifteen random cells.",
-    "cost": [100, 245, 140]
+    "cost": [100, 245, 145]
   },
   "greenhouse": {
     "cost": [300, 20, 0]
@@ -89,7 +89,7 @@
   },
   "clock_tower": {
     "about": "Unlocks Shield. Hit the row through a chosen cell.",
-    "cost": [10, 55, 40]
+    "cost": [5, 55, 40]
   },
   "lighthouse": {
     "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
@@ -100,7 +100,7 @@
   },
   "aviary": {
     "about": "Sandals earn 9 Coins each.",
-    "cost": [120, 185, 110]
+    "cost": [115, 165, 100]
   },
   "beached_ship": {
     "about": "Scarabs earn 8 Coins each.",
@@ -112,7 +112,7 @@
   },
   "museum": {
     "about": "Harps earn 10 Coins each.",
-    "cost": [220, 280, 205]
+    "cost": [220, 280, 200]
   },
   "hanging_gardens": {
     "cost": [550, 37, 0]
