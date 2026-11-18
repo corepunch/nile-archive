@@ -86,7 +86,7 @@ return ui.skin{
             disabled = {set = {body = {fill = "#4B5E50"}, face = {fill = "#6E7E6C"}, gloss = {fill = "#82917D"}}},
             variants = {
                 navigation_build=buttons.navigation("build"),
-                navigation_play = buttons.navigation("play", {text = "cream", em = 44}),
+                navigation_play = buttons.navigation("play", {text = "cream", em = 28, text_inset = {45, 0}, text_align = {.5, .45}, text_fit = true}),
                 navigation_pause = buttons.navigation("pause"),
                 flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE
                 -- Secondary actions (Restart, Quit) in carved wood, beside the jade primary.
