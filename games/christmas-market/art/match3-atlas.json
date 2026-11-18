@@ -1132,7 +1132,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "f9708261dadfee516650f1d4010c98917ef7ae81559d58923ef62b365e496116",
+    "recipe": "0dd1812901071e13817dfdb1f3914b8b4ce6cc40bd7ebe38ad6d5be8b81f7c5a",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1203,6 +1203,7 @@
       "games/christmas-market/art/registered/story-pieces/telegram.png": "da4dcb762ad7bb9d46765606c49d59ff20ca49901defbc74906b85be5b291870",
       "games/christmas-market/data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
       "games/christmas-market/data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
+      "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "77d1488d6c5005236dc0c1cb35dc98fcae22b686d7010c99ca3392273d2c5ce8",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
@@ -1214,7 +1215,7 @@
       "games/christmas-market/data/board/pieces.png": "e7ac81ed9186af23df93c8236b6a2c7b88adf4712f5a3c9bc89201a2d41b1ba2",
       "games/christmas-market/lua/match3_atlases.lua": "9a7fcc4d97b383d78ac031b658c1d51f6b8e85af631e8c5a87681efbe02a26ec",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
-      "games/christmas-market/lua/match3_skin.lua": "7114ad4102a98d155b53bfa5b3f8b296bac7194b0a6167c9f7f8d4863a7b7f81"
+      "games/christmas-market/lua/match3_skin.lua": "4a682635164a0d53a40c3e7c06b05140f12a8686a84e59898a2a528937fbba9c"
     }
   }
 }

@@ -1451,7 +1451,7 @@
         "board": 88
       }
     },
-    "registration": "Center the visible board pieces on 128 px cells, at 112 px or 88 px for Hammer.",
+    "registration": "Center the visible board pieces on 128 px cells, at 112 px or 88 px for Hammer. The atlas builder measures each frame's center of opacity for the silhouette and color on round buttons.",
     "bonuses": {
       "hammer": {
         "slot": "impact",

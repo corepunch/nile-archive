@@ -112,7 +112,7 @@ Play is the largest control.
 The four circular boosters share the [runtime enamel painter](../../../art/match3-buttons/README.md)
 with Build, Play, Wishes and Pause. The [manifest](../art/manifest.json) maps
 Hammer and Lantern to market goods 5 and 10, and the other two to the bomb
-and rocket frames. Cards and the guide show those same pieces. The [state
+and rocket frames. The inset and the colored piece share the frame's center of opacity on the button face. Cards and the guide show those same pieces. The [state
 review](screenshots/art-states.jpg) covers all four boosters.
 
 Matched toy hammers and lantern stars use the engine's resource flight arc,

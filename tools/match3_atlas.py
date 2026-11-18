@@ -19,6 +19,7 @@ from pathlib import Path
 
 from PIL import Image, ImageChops
 from match3_elements_art import NAMES as ELEMENT_NAMES
+import match3_buttons
 import match3_theme_art
 import pack_particles
 
@@ -367,17 +368,18 @@ def game_sprites(game, root):
         sprites |= grid_sprites(registered / 'campaign-pieces.png', campaign, 5)
         sprites |= grid_sprites(registered / 'result-icons.png', list(manifest['result_icons']['icons']), 2)
         gems = manifest['bonus_gems']
-        names = [f'bonus-{key}' for key in gems['columns']]
-        sprites |= grid_sprites(registered / 'bonus-gems.png', names, len(names))
+        bonus_frames = [f'bonus-{key}' for key in gems['columns']]
+        sprites |= grid_sprites(registered / 'bonus-gems.png', bonus_frames, len(bonus_frames))
         inputs += [registered / name for name in ('campaign-pieces.png', 'result-icons.png', 'bonus-gems.png')]
     else:
         manifest = json.loads((root / 'art/manifest.json').read_text())
+        bonus_frames = manifest['bonus_buttons']['icons'].values()
         goods = manifest['market_goods']['frames']
         sprites |= grid_sprites(registered / 'market-goods.png', [f'market-{i}' for i in range(len(goods))], 4)
         inputs.append(registered / 'market-goods.png')
     for name, path in files.items():
         sprites[name] = Image.open(path).convert('RGBA')
-    return sprites, inputs + list(files.values())
+    return sprites, inputs + list(files.values()), bonus_frames
 
 
 def build_game(game, check):
@@ -436,9 +438,14 @@ def build_game(game, check):
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
     loaded["glow"] = glow
-    extra, extra_inputs = game_sprites(game, root)
+    extra, extra_inputs, bonus_frames = game_sprites(game, root)
     assert not set(extra) & set(loaded), set(extra) & set(loaded)
     loaded.update(extra)
+    button_centers = {}
+    for name in sorted(set(bonus_frames)):
+        image = loaded[name]
+        x, y = match3_buttons.alpha_center(image)
+        button_centers[name] = (f'{x / image.width:.7f}', f'{y / image.height:.7f}')
     packed = pack_groups(loaded)
     outputs = []
     for group, (sheet, _) in packed.items():
@@ -450,6 +457,7 @@ def build_game(game, check):
             ''.join(f'    {group}=' + lua_sheet(f'board/{group}.png', frames).lstrip() + ',\n' for group, (_, frames) in packed.items()) + '}\n',
         'lua/match3_skin.lua': header + 'local atlases = require("match3_atlases")\nreturn {\n    sheets={' +
             ', '.join(f'atlases.{group}' for group in BOARD_GROUPS if group in packed) + '},\n' +
+            '    button_centers={\n' + lua_frames(button_centers, '        ') + '    },\n' +
             '    images={\n' + lua_strings(images) + '    },\n    aliases={\n' + lua_strings(aliases) + '    },\n}\n',
         'lua/match3_hud.lua': header + 'local atlases = require("match3_atlases")\nreturn {\n    sheets={' +
             ', '.join(f'atlases.{group}' for group in HUD_GROUPS if group in packed) + '},\n' +
@@ -475,7 +483,7 @@ def build_game(game, check):
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
-    inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs
+    inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs + [Path(match3_buttons.__file__)]
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
     inputs += ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
     inputs += [root / 'data' / path for path in (images | hud_images).values()]

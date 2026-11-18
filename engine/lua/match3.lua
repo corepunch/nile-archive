@@ -151,6 +151,9 @@ function E.atlas(definition)
     for name, target in pairs(definition.aliases or {}) do
         images[name] = assert(images[target], "match3 alias of a missing frame: " .. target)
     end
+    for name, point in pairs(definition.button_centers or {}) do
+        buttons.centers[assert(images[name], "missing button frame: " .. name)] = vec2(point[1], point[2])
+    end
     atlases[key] = images
     return images
 end

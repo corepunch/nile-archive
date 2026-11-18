@@ -1,6 +1,8 @@
 -- The rim and enamel face follow the control's drawn size. Only the inset
 -- illustration is a sprite, shared by every interaction state.
 local B = {}
+-- Normalized centers of opacity for board pieces also used on round buttons.
+B.centers = setmetatable({}, {__mode = "k"})
 local rgb = color.hex
 local faces = {
     normal   = {top=rgb(0xFFF4D1), bottom=rgb(0xEBC284)},
@@ -56,6 +58,8 @@ function B.paint(box, image, state, alpha)
     gfx.circle(well:center(), well.w / 2, ink(rim.lip))
     gfx.round_rect_grad(enamel, enamel.w / 2, ink(face.top), ink(face.bottom))
     local dst = rect.centered(enamel:center(), size2(side * .78, side * .78)):fit(texture.size(image))
+    local anchor = B.centers[image]
+    if anchor then dst = dst:offset(enamel:center() - dst:point(anchor)) end
     if disabled then
         gfx.image_inset(image, dst, vec2(side * .014, side * .018), ink(sandstone))
     else

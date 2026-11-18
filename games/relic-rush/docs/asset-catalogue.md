@@ -425,7 +425,7 @@ cover a zero-charge ring at both phone sizes.
 The eight standalone pieces each have their own silhouette. Board pieces, rewards and toolbar buttons use the same 128 px frames in `data/board/pieces.png`. The four painted navigation icons also live in this atlas. The [board progression](board-progression.md#bonus-pieces) lists each construction reward and effect. All eight items are drawn together in the [painted source](../art/bonus-gems/rome-eight.png). The [manifest](../art/board-states/manifest.json) records source positions and registration. Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` and `python3 tools/match3_atlas.py` to reproduce the frames.
 
 The shared enamel painter draws the five states and exposes the ready face from
-the bottom as each matched gem lands. The house, Play triangle, expedition map
+the bottom as each matched gem lands. The inset and the colored piece use the same center of opacity on the button face. The house, Play triangle, expedition map
 and pause bars use the painted materials of the resource pieces in the [shared action atlas](../../../art/match3-buttons/README.md).
 [Toolbar at both sizes](screenshots/enamel-toolbar.jpg) · [All bonus states](screenshots/bonus-states.jpg).
 

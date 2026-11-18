@@ -10,27 +10,34 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "art/match3-buttons/manifest.json"
 
 
+def alpha_center(image):
+    """Center of opacity in image coordinates measured from the top-left edge."""
+    alpha = image.getchannel("A").tobytes()
+    mass = sum(alpha)
+    if not mass:
+        raise ValueError("The icon is completely transparent")
+    moment_x = moment_y = 0
+    for y in range(image.height):
+        row = alpha[y * image.width:(y + 1) * image.width]
+        moment_x += sum(x * weight for x, weight in enumerate(row))
+        moment_y += y * sum(row)
+    return moment_x / mass + .5, moment_y / mass + .5
+
+
 def centered_icon(image, side, fit):
     """Place the alpha-weighted center of the visible artwork at the cell center."""
     bounds = image.getchannel("A").getbbox()
     if not bounds:
         raise ValueError("The icon is completely transparent")
     artwork = image.crop(bounds)
-    center = (side - 1) / 2
     for limit in range(min(fit, side, max(artwork.size)), 0, -1):
         icon = artwork.copy()
         icon.thumbnail((limit, limit), Image.Resampling.LANCZOS)
-        alpha = icon.getchannel("A").tobytes()
-        mass = sum(alpha)
-        if not mass:
+        if not icon.getchannel("A").getbbox():
             continue
-        moment_x = moment_y = 0
-        for y in range(icon.height):
-            row = alpha[y * icon.width:(y + 1) * icon.width]
-            moment_x += sum(x * weight for x, weight in enumerate(row))
-            moment_y += y * sum(row)
-        x = round(center - moment_x / mass)
-        y = round(center - moment_y / mass)
+        cx, cy = alpha_center(icon)
+        x = round(side / 2 - cx)
+        y = round(side / 2 - cy)
         if 0 <= x <= side - icon.width and 0 <= y <= side - icon.height:
             cell = Image.new("RGBA", (side, side))
             cell.paste(icon, (x, y))

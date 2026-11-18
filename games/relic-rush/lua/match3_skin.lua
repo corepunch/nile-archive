@@ -2,6 +2,16 @@
 local atlases = require("match3_atlases")
 return {
     sheets={atlases.pieces, atlases.blockers, atlases.cells, atlases.fx},
+    button_centers={
+        ["bonus-bomb"]={0.4757180,0.5762849},
+        ["bonus-hammer"]={0.4950052,0.4838808},
+        ["bonus-hourglass"]={0.4982855,0.5017298},
+        ["bonus-lightning"]={0.4739382,0.4475542},
+        ["bonus-mixer"]={0.4961388,0.4590196},
+        ["bonus-plus"]={0.4957312,0.4973252},
+        ["bonus-shield"]={0.5032678,0.4744947},
+        ["bonus-star"]={0.5023415,0.5358453},
+    },
     images={
         ["background"]="board/backs/background.jpg",
         ["scene-1"]="board/backs/scene-1.jpg",

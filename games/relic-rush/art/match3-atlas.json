@@ -1487,7 +1487,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "f9708261dadfee516650f1d4010c98917ef7ae81559d58923ef62b365e496116",
+    "recipe": "0dd1812901071e13817dfdb1f3914b8b4ce6cc40bd7ebe38ad6d5be8b81f7c5a",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1584,6 +1584,7 @@
       "games/relic-rush/data/board/backs/scene-1.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
       "games/relic-rush/data/board/backs/scene-2.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
       "games/relic-rush/tools/prepare_assets.py": "34f0b6e59c10e6fcf0088ccb2ab0606a5c16c0ff92358c69c7565f2b7bb751a8",
+      "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "77d1488d6c5005236dc0c1cb35dc98fcae22b686d7010c99ca3392273d2c5ce8",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
@@ -1598,7 +1599,7 @@
       "games/relic-rush/data/board/pieces.png": "f6167e9e7ce8780e37c29237f148f302e7b2b564c6b426914345b52eed50a61d",
       "games/relic-rush/lua/match3_atlases.lua": "7acd7cc415c3cee7c8ff9fae925beffa73ebb39f380d817d41d64aa42653c6b6",
       "games/relic-rush/lua/match3_hud.lua": "19591300f7e87746c4e7dd8b978f1538a4b3d39ac3b3e7e24b332163489c6c58",
-      "games/relic-rush/lua/match3_skin.lua": "49781922bd1559bc9f1ec5db4c6249e824a838f68f47eb8549ffa5c7446ac596"
+      "games/relic-rush/lua/match3_skin.lua": "15aae9be64b2c79f63881e3cd1887611db131af1bc06c87ea58a96df284b3f6c"
     }
   }
 }
