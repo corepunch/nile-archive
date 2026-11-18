@@ -192,7 +192,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 1. Start directly in the first match-4 level; there is no title-screen or friend-road detour.
 2. Clear all blue tablets within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Return to the island. At a restoration milestone, check the price and replay an expedition if you need more resources. Nothing blocks the next expedition: you can play on without building and come back when you can afford it.
+4. Return to the island. At a restoration milestone, check the price and replay an expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. You can finish all 100 with an empty island. If you build later, the island story picks up where you left it.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. See how the crew uses what you built, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
 

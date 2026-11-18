@@ -34,7 +34,6 @@ G.DEFAULTS = {
     region_speaker = "",
     board = {},
     notices = {
-        story_waiting = "Something is happening in town.",
         reward_building = "Building funded! Spare gold is yours to decorate.",
         reward_story = "Something is happening in town.",
         reward_replay = "Replay gold collected. Choose something in the shop.",
@@ -332,32 +331,31 @@ function G.journey(content)
         p.story_recap = s:int("narrative.recap", p.story_recap and 1 or 0) == 1
     end
 
+    local function first_unread(p)
+        for _, beat in ipairs(M.beats) do
+            if not (p.story_seen or {})[beat.key] then return beat end
+        end
+    end
+
     function M.result_beat(p, g, level)
         if not g.won or g.level ~= p.level or not (M.clear_before_result or level and level.reveal) then return end
-        local beat = M.find(("after-%02d"):format(p.level + 1))
-        if beat and not beat.choices and not p.story_seen[beat.key] and g.story_clear ~= beat.key then return beat end
+        local key = ("after-%02d"):format(p.level + 1)
+        local beat = M.clear_before_result and first_unread(p) or M.find(key)
+        if beat and beat.key == key and not beat.choices and not p.story_seen[key] and g.story_clear ~= key then return beat end
     end
 
     function M.next(p, owns, before_level)
-        for _, b in ipairs(M.beats) do
-            if not (p.story_seen or {})[b.key] then
-                if b.phase == "before" then
-                    if before_level == b.level - 1 and p.level >= b.level - 1 then return b end
-                elseif p.level >= b.level then
-                    local wonder = M.wonder_at(b.level)
-                    if ((b.phase == "after" and M.clear_before_result) or not wonder or owns(wonder - 1))
-                        and (not M.ready or M.ready(p, b)) then return b end
-                end
-                return nil
-            end
+        local b = first_unread(p)
+        if not b then return end
+        if b.phase == "before" then
+            if before_level == b.level - 1 and p.level >= b.level - 1 then return b end
+            -- Catch up on the island if this expedition was already cleared.
+            if before_level == nil and p.level >= b.level then return b end
+        elseif p.level >= b.level then
+            local wonder = M.wonder_at(b.level)
+            if ((b.phase == "after" and M.clear_before_result) or not wonder or owns(wonder - 1))
+                and (not M.ready or M.ready(p, b)) then return b end
         end
-    end
-
-    function M.awaiting_return(p)
-        for _, b in ipairs(M.beats) do
-            if not (p.story_seen or {})[b.key] then return b.phase ~= "before" and p.level >= b.level end
-        end
-        return false
     end
 
     -- The scene that bridges an old save: the opening line, then the lines of
@@ -1193,6 +1191,12 @@ function G.bind(R, over)
         if event and event.kind == "click" then R.choose_story_option(tonumber(event.id)) end
     end
 
+    function R.next_story(before_level)
+        return journey.next(R.prog, function(index)
+            return island.owned(R.island, wonder_kind(island, index + 1)) > 0
+        end, before_level)
+    end
+
     -- Acknowledge a finished beat, then start the next one that is due. The
     -- opening plays at once, even over the town a new game may start on.
     function R.story_tick()
@@ -1215,9 +1219,8 @@ function G.bind(R, over)
         if R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
-            if R.clear_scene and R.clear_scene() then return end
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
-            if b then R.queue_story(b, false, true) end
+            if b and not (R.clear_scene and R.clear_scene()) then R.queue_story(b, false, true) end
             return
         end
         if R.overlay ~= R.OV_NONE or R.island.placing >= 0 then return end
@@ -1227,9 +1230,8 @@ function G.bind(R, over)
             return
         end
         local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
-        local b = journey.next(R.prog, function(index) return island.owned(R.island, wonder_kind(island, index + 1)) > 0 end, before)
-        if b then
-            if b.phase ~= "before" then R.on_island = true end
+        local b = R.next_story(before)
+        if b and (R.on_island or b.phase == "before") then
             local reply = R.prog.story_choices and R.prog.story_choices[b.key]
             if reply then choice_reply(b, reply)
             else R.queue_story(b) end
@@ -1274,7 +1276,6 @@ function G.bind(R, over)
     function R.start_level(chosen)
         local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
         if lvl > R.prog.level then return false end
-        if lvl == R.prog.level and journey.awaiting_return(R.prog) then R.notice(W.notices.story_waiting); return false end
         R.reset_board(R.make_board(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
         R.on_island = false
         R.overlay = R.OV_NONE
@@ -1290,7 +1291,6 @@ function G.bind(R, over)
 
     function R.play_level(level)
         if R.g and R.g.level == level and not R.g.won and not R.g.lost then
-            if level == R.prog.level and journey.awaiting_return(R.prog) then return false end
             if R.refresh_board_bonuses then R.refresh_board_bonuses() end
             R.on_island = false; R.overlay = R.OV_NONE
             if R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT then R.present_board() end
@@ -1535,8 +1535,8 @@ function G.app(R)
         ui.set_enabled(true)
         local at_result = R.overlay == R.OV_RESULT
         local revealing = at_result and require("match3.elements_view").reveal_holding(R, rules)
-        local scene = at_result and not R.quiet and R.clear_scene and R.clear_scene()
         local clear_due = at_result and not R.quiet and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
+        local scene = clear_due and R.clear_scene and R.clear_scene()
         if scene then R.draw_clear_scene(scene, inp) end
         if not talking and not revealing and not scene and not clear_due then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
@@ -1601,15 +1601,11 @@ function G.app(R)
         R.story_current, R.story_preview, R.story_before_result = nil, false, false
         R.story_choice_beat, R.story_choice_preview = nil, nil
         R.layout()
-        if not R.start_level() then
-            -- A save the story or a building holds on the island still needs an
-            -- inert board for shared view updates.
-            R.reset_board(R.make_board(math.min(R.prog.level, LEVELS - 1), R.prog.seed))
-            R.g.lost = true
-            R.on_island = true
+        R.start_level()
+        if R.prog.level >= LEVELS then
+            R.g.won, R.on_island = true, true
         end
-        if R.prog.level >= LEVELS then R.g.won = true end -- no unfinished attempt is created at campaign completion
-        if journey.earned(R.prog.level) > island.wonder_count(R.island) or R.prog.level >= LEVELS then R.on_island = true end
+        if R.prog.story_recap or R.next_story(nil) then R.on_island = true end
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end
         if W.start_on_town and not app.arg("smoke") then R.on_island = true end
         if R.resume_completed then R.resume_completed() end

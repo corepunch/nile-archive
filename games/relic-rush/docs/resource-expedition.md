@@ -84,7 +84,7 @@ Confirmed placements change openings and refills from the listed expedition
 onward. Authored story pieces keep their slots. The four bonus families debut
 as matchable pieces and fill their own saved slots across both levels. [Bonus rules and effects](board-progression.md#bonus-pieces)
 
-The ten story restorations (★) keep the journey's schedule but never block the next new expedition. Nine more purchases sit between them on the same ladder. Each opens after
+Every first clear opens the next expedition, even with an empty island and unread dialogue. The ten story restorations (★) unlock their own scenes and rewards. Nine more purchases sit between them on the same ladder. Each opens after
 its clear and must be placed before the next story restoration. A player can play on past an open one until the story
 needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDINGS.md#relic-rush-the-20-restorations)
 

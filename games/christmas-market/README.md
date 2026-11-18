@@ -25,6 +25,7 @@ results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 The game has 100 winter wishes, authored boards of 9 x 12 hexes (text files in `levels/`, validated by `tools/hex_levels.py`). Each one asks you to light every marked pane, and the story and twenty buildings run across the first thirty; wishes 31 to 100 are playable without story yet.
+Collecting a first-clear reward opens the next wish, even with an unbuilt stall or unread market dialogue.
 Blue panes clear in one hit. Green panes first turn blue. A tinsel tie
 absorbs a hit before the piece and its pane can clear. The lamps lead from the market
 arch to Agnes's bakery and along the station walk for Pip's mum. See the

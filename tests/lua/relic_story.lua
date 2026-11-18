@@ -172,14 +172,14 @@ for level=1,30 do
         check(not after, 'a chapter-one win cannot start the story')
     else
         check(after and after.key==('after-%02d'):format(level),'later first clears play their assigned beat')
-        check(journey.awaiting_return(p),'unread result blocks the next new expedition')
+        check(R.start_level(level),'an unread result leaves the next expedition open')
         p.story_seen[after.key]=true
     end
     for z=1,5 do c:unlock(z,p.wallet) end
     for _, step in ipairs(opened) do
         check(island.next_step(c,p.level)==step.kind,'restorations open in ladder order')
         if step.story then
-            check(not R.start_level(level),'the next board waits for required construction')
+            check(R.start_level(level),'the next board opens before construction')
             check(not journey.next(p,owned(c),nil),'restoration story waits for confirmed construction')
             local reserve,cost=island.reserved_cost(c,p.level),island.buildings[step.kind+1].cost
             check(reserve:covers(cost) and cost:covers(reserve),'reserve covers all costs of the earned building')
@@ -211,6 +211,29 @@ check(c.count==20 and c.open==63 and p.wallet[rules.CLEARED]==30,
     'thirty clears restore twenty buildings and open every region')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth wonder')
 
+-- Take the normal Play, resume and Collect paths with an empty island.
+R.island=city.new(); island.island_setup(R.island)
+R.prog={level=0,seed=1,wallet=purse(),story_seen={}}
+R.test_mode=true
+for level=1,rules.LEVELS do
+    check(R.play_level(level-1) and R.g.level==level-1,'Play opens expedition '..level)
+    local board=R.g
+    R.on_island=true
+    check(R.play_level(level-1) and R.g==board and not R.on_island,'Play resumes the same expedition')
+    R.overlay=R.OV_RESULT
+    for _,cell in ipairs(rules.level_of(board).oil) do board.oil[cell]=0 end
+    board.oil_left=0
+    rules.game_check_end(board)
+    R.quiet=false
+    R.story_tick()
+    check(not story.active() and not R.story_current,'playing ahead leaves island scenes unread')
+    R.claim_reward()
+    R.story_tick()
+    check(R.prog.level==level and R.on_island and not story.active(),'Collect opens the next expedition')
+    R.quiet=true
+end
+check(R.island.count==0 and not next(R.prog.story_seen),'all 100 expeditions clear without building or dialogue')
+
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false
 R.island=c;R.g=rules.game_start(0,1)
@@ -240,7 +263,9 @@ local old={level=10,seed=55,wallet=purse(1234,12,34,30,7)}
 journey.migrate(old,3)
 check(old.level==10 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
 check(journey.next(old,owned(c),10).key=='before-11','old completion opens the new episode without replaying episode one')
-old.level=13;old.story_seen['before-11']=true
+old.level=13
+check(journey.next(old,owned(c),nil).key=='before-11','a deferred chapter opening can play back on the island')
+old.story_seen['before-11']=true
 old.story_seen['after-11'],old.story_seen['after-12']=true,true
 old.story_seen['after-13']=true
 check(journey.next(old,owned(c),nil).key=='restore-13','an already-owned later wonder satisfies its story gate')
@@ -268,6 +293,7 @@ empty_queue()
 
 -- The first clear hands straight to the scene that reveals the note.
 R.prog.level=12
+journey.migrate(R.prog, 0)
 R.g=rules.game_start(12,1)
 R.g.won=true
 R.on_island,R.overlay=false,R.OV_RESULT
@@ -280,6 +306,8 @@ check(R.g.story_clear=='after-13','the note scene is ready to record when the re
 -- before the first-clear dialogue.
 R.g=rules.game_start(29,1)
 R.prog={level=29,story_seen={}}
+journey.migrate(R.prog, 0)
+R.prog.story_seen["before-30"]=true
 R.on_island,R.overlay=false,R.OV_RESULT
 local g=R.g
 local level=rules.level_of(g)

@@ -106,7 +106,6 @@ for level=1,30 do
     check(not island.island_place_next(c,p.wallet,p.level,0),'a wish opens only its own stalls')
     local after=journey.next(p,owned(c),nil)
     check(after and after.key==('after-%02d'):format(level),'the right post-clear beat follows every result')
-    check(journey.awaiting_return(p),'unread result blocks the next new wish')
     p.story_seen[after.key]=true
     local replay=rules.game_start(level-1,100+level);replay.won=true;replay.moves=0
     local stars=p.wallet[4]

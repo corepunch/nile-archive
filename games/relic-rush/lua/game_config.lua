@@ -29,7 +29,6 @@ return {
         },
     },
     notices = {
-        story_waiting = "Finish the conversation on your island.",
         reward_building = "Resources banked. Open Buildings for the crew’s next request.",
         reward_story = "Resources banked. Spend them in the Build Shop.",
         reward_replay = "Resources banked. Spend them in the Build Shop.",

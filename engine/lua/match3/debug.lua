@@ -147,6 +147,11 @@ function D.bind(R, W)
                 end
                 g.obstacles = 0
                 R.prog.level, R.quiet = g.level, false
+                for _, beat in ipairs(journey.beats) do
+                    if beat.level <= g.level or beat.level == g.level + 1 and beat.phase == "before" then
+                        R.prog.story_seen[beat.key] = true
+                    end
+                end
                 R.debug_skip_level()   -- first clear, with its beat
             end
         end

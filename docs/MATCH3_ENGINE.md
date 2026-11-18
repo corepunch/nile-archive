@@ -124,9 +124,10 @@ A loadout's `extra_moves` adds moves to the level's budget.
 
 `match3.game.campaign_ladder(island, unlocks, journey, slots)` gives a game a
 Cradle of Rome ladder: catalogue buildings bought in order, with optional
-piece and bonus unlocks. Story buildings keep the journey's schedule and never block the next
-new level; the others open after their clear and must be placed before the
-next story building. It installs the gate, reserve, shop order and waivers
+piece and bonus unlocks. First clears unlock levels. Players can start and resume the current level with
+unread dialogue or outstanding purchases. Story buildings keep the journey's
+schedule. The other buildings open after their clear and must be placed before
+the next story building. It installs the gate, reserve, shop order and waivers
 for older saves on the island module. Both portrait games use it. A game whose
 campaign buildings are more than story types `0..WONDERS-1` in
 order supplies three island hooks, which the ladder installs. `next_build(city, level)` names the
