@@ -4,25 +4,25 @@ teaches: Match pieces on top of the blue tablets to clear them; clear every tabl
 
 x x x x x
  x x x x
-x . . . x
+x x x x x
+ x x x x
+x x . x x
  x . . x
 x . . . x
- . . . .
-x . . . x
  . p p .
-x . p . x
+. . p . .
  . p p .
-x . p . x
+. . p . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  . . . .
 x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x . . . x
- . . . .
-x x x x x
+ x . . x
+x x . x x
  x x x x
 x x x x x
  x x x x

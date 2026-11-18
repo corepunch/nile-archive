@@ -276,6 +276,28 @@ for _, reduced in ipairs({false, true}) do
 end
 R.reduced_motion = false
 
+if testing.game == "relic-rush" then
+    local next_level = rules.game_start(1, 982)
+    R.reset_board(next_level)
+    local default_radius, default_width = R.HEX_R, R.piece_width
+    local opening = rules.game_start(0, 982)
+    R.reset_board(opening)
+    local centre = rules.hex_center()
+    for i = 0, rules.CELLS - 1 do
+        local active = rules.hex_distance(centre, i) <= 4
+        check(rules.game_cell_active(opening, i) == active, "The Landing fills a complete hex")
+        check(R.cell_at(R.cell_pos(i)) == (active and i or -1), "The Landing's input follows the enlarged cells")
+    end
+    local left = R.cell_pos(rules.hex_index(-4, 2)).x - R.HEX_R
+    local right = R.cell_pos(rules.hex_index(4, -2)).x + R.HEX_R
+    check(right - left >= R.SCREEN_W * .95 and R.BOARD_CLIP.x >= 0 and R.BOARD_CLIP:max().x <= R.SCREEN_W,
+        "The Landing fills the safe width without clipping its cells")
+    near(R.piece_width / R.HEX_R, default_width / default_radius, "refill clips scale with the cells")
+    R.reset_board(next_level)
+    near(R.HEX_R, default_radius, "the second level restores the usual cell size")
+    near(R.piece_width, default_width, "the second level restores the usual refill clip")
+end
+
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,
 -- a skip release cannot play a move, and reset discards suspended presentation.
 do

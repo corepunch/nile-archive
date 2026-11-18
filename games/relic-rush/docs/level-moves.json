@@ -1,9 +1,9 @@
 [
  {
-  "fastest": 3,
+  "fastest": 2,
   "level": 1,
-  "median": 6,
-  "moves": 15,
+  "median": 7,
+  "moves": 18,
   "seeds": 40,
   "tier": "tutorial",
   "wins": 40,

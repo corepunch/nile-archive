@@ -8,7 +8,7 @@ it orders and spaces the boards and is not a human win rate.
 
 | # | Board | Tier | Moves | Median | Fastest | Within budget |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
-| 1 | The Landing | tutorial | 15 | 6 | 3 | 40/40 |
+| 1 | The Landing | tutorial | 18 | 7 | 2 | 40/40 |
 | 2 | Temple Steps | tutorial | 18 | 7 | 3 | 38/40 |
 | 3 | Sunken Courtyard | tutorial | 23 | 9 | 2 | 37/40 |
 | 4 | Overgrown Terraces | tutorial | 15 | 6 | 2 | 39/40 |

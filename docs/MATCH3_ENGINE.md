@@ -89,6 +89,10 @@ games' `campaign.lua` files contain these data; their
 `rules.lua` modules only configure the engine, name kinds and handle the
 restoration economy. Matching and input do not live in either game.
 
+An optional `view_radius` sets the drawn cell radius in logical points. The
+layout fits the active field and uses the new radius for drawing, pointer
+input, entrance and refill clips. Boards without it use the game default.
+
 Optional stones and tablets extend these descriptors. Their exact schema, timing,
 artwork and board-design rationale are in [Match-3 elements](MATCH3_ELEMENTS.md).
 

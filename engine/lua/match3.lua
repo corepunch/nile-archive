@@ -1496,6 +1496,7 @@ function E.new(config)
         R.fall_steps, R.fall_from = nil, {}
         R.shuffle_from = nil
         R.kudos, R.kudos_level, R.mission_banner = nil, 0, nil
+        R.layout()
     end
     local rules = M
     -- The engine owns the HUD, field and tool bands. The scenery is painted
@@ -1505,9 +1506,12 @@ function E.new(config)
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
     local BONUS_GAP, BONUS_MARGIN = 4, 4   -- the round button art carries its own clear border
     local neutral_hud = app.arg("default-match3")
-    local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
+    local default_radius, default_piece_width = R.HEX_R, R.piece_width
+    local HEX_R, HEX_DY = default_radius, math.sqrt(3) * default_radius
+    local piece_width = default_piece_width or HEX_DY
     local env = M.envelope
-    local board_size = size2(((env.max_q - env.min_q) * 1.5 + 2) * HEX_R + 12, (env.max_y - env.min_y + 1) * HEX_DY + 12)
+    local envelope_width, envelope_rows = (env.max_q - env.min_q) * 1.5 + 2, env.max_y - env.min_y + 1
+    local board_size = size2(envelope_width * HEX_R + 12, envelope_rows * HEX_DY + 12)
     local centred_game, centre_q, centre_row = nil, 0, 0
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
@@ -1518,6 +1522,9 @@ function E.new(config)
         R.tools_y = h - TOOLS_FROM_BOTTOM
         if g ~= centred_game then
             centred_game, centre_q, centre_row = g, 0, 0
+            local width, rows = envelope_width, envelope_rows
+            local level = g and M.level_of(g)
+            local fitted_radius = level and level.view_radius
             if g then
                 local min_q, max_q, min_row, max_row = math.huge, -math.huge, math.huge, -math.huge
                 for i = 0, CELLS - 1 do
@@ -1528,8 +1535,17 @@ function E.new(config)
                         min_row, max_row = math.min(min_row, row), math.max(max_row, row)
                     end
                 end
-                if min_q <= max_q then centre_q, centre_row = (min_q + max_q) / 2, (min_row + max_row) / 2 end
+                if min_q <= max_q then
+                    centre_q, centre_row = (min_q + max_q) / 2, (min_row + max_row) / 2
+                    if fitted_radius then width, rows = (max_q - min_q) * 1.5 + 2, max_row - min_row + 1 end
+                end
             end
+            HEX_R = fitted_radius or default_radius
+            HEX_DY = math.sqrt(3) * HEX_R
+            R.HEX_R = HEX_R
+            R.piece_width = default_piece_width and default_piece_width * (HEX_R / default_radius)
+            piece_width = R.piece_width or HEX_DY
+            board_size = size2(width * HEX_R + 12, rows * HEX_DY + 12)
         end
         local board_center = vec2(w / 2, bonuses and h / 2 or h - BOARD_FROM_BOTTOM)
         local shift = vec2(centre_q * 1.5 * HEX_R, bonuses and centre_row * HEX_DY or 0)
@@ -1565,7 +1581,6 @@ function E.new(config)
     end
     R.layout = layout
     layout()
-    local CELL_SIZE = R.piece_width or HEX_DY
     local PI = math.pi
     local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE = 0, 1, 2, 3, 4, 6
     local REJECT_LEG = .16
@@ -1881,7 +1896,7 @@ function E.new(config)
             local delta = at - start
             local bend = math.min(HEX_R * 1.9, delta:len() * .5) * (from % 2 == 0 and 1 or -1)
             local control = start:lerp(at, .5) + vec2(-delta.y, delta.x):norm():scale(bend)
-            local bounds = R.BOARD_CLIP:inflate(-CELL_SIZE / 2)
+            local bounds = R.BOARD_CLIP:inflate(-piece_width / 2)
             local limit = bounds:max()
             control.x = num.clamp(control.x, bounds.x, limit.x)
             control.y = num.clamp(control.y, bounds.y, limit.y)
@@ -1920,7 +1935,7 @@ function E.new(config)
             if from < 0 then
                 -- Clip only the inlet; sideways moves need the whole board.
                 local top = cell_pos(i).y - HEX_DY / 2
-                clip = rect(at.x - CELL_SIZE / 2 - 1, top, CELL_SIZE + 2, R.BOARD_CLIP.h)
+                clip = rect(at.x - piece_width / 2 - 1, top, piece_width + 2, R.BOARD_CLIP.h)
             end
         elseif not R.reduced_motion and landed and landed.from[i] ~= i
             and t == landed.tiles[i] and t.kind >= 0 then

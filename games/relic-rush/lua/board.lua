@@ -27,14 +27,12 @@ local match3 = require("match3")
 match3.bind_board_ui(R, rules)
 match3.bind_town_board_hud(R)
 
-local CELLS, HEX_R = rules.CELLS, R.HEX_R
+local CELLS = rules.CELLS
 local cell_active = rules.game_cell_active
 local rgba = color
 
 -- Preserve the guide's icon size; only live board pieces follow the board's geometry.
 local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
-local BOARD_SCALE = HEX_R / ART_HEX_R
-local CELL_FACE_SIZE = 2 * (HEX_R - .65)
 local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
@@ -65,7 +63,7 @@ function R.draw_relic(t, at, scale, alpha, aspect, board)
     if t.kind < 0 then return end
     -- Preserve the original piece canvas, including its transparent gutter.
     -- Filling the cell with the opaque interior makes pieces crowd its edges.
-    local draw_scale = scale * (board and BOARD_SCALE or 1)
+    local draw_scale = scale * (board and R.HEX_R / ART_HEX_R or 1)
     local s = ART_CELL_SIZE * .95 * draw_scale
     local tint = rgba(255, 255, 255, alpha)
     local tex, area = board and R.board_piece_texture(t.kind) or R.relics[t.kind+1],
@@ -122,7 +120,7 @@ local function draw_blockers(sx)
             local visible, scale, alpha = true, 1, 1
             if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
             if visible then
-                local dst = rect.centered(at, size2.splat(CELL_FACE_SIZE * scale))
+                local dst = rect.centered(at, size2.splat(2 * (R.HEX_R - .65) * scale))
                 local tint = rgba(255, 255, 255, 255 * alpha * cover)
                 -- An ice field: the ice floor tile below, full ice over the piece at any strength.
                 if g.ice[i] > 0 then gfx.image(R.board_art["ice-2"], dst, tint) end
@@ -136,7 +134,7 @@ end
 local function draw_sheen(sx)
     for i = 0, CELLS - 1 do
         local s = cell_active(R.g, i) and R.intro:sheen(i) or 0
-        if s > .02 then R.vfx_halo(cell_pos(i) + vec2(sx, 0), HEX_R * 1.9, rgba(255, 238, 186, 150 * s)) end
+        if s > .02 then R.vfx_halo(cell_pos(i) + vec2(sx, 0), R.HEX_R * 1.9, rgba(255, 238, 186, 150 * s)) end
     end
 end
 
