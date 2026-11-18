@@ -1,28 +1,28 @@
 name: The Well
 tier: normal
-teaches: Use the wide rim of the well to line up the double chain, then clear the tablet beneath it.
+teaches: Sweep the ring of plaques around the well.
 
 x x x x x
  x x x x
-. . . . .
- . . . .
-. . . . .
- . p p .
-. p K p .
- . p p .
-x p . p x
- . . . .
-x x . x x
- x . . x
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
+x x x x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p x x p
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x x p x x
+ x x x x

@@ -1,28 +1,28 @@
 name: Warden's Colonnade
 tier: hard
-teaches: Free the paired chains in the colonnade, then clear the blue tablets below their pieces.
+teaches: Trace the plaque bands between the colonnade and its wings.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+x x x x x
+ x . . x
+x x . x x
  . p p .
-. p . p .
- . k k .
-. . p . .
+x p x p x
+ p p p p
+. x p x .
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+x p p p x
  . p p .
-. . . . .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-. . . . .
- . . . .
+x . x . x
+ x x x x

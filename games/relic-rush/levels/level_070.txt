@@ -1,28 +1,28 @@
 name: Grand Observatory
 tier: boss
-teaches: Use the open dome to reach the double ice and line up a second hit on the double tablets.
+teaches: Free the chains and clear double plaques across the curved dome and down the pier.
 
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
+x x x x x
+ x x x x
+x x x x x
  x P P x
-x P . P x
- x J J x
-. . . . .
- . . . .
-. P x P .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . x x .
-. . x . .
- . . . .
-. s . s .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x P x x
+ P P P P
+x P P P x
+ g g g g
+P P P P P
+ P P P P
+x P P P x
+ P g g P
+x g P g x
+ P P P P
+x P P P x
+ P g g P
+x P P P x
+ g g g g
+x P P P x
+ P P P P
+x P P P x
+ x P P x
+x x P x x
+ x P P x

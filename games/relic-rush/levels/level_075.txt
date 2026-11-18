@@ -1,28 +1,28 @@
 name: Lost Sanctum
 tier: hard
-teaches: Break through the chains and ice around the sanctum's open eye.
+teaches: Break the ice and carved stones around the sanctum.
 
 x x x x x
  x x x x
-x . . . x
- . . . .
-. . . . .
- . p p .
+x . p . x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p s p s p
+ p p p p
 . p p p .
- . K K .
-. p p p .
- . . . .
-. . x . .
- . x x .
-x . x . x
- x . . x
-x x J x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+ p p p p
+x J p J x
+ x p p x
+x p p p x
+ p p p p
+p J p J p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x p x p x
+ x x x x

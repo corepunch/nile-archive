@@ -1,28 +1,28 @@
 name: Sun Terraces
 tier: easy
-teaches: Clear the tablets terrace by terrace; the plain outer steps are free space for matches.
+teaches: Follow the offsets of the sun terraces from corner to corner.
 
 x x x x x
  x x x x
-x . . . x
- x . . x
-x . . . x
- . . . .
-x . . . x
- . . . .
-. p . p .
- . j j .
-. . p . .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x p x p x
+ p p p x
+x p p p x
+ p p p x
+x p p p x
+ p p p x
+p p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p p
+ x p p p
+x p p p x
+ x p p p
+x p p p x
+ x p p p
+x p x p x
+ x x x x

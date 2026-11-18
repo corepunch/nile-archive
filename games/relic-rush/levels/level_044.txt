@@ -1,28 +1,28 @@
 name: Chained Cloisters
 tier: normal
-teaches: Work from both sides of the cloister to clear its chained tablets.
+teaches: Work down the paired rows of chained plaques and clear the floor between them.
 
-. . x . .
- . . . .
-. . x . .
+x x x x x
+ x x x x
+x x x x x
+ x x x x
+x . x . x
  . p p .
-. p x p .
- . k k .
-. p x p .
- . . . .
-. x x x .
- . . . .
-. . x . .
+x k p k x
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+x k p k x
  . p p .
-. . x . .
- . . . .
-. s x s .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x . . . x
+ x . . x
 x x x x x
  x x x x

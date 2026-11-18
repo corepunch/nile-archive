@@ -1,28 +1,28 @@
 name: Temple Eye
 tier: normal
-teaches: Match through the paired chains flanking the temple eye, then clear the exposed tablets.
+teaches: Circle the eye of the temple through ice and stone.
 
 x x x x x
  x x x x
-x . . . x
- . . . .
-. p . p .
+x x p x x
+ x p p x
+x p p p x
  p p p p
-. K . K .
- . . . .
-. p x p .
- . x x .
-. . x . .
- . x x .
-x . x . x
+p p p p p
+ p p p p
+p j p j p
+ p p p p
+p p x p p
+ j x x j
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+. j p j .
+ p p p p
+p p p p p
+ p s s p
+x p . p x
+ x . . x
+x x p x x
  x x x x
-x . x . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .

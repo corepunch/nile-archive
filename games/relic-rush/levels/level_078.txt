@@ -1,28 +1,28 @@
 name: Arch Gate
 tier: normal
-teaches: Tablets ring a doorway; clear the flanks and the stone keystone to open the arch.
+teaches: Clear the arch gate above the two entries.
 
-x . . . x
- x . . x
-. . . . .
- . . . .
-. p . p .
- . p p .
-. j s j .
- . p p .
-. p . p .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . . . .
+x x x x x
+ x x x x
+x x p x x
+ x p p x
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p x x p
+p x x x p
+ x x x x
+x x x x x
+ x x x x
+x x x x x
+ x x x x

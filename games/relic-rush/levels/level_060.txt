@@ -1,28 +1,28 @@
 name: Hall of Idols
 tier: boss
-teaches: Work through the iced tablets between the stones and match twice over each double tablet.
+teaches: Free the chains along the crossing and clear both plaque layers around the openings.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. s . s .
- . P P .
-. . . . .
- . J J .
-. . P . .
- . P P .
-. . . . .
- . P P .
-. s . s .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. s . s .
- . . . .
-x . . . x
- x . . x
+x x x x x
+ x x x x
+P x x x x
+ P P x x
+P P x P x
+ P P P x
+P P P P x
+ P P P x
+P x g P x
+ P P P P
+x P P g x
+ P g P P
+P x P x P
+ P P g P
+x g P P x
+ P P P P
+x P g x P
+ x P P P
+x P P P P
+ x P P P
+x P x P P
+ x x P P
+x x x x P
+ x x x x

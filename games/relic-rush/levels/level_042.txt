@@ -1,28 +1,28 @@
 name: Twin Arches
 tier: easy
-teaches: Work through the chain where the two arches meet. Use the open hall to line up another four.
+teaches: Free the opposing locks and clear across the twin arches.
 
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . p . .
- . p p .
-. . k . .
- . p p .
-. . p . .
- . . . .
-x . x . x
+x x x x x
  x x x x
-x . x . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . s s .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ p p p p
+x p p p x
+ p p p p
+p k p k p
+ p p p p
+x p p p x
+ p p p p
+x k x k x
+ x x x x
+x p x p x
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+x x x x x
+ x x x x

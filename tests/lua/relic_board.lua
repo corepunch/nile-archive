@@ -311,6 +311,37 @@ if testing.game == "relic-rush" then
     for _, i in ipairs(empty) do
         check(terraces.tiles[i].kind >= 0, "opening the chain feeds the lower terrace")
     end
+
+    local shrines = rules.game_start(78, 982)
+    local gates, gated = {}, {}
+    for i = 0, rules.CELLS - 1 do
+        if shrines.chain[i] == 2 then gates[#gates+1] = i end
+        if shrines.active[i] and shrines.tiles[i].kind < 0 then gated[#gated+1] = i end
+    end
+    check(#gates > 0 and #gated >= 20, "the double chains hold back the lower shrines")
+    for hit = 1, 2 do
+        local strike = rules.new_match()
+        for _, i in ipairs(gates) do strike.mask[i] = true end
+        rules.game_apply(shrines, strike)
+        rules.game_collapse(shrines)
+        for _, i in ipairs(gated) do
+            check((shrines.tiles[i].kind >= 0) == (hit == 2), "the shrines refill after the second hit")
+        end
+    end
+
+    local temple = rules.game_start(99, 982)
+    local frozen
+    for i = 0, rules.CELLS - 1 do
+        if temple.ice[i] > 0 then frozen = i; break end
+    end
+    check(frozen and temple.ice[frozen] == 1 and temple.oil[frozen] == 2, "the final boss places ice over a green plaque")
+    for _, layers in ipairs{2, 1, 0} do
+        local strike = rules.new_match()
+        strike.mask[frozen] = true
+        rules.game_apply(temple, strike)
+        check(temple.ice[frozen] == 0 and temple.oil[frozen] == layers, "ice absorbs a separate hit before the two plaque layers")
+        rules.game_collapse(temple)
+    end
 end
 
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,

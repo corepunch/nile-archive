@@ -1,28 +1,28 @@
 name: Twin Sanctums
 tier: hard
-teaches: Find a line for each protected tablet in the two sanctums, using both the ice and chain approaches.
+teaches: Break the ice and clear the two stone-framed sanctums.
 
-x . x . x
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- j k k j
-. p x p .
+x x x x x
+ x x x x
+x x x x x
  . p p .
-. p x p .
- . p p .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x p p p x
+ p p p p
+. p p p .
+ p p p p
+. x p x .
+ p p p p
+. p p p .
+ p p p p
+s j p j s
+ p p p p
+. p p p .
+ j j j j
+p x p x p
+ p p p p
+. p . p .
+ p p p p
+x p p p x
+ x p p x
+x x x x x
+ x x x x

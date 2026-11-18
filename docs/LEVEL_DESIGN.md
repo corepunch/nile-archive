@@ -56,14 +56,14 @@ of every level). Regenerate both with
    tablets (`oil` in the engine); clear them all to win. Our levels count
    moves, not time: Cradle covers 80–95% of a board because its levels run on
    a timer. Count a board's tablet layers (a double tablet is two) and stay
-   within its tier on Christmas Market and Relic Rush 31–100. Tutorial boards
+   within its tier on Christmas Market. Tutorial boards
    have 6–16 layers, with ceilings of 24 for easy, 30 for normal, 34 for hard
    and 40 for boss. The validator enforces the campaign's limits. Put the tablets
    where they make the board's point: behind the gate, in the far corner of
    the vault, along the tunnel. The move budget is set later by the tuner.
 6. **Chains guard tablets.** In Cradle of Rome 869 of 871 chains sit on
    plaques; the other two are teaching gates. Put every chain and every ice
-   on a tablet (`k K g G j J`). A chain or ice on a plain cell (`c C i I`) is
+   on a tablet (`k K g G j J f`). A chain or ice on a plain cell (`c C i I`) is
    allowed only as a gate, when breaking it lets pieces into cells below;
    otherwise the player never needs to break it, and the validator says so.
 7. **Chains as gates.** Pieces fall only from the sky: a cell refills if
@@ -81,7 +81,7 @@ of every level). Regenerate both with
 ## The default 100-level schedule
 
 The default schedule follows the first Cradle of Rome's Adventure boards in
-`levels.json`. Relic Rush uses the sequel for its first 30 expeditions.
+`levels.json`. Relic Rush follows the Windows sequel.
 
 | Levels | Tablet layers | Chains | What is new |
 | --- | --- | --- | --- |
@@ -114,10 +114,11 @@ silhouettes: a fir tree, a bell, a star, a snowflake, a sleigh, stalls in a
 row. Reuse a family with a changed task instead of inventing an arbitrary
 notch. Give every board a one-sentence intent (`teaches:`).
 
-**Relic Rush 1–30.** The first six boards introduce small plaque fields. Levels
-7–30 cover at least four fifths of the board with plaques. Every cell on a boss
+**Relic Rush.** The first six boards introduce small plaque fields. Levels
+7–100 cover at least four fifths of the board with plaques. Every cell on a boss
 board has two layers. Chains debut on level 4. Ice and carved stones arrive on
-level 12. The first six boards allow up to 24 tutorial, 40 easy or 45 normal
+level 12. Level 62 brings double chains, following the sequel's Adventure
+schedule. The first six boards allow up to 24 tutorial, 40 easy or 45 normal
 plaque layers. See the [Relic Rush board progression](../games/relic-rush/docs/board-progression.md).
 
 ## The level file
@@ -207,6 +208,7 @@ Empty template (all 108 cells plain):
 | `I` | Double ice (two hits) on a plain cell |
 | `j` | Ice on a blue tablet |
 | `J` | Double ice on a blue tablet |
+| `f` | Ice on a green double tablet |
 | `s` | Carved stone: solid, no piece, one hit from an adjacent match or a tool |
 
 ### Reading the honeycomb
@@ -289,7 +291,7 @@ python3 tools/tune_moves.py relic-rush                # lua/level_moves.lua, doc
 python3 tools/tune_moves.py relic-rush --levels 41-50 # after changing a few boards
 ```
 
-The greedy bot (`tests/lua/tune_moves.lua`) clears each board 40 times on
+The greedy bot (`tests/lua/tune_moves.lua`) attempts each board on 40
 hashed seeds with a 250-move calibration ceiling. The budget is its median game
 times the tier's margin, rounded up. The median is used because the bot's
 slowest games vary wildly from board to board: a budget read from that tail

@@ -1,28 +1,28 @@
 name: Lost Courtyard
 tier: normal
-teaches: Pillars ring an open courtyard; clear every tablet around the well.
+teaches: Break the ice along the inner edge of the lost courtyard.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
+x x x x x
+ x x x x
+x x x x x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p j x j p
+ p p p p
+p p x p p
+ p p p p
+p j x j p
+ p p p p
+p p p p p
  . p p .
-. j p j .
+x s p s x
  . p p .
-. . s . .
- . s s .
-. . x . .
- . s s .
-. . s . .
- . . . .
-. . . . .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x . x x
+ x . . x
 x x x x x
  x x x x

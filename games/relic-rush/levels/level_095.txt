@@ -1,28 +1,28 @@
 name: Sealed Vault
 tier: hard
-teaches: Open the double chains on the vault seal, using the open floor to set up the next four.
+teaches: Break the vault’s ice and stones before clearing the floor.
 
 x x x x x
- x x x x
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+x j p j x
+ p p p p
+p x p x p
+ p p p p
+x j x j x
+ p p p p
+p x p x p
+ p p p p
+x j p j x
+ p p p p
+x . p . x
+ p s s p
 x . . . x
  . . . .
-. . . . .
- . . . .
-. . . . .
- . p p .
-. p p p .
- . K K .
-. p p p .
- . p p .
-. . . . .
- . . . .
-. s . s .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
+x x p x x
+ x . . x

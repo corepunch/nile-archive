@@ -1,28 +1,28 @@
 name: Ruined Colonnade
 tier: normal
-teaches: Rows of fallen pillars leave narrow lanes; match along the colonnades.
+teaches: Sweep the plaques between the ruined pillars.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. s . s .
- . p p .
-. . . . .
+x x x x x
+ x . . x
+. p x p .
  p p p p
-. . x . .
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+. x p x .
+ x p p x
+x x x x x
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+. p p p .
  . p p .
-. . . . .
- . p p .
-. s . s .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
+x p p p x
+ x p p x
+x . x . x
+ x x x x

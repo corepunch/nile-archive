@@ -5,13 +5,13 @@ hit and green plaques take two. Chains hold their pieces until a match or tool
 hit breaks the chain. A later hit clears the plaque beneath it. Ice and carved
 stones can also cut off the route that feeds a chamber.
 
-The first 30 expeditions use the [GameTop Windows edition of Cradle of Rome 2](../../../docs/cradle-of-rome-reference/README.md#adventure-comparison-sheets)
-as their progression reference. The authored layouts use Relic Rush’s hex
+The campaign uses the [GameTop Windows edition of Cradle of Rome 2](../../../docs/cradle-of-rome-reference/README.md#adventure-comparison-sheets)
+as its progression reference. The authored layouts use Relic Rush’s hex
 geometry and four-piece matches. Plaque coverage tracks the reference after
-level 6, with a minimum of 80% of all board cells. The three story bosses are
-entirely green double plaques. The [30-level sheet](../../../docs/review/level-sheets/relic-rush-1-30.png)
-shows the revised boards and the [full sheet](../../../docs/review/level-sheets/relic-rush.png)
-shows all 100.
+level 6, with a minimum of 80% of all board cells. Each tenth expedition is a
+boss with green double plaques on every cell. The [full sheet](../../../docs/review/level-sheets/relic-rush.png)
+shows all 100 boards, and the [30-level sheet](../../../docs/review/level-sheets/relic-rush-1-30.png)
+focuses on the story expeditions.
 
 ## Match-four difficulty
 
@@ -33,6 +33,34 @@ low armrests. Heart of the Temple (20) has two lobes that taper to the base.
 Hall of Pillars (30) frames an open courtyard and ends in two pillars. Its
 centre plaque covers the signal plate used by the story scene.
 
+The Sundered Gallery (34) brings back an empty lower chamber. From Twin Sanctums
+(35) onward, ice or carved stones punctuate the sequence of chained boards.
+The Jungle Bridge (62) introduces double chains. Twin Shrines (79) holds the
+lower chamber until both links on the gate chains have been broken. The Valley
+Temple (100) combines double chains and ice over green plaques.
+
+## Boss blockers
+
+The sequel leaves bosses 10, 20, 30 and 80 free of blockers. Bosses 40, 50 and
+60 step up the chain count. The Observatory (70) and the Altar (90) chain
+about a fifth of the field. The final boss mixes double chains and ice.
+Relic Rush scales the counts by board area and groups blockers symmetrically.
+
+| Boss | Cradle of Rome 2 | Relic Rush |
+| --- | --- | --- |
+| 10, 20, 30, 80 | No chains or ice | No chains or ice |
+| 40 | 4 chains | 2 chains |
+| 50 | 6 chains | 3 chains |
+| 60 | 12 chains | 6 chains |
+| 70 | 44 chains | 14 chains |
+| 90 | 32 chains | 14 chains |
+| 100 | 10 double chains and 8 frozen cells | 4 double chains and 3 frozen cells |
+
+The final board uses cutouts for open space. Its ice and chains sit over
+green plaques and absorb hits before the plaque layers.
+
+## Board checks and captures
+
 Each tablet has space for a match on two axes. Each gate has a four-piece line
 on its fed side. The level validator checks symmetry, feed routes and coverage
 before compiling the 100 source boards in [../levels](../levels). Every opening
@@ -48,6 +76,9 @@ one on the right.
 | 9 · Twin Terraces | [Opening deal](screenshots/review/rome-2-campaign/terraces-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/terraces-390.jpg) |
 | 12 · Choked Gateway | [Opening deal](screenshots/review/rome-2-campaign/gateway-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/gateway-390.jpg) |
 | 30 · Hall of Pillars | [Opening deal](screenshots/review/rome-2-campaign/hall-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/hall-390.jpg) |
+| 44 · Chained Cloisters | [Opening deal](screenshots/review/rome-2-campaign/cloisters-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/cloisters-390.jpg) |
+| 65 · Star Chamber | [Opening deal](screenshots/review/rome-2-campaign/star-chamber-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/star-chamber-390.jpg) |
+| 100 · The Valley Temple | [Opening deal](screenshots/review/rome-2-campaign/valley-temple-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/valley-temple-390.jpg) |
 
 ## Piece progression
 

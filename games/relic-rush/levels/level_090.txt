@@ -1,28 +1,28 @@
 name: The Altar
 tier: boss
-teaches: Clear the chain over the double tablet at the altar and the ice on its approach.
+teaches: Free the chains and clear both layers on the altar crown and its two projecting feet.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . J J .
-. . . . .
- . . . .
-. s G s .
- . P P .
-. . . . .
- . P P .
-. . . . .
- . P P .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
+x x x x x
+ x x x x
+x x x x x
+ P x x P
+x P x P x
+ P P P P
+x P P P x
+ P g g P
+P P P P P
+ P g g P
+x g P g x
+ x P P x
+x P P P x
+ x g g x
+x P P P x
+ P P P P
+P g P g P
+ P g g P
+x P P P x
+ P g g P
+x P P P x
+ P P P P
+x x x x x
+ x x x x

@@ -1,28 +1,28 @@
 name: Temple Stairs
 tier: easy
-teaches: Use the stair landing to make repeated lines through the double chain.
+teaches: Clear the steps along the tilt of the hillside.
 
-. x x x .
- . x x .
-. . x . .
- . . . .
-. . p . .
- . . . .
-. . K . .
- . p p .
-. . p . .
- . p p .
-. . . . .
- . . . .
-x . . . x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
 x x x x x
+ x x x x
+x x p x x
+ x x p p
+x x p p x
+ x p p p
+x p p x p
+ p p p p
+x p p p p
+ p p p p
+x x p p p
+ p p p p
+p p p p p
+ p p p p
+p p p x x
+ p p p p
+p p p p x
+ p p p p
+p x p p x
+ p p p x
+x p p x x
+ p p x x
+x x p x x
  x x x x

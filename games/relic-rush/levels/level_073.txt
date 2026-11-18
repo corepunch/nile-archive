@@ -1,28 +1,28 @@
 name: Flooded Crypt
 tier: normal
-teaches: Use the open approach above the crypt to break the double chain and clear its tablet.
+teaches: Free the locks and clear the lower chamber of the crypt.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . K . .
- . p p .
-. p . p .
- . p p .
-. p . p .
- . . . .
-. . . . .
- . . . .
-. . . . .
+x x x x x
  x x x x
-. . . . .
- . . . .
-. . . . .
- . . . .
-. s . s .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
+x x x x x
+ x p p x
+x x p x x
+ p p p p
+x p p p x
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ k x x k
+p x p x p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+x x x x x
+ x x x x

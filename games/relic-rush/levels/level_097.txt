@@ -1,28 +1,28 @@
 name: Crossroads
 tier: normal
-teaches: Follow the open arms of the crossing to line up the two iced pieces.
+teaches: Break the double chains where the four arms of the crossroads meet.
 
 x x x x x
- x x x x
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
- x . . x
-. . . . .
- . . . .
-. p . p .
- . p p .
-. j p j .
- . p p .
-. . . . .
- . . . .
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
- x . . x
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x K p K x
+ x p p x
+x p p p x
+ p p p p
+p K p K p
+ p p p p
+x p p p x
+ x p p x
+x K p K x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x p p x

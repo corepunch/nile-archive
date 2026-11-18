@@ -1,28 +1,28 @@
 name: Twin Towers
 tier: normal
-teaches: Work on both sides of the valley; the iced tablets need a second match once the pieces are free.
+teaches: Undo the chains at both towers and clear the bridge across them.
 
 x x x x x
- x . . .
-x . . . .
- . . . .
-x . . . .
- x . . .
-x x . . .
- x x j .
-x x . . .
- x . p .
-x . p . .
- . . p .
-. . p . .
- . p . .
-. . p . x
- . p . x
-. . . x x
- . j x x
-. . . x x
- . . . x
-. . . . x
- . . . .
-. . . . x
- . . . x
+ x x x x
+x x x x x
+ p p p p
+x p x p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p k x k p
+ p p p p
+k p x p k
+ p p p p
+p k x k p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p x p x
+ p x x p
+x x x x x
+ x x x x

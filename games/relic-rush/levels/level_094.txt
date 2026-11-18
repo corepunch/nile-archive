@@ -1,28 +1,28 @@
 name: Twin Wells
 tier: normal
-teaches: Match into both shafts to free the chained tablets at the wells.
+teaches: Release both kinds of chain around the twin wells.
 
-. . . . .
- . . . .
-. . . . .
- . . . .
-. p . p .
- . K K .
-. p p p .
- . p p .
-. . . . .
- . . . .
-x . x . x
- . . . .
-x . x . x
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
+x x x x x
+ x p p x
+x x p x x
+ p p p p
+x k p k x
+ p p p p
+p p p p p
+ p p p p
+x K p K x
+ p p p p
+x x p x x
+ x K K x
+x x x x x
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x x x x

@@ -1,28 +1,28 @@
 name: Cistern Locks
 tier: easy
-teaches: Match into the double chain at the cistern mouth, then clear the exposed tablet.
+teaches: Clear the cistern floor around its recessed centre.
 
 x x x x x
  x x x x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . p p .
-. p K p .
- . p p .
-x . . . x
- . . . .
-x . . . x
+x p p p x
+ x p p x
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p x x p
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x p x p x
  x x x x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- x . . x

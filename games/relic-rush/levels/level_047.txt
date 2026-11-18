@@ -1,28 +1,28 @@
 name: Mirror Pool
 tier: normal
-teaches: Pieces slide round a still pool in the centre of the court, with ice at its brim.
+teaches: Clear a ring of plaques around the mirror pool.
 
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . p p .
-. p p p .
- . j j .
-. . . . .
- . p p .
-. . . . .
- . . . .
-x . . . x
- . . . .
 x x x x x
  x x x x
+x x x x x
+ p x x p
+. p . p .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p x x p
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p x x p
 x x x x x
  x x x x

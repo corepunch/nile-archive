@@ -1,28 +1,28 @@
 name: Triumphal Arch
 tier: easy
-teaches: Use the space above the arch to break the ice and line up the newly exposed tablets.
+teaches: Clear the stepped arch from its lintel to its legs.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . j j .
-. . p . .
- . p p .
-. . . . .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . x x .
-. x x x .
+x x x x x
+ x x x x
+x x x x x
+ x x x x
+x p x p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+x p x p x
+ x x x x
+x x x x x
  x x x x

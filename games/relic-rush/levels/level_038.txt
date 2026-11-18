@@ -1,28 +1,28 @@
 name: Nested Vaults
 tier: normal
-teaches: Work through the chains at the vault entrance and use the open floor for the return match.
+teaches: Free the locks at the mouths of the nested vaults.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . p . .
- . p p .
-. . p . .
- . k k .
-. . p . .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . s . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ x x x x
+x x x x x
+ x x x x
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+k k p k k
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x x x x
+x x x x x
+ x x x x

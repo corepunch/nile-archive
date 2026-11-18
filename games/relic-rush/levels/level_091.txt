@@ -1,28 +1,28 @@
 name: Split Stair
 tier: easy
-teaches: Work from both sides of the split stair, freeing its chained and frozen pieces.
+teaches: Trace both arms of the split stair and clear their landing.
 
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . p . .
- . K K .
-. j . j .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . x x .
+x x x x x
+ x x x x
+x x x x x
+ x p p x
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p x x p
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+x x x x x
+ x x x x

@@ -1,28 +1,28 @@
 name: Twin Courts
 tier: normal
-teaches: Two courtyards, each with a fountain, join in one hall; keep both sides moving.
+teaches: Melt the ice at both courts and clear the crossing.
 
-x . x . x
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. s x s .
- . . . .
-. p x p .
- p j j p
-. p x p .
- . p p .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
+x x x x x
+ x x x x
+x x x x x
+ x x x x
+p x x x p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+j j x j j
+ p p p p
+p p x p p
+ p p p p
+s j x j s
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ p p p p
+. p p p .
+ x x x x
+x x x x x
+ x x x x

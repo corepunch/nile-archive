@@ -36,12 +36,14 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-Every expedition ends when all of its blue tablets are clear. Match on a blue
-cell to reveal the pale stone below; a green double tablet takes two hits. A chain absorbs the first hit on its piece.
+Every expedition ends when all of its plaques are clear. A blue plaque takes
+one hit and a green plaque takes two. A single chain absorbs one hit, and a
+double chain absorbs two before the plaque underneath can be cleared.
 With three or fewer tablets left, sparks trace their edges after the same idle delay as the move suggestion.
 Swipe or tap a gem toward a chain, ice or a carved stone and it slides toward
 the blocker and back, with the same haptic as a rejected swap and zero moves spent.
-See the [board progression](docs/board-progression.md) for the pattern and move budget of each expedition.
+See the [board progression](docs/board-progression.md) for the pattern and move budget of each expedition
+and the [campaign sheet](../../docs/review/level-sheets/relic-rush.png) for all 100 layouts.
 The [resource expedition design](docs/resource-expedition.md) covers how
 resource matches and restoration costs fit into the campaign.
 See the [shared element rules and design reference](../../docs/MATCH3_ELEMENTS.md)

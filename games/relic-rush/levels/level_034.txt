@@ -1,28 +1,28 @@
 name: Sundered Gallery
 tier: normal
-teaches: An S-shaped gallery with a slanting corridor; stones block the bends until you break them.
+teaches: Break the chains at the narrow crossing to feed the empty gallery below.
 
 x x x x x
- x x x x
-. . . . .
- . . . .
-. . . . x
- . s . x
-. s . x x
- . . x x
-. . x x x
- p p x x
-p . . x x
- . p p x
-x . . . x
- x p p .
-x x . . p
- x x p p
-x x x . .
- x x . .
-x x . s .
- x . s .
-x . . . .
- . . . .
-. . . . .
+ . x x .
+. p x p .
+ p p p p
+. k p k .
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+x x p x x
+ x k k x
+x x x x x
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+. p p p .
+ . p p .
+x p p p x
+ x p p x
+x x x x x
  x x x x

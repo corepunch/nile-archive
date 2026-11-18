@@ -1,28 +1,28 @@
 name: Throne of the Valley
 tier: boss
-teaches: Break the chains on the double tablets and the ice over the throne's other plaques.
+teaches: Clear two full layers from the peak to the broad stepped plinth.
 
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . J . x
+x x x x x
+ x x x x
+x x x x x
+ x P P x
+x x P x x
  x P P x
 x P P P x
- x g g x
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- s . . s
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
+ P P P P
+x P g P x
+ P P P P
+P g P g P
+ P P P P
+P P P P P
+ P P P P
+x P P P x
+ P P P P
+P P P P P
+ P P P P
+x P P P x
+ P P P P
+x P P P x
+ x P P x
+x x x x x
+ x x x x

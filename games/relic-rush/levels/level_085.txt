@@ -1,28 +1,28 @@
 name: Portcullis
 tier: hard
-teaches: Free the paired double chains on the portcullis and reach their tablets from the broad hall.
+teaches: Break through the frozen portcullis and the stones at its feet.
 
-. x . x .
- . . . .
-. . . . .
- . p p .
-. p . p .
- . p p .
-. p x p .
- . . . .
-. p x p .
- . . . .
-. . . . .
- . K K .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ x x x x
+x x x x x
+ x p p x
+p . p . p
+ p p p p
+p p x p p
+ p p p p
+p s x s p
+ p p p p
+p p p p p
+ p p p p
+J J p J J
+ p p p p
+p p p p p
+ p p p p
+p J p J p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
 x x x x x
  x x x x

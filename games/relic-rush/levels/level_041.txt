@@ -1,28 +1,28 @@
 name: Needle Gate
 tier: easy
-teaches: A narrow shaft joins the chambers. Use the wider chamber to build a four through the chain.
+teaches: Clear the narrow gate and release the plaques beside its opening.
 
-. . . . .
- . . . .
-. . p . .
- . p p .
-x . p . x
+x x x x x
+ x x x x
+x x x x x
  x p p x
-x x k x x
- x . . x
-x x . x x
- x x x x
-x x . x x
- x x x x
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+p k x k p
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x p p x
 x x x x x
  x x x x

@@ -1,28 +1,28 @@
 name: Citadel Keep
 tier: hard
-teaches: Return to the two frozen positions in the keep until their blue tablets are clear.
+teaches: Clear the frozen wall and push through to the keep.
 
-. x . x .
- . . . .
-. . . . .
- . . . .
-. . . . .
+x x x x x
+ x x x x
+x x p x x
+ p p p p
+x p . p x
+ p p p p
+x s p s x
  . p p .
-. . . . .
- . J J .
-. p p p .
- . p p .
-. . x . .
- . p p .
-. . . . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. x . x .
- x . . x
+. x p x .
+ p p p p
+x j p j x
+ p p p p
+x p p p x
+ p p p p
+x j p j x
+ p p p p
+p p p p p
+ p p p p
+p j p j p
+ p p p p
+x p p p x
+ p p p p
+x x p x x
+ x p p x

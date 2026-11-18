@@ -1,28 +1,28 @@
 name: The Valley Temple
 tier: boss
-teaches: Work around the temple's sanctum to clear the double tablets and break through the double ice.
+teaches: Thaw the frozen plaques and break the double chains across the temple wings.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . P P .
-. . . . .
- . J J .
-. . . . .
- . P P .
-. P x P .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. s . s .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . . . .
+x x x x x
+ x x x x
+x x x x x
+ x P P x
+x x P x x
+ x P P x
+P P x P P
+ P P P P
+P P x P P
+ P P P P
+P P P P P
+ f G G f
+P P f P P
+ P P P P
+P P P P P
+ P P P P
+P P P P P
+ P G G P
+P P x P P
+ P P P P
+x x x x x
+ x x x x
+x x x x x
+ x x x x

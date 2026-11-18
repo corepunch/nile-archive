@@ -1,28 +1,28 @@
 name: Bridge Footings
 tier: easy
-teaches: Line up the chains from the wide bridge deck, then clear the tablets underneath.
+teaches: Clear the bridge footings along both ends of the diagonal.
 
-. . . . .
- . . . .
-. . . . .
- . k k .
-. p x p .
- . p p .
-. p x p .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
 x x x x x
+ x x x x
+p x x x x
+ p x x x
+p p x x x
+ p p x x
+p p p x x
+ p p p p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+x x p p p
+ x x p p
+x x x p p
+ x x x p
+x x x x p
  x x x x

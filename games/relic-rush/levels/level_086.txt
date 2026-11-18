@@ -1,28 +1,28 @@
 name: Twin Gardens
 tier: easy
-teaches: Use the crossing between the two gardens to match repeatedly through the double chain.
+teaches: Clear both gardens and the narrow path between them.
 
 x x x x x
- x . . x
-x . x . x
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . p p .
-. p K p .
- . p p .
-. . . . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+ x x x x
+x x x x x
+ x x x x
+p x x x p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p x x x p
+ p p p p
+x p x p x
+ p p p p
+p x p x p
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+p x x x p
+ x x x x
+x x x x x
+ x x x x

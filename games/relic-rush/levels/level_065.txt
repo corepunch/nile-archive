@@ -1,28 +1,28 @@
 name: Star Chamber
 tier: hard
-teaches: The chamber has room to set up a second line through its double chain.
+teaches: Break the ice beside the arms of the chamber.
 
 x x x x x
- x x x x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . p . .
- . p p .
-. . K . .
- . p p .
+ x p p x
+x x p x x
+ p p p p
+x p . p x
+ p p p p
+p s p s p
+ p p p p
+. p p p .
+ p p p p
+x J p J x
+ x p p x
+x x p x x
+ x p p x
+x J p J x
+ p p p p
+p p p p p
+ p p p p
+x J p J x
+ p p p p
 x p p p x
- . p p .
-x x . x x
- x x x x
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . . . .
+ x p p x
+x x p x x
+ x p p x

@@ -1,28 +1,28 @@
 name: Sunken Court
 tier: boss
-teaches: Break the double chains over the double tablets and clear the ice at the entrance to the two courts.
+teaches: Clear both layers around the large opening of the sunken court.
 
-x . . . x
- . . . .
-. . . . .
- . P P .
-. G . G .
- . J J .
-. P . P .
- x . . x
-. . x . .
- x . . x
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. s x s .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-x . x . x
- . . . .
+x x x x x
+ x x x x
+x x x x x
+ P x x P
+P P x P P
+ P P P P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+P P x P P
+ P x x P
+P x x x P
+ P x x P
+P P x P P
+ P P P P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+P P P P P
+ x P P x
+x x x x x
+ x x x x

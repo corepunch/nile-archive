@@ -1,28 +1,28 @@
 name: Sunken Vault
 tier: hard
-teaches: Work through both the double chains and the double ice in the sunken vault.
+teaches: Break the frozen plaques and work down to the sunken vault.
 
 x x x x x
  x x x x
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . p p .
-. . . . .
- . K K .
-. p p p .
- . p p .
-x . J . x
- x p p x
-x . . . x
- x . . x
-x . . . x
- x . . x
 x x . x x
- x . . x
-x . . . x
- . . . .
-x . . . x
- x . . x
+ . p p .
+x p p p x
+ p p p p
+. . p . .
+ p p p p
+p p x p p
+ p p p p
+p s x s p
+ p p p p
+p p p p p
+ p p p p
+p j p j p
+ p p p p
+. p p p .
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x . x . x
+ x x x x

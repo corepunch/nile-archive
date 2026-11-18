@@ -1,28 +1,28 @@
 name: Twin Obelisks
 tier: hard
-teaches: Two obelisk courts rise from a shared hall under a clipped skyline; every move counts on each side.
+teaches: Break the frozen pieces between the obelisks and clear the floor.
 
-x . x . x
- x . . x
-x . x . x
- . . . .
-x . x . x
- . . . .
-. . x . .
- . . . .
-. s x s .
- . p p .
-. . x . .
- . J J .
-. . x . .
- . p p .
-. . x . .
- . p p .
-. . p . .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ x x x x
+x x x x x
+ x p p x
+x p x p x
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p J x J p
+ p p p p
+J p x p J
+ p p p p
+p J x J p
+ p p p p
+p p p p p
+ p p p p
+p s p s p
+ p p p p
+. p . p .
+ p p p p
+x x x x x
+ x x x x

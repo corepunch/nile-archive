@@ -7,18 +7,19 @@ local here = (... or ""):match("^(.-)campaign$") or ""
 local boards, budgets = require(here .. "boards"), require(here .. "level_moves")
 
 local dress = {floor={normal="tile-cell-normal", covered="tile-tablet-single", tablet_hint=true}}
-local double_lesson = "Green plaques take two hits. Clear both layers of every plaque."
 local opening_lessons = {
     [4] = "Match four through the chained piece to free it. Then clear its plaque.",
     [9] = "Break the chain at the entrance to feed the empty terrace below.",
-    [10] = double_lesson,
     [12] = "Match frozen pieces to break the ice. Match beside carved stones to break them.",
-    [20] = double_lesson,
-    [30] = double_lesson,
+    [34] = "Break the gate chains to refill the gallery below.",
+    [62] = "Double chains take two hits. Free the pieces, then clear their plaques.",
+    [79] = "Break both links on the gate chains to refill the shrines below.",
+    [100] = "Break the ice and double chains. Then clear both layers of the green plaques.",
 }
 local levels = {}
 for i, b in ipairs(boards) do
-    levels[i] = {name=b.name, tier=b.tier, lesson=opening_lessons[i] or "Clear every blue plaque.", moves=budgets[i] or 30,
+    local lesson = b.tier == "boss" and "Green plaques take two hits. Clear both layers of every plaque." or "Clear every blue plaque."
+    levels[i] = {name=b.name, tier=b.tier, lesson=opening_lessons[i] or lesson, moves=budgets[i] or 30,
         score=0, relics=0, chains=0, ice=0, mask=b.mask, oil=b.oil, oil_double=b.oil_double,
         chain_cells=b.chain_cells, ice_cells=b.ice_cells, stones=b.stones,
         goals={"oil"}, dress=dress, background=(i - 1) // 5 % 2 + 1}

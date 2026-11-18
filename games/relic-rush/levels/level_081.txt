@@ -1,28 +1,28 @@
 name: Sunken Stair
 tier: easy
-teaches: Use both halves of the slanting stair to reach its chained and iced tablets.
+teaches: Clear around the ice and stone on the diagonal steps.
 
 x x x x x
  x x x x
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . j p .
-. . . . x
- . p K .
-. . . . .
- . K p .
-x . . . .
- . p j .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+x p p . x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x j p s x
+ p p p p
+x p p p x
+ p p p p
+x j p j x
+ p p p p
+x p p p x
+ p p p p
+x s p j x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x . p p x
  x x x x

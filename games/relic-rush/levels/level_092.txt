@@ -1,28 +1,28 @@
 name: Rope Bridges
 tier: easy
-teaches: Rope bridges slant across the gap; free the chained planks along them.
+teaches: Cross the staggered rope bridges to sweep each platform.
 
 x x x x x
- x . . .
-x . . . .
- . . . .
-x . . . .
- x . . .
-x x . p .
- x x p .
-x x x K .
- x x . p
-x x . . .
- x . . .
-x . . . x
- . . . x
-. . . x x
- p . x x
-. K x x x
- . p x x
-. p . x x
- . . . x
-. . . . x
- . . . .
-. . . . x
- . . . x
+ x x x x
+x x x x x
+ x p x x
+p p x x x
+ p p p x
+p p p p x
+ p p p x
+p p p p x
+ p p p x
+p p p p x
+ p p p p
+p p p p p
+ p p p p
+x p p p p
+ x p p p
+x p p p p
+ x p p p
+x p p p p
+ x p p p
+x x x p p
+ x x p x
+x x x x x
+ x x x x

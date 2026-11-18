@@ -1,28 +1,28 @@
 name: Gatehouse
 tier: easy
-teaches: A double chain holds a tablet in the gatehouse. Break both links before clearing the blue tile.
+teaches: Sweep the front gatehouse and the courtyard through it.
 
 x x x x x
  x x x x
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
- x . . x
-. . K . .
- . p p .
-. p . p .
- . p p .
-. . . . .
- . . . .
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-x . . . x
- x . . x
-x . . . x
- x . . x
+x x x x x
+ x x x x
+x p x p x
+ x p p x
+. p p p .
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+x p p p x
+ x x x x
+x x x x x
+ x x x x

@@ -1,28 +1,28 @@
 name: Quarry Pit
 tier: normal
-teaches: A quarried pit pulls pieces down its slanted walls; work around its rim.
+teaches: Free the double chains on both sides of the quarry and clear its floor.
 
 x x x x x
  x x x x
 x x x x x
+ x p p x
+x x p x x
+ p p p p
+x K p K x
+ p p p p
+p p p p p
+ p p p p
+p K p K p
+ p p p p
+p p p p p
+ p p p p
+p K p K p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x p p p x
  x x x x
-. x x x .
- . x x .
-. . x . .
- . . . .
-. . . . .
- . j j .
-. p . p .
- . p p .
-. p . p .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ x x x x

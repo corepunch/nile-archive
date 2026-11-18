@@ -1,28 +1,28 @@
 name: Hanging Gardens
 tier: normal
-teaches: Clear stones beside the hanging gardens to reach the tablet under the double chain.
+teaches: Free the double chains on the hanging garden ledges.
 
 x x x x x
  x x x x
-. . . . .
- . . . .
-. . . . .
- . p p .
-. s K s .
- . p p .
-. . p . .
- . p p .
-. . p . .
- . . . .
-. x x x .
- . x x .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ x p p x
+x x p x x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p x p x p
+ x K K x
+p x p x p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p x p x
+ p p p p
+x x x x x
+ x x x x

@@ -1,28 +1,28 @@
 name: Last Door
 tier: hard
-teaches: Open the last double chain to feed a piece into the sealed tablet pocket.
+teaches: Break ice and stones on both sides of the last door.
 
 x x x x x
  x x x x
-. x . x .
- . . . .
-. . . . .
- . . . .
-. . . . .
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p J x J p
+ p p p p
+J p x p J
+ p p p p
+p J x J p
+ p p p p
+p p p p p
  . p p .
-. . C . .
- . x x .
-. p p p .
- . p p .
-. . p . .
- . p p .
-x . . . x
- . . . .
-x . . . x
- x . . x
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
+x s p s x
+ p p p p
+x p . p x
+ x p p x
+x x p x x
+ x x x x

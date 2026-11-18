@@ -1,28 +1,28 @@
 name: The Bridge
 tier: normal
-teaches: Use both banks of the bridge to match through the ice and clear the tablets along the crossing.
+teaches: Clear both ends of the narrow diagonal bridge.
 
 x x x x x
- . . . x
-. . . . x
- . . . .
-. . . . x
- . . . x
-. . . x x
- . j x x
-. . . x x
- . p . x
-. . . . x
- . p p .
-. . p . .
- . p p .
-x . . . .
- x . p .
-x x . . .
- x x j .
-x x . . .
- x . . .
-x . . . .
- . . . .
-x . . . .
- x . . .
+ p p x x
+x p p x x
+ p p p x
+x p p p x
+ p p p x
+x p p x x
+ p p x x
+x p p x x
+ p p p x
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p p
+x x p p x
+ x x p p
+x x p p x
+ x p p p
+x p p p x
+ x p p p
+x x p p x
+ x x p p

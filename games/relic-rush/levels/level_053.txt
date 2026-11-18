@@ -1,28 +1,28 @@
 name: Cellar Door
 tier: normal
-teaches: Break the chain above the cellar door to feed the tablet below it.
+teaches: Open the cellar locks and clear around the two side openings.
 
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . p p .
-. . . . .
- . p p .
-. . c . .
- . x x .
-x . p . x
- x p p x
-x . . . x
- . . . .
-x . . . x
- x . . x
-x . . . x
- x . . x
-x . . . x
- . . . .
-x . . . x
- x . . x
 x x x x x
+ x p p x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p k p k p
+ p p p p
+p x p x p
+ x x x x
+p x p x p
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x x p x x
  x x x x

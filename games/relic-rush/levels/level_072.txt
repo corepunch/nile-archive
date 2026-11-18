@@ -1,28 +1,28 @@
 name: Sunken Plaza
 tier: easy
-teaches: Work along the upper plaza to clear the double chain and its neighbouring iced tiles.
+teaches: Sweep the sunken plaza from the stepped sides to the centre.
 
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . p . .
- . j j .
-. . K . .
- . p p .
-. . p . .
- . . . .
-. . . . .
- . . . .
-x x . x x
+x x x x x
  x x x x
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x x x x x
+ x x x x

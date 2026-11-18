@@ -1,28 +1,28 @@
 name: Parted Cloister
 tier: easy
-teaches: Follow the slanting arms of the cloister to reach the tablets on both sides of the court.
+teaches: Sweep the two sides of the parted cloister.
 
 x x x x x
  x x x x
-x x . x x
- x . . x
-x . . . x
- . p p .
+x x x x x
+ x p p x
 x p p p x
  . p p .
-. . . . .
- . . . .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x . . . x
- x . . x
-x x . x x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p x p p
+ p x x p
+p x x x p
+ p x x p
+p p x p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ x p p x
+x x x x x
  x x x x
