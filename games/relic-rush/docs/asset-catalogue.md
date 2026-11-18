@@ -962,8 +962,9 @@ bonus (Camp), a built building with both (Museum) and five amounts in one row.
 
 The [review board](review/moves-capsule/board.jpg) places remaining moves in the
 first wallet-style capsule. ImageGen painted the [static icon](review/moves-capsule/moves.png)
-as a front-facing teal enamel token with a brass rim and two ivory clockwise
-arrows on transparent surroundings. The [header comparison](review/moves-capsule/comparison.jpg)
+using the [wallet coin](../art/registered/resource-pieces/coin.png) as its reference.
+Two recessed clockwise arrows replace the stamped sun on the warm gold face.
+The transparent sprite is registered at the same 128 × 128 px as the wallet coin. The [header comparison](review/moves-capsule/comparison.jpg)
 shows the shipped hex counter above the concept. To render this preview from
 the repository root:
 
