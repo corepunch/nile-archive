@@ -78,6 +78,5 @@ adapters, hidden-object finds/combos/misses/hints/completion, and Emergency even
 `testing.haptics()` flushes the pending frame and reports count, effect and
 strength without driving hardware; it exists only in test builds.
 
-This change has no visual output, so screenshots cannot demonstrate it. Physical
-feel still needs review on an iPhone or Force Touch trackpad; simulators and
-automated tests verify routing and timing, not actuator feel.
+Physical feel still needs review on an iPhone or Force Touch trackpad; simulators
+and automated tests verify routing and timing, not actuator feel.
