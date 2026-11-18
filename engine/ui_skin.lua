@@ -3,7 +3,7 @@
 -- A game describes its look once, as data: fonts, named colours, images, text
 -- styles and, per control, a look for every interaction state. ui.skin(def)
 -- compiles that description into the paint contract ui.form already uses
--- (style, panel, button, button_text, label, focus, checkbox, progress), and
+-- (style, panel, border, button, button_text, label, focus, checkbox, progress), and
 -- into immediate-mode helpers, so forms and hand-placed widgets share one look.
 -- The engine still owns layout, hit testing, focus and activation.
 local Skin = {}
@@ -318,6 +318,18 @@ end
 
 function Skin:paint_panel(box, node) self:paint('panel', box, nil, node) end
 
+-- A form's border node: the `border` control's look (the node's role picks a
+-- variant), unless the node names its own background and/or border colour.
+function Skin:paint_border(box, node)
+    if not node.background and not node.border_color then return self:paint('border', box, nil, node) end
+    local look, width = {}, node.border_width or 1
+    if node.background then draw_layer(self, {fill = node.background, radius = node.radius}, box, look) end
+    if node.border_color then
+        local radius = math.max(0, (node.radius or 0) - width / 2)
+        draw_layer(self, {border = node.border_color, width = width, radius = radius, inset = width / 2}, box, look)
+    end
+end
+
 function Skin:paint_image(box, image, node)
     if not node.cover then box = box:fit(texture.size(image)) end
     local out, _, alpha = transformed(self, box)
@@ -526,6 +538,7 @@ function ui.skin(def)
     -- above keep distinct names so these fields never shadow them.
     skin.style = function(node) return skin:measure_style(node) end
     skin.panel = def.controls and def.controls.panel and function(box, node) skin:paint_panel(box, node) end or nil
+    skin.border = function(box, node) skin:paint_border(box, node) end
     -- Theme colours are checked now; its text styles wait for the fonts.
     for k, v in pairs(def.theme or {}) do
         local text_entry = type(v) == 'table' and type(v[1]) == 'string' or type(v) == 'string' and def.text and def.text[v]

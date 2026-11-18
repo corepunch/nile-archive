@@ -710,7 +710,7 @@ def main():
     api = Api(ET.parse(args.source).getroot())
     validate(api)
     outputs = {'c': gen_c(api), 'h': gen_h(api), 'md': gen_md(api), 'dlua': gen_dlua(api)}
-    outputs['md'] += '\n## Shared Lua forms\n\nThe embedded UI framework extends ui with ui.form(template) and ui.modals(skin). See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).\n'
+    outputs['md'] += '\n## Shared Lua forms\n\nThe embedded UI framework extends ui with ui.form(template), ui.modals(skin), ui.element(kind, class) and ui.prefab(kind, build). See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).\n'
     outputs['md'] += '\n## Motion: ease and tween\n\nThe embedded motion module (engine/tween.lua) defines the easing catalogue `ease` and the tween, timeline, stagger, punch and shake API `tween`. See [Motion](MOTION.md).\n'
     outputs['dlua'] += '''
 ---@class ui_form
@@ -732,6 +732,19 @@ function ui_form:set_items(id, items) end
 function ui_form:measure(width, skin) end
 ---@return table<string,rect>
 function ui_form:layout(bounds, skin) end
+---For a class's measure_override: the size a child wants within width
+---@return number, number
+function ui_form:measure_node(node, width, skin) end
+---For a class's arrange_override: give a child its final box
+function ui_form:arrange_node(node, bounds, skin) end
+---Add a form element kind: {measure_override, arrange_override, paint, inset, check, items}
+---@param kind string
+---@param class table
+function ui.element(kind, class) end
+---Add a named template: a node of this kind is replaced by what build(node) returns
+---@param kind string
+---@param build fun(props: table): table
+function ui.prefab(kind, build) end
 ---@return table?
 function ui_form:draw(bounds, skin, options) end
 ---A compiled skin file (engine/ui_skin.lua): fonts, colours, images, text styles and per-state control looks

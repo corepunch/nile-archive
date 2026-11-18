@@ -208,6 +208,24 @@ local missing=art:audit()
 check(#missing==2 and missing[1].state=="disabled" and missing[2].state=="hover","audit lists image states without artwork")
 check(#art:audit({button={"pressed"}})==0,"audit takes the game's required states")
 
+-- A form's border node: its role picks a variant of the `border` control; a
+-- node that names its own colours is painted from those instead.
+local cards=ui.skin{fonts={f={font=base_font}},text={body={font="f"}},colors={rim="#102030"},controls={
+    border={variants={card={normal={layers={{paint=rec("card")}}}}}},
+}}
+drawn={};cards.border(box,{kind="border",role="card"})
+check(find("card") and find("card").box.w==100,"a border's role picks its look")
+drawn={};cards.border(box,{kind="border"})
+check(#drawn==0,"a border without a role or colours paints nothing")
+local fill_draw,line_draw,shapes=gfx.round_rect,gfx.round_rect_line,{}
+gfx.round_rect=function(bounds,radius,c) shapes.fill={box=bounds,radius=radius,color=c} end -- luacheck: ignore 122
+gfx.round_rect_line=function(bounds,radius,width,c) shapes.line={box=bounds,radius=radius,width=width,color=c} end -- luacheck: ignore 122
+drawn={};cards.border(box,{kind="border",role="card",background="#FFFFFF",border_color="rim",border_width=4,radius=12})
+gfx.round_rect,gfx.round_rect_line=fill_draw,line_draw -- luacheck: ignore 122
+check(#drawn==0 and shapes.fill.radius==12 and shapes.fill.box.w==100 and shapes.fill.color.r==255,"a border's own background replaces the role's look")
+check(shapes.line.width==4 and shapes.line.color.b==48 and shapes.line.box.x==12 and shapes.line.box.w==96 and shapes.line.radius==10,
+      "its rim is stroked inside the box, in a palette colour")
+
 -- Mistakes fail when the file is compiled or first used, not silently.
 check(not pcall(ui.skin,{text={a={em=3}}}),"text needs a font")
 check(not pcall(ui.skin,{fonts={f={font=base_font}},text={a={extends="b"}}}),"extends must name a style")

@@ -44,6 +44,18 @@ function E.set_popup_header(form, title, subtitle)
     form:set("title", header_title(title)):set("subtitle", header_subtitle(subtitle))
 end
 
+-- One resource and how much of it: the icon above its amount and its name
+-- (omit `name` for the figure alone), in the skin's resource_indicator border.
+ui.prefab("resource_indicator", function(p)
+    return {kind="border",role="resource_indicator",padding={4,5,4,7},children={
+        {kind="column",gap=1,children={
+            {kind="image",image=p.icon,height=36},
+            {kind="label",text=p.amount,em=25,text_style="gold"},
+            {kind="label",text=p.name,em=13,text_style="cream",visible=p.name~=nil},
+        }},
+    }}
+end)
+
 -- Full-screen sheets under the wallet row. One building per row: the whole
 -- row is the button (id 'pick') and paint_row draws its art, name, price and
 -- action. A record marked slim (already built) takes a short row.
