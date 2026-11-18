@@ -1,18 +1,18 @@
 name: Twin Terraces
 tier: hard
-teaches: Two terraces are joined by a narrow bridge; a chain blocks the way down in each.
+teaches: Clear the chained tablets on the upper terrace and follow the two lower paths.
 
 x . x . x
  x . . x
 x . x . x
- x p p x
+ . . . .
+. . . . .
+ . . . .
 . p . p .
  . p p .
-. p . p .
+. k . k .
  . p p .
-. c . c .
- x x x x
-x . x . x
+. . . . .
  . . . .
 . . x . .
  . . . .
@@ -22,7 +22,7 @@ x . x . x
  . . . .
 . . x . .
  . . . .
-. . x . .
- . . . .
+x . x . x
+ x . . x
 x x x x x
  x x x x

@@ -11,11 +11,11 @@ boss 50%). The bot orders and spaces the boards; its rates are not human win rat
 | 2 | Temple Steps | tutorial | 17 | 7 | 3 | 40/40 |
 | 3 | Sunken Courtyard | tutorial | 24 | 9 | 2 | 40/40 |
 | 4 | Overgrown Terraces | tutorial | 12 | 6 | 2 | 40/40 |
-| 5 | Vault Door | easy | 49 | 15 | 5 | 40/40 |
+| 5 | Vault Door | easy | 48 | 14 | 4 | 40/40 |
 | 6 | Vine-Bound Terraces | normal | 19 | 14 | 5 | 40/40 |
 | 7 | Jaguar Court | easy | 56 | 15 | 4 | 40/40 |
 | 8 | Overgrown Arches | normal | 30 | 16 | 5 | 40/40 |
-| 9 | Twin Terraces | hard | 32 | 28 | 11 | 40/40 |
+| 9 | Twin Terraces | hard | 30 | 25 | 8 | 40/40 |
 | 10 | Jaguar Throne | boss | 28 | 28 | 12 | 40/40 |
 | 11 | Fallen Colonnade | easy | 23 | 11 | 5 | 40/40 |
 | 12 | Choked Gateway | easy | 26 | 12 | 4 | 40/40 |

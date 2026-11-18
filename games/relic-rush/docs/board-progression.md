@@ -28,9 +28,22 @@ chamber below. Use stepped edges, deep cutouts or interior gaps to give each
 expedition a recognizable silhouette at phone size. Temple Steps has deep cuts
 on opposite sides of its diagonal stairway, with seven tablets on the middle
 landing. Sunken Courtyard has a seven-cell opening, with seven tablets along
-the lower rim. Board 5 introduces a chain over a vault, and board 7 places ice
-above an empty tablet. Later boards combine split chambers, layered tablets and
-double locks.
+the lower rim. Board 5 introduces a chain that holds back a tablet, and board 7
+places ice above an empty tablet. Later boards combine split chambers, layered
+tablets and double locks.
+
+Keep more refillable cells than waiting cells in the opening position so
+players can rearrange pieces while a gate holds. The match-four audit checked
+every board and found two openings where most cells waited for a chain.
+Vault Door now feeds its outer lanes from the start. Twin Terraces now feeds
+both lower paths from the start, and each mandatory chain sits at the
+intersection of all three match axes. Each Twin Terraces chain has ten
+possible four-cell runs with room to swap in a piece, up from two.
+
+| Board | Refillable cells at the start | Cells waiting for chains |
+| --- | ---: | ---: |
+| 5 · Vault Door | 35 → 73 | 38 → 1 |
+| 9 · Twin Terraces | 29 → 80 | 46 → 0 |
 
 Each board was played on 40 deals without tools to set its move limit. Levels
 1–4 have median clears of 6, 7, 9 and 6 moves respectively. Across boards in
@@ -38,7 +51,7 @@ each later tier, the median of those board medians was 12 for easy, 16 for
 normal, 23 for hard and 26.5 for bosses. All deals cleared within the 250-move
 calibration ceiling. The fitted limits range from 11 to 56.
 
-Before the Temple Steps and Sunken Courtyard revisions, a separate check used
+Before the early-board revisions to levels 2, 3, 5 and 9, a separate check used
 ten other deals per board (runs 301–310 of the same seed sequence), with the
 scheduled restoration pieces, no tools and the live move limits. The bot won
 766 of 1,000 games, up from 131 on the same deals with the pre-rebalance
@@ -51,7 +64,8 @@ Each comparison shows the previous layout on the left and the current one on the
 | --- | --- | --- |
 | 2 · Temple Steps | [Opening deal](screenshots/review/tutorial-shapes/temple-steps-480.jpg) | [Opening deal](screenshots/review/tutorial-shapes/temple-steps-390.jpg) |
 | 3 · Sunken Courtyard | [Opening deal](screenshots/review/tutorial-shapes/sunken-courtyard-480.jpg) | [Opening deal](screenshots/review/tutorial-shapes/sunken-courtyard-390.jpg) |
-| 5 · Vault Door | [Chain and lower chamber](screenshots/review/match-four-balance/dressing-quay.jpg) | [Chain and lower chamber](screenshots/review/match-four-balance/plaques-phone.jpg) |
+| 5 · Vault Door | [Opening deal](screenshots/review/match-four-gates/vault-door-480.jpg) | [Opening deal](screenshots/review/match-four-gates/vault-door-390.jpg) |
+| 9 · Twin Terraces | [Opening deal](screenshots/review/match-four-gates/twin-terraces-480.jpg) | [Opening deal](screenshots/review/match-four-gates/twin-terraces-390.jpg) |
 
 ## Piece progression
 

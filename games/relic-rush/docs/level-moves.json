@@ -36,10 +36,10 @@
   "wins": 40
  },
  {
-  "fastest": 5,
+  "fastest": 4,
   "level": 5,
-  "median": 15,
-  "moves": 49,
+  "median": 14,
+  "moves": 48,
   "seeds": 40,
   "tier": "easy",
   "wins": 40
@@ -72,10 +72,10 @@
   "wins": 40
  },
  {
-  "fastest": 11,
+  "fastest": 8,
   "level": 9,
-  "median": 28,
-  "moves": 32,
+  "median": 25,
+  "moves": 30,
   "seeds": 40,
   "tier": "hard",
   "wins": 40

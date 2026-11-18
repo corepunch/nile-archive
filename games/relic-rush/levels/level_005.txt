@@ -1,6 +1,6 @@
 name: Vault Door
 tier: easy
-teaches: Break the chain at the vault door to feed the tablet in the chamber below.
+teaches: Break the chain to feed the tablet below it. Both sides of the vault are open.
 
 x x . x x
  x . . x
@@ -10,19 +10,19 @@ x . . . x
  . . . .
 . . p . .
  . p p .
-x . p . x
+. . p . .
  . p p .
-x x c x x
- x x x x
+. . c . .
+ . x x .
+x . p . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ x . . x
 x x . x x
  x x x x
-x x p x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x x x x
+ x x x x

@@ -5,11 +5,11 @@ return {
     [2] = 17,   -- tutorial
     [3] = 24,   -- tutorial
     [4] = 12,   -- tutorial
-    [5] = 49,   -- easy
+    [5] = 48,   -- easy
     [6] = 19,   -- normal
     [7] = 56,   -- easy
     [8] = 30,   -- normal
-    [9] = 32,   -- hard
+    [9] = 30,   -- hard
     [10] = 28,   -- boss
     [11] = 23,   -- easy
     [12] = 26,   -- easy
