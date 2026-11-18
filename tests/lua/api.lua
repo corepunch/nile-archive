@@ -128,11 +128,16 @@ check(intro:cell(1) == 0 and not intro:relic(1) and intro:arrive(0) == 0, "nothi
 intro:update(1 / 60)
 check(not intro:done() and intro:arrive(0) > 0, "the HUD moves first")
 local seen_over = false
+local seen_frame_fade = false
+near(intro:frame_fade(), 0, "the assembled rim starts transparent")
 for _ = 1, 600 do
     intro:update(1 / 60)
     seen_over = seen_over or intro:arrive(.1, 3, .4) > 1
+    local frame_alpha = intro:frame_fade()
+    seen_frame_fade = seen_frame_fade or (frame_alpha > 0 and frame_alpha < 1)
 end
 check(seen_over, "spring arrivals overshoot")
+check(seen_frame_fade and intro:frame_fade() == 1, "the rim and shadow fade in before the entrance ends")
 check(intro:done() and landed == 3 and slammed == 1 and sheened == 1, "every piece lands once, every blocker slams once")
 near(intro:cell(1), 1, "a finished cell is full size")
 local visible, height, aspect = intro:relic(2)
@@ -141,9 +146,10 @@ near(height, 0, "a finished piece sits in its cell")
 near(aspect, 1, "a finished piece has its own shape")
 local skipped = board_intro.new(entrance, {on_land = function() error("skipping must not call back") end})
 skipped:update(1 / 60); skipped:skip(); skipped:update(1 / 60)
-check(skipped:done(), "a tap ends the entrance")
+check(skipped:done() and skipped:frame_fade() == 1, "a tap ends the entrance with the rim fully visible")
 local calm = board_intro.new(entrance, {reduced = true, on_land = function() error("reduced motion has no landings") end})
 calm:update(.1)
 check(calm:cell(1) == 1 and calm:fade() < 1, "reduced motion fades everything in place")
+near(calm:frame_fade(), calm:fade(), "reduced motion fades the rim and shadow with the floor")
 calm:update(1)
 check(calm:done() and calm:fade() == 1 and select(2, calm:relic(1)) == 0, "and takes no time to speak of")

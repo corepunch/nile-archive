@@ -117,6 +117,12 @@ end
 
 function intro:fade() return self.reduced and math.min(1, self.t / FADE_TIME) or 1 end
 
+-- The assembled rim and shadow take over as the final sheen sweeps the board.
+function intro:frame_fade()
+    if self.reduced then return self:fade() end
+    return num.saturate(1 - (self.ends - self.t) / SHEEN_TIME)
+end
+
 -- A cell: scale (0 hides it), turn in radians, lift downward, white flash 0..1.
 function intro:cell(id)
     if self.t <= 0 then return 0, 0, 0, 0 end

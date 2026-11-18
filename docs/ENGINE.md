@@ -404,13 +404,16 @@ writable directory. Normal play continues to use the existing per-game save dire
 `bind(view, rules)` adapter. Relic Rush and Christmas Market keep their skins
 and draw the poses; the existing match engine keeps matching, refill and input.
 The HUD arrives first, cells ripple from the centre, pieces drop in column
-order, blockers land, and a light sweep finishes the entrance. Existing artwork
-is translated, rotated and scaled; transient glows and sparks are procedural.
+order, blockers land, and a light sweep finishes the entrance. During the
+sweep the individual cell rims fade out while the assembled rim, its painted
+joins and the board's shadow fade in. The game uses the existing artwork and
+draws transient glows and sparks procedurally.
 
 The clock waits for dialogue, pauses under modals and while on the island, and
 returns to IDLE before matching resumes. A release skips the entrance without
-selecting a piece or spending a move. Reduced motion uses a quarter-second fade,
-with no landing callbacks or travel. Resetting a board clears its entrance.
+selecting a piece or spending a move. Reduced motion fades the assembled rim,
+shadow, floor and pieces together over a quarter second. Resetting a board
+clears its entrance.
 
 Reproduce both phone sizes with `build/test/relic-rush board-intro` and
 `build/test/christmas-market board-intro`. The manifests own all frames, so each

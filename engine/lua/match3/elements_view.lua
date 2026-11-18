@@ -401,16 +401,9 @@ end
 
 local function draw_stone(R, rules, sx, alpha)
     local art = R.GROUND.frame and R.board_art[R.GROUND.frame]
-    if not art or art.w == 0 then return end
+    if alpha <= 0 or not art or art.w == 0 then return end
     local tint = color(255, 255, 255, 255 * alpha)
     local scale = R.HEX_R / FRAME_RADIUS
-    if R.intro then
-        each_ground_cell(R, rules, sx, function(_, at, amount, turn)
-            local size = ENTRY_RIM.w * scale * amount
-            gfx.image_rot(R.board_art["frame-entrance"], rect.centered(at, size2.splat(size)), turn, tint)
-        end)
-        return
-    end
     local layout = frame_layout(R, rules)
     local origin = R.board_origin + vec2(sx, 0)
     local size = size2.splat(FRAME_SLOT * scale)
@@ -424,9 +417,17 @@ local function draw_stone(R, rules, sx, alpha)
     return layout
 end
 
-local function draw_ground_backing(R, rules, sx, alpha, textured)
+local function draw_ground_backing(R, rules, sx, alpha, frame_alpha, textured)
     local look = R.GROUND
-    local frame = draw_stone(R, rules, sx, alpha)
+    local frame = draw_stone(R, rules, sx, frame_alpha)
+    local rim = look.frame and R.board_art["frame-entrance"]
+    if rim and frame_alpha < 1 and not R.intro.reduced then
+        local tint = color(255, 255, 255, 255 * (1 - frame_alpha))
+        local rim_size = ENTRY_RIM.w * R.HEX_R / FRAME_RADIUS
+        each_ground_cell(R, rules, sx, function(_, at, scale, turn)
+            gfx.image_rot(rim, rect.centered(at, size2.splat(rim_size * scale)), turn, tint)
+        end)
+    end
     local seam = color.alpha(look.seam, alpha)
     local face = color.alpha(look.face, alpha)
     local inset = look.seam_width or FLOOR_INSET
@@ -513,7 +514,8 @@ end
 function E.ground(R, rules, sx, floor)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
-    local frame = draw_ground_backing(R, rules, sx, alpha, floor and floor.normal)
+    local frame_alpha = intro and intro:frame_fade() or 1
+    local frame = draw_ground_backing(R, rules, sx, alpha, frame_alpha, floor and floor.normal)
     -- A reveal can show during play or wait for the first clear.
     local level = rules.level_of(g)
     local story = reveal(R, rules) or level.reveal
@@ -542,7 +544,7 @@ function E.ground(R, rules, sx, floor)
         -- The painted joins sit over the tile faces, so leaves crossing
         -- the lip keep their full silhouette. Pieces are drawn afterwards.
         local origin = R.board_origin + vec2(sx, 0)
-        local tint = color(255, 255, 255, 255 * alpha)
+        local tint = color(255, 255, 255, 255 * frame_alpha)
         local art = R.board_art[R.GROUND.frame]
         for _, p in ipairs(frame.painted) do gfx.image_part(art, p.source, p.area:offset(origin), tint) end
     end
