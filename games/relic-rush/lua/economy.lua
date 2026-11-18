@@ -59,13 +59,14 @@ for tool, slot in ipairs(E.bonus_slots) do
 end
 E.bonuses = B
 
--- Requests shown on the next-building card before the purchase. Costs and
--- board unlocks come from the building catalogue and ladder.
+-- The next-building card states each need as narration: who needs the
+-- building and why. Characters speak in the scenes, which play once. Costs
+-- and board unlocks come from the building catalogue and ladder.
 E.quests = {
-    camp={title="Bring the crew ashore", matches="Match timber or stone and fruit.", request="Mara: The others are still on the boat. Let’s pitch the tents and have supper ready."},
-    well={title="Get the pump running", matches="Match coins for the pump seal.", request="Mara: That’s the last of the cask. Can we buy a new seal for the old pump?"},
-    log_cabin={title="Be there for low tide", matches="Match coins, stone, and water or fruit.", request="Tomas: Low tide comes before dawn. Give us a dry cabin and we’ll see what the steps need."},
-    workshop={title="Cut a tread to fit", matches="Match coins, stone, and water or fruit.", request="Tomas: These knots mark the gap. Build me a stone bench and we can cut a tread to fit."},
+    camp={title="Bring the crew ashore", matches="Match timber or stone and fruit.", request="The crew is still out on the boat. Pitch a camp so they come ashore to a hot supper."},
+    well={title="Get the pump running", matches="Match coins for the pump seal.", request="The last water cask is empty. Buy a seal for the old pump and get the well running."},
+    log_cabin={title="Be there for low tide", matches="Match coins, stone, and water or fruit.", request="Low tide comes before dawn. Build a dry cabin so Mara and Tomas can reach the steps in time."},
+    workshop={title="Cut a tread to fit", matches="Match coins, stone, and water or fruit.", request="Tomas has the measure of the missing step. Build a workshop where the crew can cut a new tread."},
 }
 
 -- The campaign ladder, in purchase order, after Cradle of Rome's 20

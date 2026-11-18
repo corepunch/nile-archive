@@ -327,6 +327,7 @@ The Chapter 2 cold read followed the fresh supplies to the note and Tomas’s re
 
 ## Changelog
 
+- 2026-11-18: Epoch-one build cards state each need as narration and no longer quote a character. Scene dialogue is unchanged.
 - 2026-11-17: Each epoch-one build card carries its character’s request. The Cabin supplies the measurement. The Workshop repairs the quay and keeps the original keeper scene and saved reply.
 
 - 2026-11-17: Chapter 1 scenes move to town actions. Tomas arrives at the restored well. The Quay Steps replace the required market and cue the ancient keeper flashback. The reply choice keeps its save key.
