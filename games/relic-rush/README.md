@@ -121,7 +121,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The result card fits its contents. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Score, a row of three resource totals (icon and figure), an available restoration and Collect stack vertically. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
+The result card fits its contents. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Score, a row of three resource totals (icon and figure), one line about the next restoration and Collect stack vertically. That line is what the restoration still needs after this win, as the same icon-and-figure amounts, or its picture under READY TO BUILD once the wallet covers it. The quest title, story sentence and price stay on the building card. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 
@@ -199,7 +199,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 6. See how the crew uses what you built, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
-The Well costs 50 Coins. Its buckets earn 3 Food each from expedition 2. The Hunter's Hut introduces Hammer, and the Sawmill introduces timber worth 5 Supplies per piece. Buying the Village replaces Hammer with Bomb. The result shows the next purchase and its reward.
+The Well costs 50 Coins. Its buckets earn 3 Food each from expedition 2. The Hunter's Hut introduces Hammer, and the Sawmill introduces timber worth 5 Supplies per piece. Buying the Village replaces Hammer with Bomb. The result shows what the next restoration still needs or that it is ready to build.
 
 ### Tutorials and citizens (`lua/user_events.lua`)
 
@@ -285,7 +285,7 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 
 - Swap adjacent pieces to make a straight line of four or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
-- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and any remaining cost of the next restoration.
+- Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and, as icon amounts, what the next restoration still needs.
 - Restore buildings to unlock four bonus families. A later restoration
   upgrades each of the four slots and carries its charge forward. An expedition
   can feature one bonus gem family. Matching six fills one use, and activation

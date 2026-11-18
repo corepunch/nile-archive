@@ -56,8 +56,9 @@ G.DEFAULTS = {
     -- A line's %d is the number of levels.
     complete = {title = "You won!", lines = {{"YOU COMPLETED ALL %d LEVELS.", 16}, {"Your town stays open to build.", 16}},
         button = "BACK TO TOWN"},
+    result = {needs = "%s STILL NEEDS", ready = "READY TO BUILD"},
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
-            gets = "YOU GET", price = "PRICE", play = "PLAY",
+            gets = "YOU GET", price = "PRICE", missing = "STILL NEEDED", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
@@ -599,6 +600,14 @@ function G.bind(R, over)
         config.form = form
     end
 
+    -- The results card's line about the next building `w`: what it still
+    -- needs after this win (`missing`, resource records), or its picture
+    -- once the wallet covers it.
+    function R.result_next(w, missing)
+        if #missing > 0 then return {needs=missing, needs_caption=W.result.needs:format(w.name:upper())} end
+        return {icon=w.sprite, heading=W.result.ready, title=w.name}
+    end
+
     function R.register_result(model)
         local form = ui.form{kind="column",panel=true,padding={21,20,21,23},gap=15,children={
             match3.popup_header("Results"),
@@ -613,14 +622,24 @@ function G.bind(R, over)
                     return match3.resource_indicator(entry)
                 end},
             }},
-            {kind="row",id="next_step",visible_field="show_next",panel=true,role="group",
-                padding={9,8,10,8},gap=10,align="center",paint_group={.9,.26,8},children={
-                    {kind="image",id="next_icon",width=58,height=58,visible_field="show_next_icon"},
-                    {kind="column",grow=1,gap=2,children={
-                        {kind="label",id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
-                        {kind="label",id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
-                        {kind="label",id="next_detail",visible_field="show_next_detail",
-                            wrap=true,text_align="start",em=13,text_style="body"},
+            -- The next purchase, in at most two parts: what it still needs after
+            -- this win, as resource amounts, and one captioned picture row.
+            {kind="column",id="next_step",visible_field="show_next",panel=true,role="group",
+                padding={9,8,10,9},gap=6,paint_group={.9,.26,8},children={
+                    {kind="label",id="next_needs_caption",em=13,text_style="caption",visible_field="show_next_needs"},
+                    {kind="row",visible_field="show_next_needs",children={
+                        {kind="spacer",grow=1},
+                        {kind="list",id="next_needs",direction="row",gap=9,item=function(entry)
+                            return match3.resource_indicator(entry, 104)
+                        end},
+                        {kind="spacer",grow=1},
+                    }},
+                    {kind="row",gap=10,align="center",visible_field="show_next_title",children={
+                        {kind="image",id="next_icon",width=58,height=58,visible_field="show_next_icon"},
+                        {kind="column",grow=1,gap=2,children={
+                            {kind="label",id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
+                            {kind="label",id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
+                        }},
                     }},
                 }},
             {kind="button",id="claim",height=54,paint_group={1.02,.22,8}},
@@ -635,12 +654,16 @@ function G.bind(R, over)
             match3.set_popup_header(form, data.title, data.subtitle)
             form:set("claim", data.action)
             assert(form:set_items("resources", data.resources))
+            local needs = next_step and next_step.needs or {}
             form.values.show_next = next_step ~= nil
-            form.values.show_next_icon = next_step and next_step.icon ~= nil
-            form.values.show_next_detail = next_step and next_step.detail ~= nil
+            form.values.show_next_needs = #needs > 0
+            form.values.show_next_title = next_step ~= nil and next_step.title ~= nil
+            form.values.show_next_icon = next_step ~= nil and next_step.icon ~= nil
+            assert(form:set_items("next_needs", needs))
             if next_step then
-                form:set("next_icon", next_step.icon):set("next_heading", next_step.heading)
-                    :set("next_title", next_step.title):set("next_detail", next_step.detail)
+                form:set("next_needs_caption", next_step.needs_caption or "")
+                    :set("next_icon", next_step.icon):set("next_heading", next_step.heading or "")
+                    :set("next_title", next_step.title or "")
             end
         end, handle=function(event)
             if event.id ~= "claim" or R.modal_closing then return end
@@ -707,7 +730,8 @@ function G.bind(R, over)
         local quest, step
         if not built and island.next_quest then quest, step = island.next_quest(R.island, R.prog.level) end
         if quest and step.kind ~= i then quest = nil end
-        quest_funding = quest ~= nil and not can_build and R.prog.level < rules.LEVELS
+        local needs_funding = quest ~= nil and not can_build
+        quest_funding = needs_funding and R.prog.level < rules.LEVELS
         local subtitle = quest and W.card.quest_subtitle:format(w.name, island.ladder_position[i])
         match3.set_popup_header(wonder_form, quest and quest.title or w.name, subtitle)
         local ok, message = wonder_form:push{sprite=w.sprite, about=quest and quest.request or journey.building_about(i, R.prog.level, w.about),
@@ -721,6 +745,11 @@ function G.bind(R, over)
         local gets, gets_caption = {}, nil
         if R.building_gets then gets, gets_caption = R.building_gets(i) end
         local price = show_price and price_parts(w.cost) or {}
+        -- While the quest is being funded the card lists what is still
+        -- missing, as amounts, in place of the full price.
+        local missing = needs_funding and R.funding_shortfall and R.funding_shortfall(w.cost) or {}
+        if #missing > 0 then price = missing end
+        wonder_form:set("price_caption", #missing > 0 and W.card.missing or W.card.price)
         local count, groups = #gets + #price, (#gets > 0 and 1 or 0) + (#price > 0 and 1 or 0)
         amount_width = math.min(96, math.floor((CARD_INNER - GROUP_GAP * (groups - 1) - AMOUNT_GAP * (count - groups)) / math.max(1, count)))
         wonder_form.values.show_gets, wonder_form.values.show_amounts = #gets > 0, count > 0
@@ -731,11 +760,11 @@ function G.bind(R, over)
         wonder_form:set("unlock", unlock_text or "")
         assert(wonder_form:set_items("price", price))
         local funding
-        if quest and not can_build then
-            local missing = R.funding_shortfall and R.funding_shortfall(w.cost)
-            if R.prog.level < step.after then
-                funding = W.catalogue.complete:format(step.after) .. (missing and "\n" .. missing or "")
-            else funding = missing or W.catalogue.poor end
+        if needs_funding then
+            -- The amounts already say what is missing; a line is only for the level gate.
+            if R.prog.level < step.after then funding = W.catalogue.complete:format(step.after)
+            elseif #missing == 0 then funding = W.catalogue.poor
+            else wonder_form.values.show_notice = false end
         end
         wonder_form:set("notice", funding or built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
         wonder_action = (can_build or movable) and {kind=i, item=movable and R.inspect_item or nil} or nil

@@ -69,28 +69,26 @@ function R.building_gets(kind)
     return gets, card.every_win
 end
 
-function R.cost_text(parts)
-    local prices = {}
-    for i, part in ipairs(parts) do prices[i] = ("%d %s"):format(part.amount, part.name) end
-    return table.concat(prices, " + ")
-end
-
 R.register_result(function()
     local spec = rules.level_of(R.g)
     local breakdown = rules.reward_breakdown(R.g, R.wonders, R.prog)
-    local w, reward, first = breakdown.wonder, breakdown.total, breakdown.first
+    local reward, first = breakdown.total, breakdown.first
     local resources = {}
     for slot, currency in ipairs(economy.currencies) do
         resources[slot] = {id=currency.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
     end
+    -- A first clear's story find, or else the next stall on the ladder: what
+    -- it still needs after this win, or its picture once the wallet covers it.
     local find = first and spec.story_piece
-    local next_step = {
-        icon=find and R.board_art["story-" .. find.key] or first and w and w.sprite or R.hud_art.complete,
-        heading=find and "RECOVERED · " .. find.name or first and (w and "NEXT: BUILD" or "NEXT") or "SPEND IT IN THE",
-        title=first and (w and w.name or "The market has news") or "Build shop",
-    }
-    if first and w then
-        next_step.detail = (R.prog.wallet + reward):covers(w.cost) and "Ready to build" or "Replay a wish for more goods"
+    local kind = island.next_step(R.island, first and R.g.level + 1 or R.prog.level)
+    local w = kind and R.buildings[kind + 1]
+    local next_step
+    if find then
+        next_step = {icon=R.board_art["story-" .. find.key], heading="RECOVERED", title=find.name}
+    elseif w then
+        local have, missing = R.prog.wallet + reward, purse()
+        for slot in ipairs(economy.currencies) do missing[slot] = math.max(0, w.cost[slot] - have[slot]) end
+        next_step = R.result_next(w, R.currency_prices(missing))
     end
     return {
         title=first and "Wish granted!" or "Replay complete",
