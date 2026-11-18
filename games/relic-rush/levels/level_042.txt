@@ -5,7 +5,7 @@ teaches: Free the opposing locks and clear across the twin arches.
 x x x x x
  x x x x
 x x x x x
- k k k k
+ p p p p
 x p p p x
  p p p p
 k k k k k

@@ -39,6 +39,20 @@ The Jungle Bridge (62) introduces double chains. Twin Shrines (79) holds the
 lower chamber until both links on the gate chains have been broken. The Valley
 Temple (100) combines double chains and ice over green plaques.
 
+## Blocker density
+
+Boards with chains or ice carry about the reference's share of them. Chained
+plaques run in dotted rows, with a free piece between two chains so every
+chain keeps a line of four. Ice runs in rows, and the chamber under an ice row
+starts empty, as the cells under a Cradle of Rome 2 ice tablet start frozen.
+Per ten levels chains cover 3–7% of all cells (reference 3–9%) and ice up to
+7% (reference up to 8%). Compare any range with
+`python3 tools/reference/cradle-of-rome/compare_levels.py relic-rush`.
+
+Twelve boards stay below the reference because the bot's games ran past the
+250-move ceiling at full density: 23, 25, 26, 38, 53, 65, 70, 73, 75, 81, 89, 98
+and 99 carry between the earlier count and 60% of the reference's share.
+
 ## Boss blockers
 
 The sequel leaves bosses 10, 20, 30 and 80 free of blockers. Bosses 40, 50 and

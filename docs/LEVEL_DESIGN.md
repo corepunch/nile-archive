@@ -74,7 +74,9 @@ of every level). Regenerate both with
    through and the tablets below can be cleared.
 8. **Every feature by level 100.** The first Cradle of Rome uses ice and
    disabled cells in Extras. The Windows sequel introduces both in Adventure
-   level 12. Give each first appearance a short hint in the game's own terms.
+   level 12: a row of ice tablets, and under it the cells that stay frozen
+   (`disable`) until the ice breaks. Our match is an ice row over a chamber
+   that starts empty. Give each first appearance a short hint in the game's own terms.
 9. **Follow the schedule below.** The validator rejects a feature before its
    first level.
 

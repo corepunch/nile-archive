@@ -103,6 +103,7 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `cradle-of-rome/extract_pak.py` | Unpacks a Cradle of Rome `resources.pak` | `python3 tools/reference/cradle-of-rome/extract_pak.py <resources.pak> <new dir>` |
 | `cradle-of-rome/analyze.py` | Inspects board, piece and construction tables | `python3 tools/reference/cradle-of-rome/analyze.py` |
 | `cradle-of-rome/level_data.py` | Exports every level as design data: `docs/cradle-of-rome-reference/levels.json` and `LEVELS.md` | `python3 tools/reference/cradle-of-rome/level_data.py [--check]` |
+| `cradle-of-rome/compare_levels.py` | Compares a hex campaign with Cradle of Rome 2 level by level: board fill, blue and green plaques, chains, ice and the cells a blocker holds back | `python3 tools/reference/cradle-of-rome/compare_levels.py relic-rush` |
 | `cradle-of-rome/level_previews.py` | Draws 100 Adventure layouts from each of the two local Cradle of Rome editions as comparison sheets | `make reference-levels-preview` |
 | `cradle-of-rome/export_art.py` | Exports the XML-defined board artwork | `python3 tools/reference/cradle-of-rome/export_art.py` |
 | `cradle-of-rome/export_economy.py` | Exports Cradle of Rome 2's economy tables | `python3 tools/reference/cradle-of-rome/export_economy.py` |

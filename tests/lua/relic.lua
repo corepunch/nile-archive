@@ -197,17 +197,18 @@ local function test_holes_and_shapes()
         check(n >= 12, "the first area is big enough to play")
         rules.game_collapse(g)
         local fed = rules.game_fed_cells(g)
-        local refilling, waiting = 0, 0
+        local refilling = 0
         for i = 0, CELLS - 1 do
             local kind = g.tiles[i].kind
             local fixed = g.stone_hp[i] > 0
             local locked = g.chain[i] > 0 or g.ice[i] > 0
-            if fed[i] then refilling = refilling + 1
-            elseif g.active[i] and not fixed and not locked then waiting = waiting + 1 end
+            if fed[i] then refilling = refilling + 1 end
             check(g.active[i] and (fixed and kind == -1 or (fed[i] or locked) and kind >= 0 or not fed[i] and not locked and not fixed)
                 or not g.active[i] and kind == -1, "collapse fills fed cells, gated cells wait, solids and voids stay empty")
         end
-        check(refilling > waiting, ("level %d has room for match-fours before opening its gates"):format(lvl + 1))
+        -- A gated chamber may be larger than the open part, as in Cradle of Rome 2
+        -- (levels 9 and 59); the open part still needs room to make matches.
+        check(refilling >= 20, ("level %d has room for match-fours before opening its gates"):format(lvl + 1))
     end
     check(family_count >= 4, "campaign has at least four recognizable board families")
 end

@@ -250,7 +250,7 @@ return {
     {number=42, name="Twin Arches", tier="easy",
      mask="000100011110011110111110001111111110011110111110001110011110011110111110001111111110011110111110000100011110",
      oil={3, 7, 8, 9, 10, 13, 14, 15, 16, 18, 19, 20, 21, 22, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 42, 43, 44, 45, 46, 50, 51, 52, 55, 56, 57, 58, 61, 62, 63, 64, 66, 67, 68, 69, 70, 74, 75, 76, 77, 78, 79, 80, 81, 82, 85, 86, 87, 88, 90, 91, 92, 93, 94, 99, 103, 104, 105, 106}, oil_double={},
-     chain_cells={{cell=3, hits=1}, {cell=13, hits=1}, {cell=27, hits=1}, {cell=29, hits=1}, {cell=31, hits=1}, {cell=33, hits=1}, {cell=37, hits=1}, {cell=51, hits=1}, {cell=61, hits=1}, {cell=75, hits=1}, {cell=77, hits=1}, {cell=79, hits=1}, {cell=81, hits=1}, {cell=85, hits=1}, {cell=99, hits=1}},
+     chain_cells={{cell=3, hits=1}, {cell=27, hits=1}, {cell=29, hits=1}, {cell=31, hits=1}, {cell=33, hits=1}, {cell=51, hits=1}, {cell=75, hits=1}, {cell=77, hits=1}, {cell=79, hits=1}, {cell=81, hits=1}, {cell=99, hits=1}},
      ice_cells={},
      stones={}},
     {number=43, name="The Cistern", tier="normal",

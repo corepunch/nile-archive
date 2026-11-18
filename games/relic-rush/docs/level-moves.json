@@ -50,10 +50,10 @@
   "within": 36
  },
  {
-  "fastest": 12,
+  "fastest": 15,
   "level": 6,
-  "median": 22,
-  "moves": 31,
+  "median": 27,
+  "moves": 38,
   "seeds": 40,
   "tier": "normal",
   "wins": 40,
@@ -110,33 +110,33 @@
   "within": 35
  },
  {
-  "fastest": 34,
+  "fastest": 42,
   "level": 12,
-  "median": 75,
-  "moves": 150,
+  "median": 87,
+  "moves": 174,
   "seeds": 40,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 38,
+  "within": 35
  },
  {
   "fastest": 54,
   "level": 13,
-  "median": 137,
-  "moves": 192,
+  "median": 164,
+  "moves": 230,
   "seeds": 40,
   "tier": "normal",
-  "wins": 39,
-  "within": 27
+  "wins": 34,
+  "within": 32
  },
  {
-  "fastest": 45,
+  "fastest": 41,
   "level": 14,
-  "median": 88,
-  "moves": 124,
+  "median": 102,
+  "moves": 143,
   "seeds": 40,
   "tier": "normal",
-  "wins": 40,
+  "wins": 38,
   "within": 29
  },
  {
@@ -170,24 +170,24 @@
   "within": 33
  },
  {
-  "fastest": 43,
+  "fastest": 49,
   "level": 18,
-  "median": 71,
-  "moves": 100,
+  "median": 91,
+  "moves": 128,
   "seeds": 40,
   "tier": "normal",
   "wins": 40,
-  "within": 37
+  "within": 33
  },
  {
-  "fastest": 21,
+  "fastest": 49,
   "level": 19,
-  "median": 62,
-  "moves": 75,
+  "median": 105,
+  "moves": 126,
   "seeds": 40,
   "tier": "hard",
-  "wins": 39,
-  "within": 24
+  "wins": 37,
+  "within": 25
  },
  {
   "fastest": 86,
@@ -210,14 +210,14 @@
   "within": 37
  },
  {
-  "fastest": 45,
+  "fastest": 40,
   "level": 22,
   "median": 131,
   "moves": 250,
   "seeds": 40,
   "tier": "easy",
-  "wins": 36,
-  "within": 36
+  "wins": 37,
+  "within": 37
  },
  {
   "fastest": 43,
@@ -240,14 +240,14 @@
   "within": 28
  },
  {
-  "fastest": 46,
+  "fastest": 59,
   "level": 25,
-  "median": 94,
-  "moves": 113,
+  "median": 166,
+  "moves": 200,
   "seeds": 40,
   "tier": "hard",
-  "wins": 40,
-  "within": 28
+  "wins": 38,
+  "within": 31
  },
  {
   "fastest": 55,
@@ -260,14 +260,14 @@
   "within": 30
  },
  {
-  "fastest": 60,
+  "fastest": 59,
   "level": 27,
-  "median": 95,
-  "moves": 133,
+  "median": 116,
+  "moves": 163,
   "seeds": 40,
   "tier": "normal",
-  "wins": 39,
-  "within": 34
+  "wins": 40,
+  "within": 37
  },
  {
   "fastest": 33,
@@ -300,14 +300,14 @@
   "within": 20
  },
  {
-  "fastest": 43,
+  "fastest": 53,
   "level": 31,
-  "median": 68,
-  "moves": 136,
+  "median": 81,
+  "moves": 162,
   "seeds": 40,
   "tier": "easy",
   "wins": 40,
-  "within": 36
+  "within": 40
  },
  {
   "fastest": 34,
@@ -320,34 +320,34 @@
   "within": 35
  },
  {
-  "fastest": 38,
+  "fastest": 56,
   "level": 33,
-  "median": 116,
-  "moves": 163,
+  "median": 164,
+  "moves": 230,
   "seeds": 40,
   "tier": "normal",
-  "wins": 37,
-  "within": 28
+  "wins": 32,
+  "within": 31
  },
  {
-  "fastest": 44,
+  "fastest": 62,
   "level": 34,
-  "median": 84,
-  "moves": 118,
+  "median": 102,
+  "moves": 143,
   "seeds": 40,
   "tier": "normal",
-  "wins": 40,
-  "within": 32
+  "wins": 39,
+  "within": 34
  },
  {
-  "fastest": 46,
+  "fastest": 63,
   "level": 35,
-  "median": 103,
-  "moves": 124,
+  "median": 134,
+  "moves": 161,
   "seeds": 40,
   "tier": "hard",
-  "wins": 36,
-  "within": 24
+  "wins": 35,
+  "within": 22
  },
  {
   "fastest": 46,
@@ -370,14 +370,14 @@
   "within": 27
  },
  {
-  "fastest": 39,
+  "fastest": 50,
   "level": 38,
-  "median": 132,
-  "moves": 185,
+  "median": 151,
+  "moves": 212,
   "seeds": 40,
   "tier": "normal",
-  "wins": 37,
-  "within": 31
+  "wins": 36,
+  "within": 32
  },
  {
   "fastest": 43,
@@ -400,54 +400,54 @@
   "within": 20
  },
  {
-  "fastest": 42,
+  "fastest": 41,
   "level": 41,
-  "median": 71,
-  "moves": 142,
+  "median": 87,
+  "moves": 174,
   "seeds": 40,
   "tier": "easy",
-  "wins": 40,
-  "within": 36
- },
- {
-  "fastest": 56,
-  "level": 42,
-  "median": 103,
-  "moves": 206,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 49,
-  "level": 43,
-  "median": 111,
-  "moves": 156,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
+  "wins": 39,
   "within": 35
  },
  {
-  "fastest": 29,
-  "level": 44,
-  "median": 57,
-  "moves": 80,
+  "fastest": 63,
+  "level": 42,
+  "median": 121,
+  "moves": 242,
   "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 28
+  "tier": "easy",
+  "wins": 38,
+  "within": 38
  },
  {
-  "fastest": 43,
+  "fastest": 44,
+  "level": 43,
+  "median": 151,
+  "moves": 212,
+  "seeds": 40,
+  "tier": "normal",
+  "wins": 35,
+  "within": 30
+ },
+ {
+  "fastest": 45,
+  "level": 44,
+  "median": 90,
+  "moves": 126,
+  "seeds": 40,
+  "tier": "normal",
+  "wins": 39,
+  "within": 30
+ },
+ {
+  "fastest": 65,
   "level": 45,
-  "median": 82,
-  "moves": 99,
+  "median": 111,
+  "moves": 134,
   "seeds": 40,
   "tier": "hard",
   "wins": 39,
-  "within": 25
+  "within": 27
  },
  {
   "fastest": 37,
@@ -540,54 +540,54 @@
   "within": 30
  },
  {
-  "fastest": 32,
+  "fastest": 48,
   "level": 55,
-  "median": 69,
-  "moves": 83,
+  "median": 79,
+  "moves": 95,
   "seeds": 40,
   "tier": "hard",
-  "wins": 40,
-  "within": 22
+  "wins": 39,
+  "within": 27
  },
  {
-  "fastest": 40,
+  "fastest": 61,
   "level": 56,
-  "median": 87,
-  "moves": 174,
+  "median": 98,
+  "moves": 196,
   "seeds": 40,
   "tier": "easy",
   "wins": 40,
   "within": 40
  },
  {
-  "fastest": 40,
+  "fastest": 34,
   "level": 57,
-  "median": 64,
-  "moves": 90,
+  "median": 83,
+  "moves": 117,
   "seeds": 40,
   "tier": "normal",
   "wins": 40,
-  "within": 32
- },
- {
-  "fastest": 42,
-  "level": 58,
-  "median": 68,
-  "moves": 96,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 36
+  "within": 37
  },
  {
   "fastest": 49,
+  "level": 58,
+  "median": 112,
+  "moves": 157,
+  "seeds": 40,
+  "tier": "normal",
+  "wins": 39,
+  "within": 31
+ },
+ {
+  "fastest": 75,
   "level": 59,
-  "median": 167,
-  "moves": 201,
+  "median": 160,
+  "moves": 192,
   "seeds": 40,
   "tier": "hard",
   "wins": 37,
-  "within": 29
+  "within": 30
  },
  {
   "fastest": 69,
@@ -610,24 +610,24 @@
   "within": 36
  },
  {
-  "fastest": 34,
+  "fastest": 45,
   "level": 62,
-  "median": 64,
-  "moves": 128,
+  "median": 102,
+  "moves": 204,
   "seeds": 40,
   "tier": "easy",
   "wins": 40,
-  "within": 38
+  "within": 40
  },
  {
-  "fastest": 48,
+  "fastest": 45,
   "level": 63,
-  "median": 149,
-  "moves": 209,
+  "median": 130,
+  "moves": 182,
   "seeds": 40,
   "tier": "normal",
-  "wins": 33,
-  "within": 30
+  "wins": 35,
+  "within": 32
  },
  {
   "fastest": 26,
@@ -640,14 +640,14 @@
   "within": 28
  },
  {
-  "fastest": 64,
+  "fastest": 63,
   "level": 65,
-  "median": 156,
-  "moves": 188,
+  "median": 180,
+  "moves": 216,
   "seeds": 40,
   "tier": "hard",
-  "wins": 34,
-  "within": 30
+  "wins": 32,
+  "within": 27
  },
  {
   "fastest": 42,
@@ -670,24 +670,24 @@
   "within": 30
  },
  {
-  "fastest": 44,
+  "fastest": 66,
   "level": 68,
-  "median": 94,
-  "moves": 132,
+  "median": 148,
+  "moves": 208,
   "seeds": 40,
   "tier": "normal",
-  "wins": 40,
-  "within": 27
+  "wins": 37,
+  "within": 33
  },
  {
-  "fastest": 31,
+  "fastest": 47,
   "level": 69,
-  "median": 98,
-  "moves": 118,
+  "median": 115,
+  "moves": 138,
   "seeds": 40,
   "tier": "hard",
-  "wins": 40,
-  "within": 27
+  "wins": 36,
+  "within": 26
  },
  {
   "fastest": 71,
@@ -740,14 +740,14 @@
   "within": 32
  },
  {
-  "fastest": 71,
+  "fastest": 84,
   "level": 75,
-  "median": 210,
-  "moves": 250,
+  "median": 204,
+  "moves": 245,
   "seeds": 40,
   "tier": "hard",
-  "wins": 27,
-  "within": 27
+  "wins": 25,
+  "within": 25
  },
  {
   "fastest": 41,
@@ -760,14 +760,14 @@
   "within": 36
  },
  {
-  "fastest": 39,
+  "fastest": 57,
   "level": 77,
-  "median": 100,
-  "moves": 140,
+  "median": 112,
+  "moves": 157,
   "seeds": 40,
   "tier": "normal",
-  "wins": 39,
-  "within": 32
+  "wins": 37,
+  "within": 28
  },
  {
   "fastest": 35,
@@ -780,14 +780,14 @@
   "within": 23
  },
  {
-  "fastest": 69,
+  "fastest": 99,
   "level": 79,
-  "median": 144,
-  "moves": 173,
+  "median": 187,
+  "moves": 225,
   "seeds": 40,
   "tier": "hard",
-  "wins": 38,
-  "within": 28
+  "wins": 39,
+  "within": 33
  },
  {
   "fastest": 64,
@@ -800,14 +800,14 @@
   "within": 20
  },
  {
-  "fastest": 38,
+  "fastest": 29,
   "level": 81,
-  "median": 116,
-  "moves": 232,
+  "median": 113,
+  "moves": 226,
   "seeds": 40,
   "tier": "easy",
-  "wins": 34,
-  "within": 32
+  "wins": 31,
+  "within": 30
  },
  {
   "fastest": 33,
@@ -840,14 +840,14 @@
   "within": 25
  },
  {
-  "fastest": 60,
+  "fastest": 82,
   "level": 85,
-  "median": 140,
-  "moves": 168,
+  "median": 146,
+  "moves": 176,
   "seeds": 40,
   "tier": "hard",
-  "wins": 36,
-  "within": 29
+  "wins": 34,
+  "within": 27
  },
  {
   "fastest": 33,
@@ -860,34 +860,34 @@
   "within": 39
  },
  {
-  "fastest": 48,
+  "fastest": 36,
   "level": 87,
-  "median": 137,
-  "moves": 192,
+  "median": 139,
+  "moves": 195,
   "seeds": 40,
   "tier": "normal",
-  "wins": 32,
-  "within": 24
+  "wins": 30,
+  "within": 28
  },
  {
-  "fastest": 45,
+  "fastest": 57,
   "level": 88,
-  "median": 70,
-  "moves": 98,
+  "median": 125,
+  "moves": 175,
   "seeds": 40,
   "tier": "normal",
-  "wins": 40,
-  "within": 36
+  "wins": 35,
+  "within": 32
  },
  {
-  "fastest": 45,
+  "fastest": 60,
   "level": 89,
-  "median": 80,
-  "moves": 96,
+  "median": 115,
+  "moves": 138,
   "seeds": 40,
   "tier": "hard",
-  "wins": 40,
-  "within": 30
+  "wins": 39,
+  "within": 28
  },
  {
   "fastest": 83,
@@ -930,24 +930,24 @@
   "within": 26
  },
  {
-  "fastest": 71,
+  "fastest": 62,
   "level": 94,
-  "median": 107,
-  "moves": 150,
+  "median": 113,
+  "moves": 159,
   "seeds": 40,
   "tier": "normal",
-  "wins": 38,
-  "within": 32
+  "wins": 40,
+  "within": 33
  },
  {
-  "fastest": 49,
+  "fastest": 41,
   "level": 95,
-  "median": 86,
-  "moves": 104,
+  "median": 133,
+  "moves": 160,
   "seeds": 40,
   "tier": "hard",
   "wins": 39,
-  "within": 26
+  "within": 29
  },
  {
   "fastest": 30,
@@ -960,13 +960,13 @@
   "within": 34
  },
  {
-  "fastest": 60,
+  "fastest": 78,
   "level": 97,
-  "median": 145,
-  "moves": 203,
+  "median": 176,
+  "moves": 247,
   "seeds": 40,
   "tier": "normal",
-  "wins": 37,
+  "wins": 33,
   "within": 33
  },
  {
@@ -980,14 +980,14 @@
   "within": 32
  },
  {
-  "fastest": 57,
+  "fastest": 56,
   "level": 99,
-  "median": 98,
-  "moves": 118,
+  "median": 153,
+  "moves": 184,
   "seeds": 40,
   "tier": "hard",
-  "wins": 39,
-  "within": 24
+  "wins": 34,
+  "within": 27
  },
  {
   "fastest": 76,
