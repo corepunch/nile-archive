@@ -1570,6 +1570,8 @@ function G.app(R)
         R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
         R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
         if not app.arg("smoke") then save.read(R.progress_slot(), R.serialize) end
+        -- A game may furnish the town a new player first sees (island.new_game).
+        if island.new_game and R.prog.level == 0 and R.island.count == 0 then island.new_game(R.island, app.clock()) end
         if W.leaderboard and not app.arg("smoke") and not app.arg("debug-walkthrough") then
             gamecenter.submit(W.leaderboard.board, R.prog.level)
         end

@@ -258,7 +258,7 @@ The twenty campaign purchases follow the Windows edition of Cradle of Rome 2. Ea
 | 19 | Forum | 26 | 135 / 175 / 115 | Unlocks Star. Clear all pieces of a chosen kind. |
 | 20 | Fountain | 29 | 485 / 625 / 410 | Emeralds earn 11 Coins each. |
 
-The Sawmill also repairs the fixed quay as part of the island story. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
+A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. The Sawmill also repairs the fixed quay as part of the island story. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
 confirm. Cancelling is free. The resources
 needed for an earned restoration are reserved until placement. Purchases save

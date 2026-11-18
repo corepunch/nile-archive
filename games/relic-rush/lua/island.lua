@@ -105,6 +105,14 @@ function M.migrate_wallet(progress, c)
     wallet[economy.GOLD] = math.max(wallet[economy.GOLD], reserved[economy.GOLD])
 end
 
+-- A new game opens on the crew's tent, pitched the evening they landed. It is
+-- scenery: free, movable and outside the campaign ladder.
+function M.new_game(c, now)
+    local tent = M.kinds.supply_tent
+    local ok, spot = c:find_spot(tent, vec2(740, 2080))
+    if ok then c:add(spot, tent, now) end
+end
+
 function M.restore_saved(c)
     -- Purchased decorations do not count toward campaign restoration progress.
     -- Rehome saved buildings whose footprints no longer fit without charging again.

@@ -183,7 +183,7 @@ function R.smoke()
     elseif stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 4   -- PLACE & BUILD
     elseif stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
-        if R.island.count ~= 1 then error("smoke: the wonder was not built") end
+        if R.island.count ~= 2 then error("smoke: the wonder was not built") end   -- beside the crew's tent
         R.open_catalogue("building"); shop.categories = 0; stage = 20
     elseif stage == 20 and R.overlay == R.OV_SHOP then
         if shop.categories < 2 then
@@ -200,17 +200,17 @@ function R.smoke()
         assert(R.island.placing == 37, "catalogue action lost its stable item key")
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 23
     elseif stage == 23 and R.island.placing < 0 then
-        assert(R.island.count == 1 and R.prog.wallet[1] == shop.gold, "cancelled purchase changed save state")
+        assert(R.island.count == 2 and R.prog.wallet[1] == shop.gold, "cancelled purchase changed save state")
         R.open_catalogue(); stage = 24
     elseif stage == 24 and R.overlay == R.OV_SHOP then
         if press_tile("shrub") then stage = 25 end
     elseif stage == 25 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 26
     elseif stage == 26 and R.island.placing < 0 then
-        assert(R.island.count == 2 and island.wonder_count(R.island) == 1, "decoration changed campaign restoration count")
+        assert(R.island.count == 3 and island.wonder_count(R.island) == 1, "decoration changed campaign restoration count")
         assert(R.prog.wallet[1] == shop.gold - 15, "purchase must charge once")
         move = city.move_test(R.island, {
-            item = 1,   -- the Well: the first restoration moves like any other building
+            item = 2,   -- the Well: the first restoration moves like any other building
             look = function(at) R.island_focus(at - vec2(0, 80), math.max(.65, R.island.cam.zoom)) end,
             wallet = function() return R.prog.wallet[rules.GOLD] end,
             cancel = function() app.inject_click(R.placement_form.boxes.cancel:center()) end,
@@ -220,15 +220,15 @@ function R.smoke()
         stage = 6
     elseif stage == 6 then
         if move() then return end
-        R.island_focus(R.island.items[2].pos - vec2(0, 80), R.island.cam.zoom); stage = 7   -- the camera followed the Well
+        R.island_focus(R.island.items[3].pos - vec2(0, 80), R.island.cam.zoom); stage = 7   -- the camera followed the Well
     elseif stage == 7 then
         local c = R.island
-        app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5, .65))); stage = 27
+        app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[3])):point(vec2(.5, .65))); stage = 27
     elseif stage==27 and R.overlay==R.OV_NONE then
-        assert(R.town.bubble and R.town.bubble.item==1 and R.town.bubble.text:find("Round shrub",1,true),"tap shows the purchased building's name and subtitle")
-        R.island_begin(37,true,1);stage=28
+        assert(R.town.bubble and R.town.bubble.item==2 and R.town.bubble.text:find("Round shrub",1,true),"tap shows the purchased building's name and subtitle")
+        R.island_begin(37,true,2);stage=28
     elseif stage == 28 and R.island.placing >= 0 then
-        assert(R.island.moving == 1 and R.island.placing == 37, "details must move the purchased instance")
+        assert(R.island.moving == 2 and R.island.placing == 37, "details must move the purchased instance")
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 29
     elseif stage == 29 and R.island.placing < 0 then
         shop.wallet = purse(table.unpack(R.prog.wallet))
