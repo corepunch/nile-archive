@@ -5,8 +5,7 @@
   },
   "well": {
     "about": "Water buckets earn 3 Food each.",
-    "cost": [50, 0, 0],
-    "fixed_site": [610, 1840]
+    "cost": [50, 0, 0]
   },
   "quay_steps": {
     "about": "The Workshop's first tread opens the way to the viewing shutter.",

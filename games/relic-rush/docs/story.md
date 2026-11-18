@@ -37,7 +37,7 @@ Each row connects a character’s request with the expedition clears and confirm
 | Chapter and story objective | Expeditions and confirmed placement | Outcome and next request |
 | --- | --- | --- |
 | 1. Set up camp | Clear 1 and place the Expedition Camp. | Mara uses the old lookout and gets two flashes back. The crew needs water. |
-| 1. Restore water | Clear through 4 and restore the Spring Well at its original site. | Tomas joins, explains the severed relay and points the crew toward the lower quay. |
+| 1. Restore water | Clear through 4 and restore the Spring Well. | Tomas joins, explains the severed relay and points the crew toward the lower quay. |
 | 1. Catch the low tide | Clear through 7 and place the Trapper’s Cabin. | Tomas and Mara set out before dawn and knot a line to the width of the missing tread. |
 | 1. Reach the lower quay | Clear through 10 and place the Artisan Workshop. Its first tread repairs the quay on the same purchase. | The restored tread cues the ancient keeper’s scene. Back in the present, the crew opens the viewing shutter, sees three flashes and chooses who answers. |
 | 2. Find the sender — Mara wants to answer safely | 11 follow the reply; 12 find recently delivered supplies; 13 recover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |

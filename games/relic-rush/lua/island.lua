@@ -230,6 +230,7 @@ end
 
 -- A ladder restoration is suggested beside the story restoration after it.
 function M.island_suggestion(kind)
+    if kind == M.kinds.well then return vec2(610, 1840) end   -- the old spring, but it may stand anywhere
     if kind == M.kinds.log_cabin then return vec2(875, 2050) end
     local site = M.buildings[kind + 1].fixed_site
     if site then return site end

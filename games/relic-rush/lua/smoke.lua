@@ -210,7 +210,7 @@ function R.smoke()
         assert(R.island.count == 2 and island.wonder_count(R.island) == 1, "decoration changed campaign restoration count")
         assert(R.prog.wallet[1] == shop.gold - 15, "purchase must charge once")
         move = city.move_test(R.island, {
-            item = 2,
+            item = 1,   -- the Well: the first restoration moves like any other building
             look = function(at) R.island_focus(at - vec2(0, 80), math.max(.65, R.island.cam.zoom)) end,
             wallet = function() return R.prog.wallet[rules.GOLD] end,
             cancel = function() app.inject_click(R.placement_form.boxes.cancel:center()) end,
@@ -220,6 +220,8 @@ function R.smoke()
         stage = 6
     elseif stage == 6 then
         if move() then return end
+        R.island_focus(R.island.items[2].pos - vec2(0, 80), R.island.cam.zoom); stage = 7   -- the camera followed the Well
+    elseif stage == 7 then
         local c = R.island
         app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5, .65))); stage = 27
     elseif stage==27 and R.overlay==R.OV_NONE then

@@ -2,7 +2,7 @@
 local sprites = require("building_sprites")
 local items = {
     {key="camp", name="Village", category="wonder", cleared=0, about="Unlocks Bomb. Hit a cell and its six neighbors.", cost=purse(480,180,210), needs=purse(0,0,0,0)},
-    {key="well", name="Well", category="wonder", cleared=0, about="Water buckets earn 3 Food each.", cost=purse(50,0,0), needs=purse(0,0,0,0), fixed_site=vec2(610,1840)},
+    {key="well", name="Well", category="wonder", cleared=0, about="Water buckets earn 3 Food each.", cost=purse(50,0,0), needs=purse(0,0,0,0)},
     {key="workshop", name="Sawmill", category="wonder", cleared=0, about="Timber bundles earn 5 Supplies each.", cost=purse(360,135,0), needs=purse(0,0,0,0)},
     {key="market", name="Farm", category="building", cleared=10, about="Ration jars earn 4 Food each.", cost=purse(165,70,90), needs=purse(0,0,0,10)},
     {key="gateway", name="Port", category="wonder", cleared=0, about="Shrimp earn 6 Food each.", cost=purse(10,60,45), needs=purse(0,0,0,0)},
