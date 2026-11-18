@@ -98,7 +98,7 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Board 1, The Landing, is a full-width hex with six blue plaques. It uses Cradle of Rome's opening pool: sun coins and silver coins (Coins) plus a leaf, a flower and an amphora that only score. Food and Supplies pieces arrive with the restorations.
+Board 1, The Landing, is a nine-column hex with six blue plaques. It uses Cradle of Rome's opening pool: sun coins and silver coins (Coins) plus a leaf, a flower and an amphora that only score. Food and Supplies pieces arrive with the restorations.
 Boards 2–10 and 13 show a story piece in place of one matching colour.
 Every board spawns five kinds, so those boards use four regular kinds plus the story piece.
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)

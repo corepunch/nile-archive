@@ -15,9 +15,6 @@ for i, b in ipairs(boards) do
         goals={"oil"}, dress=dress, background=(i - 1) // 5 % 2 + 1}
 end
 
--- The opening hex is wide and short enough to use nearly the entire safe width.
-levels[1].view_radius = 33
-
 -- Later chapters still use a story piece in one of the five colour slots.
 levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
 levels[30].signal = "landing"

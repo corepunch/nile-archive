@@ -24,8 +24,8 @@ redeals if any exchange clears all the plaques. Refill damping begins on the sec
 
 Each blue tablet sits on two axes with space for four pieces. A gate must have a
 four-piece line on its fed side so the player can open it before filling the
-chamber below. The Landing is a 61-cell hex that uses all nine columns and
-fits close to both edges of the phone. It starts with six blue plaques.
+chamber below. The Landing is a 61-cell hex that uses all nine columns at the
+standard tile size, with space at both sides. It starts with six blue plaques.
 Use stepped edges, deep cutouts or interior gaps to give each later expedition
 a recognizable silhouette at phone size. Temple Steps has deep cuts
 on opposite sides of its diagonal stairway, with seven tablets on the middle
@@ -60,7 +60,7 @@ scheduled restoration pieces, no tools and the live move limits. The bot won
 layouts and budgets. It won at least once on each board. Trying every legal
 first exchange on the first of those ten deals per board found zero one-move wins.
 
-Each comparison shows the previous layout on the left and the current one on the right.
+Each comparison shows the previous board on the left and the current one on the right.
 
 | Board | 480 × 900 | 390 × 844 |
 | --- | --- | --- |

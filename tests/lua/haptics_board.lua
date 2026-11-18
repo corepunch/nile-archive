@@ -20,8 +20,8 @@ end
 
 do
     local source, target = rules.hex_index(0, -1), rules.hex_center()
-    local g = setup()
     local from, to = R.cell_pos(source), R.cell_pos(target)
+    local g = setup()
     for i = 0, rules.CELLS - 1 do g.active[i] = i == source or i == target end
     R.board_input{released=true, press_pos=from, pos=to}
     local count, effect, strength = testing.haptics()
