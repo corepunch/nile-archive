@@ -60,7 +60,6 @@ end
 
 -- The game's own atlases, even when the board borrows the engine's neutral skin.
 local function own_board() return require("match3").skin(require("match3_skin")) end
-local function own_hud() return require("match3").hud(require("match3_hud")) end
 
 function A.load_hud()
     local match3 = require("match3")
@@ -93,14 +92,14 @@ end
 function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
-    local own, hud = own_board(), own_hud()
+    local own = own_board()
     local function piece(name) return assert(own[name], "missing pieces frame: " .. name) end
     for _, key in ipairs(A.bonus_atlas_order) do textures[key] = piece(key) end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     elements_view.load(textures, own)
     for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
     elements_view.load_frame(textures, A.board_frame)
-    for _, key in ipairs(A.result_icons) do textures[key] = assert(hud[key], "missing hud frame: " .. key) end
+    for _, key in ipairs(A.result_icons) do textures[key] = piece(key) end
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
     for _, key in ipairs(A.campaign_pieces) do textures["campaign-" .. key] = piece("campaign-" .. key) end

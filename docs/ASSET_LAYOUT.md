@@ -62,6 +62,10 @@ shelved below the grid.
 | `hud` | `pause-*`, `score`, `complete`, `life`, `shop-*`, `signboard`, result icons |
 | `fx` | `fx-*`, `glow`, `spark-*`, `ice-puff-*`, `impact-*` |
 
+Relic Rush packs its small HUD icons (score, completion, lives, shop and
+result icons) into `pieces`. Its HUD definition reads those frames from
+`pieces` and the jade signboard from `hud`.
+
 It writes `lua/match3_atlases.lua` (one `{path, frames}` per atlas), the board
 skin `lua/match3_skin.lua` and the board HUD `lua/match3_hud.lua`. A skin lists
 `sheets`, standalone `images` (backgrounds, a portrait) and `aliases`, and

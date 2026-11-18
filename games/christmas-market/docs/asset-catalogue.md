@@ -515,8 +515,8 @@ icons to the goal display.
 
 The shop's built and locked tiles use `art/registered/expedition-hud/shop-built.png`
 (checkmark) and `shop-locked.png` (padlock), packed into the HUD atlas as
-`shop-built` and `shop-locked`. Relic Rush and Christmas Market ship the same
-two files. Their source, prompt and per-game styling are not yet recorded:
+`shop-built` and `shop-locked`. The Christmas Market source, prompt and
+per-game styling still need to be recorded in
 [#90](https://github.com/corepunch/nile-archive/issues/90).
 
 The engine's default resource skin is independent and embedded; both games

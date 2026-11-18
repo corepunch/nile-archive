@@ -7,6 +7,11 @@ pause interaction states, a score-goal star seal and a completed-goal check seal
 The square-tool atlas supplied the existing jade/gold style. See
 [controls-prompt.txt](controls-prompt.txt) for the exact request.
 
+`shop-status.png` contains the emerald checkmark for restored buildings and
+the gold padlock for locked buildings and expeditions. Both were painted in
+a single ImageGen call. See [the prompt](shop-status-prompt.txt) and
+[in-game comparisons](../../docs/screenshots/review/shop-status/README.md).
+
 `elena-investigating.png` is a separate identity-preserving edit using the game's
 existing Elena dialogue portrait. She examines an ancient sun fragment through a
 magnifying glass. See [elena-prompt.txt](elena-prompt.txt). It is retired: the

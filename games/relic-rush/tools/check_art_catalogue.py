@@ -125,12 +125,19 @@ for pack in manifest["packs"]:
     for kind in range(len(kinds)):
         assert (ROOT / f"art/registered/tile-sets/{pack}/{kind}.png").is_file()
 hud = json.loads((ROOT / manifest["expedition_hud"]).read_text())
-assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | {"score", "complete", "life"}
-for asset in [hud["controls"], hud["retired_portrait"]]:
+assert set(hud["pieces_frames"]) == {"score", "complete", "life", "shop-built", "shop-locked"}
+assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | set(hud["pieces_frames"])
+for asset in [hud["controls"], hud["retired_portrait"], hud["shop_status"]]:
     assert (ROOT / asset["source"]).is_file() and (ROOT / asset["prompt"]).is_file()
+assert (ROOT / hud["shop_status"]["review"]).is_file()
+with Image.open(ROOT / hud["shop_status"]["source"]) as status:
+    assert status.mode == "RGBA" and list(status.size) == hud["shop_status"]["size"]
 for name, asset in hud["icons"].items():
     assert "`" + name + "`" in doc
     assert (ROOT / asset["runtime"]).is_file()
+for name in hud["pieces_frames"]:
+    assert atlas["frames"][name]["atlas"] == "pieces", name
+assert {name for name, frame in atlas["frames"].items() if frame["atlas"] == "hud"} == {"signboard"}
 nav=json.loads((ROOT / manifest["archived_navigation"]).read_text())
 assert (ROOT/nav["source"]).is_file() and (ROOT/nav["prompt"]).is_file()
 assert set(nav["icons"])=={kind+"-"+state for kind in ("build","play","levels") for state in manifest["tool_states"]}
@@ -249,6 +256,7 @@ declaration = re.search(r"A\.result_icons = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"([^"]+)"', declaration) == list(result_icons["icons"])
 for key in result_icons["icons"]:
     assert "`" + key + "`" in doc
+    assert atlas["frames"][key]["atlas"] == result_icons["atlas"] == "pieces", key
 assert (ROOT / result_icons["source"]).is_file() and (ROOT / result_icons["prompt"]).is_file()
 subprocess.run([sys.executable, str(ROOT / result_icons["registration"]), "--check"], check=True)
 

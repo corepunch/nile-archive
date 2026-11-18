@@ -662,6 +662,7 @@
     ],
     "generator": "Built-in ImageGen, 2026-11-15. Both readout icons authored in one transparent atlas, using the Christmas Market result screen as a style reference.",
     "runtime": "art/registered/result-icons.png",
+    "atlas": "pieces",
     "registration": "tools/prepare_result_icons.py",
     "cell_size": 128,
     "art_size": 120,

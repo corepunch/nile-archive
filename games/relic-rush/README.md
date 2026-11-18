@@ -57,7 +57,9 @@ locked or missing. Locks still route gems around their sides.
 
 The board's art is one atlas per kind in `data/board/`: `pieces.png`,
 `blockers.png`, `cells.png`, `hud.png` and `fx.png`. Its backgrounds are separate JPEGs in
-`data/board/backs/`. `python3 tools/match3_atlas.py` rebuilds the atlases from
+`data/board/backs/`. The small HUD icons share `pieces.png` with the board
+pieces, and the jade signboard lives in `hud.png`.
+`python3 tools/match3_atlas.py` rebuilds the atlases from
 the registered sprites in `art/registered/`; [Asset layout](../../docs/ASSET_LAYOUT.md)
 describes the folders.
 `--default-match3` previews the engine's neutral skin.

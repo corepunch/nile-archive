@@ -94,7 +94,30 @@
       "runtime": "art/registered/expedition-hud/life.png",
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Life count; regenerates one life per 30 minutes"
+    },
+    "shop-built": {
+      "box": [83, 418, 611, 877],
+      "runtime": "art/registered/expedition-hud/shop-built.png",
+      "source": "art/expedition-hud/shop-status.png",
+      "meaning": "Restored building in the catalogue"
+    },
+    "shop-locked": {
+      "box": [721, 365, 1137, 892],
+      "runtime": "art/registered/expedition-hud/shop-locked.png",
+      "source": "art/expedition-hud/shop-status.png",
+      "meaning": "Locked building or expedition"
     }
+  },
+  "pieces_frames": ["score", "complete", "life", "shop-built", "shop-locked"],
+  "shop_status": {
+    "source": "art/expedition-hud/shop-status.png",
+    "prompt": "art/expedition-hud/shop-status-prompt.txt",
+    "size": [1254, 1254],
+    "generator": "Built-in ImageGen, 2026-11-18. Both status icons authored in one transparent atlas.",
+    "style_references": ["data/board/hud.png", "data/board/pieces.png"],
+    "reference_revision": "9271996e",
+    "states": "Static readouts for restored and locked rows",
+    "review": "docs/screenshots/review/shop-status/README.md"
   },
   "registration": "Measured crops, aspect-preserving resize into 120x120 on 128x128 RGBA canvas; original alpha preserved",
   "review": "docs/review/expedition-header/README.md",

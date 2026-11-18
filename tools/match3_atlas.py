@@ -61,6 +61,7 @@ GROUPS = ['pieces', 'blockers', 'cells', 'hud', 'fx']
 HUD_NAMES = {'score', 'complete', 'moves', 'life', 'signboard', 'hud-panel', 'tool-tray', 'discovery-star', 'next-clue'}
 BOARD_GROUPS = ['pieces', 'blockers', 'cells', 'fx']   # the board skin
 HUD_GROUPS = ['hud']                                   # the board HUD
+RELIC_HUD_ICONS = {'score', 'complete', 'life', 'discovery-star', 'next-clue', 'shop-built', 'shop-locked'}
 
 
 def group_of(name):
@@ -95,13 +96,14 @@ def grid_layout(sprites, columns):
 ACTION_STRIP = ROOT / 'art/match3-buttons/actions.png'
 
 
-def pack_groups(sprites):
+def pack_groups(sprites, piece_icons=()):
     """{group: (image, frames)}: each group in the smallest power-of-two sheet."""
     actions = grid_sprites(ACTION_STRIP, ['action-build', 'action-play', 'action-levels', 'action-pause'], 4)
     sprites = sprites | actions
     groups = {}
     for name, sprite in sprites.items():
-        groups.setdefault(group_of(name), {})[name] = sprite
+        group = 'pieces' if name in piece_icons else group_of(name)
+        groups.setdefault(group, {})[name] = sprite
     packed = {}
     for group in GROUPS:
         members = groups.get(group)
@@ -446,7 +448,9 @@ def build_game(game, check):
         image = loaded[name]
         x, y = match3_buttons.alpha_center(image)
         button_centers[name] = (f'{x / image.width:.7f}', f'{y / image.height:.7f}')
-    packed = pack_groups(loaded)
+    piece_icons = RELIC_HUD_ICONS if game == 'relic-rush' else ()
+    hud_groups = ['pieces', *HUD_GROUPS] if piece_icons else HUD_GROUPS
+    packed = pack_groups(loaded, piece_icons)
     outputs = []
     for group, (sheet, _) in packed.items():
         write_asset(root / f'data/board/{group}.png', png(sheet))
@@ -460,7 +464,7 @@ def build_game(game, check):
             '    button_centers={\n' + lua_frames(button_centers, '        ') + '    },\n' +
             '    images={\n' + lua_strings(images) + '    },\n    aliases={\n' + lua_strings(aliases) + '    },\n}\n',
         'lua/match3_hud.lua': header + 'local atlases = require("match3_atlases")\nreturn {\n    sheets={' +
-            ', '.join(f'atlases.{group}' for group in HUD_GROUPS if group in packed) + '},\n' +
+            ', '.join(f'atlases.{group}' for group in hud_groups if group in packed) + '},\n' +
             '    images={\n' + lua_strings(hud_images) + '    },\n    aliases={\n' + lua_strings(hud_aliases) + '    },\n}\n',
     }
     for name, text in tables.items():
@@ -468,7 +472,7 @@ def build_game(game, check):
         outputs.append(root / name)
     manifest = {'atlases': {group: {'runtime': f'data/board/{group}.png', 'size': list(sheet.size)}
                             for group, (sheet, _) in packed.items()},
-                'board': BOARD_GROUPS, 'hud': HUD_GROUPS,
+                'board': BOARD_GROUPS, 'hud': hud_groups,
                 'images': {name: 'data/' + path for name, path in (images | hud_images).items()},
                 'aliases': aliases | hud_aliases,
                 'frames': frame_index(packed),

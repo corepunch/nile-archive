@@ -760,20 +760,29 @@ in [the road removal comparison](review/no-auto-roads/README.md).
 
 ## Engine match-3 atlas and trickling
 
-`data/board/` holds one atlas per kind of art: `pieces.png` (pieces, bonuses and action icons), `blockers.png`,
-`cells.png` (floors and selection/hint frames), `hud.png` (Pause, goal and wallet counters, shop
-icons) and `fx.png` (additive effects). Backgrounds are separate files in
+`data/board/` holds the following atlases. `pieces.png` contains pieces,
+bonuses, action icons and the seven small HUD icons. `blockers.png` contains
+blockers, `cells.png` contains floors and selection/hint frames, `hud.png`
+contains the jade signboard, and `fx.png` contains additive effects.
+Backgrounds are separate files in
 `data/board/backs/`. `lua/match3_atlases.lua` gives each frame's pixel
 rectangle; `lua/match3_skin.lua` and `lua/match3_hud.lua` choose the atlases for
 the board and its HUD. `art/match3-atlas.json` records every atlas and its
 source images. Board pieces and objectives also supply their own
 icons to the goal display.
 
-The shop's built and locked tiles use `art/registered/expedition-hud/shop-built.png`
-(checkmark) and `shop-locked.png` (padlock), packed into the HUD atlas as
-`shop-built` and `shop-locked`. Relic Rush and Christmas Market ship the same
-two files. Their source, prompt and per-game styling are not yet recorded:
-[#90](https://github.com/corepunch/nile-archive/issues/90).
+The HUD reads `score`, `complete`, `life`, `discovery-star`, `next-clue`,
+`shop-built` and `shop-locked` from `pieces.png`. The first five use their
+existing registered artwork. `shop-built` is a jade checkmark with a gold
+bevel for restored buildings. `shop-locked` is a gold padlock for locked
+buildings and expeditions. Both are static readouts painted together in one
+transparent [ImageGen atlas](../art/expedition-hud/shop-status.png). The
+[prompt](../art/expedition-hud/shop-status-prompt.txt) and
+[registration manifest](../art/expedition-hud/manifest.json) record the source
+and crop boxes. Run `python3 games/relic-rush/tools/prepare_hud.py` to fit each
+crop into a 120 × 120 area on a 128 × 128 canvas with the painted alpha, then
+`python3 tools/match3_atlas.py` to repack.
+[Reviewed catalogue and expedition shots](screenshots/review/shop-status/README.md).
 
 The engine's default resource skin is independent and embedded; both games
 normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
