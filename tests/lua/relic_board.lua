@@ -285,8 +285,10 @@ if testing.game == "relic-rush" then
     R.layout()
     local centre = rules.hex_center()
     for i = 0, rules.CELLS - 1 do
-        local active = rules.hex_distance(centre, i) <= 4
+        local distance = rules.hex_distance(centre, i)
+        local active = distance <= 4
         check(rules.game_cell_active(opening, i) == active, "The Landing fills a complete hex")
+        check(opening.oil[i] == (distance <= 1 and 1 or 0), "The Landing has seven single plaques in the centre")
         check(R.cell_at(R.cell_pos(i)) == (active and i or -1), "The Landing's input follows its cells")
     end
     local left = R.cell_pos(rules.hex_index(-4, 2)).x - R.HEX_R

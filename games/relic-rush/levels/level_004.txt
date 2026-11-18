@@ -9,9 +9,9 @@ teaches: Match across the middle terraces; pieces falling through one row can se
 . . p . .
  . p p .
 . . p . .
- . p p .
-. . p . .
  . . . .
+. . p . .
+ . p p .
 . . p . .
  . . . .
 . . . . .

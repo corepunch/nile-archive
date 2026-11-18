@@ -3,7 +3,7 @@
 return {
     {number=1, name="The Landing", tier="tutorial",
      mask="000011111000000111111000000111111100001111111100001111111110001111111100000111111100000111111000000011111000",
-     oil={39, 40, 52, 53, 63, 64}, oil_double={},
+     oil={41, 42, 53, 54, 55, 65, 66}, oil_double={},
      chain_cells={},
      ice_cells={},
      stones={}},
@@ -21,7 +21,7 @@ return {
      stones={}},
     {number=4, name="Overgrown Terraces", tier="tutorial",
      mask="111111111000111111111000111111111100111111111100111111111100111111111100111111111100111111111000111111111000",
-     oil={38, 39, 50, 51, 52, 53, 62, 63}, oil_double={},
+     oil={38, 40, 50, 51, 52, 53, 62, 64}, oil_double={},
      chain_cells={},
      ice_cells={},
      stones={}},

@@ -25,12 +25,11 @@ redeals if any exchange clears all the plaques. Refill damping begins on the sec
 Each blue tablet sits on two axes with space for four pieces. A gate must have a
 four-piece line on its fed side so the player can open it before filling the
 chamber below. The Landing is a 61-cell hex that uses all nine columns at the
-standard tile size, with space at both sides. It starts with six blue plaques.
-Use stepped edges, deep cutouts or interior gaps to give each later expedition
-a recognizable silhouette at phone size. Temple Steps has deep cuts
-on opposite sides of its diagonal stairway, with seven tablets on the middle
-landing. Sunken Courtyard has a seven-cell opening, with seven tablets along
-the lower rim. Board 5 introduces a chain that holds back a tablet, and board 7
+standard tile size. Its seven blue plaques occupy the centre cell and its six
+neighbours. Temple Steps uses the same cluster where its two stairways meet.
+Sunken Courtyard has a seven-cell opening, with seven tablets along the lower
+rim. Overgrown Terraces uses two matching four-plaque diamonds on successive
+terraces. Board 5 introduces a chain that holds back a tablet, and board 7
 places ice above an empty tablet. Later boards combine split chambers, layered
 tablets and double locks.
 
@@ -48,7 +47,7 @@ possible four-cell runs with room to swap in a piece, up from two.
 | 9 · Twin Terraces | 29 → 80 | 46 → 0 |
 
 Each board was played on 40 deals without tools to set its move limit. Levels
-1–4 have median clears of 7, 7, 9 and 6 moves respectively. Across boards in
+1–4 have median clears of 6, 7, 9 and 7 moves respectively. Across boards in
 each later tier, the median of those board medians was 12 for easy, 16 for
 normal, 23 for hard and 26.5 for bosses. All deals cleared within the 250-move
 calibration ceiling. The fitted limits range from 13 to 49.
@@ -64,9 +63,10 @@ Each comparison shows the previous board on the left and the current one on the 
 
 | Board | 480 × 900 | 390 × 844 |
 | --- | --- | --- |
-| 1 · The Landing | [Opening deal](screenshots/review/landing-hex/board-480x900.jpg) | [Opening deal](screenshots/review/landing-hex/board-390x844.jpg) |
+| 1 · The Landing | [Opening deal](screenshots/review/plaque-symmetry/landing-480.jpg) | [Opening deal](screenshots/review/plaque-symmetry/landing-390.jpg) |
 | 2 · Temple Steps | [Opening deal](screenshots/review/tutorial-shapes/temple-steps-480.jpg) | [Opening deal](screenshots/review/tutorial-shapes/temple-steps-390.jpg) |
 | 3 · Sunken Courtyard | [Opening deal](screenshots/review/tutorial-shapes/sunken-courtyard-480.jpg) | [Opening deal](screenshots/review/tutorial-shapes/sunken-courtyard-390.jpg) |
+| 4 · Overgrown Terraces | [Opening deal](screenshots/review/plaque-symmetry/terraces-480.jpg) | [Opening deal](screenshots/review/plaque-symmetry/terraces-390.jpg) |
 | 5 · Vault Door | [Opening deal](screenshots/review/match-four-gates/vault-door-480.jpg) | [Opening deal](screenshots/review/match-four-gates/vault-door-390.jpg) |
 | 9 · Twin Terraces | [Opening deal](screenshots/review/match-four-gates/twin-terraces-480.jpg) | [Opening deal](screenshots/review/match-four-gates/twin-terraces-390.jpg) |
 

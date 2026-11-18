@@ -98,7 +98,7 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Board 1, The Landing, is a nine-column hex with six blue plaques. It uses Cradle of Rome's opening pool: sun coins and silver coins (Coins) plus a leaf, a flower and an amphora that only score. Food and Supplies pieces arrive with the restorations.
+Board 1, The Landing, is a nine-column hex with seven blue plaques in its centre. It uses Cradle of Rome's opening pool: sun coins and silver coins (Coins) plus a leaf, a flower and an amphora that only score. Food and Supplies pieces arrive with the restorations.
 Boards 2–10 and 13 show a story piece in place of one matching colour.
 Every board spawns five kinds, so those boards use four regular kinds plus the story piece.
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
@@ -148,7 +148,7 @@ board surface. [Before and after at both phone sizes](../../docs/review/match3-b
 
 The minimum match is **four identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are no special pieces: a longer line just clears. The 100 boards sit on a 9 x 12 rectangle of flat-top hexes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
-All 100 expeditions use five piece kinds. The first four had median clears of 7, 7, 9 and 6 moves in 40 bot deals per board. Each board has a move limit fitted to its difficulty tier. See the [campaign balance and board comparisons](docs/board-progression.md#match-four-difficulty).
+All 100 expeditions use five piece kinds. The first four had median clears of 6, 7, 9 and 7 moves in 40 bot deals per board. Each board has a move limit fitted to its difficulty tier. See the [campaign balance and board comparisons](docs/board-progression.md#match-four-difficulty).
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades. Movable pieces fly to their new cells during either a free shuffle or a Mixer use. Locked pieces and blue tablets stay put. Reduce Motion settles the pieces immediately. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
