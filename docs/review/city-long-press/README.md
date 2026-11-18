@@ -13,7 +13,7 @@ preview; only Confirm saves a move, while Cancel preserves the original layout.
 
 ## Capture the actual games
 
-`engine/launcher.c`, with `--gesture`, wraps the normal game's frame callback and queues
+`engine/src/launcher.c`, with `--gesture`, wraps the normal game's frame callback and queues
 native pointer events, without changing game drawing or synthesizing placement
 state. Build with `make CFLAGS="-O2 -g -Werror"`, then run:
 

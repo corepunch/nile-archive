@@ -20,25 +20,33 @@ The games target the iPad; the web build is only a fullscreen preview (a bare ca
 ## Layout
 
 ```
-engine/            the shared engine: ONE public header + one .c per module
-  engine.h         math, app, input, gfx, camera, fx, text, ui, audio, save, story, city, script
-  core.c           window, logical screen, main loop, pointer/touch gestures, screenshots
-  gfx.c            textures, anti-aliased shapes, camera, particles
-  font.c           TrueType text: outline, soft shadow, gradient; Retina-crisp glyph atlas
-  ui.c             immediate-mode widgets, input blocking, toasts, modals
-  save.c           key=value saves (files natively, localStorage on the web)
-  city.c           the city-building meta-game
-  sprite.c         authored atlas animation and pivot-aware drawing
-  nav.c            geometric graph routes with live blockers
-  audio.c          feedback-tone synthesiser
-  story.c          characters, dialogue with portraits, speech bubbles
-  script.c         the Lua runtime: sandboxed libraries, API setup, main-loop callbacks
-  script_modules.c private module resolution, per-state roots/cache, dependency cycles
-  launcher.c       main() for a Lua game, built once per game
-  api.xml          the Lua API, described once          ─┐ tools/luagen.py
-  api_lua.c/.h     the generated glue                   ─┤ (committed; make gen,
-  engine.d.lua     generated editor annotations         ─┘  checked by make test)
-  lua_lib.c        Lua 5.4 as one translation unit, sandbox libraries only
+engine/            the shared engine
+  api.xml          the Lua API, described once; tools/luagen.py writes generated/ from it
+  src/             the C runtime: ONE public header + one .c per module
+    engine.h       math, app, input, gfx, camera, fx, text, ui, audio, save, story, city, script
+    core.c         window, logical screen, main loop, pointer/touch gestures, screenshots
+    gfx.c          textures, anti-aliased shapes, camera, particles
+    font.c         TrueType text: outline, soft shadow, gradient; Retina-crisp glyph atlas
+    ui.c           immediate-mode widgets, input blocking, toasts, modals
+    save.c         key=value saves (files natively, localStorage on the web)
+    city.c         the city-building meta-game
+    sprite.c       authored atlas animation and pivot-aware drawing
+    nav.c          geometric graph routes with live blockers
+    audio.c        feedback-tone synthesiser
+    story.c        characters, dialogue with portraits, speech bubbles
+    script.c       the Lua runtime: sandboxed libraries, API setup, main-loop callbacks
+    script_modules.c private module resolution, per-state roots/cache, dependency cycles
+    launcher.c     main() for a Lua game, built once per game
+    lua_lib.c      Lua 5.4 as one translation unit, sandbox libraries only
+    platform/      haptics, Game Center, the animation clock and web audio per platform
+    test/          the test build's harness (-DENGINE_TEST): test.h, test_runner.c, test_lua.c
+  generated/       api_lua.c/.h (the Lua glue) and engine.d.lua (editor annotations);
+                   committed, written by make gen, checked by make test
+  lua/             the engine's own Lua, loaded at start-up: tween, ui_forms, ui_skin,
+                   town, leaderboard, board_intro, city_smoke and match3
+    match3/        match3's submodules by require name: match3.game is match3/game.lua
+  data/            the default skin's runtime art
+  art/             sources and registration for that art
   third_party/     lua/ and platform/ (pinned submodules), stb_*
 games/
   nile-archive/    lua/ (main, state, content, economy, progress, kit, island, scene, dialogs, smoke)
@@ -95,7 +103,7 @@ Every game accepts: `--size WxH`, `--fresh` (no save read/write), `--data DIR`, 
 
 ## The engine in five minutes
 
-A game is `games/<name>/lua/main.lua`, which returns the app descriptor: a title, a save id, a design resolution, and `init` and `frame(dt)` functions. The engine runs the loop; the game draws everything, every frame. The API is [`engine/engine.h`](engine/engine.h) seen from Lua — same names minus the type prefix, documented in [docs/LUA_API.md](docs/LUA_API.md). Conventions:
+A game is `games/<name>/lua/main.lua`, which returns the app descriptor: a title, a save id, a design resolution, and `init` and `frame(dt)` functions. The engine runs the loop; the game draws everything, every frame. The API is [`engine/src/engine.h`](engine/src/engine.h) seen from Lua — same names minus the type prefix, documented in [docs/LUA_API.md](docs/LUA_API.md). Conventions:
 
 - **Value types are tables with a metatable**: `vec2`, `size2`, `rect`, `color`, `purse`, `camera`, `style`, `input`. Functions return new values and chain as methods; `a + b` works on vectors and purses; every field left out is zero, so `style{font = f, size = 17}` is complete.
 - **Stateful things are handles**: `city.new()`, the save handle inside a visitor. Fields read and write the engine's state; callbacks are plain functions.

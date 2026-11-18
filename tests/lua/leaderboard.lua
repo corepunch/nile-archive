@@ -1,4 +1,4 @@
--- The shared leaderboard dialog (engine/leaderboard.lua) over the engine's Game Center rows.
+-- The shared leaderboard dialog (engine/lua/leaderboard.lua) over the engine's Game Center rows.
 local leaderboard = require("leaderboard")
 testing.reset()
 gamecenter.submit('stars', 1234567)

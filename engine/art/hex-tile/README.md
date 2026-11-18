@@ -4,7 +4,7 @@
 
 This is the registration mask for any artwork that fills a match-three tile.
 The engine draws a six-sided polygon at angles `0, π/3, …` (see
-`engine/gfx.c`), so the left and right vertices are at ±R and the horizontal
+`engine/src/gfx.c`), so the left and right vertices are at ±R and the horizontal
 top and bottom edges are at ±√3R/2. The transparent PNGs use a square canvas
 whose width is 2R. Their alpha is opaque inside that exact shape, with a
 four-times supersampled antialiased boundary. These masks describe geometry;

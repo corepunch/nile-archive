@@ -1,5 +1,5 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
--- engine's defaults (engine/town.lua): tables merge field by field, lists
+-- engine's defaults (engine/lua/town.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
 return {
     background = "#166E77",

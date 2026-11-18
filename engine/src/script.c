@@ -8,10 +8,10 @@
  * engine drives init/frame/quit from C, the way LÖVE calls love.load/draw
  * and PICO-8 calls _init/_draw. Errors print a traceback and end the process
  * with status 3, so a broken script fails a headless run loudly. */
-#include "api_lua.h"
+#include "generated/api_lua.h"
 #include "script_modules.h"
 #ifdef ENGINE_TEST
-#include "test.h"
+#include "test/test.h"
 static void test_lua_open(lua_State *S);
 static bool test_rules_active;
 #endif
@@ -67,7 +67,7 @@ static void on_init(void)
     if (hook("init")) call(0, 0);
 }
 
-/* The engine's tweens (engine/tween.lua) advance before the game's frame, so
+/* The engine's tweens (engine/lua/tween.lua) advance before the game's frame, so
  * everything it draws is at this frame's value. */
 static void tick_tweens(float dt)
 {
@@ -109,9 +109,10 @@ static void open_libs(void)
     for (int i = 0; dropped[i]; i++) lua_pushnil(L), lua_setglobal(L, dropped[i]);
 }
 
-/* The engine's resources (its Lua and default assets) live in one directory,
- * like a share/ of the application: engine/ in a checkout, the bundle's
- * engine/ folder on a device, /engine on the web. */
+/* The engine's resources live in one directory, like a share/ of the
+ * application: engine/ in a checkout, the bundle's engine/ folder on a
+ * device, /engine on the web. Its Lua is in lua/ and its default assets in
+ * data/ under it. */
 #ifndef ENGINE_DIR
 #define ENGINE_DIR "engine"
 #endif
@@ -135,22 +136,22 @@ void script_open(const char *dir)
     api_open(L);
     /* the engine's own Lua, from the engine's resource directory, runs before main.lua */
     static const struct { const char *file, *module; } files[] = {
-        {"tween.lua", NULL},
-        {"ui_forms.lua", NULL},
-        {"ui_skin.lua", NULL},
-        {"city_smoke.lua", NULL},
-        {"match3.lua", "match3"},
-        {"match3_shapes.lua", "match3.shapes"},
-        {"match3_elements_view.lua", "match3.elements_view"},
-        {"match3_frames.lua", "match3.frames"},
-        {"board_intro.lua", NULL},
-        {"town.lua", "town"},
-        {"leaderboard.lua", "leaderboard"},
-        {"match3_vfx.lua", "match3.vfx"},
-        {"match3_shatter.lua", "match3.shatter"},
-        {"match3_debug.lua", "match3.debug"},
-        {"match3_dive.lua", "match3.dive"},
-        {"match3_game.lua", "match3.game"},
+        {"lua/tween.lua", NULL},
+        {"lua/ui_forms.lua", NULL},
+        {"lua/ui_skin.lua", NULL},
+        {"lua/city_smoke.lua", NULL},
+        {"lua/match3.lua", "match3"},
+        {"lua/match3/shapes.lua", "match3.shapes"},
+        {"lua/match3/elements_view.lua", "match3.elements_view"},
+        {"lua/match3/frames.lua", "match3.frames"},
+        {"lua/board_intro.lua", NULL},
+        {"lua/town.lua", "town"},
+        {"lua/leaderboard.lua", "leaderboard"},
+        {"lua/match3/vfx.lua", "match3.vfx"},
+        {"lua/match3/shatter.lua", "match3.shatter"},
+        {"lua/match3/debug.lua", "match3.debug"},
+        {"lua/match3/dive.lua", "match3.dive"},
+        {"lua/match3/game.lua", "match3.game"},
     };
     for (size_t i = 0; i < sizeof files / sizeof files[0]; i++) {
         char path[1024];
@@ -412,7 +413,7 @@ void lcity_draw_over(const struct city *c)
 }
 
 #ifdef ENGINE_TEST
-#include "test_lua.c"
+#include "test/test_lua.c"
 #endif
 
 app_desc script_boot(const char *dir, const char *data_dir)

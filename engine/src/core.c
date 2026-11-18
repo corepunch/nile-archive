@@ -69,7 +69,7 @@ static struct {
 } A;
 
 #ifdef ENGINE_TEST
-#include "test.h"
+#include "test/test.h"
 static bool window_open, in_frame;
 #endif
 

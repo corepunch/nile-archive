@@ -85,7 +85,7 @@ return ui.skin{
         multiplier = {font = "serif", em = 24, fill = "#F6C24A", fill2 = "#B8761C", outline = "#5A3608", outline_width = 1.2},
         float = {font = "serif", em = 26, fill = "#FFF6DC", fill2 = "#F5C860", outline = "#4A2A08", outline_width = 1.6},
         float_miss = {font = "serif", em = 22, fill = "#FF8A70", outline = "#3A0E08", outline_width = 1.4},
-        -- The shared leaderboard dialog (engine/leaderboard.lua): rows, the player's own row and the note.
+        -- The shared leaderboard dialog (engine/lua/leaderboard.lua): rows, the player's own row and the note.
         board_row = {font = "sans_bold", em = 20, fill = "cream", shadow = "#0000005A", shadow_offset = {0, 1}, shadow_blur = 1},
         board_me = {font = "sans_bold", em = 20, fill = "gold_hi", shadow = "#0000005A", shadow_offset = {0, 1}, shadow_blur = 1},
         board_note = {font = "sans", em = 17, fill = "#E9D7A8", shadow = "#00000050", shadow_offset = {0, 1}, shadow_blur = 1},
@@ -185,7 +185,7 @@ return ui.skin{
         -- Form text: the build tray's cards and buttons (native button paint).
         label = {text = "card_title", em = 17},
         button = {text = "button", em = 17, variants = {
-            -- The town's shared bottom badges and placement buttons (engine/town.lua),
+            -- The town's shared bottom badges and placement buttons (engine/lua/town.lua),
             -- gold-rimmed teal like the archive's round buttons.
             navigation_build = badge(function(box) require("archive_kit").icon_house(box:center() + vec2(0, 4), box.h * .26) end),
             navigation_play = badge(function(box) require("archive_kit").icon_glass(box:center(), box.h * .24) end),

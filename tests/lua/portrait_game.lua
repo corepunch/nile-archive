@@ -1,4 +1,4 @@
--- The shared portrait match-3 game (engine/match3_game.lua): each game's
+-- The shared portrait match-3 game (engine/lua/match3/game.lua): each game's
 -- lua/game_config.lua reaches the engine, and its journey content keeps the
 -- story's meaning as data. Runs in Relic Rush and Christmas Market.
 local game = require("match3.game")

@@ -8,7 +8,7 @@ local C={cream=color.hex(0xFFF2D2),ink=color.hex(0x193D43),gold=color.hex(0xF4CB
 local white=color.WHITE
 -- The look lives in emergency_skin.lua; lettering is one of its text styles at a size.
 local skin=require('emergency_skin')
--- Game Center (engine/leaderboard.lua). Boards rank high to low, so a district's time becomes a speed
+-- Game Center (engine/lua/leaderboard.lua). Boards rank high to low, so a district's time becomes a speed
 -- score, 1e9 / (1000 + tenths of a second): faster is higher, with no ceiling and a tiny rounding error;
 -- time_text turns it back. The rescue board adds up each district's best.
 local boards=require('leaderboard').boards{skin=skin,width=600}

@@ -5,7 +5,7 @@
     python3 tools/roads.py christmas-market --style sandstone   # a second look: data/city/roads-sandstone.png
     python3 tools/roads.py christmas-market --keep DIR  # keep the scene and the single renders
 
-The engine lays roads on whole tiles (engine/city.c): every building gets a flag tile
+The engine lays roads on whole tiles (engine/src/city.c): every building gets a flag tile
 against its front, and the flags are joined by the shortest tile routes. A road
 tile is drawn by which of its four neighbours it joins, so the atlas holds one piece
 per combination: 8 x 4 cells, the left half with cell = mask, bit 0 +u (down-right),
@@ -38,14 +38,14 @@ import city_camera  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 TILE = 160.          # cm per tile, as the building scenes
-CELL_TILES = 1.6     # a cell's width in tile sides (engine/city.c: ROAD_CELL_TILES)
+CELL_TILES = 1.6     # a cell's width in tile sides (engine/src/city.c: ROAD_CELL_TILES)
 CELL_ASPECT = .7     # a cell's height over its width
 N = 5                # stones per tile side
 ROAD = 3             # the road's width in stones
 SPACING = 8          # tiles between pieces in the scene
 DIRS = ((1, 0), (0, 1), (-1, 0), (0, -1))   # bit order: +u, +v, -u, -v
 COLUMNS, VARIANTS = 8, 8   # the atlas is 8 x 4 cells; a straight road has VARIANTS looks
-STRAIGHT = (5, 10)         # along u, along v (engine/city.c: road_cell)
+STRAIGHT = (5, 10)         # along u, along v (engine/src/city.c: road_cell)
 # (camera name, mask, seed, (column, row)): the fifteen pieces in the left half, cell = mask,
 # then each straight's variants in the right half, two rows of four per direction
 PIECES = [('road%d' % m, m, 1000 + m, (m % 4, m // 4)) for m in range(1, 16)] + [

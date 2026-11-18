@@ -40,7 +40,7 @@ void test_tick(void);                             /* per frame: enforces the tim
 const char *test_shot_due(int frame, int shot_frames, const char *shot_path, bool *last);
 void test_check_picture(const unsigned char *rgba, int width, int height);
 
-/* One entry of tests/games/<suite>.lua, filled in by engine/test_lua.c. */
+/* One entry of tests/games/<suite>.lua, filled in by engine/src/test/test_lua.c. */
 typedef struct {
     char kind[8], name[80], file[64], roots[160], size[16], press[24], opts[400];
     int count, step;

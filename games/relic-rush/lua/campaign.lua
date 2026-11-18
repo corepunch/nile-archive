@@ -1,4 +1,4 @@
--- Campaign content only; all match mechanics live in engine/match3.lua.
+-- Campaign content only; all match mechanics live in engine/lua/match3.lua.
 -- One hundred expeditions, authored as hex boards in games/relic-rush/levels
 -- and compiled to lua/boards.lua by tools/hex_levels.py (docs/LEVEL_DESIGN.md).
 -- Move budgets come from tools/tune_moves.py, which writes lua/level_moves.lua.

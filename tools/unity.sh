@@ -23,7 +23,7 @@ UNITY
 /* Game scripting and generated API bindings. */
 #include "script_modules.c"
 #include "script.c"
-#include "api_lua.c"
+#include "generated/api_lua.c"
 UNITY
         ;;
     lua) cat <<'UNITY'
@@ -36,8 +36,8 @@ UNITY
 #define HAVE_WINDOWING 1
 #define GL_SILENCE_DEPRECATION
 #include "third_party/platform/platform.h"
-#include "haptic_platform.c"
-#include "gamecenter_platform.c"
+#include "platform/haptic_platform.c"
+#include "platform/gamecenter_platform.c"
 #if defined(__APPLE__)
 #ifdef AX_PLATFORM_IOS
 #include "third_party/platform/ios/ios_message_queue.m"
@@ -89,12 +89,12 @@ UNITY
 #endif
 #include "third_party/platform/unix/unix_thread.c"
 #ifdef __EMSCRIPTEN__
-#include "web_audio.c"
+#include "platform/web_audio.c"
 #else
 #include "third_party/platform/audio/audio_backend.c"
 #endif
 #include "third_party/platform/audio/audio_wav.c"
-#include "animation_clock_platform.c"
+#include "platform/animation_clock_platform.c"
 UNITY
         ;;
     launcher) cat <<'UNITY'

@@ -1,4 +1,4 @@
--- match3_game.lua — the portrait match-3 city game around the board, shared by
+-- match3/game.lua — the portrait match-3 city game around the board, shared by
 -- Relic Rush and Christmas Market (`require("match3.game")`): progress and
 -- saving, the level flow, the frame, the paint helpers and every
 -- dialog (pause and its Restart confirmation, failed, region card, building
@@ -1346,7 +1346,7 @@ function G.bind(R, over)
         return false
     end
 
-    -- Game Center (engine/gamecenter.lua docs: docs/GAMECENTER.md). game_config.lua's
+    -- Game Center (engine/lua/leaderboard.lua, docs/GAMECENTER.md). game_config.lua's
     -- "leaderboard" block turns it on: `board` holds the boards cleared,
     -- `level_board` (a format with the level number, e.g. "level_%02d") each
     -- expedition's best score. Scores are reported when a reward is claimed.
@@ -1429,7 +1429,7 @@ function G.app(R)
 
     -- Town <-> board: the screen being left is covered (the town's camera dives
     -- into its newest building), then the other screen is uncovered while the
-    -- board's pieces start to fall. engine/match3_dive.lua holds the styles.
+    -- board's pieces start to fall. engine/lua/match3/dive.lua holds the styles.
     -- Game state switches at once; only drawing and input wait for the dive.
     local dive_styles = require("match3.dive")
     local dive, shown_island

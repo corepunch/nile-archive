@@ -1,7 +1,7 @@
 # Engine architecture
 
 The engine uses small C11 modules behind one public header,
-[`engine/engine.h`](../engine/engine.h), plus Lua 5.4 and the glue generated
+[`engine/src/engine.h`](../engine/src/engine.h), plus Lua 5.4 and the glue generated
 from [`engine/api.xml`](../engine/api.xml). It targets 2D sprite games with
 menus, dialogs and a build-your-place meta-game: hidden objects, match-3,
 merge, solitaire, word games and the like. Games are written in Lua; see
@@ -121,7 +121,7 @@ while drawing what sits under the dialog.
   `camera_draw_texture` blits only the visible part of a world-sized image.
 - **fx**: a pooled particle system (`fx_burst`, `fx_sparkle`) drawn additively,
   and floating text (`fx_text`) for score pop-ups.
-- **motion** (Lua, `engine/tween.lua`): the easing catalogue and tweens,
+- **motion** (Lua, `engine/lua/tween.lua`): the easing catalogue and tweens,
   timelines, staggers, punch and shake, ticked by the engine before each
   frame; the design follows GSAP, flux, DOTween and Godot's Tween
   ([MOTION.md](MOTION.md)).
@@ -305,7 +305,7 @@ game's `lua/town_config.lua`. See [Shared town screen](TOWN.md).
 ## Portrait match-3 game
 
 Relic Rush and Christmas Market share the whole game around the board:
-`require("match3.game")` (`engine/match3_game.lua`) owns progress and saving,
+`require("match3.game")` (`engine/lua/match3/game.lua`) owns progress and saving,
 the level flow, every dialog, the shop, the level list, the town
 hooks and story delivery; `match3.vfx` the effects and `match3.debug` the
 screenshot entry points. Each game's words are `lua/game_config.lua`, read while
@@ -400,7 +400,7 @@ writable directory. Normal play continues to use the existing per-game save dire
 
 ## Board entrance
 
-`engine/board_intro.lua` owns the shared match-board entrance clock and its
+`engine/lua/board_intro.lua` owns the shared match-board entrance clock and its
 `bind(view, rules)` adapter. Relic Rush and Christmas Market keep their skins
 and draw the poses; the existing match engine keeps matching, refill and input.
 The HUD arrives first, cells ripple from the centre, pieces drop in column

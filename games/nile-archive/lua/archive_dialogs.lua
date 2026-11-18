@@ -15,7 +15,7 @@ local WHITE = K.WHITE
 
 local M = {}
 
--- Game Center boards (engine/leaderboard.lua): lifetime influence, and each search's best score.
+-- Game Center boards (engine/lua/leaderboard.lua): lifetime influence, and each search's best score.
 M.boards = require("leaderboard").boards{skin = K.skin, width = 520, texts = {
     everyone = "Все", friends = "Друзья", close = "Закрыть", native = "Game Center", you = "(вы)",
     loading = "Загрузка...", empty = "Пока нет результатов. Будьте первым!",

@@ -280,7 +280,7 @@ end
 
 -------------------------------------------------------------------- frame
 
--- The island on the engine's shared town screen (engine/town.lua), laid out
+-- The island on the engine's shared town screen (engine/lua/town.lua), laid out
 -- by lua/town_config.lua like Relic Rush and Christmas Market. The archive adds its
 -- player plate, the cast button and the goal card between Build and Play.
 local function shore(z)

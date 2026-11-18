@@ -149,10 +149,10 @@ same.
 
 Each game gets its own Lua state with `base`, `table`, `string`, `math`,
 `utf8` and `coroutine`. `io`, `os`, `package` and `debug` are not in the build
-(`engine/lua_lib.c` amalgamates only the libraries the sandbox opens from the
+(`engine/src/lua_lib.c` amalgamates only the libraries the sandbox opens from the
 `lua/lua` submodule, pinned to v5.4.8);
 `dofile` and `loadfile` are removed. The private
-[`script_modules.c`](../engine/script_modules.c) owns module resolution; it has
+[`script_modules.c`](../engine/src/script_modules.c) owns module resolution; it has
 no dependency on app callbacks, generated bindings, game content or renderer
 state. Each Lua state owns its ordered script roots, completed-module cache
 and in-progress imports. Closing the state discards all three.
@@ -186,17 +186,17 @@ error.
 
 ## The glue is generated
 
-Nothing in `engine/api_lua.c` was typed by hand. [`engine/api.xml`](../engine/api.xml)
+Nothing in `engine/generated/api_lua.c` was typed by hand. [`engine/api.xml`](../engine/api.xml)
 describes the API once — modules, structs and their fields, handles and their
 fields, enums, constants, functions with typed arguments, documentation on
 every node — and [`tools/luagen.py`](../tools/luagen.py) writes four files from it:
 
 | Output | What it is |
 | --- | --- |
-| `engine/api_lua.c` | The glue: `api_push_*`/`api_get_*`/`api_check_*`/`api_store_*` for every struct, metatables and constructors, handle `__index`/`__newindex`/`__gc`, one `lua_CFunction` per function with argument checks, module registration (`api_open`). |
-| `engine/api_lua.h` | Its declarations, including the prototypes of the few hand-written functions, so a signature that disagrees with the XML does not compile. |
+| `engine/generated/api_lua.c` | The glue: `api_push_*`/`api_get_*`/`api_check_*`/`api_store_*` for every struct, metatables and constructors, handle `__index`/`__newindex`/`__gc`, one `lua_CFunction` per function with argument checks, module registration (`api_open`). |
+| `engine/generated/api_lua.h` | Its declarations, including the prototypes of the few hand-written functions, so a signature that disagrees with the XML does not compile. |
 | `docs/LUA_API.md` | The reference: modules, types, fields, signatures, argument tables, returns. |
-| `engine/engine.d.lua` | `---@class`/`---@param`/`---@return` annotations for Lua language servers (completion and type checks in an editor). |
+| `engine/generated/engine.d.lua` | `---@class`/`---@param`/`---@return` annotations for Lua language servers (completion and type checks in an editor). |
 
 The generated files are committed, so a checkout builds with a C compiler
 alone; `make gen` regenerates them (Python 3, standard library only) and
@@ -239,7 +239,7 @@ when NULL) or `ptr="true"`.
 
 That is the whole procedure; no C is written for the binding, and the
 reference and the annotations update with it. The hand-written exceptions
-live in `engine/script.c` and are declared with `impl=`: the save visitors
+live in `engine/src/script.c` and are declared with `impl=`: the save visitors
 (`save.read`/`save.write` call a Lua function with a handle), `story.setup`
 (the engine keeps the cast, so the binding copies it into static storage and
 anchors the Lua table for its strings), `ui.set_theme` (the widgets read the
@@ -270,7 +270,7 @@ the old web save).
 - `./build/relic-rush --smoke --mute` still plays level one through injected
   clicks to level two, driven by `smoke.lua`; Nile Archive's `archive_smoke.lua`
   plays chapter one. Both run the engine's `city.move_test`
-  (`engine/city_smoke.lua`, embedded like `ui_forms.lua`), which drags the first
+  (`engine/lua/city_smoke.lua`, embedded like `ui_forms.lua`), which drags the first
   building through real press/move/release events and asserts the deliberate
   pickup contract: a drag pans, a half-second hold lifts, release leaves an
   uncommitted preview, Cancel restores it and Confirm moves it for free.

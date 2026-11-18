@@ -28,7 +28,9 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 IOS_MINIMUM = '16.0'
 UNITY_SOURCES = ['u_engine', 'u_script', 'u_lua', 'u_platform', 'u_launcher']
+# Shown in the project navigator, by name; a path only where the file is outside engine/src.
 ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio', 'haptic', 'haptic_platform', 'gamecenter', 'gamecenter_platform', 'story', 'sprite', 'nav', 'script_modules', 'script', 'api_lua', 'lua_lib', 'launcher']
+ENGINE_SOURCE_DIRS = {'haptic_platform': 'engine/src/platform', 'gamecenter_platform': 'engine/src/platform', 'api_lua': 'engine/generated'}
 
 GAMES = {
     'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', families='1,2', orientations=('Portrait', 'PortraitUpsideDown')),
@@ -191,7 +193,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         'SDKROOT': 'macosx', 'GCC_C_LANGUAGE_STANDARD': 'c11', 'CLANG_ENABLE_OBJC_ARC': 'NO',
         'ENABLE_USER_SCRIPT_SANDBOXING': 'NO', 'ALWAYS_SEARCH_USER_PATHS': 'NO',
         'GCC_WARN_INHIBIT_ALL_WARNINGS': 'NO', 'GCC_WARN_ABOUT_RETURN_TYPE': 'YES',
-        'HEADER_SEARCH_PATHS': ['$(ENGINE_ROOT)/engine'],
+        'HEADER_SEARCH_PATHS': ['$(ENGINE_ROOT)/engine', '$(ENGINE_ROOT)/engine/src'],
         'GCC_PREPROCESSOR_DEFINITIONS': ['$(inherited)', 'GAME_IN_BUNDLE=1', f'GAME_DIR=\\"games/{game}\\"'],
         'OTHER_CFLAGS': ['$(inherited)', '-Wall', '-Wextra', '-Wno-unused-parameter', '-Wno-missing-field-initializers',
                          '-Wno-deprecated-declarations'],
@@ -208,17 +210,17 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
                                     name=name + '.c', sourceTree='DERIVED_FILE_DIR',
                                     lastKnownFileType='sourcecode.c.objc' if name == 'u_platform' else 'sourcecode.c.c')
     for name in ENGINE_SOURCES:
-        sources[name] = project.add('engine/' + name, 'PBXFileReference', path=rel(f'engine/{name}.c'),
+        sources[name] = project.add('engine/' + name, 'PBXFileReference', path=rel(f"{ENGINE_SOURCE_DIRS.get(name, 'engine/src')}/{name}.c"),
                                     name=name + '.c', sourceTree='SOURCE_ROOT', lastKnownFileType='sourcecode.c.objc' if name == 'u_platform' else 'sourcecode.c.c')
-    header = project.add('engine/engine.h', 'PBXFileReference', path=rel('engine/engine.h'), name='engine.h',
+    header = project.add('engine/src/engine.h', 'PBXFileReference', path=rel('engine/src/engine.h'), name='engine.h',
                          sourceTree='SOURCE_ROOT', lastKnownFileType='sourcecode.c.h')
     api = project.add('engine/api.xml', 'PBXFileReference', path=rel('engine/api.xml'), name='api.xml',
                       sourceTree='SOURCE_ROOT', lastKnownFileType='text.xml')
     lua_folder = project.add('game/lua', 'PBXFileReference', path='lua', sourceTree='<group>', lastKnownFileType='folder')
     data_folder = project.add('game/data', 'PBXFileReference', path='data', sourceTree='<group>', lastKnownFileType='folder')
-    engine_lua = [project.add('engine/lua/' + f.name, 'PBXFileReference', path=rel('engine/' + f.name), name=f.name,
-                              sourceTree='SOURCE_ROOT', lastKnownFileType='text')
-                  for f in sorted((ROOT / 'engine').glob('*.lua')) if f.name != 'engine.d.lua']
+    # The engine's Lua, copied as one folder to engine/lua.
+    engine_lua = [project.add('engine/lua', 'PBXFileReference', path=rel('engine/lua'), name='lua',
+                              sourceTree='SOURCE_ROOT', lastKnownFileType='folder')]
     # The default skin's atlases and background, copied as one folder to engine/data/board.
     engine_data = [project.add('engine/data/board', 'PBXFileReference', path=rel('engine/data/board'), name='board',
                                sourceTree='SOURCE_ROOT', lastKnownFileType='folder')]

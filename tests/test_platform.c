@@ -1,7 +1,7 @@
 /* Real-context integration checks: pixels, logical pointer mapping and gestures.
  * Part of build/test/engine. */
 #include "render.h"
-#include "test.h"
+#include "test/test.h"
 #include "viewport.h"
 #include <stdio.h>
 #include <string.h>

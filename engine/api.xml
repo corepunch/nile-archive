@@ -3,10 +3,10 @@
   api.xml - the engine's Lua API, described once.
 
   tools/luagen.py reads this file and writes:
-    engine/api_lua.c / api_lua.h   the Lua glue: argument checks, struct
+    engine/generated/api_lua.c / api_lua.h   the Lua glue: argument checks, struct
                                    marshalling, handle metatables, registration
     docs/LUA_API.md                the reference games are written against
-    engine/engine.d.lua            annotations for Lua language servers
+    engine/generated/engine.d.lua            annotations for Lua language servers
 
   Nothing in the glue is written by hand. A function needing a hand-written
   body (callbacks, visitors, things that keep Lua values alive) names it with

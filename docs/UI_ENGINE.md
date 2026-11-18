@@ -145,7 +145,7 @@ written once and used like any other node. The instance keeps what places it:
 the prefab's own property. Prefab and element names share one namespace.
 
 ```lua
-ui.prefab("resource_indicator", function(p)   -- engine/match3.lua, abridged
+ui.prefab("resource_indicator", function(p)   -- engine/lua/match3.lua, abridged
     return {kind="border", role="resource_indicator", padding={4,5,4,7}, children={
         {kind="column", gap=1, children={
             {kind="image", image=p.icon, height=36},
@@ -212,7 +212,7 @@ rules. Touch has no artificial hover state.
 Each game describes its look in **one skin file**, for example
 [`games/relic-rush/lua/skin.lua`](../games/relic-rush/lua/skin.lua). The file
 returns `ui.skin{...}`: fonts, named colours, images, text styles and, for every
-control, what each interaction state draws. `ui.skin` (in `engine/ui_skin.lua`)
+control, what each interaction state draws. `ui.skin` (in `engine/lua/ui_skin.lua`)
 compiles it into the paint contract below, so the result goes straight to
 `form:draw`, `form:measure` and `ui.modals`. The same object paints hand-placed
 widgets, so a game's forms and its own buttons can't drift apart. The engine
@@ -515,7 +515,7 @@ make test-platform               # prefix with xvfb-run -a on Linux
 The fixture accepts `--nested --shot file.png`; without `--nested` it shows the
 same template in two skin files (`tests/fixtures/ui/*_skin.lua`). `--layout` shows
 borders, uniform grids and a prefab. `make shots` captures both. The runtime loads
-`engine/ui_forms.lua` and `engine/ui_skin.lua` from the engine's resource directory; native,
+`engine/lua/ui_forms.lua` and `engine/lua/ui_skin.lua` from the engine's resource directory; native,
 iOS and web games use the same implementation without extra game resources.
 
 This core supports display, action and boolean controls (toggle and checkbox). Text-entry/IME, combo
@@ -533,7 +533,7 @@ at the sampled value, repeating a target does not restart it, negative time is
 ignored, and completion returns the exact target. The default curve is monotonic
 cubic out. There is no global animation manager or implicit wall clock.
 
-Dialogue staging in `engine/story.c` keeps one track per visible character.
+Dialogue staging in `engine/src/story.c` keeps one track per visible character.
 An independent visibility tween slides/fades portraits in and out. Speaking state
 uses a separate colour tween to brighten/dim the portrait; it cannot restart or
 retarget the visibility tween. Layout owns the rectangle, with the same portrait
@@ -639,7 +639,7 @@ Play and Wishes. Play is the largest control. Both surfaces use the same
 
 ## Town building popups
 
-`engine/town.lua` draws the label above a tapped building. The game's
+`engine/lua/town.lua` draws the label above a tapped building. The game's
 `town_config.lua` can select skin text palettes with `bubble.title` and
 `bubble.text`. Set `bubble.em` to size the configured subtitle. The title
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex

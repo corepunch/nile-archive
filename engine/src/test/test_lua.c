@@ -116,7 +116,7 @@ int test_read_jobs(const char *path, test_job *jobs, int max)
     open_libs();
     L = game;
     const char *root = getenv("SPRITE_MATCH3_ROOT");
-    if (!root) root = "engine";
+    if (!root) root = "engine/lua";
     char module[512];
     snprintf(module, sizeof module, "%s/match3.lua", root);
     if (!access(module, R_OK)) lua_pushstring(S, root); else lua_pushnil(S);

@@ -3,7 +3,7 @@
 The engine follows Cradle of Rome: matches only clear, and the board elements are chains, ice, carved stones and tablets. See [Match-3 elements](MATCH3_ELEMENTS.md).
 
 `require("match3")` is built into the engine on native, iOS and WebAssembly.
-`engine/match3.lua` owns the hex grid, matching, swaps, blockers,
+`engine/lua/match3.lua` owns the hex grid, matching, swaps, blockers,
 collection, seeded refill, free reshuffle, hints, tools, objectives and move
 budget. It also owns board selection, tap/swipe input, phase transitions,
 cascade timing and piece animation poses. Games provide graphics, level data
@@ -262,7 +262,7 @@ continued inactivity. Reduce Motion hides it. See the
 [Cradle of Rome 2 glow reference](cradle-of-rome-reference/README.md#last-puzzle-tile-glow).
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
 When a hit removes a floor layer (ice, a double tablet's green face or a
-tablet), `engine/match3_shatter.lua` breaks that cell's own artwork apart.
+tablet), `engine/lua/match3/shatter.lua` breaks that cell's own artwork apart.
 At bind it makes eight Voronoi fractures of the unit hex; each break picks one
 and one of the hex's twelve symmetries. The pieces are cut from the layer's
 texture with `gfx.image_poly`. Cracks glow for 0.07 s, then the shards burst outwards,

@@ -1,4 +1,4 @@
-"""The city camera, read from engine/engine.h so art and engine cannot disagree.
+"""The city camera, read from engine/src/engine.h so art and engine cannot disagree.
 
 Orthographic. World X is tile u (down-right on screen), world Y is -v (up-right),
 Z is up. Use it from Blender and from plain Python: it imports neither.
@@ -7,7 +7,7 @@ import math
 import re
 from pathlib import Path
 
-ENGINE_H = Path(__file__).resolve().parents[1] / 'engine/engine.h'
+ENGINE_H = Path(__file__).resolve().parents[1] / 'engine/src/engine.h'
 _header = ENGINE_H.read_text()
 YAW = float(re.search(r'#define CITY_CAMERA_YAW ([\d.]+)f', _header).group(1))
 ELEVATION = float(re.search(r'#define CITY_CAMERA_ELEVATION ([\d.]+)f', _header).group(1))

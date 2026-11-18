@@ -26,7 +26,7 @@ return ui.skin{
         cream_off = {extends = "cream", fade = .45},
     },
 
-    -- The shared leaderboard dialog (engine/leaderboard.lua) sets its title, rows, the player's own row and its note by role.
+    -- The shared leaderboard dialog (engine/lua/leaderboard.lua) sets its title, rows, the player's own row and its note by role.
     roles = {
         title = {text = "gold", em = 42},
         leaderboard_row = {text = "cream", em = 26},

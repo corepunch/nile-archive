@@ -475,7 +475,7 @@
   },
   "island_layers": {
     "cloud-fog": {
-      "source": "engine/city.c",
+      "source": "engine/src/city.c",
       "runtime": "city.fog_clouds",
       "states": [
         "closed animated banks",
@@ -495,7 +495,7 @@
       "reproduction": "make buildings GAME=relic-rush"
     },
     "placement-guides": {
-      "source": "engine/city.c draw_placement_guides",
+      "source": "engine/src/city.c draw_placement_guides",
       "runtime": "city.placing >= 0; excludes city.moving original position",
       "states": [
         "idle-hidden",
@@ -515,7 +515,7 @@
     "source": "art/match3-atlas.json",
     "runtime": "data/board/",
     "contract": "lua/match3_atlases.lua",
-    "behavior": "engine/match3.lua",
+    "behavior": "engine/lua/match3.lua",
     "states": "all existing authored pieces, blockers, cells, boosters, HUD and effects in one atlas per kind (data/board/<kind>.png); backgrounds are separate files in data/board/backs/; packed without alpha changes",
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/review/trickling/README.md"
@@ -561,7 +561,7 @@
     "review": "../../../docs/review/motion/README.md"
   },
   "dialogue_motion": {
-    "engine": "engine/story.c",
+    "engine": "engine/src/story.c",
     "states": [
       "entering",
       "active",
@@ -574,7 +574,7 @@
     "geometry": "speaker/listener share size and side anchors; entrance/exit slide only; no resizing, rotation or idle bobbing"
   },
   "board_entrance": {
-    "engine": "engine/board_intro.lua",
+    "engine": "engine/lua/board_intro.lua",
     "states": [
       "waiting-for-dialogue",
       "hud-arrival",
@@ -724,7 +724,7 @@
     "origin": "Particle Pack by Kenney Vleugels, CC0, https://opengameart.org/content/particle-pack-80-sprites",
     "runtime": "data/board/fx.png",
     "contract": "lua/match3_atlases.lua",
-    "renderer": "../../engine/match3_vfx.lua",
+    "renderer": "../../engine/lua/match3/vfx.lua",
     "frames": {
       "shock": "circle_03",
       "flash": "light_01",
@@ -745,7 +745,7 @@
     "origin": "Smoke particle assets by Kenney Vleugels, CC0, https://opengameart.org/content/smoke-particle-assets",
     "runtime": "data/board/fx.png",
     "contract": "lua/match3_atlases.lua",
-    "renderer": "../../engine/match3_shatter.lua",
+    "renderer": "../../engine/lua/match3/shatter.lua",
     "frames": {
       "smoke-0": "whitePuff00",
       "smoke-1": "whitePuff04",

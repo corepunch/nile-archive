@@ -393,7 +393,7 @@ Existing lines are kept word for word, in their existing order and scene. These 
 
 ### Staging rules
 
-Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THOUGHT` and `story.SHOUT`. **Хорем is always a thought bubble**, as today: he is a note being read. **Хорем and Мерит never speak back to back.** Both stand on the right, and `engine/story.c:581` only shows a listener on the opposite side, so Нефра would leave the stage. The validation script enforces this.
+Lines are speech unless marked `(thought)` or `(shout)`, which map to `story.THOUGHT` and `story.SHOUT`. **Хорем is always a thought bubble**, as today: he is a note being read. **Хорем and Мерит never speak back to back.** Both stand on the right, and `engine/src/story.c:581` only shows a listener on the opposite side, so Нефра would leave the stage. The validation script enforces this.
 
 **Order after a clear:** clue dialogue, then reward dialog (already so: `lua/archive_scene.lua:147-149`, `lua/main.lua:52`). Each beat plays once per save. Replays that earn nothing show nothing.
 
@@ -867,7 +867,7 @@ This is the historical implementation sketch against `c3b507b`. All three chapte
 | `lua/archive_scene.lua:119-122` | `stars_for` stays. Floor lives in the economy |
 | `lua/archive_dialogs.lua:36`, `:60` | Win dialog uses the note, not `sc.clue[1..2]`, which breaks on 3-12 line beats |
 | `lua/archive_dialogs.lua:60`, `:93`, `:99`, `:104` | "ГЛАВА %d" and the "80 монет" line become scene text; add "Нужны улики" locked state |
-| `lua/archive_dialogs.lua:73-108`, `:131-140` | The browser draws `SCENES` columns (`:133`, `:139`), unreadable at 15. Make it chapter pages of 5 + Тайник (reference hub, `official`). Prefer the engine `list` with `form:set_items` (`engine/ui_forms.lua:92`), as `AGENTS.md` asks |
+| `lua/archive_dialogs.lua:73-108`, `:131-140` | The browser draws `SCENES` columns (`:133`, `:139`), unreadable at 15. Make it chapter pages of 5 + Тайник (reference hub, `official`). Prefer the engine `list` with `form:set_items` (`engine/lua/ui_forms.lua:92`), as `AGENTS.md` asks |
 | `lua/archive_dialogs.lua:161` | Add `MODAL_END`; small Journal |
 | `lua/archive_island.lua:38` | Shore needs |
 | `lua/archive_island.lua:86-92`, `:349-350` | Goal card and red dot: replay for clue, Тайник ready, end |
@@ -881,13 +881,13 @@ This is the historical implementation sketch against `c3b507b`. All three chapte
 | `lua/archive_smoke.lua:94`, `:124`, `:134`, `:158`, `:163` | Smoke path and "grant no Influence" assertion change. Must reach clue B in the path |
 | `tests/lua/archive_rewards.lua:6`, `:28-29`, `:33-38`, `:40-41` | State shape, two-clear path, replay coin totals, can_play signature |
 
-**Engine:** nothing required. `story.c` holds 48 queued lines at 512 bytes (`engine/story.c:19`, `:37`) and 256 seen beats (`:20`). The script needs under 60 beats and at most 12 lines in one, so it fits. `tests/test_story.c` and the shipped game have only played short beats, so check long beats in the game.
+**Engine:** nothing required. `story.c` holds 48 queued lines at 512 bytes (`engine/src/story.c:19`, `:37`) and 256 seen beats (`:20`). The script needs under 60 beats and at most 12 lines in one, so it fits. `tests/test_story.c` and the shipped game have only played short beats, so check long beats in the game.
 
 **Docs to update when implementing:** `README.md` (rules, table, status), `docs/PROJECT.md`, `docs/REFERENCES.md:28`, `docs/ECONOMY_RESEARCH.md` Nile section, `docs/UI_CATALOGUE.md`.
 
 ### Saves
 
-- **Format holds.** `s:ints` reads only as many ints as the Lua table has and leaves the rest at their default (`engine/save.c:105-116`), so a 3-element `wins` loads into a 15-element table. Size the tables **before** `progress.read`, as `init` already does through `new_game` (`lua/main.lua:180-182`).
+- **Format holds.** `s:ints` reads only as many ints as the Lua table has and leaves the rest at their default (`engine/src/save.c:105-116`), so a 3-element `wins` loads into a 15-element table. Size the tables **before** `progress.read`, as `init` already does through `new_game` (`lua/main.lua:180-182`).
 - **Slots are append-only,** so old `wins` and `stars` indices stay valid.
 - **Beats by new key.** Old saves hold `chapter-0..2`. The new keys are unseen, so an old player sees the new clue A on their next clear of that scene. That is harmless, and worth it to read the new lines. `intro` stays seen, so they miss the prologue's three new lines.
 - **`clues` migration at version < 4:** `clues[i] = 1` where `wins[i] > 0`, and `2` where `stars[i] == 3`, except that their clue B beat is still unseen and will play on the next clear. Nobody is re-locked: `can_play`'s `wins[i]>0` covers visited scenes.

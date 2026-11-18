@@ -33,7 +33,7 @@ or `games/*/tools/` is missing from this page (`tests/test_tools_index.py`).
 
 ## City buildings and roads
 
-The city camera is defined once in `engine/engine.h`; `city_camera.py` reads it
+The city camera is defined once in `engine/src/engine.h`; `city_camera.py` reads it
 for every art tool. [docs/BUILDINGS.md](../docs/BUILDINGS.md) and
 [docs/BUILDING_ART.md](../docs/BUILDING_ART.md) are the guides.
 
@@ -47,7 +47,7 @@ for every art tool. [docs/BUILDINGS.md](../docs/BUILDINGS.md) and
 | `painted_foundations.py` | Registers painted slab textures to a model's ground polygon | imported |
 | `import_painted_buildings.py` | Imports reviewed paint-overs and registers their foundations | `python3 tools/import_painted_buildings.py <game>` |
 | `footprint.py` | Measures a sprite's ground footprint for art not rendered from the master | `python3 tools/footprint.py <sprite> --overlay out.png` |
-| `city_camera.py` | The camera's yaw, elevation and tile slopes, read from `engine/engine.h` | imported |
+| `city_camera.py` | The camera's yaw, elevation and tile slopes, read from `engine/src/engine.h` | imported |
 | `roads.py` | Renders a game's road tiles for the city camera | `python3 tools/roads.py <game>` |
 
 ## Match-3 art

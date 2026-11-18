@@ -52,7 +52,7 @@ def blocker(symbol):
 
 def cells():
     """Engine cell ids, in the engine's order: q ascending, then r ascending.
-    Odd columns sit half a cell lower (engine/match3.lua, `columns`/`rows`)."""
+    Odd columns sit half a cell lower (engine/lua/match3.lua, `columns`/`rows`)."""
     out, n = {}, 0
     for q in range(-HALF, HALF + 1):
         for row in range(BOARD_ROWS):

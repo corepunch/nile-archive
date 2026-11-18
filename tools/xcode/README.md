@@ -91,7 +91,8 @@ and gestures use the platform API. Logical coordinates, letterboxing and
 Retina scaling are handled by the engine.
 
 The `lua/` and `data/` folders are bundled as folder references and found via
-`axShareDirectory`. Native save paths retain the original
+`axShareDirectory`. The engine's own Lua and default art are copied beside them
+as `engine/lua` and `engine/data/board`, also as folder references. Native save paths retain the original
 `Application Support/corepunch/<game>` namespace, including sandboxed
 containers. `SPRITE_SAVE_DIR` isolates test saves.
 

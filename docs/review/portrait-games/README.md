@@ -1,7 +1,7 @@
 # One portrait game, two skins: review captures
 
 Before/after captures at 480×900 for moving the shared Relic Rush and
-Christmas Market behaviour into `engine/match3_game.lua`
+Christmas Market behaviour into `engine/lua/match3/game.lua`
 ([PORTRAIT_GAMES.md](../../PORTRAIT_GAMES.md)). Every other capture used for
 review (both boards, the town, the reward and building cards, Christmas
 Market's failed dialog) is pixel-identical before and after.

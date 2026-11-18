@@ -1,4 +1,4 @@
--- The motion module (engine/tween.lua): the easing catalogue, tweens as a
+-- The motion module (engine/lua/tween.lua): the easing catalogue, tweens as a
 -- function of their playhead, overwrite, loops, timelines and their positions,
 -- staggers, punch, shake, groups and the test reset. Runs without a window.
 local suite = require("support").suite("tween")

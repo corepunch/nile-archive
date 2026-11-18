@@ -42,4 +42,4 @@ documented 10 s allowance completed them. Relic Rush guide captures 4.26 s;
 Nile Archive 3.06 s; Christmas Market 1.33 s. Lint 1.51 s, zero warnings/errors.
 
 The work reused installed tools and added no dependencies or models. Source is
-`engine/city.c`; no bitmap, icon atlas or ImageGen source was added.
+`engine/src/city.c`; no bitmap, icon atlas or ImageGen source was added.

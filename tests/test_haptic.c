@@ -1,4 +1,4 @@
-#include "test.h"
+#include "test/test.h"
 #include "haptic.h"
 
 TEST(haptic_frame_priority_and_cooldown)

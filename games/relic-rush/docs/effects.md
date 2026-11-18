@@ -26,7 +26,7 @@ Our interpretation is anticipation → attack → tile response → collection �
 
 ## Implementation and verification
 
-`engine/match3_vfx.lua` (shared with Christmas Market) isolates presentation from `rules.lua`. Effects use a separate random stream, a 256-event pool and the existing 650-particle pool. The cubic radial glow is an atlas frame. Impact rings, sparkles, shards and shockwaves use tinted CC0 Kenney particle sprites (`fx-*` frames in `data/board/fx.png`, see the [asset catalogue](asset-catalogue.md#particle-sprites)); other strokes use SDL geometry. Presentation never consumes gameplay random numbers or changes rewards/objectives.
+`engine/lua/match3/vfx.lua` (shared with Christmas Market) isolates presentation from `rules.lua`. Effects use a separate random stream, a 256-event pool and the existing 650-particle pool. The cubic radial glow is an atlas frame. Impact rings, sparkles, shards and shockwaves use tinted CC0 Kenney particle sprites (`fx-*` frames in `data/board/fx.png`, see the [asset catalogue](asset-catalogue.md#particle-sprites)); other strokes use SDL geometry. Presentation never consumes gameplay random numbers or changes rewards/objectives.
 
 Static blockers and tool controls use authored atlas artwork; their
 states and the intentional procedural animation primitives are listed in the

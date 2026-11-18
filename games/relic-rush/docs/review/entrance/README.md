@@ -1,6 +1,6 @@
 # relic-rush: board entrance review
 
-The board's existing artwork enters on `engine/board_intro.lua`'s shared clock.
+The board's existing artwork enters on `engine/lua/board_intro.lua`'s shared clock.
 The goal panel and tools arrive first; cells ripple from the centre, pieces drop
 down their column segments, blockers land and a light sweep completes the entrance.
 The same shared match engine continues to own moves, cascades and diagonal refill.

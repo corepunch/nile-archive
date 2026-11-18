@@ -1,4 +1,4 @@
--- match3_dive.lua — the town <-> board transition styles
+-- match3/dive.lua — the town <-> board transition styles
 -- (`require("match3.dive")`, used by match3.game). game_config.lua's "dive" block
 -- picks the style and dresses it in the game's theme; `--dive-style NAME`
 -- overrides the style for review. A style covers the screen being left in

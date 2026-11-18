@@ -1,7 +1,7 @@
 /* The engine's tests: math and layout, camera, purses, saves, city and story rules.
  * With the real-renderer tests beside it and tests/games/engine.lua, this is
  * build/test/engine, one start for all of them. See docs/TESTING.md. */
-#include "test_runner.c"
+#include "test/test_runner.c"
 #include "viewport.h"
 #include "script_modules.h"
 #include "third_party/lua/lauxlib.h"

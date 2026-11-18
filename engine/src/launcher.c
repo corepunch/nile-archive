@@ -21,7 +21,7 @@
 #endif
 
 #ifdef ENGINE_TEST
-#include "test_runner.c"
+#include "test/test_runner.c"
 int main(int argc, char **argv) { return test_main(GAME_NAME, GAME_LUA_DIR, GAME_DATA_DIR, argc, argv); }
 #else
 static int launch(int argc, char **argv)

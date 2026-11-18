@@ -1,6 +1,6 @@
 # Motion: ease and tween
 
-The engine animates through one Lua module, [`engine/tween.lua`](../engine/tween.lua),
+The engine animates through one Lua module, [`engine/lua/tween.lua`](../engine/lua/tween.lua),
 loaded from the engine's resource directory before `main.lua`. It defines two globals:
 
 - **`ease`**, the easing catalogue: every curve of [easings.net](https://easings.net)
@@ -209,15 +209,15 @@ needs no second code path.
 
 ### What stays on its own clock
 
-The match board's entrance (`engine/board_intro.lua`) is a small simulation
+The match board's entrance (`engine/lua/board_intro.lua`) is a small simulation
 rather than a set of lerps: gravity falls, damped springs and a sweep computed
 per cell from one clock, with callbacks at the landing times, and its tests
 drive that clock (`intro:update(dt)`, `intro.t`). As tweens it would be one
 custom-eased tween per cell per effect, so it keeps its clock. The town <-> board
-dive in `engine/match3_game.lua` also keeps a small clock of its own: game state
+dive in `engine/lua/match3/game.lua` also keeps a small clock of its own: game state
 switches at once, the screen being left is covered, then the other screen is
 uncovered while the board's entrance plays. It takes no input (`R.diving()`),
-and reduced motion skips it. The styles live in `engine/match3_dive.lua`:
+and reduced motion skips it. The styles live in `engine/lua/match3/dive.lua`:
 `flash` (the engine's default: the town zooms into its newest building and
 blurs into a warm flash), `hex`, `drift`, `iris`, `bands` and `wipe`. game_config.lua's `dive`
 block picks one (`style`) and dresses it in the game's theme: a `motif` (`snow`,
@@ -229,7 +229,7 @@ it in from the left on the way back. The town is the masked screen
 mosaic and the renderer holds one mask at a time. Capture with `--city 3 --dive --dive-back 120 --reel` (the
 `*-town-dive` reels, there and back); `--dive-style NAME` films another style.
 The particle
-pools in `engine/match3_vfx.lua` and the continuous hint pulse are likewise not tweens.
+pools in `engine/lua/match3/vfx.lua` and the continuous hint pulse are likewise not tweens.
 
 ## Writing juice with it
 

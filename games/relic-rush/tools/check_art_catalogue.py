@@ -81,7 +81,7 @@ variant_art = {key: art_key or key for key, art_key in variants}
 assert variant_art == {key: bonus["art"] for key, bonus in gems["bonuses"].items()}
 assert set(variant_art.values()) == set(gems["columns"])
 assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", levels=\{', economy)
-match3 = (ROOT.parent.parent / "engine/match3.lua").read_text()
+match3 = (ROOT.parent.parent / "engine/lua/match3.lua").read_text()
 assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
 assert kinds == manifest["kinds"], "Rule kinds need artwork and catalogue entries"

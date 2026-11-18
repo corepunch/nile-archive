@@ -596,15 +596,15 @@ pause, guide and the island.
 
 | State | Presentation / assets |
 | --- | --- |
-| PRESENT | The board's entrance after any dialogue: existing HUD, tool, cell, piece and blocker artwork move on the shared timeline in `engine/board_intro.lua`, with transient glows, sparks and a sheen. No new art. Tap skips it. Capture: `build/test/relic-rush board-intro` (`--level 5 --present --reel`), frames in `build/shots/frames/` |
-| DIVE | Town <-> board transition (`wipe` in `engine/match3_dive.lua`): a diagonal edge sweeps left to right over 1.4 seconds, the town on one side and the board on the other; procedural (a masked draw of both screens), no art. Input waits for it; reduced motion skips it. Capture: `build/test/relic-rush relic-rush-town-dive` (`--city 3 --dive --reel`), frames in `build/shots/frames/` |
+| PRESENT | The board's entrance after any dialogue: existing HUD, tool, cell, piece and blocker artwork move on the shared timeline in `engine/lua/board_intro.lua`, with transient glows, sparks and a sheen. No new art. Tap skips it. Capture: `build/test/relic-rush board-intro` (`--level 5 --present --reel`), frames in `build/shots/frames/` |
+| DIVE | Town <-> board transition (`wipe` in `engine/lua/match3/dive.lua`): a diagonal edge sweeps left to right over 1.4 seconds, the town on one side and the board on the other; procedural (a masked draw of both screens), no art. Input waits for it; reduced motion skips it. Capture: `build/test/relic-rush relic-rush-town-dive` (`--city 3 --dive --reel`), frames in `build/shots/frames/` |
 | Idle | Base or special frame, optional selection/hint/blocker layers |
 | SWAP | Existing piece artwork moves to neighbour |
-| REJECT | Existing artwork moves and returns with zero moves spent. Against a chain only the incoming gem moves (`engine/match3.lua`). Capture with `build/test/all --suite=relic-rush 'reel chain-reject'`. |
+| REJECT | Existing artwork moves and returns with zero moves spent. Against a chain only the incoming gem moves (`engine/lua/match3.lua`). Capture with `build/test/all --suite=relic-rush 'reel chain-reject'`. |
 | CLEAR | Existing artwork expands briefly, then shrinks and fades; a blocked hit keeps the piece |
-| FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
-| Last tablets | Cradle of Rome 2's original `Star_02_16.png` and `Star_16.png` are packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in `data/board/fx.png`. `engine/match3_vfx.lua` sweeps them clockwise along the bevel over a soft blue wash. One to three tablets receive the first pulse with the move suggestion. The cue repeats every nine seconds until board input. Reduce Motion hides it. Reproduce the phone captures with `build/test/all --suite=relic-rush 'reel relic-rush-tablet-hints'`. [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow). |
-| Layer break | A hit that removes ice, a double tablet's green face or a blue tablet breaks that layer's own art (`tile-ice`, `tile-tablet-double`, `tile-tablet-single` levels) into about eight Voronoi shards (`engine/match3_shatter.lua`). Cracks glow, then shards burst, tumble with a darker side face and fall over about 0.55 s, above billowing smoke: four Kenney puff sprites per cell (`fx-smoke-0..3`, below), turning slowly, tinted pale earth and fading over about 1.25 s, after the shards. The shards are procedural cut-outs of existing art with no new states; Reduce Motion hides it. Capture with `build/test/all --suite=relic-rush 'reel fx-shatter'` (`--fx shatter`). [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg); smoke [before](screenshots/review/shatter/smoke-before.jpg) and [after](screenshots/review/shatter/smoke-after.jpg) (24 reel frames, 2 apart). |
+| FALL | Existing gem artwork follows engine gravity, then squashes and rebounds briefly on contact with its resting slot (`engine/lua/match3.lua`). Reduced motion omits the bounce. Capture with `build/test/all --suite=relic-rush 'reel relic-rush-top-edge-refill'`. |
+| Last tablets | Cradle of Rome 2's original `Star_02_16.png` and `Star_16.png` are packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in `data/board/fx.png`. `engine/lua/match3/vfx.lua` sweeps them clockwise along the bevel over a soft blue wash. One to three tablets receive the first pulse with the move suggestion. The cue repeats every nine seconds until board input. Reduce Motion hides it. Reproduce the phone captures with `build/test/all --suite=relic-rush 'reel relic-rush-tablet-hints'`. [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow). |
+| Layer break | A hit that removes ice, a double tablet's green face or a blue tablet breaks that layer's own art (`tile-ice`, `tile-tablet-double`, `tile-tablet-single` levels) into about eight Voronoi shards (`engine/lua/match3/shatter.lua`). Cracks glow, then shards burst, tumble with a darker side face and fall over about 0.55 s, above billowing smoke: four Kenney puff sprites per cell (`fx-smoke-0..3`, below), turning slowly, tinted pale earth and fading over about 1.25 s, after the shards. The shards are procedural cut-outs of existing art with no new states; Reduce Motion hides it. Capture with `build/test/all --suite=relic-rush 'reel fx-shatter'` (`--fx shatter`). [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg); smoke [before](screenshots/review/shatter/smoke-before.jpg) and [after](screenshots/review/shatter/smoke-after.jpg) (24 reel frames, 2 apart). |
 | Collection | Removed resources fly to their matching wallet capsule with a trail; story pieces do not earn resources |
 | Reduced motion | Suppresses trails, shake, squash and effect spawns; the board's entrance becomes a short fade; rule resolution stays active |
 
@@ -612,7 +612,7 @@ Transient light, beams, rings, particles, score text and sunlight motes
 are intentional animation primitives, not missing static artwork. Result-card
 torch sconces and their flame renderer have been removed; reviewed standard
 and safe-area phone captures are in `docs/review/result-without-torches/`.
-`engine/match3_vfx.lua` draws the radial glow from the board atlas. See
+`engine/lua/match3/vfx.lua` draws the radial glow from the board atlas. See
 [effects and capture modes](effects.md).
 
 ### Particle sprites
@@ -622,7 +622,7 @@ texture the impact, spark and bomb effects. The original black-background PNGs
 and `License.txt` are retained in `art/particles/kenney/`;
 `python3 tools/match3_atlas.py` packs the seven `fx-*` frames into
 `data/board/fx.png`. Registration resizes the sources and uses their brightness as
-alpha on white. `engine/match3_vfx.lua` draws them additively, tinted with each piece's effect colour.
+alpha on white. `engine/lua/match3/vfx.lua` draws them additively, tinted with each piece's effect colour.
 They are transient effect sprites with no interaction states. Ray beams,
 prism links, special births and the bomb's leading ring stay procedural.
 
@@ -635,7 +635,7 @@ prism links, special births and the bomb's leading ring stay procedural.
 | `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, ray tips and births |
 | `twinkle` | `star_06` | Spark particles and shard heads |
 | `streak` | `trace_06` | Shard particles, aligned to their velocity |
-| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Smoke of a breaking layer (`engine/match3_shatter.lua`), alpha-blended |
+| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Smoke of a breaking layer (`engine/lua/match3/shatter.lua`), alpha-blended |
 
 The smoke puffs come from Kenney's CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets)
 (`engine/art/match3/kenney-smoke/`, with its license). Unlike the sprites above they keep
@@ -647,7 +647,7 @@ those special pieces and their `--fx` modes have since been removed, only `--fx 
 
 ## Remaining runtime asset families
 
-`cloud-fog` covers locked land with rolling cloud banks (`city.fog_clouds`, `engine/city.c`).
+`cloud-fog` covers locked land with rolling cloud banks (`city.fog_clouds`, `engine/src/city.c`).
 Two world-space density fields of three spatial frequencies each drift on the smooth frame
 clock. Density modulates soft cloud edges, blue-grey hollows and pale sunlit lobes. The cached
 closed-land mask stays fixed, and unlocking clears it immediately. Open land stays clear. This
@@ -716,7 +716,7 @@ phone safe areas, modal underlays and effects. Historical captures are in
 `docs/review/floating-hud/`.
 
 The island's redundant minus/plus/MAP button cluster has been removed from
-`engine/match3_game.lua` (the town hooks). Navigation uses the shared city camera: pinch or mouse
+`engine/lua/match3/game.lua` (the town hooks). Navigation uses the shared city camera: pinch or mouse
 wheel to zoom and drag to pan. Placement, confirmation and long-press pickup
 are unchanged. No bitmap or state mapping changed. Normal, overview and
 placement captures at both phone sizes are in
@@ -726,7 +726,7 @@ Building pickup now uses the engine's stationary 0.5-second hold; ordinary drags
 pan the map. The existing ghost/footprint, held/released, valid/blocked and
 confirm/cancel states are retained. [Issue #21](https://github.com/corepunch/nile-archive/issues/21)
 tracks gesture arbitration and the two-game input audit. Sources are
-`engine/city.c`, `engine/core.c` and `engine/match3_game.lua` (the town hooks); reviewed native-input
+`engine/src/city.c`, `engine/src/core.c` and `engine/lua/match3/game.lua` (the town hooks); reviewed native-input
 captures and reproduction commands are in
 [the shared gesture review](../../../docs/review/city-long-press/README.md).
 No bitmap or atlas mapping is added.
@@ -870,7 +870,7 @@ constant for speaker/listener, with no scale/rotation animation or idle wobble. 
 
 ### Placement confirmation controls
 
-`engine/match3_game.lua` (the town hooks) uses an engine form with `placement_cancel` and
+`engine/lua/match3/game.lua` (the town hooks) uses an engine form with `placement_cancel` and
 `placement_confirm` variants from `lua/skin.lua`. These are procedural UI skin
 controls like the existing checkbox: red round × (cancel) and jade round ✓
 (commit build/move), normal/hover/pressed states with a keyboard-only focus ring; confirmation fades when
@@ -902,7 +902,7 @@ for both phone sizes and the dense special/blocker state board.
 
 ## Placement alignment guides
 
-`placement-guides` uses the shared `engine/city.c` renderer. While moving or
+`placement-guides` uses the shared `engine/src/city.c` renderer. While moving or
 placing a building, other buildings show neutral cream outlines with dark
 contrast edges around their occupied ground, including placement clearance.
 The building in hand retains its green/red footprint; its original location

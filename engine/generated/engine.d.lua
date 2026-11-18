@@ -1759,7 +1759,7 @@ function ui.element(kind, class) end
 function ui.prefab(kind, build) end
 ---@return table?
 function ui_form:draw(bounds, skin, options) end
----A compiled skin file (engine/ui_skin.lua): fonts, colours, images, text styles and per-state control looks
+---A compiled skin file (engine/lua/ui_skin.lua): fonts, colours, images, text styles and per-state control looks
 ---@class ui_skin
 ---@field theme ui_theme?
 ---@field transform (fun(): number, vec2, number)?
@@ -1798,12 +1798,12 @@ function ui_modal_stack:open(id, form, model, options) end
 function ui_modal_stack:close(id) end
 ---@return table?
 function ui_modal_stack:draw(dt, options) end
----Smoke-test driver for the deliberate building pickup (engine/city_smoke.lua): call the returned function once per tick while it returns true
+---Smoke-test driver for the deliberate building pickup (engine/lua/city_smoke.lua): call the returned function once per tick while it returns true
 ---@param c city
 ---@param opts {look: fun(at: vec2), wallet: fun(): number, cancel: fun(), confirm: fun(), offset: vec2?}
 ---@return fun(): boolean
 function city.move_test(c, opts) end
----Easing curves, t in [0, 1] (engine/tween.lua): in_, out_ and in_out_ of sine, quad, cubic, quart, quint, expo, circ, back, elastic and bounce, plus linear, none, steps and the historic in_out; see docs/MOTION.md
+---Easing curves, t in [0, 1] (engine/lua/tween.lua): in_, out_ and in_out_ of sine, quad, cubic, quart, quint, expo, circ, back, elastic and bounce, plus linear, none, steps and the historic in_out; see docs/MOTION.md
 ---@class easelib
 ---@field linear fun(t: number): number
 ---@field none fun(t: number): number
@@ -1831,7 +1831,7 @@ function ease.steps(t, n) end
 ---@param spec string|fun(t: number, a: number?, b: number?): number|nil
 ---@return fun(t: number, a: number?, b: number?): number
 function ease.get(spec) end
----A tween, timeline, interval or callback with a playhead (engine/tween.lua); see docs/MOTION.md
+---A tween, timeline, interval or callback with a playhead (engine/lua/tween.lua); see docs/MOTION.md
 ---@class tween_clip
 local tween_clip = {}
 ---@param s number
@@ -1981,7 +1981,7 @@ function tween_group:time_scale(s) end
 ---@param flag boolean?
 ---@return self
 function tween_group:set_instant(flag) end
----The motion module (engine/tween.lua): the default group's functions, plus group(), instant() and reset(); see docs/MOTION.md
+---The motion module (engine/lua/tween.lua): the default group's functions, plus group(), instant() and reset(); see docs/MOTION.md
 ---@class tweenlib
 tween = {}
 ---@param dt number?
@@ -2021,7 +2021,7 @@ function tween.group() end
 function tween.instant(flag) end
 function tween.reset() end
 
----A match board's entrance as pure functions of one clock (engine/board_intro.lua): the HUD lands, cells ripple out, pieces rain down, blockers slam, a sheen runs across
+---A match board's entrance as pure functions of one clock (engine/lua/board_intro.lua): the HUD lands, cells ripple out, pieces rain down, blockers slam, a sheen runs across
 ---@class board_intro
 ---@field t number
 board_intro = {}

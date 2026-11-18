@@ -40,7 +40,7 @@ chain and returns to its slot.
 
 ## Engine and platform boundary
 
-`engine/haptic.c` collects requests during a frame. After the game frame the
+`engine/src/haptic.c` collects requests during a frame. After the game frame the
 engine emits at most one effect: SUCCESS, PLACE, COMBO/ERROR, MATCH, COLLECT,
 then TICK in descending priority. Equal effects retain the greatest strength.
 Ticks use a 75 ms cooldown; other events use 100 ms, or 240 ms after SUCCESS.
@@ -50,7 +50,7 @@ platform resources. On native iOS, the first active frame after an interruption
 resumes feedback after processing the queued focus loss. App/test resets clear
 all policy state.
 
-`engine/haptic_platform.c` compiles in the platform unity unit, separately
+`engine/src/platform/haptic_platform.c` compiles in the platform unity unit, separately
 from engine C and generated Lua glue:
 
 - iOS uses cached UIKit impact and notification generators, with Core Haptics

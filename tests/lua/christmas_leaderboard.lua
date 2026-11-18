@@ -1,5 +1,5 @@
 -- Christmas Market's Game Center boards: scores go out when a reward is claimed, and
--- Settings and the results card open the shared dialog (engine/match3_game.lua).
+-- Settings and the results card open the shared dialog (engine/lua/match3/game.lua).
 local rules = require('rules')
 local island = require('island')
 local R = require('state')

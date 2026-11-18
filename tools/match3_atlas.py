@@ -286,7 +286,7 @@ def build_default(check):
     background = sprites.pop('background')
     del sprites['glow']
     packed = pack_groups(sprites)
-    outputs = [ROOT / 'engine/data/board/backs/background.png', ROOT / 'engine/match3_frames.lua']
+    outputs = [ROOT / 'engine/data/board/backs/background.png', ROOT / 'engine/lua/match3/frames.lua']
     write_asset(outputs[0], png(background))
     sheets = []
     for group, (sheet, sheet_frames) in packed.items():

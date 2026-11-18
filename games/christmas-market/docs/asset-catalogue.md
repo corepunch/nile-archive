@@ -422,7 +422,7 @@ layers, and the three tools use their five authored interaction states.
 
 A pane, a double pane's green face or ice shatters when a hit removes it.
 The engine cuts that layer's existing tile into shards over billowing smoke
-(`engine/match3_shatter.lua`), drawn with the Kenney puff sprites `fx-smoke-0..3`
+(`engine/lua/match3/shatter.lua`), drawn with the Kenney puff sprites `fx-smoke-0..3`
 listed below. The shards are a procedural cut-out with no new states, and Reduce Motion hides it. Capture with
 `build/test/all --suite=christmas-market 'reel fx-shatter'`.
 [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg).
@@ -515,11 +515,11 @@ The engine's default resource skin is independent and embedded; both games
 normally override it. `python3 tools/match3_atlas.py` reproduces the atlases and
 registrations. FALL uses simultaneous one-edge movement steps, with vertical
 spawning at every exposed column top. Existing treat artwork squashes and
-rebounds briefly on contact with its resting slot (`engine/match3.lua`). Reduced
+rebounds briefly on contact with its resting slot (`engine/lua/match3.lua`). Reduced
 motion omits the bounce. Capture with
 `build/test/all --suite=christmas-market 'reel christmas-market-top-edge-refill'`.
 
-At one to three remaining panes, `engine/match3_vfx.lua` layers a soft floor
+At one to three remaining panes, `engine/lua/match3/vfx.lua` layers a soft floor
 wash with a clockwise sweep of Cradle of Rome 2's `Star_02_16.png` and
 `Star_16.png`, packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in
 `data/board/fx.png`. Green uses the same pulse until its first hit turns the pane
@@ -529,7 +529,7 @@ capture with `build/test/all --suite=christmas-market 'frame christmas-market-ta
 [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow).
 
 When a swap is rejected by a tinsel tie, only the incoming treat slides toward
-the tie and back. The shared `engine/match3.lua` animation moves the existing
+the tie and back. The shared `engine/lua/match3.lua` animation moves the existing
 artwork and plays the normal reject haptic. Review the same motion with
 `build/test/all --suite=relic-rush 'reel chain-reject'`.
 
@@ -558,7 +558,7 @@ texture the impact, spark and bomb effects, as in Relic Rush. The original
 black-background PNGs and `License.txt` are retained in `art/particles/kenney/`;
 `python3 tools/match3_atlas.py` packs the seven `fx-*` frames into
 `data/board/fx.png`. Registration resizes the sources and uses their brightness as
-alpha on white. `engine/match3_vfx.lua` draws them additively,
+alpha on white. `engine/lua/match3/vfx.lua` draws them additively,
 tinted with each piece's effect colour. They are transient effect sprites with no
 interaction states. Shooting-star beams, prism links, special births and the
 bomb's leading ring stay procedural.
@@ -581,7 +581,7 @@ before and after; those special pieces and their `--fx` modes have since been re
 ## Board entrance
 
 After any dialogue the board presents itself on the engine's shared timeline
-(`engine/board_intro.lua`, see [the engine guide](../../../docs/ENGINE.md#board-entrance)):
+(`engine/lua/board_intro.lua`, see [the engine guide](../../../docs/ENGINE.md#board-entrance)):
 the goal card and tools land, Noelle springs up behind the card, cells ripple
 out, treats rain down their columns, ice and tinsel slam on and a sheen runs
 across. It moves existing artwork with transient glows and sparks, so it adds no
@@ -590,7 +590,7 @@ new assets. A tap skips it and reduced motion makes it a short fade. Capture:
 in `build/shots/frames/`.
 
 Pressing Play in the market (and returning to it) runs the shared town <-> board
-transition (`wipe` in `engine/match3_dive.lua`): a diagonal edge sweeps left to
+transition (`wipe` in `engine/lua/match3/dive.lua`): a diagonal edge sweeps left to
 right over 1.4 seconds, the market on one side and the board on the other. It is
 procedural (a masked draw of both screens) and adds no art;
 input waits for it and reduced motion skips it. Capture:
@@ -608,7 +608,7 @@ ground-contact edges. See the [adjacent foundation captures](review/foundations/
 
 ## Placement alignment guides
 
-The shared `engine/city.c` renderer draws cream outlines around occupied
+The shared `engine/src/city.c` renderer draws cream outlines around occupied
 ground during placement. Building sprites cover the lines behind them. The
 building in hand retains its green/red footprint, and the old plot of a
 building being moved is free. Confirm or Cancel hides the guides. Debug

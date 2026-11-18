@@ -151,7 +151,7 @@ make buildings GAME=nile-archive REBUILD=1 KEYS="sphinx date_palm"   # omit KEYS
 [BUILDINGS.md](BUILDINGS.md#rendering-buildings). Either way these are fixed, which is what
 makes all sprites one registered set:
 
-- **Camera.** `tools/city_camera.py`, read from `engine/engine.h`.
+- **Camera.** `tools/city_camera.py`, read from `engine/src/engine.h`.
 - **Fixed scale.** `ppt` pixels per tile side from `art/buildings.json`, never fitted to a
   cell. Each sprite's `base_width` follows exactly from it and from the camera.
 - **Framing.** Each object renders alone, on whole pixels, so its pivot is exact.

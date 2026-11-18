@@ -1,7 +1,7 @@
 /* Game Center policy: queueing, retry, caching and the local fallback.
  * The native backend is replaced by a recorder; part of build/test/engine. */
 #include "gamecenter.h"
-#include "test.h"
+#include "test/test.h"
 #include <string.h>
 
 static void restart(bool backend)

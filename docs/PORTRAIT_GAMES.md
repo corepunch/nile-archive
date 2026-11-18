@@ -6,12 +6,12 @@ tables, and PNGs. Behaviour belongs to the engine:
 
 | Engine module | Owns |
 |---|---|
-| `engine/match3.lua` (`match3`) | Rules, the board layout, HUD, tools, swaps, waves, the guide and pause forms |
-| `engine/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
-| `engine/town.lua` (`town`) | The town screen (`lua/town_config.lua`) |
-| `engine/match3_game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
-| `engine/match3_vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
-| `engine/match3_debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--dialog`, ...) |
+| `engine/lua/match3.lua` (`match3`) | Rules, the board layout, HUD, tools, swaps, waves, the guide and pause forms |
+| `engine/lua/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
+| `engine/lua/town.lua` (`town`) | The town screen (`lua/town_config.lua`) |
+| `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the level list, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
+| `engine/lua/match3/vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
+| `engine/lua/match3/debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--dialog`, ...) |
 
 Each game's `lua/` keeps only:
 
@@ -51,8 +51,8 @@ Games that bank winnings at Collect call `bind_completed_rewards` and include
 its serializer in their campaign save hook. An unclaimed win then resumes
 with its matched resources.
 
-`engine/match3_game.lua` selects the engine's default portrait-game dialogue
-layout, drawn by `engine/story.c`. On phones the engine puts the portraits at
+`engine/lua/match3/game.lua` selects the engine's default portrait-game dialogue
+layout, drawn by `engine/src/story.c`. On phones the engine puts the portraits at
 the screen edges, centers the text vertically in a full-width bar, and centers
 the speaker's name tag on its top border. Games supply the skin, cast and
 dialogue. Cast art faces right and the engine mirrors the right slot.
@@ -100,7 +100,7 @@ Fixed in the engine, so both games now behave the same way:
 | `--talk-through`, `--scroll-review`, `--placing focused`, `--dialog confirm` debug entry points | Relic Rush | Christmas Market | Both |
 | `--present`, `--goals-met`, `--dialog bubble` with the story's words, `--victory clue`, debug wallets without legacy slots | Christmas Market | Relic Rush | Both |
 | `R.expand()` (open the next region from code) | Relic Rush | Christmas Market | Both |
-| Board entrance haptics (`R.intro_haptics`) | Relic Rush | Christmas Market | Both (fixed earlier in `engine/board_intro.lua`) |
+| Board entrance haptics (`R.intro_haptics`) | Relic Rush | Christmas Market | Both (fixed earlier in `engine/lua/board_intro.lua`) |
 
 ### Intentional skin
 

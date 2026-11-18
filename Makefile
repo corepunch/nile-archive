@@ -25,7 +25,9 @@ CFLAGS  ?= -O2 -g
 ARGS    ?=
 # CFLAGS is yours to override (make CFLAGS="-O0 -g -Werror"); the essentials live in ALL_CFLAGS
 # zero is a valid default everywhere, so partial initialisers ({"who", "text"}) are idiomatic
-ALL_CFLAGS = $(CFLAGS) -std=c11 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Iengine -D_DEFAULT_SOURCE
+ALL_CFLAGS = $(CFLAGS) -std=c11 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers $(ENGINE_INC) -D_DEFAULT_SOURCE
+# engine/ for third_party/ and generated/, engine/src for the engine's own headers.
+ENGINE_INC := -Iengine -Iengine/src
 # Platform is compiled into each app, with no embedded third-party framework.
 PLATFORM_DIR := engine/third_party/platform
 ifeq ($(shell uname -s),Darwin)
@@ -51,16 +53,16 @@ endif
 LIBS := $(PLATFORM_LIBS) -lm
 
 # Lua 5.4: the lua/lua git mirror as a submodule in engine/third_party/lua (MIT),
-# pinned to a release tag and built as one translation unit (engine/lua_lib.c).
+# pinned to a release tag and built as one translation unit (engine/src/lua_lib.c).
 LUA_DIR    := engine/third_party/lua
 UNITY      := tools/unity.sh
 LUA_FLAGS  := -Wno-unused-function
 ENGINE_OBJ := build/engine/engine.o build/engine/script.o build/engine/lua.o build/engine/platform.o
-ENGINE_DEPS := $(UNITY) $(wildcard engine/*.c engine/*.h)
+ENGINE_DEPS := $(UNITY) $(wildcard engine/src/*.[ch] engine/src/platform/*.c engine/generated/*.[ch])
 PLATFORM_DEPS := $(shell find $(PLATFORM_DIR) -type f \( -name '*.c' -o -name '*.m' -o -name '*.h' \) 2>/dev/null)
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
 # the engine's own Lua, shared by every game (the web build serves it from /engine)
-ENGINE_LUA  := $(filter-out engine/engine.d.lua,$(wildcard engine/*.lua))
+ENGINE_LUA  := $(wildcard engine/lua/*.lua engine/lua/match3/*.lua)
 
 .PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings level-sheets web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)
@@ -72,20 +74,20 @@ build/engine/%.o: $(ENGINE_DEPS)
 $(LUA_DIR)/lua.h:
 	@echo "Lua sources missing: run 'git submodule update --init' (the Lua interpreter is a submodule)" >&2; exit 1
 
-build/engine/lua.o: $(UNITY) engine/lua_lib.c $(LUA_DIR)/lua.h $(wildcard $(LUA_DIR)/*.c) $(wildcard $(LUA_DIR)/*.h)
+build/engine/lua.o: $(UNITY) engine/src/lua_lib.c $(LUA_DIR)/lua.h $(wildcard $(LUA_DIR)/*.c) $(wildcard $(LUA_DIR)/*.h)
 	@mkdir -p $(dir $@)
-	sh $(UNITY) lua | $(CC) $(CFLAGS) -std=c11 -Wall $(LUA_FLAGS) -Iengine -x c -c -o $@ -
+	sh $(UNITY) lua | $(CC) $(CFLAGS) -std=c11 -Wall $(LUA_FLAGS) $(ENGINE_INC) -x c -c -o $@ -
 
-build/engine/platform.o: $(UNITY) engine/web_audio.c engine/haptic_platform.c engine/haptic.h engine/gamecenter_platform.c engine/gamecenter.h engine/animation_clock_platform.c engine/animation_clock.h engine/engine.h $(PLATFORM_DEPS)
+build/engine/platform.o: $(UNITY) engine/src/platform/web_audio.c engine/src/platform/haptic_platform.c engine/src/haptic.h engine/src/platform/gamecenter_platform.c engine/src/gamecenter.h engine/src/platform/animation_clock_platform.c engine/src/animation_clock.h engine/src/engine.h $(PLATFORM_DEPS)
 	@mkdir -p $(dir $@)
-	sh $(UNITY) platform | $(CC) $(CFLAGS) -std=gnu11 -Wall -Iengine -x c $(PLATFORM_FLAGS) -c -o $@ -
+	sh $(UNITY) platform | $(CC) $(CFLAGS) -std=gnu11 -Wall $(ENGINE_INC) -x c $(PLATFORM_FLAGS) -c -o $@ -
 
 # Every game is the same launcher pointed at games/<name>: lua/ for code, data/ for assets.
 define GAME_RULES
 $(1): build/$(1)
-build/$(1): $(ENGINE_OBJ) engine/launcher.c engine/engine.h
+build/$(1): $(ENGINE_OBJ) engine/src/launcher.c engine/src/engine.h
 	@mkdir -p build
-	$$(CC) $$(ALL_CFLAGS) -DGAME_DIR='"games/$(1)"' -o $$@ engine/launcher.c $(ENGINE_OBJ) $$(LIBS)
+	$$(CC) $$(ALL_CFLAGS) -DGAME_DIR='"games/$(1)"' -o $$@ engine/src/launcher.c $(ENGINE_OBJ) $$(LIBS)
 run-$(1): build/$(1)
 	./build/$(1) $$(ARGS)
 endef
@@ -98,7 +100,7 @@ run-relic: run-relic-rush
 # engine/api.xml describes the API once; tools/luagen.py writes the glue, the
 # reference and the editor annotations. They are committed, so building needs
 # no Python; `make test` fails when they are stale.
-GENERATED := engine/api_lua.c engine/api_lua.h docs/LUA_API.md engine/engine.d.lua
+GENERATED := engine/generated/api_lua.c engine/generated/api_lua.h docs/LUA_API.md engine/generated/engine.d.lua
 gen:
 	python3 tools/luagen.py
 gen-check:
@@ -108,7 +110,7 @@ gen-check:
 # .luacheckrc declares the engine's globals, so an undefined global is a typo
 # or a missing import and an unused local is dead code.
 lint:
-	luacheck -q games/*/lua engine/tween.lua engine/ui_forms.lua engine/ui_skin.lua engine/city_smoke.lua engine/match3.lua engine/match3_shapes.lua engine/match3_frames.lua engine/board_intro.lua engine/town.lua engine/leaderboard.lua engine/match3_vfx.lua engine/match3_shatter.lua engine/match3_elements_view.lua engine/match3_debug.lua engine/match3_dive.lua engine/match3_game.lua tests/lua tests/games tests/fixtures tools/*.lua
+	luacheck -q games/*/lua engine/lua tests/lua tests/games tests/fixtures tools/*.lua
 
 # --- Xcode projects -------------------------------------------------------
 # One committed project per game with a macOS and an iOS target (iPad for Nile
@@ -140,14 +142,14 @@ test-ios-deploy:
 TEST_GAMES := nile-archive relic-rush christmas-market emergency
 TEST_BINS := build/test/engine $(TEST_GAMES:%=build/test/%)
 TEST_OBJ := build/test-obj/engine.o build/test-obj/script.o build/engine/lua.o build/engine/platform.o
-TEST_DEPS := engine/test.h engine/test_runner.c engine/test_lua.c
+TEST_DEPS := engine/src/test/test.h engine/src/test/test_runner.c engine/src/test/test_lua.c
 build/test-obj/%.o: $(ENGINE_DEPS) $(TEST_DEPS)
 	@mkdir -p $(dir $@)
 	sh $(UNITY) $* | $(CC) $(ALL_CFLAGS) -DENGINE_TEST -x c -c -o $@ -
 define TEST_GAME_RULES
-build/test/$(1): $(TEST_OBJ) engine/launcher.c $(TEST_DEPS)
+build/test/$(1): $(TEST_OBJ) engine/src/launcher.c $(TEST_DEPS)
 	@mkdir -p build/test
-	$$(CC) $$(ALL_CFLAGS) -DENGINE_TEST -DGAME_NAME='"$(1)"' -DGAME_DIR='"games/$(1)"' -o $$@ engine/launcher.c $(TEST_OBJ) $$(LIBS)
+	$$(CC) $$(ALL_CFLAGS) -DENGINE_TEST -DGAME_NAME='"$(1)"' -DGAME_DIR='"games/$(1)"' -o $$@ engine/src/launcher.c $(TEST_OBJ) $$(LIBS)
 endef
 $(foreach g,$(TEST_GAMES),$(eval $(call TEST_GAME_RULES,$(g))))
 ENGINE_TEST_SRC := tests/test_main.c tests/test_platform.c tests/test_backdrop.c tests/test_story.c tests/test_city_render.c tests/test_haptic.c tests/test_gamecenter.c
@@ -159,9 +161,9 @@ build/test/all: $(ENGINE_TEST_SRC) $(TEST_OBJ) $(TEST_DEPS)
 	@mkdir -p build/test
 	$(CC) $(ALL_CFLAGS) -DENGINE_TEST -DTEST_ALL_GAMES='"$(TEST_GAMES)"' -o $@ $(ENGINE_TEST_SRC) $(TEST_OBJ) $(LIBS)
 
-build/test-audio: tests/test_audio.c engine/audio.c engine/engine.h
+build/test-audio: tests/test_audio.c engine/src/audio.c engine/src/engine.h
 	@mkdir -p build
-	$(CC) $(ALL_CFLAGS) -o $@ tests/test_audio.c engine/audio.c -lm
+	$(CC) $(ALL_CFLAGS) -o $@ tests/test_audio.c engine/src/audio.c -lm
 
 .PHONY: test-assets
 test-assets:
@@ -212,7 +214,7 @@ test-engine: build/test/all build/test-audio
 	./build/test-audio
 test-extended:
 	$(MAKE) test-fast TEST_ARGS=--extended TEST_BUDGET=60
-MATCH3_LUA_DIR ?= engine
+MATCH3_LUA_DIR ?= engine/lua
 test-match3: build/test/all
 	test -f "$(MATCH3_LUA_DIR)/match3.lua"
 	SPRITE_MATCH3_ROOT="$(MATCH3_LUA_DIR)" ./build/test/all --suite=engine engine_match3 $(TEST_ARGS)
@@ -238,7 +240,7 @@ level-sheets:
 # --- WebAssembly (Emscripten) ------------------------------------------------
 # gnu11 rather than c11: Emscripten's EM_JS/EM_ASM macros need GNU extensions.
 EMCC      ?= emcc
-WEB_FLAGS := -std=gnu11 -O2 -Iengine -sUSE_WEBGL2=1 -sMIN_WEBGL_VERSION=2 -sMAX_WEBGL_VERSION=2 -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=64MB \
+WEB_FLAGS := -std=gnu11 -O2 $(ENGINE_INC) -sUSE_WEBGL2=1 -sMIN_WEBGL_VERSION=2 -sMAX_WEBGL_VERSION=2 -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=64MB \
              -sEXPORTED_FUNCTIONS=_main,_malloc,_free \
              -sEXPORTED_RUNTIME_METHODS=ccall,UTF8ToString,stringToUTF8,lengthBytesUTF8 \
              '-sDEFAULT_LIBRARY_FUNCS_TO_INCLUDE=$$UTF8ToString,$$stringToUTF8,$$lengthBytesUTF8' \
@@ -247,7 +249,7 @@ WEB_FLAGS := -std=gnu11 -O2 -Iengine -sUSE_WEBGL2=1 -sMIN_WEBGL_VERSION=2 -sMAX_
 WEB_OBJ := $(addprefix build/web/,$(addsuffix .o,engine script lua platform))
 build/web/%.o: $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h $(wildcard $(LUA_DIR)/*.c $(LUA_DIR)/*.h)
 	@mkdir -p $(dir $@)
-	sh $(UNITY) $* | $(EMCC) -std=gnu11 -O2 -Iengine $(LUA_FLAGS) -x c -c -o $@ -
+	sh $(UNITY) $* | $(EMCC) -std=gnu11 -O2 $(ENGINE_INC) $(LUA_FLAGS) -x c -c -o $@ -
 
 web: $(GAMES:%=dist/%/index.html)
 
@@ -255,8 +257,8 @@ define WEB_RULES
 dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h web/shell.html $(call game_lua,$(1)) $(ENGINE_LUA) $(shell find games/$(1)/data -type f 2>/dev/null)
 	@mkdir -p dist/$(1)
 	$$(EMCC) $$(WEB_FLAGS) $(LUA_FLAGS) -DGAME_DIR='"/game"' -DGAME_DATA_DIR='"/data"' -DGAME_LUA_DIR='"/lua"' -DENGINE_DIR='"/engine"' -o $$@ \
-	    engine/launcher.c $(WEB_OBJ) \
-	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua $(foreach f,$(ENGINE_LUA),--preload-file $(f)@/engine/$(notdir $(f))) --preload-file engine/data@/engine/data
+	    engine/src/launcher.c $(WEB_OBJ) \
+	    --preload-file games/$(1)/data@/data --preload-file games/$(1)/lua@/lua --preload-file engine/lua@/engine/lua --preload-file engine/data@/engine/data
 endef
 $(foreach g,$(GAMES),$(eval $(call WEB_RULES,$(g))))
 

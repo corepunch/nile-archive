@@ -1,6 +1,6 @@
 /* Real GPU/llvmpipe checks and an inclusive blur+readback timing sample. */
 #include "render.h"
-#include "test.h"
+#include "test/test.h"
 #include "viewport.h"
 #include <stdio.h>
 

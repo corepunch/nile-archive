@@ -13,6 +13,7 @@
 "GCC_WARN_INHIBIT_ALL_WARNINGS" = "NO";
 "GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
 "HEADER_SEARCH_PATHS" = ("$(ENGINE_ROOT)/engine",
+"$(ENGINE_ROOT)/engine/src",
 );
 "GCC_PREPROCESSOR_DEFINITIONS" = ("$(inherited)",
 "GAME_IN_BUNDLE=1",
@@ -46,6 +47,7 @@
 "GCC_WARN_INHIBIT_ALL_WARNINGS" = "NO";
 "GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
 "HEADER_SEARCH_PATHS" = ("$(ENGINE_ROOT)/engine",
+"$(ENGINE_ROOT)/engine/src",
 );
 "GCC_PREPROCESSOR_DEFINITIONS" = ("$(inherited)",
 "GAME_IN_BUNDLE=1",
@@ -106,127 +108,127 @@
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "8C7BBF5CEC333F89C39F4DD3" = {"isa" = "PBXFileReference";
-"path" = "../../engine/core.c";
+"path" = "../../engine/src/core.c";
 "name" = "core.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "6C93BD11F9AA66A9F00EC3BD" = {"isa" = "PBXFileReference";
-"path" = "../../engine/render.c";
+"path" = "../../engine/src/render.c";
 "name" = "render.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "DB3AB349C060C5F6876F6B06" = {"isa" = "PBXFileReference";
-"path" = "../../engine/gfx.c";
+"path" = "../../engine/src/gfx.c";
 "name" = "gfx.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "1307E1D3B0F32989778C78F4" = {"isa" = "PBXFileReference";
-"path" = "../../engine/font.c";
+"path" = "../../engine/src/font.c";
 "name" = "font.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "E48481DFBF7C633F32885C82" = {"isa" = "PBXFileReference";
-"path" = "../../engine/ui.c";
+"path" = "../../engine/src/ui.c";
 "name" = "ui.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "ADBE7599AFC06409EDF9F7DA" = {"isa" = "PBXFileReference";
-"path" = "../../engine/save.c";
+"path" = "../../engine/src/save.c";
 "name" = "save.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "744E0DC332E76F47A555E499" = {"isa" = "PBXFileReference";
-"path" = "../../engine/city.c";
+"path" = "../../engine/src/city.c";
 "name" = "city.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "2C6345C1907FD24B6EEFEC5A" = {"isa" = "PBXFileReference";
-"path" = "../../engine/audio.c";
+"path" = "../../engine/src/audio.c";
 "name" = "audio.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "6FDD5359139C57B8D6DD06E2" = {"isa" = "PBXFileReference";
-"path" = "../../engine/haptic.c";
+"path" = "../../engine/src/haptic.c";
 "name" = "haptic.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "2175584D517BBE7031C823AB" = {"isa" = "PBXFileReference";
-"path" = "../../engine/haptic_platform.c";
+"path" = "../../engine/src/platform/haptic_platform.c";
 "name" = "haptic_platform.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "FE02CA917A7F93328305F425" = {"isa" = "PBXFileReference";
-"path" = "../../engine/gamecenter.c";
+"path" = "../../engine/src/gamecenter.c";
 "name" = "gamecenter.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "580A0DDE2AC57F7DE238D671" = {"isa" = "PBXFileReference";
-"path" = "../../engine/gamecenter_platform.c";
+"path" = "../../engine/src/platform/gamecenter_platform.c";
 "name" = "gamecenter_platform.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "45B4B9CF2B44A145D927FBC6" = {"isa" = "PBXFileReference";
-"path" = "../../engine/story.c";
+"path" = "../../engine/src/story.c";
 "name" = "story.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "8A8386A2CEEEFE289DA8945E" = {"isa" = "PBXFileReference";
-"path" = "../../engine/sprite.c";
+"path" = "../../engine/src/sprite.c";
 "name" = "sprite.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "4F62C834EFF9537C0E92FC7C" = {"isa" = "PBXFileReference";
-"path" = "../../engine/nav.c";
+"path" = "../../engine/src/nav.c";
 "name" = "nav.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "41590808361351D30D12FA8C" = {"isa" = "PBXFileReference";
-"path" = "../../engine/script_modules.c";
+"path" = "../../engine/src/script_modules.c";
 "name" = "script_modules.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "3844D74B4527AE195536A1E2" = {"isa" = "PBXFileReference";
-"path" = "../../engine/script.c";
+"path" = "../../engine/src/script.c";
 "name" = "script.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "5A3E88961896E4AB82DE84B5" = {"isa" = "PBXFileReference";
-"path" = "../../engine/api_lua.c";
+"path" = "../../engine/generated/api_lua.c";
 "name" = "api_lua.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "332638782EE028D2FCDBBFAB" = {"isa" = "PBXFileReference";
-"path" = "../../engine/lua_lib.c";
+"path" = "../../engine/src/lua_lib.c";
 "name" = "lua_lib.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
 "06369032B38F99A704630800" = {"isa" = "PBXFileReference";
-"path" = "../../engine/launcher.c";
+"path" = "../../engine/src/launcher.c";
 "name" = "launcher.c";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.c";
 };
-"EB5CBE17182664B6DBD76360" = {"isa" = "PBXFileReference";
-"path" = "../../engine/engine.h";
+"B60900DED89F03582009433C" = {"isa" = "PBXFileReference";
+"path" = "../../engine/src/engine.h";
 "name" = "engine.h";
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "sourcecode.c.h";
@@ -247,101 +249,11 @@
 "sourceTree" = "<group>";
 "lastKnownFileType" = "folder";
 };
-"6381E17C7276272DC6DC5CC6" = {"isa" = "PBXFileReference";
-"path" = "../../engine/board_intro.lua";
-"name" = "board_intro.lua";
+"A150F31180C678E8E8A70275" = {"isa" = "PBXFileReference";
+"path" = "../../engine/lua";
+"name" = "lua";
 "sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"ECDA85D0CBDCAD3F6D5E09A6" = {"isa" = "PBXFileReference";
-"path" = "../../engine/city_smoke.lua";
-"name" = "city_smoke.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"C547089BBD2224CAB8659129" = {"isa" = "PBXFileReference";
-"path" = "../../engine/leaderboard.lua";
-"name" = "leaderboard.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"6428ECB55BAFADD8FB48D8DA" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3.lua";
-"name" = "match3.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"898D908F744AAE03EAF42633" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_debug.lua";
-"name" = "match3_debug.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"8499D6460ECB487F259595F2" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_dive.lua";
-"name" = "match3_dive.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"980F4BAC8EEB3304C0C396ED" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_elements_view.lua";
-"name" = "match3_elements_view.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"5C7A52D4239F958EC87E2894" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_frames.lua";
-"name" = "match3_frames.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"70CA0C3545609F2A89BBBBB3" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_game.lua";
-"name" = "match3_game.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"28F5B5E33BE595CB4C27F0FB" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_shapes.lua";
-"name" = "match3_shapes.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"8B7751F2E942D76354A1A2E6" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_shatter.lua";
-"name" = "match3_shatter.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"00556967F9F5635A526D112F" = {"isa" = "PBXFileReference";
-"path" = "../../engine/match3_vfx.lua";
-"name" = "match3_vfx.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"3701F2C6C99CD48B7085AB11" = {"isa" = "PBXFileReference";
-"path" = "../../engine/town.lua";
-"name" = "town.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"A6921B57F164F52360796AAB" = {"isa" = "PBXFileReference";
-"path" = "../../engine/tween.lua";
-"name" = "tween.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"B1B35CCDE01AA42B3453A2F6" = {"isa" = "PBXFileReference";
-"path" = "../../engine/ui_forms.lua";
-"name" = "ui_forms.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
-};
-"B4ACFDF027CC4D43A288DD43" = {"isa" = "PBXFileReference";
-"path" = "../../engine/ui_skin.lua";
-"name" = "ui_skin.lua";
-"sourceTree" = "SOURCE_ROOT";
-"lastKnownFileType" = "text";
+"lastKnownFileType" = "folder";
 };
 "9A369C44F8A274915962CB02" = {"isa" = "PBXFileReference";
 "path" = "../../engine/data/board";
@@ -364,24 +276,9 @@
 };
 "2D25A9B56DCCB8131EBB5456" = {"isa" = "PBXGroup";
 "name" = "Engine";
-"children" = ("EB5CBE17182664B6DBD76360",
+"children" = ("B60900DED89F03582009433C",
 "541B66CD1C747C1DB8B77446",
-"6381E17C7276272DC6DC5CC6",
-"ECDA85D0CBDCAD3F6D5E09A6",
-"C547089BBD2224CAB8659129",
-"6428ECB55BAFADD8FB48D8DA",
-"898D908F744AAE03EAF42633",
-"8499D6460ECB487F259595F2",
-"980F4BAC8EEB3304C0C396ED",
-"5C7A52D4239F958EC87E2894",
-"70CA0C3545609F2A89BBBBB3",
-"28F5B5E33BE595CB4C27F0FB",
-"8B7751F2E942D76354A1A2E6",
-"00556967F9F5635A526D112F",
-"3701F2C6C99CD48B7085AB11",
-"A6921B57F164F52360796AAB",
-"B1B35CCDE01AA42B3453A2F6",
-"B4ACFDF027CC4D43A288DD43",
+"A150F31180C678E8E8A70275",
 "9A369C44F8A274915962CB02",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
@@ -555,52 +452,7 @@
 "runOnlyForDeploymentPostprocessing" = 0;
 };
 "08D12EE04239E518389ECDC7" = {"isa" = "PBXBuildFile";
-"fileRef" = "6381E17C7276272DC6DC5CC6";
-};
-"0516FFA5B82446D8BE906B88" = {"isa" = "PBXBuildFile";
-"fileRef" = "ECDA85D0CBDCAD3F6D5E09A6";
-};
-"A20F111E68FF74DF658F6C69" = {"isa" = "PBXBuildFile";
-"fileRef" = "C547089BBD2224CAB8659129";
-};
-"DDEA06FB257BFB2F8EE19C5F" = {"isa" = "PBXBuildFile";
-"fileRef" = "6428ECB55BAFADD8FB48D8DA";
-};
-"B240EBACF79C50E8033BF1D7" = {"isa" = "PBXBuildFile";
-"fileRef" = "898D908F744AAE03EAF42633";
-};
-"CE7CE704F8BF7051B016206C" = {"isa" = "PBXBuildFile";
-"fileRef" = "8499D6460ECB487F259595F2";
-};
-"7F622EDFA59A20E589D26FF6" = {"isa" = "PBXBuildFile";
-"fileRef" = "980F4BAC8EEB3304C0C396ED";
-};
-"90743038D4FD989EDC331837" = {"isa" = "PBXBuildFile";
-"fileRef" = "5C7A52D4239F958EC87E2894";
-};
-"623DD73804660067F0B84F2F" = {"isa" = "PBXBuildFile";
-"fileRef" = "70CA0C3545609F2A89BBBBB3";
-};
-"1B3C22DC17765E2D350DF6DB" = {"isa" = "PBXBuildFile";
-"fileRef" = "28F5B5E33BE595CB4C27F0FB";
-};
-"486BC79FD84F7C1DF2174E47" = {"isa" = "PBXBuildFile";
-"fileRef" = "8B7751F2E942D76354A1A2E6";
-};
-"83DB88C049C27F30D08EBCD4" = {"isa" = "PBXBuildFile";
-"fileRef" = "00556967F9F5635A526D112F";
-};
-"DFC003D81C99B1A44EE5C495" = {"isa" = "PBXBuildFile";
-"fileRef" = "3701F2C6C99CD48B7085AB11";
-};
-"B8F1B89F98CC2F1226A144D5" = {"isa" = "PBXBuildFile";
-"fileRef" = "A6921B57F164F52360796AAB";
-};
-"85AA19533823E10CF3D8F2CC" = {"isa" = "PBXBuildFile";
-"fileRef" = "B1B35CCDE01AA42B3453A2F6";
-};
-"DE02668AA7EFC71CF1D24F5A" = {"isa" = "PBXBuildFile";
-"fileRef" = "B4ACFDF027CC4D43A288DD43";
+"fileRef" = "A150F31180C678E8E8A70275";
 };
 "A63DE33C776B7DF6008A5508" = {"isa" = "PBXCopyFilesBuildPhase";
 "buildActionMask" = 2147483647;
@@ -609,21 +461,6 @@
 "name" = "Engine resources";
 "runOnlyForDeploymentPostprocessing" = 0;
 "files" = ("08D12EE04239E518389ECDC7",
-"0516FFA5B82446D8BE906B88",
-"A20F111E68FF74DF658F6C69",
-"DDEA06FB257BFB2F8EE19C5F",
-"B240EBACF79C50E8033BF1D7",
-"CE7CE704F8BF7051B016206C",
-"7F622EDFA59A20E589D26FF6",
-"90743038D4FD989EDC331837",
-"623DD73804660067F0B84F2F",
-"1B3C22DC17765E2D350DF6DB",
-"486BC79FD84F7C1DF2174E47",
-"83DB88C049C27F30D08EBCD4",
-"DFC003D81C99B1A44EE5C495",
-"B8F1B89F98CC2F1226A144D5",
-"85AA19533823E10CF3D8F2CC",
-"DE02668AA7EFC71CF1D24F5A",
 );
 };
 "2CDE8C695C4F6150FACB5724" = {"isa" = "PBXBuildFile";
@@ -818,52 +655,7 @@
 "runOnlyForDeploymentPostprocessing" = 0;
 };
 "A44ED45F2A6D9C41BB0D1D1D" = {"isa" = "PBXBuildFile";
-"fileRef" = "6381E17C7276272DC6DC5CC6";
-};
-"1610DF446BA8762F06A76D01" = {"isa" = "PBXBuildFile";
-"fileRef" = "ECDA85D0CBDCAD3F6D5E09A6";
-};
-"572C63282FE4D64937F6EBC6" = {"isa" = "PBXBuildFile";
-"fileRef" = "C547089BBD2224CAB8659129";
-};
-"2519DC88ECB593120F5CA011" = {"isa" = "PBXBuildFile";
-"fileRef" = "6428ECB55BAFADD8FB48D8DA";
-};
-"DC8F82C1AC79ACF2C8415D86" = {"isa" = "PBXBuildFile";
-"fileRef" = "898D908F744AAE03EAF42633";
-};
-"4B1123ED9F220105E6A42639" = {"isa" = "PBXBuildFile";
-"fileRef" = "8499D6460ECB487F259595F2";
-};
-"A4DF182E99342425421A9DFA" = {"isa" = "PBXBuildFile";
-"fileRef" = "980F4BAC8EEB3304C0C396ED";
-};
-"3E2F77AD3A0E85E42BB0A05F" = {"isa" = "PBXBuildFile";
-"fileRef" = "5C7A52D4239F958EC87E2894";
-};
-"69DE3B9074FE3FFEB75B9CA7" = {"isa" = "PBXBuildFile";
-"fileRef" = "70CA0C3545609F2A89BBBBB3";
-};
-"68718CE3FBCA477784BAF1DA" = {"isa" = "PBXBuildFile";
-"fileRef" = "28F5B5E33BE595CB4C27F0FB";
-};
-"2831AE64F9E3CCE568218C3B" = {"isa" = "PBXBuildFile";
-"fileRef" = "8B7751F2E942D76354A1A2E6";
-};
-"6DF82D7D6C9848BF4016B933" = {"isa" = "PBXBuildFile";
-"fileRef" = "00556967F9F5635A526D112F";
-};
-"4F23B0E7CF73F51DF3032454" = {"isa" = "PBXBuildFile";
-"fileRef" = "3701F2C6C99CD48B7085AB11";
-};
-"B9999AD4B4652E2BBE0655F0" = {"isa" = "PBXBuildFile";
-"fileRef" = "A6921B57F164F52360796AAB";
-};
-"ED7293F5C335C87813F568C5" = {"isa" = "PBXBuildFile";
-"fileRef" = "B1B35CCDE01AA42B3453A2F6";
-};
-"3FD2A805403F94ECD90C5092" = {"isa" = "PBXBuildFile";
-"fileRef" = "B4ACFDF027CC4D43A288DD43";
+"fileRef" = "A150F31180C678E8E8A70275";
 };
 "211A65D9A7566EEFF13182D8" = {"isa" = "PBXCopyFilesBuildPhase";
 "buildActionMask" = 2147483647;
@@ -872,21 +664,6 @@
 "name" = "Engine resources";
 "runOnlyForDeploymentPostprocessing" = 0;
 "files" = ("A44ED45F2A6D9C41BB0D1D1D",
-"1610DF446BA8762F06A76D01",
-"572C63282FE4D64937F6EBC6",
-"2519DC88ECB593120F5CA011",
-"DC8F82C1AC79ACF2C8415D86",
-"4B1123ED9F220105E6A42639",
-"A4DF182E99342425421A9DFA",
-"3E2F77AD3A0E85E42BB0A05F",
-"69DE3B9074FE3FFEB75B9CA7",
-"68718CE3FBCA477784BAF1DA",
-"2831AE64F9E3CCE568218C3B",
-"6DF82D7D6C9848BF4016B933",
-"4F23B0E7CF73F51DF3032454",
-"B9999AD4B4652E2BBE0655F0",
-"ED7293F5C335C87813F568C5",
-"3FD2A805403F94ECD90C5092",
 );
 };
 "F40506C897D177F04762EE7F" = {"isa" = "PBXBuildFile";

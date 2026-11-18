@@ -136,7 +136,7 @@
     "origin": "Particle Pack by Kenney Vleugels, CC0, https://opengameart.org/content/particle-pack-80-sprites",
     "runtime": "data/board/fx.png",
     "contract": "lua/match3_atlases.lua",
-    "renderer": "../../engine/match3_vfx.lua",
+    "renderer": "../../engine/lua/match3/vfx.lua",
     "frames": {
       "shock": "circle_03",
       "flash": "light_01",

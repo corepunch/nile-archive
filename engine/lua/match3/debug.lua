@@ -1,4 +1,4 @@
--- match3_debug.lua — the entry points tools/screenshots.py, the test manifests
+-- match3/debug.lua — the entry points tools/screenshots.py, the test manifests
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
 -- --level, --city, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,

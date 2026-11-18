@@ -18,10 +18,10 @@ read_globals = {
     "story_style", "ui_theme", "building", "building_def", "character", "city_event", "city_zone", "nav_blocker",
     "sprite_frame", "story_line", "ui_state",
 }
-files["engine/tween.lua"] = {globals = {"ease", "tween"}}         -- defines the easing catalogue and the tween module
-files["engine/ui_forms.lua"] = {globals = {"ui"}}            -- defines ui.form, ui.modals and ui.modal_dismiss
-files["engine/ui_skin.lua"] = {globals = {"ui"}}             -- defines ui.skin
-files["engine/city_smoke.lua"] = {globals = {"city"}}         -- defines city.move_test
+files["engine/lua/tween.lua"] = {globals = {"ease", "tween"}}         -- defines the easing catalogue and the tween module
+files["engine/lua/ui_forms.lua"] = {globals = {"ui"}}            -- defines ui.form, ui.modals and ui.modal_dismiss
+files["engine/lua/ui_skin.lua"] = {globals = {"ui"}}             -- defines ui.skin
+files["engine/lua/city_smoke.lua"] = {globals = {"city"}}         -- defines city.move_test
 files["tests/lua"] = {read_globals = {"check", "near", "testing"}}   -- from the test build
 files["tests/games"] = {read_globals = {"rules", "smoke", "shot", "frame", "reel", "hold", "match3_root", "getenv"}, globals = {"default_frames"}}
 
@@ -29,5 +29,5 @@ files["tests/lua/injections.lua"] = {read_globals = {"check", "near", "testing"}
 
 files["tests/fixtures/trickling"] = {read_globals = {"testing"}} -- test-build presentation fixture
 
-files["engine/board_intro.lua"] = {globals = {"board_intro"}}
+files["engine/lua/board_intro.lua"] = {globals = {"board_intro"}}
 files["tools/scenario_dump.lua"] = {globals = {"vec2", "size2", "color", "rect", "story", "require"}}   -- host-Lua stubs for the game data

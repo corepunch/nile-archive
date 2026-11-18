@@ -15,7 +15,7 @@ neither overlaps the other. Detail at device resolution:
 
 ![Rim detail in both games](rim-detail.jpg)
 
-The colours and widths are `R.GROUND` in `engine/match3.lua`, drawn by
+The colours and widths are `R.GROUND` in `engine/lua/match3.lua`, drawn by
 `R.draw_ground`. Capture the boards with the existing art-board shots.
 
 ```sh

@@ -23,12 +23,12 @@ coordinate. A source mask therefore does not fully describe the starting board.
 
 | Existing capability | Source | Consequence for design |
 | --- | --- | --- |
-| Three hex line axes; four in a line creates that axis's ray, five or more creates a prism | [Shared matching rules](../../engine/match3.lua), `game_matches`, `LINE_MATCHES` | A square Tropicats shape cannot be copied cell-for-cell. Check run lengths and all three hex axes. T/L bomb creation is not currently part of these games' line-matching mode. |
+| Three hex line axes; four in a line creates that axis's ray, five or more creates a prism | [Shared matching rules](../../engine/lua/match3.lua), `game_matches`, `LINE_MATCHES` | A square Tropicats shape cannot be copied cell-for-cell. Check run lengths and all three hex axes. T/L bomb creation is not currently part of these games' line-matching mode. |
 | Soil under pieces, chain and ice locks, selected-kind adjacent thaw | `game_apply`, `game_can_swap`, and each game's [kind flags](../../games/relic-rush/lua/rules.lua) | We can already vary access, uncovering and thaw priorities. Ice, chains and soil have different timing; they are not interchangeable decoration. |
 | Downward gravity with side trickling; exposed column tops and blocked-parent pockets can refill | `game_collapse` in the shared rules | A narrow corridor is not automatically a supply bottleneck. Inspect the actual refill paths before calling a pocket starved. |
 | Seeded generation; terrain-ranked blocker placement | `game_init` | The authored content defines constraints, with a generated arrangement inside them. Evaluate multiple seeds and inspect the actual blocker coordinates. |
 | Win requires score target, collection target, enough soil cleared, and all locks removed | `game_check_end` | Changing the principal goal is more than renaming the title. Goals at zero still appear for score/collection in the present HUD; hiding or replacing those counters is a shared UI change. |
-| Separate first-clear building grant, discretionary currency and one-time story scheduling | [Relic rules](../../games/relic-rush/lua/rules.lua), [Christmas rules](../../games/christmas-market/lua/rules.lua), [shared journey](../../engine/match3_game.lua) | A board can serve a specific story action without making random color yield determine whether the player can afford its required building. |
+| Separate first-clear building grant, discretionary currency and one-time story scheduling | [Relic rules](../../games/relic-rush/lua/rules.lua), [Christmas rules](../../games/christmas-market/lua/rules.lua), [shared journey](../../engine/lua/match3/game.lua) | A board can serve a specific story action without making random color yield determine whether the player can afford its required building. |
 | Thirty named boards and ten scheduled buildings | [Relic campaign](../../games/relic-rush/lua/campaign.lua), [Christmas campaign](../../games/christmas-market/lua/campaign.lua) | Existing milestone levels are 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Build on that authored structure. |
 
 A direct comparison of the two campaign tables finds **28 of 30 masks identical
@@ -175,7 +175,7 @@ Story implementation must retain the existing distinctions between win, claim,
 placement, scene completion and save acknowledgement. Replays must not repeat a
 reveal; interrupted dialogue must resume according to the journey contract; a
 region announcement must not overlap a building beat. The [repository story guide](../STORY_WRITING.md)
-and [shared journey implementation](../../engine/match3_game.lua) define these
+and [shared journey implementation](../../engine/lua/match3/game.lua) define these
 constraints more precisely than a chronological quest list alone.
 
 ## A practical order for future work

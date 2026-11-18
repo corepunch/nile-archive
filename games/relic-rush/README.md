@@ -173,7 +173,7 @@ In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard, L
 
 A first clear advances the expedition counter. Successful expeditions and replays bank their matched resources. Construction, currency and story progress persist across saves.
 
-`lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/match3_game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
+`lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/lua/match3/game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 9`. The current presentation uses the live island/scene paintings and character busts; the script's illustrated-panel directions remain optional art direction, not required runtime assets.
 
 | Elena | Mara | Tomas | Adrian | Word bubble |
 | --- | --- | --- | --- | --- |
@@ -370,8 +370,8 @@ Fonts: **Lilita One** for the game UI, rendered at runtime by the engine (TrueTy
 Relic Rush and Christmas Market are one game with two skins
 ([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)). The flow around the
 board, every dialog, the shop, the level list, the town hooks, story delivery,
-effects and the debug entry points are the engine's (`engine/match3_game.lua`,
-`engine/match3_vfx.lua`, `engine/match3_debug.lua`); this folder is data and art.
+effects and the debug entry points are the engine's (`engine/lua/match3/game.lua`,
+`engine/lua/match3/vfx.lua`, `engine/lua/match3/debug.lua`); this folder is data and art.
 
 - `lua/game_config.lua`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop, level list), the piece packs and the dialogue scale.
 - `lua/town_config.lua`: the town screen's layout and notices.

@@ -167,7 +167,7 @@ Put it in `tests/test_main.c`. A test that needs the real renderer calls `app_ru
 
 ## How it works
 
-`-DENGINE_TEST` swaps `main` in `engine/launcher.c` for `test_main` in `engine/test_runner.c`. The
+`-DENGINE_TEST` swaps `main` in `engine/src/launcher.c` for `test_main` in `engine/src/test/test_runner.c`. The
 engine's few hooks are `#ifdef ENGINE_TEST` where they belong: `core.c` keeps one window and resets
 state per run, `render.c` frees a finished test's textures, and `script.c` turns a Lua error into a
 failure instead of exiting. Release builds contain none of it. If a test needs something more from
@@ -235,7 +235,7 @@ tests explicitly call updates. Input reaches the real `input.get()` without a
 window. Negative and nonfinite durations are rejected. Real game runs switch
 back to their normal clock. `testing.game` identifies the manifest's suite and
 `testing.extended` selects the larger sample. Release builds expose none of these
-hooks; declarations live with the existing test infrastructure in `engine/test.h`.
+hooks; declarations live with the existing test infrastructure in `engine/src/test/test.h`.
 
 Each rule file gets a fresh Lua state and selected game + engine + test module
 roots. Save output uses a unique temporary directory per suite invocation, which
@@ -267,7 +267,7 @@ checks all job costs, duplicate dispatch and blocked/paused/busy/unreachable wor
 The embedded shared-engine module exposes `match3.new(config)`. Its direct
 suite tests all 64 behavior-flag combinations, default match-3, configurable
 thresholds/colours, multiple radii and the same board contract. The engine manifest
-includes it automatically when `engine/match3.lua` is present. Use its direct suite:
+includes it automatically when `engine/lua/match3.lua` is present. Use its direct suite:
 
 ```sh
 make test-match3

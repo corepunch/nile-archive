@@ -1,4 +1,4 @@
--- A motion fixture (engine/tween.lua): six bars arrive on six curves, staggered
+-- A motion fixture (engine/lua/tween.lua): six bars arrive on six curves, staggered
 -- in a timeline; a badge punches, a counter counts, the badge shakes. Rendered
 -- as a reel by `make test` into docs/screenshots/motion-reel.gif. Run it with
 -- `build/nile-archive --lua tests/fixtures/motion`.

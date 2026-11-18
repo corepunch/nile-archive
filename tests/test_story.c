@@ -2,7 +2,7 @@
  * introduce a large blank band above the words. Also exercise resize/letterbox, centred framed groups and Skip input. */
 #include "render.h"
 #include "haptic.h"
-#include "test.h"
+#include "test/test.h"
 #include <stdio.h>
 #include <string.h>
 

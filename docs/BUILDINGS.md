@@ -20,7 +20,7 @@ parallelogram rather than a symmetric diamond.
 | height | 0 | −0.766 |
 
 So the front-left edge is shallow (slope 0.371) and the front-right edge steep
-(slope 1.114). `CITY_CAMERA_YAW` and `CITY_CAMERA_ELEVATION` in `engine/engine.h`
+(slope 1.114). `CITY_CAMERA_YAW` and `CITY_CAMERA_ELEVATION` in `engine/src/engine.h`
 are the only definition: the engine projects with them, and `tools/city_camera.py`
 reads them for the art tools. `make test` fails when a game's rendered art doesn't
 match. Changing them means re-rendering every game.
@@ -177,7 +177,7 @@ own list: append new rows, never reorder.
 | `tools/buildings.py` | The command; crops, registers, writes Lua and the review sheet |
 | `tools/scener_buildings.py` | Runs the models without Blender and writes the Scener scenes |
 | `tools/render_buildings_blender.py` | Runs inside Blender (`BLENDER=1`): one sprite and one shadow per building |
-| `tools/city_camera.py` | The camera for all of them, read from `engine/engine.h` |
+| `tools/city_camera.py` | The camera for all of them, read from `engine/src/engine.h` |
 
 To add a building: add a function to the game's `build_scene.py`, add it to the
 game's list, and run `make buildings GAME=<game> REBUILD=1 KEYS=<key>`. Footprints

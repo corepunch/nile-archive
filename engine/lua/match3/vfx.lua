@@ -1,4 +1,4 @@
--- match3_vfx.lua — presentation-only match-3 effects with their own random
+-- match3/vfx.lua — presentation-only match-3 effects with their own random
 -- stream and fixed pools: impacts, score pop-ups, sparks and pieces flying
 -- to the HUD
 -- (`require("match3.vfx").bind(R, rules)`, called by match3.game).

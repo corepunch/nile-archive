@@ -61,7 +61,7 @@ player; a new player simply sees a short list.
 
 ![Leaderboard dialog in Relic Rush's skin, with the Everyone tab chosen](screenshots/leaderboard.jpg)
 
-`require("leaderboard")` (`engine/leaderboard.lua`) is the screen a game opens
+`require("leaderboard")` (`engine/lua/leaderboard.lua`) is the screen a game opens
 from a button. It lists the rows `gamecenter.entries` returns in a scrolling
 list under Everyone / Friends tabs, shows each player's Game Center portrait
 (a round placeholder with their initial until it arrives), marks the player's own row, offers a button
@@ -140,9 +140,9 @@ reached from the level result or the level list, opened on the Friends tab.
 
 ## Engine and platform boundary
 
-`engine/gamecenter.c` owns every decision: the report queue and its saved
+`engine/src/gamecenter.c` owns every decision: the report queue and its saved
 state, the board cache (16 board/scope pairs, oldest evicted), the local
-fallback and the demo rows. `engine/gamecenter_platform.c` compiles in the
+fallback and the demo rows. `engine/src/platform/gamecenter_platform.c` compiles in the
 platform unity unit and only translates:
 
 | Engine asks | GameKit |

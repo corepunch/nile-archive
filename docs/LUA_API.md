@@ -2889,4 +2889,4 @@ The embedded UI framework extends ui with ui.form(template), ui.modals(skin), ui
 
 ## Motion: ease and tween
 
-The embedded motion module (engine/tween.lua) defines the easing catalogue `ease` and the tween, timeline, stagger, punch and shake API `tween`. See [Motion](MOTION.md).
+The embedded motion module (engine/lua/tween.lua) defines the easing catalogue `ease` and the tween, timeline, stagger, punch and shake API `tween`. See [Motion](MOTION.md).

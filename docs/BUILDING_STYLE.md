@@ -46,7 +46,7 @@ defines what the finished artwork should look like and where its sources live.
 These references guide **surface style**, not the geometry or camera. In
 particular, Relic's earlier paintings use the retired 2:1 view. Never copy that
 perspective back into a current sprite. The live camera comes from
-`engine/engine.h` through `tools/city_camera.py`.
+`engine/src/engine.h` through `tools/city_camera.py`.
 
 Additional historical context remains in Relic's `paintover-*.png` and their
 prompts, Nile's `art/building-0.png` through `building-4.png` (also used as model

@@ -80,11 +80,11 @@ Every element must occupy an active cell; overlaps fail at level creation.
 Stones are reserved before the scalar `chains` and `ice` counts are placed by
 terrain rank.
 
-`engine/match3.lua` owns all rules. Mutable state lives on each game instance:
+`engine/lua/match3.lua` owns all rules. Mutable state lives on each game instance:
 `chain`, `ice`, `stone_hp` and `oil`. `game_copy` isolates mutable state for
 hint/bot search. A wave deals at most one hit to each stone.
 
-`engine/match3_elements_view.lua` draws the board. Tablets use the Cradle of
+`engine/lua/match3/elements_view.lua` draws the board. Tablets use the Cradle of
 Rome tablet tiles (`tile-tablet-single`, `tile-tablet-double`), or the game's
 `floor.covered` tile. Each carved stone is one face-on hex sprite. The guide
 and HUD use the same goal icons.

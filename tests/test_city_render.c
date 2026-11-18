@@ -1,6 +1,6 @@
 /* Real-renderer contracts for the city's depth order and animated fog. */
 #include "render.h"
-#include "test.h"
+#include "test/test.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

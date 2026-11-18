@@ -1,6 +1,6 @@
 # Relic Rush buildings rebuilt as procedural Blender geometry on the game's grid.
 #
-# Convention (docs/BUILDINGS.md, engine/city.c):
+# Convention (docs/BUILDINGS.md, engine/src/city.c):
 #   1 Blender unit = 1 tile side. World X = tile u (down-right on screen, the
 #   front-left side, size.w). World Y = -tile v (up-right, the front-right side,
 #   size.h). Pivot = footprint centre at z = 0. Footprints sit on whole tiles.

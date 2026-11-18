@@ -1,4 +1,4 @@
--- match3_shatter.lua — a floor layer (tablet, ice) breaking apart: the cell's
+-- match3/shatter.lua — a floor layer (tablet, ice) breaking apart: the cell's
 -- own artwork is cut into Voronoi shards that crack, burst outwards, tumble and
 -- fall under gravity, over billowing smoke (Kenney puff sprites). Presentation only, with its
 -- own random stream and fixed pools (`require("match3.shatter").bind(R, rules)`,
