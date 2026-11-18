@@ -15,10 +15,10 @@ double tablets from 10, carved stones from 15 and double chains from 51.
 fitted by `python3 tools/tune_moves.py relic-rush` and listed with each
 board's tier in [level-moves.md](level-moves.md).
 
-Every board spawns five kinds, as Cradle of Rome does on all 100 of its
-levels. With six, lines of three were so rare on the 108-cell boards that the
-reference bot needed about 200 moves a board. Refills are damped from the
-second cascade wave (`refill_damping=2`), so one move rarely clears a board.
+Every board from 1 to 100 uses five piece kinds. Swapping neighbours must
+form a straight line of four or more. The same minimum applies after a fall.
+Each new deal checks every opening exchange through its entire cascade and
+redeals if any exchange clears all the plaques. Refill damping begins on the second wave (`refill_damping=2`).
 
 The green apple's slot (kind 2, 1 Food, never upgraded) is the special slot:
 the bonus gem, a story item or a score piece takes it, and the bonus moves to

@@ -95,7 +95,7 @@ end)
 -- row. Composite icon painting uses the same authored layers as the board.
 local chip_prefix = art.use_campaign_pieces() and "campaign-" or "resource-"
 local guide_entries = {
-    {id="neighbors", title="Line up 3+ pieces", description="Match straight lines along any of the three axes.",
+    {id="neighbors", title="Line up 4+ pieces", description="Match straight lines along any of the three axes.",
      icon={front=chip_prefix .. "coin"}},
     {id="plaques", title="Blue plaques", description="Clear every blue plaque to win. Match pieces on a plaque or hit it with a tool.",
      icon={floor="tile-tablet-single"}},

@@ -133,7 +133,12 @@ do
     end
     local rng = g.rng
     R.board_update(.02)
-    check(g.rng == rng and not R.toast and R.hint_a >= 0, "photo board receives a hint without reshuffling")
+    if rules.MATCH_MIN == 4 then
+        check(R.toast == "No moves. Board reshuffled." and rules.game_hint(g),
+              "photo board has no straight four available and reshuffles to a playable board")
+    else
+        check(g.rng == rng and not R.toast and R.hint_a >= 0, "photo board receives a hint without reshuffling")
+    end
 end
 
 -- Settlement and the idle fallback share recovery and terminal precedence.

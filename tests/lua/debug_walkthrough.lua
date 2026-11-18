@@ -92,33 +92,26 @@ local function charge_match(g)
     R.reset_board(g)
     for i = 0, rules.CELLS - 1 do g.tiles[i] = rules.tile(-1) end
     local kind = reward_piece(g, first_tool)
-    for a = 0, rules.CELLS - 1 do
-        local b = rules.hex_neighbor(a, 1)
-        local c = b >= 0 and rules.hex_neighbor(b, 1) or -1
-        if g.active[a] and g.active[b] and g.active[c] then
-            for _, cell in ipairs{a, b, c} do
-                g.tiles[cell], g.chain[cell], g.ice[cell] = rules.tile(kind), 0, 0
-            end
-            break
-        end
+    for _, cell in ipairs(require('support').open_line(rules, g)) do
+        g.tiles[cell], g.chain[cell], g.ice[cell] = rules.tile(kind), 0, 0
     end
     rules.game_matches(g, R.pending, -1)
-    check(R.pending.hits == 3, 'bonus pieces form an ordinary match')
+    check(R.pending.hits == rules.MATCH_MIN, 'bonus pieces form an ordinary match')
     local previous = g.tool_meter[tool]
     R.finish_wave()
     local airborne = 0
     for _, points in pairs(R.pending.bonus_charge_by_cell) do airborne = airborne + points end
-    local expected_charge = first_tool.amount * 3
+    local expected_charge = first_tool.amount * rules.MATCH_MIN
     if relic then expected_charge = math.min(expected_charge, g.tool_threshold - previous) end
     check(airborne == expected_charge, 'the cleared cells carry the full awarded charge to their booster')
 end
 R.reduced_motion, R.sound = true, false
 R.vfx_wave = function() end
 charge_match(board)
-local triple = first_tool.amount * 3
-check(board.tool_meter[tool] == triple and R.prog[stock_key][tool] == triple, 'a triple earns and banks its charge')
+local match_charge = first_tool.amount * rules.MATCH_MIN
+check(board.tool_meter[tool] == match_charge and R.prog[stock_key][tool] == match_charge, 'a match earns and banks its charge')
 local new_board = R.make_board(board.level + 1, 2)
-check(new_board.tool_meter[tool] == triple, 'partial charge carries to the next board')
+check(new_board.tool_meter[tool] == match_charge, 'partial charge carries to the next board')
 -- Start near a full meter so the same test works with both games' thresholds.
 new_board.tool_meter[tool] = new_board.tool_threshold - 8
 charge_match(new_board)

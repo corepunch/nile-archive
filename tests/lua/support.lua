@@ -45,6 +45,19 @@ function M.board(rules)
     return g
 end
 
+-- Find a full vertical line of playable cells for a scoring or charge fixture.
+function M.open_line(rules, g)
+    for i = 0, rules.CELLS - 1 do
+        local cells, cell = {}, i
+        while #cells < rules.MATCH_MIN and rules.game_cell_active(g, cell) and g.stone_hp[cell] == 0 do
+            cells[#cells + 1] = cell
+            cell = rules.hex_neighbor(cell, 1)
+        end
+        if #cells == rules.MATCH_MIN then return cells end
+    end
+    error("fixture needs a full vertical line")
+end
+
 -- The first campaign level with no story reveal or buried find: synthetic
 -- boards on it carry no floor goal that an empty floor would already meet.
 function M.plain_level(rules)

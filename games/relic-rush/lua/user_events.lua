@@ -35,13 +35,13 @@ local economy = require("economy")
 local events = {
     ---------------------------------------------------------------- tutorials
     -- The move hint: shown with the board's 1st, 2nd, 3rd and 5th suggestion
-    -- until the player makes a first line of three.
+    -- until the player makes a first line of four.
     {id="hint_01_1",
         If={"IF_GAME_SHOW_MOVE_HINT", amount=1},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Swap the two glowing gems to line up three."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Swap the two glowing gems to line up four."}}},
     {id="hint_01_2",
         If={"IF_GAME_SHOW_MOVE_HINT", amount=2},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Swipe a gem onto its neighbour to make a line of three."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Swipe a gem onto its neighbour to make a line of four."}}},
     {id="hint_01_3",
         If={"IF_GAME_SHOW_MOVE_HINT", amount=3},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Lines run three ways on the hex board. Try the glowing pair."}}},
@@ -49,7 +49,7 @@ local events = {
         If={"IF_GAME_SHOW_MOVE_HINT", amount=5},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Tap a gem, then the neighbour to swap it with."}}},
     {id="hint_01_close",
-        If={"IF_PLAYER_MAKE_MATCH", length=3},
+        If={"IF_PLAYER_MAKE_MATCH", length=4},
         Then={
             {"THEN_USER_EVENT_AVAILABLE", id="hint_01_1 hint_01_2 hint_01_3 hint_01_4", available=false},
             {"THEN_USER_EVENT_AVAILABLE", id="hint_02_1 hint_10", available=true},
@@ -143,7 +143,7 @@ local events = {
         }},
     -- Rome: miller, Mill, 15 matches in rapid succession.
     {id="man_04", available=false, citizen="The trader",
-        If={"IF_PLAYER_MAKE_MATCH_IN_TIME", min_length=3, amount=15, time=90},
+        If={"IF_PLAYER_MAKE_MATCH_IN_TIME", min_length=4, amount=15, time=90},
         Then={
             {"THEN_SHOW_HINT", id="HINT_INFO", text="15 lines in 90 seconds! The trader opens a stall: ration jars earn 5 Food each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_04"},
@@ -179,7 +179,7 @@ local events = {
         }},
     -- Rome: scholar, Tabularium, a combo of three.
     {id="man_08", available=false, citizen="The cartographer",
-        If={"IF_PLAYER_MAKE_COMBO", length=3},
+        If={"IF_PLAYER_MAKE_COMBO", length=4},
         Then={
             {"THEN_SHOW_HINT", id="HINT_INFO", text="Three waves from one move! The cartographer joins: Plus gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_08"},

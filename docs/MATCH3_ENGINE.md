@@ -65,8 +65,8 @@ Both games use a `columns` x `rows` rectangle of flat-top hexes (9 x 12, odd
 columns half a cell lower) with arbitrary missing cells. The hexagon mode
 (`radius`, 1 to 16) still exists and the engine tests use it. The default is
 `match_min=3` with `LINE_MATCHES`; explicit `flags=0` retains legacy
-connected-group matching. A match is a straight line of three or more pieces
-of one kind along the three hex axes. Matches only clear. As in Cradle of
+connected-group matching. A match is a straight line of one kind along any of the three hex axes.
+Relic Rush requires four pieces and Christmas Market requires three. Matches only clear. As in Cradle of
 Rome, no line length or shape creates a special piece; a player's extra power
 comes from the game's tools and boosters. Overlapping runs form one group and
 count each cell once. Longer runs can still pay more through

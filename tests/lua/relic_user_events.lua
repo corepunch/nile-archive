@@ -49,7 +49,7 @@ local saved_prog, saved_island = R.prog, R.island
 R.prog={level=0,seed=1,wallet=purse(),story_seen={},bonus_charge={}}
 R.island=city.new();island.island_setup(R.island)
 
--- The move hint shows until the first line of three, which opens the next tutorials.
+-- The move hint shows until the first line of four, which opens the next tutorials.
 do
     local g=R.make_board(0,7)
     local st=U.state()
@@ -57,9 +57,9 @@ do
     check(not st.done.hint_01_1,'the first hint waits for the board to count a suggestion')
     g.user_events.hints=1;U.emit("hint",{g=g})
     check(st.done.hint_01_1 and not st.done.hint_01_2,'the first suggestion shows the first move hint only')
-    U.emit("wave",{g=g,runs={3},longest=3})
+    U.emit("wave",{g=g,runs={4},longest=4})
     check(st.done.hint_01_close and not st.available.hint_01_2 and st.available.hint_02_1,
-        'a first line of three retires the move hints and opens the plaque hint')
+        'a first line of four retires the move hints and opens the plaque hint')
     g.user_events.hints=2;U.emit("hint",{g=g})
     check(not st.done.hint_01_2,'a retired hint no longer shows')
 end

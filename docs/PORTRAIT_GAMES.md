@@ -1,6 +1,7 @@
 # Relic Rush and Christmas Market: one game, two skins
 
-Relic Rush and Christmas Market are the same portrait match-3 city game. Both
+Relic Rush and Christmas Market share the portrait puzzle and city engine.
+Relic Rush matches four in a line and Christmas Market matches three. Both
 should differ only in data: Lua settings, levels, campaign and story content, skin and art
 tables, and PNGs. Behaviour belongs to the engine:
 

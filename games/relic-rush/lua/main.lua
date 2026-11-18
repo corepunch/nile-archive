@@ -1,4 +1,4 @@
--- Relic Rush · The Lost Valley — hex straight-line match-3 expeditions that restore an island.
+-- Relic Rush · The Lost Valley — hex straight-line match-4 expeditions that restore an island.
 --
 -- The game is data: lua/game_config.lua (words), lua/town_config.lua (the town), the
 -- campaign, story and building tables, skin.lua, art.lua and the PNGs. The

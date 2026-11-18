@@ -5,7 +5,7 @@ This supersedes the prototype's connected-group match-4 rules.
 ## Matching
 
 - Exchange two side-adjacent movable relics, by swiping or tapping both.
-- A contiguous **straight line of three or more identical relics** matches along any of the three hex axes. Bends, triangles, diamonds and rings do not count on their own. Side branches are not part of a line.
+- A contiguous **straight line of four or more identical relics** matches along any of the three hex axes. Bends, triangles, diamonds and rings do not count on their own. Side branches are not part of a line.
 - A swap without a line through either swapped cell returns without spending a move.
 - Any line clears normally, whatever its length. There are no special pieces of any kind: like Cradle of Rome, power comes only from the bonus tools along the bottom edge (Hammer/Dynamite, Shield/Lightning, Star/Star II, Plus/Plus II), charged by matching bonus gems and unlocked by restoring buildings.
 - Crossing lines clear their union once. There are no T/L or ring recipes.
@@ -14,7 +14,7 @@ This supersedes the prototype's connected-group match-4 rules.
 - The expedition's top bar shows the hexagonal Moves medallion, Coins, Supplies, Food and Settings. Blue tablets mark the objective on the board. Tools sit along the bottom edge. Settings opens the Explorer's Guide and lets the player resume, restart after confirmation, or quit to the island and resume the same board from Expeditions. See the [top bar review](screenshots/review/top-bar-moves/README.md).
 - Hints highlight a legal swap after five idle seconds. If the hint search finds no swap, idle boards use the same free reshuffle as boards settling after a fall, with a “No moves. Board reshuffled.” notice. Recovery resets selection/tool targeting and stale hints, preserving move/tool budgets, objective progress, holes, sand, ice, chains and their locked relics. Victory and exhausted moves take precedence over reshuffling.
 
-The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. The engine has no special pieces at all. Generation, hints, reshuffling and cascades use the same rule in both games.
+The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. The engine has no special pieces at all. Generation, hints, reshuffling and cascades respect each game’s configured minimum.
 
 ## Board shape
 
@@ -30,8 +30,8 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 
 ## Validation
 
-- Seeded startup boards across all 100 boards: no pre-existing straight match and at least one legal opening move.
-- Three/four/five/six runs on all axes, rejected triangles/diamonds/rings, excluded branches, crossing triples, swap rollback, and hole-separated runs.
+- Seeded startup boards across all 100 boards: no pre-existing straight match and at least one legal opening move. Every opening exchange, including its cascades, leaves at least one tablet.
+- Three/four/five/six runs on all axes, rejected triangles/diamonds/rings, excluded branches, crossing lines of four, swap rollback, and hole-separated runs.
 - Independent coordinate-based line oracle and exhaustive runs in both directions for every color and length.
 - Existing blockers, gravity, tools, update-loop cascades, hints and reshuffles.
 
@@ -42,4 +42,4 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 - [Match 4 – Hex, developer page](https://dimcairion.itch.io/match-4-hex): an independent hex swap/match-4 prototype demonstrating the genre. No code or assets were imported.
 - [Candy Crush official modes guide](https://candycrush.zendesk.com/hc/en-us/articles/360000754897-Which-game-modes-will-I-find): varying objectives and mixed modes complement level-layout variety.
 
-The hexagonal grid does not mandate a four-piece minimum. Relic Rush uses three in a straight line; longer lines earn no extra piece.
+The hexagonal grid does not mandate a four-piece minimum. Relic Rush uses four in a straight line; longer lines earn no extra piece.

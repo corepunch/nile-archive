@@ -3,7 +3,7 @@ local economy=require("economy")
 local island=require("island")
 local R=require("state")
 require("main")
--- A plain cell whose six neighbours are all playable, for tool and line checks.
+-- A plain cell whose six neighbours are all playable, for tool checks.
 local function open_cell(g)
     for i=0,rules.CELLS-1 do
         local ok=rules.game_cell_active(g,i) and g.stone_hp[i]==0
@@ -135,13 +135,12 @@ for _, entry in ipairs{{1, 2, 'leaf'}, {1, 3, 'flower'}, {6, 4, 'amphora'}} do
     local present = false
     for i=0,rules.CELLS-1 do present = present or g.tiles[i].kind == kind end
     check(present,'the opening contains ' .. name)
-    local mid = open_cell(g)
-    for _, i in ipairs{rules.hex_neighbor(mid,4), mid, rules.hex_neighbor(mid,1)} do
+    for _, i in ipairs(require('support').open_line(rules, g)) do
         g.tiles[i], g.chain[i], g.ice[i] = rules.tile(kind), 0, 0
     end
     local m = rules.new_match()
     rules.game_matches(g,m,-1)
-    check(m.hits >= 3,'a line of ' .. name .. ' matches')
+    check(m.hits >= rules.MATCH_MIN,'a line of ' .. name .. ' matches')
     rules.game_apply(g,m)
     check(g.score > 0 and g.earnings[economy.GOLD] == 0 and g.earnings[economy.SUPPLIES] == 0
         and g.earnings[economy.PROVISIONS] == 0,
@@ -256,8 +255,7 @@ do
     local g, m = rules.game_start(1, 73, restored), rules.new_match()
     local kind = rules.level_of(g).goal_kind == economy.SPECIAL_KIND and economy.SPECIAL_FALLBACK or economy.SPECIAL_KIND
     check(g.bonus_debut == B.hammer and g.resource_yields[kind] == B.hammer, 'the Camp debuts Hammer')
-    local mid = open_cell(g)
-    local line = {rules.hex_neighbor(mid, 4), mid, rules.hex_neighbor(mid, 1)}
+    local line = require('support').open_line(rules, g)
     for _ = 1, 3 do
         for _, cell in ipairs(line) do
             g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0

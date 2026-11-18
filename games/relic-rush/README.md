@@ -4,7 +4,7 @@ From the repository root, `make -C games/relic-rush ios` builds, signs, installs
 and launches on the connected iPhone. Set `DEVICE="name or UDID"` to select one.
 See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
-A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
+A portrait mobile-first hex match-4 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
 Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Clear all blue tablets within the move budget, claim resources, restore the next building on the island, and set out again. The story runs across the first thirty of the hundred boards, in three episodes: it restores the ten wonders and ends with the valley singing and five lights answering at sea. Boards 31-100 are playable without story yet. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
@@ -70,7 +70,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 
 | Hexagonal expeditions | Restored island |
 | --- | --- |
-| ![First hex match-3 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
+| ![First hex match-4 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
 | ![Chains and blue tablets on board 22](docs/review/chains-only/board-after-480x900.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Boards required to open land](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
@@ -137,14 +137,14 @@ Coloured match fragments, resource trails and cascade chimes follow each clear. 
 
 See [effect reference study](docs/effects.md). The reel uses deterministic test boards; actual iPhone/Android performance still needs device testing.
 
-## Current match-3 rules and boards
+## Current match-4 rules and boards
 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
 The pale limestone and blue tablets meet at hairline seams on one continuous
 board surface. [Before and after at both phone sizes](../../docs/review/match3-board-seams/README.md).
 
-The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are no special pieces: a longer line just clears. The 100 boards sit on a 9 x 12 rectangle of flat-top hexes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
+The minimum match is **four identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are no special pieces: a longer line just clears. The 100 boards sit on a 9 x 12 rectangle of flat-top hexes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue tablets in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
@@ -157,7 +157,7 @@ See [matching rules, board shape, implementation notes and reference sources](do
 
 ## New art direction
 
-The match-3 scenes now use two original runtime backgrounds: **Sunlit Lagoon** for levels 1–5 and **Moonlit Sun Temple** for levels 6–10; each later episode reuses those paintings, opening on the lagoon and moving into the temple. The study draws on Tropicats and Candy Crush for playable-screen readability, and June's Journey / Pearl's Peril for garden islands and adult adventure characters.
+The match-4 scenes now use two original runtime backgrounds: **Sunlit Lagoon** for levels 1–5 and **Moonlit Sun Temple** for levels 6–10; each later episode reuses those paintings, opening on the lagoon and moving into the temple. The study draws on Tropicats and Candy Crush for playable-screen readability, and June's Journey / Pearl's Peril for garden islands and adult adventure characters.
 
 See the [reference study, original cast and asset gallery](docs/art-direction-v2.md) and [complete generation prompts](docs/art-direction-v2-prompts.json).
 
@@ -187,7 +187,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 ## Expedition and restoration loop
 
-1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
+1. Start directly in the first match-4 level; there is no title-screen or friend-road detour.
 2. Clear all blue tablets within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
 4. Return to the island. At a restoration milestone, check the price and replay an expedition if you need more resources. Nothing blocks the next expedition: you can play on without building and come back when you can afford it.
@@ -211,7 +211,7 @@ condition and effect it supports. Each event fires once per profile, and the
 save keeps which events are done.
 
 - **Tutorials.** The move hint repeats with the board's 1st, 2nd, 3rd and
-  5th suggestion until the first line of three. Toasts introduce tablets,
+  5th suggestion until the first line of four. Toasts introduce tablets,
   double tablets, chains, double chains, ice, the low-moves warning, each
   charged bonus and the catalogue.
 - **Citizens.** Tomas joins as soon as the Well is restored. Other building events open a citizen’s challenge. Examples: a line of five after the Workshop, 120 Supplies on
@@ -288,7 +288,7 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 
 ## Play
 
-- Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
+- Swap adjacent pieces to make a straight line of four or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and any remaining cost of the next restoration.
 - Restore buildings to unlock Hammer, Shield, Star and Plus. A later restoration

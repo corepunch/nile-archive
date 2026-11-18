@@ -1,4 +1,4 @@
--- Relic Rush rules: hex grid, straight-line match-3 detection, blockers, gravity,
+-- Relic Rush rules: hex grid, straight-line match-4 detection, blockers, gravity,
 -- tools, the campaign's boards and economy, and the island on the engine
 -- city. Ported from the original tests/test_relic.c.
 local rules = require("rules")
@@ -88,8 +88,7 @@ local function test_matching()
         local g = blank()
         line(g, start, axis, 3, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 3, "three in a line clear normally")
-        check(rules.game_apply(g, m) == 3, "triple clears all three")
+        check(m.hits == 0, "a straight triple stays on the board")
         g = blank()
         line(g, start, axis, 4, 2)
         rules.game_matches(g, m, c)
@@ -104,10 +103,10 @@ local function test_matching()
         check(g.tiles[c].kind < 0, "longer lines make no rainbow ball")
     end
     local g = blank()
-    line(g, hex_neighbor(c, 3), 0, 3, 0)
-    line(g, hex_neighbor(c, 4), 1, 3, 0)
+    line(g, hex_neighbor(c, 3), 0, 4, 0)
+    line(g, hex_neighbor(c, 4), 1, 4, 0)
     rules.game_matches(g, m, c)
-    check(m.hits == 5, "crossing lines clear their union")
+    check(m.hits == 7, "crossing lines clear their union")
     rules.game_apply(g, m)
     check(g.tiles[c].kind < 0, "crossing lines make no bomb")
     for d = 0, 5 do
@@ -118,8 +117,9 @@ local function test_matching()
         check(m.hits == 0, "compact triangle is not a line")
         local e = hex_neighbor(a, d)
         g.tiles[e].kind = 0
+        g.tiles[hex_neighbor(e, d)].kind = 0
         rules.game_matches(g, m, c)
-        check(m.hits == 3 and not m.mask[b], "side branch does not extend a triple")
+        check(m.hits == 4 and not m.mask[b], "side branch stays outside the line of four")
     end
     g = blank()
     for _, at in ipairs({c, hex_index(1,0), hex_index(0,1), hex_index(1,1)}) do g.tiles[at].kind = 2 end
@@ -138,6 +138,22 @@ local function test_matching()
     check(not rules.game_swap(g,a,b,m) and g.moves == moves
         and g.tiles[a].kind == 1 and g.tiles[b].kind == 2, "nonlinear swap rejected without spending a move")
 
+end
+
+-- Both deals used to allow an opening swap with a four-wave victory.
+for _, deal in ipairs{{1, 584653585}, {2, 203663903}} do
+    local g = rules.game_start(deal[1] - 1, deal[2])
+    check(rules.game_hint(g), "the replacement opening has a move")
+    for a = 0, CELLS - 1 do
+        for axis = 0, 2 do
+            local b = hex_neighbor(a, axis)
+            if rules.game_swap_matches(g, a, b) then
+                local trial, wave = rules.game_copy(g), rules.new_match()
+                check(rules.game_swap(trial, a, b, wave) and resolve(trial, wave)
+                    and not trial.won, "opening exchange leaves work for a second move")
+            end
+        end
+    end
 end
 
 local function test_holes_and_shapes()
