@@ -470,18 +470,25 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     end
 end
 
-local BOARD_HEADER = {
+local CAPSULE_BOARD_HEADER = {
     role="wallet", align="center", interactive=false, x=12, y=-2, height=32, band_height=72,
-    gap=18, overhang=16, width=90, leading_width=66,
+    gap=18, overhang=16, width=90,
 }
+local BOARD_HEADER = setmetatable({leading_width=66}, {__index=CAPSULE_BOARD_HEADER})
 
-function E.bind_town_board_hud(R)
+function E.bind_town_board_hud(R, moves_capsule)
     local goal_hud, goal_target, mission = R.draw_board_hud, R.goal_target, R.mission
     local neutral = app.arg("default-match3")
 
     function R.draw_board_hud()
         if neutral then return goal_hud() end
-        local box = R.town:header(R.header_capsules(true), BOARD_HEADER)
+        local caps = R.header_capsules(true)
+        if moves_capsule then
+            table.insert(caps, 1, moves_capsule())
+            R.town:header(caps, CAPSULE_BOARD_HEADER)
+            return
+        end
+        local box = R.town:header(caps, BOARD_HEADER)
         local arrive = R.intro and R.intro:arrive(.16, 3, .42) or 1
         if arrive > .05 then R.draw_moves(box:center(), arrive, box.w * .5) end
     end

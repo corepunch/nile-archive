@@ -24,7 +24,8 @@ R.town:frame(inp, dt, R.overlay == R.OV_NONE)   -- once per frame
 - Placement: `view:begin(kind, focus, item)` lifts a new or placed building.
   Cancel and Confirm stand under it, and nothing is charged until Confirm
   (`hooks.can_buy`, `hooks.placed`).
-- The header: wallet capsules (`hooks.capsules`, left- or right-aligned) and
+- The header: wallet capsules (`hooks.capsules`, each with an optional skin
+  role, left- or right-aligned) and
   the menu button (`hooks.menu`) in the top-right corner.
 - The bottom row: the Build badge (`navigation_build`), the Play badge
   (`navigation_play`) and a middle control between them. That is a round

@@ -950,7 +950,7 @@
         128
       ]
     },
-    "next-clue": {
+    "moves": {
       "atlas": "hud",
       "box": [
         384,
@@ -959,7 +959,7 @@
         128
       ]
     },
-    "score": {
+    "next-clue": {
       "atlas": "hud",
       "box": [
         512,
@@ -968,7 +968,7 @@
         128
       ]
     },
-    "shop-built": {
+    "score": {
       "atlas": "hud",
       "box": [
         640,
@@ -977,10 +977,19 @@
         128
       ]
     },
-    "shop-locked": {
+    "shop-built": {
       "atlas": "hud",
       "box": [
         768,
+        0,
+        128,
+        128
+      ]
+    },
+    "shop-locked": {
+      "atlas": "hud",
+      "box": [
+        896,
         0,
         128,
         128
@@ -1141,6 +1150,7 @@
     "selected": "art/registered/board-states/selected.png",
     "complete": "art/registered/expedition-hud/complete.png",
     "life": "art/registered/expedition-hud/life.png",
+    "moves": "art/registered/expedition-hud/moves.png",
     "score": "art/registered/expedition-hud/score.png",
     "shop-built": "art/registered/expedition-hud/shop-built.png",
     "shop-locked": "art/registered/expedition-hud/shop-locked.png"
@@ -1545,6 +1555,7 @@
       "games/relic-rush/art/registered/campaign-pieces.png": "2af737b42415768ba7a75909f1d933781f690163f577cf6631fc5bd07c85f893",
       "games/relic-rush/art/registered/expedition-hud/complete.png": "8f2db8c6941dd8a717741555329734e7bf6ced57249c397d8dda982e26f0120c",
       "games/relic-rush/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
+      "games/relic-rush/art/registered/expedition-hud/moves.png": "1ae0579577460e8c07a50e322509c624a413dcd9168c53130983ca8a770d6ed6",
       "games/relic-rush/art/registered/expedition-hud/score.png": "8e395c4ae507674be6669e43d4a37a404886fed5acd70d1adac4c07e14818f65",
       "games/relic-rush/art/registered/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
       "games/relic-rush/art/registered/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
@@ -1595,9 +1606,9 @@
       "games/relic-rush/data/board/blockers.png": "ce55e86bc3272fb5e8b67d5e0608bce7d4a3e370c807a155c6a81964df366502",
       "games/relic-rush/data/board/cells.png": "f51ae923c801eb2dd8ce2f001870e8588cc30d1975ac4122c11c2e279bdd4d1a",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
-      "games/relic-rush/data/board/hud.png": "054af85871a43684d502ac55289a05a3ae786d2d74f8c7d993914ea20368126d",
+      "games/relic-rush/data/board/hud.png": "78beae614cd5c16abbe14cf60a8e3e0163675da25aa5ff92f1b21decf31841af",
       "games/relic-rush/data/board/pieces.png": "c680e0d947278bc88d88bb6586afab31e4976e385db94fe0c244773d0d5dc7cd",
-      "games/relic-rush/lua/match3_atlases.lua": "7acd7cc415c3cee7c8ff9fae925beffa73ebb39f380d817d41d64aa42653c6b6",
+      "games/relic-rush/lua/match3_atlases.lua": "eba3a9f572088202fe45ce889662606817971e2afaf05a1a12435c819a07832b",
       "games/relic-rush/lua/match3_hud.lua": "19591300f7e87746c4e7dd8b978f1538a4b3d39ac3b3e7e24b332163489c6c58",
       "games/relic-rush/lua/match3_skin.lua": "15aae9be64b2c79f63881e3cd1887611db131af1bc06c87ea58a96df284b3f6c"
     }

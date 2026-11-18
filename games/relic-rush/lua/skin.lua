@@ -10,6 +10,11 @@
 -- `offset` moves every layer that isn't `fixed`.
 local buttons = require("match3.buttons")
 local resource_fill = color(13, 47, 41, 0xD7)
+local moves_low_fill = color.hex(0x702218)
+
+local function wallet(fill)
+    return {normal = buttons.wallet(fill), em = 16, icon_ratio = 1.71, icon_overhang = .375}
+end
 
 return ui.skin{
     fonts = {
@@ -22,7 +27,7 @@ return ui.skin{
         ink_shadow = "#1F2318B8",
         moves_face = "#0C3E34",
         moves_glow = "#247C60",
-        moves_low = "#702218",
+        moves_low = moves_low_fill,
         moves_low_glow = "#B24028",
         board_face = "#C3A87D",
         bubble_face = "#102D26F0",
@@ -150,8 +155,8 @@ return ui.skin{
             variants = {
                 goal = {icon_overhang = .24},
                 signboard_goal = {em = 19, icon_overhang = .12, normal = {layers = {}}},
-                wallet = {normal = buttons.wallet(resource_fill),
-                          em = 16, icon_ratio = 1.71, icon_overhang = .375},
+                wallet = wallet(resource_fill),
+                wallet_low_moves = wallet(moves_low_fill),
             },
         },
 

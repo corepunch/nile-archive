@@ -19,7 +19,8 @@ exports = {}
 for name, asset in ({} if args.navigation_only else manifest["icons"]).items():
     sheet=Image.open(ROOT/asset["source"]).convert("RGBA") if "source" in asset else source
     image = sheet.crop(asset["box"])
-    image.thumbnail((120, 120), Image.Resampling.LANCZOS)
+    side = asset.get("max_size", 120)
+    image.thumbnail((side, side), Image.Resampling.LANCZOS)
     canvas = Image.new("RGBA", (128, 128))
     canvas.alpha_composite(image, ((128 - image.width) // 2, (128 - image.height) // 2))
     exports[asset["runtime"]] = canvas

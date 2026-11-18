@@ -116,6 +116,7 @@ reel("relic-rush-plaques", 25, 15, "480x900", "--level 3 --floor-reel oil --reel
 shot("phone-element-states", "390x844", "--element-states --safe-area 0,47,0,34")
 shot("floating-hud", "480x900", "--level 9")
 shot("phone-floating-hud", "390x844", "--level 9 --safe-area 0,47,0,34")
+shot("low-moves", "390x844", "--lua tests/fixtures/expedition-header;games/relic-rush/lua;. --level 9 --moves 3 --safe-area 0,47,0,34")
 shot("art-catalogue", "480x900", "--art-states")
 shot("hud-states", "480x900", "--level 7 --hud-states")
 shot("phone-art-pieces", "390x844", "--art-board --safe-area 0,47,0,34")

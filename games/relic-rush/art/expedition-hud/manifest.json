@@ -64,6 +64,13 @@
       "source": "art/expedition-hud/settings-lives.png",
       "meaning": "Settings gear: disabled (legacy pause API key)"
     },
+    "moves": {
+      "box": [443, 0, 886, 443],
+      "max_size": 112,
+      "runtime": "art/registered/expedition-hud/moves.png",
+      "source": "docs/review/moves-capsule/variants-atlas.png",
+      "meaning": "Remaining moves; blue glass badge with two circular arrows. The capsule face turns red at five moves."
+    },
     "score": {
       "box": [
         28,

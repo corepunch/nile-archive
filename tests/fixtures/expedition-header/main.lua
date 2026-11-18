@@ -1,4 +1,5 @@
-local game=require("game")
+-- luacheck: globals testing
+local game=require(testing and "games/" .. testing.game .. "/lua/main" or "game")
 local R=require("state")
 local init,frame=game.init,game.frame
 local tick,stage=0,0
