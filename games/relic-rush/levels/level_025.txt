@@ -10,16 +10,16 @@ p p x p p
  p p p p
 p p x p p
  s p p s
-p J x J p
+p p x p p
  p p p p
 p p x p p
  p p p p
-p J x J p
- J J J J
-x p x p x
+p p x p p
  p p p p
 x p x p x
- s p p s
+ p p p p
+x J x J x
+ s J J s
 . p p p .
  . p p .
 . p . p .

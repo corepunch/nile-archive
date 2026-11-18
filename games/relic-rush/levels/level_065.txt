@@ -12,15 +12,15 @@ p s p s p
  p p p p
 . p p p .
  p p p p
-x J J J x
+x p p p x
  x p p x
 x x p x x
- x p p x
-x J J J x
- p J J p
-p p p p p
+ x J J x
+x p p p x
  p p p p
-x J p J x
+p J p J p
+ p J J p
+x p p p x
  p p p p
 x p p p x
  x p p x

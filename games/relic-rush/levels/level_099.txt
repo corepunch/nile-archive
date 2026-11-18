@@ -12,14 +12,14 @@ p p p p p
  p p p p
 p p p p p
  p p p p
-p J x J p
+p p x p p
  p p p p
-J p x p J
+p p x p p
  p p p p
-J J x J J
- J J J J
-p p p p p
- . p p .
+p p x p p
+ p p p p
+p J J J p
+ I J J I
 x s p s x
  p p p p
 x p . p x

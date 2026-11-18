@@ -11,7 +11,7 @@ p p p p p
 x p p p x
  x p p x
 x p k p x
- k k k k
+ p k k p
 p p p p p
  p p p p
 . p p p .
