@@ -31,8 +31,8 @@ A.resource_upgrades = {
     grain="resources-5", quartz="relics-4",
 }
 -- Local comparison art uses the exact source crops and the same board states.
-A.rome_reference = {coin=4, berries=2, emerald=16, timber=6, stone=8, water=5, rations=9, ["cut-blocks"]=8,
-    ["silver-coin"]=3, shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15}
+A.rome_reference = {leaf=1, flower=2, ["silver-coin"]=3, coin=4, water=5, timber=6, rations=7, stone=8, grain=9,
+    shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15, emerald=16, amphora=17}
 A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-shield", "bonus-lightning", "bonus-star", "bonus-plus"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}

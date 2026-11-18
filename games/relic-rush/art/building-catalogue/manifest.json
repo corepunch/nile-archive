@@ -26,7 +26,7 @@
         159.719
       ],
       "base_width": 273.205,
-      "gold": 0,
+      "gold": 60,
       "stars": 0,
       "runtime": "data/city/buildings/camp.png",
       "image": [
@@ -36,9 +36,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
+        60,
         0,
-        10,
-        20
+        0
       ],
       "about": "Match Hammer gems to charge a hit on one cell.",
       "road": false,
@@ -110,7 +110,7 @@
         225.83
       ],
       "base_width": 359.808,
-      "gold": 120,
+      "gold": 210,
       "stars": 0,
       "runtime": "data/city/buildings/workshop.png",
       "image": [
@@ -120,11 +120,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        120,
+        210,
         80,
-        90
+        0
       ],
-      "about": "Cut blocks earn 5 Supplies each. The first tread repairs the quay steps.",
+      "about": "Timber bundles earn 5 Supplies each. The first tread repairs the quay steps.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/workshop.png",
@@ -284,7 +284,7 @@
         145,
         110
       ],
-      "about": "Adds carved quartz worth 7 Supplies each.",
+      "about": "Adds dressed stones worth 7 Supplies each.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/archive.png",
@@ -430,7 +430,7 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 65,
+      "gold": 110,
       "stars": 0,
       "runtime": "data/city/buildings/log_cabin.png",
       "image": [
@@ -440,9 +440,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        65,
+        110,
         40,
-        45
+        0
       ],
       "about": "Upgrades Hammer to Dynamite. The Blast slot keeps its charge.",
       "road": false,

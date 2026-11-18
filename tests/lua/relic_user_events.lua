@@ -64,7 +64,7 @@ do
     check(not st.done.hint_01_2,'a retired hint no longer shows')
 end
 
--- A citizen arrives once their building stands, upgrades the matched cut blocks.
+-- A citizen arrives once their building stands, upgrades the matched timber.
 do
     local st=U.state()
     U.emit("island")
@@ -78,7 +78,7 @@ do
     U.emit("wave",{g=g,runs={5},longest=5})
     U.apply_weights(g)
     check(st.done.man_01 and U.upgrades("workshop")==1,'a line of five brings the carpenter and upgrades the workshop')
-    check(g.yield_amounts[4]==6,'the carpenter increases the yield of cut blocks')
+    check(g.yield_amounts[4]==6,'the carpenter increases the yield of timber')
     g.won,g.moves=true,0
     local reward=rules.reward_breakdown(g,R.prog)
     check(reward.total[economy.SUPPLIES]==0,'a citizen adds no Supplies when no block was matched')
@@ -121,7 +121,7 @@ do
     check(not U.state().done.man_01,'a fresh profile starts with no citizens')
     check(save.read("user-events-test",U.serialize),'read user events')
     local st=U.state()
-    check(st.done.man_01 and st.done.hint_01_close and not st.available.hint_01_2 and U.chip_weights()["cut-blocks"]==6,
+    check(st.done.man_01 and st.done.hint_01_close and not st.available.hint_01_2 and U.chip_weights()["timber"]==6,
         'done and switched-off events come back with their income')
 end
 

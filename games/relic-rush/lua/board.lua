@@ -5,6 +5,7 @@
 -- slide back), CLEAR (matched relics pop) and FALL (diagonal trickling around holes and locks); after a fall the board is checked again, so cascades chain.
 local R = require("state")
 local rules = require("rules")
+local economy = require("economy")
 local art = require("art")
 local elements = require("match3.elements_view")
 local skin = require("skin")
@@ -48,12 +49,14 @@ function R.board_piece_texture(kind)
         return R.board_art[(campaign and "campaign-" or "story-") .. level.story_piece]
     end
     if campaign then
-        local score_piece = level.score_pieces and level.score_pieces[kind]
-        if score_piece then return R.board_art["campaign-" .. score_piece] end
-        if piece then return R.board_art["campaign-" .. piece.key] end
+        local shown = piece or economy.pieces[kind]   -- a score piece has no yield
+        if shown then return R.board_art["campaign-" .. shown.key] end
     end
     if piece and (kind == level.goal_kind or piece.kind ~= nil or not neutral and (not pack or pack == "relics")) then
         return R.board_art["resource-" .. piece.key]
+    end
+    if app.arg("rome-reference-art") and economy.pieces[kind] then   -- the score pieces' originals
+        return R.board_art["resource-" .. economy.pieces[kind].key]
     end
     return R.relics[kind + 1]
 end

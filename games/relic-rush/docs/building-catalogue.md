@@ -115,9 +115,9 @@ sprite file is always `data/city/buildings/<key>.png`.
 
 | ID / key | Name | Category | Tiles | Price | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
-| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 20 Supplies + 10 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 60 Coins | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 1 / `well` | Spring well | wonder | 2 x 2 | 125 Coins | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 120 Coins + 90 Supplies + 80 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `workshop` | Artisan workshop | wonder | 3 x 2 | 210 Coins + 80 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 3 / `market` | Jungle market | building | 3 x 2 | 125 Coins + 125 Supplies + 70 Food | 10 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 4 / `gateway` | Sunstone courtyard | wonder | 3 x 2 | 55 Coins + 65 Supplies + 95 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 5 / `lodge` | Explorer's lodge | wonder | 3 x 3 | 330 Coins + 325 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
@@ -125,7 +125,7 @@ sprite file is always `data/city/buildings/<key>.png`.
 | 7 / `observatory` | Star observatory | wonder | 2 x 2 | 120 Coins + 85 Supplies | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 315 Coins + 225 Supplies | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 9 / `temple` | Temple of the sun | wonder | 4 x 4 | 435 Coins + 260 Supplies + 450 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 10 / `log_cabin` | Trapper's cabin | wonder | 2 x 2 | 65 Coins + 45 Supplies + 40 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 10 / `log_cabin` | Trapper's cabin | wonder | 2 x 2 | 110 Coins + 40 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 11 / `apothecary` | Herbalist's hut | building | 2 x 2 | 220 Coins + 15 Food | 6 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 12 / `mess_hall` | Mess hall | building | 3 x 2 | 240 Coins + 16 Supplies | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
 | 13 / `stilt_house` | Stilt house | building | 3 x 2 | 260 Coins + 17 Supplies | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |

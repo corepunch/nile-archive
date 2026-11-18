@@ -20,7 +20,7 @@ Keep the rhythm of Cradle of Rome. The player matches pieces, banks resources an
 
 **Mara asks** for tents and a meal. The others are still on the boat, and she wants supper ready when they land.
 
-**Match** timber or dressed stone for **20 Supplies**, and fruit for **10 Food**.
+**Match** sun and silver coins for **60 Coins**. Board 1 has no fruit, timber or stone yet.
 
 **On placement**, the player chooses the camp site. The crew comes ashore and eats. Hammer gems unlock. At dusk Elena spots a lamp bracket at the lookout. Mara flashes twice and sees two flashes come back. A reflection could do that. At breakfast, Mara tips the last water from the boat’s cask.
 

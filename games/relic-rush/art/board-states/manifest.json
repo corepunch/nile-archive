@@ -1381,6 +1381,8 @@
       "first_level": 3,
       "last_level": 3,
       "kind": 0,
+      "opening_level": 1,
+      "opening_kind": 1,
       "yield": {
         "gold": 3
       },

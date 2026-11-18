@@ -72,10 +72,10 @@ listed clear and come before the next story restoration.
 | # | Build after | Building | From board | Adds | Price C / F / S |
 | ---: | ---: | --- | ---: | --- | ---: |
 | **I. The landing** |
-| 1 | 1 | ★ Expedition camp | 2 | Hammer gems | 0 / 10 / 20 |
+| 1 | 1 | ★ Expedition camp | 2 | Hammer gems | 60 / 0 / 0 |
 | 2 | 4 | ★ Spring well | 5 | Water bucket, 3 Food | 125 / 0 / 0 |
-| 3 | 7 | Trapper's cabin | 8 | Dynamite upgrades Hammer | 65 / 40 / 45 |
-| 4 | 7 | ★ Artisan workshop | 8 | Cut blocks, 5 Supplies | 120 / 80 / 90 |
+| 3 | 7 | Trapper's cabin | 8 | Dynamite upgrades Hammer | 110 / 40 / 0 |
+| 4 | 7 | ★ Artisan workshop | 8 | Timber bundle, 5 Supplies | 210 / 80 / 0 |
 | **II. The quay** |
 | 5 | 9 | Water mill | — | Opens the Jungle market restoration | 65 / 35 / 60 |
 | 6 | 9 | ★ Jungle market | 10 | Ration jar, 4 Food | 125 / 70 / 125 |
@@ -87,7 +87,7 @@ listed clear and come before the next story restoration.
 | 11 | 17 | Trading post | 18 | Ring, 7 Coins *(from the Courtyard)* | 170 / 215 / 290 |
 | 12 | 19 | Valley lighthouse | 20 | Lightning upgrades Shield | 70 / 70 / 55 |
 | **IV. The wreck** |
-| 13 | 19 | ★ Lost-world archive | 20 | Carved quartz, 7 Supplies | 140 / 145 / 110 |
+| 13 | 19 | ★ Lost-world archive | 20 | Dressed stone, 7 Supplies | 140 / 145 / 110 |
 | 14 | 20 | Beached schooner | 21 | Scarab, 8 Coins *(from the Courtyard)* | 145 / 140 / 125 |
 | 15 | 22 | Cartographer's house | 23 | Plus gems give a quarter charge to other sockets | 275 / 230 / 180 |
 | 16 | 23 | ★ Star observatory | 24 | Star II upgrades Star | 120 / 0 / 85 |

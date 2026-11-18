@@ -1,4 +1,6 @@
 -- Three wallet slots. Score-only pieces have no wallet yield.
+-- Every piece has a Cradle of Rome 2 counterpart with the same wallet and
+-- yield (docs/cradle-of-rome-reference/gem-correspondence.html).
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
@@ -7,24 +9,26 @@ local E = {
         {key="food", name="Food"},
         {key="supplies", name="Supplies"},
     },
+    -- The opening pool, the five pieces of Cradle of Rome's first level: two
+    -- coins that pay Coins and a leaf, a flower and an amphora that only
+    -- score. Food and Supplies pieces come from restorations; each takes the
+    -- slot of the piece below it (E.unlocks, `kind`).
     pieces={
-        [0]={key="coin", name="Sun coin", slot=1, amount=4},
-        {key="berries", name="Red berries", slot=2, amount=1},
-        {key="apple", name="Green apple", slot=2, amount=1},
-        {key="timber", name="Timber", slot=3, amount=2},
-        {key="stone", name="Dressed stone", slot=3, amount=3},
+        [0]={key="coin", name="Sun coin", slot=1, amount=5},
+        {key="silver-coin", name="Silver coins", slot=1, amount=3},
+        {key="leaf", name="Leaf"},
+        {key="flower", name="Flower"},
+        {key="amphora", name="Amphora"},
     },
     WELL_KIND=1, WORKSHOP_KIND=2,
-    -- Boards spawn five kinds, as in Cradle of Rome. The green apple's slot
-    -- (1 Food, never upgraded) carries the bonus gem, a story item or a score
-    -- piece; the red slot takes the bonus when a story item holds it.
+    -- Boards spawn five kinds, as in Cradle of Rome. The leaf's slot carries
+    -- the bonus gem or a story item; the silver slot takes the bonus when a
+    -- story item holds the leaf's.
     SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
     CAMPAIGN_VERSION=7,
 }
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
-
-E.silver_coin = {key="silver-coin", name="Silver coins", kind=0, slot=E.GOLD, amount=3, first_level=3}
 
 E.BONUS_THRESHOLD = 36
 E.bonus_slots = {
@@ -78,7 +82,7 @@ E.unlocks = {
     {building="camp", backdrop=1, first_level=2, bonus=B.hammer},
     {building="well", key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
     {building="log_cabin", first_level=8, bonus=B.dynamite},
-    {building="workshop", after=10, key="cut-blocks", backdrop=1, name="Cut blocks", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
+    {building="workshop", after=10, key="timber", backdrop=1, name="Timber bundles", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
     {building="water_mill", first_level=11},
     {building="market", key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=11, optional=true},
     {building="clock_tower", first_level=12, bonus=B.star},
@@ -87,7 +91,7 @@ E.unlocks = {
     {building="lodge", key="grain", backdrop=1, name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
     {building="trading_post", key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7, first_level=18},
     {building="lighthouse", first_level=20, bonus=B.lightning},
-    {building="archive", key="quartz", backdrop=2, name="Carved quartz", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
+    {building="archive", key="stone", backdrop=2, name="Dressed stones", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
     {building="beached_ship", key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8, first_level=21},
     {building="map_room", first_level=23, bonus=B.plus},
     {building="observatory", backdrop=2, first_level=24, bonus=B["star-ii"]},
@@ -145,16 +149,15 @@ function E.board_loadout(level, number, restored, seed)
     local yields, available = {}, {}
     local slots, meter = E.active_bonus_slots(number, restored)
     local debut
-    local score_pieces = level.score_pieces or {}
-    for kind, piece in pairs(E.pieces) do
-        if kind ~= level.omit_kind and not score_pieces[kind] and not (level.story_piece and level.goal_kind == kind) then
-            yields[kind] = piece
-        end
+    -- A slot is open unless the board omits it or a story item holds it.
+    local function open(kind)
+        return kind ~= level.omit_kind and not (level.story_piece and level.goal_kind == kind)
     end
-    local silver = E.silver_coin
-    if number == silver.first_level and yields[silver.kind] then yields[silver.kind] = silver end
+    for kind, piece in pairs(E.pieces) do
+        if piece.amount and open(kind) then yields[kind] = piece end
+    end
     for _, unlock in ipairs(E.unlocks) do
-        if number >= unlock.first_level and restored and restored[unlock.building] and unlock.kind and yields[unlock.kind] then
+        if number >= unlock.first_level and restored and restored[unlock.building] and unlock.kind and open(unlock.kind) then
             yields[unlock.kind] = unlock
         end
     end

@@ -118,10 +118,10 @@ local events = {
     {id="man_01", available=false, test=true, citizen="The carpenter",
         If={"IF_PLAYER_MAKE_MATCH", length=5},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the workshop: cut blocks earn 6 Supplies each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the workshop: timber earns 6 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_01"},
             {"THEN_CITY_UPGRADE_BUILDING", id="workshop"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="cut-blocks", amount=6},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="timber", amount=6},
         }},
     -- Rome: smith, Forge, 10,000 points within levels 0–10.
     {id="man_02", available=false, citizen="The trapper", to_level=12,
@@ -136,10 +136,10 @@ local events = {
     {id="man_03", available=false, citizen="The stonecutter",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=120},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the archive: carved quartz earns 8 Supplies each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the archive: dressed stone earns 8 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_03"},
             {"THEN_CITY_UPGRADE_BUILDING", id="archive"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="quartz", amount=8},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="stone", amount=8},
         }},
     -- Rome: miller, Mill, 15 matches in rapid succession.
     {id="man_04", available=false, citizen="The trader",

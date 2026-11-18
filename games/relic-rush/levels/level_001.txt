@@ -2,25 +2,25 @@ name: The Landing
 tier: tutorial
 teaches: Match pieces on top of the blue tablets to clear them; clear every tablet to win.
 
+x x x x x
+ x x x x
+x . . . x
+ x . . x
 x . . . x
  . . . .
 x . . . x
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+x . . . x
  . p p .
-. . . . .
+x . . . x
  . . . .
-. . . . .
+x . . . x
  . p p .
-. . p . .
+x . p . x
  . . . .
 x . p . x
+ . . . .
+x . . . x
  . . . .
 x x x x x
  x x x x

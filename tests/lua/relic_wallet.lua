@@ -44,9 +44,9 @@ do
     local fits,spot=c:find_spot(economy.WELL_KIND,island.island_suggestion(economy.WELL_KIND))
     check(fits,'well fits first region')
     c:begin_place(economy.WELL_KIND,spot)
-    check(R.make_board(4,19).resource_yields[3].key=='timber','placement preview does not unlock water')
+    check(R.make_board(4,19).resource_yields[3]==nil,'placement preview does not unlock water')
     c:cancel()
-    check(R.make_board(5,19).resource_yields[3].key=='timber','cancel still leaves the timber palette')
+    check(R.make_board(5,19).resource_yields[3]==nil,'cancel still leaves the flower in the water slot')
     check(island.island_place_next(c,bank,4,0),'confirm the earned well')
     check(not island.island_place_next(c,bank,6,0),'the next ladder restoration waits for clear 7')
     check(island.island_place_next(c,bank,7,0) and R.make_board(7,19).bonus_debut == economy.bonuses.dynamite,
@@ -63,9 +63,9 @@ do
     fits,spot=c:find_spot(workshop,island.island_suggestion(workshop))
     check(fits,'workshop has a placement spot')
     c:begin_place(workshop,spot)
-    check(R.make_board(7,19).resource_yields[4].key=='stone','workshop preview does not unlock cut blocks')
+    check(R.make_board(7,19).resource_yields[4]==nil,'workshop preview does not unlock timber')
     c:cancel()
-    check(R.make_board(8,19).resource_yields[4].key=='stone','cancel preserves the stone palette')
+    check(R.make_board(8,19).resource_yields[4]==nil,'cancel leaves the amphora in the timber slot')
     local steps = island.kinds.quay_steps
     check(island.owned(c, steps)==0 and not island.can_buy(c,bank,10,steps),
         'the cancelled Workshop preview leaves the fixed quay reserved and off sale')
@@ -107,11 +107,6 @@ do
             local piece = g.resource_yields[spec.goal_kind]
             check(not piece, 'story items neither pay into the wallet nor charge a bonus')
         end
-        for kind in pairs(spec.score_pieces or {}) do
-            local piece = g.resource_yields[kind]
-            check(kind ~= spec.goal_kind and kind ~= spec.omit_kind and not (piece and piece.slot),
-                'score pieces use their own active slot and never pay the wallet')
-        end
     end
 
     check(R.make_board(13,19).backdrop==1,'the courtyard scene waits for the courtyard')
@@ -120,15 +115,23 @@ do
         'the courtyard brings the temple to boards from its first expedition')
 end
 
--- Score pieces (the Shore Marker's flower, the cable board's leaf) use the
--- normal scoring path, while a green apple still earns Food.
-for _, entry in ipairs{{6, 1, 'flower'}, {3, 2, 'leaf'}, {1, 2, 'apple'}} do
+-- The landing opens with Cradle of Rome's pool. Its leaf, flower and amphora
+-- use the normal scoring path and pay nothing; only the two coins pay.
+do
+    local g = rules.game_start(0,123)
+    local keys = {}
+    for kind = 0, rules.COLORS - 1 do keys[kind + 1] = economy.pieces[kind].key end
+    check(table.concat(keys,' ')=='coin silver-coin leaf flower amphora',"the base pool is Cradle of Rome's first level")
+    for kind, piece in pairs(g.resource_yields) do
+        check(piece.slot==economy.GOLD,'before any restoration a board pays Coins only: ' .. kind)
+    end
+    check(g.resource_yields[0].amount==5 and g.resource_yields[1].amount==3,'gold coins pay 5 and silver coins 3')
+end
+for _, entry in ipairs{{1, 2, 'leaf'}, {1, 3, 'flower'}, {6, 4, 'amphora'}} do
     local level, kind, name = table.unpack(entry)
     local g = rules.game_start(level-1,123)
-    local spec = rules.level_of(g)
     local yield = g.resource_yields[kind]
-    local key = yield and yield.key or spec.score_pieces and spec.score_pieces[kind]
-    check(key==name,'the selected expedition spawns ' .. name)
+    check(not yield and economy.pieces[kind].key==name,'the selected expedition spawns ' .. name)
     local present = false
     for i=0,rules.CELLS-1 do present = present or g.tiles[i].kind == kind end
     check(present,'the opening contains ' .. name)
@@ -141,15 +144,15 @@ for _, entry in ipairs{{6, 1, 'flower'}, {3, 2, 'leaf'}, {1, 2, 'apple'}} do
     check(m.hits >= 3,'a line of ' .. name .. ' matches')
     rules.game_apply(g,m)
     check(g.score > 0 and g.earnings[economy.GOLD] == 0 and g.earnings[economy.SUPPLIES] == 0
-        and g.earnings[economy.PROVISIONS] == (yield and m.hits or 0),
-        'apple matches pay Food and leaf or flower matches pay score only')
+        and g.earnings[economy.PROVISIONS] == 0,
+        'leaf, flower and amphora matches pay score only')
 end
 
 -- Roman finds change the appearance and payout of the same slot. The
 -- Courtyard gates its whole sequence and the Temple owns the final emerald.
 do
     local finds = {
-        {2, "coin", 4}, {3, "silver-coin", 3}, {5, "coin", 4},
+        {2, "coin", 5}, {5, "coin", 5},
         {14, "helmet", 6}, {18, "ring", 7}, {21, "scarab", 8},
         {25, "sandal", 9}, {28, "harp", 10}, {30, "emerald", 11},
     }
@@ -397,11 +400,11 @@ do
     local a,c=rules.hex_neighbor(b,3),rules.hex_neighbor(b,0)
     for _,i in ipairs{a,b,c} do g.ice[i],g.oil[i]=0,0 end
     g.chain[a],g.chain[b],g.chain[c]=1,0,0
-    g.tiles[a],g.tiles[b],g.tiles[c]=rules.tile(3),rules.tile(0),rules.tile(4)
+    g.tiles[a],g.tiles[b],g.tiles[c]=rules.tile(3),rules.tile(0),rules.tile(1)
     local m=rules.new_match()
     m.mask[a],m.mask[b],m.mask[c]=true,true,true
     rules.game_apply(g,m)
-    check(g.earnings[1]==4 and g.earnings[2]==0 and g.earnings[3]==3,'credit paid-once gold and stone, protected water waits')
+    check(g.earnings[1]==8 and g.earnings[2]==0 and g.earnings[3]==0,'credit paid-once gold and silver coins, protected water waits')
     local copy=rules.game_copy(g)
     m=rules.new_match();m.mask[a]=true
     rules.game_apply(copy,m)
@@ -427,9 +430,9 @@ do
         'a clear without income cannot buy the camp')
     check(not rules.progress_reward(p,g,island.wonders),'the same win cannot pay twice')
     local camp=island.wonders[1].cost
-    g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={8,camp[2]+2,camp[3]+4}
+    g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={camp[1]+8,camp[2]+2,camp[3]+4}
     check(rules.progress_reward(p,g,island.wonders),'replay resources bank')
-    check(p.wallet[1]==8 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==1 and p.level==1,
+    check(p.wallet[1]==camp[1]+8 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==1 and p.level==1,
         'replay pays the matched resources exactly')
     check(island.island_place_next(c,p.wallet,p.level,0) and island.wonder_count(c)==1,'replay can fund the camp')
     check(not rules.progress_reward(p,{won=false},island.wonders),'failed attempt pays nothing')

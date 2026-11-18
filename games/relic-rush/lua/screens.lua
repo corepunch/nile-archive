@@ -103,7 +103,7 @@ local guide_entries = {
      icon={floor="tile-tablet-single", piece=chip_prefix .. "coin", front="chain"}},
     {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Coins, Supplies and Food.",
      icon={front="resource-wallet-supplies"}},
-    {id="score", title="Leaves and flowers", description="These pieces earn score only. See your score at the end of the expedition.",
+    {id="score", title="Leaves, flowers and amphoras", description="These pieces earn score only. See your score at the end of the expedition.",
      icon={front="campaign-leaf"}},
 }
 local function guide_piece(unlock, title, availability)
@@ -111,7 +111,7 @@ local function guide_piece(unlock, title, availability)
     guide_entries[#guide_entries+1] = {id=unlock.key, title=title,
         description=description, icon={front=chip_prefix .. unlock.key}}
 end
-guide_piece(economy.silver_coin, "Silver coins", ("On expedition %d."):format(economy.silver_coin.first_level))
+guide_piece(economy.pieces[1], "Silver coins", "From expedition 1.")
 for _, unlock in ipairs(economy.unlocks) do
     local building = island.buildings[island.kinds[unlock.building] + 1].name
     if unlock.kind then guide_piece(unlock, building, ("From expedition %d."):format(unlock.first_level)) end

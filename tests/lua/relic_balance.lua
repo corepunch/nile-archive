@@ -62,8 +62,9 @@ if not RUNS then
         local g = play_board(level, 1, restored_by(level))
         assert(g.won, ('balance sample: bot lost board %d'):format(level))
         local reward = rules.reward_breakdown(g).total
+        -- The landing spawns coins and score pieces only.
         for slot, currency in ipairs(economy.currencies) do
-            check(reward[slot] > 0, ('board %d pays %s'):format(level, currency.name))
+            check((reward[slot] > 0) == (level > 1 or slot == economy.GOLD), ('board %d pays %s'):format(level, currency.name))
         end
     end
     return

@@ -1,7 +1,7 @@
 {
   "camp": {
     "about": "Match Hammer gems to charge a hit on one cell.",
-    "cost": [0, 10, 20]
+    "cost": [60, 0, 0]
   },
   "well": {
     "about": "Water buckets earn 3 Food each from expedition 5.",
@@ -21,8 +21,8 @@
     }
   },
   "workshop": {
-    "about": "Cut blocks earn 5 Supplies each. The first tread repairs the quay steps.",
-    "cost": [120, 80, 90]
+    "about": "Timber bundles earn 5 Supplies each. The first tread repairs the quay steps.",
+    "cost": [210, 80, 0]
   },
   "market": {
     "about": "Adds ration jars to later expeditions.",
@@ -37,7 +37,7 @@
     "cost": [330, 325, 0]
   },
   "archive": {
-    "about": "Adds carved quartz worth 7 Supplies each.",
+    "about": "Adds dressed stones worth 7 Supplies each.",
     "cost": [140, 145, 110]
   },
   "observatory": {
@@ -54,7 +54,7 @@
   },
   "log_cabin": {
     "about": "Upgrades Hammer to Dynamite. The Blast slot keeps its charge.",
-    "cost": [65, 40, 45]
+    "cost": [110, 40, 0]
   },
   "apothecary": {"cost": [220, 15, 0]},
   "mess_hall": {"cost": [240, 0, 16]},
@@ -70,7 +70,7 @@
   },
   "water_mill": {
     "about": "A two-stage cascade can bring a miller to the working mill.",
-    "cost": [65, 35, 60]
+    "cost": [125, 35, 0]
   },
   "clock_tower": {
     "about": "Match Star gems to charge a hit on every piece of one kind.",

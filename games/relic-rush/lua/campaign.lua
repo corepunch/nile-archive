@@ -17,13 +17,6 @@ end
 
 -- Later chapters still use a story piece in one of the five colour slots.
 levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
-levels[3].score_pieces = {[2]="leaf"}
-levels[4].score_pieces = {[2]="flower"}
-levels[6].score_pieces = {[1]="flower"}
-levels[7].score_pieces = {[2]="flower"}
-levels[9].score_pieces = {[2]="leaf"}
-for _, i in ipairs{12,18,24} do levels[i].score_pieces = {[2]="leaf"} end
-for _, i in ipairs{15,21,27} do levels[i].score_pieces = {[2]="flower"} end
 levels[30].signal = "landing"
 -- The final board's signal plate is its tablet nearest the centre, a bare
 -- single one when the board has one.
