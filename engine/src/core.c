@@ -384,6 +384,7 @@ void app_step(void)
     haptic_flush();
     ui_end_frame(dt);
     draw_rotate_prompt();
+    render_flush();
 #ifdef ENGINE_TEST
     if (A.shot_path) {
         bool last = false;
@@ -503,7 +504,10 @@ void app_stop(void)
  * so its quit hook doesn't run. */
 void app_test_recover(void)
 {
-    if (in_frame) axEndPaint();
+    if (in_frame) {
+        render_flush();
+        axEndPaint();
+    }
     in_frame = false;
     A.desc.quit = NULL;
     if (render_ready()) app_stop();

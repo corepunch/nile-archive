@@ -26,14 +26,23 @@ struct render_texture {
     struct render_texture *prev, *next;
 #endif
 };
+
+enum { BATCH_VERTICES = 4096, BATCH_INDICES = 8192 };
 static struct {
     GLuint program, vao, vertices, indices, white;
     GLint inset_offset, inset_bounds;
-    GLint screen, origin, stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params;
+    GLint screen, origin, mask_rect, mask_uv, mask_params;
     size2 pixels, logical;
     float scale;
     vec2 offset;
     bool additive, bleed;
+    struct {
+        render_vertex vertices[BATCH_VERTICES];
+        int indices[BATCH_INDICES];
+        int vertex_count, index_count;
+        GLuint texture;
+        bool additive;
+    } batch;
     GLuint blur_program, blur_texture[4], blur_fbo[4];
     int blur_w, blur_h;
     bool blur_failed;
@@ -86,12 +95,15 @@ static void texture_forget(struct render_texture *t)
 bool render_init(void)
 {
     GLuint vs = render_shader(GL_VERTEX_SHADER,
-        "in vec2 position; in vec4 color; in vec2 uv; uniform vec2 screen, origin;\n"
+        "in vec2 position; in vec4 color; in vec2 uv, stripe; in vec4 stripe_ink; uniform vec2 screen, origin;\n"
         "out vec4 tint; out vec2 texcoord, point;\n"
-        "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);tint=color;texcoord=uv;point=position;}\n");
+        "out float stripe_phase; flat out float stripe_width; flat out vec4 stripe_color;\n"
+        "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);"
+        "tint=color;texcoord=uv;point=position;stripe_phase=stripe.x;stripe_width=stripe.y;stripe_color=stripe_ink;}\n");
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
         "in vec4 tint; in vec2 texcoord, point; uniform sampler2D image; out vec4 pixel;\n"
-        "uniform vec4 stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params; uniform sampler2D mask;\n"
+        "in float stripe_phase; flat in float stripe_width; flat in vec4 stripe_color;\n"
+        "uniform vec4 mask_rect, mask_uv, mask_params; uniform sampler2D mask;\n"
         "uniform vec3 inset_offset; uniform vec4 inset_bounds;\n"
         "float silhouette(vec2 uv){"
         "if(any(lessThan(uv,inset_bounds.xy))||any(greaterThan(uv,inset_bounds.zw)))return 0.;"
@@ -109,9 +121,8 @@ bool render_init(void)
         "float grain=fract(52.9829*fract(dot(texel,vec2(.06711056,.00583715))))-.5;"
         "base=vec4(vec3(.99-.065*y-.40*(1.-open)+.085*bevel+.036*grain),a);}"
         "else base=texture(image,texcoord);"
-        "if(stripes.z>0.){vec2 q=(point-stripe_rect.xy)/stripe_rect.zw-.5;"
-        "float phase=dot(q,stripes.xy)*stripes.z;float aa=max(fwidth(phase),.001);"
-        "float band=1.-smoothstep(stripes.w*.5-aa,stripes.w*.5+aa,abs(fract(phase+.5)-.5));"
+        "if(stripe_color.a>0.){float aa=max(fwidth(stripe_phase),.001);"
+        "float band=1.-smoothstep(stripe_width*.5-aa,stripe_width*.5+aa,abs(fract(stripe_phase+.5)-.5));"
         "float shade=.65+.35*dot(base.rgb,vec3(.2126,.7152,.0722));"
         "base.rgb=mix(base.rgb,stripe_color.rgb*shade,band*stripe_color.a);}"
         /* Signed distance mask, as for SDF fonts: 0.5 is the edge, outside is
@@ -132,6 +143,8 @@ bool render_init(void)
     glBindAttribLocation(R.program, 0, "position");
     glBindAttribLocation(R.program, 1, "color");
     glBindAttribLocation(R.program, 2, "uv");
+    glBindAttribLocation(R.program, 3, "stripe");
+    glBindAttribLocation(R.program, 4, "stripe_ink");
     glLinkProgram(R.program);
     glDeleteShader(vs); glDeleteShader(fs);
     GLint ok;
@@ -145,9 +158,6 @@ bool render_init(void)
     R.origin = glGetUniformLocation(R.program, "origin");
     R.inset_offset = glGetUniformLocation(R.program, "inset_offset");
     R.inset_bounds = glGetUniformLocation(R.program, "inset_bounds");
-    R.stripes = glGetUniformLocation(R.program, "stripes");
-    R.stripe_rect = glGetUniformLocation(R.program, "stripe_rect");
-    R.stripe_color = glGetUniformLocation(R.program, "stripe_color");
     R.mask_rect = glGetUniformLocation(R.program, "mask_rect");
     R.mask_uv = glGetUniformLocation(R.program, "mask_uv");
     R.mask_params = glGetUniformLocation(R.program, "mask_params");
@@ -158,9 +168,12 @@ bool render_init(void)
     glGenBuffers(1, &R.vertices); glBindBuffer(GL_ARRAY_BUFFER, R.vertices);
     glGenBuffers(1, &R.indices);
     glEnableVertexAttribArray(0); glEnableVertexAttribArray(1); glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3); glEnableVertexAttribArray(4);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(render_vertex), (void *)offsetof(render_vertex, position));
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(render_vertex), (void *)offsetof(render_vertex, color));
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(render_vertex), (void *)offsetof(render_vertex, uv));
+    glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(render_vertex), (void *)offsetof(render_vertex, stripe));
+    glVertexAttribPointer(4, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(render_vertex), (void *)offsetof(render_vertex, stripe_ink));
     uint32_t white = UINT32_MAX;
     struct render_texture *t = render_texture_create(1, 1, &white);
     if (!t) { render_shutdown(); return false; }
@@ -196,6 +209,7 @@ void render_shutdown(void)
  * Drawing is clipped to the logical screen unless bleed is on. */
 void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
 {
+    render_flush();
     R.pixels = pixels; R.logical = logical;
     R.scale = viewport.size.w / logical.w;
     R.offset = viewport.pos;
@@ -209,7 +223,6 @@ void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
     glUseProgram(R.program);
     glUniform2f(R.screen, pixels.w / R.scale, pixels.h / R.scale);
     glUniform2f(R.origin, R.offset.x / R.scale, R.offset.y / R.scale);
-    glUniform4f(R.stripes, 0, 0, 0, 0);
     glActiveTexture(GL_TEXTURE0); glBindVertexArray(R.vao);
     render_clip(NULL);
 }
@@ -231,12 +244,14 @@ struct render_texture *render_texture_create(int w, int h, const void *rgba)
 void render_texture_update(struct render_texture *t, int x, int y, int w, int h, const void *rgba)
 {
     if (!t) return;
+    render_flush();
     glBindTexture(GL_TEXTURE_2D, t->id);
     glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, rgba);
 }
 void render_texture_free(struct render_texture *t)
 {
     if (!t) return;
+    render_flush();
     if (t->id) glDeleteTextures(1, &t->id);   /* zero: already gone with its test */
     texture_forget(t);
     free(t);
@@ -244,12 +259,10 @@ void render_texture_free(struct render_texture *t)
 void render_texture_additive(struct render_texture *t, bool on) { if (t) t->additive = on; }
 void render_additive(bool on) { R.additive = on; }
 
-void render_geometry(struct render_texture *t, const render_vertex *v, int n, const int *idx, int count)
+static void render_draw(GLuint tex, bool add, const render_vertex *v, int n, const int *idx, int count)
 {
-    if (!render_ready() || n <= 0) return;
-    bool add = t ? t->additive : R.additive;
     glBlendFuncSeparate(GL_SRC_ALPHA, add ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA, GL_ONE, add ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA);
-    glBindTexture(GL_TEXTURE_2D, t ? t->id : R.white);
+    glBindTexture(GL_TEXTURE_2D, tex);
     glBindBuffer(GL_ARRAY_BUFFER, R.vertices);
     glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)n * sizeof *v, v, GL_STREAM_DRAW);
     if (idx && count > 0) {
@@ -257,6 +270,46 @@ void render_geometry(struct render_texture *t, const render_vertex *v, int n, co
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)count * sizeof *idx, idx, GL_STREAM_DRAW);
         glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, NULL);
     } else glDrawArrays(GL_TRIANGLES, 0, n);
+}
+
+void render_flush(void)
+{
+    if (!R.batch.index_count) return;
+    render_draw(R.batch.texture, R.batch.additive, R.batch.vertices, R.batch.vertex_count,
+                R.batch.indices, R.batch.index_count);
+    R.batch.vertex_count = R.batch.index_count = 0;
+}
+
+/* Merge adjacent triangles in painter order, including different views of the
+ * same atlas. State changes that aren't vertex data flush the pending draw. */
+static void render_submit(GLuint tex, bool add, const render_vertex *v, int n, const int *idx, int count)
+{
+    if (!render_ready() || n <= 0) return;
+    if (count <= 0) idx = NULL;
+    int used = idx ? count : n;
+    used -= used % 3;
+    if (!used) return;
+    if (n > BATCH_VERTICES || used > BATCH_INDICES) {
+        render_flush();
+        render_draw(tex, add, v, idx ? n : used, idx, used);
+        return;
+    }
+    if (tex != R.batch.texture || add != R.batch.additive ||
+        R.batch.vertex_count + n > BATCH_VERTICES || R.batch.index_count + used > BATCH_INDICES)
+        render_flush();
+    R.batch.texture = tex;
+    R.batch.additive = add;
+    int base = R.batch.vertex_count;
+    memcpy(R.batch.vertices + base, v, (size_t)n * sizeof *v);
+    int *out = R.batch.indices + R.batch.index_count;
+    for (int i = 0; i < used; ++i) out[i] = base + (idx ? idx[i] : i);
+    R.batch.vertex_count += n;
+    R.batch.index_count += used;
+}
+
+void render_geometry(struct render_texture *t, const render_vertex *v, int n, const int *idx, int count)
+{
+    render_submit(t ? t->id : R.white, t ? t->additive : R.additive, v, n, idx, count);
 }
 
 /* Textured meshes supply UVs in local texture pixels, including for atlas views. */
@@ -268,23 +321,27 @@ void render_textured_geometry(texture t, render_vertex *v, int n, const int *idx
         vec2 local = vec2_div(v[i].uv, size2_vec(t.size));
         v[i].uv = rect_point(uv, local);
     }
-    bool original_blend = t.tex->additive;
-    if (t.additive) t.tex->additive = true;
-    render_geometry(t.tex, v, n, idx, count);
-    t.tex->additive = original_blend;
+    render_submit(t.tex->id, t.additive || t.tex->additive, v, n, idx, count);
 }
 
-void render_image(texture t, rect src, rect dst, float angle, color tint)
+static void render_quad(texture t, rect src, rect dst, float angle, color tint,
+                        vec2 stripe_axis, float stripe_width, color ink)
 {
+    static const vec2 corners[] = {{-.5f, -.5f}, {.5f, -.5f}, {.5f, .5f}, {-.5f, .5f}};
     vec2 p[4] = {dst.pos, rect_point(dst, v2(1, 0)), rect_max(dst), rect_point(dst, v2(0, 1))};
     vec2 uv[4] = {src.pos, rect_point(src, v2(1, 0)), rect_max(src), rect_point(src, v2(0, 1))};
     render_vertex v[4];
     for (int i = 0; i < 4; i++) {
         if (angle) p[i] = vec2_add(rect_center(dst), vec2_rotate(vec2_sub(p[i], rect_center(dst)), angle));
-        v[i] = (render_vertex){p[i], tint, uv[i]};
+        v[i] = (render_vertex){p[i], tint, uv[i], {vec2_dot(corners[i], stripe_axis), stripe_width}, ink};
     }
     const int idx[] = {0, 1, 2, 0, 2, 3};
     render_textured_geometry(t, v, 4, idx, 6);
+}
+
+void render_image(texture t, rect src, rect dst, float angle, color tint)
+{
+    render_quad(t, src, dst, angle, tint, v2(0, 0), 0, CLEAR);
 }
 
 /* Recess a sprite's alpha silhouette into a matte surface. Neighboring
@@ -292,12 +349,14 @@ void render_image(texture t, rect src, rect dst, float angle, color tint)
 void draw_image_inset(texture t, rect dst, vec2 offset, color floor_color)
 {
     if (!render_ready() || !t.tex || dst.size.w <= 0 || dst.size.h <= 0 || !floor_color.a) return;
+    render_flush();
     rect uv = t.uv.size.w > 0 ? t.uv : rc(0, 0, 1, 1);
     vec2 shift = vec2_div(offset, size2_vec(dst.size));
     glUniform3f(R.inset_offset, shift.x * uv.size.w, shift.y * uv.size.h, 1);
     vec2 end = rect_max(uv);
     glUniform4f(R.inset_bounds, uv.pos.x, uv.pos.y, end.x, end.y);
     render_image(t, tex_rect(t), dst, 0, floor_color);
+    render_flush();
     glUniform3f(R.inset_offset, 0, 0, 0);
 }
 
@@ -310,11 +369,8 @@ void render_image_striped(texture t, rect dst, float angle, float repeats, float
     }
     /* Pattern coordinates belong to the piece, so its stripes follow squash,
      * translation and atlas-region UVs while retaining the source alpha. */
-    glUniform4f(R.stripes, -sinf(angle), cosf(angle), repeats, saturate(width));
-    glUniform4f(R.stripe_rect, dst.pos.x, dst.pos.y, dst.size.w, dst.size.h);
-    glUniform4f(R.stripe_color, ink.r / 255.f, ink.g / 255.f, ink.b / 255.f, ink.a / 255.f);
-    render_image(t, tex_rect(t), dst, 0, tint);
-    glUniform4f(R.stripes, 0, 0, 0, 0);   /* following ordinary images/shapes stay unstriped */
+    vec2 axis = vec2_scale(v2(-sinf(angle), cosf(angle)), repeats);
+    render_quad(t, tex_rect(t), dst, 0, tint, axis, saturate(width), ink);
 }
 
 /* Until render_mask with an empty texture, every draw is cut to the signed distance field
@@ -323,6 +379,7 @@ void render_image_striped(texture t, rect dst, float angle, float repeats, float
 void render_mask(texture t, rect area, float range, float rim, float shade, float bevel, float softness)
 {
     if (!render_ready()) return;
+    render_flush();
     if (!t.tex || range <= 0 || area.size.w <= 0 || area.size.h <= 0) {
         glUniform4f(R.mask_params, 0, 0, 0, 0);
         glActiveTexture(GL_TEXTURE1); glBindTexture(GL_TEXTURE_2D, R.white); glActiveTexture(GL_TEXTURE0);
@@ -354,6 +411,7 @@ void render_bleed(bool on)
 void render_clip(const rect *r)
 {
     if (!render_ready()) return;
+    render_flush();
     rect clipped = rect_intersect(r ? *r : render_bounds(), render_bounds());
     int x = (int)floorf(R.offset.x + clipped.pos.x * R.scale);
     int y = (int)floorf(R.pixels.h - R.offset.y - (clipped.pos.y + clipped.size.h) * R.scale);
@@ -367,6 +425,7 @@ void render_clip(const rect *r)
 
 bool render_read_pixels(void *rgba, int w, int h)
 {
+    render_flush();
     glReadPixels(0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, rgba);
     if (glGetError() != GL_NO_ERROR) return false;
     uint8_t *p = rgba;
@@ -437,6 +496,7 @@ void render_backdrop(float radius, color dim)
     if (!isfinite(radius)) radius = 0;
     radius = clampf(radius, 0, 32);
     if (radius <= 0 && dim.a == 0) return;
+    render_flush();
     GLint draw_fbo, read_fbo, viewport[4], scissor[4];
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &draw_fbo);
     glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &read_fbo);
@@ -512,6 +572,7 @@ void render_backdrop(float radius, color dim)
                              {lo,dim,{0,0}},{hi,dim,{0,0}},{{lo.x,hi.y},dim,{0,0}}};
         bool saved_additive = R.additive; R.additive = false;
         glEnable(GL_BLEND); render_geometry(NULL, v, 6, NULL, 0);
+        render_flush();
         R.additive = saved_additive;
         if (!blending) glDisable(GL_BLEND);
     }

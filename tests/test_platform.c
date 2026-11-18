@@ -115,6 +115,25 @@ static void draw_and_check(void)
     c = pixel(25, 77); CHECK(c.r < 100); /* diagonal gap */
     c = pixel(70, 20); CHECK(c.r < 15 && c.g > 240 && c.b < 15); /* no leaked stripe state */
 
+    /* A tinted image blends over a striped draw of the same atlas region. */
+    draw_rect(rc(0, 0, 100, 100), BLACK);
+    draw_image_striped(masked, rc(10, 10, 40, 20), 0, 1, 1, WHITE, WHITE);
+    draw_image(masked, rc(10, 10, 40, 20), rgba(255, 255, 255, 128));
+    CHECK(render_read_pixels(pixels, width, height));
+    c = pixel(20, 15); CHECK(c.r > 100 && c.r < 130 && c.b > 160);
+
+    /* Draws queued against a texture keep the old texels before an update
+     * and reach the framebuffer before its storage is freed. */
+    color red = hex(0xff0000), blue = hex(0x0000ff);
+    texture changing = tex_from_pixels(&red, 1, 1);
+    draw_image(changing, rc(55, 10, 10, 10), WHITE);
+    render_texture_update(changing.tex, 0, 0, 1, 1, &blue);
+    draw_image(changing, rc(65, 10, 10, 10), WHITE);
+    tex_free(changing);
+    CHECK(render_read_pixels(pixels, width, height));
+    c = pixel(60, 15); CHECK(c.r == 255 && c.b == 0);
+    c = pixel(70, 15); CHECK(c.r == 0 && c.b == 255);
+
     draw_rect(rc(0, 0, 100, 100), BLACK);
     draw_image_hex(masked, rc(1, 0, 2, 4), v2(26, 23), 16, ENGINE_PI / 6, WHITE);
     draw_ngon_grad(v2(68, 23), 16, 6, 0, WHITE, hex(0x404040));

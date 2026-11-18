@@ -3,7 +3,13 @@
 #define ENGINE_RENDER_H
 #include "engine.h"
 
-typedef struct { vec2 position; color color; vec2 uv; } render_vertex;
+typedef struct {
+    vec2 position;
+    color color;
+    vec2 uv;
+    vec2 stripe;         /* interpolated phase, constant width */
+    color stripe_ink;
+} render_vertex;
 void app_step(void);
 void app_stop(void);
 void sfx_shutdown(void);
@@ -12,6 +18,7 @@ bool render_init(void);
 void render_shutdown(void);
 bool render_ready(void);
 void render_begin(size2 pixels, size2 logical, rect viewport, color clear);
+void render_flush(void);
 void render_geometry(struct render_texture *tex, const render_vertex *v, int n, const int *indices, int count);
 void render_textured_geometry(texture t, render_vertex *v, int n, const int *indices, int count);
 struct render_texture *render_texture_create(int w, int h, const void *rgba);
