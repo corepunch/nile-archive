@@ -614,3 +614,25 @@ building in hand retains its green/red footprint, and the old plot of a
 building being moved is free. Confirm or Cancel hides the guides. Debug
 `--footprints` draws the full outlines above the sprites. See the
 [phone captures](review/placement-guides/README.md).
+
+## Stall card: what a stall adds
+
+The stall card lists its price and what the stall adds side by side as the
+engine's icon-and-figure amounts (`match3.resource_amount`). It reuses existing
+art and adds none. `R.building_gets` in `lua/screens.lua` maps each ladder
+unlock:
+
+| Unlock | Caption | Icon | Figure |
+|---|---|---|---|
+| New piece | YOU GET | the piece, `market-<kind>` | `+N` beside the currency it banks |
+| Tool piece | YOU GET | the piece | `+N` beside the booster it charges |
+| Booster per wish | EVERY WISH | the booster's `-normal` button | `+1` |
+| More moves | EVERY WISH | none: the word MOVES under a larger figure | `+3` |
+| Faster charge | YOU GET | the first tool piece | `x2` |
+| Takings | EVERY WIN | the currency | `+N` |
+
+The Moves row is a temporary fallback until the HUD atlas has a Moves icon:
+[#105](https://github.com/corepunch/nile-archive/issues/105). Reproduce a card
+with `./build/christmas-market --headless --mute --fresh --size 390x844 --card 2 --shot out.png`
+(`--catalogue-card <kind>` for a built stall). Reviewed in game at 390×844 for
+every row and at 480×900 for a piece.

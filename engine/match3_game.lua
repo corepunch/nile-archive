@@ -55,6 +55,7 @@ G.DEFAULTS = {
             open = "OPEN THIS AREA", wait = "KEEP EXPLORING", close = "CLOSE"},
     finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
+            gets = "YOU GET", price = "PRICE",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
@@ -607,27 +608,23 @@ function G.bind(R, over)
         local form = ui.form{kind="column",panel=true,padding={21,20,21,23},gap=15,children={
             match3.popup_header("Results"),
             {kind="column",gap=1,paint_group={.24,.32,9},children={
-                {kind="label",text="SCORE",em=13,text_style="cream"},
+                {kind="label",text="SCORE",em=13,text_style="caption"},
                 {kind="label",id="score",em=44,text_style="gold"},
             }},
             {kind="column",gap=7,paint_group={.62,.28,10},children={
-                {kind="label",text="RESOURCES TO BANK",em=13,text_style="cream"},
+                {kind="label",text="RESOURCES TO BANK",em=13,text_style="caption"},
                 {kind="list",id="resources",direction="row",gap=9,item=function(entry)
-                    return {kind="column",grow=1,panel=true,role="result_resource",padding={4,5,4,7},gap=1,children={
-                        {kind="image",image=entry.icon,height=36},
-                        {kind="label",text=entry.amount,em=25,text_style="gold"},
-                        {kind="label",text=entry.name,em=13,text_style="cream"},
-                    }}
+                    return match3.resource_amount(entry)
                 end},
             }},
             {kind="row",id="next_step",visible_field="show_next",panel=true,role="group",
                 padding={9,8,10,8},gap=10,align="center",paint_group={.9,.26,8},children={
                     {kind="image",id="next_icon",width=58,height=58,visible_field="show_next_icon"},
                     {kind="column",grow=1,gap=2,children={
-                        {kind="label",id="next_heading",wrap=true,text_align="start",em=12,text_style="cream"},
+                        {kind="label",id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
                         {kind="label",id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
                         {kind="label",id="next_detail",visible_field="show_next_detail",
-                            wrap=true,text_align="start",em=12,text_style="gold"},
+                            wrap=true,text_align="start",em=13,text_style="body"},
                     }},
                 }},
             {kind="button",id="claim",height=54,paint_group={1.02,.22,8}},
@@ -659,25 +656,39 @@ function G.bind(R, over)
         popup(R.OV_GUIDE, form, {width=432, shift=10, handle=function() R.overlay = R.OV_NONE end})
     end
 
+    -- A captioned group of resource amounts on the building card. The price
+    -- and what the building brings sit side by side, after Cradle of Rome,
+    -- and the amounts narrow together when five share the row.
+    local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 18, 372
+    local amount_width = 96
+    local function amounts(id, caption, visible)
+        return {kind="column", gap=5, visible_field=visible, children={
+            {kind="label", id=id .. "_caption", text=caption, em=13, text_style="caption"},
+            {kind="list",id=id,direction="row",gap=AMOUNT_GAP,item=function(entry)
+                return match3.resource_amount(entry, amount_width)
+            end},
+        }}
+    end
+
     -- The building card: a story building or a shop item, to build or move.
+    -- A game's R.building_gets(kind) lists what the building brings as icons
+    -- and may return a second value, a caption for when it comes (default
+    -- W.card.gets);
+    -- without it the card falls back to the building's unlock text.
     local wonder_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
             match3.popup_header("Building details"),
             {kind="image", id="sprite", height=205},
-            {kind="label", id="about", wrap=true, em=22, text_style=PAL_CREAM},
-            {kind="label", id="unlock", wrap=true, em=17, text_style=PAL_GOLD, visible_field="show_unlock"},
-            {kind="row", height=78, align="center", visible_field="show_price", children={
+            {kind="label", id="about", wrap=true, em=19, text_style="body"},
+            {kind="label", id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
+            {kind="row", visible_field="show_amounts", children={
                 {kind="spacer",grow=1},
-                {kind="list",id="price",direction="row",gap=10,item=function(entry)
-                    return {kind="column",width=90,gap=4,children={
-                        {kind="image",image=entry.icon,height=33},
-                        {kind="label",text=tostring(entry.amount),height=25,em=23},
-                        {kind="label",text=entry.name or "",height=12,em=11,text_style=PAL_CREAM},
-                    }}
-                end},
+                amounts("price", W.card.price, "show_price"),
+                {kind="spacer",width=GROUP_GAP,visible_field="show_both"},
+                amounts("gets", W.card.gets, "show_gets"),
                 {kind="spacer",grow=1},
             }},
-            {kind="label",id="notice",wrap=true,em=15,text_style=PAL_CREAM,visible_field="show_notice"},
+            {kind="label",id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
             {kind="button",id="action",height=56},
             {kind="button",id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
             {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16},
@@ -711,9 +722,18 @@ function G.bind(R, over)
         wonder_form.values.show_price = show_price
         wonder_form.values.show_notice = not show_price or quest ~= nil and not can_build
         wonder_form.values.show_shop = quest ~= nil
-        wonder_form.values.show_unlock = unlock_text ~= nil
+        local gets, gets_caption = {}, nil
+        if R.building_gets then gets, gets_caption = R.building_gets(i) end
+        local price = show_price and price_parts(w.cost) or {}
+        local count, groups = #gets + #price, (#gets > 0 and 1 or 0) + (#price > 0 and 1 or 0)
+        amount_width = math.min(96, math.floor((CARD_INNER - GROUP_GAP * (groups - 1) - AMOUNT_GAP * (count - groups)) / math.max(1, count)))
+        wonder_form.values.show_gets, wonder_form.values.show_amounts = #gets > 0, count > 0
+        wonder_form.values.show_both = groups == 2
+        assert(wonder_form:set_items("gets", gets))
+        wonder_form:set("gets_caption", gets_caption or W.card.gets)
+        wonder_form.values.show_unlock = unlock_text ~= nil and #gets == 0
         wonder_form:set("unlock", unlock_text or "")
-        assert(wonder_form:set_items("price", price_parts(w.cost)))
+        assert(wonder_form:set_items("price", price))
         local funding
         if quest and not can_build then
             local missing = R.funding_shortfall and R.funding_shortfall(w.cost)

@@ -993,3 +993,14 @@ Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.jso
 | Asset | Source | Runtime | States and use |
 |---|---|---|---|
 | Old stone paths | `python3 tools/roads.py relic-rush` (Scener model; palette in `art/roads.json`) | `data/city/roads.png` | Fifteen paved road pieces, one per combination of joined neighbours, with rounded turns and junction corners, plus eight looks of each straight direction so a long street does not repeat (8 × 4 atlas): worn, uneven flagstones of weathered limestone in keeping with the valley's ruins: no kerb and no bed, wide joints and the odd missing stone, so the grass shows between them (`rough`, `gap`, `missing` in the palette). The engine lays them from every building's front and joins them ([Roads](../../../docs/BUILDINGS.md#roads)); they replace the curved connectors removed in [the earlier review](review/no-auto-roads/README.md). No interaction states. Captures: `screenshots/island-village.jpg` (`--showcase`), `screenshots/phone-island.jpg` (`--city 3`) |
+
+## Building card: what a building brings
+
+The building card lists its price and what the building brings side by side as
+the engine's icon-and-figure amounts (`match3.resource_amount`). It reuses
+existing art and adds none. `R.building_gets` in `lua/screens.lua` maps each
+ladder unlock: a new piece shows its board art above `+N` beside the currency a
+match banks, and a bonus shows its `bonus-<key>` gem alone. Reproduce with
+`./build/relic-rush --headless --mute --fresh --size 390x844 --card 3 --shot out.png`.
+Reviewed in game at 480×900 and 390×844 for a piece (Workshop, Well, Temple), a
+bonus (Camp), a built building with both (Museum) and five amounts in one row.

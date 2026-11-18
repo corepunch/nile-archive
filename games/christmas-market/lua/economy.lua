@@ -134,28 +134,4 @@ function E.lightning_targets(g, cell, cells)
     return mask
 end
 
--- What a stall adds, for its card and the board's arrival notice.
-function E.unlock_text(unlock)
-    if unlock.kind or unlock.tool then
-        local piece = E.pieces[unlock.kind or unlock.piece]
-        local unit = piece.tool and "tool charge" or E.currencies[piece.slot].name
-        return ("%s · +%d %s per piece"):format(piece.name, piece.amount, unit)
-    elseif unlock.opening_tool then
-        for _, earlier in ipairs(E.unlocks) do
-            if earlier == unlock then break end
-            if earlier.opening_tool == unlock.opening_tool then
-                return ("A second %s booster per wish"):format(unlock.name)
-            end
-        end
-        return ("One %s booster per wish"):format(unlock.name)
-    elseif unlock.moves then return ("Every wish gets %d more moves"):format(unlock.moves)
-    elseif unlock.charge then return "Tool pieces charge twice as fast"
-    end
-    local parts = {}
-    for slot, currency in ipairs(E.currencies) do
-        if unlock.income[slot] > 0 then parts[#parts + 1] = ("+%d %s"):format(unlock.income[slot], currency.name) end
-    end
-    return table.concat(parts, " ") .. " on every win"
-end
-
 return E

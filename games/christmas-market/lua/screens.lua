@@ -6,6 +6,7 @@ local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local rules = require("rules")
 local economy = require("economy")
+local island = require("island")
 local picture = R.picture
 
 function R.wallet_icons() return {R.life_art, R.board_art["market-3"], R.hud_art.complete} end
@@ -36,6 +37,38 @@ function R.currency_prices(cost)
     return parts
 end
 
+-- What a stall adds, as icons for its card: a new piece with what each match
+-- of it banks or charges, a booster, moves, faster tool charge or takings.
+-- The caption says when a recurring gift arrives.
+function R.building_gets(kind)
+    local unlock
+    for _, step in ipairs(island.ladder) do if step.kind == kind then unlock = step.unlock end end
+    if not unlock then return {} end
+    local card = R.words.card
+    local function booster(tool) return R.hud_art[economy.tool_slots[tool].icon .. "-normal"] end
+    local function piece_icon(piece) return R.board_art["market-" .. piece] end
+    local function plus(n) return ("+%d"):format(n) end
+    if unlock.kind then
+        local piece = economy.pieces[unlock.kind]
+        return {{id="piece", icon=piece_icon(unlock.kind), amount=plus(piece.amount), unit=currency_icon(piece.slot)}}
+    elseif unlock.tool then
+        return {{id="tool", icon=piece_icon(unlock.piece), amount=plus(economy.pieces[unlock.piece].amount), unit=booster(unlock.tool)}}
+    elseif unlock.opening_tool then
+        return {{id="booster", icon=booster(unlock.opening_tool), amount=plus(1)}}, card.every_wish
+    elseif unlock.moves then
+        return {{id="moves", amount=plus(unlock.moves), label=card.moves}}, card.every_wish
+    elseif unlock.charge then
+        for _, earlier in ipairs(economy.unlocks) do
+            if earlier.tool then return {{id="charge", icon=piece_icon(earlier.piece), amount=("x%d"):format(unlock.charge)}} end
+        end
+    end
+    local gets = {}
+    for slot in ipairs(economy.currencies) do
+        if unlock.income[slot] > 0 then gets[#gets + 1] = {id="income-" .. slot, icon=currency_icon(slot), amount=plus(unlock.income[slot])} end
+    end
+    return gets, card.every_win
+end
+
 function R.cost_text(parts)
     local prices = {}
     for i, part in ipairs(parts) do prices[i] = ("%d %s"):format(part.amount, part.name) end
@@ -48,7 +81,7 @@ R.register_result(function()
     local w, reward, first = breakdown.wonder, breakdown.total, breakdown.first
     local resources = {}
     for slot, currency in ipairs(economy.currencies) do
-        resources[slot] = {id=currency.name, name=currency.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
+        resources[slot] = {id=currency.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
     end
     local find = first and spec.story_piece
     local next_step = {

@@ -34,6 +34,10 @@ return ui.skin{
         green = {extends = "base", fill = "#C7FFC9", fill2 = "#5BC682"},
         white = {extends = "base", fill = "#FFFFFF", fill2 = "#C4E8DC"},
         short = {extends = "base", fill = "#FFD9CC", fill2 = "#F0705A"},   -- a price the wallet cannot cover
+        -- Running copy on parchment is flat ink. The rim, gradient and shadow
+        -- above are for titles, buttons and figures.
+        body = {font = "lilita", em = 64, fill = "#5A4226"},
+        caption = {font = "lilita", em = 64, fill = "#9A7A48", tracking = 2},
     },
 
     controls = {
@@ -49,7 +53,7 @@ return ui.skin{
                     {fill = "#1F5345", radius = 16},
                     {fill = "#2C6C54", radius = 13, inset = 3},
                 }}},
-                result_resource = {normal = {layers = {
+                resource_amount = {normal = {layers = {
                     {fill = "#F1DA9D", radius = 12},
                     {fill = "#FFF2C9", radius = 10, inset = 2},
                 }}},

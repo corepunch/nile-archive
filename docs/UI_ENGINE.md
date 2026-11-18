@@ -276,7 +276,7 @@ modal backdrops and native widgets: `ui.set_theme(skin.theme)`. Fields the skin
 doesn't name keep the engine theme. The theme is built on first use, after the
 fonts can load; its colours are checked when the skin is compiled.
 
-Relic Rush keeps its entire look in `lua/skin.lua`: four outlined text palettes,
+Relic Rush keeps its entire look in `lua/skin.lua`: four outlined text palettes, flat `body` and `caption` ink for running copy,
 the parchment panel, the jade button (pressed sinks it 2 units; disabled drains
 its colour), the flat CLOSE variant and the focus ring. Its Pause menu uses the `checkbox`
 control for Sound and Reduce motion: a wooden-rimmed well that fills with jade
@@ -340,7 +340,18 @@ The shared match-3 popup renderer also requires a column-root form. It owns
 measurement, centering, hit testing and dismissal for Results, Settings, the
 Guide, restart confirmation, building details, the out-of-moves prompt, region
 unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form. Results use three equal
-columns in one row. Optional content participates in the measured stack only
+columns in one row. Each is `match3.resource_amount(entry, width)`: an icon above
+its figure, with no caption because the icon names the resource. The building
+card lists its price and what the building brings with the same element, side
+by side under PRICE and YOU GET captions. `entry.unit` puts a second icon beside
+the figure, such as the resource a new piece banks. An entry without an amount
+shows its icon alone, and `entry.label` adds one word under a larger figure only
+for an amount that has no art of its own. A game lists what a building brings in
+`R.building_gets(kind)`, which may return a second value to replace the YOU GET
+caption when the gift recurs (Christmas Market's EVERY WISH and EVERY WIN);
+without it the card shows the building's unlock text.
+Running copy and captions on parchment use the skin's flat `body` and `caption`
+text styles. The outlined styles are for titles, buttons and figures. Optional content participates in the measured stack only
 when visible, so the Collect button follows the last row. The building shop,
 expeditions, story choice and leaderboard use the same root contract through
 `ui.modals`.

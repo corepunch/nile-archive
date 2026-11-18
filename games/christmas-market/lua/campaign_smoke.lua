@@ -41,7 +41,7 @@ function R.campaign_smoke()
             R.prog.level, #played, island.campaign_count(c), frames))
         app.quit()
     elseif R.overlay == R.OV_RESULT then
-        if R.dialog_settled() then app.inject_click(rect(76, 660, 328, 56):center() + vec2(0, R.drop / 2)); wait = 20 end
+        if R.dialog_settled() then app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_ZONE then
         if R.dialog_settled() then app.inject_click(rect(72, 487, 336, 47):center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif c.placing >= 0 then

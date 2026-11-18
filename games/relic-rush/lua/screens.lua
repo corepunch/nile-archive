@@ -67,7 +67,7 @@ R.register_result(function()
     local resources = {}
     for _, slot in ipairs(economy.currency_order) do
         local kind = economy.currencies[slot]
-        resources[#resources+1] = {id=kind.key, name=kind.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
+        resources[#resources+1] = {id=kind.key, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
     end
     local level = breakdown.first and R.g.level + 1 or R.prog.level
     local quest, step = island.next_quest(R.island, level)
@@ -128,6 +128,22 @@ local function guide_icon(box, icon)
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
 end
+-- What a campaign building brings to the boards, as icons for its card: the
+-- new piece with what each match of it banks, and the bonus gem.
+function R.building_gets(kind)
+    local gets = {}
+    for _, unlock in ipairs(economy.unlocks) do
+        if island.kinds[unlock.building] == kind then
+            if unlock.kind then
+                gets[#gets + 1] = {id=unlock.key, icon=R.board_art[chip_prefix .. unlock.key],
+                    amount=("+%d"):format(unlock.amount), unit=currency_icon(unlock.slot)}
+            end
+            if unlock.bonus then gets[#gets + 1] = {id=unlock.bonus.key, icon=R.board_art[unlock.bonus.icon]} end
+        end
+    end
+    return gets
+end
+
 local guide_form = match3.guide_form({
     title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",
     done = "LET'S EXPLORE",

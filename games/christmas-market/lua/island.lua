@@ -42,12 +42,8 @@ end
 
 -- The twenty-stall ladder (economy.unlocks), after Cradle of Rome: order,
 -- gate, reserve, shop order and older saves are the engine's. Each stall's
--- card says what it adds.
+-- card shows what it adds as icons (screens.lua).
 require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
-for _, step in ipairs(M.ladder) do
-    local building = M.buildings[step.kind + 1]
-    building.about = building.about .. "\n" .. economy.unlock_text(step.unlock)
-end
 
 function M.migrate_wallet(progress, c)
     local reserved = M.reserved_cost(c, progress.level)

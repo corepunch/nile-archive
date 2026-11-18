@@ -71,6 +71,7 @@ return {
         back = "BACK TO MARKET",
         moving = "HOLD AND DRAG IN THE MARKET TO MOVE",
         locked = "COMPLETE MORE PUZZLES TO BUILD THIS STALL",
+        every_wish = "EVERY WISH", every_win = "EVERY WIN", moves = "MOVES",
     },
     catalogue = {
         title = "Build your market",
