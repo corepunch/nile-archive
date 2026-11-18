@@ -957,3 +957,16 @@ match banks, and a bonus shows its `bonus-<key>` gem alone. Reproduce with
 `./build/relic-rush --headless --mute --fresh --size 390x844 --card 3 --shot out.png`.
 Reviewed in game at 480×900 and 390×844 for a piece (Workshop, Well, Temple), a
 bonus (Camp), a built building with both (Museum) and five amounts in one row.
+
+### Moves capsule concept
+
+The [review board](review/moves-capsule/board.jpg) places remaining moves in the
+first wallet-style capsule. ImageGen painted the [static icon](review/moves-capsule/moves.png)
+as a front-facing teal enamel token with a brass rim and two ivory clockwise
+arrows on transparent surroundings. The [header comparison](review/moves-capsule/comparison.jpg)
+shows the shipped hex counter above the concept. To render this preview from
+the repository root:
+
+```sh
+build/relic-rush --headless --fresh --mute --size 480x900 --level 9 --lua 'games/relic-rush/docs/review/moves-capsule;games/relic-rush/lua;.' --shot /tmp/moves-capsule.png
+```
