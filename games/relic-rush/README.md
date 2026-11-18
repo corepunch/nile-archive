@@ -39,8 +39,8 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 Every expedition ends when all of its blue tablets are clear. Match on a blue
 cell to reveal the pale stone below; a green double tablet takes two hits. A chain absorbs the first hit on its piece.
 With three or fewer tablets left, sparks trace their edges after the same idle delay as the move suggestion.
-Swipe or tap a gem toward a chain and it slides toward the chain and back,
-with the same haptic as a rejected swap and zero moves spent.
+Swipe or tap a gem toward a chain, ice or a carved stone and it slides toward
+the blocker and back, with the same haptic as a rejected swap and zero moves spent.
 See the [board progression](docs/board-progression.md) for the pattern and move budget of each expedition.
 The [resource expedition design](docs/resource-expedition.md) covers how
 resource matches and restoration costs fit into the campaign.

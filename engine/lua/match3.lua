@@ -1742,8 +1742,10 @@ function E.new(config)
         end
     end
 
-    local function reject_swap(chain)
-        R.phase, R.phase_time, R.reject_chain = PH_REJECT, 0, chain
+    -- `blocked`: the far cell cannot move, so only the incoming piece slides,
+    -- halfway to it and back.
+    local function reject_swap(blocked)
+        R.phase, R.phase_time, R.reject_blocked = PH_REJECT, 0, blocked
         R.play("reject")
         haptic.play(haptic.ERROR, .5)
     end
@@ -1761,11 +1763,17 @@ function E.new(config)
             R.play("swap")
         elseif rules.game_can_swap(g, a, b) then
             reject_swap(false)
-        else
+        elseif not g.won and not g.lost and cell_active(g, a) and cell_active(g, b) and hex_distance(a, b) == 1
+            and (locked(g, a) or g.tiles[a].kind ~= -1) and (locked(g, b) or g.tiles[b].kind ~= -1) then
+            -- A chain, ice or a carved stone holds one of the two. A free piece
+            -- slides to the blocker and back; a held one only refuses. A hole
+            -- or an empty cell is no swap at all and stays silent.
             R.notice(R.locked_notice or "Ice and chains must be broken first.")
-            if not g.won and not g.lost and cell_active(g, a) and cell_active(g, b) and hex_distance(a, b) == 1
-                and (g.chain[b] or 0) > 0 and movable_for_swap(g, a) then
+            if movable_for_swap(g, a) then
                 reject_swap(true)
+            else
+                R.play("reject")
+                haptic.play(haptic.ERROR, .5)
             end
         end
     end
@@ -1845,13 +1853,13 @@ function E.new(config)
     local clip = nil
     if R.phase == PH_SWAP or R.phase == PH_REJECT then
         t = R.old_tiles[i]
-        local into_chain = R.phase == PH_REJECT and R.reject_chain
-        if i == R.swap_a or (i == R.swap_b and not into_chain) then
+        local blocked = R.phase == PH_REJECT and R.reject_blocked
+        if i == R.swap_a or (i == R.swap_b and not blocked) then
             local other = i == R.swap_a and R.swap_b or R.swap_a
             local leg = R.phase == PH_SWAP and .17 or REJECT_LEG * (R.reduced_motion and .35 or 1)
             local f = R.phase_time / leg
             if R.phase == PH_REJECT and f > 1 then f = 2 - f end
-            at = at:lerp(cell_pos(other) + vec2(sx, 0), (into_chain and .5 or 1) * ease.out_cubic(num.saturate(f)))
+            at = at:lerp(cell_pos(other) + vec2(sx, 0), (blocked and .5 or 1) * ease.out_cubic(num.saturate(f)))
         end
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]

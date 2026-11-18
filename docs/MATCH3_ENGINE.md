@@ -136,10 +136,12 @@ building can be placed, or nil for shop items. `catalogue_order` lists catalogue
 rows in shop order. Relic Rush's twenty-step ladder uses all three; without
 them the engine keeps the story-only rules.
 
-A swap into a chain sends the movable gem halfway toward the blocked cell
-and back. The chained gem stays in place. This plays the ordinary rejected
-swap's sound and haptic and spends zero moves. Reduced motion shortens the
-out-and-back animation.
+A swap into a chain, ice or a carved stone sends the movable gem halfway toward
+the blocked cell and back. The blocked cell stays in place. This plays the
+ordinary rejected swap's sound and haptic and spends zero moves. Reduced motion
+shortens the out-and-back animation. A swap that starts on a chained, iced or
+stone cell plays the same sound and haptic with the notice and no motion. A swap into
+a hole or an empty cell is ignored: no sound, haptic or notice.
 
 ## Diagonal refill
 

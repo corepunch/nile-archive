@@ -528,10 +528,11 @@ seconds until board input. Reduce Motion hides it. Reproduce the mixed-pane
 capture with `build/test/all --suite=christmas-market 'frame christmas-market-tablet-hints'`.
 [Source and extraction](../../../docs/cradle-of-rome-reference/README.md#last-puzzle-tile-glow).
 
-When a swap is rejected by a tinsel tie, only the incoming treat slides toward
-the tie and back. The shared `engine/lua/match3.lua` animation moves the existing
-artwork and plays the normal reject haptic. Review the same motion with
-`build/test/all --suite=relic-rush 'reel chain-reject'`.
+When a swap is rejected by a tinsel tie, ice or a carved stone, only the incoming
+treat slides toward the blocker and back. The shared `engine/lua/match3.lua`
+animation moves the existing artwork and plays the normal reject haptic. Review
+the same motion with
+`build/test/all --suite=relic-rush 'reel chain-reject' 'reel ice-reject' 'reel stone-reject'`.
 
 See [checked in-game captures and commands](review/trickling/README.md) and the
 [engine contract](../../../docs/MATCH3_ENGINE.md). The default atlas's source,

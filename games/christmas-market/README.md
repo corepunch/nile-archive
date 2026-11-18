@@ -30,8 +30,8 @@ absorbs a hit before the piece and its pane can clear. The lamps lead from the m
 arch to Agnes's bakery and along the station walk for Pip's mum. See the
 [board progression](docs/board-progression.md) and [story](docs/story.md).
 With three or fewer panes left, blue or green sparks trace their edges after the same idle delay as the move suggestion.
-A treat moved toward a tinsel tie slides toward it and back, with the same
-haptic as a rejected swap and zero moves spent.
+A treat moved toward a tinsel tie, ice or a carved stone slides toward it and
+back, with the same haptic as a rejected swap and zero moves spent.
 
 Mrs Alder sets aside a cup of cocoa for the next person who comes in cold.
 The guests who share it return with lamps when the wind takes the lights out.

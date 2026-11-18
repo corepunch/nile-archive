@@ -208,9 +208,13 @@ frame("portrait-same-side-390x844", "390x844", "--lua tests/fixtures/dialogue;ga
 reel("relic-rush-board-intro", 18, 6, "480x900", "--level 5 --present --reel")
 reel("relic-rush-town-dive", 48, 4, "480x900", "--city 3 --dive --dive-back 120 --reel")   -- Play: the town dives into the board and back
 reel("relic-rush-phone-board-intro", 12, 8, "390x844", "--level 9 --present --reel --safe-area 0,47,0,34")
-local chain_review = "--lua tests/fixtures/chain-reject;games/relic-rush/lua;. --level 6 --reel"   -- the first board with chains over plaques
+-- A swipe into a blocker: the free gem slides halfway and back.
+local reject_review = "--lua tests/fixtures/swap-reject;games/relic-rush/lua;. --reel"
+local chain_review = reject_review .. " --level 6"   -- the first board with chains over plaques
 reel("chain-reject", 8, 4, "480x900", chain_review)
 reel("chain-reject-phone", 8, 4, "390x844", chain_review .. " --safe-area 0,47,0,34")
+reel("ice-reject", 8, 4, "480x900", reject_review .. " --level 7 --block ice")
+reel("stone-reject", 8, 4, "480x900", reject_review .. " --level 15 --block stone")
 reel("dialogue-to-board", 30, 8, "480x900", "--dialog intro --talk-through 45 --reel")
 frame("entrance-settled-relic-rush-480x900", "480x900", "--level 5 --present --frames 180")
 frame("entrance-settled-relic-rush-390x844", "390x844", "--level 5 --present --frames 180 --safe-area 0,47,0,34")

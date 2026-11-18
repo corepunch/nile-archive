@@ -27,35 +27,60 @@ do
     local count, effect, strength = testing.haptics()
     check(count == 1 and effect == haptic.ERROR, 'a swap without a match gives one error pulse')
 
-    for _, reduced in ipairs({false, true}) do
-        g = setup()
-        R.reduced_motion = reduced
-        g.chain[target] = 1
-        local moving, chained, moves = g.tiles[source], g.tiles[target], g.moves
-        if reduced then R.board_input{released=true, press_pos=from, pos=from} end
-        R.board_input{released=true, press_pos=reduced and to or from, pos=to}
-        local pulses, chain_effect, chain_strength = testing.haptics()
-        check(pulses == 1 and chain_effect == effect and chain_strength == strength,
-            'a chain gives the normal reject pulse on a swipe or two taps')
+    -- A chain, ice or a carved stone in the far cell: the free gem slides
+    -- halfway to it and back, on a swipe and on two taps.
+    for _, block in ipairs({"chain", "ice", "stone_hp"}) do
+        for _, reduced in ipairs({false, true}) do
+            g = setup()
+            R.reduced_motion = reduced
+            g[block][target] = 1
+            if block == "stone_hp" then g.tiles[target] = rules.tile(-1) end
+            local moving, held, moves = g.tiles[source], g.tiles[target], g.moves
+            if reduced then R.board_input{released=true, press_pos=from, pos=from} end
+            R.board_input{released=true, press_pos=reduced and to or from, pos=to}
+            local pulses, block_effect, block_strength = testing.haptics()
+            check(pulses == 1 and block_effect == effect and block_strength == strength,
+                block .. ' gives the normal reject pulse on a swipe or two taps')
 
-        local leg = reduced and .16 * .35 or .16
-        R.board_update(leg)
-        local _, moving_at = R.piece_pose(source, 0)
-        local _, chained_at = R.piece_pose(target, 0)
-        local halfway = from:lerp(to, .5)
-        near(moving_at:dist(halfway), 0, 'the moving gem reaches the chain')
-        near(chained_at:dist(to), 0, 'the chained gem stays in its slot')
-        R.board_update(leg / 2)
-        _, moving_at = R.piece_pose(source, 0)
-        check(moving_at:dist(from) < halfway:dist(from), 'the moving gem heads back')
-        testing.advance(2 * leg)
-        R.board_update(leg / 2 + .001)
-        _, moving_at = R.piece_pose(source, 0)
-        near(moving_at:dist(from), 0, 'the moving gem returns to its slot')
-        check(R.phase == R.PH_IDLE and g.moves == moves and g.chain[target] == 1
-            and g.tiles[source] == moving and g.tiles[target] == chained, 'the rejection preserves the board and moves')
-        check(testing.haptics() == 1, 'the return does not play a second pulse')
+            local leg = reduced and .16 * .35 or .16
+            R.board_update(leg)
+            local _, moving_at = R.piece_pose(source, 0)
+            local _, held_at = R.piece_pose(target, 0)
+            local halfway = from:lerp(to, .5)
+            near(moving_at:dist(halfway), 0, 'the moving gem reaches the ' .. block)
+            near(held_at:dist(to), 0, 'the blocked cell stays in its slot')
+            R.board_update(leg / 2)
+            _, moving_at = R.piece_pose(source, 0)
+            check(moving_at:dist(from) < halfway:dist(from), 'the moving gem heads back')
+            testing.advance(2 * leg)
+            R.board_update(leg / 2 + .001)
+            _, moving_at = R.piece_pose(source, 0)
+            near(moving_at:dist(from), 0, 'the moving gem returns to its slot')
+            check(R.phase == R.PH_IDLE and g.moves == moves and g[block][target] == 1
+                and g.tiles[source] == moving and g.tiles[target] == held, 'the rejection preserves the board and moves')
+            check(testing.haptics() == 1, 'the return does not play a second pulse')
+        end
     end
+
+    -- A held gem cannot set off: it refuses with the pulse and the notice, and nothing slides.
+    local notices
+    local function swipe_with(prepare)
+        g = setup()
+        notices = 0
+        R.notice = function() notices = notices + 1 end
+        prepare(g)
+        R.board_input{released=true, press_pos=from, pos=to}
+        return testing.haptics()
+    end
+    local pulses, held_effect = swipe_with(function(board) board.chain[source] = 1 end)
+    check(pulses == 1 and held_effect == effect and notices == 1 and R.phase == R.PH_IDLE,
+        'a swipe from a chained gem pulses and explains without moving')
+
+    -- A hole or an empty cell is no swap: no pulse, no notice, no motion.
+    check(swipe_with(function(board) board.active[target] = false end) == 0 and notices == 0 and R.phase == R.PH_IDLE,
+        'a swipe into a hole is ignored')
+    check(swipe_with(function(board) board.tiles[target] = rules.tile(-1) end) == 0 and notices == 0 and R.phase == R.PH_IDLE,
+        'a swipe into an empty cell is ignored')
 end
 
 local g = setup()

@@ -34,9 +34,11 @@ cancellation does not count as a drop. Confirm/Cancel never request feedback.
 Relic Rush entrances request the same TICK at .35 strength as normal refill,
 coalescing simultaneous landings. An opening release cannot skip the entrance;
 skipping requires a new press and release during it. Rendering never emits feedback.
-Swiping or tapping a movable gem toward a chained cell plays the same ERROR
-pulse at .5 strength as an ordinary rejected swap. The gem slides toward the
-chain and returns to its slot.
+Swiping or tapping a movable gem toward a chain, ice or a carved stone plays the
+same ERROR pulse at .5 strength as an ordinary rejected swap. The gem slides
+toward the blocker and returns to its slot. A swipe that starts on a chained,
+iced or stone cell gives the same pulse without moving. A swipe into a hole or an empty cell
+gives no feedback.
 
 ## Engine and platform boundary
 
