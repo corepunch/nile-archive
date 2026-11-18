@@ -125,6 +125,20 @@ for level = 1, rules.LEVELS do
             end
             fitted[b.key] = price
         end
+        -- Rounding to fives can ask for more than a thin wallet holds: trim
+        -- the stop's dearest price in that currency until it fits.
+        for slot = 1, CURRENCIES do
+            while true do
+                local sum, dearest = 0, nil
+                for _, b in ipairs(stops[after]) do
+                    local price = fitted[b.key][slot]
+                    sum = sum + price
+                    if price > 5 and (not dearest or price > fitted[dearest.key][slot]) then dearest = b end
+                end
+                if sum <= carry[slot] or not dearest then break end
+                fitted[dearest.key][slot] = fitted[dearest.key][slot] - 5
+            end
+        end
         for _, b in ipairs(stops[after]) do
             for slot = 1, CURRENCIES do carry[slot] = carry[slot] - fitted[b.key][slot] end
         end

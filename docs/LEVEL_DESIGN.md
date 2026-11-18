@@ -104,8 +104,8 @@ Adventure levels. Each row in `levels.json` describes one reference board.
 **Rhythm.** Inside every ten levels after the first ten, use the tiers
 `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`. Levels
 1–4 are `tutorial`. A boss is a dense, combined board, and the board after
-it is a breather. The tier sets the share of games the bot must win within
-the budget (tutorial 95%, easy 92%, normal 80%, hard 62%, boss 50%; see
+it is a breather. The tier sets the margin over the bot's median game that
+the budget allows (tutorial 2.5, easy 2, normal 1.4, hard 1.2, boss 1; see
 [Move budgets](#move-budgets)).
 
 **Shapes.** Make each board recognizable. Relic Rush uses ruins: temple fronts,
@@ -281,8 +281,11 @@ python3 tools/tune_moves.py relic-rush --levels 41-50 # after changing a few boa
 ```
 
 The greedy bot (`tests/lua/tune_moves.lua`) clears each board 40 times on
-hashed seeds with a 250-move calibration ceiling. The budget is the number of moves it needed
-in the tier's share of those games. Its rates order and space the boards;
-they are not human win rates. Read `games/<game>/docs/level-moves.md`
+hashed seeds with a 250-move calibration ceiling. The budget is its median game
+times the tier's margin, rounded up. The median is used because the bot's
+slowest games vary wildly from board to board: a budget read from that tail
+gave neighbouring boards two and three and a half times their typical game.
+The table's "Within budget" column is how many of the bot's games fit; it
+orders and spaces the boards and is not a human win rate. Read `games/<game>/docs/level-moves.md`
 afterwards: a board whose budget jumps far from its neighbours of the same
 tier is usually a board that does not play as its `teaches:` line says.
