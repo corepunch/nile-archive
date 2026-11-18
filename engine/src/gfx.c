@@ -461,50 +461,83 @@ static int hex_perimeter(const char *centres, int count, float radius, hex_edge 
     return used;
 }
 
+/* A block can reject a centre only if all its sample points would fail the
+ * same distance check. Keep the input order for the smooth-min fold. */
+static bool hex_near_block(vec2 p, vec2 lo, vec2 hi, float reach)
+{
+    return !(lo.x - p.x > reach || p.x - hi.x > reach ||
+             lo.y - p.y > reach || p.y - hi.y > reach);
+}
+
 texture tex_hex_field(const char *centres, int count, float radius, float corner, float fillet,
                       rect area, int w, int h, float range, float inset)
 {
-    if (count < 0 || w <= 0 || h <= 0 || w > 2048 || h > 2048 || radius <= 0 || range <= 0) return (texture){0};
+    enum { BLOCK = 16, LIMIT = 2048 };
+    if (count < 0 || w <= 0 || h <= 0 || w > LIMIT || h > LIMIT || radius <= 0 || range <= 0) return (texture){0};
     hex_edge *edges = inset > 0 && count > 0 ? malloc((size_t)count * 6 * sizeof *edges) : NULL;
     if (inset > 0 && count > 0 && !edges) return (texture){0};
-    unsigned char *px = malloc((size_t)w * h * 4);
-    if (!px) { free(edges); return (texture){0}; }
     int perimeter = edges ? hex_perimeter(centres, count, radius, edges) : 0;
+    vec2 *near_centres = count ? malloc((size_t)count * sizeof *near_centres) : NULL;
+    hex_edge *near_edges = perimeter ? malloc((size_t)perimeter * sizeof *near_edges) : NULL;
+    unsigned char *px = malloc((size_t)w * h * 4);
+    texture t = {0};
+    if (!px || (count && !near_centres) || (perimeter && !near_edges)) goto done;
     float apothem = radius * .866025404f;
     corner = clampf(corner, 0, apothem * .9f);
     float reach = radius + range + fillet;   /* cells further away cannot change the encoded value */
-    for (int y = 0; y < h; y++) {
-        for (int x = 0; x < w; x++) {
-            vec2 p = v2(area.pos.x + (x + .5f) * area.size.w / w, area.pos.y + (y + .5f) * area.size.h / h);
-            float d = range;
-            bool inside = false;
+    float limit = range + inset, edge_reach = radius + limit;
+    float xs[LIMIT], ys[LIMIT];
+    for (int x = 0; x < w; x++) xs[x] = area.pos.x + (x + .5f) * area.size.w / w;
+    for (int y = 0; y < h; y++) ys[y] = area.pos.y + (y + .5f) * area.size.h / h;
+    for (int by = 0; by < h; by += BLOCK) {
+        int y_end = by + BLOCK < h ? by + BLOCK : h;
+        for (int bx = 0; bx < w; bx += BLOCK) {
+            int x_end = bx + BLOCK < w ? bx + BLOCK : w;
+            vec2 lo = v2(minf(xs[bx], xs[x_end - 1]), minf(ys[by], ys[y_end - 1]));
+            vec2 hi = v2(maxf(xs[bx], xs[x_end - 1]), maxf(ys[by], ys[y_end - 1]));
+            int ncentres = 0, nedges = 0;
             for (int i = 0; i < count; i++) {
-                float c[2];
-                memcpy(c, centres + i * 8, sizeof c);
-                vec2 q = v2(p.x - c[0], p.y - c[1]);
-                if (fabsf(q.x) > reach || fabsf(q.y) > reach) continue;
-                d = smooth_min(d, hex_distance(q, apothem - corner) - corner, fillet);
-                if (perimeter && !inside) inside = hex_distance(q, apothem) <= 0;
+                vec2 c;
+                memcpy(&c, centres + i * 8, sizeof c);
+                if (hex_near_block(c, lo, hi, reach)) near_centres[ncentres++] = c;
             }
-            if (perimeter && d < range) {
-                float limit = range + inset;
-                float closest = limit * limit;
-                for (int i = 0; i < perimeter; i++) {
-                    vec2 q = vec2_sub(p, edges[i].start);
-                    if (fabsf(q.x) > radius + limit || fabsf(q.y) > radius + limit) continue;
-                    float along = saturate(vec2_dot(q, edges[i].step) / (radius * radius));
-                    vec2 delta = vec2_sub(q, vec2_scale(edges[i].step, along));
-                    closest = minf(closest, vec2_dot(delta, delta));
+            for (int i = 0; i < perimeter; i++) {
+                if (hex_near_block(edges[i].start, lo, hi, edge_reach)) near_edges[nedges++] = edges[i];
+            }
+            for (int y = by; y < y_end; y++) {
+                for (int x = bx; x < x_end; x++) {
+                    vec2 p = v2(xs[x], ys[y]);
+                    float d = range;
+                    bool inside = false;
+                    for (int i = 0; i < ncentres; i++) {
+                        vec2 q = vec2_sub(p, near_centres[i]);
+                        if (fabsf(q.x) > reach || fabsf(q.y) > reach) continue;
+                        d = smooth_min(d, hex_distance(q, apothem - corner) - corner, fillet);
+                        if (perimeter && !inside) inside = hex_distance(q, apothem) <= 0;
+                    }
+                    if (perimeter && d < range) {
+                        float closest = limit * limit;
+                        for (int i = 0; i < nedges; i++) {
+                            vec2 q = vec2_sub(p, near_edges[i].start);
+                            if (fabsf(q.x) > edge_reach || fabsf(q.y) > edge_reach) continue;
+                            float along = saturate(vec2_dot(q, near_edges[i].step) / (radius * radius));
+                            vec2 delta = vec2_sub(q, vec2_scale(near_edges[i].step, along));
+                            closest = minf(closest, vec2_dot(delta, delta));
+                        }
+                        d = inset + (inside ? -1.f : 1.f) * sqrtf(closest);
+                    }
+                    unsigned char v = (unsigned char)(saturate(.5f + d / (2 * range)) * 255 + .5f);
+                    unsigned char *o = px + ((size_t)y * w + x) * 4;
+                    o[0] = o[1] = o[2] = v; o[3] = 255;
                 }
-                d = inset + (inside ? -1.f : 1.f) * sqrtf(closest);
             }
-            unsigned char v = (unsigned char)(saturate(.5f + d / (2 * range)) * 255 + .5f);
-            unsigned char *o = px + ((size_t)y * w + x) * 4;
-            o[0] = o[1] = o[2] = v; o[3] = 255;
         }
     }
-    texture t = tex_from_pixels(px, w, h);
+    t = tex_from_pixels(px, w, h);
+done:
     free(px);
+    free(near_edges);
+    free(near_centres);
     free(edges);
     return t;
 }
