@@ -12,13 +12,13 @@ x p p p x
  p p p p
 p p p p p
  p p p p
-p k p k p
+k k k k k
  p p p p
 p x p x p
  x k k x
 p x p x p
  p p p p
-p k p k p
+k k p k k
  p p p p
 x p p p x
  p p p p

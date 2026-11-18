@@ -10,12 +10,12 @@ p x x x p
  p p p p
 p p x p p
  p p p p
-p p x p p
- p p p p
+p j x j p
+ p j j p
 j j x j j
  p p p p
-p p x p p
- p p p p
+p j x j p
+ j p p j
 s j x j s
  p p p p
 p p p p p

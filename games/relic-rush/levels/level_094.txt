@@ -3,7 +3,7 @@ tier: normal
 teaches: Release both kinds of chain around the twin wells.
 
 x x x x x
- x p p x
+ x K K x
 x x p x x
  p p p p
 x k p k x

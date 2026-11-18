@@ -5,10 +5,10 @@ teaches: Free the opposing locks and clear across the twin arches.
 x x x x x
  x x x x
 x x x x x
- p p p p
+ k k k k
 x p p p x
  p p p p
-p k p k p
+k k k k k
  p p p p
 x p p p x
  p p p p

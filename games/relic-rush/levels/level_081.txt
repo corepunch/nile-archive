@@ -11,13 +11,13 @@ x p p p x
 x p p p x
  p p p p
 x j p s x
- p p p p
+ j j j j
 x p p p x
  p p p p
 x j p j x
  p p p p
 x p p p x
- p p p p
+ j j j j
 x s p j x
  p p p p
 x p p p x

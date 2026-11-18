@@ -5,13 +5,13 @@ teaches: Break both links on the entrance chains to feed the empty shrines below
 x x x x x
  x x x x
 x x x x x
- . p p .
+ . K K .
 x p p p x
  p p p p
-. p p p .
+. K p K .
  p p p p
 x p p p x
- p p p p
+ K K K K
 x x p x x
  p p p p
 x p x p x

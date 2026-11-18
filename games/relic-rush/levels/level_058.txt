@@ -15,11 +15,11 @@ p j p j p
 p p x p p
  j x x j
 p x x x p
- p x x p
+ j x x j
 p p x p p
  p p p p
-. j p j .
- p p p p
+i j p j i
+ j p p j
 p p p p p
  p s s p
 x p . p x

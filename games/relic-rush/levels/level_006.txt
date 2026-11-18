@@ -11,7 +11,7 @@ x . . . x
 x k k k x
  p p p p
 . p . p .
- . p p .
+ . k k .
 x . . . x
  x x x x
 x . . . x

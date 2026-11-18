@@ -14,8 +14,8 @@ x p . p x
  p p p p
 x j x j x
  p p p p
-p p x p p
- p p p p
+j j x j j
+ j j j j
 p j x j p
  p p p p
 p p p p p

@@ -18,8 +18,8 @@ x j x j x
  p p p p
 p x p x p
  p p p p
-x j p j x
- p p p p
+x j j j x
+ j j j j
 x . p . x
  p s s p
 x . . . x

@@ -12,7 +12,7 @@ p p p p p
  p p p p
 p p p p p
  p p p p
-p K p K p
+K K K K K
  p p p p
 p p p p p
  x p p x

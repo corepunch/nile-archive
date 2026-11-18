@@ -9,10 +9,10 @@ x x . x x
 x p p p x
  p p p p
 p p p p p
- p p p p
+ k p p k
 p p p p p
  p p p p
-x k p k x
+x k k k x
  p p p p
 p p p p p
  p p p p

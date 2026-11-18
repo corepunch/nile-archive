@@ -12,7 +12,7 @@ x p p p x
  x p p x
 x x x x x
  x p p x
-p p p p p
+p k p k p
  p p p p
 p p x p p
  x k k x
@@ -21,7 +21,7 @@ p p x p p
 p p p p p
  p p p p
 . p p p .
- k p p k
+ k k k k
 x p p p x
  . p p .
 x x x x x

@@ -9,17 +9,17 @@ x x x p x
 x x p p .
  x p p p
 x p p p p
- x p p p
+ x K K p
 x p p p p
  p p p p
-x p x K p
+x K x K K
  p p p p
 p p x p p
  p p p p
-p K x p x
+K K x K x
  p p p p
 p p p p x
- p p p x
+ p K K x
 p p p p x
  p p p x
 . p p x x

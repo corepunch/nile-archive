@@ -8,8 +8,8 @@ x x x x x
  x p p x
 p . p . p
  p p p p
-p p x p p
- p p p p
+J J x J J
+ J p p J
 p s x s p
  p p p p
 p p p p p
@@ -18,8 +18,8 @@ J J p J J
  p p p p
 p p p p p
  p p p p
-p J p J p
- p p p p
+p J J J p
+ J J J J
 p p p p p
  p p p p
 p p p p p

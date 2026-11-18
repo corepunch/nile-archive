@@ -8,7 +8,7 @@ x x x p p
  x x p p
 x x p p p
  x p p p
-x p p k p
+x k k k p
  p p p p
 p p p p p
  p p k p
@@ -20,7 +20,7 @@ p p p p p
  p k p p
 p p p p p
  p p p p
-p k p p x
+p k k k x
  p p p x
 p p p x x
  p p x x

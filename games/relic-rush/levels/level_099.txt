@@ -16,8 +16,8 @@ p J x J p
  p p p p
 J p x p J
  p p p p
-p J x J p
- p p p p
+J J x J J
+ J J J J
 p p p p p
  . p p .
 x s p s x

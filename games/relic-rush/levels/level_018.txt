@@ -6,8 +6,8 @@ teaches: Break ice and stone near the wells, then clear the connecting floor.
  p p p p
 x p p p x
  p p p p
-p p x p p
- p p p p
+p j x j p
+ j p p j
 p j x j p
  p p p p
 p x x x p
@@ -16,7 +16,7 @@ p x x x p
  p . . p
 . p x p .
  s p p s
-p p x p p
+j j x j j
  p j j p
 p p x p p
  p p p p

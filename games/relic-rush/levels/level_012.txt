@@ -9,7 +9,7 @@ x p p p x
 . p p p .
  p p p p
 p p p p p
- p j j p
+ p p p p
 x p p p x
  p p p p
 x p p p x
@@ -20,8 +20,8 @@ x p x p x
  . p p .
 x p p p x
  s p p s
-x p p p x
- p p p p
+x j p j x
+ p j j p
 x p p p x
  . p p .
 . p p p .
