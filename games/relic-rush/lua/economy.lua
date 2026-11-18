@@ -63,10 +63,10 @@ E.bonuses = B
 -- building and why. Characters speak in the scenes, which play once. Costs
 -- and board unlocks come from the building catalogue and ladder.
 E.quests = {
-    camp={title="Bring the crew ashore", matches="Match timber or stone and fruit.", request="The crew is still out on the boat. Pitch a camp so they come ashore to a hot supper."},
-    well={title="Get the pump running", matches="Match coins for the pump seal.", request="The last water cask is empty. Buy a seal for the old pump and get the well running."},
-    log_cabin={title="Be there for low tide", matches="Match coins, stone, and water or fruit.", request="Low tide comes before dawn. Build a dry cabin so Mara and Tomas can reach the steps in time."},
-    workshop={title="Cut a tread to fit", matches="Match coins, stone, and water or fruit.", request="Tomas has the measure of the missing step. Build a workshop where the crew can cut a new tread."},
+    camp={title="Bring the crew ashore", request="The crew is still out on the boat. Pitch a camp so they come ashore to a hot supper."},
+    well={title="Get the pump running", request="The last water cask is empty. Buy a seal for the old pump and get the well running."},
+    log_cabin={title="Be there for low tide", request="Low tide comes before dawn. Build a dry cabin so Mara and Tomas can reach the steps in time."},
+    workshop={title="Cut a tread to fit", request="Tomas has the measure of the missing step. Build a workshop where the crew can cut a new tread."},
 }
 
 -- The campaign ladder, in purchase order, after Cradle of Rome's 20

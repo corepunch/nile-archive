@@ -711,7 +711,6 @@ function G.bind(R, over)
         wonder_form.values.show_price = show_price
         wonder_form.values.show_notice = not show_price or quest ~= nil and not can_build
         wonder_form.values.show_shop = quest ~= nil
-        if quest then unlock_text = quest.matches .. (unlock_text and "\n" .. unlock_text or "") end
         wonder_form.values.show_unlock = unlock_text ~= nil
         wonder_form:set("unlock", unlock_text or "")
         assert(wonder_form:set_items("price", price_parts(w.cost)))
