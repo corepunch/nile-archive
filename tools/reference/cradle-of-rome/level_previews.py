@@ -16,6 +16,29 @@ CAMPAIGNS = (
     ('cradle-of-rome-2', 'Cradle of Rome 2 (GameTop Windows)'),
 )
 CELL_SIZE = 9  # Fits the widest occupied square board in the shared panel.
+ORTHOGONAL_NEIGHBORS = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+
+def source_reach(cells, sources, blocked):
+    reachable = sources - blocked
+    pending = list(reachable)
+    while pending:
+        x, y = pending.pop()
+        for dx, dy in ORTHOGONAL_NEIGHBORS:
+            neighbor = x + dx, y + dy
+            if neighbor in cells and neighbor not in blocked and neighbor not in reachable:
+                reachable.add(neighbor)
+                pending.append(neighbor)
+    return reachable
+
+
+def gated_cells(cells):
+    """Find chambers joined to a generator only when chains and ice are open."""
+    sources = {at for at, (_, ball) in cells.items() if ball.get('generator') == '1'}
+    disabled = {at for at, (_, ball) in cells.items() if ball.get('disable') == '1'}
+    blocked = disabled | {at for at, (_, ball) in cells.items()
+                          if ball.get('lock') in ('1', '2') or ball.get('freeze') == '1'}
+    return source_reach(cells, sources, disabled) - source_reach(cells, sources, blocked) - blocked
 
 
 def adventure_boards(level_dir):
@@ -27,12 +50,12 @@ def adventure_boards(level_dir):
         left, top = min(xs), min(ys)
         width, height = max(xs) - left + 1, max(ys) - top + 1
         label = f'{number}  {width}x{height}  |  {len(cells)} cells'
-        boards.append((label, (cells, left, top, width, height)))
+        boards.append((label, (cells, left, top, width, height, gated_cells(cells))))
     return boards
 
 
 def draw_square_board(draw, ox, oy, layout):
-    cells, left, top, width, height = layout
+    cells, left, top, width, height, gated = layout
     x0 = round(ox - width * CELL_SIZE / 2)
     y0 = round(oy - height * CELL_SIZE / 2)
     theme = SHEET_THEME
@@ -41,7 +64,8 @@ def draw_square_board(draw, ox, oy, layout):
             x, y = x0 + column * CELL_SIZE, y0 + row * CELL_SIZE
             right, bottom = x + CELL_SIZE - 1, y + CELL_SIZE - 1
             box = (x, y, right, bottom)
-            cell = cells.get((left + column, top + row))
+            at = left + column, top + row
+            cell = cells.get(at)
             if cell is None:
                 draw.rectangle(box, outline=theme['hole'])
                 continue
@@ -55,6 +79,10 @@ def draw_square_board(draw, ox, oy, layout):
             if ball.get('disable') == '1':
                 draw.line((x + 2, y + 2, right - 2, bottom - 2), fill='lightgrey')
                 draw.line((right - 2, y + 2, x + 2, bottom - 2), fill='lightgrey')
+            if ball.get('generator') == '1':
+                draw.polygon(((x + 2, y + 3), (right - 2, y + 3), (x + 4, bottom - 2)), fill='white')
+            if at in gated:
+                draw.ellipse((x + 3, y + 3, right - 3, bottom - 3), fill=theme['gated'])
 
 
 def main():
@@ -69,7 +97,8 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     for key, title, boards in campaigns:
         path = args.output_dir / f'{key}.png'
-        legend = 'Blue single plaques, green double plaques, gold chains, pale outlines ice, grey crosses disabled'
+        legend = ('Blue single plaques, green double plaques, gold chains, pale outlines ice, grey crosses disabled, '
+                  'white arrows refill sources, red dots potential gates')
         sheet_grid(boards, path, f'{title} - Adventure 1-100  |  {legend}', draw_square_board)
         print(f'wrote {path} ({len(boards)} levels)')
 

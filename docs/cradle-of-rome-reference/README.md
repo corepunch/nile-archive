@@ -62,6 +62,12 @@ board width, height and active cell count on each label. Gold rings mark
 chains, pale outlines mark ice, and grey crosses mark disabled cells. Markers
 sit over the plaque color when the two layers overlap.
 
+White arrows identify authored refill sources (`Ball generator="1"`). Red
+dots mark cells that gain a connection to a source across square edges when
+chains and ice are removed. This estimates which chambers the blockers cut
+off. Cradle of Rome 2 level 9 shows the pattern clearly. Five chains along
+the diagonal isolate 73 cells, including 48 plaques, in the lower chamber.
+
 | Game | Adventure boards 1–100 |
 | --- | --- |
 | Cradle of Rome, Android beta 0.9.0 | [Overview](../review/level-sheets/cradle-of-rome.png) |
