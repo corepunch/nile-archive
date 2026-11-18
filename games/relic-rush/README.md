@@ -97,7 +97,7 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Board 1 uses five regular kinds, including the timber log that earns Supplies.
+Board 1 is Cradle of Rome's opening pool: sun coins and silver coins (Coins) plus a leaf, a flower and an amphora that only score. Food and Supplies pieces arrive with the restorations.
 Boards 2–10 and 13 show a story piece in place of one matching colour.
 Every board spawns five kinds, so those boards use four regular kinds plus the story piece.
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
@@ -190,17 +190,16 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all blue tablets within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Return to the island. At a wonder milestone, check the price and replay an expedition if you need more resources.
+4. Return to the island. At a restoration milestone, check the price and replay an expedition if you need more resources. Nothing blocks the next expedition: you can play on without building and come back when you can afford it.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. See how the crew uses what you built, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
 
-A matched sun coin earns 4 Coins. Red berries and green apples pay 1 Food.
-Leaves and flowers add score only.
-Timber and dressed stone pay 2 and 3 Supplies. Each confirmed
+A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
+The first building, the camp, costs 60 Coins. Food and Supplies come from the Well's water buckets and the Workshop's timber, then the Archive's dressed stone. Each confirmed
 restoration unlocks a higher-yield chip or a tool on eligible expeditions.
 The result shows what the next restoration unlocks or what is still needed to afford it. Matches and cascades earn resources. Direct tool hits can clear plaques and start cascades.
 
-The Well adds water buckets on level 5. Water buckets earn 3 Food each. The Workshop adds cut blocks on level 11. An arrival message names the building and piece.
+The Well adds water buckets on level 5. Water buckets earn 3 Food each. The Workshop adds timber bundles on level 8. An arrival message names the building and piece.
 
 ### Tutorials and citizens (`lua/user_events.lua`)
 
