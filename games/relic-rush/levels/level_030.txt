@@ -1,28 +1,28 @@
 name: Hall of Pillars
 tier: boss
-teaches: Break the ice and chains in the hall, then work through both layers of its double tablets.
+teaches: Clear the double plaques around the open courtyard and uncover the central signal plate.
 
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . j j .
-. . . . .
- . . . .
-. g x g .
- . P P .
-. . . . .
- . P P .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . s . .
- . . . .
+P x x x P
+ P P P P
+P P P P P
+ P P P P
+P P P P P
+ P P P P
+P P x P P
+ P x x P
+x P x P x
+ P P P P
+x P P P x
+ P P P P
+P P P P P
+ P P P P
+x P P P x
+ P P P P
+x P x P x
+ P x x P
+x x x x x
+ x x x x
+x x x x x
+ x x x x
+x x x x x
+ x x x x

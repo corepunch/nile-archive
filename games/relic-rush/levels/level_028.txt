@@ -1,28 +1,28 @@
 name: Ziggurat Steps
 tier: normal
-teaches: A chevron of steps; ice sits on tablets of the inner stairs.
+teaches: Sweep the plaque fields as the ziggurat steps widen toward the base.
 
 x x x x x
  x x x x
 x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . p . .
- . j j .
-. . p . .
- . p p .
-. p . p .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
- . x x .
+ x p p x
+x p p p x
+ x p p x
+. p p p .
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+. p x p .
+ p x x p
 . x x x .
  x x x x

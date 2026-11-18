@@ -1,28 +1,28 @@
 name: Moat Gate
 tier: normal
-teaches: Two halves of the court sit apart; break the gate chains at their feet to drain pieces into the moat below.
+teaches: Follow the plaque bands between the openings around the moat.
 
 x . x . x
- . . . .
-. . . . .
+ p p p p
+. p p p .
+ p p p p
+p x p x p
  . p p .
-. p p p .
- . k k .
-. p p p .
- . . . .
-. . . . .
+. x p x .
+ . p p .
+. p . p .
  x x x x
-x . x . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x p x p x
+ p p p p
+. p p p .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
 x x x x x
  x x x x

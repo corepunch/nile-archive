@@ -1,6 +1,6 @@
 name: Sunken Courtyard
 tier: tutorial
-teaches: Follow the rim of the sunken courtyard to clear the blue tablets.
+teaches: Follow the ring of plaques around the sunken court.
 
 x x x x x
  x x x x
@@ -13,13 +13,13 @@ x . . . x
 . . x . .
  . x x .
 . . x . .
- . x x .
+ p x x p
 . p x p .
+ p p p p
+. . . . .
  . p p .
 . . p . .
  . p p .
-. . . . .
- . . . .
 . . . . .
  . . . .
 x . . . x

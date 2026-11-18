@@ -1,28 +1,28 @@
 name: Overgrown Stair
 tier: easy
-teaches: A slanting stair descends to the sunken floor; ice sits on tablets of the middle steps.
+teaches: Clear the chained plaques at both ends of the diagonal stair.
 
 x x x x x
  x x x x
-x x x . .
- x x . .
-x x . . .
- x . . .
-x . . . .
- . . . .
-. . . . .
- . . . .
-. . p . .
- . p p .
-. . j . .
- . p p .
-. . p . .
- . . . .
-. . . . .
- . . . .
-. . . . x
- . . . x
-. . . x x
- . . x x
-. . x x x
+x x x p p
+ x x p p
+x x p p p
+ x p p p
+x p p k p
+ p p p p
+p p p p p
+ p p k p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p k p p
+p p p p p
+ p p p p
+p k p p x
+ p p p x
+p p p x x
+ p p x x
+p p x x x
  x x x x

@@ -1,28 +1,28 @@
 name: Twin Terraces
 tier: hard
-teaches: Clear the chained tablets on the upper terrace and follow the two lower paths.
+teaches: Open the middle chain to feed the empty terrace below it.
 
-x . x . x
- x . . x
-x . x . x
- . . . .
-. . . . .
- . . . .
-. p . p .
- . p p .
-. k . k .
- . p p .
-. . . . .
- . . . .
-. . x . .
- . . . .
-. p x p .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-x . x . x
- x . . x
 x x x x x
+ . . . .
+. . . . .
+ . p p .
+. k p k .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ x p p x
+x x k x x
+ x x x x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ p p p p
+x p p p x
  x x x x

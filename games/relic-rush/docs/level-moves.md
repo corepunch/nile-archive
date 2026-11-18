@@ -9,35 +9,35 @@ it orders and spaces the boards and is not a human win rate.
 | # | Board | Tier | Moves | Median | Fastest | Within budget |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
 | 1 | The Landing | tutorial | 15 | 6 | 3 | 38/40 |
-| 2 | Temple Steps | tutorial | 18 | 7 | 3 | 38/40 |
-| 3 | Sunken Courtyard | tutorial | 23 | 9 | 2 | 37/40 |
-| 4 | Overgrown Terraces | tutorial | 18 | 7 | 3 | 39/40 |
-| 5 | Vault Door | easy | 28 | 14 | 4 | 32/40 |
-| 6 | Vine-Bound Terraces | normal | 20 | 14 | 5 | 34/40 |
-| 7 | Jaguar Court | easy | 30 | 15 | 4 | 30/40 |
-| 8 | Overgrown Arches | normal | 23 | 16 | 5 | 31/40 |
-| 9 | Twin Terraces | hard | 30 | 25 | 8 | 26/40 |
-| 10 | Jaguar Throne | boss | 28 | 28 | 12 | 20/40 |
-| 11 | Fallen Colonnade | easy | 22 | 11 | 5 | 36/40 |
-| 12 | Choked Gateway | easy | 24 | 12 | 4 | 36/40 |
-| 13 | The Spire Keep | normal | 20 | 14 | 7 | 32/40 |
-| 14 | Hall of Pillars | normal | 21 | 15 | 9 | 32/40 |
-| 15 | Broken Aqueduct | hard | 18 | 15 | 6 | 26/40 |
-| 16 | The Overlook | easy | 20 | 10 | 5 | 37/40 |
-| 17 | Moss Bridge | normal | 19 | 13 | 5 | 29/40 |
-| 18 | Twin Wells | normal | 37 | 26 | 15 | 31/40 |
-| 19 | Sun Court | hard | 15 | 12 | 7 | 27/40 |
-| 20 | Heart of the Temple | boss | 15 | 15 | 7 | 22/40 |
-| 21 | The Great Well | easy | 22 | 11 | 4 | 36/40 |
-| 22 | Overgrown Stair | easy | 18 | 9 | 3 | 37/40 |
-| 23 | Triple Terrace Gate | normal | 31 | 22 | 6 | 30/40 |
-| 24 | Moat Gate | normal | 20 | 14 | 5 | 26/40 |
-| 25 | Sentinel Walls | hard | 47 | 39 | 16 | 26/40 |
-| 26 | Lintel Door | easy | 22 | 11 | 4 | 40/40 |
-| 27 | Twin Obelisks | normal | 42 | 30 | 13 | 35/40 |
-| 28 | Ziggurat Steps | normal | 19 | 13 | 7 | 34/40 |
-| 29 | The Dry Well | hard | 32 | 26 | 12 | 30/40 |
-| 30 | Hall of Pillars | boss | 28 | 28 | 15 | 20/40 |
+| 2 | Temple Steps | tutorial | 33 | 13 | 4 | 37/40 |
+| 3 | Sunken Courtyard | tutorial | 48 | 19 | 8 | 40/40 |
+| 4 | Overgrown Terraces | tutorial | 28 | 11 | 3 | 40/40 |
+| 5 | Vault Door | easy | 100 | 50 | 12 | 36/40 |
+| 6 | Vine-Bound Terraces | normal | 31 | 22 | 12 | 32/40 |
+| 7 | Jaguar Court | easy | 208 | 104 | 37 | 37/40 |
+| 8 | Overgrown Arches | normal | 132 | 94 | 54 | 30/40 |
+| 9 | Twin Terraces | hard | 174 | 145 | 60 | 25/40 |
+| 10 | Jaguar Throne | boss | 144 | 144 | 84 | 20/40 |
+| 11 | Fallen Colonnade | easy | 142 | 71 | 38 | 35/40 |
+| 12 | Choked Gateway | easy | 150 | 75 | 34 | 37/40 |
+| 13 | The Spire Keep | normal | 192 | 137 | 54 | 27/40 |
+| 14 | Hall of Pillars | normal | 124 | 88 | 45 | 29/40 |
+| 15 | Broken Aqueduct | hard | 130 | 108 | 45 | 24/40 |
+| 16 | The Overlook | easy | 160 | 80 | 35 | 33/40 |
+| 17 | Moss Bridge | normal | 118 | 84 | 49 | 33/40 |
+| 18 | Twin Wells | normal | 100 | 71 | 43 | 37/40 |
+| 19 | Sun Court | hard | 75 | 62 | 21 | 24/40 |
+| 20 | Heart of the Temple | boss | 183 | 183 | 86 | 20/40 |
+| 21 | The Great Well | easy | 174 | 87 | 30 | 37/40 |
+| 22 | Overgrown Stair | easy | 250 | 131 | 45 | 36/40 |
+| 23 | Triple Terrace Gate | normal | 250 | 215 | 43 | 27/40 |
+| 24 | Moat Gate | normal | 132 | 94 | 39 | 28/40 |
+| 25 | Sentinel Walls | hard | 113 | 94 | 46 | 28/40 |
+| 26 | Lintel Door | easy | 250 | 161 | 55 | 30/40 |
+| 27 | Twin Obelisks | normal | 133 | 95 | 60 | 34/40 |
+| 28 | Ziggurat Steps | normal | 125 | 89 | 33 | 27/40 |
+| 29 | The Dry Well | hard | 190 | 158 | 65 | 22/40 |
+| 30 | Hall of Pillars | boss | 131 | 131 | 80 | 20/40 |
 | 31 | Flooded Vault | easy | 34 | 17 | 6 | 33/40 |
 | 32 | Cloven Colonnade | easy | 26 | 13 | 4 | 38/40 |
 | 33 | Sealed Stair | normal | 20 | 14 | 4 | 36/40 |

@@ -1,22 +1,22 @@
 name: Overgrown Terraces
 tier: tutorial
-teaches: Match across the middle terraces; pieces falling through one row can set up the next.
+teaches: Match through the chained piece to free its plaque, then clear the two terraces.
 
 . . . . .
  . . . .
-. . . . .
+x . . . x
  . . . .
+x . p . x
+ . p p .
+. . k . .
+ . p p .
 . . p . .
  . p p .
 . . p . .
- . . . .
-. . p . .
  . p p .
-. . p . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+x . p . x
+ . p p .
+x . . . x
  . . . .
 . . . . .
  . . . .

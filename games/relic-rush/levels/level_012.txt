@@ -1,28 +1,28 @@
 name: Choked Gateway
 tier: easy
-teaches: Line up the vine at the gateway, then match the tablet that it guarded.
+teaches: Match over ice and beside the carved stones to open room around the gate.
 
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. p k p .
- . p p .
-x p . p x
- . . . .
-x . . . x
+x x p x x
+ x p p x
+x p p p x
+ p p p p
+. p p p .
+ p p p p
+p p p p p
+ p j j p
+x p p p x
+ p p p p
+x p p p x
  x x x x
-x . x . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x p x p x
+ . p p .
+. p p p .
+ . p p .
+x p p p x
+ s p p s
+x p p p x
+ p p p p
+x p p p x
+ . p p .
+. p p p .
+ . p p .

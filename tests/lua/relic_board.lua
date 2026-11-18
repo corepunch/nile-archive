@@ -296,6 +296,21 @@ if testing.game == "relic-rush" then
     near(R.HEX_R, default_radius, "The Landing uses the same cell size as later boards")
     near(left, R.SCREEN_W - right, "The Landing is centered across the screen")
     check(left >= R.SCREEN_W * .05, "The Landing leaves room beside its outer columns")
+
+    local terraces = rules.game_start(8, 982)
+    local entrance = rules.hex_index(0, -1)
+    local empty = {}
+    for i = 0, rules.CELLS - 1 do
+        if terraces.active[i] and terraces.tiles[i].kind < 0 then empty[#empty+1] = i end
+    end
+    check(terraces.chain[entrance] == 1 and #empty >= 30, "the entrance chain holds back the lower terrace")
+    local wave = rules.new_match()
+    wave.mask[entrance] = true
+    rules.game_apply(terraces, wave)
+    rules.game_collapse(terraces)
+    for _, i in ipairs(empty) do
+        check(terraces.tiles[i].kind >= 0, "opening the chain feeds the lower terrace")
+    end
 end
 
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,

@@ -241,7 +241,7 @@ levels-preview:
 	@mkdir -p docs/review/level-sheets
 	@for game in $(SHEET_GAMES); do \
 		report=$$(python3 tools/hex_levels.py "$$game" --levels "$(or $(LEVELS),1-100)" \
-			--sheet "docs/review/level-sheets/$$game.png") || { printf '%s\n' "$$report" >&2; exit 1; }; \
+			--sheet "docs/review/level-sheets/$$game$(if $(filter-out 1-100,$(LEVELS)),-$(LEVELS)).png") || { printf '%s\n' "$$report" >&2; exit 1; }; \
 		printf '%s\n' "$$report" | tail -2; \
 	done
 

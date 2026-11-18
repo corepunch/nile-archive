@@ -1,28 +1,28 @@
 name: Jaguar Court
 tier: easy
-teaches: Break the ice over the empty tablet. A piece can then fall onto it and make a scoring line.
+teaches: Sweep both sides of the wide court, including the foot of the board.
 
-. . . . .
+x x x x x
  . . . .
-. . . . .
- . . . .
-. . p . .
- . p p .
-. . i . .
- . x x .
-. . p . .
- . p p .
-. . p . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
- x . . x
-x . . . x
- x . . x
+x p x p x
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p x x p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+. p p p .
+ p p p p
+x p p p x
+ x p p x
+x p p p x
+ x p p x
 x x x x x
  x x x x

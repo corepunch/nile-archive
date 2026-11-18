@@ -1,6 +1,6 @@
 name: The Landing
 tier: tutorial
-teaches: Match pieces on top of the blue tablets to clear them; clear every tablet to win.
+teaches: Clear the seven plaques in the small hex at the centre of the beach.
 
 x x x x x
  x x x x

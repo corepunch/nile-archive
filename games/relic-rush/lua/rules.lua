@@ -5,6 +5,8 @@ local economy = require("economy")
 local M = match3.new{flags=match3.LINE_MATCHES | match3.COLOR_TOOL, columns=9, rows=12, colors=campaign.colors, match_min=4,
     lightning_hits=15, refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
+-- The final hall reveals the signal plate from its centre plaque.
+M.levels[30].signal_cell = M.hex_center()
 local start = M.game_start
 
 -- A fresh expedition must leave a plaque for a second player move. Try each

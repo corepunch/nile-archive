@@ -1,28 +1,28 @@
 name: Sun Court
 tier: hard
-teaches: Use the open court to line up the iced pieces, then return to the tablets under them.
+teaches: Open the chained plaques at the shoulders and foot of the sun court.
 
+x x x x x
+ x x x x
 x x . x x
  x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . j j .
-. p . p .
- . p p .
-. . p . .
- . p p .
-. . . . .
- . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
+x x . x x
+ x p p x
+x p p p x
+ p p p p
+p k p k p
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+p k p k p
+ p p p p
+x p p p x
+ x p p x
+x x . x x
  x . . x
+x x . x x
+ x x x x

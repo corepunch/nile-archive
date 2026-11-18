@@ -52,12 +52,13 @@ of every level). Regenerate both with
    down a diagonal tunnel one cell at a time when nothing lies straight above
    them, so a tunnel from one chamber to another trickles pieces at an angle.
    Put a few such boards in every ten.
-5. **Tablets win the board, and there are few of them.** Every board has
+5. **Tablets win the board.** Every board has
    tablets (`oil` in the engine); clear them all to win. Our levels count
    moves, not time: Cradle covers 80–95% of a board because its levels run on
    a timer. Count a board's tablet layers (a double tablet is two) and stay
-   within its tier: tutorial 6–16, easy up to 24, normal up to 30, hard up to
-   34, boss up to 40. The validator enforces the ceilings. Put the tablets
+   within its tier on Christmas Market and Relic Rush 31–100. Tutorial boards
+   have 6–16 layers, with ceilings of 24 for easy, 30 for normal, 34 for hard
+   and 40 for boss. The validator enforces the campaign's limits. Put the tablets
    where they make the board's point: behind the gate, in the far corner of
    the vault, along the tunnel. The move budget is set later by the tuner.
 6. **Chains guard tablets.** In Cradle of Rome 869 of 871 chains sit on
@@ -71,17 +72,16 @@ of every level). Regenerate both with
    chain, or a hole, closes that path. A cell that only a chain can feed
    starts empty and stays empty until the chain breaks. Then pieces trickle
    through and the tablets below can be cleared.
-8. **Every feature by level 100.** Cradle of Rome's Adventure never uses ice
-   or stones. We introduce both gradually: ice early (7), stones at 15, so the
-   campaign uses every board feature we have. Each first appearance gets a
-   one-line hint card naming the feature in the game's own terms.
+8. **Every feature by level 100.** The first Cradle of Rome uses ice and
+   disabled cells in Extras. The Windows sequel introduces both in Adventure
+   level 12. Give each first appearance a short hint in the game's own terms.
 9. **Follow the schedule below.** The validator rejects a feature before its
    first level.
 
-## The 100-level schedule
+## The default 100-level schedule
 
-The original progression follows the feature introductions in Cradle of Rome's
-Adventure levels. Each row in `levels.json` describes one reference board.
+The default schedule follows the first Cradle of Rome's Adventure boards in
+`levels.json`. Relic Rush uses the sequel for its first 30 expeditions.
 
 | Levels | Tablet layers | Chains | What is new |
 | --- | --- | --- | --- |
@@ -114,9 +114,11 @@ silhouettes: a fir tree, a bell, a star, a snowflake, a sleigh, stalls in a
 row. Reuse a family with a changed task instead of inventing an arbitrary
 notch. Give every board a one-sentence intent (`teaches:`).
 
-Relic Rush keeps the feature introductions on this schedule. Its match-four boards
-use smaller groups of tablets and fewer simultaneous locks. See the
-[Relic Rush board progression](../games/relic-rush/docs/board-progression.md) for its current difficulty curve.
+**Relic Rush 1–30.** The first six boards introduce small plaque fields. Levels
+7–30 cover at least four fifths of the board with plaques. Every cell on a boss
+board has two layers. Chains debut on level 4. Ice and carved stones arrive on
+level 12. The first six boards allow up to 24 tutorial, 40 easy or 45 normal
+plaque layers. See the [Relic Rush board progression](../games/relic-rush/docs/board-progression.md).
 
 ## The level file
 
@@ -255,10 +257,11 @@ python3 tools/hex_levels.py relic-rush --show 5           # print a board; ~ mar
 python3 tools/hex_levels.py relic-rush --lua              # write lua/boards.lua once all 100 pass
 make levels-preview                                        # 100 boards per game, one image each
 make levels-preview SHEET_GAMES=relic-rush                 # one game, all 100 boards
-make levels-preview SHEET_GAMES=relic-rush LEVELS=41-60    # one game, a range
+make levels-preview SHEET_GAMES=relic-rush LEVELS=1-30     # one game, a range
 ```
 
-`make levels-preview` writes `docs/review/level-sheets/<game>.png`. Each sheet
+`make levels-preview` writes `docs/review/level-sheets/<game>.png`. Range previews
+include the range in the filename, for example `relic-rush-1-30.png`. Each sheet
 shows blue tablets, green double tablets, gold chain rings, pale ice rings,
 grey stones, outlined holes and red dots on gated cells. Regenerate the sheet
 after changing boards and look at it before committing. `make level-sheets`

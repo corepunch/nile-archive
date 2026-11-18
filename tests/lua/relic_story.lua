@@ -312,9 +312,11 @@ R.on_island,R.overlay=false,R.OV_RESULT
 local g=R.g
 local level=rules.level_of(g)
 local signal=level.signal_cell
+check(signal==rules.hex_center() and g.oil[signal]==2, 'the central double plaque covers the signal plate')
 for _, i in ipairs(level.oil) do
     if i~=signal then g.oil[i]=0 end
 end
+g.chain[level.oil[1]],g.obstacles=1,1 -- exercise a win with an ordinary blocker left on the board
 g.oil_left=1
 local m=rules.new_match()
 m.mask[signal]=true

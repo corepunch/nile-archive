@@ -1,28 +1,28 @@
 name: The Overlook
 tier: easy
-teaches: Use the broad end of the hourglass to match through the ice before working towards the waist.
+teaches: Sweep the two broad platforms on either side of the overlook’s narrow waist.
 
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . j j .
-. . p . .
- . p p .
-x . . . x
+x x x x x
+ p p p p
+. p p p .
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
  x p p x
-x x . x x
- x . . x
-x . . . x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x x p x x
+ x p p x
+x p p p x
+ . p p .
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+. p p p .
+ p p p p
+x p p p x
+ . p p .
 x x x x x
  x x x x

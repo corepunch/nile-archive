@@ -1,28 +1,28 @@
 name: Broken Aqueduct
 tier: hard
-teaches: Break stones with a neighbouring match, then line up the chained piece in the channel.
+teaches: Follow the plaque fields across both sides of the broken aqueduct.
 
 x x . x x
  x . . x
-. . . . .
- . . . .
-. . . . .
- . s s .
-. . p . .
- s p p s
-. p k p .
- . p p .
-x . . . x
+. p . p .
+ x p p x
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+p p p p p
+ p p p p
+x p p p x
  x p p x
 x x x x x
- x . . x
-x . . . x
+ x p p x
+x s p s x
+ p p p p
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+. p p p .
  . p p .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .

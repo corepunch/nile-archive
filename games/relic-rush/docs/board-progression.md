@@ -1,74 +1,53 @@
 # Relic Rush board progression
 
-Every expedition asks the player to clear its blue plaques. Chains hold
-pieces in place. A match or tool hit removes a chain (crossed double chains
-take two), and a later hit
-clears the plaque beneath it. A chain on plain stone can be left in place if
-it is out of the way. Board 13 shows a story piece in one colour slot. Chapter 1 story scenes follow confirmed island work.
+Every expedition asks the player to clear its plaques. Blue plaques take one
+hit and green plaques take two. Chains hold their pieces until a match or tool
+hit breaks the chain. A later hit clears the plaque beneath it. Ice and carved
+stones can also cut off the route that feeds a chamber.
 
-The 100 boards are authored, one file each, in [../levels](../levels), on Cradle
-of Rome's feature schedule: chains from 5, ice from 7, two areas from 9,
-double tablets from 10, carved stones from 15 and double chains from 51.
-[docs/LEVEL_DESIGN.md](../../../docs/LEVEL_DESIGN.md) is the guide;
-`make levels-preview` draws every board on
-[one sheet](../../../docs/review/level-sheets/relic-rush.png). Move budgets are
-fitted by `python3 tools/tune_moves.py relic-rush` and listed with each
-board's tier in [level-moves.md](level-moves.md).
-
-Every board from 1 to 100 uses five piece kinds. Swapping neighbours must
-form a straight line of four or more. The same minimum applies after a fall.
-Each new deal checks every opening exchange through its entire cascade and
-redeals if any exchange clears all the plaques. Refill damping begins on the second wave (`refill_damping=2`).
+The first 30 expeditions use the [GameTop Windows edition of Cradle of Rome 2](../../../docs/cradle-of-rome-reference/README.md#adventure-comparison-sheets)
+as their progression reference. The authored layouts use Relic Rush’s hex
+geometry and four-piece matches. Plaque coverage tracks the reference after
+level 6, with a minimum of 80% of all board cells. The three story bosses are
+entirely green double plaques. The [30-level sheet](../../../docs/review/level-sheets/relic-rush-1-30.png)
+shows the revised boards and the [full sheet](../../../docs/review/level-sheets/relic-rush.png)
+shows all 100.
 
 ## Match-four difficulty
 
-Each blue tablet sits on two axes with space for four pieces. A gate must have a
-four-piece line on its fed side so the player can open it before filling the
-chamber below. The Landing is a 61-cell hex that uses all nine columns at the
-standard tile size. Its seven blue plaques occupy the centre cell and its six
-neighbours. Temple Steps uses the same cluster where its two stairways meet.
-Sunken Courtyard has a seven-cell opening, with seven tablets along the lower
-rim. Overgrown Terraces uses two matching four-plaque diamonds on successive
-terraces. Board 5 introduces a chain that holds back a tablet, and board 7
-places ice above an empty tablet. Later boards combine split chambers, layered
-tablets and double locks.
+The first six boards use smaller objective fields. The Landing keeps the
+seven-plaque hex at the centre of its nine-column board. Temple Steps sets two
+objective groups along a diagonal, and Sunken Courtyard wraps its plaques around
+an open court. Overgrown Terraces introduces a single chained plaque on level 4.
+Vault Door expands the clearing area, then Vine-Bound Terraces brings back
+chains on smaller target fields.
 
-Keep more refillable cells than waiting cells in the opening position so
-players can rearrange pieces while a gate holds. The match-four audit checked
-every board and found two openings where most cells waited for a chain.
-Vault Door now feeds its outer lanes from the start. Twin Terraces now feeds
-both lower paths from the start, and each mandatory chain sits at the
-intersection of all three match axes. Each Twin Terraces chain has ten
-possible four-cell runs with room to swap in a piece, up from two.
+Jaguar Court and Overgrown Arches introduce dense clearing on levels 7 and 8.
+On level 9, Twin Terraces starts with 40 empty cells below a chained entrance.
+The upper terrace has lines of four that can open the chain and start the fall.
+Level 12 introduces ice and carved stones. Later boards vary the shape of the
+routes with stepped edges, paired wells, pillars and diagonal bridges.
 
-| Board | Refillable cells at the start | Cells waiting for chains |
-| --- | ---: | ---: |
-| 5 · Vault Door | 35 → 73 | 38 → 1 |
-| 9 · Twin Terraces | 29 → 80 | 46 → 0 |
+The bosses each have their own outline. Jaguar Throne (10) has a tall back and
+low armrests. Heart of the Temple (20) has two lobes that taper to the base.
+Hall of Pillars (30) frames an open courtyard and ends in two pillars. Its
+centre plaque covers the signal plate used by the story scene.
 
-Each board was played on 40 deals without tools to set its move limit. Levels
-1–4 have median clears of 6, 7, 9 and 7 moves respectively. Across boards in
-each later tier, the median of those board medians was 12 for easy, 16 for
-normal, 23 for hard and 26.5 for bosses. All deals cleared within the 250-move
-calibration ceiling. The fitted limits range from 13 to 49.
+Each tablet has space for a match on two axes. Each gate has a four-piece line
+on its fed side. The level validator checks symmetry, feed routes and coverage
+before compiling the 100 source boards in [../levels](../levels). Every opening
+deal has a legal move and is rejected if one exchange could clear every plaque.
+Move budgets come from 40 seeded deals per board played by a bot without tools.
+The results are listed in [level-moves.md](level-moves.md).
 
-Before the early-board revisions to levels 2, 3, 5 and 9, a separate check used
-ten other deals per board (runs 301–310 of the same seed sequence), with the
-scheduled restoration pieces, no tools and the live move limits. The bot won
-766 of 1,000 games, up from 131 on the same deals with the pre-rebalance
-layouts and budgets. It won at least once on each board. Trying every legal
-first exchange on the first of those ten deals per board found zero one-move wins.
-
-Each comparison shows the previous board on the left and the current one on the right.
+Each in-game comparison shows the previous board on the left and the revised
+one on the right.
 
 | Board | 480 × 900 | 390 × 844 |
 | --- | --- | --- |
-| 1 · The Landing | [Opening deal](screenshots/review/plaque-symmetry/landing-480.jpg) | [Opening deal](screenshots/review/plaque-symmetry/landing-390.jpg) |
-| 2 · Temple Steps | [Opening deal](screenshots/review/tutorial-shapes/temple-steps-480.jpg) | [Opening deal](screenshots/review/tutorial-shapes/temple-steps-390.jpg) |
-| 3 · Sunken Courtyard | [Opening deal](screenshots/review/tutorial-shapes/sunken-courtyard-480.jpg) | [Opening deal](screenshots/review/tutorial-shapes/sunken-courtyard-390.jpg) |
-| 4 · Overgrown Terraces | [Opening deal](screenshots/review/plaque-symmetry/terraces-480.jpg) | [Opening deal](screenshots/review/plaque-symmetry/terraces-390.jpg) |
-| 5 · Vault Door | [Opening deal](screenshots/review/match-four-gates/vault-door-480.jpg) | [Opening deal](screenshots/review/match-four-gates/vault-door-390.jpg) |
-| 9 · Twin Terraces | [Opening deal](screenshots/review/match-four-gates/twin-terraces-480.jpg) | [Opening deal](screenshots/review/match-four-gates/twin-terraces-390.jpg) |
+| 9 · Twin Terraces | [Opening deal](screenshots/review/rome-2-campaign/terraces-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/terraces-390.jpg) |
+| 12 · Choked Gateway | [Opening deal](screenshots/review/rome-2-campaign/gateway-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/gateway-390.jpg) |
+| 30 · Hall of Pillars | [Opening deal](screenshots/review/rome-2-campaign/hall-480.jpg) | [Opening deal](screenshots/review/rome-2-campaign/hall-390.jpg) |
 
 ## Piece progression
 

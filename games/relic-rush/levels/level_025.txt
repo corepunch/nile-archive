@@ -1,28 +1,28 @@
 name: Sentinel Walls
 tier: hard
-teaches: The sentinel walls shelter double ice. Two lines free the piece and a third can clear its tablet.
+teaches: Clear through the frost beside the stone sentinels on both walls.
 
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . x . .
+. p . p .
+ x p p x
+p p p p p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ s p p s
+p J x J p
+ p p p p
+p p x p p
+ p p p p
+p p x p p
+ p J J p
+x p x p x
+ p p p p
+x p x p x
+ s p p s
+. p p p .
  . p p .
-. p x p .
- . J J .
-. p x p .
- . p p .
-. . x . .
- . p p .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+. p . p .
+ . x x .
 x x x x x
  x x x x

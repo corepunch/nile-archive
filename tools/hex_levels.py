@@ -42,6 +42,9 @@ HOLE = 'x'
 # into its gaps (docs/LEVEL_DESIGN.md).
 FIRST = {'chain': 5, 'chain_on_tablet': 6, 'gate': 5, 'ice': 7, 'double_tablet': 10,
          'ice_on_tablet': 11, 'stone': 15, 'double_ice': 25, 'double_chain': 51}
+# The first 30 Relic Rush expeditions follow the Windows sequel's denser arc.
+RELIC_INTRO_CAPS = {'tutorial': 24, 'easy': 40, 'normal': 45}
+RELIC_OPENING_FIRST = {**FIRST, 'chain': 4, 'chain_on_tablet': 4, 'ice': 12, 'ice_on_tablet': 12, 'stone': 12}
 
 
 def blocker(symbol):
@@ -148,7 +151,8 @@ def areas(layout):
     return groups
 
 
-def summarize(number, head, layout, problems, match_min):
+def summarize(number, head, layout, problems, match_min, *, game=None):
+    relic_opening = game == 'relic-rush' and number <= 30
     tablets = [c for c, s in layout.items() if SYMBOLS[s][0] >= 1]
     doubles = [c for c, s in layout.items() if SYMBOLS[s][0] == 2]
     chains = [c for c, s in layout.items() if SYMBOLS[s][1] >= 1]
@@ -175,9 +179,16 @@ def summarize(number, head, layout, problems, match_min):
     if not tablets:
         problems.append('no tablets: every board is won by clearing its tablets')
     layers = len(tablets) + len(doubles)
-    cap = MAX_LAYERS.get(head.get('tier'), 40)
-    if not MIN_LAYERS <= layers <= cap:
-        problems.append(f'{layers} tablet layers (a double counts two); a {head.get("tier")} board holds {MIN_LAYERS} to {cap}')
+    if relic_opening and number >= 7:
+        if len(tablets) * 5 < len(layout) * 4:
+            problems.append('plaques must cover at least 80% of the board')
+        if head.get('tier') == 'boss' and len(doubles) != len(layout):
+            problems.append('every boss cell must be a double plaque')
+    else:
+        caps = RELIC_INTRO_CAPS if relic_opening else MAX_LAYERS
+        cap = caps.get(head.get('tier'), 40)
+        if not MIN_LAYERS <= layers <= cap:
+            problems.append(f'{layers} tablet layers (a double counts two); a {head.get("tier")} board holds {MIN_LAYERS} to {cap}')
     # A tablet needs two possible match axes. Other cells need one, even
     # when a removable stone initially interrupts the line.
     spans = [range(-offset, match_min - offset) for offset in range(match_min)]
@@ -255,9 +266,10 @@ def summarize(number, head, layout, problems, match_min):
     used = {'chain': chains, 'chain_on_tablet': on_tablets, 'gate': gated, 'double_tablet': doubles,
             'double_chain': double_chains, 'stone': stones, 'ice': ice,
             'ice_on_tablet': ice_on_tablets, 'double_ice': double_ice}
-    for feature, first in FIRST.items():
+    introductions = RELIC_OPENING_FIRST if relic_opening else FIRST
+    for feature, first in introductions.items():
         if used[feature] and number < first:
-            problems.append(f'{feature.replace("_", " ")} appears on level {number}; Cradle of Rome introduces it on {first}')
+            problems.append(f'{feature.replace("_", " ")} appears on level {number}; the campaign introduces it on {first}')
     return info
 
 
@@ -386,7 +398,7 @@ def main():
         problems = []
         layout = board(rows, problems)
         symmetry(rows, layout, problems)
-        info = summarize(number, head, layout, problems, 4 if args.game == "relic-rush" else 3) if layout else {}
+        info = summarize(number, head, layout, problems, 4 if args.game == "relic-rush" else 3, game=args.game) if layout else {}
         levels.append((number, head, layout))
         status = 'ok ' if not problems else 'BAD'
         failed += bool(problems)

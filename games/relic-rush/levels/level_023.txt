@@ -1,28 +1,28 @@
 name: Triple Terrace Gate
 tier: normal
-teaches: Break the chain above the terrace to feed its tablet; matches beside stones clear more room.
+teaches: Open the chains above the middle terrace and clear the three plaque fields.
 
-x x . x x
- x . . x
-. . . . .
- . . . .
+x x p x x
+ x p p x
 . p p p .
- . . . .
-. . k . .
+ p p p p
+p p p p p
+ p p p p
+x p p p x
+ x p p x
+x p k p x
+ p k k p
+p p p p p
+ p p p p
+. p p p .
+ . p p .
+. p p p .
  x x x x
-x . p . x
- . . . .
-. p . p .
- . s s .
-. p . p .
- . . . .
-. . p . .
- x x x x
-x . . . x
- . . . .
-. . . . .
- . s s .
-. . . . .
- . . . .
-. . . . .
- . . . .
+x p p p x
+ p p p p
+x p p p x
+ p p p p
+p p p p p
+ p p p p
+. p p p .
+ p p p p

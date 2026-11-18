@@ -1,28 +1,28 @@
 name: Moss Bridge
 tier: normal
-teaches: A Z-shaped bridge: pieces slide down the slanting span from the upper bank to the lower one.
+teaches: Follow the diagonal bridge from one plaque field to the other.
 
 x x x x x
- x x x x
-. . . . .
- . . . .
-x . . . .
- x . p .
-x x . . .
- x x p .
-x x x p .
- x x . p
-x x . . .
- x . p .
-x . . . x
- . p . x
-. . . x x
- p . x x
-. p x x x
- . p x x
-. . . x x
- . p . x
-. . . . x
- . . . .
-. . . . .
- x x x x
+ x x p x
+. . p p p
+ . p p p
+x p p p p
+ x p p p
+x x p p p
+ x x p p
+x x p p p
+ x x p p
+x x p p p
+ x p p p
+x p p p x
+ p p p x
+p p p x x
+ p p x x
+p p p x x
+ p p x x
+p p p x x
+ p p p x
+p p p p x
+ p p p .
+p p p . .
+ x p x x

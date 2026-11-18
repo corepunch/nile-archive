@@ -1,28 +1,28 @@
 name: Vine-Bound Terraces
 tier: normal
-teaches: Match through the chained tablet twice: first free its piece, then clear the blue tile.
+teaches: Free the chained plaques on the upper terrace and clear the lower floor.
 
 x . . . x
  x . . x
 x . . . x
  x . . x
 x . . . x
+ . . . .
+x k k k x
+ p p p p
+. p . p .
  . p p .
-x . p . x
- . p p .
-. . k . .
- . p p .
-x . p . x
+x . . . x
  x x x x
 x . . . x
+ . p p .
+. . p . .
  . . . .
 . . . . .
  . . . .
-. . . . .
+x . . . x
  . . . .
-. . . . .
- . . . .
-. . . . .
+x . . . x
  . . . .
 . . . . .
  . . . .
