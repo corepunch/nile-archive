@@ -971,3 +971,13 @@ the repository root:
 ```sh
 build/relic-rush --headless --fresh --mute --size 480x900 --level 9 --lua 'games/relic-rush/docs/review/moves-capsule;games/relic-rush/lua;.' --shot /tmp/moves-capsule.png
 ```
+
+The [eight-variant comparison](review/moves-capsule/variants.jpg) shows all
+icons at wallet scale on the expedition backdrop. ImageGen used the Moves and
+wallet coins as references and painted all eight in a single [transparent atlas](review/moves-capsule/variants-atlas.png).
+Reading order follows the 4 × 2 grid. The designs use broad recessed arrows,
+thin tapered arrows, oversized wedge tips, rounded tips, angular arrows,
+nearly closed arcs, raised gold arrows, and diagonal tapered arrows. The preview
+reads cells directly as texture regions and uses the same capsule and count for
+each. Add `--moves-variants` to the command above and crop the top 141 logical
+pixels for the comparison sheet.
