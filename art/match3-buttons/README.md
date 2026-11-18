@@ -12,7 +12,7 @@ button from the bottom of the same box.
 | Action | Painted icon |
 | --- | --- |
 | Build | Ivory cottage with clay roof tiles and a blue-green timber door |
-| Play | Faceted emerald triangle in a brass setting |
+| Play | Loose triangular emerald, optically centered on the enamel face |
 | Levels / Wishes | Rolled parchment chart with a red destination mark |
 | Pause | Two sapphire bars with brass end caps |
 

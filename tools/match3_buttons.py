@@ -24,7 +24,9 @@ def main():
             crop = crop.crop(crop.getchannel("A").getbbox())
             fit = icon.get("fit", spec["fit"])
             crop.thumbnail((fit, fit), Image.Resampling.LANCZOS)
-            atlas.paste(crop, (side * col + (side - crop.width) // 2, (side - crop.height) // 2))
+            x = (side - crop.width) // 2 + icon.get("offset_x", 0)
+            assert 0 <= x <= side - crop.width, icon["key"]
+            atlas.paste(crop, (side * col + x, (side - crop.height) // 2))
     path = ROOT / spec["registered"]
     if args.check:
         with Image.open(path) as actual:
