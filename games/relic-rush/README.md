@@ -106,9 +106,9 @@ Clear every blue plaque to finish the expedition. The opening chapter’s dialog
 ## Shared UI and dialog layers
 
 The island and the board share one wallet and Settings bar. The green resource
-capsules have the same brass rim and drop shadow as the round buttons. On the
-board, the Moves capsule leads the row with two circular arrows on blue glass.
-Its fill turns red at five moves. Blue tablets mark the board objective. Winning banks the resources
+capsules have the same brass rim and drop shadow as the round buttons. The board shows
+Moves at the left of the resource balances. The medallion turns red at five
+moves. Blue tablets mark the board objective. Winning banks the resources
 earned in the three slots.
 Four large circular bonus sockets sit in one row below the centered board from the first
 expedition. Settings opens the Explorer's Guide,

@@ -125,7 +125,7 @@ for pack in manifest["packs"]:
     for kind in range(len(kinds)):
         assert (ROOT / f"art/registered/tile-sets/{pack}/{kind}.png").is_file()
 hud = json.loads((ROOT / manifest["expedition_hud"]).read_text())
-assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | {"score", "complete", "life", "moves"}
+assert set(hud["icons"]) == {"pause-" + state for state in manifest["tool_states"]} | {"score", "complete", "life"}
 for asset in [hud["controls"], hud["retired_portrait"]]:
     assert (ROOT / asset["source"]).is_file() and (ROOT / asset["prompt"]).is_file()
 for name, asset in hud["icons"].items():
@@ -161,7 +161,7 @@ assert str(count) in doc and 'building-catalogue.md' in doc
 assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows', 'placement-guides'}
 for name in manifest['island_layers']:
     assert '"'+name+'"' in art and '`'+name+'`' in doc
-print(f"Relic Rush catalogue: {len(actual)} runtime files, {len(slots)} campaign pieces, 26 board states, {len(hud['icons'])} HUD icons, {count} buildings covered")
+print(f"Relic Rush catalogue: {len(actual)} runtime files, {len(slots)} campaign pieces, 26 board states, 7 HUD icons, {count} buildings covered")
 
 # Compare actual piece silhouettes with the renderer-authored cell. The sun
 # face remains upright: geometry is authored, not a runtime sprite rotation.

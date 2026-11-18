@@ -27,8 +27,7 @@ local function check_layout(g)
         "the round Pause button is the fifth slot")
     assert(math.abs((first.x + pause:max().x) / 2 - app.screen():center().x) < .01, "the five slots are centered")
     local header = R.town.header_form.boxes
-    assert(not header.menu and not header.leading and header.cap4
-        and math.abs((header.cap1.x + header.cap4:max().x) / 2 - app.screen():center().x) < .01,
+    assert(not header.menu and math.abs((header.leading.x + header.cap3:max().x) / 2 - app.screen():center().x) < .01,
         "the display-only header is centered")
     local min_x, max_x, min_y, max_y = math.huge, -math.huge, math.huge, -math.huge
     for cell = 0, rules.CELLS - 1 do

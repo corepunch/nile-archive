@@ -25,14 +25,7 @@ R.locked_notice = words.locked
 board_intro.bind(R, rules)
 local match3 = require("match3")
 match3.bind_board_ui(R, rules)
-match3.bind_town_board_hud(R, function()
-    local moves = R.g.moves
-    return {
-        icon = R.hud_art[art.moves_icon],
-        value = tostring(moves),
-        role = moves <= 5 and not R.g.won and "wallet_low_moves" or nil,
-    }
-end)
+match3.bind_town_board_hud(R)
 
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local cell_active = rules.game_cell_active

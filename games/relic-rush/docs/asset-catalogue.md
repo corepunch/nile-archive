@@ -487,20 +487,8 @@ buttons without captions; choosing one names it and its effect in the toast.
 ## Expedition header
 
 The campaign board centers its display-only row of Moves, Coins, Supplies
-and Food. Pause sits at the right end of the booster row. The Moves capsule uses
-variant 2 from the [concept atlas](review/moves-capsule/variants-atlas.png).
-The `moves` frame in `data/board/hud.png` is a blue glass badge with two curved
-arrows. Its crop and 128 × 128 registration are recorded in the
-[HUD manifest](../art/expedition-hud/manifest.json). The display-only capsule
-uses the green wallet fill above five moves and the red fill at five or fewer
-until the board is won. The badge retains its authored pixels in both states.
-Run `python3 games/relic-rush/tools/prepare_hud.py` and
-`python3 tools/match3_atlas.py` to rebuild.
-The before-and-after comparisons show the
-[480 × 900 HUD](review/moves-capsule/live-480.jpg),
-[390 × 844 HUD](review/moves-capsule/live-390.jpg), and
-[three moves remaining](review/moves-capsule/live-low.jpg). These use the
-`shot floating-hud`, `shot phone-floating-hud`, and `shot low-moves` cases.
+and Food. Pause sits at the right end of the booster row. The Moves medallion
+shows its low-move state when needed.
 Resource counts include pending earnings, and matched pieces land on their
 currency icons. [Current board](screenshots/bonus-toolbar-phone.jpg)
 
@@ -977,7 +965,7 @@ first wallet-style capsule. ImageGen painted the [static icon](review/moves-caps
 using the [wallet coin](../art/registered/resource-pieces/coin.png) as its reference.
 Two recessed clockwise arrows replace the stamped sun on the warm gold face.
 The transparent sprite is registered at the same 128 × 128 px as the wallet coin. The [header comparison](review/moves-capsule/comparison.jpg)
-shows the original hex counter above the concept. To render this preview from
+shows the shipped hex counter above the concept. To render this preview from
 the repository root:
 
 ```sh

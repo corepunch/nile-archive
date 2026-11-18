@@ -41,7 +41,6 @@ A.buildings = {catalogue="buildings", shadows="building_sprites", states={"resto
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.placement_controls = {cancel="placement_cancel", confirm="placement_confirm", states={"normal","hover","pressed","focused","disabled-confirm"}}
 A.wallet_icons={coins="coin", supplies="wallet-supplies", food="wallet-food"}
-A.moves_icon = "moves"
 A.result_icons = {"discovery-star", "next-clue"}
 A.navigation={source="../../art/match3-buttons/manifest.json",roles={"navigation_build","navigation_play", "navigation_levels","navigation_pause"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
@@ -68,7 +67,6 @@ function A.load_hud()
     local neutral = app.arg("default-match3")
     local theme = match3.hud(not neutral and require("match3_hud") or nil)
     assert(neutral or theme.signboard, "missing jade signboard")
-    assert(neutral or theme[A.moves_icon], "missing Moves icon")
     return theme
 end
 
