@@ -877,6 +877,17 @@ footprints and collision rules are unchanged. No bitmap or ImageGen source is
 added. Reproduce with the existing native-input hold/placement captures in the
 [review](../../../docs/review/city-placement-guides/README.md).
 
+## Settings gear
+
+Relic Rush's expedition and town Settings buttons use `action-pause` from the
+[shared action atlas](../../../art/match3-buttons/README.md). `lua/art.lua` takes
+a centered view of five-sixths of the transparent sprite frame's width and
+height, so the sapphire gear draws 20% larger in every button state. The crop
+lies outside the painted gear. Reproduce the board captures with
+`build/test/relic-rush 'shot hex-first' 'shot phone-board'`.
+[480 × 900](screenshots/review/gear-size/board-480x900.jpg) ·
+[390 × 844](screenshots/review/gear-size/board-390x844.jpg).
+
 ## Earlier settings gear and three-resource wallet
 
 The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. The same atlas includes the archived `life` heart. The top wallet shows the sun coin, `wallet-supplies` and `wallet-food` in that order. The shared header keeps the gear slot square and scales the wallet capsule widths to fit beside it.

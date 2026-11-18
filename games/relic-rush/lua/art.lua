@@ -52,10 +52,18 @@ end
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
+local board_skin
 function A.skin()
+    if board_skin then return board_skin end
     local match3 = require("match3")
-    if app.arg("default-match3") then return match3.skin() end
-    return match3.skin(require("match3_skin"))
+    local skin = app.arg("default-match3") and match3.skin() or match3.skin(require("match3_skin"))
+    local gear = skin["action-pause"]
+    local frame = texture.rect(gear)
+    -- Use less transparent padding so the gear draws 20% larger on the same face.
+    local crop = rect.centered(frame:center(), frame:size():scale(1 / 1.2))
+    skin["action-pause"] = texture.region(gear, crop)
+    board_skin = skin
+    return board_skin
 end
 
 -- The game's own atlases, even when the board borrows the engine's neutral skin.
