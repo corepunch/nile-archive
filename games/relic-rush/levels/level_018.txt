@@ -1,28 +1,28 @@
 name: Twin Wells
 tier: normal
-teaches: One well is bridged at top and bottom; break the chains to feed the lower floor.
+teaches: Work from either bank of the wells. The chained tablets need a second line once freed.
 
 . . . . .
  . . . .
 . . . . .
- . . . .
+ . k k .
+. p x p .
+ . p p .
+. p x p .
+ p . . p
 . . x . .
  . . . .
 . . x . .
- . . . .
-. . x . .
- . . . .
-. k x k .
  . . . .
 . s x s .
  . . . .
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p p p p
- p p p p
-x . p . x
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
  . . . .
 x x x x x
  x x x x

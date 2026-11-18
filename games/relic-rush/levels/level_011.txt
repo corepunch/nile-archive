@@ -1,27 +1,27 @@
 name: Fallen Colonnade
 tier: easy
-teaches: Ice over a tablet: break the ice first, then clear the tablet beneath.
+teaches: Match through the ice to expose the blue tablets in the colonnade.
 
 . . . . .
  . . . .
 . . . . .
  x . . x
 . . . . .
- . j j .
+ . . . .
+. . p . .
+ x j j x
+. p p p .
+ . . . .
+. . . . .
+ x p p x
+. . . . .
+ . . . .
 . . . . .
  x . . x
 . . . . .
  . . . .
-. j . j .
+x . . . x
  x . . x
-p . . . p
- p . . p
-p . . . p
- x p p x
-. p p p .
- p p p p
-x p p p x
- x p p x
 x x x x x
  x x x x
 x x x x x

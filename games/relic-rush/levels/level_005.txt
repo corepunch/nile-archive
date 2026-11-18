@@ -1,6 +1,6 @@
 name: Vault Door
 tier: easy
-teaches: Break the chain at the doorway so pieces can fall into the treasure vault below.
+teaches: Break the chain at the vault door to feed the tablet in the chamber below.
 
 x x . x x
  x . . x
@@ -8,21 +8,21 @@ x . . . x
  . . . .
 . . . . .
  . . . .
-. . . . .
- . . . .
-x . . . x
- . . . .
-x x . x x
- x x x x
+. . p . .
+ . p p .
+x . p . x
+ . p p .
 x x c x x
  x x x x
 x x . x x
+ x x x x
+x x p x x
  x . . x
 x . . . x
  . . . .
 . . . . .
- . p p .
-. p p p .
- p p p p
-p p p p p
- p p p p
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .

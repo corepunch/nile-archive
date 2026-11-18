@@ -1,6 +1,6 @@
 name: Twin Gardens
 tier: easy
-teaches: Two walled gardens meet in one hall; each locks its lower tablets behind a chained terrace.
+teaches: Use the crossing between the two gardens to match repeatedly through the double chain.
 
 x x x x x
  x . . x
@@ -10,17 +10,17 @@ x . x . x
  . . . .
 . . x . .
  . . . .
-. . x . .
+. . . . .
+ . p p .
+. p K p .
+ . p p .
+. . . . .
  . . . .
 . . x . .
  . . . .
-. . x . .
+. . . . .
  . . . .
-K K x K K
- K K K K
-. p . p .
- p . . p
-p . . . p
+. . . . .
  . . . .
 . . . . .
  . . . .

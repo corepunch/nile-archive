@@ -1,6 +1,6 @@
 name: Twin Shrines
 tier: hard
-teaches: Two shrines rise from one hall; break the double chains to feed the tablets in each crypt.
+teaches: Use the crossing between the shrines to reach the double chains on both sides.
 
 x . x . x
  x . . x
@@ -10,19 +10,19 @@ x . x . x
  . . . .
 . s x s .
  . . . .
+. p . p .
+ p K K p
+. p . p .
+ . p p .
+. . . . .
+ . p p .
 . . x . .
  . . . .
 . . x . .
  . . . .
-K K x K K
- K K K K
-p p x p p
- p p p p
-p p x p p
- p p p p
-p p . p p
- p . . p
-p . . . p
+. . . . .
+ . . . .
+. . . . .
  . . . .
 . . . . .
  . . . .

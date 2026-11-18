@@ -1,28 +1,28 @@
 name: Citadel Keep
 tier: hard
-teaches: A walled keep with a tablet in every room; no gates, only tight lanes.
+teaches: Return to the two frozen positions in the keep until their blue tablets are clear.
 
 . x . x .
  . . . .
 . . . . .
  . . . .
 . . . . .
+ . p p .
+. . . . .
+ . J J .
+. p p p .
+ . p p .
+. . x . .
+ . p p .
+. . . . .
+ . . . .
+. . x . .
  . . . .
 . . . . .
  . . . .
-. J . J .
+. . . . .
  . . . .
-. . x . .
+. . . . .
  . . . .
-. . J . .
- . . . .
-. . x . .
- p . . p
-p J p J p
- p p p p
-p p p p p
- p p p p
-p p p p p
- p p p p
 . x . x .
  x . . x

@@ -1,28 +1,28 @@
 name: Grand Observatory
 tier: boss
-teaches: A grand dome of double tablets around a central void, crowned by a tower that needs two hits per cell too.
+teaches: Use the open dome to reach the double ice and line up a second hit on the double tablets.
 
 x . . . x
  x . . x
 x . . . x
  x . . x
 x . . . x
- x . . x
-x . . . x
- x . . x
+ x P P x
+x P . P x
+ x J J x
+. . . . .
+ . . . .
+. P x P .
+ . . . .
 . . . . .
  . . . .
 . . x . .
- . . . .
-. . . . .
- . . . .
-. J x J .
  . x x .
 . . x . .
  . . . .
 . s . s .
- . P P .
-. P . P .
- P P P P
-P P P P P
- P P P P
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .

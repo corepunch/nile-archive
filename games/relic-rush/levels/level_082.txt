@@ -1,28 +1,28 @@
 name: Colonnade
 tier: easy
-teaches: A row of chained tablets seals the crypt under the colonnade.
+teaches: Break the double chain and the ice in the colonnade; the open flanks leave room for a second line.
 
 x x . x x
- x . . x 
+ x . . x
 x . . . x
- . . . . 
+ . . . .
 . . s . .
- . . . . 
+ . . . .
+. x K x .
+ . . . .
 . x . x .
- . . . . 
+ . . . .
 . x . x .
- . . . . 
-. x . x .
- . . . . 
-. x . x .
- . . . . 
-K K K K K
- K K K K 
+ . . . .
+. x p x .
+ . p p .
+. . p . .
+ . p p .
+. . j . .
+ . . . .
 . . . . .
- . . . . 
-. j . j .
- . . . . 
+ . . . .
 x . . . x
- p p p p 
-x p p p x
- p p p p 
+ . . . .
+x . . . x
+ . . . .

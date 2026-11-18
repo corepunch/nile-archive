@@ -1,28 +1,28 @@
 name: Sunken Court
 tier: boss
-teaches: Double tablets in two courts joined by an arch overhead: break the chains to feed each crypt.
+teaches: Break the double chains over the double tablets and clear the ice at the entrance to the two courts.
 
 x . . . x
- . . . . 
+ . . . .
 . . . . .
- . . . . 
-. J . J .
- . . . . 
-. . . . .
- x . . x 
+ . P P .
+. G . G .
+ . J J .
+. P . P .
+ x . . x
 . . x . .
- x . . x 
+ x . . x
 . . x . .
- . . . . 
+ . . . .
 . . x . .
- . . . . 
-G G x G G
- G G G G 
+ . . . .
+. . x . .
+ . . . .
 . s x s .
- . . . . 
-. J x J .
- . . . . 
-P P x P P
- . . . . 
-x P x P x
- P P P P 
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+x . x . x
+ . . . .

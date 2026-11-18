@@ -1,28 +1,28 @@
 name: Sunken Stair
 tier: easy
-teaches: The stair slants down to a landing of double chains; break them as the steps narrow.
+teaches: Use both halves of the slanting stair to reach its chained and iced tablets.
 
 x x x x x
  x x x x
 . . . . .
- . . p .
-. p p p .
- . . p .
-. . j . .
  . . . .
-. . . p .
- . . p .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . j p .
 . . . . x
- . . . p
-. K K K .
- p . . .
+ . p K .
+. . . . .
+ . K p .
 x . . . .
- . p . .
-. p . . .
+ . p j .
+. . . . .
  . . . .
-. . j . .
- . p . .
-. p p p .
- . p . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 . . . . .
  x x x x

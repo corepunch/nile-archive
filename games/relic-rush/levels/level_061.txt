@@ -1,28 +1,28 @@
 name: Temple Stairs
 tier: easy
-teaches: Climb down the stairs and break the double chains at the landing to flood the lower hall.
+teaches: Use the stair landing to make repeated lines through the double chain.
 
 . x x x .
  . x x .
 . . x . .
  . . . .
+. . p . .
+ . . . .
+. . K . .
+ . p p .
+. . p . .
+ . p p .
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x K K K x
- x K K x
+x . . . x
+ x . . x
 x . . . x
  . . . .
 . . . . .
  . . . .
-p p p p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x

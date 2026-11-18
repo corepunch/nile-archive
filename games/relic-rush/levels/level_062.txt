@@ -1,27 +1,27 @@
 name: Jungle Bridge
 tier: easy
-teaches: The jungle bridge slants across the gorge; its middle planks are chained, so break them as you cross.
+teaches: Work from both banks of the slanting bridge to match the chain on its central plank.
 
 x x x x x
  . . . x
 . . . . x
  . . . .
 . . . . x
- . j . x
-p . . x x
- . p x x
-. p x x x
- . p x x
+ . . . x
 . . . x x
- . . p x
-x K K K x
- x p . .
+ . . x x
+. . . x x
+ p . x x
+. p . x x
+ . p p x
+x . k . x
+ x p p .
+x x . p .
+ x x . p
 x x . . .
- x x p .
-x x x p .
- x x p .
-x x . . p
- x . j .
+ x x . .
+x x . . .
+ x . . .
 x . . . .
  . . . .
 x . . . .

@@ -1,28 +1,28 @@
 name: Sentinel Walls
 tier: hard
-teaches: The sentinel walls are joined at the base; double ice holds the middle tablets.
+teaches: The sentinel walls shelter double ice. Two lines free the piece and a third can clear its tablet.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
 . . x . .
- . . . .
-. J x J .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- . . . .
-. . x . .
- J p p J
-p . x . p
  . p p .
-p p p p p
- p p p p
-p p p p p
- p p p p
+. p x p .
+ . J J .
+. p x p .
+ . p p .
+. . x . .
+ . p p .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x

@@ -1,6 +1,6 @@
 name: Sun Court
 tier: hard
-teaches: A dense court of tablets: iced tablets glow at the rim of the sun, and every cell matters.
+teaches: Use the open court to line up the iced pieces, then return to the tablets under them.
 
 x x . x x
  x . . x
@@ -10,19 +10,19 @@ x . . . x
  . . . .
 . . . . .
  . . . .
-. j . j .
- . . . .
 . . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- j . . j
-. . . . .
- p p p p
+ . j j .
 . p . p .
- p p p p
-p p p p p
- p p p p
-x p p p x
- x p p x
+ . p p .
+. . p . .
+ . p p .
+. . . . .
+ . p p .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ x . . x

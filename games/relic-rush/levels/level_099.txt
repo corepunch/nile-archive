@@ -1,6 +1,6 @@
 name: Last Door
 tier: hard
-teaches: A small sealed room at the foot of the ruins holds the last tablets behind two gates.
+teaches: Open the last double chain to feed a piece into the sealed tablet pocket.
 
 x x x x x
  x x x x
@@ -9,20 +9,20 @@ x x x x x
 . . . . .
  . . . .
 . . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- p p p p
-x p p p x
- p p p p
-x p p p x
- x p p x
-x x K x x
- x K K x
-x K K K x
- K K K K
+ . p p .
+. . C . .
+ . x x .
 . p p p .
  . p p .
+. . p . .
+ . p p .
+x . . . x
+ . . . .
+x . . . x
+ x . . x
+x x . x x
+ x . . x
+x . . . x
+ . . . .
+. . . . .
+ . . . .

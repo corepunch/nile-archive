@@ -1,24 +1,24 @@
 name: Overgrown Terraces
 tier: tutorial
-teaches: The whole hexagon is open: clear tablets on every terrace from top to bottom.
+teaches: Match across the middle terraces; pieces falling through one row can set up the next.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
-. . . . .
+. . p . .
+ . p p .
+. . p . .
+ . p p .
+. . p . .
+ . . . .
+. . p . .
  . . . .
 . . . . .
  . . . .
-p . . . p
- . . . .
 . . . . .
  . . . .
 . . . . .
- . . . .
-p p p p p
- p p p p
-p p p p p
  . . . .
 x . . . x
  x . . x

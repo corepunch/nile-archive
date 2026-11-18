@@ -1,28 +1,28 @@
 name: Star Gallery
 tier: hard
-teaches: Three chained arches close the lower gallery; break one to reach the tablets.
+teaches: Open the double chain and double ice in the gallery before returning to the blue floor.
 
 x . . . x
- x . . x 
+ x . . x
 . . . . .
- . . . . 
+ . . . .
 . . . . .
- . . . . 
+ . p p .
 . . . . .
- . . . . 
-. J . J .
- . . . . 
-. . J . .
- . . . . 
-. J . J .
- . . . . 
-x K K K x
- x x x x 
-x p . p x
- . p p . 
-p p p p p
- p p p p 
-x K K K x
- x K K x 
+ . J J .
+. p p p .
+ . p p .
+. . K . .
+ . p p .
+. . . . .
+ . . . .
+x . . . x
+ x x x x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ x . . x
 x x x x x
- x x x x 
+ x x x x

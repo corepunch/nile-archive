@@ -1,6 +1,6 @@
 name: Sealed Stair
 tier: normal
-teaches: A stair of plain treads descends to the middle; chains seal the landing and the lower hall fills only once they break.
+teaches: Line up the chained landing from the open steps; matches beside a stone open more space below.
 
 . x x x .
  x x x x
@@ -9,20 +9,20 @@ teaches: A stair of plain treads descends to the middle; chains seal the landing
 . . x . .
  . x x .
 . . x . .
+ . p p .
+. p k p .
+ . p p .
+. p . p .
+ . . . .
+x . . . x
  . . . .
 . . . . .
  . . . .
 . . . . .
  . . . .
-x k k k x
- k k k k
-. . . . .
+. s . s .
  . . . .
 . . . . .
  . . . .
-p s p s p
- p . . p
-p p . p p
- p . . p
-p p p p p
- p p p p
+. . . . .
+ . . . .

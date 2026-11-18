@@ -23,7 +23,7 @@ for level, entry in ipairs(campaign.levels) do
                         j = rules.hex_neighbor(j, direction)
                     end
                 end
-                supported = supported or length >= 3
+                supported = supported or length >= rules.MATCH_MIN
             end
             check(supported, label .. 'cell ' .. i .. ' belongs to a match line')
         else

@@ -1,28 +1,28 @@
 name: Triumphal Arch
 tier: easy
-teaches: An arch stands open at the bottom; clear every tablet under and around it.
+teaches: Use the space above the arch to break the ice and line up the newly exposed tablets.
 
 x . . . x
  . . . .
 . . . . .
  . . . .
-. . j . .
- . . . .
-. . . . .
- . . . .
-. j . j .
- . . . .
 . . . . .
  . . . .
 . . . . .
- . . . .
-. j . j .
- . . . .
+ . j j .
+. . p . .
+ . p p .
 . . . . .
  . p p .
-. p p p .
- p p p p
-p p x p p
- p x x p
-p x x x p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . x x .
+. x x x .
  x x x x

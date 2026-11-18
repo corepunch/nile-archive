@@ -1,10 +1,10 @@
 name: Crossroads
 tier: normal
-teaches: Four roads meet at the old crossing; tablets line every arm.
+teaches: Follow the open arms of the crossing to line up the two iced pieces.
 
 x x x x x
  x x x x
-x j . j x
+x . . . x
  x . . x
 x . . . x
  x . . x
@@ -12,17 +12,17 @@ x . . . x
  x . . x
 . . . . .
  . . . .
+. p . p .
+ . p p .
+. j p j .
+ . p p .
 . . . . .
  . . . .
-. . . . .
- p . . p
-. . p . .
- p p p p
-x p p p x
- x p p x
-x j p j x
- x p p x
-x p p p x
- x p p x
-x p . p x
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
  x . . x

@@ -1,27 +1,27 @@
 name: The Overlook
 tier: easy
-teaches: Pieces funnel through the waist of the hourglass; iced cells guard each lobe.
+teaches: Use the broad end of the hourglass to match through the ice before working towards the waist.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
-. j . j .
- . . . .
 . . . . .
- . . . .
+ . j j .
+. . p . .
+ . p p .
 x . . . x
- x . . x
+ x p p x
 x x . x x
  x . . x
 x . . . x
  . . . .
-p . . . p
+. . . . .
  . . . .
-p j p j p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 . . . . .
  . . . .
 x x x x x

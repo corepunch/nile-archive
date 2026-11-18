@@ -1,6 +1,6 @@
 name: Cistern Locks
 tier: easy
-teaches: Three chained locks hold the cistern; break any of them to let pieces fall.
+teaches: Match into the double chain at the cistern mouth, then clear the exposed tablet.
 
 x x x x x
  x x x x
@@ -9,20 +9,20 @@ x . . . x
 . . . . .
  . . . .
 . . . . .
+ . p p .
+. p K p .
+ . p p .
+x . . . x
+ . . . .
+x . . . x
+ x x x x
+x . . . x
+ . . . .
+. . . . .
  . . . .
 . . . . .
  . . . .
 x . . . x
  . . . .
-x K K K x
- x x x x
-x . . . x
- . . . .
-. p . p .
- p . . p
-p p p p p
- p p p p
-x p p p x
- p p p p
 x . . . x
  x . . x

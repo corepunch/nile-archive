@@ -1,28 +1,28 @@
 name: Vine-Bound Terraces
 tier: normal
-teaches: Tablets under chains: break a vine over the doorway to reach the deep chamber.
+teaches: Match through the chained tablet twice: first free its piece, then clear the blue tile.
 
 x . . . x
  x . . x
 x . . . x
  x . . x
 x . . . x
- . . . .
-x . . . x
- . . . .
-. . . . .
- . . . .
-x . . . x
- x x x x
-x k k k x
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
  . p p .
-. p . p .
- p p p p
-p p p p p
- p p p p
+x . p . x
+ . p p .
+. . k . .
+ . p p .
+x . p . x
+ x x x x
+x . . . x
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .

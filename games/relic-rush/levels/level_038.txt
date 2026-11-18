@@ -1,6 +1,6 @@
 name: Nested Vaults
 tier: normal
-teaches: A vault inside a vault: break two sets of chains to reach the deepest tablets.
+teaches: Work through the chains at the vault entrance and use the open floor for the return match.
 
 x . . . x
  . . . .
@@ -8,21 +8,21 @@ x . . . x
  . . . .
 . . . . .
  . . . .
+. . p . .
+ . p p .
+. . p . .
+ . k k .
+. . p . .
+ . p p .
 . . . . .
  . . . .
-k k k k k
- k k k k
 . . . . .
+ . . . .
+x . . . x
  . . . .
 . . . . .
  . . . .
+. . s . .
+ . . . .
 . . . . .
  . . . .
-x k k k x
- k k k k
-. . . . .
- . . . .
-p . s . p
- p . . p
-p p . p p
- p p p p

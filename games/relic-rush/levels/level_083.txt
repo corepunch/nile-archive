@@ -1,28 +1,28 @@
 name: The Well
 tier: normal
-teaches: A narrow chained shaft is the only way down to the water room.
+teaches: Use the wide rim of the well to line up the double chain, then clear the tablet beneath it.
 
 x x x x x
  x x x x
 . . . . .
  . . . .
 . . . . .
- . . . .
-. . . . .
- . . . .
-x . . . x
+ . p p .
+. p K p .
+ . p p .
+x p . p x
  . . . .
 x x . x x
  x . . x
-x x K x x
- x K K x
+x x . x x
+ x . . x
 x . . . x
  . . . .
 . . . . .
  . . . .
-p p p p p
- p p p p
-p p p p p
- p p p p
-x p p p x
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .

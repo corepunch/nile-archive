@@ -5,23 +5,23 @@ teaches: Pieces slide round a still pool in the centre of the court, with ice at
 . . . . .
  . . . .
 . . . . .
- . j j .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . x x .
-. . x . .
- . j j .
-. p p p .
  . . . .
-p p . p p
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
  . p p .
-p p p p p
- p p p p
-x p p p x
- p p p p
+. p p p .
+ . j j .
+. . . . .
+ . p p .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
 x x x x x
  x x x x
 x x x x x

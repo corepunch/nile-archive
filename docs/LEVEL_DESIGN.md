@@ -80,8 +80,8 @@ of every level). Regenerate both with
 
 ## The 100-level schedule
 
-Level N follows Cradle of Rome's Adventure level N: use the same features it
-uses (read its row in `levels.json`). Its boards are about as big as ours.
+The original progression follows the feature introductions in Cradle of Rome's
+Adventure levels. Each row in `levels.json` describes one reference board.
 
 | Levels | Tablet layers | Chains | What is new |
 | --- | --- | --- | --- |
@@ -113,6 +113,10 @@ terraces, arches, stairways and courtyards. Christmas Market uses festive
 silhouettes: a fir tree, a bell, a star, a snowflake, a sleigh, stalls in a
 row. Reuse a family with a changed task instead of inventing an arbitrary
 notch. Give every board a one-sentence intent (`teaches:`).
+
+Relic Rush keeps the feature introductions on this schedule. Its match-four boards
+use smaller groups of tablets and fewer simultaneous locks. See the
+[Relic Rush board progression](../games/relic-rush/docs/board-progression.md) for its current difficulty curve.
 
 ## The level file
 
@@ -227,8 +231,8 @@ Empty template (all 108 cells plain):
 - **A diagonal tunnel.** A run of cells along a 60-degree diagonal, with the
   slots straight above each cell closed, fills by sliding: each piece drops
   to the next cell down the slant. Make tunnels at least two cells wide where
-  they carry tablets, so every tablet still has two lines of three.
-- **A gate must be breakable.** A chain or ice must sit on a line of three
+  they carry tablets, so every tablet still has two axes that fit a complete match.
+- **A gate must be breakable.** A chain or ice must sit on a full match line
   whose other cells fill while it holds, now or once an earlier gate has
   broken; gates in series (two vault doors) are fine. Ice at the foot of a
   one-cell spur, whose only line runs through the empty cell it gates, waits
@@ -238,9 +242,9 @@ Empty template (all 108 cells plain):
   small tower joined by one cell still refills only through that cell, so give
   towers and wings a two-cell joint.
 - **Every tablet has two ways in.** Each tablet must sit on straight runs of
-  three playable cells (not stones) along at least two of the three axes. A
-  tablet in a one-line pocket deadlocks: its three pieces never change, and
-  no swap from outside can line them up. The bot showed boards stalling on
+  four playable cells in Relic Rush or three in Christmas Market, along at least
+  two axes. Stones interrupt these runs. In narrow pockets too few neighbours
+  can supply a missing piece. The bot showed boards stalling on
   the last few tablets for hundreds of moves.
 
 ## Check a board
@@ -258,8 +262,8 @@ make level-sheets SHEET_GAMES=relic-rush LEVELS=41-60     # one game, a range
 rings, stones grey, holes outlined and gated cells marked with a red dot.
 Regenerate it after changing boards and look at it before committing.
 
-The validator checks the format, the mirror, the 70-cell minimum, tablets on
-runs of three on two axes, every cell on a run of three, one connected board 9 to 12 rows tall, cells that stay unfed even with every
+The validator checks the format, the mirror, the 60-cell minimum, tablets with a full match line
+on two axes, every playable cell on at least one full line, one connected board 9 to 12 rows tall, cells that stay unfed even with every
 chain broken, and the schedule's first levels. It prints each board's cells,
 tablets, chains and gated cells. A board is done when it passes and
 does what its `teaches:` line says.
@@ -277,7 +281,7 @@ python3 tools/tune_moves.py relic-rush --levels 41-50 # after changing a few boa
 ```
 
 The greedy bot (`tests/lua/tune_moves.lua`) clears each board 40 times on
-hashed seeds with no move limit. The budget is the number of moves it needed
+hashed seeds with a 250-move calibration ceiling. The budget is the number of moves it needed
 in the tier's share of those games. Its rates order and space the boards;
 they are not human win rates. Read `games/<game>/docs/level-moves.md`
 afterwards: a board whose budget jumps far from its neighbours of the same

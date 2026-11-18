@@ -1,28 +1,28 @@
 name: Throne of the Valley
 tier: boss
-teaches: Every tablet on the throne takes two hits: the valley's last stand.
+teaches: Break the chains on the double tablets and the ice over the throne's other plaques.
 
 x . . . x
  x . . x
 x . . . x
- x j j x
-x . . . x
  x . . x
-x . . . x
- x . . x
+x . J . x
+ x P P x
+x P P P x
+ x g g x
 . . . . .
  . . . .
 . . . . .
  . . . .
-. g . g .
+. . . . .
  s . . s
 . . . . .
  . . . .
-. J . J .
+. . . . .
  . . . .
 . . x . .
- P . . P
+ . . . .
 . . x . .
- P P P P
-. P x P .
- P P P P
+ . . . .
+. . x . .
+ . . . .

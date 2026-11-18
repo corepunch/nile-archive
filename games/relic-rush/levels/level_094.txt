@@ -1,28 +1,28 @@
 name: Twin Wells
 tier: normal
-teaches: Each shaft sinks into a chained well; break both to refill the depths.
+teaches: Match into both shafts to free the chained tablets at the wells.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+. p . p .
+ . K K .
+. p p p .
+ . p p .
 . . . . .
  . . . .
 x . x . x
  . . . .
-x K x K x
- K K K K
+x . x . x
+ . . . .
+. . x . .
+ . . . .
 . . x . .
  . . . .
 . . x . .
  . . . .
-. p x p .
- p p p p
-p . x . p
- p p p p
-p p x p p
- p . . p
+. . x . .
+ . . . .
+. . x . .
+ . . . .

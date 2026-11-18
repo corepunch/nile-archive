@@ -1,28 +1,28 @@
 name: The Bridge
 tier: normal
-teaches: Tablets on both banks; the slanted bridge keeps the two sides fed.
+teaches: Use both banks of the bridge to match through the ice and clear the tablets along the crossing.
 
 x x x x x
  . . . x
-. . p . x
- . . . p
-. J p . x
- . p . x
-. . . x x
- p J x x
-p . . x x
- . . . x
 . . . . x
- . . p .
-p . . . p
- . p . .
+ . . . .
+. . . . x
+ . . . x
+. . . x x
+ . j x x
+. . . x x
+ . p . x
+. . . . x
+ . p p .
+. . p . .
+ . p p .
 x . . . .
- x . . .
-x x . . p
- x x J p
-x x . . .
  x . p .
-x . p J .
- p . . .
-x . p . .
+x x . . .
+ x x j .
+x x . . .
+ x . . .
+x . . . .
+ . . . .
+x . . . .
  x . . .

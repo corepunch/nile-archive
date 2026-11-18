@@ -5,11 +5,11 @@ teaches: The roof is open at the top, but the hall has two pillars to match arou
 . . x . .
  . . . .
 . . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
+ . p p .
+. p . p .
+ . p p .
+. p . p .
+ . p p .
 . . . . .
  . . . .
 . s . s .
@@ -18,11 +18,11 @@ teaches: The roof is open at the top, but the hall has two pillars to match arou
  . . . .
 . . . . .
  . . . .
-p p . p p
- p . . p
-p p . p p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x

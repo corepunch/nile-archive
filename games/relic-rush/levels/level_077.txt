@@ -1,28 +1,28 @@
 name: Twin Towers
 tier: normal
-teaches: Two towers hold tablets either side of a valley; work the slanted hall that joins them.
+teaches: Work on both sides of the valley; the iced tablets need a second match once the pieces are free.
 
 x x x x x
  x . . .
-x . . . p
- . p . .
-x p . . p
- x . j p
-x x p . .
- x x p .
-x x p j p
- x p . .
 x . . . .
  . . . .
+x . . . .
+ x . . .
+x x . . .
+ x x j .
+x x . . .
+ x . p .
+x . p . .
+ . . p .
 . . p . .
+ . p . .
+. . p . x
+ . p . x
+. . . x x
+ . j x x
+. . . x x
+ . . . x
+. . . . x
  . . . .
 . . . . x
- . . p x
-p j p x x
- . p x x
-. . p x x
- p j . x
-p . . p x
- . . p .
-p . . . x
  . . . x

@@ -90,10 +90,10 @@ needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDING
 
 | # | Restoration | Placed after | First board | Board payoff | Price C / F / S |
 | ---: | --- | ---: | ---: | --- | ---: |
-| 1 | ★ Expedition Camp | 1 | 2 | Hammer gems | 0 / 10 / 20 |
+| 1 | ★ Expedition Camp | 1 | 2 | Hammer gems | 60 / 0 / 0 |
 | 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 125 / 0 / 0 |
-| 3 | ★ Trapper's cabin | 7 | 8 | Dynamite upgrades Hammer | 65 / 40 / 45 |
-| 4 | ★ Artisan Workshop | 10 | 11 | Repairs the quay and adds cut blocks worth 5 Supplies | 120 / 80 / 90 |
+| 3 | ★ Trapper's cabin | 7 | 8 | Dynamite upgrades Hammer | 110 / 40 / 0 |
+| 4 | ★ Artisan Workshop | 10 | 11 | Repairs the quay and adds cut blocks worth 5 Supplies | 210 / 80 / 0 |
 | 5 | Water mill | 10 | — | Opens the miller’s cascade challenge | 65 / 35 / 60 |
 | 6 | Clock tower | 11 | 12 | Star gems | 150 / 200 / 150 |
 | 7 | Stone amphitheatre | 13 | 14 | Shield gems | 35 / 50 / 35 |
@@ -124,27 +124,25 @@ restorations before its latest earned story restoration become optional:
 they stay on sale and never hold an expedition.
 
 An arrival message credits the restored building and names the new piece's
-yield. The opening water match on board 5 earns Food and the opening cut-block match on board 9 earns Supplies. Coins pay for labor and materials,
+yield. The opening water match on board 5 earns Food and the first Workshop pieces on board 11 earn Supplies. Coins pay for labor and materials,
 Food keeps the workers supplied, and Supplies go into repairs.
 
 ## Restoration prices and earnings
 
-The Camp uses Supplies and Food. Buying the Well with Coins unlocks a Food
-source. Every restoration after it uses at least two currencies. The prices
-are in the ladder table above.
+The first expedition pays Coins for the Camp. The Well adds Food from
+expedition 5. The Workshop opens after expedition 10 and its piece starts
+earning Supplies on the next board. This lets the crew fund the Water Mill,
+which opens alongside the Workshop and can wait for those Supplies.
 
-**Prices come from averaged board income.** For the price fit, the balance runner played every
-board 40 times with the greedy bot and the unlocks the ladder has delivered by
-then, using only the rules: no screen, story or animation. It reports each
-board's win rate, moves left and mean income per won board, then walks the
-expected campaign: bank each board's mean income and, at each stop, spend 80%
-of what the wallet holds in every currency the stop's restorations use, split
-by their previous prices. The rest carries over, so every currency runs low
-somewhere and none piles up unused. The current seeded campaign check uses the live match ledger, plays the story expeditions and replays boards when a building needs more resources.
-
-The bot wins many boards in fewer than half its attempts (board 28 in 8 of
-40), since matches make no special pieces. Win rates and moves left are
-in the same report.
+The balance runner plays the 100 expeditions with their fitted move limits
+and the restoration pieces available at each point. It reports the mean
+income per won board. Its wallet simulation buys restorations in ladder
+order and replays for income when a story purchase comes due. A second walk
+shows candidate prices based on spending 80% of the available balance in each
+required currency. With ten plays per board at the current prices, this simulation needed three
+extra wins for income, two after board 13 and one after board 19. The seeded
+story check separately plays the first 30 expeditions and claims their actual rewards. See the [match-four board
+measurements](board-progression.md#match-four-difficulty).
 
 ```sh
 make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush
@@ -186,7 +184,7 @@ both supported phone sizes and sample a migrated save midway through chapter two
 Verify that matching every resource kind, including through a cascade, agrees with the result and the wallet after a restart. Confirm the
 shop's price and reserve through Confirm, Cancel, exhausted tool counts, replay
 and claim interruption. The seeded campaign test plays the 30 story boards with
-the live wallet and confirms all ten purchases. For release tuning, record
+the live wallet and confirms every ladder purchase. For release tuning, record
 wallet shortfalls across more seeds and watch people play on both phone sizes.
 Review tablet and story piece recognition with Reduce Motion enabled at
 390×844 and 480×900.

@@ -1,28 +1,28 @@
 name: Hanging Gardens
 tier: normal
-teaches: Two chained terraces hang over the garden below; open both to fill it.
+teaches: Clear stones beside the hanging gardens to reach the tablet under the double chain.
 
 x x x x x
  x x x x
 . . . . .
  . . . .
 . . . . .
+ . p p .
+. s K s .
+ . p p .
+. . p . .
+ . p p .
+. . p . .
  . . . .
-. s . s .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-K x x x K
- K x x K
+. x x x .
+ . x x .
 . . x . .
  . . . .
 . . . . .
- p p p p
-. . p . .
- p p p p
-p p p p p
- p p p p
-p p p p p
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  . . . .

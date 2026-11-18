@@ -1,18 +1,18 @@
 name: Twin Arches
 tier: easy
-teaches: Two chained arches carry the fall into the hall; break either one to start the flow.
+teaches: Work through the chain where the two arches meet. Use the open hall to line up another four.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
-. . . . .
+. . p . .
+ . p p .
+. . k . .
+ . p p .
+. . p . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x k x k x
+x . x . x
  x x x x
 x . x . x
  . . . .
@@ -22,7 +22,7 @@ x . x . x
  . s s .
 . . . . .
  . . . .
-p p p p p
- . p p .
-p p p p p
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .

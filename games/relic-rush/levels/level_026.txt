@@ -1,27 +1,27 @@
 name: Lintel Door
 tier: easy
-teaches: Clear the tablets of the lintel wall and the door posts; plain matching with a little ice at the edges.
+teaches: Use the lintel above the doorway to build a four through the ice.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
-j . . . j
- . . . .
-j . . . j
- . . . .
+. . . . .
+ . p p .
+. . p . .
+ . j j .
+. . p . .
+ . p p .
 . . . . .
  . . . .
 . . . . .
  . . . .
 . . . . .
- p . . p
-p . . . p
- p . . p
-p p . p p
- p . . p
-p p . p p
- p . . p
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x
 x x x x x

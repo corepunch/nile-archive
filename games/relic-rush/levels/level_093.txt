@@ -1,6 +1,6 @@
 name: Barred Gate
 tier: normal
-teaches: Chains bar every door of the gatehouse; open them to flood the lower hall.
+teaches: Break the gatehouse chains and use a match beside the stone to open more space on the terrace.
 
 x x x x x
  x x x x
@@ -11,18 +11,18 @@ x x x x x
 . . s . .
  . . . .
 x x x x x
- C C C C
+ . . . .
+. . . . .
+ . K K .
+. p p p .
+ . p p .
+. . . . .
+ . p p .
 . . . . .
  . . . .
 . . . . .
  . . . .
 . . . . .
  . . . .
-. . . . .
- p p p p
-p . p . p
- p p p p
-p p p p p
- p p p p
-x p . p x
- p p p p
+x . . . x
+ . . . .

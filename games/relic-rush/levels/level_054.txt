@@ -4,25 +4,25 @@ teaches: Fallen columns lie slantwise from corner to corner; plan around the sto
 
 x x x x x
  x . . .
-x p p . .
+x . . . .
  . . . .
 x . . . .
- x p s .
-x x p s p
- x x p p
+ x . s .
+x x . s .
+ x x . .
 x x x . .
- x x . p
-x x p . .
- x p . p
+ x x p p
+x x . . p
+ x p p .
 x . . . x
- p . p x
-. . p x x
- p . x x
-. . x x x
+ . p p x
+p . . x x
  p p x x
-p s p x x
- . s p x
+. . x x x
+ . . x x
+. s . x x
+ . s . x
 . . . . x
  . . . .
-. . p p x
+. . . . x
  . . . x

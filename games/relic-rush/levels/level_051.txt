@@ -1,6 +1,6 @@
 name: Gatehouse
 tier: easy
-teaches: Chains here take two hits: break the double chains below the tower to let pieces fall into the cellar.
+teaches: A double chain holds a tablet in the gatehouse. Break both links before clearing the blue tile.
 
 x x x x x
  x x x x
@@ -10,19 +10,19 @@ x . . . x
  x . . x
 x . . . x
  x . . x
+. . K . .
+ . p p .
+. p . p .
+ . p p .
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x K K K x
- x K K x
 x . . . x
- x p p x
-x . p . x
- p p p p
-x p p p x
- x p p x
-x p p p x
- x p p x
+ x . . x
+x . . . x
+ x . . x
+x . . . x
+ . . . .
+x . . . x
+ x . . x
+x . . . x
+ x . . x

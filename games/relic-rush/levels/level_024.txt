@@ -5,24 +5,24 @@ teaches: Two halves of the court sit apart; break the gate chains at their feet 
 x . x . x
  . . . .
 . . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+ . p p .
+. p p p .
+ . k k .
+. p p p .
  . . . .
 . . . . .
  x x x x
-x k x k x
+x . x . x
  . . . .
 . . . . .
- p . . p
-p . . . p
  . . . .
 . . . . .
- p . . p
-. p p p .
- p p p p
-p p p p p
- p p p p
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x

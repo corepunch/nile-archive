@@ -4,25 +4,25 @@ teaches: Rope bridges slant across the gap; free the chained planks along them.
 
 x x x x x
  x . . .
-x . . . p
- . . K .
-x . . . p
- x . . p
-x x . K .
- x x . .
-x x x . .
- x x K .
-x x p p .
- x p . p
-x p p p x
- p . p x
-. p p x x
- . K x x
-. . x x x
- . . x x
-. K . x x
- p . . x
-p . . . x
- . K . .
-p . . . x
+x . . . .
+ . . . .
+x . . . .
+ x . . .
+x x . p .
+ x x p .
+x x x K .
+ x x . p
+x x . . .
+ x . . .
+x . . . x
+ . . . x
+. . . x x
+ p . x x
+. K x x x
+ . p x x
+. p . x x
+ . . . x
+. . . . x
+ . . . .
+. . . . x
  . . . x

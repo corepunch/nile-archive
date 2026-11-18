@@ -1,26 +1,26 @@
 name: Jaguar Court
 tier: easy
-teaches: Ice holds its piece: break the ice at the base of the court and the pieces trickle into the chamber below.
+teaches: Break the ice over the empty tablet. A piece can then fall onto it and make a scoring line.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-p . p . p
+. . p . .
  . p p .
-p . . . p
- p . . p
-. p p p .
- p p p p
-. p i p .
- . i i .
-x x p x x
+. . i . .
+ . x x .
+. . p . .
+ . p p .
+. . p . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
  x . . x
 x . . . x
  x . . x

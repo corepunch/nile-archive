@@ -1,28 +1,28 @@
 name: Overgrown Arches
 tier: normal
-teaches: Chains guard tablets on the arches; break any vine on the arcade to pour pieces into the vault.
+teaches: Clear the chained tablet at the arch and use the open arcade to approach it again.
 
 x . . . x
  . . . .
 . . . . .
  . . . .
-. . . . .
+. . p . .
+ . p p .
+. . p . .
  . . . .
-. . . . .
- . . . .
-. . . . .
+. . p . .
  x x x x
-k k k k k
+. . k . .
  . . . .
+. . p . .
+ . p p .
 . . . . .
  . . . .
 . . . . .
  . . . .
 . . . . .
  . . . .
-p . . . p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . . . .
 x x x x x
  x x x x

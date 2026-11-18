@@ -1,28 +1,28 @@
 name: Flooded Vault
 tier: easy
-teaches: Break the chains across the vault door so pieces can pour into the tablet chamber below.
+teaches: Open the vault's chain to let a piece drop onto the waiting tablet.
 
 . . . . .
  . . . .
 . . . . .
  . . . .
-. . . . .
- . . . .
-x k k k x
- k k k k
-. . . . .
- . . . .
-. . . . .
- . . . .
-. . . . .
+. . p . .
+ . p p .
+x p . p x
+ . p p .
+. . k . .
+ . x x .
+. . p . .
  . . . .
 . . . . .
  . . . .
 . . . . .
  . . . .
-p . . . p
- p p p p
-x p p p x
- p p p p
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
 x x x x x
  x x x x

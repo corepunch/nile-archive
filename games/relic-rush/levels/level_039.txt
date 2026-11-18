@@ -4,25 +4,25 @@ teaches: A causeway zigzags between two pillars; pieces trickle down the slantin
 
 x x x x x
  x x x x
-p p x p p
- p x x .
-p p x p p
- p x x p
-p p x . p
- . p x .
-p . . . .
- . . . .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . . x .
 . . . . .
- . . . .
+ . . p .
+. p . p .
+ . p p .
+. p . p .
+ . p p .
+. p . p .
+ . p . .
 . . . . .
- . . . .
-. . . . .
- . . . .
-. . . . p
- . x p .
-p . x p p
- p x x p
-p p x p p
- . x x p
-p p x p p
+ . x . .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
  x x x x

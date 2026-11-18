@@ -1,15 +1,15 @@
 name: Parted Cloister
 tier: easy
-teaches: A ring of diagonal corridors around an open court; tablets lie along every slanting arm.
+teaches: Follow the slanting arms of the cloister to reach the tablets on both sides of the court.
 
 x x x x x
  x x x x
 x x . x x
  x . . x
 x . . . x
- . . . .
-x . . . x
- . . . .
+ . p p .
+x p p p x
+ . p p .
 . . . . .
  . . . .
 . . x . .
@@ -18,11 +18,11 @@ x . . . x
  . x x .
 . . x . .
  . . . .
-p . . . p
- p p p p
-x p p p x
- p p p p
-x p p p x
- x p p x
-x x p x x
+. . . . .
+ . . . .
+x . . . x
+ . . . .
+x . . . x
+ x . . x
+x x . x x
  x x x x

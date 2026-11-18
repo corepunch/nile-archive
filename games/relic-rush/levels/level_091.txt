@@ -1,6 +1,6 @@
 name: Split Stair
 tier: easy
-teaches: Climb either side of the ravine; a small chained crypt waits under each stair.
+teaches: Work from both sides of the split stair, freeing its chained and frozen pieces.
 
 . . x . .
  . x x .
@@ -10,19 +10,19 @@ teaches: Climb either side of the ravine; a small chained crypt waits under each
  . . . .
 . . x . .
  . . . .
-. . . . .
- . . . .
+. . p . .
+ . K K .
 . j . j .
- . . . .
+ . p p .
 . . . . .
  . . . .
 . . . . .
  . . . .
-K K x K K
- K x x K
 . . x . .
- p x x p
-p p x p p
- p x x p
-p p x p p
+ . x x .
+. . x . .
+ . x x .
+. . x . .
+ . x x .
+. . x . .
  . x x .

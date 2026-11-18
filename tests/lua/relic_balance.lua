@@ -140,38 +140,48 @@ for _, after in ipairs(order) do
     end
 end
 
--- The expected campaign: bank each board's mean income, then buy each
--- restoration at its stop. A short wallet replays the stop's board until it
--- can pay, as the campaign bot does.
-local stop_of = {}
-for _, after in ipairs(order) do stop_of[after] = stops[after] end
-local function walk(label, price_of)
-print(('expected campaign with %s prices (Coins/Food/Supplies):'):format(label))
-local wallet, replays, lowest = {}, 0, {}
-for slot = 1, CURRENCIES do wallet[slot], lowest[slot] = 0, math.huge end
-for level = 1, rules.LEVELS do
-    local income = boards[level].income
-    for slot = 1, CURRENCIES do wallet[slot] = wallet[slot] + income[slot] end
-    local bought, extra = {}, 0
-    for _, b in ipairs(stop_of[level] or {}) do
-        local need = 0
-        for slot = 1, CURRENCIES do
-            local short = price_of(b)[slot] - wallet[slot]
-            if short > 0 then need = math.max(need, income[slot] > 0 and math.ceil(short / income[slot]) or math.huge) end
-        end
-        assert(need < math.huge, ('board %d pays none of a currency %s needs'):format(level, b.key))
-        for slot = 1, CURRENCIES do wallet[slot] = wallet[slot] + need * income[slot] - price_of(b)[slot] end
-        extra, bought[#bought + 1] = extra + need, b.key
-        for slot = 1, CURRENCIES do lowest[slot] = math.min(lowest[slot], wallet[slot]) end
-    end
-    replays = replays + extra
-    if #bought > 0 then
-        print(('  board %02d · bought %s · replays %d · wallet %.0f/%.0f/%.0f'):format(level, table.concat(bought, ', '),
-            extra, wallet[1], wallet[2], wallet[3]))
-    end
+-- A purchase can wait for income from later expeditions until a story
+-- restoration is due. In particular the Mill opens at 10, but its Supplies
+-- first arrive on 11 after placing the Workshop.
+local story_due = {}
+for position, step in ipairs(island.ladder) do
+    if step.story then story_due[step.after] = position end
 end
-print(('expected campaign (%s): %d replays, lowest wallet after a purchase %.0f/%.0f/%.0f, final %.0f/%.0f/%.0f'):format(
-    label, replays, lowest[1], lowest[2], lowest[3], wallet[1], wallet[2], wallet[3]))
+
+local function walk(label, price_of)
+    print(('expected campaign with %s prices (Coins/Food/Supplies):'):format(label))
+    local wallet, replays, lowest = {}, 0, {}
+    local next_purchase = 1
+    for slot = 1, CURRENCIES do wallet[slot], lowest[slot] = 0, math.huge end
+    for level = 1, rules.LEVELS do
+        local income = boards[level].income
+        for slot = 1, CURRENCIES do wallet[slot] = wallet[slot] + income[slot] end
+        local bought, extra = {}, 0
+        while island.ladder[next_purchase] and island.ladder[next_purchase].after <= level do
+            local b = island.buildings[island.ladder[next_purchase].kind + 1]
+            local price, need = price_of(b), 0
+            for slot = 1, CURRENCIES do
+                local short = price[slot] - wallet[slot]
+                if short > 0 then need = math.max(need, income[slot] > 0 and math.ceil(short / income[slot]) or math.huge) end
+            end
+            if need > 0 and next_purchase > (story_due[level] or 0) then break end
+            assert(need < math.huge, ('board %d pays none of a currency %s needs'):format(level, b.key))
+            for slot = 1, CURRENCIES do
+                wallet[slot] = wallet[slot] + need * income[slot] - price[slot]
+                lowest[slot] = math.min(lowest[slot], wallet[slot])
+            end
+            extra, bought[#bought + 1] = extra + need, b.key
+            next_purchase = next_purchase + 1
+        end
+        replays = replays + extra
+        if #bought > 0 then
+            print(('  board %02d · bought %s · replays %d · wallet %.0f/%.0f/%.0f'):format(level, table.concat(bought, ', '),
+                extra, wallet[1], wallet[2], wallet[3]))
+        end
+    end
+    check(next_purchase > #island.ladder, 'the expected campaign buys every restoration at ' .. label .. ' prices')
+    print(('expected campaign (%s): %d replays, lowest wallet after a purchase %.0f/%.0f/%.0f, final %.0f/%.0f/%.0f'):format(
+        label, replays, lowest[1], lowest[2], lowest[3], wallet[1], wallet[2], wallet[3]))
 end
 walk('current', function(b) return b.cost end)
 walk('fitted', function(b) return fitted[b.key] end)

@@ -1,28 +1,28 @@
 name: The Valley Temple
 tier: boss
-teaches: The grand temple: double tablets everywhere, a sanctum hole at the heart and the great door below.
+teaches: Work around the temple's sanctum to clear the double tablets and break through the double ice.
 
 x . . . x
  . . . .
 . . . . .
  . . . .
 . . . . .
- . . . .
+ . P P .
 . . . . .
- . . . .
-. J . J .
+ . J J .
+. . . . .
+ . P P .
+. P x P .
  . . . .
 . . x . .
  . . . .
-. . x . .
- . . . .
 . . . . .
  . . . .
-. J . J .
+. . . . .
  . . . .
 . s . s .
- P . . P
-P . . . P
- P P P P
-P P x P P
- P P P P
+ . . . .
+. . . . .
+ . . . .
+. . x . .
+ . . . .

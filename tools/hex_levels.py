@@ -148,7 +148,7 @@ def areas(layout):
     return groups
 
 
-def summarize(number, head, layout, problems):
+def summarize(number, head, layout, problems, match_min):
     tablets = [c for c, s in layout.items() if SYMBOLS[s][0] >= 1]
     doubles = [c for c, s in layout.items() if SYMBOLS[s][0] == 2]
     chains = [c for c, s in layout.items() if SYMBOLS[s][1] >= 1]
@@ -178,20 +178,21 @@ def summarize(number, head, layout, problems):
     cap = MAX_LAYERS.get(head.get('tier'), 40)
     if not MIN_LAYERS <= layers <= cap:
         problems.append(f'{layers} tablet layers (a double counts two); a {head.get("tier")} board holds {MIN_LAYERS} to {cap}')
-    # A tablet must sit on runs of three matchable cells (not stones) along
-    # two axes. With one, three fixed pieces can deadlock it for good.
+    # A tablet needs two possible match axes. Other cells need one, even
+    # when a removable stone initially interrupts the line.
+    spans = [range(-offset, match_min - offset) for offset in range(match_min)]
+    def possible_axes(cell, area):
+        q, r = cell
+        return sum(any(all((q + k * dq, r + k * dr) in area for k in span) for span in spans)
+                   for dq, dr in NEIGHBORS[:3])
     play = {c for c, s in layout.items() if not SYMBOLS[s][3]}
-    axes = {c: sum(any(all((c[0] + k * dq, c[1] + k * dr) in play for k in ks)
-                       for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2))) for dq, dr in NEIGHBORS[:3])
-            for c in layout}
-    lonely = [c for c in play if not any(all((c[0] + k * dq, c[1] + k * dr) in layout for k in ks)
-                                         for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2)) for dq, dr in NEIGHBORS[:3])]
+    lonely = [c for c in play if not possible_axes(c, layout)]
     if lonely:
-        problems.append(f'{len(lonely)} cells sit on no straight run of 3 board cells: '
+        problems.append(f'{len(lonely)} cells sit on no straight run of {match_min} board cells: '
                         + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(lonely, key=lambda c: slot(*c))))
-    stuck = [c for c in tablets if axes[c] < 2]
+    stuck = [c for c in tablets if possible_axes(c, play) < 2]
     if stuck:
-        problems.append(f'{len(stuck)} tablets sit on runs of 3 along fewer than two axes: '
+        problems.append(f'{len(stuck)} tablets sit on runs of {match_min} along fewer than two axes: '
                         + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(stuck, key=lambda c: slot(*c))))
     # One board: every part joins the rest through at least one cell (two is better).
     if len(groups) > 1:
@@ -217,7 +218,7 @@ def summarize(number, head, layout, problems):
         problems.append(f'{len(idle)} chains or ice sit on plain cells and gate nothing; put them on tablets: '
                         + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(idle, key=lambda c: slot(*c))))
     # Every chain and ice must break at some point. Simulate: a blocker breaks
-    # once it sits on a line of three whose other two cells refill (fed, so a
+    # once it sits on a match-length line whose other cells refill (fed, so a
     # swap or a fall can bring the matching colour; another blocker's piece is
     # stuck in its colour). A broken blocker opens the fall below it, and
     # gates behind it may break next. A blocker left at the end waits for pieces
@@ -225,11 +226,11 @@ def summarize(number, head, layout, problems):
     work = dict(layout)
     def breaks(c, filled):
         for dq, dr in NEIGHBORS[:3]:
-            for ks in ((-2, -1, 0), (-1, 0, 1), (0, 1, 2)):
+            for ks in spans:
                 cells = [(c[0] + k * dq, c[1] + k * dr) for k in ks]
                 others = [x for x in cells if x != c]
                 # A swap must be able to bring the colour in: one of the other
-                # two cells needs a filled neighbour off the line.
+                # cells needs a filled neighbour off the line.
                 partner = any((x[0] + a, x[1] + b) in filled and (x[0] + a, x[1] + b) not in cells
                               for x in others for a, b in NEIGHBORS)
                 if all(x in filled for x in others) and partner:
@@ -244,7 +245,7 @@ def summarize(number, head, layout, problems):
             work[c] = 'p' if SYMBOLS[work[c]][0] else '.'
     locked = [c for c, sym in work.items() if SYMBOLS[sym][1] or SYMBOLS[sym][2]]
     if locked:
-        problems.append(f'{len(locked)} chains or ice can never break (no line of three fills while they hold): '
+        problems.append(f'{len(locked)} chains or ice can never break (no line of {match_min} fills while they hold): '
                         + ', '.join('line %d col %d' % tuple(n + 1 for n in slot(*c)) for c in sorted(locked, key=lambda c: slot(*c))))
     # Every gated cell must open once its chains break.
     open_board = {c: ('.' if blocker(s) else s) for c, s in layout.items()}
@@ -358,7 +359,7 @@ def main():
         problems = []
         layout = board(rows, problems)
         symmetry(rows, layout, problems)
-        info = summarize(number, head, layout, problems) if layout else {}
+        info = summarize(number, head, layout, problems, 4 if args.game == "relic-rush" else 3) if layout else {}
         levels.append((number, head, layout))
         status = 'ok ' if not problems else 'BAD'
         failed += bool(problems)

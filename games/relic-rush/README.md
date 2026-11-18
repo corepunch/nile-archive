@@ -146,6 +146,8 @@ board surface. [Before and after at both phone sizes](../../docs/review/match3-b
 
 The minimum match is **four identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are no special pieces: a longer line just clears. The 100 boards sit on a 9 x 12 rectangle of flat-top hexes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
+All 100 expeditions use five piece kinds. The first four take a median of six moves each in 40 bot deals per board. Each later board has its own move limit fitted to its difficulty tier. See the [campaign balance and board comparisons](docs/board-progression.md#match-four-difficulty).
+
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue tablets in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
 Power comes only from the bonus tools: matched bonus gems fly into their sockets and fill them with gold from the bottom.

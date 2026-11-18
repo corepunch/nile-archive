@@ -1,28 +1,28 @@
 name: Triple Terrace Gate
 tier: normal
-teaches: A web of chains and stones guards the terraces: break a gate chain to open the terrace below.
+teaches: Break the chain above the terrace to feed its tablet; matches beside stones clear more room.
 
 x x . x x
  x . . x
 . . . . .
  . . . .
-. . . . .
- . . . .
-. . . . .
- x x x x
-x k k k x
- . . . .
-. . . . .
- . s s .
-. . . . .
- . . . .
-. . . . .
- x x x x
-x k k k x
- . . . .
-p p p p p
- . s s .
 . p p p .
- p p p p
-p p p p p
- p p p p
+ . . . .
+. . k . .
+ x x x x
+x . p . x
+ . . . .
+. p . p .
+ . s s .
+. p . p .
+ . . . .
+. . p . .
+ x x x x
+x . . . x
+ . . . .
+. . . . .
+ . s s .
+. . . . .
+ . . . .
+. . . . .
+ . . . .

@@ -1,6 +1,6 @@
 name: Twin Sanctums
 tier: hard
-teaches: Two sanctums share a base; break the chains and ice to reach the inner tablets.
+teaches: Find a line for each protected tablet in the two sanctums, using both the ice and chain approaches.
 
 x . x . x
  . . . .
@@ -9,20 +9,20 @@ x . x . x
 . . x . .
  . . . .
 . . x . .
- . . . .
-k k x k k
- k k k k
+ j k k j
+. p x p .
+ . p p .
+. p x p .
+ . p p .
 . . x . .
  . . . .
 . . x . .
  . . . .
 . . x . .
  . . . .
-p p x p p
- j j j j
-p . x . p
- p p p p
-p p . p p
- p . . p
-p . . . p
+. . x . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
  . . . .

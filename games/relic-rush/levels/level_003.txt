@@ -1,6 +1,6 @@
 name: Sunken Courtyard
 tier: tutorial
-teaches: A ring of tablets surrounds an empty courtyard; plan matches around the edge.
+teaches: Use the open courtyard to approach the blue tablets from either diagonal.
 
 x . . . x
  . . . .
@@ -9,15 +9,15 @@ x . . . x
 . . . . .
  . . . .
 . . . . .
- . . . .
+ . p p .
+. . p . .
+ . p p .
+. . . . .
+ . p p .
 . . . . .
  . . . .
 . . . . .
- p . . p
-. . . . .
- p . . p
-p p . p p
- p p p p
+ . . . .
 . . . . .
  . . . .
 . . . . .

@@ -1,28 +1,28 @@
 name: The Altar
 tier: boss
-teaches: Double tablets crowd the altar chamber behind a double-chained row.
+teaches: Clear the chain over the double tablet at the altar and the ice on its approach.
 
 x . . . x
- . . . . 
+ . . . .
 . . . . .
- . . . . 
+ . . . .
 . . . . .
- . . . . 
-. J . J .
- . . . . 
-. s . s .
- . . . . 
+ . J J .
 . . . . .
- . . . . 
-G G G G G
- G G G G 
+ . . . .
+. s G s .
+ . P P .
 . . . . .
- . . . . 
-. J . J .
- . . . . 
+ . P P .
 . . . . .
- . . . . 
+ . P P .
 . . . . .
- . . . . 
-x P P P x
- P P P P 
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .

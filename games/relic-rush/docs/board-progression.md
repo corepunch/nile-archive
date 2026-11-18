@@ -20,6 +20,36 @@ form a straight line of four or more. The same minimum applies after a fall.
 Each new deal checks every opening exchange through its entire cascade and
 redeals if any exchange clears all the plaques. Refill damping begins on the second wave (`refill_damping=2`).
 
+## Match-four difficulty
+
+Each blue tablet sits on two axes with space for four pieces. A gate must have a
+four-piece line on its fed side so the player can open it before filling the
+chamber below. On board 3 the two diagonals reach the courtyard tablets. Board 5
+introduces a chain over a vault, and board 7 places ice above an empty tablet.
+Later boards combine split chambers, layered tablets and double locks.
+
+Each board was played on 40 deals without tools to set its move limit. The
+median for each of the four tutorials was six moves. Across boards in each
+later tier, the median of those board medians was 12 for easy, 16 for normal,
+23 for hard and 26.5 for bosses. All 4,000 deals cleared within the 250-move
+calibration ceiling. The fitted limits range from 11 to 56.
+
+A separate check used ten other deals per board (runs 301–310 of the same
+seed sequence), with the scheduled restoration pieces, no tools and the live
+move limits. The bot won 766 of 1,000 games, up from 131 on the same deals
+with the previous layouts and budgets. It won at least once on each board.
+Trying every legal first exchange on the first of these ten deals per board
+found zero one-move wins.
+
+Each comparison shows the previous layout on the left and the current one on the right.
+
+| Board | 480 × 900 | 390 × 844 |
+| --- | --- | --- |
+| 2 · Temple Steps | [Opening deal](screenshots/review/match-four-balance/goal-board.jpg) | [Opening deal](screenshots/review/match-four-balance/goal-board-phone.jpg) |
+| 5 · Vault Door | [Chain and lower chamber](screenshots/review/match-four-balance/dressing-quay.jpg) | [Chain and lower chamber](screenshots/review/match-four-balance/plaques-phone.jpg) |
+
+## Piece progression
+
 The green apple's slot (kind 2, 1 Food, never upgraded) is the special slot:
 the bonus gem, a story item or a score piece takes it, and the bonus moves to
 the red slot when a story item holds it (`SPECIAL_KIND` in

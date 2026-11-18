@@ -1,28 +1,28 @@
 name: Hall of Pillars
 tier: normal
-teaches: Pillars stand in two halls linked by a narrow passage; break the ice to clear the tablets.
+teaches: Match along the two sides of the pillared hall to free the pieces in ice.
 
 x . . . x
  x . . x
 x . . . x
  x . . x
 x . . . x
- x . . x
+ x p p x
 x . . . x
  x . . x
 x x x x x
- x . . x
+ x p p x
 . . . . .
  . . . .
-. . x . .
- . . . .
-. j . j .
+. p x p .
  . p p .
-. p p p .
- p p p p
-p j p j p
- p p p p
-p p p p p
- p p p p
+. . . . .
+ . j j .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
+. . . . .
+ . . . .
 x x x x x
  x x x x

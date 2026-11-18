@@ -1,28 +1,28 @@
 name: Heart of the Temple
 tier: boss
-teaches: Double tablets sit behind chained doors; break the gate, then finish every tablet twice.
+teaches: Split your moves between the chained double tablet and the pieces in double ice.
 
 x . . . x
  . . . .
 . . . . .
  . . . .
 . . . . .
+ . P P .
+. . g . .
+ . P P .
+. . P . .
+ . J J .
+x . . . x
  . . . .
-. . . . .
- . . . .
-. . . . .
- . . . .
-x g g g x
- g g g g
 . . . . .
  . . . .
 s . . . s
  . . . .
-. J . J .
- . . . .
 . . . . .
  . . . .
 . . . . .
- P P P P
-x P . P x
- P . . P
+ . . . .
+. . . . .
+ . . . .
+x . . . x
+ . . . .
