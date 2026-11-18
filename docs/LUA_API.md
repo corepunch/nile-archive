@@ -1293,6 +1293,18 @@ Outline only.
 | `thickness` | `number` |  |
 | `c` | `color` |  |
 
+### `gfx.round_rect_line_grad(r, radius, thickness, top, bottom)`
+
+Vertical gradient along the outline.
+
+| Argument | Type | |
+|---|---|---|
+| `r` | `rect` |  |
+| `radius` | `number` |  |
+| `thickness` | `number` |  |
+| `top` | `color` |  |
+| `bottom` | `color` |  |
+
 ### `gfx.shadow(r, radius, blur, c)`
 
 A blurred drop shadow under a rounded rect.

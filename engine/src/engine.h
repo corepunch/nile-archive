@@ -303,6 +303,7 @@ void draw_rect_grad(rect r, color top, color bottom);
 void draw_round_rect(rect r, float radius, color c);
 void draw_round_rect_grad(rect r, float radius, color top, color bottom);
 void draw_round_rect_line(rect r, float radius, float thickness, color c);
+void draw_round_rect_line_grad(rect r, float radius, float thickness, color top, color bottom);
 void draw_shadow(rect r, float radius, float blur, color c);
 void draw_circle(vec2 center, float radius, color c);
 void draw_ring(vec2 center, float radius, float thickness, color c);

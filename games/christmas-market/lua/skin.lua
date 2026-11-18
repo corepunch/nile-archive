@@ -8,7 +8,8 @@
 -- `height_ratio` (the top fraction, taken before the inset), then `inset`
 -- (number or {left, top, right, bottom}) and `offset` {x, y}; a state's
 -- `offset` moves every layer that isn't `fixed`.
-local navigation_button = require("match3.buttons").navigation
+local buttons = require("match3.buttons")
+local resource_fill = color(13, 47, 41, 0xE1)
 
 return ui.skin{
     fonts = {
@@ -69,14 +70,15 @@ return ui.skin{
             text = "cream", em = 18,
             normal = {layers = {
                 {shadow = "#00000050", radius_scale = 1, blur = 5, offset = {0, 2}, fixed = true},
-                {fill = "#0D2F29E1", radius_scale = 1},
+                {fill = resource_fill, radius_scale = 1},
                 {border = "#E9C77BBE", width = 1.4, radius_scale = 1},
             }},
             pressed = {offset = {0, 1}},
             variants = {
                 goal = {icon_overhang = .24},
                 signboard_goal = {em = 19, icon_overhang = .12, normal = {layers = {}}},
-                wallet = {em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
+                wallet = {normal = buttons.wallet(resource_fill),
+                          em = 18, icon_ratio = 60 / 36, icon_overhang = .5},
             },
         },
 
@@ -99,10 +101,10 @@ return ui.skin{
                 -- Secondary actions (Restart, Quit) in evergreen, beside the red primary.
                 secondary = {normal = {set = {shadow = {fill = "#0A2A1E"}, body = {fill = "#1E5A3C"},
                                               face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
-                navigation_build = navigation_button("build"),
-                navigation_play = navigation_button("play"),
-                navigation_levels = navigation_button("levels"),
-                navigation_pause = navigation_button("pause"),
+                navigation_build = buttons.navigation("build"),
+                navigation_play = buttons.navigation("play"),
+                navigation_levels = buttons.navigation("levels"),
+                navigation_pause = buttons.navigation("pause"),
                 -- Confirm and cancel a placement beside the lifted building.
                 placement_confirm = {normal = {layers = {
                     {fill = "#0D362B", radius = 28, offset = {0, 4}, fixed = true},

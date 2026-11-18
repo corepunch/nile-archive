@@ -14,6 +14,33 @@ local pewter = {edge=rgb(0x736653), top=rgb(0xE7DFCB), bottom=rgb(0x9C8C72), lip
 local sandstone = rgb(0xBEAA91)
 local shade = color(46, 29, 18, 94)
 
+-- Thicknesses and the raised bezel offset follow the short axis for both shapes.
+local function frame_boxes(body, pressed)
+    local side = math.min(body.w, body.h)
+    local depth = side * .045
+    local bezel = body:inflate(-side * .019):offset(vec2(0, -depth * (pressed and .15 or .65)))
+    local well = bezel:inflate(-side * .053)
+    return depth, bezel, well, well:inflate(-side * .014)
+end
+
+-- Paint hollow bands so the game's translucent wallet colour sits over the scenery.
+function B.wallet(fill)
+    return {layers = {{fixed = true, paint = function(_, _, st, _, out, alpha)
+        local pressed = st and st.held
+        local depth, bezel, well, face = frame_boxes(out, pressed)
+        local function ink(c) return alpha < 1 and color.alpha(c, alpha) or c end
+        local function band(box, width, top, bottom)
+            local path = box:inflate(-width * .5)
+            gfx.round_rect_line_grad(path, path.h * .5, width, ink(top), ink(bottom or top))
+        end
+        gfx.round_rect(out:offset(vec2(0, depth)), out.h * .5, ink(shade))
+        band(out, (out.h - face.h) * .5 + depth, brass.edge)
+        band(bezel, (bezel.h - well.h) * .5, brass.top, brass.bottom)
+        band(well, (well.h - face.h) * .5, brass.lip)
+        gfx.round_rect(face, face.h * .5, ink(fill))
+    end}}}
+end
+
 function B.paint(box, image, state, alpha)
     local side = math.min(box.w, box.h) * .90
     if side <= 0 then return end
@@ -22,14 +49,11 @@ function B.paint(box, image, state, alpha)
     local function ink(c) return alpha and alpha < 1 and color.alpha(c, alpha) or c end
     local center = box:center()
     local body = rect.centered(center, size2(side, side))
-    local depth = side * .045
+    local depth, bezel, well, enamel = frame_boxes(body, pressed)
     gfx.circle(center + vec2(0, depth), side * .5, ink(shade))
     gfx.circle(center, side * .5, ink(rim.edge))
-    local bezel = body:inflate(-side * .019):offset(vec2(0, -depth * (pressed and .15 or .65)))
     gfx.round_rect_grad(bezel, bezel.w / 2, ink(rim.top), ink(rim.bottom))
-    local well = bezel:inflate(-side * .053)
     gfx.circle(well:center(), well.w / 2, ink(rim.lip))
-    local enamel = well:inflate(-side * .014)
     gfx.round_rect_grad(enamel, enamel.w / 2, ink(face.top), ink(face.bottom))
     local dst = rect.centered(enamel:center(), size2(side * .78, side * .78)):fit(texture.size(image))
     if disabled then

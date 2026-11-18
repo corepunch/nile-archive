@@ -871,7 +871,11 @@ The [prompt](../art/resource-pieces/wallet-supplies-food.prompt.txt) and [asset 
 record the source and registration. Run `python3 games/relic-rush/tools/prepare_resource_pieces.py`
 to crop the left and right cells, fit each to 120 px and center it on a 128 px
 canvas with the authored alpha. The static icons appear in the top wallet,
-shop prices and expedition rewards. The shared capsule handles press feedback.
+shop prices and expedition rewards. The wallet uses the [round button painter](../../../engine/lua/match3/buttons.lua)
+for its brass rim and shadow. The skin supplies the translucent green fill and the
+bezel lowers on press. Compare the headers before (top) and after (bottom) in
+the [480×900](screenshots/review/wallet-rim-480.png) and [390×844](screenshots/review/wallet-rim-390.png)
+captures from `shot floating-hud` and `shot phone-board`.
 [In-game comparison](screenshots/review/three-resource-wallet/README.md).
 
 All five gear states were generated together by ImageGen; `settings-lives-prompt.txt` records the prompt and alpha cutout edit. `python3 games/relic-rush/tools/prepare_hud.py` performs only grid crops and thumbnail registration to 128px RGBA canvases, preserving authored alpha and paint. `tools/match3_atlas.py` then packs the five gear states. No tint-generated interaction state is used. Captures: `docs/screenshots/hud-states.jpg`, `hex-first.jpg`, `phone-board.jpg`, `island-village.jpg` and `phone-island.jpg`. Normal, selected, pressed, hover and disabled use the same authored outer medallion, with distinct painted state feedback.

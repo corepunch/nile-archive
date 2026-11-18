@@ -254,6 +254,7 @@
     <function name="round_rect" c="draw_round_rect"><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="c" type="color"/></function>
     <function name="round_rect_grad" c="draw_round_rect_grad"><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="top" type="color"/><arg name="bottom" type="color"/></function>
     <function name="round_rect_line" c="draw_round_rect_line" doc="Outline only."><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="thickness" type="float"/><arg name="c" type="color"/></function>
+    <function name="round_rect_line_grad" c="draw_round_rect_line_grad" doc="Vertical gradient along the outline."><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="thickness" type="float"/><arg name="top" type="color"/><arg name="bottom" type="color"/></function>
     <function name="shadow" c="draw_shadow" doc="A blurred drop shadow under a rounded rect."><arg name="r" type="rect"/><arg name="radius" type="float"/><arg name="blur" type="float"/><arg name="c" type="color"/></function>
     <function name="circle" c="draw_circle"><arg name="center" type="vec2"/><arg name="radius" type="float"/><arg name="c" type="color"/></function>
     <function name="ring" c="draw_ring"><arg name="center" type="vec2"/><arg name="radius" type="float"/><arg name="thickness" type="float"/><arg name="c" type="color"/></function>

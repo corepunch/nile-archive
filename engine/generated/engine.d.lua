@@ -916,6 +916,14 @@ function gfx.round_rect_grad(r, radius, top, bottom) end
 ---@param c color
 function gfx.round_rect_line(r, radius, thickness, c) end
 
+---Vertical gradient along the outline.
+---@param r rect
+---@param radius number
+---@param thickness number
+---@param top color
+---@param bottom color
+function gfx.round_rect_line_grad(r, radius, thickness, top, bottom) end
+
 ---A blurred drop shadow under a rounded rect.
 ---@param r rect
 ---@param radius number

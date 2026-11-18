@@ -2880,6 +2880,18 @@ static int l_gfx_round_rect_line(lua_State *L)
     return 0;
 }
 
+/* gfx.round_rect_line_grad(r, radius, thickness, top, bottom) */
+static int l_gfx_round_rect_line_grad(lua_State *L)
+{
+    rect a_r = api_check_rect(L, 1);
+    float a_radius = (float)luaL_checknumber(L, 2);
+    float a_thickness = (float)luaL_checknumber(L, 3);
+    color a_top = api_check_color(L, 4);
+    color a_bottom = api_check_color(L, 5);
+    draw_round_rect_line_grad(a_r, a_radius, a_thickness, a_top, a_bottom);
+    return 0;
+}
+
 /* gfx.shadow(r, radius, blur, c) */
 static int l_gfx_shadow(lua_State *L)
 {
@@ -4416,6 +4428,7 @@ static void open_gfx(lua_State *L)
         {"round_rect", l_gfx_round_rect},
         {"round_rect_grad", l_gfx_round_rect_grad},
         {"round_rect_line", l_gfx_round_rect_line},
+        {"round_rect_line_grad", l_gfx_round_rect_line_grad},
         {"shadow", l_gfx_shadow},
         {"circle", l_gfx_circle},
         {"ring", l_gfx_ring},

@@ -51,7 +51,8 @@ across 15 cells. The [engine match-3 module](../../docs/MATCH3_ENGINE.md)
 owns swaps, blockers, trickling gravity, cascades, hints, tools and timing.
 The game supplies the boards, artwork and straight-match rules.
 
-The puzzle and town use the same wallet and Pause button. The remaining moves
+The puzzle and town use the same wallet and Pause button. Each green resource
+capsule has the brass rim and drop shadow of the round buttons. The remaining moves
 are shown below the wallet on the puzzle. The deep blue tablets mark the objectives on parchment cells, which meet at
 hairline seams; cleared tablets return to parchment. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.

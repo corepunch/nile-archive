@@ -191,10 +191,9 @@ static void fill_path(const vec2 *p, int n, grad g, float soft)
 }
 
 /* Stroke a closed convex path centred on its outline. */
-static void stroke_path(const vec2 *p, int n, float thickness, color c)
+static void stroke_path(const vec2 *p, int n, float thickness, grad g)
 {
     float f = feather(), h = thickness * .5f;
-    color t = color_alpha(c, 0);
     for (int i = 0; i < n; i++) {
         int j = (i + 1) % n;
         vec2 ni = path_normal(p, n, i), nj = path_normal(p, n, j);
@@ -202,9 +201,11 @@ static void stroke_path(const vec2 *p, int n, float thickness, color c)
         vec2 ci = vec2_add(p[i], vec2_scale(ni, h)), di = vec2_add(p[i], vec2_scale(ni, h + f));
         vec2 aj = vec2_add(p[j], vec2_scale(nj, -h - f)), bj = vec2_add(p[j], vec2_scale(nj, -h));
         vec2 cj = vec2_add(p[j], vec2_scale(nj, h)), dj = vec2_add(p[j], vec2_scale(nj, h + f));
-        quad(ai, t, bi, c, bj, c, aj, t);
-        quad(bi, c, ci, c, cj, c, bj, c);
-        quad(ci, c, di, t, dj, t, cj, c);
+        color left = grad_at(g, p[i]), right = grad_at(g, p[j]);
+        color clear_left = color_alpha(left, 0), clear_right = color_alpha(right, 0);
+        quad(ai, clear_left, bi, left, bj, right, aj, clear_right);
+        quad(bi, left, ci, left, cj, right, bj, right);
+        quad(ci, left, di, clear_left, dj, clear_right, cj, right);
     }
     flush();
 }
@@ -234,7 +235,13 @@ void draw_round_rect(rect r, float radius, color c) { draw_round_rect_grad(r, ra
 void draw_round_rect_line(rect r, float radius, float thickness, color c)
 {
     vec2 p[MAX_PATH];
-    stroke_path(p, round_rect_path(r, radius, p), thickness, c);
+    stroke_path(p, round_rect_path(r, radius, p), thickness, (grad){c, c, 0, 0});
+}
+
+void draw_round_rect_line_grad(rect r, float radius, float thickness, color top, color bottom)
+{
+    vec2 p[MAX_PATH];
+    stroke_path(p, round_rect_path(r, radius, p), thickness, (grad){top, bottom, r.pos.y, rect_max(r).y});
 }
 
 void draw_shadow(rect r, float radius, float blur, color c)
@@ -254,7 +261,7 @@ void draw_circle(vec2 center, float radius, color c)
 void draw_ring(vec2 center, float radius, float thickness, color c)
 {
     vec2 p[MAX_PATH];
-    stroke_path(p, circle_path(center, radius, p), thickness, c);
+    stroke_path(p, circle_path(center, radius, p), thickness, (grad){c, c, 0, 0});
 }
 
 void draw_glow(vec2 center, float radius, color inner, color outer)

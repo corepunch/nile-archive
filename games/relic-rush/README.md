@@ -105,7 +105,8 @@ Clear every blue plaque to finish the expedition. The opening chapter’s dialog
 
 ## Shared UI and dialog layers
 
-The island and the board share one wallet and Settings bar. The board shows
+The island and the board share one wallet and Settings bar. The green resource
+capsules have the same brass rim and drop shadow as the round buttons. The board shows
 Moves at the left of the resource balances. The medallion turns red at five
 moves. Blue tablets mark the board objective. Winning banks the resources
 earned in the three slots.

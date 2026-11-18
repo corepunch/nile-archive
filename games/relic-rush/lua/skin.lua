@@ -8,7 +8,8 @@
 -- `inset` (number or {left, top, right, bottom}), `offset` {x, y} and
 -- `height_ratio` (the top fraction, taken before the inset); a state's
 -- `offset` moves every layer that isn't `fixed`.
-local navigation_button = require("match3.buttons").navigation
+local buttons = require("match3.buttons")
+local resource_fill = color(13, 47, 41, 0xD7)
 
 return ui.skin{
     fonts = {
@@ -84,10 +85,10 @@ return ui.skin{
             pressed = {offset = {0, 2}},
             disabled = {set = {body = {fill = "#4B5E50"}, face = {fill = "#6E7E6C"}, gloss = {fill = "#82917D"}}},
             variants = {
-                navigation_build=navigation_button("build"),
-                navigation_play=navigation_button("play"),
-                navigation_levels = navigation_button("levels"),
-                navigation_pause = navigation_button("pause"),
+                navigation_build=buttons.navigation("build"),
+                navigation_play=buttons.navigation("play"),
+                navigation_levels = buttons.navigation("levels"),
+                navigation_pause = buttons.navigation("pause"),
                 flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE
                 -- Secondary actions (Restart, Quit) in carved wood, beside the jade primary.
                 secondary = {normal = {set = {shadow = {fill = "#4A2C12"}, body = {fill = "#7A4C22"},
@@ -142,14 +143,15 @@ return ui.skin{
             text = "cream", em = 16,
             normal = {layers = {
                 {shadow = "#00000050", radius_scale = 1, blur = 5, offset = {0, 2}, fixed = true},
-                {fill = "#0D2F29D7", radius_scale = 1},
+                {fill = resource_fill, radius_scale = 1},
                 {border = "#E9C77BAA", width = 1.4, radius_scale = 1},
             }},
             pressed = {offset = {0, 1}},
             variants = {
                 goal = {icon_overhang = .24},
                 signboard_goal = {em = 19, icon_overhang = .12, normal = {layers = {}}},
-                wallet = {em = 16, icon_ratio = 1.71, icon_overhang = .375},
+                wallet = {normal = buttons.wallet(resource_fill),
+                          em = 16, icon_ratio = 1.71, icon_overhang = .375},
             },
         },
 

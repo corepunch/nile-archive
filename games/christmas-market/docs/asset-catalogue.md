@@ -164,7 +164,11 @@ boosters with their own button art; no stall places a piece on the board.
 
 The runtime atlas is `art/registered/market-goods.png`. The Gold coin, firewood and
 cocoa sprites identify their wallets and appear on prices and result
-cards. On the board, each spendable total includes goods earned on
+cards. The wallet uses the [round button painter](../../../engine/lua/match3/buttons.lua)
+for its brass rim and shadow. The skin supplies the translucent green fill and the
+bezel lowers on press. The [390×844 header comparison](screenshots/review/wallet-rim-390.png)
+shows `shot phone-board` before (top) and after (bottom).
+On the board, each spendable total includes goods earned on
 the current attempt. The [review](screenshots/review/cradle-market/README.md)
 shows the full atlas, the board at both phone sizes and the double panes.
 
