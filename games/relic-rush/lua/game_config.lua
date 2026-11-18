@@ -22,11 +22,6 @@ return {
     region_speaker = "mara",
     board = {
         kudos = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"},
-        tool_notes = {
-            "Pickaxe: tap a relic to break it.",
-            "Dynamite: tap a relic to blast around it.",
-            "Sunburst: tap a piece to hit all pieces of that kind.",
-        },
     },
     notices = {
         reward_building = "Resources banked. Open Buildings for the crew’s next request.",

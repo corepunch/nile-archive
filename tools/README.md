@@ -62,7 +62,7 @@ are the guides.
 | `match3_elements_art.py` | Registers the authored 48-state blocker and tablet atlas | `--check` in `make test-assets` |
 | `match3_theme_art.py` | Registers each portrait game's board-theme sheet | imported by `match3_atlas.py` |
 | `pack_particles.py` | Registers particle frames for the `fx` atlas | imported by `match3_atlas.py` |
-| `match3_buttons.py` | Prepares the Pause plate and packs the shared campaign actions; uses `games/relic-rush/tools/prepare_bonus_gems.py` for the button recipe | `python3 tools/match3_buttons.py` |
+| `match3_buttons.py` | Registers the four painted campaign icons on a 128 px grid | `python3 tools/match3_buttons.py` |
 | `board_tiles.py` | Bakes the shared board tiles into hex sprites for every game | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
 | `board_frame.py` | Bakes the hex border atlas and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |
@@ -122,7 +122,7 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `board_assets.py` | Registers authored board artwork (crop, rotate, resize); `--check` in `make test-assets` |
 | `check_art_catalogue.py` | Fails on uncatalogued runtime files, rule kinds or states (`make test-assets`) |
 | `prepare_buildings.py` | Builds the catalogue around the rendered building sprites (after `tools/buildings.py`) |
-| `prepare_bonus_gems.py` | Bonus button states from a painted base and the icons; also the recipe `tools/match3_buttons.py` uses |
+| `prepare_bonus_gems.py` | Registers the standalone bonus pieces used by the board and toolbar |
 | `prepare_resource_pieces.py` | Registers match pieces and wallet icons |
 | `prepare_result_icons.py` | Registers the two result icons |
 | `prepare_hud.py` | Registers the expedition HUD atlas (`--check` in `make test-assets`) |
@@ -136,7 +136,6 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `fit_match3_edges.py` | Hex-edge remapping for the tinsel ring, used by `prepare_assets.py` |
 | `check_assets.py` | Checks shipped inventory, state coverage and icon exports (`make test-assets`) |
 | `prepare_catalogue.py` | Builds the catalogue around the rendered sprites (`--check` in `make test-assets`) |
-| `prepare_bonus_buttons.py` | Circular boosters with the shared painted-button recipe |
 | `prepare_market_goods.py` | Registers the market pieces in one 4x4 atlas |
 | `prepare_character.py` | Resizes the character cutout and the app-icon master |
 | `prepare_hud.py` | Exports the navigation cells |

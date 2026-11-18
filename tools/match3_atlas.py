@@ -56,10 +56,10 @@ HEX = {'chain', 'ice-2', 'ice-1', 'selected', 'hint', 'cell-mask', 'board-frame'
 
 
 # One atlas per kind of art, in the order the generated tables list them.
-GROUPS = ['pieces', 'blockers', 'cells', 'boosters', 'hud', 'fx']
+GROUPS = ['pieces', 'blockers', 'cells', 'hud', 'fx']
 HUD_NAMES = {'score', 'complete', 'moves', 'life', 'signboard', 'hud-panel', 'tool-tray', 'discovery-star', 'next-clue'}
-BOARD_GROUPS = ['pieces', 'blockers', 'cells', 'fx', 'boosters']   # the board skin
-HUD_GROUPS = ['hud', 'boosters']                                   # the board HUD
+BOARD_GROUPS = ['pieces', 'blockers', 'cells', 'fx']   # the board skin
+HUD_GROUPS = ['hud']                                   # the board HUD
 
 
 def group_of(name):
@@ -70,8 +70,6 @@ def group_of(name):
         return 'blockers'
     if name.startswith('tile-') or name in ('selected', 'hint', 'guide', 'cell-mask', 'board-frame'):
         return 'cells'
-    if name.startswith(('pickaxe-', 'dynamite-', 'sunburst-', 'booster-', 'bonus-')):
-        return 'boosters'
     if name in HUD_NAMES or name.startswith(('pause-', 'board-pause-', 'shop-')):
         return 'hud'
     return 'pieces'
@@ -93,8 +91,13 @@ def grid_layout(sprites, columns):
     return frames, bottom
 
 
+ACTION_STRIP = ROOT / 'art/match3-buttons/actions.png'
+
+
 def pack_groups(sprites):
     """{group: (image, frames)}: each group in the smallest power-of-two sheet."""
+    actions = grid_sprites(ACTION_STRIP, ['action-build', 'action-play', 'action-levels', 'action-pause'], 4)
+    sprites = sprites | actions
     groups = {}
     for name, sprite in sprites.items():
         groups.setdefault(group_of(name), {})[name] = sprite
@@ -161,6 +164,7 @@ def provenance(inputs, outputs):
     # Registration and JPEG decoding are authoring steps. Verify the exact
     # recipe, inputs AND registered deliverables without reauthoring artwork
     # through a different platform's resampling/decoder implementation.
+    inputs = [*inputs, ACTION_STRIP]
     return {'recipe': fingerprint(Path(__file__)),
             'inputs': {str(p.relative_to(ROOT)): fingerprint(p) for p in sorted(set(inputs))},
             'outputs': {str(p.relative_to(ROOT)): fingerprint(p) for p in sorted(set(outputs))}}
@@ -363,17 +367,14 @@ def game_sprites(game, root):
         sprites |= grid_sprites(registered / 'campaign-pieces.png', campaign, 5)
         sprites |= grid_sprites(registered / 'result-icons.png', list(manifest['result_icons']['icons']), 2)
         gems = manifest['bonus_gems']
-        rows = [[f'bonus-{key}' if row == 'board' else f'bonus-{key}-{row}' for key in gems['columns']] for row in gems['rows']]
-        sprites |= grid_sprites(registered / 'bonus-gems.png', [name for row in rows for name in row], len(gems['columns']))
+        names = [f'bonus-{key}' for key in gems['columns']]
+        sprites |= grid_sprites(registered / 'bonus-gems.png', names, len(names))
         inputs += [registered / name for name in ('campaign-pieces.png', 'result-icons.png', 'bonus-gems.png')]
     else:
         manifest = json.loads((root / 'art/manifest.json').read_text())
         goods = manifest['market_goods']['frames']
         sprites |= grid_sprites(registered / 'market-goods.png', [f'market-{i}' for i in range(len(goods))], 4)
-        buttons = manifest['bonus_buttons']['columns']
-        names = [''] * len(buttons) + [f'{key}-{state}' for state in STATES for key in buttons]
-        sprites |= grid_sprites(registered / 'bonus-buttons.png', names, len(buttons))
-        inputs += [registered / name for name in ('market-goods.png', 'bonus-buttons.png')]
+        inputs.append(registered / 'market-goods.png')
     for name, path in files.items():
         sprites[name] = Image.open(path).convert('RGBA')
     return sprites, inputs + list(files.values())
@@ -402,7 +403,8 @@ def build_game(game, check):
         if source.stem in ('stone-2', 'stone-3'):
             continue  # Archived campaign sprites from before one-hit stones.
         sources[source.stem] = source
-    sources.update((source.stem, source) for source in sorted((registered / 'expedition-hud').glob('*.png')))
+    sources.update((source.stem, source) for source in sorted((registered / 'expedition-hud').glob('*.png'))
+                   if not source.stem.startswith('pause-'))
     # Backgrounds stay separate JPEGs; the atlases hold sprites only.
     images = {'background': 'board/backs/background.jpg'}
     aliases = {f'kind-{i}': f'{packs[0]}-{i}' for i in range(6)}

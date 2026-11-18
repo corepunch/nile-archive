@@ -59,7 +59,7 @@ the Market Keeper's Guide alongside Sound and Reduce Motion.
 
 The board's art is one atlas per kind in `data/board/`: `pieces.png` (the
 market goods and the earlier festive pieces), `blockers.png`, `cells.png`,
-`boosters.png`, `hud.png` and `fx.png`, with the backdrop in
+`hud.png` and `fx.png`, with the backdrop in
 `data/board/backs/background.jpg`. Run `python3 tools/match3_atlas.py` to
 rebuild the atlases from the registered sprites in `art/registered/`;
 [Asset layout](../../docs/ASSET_LAYOUT.md) describes the folders. The three lantern
@@ -177,12 +177,9 @@ The market is the engine's [shared town screen](../../docs/TOWN.md), laid out by
 `lua/town_config.lua`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
 
-Build and Play use authored winter-market navigation badges with five interaction
-states. See [market navigation](docs/asset-catalogue.md#market-navigation) for
-the source atlas, state mapping, reproduction and pending capture review.
-
-The town bottom row has a large central Play button and equal smaller Build
-and Levels buttons, with simplified authored icons and five interaction states.
+The town row draws Build, Play, Levels and Pause as enamel buttons sized to their
+slots. A single [painted strip](../../art/match3-buttons/README.md) supplies the
+128×128 action icons. The board draws its own bonus pieces on the same buttons.
 
 For a local story walkthrough, launch `./build/christmas-market --debug-walkthrough`.
 Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.

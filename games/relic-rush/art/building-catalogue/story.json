@@ -1,11 +1,11 @@
 {
   "camp": {
-    "about": "Match Hammer gems to charge a hit on one cell.",
-    "cost": [60, 0, 0]
+    "about": "Unlocks Bomb. Hit a cell and its six neighbors.",
+    "cost": [495, 190, 205]
   },
   "well": {
-    "about": "Water buckets earn 3 Food each from expedition 5.",
-    "cost": [125, 0, 0],
+    "about": "Water buckets earn 3 Food each.",
+    "cost": [50, 0, 0],
     "fixed_site": [610, 1840]
   },
   "quay_steps": {
@@ -16,86 +16,106 @@
       "geometry": "art/building-catalogue/painted-v1/quay-steps-geometry.png",
       "source": "art/building-catalogue/painted-v1/quay-steps-output.png",
       "prompt": "art/building-catalogue/painted-v1/quay-steps-prompt.txt",
-      "from": [[13, 826], [789, 1124], [1297, 609]],
-      "to": [[1.54, 175.54], [174.74, 239.81], [274.74, 128.48]]
+      "from": [
+        [13, 826],
+        [789, 1124],
+        [1297, 609]
+      ],
+      "to": [
+        [1.54, 175.54],
+        [174.74, 239.81],
+        [274.74, 128.48]
+      ]
     }
   },
   "workshop": {
-    "about": "Timber bundles earn 5 Supplies each. The first tread repairs the quay steps.",
-    "cost": [210, 80, 0]
+    "about": "Timber bundles earn 5 Supplies each.",
+    "cost": [455, 175, 0]
   },
   "market": {
-    "about": "Adds ration jars to later expeditions.",
-    "cost": [125, 70, 125]
+    "about": "Ration jars earn 4 Food each.",
+    "cost": [170, 70, 90]
   },
   "gateway": {
-    "about": "Helmets replace sun coins, 6 Coins each.",
-    "cost": [55, 95, 65]
+    "about": "Shrimp earn 6 Food each.",
+    "cost": [10, 65, 45]
   },
   "lodge": {
-    "about": "Adds grain bundles worth 5 Food each.",
-    "cost": [330, 325, 0]
+    "about": "Unlocks Hourglass. Add five moves.",
+    "cost": [175, 410, 220]
   },
   "archive": {
-    "about": "Adds dressed stones worth 7 Supplies each.",
-    "cost": [140, 145, 110]
+    "about": "Rings earn 7 Coins each.",
+    "cost": [80, 155, 100]
   },
   "observatory": {
-    "about": "Upgrades Star to Star II so it can hit through one layer of chain or ice.",
-    "cost": [120, 0, 85]
+    "about": "Unlocks Mixer. Shuffle the pieces.",
+    "cost": [185, 280, 175]
   },
   "fountain": {
-    "about": "Adds shrimp worth 6 Food each.",
-    "cost": [315, 0, 225]
+    "about": "Emeralds earn 11 Coins each.",
+    "cost": [480, 595, 375]
   },
   "temple": {
-    "about": "Adds emeralds worth 11 Coins each.",
-    "cost": [435, 450, 260]
+    "about": "Unlocks Star. Clear all pieces of a chosen kind.",
+    "cost": [140, 175, 115]
   },
   "log_cabin": {
-    "about": "Upgrades Hammer to Dynamite. The Blast slot keeps its charge.",
-    "cost": [110, 40, 0]
+    "about": "Unlocks Hammer. Hit one cell.",
+    "cost": [135, 50, 0]
   },
-  "apothecary": {"cost": [220, 15, 0]},
-  "mess_hall": {"cost": [240, 0, 16]},
-  "stilt_house": {"cost": [260, 0, 17]},
+  "apothecary": {
+    "cost": [220, 15, 0]
+  },
+  "mess_hall": {
+    "cost": [240, 0, 16]
+  },
+  "stilt_house": {
+    "cost": [260, 0, 17]
+  },
   "map_room": {
-    "about": "Match Plus gems to add a quarter charge to your other unlocked bonuses.",
-    "cost": [275, 230, 180]
+    "about": "Unlocks Lightning. Strike up to fifteen random cells.",
+    "cost": [100, 245, 140]
   },
-  "greenhouse": {"cost": [300, 20, 0]},
+  "greenhouse": {
+    "cost": [300, 20, 0]
+  },
   "trading_post": {
-    "about": "Rings replace helmets, 7 Coins each.",
-    "cost": [170, 215, 290]
+    "about": "Dressed stones earn 7 Supplies each.",
+    "cost": [40, 30, 35]
   },
   "water_mill": {
-    "about": "A two-stage cascade can bring a miller to the working mill.",
-    "cost": [125, 35, 0]
+    "about": "Grain bundles earn 5 Food each.",
+    "cost": [50, 60, 60]
   },
   "clock_tower": {
-    "about": "Match Star gems to charge a hit on every piece of one kind.",
-    "cost": [150, 200, 150]
+    "about": "Unlocks Shield. Hit the row through a chosen cell.",
+    "cost": [10, 55, 40]
   },
   "lighthouse": {
-    "about": "Upgrades Shield to Lightning. Hit a row and strike up to 20 cells in total.",
-    "cost": [70, 70, 55]
+    "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
+    "cost": [115, 185, 120]
   },
-  "treehouse": {"cost": [400, 0, 27]},
+  "treehouse": {
+    "cost": [400, 0, 27]
+  },
   "aviary": {
-    "about": "Sandals replace scarabs, 9 Coins each.",
-    "cost": [210, 285, 175]
+    "about": "Sandals earn 9 Coins each.",
+    "cost": [120, 185, 110]
   },
   "beached_ship": {
-    "about": "Scarabs replace rings, 8 Coins each.",
-    "cost": [145, 140, 125]
+    "about": "Scarabs earn 8 Coins each.",
+    "cost": [80, 140, 95]
   },
   "amphitheater": {
-    "about": "Shield gems join later expeditions. Match them to charge a row strike.",
-    "cost": [35, 50, 35]
+    "about": "Helmets earn 6 Coins each.",
+    "cost": [80, 195, 100]
   },
   "museum": {
-    "about": "Harps replace sandals and earn 10 Coins each. Plus II gives the other unlocked bonuses a half charge.",
-    "cost": [205, 420, 115]
+    "about": "Harps earn 10 Coins each.",
+    "cost": [220, 280, 205]
   },
-  "hanging_gardens": {"cost": [550, 37, 0]}
+  "hanging_gardens": {
+    "cost": [550, 37, 0]
+  }
 }

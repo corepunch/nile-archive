@@ -871,6 +871,13 @@ function gfx.image_hex(t, src, center, radius, angle, tint) end
 ---@param tint color
 function gfx.image_poly(t, pts, uvs, tint) end
 
+---Render a matte recess from the sprite's alpha. Offset is the shadow cast into the silhouette, in logical units. The floor colour supplies its tint and opacity. Samples stay inside the atlas frame.
+---@param t texture
+---@param dst rect
+---@param offset vec2
+---@param floor_color color
+function gfx.image_inset(t, dst, offset, floor_color) end
+
 ---Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
 ---@param t texture
 ---@param dst rect

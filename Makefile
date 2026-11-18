@@ -254,7 +254,7 @@ build/web/%.o: $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h $(wildcard $(LUA
 web: $(GAMES:%=dist/%/index.html)
 
 define WEB_RULES
-dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h web/shell.html $(call game_lua,$(1)) $(ENGINE_LUA) $(shell find games/$(1)/data -type f 2>/dev/null)
+dist/$(1)/index.html: $(WEB_OBJ) $(ENGINE_DEPS) $(PLATFORM_DEPS) $(LUA_DIR)/lua.h web/shell.html $(call game_lua,$(1)) $(ENGINE_LUA) $(shell find engine/data -type f) $(shell find games/$(1)/data -type f 2>/dev/null)
 	@mkdir -p dist/$(1)
 	$$(EMCC) $$(WEB_FLAGS) $(LUA_FLAGS) -DGAME_DIR='"/game"' -DGAME_DATA_DIR='"/data"' -DGAME_LUA_DIR='"/lua"' -DENGINE_DIR='"/engine"' -o $$@ \
 	    engine/src/launcher.c $(WEB_OBJ) \

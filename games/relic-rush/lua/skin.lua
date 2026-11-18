@@ -8,7 +8,7 @@
 -- `inset` (number or {left, top, right, bottom}), `offset` {x, y} and
 -- `height_ratio` (the top fraction, taken before the inset); a state's
 -- `offset` moves every layer that isn't `fixed`.
-local navigation_button = require("match3").navigation_button
+local navigation_button = require("match3.buttons").navigation
 
 return ui.skin{
     fonts = {

@@ -19,7 +19,7 @@ add no feedback. See the [shared haptics contract](../../docs/HAPTICS.md).
 
 ## Island navigation and resources
 
-Buildings is the large workshop/hammer image at bottom left, Play the large right-pointing image at bottom right, and Expeditions the smaller compass beside Buildings. These bottom actions have no text captions. The larger top-right gear opens Settings. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are full-screen sheets under the wallet row: continuous measured scrolling lists with bounded inertia, one entry per row. A building's row shows its art, what it unlocks, its whole price in Coins, Supplies and Food (an amount the wallet cannot cover is red) and a BUILD button or the reason it waits; restored buildings keep their art on a shorter ticked row. An expedition's row shows its number, name, what a win brings and PLAY, REPLAY or RESUME. During epoch one, Buildings opens the current quest card with a short narrated reason for the building in flat ink, then its price and what it brings side by side as icons with figures. A new piece shows the resource and amount each match banks, and a bonus gem shows its icon. Its shop link opens the full catalogue and category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The two lists share templates with Christmas Market and lay out only the rows in view.
+The town actions show a cottage for Buildings, a green triangle for Play, a folded map for Expeditions and blue bars for Pause. Resource icons protrude beyond their counter bars for readability. Expeditions and the building catalogue are full-screen sheets under the wallet row: continuous measured scrolling lists with bounded inertia, one entry per row. A building's row shows its art, what it unlocks, its whole price in Coins, Supplies and Food (an amount the wallet cannot cover is red) and a BUILD button or the reason it waits; restored buildings keep their art on a shorter ticked row. An expedition's row shows its number, name, what a win brings and PLAY, REPLAY or RESUME. During epoch one, Buildings opens the current quest card with a short narrated reason for the building in flat ink, then its price and what it brings side by side as icons with figures. A new piece shows the resource and amount each match banks, and a bonus gem shows its icon. Its shop link opens the full catalogue and category selectors. Keyboard focus reveals its item and mouse wheels scroll the same viewport. The two lists share templates with Christmas Market and lay out only the rows in view.
 
 The top wallet shows Coins, Supplies and Food on both screens. Matches
 preview in the wallet during an expedition and bank after a successful clear.
@@ -56,8 +56,7 @@ empty and movable, and slide diagonally only when that cell is occupied,
 locked or missing. Locks still route gems around their sides.
 
 The board's art is one atlas per kind in `data/board/`: `pieces.png`,
-`blockers.png`, `cells.png`, `boosters.png` (tools and the six campaign
-bonuses), `hud.png` and `fx.png`. Its backgrounds are separate JPEGs in
+`blockers.png`, `cells.png`, `hud.png` and `fx.png`. Its backgrounds are separate JPEGs in
 `data/board/backs/`. `python3 tools/match3_atlas.py` rebuilds the atlases from
 the registered sprites in `art/registered/`; [Asset layout](../../docs/ASSET_LAYOUT.md)
 describes the folders.
@@ -150,9 +149,9 @@ All 100 expeditions use five piece kinds. The first four take a median of six mo
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades; the free shuffle rearranges the movable pieces around chains and keeps the blue tablets in place. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
-Power comes only from the bonus tools: matched bonus gems fly into their sockets and fill them with gold from the bottom.
-With Reduce Motion on, the gold fills immediately.
-Empty buttons show their tool carved into sandstone.
+Power comes only from the bonus tools: matched bonus gems fly into their sockets and reveal the colored pieces from the bottom.
+With Reduce Motion on, the charge appears immediately.
+Empty buttons show the tool recessed into sandstone, with a soft shadow along the upper-left edge.
 See the [bonus artwork and state review](docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets).
 
 See [matching rules, board shape, implementation notes and reference sources](docs/match4-rules.md).
@@ -169,7 +168,7 @@ Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, T
 
 ## Story and world
 
-In **A Light Below** (levels 1–10), placing the Expedition Camp lets Mara answer a light under the cliff. Restoring the Spring Well brings Tomas to camp, and the Cabin gives Mara and Tomas shelter to measure the missing tread at low tide. Confirming the Workshop cuts the first tread, repairs the original quay steps, and triggers a brief flashback to the ancient keeper and the player’s choice of who answers the signal. Camp, Cabin and Workshop are freely placed. The Well and the Workshop’s quay repair have fixed sites. The Jungle Market is an optional purchase.
+In **A Light Below** (levels 1–10), the crew lands, restores the water supply and investigates a light below the cliff. The Sawmill supplies the quay repair. The Well and the repaired steps have fixed sites.
 
 In **The Keeper’s Return** (levels 11–20), the crew returns the Courtyard, Lodge and Archive to use. Ines’s note identifies the signaler, and her signed plan gives the crew a way to repair the quay wall. Chapter 3 carries the repair and ownership dispute to the finale. The signal plate and Ines’s reply on board 30 pay off the three flashes at the restored steps.
 
@@ -197,11 +196,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 6. See how the crew uses what you built, then set out again. The story's thirty boards support ten restored buildings; board 30 delivers the final hook.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
-The first building, the camp, costs 60 Coins. Food and Supplies come from the Well's water buckets and the Workshop's timber, then the Archive's dressed stone. Each confirmed
-restoration unlocks a higher-yield chip or a tool on eligible expeditions.
-The result shows what the next restoration unlocks or what is still needed to afford it. Matches and cascades earn resources. Direct tool hits can clear plaques and start cascades.
-
-The Well adds water buckets on level 5. Water buckets earn 3 Food each. The Workshop adds timber bundles on level 8. An arrival message names the building and piece.
+The Well costs 50 Coins. Its buckets earn 3 Food each from expedition 2. The Hunter's Hut introduces Hammer, and the Sawmill introduces timber worth 5 Supplies per piece. Buying the Village replaces Hammer with Bomb. The result shows the next purchase and its reward.
 
 ### Tutorials and citizens (`lua/user_events.lua`)
 
@@ -231,40 +226,32 @@ Every board is authored on a 9 x 12 rectangle of flat-top hexes, with holes and 
 
 ## Buildings
 
-Buildings unlock in this order at clear milestones 1, 4, 7, 10, 13, 16, 19, 23, 26 and 29. The Spring Well and Quay Steps have fixed sites. The player chooses the plot for other buildings.
+The twenty campaign purchases follow the Windows edition of Cradle of Rome 2. Each purchase introduces one piece. Prices reflect ten seeded plays of each of the 100 hex boards. The first thirty cover all twenty purchases. The balance simulation uses mean income per win and spends about 80% of the available balance at a purchase stop.
 
-| # | Restoration | Price | Board payoff |
-| --- | --- | --- | --- |
-| 1 | ★ Expedition camp | 20 Supplies + 10 Food | Hammer gems from board 2. |
-| 2 | ★ Spring well | 125 Coins | Water buckets worth 3 Food each. |
-| 3 | ★ Trapper's cabin | 65 Coins + 45 Supplies + 40 Food | Dynamite upgrades Hammer. |
-| 4 | ★ Artisan workshop | 120 Coins + 90 Supplies + 80 Food | Cut blocks worth 5 Supplies each and the repaired quay. |
-| 5 | Water mill | 65 Coins + 60 Supplies + 35 Food | Opens the miller’s cascade challenge. |
-| 6 | Clock tower | 150 Coins + 150 Supplies + 200 Food | Star gems. |
-| 7 | Stone amphitheatre | 35 Coins + 35 Supplies + 50 Food | Shield gems. |
-| 8 | ★ Sunstone courtyard | 55 Coins + 65 Supplies + 95 Food | Helmets worth 6 Coins. |
-| 9 | ★ Explorer's lodge | 330 Coins + 325 Food | Grain bundles worth 5 Food each. |
-| 10 | Trading post | 170 Coins + 290 Supplies + 215 Food | Rings worth 7 Coins. |
-| 11 | Valley lighthouse | 70 Coins + 55 Supplies + 70 Food | Lightning upgrades Shield. |
-| 12 | ★ Lost-world archive | 140 Coins + 110 Supplies + 145 Food | Carved quartz worth 7 Supplies each. |
-| 13 | Beached schooner | 145 Coins + 125 Supplies + 140 Food | Scarabs worth 8 Coins. |
-| 14 | Cartographer's house | 275 Coins + 180 Supplies + 230 Food | Plus gems give a quarter charge to other unlocked bonuses. |
-| 15 | ★ Star observatory | 120 Coins + 85 Supplies | Star II upgrades Star. |
-| 16 | Great aviary | 210 Coins + 175 Supplies + 285 Food | Sandals worth 9 Coins. |
-| 17 | ★ Jade fountain | 315 Coins + 225 Supplies | Shrimp worth 6 Food each. |
-| 18 | Relic museum | 205 Coins + 115 Supplies + 420 Food | Harps worth 10 Coins. |
-| 19 | ★ Temple of the sun | 435 Coins + 260 Supplies + 450 Food | Emeralds worth 11 Coins each. |
+| # | Building | After clear | Coins / Food / Supplies | Board reward |
+| --- | --- | ---: | --- | --- |
+| 1 | Well | 1 | 50 / 0 / 0 | Water buckets earn 3 Food each. |
+| 2 | Hunter's Hut | 4 | 135 / 50 / 0 | Unlocks Hammer. Hit one cell. |
+| 3 | Sawmill | 7 | 455 / 175 / 0 | Timber bundles earn 5 Supplies each. |
+| 4 | Village | 10 | 495 / 190 / 205 | Unlocks Bomb. Hit a cell and its six neighbors. |
+| 5 | Farm | 11 | 170 / 70 / 90 | Ration jars earn 4 Food each. |
+| 6 | Quarry | 12 | 40 / 30 / 35 | Dressed stones earn 7 Supplies each. |
+| 7 | Mill | 12 | 50 / 60 / 60 | Grain bundles earn 5 Food each. |
+| 8 | Thermae | 13 | 10 / 55 / 40 | Unlocks Shield. Hit the row through a chosen cell. |
+| 9 | Port | 13 | 10 / 65 / 45 | Shrimp earn 6 Food each. |
+| 10 | Curia Octavia | 16 | 175 / 410 / 220 | Unlocks Hourglass. Add five moves. |
+| 11 | Coliseum | 17 | 80 / 195 / 100 | Helmets earn 6 Coins each. |
+| 12 | House of the Vestals | 18 | 100 / 245 / 140 | Unlocks Lightning. Strike up to fifteen random cells. |
+| 13 | Aqueduct | 19 | 80 / 155 / 100 | Rings earn 7 Coins each. |
+| 14 | Lighthouse | 20 | 115 / 185 / 120 | Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge. |
+| 15 | Nero's Golden House | 21 | 80 / 140 / 95 | Scarabs earn 8 Coins each. |
+| 16 | Mausoleum of Augustus | 23 | 185 / 280 / 175 | Unlocks Mixer. Shuffle the pieces. |
+| 17 | Pantheon | 24 | 120 / 185 / 110 | Sandals earn 9 Coins each. |
+| 18 | Theatre | 25 | 220 / 280 / 205 | Harps earn 10 Coins each. |
+| 19 | Forum | 26 | 140 / 175 / 115 | Unlocks Star. Clear all pieces of a chosen kind. |
+| 20 | Fountain | 29 | 480 / 595 / 375 | Emeralds earn 11 Coins each. |
 
-These nineteen purchases restore twenty buildings, including the Workshop’s quay steps. ★ marks the ten story restorations,
-which never block the next expedition. The others open after their clear and
-must be placed before the next ★ one. Resource and bonus unlocks follow the
-table above.
-
-Construction makes the next story beat available. The [economy table](docs/resource-expedition.md#board-rules-and-palette)
-lists the first expedition and currency for each payoff.
-
-The island’s **SHOP** adds the optional Jungle Market and 76 repeatable buildings and decorations to these twenty restorations. The market introduces ration jars from board 11. Other shop stock includes buildings, trees, shrubs, flowers, monuments, water gardens,
-furniture, supplies, wildlife and rocks. Browse categories and pages, check the
+The Sawmill also repairs the fixed quay as part of the island story. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
 confirm. Cancelling is free. The resources
 needed for an earned restoration are reserved until placement. Purchases save
@@ -293,7 +280,7 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 - Swap adjacent pieces to make a straight line of four or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and any remaining cost of the next restoration.
-- Restore buildings to unlock Hammer, Shield, Star and Plus. A later restoration
+- Restore buildings to unlock four bonus families. A later restoration
   upgrades each of the four slots and carries its charge forward. An expedition
   can feature one bonus gem family. Matching six fills one use, and activation
   costs zero moves. [Bonus effects and restorations](docs/board-progression.md#bonus-pieces)
@@ -412,7 +399,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-Current scope is an offline prototype: one hundred hex boards, twenty campaign restorations plus the optional Jungle Market and 76 repeatable buildings and decorations, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
+Current scope is an offline prototype: one hundred hex boards, twenty campaign purchases and repeatable scenery, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
 
 ## Fast rule tests
 
@@ -445,8 +432,9 @@ The island is the engine's [shared town screen](../../docs/TOWN.md), laid out by
 `lua/town_config.lua`. Tapping a building shows its name in a word bubble; holding
 it for half a second lifts it to move.
 
-The town bottom row has a large central Play button and equal smaller Build
-and Levels buttons, with simplified authored icons and five interaction states.
+The town row draws Build, Play, Levels and Pause as enamel buttons sized to their
+slots. A single [painted strip](../../art/match3-buttons/README.md) supplies the
+128×128 action icons. The board draws its own bonus pieces on the same buttons.
 
 For a local story walkthrough, launch `./build/relic-rush --debug-walkthrough`.
 Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.

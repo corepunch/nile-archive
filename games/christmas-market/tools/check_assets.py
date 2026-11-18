@@ -43,12 +43,6 @@ def main():
         assert atlas['frames'][name]['atlas'] == 'pieces' and pieces['runtime'] == 'data/board/pieces.png', name
     for entry in registration['icons']:
         assert png(ROOT/'art/registered'/entry['path']) == ((128,128),6), entry['path']
-    for tool, folder in [('pause','expedition-hud')]:
-        hashes = {digest(ROOT/'art/registered'/folder/f'{tool}-{state}.png') for state in STATES}
-        assert len(hashes) == 5, f'{tool}: every state must have its own authored artwork'
-        for state in STATES:
-            name = f'{tool}-{state}'
-            assert atlas['frames'][name]['atlas'] in atlas['hud'] and atlas['frames'][name]['atlas'] not in ('pieces', 'blockers', 'cells', 'fx')
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_hud.py'), '--check'], check=True)
     tiles = manifest['tiles']
     spec = json.loads((ROOT.parents[1]/tiles['spec']).read_text())
@@ -70,11 +64,11 @@ def main():
     assert png(ROOT/goods['runtime']) == ((512, 512), 6) and len(set(goods['frames'])) == 16
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
     assert (ROOT/manifest['campaign_buttons']).is_file()
-    assert png(ROOT/'data/common/buttons.png') == ((512, 768), 6)
     buttons = manifest['bonus_buttons']
-    assert len(set(buttons['columns'])) == 4 and set(buttons['columns']) == set(buttons['icons'])
-    assert png(ROOT/buttons['runtime']) == ((512, 768), 6)
-    subprocess.run([sys.executable, str(ROOT.parents[1]/buttons['generator']), '--check'], check=True)
+    economy = (ROOT/'lua/economy.lua').read_text()
+    for key, frame in buttons['icons'].items():
+        assert f'icon="{key}", frame="{frame}"' in economy and frame in atlas['frames'], key
+        assert all(f'{key}-{state}' not in atlas['frames'] for state in STATES)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
     assert set(nav['icons']) == {f'{kind}-{state}' for kind in ('build','play','levels') for state in STATES}
     for kind in ('build', 'play', 'levels'):

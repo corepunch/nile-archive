@@ -210,7 +210,7 @@ alpha-blended pieces in one atlas. Font glyphs, engine shape primitives and
 transient beam/particle geometry remain normal renderer facilities.
 
 Relic Rush and Christmas Market each ship `data/board/pieces.png`,
-`blockers.png`, `cells.png`, `boosters.png`, `hud.png` and `fx.png`, with
+`blockers.png`, `cells.png`, `hud.png` and `fx.png`, with
 backgrounds as separate JPEGs in `data/board/backs/`. Goal displays can reuse
 the board's chip and objective frames. The generated `lua/match3_atlases.lua`
 gives each atlas's frames; `lua/match3_skin.lua` and `lua/match3_hud.lua` pick

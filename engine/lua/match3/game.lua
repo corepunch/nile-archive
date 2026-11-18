@@ -1560,6 +1560,9 @@ function G.app(R)
                                       edge_to_edge = true, skip = "SKIP"})
         local art = require("art")
         local board_skin = art.skin()
+        for _, action in ipairs{"action-build", "action-play", "action-levels", "action-pause"} do
+            R.skin.images[action] = assert(board_skin[action], "missing campaign icon: " .. action)
+        end
         R.backdrop = board_skin.background
         R.scenes[1], R.scenes[2] = board_skin["scene-1"] or R.backdrop, board_skin["scene-2"] or R.backdrop
         -- match pieces: the first pack, or another (--tiles / ?tiles=)
@@ -1573,7 +1576,6 @@ function G.app(R)
         for i, t in ipairs(pack_kinds(tiles)) do R.relics[i] = t end
         R.board_art = art.load()
         R.hud_art = art.load_hud()
-        require("match3").load_action_buttons(R.skin, R.hud_art)
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
         -- The neutral skin has no life icon: borrow the game's own HUD atlas.
         R.life_art = R.hud_art.life or require("match3").hud(require("match3_hud")).life

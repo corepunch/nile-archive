@@ -133,7 +133,7 @@ function T.new(c, config, hooks)
         {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     }}
     if b.layout == "play-primary" and b.pause then
-        v.navigation = ui.form{kind = "row", align = "center", gap = 10, children = {
+        v.navigation = ui.form{kind = "row", align = "center", gap = 8, children = {
             {kind = "spacer", grow = 1},
             {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
             {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},

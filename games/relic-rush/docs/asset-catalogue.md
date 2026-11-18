@@ -84,25 +84,7 @@ authored sprite with existing motion and separate indicators. Specials use
 their own authored art. The original scenario sheet is still the source of
 the other story pieces below, alongside the trail arrow from the outlined atlas.
 
-| Runtime name | Match meaning | Wallet context |
-| --- | --- | --- |
-| `coin` | Round gold coin engraved with an eight-ray sun, 4 Coins | Coins icon |
-| `berries` | Red berries, 1 Food | Board only |
-| `emerald` | Bright green faceted emerald, 11 Coins | Board and guide from 30 after the Temple |
-| `timber` | Three bark-covered logs with visible end grain, 2 Supplies | Board |
-| `stone` | Pale violet-grey quarry stone, 3 Supplies | Board only |
-| `water` | Teal water bucket, 3 Food. Replaces timber from board 5 after the Well is restored. | Board and guide |
-| `rations` | Orange ration jar, 4 Food in the Market slot from board 10 | Board and guide |
-| `cut-blocks` | Workshop unlock from board 8, 5 Supplies | Board and guide |
-| `silver-coin` | Silver profile coin with a laurel border, 3 Coins | Board on 3 and guide |
-| `helmet` | Gold helmet with red crest, 6 Coins | Board from 14 after the Courtyard, and guide |
-| `ring` | Gold ring with a dark green inset, 7 Coins | Board from 18 after the Trading post, and guide |
-| `scarab` | Bronze beetle with a jade inset, 8 Coins | Board from 21 after the Beached schooner, and guide |
-| `sandal` | Roman leather sandal with a silver wing, 9 Coins | Board from 25 after the Great aviary, and guide |
-| `harp` | Gold lyre with a turquoise inset, 10 Coins | Board from 28 after the Relic museum, and guide |
-| `grain` | Existing Resources wheat bundle (`art/registered/tile-sets/resources/5.png`), 5 Food | Board and guide from 17 |
-| `quartz` | Existing Relics purple crystal (`art/registered/tile-sets/relics/4.png`), 7 Supplies | Board and guide from 20 |
-| `shrimp` | Curled red-orange shrimp, 6 Food | Replaces the water bucket from 27 after the Fountain |
+The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `helmet`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). That table records their earnings and purchase order. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 Leaves and flowers use the same board match and scoring behavior as other
@@ -112,10 +94,7 @@ Cut blocks use `art/registered/tile-sets/resources/4.png` (Resources atlas, row 
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The alternate packs still supply separate grain and quartz sprites at their
 authored orientation and alpha. Selected, hinted and falling pieces use the normal chip
-with the existing board feedback. The Camp and Observatory enable existing
-Dynamite and Sunburst controls with their authored normal, selected, pressed,
-hover and disabled artwork. The locked and depleted tools share the disabled
-art and show different tap notices. Review `shot hex-first`, `shot hex-late`,
+with the existing board feedback. Review `shot hex-first`, `shot hex-late`,
 `shot landing-briefing`, and `shot phone-story-level-30` in the Relic Rush suite.
 See the [current board and wallet review](review/blue-plaque-campaign/README.md).
 The [harbor campaign review](screenshots/review/harbor-campaign/README.md)
@@ -443,51 +422,22 @@ cover a zero-charge ring at both phone sizes.
 
 ## Campaign bonus pieces and sockets
 
-The six standalone pieces are Hammer, Dynamite, Shield, Lightning, Star and
-Plus. Their effects and restoration unlocks are documented in
-[board progression](board-progression.md#bonus-pieces). The four 76 px
-booster slots share a centered row with an equally sized Pause button. Blast swaps the Hammer sprite for Dynamite
-at level II, and Sweep swaps Shield for Lightning. Star II and Plus II use
-the same generated button art as their first tiers. Every level II button
-shows a small runtime II label even when its charge is empty.
+The eight standalone pieces each have their own silhouette. Board pieces, rewards and toolbar buttons use the same 128 px frames in `data/board/pieces.png`. The four painted navigation icons also live in this atlas. The [board progression](board-progression.md#bonus-pieces) lists each construction reward and effect. All eight items are drawn together in the [painted source](../art/bonus-gems/rome-eight.png). The [manifest](../art/board-states/manifest.json) records source positions and registration. Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` and `python3 tools/match3_atlas.py` to reproduce the frames.
 
-The [shared button generator](../../../art/match3-buttons/README.md) uses
-one painted Pause base for navigation and a [strip of six standalone gems](../art/bonus-gems/six-bonuses.png)
-for the boosters.
-It maps the painted rim to a 57 px radius and uses a 47 px circular inset.
-The strip comes from the first row of the previous atlas at commit
-`20ad450b`. Its [original prompt](../art/bonus-gems/six-bonuses.prompt.txt)
-records where the gem paintings came from.
+The shared enamel painter draws the five states and exposes the ready face from
+the bottom as each matched gem lands. The house, Play triangle, expedition map
+and pause bars come from the [shared action atlas](../../../art/match3-buttons/README.md).
+[Toolbar at both sizes](screenshots/enamel-toolbar.jpg) · [All bonus states](screenshots/bonus-states.jpg).
 
-The five generated faces are ivory with a gold rim, selected jade, pressed
-amber, brighter ivory on hover, and carved sandstone for locked and empty
-sockets. The engravings preserve subpixel coverage through a 4× render pass.
-The engraver casts the inner shadow from each gem's own silhouette. The
-shadow offset is 3.5 × 4.5 px, half the original 7 × 9 px. All five states
-share the circular base's alpha. Partial charge reveals the normal face from the
-bottom. Matched gems fly to their sockets with the engine's resource flight
-timing, arc, trail and landing flash. The socket updates as each gem lands.
-Reduce Motion credits the whole match immediately.
+Earlier gameplay captures follow.
 
-Run `python3 games/relic-rush/tools/prepare_bonus_gems.py` to generate
-`art/registered/bonus-gems.png`. The [manifest](../art/board-states/manifest.json)
-records the base crop, registration and state recipes. Board gems fit in
-112 × 112 px, with an 88 px limit for the Hammer. Button glyphs are centered
-by their visible shape and scaled to clear the circular inset. The Hammer
-uses the midpoint from its visible head to handle so both ends have room.
-The board and button atlases use 128 px cells.
-[Clearance review](../../../art/match3-buttons/glyph-clearance.png)
-
-[Rendered states](screenshots/bonus-states.jpg) ·
-[480 × 900 toolbar](screenshots/bonus-toolbar.jpg) ·
-[390 × 844 toolbar](screenshots/bonus-toolbar-phone.jpg) ·
 [Locked sockets on expedition 1](screenshots/bonus-locked-phone.jpg) ·
-[Spent Dynamite](screenshots/bonus-spent.jpg) ·
+[Spent Bomb](screenshots/bonus-spent.jpg) ·
 [Workshop card](screenshots/bonus-workshop-card.jpg) ·
 [Water mill on the results screen](screenshots/bonus-building-result.jpg) ·
 [Hammer debut](screenshots/bonus-hammer-debut.jpg) ·
 [Hammer debut on phone](screenshots/bonus-hammer-debut-phone.jpg) ·
-[Plus debut](screenshots/bonus-plus-debut.jpg) ·
+[Mixer debut](screenshots/bonus-mixer-debut.jpg) ·
 [Shutter Gear board](screenshots/bonus-gear.jpg).
 Reproduce the views and the real tap-to-spend check with
 `build/test/relic-rush 'shot bonus-' 'reel bonus-gem-flight' 'shot workshop-card-phone'`.
@@ -495,7 +445,7 @@ Reproduce the views and the real tap-to-spend check with
 ## Earlier tool art and reference boards
 
 **Retired.** Every board now carries the bonus toolbar (`bonus-*` in
-`data/board/boosters.png`), so these square buttons are no longer registered,
+`data/board/pieces.png`), so these square buttons are no longer registered,
 packed or shipped. The authored sheet and this record stay as provenance; to
 restore them, register the fifteen cells again from `retired_tool_buttons` in
 `art/board-states/manifest.json`.
@@ -810,9 +760,8 @@ in [the road removal comparison](review/no-auto-roads/README.md).
 
 ## Engine match-3 atlas and trickling
 
-`data/board/` holds one atlas per kind of art: `pieces.png`, `blockers.png`,
-`cells.png` (floors and selection/hint frames), `boosters.png` (all five states
-of each tool and bonus), `hud.png` (Pause, goal and wallet counters, shop
+`data/board/` holds one atlas per kind of art: `pieces.png` (pieces, bonuses and action icons), `blockers.png`,
+`cells.png` (floors and selection/hint frames), `hud.png` (Pause, goal and wallet counters, shop
 icons) and `fx.png` (additive effects). Backgrounds are separate files in
 `data/board/backs/`. `lua/match3_atlases.lua` gives each frame's pixel
 rectangle; `lua/match3_skin.lua` and `lua/match3_hud.lua` choose the atlases for
@@ -912,7 +861,7 @@ footprints and collision rules are unchanged. No bitmap or ImageGen source is
 added. Reproduce with the existing native-input hold/placement captures in the
 [review](../../../docs/review/city-placement-guides/README.md).
 
-## Settings gear and three-resource wallet
+## Earlier settings gear and three-resource wallet
 
 The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-disabled` keys draw the authored settings gear from `art/expedition-hud/settings-lives.png`. The same atlas includes the archived `life` heart. The top wallet shows the sun coin, `wallet-supplies` and `wallet-food` in that order. The shared header keeps the gear slot square and scales the wallet capsule widths to fit beside it.
 
@@ -929,7 +878,7 @@ All five gear states were generated together by ImageGen; `settings-lives-prompt
 
 The larger Buildings and Play actions reuse the existing jade button skin in all its states. Expeditions remains the smaller compass action. Building name/subtitle bubbles use the existing story bubble renderer and persist until the next press.
 
-## Island image actions and prominent resources
+## Archived island image actions and prominent resources
 
 The **bottom of the town screen** now has Build (left), a large Play (center),
 and Levels (right). Build and Levels have equal 88×88 slots; Play has a 144×144

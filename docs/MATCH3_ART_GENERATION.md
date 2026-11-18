@@ -37,8 +37,7 @@ Shooting Star and Firework Bomb buttons use the painted row rocket and bomb from
 the bottom row of the [power-up paint sheet](../art/match3-power-up-paint/source.png).
 `tools/match3_theme_art.py` registers them as `booster-star-icon` and
 `booster-firework-icon`, sized to fixed target areas (`REFERENCE_AREAS`).
-`games/christmas-market/tools/prepare_bonus_buttons.py` bakes them into the
-booster buttons. The sheet's [prompt](../art/match3-power-up-paint/prompt.txt)
+The toolbar draws those frames directly on its enamel faces. The sheet's [prompt](../art/match3-power-up-paint/prompt.txt)
 and [edit target](../art/match3-power-up-paint/scener-strip.png) are the
 provenance. The Scener models that set its geometry have been deleted.
 

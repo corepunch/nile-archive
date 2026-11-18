@@ -28,7 +28,7 @@ The [earlier base sheet](../art/board-theme/source.png) and
 festive palette. The base sheet remains the source for certain reference elements.
 [Earlier in-game art review](screenshots/review/board-palette/README.md).
 
-Built-in ImageGen painted the rocket axes, bomb and rainbow gem together for both games. Only this game's row rocket and bomb are still registered, as the two booster icons above. The [painted sheet](../../../art/match3-power-up-paint/source.png), its [prompt](../../../art/match3-power-up-paint/prompt.txt) and [edit target](../../../art/match3-power-up-paint/scener-strip.png) are their provenance. The [atlas manifest](../art/match3-atlas.json) records each icon's crop, fitted size and position inside the canonical inset hex, and `tools/prepare_bonus_buttons.py` bakes them into the booster buttons. Rebuild with `python3 tools/match3_atlas.py`. The [painted power-up](screenshots/review/power-up-paint/README.md) and [Scener model](screenshots/review/scener-power-ups/README.md) reviews are historical.
+Built-in ImageGen painted the rocket axes, bomb and rainbow gem together for both games. Only this game's row rocket and bomb are still registered, as the two booster icons above. The [painted sheet](../../../art/match3-power-up-paint/source.png), its [prompt](../../../art/match3-power-up-paint/prompt.txt) and [edit target](../../../art/match3-power-up-paint/scener-strip.png) are their provenance. The [atlas manifest](../art/match3-atlas.json) records each icon's crop, fitted size and position inside the canonical inset hex, and the toolbar draws those same frames on its enamel faces. Rebuild with `python3 tools/match3_atlas.py`. The [painted power-up](screenshots/review/power-up-paint/README.md) and [Scener model](screenshots/review/scener-power-ups/README.md) reviews are historical.
 
 One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
 
@@ -109,17 +109,18 @@ Play is the largest control.
 
 ## Campaign booster buttons
 
-The four circular boosters and the Build, Play, Wishes and Pause actions use the same [painted Pause base and state generator](../../../art/match3-buttons/README.md) as Relic Rush. The [manifest](../art/manifest.json) records the toy hammer and lantern star from the market goods atlas, plus the bomb and rocket from the shared board artwork. The generator fits each silhouette into the same circular socket and packs normal, selected, pressed, hover and engraved disabled states beneath the standalone icons.
+The four circular boosters share the [runtime enamel painter](../../../art/match3-buttons/README.md)
+with Build, Play, Wishes and Pause. The [manifest](../art/manifest.json) maps
+Hammer and Lantern to market goods 5 and 10, and the other two to the bomb
+and rocket frames. Cards and the guide show those same pieces. The [state
+review](screenshots/art-states.jpg) covers all four boosters.
 
-The toy hammer fits within 76 px on the board. All button glyphs are centered
-by their visible shape and inset from the rim in every state.
 Matched toy hammers and lantern stars use the engine's resource flight arc,
 trail and landing flash. They follow the same timing as currency and land in
 their respective booster buttons. The meter or stored-use badge updates on
 arrival. Reduce Motion shows the earned charge immediately.
 
-Use the [button tool commands](../../../art/match3-buttons/README.md) to
-rebuild the action and booster atlases. The [flight review](screenshots/booster-flights.gif) shows a
+The [flight review](screenshots/booster-flights.gif) shows a
 currency and a booster match in the same move for each charging piece.
 [Desktop toolbar](screenshots/booster-toolbar.jpg) · [Phone toolbar](screenshots/booster-toolbar-phone.jpg) · [Five interaction states](screenshots/art-states.jpg)
 
@@ -306,6 +307,10 @@ Line specials (ROW, COLUMN, DIAGONAL) draw the treat itself through
 asked for stripes instead of shooting stars on 2026-11-09. No new artwork.
 
 ## Market navigation
+
+The current town uses the [shared 128 px action icons and enamel faces](../../../art/match3-buttons/README.md).
+
+### Archived painted badges
 
 The **bottom of the town screen** now has Build (left), a large Play (center),
 and Levels (right). Build and Levels have equal 88×88 slots; Play has a 144×144
@@ -495,9 +500,8 @@ with `--gamecenter-demo`.
 
 ## Engine match-3 atlas and trickling
 
-`data/board/` holds one atlas per kind of art: `pieces.png`, `blockers.png`,
-`cells.png` (floors and selection/hint frames), `boosters.png` (all five states
-of each tool and bonus), `hud.png` (Pause, goal and wallet counters, shop
+`data/board/` holds one atlas per kind of art: `pieces.png` (pieces, bonuses and action icons), `blockers.png`,
+`cells.png` (floors and selection/hint frames), `hud.png` (Pause, goal and wallet counters, shop
 icons) and `fx.png` (additive effects). Backgrounds are separate files in
 `data/board/backs/`. `lua/match3_atlases.lua` gives each frame's pixel
 rectangle; `lua/match3_skin.lua` and `lua/match3_hud.lua` choose the atlases for
@@ -627,7 +631,7 @@ unlock:
 |---|---|---|---|
 | New piece | YOU GET | the piece, `market-<kind>` | `+N` beside the currency it banks |
 | Tool piece | YOU GET | the piece | `+N` beside the booster it charges |
-| Booster per wish | EVERY WISH | the booster's `-normal` button | `+1` |
+| Booster per wish | EVERY WISH | the booster's standalone piece | `+1` |
 | More moves | EVERY WISH | none: the word MOVES under a larger figure | `+3` |
 | Faster charge | YOU GET | the first tool piece | `x2` |
 | Takings | EVERY WIN | the currency | `+N` |

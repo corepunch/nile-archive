@@ -191,11 +191,11 @@ function R.smoke()
             app.inject_click(R.town.buttons.play); stage = 5; return
         end
         -- A short wallet replays the cleared board for resources, as a player would.
-        local camp, short = R.buildings[1].cost, false
-        for slot = 1, 3 do short = short or R.prog.wallet[slot] < camp[slot] end
+        local cost, short = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost, false
+        for slot = 1, 3 do short = short or R.prog.wallet[slot] < cost[slot] end
         if short then
             shop.topups = (shop.topups or 0) + 1
-            assert(shop.topups <= 4, "smoke: four replays of expedition one still cannot pay for the camp")
+            assert(shop.topups <= 4, "smoke: four replays of expedition one still cannot pay for the well and shrub")
             app.inject_click(R.town.buttons.middle); stage = 60; return
         end
         app.inject_click(R.town.buttons.build); stage = 2   -- CHOOSE A LOCATION
@@ -209,16 +209,7 @@ function R.smoke()
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 4   -- PLACE & BUILD
     elseif stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
         if R.island.count ~= 1 then error("smoke: the wonder was not built") end
-        move = city.move_test(R.island, {
-            look = function(at) R.island_focus(at - vec2(0, 80), math.max(.65, R.island.cam.zoom)) end,
-            wallet = function() return R.prog.wallet[rules.GOLD] end,
-            cancel = function() app.inject_click(R.placement_form.boxes.cancel:center()) end,
-            confirm = function() app.inject_click(R.placement_form.boxes.confirm:center()) end,
-            offset = vec2(240, 0),
-        })
-        stage = 6
-    elseif stage == 6 then   -- pan, hold to lift, drag, cancel, then confirm
-        if not move() then R.open_catalogue("building"); shop.categories = 0; stage = 20 end
+        R.open_catalogue("building"); shop.categories = 0; stage = 20
     elseif stage == 20 and R.overlay == R.OV_SHOP then
         if shop.categories < 2 then
             app.inject_click(R.catalogue_form.boxes.category_next:center())
@@ -243,6 +234,17 @@ function R.smoke()
     elseif stage == 26 and R.island.placing < 0 then
         assert(R.island.count == 2 and island.wonder_count(R.island) == 1, "decoration changed campaign restoration count")
         assert(R.prog.wallet[1] == shop.gold - 15, "purchase must charge once")
+        move = city.move_test(R.island, {
+            item = 2,
+            look = function(at) R.island_focus(at - vec2(0, 80), math.max(.65, R.island.cam.zoom)) end,
+            wallet = function() return R.prog.wallet[rules.GOLD] end,
+            cancel = function() app.inject_click(R.placement_form.boxes.cancel:center()) end,
+            confirm = function() app.inject_click(R.placement_form.boxes.confirm:center()) end,
+            offset = vec2(240, 0),
+        })
+        stage = 6
+    elseif stage == 6 then
+        if move() then return end
         local c = R.island
         app.inject_click(c.cam:rect_to_screen(c:sprite_rect(c.items[2])):point(vec2(.5, .65))); stage = 27
     elseif stage==27 and R.overlay==R.OV_NONE then

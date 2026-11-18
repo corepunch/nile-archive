@@ -24,8 +24,14 @@ check(R.prog.level == 1 and R.prog.wallet[4] == expected[4], 'replay does not ad
 R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
-check(R.debug_advance_town() and island.owned(R.island, 0) == 1, 'town action confirms the earned building')
-check(not R.debug_advance_town() or island.owned(R.island, 0) == 1, 'repeated action does not duplicate the building')
+local nav, bonus_bounds = R.town.navigation.boxes, R.board_tool_bounds(0)
+for _, button in ipairs{nav.build, nav.levels, nav.pause} do
+    check(math.abs(button.w - bonus_bounds.w) < .01 and math.abs(button.h - bonus_bounds.h) < .01,
+        "the three secondary town buttons match the live bonus control")
+end
+check(nav.play.w == 124 and nav.play.h == 124, "Play keeps its larger target")
+check(R.debug_advance_town() and island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'town action confirms the earned building')
+check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
 
 local relic = economy.bonuses ~= nil
@@ -76,14 +82,11 @@ local function check_unlock(index, reward, already_placed)
     return next_board
 end
 
-local first_tool = relic and economy.unlocks[1].bonus or economy.pieces[5]
+local first_tool = relic and economy.bonuses.hammer or economy.pieces[5]
 local second_tool = relic and economy.unlock_of("observatory").bonus or economy.pieces[10]
-local resource = relic and economy.unlocks[2] or economy.pieces[4]
-local board
-if relic then board = check_unlock(1, first_tool, true)
-else check_unlock(1, resource, true) end
-if relic then check_unlock(2, resource)
-else board = check_unlock(2, first_tool) end
+local resource = relic and economy.unlock_of("well") or economy.pieces[4]
+check_unlock(1, resource, true)
+local board = check_unlock(2, first_tool)
 
 local tool = first_tool.tool
 local stock_key = relic and 'bonus_charge' or 'tool_stock'

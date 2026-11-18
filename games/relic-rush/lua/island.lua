@@ -29,8 +29,8 @@ for i, d in ipairs(M.buildings) do
     d.decoration = not (HOUSES[d.category] or d.road)
     M.kinds[d.key] = i - 1
 end
-M.wonder_kinds = {M.kinds.camp, M.kinds.well, M.kinds.log_cabin, M.kinds.workshop,
-    M.kinds.gateway, M.kinds.lodge, M.kinds.archive, M.kinds.observatory, M.kinds.fountain, M.kinds.temple}
+M.wonder_kinds = {M.kinds.well, M.kinds.log_cabin, M.kinds.workshop, M.kinds.camp,
+    M.kinds.gateway, M.kinds.lodge, M.kinds.archive, M.kinds.observatory, M.kinds.temple, M.kinds.fountain}
 local story_kind = {}
 for i, kind in ipairs(M.wonder_kinds) do
     M.wonders[i] = M.buildings[kind + 1]
@@ -62,8 +62,13 @@ end
 -- The quay is a fixed part of the Workshop purchase. Keep its catalogue ID
 -- for saved cities and its footprint reserved, but never offer it for sale.
 local steps = M.kinds.quay_steps
-for i, row in ipairs(M.catalogue_order) do
-    if row == steps + 1 then table.remove(M.catalogue_order, i); break end
+local function scenery_building(kind)
+    local item = M.catalogue[kind + 1]
+    return item and HOUSES[item.category] and not M.ladder_position[kind]
+end
+for i = #M.catalogue_order, 1, -1 do
+    local kind = M.catalogue_order[i] - 1
+    if kind == steps or scenery_building(kind) then table.remove(M.catalogue_order, i) end
 end
 
 function M.restore_quay(c, now)
@@ -81,7 +86,7 @@ end
 
 local can_buy = M.can_buy
 function M.can_buy(c, wallet, level, kind)
-    if kind == steps then return false end
+    if kind == steps or scenery_building(kind) then return false end
     return can_buy(c, wallet, level, kind)
 end
 

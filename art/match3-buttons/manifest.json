@@ -1,22 +1,54 @@
 {
-  "source": "games/christmas-market/art/registered/expedition-hud/pause-normal.png",
-  "base": "art/match3-buttons/base.png",
-  "pause_glyph": [38, 33, 89, 98],
-  "navigation_dir": "games/christmas-market/art/registered/navigation",
-  "navigation_crops": {
-    "build": [33, 41, 121, 126],
-    "play": [41, 37, 121, 125],
-    "levels": [30, 39, 122, 125]
-  },
-  "columns": ["build", "play", "levels", "pause"],
-  "icon_sizes": {
-    "build": {"button": 72, "center": "bounds"},
-    "play": {"button": 65},
-    "levels": {"button": 70},
-    "pause": {"button": 62}
-  },
-  "runtime": [
-    "games/relic-rush/data/common/buttons.png",
-    "games/christmas-market/data/common/buttons.png"
-  ]
+  "source": "art/match3-buttons/actions-source.png",
+  "prompt": "art/match3-buttons/prompt.txt",
+  "painter": "engine/lua/match3/buttons.lua",
+  "cell_size": 128,
+  "fit": 110,
+  "icons": [
+    {
+      "key": "build",
+      "box": [
+        0,
+        0,
+        627,
+        627
+      ]
+    },
+    {
+      "key": "play",
+      "box": [
+        627,
+        0,
+        1254,
+        627
+      ]
+    },
+    {
+      "key": "levels",
+      "box": [
+        0,
+        627,
+        627,
+        1254
+      ]
+    },
+    {
+      "key": "pause",
+      "box": [
+        627,
+        627,
+        1254,
+        1254
+      ]
+    }
+  ],
+  "states": [
+    "normal",
+    "selected",
+    "pressed",
+    "hover",
+    "disabled"
+  ],
+  "registered": "art/match3-buttons/actions.png",
+  "runtime_atlas": "data/board/pieces.png"
 }

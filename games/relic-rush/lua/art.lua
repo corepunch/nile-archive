@@ -1,6 +1,7 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
 -- Board pieces and wallet icons have separate presentation keys.
 local elements_view = require("match3.elements_view")
+local buttons = require("match3.buttons")
 local A = {}
 A.board_frame = require("board_frame_atlas")
 A.story={cast={"elena","mara","tomas","adrian","keeper"},keeper_source="art/art-direction/ancient-keeper.png",source="art/art-direction/expedition-cast.png",
@@ -33,7 +34,7 @@ A.resource_upgrades = {
 -- Local comparison art uses the exact source crops and the same board states.
 A.rome_reference = {leaf=1, flower=2, ["silver-coin"]=3, coin=4, water=5, timber=6, rations=7, stone=8, grain=9,
     shrimp=10, helmet=11, ring=12, scarab=13, sandal=14, harp=15, emerald=16, amphora=17}
-A.bonus_atlas_order = {"bonus-hammer", "bonus-dynamite", "bonus-shield", "bonus-lightning", "bonus-star", "bonus-plus"}
+A.bonus_atlas_order = {"bonus-hammer", "bonus-bomb", "bonus-shield", "bonus-hourglass", "bonus-lightning", "bonus-plus", "bonus-mixer", "bonus-star"}
 -- World layers: procedural animated density; separate Blender ground PNGs.
 A.island_layers = {"cloud-fog", "building-shadows", "placement-guides"}
 A.buildings = {catalogue="buildings", shadows="building_sprites", states={"restored", "valid-placement", "blocked-placement", "held", "card-and-reward"}}
@@ -66,13 +67,7 @@ function A.load_hud()
     local neutral = app.arg("default-match3")
     local theme = match3.hud(not neutral and require("match3_hud") or nil)
     assert(neutral or theme.signboard, "missing jade signboard")
-    local hud, bonus = {}, own_hud()
-    for key, image in pairs(theme) do hud[key] = image end
-    -- Every bonus column's toolbar states, from the boosters atlas.
-    for _, key in ipairs(A.bonus_atlas_order) do
-        for _, state in ipairs(A.states) do hud[key .. "-" .. state] = bonus[key .. "-" .. state] end
-    end
-    return hud
+    return theme
 end
 
 function A.draw_hud_catalogue(R)
@@ -80,7 +75,7 @@ function A.draw_hud_catalogue(R)
     R.say_at("EXPEDITION ARTWORK",vec2(240,248),25,R.PAL_GOLD,420)
     for i,state in ipairs(A.states) do
         local x=62+(i-1)*89
-        gfx.image(R.hud_art["action-pause-"..state],rect(x-32,280,64,64),color.WHITE)
+        buttons.paint(rect(x-32,280,64,64), R.skin.images["action-pause"], state)
         R.say_at(state,vec2(x,365),12,R.PAL_CREAM,85)
     end
     gfx.image(R.hud_art.score,rect(56,397,46,46),color.WHITE)
@@ -148,7 +143,7 @@ function A.draw_bonus_catalogue(R)
         local x = left + (col - 1) * step
         gfx.image(R.board_art[key], rect(x, top + 55, side, side), color.WHITE)
         for row, state in ipairs(A.states) do
-            gfx.image(R.hud_art[key .. "-" .. state], rect(x, top + 118 + (row - 1) * 69, side, side), color.WHITE)
+            buttons.paint(rect(x, top + 118 + (row - 1) * 69, side, side), R.board_art[key], state)
         end
     end
 end
@@ -183,10 +178,10 @@ function A.draw_catalogue(R)
     for row = 1, 3 do   -- the first three bonuses' toolbar states
         local bonus = A.bonus_atlas_order[row]
         for col, state in ipairs(A.states) do
-            gfx.image(R.hud_art[bonus .. "-" .. state], rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), color.WHITE)
+            buttons.paint(rect(30 + (col - 1) * 88, 588 + (row - 1) * 83, 66, 66), R.board_art[bonus], state)
         end
     end
-    R.say_at("Authored states - no generated tints", vec2(240, 855), 13, R.PAL_CREAM, 420)
+    R.say_at("Bonus pieces on enamel controls", vec2(240, 855), 13, R.PAL_CREAM, 420)
 end
 
 -- Game-rendered samples at the same size as live board cells: the eight

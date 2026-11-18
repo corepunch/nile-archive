@@ -2,6 +2,7 @@
 -- The market goods (in the pieces atlas) are shared by the board and the wallet.
 local elements_view = require("match3.elements_view")
 local economy = require("economy")
+local buttons = require("match3.buttons")
 local A = {}
 A.board_frame = require("board_frame_atlas")
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
@@ -15,7 +16,6 @@ A.island_layers = {"land-fog"}
 
 -- The game's own atlases, even when the board borrows the engine's neutral skin.
 local function own_board() return require("match3").skin(require("match3_skin")) end
-local function own_hud() return require("match3").hud(require("match3_hud")) end
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
@@ -30,16 +30,8 @@ function A.load_hud()
     local neutral = app.arg("default-match3")
     local hud = match3.hud(not neutral and require("match3_hud") or nil)
     if not neutral then assert(hud.signboard, "missing spruce signboard") end
-    local bonus = own_hud()
-    local images = setmetatable({}, {__index=hud})
-    if neutral then images.score = hud.complete end
-    -- Every booster's toolbar states, from the boosters atlas.
-    for _, booster in ipairs(economy.tool_slots) do
-        for _, state in ipairs(A.states) do
-            images[booster.icon .. "-" .. state] = bonus[booster.icon .. "-" .. state]
-        end
-    end
-    return images
+    if neutral then return setmetatable({score=hud.complete}, {__index=hud}) end
+    return hud
 end
 
 function A.draw_hud_catalogue(R)
@@ -47,7 +39,7 @@ function A.draw_hud_catalogue(R)
     R.say_at("CHRISTMAS HUD ARTWORK",vec2(240,248),25,R.PAL_GOLD,420)
     for i,state in ipairs(A.states) do
         local x=62+(i-1)*89
-        gfx.image(R.hud_art["action-pause-"..state],rect(x-32,280,64,64),color.WHITE)
+        buttons.paint(rect(x-32,280,64,64), R.skin.images["action-pause"], state)
         R.say_at(state,vec2(x,365),12,R.PAL_CREAM,85)
     end
     gfx.image(R.hud_art.score,rect(56,414,66,66),color.WHITE)
@@ -72,6 +64,7 @@ function A.load()
     local function load(name) textures[name] = skin[name] end
     local own = own_board()
     local function piece(name) return assert(own[name], "missing atlas frame: " .. name) end
+    for _, slot in ipairs(economy.tool_slots) do textures[slot.icon] = piece(slot.frame) end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     elements_view.load(textures, own)
     for _, level in ipairs(require("campaign").levels) do
@@ -118,7 +111,7 @@ function A.draw_catalogue(R)
     end
     for row, booster in ipairs(economy.tool_slots) do
         for col, state in ipairs(A.states) do
-            gfx.image(R.hud_art[booster.icon .. "-" .. state], rect(30 + (col - 1) * 88, 584 + (row - 1) * 67, 66, 66), color.WHITE)
+            buttons.paint(rect(30 + (col - 1) * 88, 584 + (row - 1) * 67, 66, 66), R.board_art[booster.icon], state)
         end
     end
 end

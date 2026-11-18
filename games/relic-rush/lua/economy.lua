@@ -25,39 +25,35 @@ local E = {
     -- the bonus gem or a story item; the silver slot takes the bonus when a
     -- story item holds the leaf's.
     SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
-    CAMPAIGN_VERSION=7,
+    CAMPAIGN_VERSION=8,
 }
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
 
 E.BONUS_THRESHOLD = 36
 E.bonus_slots = {
-    {key="blast", levels={
-        {key="hammer", name="Hammer", action="hit", effect="Tap a cell to hit it once."},
-        {key="dynamite", name="Dynamite", action="blast", effect="Tap a cell to hit it and its neighbors."},
+    {key="impact", legacy_slot="blast", levels={
+        {key="hammer", name="Hammer", action="hit", effect="Hit one cell."},
+        {key="bomb", name="Bomb", action="blast", effect="Hit a cell and its six neighbors."},
     }},
-    {key="sweep", levels={
-        {key="shield", name="Shield", action="row", effect="Tap a cell to hit the row through it."},
-        {key="lightning", name="Lightning", action="row_lightning",
-            effect="Tap a cell to hit its row and scatter strikes across up to 20 cells total."},
+    {key="shield", legacy_slot="sweep", levels={
+        {key="shield", name="Shield", action="row", effect="Hit the row through a chosen cell."},
+        {key="plus", name="Plus", action="replenish", resource_amount=100, effect="Choose a resource piece for 100 resources or another bonus to add a quarter charge."},
     }},
-    {key="star", levels={
-        {key="star", name="Star", action="color", effect="Tap a piece to hit every piece of that kind."},
-        {key="star-ii", name="Star II", action="color_pierce", art="star",
-            effect="Tap a piece to hit its kind through one layer of chain or ice."},
+    {key="hourglass", legacy_slot="recharge", levels={
+        {key="hourglass", name="Hourglass", action="moves", effect="Add five moves."},
+        {key="mixer", name="Mixer", action="shuffle", effect="Shuffle the pieces."},
     }},
-    {key="recharge", levels={
-        {key="plus", name="Plus", action="charge", charge_divisor=4,
-            effect="Tap to add a quarter charge to your other unlocked bonuses."},
-        {key="plus-ii", name="Plus II", action="charge", art="plus", charge_divisor=2,
-            effect="Tap to add half a charge to your other unlocked bonuses."},
+    {key="lightning", legacy_slot="star", levels={
+        {key="lightning", name="Lightning", action="lightning", effect="Strike up to fifteen random cells."},
+        {key="star", name="Star", action="color", effect="Clear all pieces of a chosen kind."},
     }},
 }
 local B = {}
 for tool, slot in ipairs(E.bonus_slots) do
     for rank, bonus in ipairs(slot.levels) do
         bonus.tool, bonus.rank, bonus.amount = tool, rank, 6
-        bonus.icon = "bonus-" .. (bonus.art or bonus.key)
+        bonus.icon = "bonus-" .. bonus.key
         B[bonus.key] = bonus
     end
 end
@@ -67,38 +63,36 @@ E.bonuses = B
 -- building and why. Characters speak in the scenes, which play once. Costs
 -- and board unlocks come from the building catalogue and ladder.
 E.quests = {
-    camp={title="Bring the crew ashore", request="The crew is still out on the boat. Pitch a camp so they come ashore to a hot supper."},
-    well={title="Get the pump running", request="The last water cask is empty. Buy a seal for the old pump and get the well running."},
-    log_cabin={title="Be there for low tide", request="Low tide comes before dawn. Build a dry cabin so Mara and Tomas can reach the steps in time."},
-    workshop={title="Cut a tread to fit", request="Tomas has the measure of the missing step. Build a workshop where the crew can cut a new tread."},
+    well={title="Draw fresh water", request="Restore the well to bring water buckets onto the board."},
+    log_cabin={title="Build the Hunter's Hut", request="The hunter brings a hammer. Match hammer pieces to charge it."},
+    workshop={title="Open the Sawmill", request="The mill supplies timber for the village."},
+    camp={title="Build the Village", request="The village unlocks bombs. Match them to charge a blast."},
 }
 
--- The campaign ladder, in purchase order, after Cradle of Rome's 20
--- constructions. The Workshop includes the fixed quay repair. `building`
--- is the catalogue key. The ten story restorations hold the next new
--- expedition. Other required purchases precede the next story restoration.
--- backdrop is the board painting the restored building brings: 1 lagoon, 2 temple.
+-- The twenty purchases in the Windows sequel's epochs.xml. Stable catalogue keys
+-- retain the island's original artwork and old saves. The eight bonus IDs use
+-- their first-game identities. first_level sets the small board's pacing.
 E.unlocks = {
-    {building="camp", backdrop=1, first_level=2, bonus=B.hammer},
-    {building="well", key="water", backdrop=1, name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3, first_level=5},
-    {building="log_cabin", first_level=8, bonus=B.dynamite},
-    {building="workshop", after=10, key="timber", backdrop=1, name="Timber bundles", kind=4, slot=E.SUPPLIES, amount=5, first_level=8},
-    {building="water_mill", first_level=11},
-    {building="market", key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4, first_level=11, optional=true},
-    {building="clock_tower", first_level=12, bonus=B.star},
-    {building="amphitheater", first_level=14, bonus=B.shield},
-    {building="gateway", key="helmet", backdrop=2, name="Helmets", kind=0, slot=E.GOLD, amount=6, first_level=14},
-    {building="lodge", key="grain", backdrop=1, name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5, first_level=17},
-    {building="trading_post", key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7, first_level=18},
-    {building="lighthouse", first_level=20, bonus=B.lightning},
-    {building="archive", key="stone", backdrop=2, name="Dressed stones", kind=4, slot=E.SUPPLIES, amount=7, first_level=20},
-    {building="beached_ship", key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8, first_level=21},
-    {building="map_room", first_level=23, bonus=B.plus},
-    {building="observatory", backdrop=2, first_level=24, bonus=B["star-ii"]},
-    {building="aviary", key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9, first_level=25},
-    {building="fountain", key="shrimp", backdrop=1, name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6, first_level=27},
-    {building="museum", key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10, first_level=28, bonus=B["plus-ii"]},
-    {building="temple", key="emerald", backdrop=2, name="Emeralds", kind=0, slot=E.GOLD, amount=11, first_level=30},
+    {building="well", rome="city_well", tile=5, first_level=2, backdrop=1, key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3},
+    {building="log_cabin", rome="city_hunter", tile=600, first_level=5, bonus=B.hammer},
+    {building="workshop", rome="city_sawmill", tile=6, first_level=8, backdrop=1, key="timber", name="Timber bundles", kind=4, slot=E.SUPPLIES, amount=5},
+    {building="camp", rome="city_village", tile=601, first_level=11, backdrop=1, bonus=B.bomb},
+    {building="market", rome="city_farm", tile=7, first_level=12, key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4},
+    {building="trading_post", rome="city_mine", tile=8, first_level=13, key="stone", name="Dressed stones", kind=4, slot=E.SUPPLIES, amount=7},
+    {building="water_mill", rome="city_mill", tile=9, first_level=13, key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5},
+    {building="clock_tower", rome="city_thermae", tile=602, first_level=14, bonus=B.shield},
+    {building="gateway", rome="city_port", tile=10, first_level=14, backdrop=2, key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6},
+    {building="lodge", rome="city_oktavia", tile=603, first_level=17, backdrop=1, bonus=B.hourglass},
+    {building="amphitheater", rome="city_coliseum", tile=11, first_level=18, key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6},
+    {building="map_room", rome="city_vestalki", tile=604, first_level=19, bonus=B.lightning},
+    {building="archive", rome="city_aqueduct", tile=12, first_level=20, backdrop=2, key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7},
+    {building="lighthouse", rome="city_lighthouse", tile=605, first_level=21, bonus=B.plus},
+    {building="beached_ship", rome="city_neron", tile=13, first_level=22, key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8},
+    {building="observatory", rome="city_mausoleum", tile=606, first_level=24, backdrop=2, bonus=B.mixer},
+    {building="aviary", rome="city_pantheon", tile=14, first_level=25, key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9},
+    {building="museum", rome="city_theatre", tile=15, first_level=26, key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10},
+    {building="temple", rome="city_forum", tile=607, first_level=27, backdrop=2, bonus=B.star},
+    {building="fountain", rome="city_center", tile=16, first_level=30, backdrop=1, key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11},
 }
 -- A restoration is placed after the clear before its first board.
 for _, unlock in ipairs(E.unlocks) do
@@ -119,14 +113,14 @@ end
 function E.building_unlock_text(unlock)
     local bonus = unlock.bonus
     if not bonus then return unlock.name end
-    local gems = bonus.rank == 1 and bonus.name .. " gems" or bonus.name
+    local gems = bonus.name .. " gems"
     return unlock.name and unlock.name .. " and " .. gems or gems
 end
 
 function E.bonus_lesson(bonus)
     if bonus.rank == 2 then
         local first = E.bonus_slots[bonus.tool].levels[1]
-        return ("%s upgrades %s and keeps its charge."):format(bonus.name, first.name)
+        return ("%s replaces %s and keeps its charge."):format(bonus.name, first.name)
     end
     return "Match " .. bonus.name .. " gems to charge the bonus."
 end

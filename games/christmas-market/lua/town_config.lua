@@ -1,6 +1,7 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
 -- engine's defaults (engine/lua/town.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
+local tool_size = require("match3").TOOL_SIZE
 return {
     background = "#738FB5",
     header = {
@@ -18,9 +19,10 @@ return {
         layout = "play-primary",
         bottom = 10,
         height = 124,
-        build = 76,
+        margin = 8,
+        build = tool_size,
         play = 124,
-        secondary_height = 76,
+        secondary_height = tool_size,
         pause = true,
         middle = {kind = "button"},
     },

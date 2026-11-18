@@ -30,10 +30,10 @@ local E = {
 }
 
 E.tool_slots = {
-    {icon="booster-hammer", action="hit", effect="Tap a cell to hit it with the Hammer."},
-    {icon="booster-firework", action="blast", effect="Tap a cell to blast it and its neighbors."},
-    {icon="booster-lantern", action="sunburst", effect="Tap a cell to strike across 15 cells."},
-    {icon="booster-star", action="row", effect="Tap a cell to clear its row with Shooting Star."},
+    {icon="booster-hammer", frame="market-5", action="hit", effect="Tap a cell to hit it with the Hammer."},
+    {icon="booster-firework", frame="booster-firework-icon", action="blast", effect="Tap a cell to blast it and its neighbors."},
+    {icon="booster-lantern", frame="market-10", action="sunburst", effect="Tap a cell to strike across 15 cells."},
+    {icon="booster-star", frame="booster-star-icon", action="row", effect="Tap a cell to clear its row with Shooting Star."},
 }
 
 -- Every wish's five ordinary kinds sit on five lines; a stall's new piece

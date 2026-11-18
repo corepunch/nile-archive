@@ -69,18 +69,29 @@ expected_pieces = set(pieces) | set(upgrades) | campaign_resources | set(re.find
 expected_pieces |= {"amphora", *revised_pieces}
 assert set(slots) == expected_pieces and len(slots) == len(expected_pieces), "Campaign piece atlas coverage"
 gems = manifest["bonus_gems"]
-assert all((ROOT / gems[key]).is_file() for key in ("source", "prompt", "button_base", "review"))
+assert all((ROOT / gems[key]).is_file() for key in ("source", "prompt", "review"))
 assert png_matches(ROOT / gems["runtime"], pack(gems)), "Bonus gem atlas registration is stale"
-assert gems["rows"] == ["board", *manifest["tool_states"]]
-assert set(gems["button_states"]) == set(manifest["tool_states"])
+assert {k for k in atlas["frames"] if k.startswith("bonus-")} == {"bonus-" + key for key in gems["columns"]}
 declaration = re.search(r"A\.bonus_atlas_order = \{([^}]+)\}", art).group(1)
 assert re.findall(r'"bonus-([^"]+)"', declaration) == gems["columns"]
 economy = (ROOT / "lua/economy.lua").read_text()
+reference = json.loads((ROOT.parents[1] / "docs/cradle-of-rome-reference/rome-2-economy.json").read_text())
+purchases = [b for epoch in reference["epochs"] for b in epoch["buildings"]]
+rows = re.findall(r'\{building="(\w+)", rome="(\w+)", tile=(\d+), ([^}]+)\}', economy)
+assert [(rome, int(tile)) for _, rome, tile, _ in rows] == [(b["id"], b["unlocks_tile"]) for b in purchases]
+for building, _, tile, row in rows:
+    credit = reference["tiles"][tile]["credit"]
+    if int(tile) >= 600:
+        key = gems["columns"][int(tile) - 600]
+        assert "bonus=B." + key in row and gems["bonuses"][key]["building"] == building, building
+    else:
+        wallet = {1: "GOLD", 2: "SUPPLIES", 3: "PROVISIONS"}[credit["type"]]
+        assert f'slot=E.{wallet}, amount={credit["amount"]}' in row, building
 variants = re.findall(r'\{key="([^"]+)", name="[^"]+", action="[^"]+"(?:, art="([^"]+)")?', economy)
 variant_art = {key: art_key or key for key, art_key in variants}
 assert variant_art == {key: bonus["art"] for key, bonus in gems["bonuses"].items()}
 assert set(variant_art.values()) == set(gems["columns"])
-assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", levels=\{', economy)
+assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", legacy_slot="[^"]+", levels=\{', economy)
 match3 = (ROOT.parent.parent / "engine/lua/match3.lua").read_text()
 assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
@@ -120,7 +131,7 @@ for asset in [hud["controls"], hud["retired_portrait"]]:
 for name, asset in hud["icons"].items():
     assert "`" + name + "`" in doc
     assert (ROOT / asset["runtime"]).is_file()
-nav=json.loads((ROOT / manifest["navigation"]).read_text())
+nav=json.loads((ROOT / manifest["archived_navigation"]).read_text())
 assert (ROOT/nav["source"]).is_file() and (ROOT/nav["prompt"]).is_file()
 assert set(nav["icons"])=={kind+"-"+state for kind in ("build","play","levels") for state in manifest["tool_states"]}
 for name,asset in nav["icons"].items():

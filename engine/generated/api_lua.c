@@ -2804,6 +2804,17 @@ static int l_gfx_image_poly(lua_State *L)
     return 0;
 }
 
+/* gfx.image_inset(t, dst, offset, floor_color) */
+static int l_gfx_image_inset(lua_State *L)
+{
+    texture a_t = api_check_texture(L, 1);
+    rect a_dst = api_check_rect(L, 2);
+    vec2 a_offset = api_check_vec2(L, 3);
+    color a_floor_color = api_check_color(L, 4);
+    draw_image_inset(a_t, a_dst, a_offset, a_floor_color);
+    return 0;
+}
+
 /* gfx.image_striped(t, dst, angle, repeats, width, ink, tint) */
 static int l_gfx_image_striped(lua_State *L)
 {
@@ -4398,6 +4409,7 @@ static void open_gfx(lua_State *L)
         {"image_rot", l_gfx_image_rot},
         {"image_hex", l_gfx_image_hex},
         {"image_poly", l_gfx_image_poly},
+        {"image_inset", l_gfx_image_inset},
         {"image_striped", l_gfx_image_striped},
         {"rect", l_gfx_rect},
         {"rect_grad", l_gfx_rect_grad},

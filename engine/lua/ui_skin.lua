@@ -229,9 +229,9 @@ local function draw_layer(skin, layer, box, look, node, st)
     if layer.height_ratio then lb = rect(lb.x, lb.y, lb.w, lb.h * layer.height_ratio) end
     lb = shrink(lb, layer.inset):offset(vec(layer.offset))
     if not layer.fixed then lb = lb:offset(vec(look.offset)) end
-    if layer.paint then layer.paint(lb, node, st, skin); return end
     local out, scale, alpha = transformed(skin, lb)
     alpha = alpha * (look.alpha or 1)
+    if layer.paint then layer.paint(lb, node, st, skin, out, alpha); return end
     local radius = radius_of(layer, node) * scale
     local function c(v) local parsed = parse_color(skin, v); return alpha < 1 and color.alpha(parsed, alpha) or parsed end
     if layer.shadow then gfx.shadow(out, radius, (layer.blur or 8) * scale, c(layer.shadow))

@@ -7,6 +7,9 @@ local ticks, tool, swap_a, swap_b, initial_points, match_charge, took_charge = 0
 local function check_layout(g)
     assert(#g.tool_slots == 4, "all bonuses keep their toolbar slots")
     local first = R.board_tool_bounds(0)
+    local town_cfg = require("town_config").bottom
+    assert(math.abs(first.w-town_cfg.build)<.01 and math.abs(first.h-town_cfg.secondary_height)<.01
+        and town_cfg.play>first.w, "town secondary buttons match bonus size, Play stays larger")
     local last = first
     for i in ipairs(g.tool_slots) do
         local box = R.board_tool_bounds(i - 1)

@@ -1,5 +1,6 @@
 -- Reusable deterministic hex match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
+local buttons = require("match3.buttons")
 local E = {
     NO_TRICKLE=1, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, LINE_MATCHES=64, COLOR_TOOL=256,
     GOAL=1, WOOD=4, STONE=8, -- per-kind behavior bits
@@ -166,33 +167,7 @@ end
 function E.hud(override)
     local hud = E.atlas(override)
     assert(hud.score and hud.complete, "missing match3 HUD icons")
-    -- Toolbar buttons come with the game's booster slots; only Pause is shared.
-    for _, state in ipairs({"normal", "selected", "pressed", "hover", "disabled"}) do
-        assert(hud["pause-" .. state], "missing authored match3 control state")
-    end
     return hud
-end
-
--- Both campaign skins use the same generated action atlas.
-local action_atlas = {path="common/buttons.png", frames={}}
-local action_states = {"normal", "selected", "pressed", "hover", "disabled"}
-for col, name in ipairs{"build", "play", "levels", "pause"} do
-    for row, state in ipairs(action_states) do
-        action_atlas.frames["action-" .. name .. "-" .. state] = {(col - 1) * 128, row * 128, 128, 128}
-    end
-end
-
-function E.navigation_button(name)
-    local spec = {}
-    for _, state in ipairs(action_states) do
-        spec[state] = {offset={0, 0}, layers={{image="action-" .. name .. "-" .. state, fit="contain"}}}
-    end
-    return spec
-end
-
-function E.load_action_buttons(skin, hud)
-    local art = E.atlas(action_atlas)
-    for key in pairs(action_atlas.frames) do skin.images[key], hud[key] = art[key], art[key] end
 end
 
 -- Toolbar buttons: their glyphs draw about a fifth larger than board pieces.
@@ -208,10 +183,10 @@ function E.tool_state(charges, selected, inside, down, started_inside, hover, id
     return "normal"
 end
 
-function E.pause_button(R, bounds, prefix)
+local function pause_button(bounds, icon)
     local st = ui.hit(bounds, 0)
     local state = st.held and "pressed" or st.hot and "hover" or "normal"
-    gfx.image(R.hud_art[(prefix or "pause-") .. state], bounds, color.WHITE)
+    buttons.paint(bounds, icon, state)
     return st.clicked
 end
 
@@ -350,8 +325,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         local medallion = R.intro and R.intro:arrive(.16, 3, .42) or 1
         if medallion > .05 then R.draw_moves(vec2(moves_x, centre.y), medallion) end
         if R.draw_earnings then R.draw_earnings(centre) end
-        local pause_art = signboard and R.hud_art["board-pause-normal"] and "board-pause-"
-        if not R.g.tool_slots and E.pause_button(R, R.board_pause:offset(offset), pause_art) then
+        if not R.g.tool_slots and pause_button(R.board_pause:offset(offset), R.skin.images["action-pause"]) then
             R.overlay = R.OV_PAUSE
         end
     end
@@ -453,22 +427,19 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
             local drawn = r:offset(up)
             if slots then
                 if charges > 0 then
-                    gfx.image(R.hud_art[icon .. "-" .. (state == "disabled" and "normal" or state)], drawn, color.WHITE)
+                    -- A stored charge stays visible while the board is resolving.
+                    buttons.paint(drawn, R.board_art[icon], state == "disabled" and "normal" or state)
                 else
-                    gfx.image(R.hud_art[icon .. "-disabled"], drawn, color.WHITE)
+                    buttons.paint(drawn, R.board_art[icon], "disabled")
                     if meter and meter > 0 then
-                        -- The charged painting rises inside the empty socket.
+                        -- Reveal the ready face from the bottom as the meter fills.
                         local fill = drawn.h * meter / R.g.tool_threshold
                         gfx.clip(rect(drawn.x, drawn.y + drawn.h - fill, drawn.w, fill))
-                        gfx.image(R.hud_art[icon .. "-normal"], drawn, color.WHITE)
+                        buttons.paint(drawn, R.board_art[icon], "normal")
                         gfx.unclip()
                     end
                 end
-                if entry.rank == 2 then
-                    local rank = rect(drawn:max().x - 25, drawn.y + 8, 17, 16)
-                    gfx.round_rect(rank, 4, rgba(59, 41, 23, 242))
-                    R.say("II", rank, 11, PAL_CREAM)
-                elseif charges > 1 then
+                if charges > 1 and not R.g.single_charge_tools then
                     local at = vec2(drawn.x + drawn.w * .78, drawn.y + drawn.h * .22)
                     gfx.circle(at, 10, rgba(116, 74, 33))
                     gfx.circle(at, 8, rgba(46, 112, 70))
@@ -491,7 +462,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if slots then
             local rise = R.intro and R.intro:arrive(.14, 3, .48) or 1
             local button = R.board_pause:offset(vec2(0, (1 - rise) * 120))
-            if E.pause_button(R, button, "action-pause-") then R.overlay = R.OV_PAUSE end
+            if pause_button(button, R.skin.images["action-pause"]) then R.overlay = R.OV_PAUSE end
         end
     end
 end
@@ -1416,6 +1387,10 @@ function E.new(config)
         if not cell or not cell_active(g, cell) then return false end
         if effect == "hit" then m.mask[cell], m.direct[cell] = true, true
         elseif effect == "blast" then mark_area(g, m, cell, 1)
+        elseif effect == "replenish" then
+            local piece = g.resource_yields[g.tiles[cell].kind]
+            if not piece or not (piece.slot or piece.tool) then return false end
+            m.mask[cell] = true
         elseif effect == "row" or effect == "row_lightning" then
             mark_line(g, m, cell, 0)
             if effect == "row_lightning" then
@@ -1432,26 +1407,37 @@ function E.new(config)
         return true
     end
 
-    function M.game_tool(g, tool, cell, m)
+    function M.game_tool(g, tool, cell, m, other_slot)
         if not tool_ready(g, tool) then return false end
         local effect = M.game_tool_effect(tool, g)
         reset_match(m)
         if effect == "shuffle" then
             if not game_shuffle(g) then return false end
         elseif effect == "moves" then g.moves = g.moves + (config.extra_moves or 5)
+        elseif effect == "replenish" then
+            local piece = cell and cell_active(g, cell) and g.resource_yields[g.tiles[cell].kind]
+            local slot = other_slot or piece and piece.tool
+            if slot then
+                local meter = g.tool_meter[slot]
+                if slot == tool + 1 or not meter or meter >= g.tool_threshold then return false end
+                g.tool_meter[slot] = math.min(g.tool_threshold, meter + g.tool_threshold // 4)
+                g.tools[slot] = g.tool_meter[slot] // g.tool_threshold
+            elseif piece and piece.slot then
+                g.earnings[piece.slot] = g.earnings[piece.slot] + tool_slot(g, tool).resource_amount
+            else return false end
         elseif effect == "charge" then
             if not g.tool_meter or not g.single_charge_tools then return false end
             local descriptor = tool_slot(g, tool)
             local amount = g.tool_threshold // (descriptor and descriptor.charge_divisor or 2)
             if not charge_others(g, tool, amount) then return false end
-        elseif effect == "lightning" then lightning(g, m, 20, g)
+        elseif effect == "lightning" then lightning(g, m, config.lightning_hits or 20, g)
         elseif not target_tool(g, effect, cell, m) then return false end
         g.tools[tool + 1] = g.tools[tool + 1] - 1
         if g.single_charge_tools and g.tool_meter[tool + 1] then g.tool_meter[tool + 1] = 0 end
         g.combo = 0
         count_hits(m)
         -- Effects that clear nothing skip the clearing animation.
-        local still = (effect == "shuffle" or effect == "moves" or effect == "charge") and effect or nil
+        local still = (effect == "shuffle" or effect == "moves" or effect == "charge" or effect == "replenish") and effect or nil
         return true, still
     end
 
@@ -1487,7 +1473,7 @@ function E.new(config)
     R.tool_notes = R.tool_notes or {"Choose a piece to remove.", "Choose the centre of a blast.", "Choose a piece to clear its axes."}
     -- What an untargeted bonus did, and why it could not act, by effect name.
     R.tool_done_notes = R.tool_done_notes or {shuffle="Pieces reshuffled.", moves="More moves added.",
-        charge="Your other bonuses gained charge."}
+        replenish="Bonus collected.", charge="Your other bonuses gained charge."}
     R.tool_refused_notes = R.tool_refused_notes or {shuffle="No shuffle available.",
         charge="Your other bonuses are already charged."}
     function R.reset_board(g)
@@ -1590,8 +1576,8 @@ function E.new(config)
         return cell_active(R.g, cell) and cell or -1
     end
 
-    local function use_tool(k, cell)
-        local used, still = rules.game_tool(R.g, k, cell, R.pending)
+    local function use_tool(k, cell, other_slot)
+        local used, still = rules.game_tool(R.g, k, cell, R.pending, other_slot)
         if used then
             R.tool = -1
             R.play("tool")
@@ -1606,6 +1592,10 @@ function E.new(config)
 
     function R.select_tool(k)
         if R.phase ~= PH_IDLE then return end
+        if R.tool >= 0 and R.tool ~= k and rules.game_tool_effect(R.tool, R.g) == "replenish" then
+            use_tool(R.tool, nil, k + 1)
+            return
+        end
         if (R.g.tools[k + 1] or 0) > 0 and flags & E.NO_TOOLS == 0 then
             R.selected = -1
             if rules.game_tool_untargeted(k, R.g) then use_tool(k); return end

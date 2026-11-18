@@ -28,6 +28,7 @@ struct render_texture {
 };
 static struct {
     GLuint program, vao, vertices, indices, white;
+    GLint inset_offset, inset_bounds;
     GLint screen, origin, stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params;
     size2 pixels, logical;
     float scale;
@@ -91,7 +92,23 @@ bool render_init(void)
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
         "in vec4 tint; in vec2 texcoord, point; uniform sampler2D image; out vec4 pixel;\n"
         "uniform vec4 stripes, stripe_rect, stripe_color, mask_rect, mask_uv, mask_params; uniform sampler2D mask;\n"
-        "void main(){vec4 base=texture(image,texcoord);"
+        "uniform vec3 inset_offset; uniform vec4 inset_bounds;\n"
+        "float silhouette(vec2 uv){"
+        "if(any(lessThan(uv,inset_bounds.xy))||any(greaterThan(uv,inset_bounds.zw)))return 0.;"
+        "vec2 half_texel=.5/vec2(textureSize(image,0));"
+        "return texture(image,clamp(uv,inset_bounds.xy+half_texel,inset_bounds.zw-half_texel)).a;}"
+        "void main(){vec4 base;"
+        "if(inset_offset.z>0.){"
+        "float a=silhouette(texcoord);"
+        /* Three taps soften the shadow cast by the upper-left lip into the cutout. */
+        "float open=.25*silhouette(texcoord-.45*inset_offset.xy)"
+        "+.5*silhouette(texcoord-inset_offset.xy)+.25*silhouette(texcoord-1.65*inset_offset.xy);"
+        "float bevel=1.-silhouette(texcoord+.55*inset_offset.xy);"
+        "float y=(texcoord.y-inset_bounds.y)/(inset_bounds.w-inset_bounds.y);"
+        "vec2 texel=floor(texcoord*vec2(textureSize(image,0)));"
+        "float grain=fract(52.9829*fract(dot(texel,vec2(.06711056,.00583715))))-.5;"
+        "base=vec4(vec3(.99-.065*y-.40*(1.-open)+.085*bevel+.036*grain),a);}"
+        "else base=texture(image,texcoord);"
         "if(stripes.z>0.){vec2 q=(point-stripe_rect.xy)/stripe_rect.zw-.5;"
         "float phase=dot(q,stripes.xy)*stripes.z;float aa=max(fwidth(phase),.001);"
         "float band=1.-smoothstep(stripes.w*.5-aa,stripes.w*.5+aa,abs(fract(phase+.5)-.5));"
@@ -126,6 +143,8 @@ bool render_init(void)
     }
     R.screen = glGetUniformLocation(R.program, "screen");
     R.origin = glGetUniformLocation(R.program, "origin");
+    R.inset_offset = glGetUniformLocation(R.program, "inset_offset");
+    R.inset_bounds = glGetUniformLocation(R.program, "inset_bounds");
     R.stripes = glGetUniformLocation(R.program, "stripes");
     R.stripe_rect = glGetUniformLocation(R.program, "stripe_rect");
     R.stripe_color = glGetUniformLocation(R.program, "stripe_color");
@@ -266,6 +285,20 @@ void render_image(texture t, rect src, rect dst, float angle, color tint)
     }
     const int idx[] = {0, 1, 2, 0, 2, 3};
     render_textured_geometry(t, v, 4, idx, 6);
+}
+
+/* Recess a sprite's alpha silhouette into a matte surface. Neighboring
+ * samples are constrained to this atlas frame, including at transparent holes. */
+void draw_image_inset(texture t, rect dst, vec2 offset, color floor_color)
+{
+    if (!render_ready() || !t.tex || dst.size.w <= 0 || dst.size.h <= 0 || !floor_color.a) return;
+    rect uv = t.uv.size.w > 0 ? t.uv : rc(0, 0, 1, 1);
+    vec2 shift = vec2_div(offset, size2_vec(dst.size));
+    glUniform3f(R.inset_offset, shift.x * uv.size.w, shift.y * uv.size.h, 1);
+    vec2 end = rect_max(uv);
+    glUniform4f(R.inset_bounds, uv.pos.x, uv.pos.y, end.x, end.y);
+    render_image(t, tex_rect(t), dst, 0, floor_color);
+    glUniform3f(R.inset_offset, 0, 0, 0);
 }
 
 void render_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint)

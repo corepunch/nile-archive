@@ -36,83 +36,55 @@ do
     check(next(locked.tool_meter) == nil, 'all bonus sockets require confirmed construction')
     check(not rules.game_tool(locked,1,rules.hex_center(),match),'locked dynamite cannot be used')
     check(locked.backdrop==rules.level_of(locked).background,'with nothing restored the board keeps its own scene')
-    check(island.island_place_next(R.island,bank,4,0),'place the camp before the well')
-    local c=R.island
-    local first = R.make_board(1,19)
-    check(first.bonus_debut == economy.bonuses.hammer and first.tool_meter[1] == 0 and first.tools[1] == 0,
-        'the camp introduces Hammer pieces and an empty Blast slot on expedition 2')
-    local fits,spot=c:find_spot(economy.WELL_KIND,island.island_suggestion(economy.WELL_KIND))
-    check(fits,'well fits first region')
-    c:begin_place(economy.WELL_KIND,spot)
-    check(R.make_board(4,19).resource_yields[3]==nil,'placement preview does not unlock water')
+    local c, well = R.island, island.kinds.well
+    local fits, spot = c:find_spot(well,island.island_suggestion(well))
+    check(fits,'well fits the first region')
+    c:begin_place(well, spot)
+    check(R.make_board(1,19).resource_yields[3]==nil,'a placement preview cannot unlock water')
     c:cancel()
-    check(R.make_board(5,19).resource_yields[3]==nil,'cancel still leaves the flower in the water slot')
-    check(island.island_place_next(c,bank,4,0),'confirm the earned well')
-    check(not island.island_place_next(c,bank,6,0),'the next ladder restoration waits for clear 7')
-    check(island.island_place_next(c,bank,7,0) and R.make_board(7,19).bonus_debut == economy.bonuses.dynamite,
-        "the trapper's cabin upgrades Blast to Dynamite before the workshop")
-    local previous_board = R.g
-    first.tool_meter[1] = first.tool_threshold // 2
-    R.g = first
-    R.refresh_board_bonuses()
-    R.g = previous_board
-    check(first.tool_slots[1] == economy.bonuses.dynamite and first.bonus == economy.bonuses.dynamite
-        and first.tool_meter[1] == first.tool_threshold // 2 and first.tools[1] == 0,
-        'resuming an existing board upgrades the slot and its board gem without resetting the meter')
-    local workshop=economy.WORKSHOP_KIND
-    fits,spot=c:find_spot(workshop,island.island_suggestion(workshop))
-    check(fits,'workshop has a placement spot')
+    check(R.make_board(1,19).resource_yields[3]==nil,'cancelling keeps water locked')
+    check(island.island_place_next(c,bank,1,0),'confirm the well')
+    check(R.make_board(1,19).resource_yields[3]==economy.unlock_of("well"),'water follows construction')
+    check(not island.island_place_next(c,bank,3,0),'the hut waits for clear four')
+    check(island.island_place_next(c,bank,4,0),'confirm the hut')
+    local first = R.make_board(4,19)
+    check(first.bonus_debut == economy.bonuses.hammer and first.tool_meter[1]==0,'the hut debuts Hammer')
+    local workshop = island.kinds.workshop
+    fits,spot = c:find_spot(workshop,island.island_suggestion(workshop))
+    check(fits,'sawmill has a placement spot')
     c:begin_place(workshop,spot)
-    check(R.make_board(7,19).resource_yields[4]==nil,'workshop preview does not unlock timber')
+    check(R.make_board(7,19).resource_yields[4]==nil,'timber waits for confirmation')
     c:cancel()
-    check(R.make_board(8,19).resource_yields[4]==nil,'cancel leaves the amphora in the timber slot')
-    local steps = island.kinds.quay_steps
-    check(island.owned(c, steps)==0 and not island.can_buy(c,bank,10,steps),
-        'the cancelled Workshop preview leaves the fixed quay reserved and off sale')
-    check(not island.island_place_next(c,bank,9,0), 'Workshop waits for its epoch milestone')
-    local balance, price = purse(table.unpack(bank)), island.buildings[workshop+1].cost
-    check(island.island_place_next(c,bank,10,0),'confirm the earned Workshop')
-    for slot=1,3 do check(bank[slot]==balance[slot]-price[slot], 'one Workshop price pays for both buildings') end
-    local quay = c.items[c.count]
-    check(quay.type == steps and (quay.pos-c:snap(island.island_suggestion(steps),steps)):len()<.01,
-        'Workshop repairs the original quay footprint')
+    local steps, price = island.kinds.quay_steps, island.buildings[workshop+1].cost
+    check(island.owned(c,steps)==0 and not island.can_buy(c,bank,7,steps),'the fixed quay stays off sale')
+    local balance=purse(table.unpack(bank))
+    check(island.island_place_next(c,bank,7,0),'confirm the sawmill')
+    for slot=1,3 do check(bank[slot]==balance[slot]-price[slot],'one price pays for the mill and quay') end
+    local quay=c.items[c.count]
+    check(quay.type==steps and (quay.pos-c:snap(island.island_suggestion(steps),steps)):len()<.01,
+        'repair occupies the registered quay footprint')
     c:begin_move(c.count-1)
-    check(c.placing<0, 'the repaired stairs cannot be moved')
+    check(c.placing<0,'the repaired quay stays fixed')
     island.purchase_confirmed(c,workshop,0)
-    check(island.owned(c,steps)==1, 'reprocessing a Workshop cannot duplicate the quay')
-    c:unlock(1,bank)
-    check(island.island_place_next(c,bank,10,0), 'confirm the water mill')
-    local market=island.kinds.market
-    check(island.can_buy(c,bank,10,market), 'the market is optional after the quay chapter')
-    local market_fits, market_site=c:find_spot(market, vec2(770,1900))
-    check(market_fits, 'the market has a free placement')
-    c:begin_place(market,market_site)
-    check(c:confirm(bank,0).result==city.BUILT, 'confirm the optional market')
+    check(island.owned(c,steps)==1,'reprocessing the repair is idempotent')
+    check(island.island_place_next(c,bank,10,0),'confirm the village')
+    local previous=R.g
+    R.g,first.tool_meter[1]=first,first.tool_threshold//2
+    R.refresh_board_bonuses()
+    R.g=previous
+    check(first.tool_slots[1]==economy.bonuses.bomb and first.bonus==economy.bonuses.bomb
+        and first.tool_meter[1]==first.tool_threshold//2,'a parked board replaces Hammer and preserves its charge')
+    check(island.island_place_next(c,bank,11,0),'confirm the farm')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
+        check(g.spawn_kinds==nil and rules.COLORS==5,'every expedition keeps its five kinds')
+        local charge_kinds=0
+        for _,piece in pairs(g.resource_yields) do if piece.tool then charge_kinds=charge_kinds+1 end end
+        check(charge_kinds==(g.bonus and 1 or 0),'only the selected family spawns')
         local spec=rules.level_of(g)
-        local water=g.resource_yields[3]==economy.unlock_of("well")
-        local blocks=g.resource_yields[4]==economy.unlock_of("workshop")
-        local rations=g.resource_yields[1]==economy.unlock_of("market")
-        check(water==(level>=4), 'water persists after its introduction')
-        check(blocks==(level>=7) and rations==(level>=10), 'workshop and market pieces stay unlocked')
-        check(g.backdrop==(level>=1 and 1 or spec.background),'the latest restoration in force picks the lagoon')
-        check(g.spawn_kinds==nil and rules.COLORS==5,'every expedition spawns all five kinds, as in Cradle of Rome')
-        local charge_kinds = 0
-        for _, piece in pairs(g.resource_yields) do
-            if piece.tool then charge_kinds = charge_kinds + 1 end
-        end
-        check(charge_kinds == (g.bonus and 1 or 0), 'at most one kind charges a bonus')
-        if spec.story_piece then
-            local piece = g.resource_yields[spec.goal_kind]
-            check(not piece, 'story items neither pay into the wallet nor charge a bonus')
-        end
+        if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces keep their slot') end
     end
-
-    check(R.make_board(13,19).backdrop==1,'the courtyard scene waits for the courtyard')
-    local courtyard={camp=true,well=true,workshop=true,market=true,gateway=true}
-    check(economy.board_backdrop(rules.levels[14],14,courtyard)==2 and economy.board_backdrop(rules.levels[13],13,courtyard)==1,
-        'the courtyard brings the temple to boards from its first expedition')
+    check(economy.board_backdrop(rules.levels[14],14,{gateway=true})==2,'port opens the temple backdrop')
 end
 
 -- The landing opens with Cradle of Rome's pool. Its leaf, flower and amphora
@@ -152,13 +124,13 @@ end
 do
     local finds = {
         {2, "coin", 5}, {5, "coin", 5},
-        {14, "helmet", 6}, {18, "ring", 7}, {21, "scarab", 8},
-        {25, "sandal", 9}, {28, "harp", 10}, {30, "emerald", 11},
+        {18, "helmet", 6}, {20, "ring", 7}, {22, "scarab", 8},
+        {25, "sandal", 9}, {26, "harp", 10}, {30, "emerald", 11},
     }
     for _, find in ipairs(finds) do
         local number, key, amount = table.unpack(find)
-        local g = rules.game_start(number - 1, 73, {gateway=true, trading_post=true, beached_ship=true,
-            aviary=true, museum=true, temple=true})
+        local g = rules.game_start(number - 1, 73, {amphitheater=true, archive=true, beached_ship=true,
+            aviary=true, museum=true, fountain=true})
         local piece = g.resource_yields[0]
         check(piece.key == key and piece.slot == economy.GOLD, "the coin slot uses " .. key)
         local m = rules.new_match()
@@ -174,7 +146,7 @@ do
         check(g.earnings[economy.GOLD] == amount,key .. " banks its listed Coins")
     end
     check(rules.game_start(27,73,{}).resource_yields[0].key == "coin","each find waits for its restoration")
-    check(rules.game_start(27,73,{gateway=true}).resource_yields[0].key == "helmet","the Courtyard alone keeps helmets")
+    check(rules.game_start(27,73,{amphitheater=true}).resource_yields[0].key == "helmet","the Courtyard alone keeps helmets")
     check(rules.game_start(29,73,{gateway=true, museum=true}).resource_yields[0].key == "harp","the Temple gates emeralds")
 end
 
@@ -229,8 +201,8 @@ do
         end
     end
     local final=R.make_board(29,41)
-    check(final.resource_yields[0]==economy.unlock_of("temple") and final.resource_yields[1]==economy.unlock_of("lodge") and
-          final.resource_yields[3]==economy.unlock_of("fountain") and final.resource_yields[4]==economy.unlock_of("archive"),
+    check(final.resource_yields[0]==economy.unlock_of("fountain") and final.resource_yields[1]==economy.unlock_of("water_mill") and
+          final.resource_yields[3]==economy.unlock_of("gateway") and final.resource_yields[4]==economy.unlock_of("trading_post"),
           'the last board combines all current chip upgrades')
     local seen = {}
     for seed = 1, #economy.bonus_slots do
@@ -251,8 +223,8 @@ end
 -- Hammer and Dynamite share a meter, including a charged use earned before the upgrade.
 do
     local B = economy.bonuses
-    local restored = {camp=true, bonus_charge={}}
-    local g, m = rules.game_start(1, 73, restored), rules.new_match()
+    local restored = {log_cabin=true, bonus_charge={}}
+    local g, m = rules.game_start(4, 73, restored), rules.new_match()
     local kind = rules.level_of(g).goal_kind == economy.SPECIAL_KIND and economy.SPECIAL_FALLBACK or economy.SPECIAL_KIND
     check(g.bonus_debut == B.hammer and g.resource_yields[kind] == B.hammer, 'the Camp debuts Hammer')
     local line = require('support').open_line(rules, g)
@@ -271,9 +243,9 @@ do
     check(g.tools[tool] == 1 and g.tool_meter[tool] == g.tool_threshold, 'preview copies preserve the live meters')
     R.g, R.prog, R.test_mode = g, {bonus_charge=restored.bonus_charge}, true
     R.update_bonus_charges()
-    restored.log_cabin = true
+    restored.camp = true
     local later = rules.game_start(29, 1, restored)
-    check(later.tool_slots[tool] == B.dynamite and later.tools[tool] == 1
+    check(later.tool_slots[tool] == B.bomb and later.tools[tool] == 1
         and later.tool_meter[tool] == g.tool_threshold, 'the stored Hammer use becomes a Dynamite use')
     local center = open_cell(later)
     check(rules.game_tool(later, tool - 1, center, m) and m.hits == 7
@@ -283,62 +255,44 @@ do
     check(rules.game_start(29, 1, restored).tool_meter[tool] == 0, 'spending a charge clears it across boards')
 end
 
--- Lightning previews its row and extra strikes without advancing the board seed.
+-- Compare targeted previews with the actual hit mask, and verify instant tools on live boards.
 do
     local B = economy.bonuses
-    local restored = {amphitheater=true}
-    local shield = rules.game_start(29, 3, restored)
-    local tool = charge(shield, B.shield)
-    local center = open_cell(shield)
-    local row = rules.game_tool_area(shield, tool, center)
-    check(row[center] and row[rules.hex_neighbor(center, 0)], 'Shield targets the selected row')
-    for cell in pairs(row) do check(rules.hex_r(cell) == rules.hex_r(center), 'Shield stays on its axis') end
-    restored.lighthouse = true
-    local storm, m = rules.game_start(29, 3, restored), rules.new_match()
-    charge(storm, B.lightning)
-    local rng = storm.rng
-    local preview = rules.game_tool_area(storm, tool, center)
-    check(storm.rng == rng and storm.tools[tool + 1] == 1, 'previewing Lightning keeps the seed and charge')
-    check(not rules.game_tool(storm, tool, nil, m), 'Lightning still needs a target')
-    check(rules.game_tool(storm, tool, center, m) and m.hits == 20, 'Lightning strikes twenty distinct cells')
-    for cell in pairs(row) do check(m.mask[cell], 'Lightning preserves every cell in the selected row') end
-    for cell in pairs(preview) do check(m.mask[cell], 'Lightning hits exactly its previewed cells') end
-end
-
--- Star II pierces one layer, while an extra layer still protects its gem.
-for rank = 1, 2 do
-    local B = economy.bonuses
-    local restored = {clock_tower=true, observatory=rank == 2}
-    local g, m = rules.game_start(29, 3, restored), rules.new_match()
-    local center = open_cell(g)
-    local a, b = rules.hex_neighbor(center, 0), rules.hex_neighbor(center, 1)
-    for _, cell in ipairs{center, a, b} do
-        g.tiles[cell], g.chain[cell], g.ice[cell], g.stone_hp[cell] = rules.tile(2), 0, 0, 0
+    for _, key in ipairs{"shield","star"} do
+        local bonus = B[key]
+        local g = rules.game_start(29,3,{clock_tower=true,temple=true})
+        local m, center = rules.new_match(), open_cell(g)
+        local tool = charge(g,bonus)
+        local preview = rules.game_tool_area(g,tool,center)
+        check(preview and preview[center] and g.tools[tool+1]==1,"target preview retains the charge")
+        check(rules.game_tool(g,tool,center,m) and m.hits>1,key .. " hits its pattern")
+        for i=0,rules.CELLS-1 do
+            check(m.mask[i]==preview[i],"effect hits precisely its preview")
+            if key=="star" and m.mask[i] then check(g.tiles[i].kind==g.tiles[center].kind,"Star targets one kind") end
+        end
     end
-    g.chain[a], g.ice[b] = 1, 2
-    local tool = charge(g, rank == 2 and B["star-ii"] or B.star)
-    check(rules.game_tool(g, tool, center, m) and m.mask[a] and m.mask[b], 'both ranks target protected copies')
-    rules.game_apply(g, m)
-    check(g.chain[a] == 0 and g.tiles[a].kind == (rank == 2 and -1 or 2),
-        'Star II clears the gem once its last lock is gone')
-    check(g.ice[b] == 1 and g.tiles[b].kind == 2, 'a second layer still protects the gem')
-end
-
--- Plus gives exactly a quarter or half a charge to each other unlocked slot.
-for rank = 1, 2 do
-    local B = economy.bonuses
-    local g, m = rules.game_start(29, 3, {camp=true, clock_tower=true, map_room=true, museum=rank == 2}), rules.new_match()
-    local tool = charge(g, rank == 2 and B["plus-ii"] or B.plus)
-    local moves = g.moves
-    g.tool_meter[B.hammer.tool] = g.tool_threshold - 5
-    local used, still = rules.game_tool(g, tool, nil, m)
-    check(used and still == "charge" and g.tool_meter[B.hammer.tool] == g.tool_threshold and g.tools[B.hammer.tool] == 1
-        and g.tool_meter[B.star.tool] == g.tool_threshold // (rank == 1 and 4 or 2)
-        and g.tool_meter[tool + 1] == 0 and g.tool_meter[B.shield.tool] == nil and g.moves == moves,
-        'Plus tops up other unlocked slots at its own rank without spending a move')
-    for i in pairs(g.tool_meter) do g.tools[i], g.tool_meter[i] = 1, g.tool_threshold end
-    check(not rules.game_tool(g, tool, nil, m) and g.tools[tool + 1] == 1,
-        'Plus keeps its use when there is nothing to charge')
+    do
+        local g, m = rules.game_start(29,3,{lighthouse=true,log_cabin=true}),rules.new_match()
+        local tool, cell = charge(g,B.plus),open_cell(g)
+        g.tiles[cell] = rules.tile(0)
+        check(rules.game_tool(g,tool,cell,m) and g.earnings[economy.GOLD]==100 and m.hits==0,
+            "Plus awards the selected currency without clearing the tile")
+        charge(g,B.plus)
+        check(rules.game_tool(g,tool,nil,m,B.hammer.tool) and g.tool_meter[B.hammer.tool]==g.tool_threshold//4,
+            "Plus charges the selected socket by a quarter")
+        charge(g,B.plus)
+        check(not rules.game_tool(g,tool,nil,m,B.star.tool) and g.tools[tool+1]==1,"a locked target preserves Plus")
+    end
+    for _, key in ipairs{"lightning","hourglass","mixer"} do
+        local bonus = B[key]
+        local g = rules.game_start(29,3,{map_room=true,lodge=true,observatory=key=="mixer"})
+        local m, moves = rules.new_match(), g.moves
+        local tool = charge(g,bonus)
+        check(rules.game_tool_untargeted(tool,g) and rules.game_tool(g,tool,nil,m),key .. " activates from its socket")
+        check(g.tool_meter[tool+1]==0 and g.moves==moves+(key=="hourglass" and 5 or 0),"instant bonus applies once")
+        if key=="lightning" then check(m.hits==15,"Lightning strikes fifteen distinct cells") end
+        if key=="mixer" then check(rules.game_hint(g)~=nil,"Mixer leaves a playable board") end
+    end
 end
 
 -- A save from before the ladder keeps playing: the new restorations it had
@@ -355,7 +309,7 @@ do
     end
     check(not island.can_buy(c, bank, 13, 4), 'without a waiver the courtyard waits for the earlier ladder')
     island.waive_passed(c, 13)
-    island.waived(c)[3] = true -- this pre-epoch save had already passed the cabin
+    island.waived(c)[island.ladder_position[island.kinds.log_cabin]] = true -- this pre-epoch save had already passed the cabin
     local steps = island.kinds.quay_steps
     local can_restore, site = c:find_spot(steps, island.island_suggestion(steps))
     check(can_restore, 'the migration can grant the earlier quay repair')
@@ -363,7 +317,7 @@ do
     check(island.next_step(c, 13) == 4 and island.can_buy(c, bank, 13, 4), 'the waived save builds its courtyard')
     local reserved, courtyard = island.reserved_cost(c, 13), island.buildings[5].cost
     check(reserved:covers(courtyard) and courtyard:covers(reserved), 'waived restorations are not reserved')
-    local cabin = island.ladder[3].kind
+    local cabin = island.kinds.log_cabin
     check(island.can_buy(c, bank, 13, cabin) and island.ladder_blocked(c, 13, cabin) == false,
         'a waived restoration stays on sale')
     R.island, R.prog = c, {level=13, wallet=purse(1, 2, 3), story_seen={}, bonus_charge={}}
@@ -372,7 +326,7 @@ do
     R.island = fresh
     save.read("relic-ladder-waived", R.serialize_campaign)
     local waived = island.waived(fresh)
-    check(waived[3] and waived[5] and waived[6] and waived[7] and not waived[8] and not waived[10],
+    check(waived[2] and waived[6] and waived[7] and waived[8] and not waived[9] and not waived[10],
         'the waived positions survive a save')
     local wallet = R.prog.wallet
     check(wallet[1] == 1 and wallet[2] == 2 and wallet[3] == 3, 'reading a current save leaves the wallet alone')
@@ -386,7 +340,7 @@ do
     save.write("relic-ladder-v3", function(s) s:int("resource_version", 3) end)
     R.island = old
     save.read("relic-ladder-v3", R.serialize_campaign)
-    check(island.waived(old)[3] and island.next_step(old, 13) == 4, 'a version 3 save waives the passed restorations')
+    check(island.waived(old)[2] and island.next_step(old, 13) == 4, 'a version 3 save waives the passed restorations')
     R.island, R.prog = saved_island, saved_prog
 end
 
@@ -452,10 +406,10 @@ do
         R.island:serialize(s)
     end),'write legacy fixture')
     check(save.read('relic-resource-legacy',R.serialize),'load legacy fixture')
-    check(R.make_board(4, 93).tool_meter[1] == 0, 'older saves start their unlocked bonus meters empty')
+    check(R.make_board(4, 93).tool_meter[1] == nil, 'older saves start their unlocked bonus meters empty')
     local w=R.prog.wallet
     local well=island.wonders[2].cost[1]
-    check(w[1]==math.max(155,well) and w[2]==0 and w[3]==9 and w[4]==4 and island.wonder_count(R.island)==1,
+    check(w[1]==math.max(155,well) and w[2]==island.wonders[2].cost[2] and w[3]==9 and w[4]==4 and island.wonder_count(R.island)==1,
         'legacy saves preserve Gold, placements and combined Supplies; old stars become boards cleared')
     local spare=w[1]-well
     check(not island.can_spend(R.island,w,4,purse(spare+1)) and (spare==0 or island.can_spend(R.island,w,4,purse(spare))),
@@ -469,7 +423,7 @@ do
     end),'write an old wallet with the previous well price')
     check(save.read('relic-resource-v1',R.serialize),'load the old price')
     w=R.prog.wallet
-    check(w[1]==well and w[2]==10 and w[3]==22 and w[4]==4,
+    check(w[1]==math.max(20,well) and w[2]==math.max(10,island.wonders[2].cost[2]) and w[3]==22 and w[4]==4,
         'migration covers an earned restoration at the new price and preserves other balances')
     check(island.island_place_next(R.island,w,4,0),'migrated well is affordable')
     -- Relic Rush serializes each meter by name. Reordered tools retain their
@@ -490,8 +444,8 @@ do
     check(save.read('relic-eight-bonuses', R.serialize), 'load a save from the eight-bonus version')
     local charges = R.prog.bonus_charge
     local B = economy.bonuses
-    check(charges[B.hammer.tool] == 22 and charges[B.shield.tool] == economy.BONUS_THRESHOLD
-        and charges[B.plus.tool] == economy.BONUS_THRESHOLD and charges[5] == nil,
+    check(charges[B.hammer.tool] == 22 and charges[B.lightning.tool] == 24 and charges[B.shield.tool] == economy.BONUS_THRESHOLD
+        and charges[B.hourglass.tool] == economy.BONUS_THRESHOLD and charges[5] == nil,
         'legacy paired meters merge by name, keep their fractions and cap at one use')
     R.g=R.make_board(4,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true
     R.g.tool_meter[1] = R.g.tool_threshold // 2
@@ -502,7 +456,7 @@ do
     R.prog.bonus_charge=nil
     check(save.read('relic-resource-complete',R.serialize),'load completed award')
     R.resume_completed()
-    check(R.overlay==R.OV_RESULT and R.g.earnings[3]==7 and R.g.resource_yields[3]==economy.unlocks[2],
+    check(R.overlay==R.OV_RESULT and R.g.earnings[3]==7 and R.g.resource_yields[3]==economy.unlock_of("well"),
         'completed award restores its counts on the correct palette')
     check(R.g.tool_meter[1] == R.g.tool_threshold // 2, 'partial charge survives writing, loading and resuming an award')
     check(rules.progress_reward(R.prog,R.g,R.wonders) and not R.prog.completed,'claim consumes the pending award')

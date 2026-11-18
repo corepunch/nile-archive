@@ -45,7 +45,7 @@ function R.building_gets(kind)
     for _, step in ipairs(island.ladder) do if step.kind == kind then unlock = step.unlock end end
     if not unlock then return {} end
     local card = R.words.card
-    local function booster(tool) return R.hud_art[economy.tool_slots[tool].icon .. "-normal"] end
+    local function booster(tool) return R.board_art[economy.tool_slots[tool].icon] end
     local function piece_icon(piece) return R.board_art["market-" .. piece] end
     local function plus(n) return ("+%d"):format(n) end
     if unlock.kind then
@@ -128,7 +128,7 @@ local function guide_icon(box, icon)
     if icon.back then picture(R.board_art[icon.back], layer, 255) end
     if icon.piece then picture(R.board_art[icon.piece], layer, 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
-    if icon.tool then picture(R.hud_art[icon.tool .. "-normal"], layer, 255) end
+    if icon.tool then picture(R.board_art[icon.tool], layer, 255) end
 end
 local guide_form = match3.guide_form({
     title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING TREATS",

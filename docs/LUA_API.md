@@ -1223,6 +1223,17 @@ Cut a convex polygon (3 to 16 points, either winding) out of t: uvs gives each p
 | `uvs` | `vec2[]` |  |
 | `tint` | `color` |  |
 
+### `gfx.image_inset(t, dst, offset, floor_color)`
+
+Render a matte recess from the sprite's alpha. Offset is the shadow cast into the silhouette, in logical units. The floor colour supplies its tint and opacity. Samples stay inside the atlas frame.
+
+| Argument | Type | |
+|---|---|---|
+| `t` | `texture` |  |
+| `dst` | `rect` |  |
+| `offset` | `vec2` |  |
+| `floor_color` | `color` |  |
+
 ### `gfx.image_striped(t, dst, angle, repeats, width, ink, tint)`
 
 Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.

@@ -305,7 +305,7 @@ caption; forms then keep the native button paint.
 | `{shadow, radius, blur}` | Soft shadow |
 | `{image, slice?, fit?}` | Authored art: stretched, `fit = "contain"`, or nine-slice with `slice = {left, top, right, bottom}` |
 | `{check, width}` | A tick, for checkboxes without artwork |
-| `{paint = function(box, node, state, skin)}` | Game code, for ornaments the table can't express |
+| `{paint = function(box, node, state, skin, screen_box, alpha)}` | Game code, for ornaments the table can't express |
 
 Every layer takes `height_ratio` (keep the top fraction, for gloss), then
 `inset` (a number or `{left, top, right, bottom}`; negative grows) and
@@ -635,7 +635,7 @@ and currency capsules. Each capsule identifies its currency slot so matched
 pieces land on its icon. The centered board keeps four boosters and Pause
 in one bottom row. The town's `bottom.pause` option adds Pause to Build,
 Play and Wishes. Play is the largest control. Both surfaces use the same
-[painted button generator](../art/match3-buttons/README.md).
+[runtime enamel button and painted icon strip](../art/match3-buttons/README.md).
 
 ## Town building popups
 

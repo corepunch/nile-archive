@@ -1,5 +1,5 @@
 {
-  "matching_rules": "Campaign matches clear straight lines of three or more and never create special pieces (Cradle of Rome rules). Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
+  "matching_rules": "Campaign matches clear straight lines of four or more and never create special pieces (Cradle of Rome rules). Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/reference/cradle-of-rome/export_art.py --board-only",
@@ -11,7 +11,7 @@
       "timber": 6,
       "stone": 8,
       "water": 5,
-      "rations": 9,
+      "rations": 7,
       "cut-blocks": 8,
       "silver-coin": 3,
       "shrimp": 10,
@@ -136,7 +136,6 @@
     "data/board/backs/scene-1.jpg",
     "data/board/backs/scene-2.jpg",
     "data/board/blockers.png",
-    "data/board/boosters.png",
     "data/board/cells.png",
     "data/board/frame/stone.png",
     "data/board/fx.png",
@@ -338,7 +337,6 @@
     "data/city/buildings/workshop.png",
     "data/city/island.jpg",
     "data/city/roads.png",
-    "data/common/buttons.png",
     "data/common/fonts/LilitaOne-Regular.ttf",
     "data/common/fonts/lilitaone-OFL.txt",
     "data/story/characters/adrian.png",
@@ -654,7 +652,7 @@
     "reproduction": "python3 games/relic-rush/tools/prepare_hud.py",
     "review": "docs/screenshots/hud-states.jpg"
   },
-  "navigation": "art/navigation/manifest.json",
+  "navigation": "../../art/match3-buttons/manifest.json",
   "result_icons": {
     "source": "art/result-icons/source.png",
     "prompt": "art/result-icons/prompt.txt",
@@ -1044,7 +1042,7 @@
   "resource_unlocks": {
     "water": {
       "building": "well",
-      "first_level": 5,
+      "first_level": 2,
       "kind": 3,
       "yield": {
         "provisions": 3
@@ -1052,23 +1050,18 @@
       "runtime": "art/registered/resource-pieces/water.png"
     },
     "cut-blocks": {
-      "building": "workshop",
-      "first_level": 8,
-      "kind": 4,
-      "yield": {
-        "supplies": 5
-      },
       "runtime": "art/registered/tile-sets/resources/4.png",
       "source": "art/tile-sets/source.png",
       "source_cell": {
         "row": 3,
         "column": 5
       },
-      "registration": "tools/prepare_assets.py"
+      "registration": "tools/prepare_assets.py",
+      "use": "Archived alternate resource artwork"
     },
     "rations": {
       "building": "market",
-      "first_level": 10,
+      "first_level": 12,
       "kind": 1,
       "yield": {
         "provisions": 4
@@ -1076,8 +1069,8 @@
       "runtime": "art/registered/resource-pieces/rations.png"
     },
     "helmet": {
-      "building": "gateway",
-      "first_level": 14,
+      "building": "amphitheater",
+      "first_level": 18,
       "kind": 0,
       "yield": {
         "gold": 6
@@ -1085,8 +1078,8 @@
       "runtime": "art/registered/campaign-pieces.png"
     },
     "grain": {
-      "building": "lodge",
-      "first_level": 17,
+      "building": "water_mill",
+      "first_level": 13,
       "kind": 1,
       "yield": {
         "provisions": 5
@@ -1100,23 +1093,18 @@
       "registration": "tools/prepare_assets.py"
     },
     "quartz": {
-      "building": "archive",
-      "first_level": 20,
-      "kind": 4,
-      "yield": {
-        "supplies": 7
-      },
       "runtime": "art/registered/tile-sets/relics/4.png",
       "source": "art/tile-sets/source.png",
       "source_cell": {
         "row": 1,
         "column": 5
       },
-      "registration": "tools/prepare_assets.py"
+      "registration": "tools/prepare_assets.py",
+      "use": "Archived alternate resource artwork"
     },
     "shrimp": {
-      "building": "fountain",
-      "first_level": 27,
+      "building": "gateway",
+      "first_level": 14,
       "kind": 3,
       "yield": {
         "provisions": 6
@@ -1124,13 +1112,31 @@
       "runtime": "art/registered/campaign-pieces.png"
     },
     "emerald": {
-      "building": "temple",
+      "building": "fountain",
       "first_level": 30,
       "kind": 0,
       "yield": {
         "gold": 11
       },
       "runtime": "art/registered/resource-pieces/emerald.png"
+    },
+    "stone": {
+      "runtime": "art/registered/resource-pieces/stone.png",
+      "building": "trading_post",
+      "first_level": 13,
+      "kind": 4,
+      "yield": {
+        "supplies": 7
+      }
+    },
+    "timber": {
+      "runtime": "art/registered/resource-pieces/timber.png",
+      "building": "workshop",
+      "first_level": 8,
+      "kind": 4,
+      "yield": {
+        "supplies": 5
+      }
     }
   },
   "resource_pieces": {
@@ -1378,9 +1384,8 @@
   },
   "featured_pieces": {
     "silver-coin": {
-      "first_level": 3,
-      "last_level": 3,
-      "kind": 0,
+      "first_level": 1,
+      "kind": 1,
       "opening_level": 1,
       "opening_kind": 1,
       "yield": {
@@ -1389,267 +1394,135 @@
       "runtime": "art/registered/campaign-pieces.png"
     },
     "ring": {
-      "first_level": 18,
-      "last_level": 20,
+      "first_level": 20,
       "kind": 0,
       "yield": {
         "gold": 7
       },
       "runtime": "art/registered/campaign-pieces.png",
-      "building": "gateway"
+      "building": "archive"
     },
     "scarab": {
-      "first_level": 21,
-      "last_level": 24,
+      "first_level": 22,
       "kind": 0,
       "yield": {
         "gold": 8
       },
       "runtime": "art/registered/campaign-pieces.png",
-      "building": "gateway"
+      "building": "beached_ship"
     },
     "sandal": {
       "first_level": 25,
-      "last_level": 27,
       "kind": 0,
       "yield": {
         "gold": 9
       },
       "runtime": "art/registered/campaign-pieces.png",
-      "building": "gateway"
+      "building": "aviary"
     },
     "harp": {
-      "first_level": 28,
-      "last_level": 29,
+      "first_level": 26,
       "kind": 0,
       "yield": {
         "gold": 10
       },
       "runtime": "art/registered/campaign-pieces.png",
-      "building": "gateway"
+      "building": "museum"
     }
   },
   "bonus_gems": {
-    "source": "art/bonus-gems/six-bonuses.png",
-    "prompt": "art/bonus-gems/six-bonuses.prompt.txt",
-    "generator": "prepare_bonus_gems.py maps one painted base to a circle and generates all five button states with the existing standalone gems",
+    "source": "art/bonus-gems/rome-eight.png",
+    "prompt": "art/bonus-gems/rome-eight.prompt.txt",
+    "generator": "python3 games/relic-rush/tools/prepare_bonus_gems.py",
     "runtime": "art/registered/bonus-gems.png",
     "review": "docs/screenshots/bonus-states.jpg",
     "columns": [
       "hammer",
-      "dynamite",
+      "bomb",
       "shield",
+      "hourglass",
       "lightning",
-      "star",
-      "plus"
-    ],
-    "rows": [
-      "board",
-      "normal",
-      "selected",
-      "pressed",
-      "hover",
-      "disabled"
+      "plus",
+      "mixer",
+      "star"
     ],
     "icon_sizes": {
       "hammer": {
-        "board": 88,
-        "button": 74,
-        "center": "bounds"
+        "board": 88
       }
     },
-    "registration": "Fit the standalone gems to 112 px for the board and 84 px for the buttons, with a smaller Hammer to clear the hex and inset edges. Map the source plate alpha contour to a 57 px radius, and use a 47 px inset radius for the state recipes. Center button glyphs by visible alpha, or by visible bounds for the Hammer, and fit them inside a 41 px radius. All atlas cells are 128 px.",
+    "registration": "Center the visible board pieces on 128 px cells, at 112 px or 88 px for Hammer.",
     "bonuses": {
       "hammer": {
-        "slot": "blast",
-        "rank": 1,
+        "slot": "impact",
         "art": "hammer",
-        "building": "camp",
-        "first_level": 2,
-        "effect": "Hit one cell"
-      },
-      "dynamite": {
-        "slot": "blast",
-        "rank": 2,
-        "art": "dynamite",
         "building": "log_cabin",
-        "first_level": 8,
-        "effect": "Hit the selected cell and its six neighbors"
+        "first_level": 5,
+        "effect": "Hit one cell."
+      },
+      "bomb": {
+        "slot": "impact",
+        "art": "bomb",
+        "building": "camp",
+        "first_level": 11,
+        "effect": "Hit a cell and its six neighbors."
       },
       "shield": {
-        "slot": "sweep",
-        "rank": 1,
+        "slot": "shield",
         "art": "shield",
-        "building": "amphitheater",
+        "building": "clock_tower",
         "first_level": 14,
-        "effect": "Hit the selected hex row"
+        "effect": "Hit the row through a chosen cell."
+      },
+      "hourglass": {
+        "slot": "hourglass",
+        "art": "hourglass",
+        "building": "lodge",
+        "first_level": 17,
+        "effect": "Add five moves."
       },
       "lightning": {
-        "slot": "sweep",
-        "rank": 2,
+        "slot": "lightning",
         "art": "lightning",
-        "building": "lighthouse",
-        "first_level": 20,
-        "effect": "Hit the selected row and additional cells up to twenty"
-      },
-      "star": {
-        "slot": "star",
-        "rank": 1,
-        "art": "star",
-        "building": "clock_tower",
-        "first_level": 12,
-        "effect": "Hit every piece of the chosen kind"
-      },
-      "star-ii": {
-        "slot": "star",
-        "rank": 2,
-        "art": "star",
-        "building": "observatory",
-        "first_level": 24,
-        "effect": "Hit the chosen kind through one layer of chain or ice"
+        "building": "map_room",
+        "first_level": 19,
+        "effect": "Strike up to fifteen random cells."
       },
       "plus": {
-        "slot": "recharge",
-        "rank": 1,
+        "slot": "shield",
         "art": "plus",
-        "building": "map_room",
-        "first_level": 23,
-        "effect": "Add a quarter charge to each other unlocked slot"
+        "building": "lighthouse",
+        "first_level": 21,
+        "effect": "Choose a resource piece for 100 resources or another bonus to add a quarter charge."
       },
-      "plus-ii": {
-        "slot": "recharge",
-        "rank": 2,
-        "art": "plus",
-        "building": "museum",
-        "first_level": 28,
-        "effect": "Add half a charge to each other unlocked slot"
-      }
-    },
-    "cell_size": 209,
-    "button_base": "../../art/match3-buttons/base.png",
-    "button_base_origin": "../../art/match3-buttons/manifest.json",
-    "button_inset": {
-      "bounds": [
-        17,
-        17,
-        111,
-        111
-      ],
-      "radius": 47
-    },
-    "button_states": {
-      "normal": {},
-      "selected": {
-        "inset_palette": [
-          [
-            2,
-            32,
-            19
-          ],
-          [
-            9,
-            119,
-            72
-          ],
-          [
-            104,
-            198,
-            131
-          ]
-        ],
-        "bevel": 2,
-        "glow": [
-          255,
-          236,
-          140
-        ],
-        "glow_strength": 1.65
+      "mixer": {
+        "slot": "hourglass",
+        "art": "mixer",
+        "building": "observatory",
+        "first_level": 24,
+        "effect": "Shuffle the pieces."
       },
-      "pressed": {
-        "inset_palette": [
-          [
-            42,
-            15,
-            2
-          ],
-          [
-            150,
-            62,
-            9
-          ],
-          [
-            232,
-            150,
-            57
-          ]
-        ],
-        "bevel": 4
-      },
-      "hover": {
-        "brightness": 1.14
-      },
-      "disabled": {
-        "palette": [
-          [
-            43,
-            31,
-            25
-          ],
-          [
-            184,
-            164,
-            144
-          ],
-          [
-            255,
-            244,
-            225
-          ]
-        ],
-        "cutout": {
-          "floor_palette": [
-            [
-              65,
-              49,
-              38
-            ],
-            [
-              168,
-              145,
-              119
-            ],
-            [
-              201,
-              180,
-              151
-            ]
-          ],
-          "shadow_offset": [
-            3.5,
-            4.5
-          ],
-          "shadow_softness": 1.65,
-          "shadow_brightness": 0.59,
-          "glow_radius": 3.8,
-          "glow_strength": 1.05,
-          "floor_grain": 11
-        }
+      "star": {
+        "slot": "lightning",
+        "art": "star",
+        "building": "temple",
+        "first_level": 27,
+        "effect": "Clear all pieces of a chosen kind."
       }
     },
     "toolbar": {
       "slots": [
-        "blast",
-        "sweep",
-        "star",
-        "recharge"
+        "impact",
+        "shield",
+        "hourglass",
+        "lightning"
       ],
       "button_size": 86,
       "pause": true,
-      "rank_label": "Level II overlays a small II badge on its generated button.",
       "shape": "circle"
     },
-    "button_glyph_clearance": 6,
-    "button_outer_radius": 57
+    "buttons": "../../art/match3-buttons/manifest.json",
+    "source_columns": 4
   },
   "retired_tool_buttons": {
     "source": "art/tool-buttons/source.png",
@@ -1682,5 +1555,6 @@
     "review": "docs/review/square-tools/README.md",
     "reproduction": "python3 games/relic-rush/tools/board_assets.py; python3 tests/fixtures/relic-tools/capture.py --before-ref 3120b70",
     "retired": "Square pickaxe, dynamite and sunburst buttons from before the bonus toolbar; every board now has bonus slots, so they are no longer registered or packed. The authored sheet stays as provenance."
-  }
+  },
+  "archived_navigation": "art/navigation/manifest.json"
 }

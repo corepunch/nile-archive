@@ -123,6 +123,19 @@ static void draw_and_check(void)
     c = pixel(39, 10); CHECK(c.r == 0 && c.g == 0 && c.b == 0); /* outside the hex */
     CHECK(pixel(68, 12).r > pixel(68, 33).r + 100); /* light above dark */
     CHECK(pixel(81, 12).r == 0);
+    /* The inset casts its shadow inside its silhouette. RGB in the source
+     * and neighboring opaque atlas cells must not affect the matte floor. */
+    draw_rect(rc(0, 0, 100, 100), hex(0x808080));
+    draw_image_inset(right, rc(30, 30, 40, 40), v2(3, 3), hex(0xC0AA90));
+    draw_image_inset(masked, rc(10, 5, 40, 20), v2(1, 1), hex(0xC0AA90));
+    draw_image(green, rc(74, 30, 10, 10), WHITE);
+    CHECK(render_read_pixels(pixels, width, height));
+    color floor = pixel(50, 50);
+    CHECK(floor.r > 170 && floor.r < 196 && floor.g > floor.b + 15);
+    CHECK(pixel(31, 45).r + 32 < floor.r && pixel(45, 31).r + 32 < floor.r);
+    CHECK(pixel(29, 45).r == 128 && pixel(71, 45).r == 128);
+    CHECK(pixel(45, 15).r == 128 && pixel(31, 15).r < pixel(20, 15).r);
+    CHECK(pixel(79, 35).g > 240 && pixel(79, 35).r < 15);
     tex_free(atlas);
 
     /* A raised patch insets only exposed edges and leaves the shared edge

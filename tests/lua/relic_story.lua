@@ -52,7 +52,7 @@ end
 
 -- The bonus-area preview names exactly the cells a tool would hit, without using it.
 do
-    local hammer=rules.game_start(5,123,{camp=true})
+    local hammer=rules.game_start(5,123,{log_cabin=true})
     local g=rules.game_start(5,123,{camp=true,log_cabin=true})
     local _,b=plaques_of(g)
     hammer.tools[1], g.tools[1] = 1, 1
@@ -207,7 +207,7 @@ for level=1,30 do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[rules.CLEARED]==cleared,'replay does not advance the clear count')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(c.count==20 and c.open==63 and p.wallet[rules.CLEARED]==30,
+check(island.campaign_count(c)==20 and c.count==21 and c.open==63 and p.wallet[rules.CLEARED]==30,
     'thirty clears restore twenty buildings and open every region')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth wonder')
 

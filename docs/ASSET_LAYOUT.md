@@ -11,7 +11,6 @@ in `art/registered/` beside the source paintings and prompts they come from.
 data/
   common/          shared by every screen
     fonts/
-    buttons.png    town navigation and pause: four actions x five states
     icons/         small standalone icons (Nile Archive)
   city/            the island
     island.jpg     ground painting
@@ -21,10 +20,9 @@ data/
     backs/         background.jpg, scene-1.jpg, scene-2.jpg: separate files, never packed
     frame/         the board's stone rim (lua/board_frame_atlas.lua)
     pieces.png     everything that sits in a cell: gem packs, campaign, resource,
-                   story pieces and market goods
+                   story pieces, market goods, bonus pieces and action icons
     blockers.png   chains, ice and stone over a cell
     cells.png      floor tiles and the selected, hint, guide and mask overlays
-    boosters.png   tools and bonus buttons, in all five states, with their board gems
     hud.png        settings, score, moves, shop marks, signboard, result icons
     fx.png         particles and glows
   story/
@@ -37,7 +35,8 @@ Nile Archive has no board: it uses `common/`, `city/` and `story/`
 level backdrops in `levels/` and its native animation atlases in `sprites/`.
 
 The engine's default skin uses the same names under `engine/data/board/`,
-loaded with `texture.load_engine`.
+loaded with `texture.load_engine`. Each campaign packs the four 128 px
+painted navigation icons into its own pieces atlas.
 
 ## Atlases are one kind of art each
 
@@ -81,7 +80,7 @@ that each game's registration tools write and the packer reads, in folders
 named after their source sets: `board-states/`, `board-tiles/`, `tile-sets/`,
 `expedition-hud/`, `navigation/`, `story-pieces/`, `resource-pieces/`,
 and grid sheets such as `campaign-pieces.png`, `bonus-gems.png`,
-`market-goods.png`, `bonus-buttons.png` and `result-icons.png`. Each set's
+`market-goods.png` and `result-icons.png`. Each set's
 `--check` script verifies these files, and the game's asset check verifies that
 the shipped atlases contain them.
 

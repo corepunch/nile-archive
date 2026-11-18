@@ -100,7 +100,7 @@ local present_board = R.present_board
 function R.present_board()
     present_board()
     local g = R.g
-    -- Arrivals through the museum's harps on board 28; the finale keeps its own opening.
+    -- The finale has its own opening.
     if (g.level < 28 or g.bonus_debut) and g.moves == rules.level_of(g).moves and not app.arg("mission") then
         local text, building = opening_unlock(g)
         if text then
@@ -116,19 +116,29 @@ function R.serialize_campaign(s)
     -- Version 4 added the twenty-step ladder. Restorations an older save had
     -- already passed stay optional rather than holding its next expedition.
     island.serialize_waivers(s, R.island, R.prog.level, reading and version < 4)
-    if reading and version < 7 then
+    if reading and version < 8 then
         local c, p = R.island, R.prog
         local waived = island.waived(c)
         if version >= 4 then
-            -- The old sixth position was the separately purchased quay.
+            local old = {"camp","well","log_cabin","workshop","water_mill","clock_tower","amphitheater","gateway",
+                "lodge","trading_post","lighthouse","archive","beached_ship","map_room","observatory","aviary",
+                "fountain","museum","temple"}
+            if version < 7 then table.insert(old, 6, "quay_steps") end
             local mask = s:int("ladder_waived", 0)
-            for n = 6, #island.ladder do waived[n] = mask & (1 << n) ~= 0 or nil end
+            waived = {}
+            for pos, key in ipairs(old) do
+                local now = island.ladder_position[island.kinds[key]]
+                if now and mask & (1 << (pos - 1)) ~= 0 then waived[now] = true end
+            end
+            island.set_waived(c, waived)
         end
-        if island.owned(c, island.kinds.workshop) > 0 or version < 6 and p.level >= 10 then
+        if version < 7 and (island.owned(c, island.kinds.workshop) > 0 or version < 6 and p.level >= 10) then
             island.restore_quay(c, 0)
-            if island.owned(c, island.kinds.log_cabin) == 0 then waived[3] = true end
+            if island.owned(c, island.kinds.log_cabin) == 0 then
+                waived[island.ladder_position[island.kinds.log_cabin]] = true
+                p.story_seen["restore-07"] = true
+            end
         end
-        if waived[3] then p.story_seen["restore-07"] = true end
     end
     if reading and version < 1 then
         island.migrate_wallet(R.prog, R.island)
@@ -138,13 +148,15 @@ function R.serialize_campaign(s)
     end
     local saved, charges = R.prog.bonus_charge or {}, {}
     for tool, slot in ipairs(economy.bonus_slots) do
-        local name = "bonus_slot_" .. slot.key
+        local name = "bonus_slot_" .. (reading and version < 8 and slot.legacy_slot or slot.key)
         local charge
         if reading and version < 5 then
             -- Old tools were independent and used half as many points per use.
             charge = 0
-            for _, bonus in ipairs(slot.levels) do
-                charge = charge + 2 * num.clampi(s:int("bonus_" .. bonus.key, 0), 0, 18)
+            local old = {impact={"hammer","dynamite"}, shield={"shield","fireball","superbomb","plus"},
+                hourglass={"hourglass","mixer"}, lightning={"lightning","star"}}
+            for _, key in ipairs(old[slot.key]) do
+                charge = charge + 2 * num.clampi(s:int("bonus_" .. key, 0), 0, 18)
             end
         else charge = s:int(name, reading and 0 or saved[tool] or 0) end
         charges[tool] = num.clampi(charge, 0, economy.BONUS_THRESHOLD)

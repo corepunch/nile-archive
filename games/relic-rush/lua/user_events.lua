@@ -18,7 +18,7 @@
 --
 -- Resource ids are names, not Rome's numbers: coins (Rome 1, gold), food (3),
 -- supplies (2, materials) and score (4). Piece and bonus ids are economy.lua
--- keys (water, cut-blocks, hammer, star-ii ...); buildings are buildings.lua
+-- keys (water, cut-blocks, hammer, mixer ...); buildings are buildings.lua
 -- keys. Rome's mode attribute is gone: Relic Rush has one mode.
 --
 -- What is not ported: Rome's per-piece "first appearance" hints (hint_04_*)
@@ -127,10 +127,10 @@ local events = {
     {id="man_02", available=false, citizen="The trapper", to_level=12,
         If={"IF_PLAYER_GET_RESOURCE", id="coins", amount=250},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper packs more powder: Dynamite gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper packs more powder: Hammer gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_02"},
             {"THEN_CITY_UPGRADE_BUILDING", id="log_cabin"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="dynamite", amount=9},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hammer", amount=9},
         }},
     -- Rome: miner, Quarry, 2,000 materials in a level.
     {id="man_03", available=false, citizen="The stonecutter",
@@ -172,20 +172,20 @@ local events = {
     {id="man_07", available=false, citizen="The astronomer",
         If={"IF_PLAYER_COMPLETE_LEVELS_IN_TIME", amount=1, time=120},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Done in two minutes! The astronomer tunes the lens: Star II gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Done in two minutes! The astronomer tunes the lens: Mixer gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_07"},
             {"THEN_CITY_UPGRADE_BUILDING", id="observatory"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="star-ii", amount=9},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="mixer", amount=9},
         }},
     -- Rome: scholar, Tabularium, a combo of three.
     {id="man_08", available=false, citizen="The cartographer",
         If={"IF_PLAYER_MAKE_COMBO", length=4},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Three waves from one move! The cartographer joins: Plus gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Three waves from one move! The cartographer joins: Lightning gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_08"},
             {"THEN_CITY_UPGRADE_BUILDING", id="map_room"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=9},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus-ii", amount=9},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=9},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="star", amount=9},
         }},
     -- Rome: fisherman, Port, three matches of five in a level.
     {id="man_09", available=false, citizen="The fisher",
@@ -205,7 +205,7 @@ local events = {
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_10"},
             {"THEN_CITY_UPGRADE_BUILDING", id="amphitheater"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shield", amount=9},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=9},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=9},
         }},
     -- Rome: orator, Forum, 3,000 gold in a level: every bonus piece pays more.
     {id="man_011", available=false, citizen="The trader's clerk",
@@ -215,9 +215,13 @@ local events = {
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_11"},
             {"THEN_CITY_UPGRADE_BUILDING", id="trading_post"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hammer", amount=8},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="bomb", amount=8},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hourglass", amount=8},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="mixer", amount=8},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=8},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shield", amount=8},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="star", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=8},
+            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=8},
         }},
 }
 

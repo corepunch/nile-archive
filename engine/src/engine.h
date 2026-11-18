@@ -296,6 +296,7 @@ void draw_image_part(texture t, rect src, rect dst, color tint);
 void draw_image_rot(texture t, rect dst, float angle, color tint);
 void draw_image_hex(texture t, rect src, vec2 center, float radius, float angle, color tint);
 void draw_image_poly(texture t, const vec2 *pts, const vec2 *uv, int n, color tint);
+void draw_image_inset(texture t, rect dst, vec2 offset, color floor_color);
 void draw_image_striped(texture t, rect dst, float angle, float repeats, float width, color ink, color tint);
 void draw_rect(rect r, color c);
 void draw_rect_grad(rect r, color top, color bottom);

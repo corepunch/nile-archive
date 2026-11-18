@@ -62,116 +62,11 @@ them wins. Chapter 1 tells its story through island construction. Board 13 featu
 Move limits fit short portrait play and give deliberate resource matches a
 visible cost.
 
-| Regular piece | Family | Yield per matched piece |
-| --- | --- | ---: |
-| Gold sun coin | Coins | 4 |
-| Red berries | Food | 1 |
-| Green apple | Food | 1 |
-| Timber bundle | Supplies | 2 |
-| Purple dressed stone | Supplies | 3 |
-
-Buy or restore a building using the family totals. Timber and stone are
-separate match kinds within Supplies, just as berries and green apples are
-separate kinds within Food. The town and board show Coins, Supplies and Food
-with a sun coin, a timber-and-stone bundle and a food basket. Pending earnings
-are visible on the board and bank on a win. The completion dialog shows score.
-
-Every board spawns five kinds. Board 13 keeps a story kind in one slot; see
-[board progression](board-progression.md). Leaves and flowers add score and clear
-tablets. The Well costs Coins banked by matching sun or silver coins.
-
-Confirmed placements change openings and refills from the listed expedition
-onward. Authored story pieces keep their slots. The four bonus families debut
-as matchable pieces and fill their own saved slots across both levels. [Bonus rules and effects](board-progression.md#bonus-pieces)
-
-Every first clear opens the next expedition, even with an empty island and unread dialogue. The ten story restorations (★) unlock their own scenes and rewards. Nine more purchases sit between them on the same ladder. Each opens after
-its clear and must be placed before the next story restoration. A player can play on past an open one until the story
-needs it. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDINGS.md#relic-rush-the-20-restorations)
-
-| # | Restoration | Placed after | First board | Board payoff | Price C / F / S |
-| ---: | --- | ---: | ---: | --- | ---: |
-| 1 | ★ Expedition Camp | 1 | 2 | Hammer gems | 60 / 0 / 0 |
-| 2 | ★ Spring Well | 4 | 5 | Water buckets replace timber, 3 Food each | 125 / 0 / 0 |
-| 3 | ★ Trapper's cabin | 7 | 8 | Dynamite upgrades Hammer | 110 / 40 / 0 |
-| 4 | ★ Artisan Workshop | 10 | 11 | Repairs the quay and adds cut blocks worth 5 Supplies | 210 / 80 / 0 |
-| 5 | Water mill | 10 | — | Opens the miller’s cascade challenge | 65 / 35 / 60 |
-| 6 | Clock tower | 11 | 12 | Star gems | 150 / 200 / 150 |
-| 7 | Stone amphitheatre | 13 | 14 | Shield gems | 35 / 50 / 35 |
-| 8 | ★ Sunstone Courtyard | 13 | 14 | Helmets replace sun coins, 6 Coins each | 55 / 95 / 65 |
-| 9 | ★ Explorer's Lodge | 16 | 17 | Grain bundles replace ration jars, 5 Food each | 330 / 325 / 0 |
-| 10 | Trading post | 17 | 18 | Rings replace helmets, 7 Coins each | 170 / 215 / 290 |
-| 11 | Valley lighthouse | 19 | 20 | Lightning upgrades Shield | 70 / 70 / 55 |
-| 12 | ★ Lost-world Archive | 19 | 20 | Carved quartz replaces cut blocks, 7 Supplies each | 140 / 145 / 110 |
-| 13 | Beached schooner | 20 | 21 | Scarabs replace rings, 8 Coins each | 145 / 140 / 125 |
-| 14 | Cartographer's house | 22 | 23 | Plus gems give a quarter charge to other unlocked bonuses | 275 / 230 / 180 |
-| 15 | ★ Star Observatory | 23 | 24 | Star II upgrades Star | 120 / 0 / 85 |
-| 16 | Great aviary | 24 | 25 | Sandals replace scarabs, 9 Coins each | 210 / 285 / 175 |
-| 17 | ★ Jade Fountain | 26 | 27 | Shrimp replace water buckets, 6 Food each | 315 / 0 / 225 |
-| 18 | Relic museum | 27 | 28 | Harps replace sandals, 10 Coins each. Plus II upgrades Plus | 205 / 420 / 115 |
-| 19 | ★ Temple of the Sun | 29 | 30 | Emeralds replace harps, 11 Coins each | 435 / 450 / 260 |
-
-Each new piece pays a currency the next restoration on the ladder needs.
-The Water Mill follows the Workshop. Clears 13 and 19 each open an intermediate purchase before the story restoration. The optional Jungle Market becomes available after board 10 and adds ration jars worth 4 Food each from board 11.
-
-One slot pays Coins. Expedition 3 uses the silver coin at 3 Coins. From there
-the slot climbs one treasure per restoration: helmet (6), ring (7), scarab (8),
-sandal (9), harp (10) and emerald (11). A board shows the best treasure placed
-by its expedition.
-[Side-by-side Rome comparison](../../../docs/cradle-of-rome-reference/gem-correspondence.html)
-
-A save from before the ladder keeps playing. When it loads, the new
-restorations before its latest earned story restoration become optional:
-they stay on sale and never hold an expedition.
-
-An arrival message credits the restored building and names the new piece's
-yield. The opening water match on board 5 earns Food and the first Workshop pieces on board 11 earn Supplies. Coins pay for labor and materials,
-Food keeps the workers supplied, and Supplies go into repairs.
+The opening pool contains sun coins (5 Coins), silver coins (3 Coins), leaves, flowers and amphoras. The latter three pay score. Construction introduces the twelve resource pieces and eight bonus pieces in the [purchase table](../README.md#buildings). The Well adds the first Food and the Sawmill adds the first Supplies. A confirmed purchase can replace the live bonus piece on a parked expedition.
 
 ## Restoration prices and earnings
 
-The first expedition pays Coins for the Camp. The Well adds Food from
-expedition 5. The Workshop opens after expedition 10 and its piece starts
-earning Supplies on the next board. This lets the crew fund the Water Mill,
-which opens alongside the Workshop and can wait for those Supplies.
-
-The balance runner plays the 100 expeditions with their fitted move limits
-and the restoration pieces available at each point. It reports the mean
-income per won board. Its wallet simulation buys restorations in ladder
-order and replays for income when a story purchase comes due. A second walk
-shows candidate prices based on spending 80% of the available balance in each
-required currency. With ten plays per board at the current prices, this simulation needed three
-extra wins for income, two after board 13 and one after board 19. The seeded
-story check separately plays the first 30 expeditions and claims their actual rewards. See the [match-four board
-measurements](board-progression.md#match-four-difficulty).
-
-```sh
-make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush
-make test-balance                       # 10 plays per board and the full economy report
-make test-balance BALANCE_RUNS=40       # 40 plays per board for price tuning
-build/test/relic-rush --extended "rules campaign_play"                  # one seeded campaign
-```
-
-The reports are in `build/test/relic-rush.log`.
-
-A piece earns its resource amount when a match or cascade clears it. A direct tool hit can clear a piece, and any resulting matches earn their normal yields. Breaking a chain leaves its piece in place until a later hit. Each first clear advances progress. Chapter 1 scenes wait for confirmed island work.
-The result card shows the three resource totals and what is still due for the next restoration.
-
-Record attempt earnings until a successful clear. Claim persists the first
-clear, resources and story progress together. A resumed result
-can be claimed once. Restart and loss discard unbanked matches. Quitting to the island keeps the active board available for the current session.
-Optional replays bank the matches from each won attempt and advance no story.
-When a restoration costs more than is in the wallet, replay a cleared board
-with the missing resource and bank the earnings. Optional purchases reserve
-the price of any earned restoration. Confirmed placement debits the price
-once and Cancel returns the preview. Boards cleared remain access requirements for land and shop stock.
-Citizen events can improve what an individual resource match yields. Wallet totals on Results come from the board’s match ledger.
-
-A save version identifies the Food and Supplies slots. Existing Coins,
-placements, unlocks, claimed levels and story checkpoints are
-preserved. Legacy Wood and Stone are combined into Supplies. Migration covers
-any gap on a restoration already earned before the price changes. The wallet, catalogue and result
-screen should all use the same ordering and amount formatting. Use resource
-shapes and readable labels alongside color in the guide and price rows.
+The building currencies and their order of introduction follow the [Windows economy export](../../../docs/cradle-of-rome-reference/rome-2-economy.json). The hex game prices use its own income. Run `make test-balance BALANCE_RUNS=10` to play the 100 boards with ten seeds each and calculate income per win. At each purchase stop the fit spends 80% of the available wallet in the currencies required by the reference. Buildings offered on the same clear divide this budget in proportion to their reference prices. The mean-income simulation bought all twenty buildings by clear 29 without replays. Individual deals and player decisions vary.
 
 ## Release status and checks
 
