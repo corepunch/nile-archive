@@ -255,7 +255,7 @@ Buildings unlock in this order at clear milestones 1, 4, 7, 10, 13, 16, 19, 23, 
 | 19 | ★ Temple of the sun | 435 Coins + 260 Supplies + 450 Food | Emeralds worth 11 Coins each. |
 
 These nineteen purchases restore twenty buildings, including the Workshop’s quay steps. ★ marks the ten story restorations,
-which hold the next new expedition. The others open after their clear and
+which never block the next expedition. The others open after their clear and
 must be placed before the next ★ one. Resource and bonus unlocks follow the
 table above.
 

@@ -34,7 +34,6 @@ G.DEFAULTS = {
     region_speaker = "",
     board = {},
     notices = {
-        build_first = "Build your earned building before the next level.",
         story_waiting = "Something is happening in town.",
         reward_building = "Building funded! Spare gold is yours to decorate.",
         reward_story = "Something is happening in town.",
@@ -67,7 +66,7 @@ G.DEFAULTS = {
     },
     expeditions = {
         title = "Levels", close = "BACK TO TOWN",
-        locked = "LOCKED", resume = "RESUME", replay = "REPLAY", pending = "BUILD FIRST", new = "NEW LEVEL", earlier = "COMPLETE EARLIER LEVELS",
+        locked = "LOCKED", resume = "RESUME", replay = "REPLAY", new = "NEW LEVEL", earlier = "COMPLETE EARLIER LEVELS",
         resume_note = "Continue the unfinished board. Rewards come with a win.",
         replay_note = "Gold only.", building_note = "First clear: building funded.", story_note = "First clear: the next scene.",
     },
@@ -1031,15 +1030,14 @@ function G.bind(R, over)
 
     local function refresh_levels()
         local entries = {}
-        local pending = island.wonder_count(R.island) < journey.earned(R.prog.level)
         for i = 0, LEVELS - 1 do
             local done = i < R.prog.level
             local current = i == R.prog.level
-            local available = done or (current and not pending)
+            local available = done or current
             local active = R.g and R.g.level == i and not R.g.won and not R.g.lost
             entries[#entries + 1] = {id=tostring(i), level=i, number=i + 1, name=rules.levels[i + 1].name, available=available,
                 state=done and "done" or current and "current" or "locked", resume=active and available,
-                action=active and available and E.resume or done and E.replay or current and (pending and E.pending or E.new) or E.earlier,
+                action=active and available and E.resume or done and E.replay or current and E.new or E.earlier,
                 note=active and available and E.resume_note or done and E.replay_note or
                     (journey.wonder_at(i + 1) and E.building_note or E.story_note)}
         end
@@ -1118,8 +1116,7 @@ function G.bind(R, over)
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function() open_building(owes_building() and "wonder" or "building") end,
             play = function()
-                if owes_building() then R.notice(W.notices.build_first); open_building("wonder")
-                elseif R.prog.level >= LEVELS then R.open_expeditions()
+                if R.prog.level >= LEVELS then R.open_expeditions()
                 else R.play_level(R.prog.level) end
             end,
             about = R.building_words,
@@ -1277,7 +1274,6 @@ function G.bind(R, over)
     function R.start_level(chosen)
         local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
         if lvl > R.prog.level then return false end
-        if lvl == R.prog.level and owes_building() then R.notice(W.notices.build_first); return false end
         if lvl == R.prog.level and journey.awaiting_return(R.prog) then R.notice(W.notices.story_waiting); return false end
         R.reset_board(R.make_board(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
         R.on_island = false
@@ -1294,7 +1290,7 @@ function G.bind(R, over)
 
     function R.play_level(level)
         if R.g and R.g.level == level and not R.g.won and not R.g.lost then
-            if level == R.prog.level and (owes_building() or journey.awaiting_return(R.prog)) then return false end
+            if level == R.prog.level and journey.awaiting_return(R.prog) then return false end
             if R.refresh_board_bonuses then R.refresh_board_bonuses() end
             R.on_island = false; R.overlay = R.OV_NONE
             if R.phase == R.PH_IDLE or R.phase == R.PH_PRESENT then R.present_board() end

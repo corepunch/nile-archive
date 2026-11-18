@@ -29,7 +29,6 @@ return {
         },
     },
     notices = {
-        build_first = "See what the crew needs for the next building.",
         story_waiting = "Finish the conversation on your island.",
         reward_building = "Resources banked. Open Buildings for the crew’s next request.",
         reward_story = "Resources banked. Spend them in the Build Shop.",

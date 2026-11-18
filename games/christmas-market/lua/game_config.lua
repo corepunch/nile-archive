@@ -31,7 +31,6 @@ return {
         locked = "Match the tied piece to untangle the tinsel.",
     },
     notices = {
-        build_first = "Build your earned stall before the next winter wish.",
         story_waiting = "Something's happening in the market square.",
         reward_building = "Visit the Build shop to check the next stall.",
         reward_story = "Something's happening in the market square.",

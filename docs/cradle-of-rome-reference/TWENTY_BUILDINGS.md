@@ -155,13 +155,11 @@ which places all twenty with one replay for income.
 
 ## When a building blocks the next board
 
-Rome lets the player continue without the next purchase. Both games today
-hold the next new board until the due story building is placed. With 20
-buildings the hard gate would stop play every one or two boards.
+Rome lets the player continue without the next purchase. Both games now
+play on without it: no building blocks the next new board.
 
 **Recommendation: a soft gate.** The ladder is strictly in order: each
-building appears in the shop once the one before it is placed. Only the ten
-★ story buildings hold the next new board, and a story building can't be
+building appears in the shop once the one before it is placed. No building holds the next new board, and a story building can't be
 bought until every building before it on the ladder is placed. A player
 short on Supplies after board 5 can play on to board 7 before the Workshop
 makes them build the Lighthouse. That gives Rome's slack without letting the

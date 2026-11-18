@@ -115,7 +115,7 @@ Market mirrors that rhythm. [Board progression](board-progression.md)
 
 Bellmere now has twenty stalls, after Cradle of Rome's twenty constructions:
 each adds one piece or one bonus from the wish after it is placed. The ten
-market wishes (★) keep their story beats and hold the next new wish. The ten
+market wishes (★) keep their story beats and never block the next new wish. The ten
 stalls between them open after their clear and must be placed before the next
 ★ stall. A save from before the ladder keeps playing: stalls it had already
 passed stay optional. [Ladder design](../../../docs/cradle-of-rome-reference/TWENTY_BUILDINGS.md#christmas-market-the-20-stalls)
