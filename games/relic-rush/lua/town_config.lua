@@ -27,7 +27,7 @@ return {
         middle = {kind = "button"},
     },
     -- Request and building markers as large as the Options button, with no
-    -- readout under them: their rings and the ready trail say it all.
+    -- readout under them: their gauges and the ready trail say it all.
     rail = {size = tool_size, gap = 4, caption = 0},
     bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "bubble_face", edge = "bubble_edge"},
     texts = {

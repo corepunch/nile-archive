@@ -54,7 +54,7 @@ function Q.new_state() return {have={}, done={}, introduced={}, ready_seen={}} e
 
 function Q.have(state, quest) return math.min(quest.need, state.have[quest.key] or 0) end
 function Q.ready(state, quest) return (state.have[quest.key] or 0) >= quest.need end
--- How far along a request is, 0 to 1: its marker's ring. A request of several
+-- How far along a request is, 0 to 1: its marker's gauge. A request of several
 -- requirements will average their shares.
 function Q.progress(state, quest) return Q.have(state, quest) / quest.need end
 

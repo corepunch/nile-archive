@@ -59,7 +59,7 @@ function R.town_middle_icon(at) R.compass_icon(at, 17) end
 ------------------------------------------------------------------ requests
 
 -- The crew's requests (lua/quests.lua) down the island's left edge, after the
--- next building: each open one as its giver's portrait, ringed by how much of
+-- next building: each open one as its giver's portrait, with a gauge of how much of
 -- the request is banked.
 local function quest_icon(quest) return R.board_art["campaign-" .. quest.piece] end
 
@@ -76,7 +76,7 @@ end
 
 -- How much of a price the wallet holds, 0 to 1: the mean share of each
 -- currency it asks for. A building still waiting for its clear stops short of
--- a full ring, which only a ready marker leaves bare.
+-- a full gauge, which only a ready marker leaves bare.
 local function funded(cost)
     local share, count = 0, 0
     for slot in ipairs(economy.currencies) do
