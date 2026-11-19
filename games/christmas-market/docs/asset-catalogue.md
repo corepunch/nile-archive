@@ -146,7 +146,7 @@ Christmas cracker and comet frames. The farrier's hammer centers the bounds
 of its silhouette on the enamel face. The other boosters use their centers of
 opacity. The colored icon and the disabled inset use the same anchor.
 Cards and the guide show those same pieces. The
-[state review](screenshots/review/hammer-centering/art-states.jpg) covers
+[state review](screenshots/review/large-pieces/art-states.jpg) covers
 all four boosters. The stock badge appears when the player has more than
 one use. The toolbar capture gives the hammer two uses to show that state.
 
@@ -165,7 +165,9 @@ into the transparent [4×5 master](../art/market-goods/winter-coins-and-boosters
 The [prompt](../art/market-goods/winter-coins-and-boosters-prompt.txt) includes
 the two coins, natural wood and all four booster icons. The first sixteen
 cells are board pieces. The bottom row holds two toolbar-only icons and two
-empty bays. The [registration record](../art/market-goods/registration.json)
+empty bays. A targeted [ImageGen revision](../art/market-goods/winter-thick-hammer.png)
+supplies the thicker hammer in row two, column two. Its [edit prompt](../art/market-goods/winter-thick-hammer-prompt.txt)
+specifies the larger enamel head and wider handle. The [registration record](../art/market-goods/registration.json)
 stores each source crop, proportional fit and offset in its 128 px slot.
 The crop takes the object's solid bounds with four pixels of edge padding.
 The fit preserves source alpha inside the engine's flat-top hex inset.
@@ -202,6 +204,11 @@ The wallet, prices and results share the three
 currency icons. The [color map and review](market-pieces.md) include native
 captures of the board at both phone sizes, the bakery's reward card, the
 guide, the win result and the booster catalogue.
+
+Live pieces draw their 128 px canvas, including its transparent margins, at
+106% of the cell step. This is about 12% larger than the former board scale.
+The [size review](square-match3.md#piece-size) shows the new silhouettes and
+clearance around chains and ice.
 
 ```sh
 python3 games/christmas-market/tools/prepare_market_goods.py

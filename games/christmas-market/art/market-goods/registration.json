@@ -119,25 +119,26 @@
     "market-5": {
       "name": "farrier's hammer",
       "source_crop": [
-        327,
-        298,
-        538,
-        552
+        317,
+        293,
+        537,
+        553
       ],
       "fitted_size": [
-        80,
-        96
+        85,
+        100
       ],
       "offset": [
-        24,
-        16
+        21,
+        14
       ],
       "registered_box": [
         128,
         128,
         128,
         128
-      ]
+      ],
+      "source": "art/market-goods/winter-thick-hammer.png"
     },
     "market-6": {
       "name": "toy blocks",

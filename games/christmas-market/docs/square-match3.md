@@ -71,6 +71,20 @@ python3 tools/square_board_frame.py --review games/christmas-market/docs/screens
 build/test/christmas-market "shot booster-toolbar" "shot square-winter-wreath" "shot phone-pieces-board"
 ```
 
+### Piece size
+
+Every live piece draws about 12% larger. The farrier's hammer also has a
+thicker green head and handle, with the same silhouette on the board and
+all five toolbar states.
+
+| Size | Before | After |
+| --- | --- | --- |
+| 480 × 900 | [Board](screenshots/review/square-frame/board-480.jpg) | [Board](screenshots/review/large-pieces/board-480.jpg) |
+| 390 × 844 | [Board](screenshots/review/square-frame/board-390.jpg) | [Board](screenshots/review/large-pieces/board-390.jpg) |
+
+[Dense board with chains and ice](screenshots/review/large-pieces/blockers.jpg) ·
+[Five hammer button states](screenshots/review/large-pieces/art-states.jpg)
+
 ## Captures
 
 - [Winter Wreath](screenshots/square-winter-wreath.jpg)

@@ -27,9 +27,10 @@ local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local cell_active = rules.game_cell_active
 local rgba = color
 
--- Keep the guide's icon size; only live board pieces use the enlarged board scale.
-local ART_CELL_SIZE = 46
-local BOARD_SCALE = R.cell_width / ART_CELL_SIZE
+-- The atlas preserves transparent gutters around each piece. Draw the board
+-- canvas slightly larger than a cell so the painted silhouettes fill it.
+local BOARD_ART_SIZE = R.cell_width * 1.06
+local PREVIEW_ART_SIZE = 46 * .95
 local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
@@ -41,9 +42,7 @@ end
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
     if t.kind < 0 then return end
-    -- Same piece size as Relic Rush: the whole 128px canvas, gutter included,
-    -- spans 95% of the authored cell, so pieces never crowd the cell edges.
-    local s = ART_CELL_SIZE * .95 * scale
+    local s = (board and BOARD_ART_SIZE or PREVIEW_ART_SIZE) * scale
     local tint = rgba(255, 255, 255, alpha)
     local tex = board and R.board_piece_texture(t.kind) or R.relics[t.kind + 1]
     local area = rect.centered(at, size2(s * aspect, s / aspect))
@@ -81,7 +80,7 @@ local function draw_relics(sx)
         if cell_active(g, i) then
             local t, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
             if clip then gfx.clip(clip) end
-            draw_relic(t, at, scale * BOARD_SCALE * elements.selection_scale(R,i), alpha * cover, aspect, true)
+            draw_relic(t, at, scale * elements.selection_scale(R,i), alpha * cover, aspect, true)
             if clip then gfx.clip(R.BOARD_CLIP) end
         end
     end

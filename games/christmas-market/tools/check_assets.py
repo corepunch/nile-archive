@@ -73,6 +73,8 @@ def main():
     goods = manifest['market_goods']
     for name in ('source', 'prompt', 'edit_target', 'edit_target_prompt', 'transforms', 'review'):
         assert (ROOT/goods[name]).is_file(), name
+    for edit in goods.get('source_overrides', {}).values():
+        assert (ROOT/edit['source']).is_file() and (ROOT/edit['prompt']).is_file(), edit
     assert png(ROOT/goods['runtime']) == ((512, 640), 6) and len(set(goods['frames'])) == 16
     icons = manifest['bonus_buttons']['icons']
     assert set(goods['toolbar_only']) == {frame for frame in icons.values() if not frame.startswith('market-')}
