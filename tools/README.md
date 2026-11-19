@@ -79,6 +79,8 @@ are the guides.
 | --- | --- | --- |
 | `balance.py` | One run that sets every fitted value: compiles the boards, fits the move budgets, fits Relic Rush's restoration prices to the bot's income and writes them to the catalogue, lua and README, then runs the rule tests. The bots run the rules alone, one process per processor | `make balance GAME=relic-rush`; `BALANCE_ARGS=--trim` trims long boards first |
 | `hex_levels.py` | Validates the hex level files, prints a board, writes `lua/boards.lua` and the overview sheets | `python3 tools/hex_levels.py relic-rush --lua`; `make levels-preview` |
+| `square_boards.py` | Validates square campaign layouts and checks that every target can receive pieces | `python3 tools/square_boards.py christmas-market`; add `--show N` to print a board |
+| `square_trim.py` | Uses the reference bot to find and trim the last targets cleared on long square boards | `python3 tools/square_trim.py relic-rush --levels 21-30 --report` |
 | `tune_moves.py` | Fits each board's move budget to its tier with the reference bot; writes `lua/level_moves.lua` and `docs/level-moves.md` | `python3 tools/tune_moves.py relic-rush` |
 | `balance_plaques.py` | Lists the plaques the bot clears last on each board and, with `--trim`, removes them until the bot's median game is at most twice the level's Homescapes move budget (`--high`); `--keep-blockers` trims plain plaques before chained and frozen ones | `python3 tools/balance_plaques.py relic-rush --levels 31-40`; add `--trim` to rewrite the level files |
 | `tests/lua/tune_moves.lua` | The bot side of `tune_moves.py` and `balance_plaques.py`; reports the move each plaque was cleared on | run by `tune_moves.py` |
