@@ -30,7 +30,6 @@ local rgba = color
 -- Preserve the guide's icon size; only live board pieces follow the board's geometry.
 local ART_CELL_SIZE = 46
 local BOARD_SCALE = R.cell_width / ART_CELL_SIZE
-local CELL_FACE_SIZE = 2 * (HEX_R - .65)
 local cell_pos = R.cell_pos
 
 -------------------------------------------------------------------- drawing
@@ -114,25 +113,6 @@ local function draw_relics(sx)
     gfx.unclip()
 end
 
-local function draw_blockers(sx)
-    local g = R.g
-    local cover = elements.reveal_cover(R, rules)
-    for i = 0, CELLS - 1 do
-        if cell_active(g, i) and (g.ice[i] > 0 or g.chain[i] > 0) then
-            local at = cell_pos(i) + vec2(sx, 0)
-            local visible, scale, alpha = true, 1, 1
-            if R.intro then visible, scale, alpha = R.intro:blocker(i); alpha = alpha * R.intro:fade() end
-            if visible then
-                local dst = rect.centered(at, size2.splat(CELL_FACE_SIZE * scale))
-                local tint = rgba(255, 255, 255, 255 * alpha * cover)
-                -- An ice field: the ice floor tile below, full ice over the piece at any strength.
-                if g.ice[i] > 0 then gfx.image(R.board_art["ice-2"], dst, tint) end
-                if g.chain[i] > 0 then gfx.image(elements.chain(R,g,i), dst, tint) end
-            end
-        end
-    end
-end
-
 -- The light running across the board as it goes live.
 local function draw_sheen(sx)
     for i = 0, CELLS - 1 do
@@ -158,7 +138,7 @@ function R.board_screen(inp, dt)
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     elements.ground(R, rules, sx, R.board_floor())
     draw_relics(sx)
-    draw_blockers(sx)
+    elements.square_blockers(R, rules, sx)
     elements.blockers(R, rules, sx)
     if intro then draw_sheen(sx) end
     R.draw_board_tools(inp)

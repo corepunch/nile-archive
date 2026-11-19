@@ -178,7 +178,7 @@ local NORTH_RIM = rect(3 * FRAME_SLOT, 3 * FRAME_SLOT, FRAME_SLOT, FRAME_SLOT)
 local frame_vertices, frame_sources = {}, {}
 for k = 0, 5 do
     local angle = math.rad(60 * k)
-    frame_vertices[k] = vec2(math.cos(angle), math.sin(angle))
+    frame_vertices[k + 1] = vec2(math.cos(angle), math.sin(angle))
 end
 for row = 0, 2 do
     frame_sources[row] = {}
@@ -336,8 +336,8 @@ local function frame_layout(R, rules)
             end
             for k = 0, 5 do
                 if open[k] then
-                    local a = centre + frame_vertices[k]:scale(r)
-                    local b = centre + frame_vertices[(k + 1) % 6]:scale(r)
+                    local a = centre + frame_vertices[k + 1]:scale(r)
+                    local b = centre + frame_vertices[(k + 1) % 6 + 1]:scale(r)
                     local edge = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k],
                                   direction = k, empty = open[k]}
                     edges[#edges + 1] = edge
@@ -454,12 +454,19 @@ function E.cradle_ground(R)
     for key, value in pairs(E.CRADLE_GROUND) do R.GROUND[key] = value end
 end
 
--- The art a cell's breakable floor layer is painted with, as E.ground paints
--- it, for effects that break it (match3.shatter): ice, else the top tablet
--- layer. Tablets use the Cradle of Rome tablet tiles.
+local square_ice = {"ice-square-1", "ice-square-2"}
+local square_chain = {"chain-square-1", "chain-square-2"}
+local function blocker_art(R, states, hits)
+    return R.board_art[states[math.min(hits, #states)]]
+end
+
+-- Art for the layer removed by a shatter effect.
 function E.layer_art(R, floor, oil, ice)
     local tiles = R.GROUND.tiles or {}
-    if ice > 0 then return tiles.ice and R.board_art[tiles.ice] end
+    if ice > 0 then
+        if R.board_art[square_ice[1]] then return blocker_art(R, square_ice, ice) end
+        return tiles.ice and R.board_art[tiles.ice]
+    end
     local double = floor and floor.double or tiles.double
     if oil > 1 and double then return R.board_art[double] end
     if oil > 0 then return R.board_art[floor and floor.covered or TABLET] end
@@ -474,6 +481,7 @@ local function draw_floor_cell(R, i, at, material, alpha)
     gfx.image_rot(R.board_art[material or TABLET], rect.centered(at, size2.splat(2 * radius)), turn, tint)
 end
 
+local square_vertices = {vec2(1, -1), vec2(1, 1), vec2(-1, 1), vec2(-1, -1)}
 local function draw_tablet_hints(R, rules, sx, floor)
     local g = R.g
     if not (floor and floor.tablet_hint and g.oil_left > 0 and g.oil_left <= 3)
@@ -481,10 +489,11 @@ local function draw_tablet_hints(R, rules, sx, floor)
     local time = R.tablet_hint_time(R.idle_hint_age())
     if not time then return end
     local radius = R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET) - 1
+    local vertices = rules.square and square_vertices or frame_vertices
     for i = 0, rules.CELLS - 1 do
         local layers = g.oil[i] or 0
         if layers > 0 and rules.game_cell_active(g, i) then
-            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, frame_vertices, time, layers > 1)
+            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, vertices, time, layers > 1)
         end
     end
 end
@@ -554,6 +563,9 @@ end
 
 function E.load_square(art, skin, modular_frame)
     for _, key in ipairs(square_cells) do art[key] = assert(skin[key], key) end
+    for _, states in ipairs{square_ice, square_chain} do
+        for _, key in ipairs(states) do art[key] = assert(skin[key], key) end
+    end
     if modular_frame then
         art.square_frame = square_frame_art(skin)
     else
@@ -671,6 +683,7 @@ function E.ground(R, rules, sx, floor)
     local frame_alpha = intro and intro:frame_fade() or 1
     if rules.square then
         draw_square_ground(R, rules, sx, floor, alpha, frame_alpha)
+        draw_tablet_hints(R, rules, sx, floor)
         return
     end
     local frame = draw_ground_backing(R, rules, sx, alpha, frame_alpha, floor and floor.normal)
@@ -724,6 +737,27 @@ function E.ground(R, rules, sx, floor)
     end
 end
 
+-- Ice and chains sit above the piece and stay centred on the square cell.
+function E.square_blockers(R, rules, sx)
+    local g, intro = R.g, R.intro
+    local cover = E.reveal_cover(R, rules)
+    if cover <= 0 then return end
+    local side = 2 * (R.HEX_R - R.GROUND.seam_width)
+    for i = 0, rules.CELLS - 1 do
+        local ice, chain = g.ice[i], g.chain[i]
+        if (ice > 0 or chain > 0) and rules.game_cell_active(g, i) then
+            local visible, scale, alpha = true, 1, 1
+            if intro then visible, scale, alpha = intro:blocker(i); alpha = alpha * intro:fade() end
+            if visible then
+                local dst = rect.centered(R.cell_pos(i) + vec2(sx, 0), size2.splat(side * scale))
+                local tint = color(255, 255, 255, 255 * alpha * cover)
+                if ice > 0 then gfx.image(blocker_art(R, square_ice, ice), dst, tint) end
+                if chain > 0 then gfx.image(blocker_art(R, square_chain, chain), dst, tint) end
+            end
+        end
+    end
+end
+
 -- Fixed blockers cover the piece area.
 function E.blockers(R, rules, sx)
     local g = R.g
@@ -771,10 +805,6 @@ function E.piece_shadow(tex, dst, alpha, size)
         local a = k / SHADOW_TAPS * 2 * math.pi
         gfx.image_striped(tex, base:offset(vec2(math.cos(a) * spread, math.sin(a) * spread)), 0, 1, 1, SHADOW_INK, tint)
     end
-end
-
-function E.chain(R,g,i)
-    return R.board_art[g.chain[i]>1 and "chain-2" or "chain"]
 end
 
 return E

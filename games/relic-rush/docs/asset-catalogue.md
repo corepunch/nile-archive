@@ -53,7 +53,7 @@ The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet
 
 The engine has no special pieces, so the atlas carries no rocket, bomb, plane or rainbow-ball frames. Their earlier reviews ([painted power-ups](screenshots/review/power-up-paint/README.md), [Scener models](screenshots/review/scener-power-ups/README.md)) are historical.
 
-One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
+The [edge-mounted hex chains](../../../art/match3-chain-paint/README.md) are retained as legacy previews. [Earlier in-game comparisons](screenshots/review/chain-anchors/README.md).
 
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
@@ -435,9 +435,23 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-The campaign uses the same silver chain art on each board. One hit breaks
-the chain and keeps the piece in place. A later hit clears the piece and its
-blue plaque. Ice textures are recorded here for shared engine diagnostics.
+The square campaign uses the following frames from the shared
+[square blocker atlas](../../../art/match3-square/README.md#blockers).
+A hit removes one layer and leaves the piece in place. A later hit can clear
+the piece and its blue plaque. Ice is available in board diagnostics. The
+Explorer's Guide uses the single-chain overlay on its square plaque example.
+
+| Runtime frame in `data/board/blockers.png` | Square state |
+| --- | --- |
+| `chain-square-1` | One hit left, single silver chain, beveled edge and cast shadow |
+| `chain-square-2` | Two hits left, crossed silver chains, beveled edge and cast shadows |
+| `ice-square-1` | One hit left, borderless faceted frost with the upper part broken away |
+| `ice-square-2` | Two hits left, full borderless frost with diagonal facets |
+
+With one to three plaques left, the idle pulse sweeps clockwise along each
+square edge using `fx-tablet-glow` and `fx-tablet-spark`. A two-layer plaque
+glows green and a one-layer plaque glows blue. Reduce Motion hides the pulse.
+[Board, guide and particle captures](square-match3.md#blockers-and-target-hints).
 
 ### Story materials
 

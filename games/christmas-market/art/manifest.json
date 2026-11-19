@@ -32,7 +32,7 @@
   ],
   "runtime": {
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
-    "data/board/blockers.png": "7cdb71ae145aff3536efc78f1f09d3f47b3e7fef283c43b2e7cbef791fac68a9",
+    "data/board/blockers.png": "40168b602b9a3e02fc516f43e50feec377202ac3938ede3e2dde1ea855b3e9c6",
     "data/board/cells.png": "a55c1493f055fb1ee5576652944b339ac30a9f9b1ce8a373c4a1092c8692caea",
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
@@ -461,6 +461,19 @@
       "candy cane": "art/festive-pieces/source.png, top centre",
       "note": "Kinds 12-15 reuse the game's earlier festive pieces for the stalls added by the twenty-stall ladder; no new painting."
     }
+  },
+  "square_blockers": {
+    "source": "../../art/match3-square/blockers.png",
+    "prompt": "../../art/match3-square/blockers-prompt.txt",
+    "runtime": "data/board/blockers.png",
+    "registration": "art/match3-atlas.json#square_blockers",
+    "states": {
+      "chain-square-1": "One hit remains. One diagonal silver chain with a beveled perimeter and cast shadow.",
+      "chain-square-2": "Two hits remain. Two crossed silver chains with the same perimeter and cast shadows.",
+      "ice-square-1": "One hit remains. Borderless translucent ice with a broken upper edge.",
+      "ice-square-2": "Two hits remain. A full borderless square of translucent faceted ice."
+    },
+    "review": "docs/square-match3.md#blockers-and-target-hints"
   },
   "square_board": {
     "source": "../../art/match3-square/source.png",

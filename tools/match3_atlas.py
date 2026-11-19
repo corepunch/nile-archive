@@ -4,7 +4,7 @@
 Every registered sprite is packed into one atlas per kind of art, so a reskin
 redraws one family at a time in one style: pieces, blockers, cells, boosters,
 hud and fx (see docs/ASSET_LAYOUT.md). Backgrounds are separate files, never
-packed. Match-3 ice uses a canonical mask and baked opacity. Control sprites
+packed. Match-3 ice uses geometry-specific registration and baked opacity. Control sprites
 are packed with their authored colors and alpha. --check never writes runtime
 assets.
 """
@@ -38,6 +38,15 @@ ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'open-hex.png', 'concept
                                          'filled-pane-prompt.txt')]
 ICE_INPUTS += [HEX_MASK, ROOT / 'engine/art/hex-tile/hex-mask-preview.png']
 SQUARE_DIR = ROOT / 'art/match3-square'
+SQUARE_BLOCKER_CROPS = {
+    'chain-square-1': (48, 36, 592, 580),
+    'chain-square-2': (662, 36, 1210, 584),
+    'ice-square-1': (53, 662, 596, 1199),
+    'ice-square-2': (658, 665, 1202, 1199),
+}
+SQUARE_BLOCKER_INPUTS = [SQUARE_DIR / name for name in (
+    'blockers.png', 'blockers-prompt.txt', 'blockers-edit-target.png', 'blockers-ice-reference.png')]
+SQUARE_ICE_OPACITY = {'luma': [170, 235], 'opacity': [.55, .95]}
 SIGNBOARD_DIR = ROOT / 'art/match3-signboards'
 SIGNBOARD_CROPS = {
     # Centre each crop on the painted face so live counters share its axis.
@@ -215,6 +224,33 @@ def registered_ice():
                              'crop': list(box), 'canvas': list(mask.size), 'opacity_ramp': ramp,
                              'mask': str(HEX_MASK.relative_to(ROOT))}
     return sprites, records
+
+
+def registered_square_blockers(root):
+    source, prompt, edit_target, ice_reference = SQUARE_BLOCKER_INPUTS
+    with Image.open(source) as sheet:
+        assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254)
+        sprites = {name: sheet.crop(box).resize((CELL, CELL), Image.Resampling.LANCZOS)
+                   for name, box in SQUARE_BLOCKER_CROPS.items()}
+    low, high = SQUARE_ICE_OPACITY['luma']
+    clear, bright = SQUARE_ICE_OPACITY['opacity']
+    curve = [round(255 * (clear + (bright - clear) * min(1, max(0, (value - low) / (high - low)))))
+             for value in range(256)]
+    for name, sprite in sprites.items():
+        if name.startswith('ice-'):
+            opacity = sprite.convert('L').point(curve)
+            sprite.putalpha(ImageChops.multiply(sprite.getchannel('A'), opacity))
+    return sprites, {
+        'source': relpath(source, root),
+        'prompt': relpath(prompt, root),
+        'edit_target': relpath(edit_target, root),
+        'ice_reference': relpath(ice_reference, root),
+        'crops': SQUARE_BLOCKER_CROPS,
+        'canvas': [CELL, CELL],
+        'transform': 'Crop and resize with Lanczos, then multiply ice alpha by the luminance ramp',
+        'ice_opacity_ramp': SQUARE_ICE_OPACITY,
+        'review': 'docs/square-match3.md#blockers-and-target-hints',
+    }
 
 
 def build_default(check):
@@ -538,6 +574,8 @@ def build_game(game, check):
     loaded.update(extra)
     squares, square_inputs, square_registration = square_cells(game, root)
     loaded.update(squares)
+    square_blockers, square_blocker_registration = registered_square_blockers(root)
+    loaded.update(square_blockers)
     button_centers = {}
     for name in sorted(set(bonus_frames)):
         image = loaded[name]
@@ -597,12 +635,14 @@ def build_game(game, check):
                 'square_cells': {**square_sources,
                                  'frames': square_registration,
                                  'review': 'docs/square-match3.md'},
+                'square_blockers': square_blocker_registration,
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
     inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs + [Path(match3_buttons.__file__)] + square_inputs
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
     inputs += ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
+    inputs += SQUARE_BLOCKER_INPUTS
     inputs += [root / 'data' / path for path in (images | hud_images).values()]
     if game == 'relic-rush':
         inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]

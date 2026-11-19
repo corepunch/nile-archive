@@ -10,7 +10,7 @@
     "blockers": {
       "runtime": "data/board/blockers.png",
       "size": [
-        256,
+        512,
         512
       ]
     },
@@ -389,8 +389,8 @@
     "chain-1-mirror": {
       "atlas": "blockers",
       "box": [
+        256,
         0,
-        128,
         128,
         128
       ]
@@ -398,8 +398,8 @@
     "chain-2": {
       "atlas": "blockers",
       "box": [
-        128,
-        128,
+        384,
+        0,
         128,
         128
       ]
@@ -408,7 +408,25 @@
       "atlas": "blockers",
       "box": [
         0,
+        128,
+        128,
+        128
+      ]
+    },
+    "chain-square-1": {
+      "atlas": "blockers",
+      "box": [
+        128,
+        128,
+        128,
+        128
+      ]
+    },
+    "chain-square-2": {
+      "atlas": "blockers",
+      "box": [
         256,
+        128,
         128,
         128
       ]
@@ -416,8 +434,8 @@
     "ice-1": {
       "atlas": "blockers",
       "box": [
+        384,
         128,
-        256,
         128,
         128
       ]
@@ -426,7 +444,25 @@
       "atlas": "blockers",
       "box": [
         0,
-        384,
+        256,
+        128,
+        128
+      ]
+    },
+    "ice-square-1": {
+      "atlas": "blockers",
+      "box": [
+        128,
+        256,
+        128,
+        128
+      ]
+    },
+    "ice-square-2": {
+      "atlas": "blockers",
+      "box": [
+        256,
+        256,
         128,
         128
       ]
@@ -434,8 +470,8 @@
     "stone-1": {
       "atlas": "blockers",
       "box": [
-        128,
         384,
+        256,
         128,
         128
       ]
@@ -1351,12 +1387,60 @@
     },
     "review": "docs/square-match3.md"
   },
+  "square_blockers": {
+    "source": "../../art/match3-square/blockers.png",
+    "prompt": "../../art/match3-square/blockers-prompt.txt",
+    "edit_target": "../../art/match3-square/blockers-edit-target.png",
+    "ice_reference": "../../art/match3-square/blockers-ice-reference.png",
+    "crops": {
+      "chain-square-1": [
+        48,
+        36,
+        592,
+        580
+      ],
+      "chain-square-2": [
+        662,
+        36,
+        1210,
+        584
+      ],
+      "ice-square-1": [
+        53,
+        662,
+        596,
+        1199
+      ],
+      "ice-square-2": [
+        658,
+        665,
+        1202,
+        1199
+      ]
+    },
+    "canvas": [
+      128,
+      128
+    ],
+    "transform": "Crop and resize with Lanczos, then multiply ice alpha by the luminance ramp",
+    "ice_opacity_ramp": {
+      "luma": [
+        170,
+        235
+      ],
+      "opacity": [
+        0.55,
+        0.95
+      ]
+    },
+    "review": "docs/square-match3.md#blockers-and-target-hints"
+  },
   "procedural_glow": "Original 64px white cubic radial alpha; transient light, packed alongside sprites",
   "transform": "RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters",
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "c95868b5d34a35c0ddf97dc73a944925e7716902666b6d74ff77ad2886c453a4",
+    "recipe": "b2a5a65eb53c8011f673df76266026129ddd449b3f2ddfe003293d6603a4c849",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1379,6 +1463,10 @@
       "art/match3-signboards/concept.jpg": "ed4c3cb83c720f6a3acf7006c4cbe0a42a353237f0f698465a3959784dcc3c13",
       "art/match3-signboards/prompt.txt": "24afea9b1796b31f61eb28b00c301276ed8ce6643e39876dcde7732cf3e23b27",
       "art/match3-signboards/source.png": "6756852d29a38aa1ddb51e20d3c24dcdeccc9eed146904f7d1b71ebfba5f80db",
+      "art/match3-square/blockers-edit-target.png": "271cd3f04f8866148d97542b94cd9e39f8e02b60c8885750727b9a9f4023e131",
+      "art/match3-square/blockers-ice-reference.png": "c7309cd4cf231b36989a9183fb6a417b95e2f38365c15e15b93a2fe84dc0c3c1",
+      "art/match3-square/blockers-prompt.txt": "959f34623cb0f12a702ebce85f668ecc8b340b1fe49e4ef53d89226d56f4cdff",
+      "art/match3-square/blockers.png": "4ca1f9a176638af1ec5c4e4242268951c1efc297f4e8ef0fea4cf43126b9a8fd",
       "art/match3-square/lighting-prompt.txt": "44648f991d91d3af80a399361aa7054486eab14e22779a9296c803b4809de78c",
       "art/match3-square/ornaments-prompt.txt": "c4156812cc922f3f0d0ae78e0b0f6a08265ef29eee93e5316172d06fd3fa39f0",
       "art/match3-square/ornaments.png": "eb76969acec901820e09a1aaa6cd5612082af8ea2ab1a52cbc01fe6e14a8ae82",
@@ -1446,12 +1534,12 @@
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
     },
     "outputs": {
-      "games/christmas-market/data/board/blockers.png": "7cdb71ae145aff3536efc78f1f09d3f47b3e7fef283c43b2e7cbef791fac68a9",
+      "games/christmas-market/data/board/blockers.png": "40168b602b9a3e02fc516f43e50feec377202ac3938ede3e2dde1ea855b3e9c6",
       "games/christmas-market/data/board/cells.png": "a55c1493f055fb1ee5576652944b339ac30a9f9b1ce8a373c4a1092c8692caea",
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
       "games/christmas-market/data/board/pieces.png": "9013ad6380f8216727beffdc8e92c2fb5c715507ddb24c2aee8b4d3cb062bad3",
-      "games/christmas-market/lua/match3_atlases.lua": "58d864d90b40b524e063e506679a8d79831f8bd2c68711af7744ea7876e85c4e",
+      "games/christmas-market/lua/match3_atlases.lua": "5bba11ab0c1a5a5698705b36d1d199c4fe6c6f00832afca9893bf2ea5e5b3d4e",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
       "games/christmas-market/lua/match3_skin.lua": "f1e95ebc231c836426a3da0282bc8c28982455cd2b30d85386fdba4055cdb727"
     }

@@ -133,7 +133,7 @@ local guide_entries = {
     {id="double-plaques", title="Green plaques", description="Match twice to clear a green plaque. Its first hit turns it turquoise.",
      icon={floor="square-double"}},
     {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell has a plaque, clear it with another hit.",
-     icon={floor="square-target", piece=chip_prefix .. "coin", front="chain"}},
+     icon={floor="square-target", piece=chip_prefix .. "coin", front="chain-square-1"}},
     {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Coins, Supplies and Food.",
      icon={front="resource-wallet-supplies"}},
     {id="score", title="Leaves, flowers and amphoras", description="These pieces earn score only. See your score at the end of the expedition.",

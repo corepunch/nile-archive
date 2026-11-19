@@ -25,7 +25,7 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-The ten original winter wishes use square boards up to 9 × 12. Swap two neighboring treats to match three in a row or column. Every blue pane must light. A tied treat needs one or two hits before the pane can clear. The [square campaign guide](docs/square-match3.md) lists the levels and artwork.
+The ten original winter wishes use square boards up to 9 × 12. Swap two neighboring treats to match three in a row or column. Every blue pane must light. Single and crossed chains mark treats that need one or two hits before the pane can clear. The last few panes get a trail around their square edges during idle play. The [square campaign guide](docs/square-match3.md) lists the levels and artwork.
 
 ## Shared match engine and atlas
 

@@ -48,3 +48,22 @@ The runtime frames and exact crop rectangles are recorded in each game's
 
 - [Relic Rush captures](../../games/relic-rush/docs/square-match3.md#captures)
 - [Christmas Market captures](../../games/christmas-market/docs/square-match3.md#captures)
+
+## Blockers
+
+Built-in ImageGen painted the four square states together in
+[blockers.png](blockers.png), using the [first pass](blockers-edit-target.png)
+and a [swatch of the previous ice textures](blockers-ice-reference.png).
+The [prompts](blockers-prompt.txt) record both steps. The beveled metal edge
+and cast shadow in Cradle of Rome's `lock_01.png` and `lock_02.png` informed
+the chain contrast. The ice keeps the earlier glass facets, bubbles and chip
+line on a borderless square.
+
+`python3 tools/match3_atlas.py` crops and resizes each painted overlay to
+128 × 128 and packs it into both games' `data/board/blockers.png`. The
+`square_blockers` entry in each atlas manifest records the crop bounds. Both
+ice frames multiply the painted alpha by the same luminance ramp. Luminance
+values up to 170 use 55% of the painted alpha. Highlights reach 95% at 235.
+
+- [Relic Rush review](../../games/relic-rush/docs/square-match3.md#blockers-and-target-hints)
+- [Christmas Market review](../../games/christmas-market/docs/square-match3.md#blockers-and-target-hints)

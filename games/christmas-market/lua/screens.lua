@@ -113,7 +113,7 @@ local guide_entries = {
     {id="double-panes", title="Green panes", description="A green pane turns blue after its first hit. Match again to light it.",
      icon={back="square-double"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
-     icon={back="square-target", piece="market-1", front="chain"}},
+     icon={back="square-target", piece="market-1", front="chain-square-1"}},
     {id="supplies", title="Stock the market", description="Coins pay Gold. After you build stalls, their wood, food and other goods appear on the board. Holly, mittens and candy canes earn score.",
      icon={front="market-3"}},
     {id="long-lines", title="Long lines pay more", description="A line of four pays twice per piece. A line of five pays four times per piece.",

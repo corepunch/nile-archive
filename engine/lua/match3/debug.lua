@@ -385,6 +385,11 @@ function D.bind(R, W)
                 local cell = rules.hex_index(3 - hits, 1)
                 R.g.active[cell], R.g.stone_hp[cell], R.g.ice[cell] = true, 0, 0
                 R.g.chain[cell], R.g.tiles[cell] = hits, rules.tile(hits)
+                if rules.square then
+                    local frozen = rules.hex_index(hits - 2, 1)
+                    R.g.active[frozen], R.g.stone_hp[frozen], R.g.chain[frozen] = true, 0, 0
+                    R.g.ice[frozen], R.g.tiles[frozen] = hits, rules.tile(hits)
+                end
             end
             R.selected, R.hint_a, R.hint_b = rules.hex_index(-2, 1), rules.hex_index(1, 1), rules.hex_index(2, 1)
             R.g.tools[1], R.g.tools[2], R.g.tools[3] = 2, 2, 0

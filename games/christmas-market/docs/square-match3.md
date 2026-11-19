@@ -11,6 +11,10 @@ Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
 all the targets within the move budget and collect the matched Gold, Food and Supplies.
 
+When one to three panes remain, a trail follows their four edges after a
+short pause. It glows blue on a single pane and green on a double pane.
+Reduce Motion hides the trail.
+
 ## Build
 
 The lower-left Build button opens the next purchase. The card shows the
@@ -38,3 +42,20 @@ with `python3 tools/match3_atlas.py`.
 - [Christmas Star](screenshots/square-christmas-star.jpg)
 
 Capture from the game using `build/test/all --suite=christmas-market "shot square-"`.
+
+### Blockers and target hints
+
+The [shared blocker sheet](../../../art/match3-square/README.md#blockers)
+supplies a single silver tie and a crossed pair. The board artwork review
+also shows full and chipped borderless ice over the treats.
+
+| Size | Board, before and after | Guide, before and after |
+| --- | --- | --- |
+| 480 × 900 | [Blockers](screenshots/review/square-blockers/board-480.jpg) | [Tied treat](screenshots/review/square-blockers/guide-480.jpg) |
+| 390 × 844 | [Blockers](screenshots/review/square-blockers/board-390.jpg) | [Tied treat](screenshots/review/square-blockers/guide-390.jpg) |
+
+[Three remaining panes with their edge trails](screenshots/review/square-blockers/target-hints.jpg).
+
+```sh
+build/test/all --suite=christmas-market 'shot pieces-board' 'shot phone-pieces-board' 'shot guide' 'shot phone-guide' 'frame christmas-market-tablet-hints'
+```

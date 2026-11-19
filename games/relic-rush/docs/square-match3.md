@@ -11,6 +11,10 @@ Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
 all the targets within the move budget and collect the matched Coins, Food and Supplies.
 
+When one to three plaques remain, a trail follows their four edges after a
+short pause. It glows blue on a single plaque and green on a double plaque.
+Reduce Motion hides the trail.
+
 ## Build
 
 Only gold and silver coins pay into the wallet on the first expedition.
@@ -98,6 +102,24 @@ BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules re
 - [Still needed](screenshots/square-build-cost.jpg)
 
 Capture from the game using `build/test/all --suite=relic-rush "shot square-"`.
+
+### Blockers and target hints
+
+The [shared blocker sheet](../../../art/match3-square/README.md#blockers)
+supplies a single silver chain and a crossed pair. Two ice states use
+borderless, translucent frost, with a chipped upper edge after the first hit.
+The board artwork review shows all four states together.
+
+| Size | Board, before and after | Guide, before and after |
+| --- | --- | --- |
+| 480 × 900 | [Blockers](screenshots/review/square-blockers/board-480.jpg) | [Chain example](screenshots/review/square-blockers/guide-480.jpg) |
+| 390 × 844 | [Blockers](screenshots/review/square-blockers/board-390.jpg) | [Chain example](screenshots/review/square-blockers/guide-390.jpg) |
+
+[Motion on the final two plaques](screenshots/review/square-blockers/target-hints.webp).
+
+```sh
+build/test/all --suite=relic-rush 'shot art-pieces' 'shot phone-art-pieces' 'shot guide' 'shot phone-guide' 'reel relic-rush-tablet-hints-phone'
+```
 
 ### Build progress captures
 

@@ -115,18 +115,24 @@ function V.bind(R, rules)
     end
 
     function R.vfx_tablet_hint(center, radius, vertices, time, double)
+        local sides = #vertices
         local bright = num.saturate(time / .42) * num.saturate((HINT_DURATION - time) / .55)
-        local phase = 5.5 + 6 * time / HINT_LAP
+        local phase = sides - .5 + sides * time / HINT_LAP
         local ink = double and green_hint or blue_hint
-        gfx.ngon_grad(center, radius + 1, 6, 0, color.alpha(ink.face, .54 * bright), color.alpha(ink.shadow, .52 * bright))
+        local top, bottom = color.alpha(ink.face, .54 * bright), color.alpha(ink.shadow, .52 * bright)
+        if sides == 4 then
+            gfx.rect_grad(rect.centered(center, size2.splat(2 * (radius + 1))), top, bottom)
+        else
+            gfx.ngon_grad(center, radius + 1, sides, 0, top, bottom)
+        end
 
         -- The soft blue trail lingers across the bevel. The brighter leading
         -- particles follow it clockwise, with a hot spot one edge long.
         for n = TRAIL_PARTICLES - 1, 0, -1 do
             local behind = n / TRAIL_PARTICLES
-            local distance = phase - 6 * behind
+            local distance = phase - sides * behind
             local edge = math.floor(distance)
-            local at = center + vertices[edge % 6]:lerp(vertices[(edge + 1) % 6], distance - edge):scale(radius)
+            local at = center + vertices[edge % sides + 1]:lerp(vertices[(edge + 1) % sides + 1], distance - edge):scale(radius)
             rim_particle(at, radius, time, n, behind, ink, bright)
         end
     end

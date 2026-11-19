@@ -1692,6 +1692,19 @@
     "retired": "Square pickaxe, dynamite and sunburst buttons from before the bonus toolbar; every board now has bonus slots, so they are no longer registered or packed. The authored sheet stays as provenance."
   },
   "archived_navigation": "art/navigation/manifest.json",
+  "square_blockers": {
+    "source": "../../art/match3-square/blockers.png",
+    "prompt": "../../art/match3-square/blockers-prompt.txt",
+    "runtime": "data/board/blockers.png",
+    "registration": "art/match3-atlas.json#square_blockers",
+    "states": {
+      "chain-square-1": "One hit remains. One diagonal silver chain with a beveled perimeter and cast shadow.",
+      "chain-square-2": "Two hits remain. Two crossed silver chains with the same perimeter and cast shadows.",
+      "ice-square-1": "One hit remains. Borderless translucent ice with a broken upper edge.",
+      "ice-square-2": "Two hits remain. A full borderless square of translucent faceted ice."
+    },
+    "review": "docs/square-match3.md#blockers-and-target-hints"
+  },
   "square_board": {
     "source": "art/papyrus-board/contact.png",
     "layout": "art/papyrus-board/contact-layout.png",

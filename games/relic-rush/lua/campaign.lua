@@ -207,7 +207,7 @@ local boards = {
         "---...---"},
 }
 
-local floor = {normal="square-plain", covered="square-target", double="square-double"}
+local floor = {normal="square-plain", covered="square-target", double="square-double", tablet_hint=true}
 local levels, shapes = require("match3.shapes").square_levels(boards, 9, 12, "Clear every turquoise plaque.", {floor=floor})
 for i, level in ipairs(levels) do level.background = (i - 1) % 10 < 5 and 1 or 2 end
 

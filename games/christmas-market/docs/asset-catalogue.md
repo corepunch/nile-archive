@@ -34,7 +34,18 @@ festive palette. The base sheet remains the source for certain reference element
 
 Built-in ImageGen painted the rocket axes, bomb and rainbow gem together for both games. Only this game's row rocket and bomb are still registered, as the two booster icons above. The [painted sheet](../../../art/match3-power-up-paint/source.png), its [prompt](../../../art/match3-power-up-paint/prompt.txt) and [edit target](../../../art/match3-power-up-paint/scener-strip.png) are their provenance. The [atlas manifest](../art/match3-atlas.json) records each icon's crop, fitted size and position inside the canonical inset hex, and the toolbar draws those same frames on its enamel faces. Rebuild with `python3 tools/match3_atlas.py`. The [painted power-up](screenshots/review/power-up-paint/README.md) and [Scener model](screenshots/review/scener-power-ups/README.md) reviews are historical.
 
-One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
+The [edge-mounted hex chains](../../../art/match3-chain-paint/README.md) are retained as legacy previews. [Earlier in-game comparisons](screenshots/review/chain-anchors/README.md).
+
+| Runtime frame in `data/board/blockers.png` | Square state |
+| --- | --- |
+| `chain-square-1` | One hit left, single silver chain, beveled edge and cast shadow. The Market Keeper's Guide uses this frame. |
+| `chain-square-2` | Two hits left, crossed silver chains, beveled edge and cast shadows |
+| `ice-square-1` | One hit left, borderless faceted frost with the upper part broken away |
+| `ice-square-2` | Two hits left, full borderless frost with diagonal facets |
+
+Ice is available in board diagnostics. Both games use the same [painted square
+blocker sheet and registration](../../../art/match3-square/README.md#blockers).
+[Board, guide and particle captures](square-match3.md#blockers-and-target-hints).
 
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
@@ -444,7 +455,7 @@ listed below. The shards are a procedural cut-out with no new states, and Reduce
 
 ## Ice
 
-`ice-2` is a continuous translucent cyan pane with high-contrast facets across
+The legacy `ice-2` frame is a continuous translucent cyan pane with high-contrast facets across
 the hex face and takes two hits. `ice-1` is translucent ice with a broken
 upper edge and takes one hit. Both states follow the canonical hex mask.
 Both states were drawn together in the shared ImageGen atlas and are packed
@@ -539,7 +550,7 @@ motion omits the bounce. Capture with
 `build/test/all --suite=christmas-market 'reel christmas-market-top-edge-refill'`.
 
 At one to three remaining panes, `engine/lua/match3/vfx.lua` layers a soft floor
-wash with a clockwise sweep of Cradle of Rome 2's `Star_02_16.png` and
+wash with a clockwise sweep along all four edges. It uses Cradle of Rome 2's `Star_02_16.png` and
 `Star_16.png`, packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in
 `data/board/fx.png`. Green uses the same pulse until its first hit turns the pane
 blue. The first pulse starts with the move suggestion and repeats every nine
