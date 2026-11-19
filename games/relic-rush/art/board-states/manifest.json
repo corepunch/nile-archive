@@ -1703,16 +1703,19 @@
       "square-plain": "ordinary or cleared cell",
       "square-target": "plaque or pane remaining",
       "square-selected": "selected cell or tool target preview",
-      "square-trim": "exposed perimeter",
-      "square-grout": "cell seams and frame joins",
+      "square-grout": "backing inside playable cell seams",
       "square-double": "two target layers remaining",
-      "square-foliage": "foliage in the frame’s 90-degree notch",
-      "square-joint": "bare fitting on an outer corner",
-      "square-medallion": "medallion on an outer corner"
+      "square-frame-edge": "straight sandstone rim between two adjacent cells",
+      "square-frame-outer": "outside corner around one playable cell",
+      "square-frame-inner": "recessed corner between three playable cells with foliage painted into the stone",
+      "square-frame-diagonal": "stepped sandstone join between two diagonal cells"
     },
     "review": "docs/square-match3.md#captures",
-    "ornaments": "../../art/match3-square/ornaments.png",
-    "ornaments_prompt": "../../art/match3-square/ornaments-prompt.txt",
+    "frame_source": "art/square-frame/source.png",
+    "frame_layout": "art/square-frame/layout.png",
+    "frame_prompt": "art/square-frame/prompt.txt",
+    "foliage_source": "art/square-frame/foliage.png",
+    "foliage_prompt": "art/square-frame/retouch-prompt.txt",
     "lighting_prompt": "../../art/match3-square/lighting-prompt.txt"
   }
 }

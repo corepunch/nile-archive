@@ -933,7 +933,7 @@
         128
       ]
     },
-    "square-foliage": {
+    "square-frame-diagonal": {
       "atlas": "cells",
       "box": [
         128,
@@ -942,7 +942,7 @@
         128
       ]
     },
-    "square-grout": {
+    "square-frame-edge": {
       "atlas": "cells",
       "box": [
         256,
@@ -951,7 +951,7 @@
         128
       ]
     },
-    "square-joint": {
+    "square-frame-inner": {
       "atlas": "cells",
       "box": [
         384,
@@ -960,10 +960,19 @@
         128
       ]
     },
-    "square-medallion": {
+    "square-frame-outer": {
       "atlas": "cells",
       "box": [
         0,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-grout": {
+      "atlas": "cells",
+      "box": [
+        128,
         256,
         128,
         128
@@ -972,7 +981,7 @@
     "square-plain": {
       "atlas": "cells",
       "box": [
-        128,
+        256,
         256,
         128,
         128
@@ -981,7 +990,7 @@
     "square-selected": {
       "atlas": "cells",
       "box": [
-        256,
+        384,
         256,
         128,
         128
@@ -990,25 +999,16 @@
     "square-target": {
       "atlas": "cells",
       "box": [
+        0,
         384,
-        256,
         128,
         128
-      ]
-    },
-    "square-trim": {
-      "atlas": "cells",
-      "box": [
-        2,
-        642,
-        128,
-        38
       ]
     },
     "tile-bonus-area": {
       "atlas": "cells",
       "box": [
-        0,
+        128,
         384,
         128,
         128
@@ -1017,7 +1017,7 @@
     "tile-cell-normal": {
       "atlas": "cells",
       "box": [
-        128,
+        256,
         384,
         128,
         128
@@ -1026,7 +1026,7 @@
     "tile-hover": {
       "atlas": "cells",
       "box": [
-        256,
+        384,
         384,
         128,
         128
@@ -1035,8 +1035,8 @@
     "tile-ice": {
       "atlas": "cells",
       "box": [
-        384,
-        384,
+        0,
+        512,
         128,
         128
       ]
@@ -1044,7 +1044,7 @@
     "tile-light-wave": {
       "atlas": "cells",
       "box": [
-        0,
+        128,
         512,
         128,
         128
@@ -1053,7 +1053,7 @@
     "tile-selected": {
       "atlas": "cells",
       "box": [
-        128,
+        256,
         512,
         128,
         128
@@ -1062,7 +1062,7 @@
     "tile-tablet-double": {
       "atlas": "cells",
       "box": [
-        256,
+        384,
         512,
         128,
         128
@@ -1071,8 +1071,8 @@
     "tile-tablet-single": {
       "atlas": "cells",
       "box": [
-        384,
-        512,
+        0,
+        640,
         128,
         128
       ]
@@ -1578,8 +1578,11 @@
     "source": "../../art/match3-square/source.png",
     "prompt": "../../art/match3-square/prompt.txt",
     "lighting_prompt": "../../art/match3-square/lighting-prompt.txt",
-    "ornaments": "../../art/match3-square/ornaments.png",
-    "ornaments_prompt": "../../art/match3-square/ornaments-prompt.txt",
+    "frame_source": "art/square-frame/source.png",
+    "frame_layout": "art/square-frame/layout.png",
+    "frame_prompt": "art/square-frame/prompt.txt",
+    "foliage_source": "art/square-frame/foliage.png",
+    "foliage_prompt": "art/square-frame/retouch-prompt.txt",
     "frames": {
       "square-plain": {
         "source": "../../art/match3-square/source.png",
@@ -1643,20 +1646,6 @@
         ],
         "registered": "art/registered/square-cells/square-double.png"
       },
-      "square-trim": {
-        "source": "../../art/match3-square/source.png",
-        "crop": [
-          1024,
-          0,
-          1280,
-          76
-        ],
-        "size": [
-          128,
-          38
-        ],
-        "registered": "art/registered/square-cells/square-trim.png"
-      },
       "square-grout": {
         "source": "../../art/match3-square/source.png",
         "crop": [
@@ -1671,47 +1660,197 @@
         ],
         "registered": "art/registered/square-cells/square-grout.png"
       },
-      "square-foliage": {
-        "source": "../../art/match3-square/ornaments.png",
-        "crop": [
-          91,
-          87,
-          425,
-          414
-        ],
+      "square-frame-edge": {
+        "source": "art/square-frame/source.png",
         "size": [
           128,
           128
         ],
-        "registered": "art/registered/square-cells/square-foliage.png"
+        "x_stops": [
+          [
+            0,
+            30
+          ],
+          [
+            128,
+            598
+          ]
+        ],
+        "y_stops": [
+          [
+            42,
+            210
+          ],
+          [
+            44,
+            219
+          ],
+          [
+            68,
+            332
+          ],
+          [
+            70,
+            341
+          ]
+        ],
+        "registered": "art/registered/square-cells/square-frame-edge.png"
       },
-      "square-joint": {
-        "source": "../../art/match3-square/ornaments.png",
-        "crop": [
-          618,
-          127,
-          889,
-          398
-        ],
+      "square-frame-outer": {
+        "source": "art/square-frame/source.png",
         "size": [
           128,
           128
         ],
-        "registered": "art/registered/square-cells/square-joint.png"
+        "x_stops": [
+          [
+            42,
+            806
+          ],
+          [
+            44,
+            816
+          ],
+          [
+            68,
+            933
+          ],
+          [
+            128,
+            1221
+          ]
+        ],
+        "y_stops": [
+          [
+            42,
+            210
+          ],
+          [
+            44,
+            219
+          ],
+          [
+            68,
+            332
+          ],
+          [
+            128,
+            595
+          ]
+        ],
+        "registered": "art/registered/square-cells/square-frame-outer.png"
       },
-      "square-medallion": {
-        "source": "../../art/match3-square/ornaments.png",
-        "crop": [
-          1081,
-          167,
-          1452,
-          337
-        ],
+      "square-frame-inner": {
+        "source": "art/square-frame/foliage.png",
         "size": [
           128,
           128
         ],
-        "registered": "art/registered/square-cells/square-medallion.png"
+        "x_stops": [
+          [
+            0,
+            30
+          ],
+          [
+            44,
+            222
+          ],
+          [
+            68,
+            334
+          ],
+          [
+            70,
+            344
+          ]
+        ],
+        "y_stops": [
+          [
+            0,
+            652
+          ],
+          [
+            39,
+            825
+          ],
+          [
+            44,
+            848
+          ],
+          [
+            68,
+            960
+          ],
+          [
+            70,
+            970
+          ]
+        ],
+        "registered": "art/registered/square-cells/square-frame-inner.png",
+        "left_edge_source_x_by_y": {
+          "652": 8,
+          "825": 8
+        }
+      },
+      "square-frame-diagonal": {
+        "source": "art/square-frame/source.png",
+        "size": [
+          128,
+          128
+        ],
+        "x_stops": [
+          [
+            0,
+            650
+          ],
+          [
+            44,
+            839
+          ],
+          [
+            60,
+            917
+          ],
+          [
+            68,
+            953
+          ],
+          [
+            84,
+            1031
+          ],
+          [
+            128,
+            1223
+          ]
+        ],
+        "y_stops": [
+          [
+            0,
+            652
+          ],
+          [
+            44,
+            848
+          ],
+          [
+            60,
+            921
+          ],
+          [
+            68,
+            960
+          ],
+          [
+            84,
+            1035
+          ],
+          [
+            128,
+            1222
+          ]
+        ],
+        "registered": "art/registered/square-cells/square-frame-diagonal.png"
       }
     },
     "review": "docs/square-match3.md"
@@ -1721,7 +1860,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "9cafa14a257cb8e4fa99f887bfd7c73e206d4ef46565e2cf44ee96da2c6badb6",
+    "recipe": "041f6c8ae521398c7ce7668d8eb194bac54935e7b52dd8cd8ee4fafbc155f2e9",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1742,8 +1881,6 @@
       "art/match3-signboards/prompt.txt": "24afea9b1796b31f61eb28b00c301276ed8ce6643e39876dcde7732cf3e23b27",
       "art/match3-signboards/source.png": "6756852d29a38aa1ddb51e20d3c24dcdeccc9eed146904f7d1b71ebfba5f80db",
       "art/match3-square/lighting-prompt.txt": "44648f991d91d3af80a399361aa7054486eab14e22779a9296c803b4809de78c",
-      "art/match3-square/ornaments-prompt.txt": "c4156812cc922f3f0d0ae78e0b0f6a08265ef29eee93e5316172d06fd3fa39f0",
-      "art/match3-square/ornaments.png": "eb76969acec901820e09a1aaa6cd5612082af8ea2ab1a52cbc01fe6e14a8ae82",
       "art/match3-square/prompt.txt": "9f05ab473fdaf872c8a7c6c4523e9d3e5481e8ac43dc4bad4db73b2c47f00261",
       "art/match3-square/source.png": "0d0d99c3ddd4c37aba26bb6f0d6f40af86d10b91ce77ca68aa39fdf4cc03e354",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
@@ -1799,14 +1936,14 @@
       "games/relic-rush/art/registered/resource-pieces/water.png": "5eaaa529bf7de275198e08ddaba50abbd4e2248299991406da9511898f7be4b5",
       "games/relic-rush/art/registered/result-icons.png": "a4f1254f574a9d287b8d2d2345cb7823ea1b5c3407baed8b96e3b7407e102a5e",
       "games/relic-rush/art/registered/square-cells/square-double.png": "077267d6ca50822f277b0b1629afda07e1a9cfc2be6abcf6a0cb2d585851e2fb",
-      "games/relic-rush/art/registered/square-cells/square-foliage.png": "85a5a512686f16443601ffaf3833244ad8b7f5d75ea1986836941803ddbc1301",
+      "games/relic-rush/art/registered/square-cells/square-frame-diagonal.png": "4a37155ded1281156d9b31d1a929c43d23baab847dfdcce618232acc1ca632a4",
+      "games/relic-rush/art/registered/square-cells/square-frame-edge.png": "e36d8819f8b9f3cdf9ea604e5a721d13e4cba7b47d4984e749e58d93a1a4e34c",
+      "games/relic-rush/art/registered/square-cells/square-frame-inner.png": "4d63346655ba39707ccc10c595683eec8547e63abf0bc046fe66a8e0ca40116c",
+      "games/relic-rush/art/registered/square-cells/square-frame-outer.png": "36e1acc8ea498e8f15c10a21a08099bd3f2116b61632e7e11239eaab9c716dc5",
       "games/relic-rush/art/registered/square-cells/square-grout.png": "9ed8a7ade23737f7c325ec4878d9cc22530e525748bf5a0e90d4d44734c41c30",
-      "games/relic-rush/art/registered/square-cells/square-joint.png": "ef72978f449b0fc7581139aee25b7f80d12ddd05fa6f12b1e4bea216b53616e7",
-      "games/relic-rush/art/registered/square-cells/square-medallion.png": "0308d2c2630bad93d4e33378bef6fe90fd87c9ff1652f24735030747a74ece22",
       "games/relic-rush/art/registered/square-cells/square-plain.png": "67a18d3b53e059e3b98b0837e6160fc310435f9dd1291c0dd41d5948a7dd3a23",
       "games/relic-rush/art/registered/square-cells/square-selected.png": "fddece0db27db24b2ef8ad346c0341228edf91febfb67f5edee541a2a67ef579",
       "games/relic-rush/art/registered/square-cells/square-target.png": "20440db001195781fbaa5cc8176168a4a7eb911205cb36e912488a96db34b72a",
-      "games/relic-rush/art/registered/square-cells/square-trim.png": "e5029036323907021e5b0c16f650857bbcb146521b1a73751f14a9917eca4968",
       "games/relic-rush/art/registered/story-pieces/cable.png": "6c5610eab0f83b7fe8836983bccf5eaa7f9d1868fece7e92866607e8083e5044",
       "games/relic-rush/art/registered/story-pieces/chart.png": "56573300ba922558e781aea265c4a7306bcb718d794a7fcdec53c326e210ecf4",
       "games/relic-rush/art/registered/story-pieces/gear.png": "1380006113a1ccb9bfb043dea16fe685374f360746529f190777a0dc0961e873",
@@ -1827,6 +1964,11 @@
       "games/relic-rush/art/registered/tile-sets/resources/3.png": "56718f477672df3fe9fac1267e69b9e3f92ea3f4b897b921fa0d63d61e688eeb",
       "games/relic-rush/art/registered/tile-sets/resources/4.png": "d6f5782acd974114c1d90089fd33399da57695cda0b045fb606038cd85a098cb",
       "games/relic-rush/art/registered/tile-sets/resources/5.png": "2e7fb26156cba5d872ef506cab2386cef848ff9d2fee08ea4e05a4cbcab58d87",
+      "games/relic-rush/art/square-frame/foliage.png": "20fdf554011c5b4de99be1e037a9a75b32f3c2fc404f018561675b50b54de855",
+      "games/relic-rush/art/square-frame/layout.png": "8e5d705d051fbbaf5a6ca57f721aecded20f5cbafef99f101a3b8fa37e86b98a",
+      "games/relic-rush/art/square-frame/prompt.txt": "15e7293471081ad8310dc1657b5a3fc930b43acf4689bef3c06ed9d92fec5682",
+      "games/relic-rush/art/square-frame/retouch-prompt.txt": "9034438e94d528336256ca135bbe1fa18913b58211a4e86c17e76364e17ea4f1",
+      "games/relic-rush/art/square-frame/source.png": "2f29eeb66e50129e4b5d42e6e5a825f232bdda1eeb3217735db93340008674fa",
       "games/relic-rush/art/tile-sets/source-flat-hex.png": "9af886c7b92ac0dd340e6cc18c21c7e1abaf5b401c6788d011e6f17f1e87961c",
       "games/relic-rush/art/tile-sets/source.png": "2cd534c2ad89c431a043e9182c21366569c6883e5e4a2579c62c4a3664b0e50c",
       "games/relic-rush/data/board/backs/background.jpg": "cc8a50ab0c8b840ba18abe1c1f316d8573d044ef4bb1fd7c8166c42b92bfd122",
@@ -1842,11 +1984,11 @@
       "games/relic-rush/art/registered/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/art/registered/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
       "games/relic-rush/data/board/blockers.png": "ce55e86bc3272fb5e8b67d5e0608bce7d4a3e370c807a155c6a81964df366502",
-      "games/relic-rush/data/board/cells.png": "2f16b1fa3a2cedb5330d41108d11a15b3cb4a199173a6adaa80303fa59f8ea47",
+      "games/relic-rush/data/board/cells.png": "018d5d6fcff7a448d2a15fc46dcd2e072946ec91bdc89403353e6b57da1c30ec",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
       "games/relic-rush/data/board/pieces.png": "1cdd3bd444e44335b1c1e9806e187392042af2845bf259d6a951f66dfb7a901b",
-      "games/relic-rush/lua/match3_atlases.lua": "e998ebde1c4de64a0f0e62f0e87acbfff5a01721a8c26e355f97116db02a6974",
+      "games/relic-rush/lua/match3_atlases.lua": "b39be5e8e834acdc26690a950495104c9e12f384c81aec3aae14ff1550f64bd9",
       "games/relic-rush/lua/match3_hud.lua": "0525d0783e4ff80f06d488507903c04b685b3017445414f0b0779af9a848bf11",
       "games/relic-rush/lua/match3_skin.lua": "8f808605b0cc29149eefa9e51fda795e94d7c2554a65f145f3433e69a16ba05f"
     }

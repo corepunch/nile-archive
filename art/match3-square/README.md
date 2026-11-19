@@ -1,11 +1,14 @@
 # Square match-3 tiles and frames
 
 The built-in ImageGen tile sheet, [source.png](source.png), supplies the
-square faces, strip and grout. [The first prompt](prompt.txt) specifies
+square faces and grout for both games, and the strip for Christmas Market.
+[The first prompt](prompt.txt) specifies
 the two material families. [Lighting revisions](lighting-prompt.txt)
 record the target colors and the final correction to the ordinary tile.
-[Ornaments](ornaments.png) use a separate transparent sheet, with its
+[Christmas Market ornaments](ornaments.png) use a separate transparent sheet, with its
 [export prompt](ornaments-prompt.txt). All painted objects are original.
+The [Relic Rush rim](../../games/relic-rush/docs/square-match3.md#levels-and-art)
+has its own modular sandstone atlas.
 
 ## Reference study
 
@@ -29,11 +32,10 @@ Cradle of Rome I stores the wood and leaf frame at
 `resources/textures/scenes/game/g_corners.png`. The second game's
 `resources/settings/scenes/city/city_graphics.xml` identifies its frame
 strip as the bottom row in `textures/scenes/city/construct/ct_built_01.png`.
-In both games, tile type 10 places its leaf art in an empty frame cell
-that touches two playable cells at right angles. Here the renderer
-places foliage only in those 90-degree notches. The sprigs span about
-one logical cell and fan into the opening. Outer corners use solid
-fittings or medallions, and the carved strip follows exposed edges.
+In both reference games, tile type 10 places its leaf art in an empty frame
+cell that touches two playable cells at right angles. Relic Rush paints the
+sprig directly into its recessed corner tile. Christmas Market places its
+ornaments over the carved strip.
 
 ## Register and review
 

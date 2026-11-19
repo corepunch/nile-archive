@@ -31,6 +31,13 @@ for scene in handoffs.values():
 atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
 registered = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "art/registered").rglob("*") if p.is_file())
 shipped = set(actual) | set(registered)
+square = manifest["square_board"]
+assert set(square["states"]) == {name for name in atlas["frames"] if name.startswith("square-")}
+for name, record in atlas["square_cells"]["frames"].items():
+    assert record["registered"] in shipped
+    assert square["runtime"] == f'data/board/{atlas["frames"][name]["atlas"]}.png'
+    if name.startswith("square-frame-"):
+        assert f"`{name}`" in doc
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
 pieces = [*resources["slots"], *resources["from_campaign"]]

@@ -26,16 +26,26 @@ columns by twelve rows. Dots are ordinary cells, asterisks single targets,
 plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes.
 
-Honey limestone, carved ochre trim, jade studs, agave leaves and sunrise medallions. The [source and lighting measurements](../../../art/match3-square/README.md)
-describe the Cradle of Rome 2 palette study and original painted frames.
-See [atlas registration](../art/match3-atlas.json) for the source crop and
-runtime region of each tile and ornament. Rebuild from the repository root
-with `python3 tools/match3_atlas.py`.
+The [shared floor study](../../../art/match3-square/README.md) records the
+Cradle of Rome palette references for the limestone and plaques. The
+Relic Rush rim is carved sandstone with jade inlays, inspired by Maya jungle
+temples. Each perimeter tile sits on a vertex of the square grid. It joins
+its neighbours halfway along each exposed cell edge. The recessed corner
+includes the tropical leaves and their shadows in the same painting.
+
+Built-in ImageGen painted the [four-tile sheet](../art/square-frame/source.png)
+from the [layout guide](../art/square-frame/layout.png) and
+[initial prompt](../art/square-frame/prompt.txt). A
+[second pass](../art/square-frame/foliage.png) retouched the plant with
+the [foliage prompt](../art/square-frame/retouch-prompt.txt).
+[Atlas registration](../art/match3-atlas.json) lists the source coordinates,
+the 128 px registered square for each section, and the runtime atlas regions.
+Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 
 ## Captures
 
-- [Jade Steps](screenshots/square-jade-steps.jpg)
-- [Tide Chamber](screenshots/square-tide-chamber.jpg)
+- [Jade Steps, 480 × 900](screenshots/square-jade-steps.jpg)
+- [Tide Chamber, 390 × 844](screenshots/square-tide-chamber.jpg)
 - [Build ready](screenshots/square-build-ready.jpg)
 - [Still needed](screenshots/square-build-cost.jpg)
 

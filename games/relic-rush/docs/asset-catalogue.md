@@ -2,7 +2,16 @@
 
 ## Square board
 
-The current campaign uses warm limestone, turquoise plaques, olive-green double plaques and carved honey-gold edging. Agave sprigs, jade joints and sunrise medallions break up the perimeter. See the [source, registration and game captures](square-match3.md).
+The current campaign uses warm limestone, turquoise plaques and olive-green double plaques. The square perimeter uses four painted Maya-inspired sandstone tiles in `data/board/cells.png`. The four floor cells around each grid vertex determine which frame tile to draw and how to turn it.
+
+| Runtime frame | Board position |
+| --- | --- |
+| `square-frame-edge` | Two adjacent floor cells meet at a straight boundary. |
+| `square-frame-outer` | One floor cell makes an outside corner. |
+| `square-frame-inner` | Three floor cells make a notch. Leaves and their contact shadows are painted into the stone corner. |
+| `square-frame-diagonal` | Two diagonally touching floor cells meet at a stepped sandstone join. |
+
+The built-in ImageGen sheet and foliage paint-over, their prompts and the exact registration transforms are linked from the [square campaign guide](square-match3.md). Rebuild with `python3 tools/match3_atlas.py`. The guide also links the reviewed in-game captures.
 
 ## Popup close button
 

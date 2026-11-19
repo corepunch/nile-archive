@@ -358,6 +358,61 @@ def folder_sprites(folder, prefix):
     return {prefix + path.stem: path for path in sorted(folder.glob('*.png'))}
 
 
+# (destination, source) axis stops for the painted Relic Rush frame. Each
+# port spans 44:68, or 60:84 on the opposite side of a diagonal join. The
+# 128 px square maps to one board step, centred at the grid vertex.
+SQUARE_FRAME_STOPS = {
+    'square-frame-edge': (
+        [(0, 30), (128, 598)],
+        [(42, 210), (44, 219), (68, 332), (70, 341)],
+    ),
+    'square-frame-outer': (
+        [(42, 806), (44, 816), (68, 933), (128, 1221)],
+        [(42, 210), (44, 219), (68, 332), (128, 595)],
+    ),
+    'square-frame-inner': (
+        [(0, 30), (44, 222), (68, 334), (70, 344)],
+        [(0, 652), (39, 825), (44, 848), (68, 960), (70, 970)],
+    ),
+    'square-frame-diagonal': (
+        [(0, 650), (44, 839), (60, 917), (68, 953), (84, 1031), (128, 1223)],
+        [(0, 652), (44, 848), (60, 921), (68, 960), (84, 1035), (128, 1222)],
+    ),
+}
+
+
+def square_frame_sprites(root):
+    source = root / 'art/square-frame/source.png'
+    foliage = source.with_name('foliage.png')
+    inputs = [source, foliage, source.with_name('layout.png'), source.with_name('prompt.txt'),
+              source.with_name('retouch-prompt.txt')]
+    sprites, registration = {}, {}
+    for name, (x_stops, y_stops) in SQUARE_FRAME_STOPS.items():
+        inner = name == 'square-frame-inner'
+        path = foliage if inner else source
+        # Leave room for the leaf tip above the left rail's terminal cut.
+        left_edge = {652: 8, 825: 8} if inner else {}
+        mesh = []
+        for (dx0, sx0), (dx1, sx1) in zip(x_stops, x_stops[1:]):
+            for (dy0, sy0), (dy1, sy1) in zip(y_stops, y_stops[1:]):
+                tl = left_edge.get(sy0, sx0) if dx0 == 0 else sx0
+                bl = left_edge.get(sy1, sx0) if dx0 == 0 else sx0
+                mesh.append(((dx0, dy0, dx1, dy1), (tl, sy0, bl, sy1, sx1, sy1, sx1, sy0)))
+        with Image.open(path) as sheet:
+            sprite = sheet.convert('RGBA').transform((CELL, CELL), Image.Transform.MESH, mesh, Image.Resampling.BICUBIC)
+        registered = root / 'art/registered/square-cells' / f'{name}.png'
+        write_asset(registered, png(sprite))
+        sprites[name] = sprite
+        registration[name] = {
+            'source': relpath(path, root), 'size': list(sprite.size),
+            'x_stops': x_stops, 'y_stops': y_stops, 'registered': relpath(registered, root),
+        }
+        if left_edge:
+            registration[name]['left_edge_source_x_by_y'] = left_edge
+        inputs.append(registered)
+    return sprites, inputs, registration
+
+
 def square_cells(game, root):
     source = SQUARE_DIR / 'source.png'
     ornaments = SQUARE_DIR / 'ornaments.png'
@@ -370,15 +425,21 @@ def square_cells(game, root):
         'square-trim': (1024, 0, 1280, 76),
         'square-grout': (1312, 32, 1504, 224),
     }
-    decorations = {
-        'square-foliage': (0, 0, 512, 512),
-        'square-joint': (512, 0, 1024, 512),
-        'square-medallion': (1024, 0, 1536, 512),
-    }
     sprites, registration = {}, {}
-    inputs = [source, ornaments, SQUARE_DIR / 'prompt.txt', SQUARE_DIR / 'lighting-prompt.txt',
-              SQUARE_DIR / 'ornaments-prompt.txt']
-    for path, crops in ((source, materials), (ornaments, decorations)):
+    inputs = [source, SQUARE_DIR / 'prompt.txt', SQUARE_DIR / 'lighting-prompt.txt']
+    decorations = {}
+    sheets = [(source, materials)]
+    if game == 'relic-rush':
+        del materials['square-trim']
+    else:
+        decorations = {
+            'square-foliage': (0, 0, 512, 512),
+            'square-joint': (512, 0, 1024, 512),
+            'square-medallion': (1024, 0, 1536, 512),
+        }
+        sheets.append((ornaments, decorations))
+        inputs += [ornaments, SQUARE_DIR / 'ornaments-prompt.txt']
+    for path, crops in sheets:
         with Image.open(path) as sheet:
             for name, (x0, y0, x1, y1) in crops.items():
                 box = (x0, y0 + row, x1, y1 + row)
@@ -408,6 +469,11 @@ def square_cells(game, root):
                 if name == 'square-selected':
                     registration[name]['transparent_center'] = [11, 11, 117, 117]
                 inputs.append(registered)
+    if game == 'relic-rush':
+        frame_sprites, frame_inputs, frame_registration = square_frame_sprites(root)
+        sprites.update(frame_sprites)
+        registration.update(frame_registration)
+        inputs.extend(frame_inputs)
     return sprites, inputs, registration
 
 
@@ -527,6 +593,15 @@ def build_game(game, check):
     for name, text in tables.items():
         write_asset(root / name, text)
         outputs.append(root / name)
+    if game == 'relic-rush':
+        square_frame_sources = {'frame_source': 'art/square-frame/source.png',
+                                'frame_layout': 'art/square-frame/layout.png',
+                                'frame_prompt': 'art/square-frame/prompt.txt',
+                                'foliage_source': 'art/square-frame/foliage.png',
+                                'foliage_prompt': 'art/square-frame/retouch-prompt.txt'}
+    else:
+        square_frame_sources = {'ornaments': '../../art/match3-square/ornaments.png',
+                                'ornaments_prompt': '../../art/match3-square/ornaments-prompt.txt'}
     manifest = {'atlases': {group: {'runtime': f'data/board/{group}.png', 'size': list(sheet.size)}
                             for group, (sheet, _) in packed.items()},
                 'board': BOARD_GROUPS, 'hud': hud_groups,
@@ -544,8 +619,7 @@ def build_game(game, check):
                 'square_cells': {'source': '../../art/match3-square/source.png',
                                  'prompt': '../../art/match3-square/prompt.txt',
                                  'lighting_prompt': '../../art/match3-square/lighting-prompt.txt',
-                                 'ornaments': '../../art/match3-square/ornaments.png',
-                                 'ornaments_prompt': '../../art/match3-square/ornaments-prompt.txt',
+                                 **square_frame_sources,
                                  'frames': square_registration,
                                  'review': 'docs/square-match3.md'},
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',

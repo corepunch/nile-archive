@@ -116,7 +116,8 @@ function A.load()
     elements_view.load(textures, own)
     for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
     elements_view.load_frame(textures, A.board_frame)
-    elements_view.load_square(textures, own)
+    -- The square expedition perimeter uses the four registered sandstone tiles.
+    elements_view.load_square(textures, own, true)
     for _, key in ipairs(A.result_icons) do textures[key] = piece(key) end
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
