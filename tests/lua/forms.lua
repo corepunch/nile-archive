@@ -31,6 +31,20 @@ check(form:layout(rect(0,0,200,160)).sound.w==90,"reflow in narrower parent")
 check(not pcall(ui.form,{kind="mystery"}),"unknown controls rejected")
 check(not pcall(ui.form,{kind="row",children={{kind="button",id="x"},{kind="button",id="x"}}}),"duplicate IDs rejected")
 check(not pcall(ui.form,{kind="button"}),"interactive control needs ID")
+-- A card's padding and gap are the engine's; a pinned control leaves the flow.
+local spaced=ui.form{kind="column",panel=true,children={
+    {kind="label",id="first",height=20},
+    {kind="button",id="corner",width=44,height=44,pin={1,0},pin_offset={-8,8}},
+    {kind="label",id="second",height=20},
+}}
+local _,spaced_height=spaced:measure(200)
+check(spaced_height==ui.FORM_PADDING*2+40+ui.FORM_GAP,"a pinned control takes no room and no gap")
+local spots=spaced:layout(rect(10,20,200,spaced_height))
+check(spots.first.x==10+ui.FORM_PADDING and spots.second.y==spots.first.y+20+ui.FORM_GAP,"card rows use the shared padding and gap")
+check(spots.corner.x==10+200-8-22 and spots.corner.y==20+8-22 and spots.corner.w==44,"a pin centres its control on a point of the form's box")
+check(not pcall(ui.form,{kind="column",panel=true,padding=12}) and not pcall(ui.form,{kind="column",panel=true,gap=4}),"a spaced cannot choose its own padding or gap")
+check(not pcall(ui.form,{kind="column",children={{kind="button",id="x",pin={1,0}}}}),"a pinned control needs a fixed size")
+check(not pcall(ui.form,{kind="overlay",children={{kind="button",id="x",width=44,height=44,pin={1,0}}}}),"only a column or row holds a pinned control")
 local readonly=ui.form{root={kind="column",children={{kind="label",id="x"}}},bindings={{id="x",field="name",readonly=true}}}
 check(readonly:push(model),"readonly push")
 readonly:set("x","changed");check(readonly:pull(model) and model.name=="Mara","readonly model field preserved")

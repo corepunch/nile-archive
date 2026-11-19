@@ -17,7 +17,7 @@ for i,radius in ipairs({0,6,12,18,24}) do
     corners[i]={kind='border',background='card_face',border_color='card_edge',border_width=2,radius=radius,padding={4,9,4,9},
         children={{kind='label',text='r '..radius,em=18}}}
 end
-local template={kind='column',panel=true,padding=24,gap=10,children={
+local template={kind='column',panel=true,children={
     {kind='label',id='title',height=40,role='title'},
     caption('rows = 1: a resource prefab per record'),
     {kind='uniform_grid',id='bank',rows=1,gap=8,item=function(r)

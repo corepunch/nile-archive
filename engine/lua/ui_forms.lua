@@ -93,9 +93,20 @@ local function copy_node(source, ids, depth, prefix, source_id, item_key, row_in
         if n[key] and (type(n[key]) ~= 'number' or n[key] < 0 or n[key] ~= n[key] or n[key] == math.huge) then fail('invalid ' .. key) end
     end
     if n.scroll and (n.kind~='list' or n.direction=='row') then fail('scroll requires a vertical list') end
+    if n.pin ~= nil then
+        local at, by = n.pin, n.pin_offset or {0, 0}
+        if type(at) ~= 'table' or type(at[1]) ~= 'number' or type(at[2]) ~= 'number' or type(by) ~= 'table'
+            or type(by[1]) ~= 'number' or type(by[2]) ~= 'number' or not n.width or not n.height then
+            fail('pin takes {x, y}, an optional pin_offset {x, y} and a fixed width and height')
+        end
+    end
     if class.check then class.check(n, source) end
     n.children = {}
-    for _, child in ipairs(source.children or {}) do n.children[#n.children+1] = copy_node(child, ids, depth+1, prefix, source_id, item_key, row_index) end
+    for _, child in ipairs(source.children or {}) do
+        local copy = copy_node(child, ids, depth+1, prefix, source_id, item_key, row_index)
+        if copy.pin and (n.kind ~= 'column' and n.kind ~= 'row' or n.scroll) then fail('only a column or row holds a pinned child') end
+        n.children[#n.children+1] = copy
+    end
     return n
 end
 -- Add an element kind (a panel with its own measure_override/arrange_override,
@@ -109,10 +120,18 @@ function ui.prefab(kind, build)
     if type(kind) ~= 'string' or type(build) ~= 'function' or classes[kind] then fail('invalid prefab ' .. tostring(kind)) end
     prefabs[kind] = build
 end
+-- Every card, a form whose root is a panel, keeps the same parchment around
+-- its content and the same gap between its rows. A template cannot choose its
+-- own, so no card drifts from the others.
+ui.FORM_PADDING, ui.FORM_GAP = 20, 14
 function ui.form(template)
     assert(type(template) == 'table', 'ui.form expects a template')
     local self = setmetatable({nodes={}, values={}, boxes={}, bindings={}, focus=nil, layout_revision=0}, Form)
     self.root = copy_node(template.root or template, self.nodes, 1)
+    if self.root.panel then
+        if self.root.padding ~= nil or self.root.gap ~= nil then fail('a panel root takes the shared padding and gap; remove padding= and gap=') end
+        self.root.padding, self.root.gap = ui.FORM_PADDING, ui.FORM_GAP
+    end
     for id,node in pairs(self.nodes) do if node.value~=nil then self.values[id]=node.value end end
     local bound = {}
     for _, b in ipairs(template.bindings or {}) do
@@ -266,6 +285,8 @@ end
 -- column, row, list: a stack along one axis with gaps, fixed lengths and
 -- weighted `grow`; `align` places children across it.
 local StackPanel={}
+-- A pinned child (`pin`) is out of the flow: it takes no room and no gap.
+local function flows(child, values) return not child.pin and visible(child, values) end
 local function horizontal(n) return n.kind=='row' or (n.kind=='list' and n.direction=='row') end
 local function row_metrics(n, width, skin, form)
     local m=n.row_metrics
@@ -297,7 +318,7 @@ function StackPanel.measure_override(n, width, skin, form)
     local across,gap=horizontal(n),n.gap or 0
     local count,fixed,weight=0,0,0
     if across then
-        for _,child in ipairs(n.children) do if visible(child,values) then
+        for _,child in ipairs(n.children) do if flows(child,values) then
             count=count+1
             if (child.grow or 0)>0 then weight=weight+child.grow
             else local cw=measure(child,width,skin,form);fixed=fixed+cw end
@@ -307,7 +328,7 @@ function StackPanel.measure_override(n, width, skin, form)
     local w,h=0,0
     count=0
     for _, child in ipairs(n.children) do
-        if visible(child, values) then
+        if flows(child, values) then
             local share=across and (child.grow or 0)>0 and remaining*child.grow/weight
             local cw,ch = measure(child, share or width, skin, form)
             if across then w,h = w+(share or cw),math.max(h,ch)
@@ -365,7 +386,7 @@ function StackPanel.arrange_override(n, inner, skin, form)
     local across=horizontal(n)
     local total,weight,count=0,0,0
     for _,child in ipairs(n.children) do
-        if visible(child,form.values) then
+        if flows(child,form.values) then
             local cw,ch=measure(child,inner.w,skin,form)
             child.desired={cw,ch}; count=count+1
             if child.grow and child.grow>0 then weight=weight+child.grow else total=total+(across and cw or ch) end
@@ -376,7 +397,7 @@ function StackPanel.arrange_override(n, inner, skin, form)
     local remaining=math.max(0,available-total-gap*math.max(0,count-1))
     local cursor=across and inner.x or inner.y
     for _,child in ipairs(n.children) do
-        if visible(child,form.values) then
+        if flows(child,form.values) then
             local cw,ch=child.desired[1],child.desired[2]
             if across and (child.grow or 0)>0 then
                 cw,ch=measure(child,remaining*child.grow/weight,skin,form)
@@ -391,6 +412,15 @@ function StackPanel.arrange_override(n, inner, skin, form)
             local offset=n.align=='center' and free/2 or n.align=='end' and free or 0
             local cb=across and rect(cursor,inner.y+offset,main,cross) or rect(inner.x+offset,cursor,cross,main)
             arrange(child,cb,skin,form); cursor=cursor+main+gap
+        end
+    end
+    -- Pinned children are centred on a point of the form's own box.
+    local whole=form.root.box
+    for _,child in ipairs(n.children) do
+        if child.pin and visible(child,form.values) then
+            local by=child.pin_offset or {0,0}
+            local at=vec2(whole.x+whole.w*child.pin[1]+by[1],whole.y+whole.h*child.pin[2]+by[2])
+            arrange(child,rect.centered(at,size2(child.width,child.height)),skin,form)
         end
     end
 end

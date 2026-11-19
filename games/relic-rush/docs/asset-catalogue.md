@@ -4,6 +4,12 @@
 
 The shared round-button renderer draws the red enamel face, brass rim and shadow at the size of the popup control. All five interaction states share the [ivory X glyph](../art/popup-close/source.png), packed as `action-close` in `data/board/pieces.png`. [Registration and prompt](../art/popup-close/README.md).
 
+The button is pinned on the card's top right corner and overhangs it; on the full-screen build shop it sits inside the corner.
+
+## Popup title
+
+Every popup writes its title on the parchment in flat ink (`popup_title`), with the context line in the caption colour (`popup_subtitle`) and a thin sand rule threaded through a diamond under both (`popup_rule`). No artwork is added: the two text styles and the rule are skin paint in `lua/skin.lua`, and `match3.popup_header` lays them out. The title has one state. It replaced a jade plate with its own rim and shadow, which read as one more button above the real ones. Reviewed captures: `pause`, `phone-pause`, `building-card`, `phone-card`, `guide` and `leaderboard` in `docs/screenshots` (from `build/test/relic-rush "shot pause"` ...).
+
 ## Themed board art
 
 The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets serve the previews and imported-board diagnostics.

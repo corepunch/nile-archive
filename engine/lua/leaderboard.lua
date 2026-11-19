@@ -64,7 +64,7 @@ function L.new(options)
     local texts = self.texts
     local visible_rows = options.rows or 8
     local me_suffix = " " .. texts.you
-    self.form = ui.form{root = {kind = "column", panel = true, padding = 24, gap = 14, children = {
+    self.form = ui.form{root = {kind = "column", panel = true, children = {
         options.header and options.header(texts.title, nil, options.corner_close and "close") or
             {kind = "label", id = "title", text = texts.title, role = "title", height = 44},
         -- the chosen tab is an accent button, the other a flat caption, whatever the skin does for "selected"

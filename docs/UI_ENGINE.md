@@ -14,7 +14,7 @@ The [identity dialog](https://github.com/corepunch/orion-ui/blob/1cf7e7272ab6866
 ```lua
 local settings = {audio = {sound = true}}
 local form = ui.form{
-    root = {kind="column", panel=true, padding=24, gap=16, children={
+    root = {kind="column", panel=true, children={
         {kind="label", text="Settings", height=44, role="title"},
         {kind="toggle", id="sound", height=48,
          on_text="Sound on", off_text="Sound off"},
@@ -70,6 +70,21 @@ Every node may have `width`, `height`, `min_width`, `min_height`, `grow`, `paddi
 IDs. Templates reject duplicate IDs, unknown kinds, invalid sizes/bindings and
 excessive nesting. Construction copies the node tree so instances have independent
 layout, values and focus.
+
+**Cards share one padding and gap.** A form whose root is a panel is a card:
+its root always takes `ui.FORM_PADDING` (20) around its content and
+`ui.FORM_GAP` (14) between its rows, and a template that passes `padding` or
+`gap` on that root is rejected. Every popup, sheet and tray therefore keeps the
+same margins; change the two numbers in `engine/lua/ui_forms.lua` to change
+them all. Group related rows in a nested `column` or `row` with its own `gap`
+when they need to sit closer. A root without `panel` is bare layout, such as a
+HUD row, and keeps its own spacing.
+
+**Pinned controls.** `pin = {x, y}` takes a fixed-size child of a `column` or
+`row` out of the flow and centres it on that point of the form's own box:
+`{1, 0}` is the top right corner. `pin_offset = {x, y}` moves it from there. It
+takes no room and no gap, may overhang the box, and keeps its place in focus
+order. The match-3 popup header pins its close button this way.
 
 ### Measure and arrange
 
@@ -434,7 +449,9 @@ measurement, centering, hit testing and dismissal for Results, Settings, the
 Guide, restart confirmation, building details, the out-of-moves prompt, region
 unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form.
 
-Pass a close action ID as the third argument to `match3.popup_header(title, subtitle, close_id)` for a dismissible card. The header reserves a 44-unit button beside the wrapped title. The Relic Rush skin uses the shared round-button renderer for `popup_close` and supplies a red face palette and the `action-close` glyph.
+The header writes the title on the card itself, in the skin's `popup_title` text style, with the subtitle in `popup_subtitle` and a thin rule under both (the skin's `popup_rule` panel variant). It has no plate of its own: a filled, rimmed bar the width of the buttons below read as one more button.
+
+Pass a close action ID as the third argument to `match3.popup_header(title, subtitle, close_id)` for a dismissible card. The header pins a 44-unit button on the card's top right corner, overhanging it, so the title keeps the full width. A full-screen sheet has no room outside its corner: pass `true` as the fourth argument to keep the button inside it. The Relic Rush skin uses the shared round-button renderer for `popup_close` and supplies a red face palette and the `action-close` glyph.
 
 Results show the banked currencies as `resource_indicator` prefabs in a one-row `uniform_grid`: equal
 columns across the dialog, however many currencies the game has. Each is an icon above

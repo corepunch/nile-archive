@@ -135,7 +135,7 @@ end
 
 local function stars_text(n) return ("%d %s"):format(n, plural(n, "звезда", "звезды", "звёзд")) end
 
-local build_form = ui.form{kind = "column", panel = true, radius = 20, padding = 16, gap = 8, children = {
+local build_form = ui.form{kind = "column", panel = true, radius = 20, children = {
     {kind = "row", height = 34, gap = 10, children = {
         {kind = "label", id = "budget", role = "budget", grow = 1, text_align = "start"},
         {kind = "button", id = "category_prev", text = "<", width = 44},
@@ -156,7 +156,7 @@ local build_form = ui.form{kind = "column", panel = true, radius = 20, padding =
 }}
 local build_skin = K.skin
 
-local project_confirm = ui.form{kind = "column", panel = true, radius = 20, padding = 24, gap = 12, children = {
+local project_confirm = ui.form{kind = "column", panel = true, radius = 20, children = {
     {kind = "label", id = "title", role = "category", wrap = true},
     {kind = "label", id = "detail", role = "budget", wrap = true},
     {kind = "row", gap = 12, height = 56, children = {

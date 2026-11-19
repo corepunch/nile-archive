@@ -33,22 +33,19 @@ local function header_subtitle(text)
     if text and text:find("%S") then return text end
 end
 
-function E.popup_header(title, subtitle, close_id)
-    local labels = {
-        {kind="label",id="title",value=header_title(title),wrap=true,em=31,text_style="gold"},
+-- The title is written on the card itself, over a thin rule: a plate of its
+-- own read as one more button. A dismissible card pins its X on the card's
+-- top right corner, where it takes no room from the title. A full-screen
+-- sheet has no room outside its corner, so `tucked` keeps the X inside it.
+function E.popup_header(title, subtitle, close_id, tucked)
+    return {kind="column",id="header",role="popup_header",padding={16,0,16,0},gap=2,children={
+        {kind="label",id="title",value=header_title(title),wrap=true,em=30,text_style="popup_title"},
         {kind="label",id="subtitle",value=header_subtitle(subtitle),visible_field="subtitle",
-            wrap=true,em=14,text_style="cream"},
-    }
-    local header = {kind="column",id="header",panel=true,role="popup_header",padding={12,8,12,10},gap=2,children=labels}
-    if close_id then
-        for _, label in ipairs(labels) do label.text_align = "start" end
-        header.kind, header.align, header.gap = "row", "center", 8
-        header.children = {
-            {kind="column",grow=1,gap=2,children=labels},
-            {kind="button",id=close_id,role="popup_close",width=44,height=44},
-        }
-    end
-    return header
+            wrap=true,em=14,text_style="popup_subtitle"},
+        {kind="spacer",panel=true,role="popup_rule",height=14},
+        close_id and {kind="button",id=close_id,role="popup_close",width=44,height=44,
+            pin={1,0},pin_offset=tucked and {-26,26} or {-8,8}} or nil,
+    }}
 end
 
 function E.set_popup_header(form, title, subtitle)
@@ -98,8 +95,8 @@ end
 -- row is the button (id 'pick') and paint_row draws its art, name, price and
 -- action. A record marked slim (already built) takes a short row.
 function E.catalogue_form(title, close, paint_row, corner)
-    return ui.form{kind='column',panel=true,padding={14,12,14,14},gap=8,children={
-        E.popup_header(title, nil, corner and "close"),
+    return ui.form{kind='column',panel=true,children={
+        E.popup_header(title, nil, corner and "close", true),
         {kind='row',height=38,gap=8,children={
             {kind='button',id='category_prev',text='<',width=42,em=22},
             {kind='label',id='category',grow=1,em=21},
@@ -549,9 +546,8 @@ function E.bind_board_quest_hud(R)
 end
 
 function E.guide_form(copy, guide_icon, corner)
-    return ui.form{kind="column",panel=true,padding=20,children={
+    return ui.form{kind="column",panel=true,children={
         E.popup_header(copy.title, copy.instructions, corner and "done"),
-        {kind="spacer",height=14},
         {kind="list",id="topics",scroll=true,height=520,gap=6,item=function(entry)
             local align=entry.icon and "start" or "center"
             return {kind="row",gap=10,align="center",children={
@@ -562,16 +558,14 @@ function E.guide_form(copy, guide_icon, corner)
                 }},
             }}
         end},
-        {kind="spacer",height=18},
         {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=12,text_style="white"},
-        {kind="spacer",height=10},
         not corner and {kind="button",id="done",text=copy.done,height=45,em=25} or nil,
     }}
 end
 
 function E.pause_form(guide_label, quit_label, leaderboard_label, corner)
     return ui.form{
-        root={kind="column",panel=true,padding={20,20,20,22},gap=16,children={
+        root={kind="column",panel=true,children={
             E.popup_header("Settings", nil, corner and "close"),
             {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
                 {kind="checkbox",id="sound",text="SOUND",height=50},

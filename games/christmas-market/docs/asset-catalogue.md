@@ -494,6 +494,12 @@ focus with the skin's focus style. Sound and Reduce Motion use the same
 checkbox control. Review the panel with
 `build/test/christmas-market "shot pause" "shot phone-pause"`.
 
+Every popup writes its title on the parchment in flat ink (`popup_title`), with the context line in
+the caption colour (`popup_subtitle`) and a thin sand rule threaded through a diamond under both
+(`popup_rule`). No artwork is added: the text styles and the rule are skin paint in `lua/skin.lua`,
+and the shared `match3.popup_header` lays them out. The title has one state. Reviewed captures:
+`pause`, `phone-pause`, `building-card`, `guide` and `leaderboard` in `docs/screenshots`.
+
 Settings has a LEADERBOARD link, which opens the overall rankings in
 the engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)) in this
 game's skin: Everyone / Friends tabs (the chosen one a red button, the other a flat caption), rows of

@@ -39,6 +39,9 @@ return ui.skin{
         -- above are for titles, buttons and figures.
         body = {font = "lilita", em = 64, fill = "#5A4226"},
         caption = {font = "lilita", em = 64, fill = "#9A7A48", tracking = 2},
+        -- A popup's title is written on its parchment, not on a plate.
+        popup_title = {extends = "body"},
+        popup_subtitle = {extends = "caption"},
     },
 
     controls = {
@@ -49,10 +52,12 @@ return ui.skin{
             {fill = "#EFCC87", radius = 16, inset = 2},
             {fill = "#FFEFBC", radius = 13, inset = 5},
         }}, variants = {
-                popup_header = {normal = {layers = {
-                    {fill = "#4D3A1F", radius = 16, offset = {0, 4}},
-                    {fill = "#1F5345", radius = 16},
-                    {fill = "#2C6C54", radius = 13, inset = 3},
+                -- The rule under a popup's title: a thin line threaded through a diamond.
+                popup_rule = {normal = {layers = {
+                    {fill = "#C9A464", radius = 1, inset = {0, 6, 0, 6}},
+                    {paint = function(_, _, _, _, out, alpha)
+                        gfx.ngon(out:center(), out.h * .5, 4, 0, color.alpha(color.hex(0xC9A464), alpha))
+                    end},
                 }}},
                 group = {normal = {layers = {
             {fill = "#E8CC8E", fill2 = "#F6E2B0", radius = 14},

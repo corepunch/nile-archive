@@ -1,5 +1,5 @@
 -- A single resource rendered with two independent skins, and stacked modals.
-local template={root={kind='column',panel=true,padding=24,gap=14,children={
+local template={root={kind='column',panel=true,children={
     {kind='label',id='title',height=46,role='title'},
     {kind='label',id='description',height=68,wrap=true},
     {kind='toggle',id='sound',height=54,on_text='SOUND ON',off_text='SOUND OFF'},

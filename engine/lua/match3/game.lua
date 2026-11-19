@@ -606,7 +606,7 @@ function G.bind(R, over)
     end
 
     function R.register_result(model)
-        local form = ui.form{kind="column",panel=true,padding={21,20,21,23},gap=15,children={
+        local form = ui.form{kind="column",panel=true,children={
             match3.popup_header("Results"),
             {kind="column",gap=1,paint_group={.24,.32,9},children={
                 {kind="label",text="SCORE",em=13,text_style="caption"},
@@ -692,7 +692,7 @@ function G.bind(R, over)
     -- W.card.gets);
     -- without it the card falls back to the building's unlock text.
     local wonder_form = ui.form{
-        root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
+        root = {kind="column", panel=true, children={
             match3.popup_header("Building details", nil, W.corner_close and "close"),
             {kind="image", id="sprite", height=205},
             {kind="label", id="about", wrap=true, em=19, text_style="body"},
@@ -780,7 +780,7 @@ function G.bind(R, over)
     -- (collected/required resource indicators), ready, waiting, level (playable
     -- zero-based destination), handoff ({title, image}, optional)}.
     local quest_form = ui.form{
-        root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
+        root = {kind="column", panel=true, children={
             match3.popup_header(W.quest.header, nil, W.corner_close and "close"),
             {kind="row",align="center",gap=14,children={
                 {kind="image",id="portrait",width=90,height=108,visible_field="show_portrait"},
@@ -844,7 +844,7 @@ function G.bind(R, over)
     -- The painting is part of the hand-in. Continue records the delivery and
     -- lets the game queue the existing dialogue.
     local handoff_form = ui.form{
-        root={kind="column",panel=true,padding=24,gap=14,children={
+        root={kind="column",panel=true,children={
             match3.popup_header(W.quest.header),
             {kind="image",id="painting",height=372},
             {kind="row",height=52,gap=8,visible_field="evidence",children={
@@ -900,7 +900,7 @@ function G.bind(R, over)
         return event.kind == "change" or event.id == "leaderboard"
     end})
 
-    local confirm_form = ui.form{kind="column",panel=true,padding={18,22,18,18},gap=14,children={
+    local confirm_form = ui.form{kind="column",panel=true,children={
         match3.popup_header(W.confirm.title, W.confirm.body, W.corner_close and "close"),
         {kind="button",id="confirm",text=W.confirm.restart,height=50},
         {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
@@ -912,7 +912,7 @@ function G.bind(R, over)
     end})
 
     local failed = W.failed
-    R.failed_form = ui.form{kind="column",panel=true,padding={16,24,16,22},gap=14,children={
+    R.failed_form = ui.form{kind="column",panel=true,children={
         match3.popup_header(failed.title, failed.subtitle),
         {kind="label",text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
         {kind="button",id="retry",text=failed.retry,height=50},
@@ -923,7 +923,7 @@ function G.bind(R, over)
     end})
 
     local region = W.zone
-    local zone_form = ui.form{kind="column",panel=true,padding={16,24,16,20},gap=14,children={
+    local zone_form = ui.form{kind="column",panel=true,children={
         match3.popup_header("Region", nil, W.corner_close and "close"),
         {kind="label",id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
         {kind="label",text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
@@ -954,7 +954,7 @@ function G.bind(R, over)
             card[#card+1] = {kind="label",text=line[1]:format(rules.LEVELS),wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
         end
         card[#card+1] = {kind="button",id="back",text=words.button,height=50}
-        popup(overlay, ui.form{kind="column",panel=true,padding=24,gap=14,children=card},
+        popup(overlay, ui.form{kind="column",panel=true,children=card},
             {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
     end
 
@@ -1255,7 +1255,7 @@ function G.bind(R, over)
         for index, option in ipairs(beat.choices) do
             children[#children + 1] = {kind="button", id=tostring(index), text=option.label, height=54}
         end
-        R.choice_form = ui.form{root={kind="column", panel=true, padding=22, gap=14, children=children}}
+        R.choice_form = ui.form{root={kind="column", panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end
         assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=false}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
