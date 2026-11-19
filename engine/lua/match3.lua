@@ -524,11 +524,11 @@ function E.guide_form(copy, guide_icon, corner)
                 {kind="custom",width=52,height=52,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
                 {kind="column",grow=1,gap=4,children={
                     {kind="label",text=entry.title,wrap=true,text_align=align,em=22,text_style="gold"},
-                    {kind="label",text=entry.description,wrap=true,text_align=align,em=16,text_style="cream"},
+                    {kind="label",text=entry.description,wrap=true,text_align=align,em=17,text_style="body"},
                 }},
             }}
         end},
-        {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=12,text_style="white"},
+        {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
         not corner and {kind="button",id="done",text=copy.done,height=45,em=25} or nil,
     }}
 end
