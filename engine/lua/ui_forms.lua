@@ -524,14 +524,27 @@ classes.custom={paint=function(n, box, _, form, options)
     if n.paint then n.paint(box,form.values[n.id],options) end
 end}
 classes.label={
+    -- Layout runs every frame and measures a label several times (a row, then
+    -- its column, then the label itself, at more than one width). Keep the
+    -- sizes until the text, the skin or the layout revision changes; wrapped
+    -- text keeps one per width.
     measure_override=function(n, width, skin, form)
-        local s,value=style_for(n,skin),caption(n,form.values)
-        local measured=n.wrap and text.box_size(s,math.max(1,width),value) or text.measure(s,value)
-        return measured.w,measured.h
+        local value,cache=caption(n,form.values),n.measured
+        if not cache or cache.value~=value or cache.skin~=skin or cache.revision~=form.layout_revision or cache.count>8 then
+            cache={value=value,skin=skin,revision=form.layout_revision,count=0};n.measured=cache
+        end
+        local key=n.wrap and width or 0
+        local size=cache[key]
+        if not size then
+            local s=style_for(n,skin)
+            size=n.wrap and text.box_size(s,math.max(1,width),value) or text.measure(s,value)
+            cache[key],cache.count=size,cache.count+1
+        end
+        return size.w,size.h
     end,
     paint=function(n, box, skin, form)
         local align=vec2(n.text_align=='start' and 0 or n.text_align=='end' and 1 or .5,.5)
-        if skin.label then skin.label(box,caption(n,form.values),n,style_for(n,skin))
+        if skin.label then skin.label(box,caption(n,form.values),n)   -- the skin styles its own text
         elseif n.wrap then text.box(style_for(n,skin),box,align,caption(n,form.values))
         else text.inside(style_for(n,skin),box,align,caption(n,form.values)) end
     end,

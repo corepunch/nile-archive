@@ -614,8 +614,9 @@ record, independent of its row position.
 The form caches row measurements and positions at the current width. It
 arranges, paints and hit-tests only rows that intersect the viewport. The
 list clips partial rows and leaves its footer in the surrounding form.
-`form.boxes` contains current boxes only. Source replacement and form value
-updates invalidate measurements. If a caller mutates geometry or styles in
+`form.boxes` contains current boxes only. Labels keep their measured sizes
+(one per width for wrapped text), so a still or scrolling list does no text
+layout. Source replacement and form value updates invalidate measurements. If a caller mutates geometry or styles in
 place, call `form:invalidate_layout()`. Set the data source when its records
 change, such as on modal open or a category change.
 
