@@ -138,19 +138,15 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 
 Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all twenty ladder stalls fit the land open by their levels, in order, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty story levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays the thirty story levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board’s panes and the scheduled building’s test wallet are prepared before one real swap. The separate extended campaign run earns its own wallet through actual play. All 36 scenes must play once, in script order, and the run must end on the end screen with twenty stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
 
-## Leaderboards
+## Leaderboard
 
-Game Center comes from the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)) and is switched on by the
-`leaderboard` block of `lua/game_config.lua`: a board ranked by wishes cleared (its Game Center id is still `stars`)
-and one board per winter wish (`level_01` to `level_100`) for its best score. Scores are reported when a
-reward is claimed. Settings has a LEADERBOARD link for the main board (the results card has no leaderboard
-button); it opens the shared dialog in this game's red and green skin. Create 101
-leaderboards in App Store Connect (high to low) as `com.corepunch.christmasmarket.stars` and
-`com.corepunch.christmasmarket.level_01` ... `level_100`. Try it with `--gamecenter-demo --dialog leaderboard`.
+The LEADERBOARD link in Settings opens the overall rankings by winter wishes cleared. The game
+updates the total when the player claims a first-clear reward. Use `com.corepunch.christmasmarket.stars`
+in [Game Center](../../docs/GAMECENTER.md) and capture the dialog with `--gamecenter-demo --dialog leaderboard`.
 
-| Settings | Merriest markets | Results card | Winter wish board |
-| --- | --- | --- | --- |
-| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The stars board](docs/screenshots/leaderboard.jpg) | ![Results card](docs/screenshots/reward.jpg) | ![One wish's board](docs/screenshots/level-leaderboard.jpg) |
+| Settings | Merriest markets |
+| --- | --- |
+| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The overall leaderboard](docs/screenshots/leaderboard.jpg) |
 
 ![The stars board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
 

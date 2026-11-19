@@ -72,7 +72,7 @@ end
 ------------------------------------------------------------------- setup
 
 -- Debug/QA entry points used to capture screenshots:
--- --screen island|build|purchase|opening|first-build|first-win|scene0..14|cache|cache2|cache3|cache-result|projects|project-confirm|chapters2|journal|cast|pause|chapters|win|story|horem|merit|leaderboard|win-leaderboard,
+-- --screen island|build|purchase|opening|first-build|first-win|scene0..14|cache|cache2|cache3|cache-result|projects|project-confirm|chapters2|journal|cast|pause|chapters|win|story|horem|merit|leaderboard,
 -- --catalogue <category> --catalogue-page N with --screen build, --building-review N,
 -- and --footprints to check the buildings' measured footprints and pivots
 local function apply_screen_arg(screen)
@@ -136,15 +136,14 @@ local function apply_screen_arg(screen)
         G.open_modal(MODAL_CHAPTERS, true)
     elseif screen == "leaderboard" then   -- the influence board over the chapter list; add --gamecenter-demo
         G.open_modal(MODAL_CHAPTERS, true)
-        dialogs.boards:open("influence", "Влияние")
-    elseif screen == "win" or screen == "win-leaderboard" then
+        dialogs.open_leaderboard()
+    elseif screen == "win" then
         scene.open(2)
         for i = 1, ITEMS do G.found[i] = 0; scene.show_found(i) end   -- the last finds are still leaving the bar
         G.wins[2], G.clues[2], G.stars[1] = 0, 0, 3
         G.wallet[CHAPTERS] = economy.completed(G.wins)
         G.result = {score = 4200, time = 68, stars = 3, clue = 1, payout = economy.reward(0, 0, 3, true)}
         G.open_modal(MODAL_WIN, not app.arg("reel"))
-        if screen == "win-leaderboard" then dialogs.boards:open("search_2", scenes[2].title) end
     elseif screen == "cache" then
         scene.open(content.CACHE)
     elseif screen == "cache2" or screen == "cache3" then
@@ -245,6 +244,7 @@ end
 return {
     title = "Архив Нила",
     id = "nile-archive",
+    gamecenter_board = "influence",
     design = size2(1200, 900),
     max_aspect = 16 / 9,
     landscape = true,

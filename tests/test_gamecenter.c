@@ -6,7 +6,7 @@
 
 static void restart(bool backend)
 {
-    gamecenter_start();
+    gamecenter_start(NULL);
     if (backend) gamecenter_test_platform(true);
 }
 
@@ -75,6 +75,29 @@ TEST(gamecenter_queue_survives_a_restart)
     gamecenter_on_auth(true, "A");
     CHECK(gamecenter_test_calls("score") == 1 && gamecenter_test_calls("achievement") == 1);
     NEAR(gamecenter_best("stars"), 70);
+}
+
+TEST(gamecenter_retires_saved_scores_outside_the_configured_board)
+{
+    fresh(true);
+    gamecenter_submit("level_01", 1234);
+    gamecenter_submit("stars", 70);
+    gamecenter_unlock("level_01", 50);
+
+    gamecenter_start("stars");
+    gamecenter_test_platform(true);
+    gamecenter_on_auth(true, "A");
+    CHECK(gamecenter_test_calls("score") == 1 && gamecenter_test_calls("achievement") == 1);
+    NEAR(gamecenter_best("stars"), 70);
+    NEAR(gamecenter_progress("level_01"), 50);
+    gamecenter_submit("level_01", 4321);
+    CHECK(gamecenter_test_calls("score") == 1);
+    NEAR(gamecenter_best("level_01"), 0);
+
+    restart(true);
+    NEAR(gamecenter_best("level_01"), 0);
+    NEAR(gamecenter_best("stars"), 70);
+    NEAR(gamecenter_progress("level_01"), 50);
 }
 
 TEST(gamecenter_load_waits_for_sign_in_and_keeps_good_rows)

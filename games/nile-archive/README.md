@@ -97,21 +97,16 @@
 | **Люди острова** | **Широкий экран 16:9** |
 | ![Персонажи](docs/screenshots/characters.jpg) | ![16:9](docs/screenshots/widescreen.jpg) |
 
-## Таблицы лидеров
+## Таблица лидеров
 
-Game Center подключён через движок ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)). В игре две
-вещи: **таблица влияния** (`influence`, суммарное влияние, оно только растёт; открывается кнопкой
-«Таблица лидеров» в списке глав) и **таблица каждого поиска** (`search_1` … `search_15`, лучший счёт;
-открывается кнопкой на окне «Поиск завершён!»). Очки уходят при победе в поиске, влияние — при
-каждом сохранении. Окно рисуется скином игры (роли `leaderboard_*` в `lua/archive_skin.lua`), подписи
-по-русски; без Game Center оно показывает ваш лучший результат. В App Store Connect нужны шестнадцать
-таблиц (от большего к меньшему): `com.corepunch.nilearchive.influence` и
-`com.corepunch.nilearchive.search_1` … `search_15`. Таблицы `search_6` … `search_15` необходимо добавить в App Store Connect. Для снимков: `--screen leaderboard` и
-`--screen win-leaderboard` с `--gamecenter-demo`.
+Кнопка «Таблица лидеров» в списке глав открывает рейтинг по суммарному влиянию. Игра отправляет
+влияние при сохранении. В режиме без подключения к Game Center таблица показывает ваш лучший
+результат. Идентификатор таблицы в App Store Connect — `com.corepunch.nilearchive.influence`.
+Для снимков используйте `--screen leaderboard --gamecenter-demo`. [Game Center](../../docs/GAMECENTER.md)
 
-| Влияние | Поиск «Библиотека писца» | Список глав | Окно награды |
-| --- | --- | --- | --- |
-| ![Таблица влияния](docs/screenshots/leaderboard.jpg) | ![Таблица поиска](docs/screenshots/search-leaderboard.jpg) | ![Кнопка в списке глав](docs/screenshots/chapters.jpg) | ![Кнопка в окне награды](docs/screenshots/reward.jpg) |
+| Влияние | Список глав | Окно награды |
+| --- | --- | --- |
+| ![Таблица влияния](docs/screenshots/leaderboard.jpg) | ![Кнопка в списке глав](docs/screenshots/chapters.jpg) | ![Итоги поиска](docs/screenshots/reward.jpg) |
 
 ![Таблица влияния на iPad 1368 × 1026](docs/screenshots/ipad-leaderboard.jpg)
 

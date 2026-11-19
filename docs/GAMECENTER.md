@@ -1,9 +1,9 @@
 # Game Center
 
 Every game gets sign-in, leaderboards and achievements from the shared
-engine through the generated `gamecenter` Lua module. Nothing is configured
-per game in code: sign-in starts by itself at launch, and a game only names its
-boards and achievements.
+engine through the generated `gamecenter` Lua module. Sign-in starts at launch.
+Each game declares its overall leaderboard as `gamecenter_board` in the app
+descriptor and names its achievements when it reports them.
 
 ```lua
 gamecenter.submit('stars', boards_cleared)     -- higher is better; non-records are dropped
@@ -25,7 +25,7 @@ The full reference is in [LUA_API.md](LUA_API.md#gamecenter).
 
 ## Behaviour games can rely on
 
-- **Nothing is lost.** Reports are kept in the `gamecenter` save slot until
+- **Reports wait for confirmation.** Reports are kept in the `gamecenter` save slot until
   Game Center confirms them, and are resent at the next sign-in or when the app
   returns to the foreground. Offline play, a declined sign-in and a crash
   before the network answers all end the same way: the score arrives later.
@@ -46,7 +46,7 @@ The full reference is in [LUA_API.md](LUA_API.md#gamecenter).
 1. In App Store Connect open the app, then Services > Game Center, and add
    leaderboards and achievements. **The identifier must be
    `<bundle id>.<name>`**, for example `com.corepunch.relicrush.stars`, where
-   `stars` is the name the game passes to Lua (the match-3 games keep that id for their boards-cleared leaderboard). Sort leaderboards high to low.
+   `stars` is the game's `gamecenter_board`. Sort leaderboards high to low.
 2. Nothing else: `tools/xcode/generate.py` links GameKit and writes the
    `com.apple.developer.game-center` entitlement for every iOS target
    (`Generated/ios.entitlements`). Automatic signing adds the capability to the
@@ -98,18 +98,18 @@ capture with `--gamecenter-demo`.
 
 ## Games using it
 
-| Game | Boards | Opened from |
+| Game | Leaderboard | Opened from |
 | --- | --- | --- |
-| Relic Rush | `stars` (boards cleared), `level_01`..`level_100` | Settings, results card |
-| Christmas Market | `stars` (boards cleared), `level_01`..`level_100` | Settings, results card |
-| Nile Archive | `influence`, `search_1`..`search_5` | Chapter list, search result |
-| Emergency | `rescue`, `district_01`..`district_05` (time as a speed score) | Menu, district results |
+| Relic Rush | `stars` (expeditions cleared) | Settings |
+| Christmas Market | `stars` (winter wishes cleared) | Settings |
+| Nile Archive | `influence` (campaign influence) | Chapter list |
+| Emergency | `rescue` (sum of the best district speed scores) | Menu |
 
-A game with its own painted screens keeps one manager rather than one dialog per board:
+A game with its own painted screens can open the same dialog from its menu:
 
 ```lua
 local boards = require("leaderboard").boards{skin = skin, width = 520, texts = {...}}
-boards:open("influence", "Influence")                 -- from a button; `extra` = per-board options (format...)
+boards:open("influence", "Influence")                 -- from a button
 -- every frame, after the screens and their dialogs:
 local covered = boards:active()                       -- nil, or the open dialog: give the screens no input
 boards:draw(dt, {reduced_motion = reduced})
@@ -129,14 +129,18 @@ clips it to a circle at 96 px and hands it to the engine, which keeps the last
 portrait, or a failed load, leaves `photo` nil and is not asked again that run.
 `--gamecenter-demo` draws placeholder busts so the dialog can be captured.
 
-## One board per level
+## Retiring the old leaderboards
 
-A board is only a name, so a game may keep one per level: `gamecenter.submit("level_07", score)` and
-`leaderboard.new{board = "level_07"}`. Every board still has to exist in App Store
-Connect under `<bundle id>.level_07` (Game Center allows 500 per app, and
-boards can be grouped into a leaderboard set), and a board nobody has played
-looks empty. Prefer one overall board as the main screen and per-level boards
-reached from the level result, opened on the Friends tab.
+At startup, the engine keeps scores for the declared `gamecenter_board` and all
+achievement reports. It removes saved scores for other leaderboards before sign-in
+can send them. New score reports must match the declared board. An app descriptor
+without `gamecenter_board` can still report scores to any leaderboard.
+
+In App Store Connect, make the overall leaderboard the default and archive any
+live `level_01` through `level_100` leaderboards for Relic Rush and Christmas Market,
+`search_1` through `search_15` for Nile Archive, and `district_01` through `district_05`
+for Emergency. Archiving hides these leaderboards from Game Center itself.
+[Apple's leaderboard management guide](https://developer.apple.com/help/app-store-connect/configure-game-center/manage-leaderboards/)
 
 ## Engine and platform boundary
 

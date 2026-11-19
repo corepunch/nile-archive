@@ -44,6 +44,7 @@ static struct gc_state {
     int state;
     char alias[48];
     bool native, demo;
+    const char *score_board;
     int nrecords;
     struct gc_record records[GC_RECORDS];
     struct gc_slot slots[GC_SLOTS];
@@ -271,6 +272,7 @@ const char *gamecenter_player(void) { return GC.alias; }
 void gamecenter_submit(const char *board, double score)
 {
     if (!board || !*board || !isfinite(score) || score <= 0) return;
+    if (GC.score_board && strcmp(board, GC.score_board)) return;
     struct gc_record *r = gc_find(false, board, true);
     if (!r || score <= r->value) return;
     r->value = score;
@@ -391,11 +393,23 @@ void gamecenter_restart(void)
     GC.state = GAMECENTER_UNAVAILABLE;   /* until gamecenter_start finds a backend */
 }
 
-void gamecenter_start(void)
+void gamecenter_start(const char *score_board)
 {
     gamecenter_restart();
+    GC.score_board = score_board;
     save_read(GC_SLOT, gc_visit, NULL);
-    for (int i = 0; i < GC.nrecords; i++) GC.records[i].inflight = false;
+    if (score_board) {
+        /* Retire saved reports before sign-in can flush them. */
+        int kept = 0;
+        for (int i = 0; i < GC.nrecords; i++) {
+            const struct gc_record *r = &GC.records[i];
+            if (r->achievement || !strcmp(r->name, score_board)) GC.records[kept++] = *r;
+        }
+        if (kept < GC.nrecords) {
+            GC.nrecords = kept;
+            gc_persist();
+        }
+    }
     GC.native = gc_backend();
     GC.demo = app_arg("gamecenter-demo") != NULL;
     if (GC.native) {

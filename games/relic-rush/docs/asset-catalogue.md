@@ -300,14 +300,14 @@ safe-area phone layout. States are listed below with the checkbox and button
 variants; no artwork, source prompt, runtime file or sprite transform is added.
 The menu contract is recorded in `art/board-states/manifest.json` under `pause_menu`.
 
-Pause also carries a LEADERBOARD link above the guide link, drawn by the game skin (the link
-role); the results card has no leaderboard button. They open the engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)):
+Pause carries a skin-painted LEADERBOARD link above the guide link. It opens the overall rankings
+in the engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMECENTER.md)),
 a panel with Everyone / Friends tabs (the chosen one a jade button, the other a flat caption), a
 scrolling list of rank, portrait, name and score rows (a round placeholder bust with the initial
 while a portrait loads, "(you)" on the player's row), loading / empty / signed-out notes, and
 Game Center and Close buttons. No artwork is added: every state is skin paint, and the portraits
-come from Game Center at runtime. Reviewed captures: `pause`, `phone-pause`, `victory`,
-`leaderboard`, `phone-leaderboard` and `level-leaderboard` in `docs/screenshots` (from
+come from Game Center at runtime. Reviewed captures: `pause`, `phone-pause`,
+`leaderboard` and `phone-leaderboard` in `docs/screenshots` (from
 `build/test/relic-rush "shot leaderboard"` ..., with `--gamecenter-demo`).
 
 Reproduce and inspect both contexts at both phone sizes with

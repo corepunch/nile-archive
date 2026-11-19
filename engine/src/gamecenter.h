@@ -23,7 +23,7 @@ void gamecenter_on_photo(const char *id, const unsigned char *rgba, int w, int h
 void gamecenter_on_entries(const char *board, int scope, const gamecenter_entry *entries, int n, bool ok);
 
 /* Core hooks. */
-void gamecenter_start(void);
+void gamecenter_start(const char *score_board);
 void gamecenter_restart(void);
 void gamecenter_focus(bool active);
 

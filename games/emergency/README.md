@@ -90,23 +90,16 @@ python3 games/emergency/tools/import_episode.py
 python3 games/emergency/tools/preserve_source.py --verify
 ```
 
-## Leaderboards
+## Leaderboard
 
-Game Center comes from the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)). Boards rank high to
-low, so a district's time is stored as a speed score, `1e9 / (1000 + tenths of a second)`: faster is
-higher, with no ceiling, and the dialog turns it back into `m:ss`. Each district has a board
-(`district_01` ... `district_05`, shown from the results card's Leaderboard button), and the **rescue**
-board adds up every district's best (from the menu's Leaderboard button, so replaying any district can
-raise it). Scores go out when a district is restored; saved progress from before the boards is sent at
-launch. The dialog is drawn with `emergency_skin.lua` (its `title` and `leaderboard_*` roles and the
-`label` control). Create six leaderboards in App Store Connect, high to low, as
-`com.corepunch.volcano.rescue` and `com.corepunch.volcano.district_01` ... `district_05` (the published
-bundle identifier is kept). Captures: `--leaderboard --gamecenter-demo` and
-`--level 5 --preview complete --leaderboard district --gamecenter-demo`.
+The menu's Leaderboard button opens the overall **rescue** rankings. The score adds up each district's
+best speed score, `floor(1e9 / (1000 + tenths of a second))`, so a faster replay can raise the total.
+The game submits the total at launch and when a district is restored. Use `com.corepunch.volcano.rescue`
+in [Game Center](../../docs/GAMECENTER.md) and capture it with `--leaderboard --gamecenter-demo`.
 
-| Menu | Rescue board | Results | District board |
-| --- | --- | --- | --- |
-| ![Menu with a Leaderboard button](docs/screenshots/menu.jpg) | ![The rescue board](docs/screenshots/menu-leaderboard.jpg) | ![Results with a Leaderboard button](docs/screenshots/complete.jpg) | ![One district's board](docs/screenshots/district-leaderboard.jpg) |
+| Menu | Rescue leaderboard | Results |
+| --- | --- | --- |
+| ![Menu with a Leaderboard button](docs/screenshots/menu.jpg) | ![The rescue leaderboard](docs/screenshots/menu-leaderboard.jpg) | ![District results](docs/screenshots/complete.jpg) |
 
 ## Fast rule tests
 

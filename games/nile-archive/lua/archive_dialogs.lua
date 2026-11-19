@@ -15,7 +15,7 @@ local WHITE = K.WHITE
 
 local M = {}
 
--- Game Center boards (engine/lua/leaderboard.lua): lifetime influence, and each search's best score.
+-- Game Center ranks players by campaign influence.
 M.boards = require("leaderboard").boards{skin = K.skin, width = 520, texts = {
     everyone = "Все", friends = "Друзья", close = "Закрыть", native = "Game Center", you = "(вы)",
     loading = "Загрузка...", empty = "Пока нет результатов. Будьте первым!",
@@ -23,8 +23,7 @@ M.boards = require("leaderboard").boards{skin = K.skin, width = 520, texts = {
     sign_in = "Войдите в Game Center, чтобы сравнить себя с другими игроками.",
     sign_in_friends = "Войдите в Game Center, чтобы увидеть друзей.",
 }}
-local function open_influence_board() M.boards:open("influence", "Влияние") end
-local function open_search_board(i) M.boards:open(("search_%d"):format(i), scenes[i].title) end
+function M.open_leaderboard() M.boards:open("influence", "Влияние") end
 
 -- A framed box with a ribbon title, popping in as G.dialog arrives.
 local function popup(w, h, title)
@@ -72,10 +71,8 @@ local function win_dialog()
     text.draw(S.goal_eyebrow, paper:pos() + vec2(16, 10), vec2(0, 0), res.clue and "НОВАЯ УЛИКА" or "ЗАПИСЬ В ЖУРНАЛЕ")
     text.box(S.ink_body, rect(paper.x + 16, paper.y + 28, paper.w - 32, clue_h), vec2(0, 0), clue)
     r:cut_top(18)
-    local buttons = r:cut_top(56):inflate2(vec2(-24, 0))
-    local continue = buttons:col(2, 1, 16)
+    local continue = r:cut_top(56):inflate2(vec2(-24, 0))
     G.spots.continue = continue:center()
-    if K.button(buttons:col(2, 0, 16), "Таблица лидеров", "blue") then open_search_board(G.scene) end
     local goal, _, restore = progress.chapter_goal()
     if K.button(continue, restore and "Строить за монеты" or "На остров", "green") then
         scene.go_home()
@@ -172,7 +169,7 @@ local function chapters_dialog()
     G.spots.browser = browser
     if not event then return end
     if event.id == "journal" then G.open_modal(G.MODAL_JOURNAL)
-    elseif event.id == "leaderboard" then open_influence_board()
+    elseif event.id == "leaderboard" then M.open_leaderboard()
     elseif event.source == "searches" then scene.start(event.key) end
 end
 

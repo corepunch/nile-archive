@@ -235,6 +235,7 @@ app_desc script_boot_args(const char *dir, const char *data_dir, int argc, char 
     memset(&desc, 0, sizeof desc);
     lua_getfield(L, t, "title"), desc.title = lua_tostring(L, -1);
     lua_getfield(L, t, "id"), desc.id = lua_tostring(L, -1);
+    lua_getfield(L, t, "gamecenter_board"), desc.gamecenter_board = lua_tostring(L, -1);
     lua_getfield(L, t, "rotate_text"), desc.rotate_text = lua_tostring(L, -1);
     lua_getfield(L, t, "design"), desc.design = api_get_size2(L, -1);
     lua_getfield(L, t, "max_aspect"), desc.max_aspect = (float)lua_tonumber(L, -1);

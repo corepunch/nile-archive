@@ -35,8 +35,6 @@ return {
     leaderboard = {
         board = "stars",
         title = "Top explorers",
-        level_board = "level_%02d",
-        level_title = "Expedition %d",
     },
     confirm = {title = "Restart this expedition?"},
     failed = {title = "One more adventure?", subtitle = "THE RUINS WILL WAIT FOR YOU.", town = "VISIT ISLAND"},

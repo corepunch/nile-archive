@@ -139,11 +139,11 @@ The engine's shared leaderboard dialog ([docs/GAMECENTER.md](../../../docs/GAMEC
 `board_me` for the player's own row, `board_note` for loading / empty / signed-out notes, an accent
 pill for the chosen Все / Друзья tab (the other a flat caption) and the Game Center and Закрыть pills.
 Rows hold rank, a round portrait (a placeholder with the initial until Game Center's photo arrives) and
-the score. It opens from the chapter list's «Таблица лидеров» button (influence) and from the
-«Поиск завершён!» window's blue pill (that search). No bitmap or ImageGen source is added: every
-state is skin paint and the portraits come from Game Center at runtime. Reviewed captures:
-`leaderboard`, `ipad-leaderboard`, `search-leaderboard`, `chapters` and `reward` in
-`docs/screenshots`, from `build/test/nile-archive "shot leaderboard"` ... with `--gamecenter-demo`.
+the campaign influence score. The chapter list's «Таблица лидеров» button opens the dialog.
+The skin paints the controls, and Game Center provides portraits at runtime. See `leaderboard`,
+`ipad-leaderboard` and `chapters` in `docs/screenshots`. The reward card shows the score and time for
+the search and a full-width continue button, as seen in `reward`. Capture the leaderboard and
+reward card with `build/test/nile-archive "shot leaderboard" "shot reward"`.
 
 
 ## Chapters and island works

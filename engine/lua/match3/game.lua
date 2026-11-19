@@ -22,7 +22,7 @@
 --                           markers down the town's left edge and their card (below)
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
---   game_config.lua "leaderboard" {board, title, level_board, level_title}   Game Center boards (below)
+--   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
 -- See docs/PORTRAIT_GAMES.md.
 local G = {}
 
@@ -1378,7 +1378,7 @@ function G.bind(R, over)
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders, R.island)
         if not paid then return end
         if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
-        if not app.arg("debug-walkthrough") then R.submit_scores() end
+        if not app.arg("debug-walkthrough") then R.submit_leaderboard_progress() end
         R.save_progress()
         R.on_island = true
         R.overlay = first and R.g.story_clear == journey.beats[#journey.beats].key and R.OV_FINALE
@@ -1417,23 +1417,15 @@ function G.bind(R, over)
         return false
     end
 
-    -- Game Center (engine/lua/leaderboard.lua, docs/GAMECENTER.md). game_config.lua's
-    -- "leaderboard" block turns it on: `board` holds the boards cleared,
-    -- `level_board` (a format with the level number, e.g. "level_%02d") each
-    -- expedition's best score. Scores are reported when a reward is claimed.
+    -- The Game Center leaderboard tracks boards cleared when rewards are claimed.
     local boards = require("leaderboard").boards{skin = skin, width = 400, header = match3.popup_header, texts = W.leaderboard and W.leaderboard.texts}
-    function R.submit_scores()
+    function R.submit_leaderboard_progress()
         local c = W.leaderboard
-        if not c then return end
-        gamecenter.submit(c.board, R.prog.level)
-        if c.level_board and R.g then gamecenter.submit(c.level_board:format(R.g.level + 1), R.g.score) end
+        if c then gamecenter.submit(c.board, R.prog.level) end
     end
-    -- The board of the whole game, or of one expedition (0-based level).
-    function R.open_leaderboard(level)
+    function R.open_leaderboard()
         local c = W.leaderboard
-        if not c then return end
-        if level and c.level_board then boards:open(c.level_board:format(level + 1), c.level_title:format(level + 1))
-        elseif not level then boards:open(c.board, c.title) end
+        if c then boards:open(c.board, c.title) end
     end
     function R.leaderboard_active() return boards:active() end
     function R.draw_leaderboard(dt) boards:draw(dt, {reduced_motion = R.reduced_motion}) end
@@ -1681,8 +1673,8 @@ function G.app(R)
         if not app.arg("smoke") then save.read(R.progress_slot(), R.serialize) end
         -- A game may furnish the town a new player first sees (island.new_game).
         if island.new_game and R.prog.level == 0 and R.island.count == 0 then island.new_game(R.island, app.clock()) end
-        if W.leaderboard and not app.arg("smoke") and not app.arg("debug-walkthrough") then
-            gamecenter.submit(W.leaderboard.board, R.prog.level)
+        if not app.arg("smoke") and not app.arg("debug-walkthrough") then
+            R.submit_leaderboard_progress()
         end
         R.story_current, R.story_preview, R.story_before_result = nil, false, false
         R.story_choice_beat, R.story_choice_preview = nil, nil
@@ -1701,6 +1693,7 @@ function G.app(R)
     return {
         title = W.app.title,
         id = W.app.id,
+        gamecenter_board = W.leaderboard and W.leaderboard.board,
         design = size2(R.SCREEN_W, R.SCREEN_H),
         fixed = true,
         max_aspect = 2.2,   -- tall phones (19.5:9) get a taller screen, not bars

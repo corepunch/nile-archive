@@ -471,7 +471,7 @@ int app_run(app_desc desc, int argc, char **argv)
     A.in.pinch = 1;
     A.running = true;
     A.last_counter = animation_clock_seconds();
-    gamecenter_start();   /* sign-in runs behind the game; reports wait for it */
+    gamecenter_start(desc.gamecenter_board);   /* sign-in runs behind the game; reports wait for it */
     if (desc.init) desc.init();
 
 #ifdef __EMSCRIPTEN__

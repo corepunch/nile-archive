@@ -82,27 +82,20 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Boards required to open land](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
-## Leaderboards
+## Leaderboard
 
-Game Center is in every game through the engine ([docs/GAMECENTER.md](../../docs/GAMECENTER.md)).
-Relic Rush turns it on with the `leaderboard` block of `lua/game_config.lua`: one board ranks players by boards cleared (its Game Center id is still `stars`), and one board per expedition (`level_01`
-to `level_100`) holds its best score. Scores are reported when a reward is claimed, so a
-replay that beats the old score raises that board, and a weaker one changes nothing. Settings
-has a LEADERBOARD link for the boards-cleared board. The results card has no leaderboard button; the
-expedition boards still receive scores. The link opens the shared dialog with Everyone / Friends tabs, player portraits and the
-player's own row marked; without Game Center it shows the player's own best.
+The LEADERBOARD link in Settings opens the overall rankings by expeditions cleared. The game updates
+the total when the player claims a first-clear reward. The dialog shows Everyone and Friends tabs,
+player portraits and the player's own row. When offline, it shows the player's best total.
 
-| Settings | Boards-cleared board | Results card | Expedition board |
-| --- | --- | --- | --- |
-| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The boards-cleared board](docs/screenshots/leaderboard.jpg) | ![Results card](docs/screenshots/victory.jpg) | ![One expedition's board](docs/screenshots/level-leaderboard.jpg) |
+| Settings | Expeditions cleared |
+| --- | --- |
+| ![Settings with a Leaderboard link](docs/screenshots/pause.jpg) | ![The overall leaderboard](docs/screenshots/leaderboard.jpg) |
 
 ![The boards-cleared board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
 
-To publish them, create 101 leaderboards in App Store Connect (Game Center, high to low) with the
-identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_01` ...
-`com.corepunch.relicrush.level_100`, ideally grouped in a leaderboard set. `--gamecenter-demo`
-shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
-open the dialogs.
+Use `com.corepunch.relicrush.stars` in [Game Center](../../docs/GAMECENTER.md). Capture the dialog
+with sample rivals using `--gamecenter-demo --dialog leaderboard`.
 
 Board 1, The Landing, is a nine-column hex with seven blue plaques in its centre. It uses Cradle of Rome's opening pool and a sixth score piece: sun coins and silver coins (Coins) plus a leaf, a flower, an amphora and quartz that only score. Food and Supplies pieces arrive with the restorations.
 Boards 2–10 and 13 show a story piece in place of one matching colour.
@@ -337,7 +330,7 @@ make web && python3 -m http.server 8080 --directory dist   # http://localhost:80
 
 The game is laid out for a 480 × 900 portrait screen inside the device's safe area. It is `fixed` with `max_aspect = 2.2`, so on taller phones the screen keeps its width and grows taller (`R.layout()` moves the bottom group down by the extra height, `R.drop`). Its jungle backdrop, the island and the HUD bands run on under the status bar and the home indicator to the screen edges (`app.bleed()` / `gfx.bleed`). Runtime art in `data/` is committed; `python3 games/relic-rush/tools/prepare_assets.py` rebuilds it from the sources in `art/` (needs Pillow).
 
-Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--epoch N` (an island once N epochs of four ladder purchases are bought), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--catalogue [category]`, `--catalogue-page N`, `--catalogue-item ID`, `--catalogue-card ID`, `--building-review N` (four catalogue objects per footprint review page), `--footprints` (every building's footprint and pivot over its sprite), `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble|leaderboard|level-leaderboard`, `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx shatter`, `--smoke` (plays level one through injected clicks, claims, builds, checks pan/long-press move/cancel/confirm and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
+Debug and capture options (no progress is written): `--level N`, `--city N` (an island after N expeditions; `--open MASK` limits it to those regions, bit per region), `--epoch N` (an island once N epochs of four ladder purchases are bought), `--look X,Y` (centre the island camera on a world point), `--showcase`, `--overview`, `--catalogue [category]`, `--catalogue-page N`, `--catalogue-item ID`, `--catalogue-card ID`, `--building-review N` (four catalogue objects per footprint review page), `--footprints` (every building's footprint and pivot over its sprite), `--placing [blocked|dragging]` (`blocked`: the red ghost over a built wonder; `dragging`: the ghost held up between tiles over the footprint of the tile it will land on), `--zone N`, `--card N`, `--victory`, `--dialog guide|pause|failed|finale|intro|mara|tomas|adrian|bubble|leaderboard`, `--tiles relics|jewels|resources`, `--art-states`, `--art-board`, `--fx shatter`, `--smoke` (plays level one through injected clicks, claims, builds, checks pan/long-press move/cancel/confirm and enters level two), plus the engine's `--shot file.png --frames N`, `--size WxH`, `--fresh` and `--mute`.
 
 ## Controls and saved progress
 

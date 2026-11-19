@@ -46,8 +46,6 @@ return {
     leaderboard = {
         board = "stars",
         title = "Merriest markets",
-        level_board = "level_%02d",
-        level_title = "Winter wish %d",
     },
     confirm = {title = "Restart this winter wish?"},
     failed = {title = "One more winter wish?", subtitle = "THE MARKET WILL WAIT FOR YOU.", town = "VISIT MARKET"},

@@ -221,6 +221,7 @@ typedef struct {
     const char *rotate_text;/* message for the rotate prompt */
     color clear;            /* clear / letterbox colour */
     const char *data_dir;   /* asset root for relative paths (overridden by --data) */
+    const char *gamecenter_board; /* sole leaderboard for score reports; NULL allows any board */
     void (*init)(void);
     void (*frame)(float dt);
     void (*quit)(void);

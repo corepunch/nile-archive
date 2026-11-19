@@ -47,6 +47,7 @@ local function frame(dt) ... end       -- every frame: update, draw, react
 
 return {
     title = "Архив Нила", id = "nile-archive",        -- id names the save files
+    gamecenter_board = "influence",                 -- optional sole leaderboard for score reports
     design = size2(1200, 900), max_aspect = 16 / 9, landscape = true,
     rotate_text = "...", clear = color(14, 43, 46),
     init = init, frame = frame, quit = nil,
