@@ -92,25 +92,22 @@ function B.paint(box, image, state, alpha, face_colors, progress)
     if progress then progress_gauge(center, side, progress) end
 end
 
--- A circle's signed distance field for gfx.sdf_mask, built once. The circle's
--- radius is CIRCLE_RADIUS of the field's CIRCLE_TEXELS; outside is positive.
-local CIRCLE_TEXELS, CIRCLE_RADIUS, CIRCLE_RANGE = 64, 28, 8
-local circle_field
-local function circle_mask(face)
-    if not circle_field then
-        local px, half = {}, CIRCLE_TEXELS / 2
-        for y = 0, CIRCLE_TEXELS - 1 do
-            for x = 0, CIRCLE_TEXELS - 1 do
-                local d = math.sqrt((x + .5 - half) ^ 2 + (y + .5 - half) ^ 2) - CIRCLE_RADIUS
-                local v = math.floor(num.saturate(.5 + d / (2 * CIRCLE_RANGE)) * 255 + .5)
-                px[#px + 1] = string.char(v, v, v, 255)
-            end
-        end
-        circle_field = texture.from_pixels(table.concat(px), CIRCLE_TEXELS, CIRCLE_TEXELS)
+-- The portrait is cut to the face as a 16-gon with gfx.image_poly, never with
+-- gfx.sdf_mask: the renderer has one mask, and a medallion drawn inside a
+-- masked scene (the town under the dive wipe) must not replace or clear it.
+-- The polygon's sides touch the face's circle; its corners, 2% further out,
+-- hide under the brass lip drawn over the cut.
+local CUT_SIDES = 16
+local function portrait_cut(image, dst, face, tint)
+    local size = texture.size(image)
+    local c, r = face:center(), face.w / 2 / math.cos(math.pi / CUT_SIDES)
+    local pts, uvs = {}, {}
+    for i = 1, CUT_SIDES do
+        local p = c + vec2.polar(2 * math.pi * (i - .5) / CUT_SIDES, r)
+        pts[i] = p
+        uvs[i] = vec2((p.x - dst.x) / dst.w * size.w, (p.y - dst.y) / dst.h * size.h)
     end
-    local texel = face.w / (2 * CIRCLE_RADIUS)
-    gfx.sdf_mask(circle_field, rect.centered(face:center(), size2(CIRCLE_TEXELS * texel, CIRCLE_TEXELS * texel)),
-        CIRCLE_RANGE * texel, 0, 0)
+    gfx.image_poly(image, pts, uvs, tint)
 end
 
 -- A character's portrait in the round buttons' brass rim: the picture fills
@@ -141,10 +138,10 @@ function B.medallion(box, image, options)
     if size and size.w > 0 and size.h > 0 then
         local w = enamel.w * 1.08
         local h = math.max(enamel.h, w * size.h / size.w)
-        circle_mask(enamel)
-        gfx.image(image, rect(enamel:center().x - w / 2, enamel.y - enamel.h * .02, w, h),
+        portrait_cut(image, rect(enamel:center().x - w / 2, enamel.y - enamel.h * .02, w, h), enamel,
             color(255, 255, 255, math.floor((disabled and 140 or 255) * alpha + .5)))
-        gfx.sdf_unmask()
+        local lip = (well.w - enamel.w) / 2
+        gfx.ring(enamel:center(), enamel.w / 2 + lip / 2, lip, ink(rim.lip))
     end
     if options.progress then progress_gauge(center, side, options.progress) end
 end
