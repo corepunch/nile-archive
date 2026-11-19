@@ -186,13 +186,15 @@ needs no second code path.
 
 ## In the games
 
-- **Christmas Market and Relic Rush** (`screens.lua`): a dialog's entrance and
-  exit are two tweens on `R.dialog` (`entry`, `exit`), started by `R.open_dialog()`
-  and `R.close_dialog()`. The parts of the result screen (score, rewards,
-  buttons) join one timeline through `R.dialog_part(delay, duration)`, keyed by
-  draw order like controls; the first tap calls `R.dialog_skip()`, which completes
-  the timeline, and the smoke runs wait on `R.dialog_settled()`. `R.open_dialog(true)`
-  opens a dialog at rest, for stills.
+- **Christmas Market and Relic Rush** (`match3/game.lua`): the board fades into
+  its background over .30 s before a win or loss card enters. Picture reveals
+  and their dialogue finish before the board starts fading. The shared popup
+  cards lift and fade in over .24 s, then drift down and fade out over .18 s.
+  They keep text at its settled size and dim the scene with a translucent layer.
+  Navigation and reward collection happen at the end of the exit. Reduced
+  motion settles these transitions immediately. `R.open_dialog(true)` opens
+  a card at rest for stills. In reels, the results sections join one timeline
+  through `R.dialog_part(delay, duration)`; the first tap completes that timeline.
 - **Nile Archive**: `G.open_modal(kind)` builds a paused timeline for a popup's
   pop (`out_back`), its backdrop and the staggered stars; `main.lua` plays it once
   any dialogue is over. In a scene, each name pill's arrival, strike-through and
@@ -201,8 +203,7 @@ needs no second code path.
 - **The engine's modal stack** (`ui.modals`): a layer's backdrop fade is a tween
   on the layer.
 - **Reduced motion**: each game calls `tween.instant(R.reduced_motion)` every
-  frame, so every tween settles on its next update and no code path checks the
-  flag for itself.
+  frame, so its tweens settle on their next update.
 
 ![Christmas Market's result dialog arriving](../games/christmas-market/docs/screenshots/reward-entrance-reel.gif)
 ![Nile Archive's chapter-won popup arriving](../games/nile-archive/docs/screenshots/reward-entrance-reel.gif)

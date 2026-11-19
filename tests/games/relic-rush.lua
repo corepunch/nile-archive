@@ -206,6 +206,7 @@ end
 for level = 1, 10 do frame("shape-" .. level, "480x900", "--level " .. level .. " --frames 3") end
 reel("fx-shatter", 24, 2, "480x900", "--fx shatter --reel")
 reel("result", 36, 3, "480x900", "--victory --reel")
+reel("relic-rush-level-end", 29, 3, "480x900", "--lua tests/fixtures/level-end;games/relic-rush/lua;. --victory 1 --reel")
 frame("ui-skins", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --frames 3")
 frame("ui-layers", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --nested --frames 3")
 frame("ui-layout", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --layout --frames 3")

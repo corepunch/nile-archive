@@ -541,12 +541,14 @@ function Control.measure_override(n, _, skin, form)
 end
 function Control.paint(n, box, skin, form, options, event)
     local theme=skin.theme or ui.theme()
-    local enabled=options.interactive~=false and n.enabled~=false and (not n.enabled_field or form.values[n.enabled_field])
+    local enabled=n.enabled~=false and (not n.enabled_field or form.values[n.enabled_field])
+        and (options.interactive~=false or options.dim_controls==false)
+    local interactive=options.interactive~=false and enabled
     local selected=(n.kind=='toggle' or n.kind=='checkbox') and not not form.values[n.id]
     local flags=(enabled and 0 or ui.DISABLED)|(n.accent and ui.ACCENT or 0)|(selected and ui.ACTIVE or 0)|(n.flat and ui.FLAT or 0)
     local hitbox=options.hit_offset and box:offset(options.hit_offset) or box
     if options.clip then hitbox=hitbox:intersect(options.hit_offset and options.clip:offset(options.hit_offset) or options.clip) end
-    local st=ui.hit(hitbox,flags)
+    local st=ui.hit(hitbox,interactive and flags or (flags | ui.DISABLED))
     if options.suppress_hit then st.clicked,st.held,st.hot=false,false,false end
     local checkbox=n.kind=='checkbox'
     if not checkbox and not skin.button and not skin.button_states then ui.button_paint(box,flags,st) end
@@ -573,8 +575,8 @@ function Control.paint(n, box, skin, form, options, event)
     if st.focused and form.focus_visible and options.interactive~=false then
         if skin.focus then skin.focus(box,n) else gfx.round_rect_line(box:inflate(3),theme.radius or 8,2,theme.active) end
     end
-    local keyboard=options.interactive~=false and form.focus==n.id and (options.input.key==input.KEY_RETURN or options.input.key==input.KEY_SPACE)
-    if enabled and (st.clicked or keyboard) and not event then
+    local keyboard=form.focus==n.id and (options.input.key==input.KEY_RETURN or options.input.key==input.KEY_SPACE)
+    if interactive and (st.clicked or keyboard) and not event then
         form.focus=n.id
         if n.kind=='toggle' or checkbox then form:set(n.id,not selected) end
         return {id=n.action or n.local_id or n.id,kind=(n.kind=='toggle' or checkbox) and 'change' or 'click',value=form.values[n.id],source=n.source_id,key=n.item_key}
@@ -591,6 +593,12 @@ end
 function Form:measure_node(node,width,skin) return measure(node,width,skin or default_skin,self) end
 function Form:arrange_node(node,box,skin) arrange(node,box,skin or default_skin,self) end
 local paint
+local function paint_box(skin, box)
+    if not skin.transform then return box, 1, 1 end
+    local scale, offset, alpha=skin.transform()
+    return rect.make(offset+box:pos():scale(scale),box:size():scale(scale)), scale, alpha
+end
+
 local function paint_node(n,skin,form,options,event)
     if not visible(n,form.values) then return event end
     local box=n.box
@@ -603,7 +611,8 @@ local function paint_node(n,skin,form,options,event)
         opts.clip=options.clip and n.scroll_inner:intersect(options.clip) or n.scroll_inner
         opts.suppress_hit=options.suppress_hit or n.scroll_state.moved
         options=opts
-        gfx.clip(opts.clip);ui.block(opts.clip)
+        gfx.clip((paint_box(skin, opts.clip)))
+        ui.block(opts.hit_offset and opts.clip:offset(opts.hit_offset) or opts.clip)
     end
     local class=classes[n.kind]
     if class.paint then event=class.paint(n,box,skin,form,options,event) or event end
@@ -613,8 +622,8 @@ local function paint_node(n,skin,form,options,event)
         if length>0 then
             local viewport=n.scroll_inner
             local h=viewport.h*viewport.h/(viewport.h+length)
-            gfx.round_rect(rect(viewport:max().x-4,viewport.y+(viewport.h-h)*n.scroll_state.offset/length,3,h),
-                1.5,color(150,114,63,180))
+            local thumb,scale,alpha=paint_box(skin,rect(viewport:max().x-4,viewport.y+(viewport.h-h)*n.scroll_state.offset/length,3,h))
+            gfx.round_rect(thumb,1.5*scale,color(150,114,63,180*alpha))
         end
         gfx.unclip()
     else

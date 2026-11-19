@@ -113,8 +113,10 @@ moves. Blue tablets mark the board objective. Winning banks the resources
 earned in the three slots.
 Four large circular bonus sockets sit in one row below the centered board from the first
 expedition. Settings opens the Explorer's Guide,
-and Results shows the score and rewards. Dialogs reuse the engine's forms and
-cached blur. See the [top bar review](docs/screenshots/review/top-bar-moves/README.md)
+and Results shows the score and rewards. Popup cards lift and fade in over a
+dimmed background, then drift down as they close. The board fades away before
+the win or loss card arrives. Reduce Motion skips these transitions.
+See the [top bar review](docs/screenshots/review/top-bar-moves/README.md)
 and [shared UI API](../../docs/UI_ENGINE.md).
 
 

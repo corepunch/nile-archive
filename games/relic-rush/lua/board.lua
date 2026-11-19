@@ -83,15 +83,20 @@ end
 
 local function wrapf(v, m) return v - m * math.floor(v / m) end
 
-local function draw_backdrop()
+function R.draw_board_background(opacity)
     local scene = R.scenes[R.g.backdrop or rules.level_of(R.g).background or (R.g.level >= 5 and 2 or 1)]
     local tex = scene.tex and scene or R.backdrop
     local full = app.bleed()   -- the jungle runs on under the status bar and the home indicator
     local size = texture.size(tex)
+    local shade = opacity * 35 / 255
+    -- Composite the same tinted background at partial opacity during the board exit.
     gfx.bleed(true)
-    gfx.image(tex, R.backdrop_rect(size, full), color.WHITE)   -- engine layout: bottom-anchored
-    gfx.rect(full, rgba(5, 30, 29, 35))
+    gfx.image(tex, R.backdrop_rect(size, full), rgba(255, 255, 255, opacity * 220 / (1 - shade)))
+    gfx.rect(full, rgba(5, 30, 29, shade * 255))
     gfx.bleed(false)
+end
+
+local function draw_motes()
     for i = 0, 11 do   -- drifting motes of sunlight
         local p = vec2(20 + wrapf(i * 93 + R.now * (i % 2 == 1 and 3 or -4) + 480, 440), 170 + wrapf(i * 139 + R.now * 5, 620))
         gfx.circle(p, 1.5 + math.sin(R.now + i) * .5, rgba(255, 228, 139, 70 + 50 * math.sin(R.now + i)))
@@ -152,7 +157,8 @@ function R.board_floor()
 end
 
 function R.board_screen(inp, dt)
-    draw_backdrop()
+    R.draw_board_background(1)
+    draw_motes()
     local intro = R.intro
     R.draw_board_hud()
     R.draw_board_quests()

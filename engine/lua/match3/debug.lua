@@ -408,6 +408,7 @@ function D.bind(R, W)
             else
                 R.overlay = a == "guide" and R.OV_GUIDE or a == "pause" and R.OV_PAUSE or a == "failed" and R.OV_FAILED
                     or a == "confirm" and R.OV_CONFIRM or a == "complete" and R.OV_COMPLETE or R.OV_FINALE
+                if R.overlay == R.OV_FAILED then R.on_island, R.g.lost = false, true end
                 if R.overlay == R.OV_FINALE or R.overlay == R.OV_COMPLETE then island_with(WONDERS); R.prog.level = LEVELS; R.on_island = true end
             end
         end

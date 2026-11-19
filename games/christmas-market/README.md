@@ -17,8 +17,9 @@ The original transparent building atlas and the labeled reference sheet are pres
 
 The supplied portrait is now the identity reference for Noelle, the main character (`art/noelle-reference.jpg`). Her transparent cutout is used in dialogue. Her [portrait app icon](art/app-icon-1024.png) is installed in the iOS/macOS `AppIcon` catalogue; its opaque square master leaves corner masking to the OS. `python3 games/christmas-market/tools/prepare_character.py` reproduces the portrait resize and all icon sizes. Built-in ImageGen prompts are in `art/character-and-icon-prompts.json`.
 
-Building popup images and resource icons follow the panel’s entrance scale,
-position and opacity through the shared form skin.
+Building cards and their contents lift and fade in together. After a win or
+loss, the board fades away before the result card arrives. Cards fade out
+before moving on, with instant transitions under Reduce Motion.
 
 Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging

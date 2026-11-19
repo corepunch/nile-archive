@@ -25,6 +25,7 @@
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
 -- See docs/PORTRAIT_GAMES.md.
 local G = {}
+local POPUP_IN, POPUP_OUT, BOARD_OUT = .24, .18, .30
 
 ------------------------------------------------------------------- words
 
@@ -106,8 +107,6 @@ function G.state()
         -- A 9 x 12 board between the HUD and the bonus tray on a 480 x 900
         -- screen; the cell art is painted at a 26.5 px radius.
         HEX_R = 30,
-        hit_dy = 0,          -- where the open dialog's buttons sit below their layout
-
         intro = nil,
 
         -- overlays and board phases
@@ -121,9 +120,8 @@ function G.state()
 
         -- screens
         on_island = false,
-        overlay = 0, modal_for = 0,   -- modal_for: the dialog whose entrance is playing
-        dialog = nil,        -- the open dialog's motion (screens.lua: R.open_dialog)
-        modal_closing = false,
+        overlay = 0, modal_for = 0,
+        dialog = nil,
         inspect = -1, inspect_item = -1, zone_card = -1,
         reduced_motion = false, sound = true, test_mode = false,
         toast = nil,
@@ -407,9 +405,7 @@ function G.bind(R, over)
 
     -------------------------------------------------------------- paint
 
-    -- Dialogs animate through a paint transform (scale, offset, opacity);
-    -- hit testing always uses the untransformed layout, so a dialog is
-    -- clickable where it comes to rest.
+    -- Dialog paint follows the motion without changing the measured layout.
     local P = {scale = 1, offset = vec2(0, 0), alpha = 1}
     R.P = P
     local function reset_paint() P.scale, P.offset, P.alpha = 1, vec2(0, 0), 1 end
@@ -509,40 +505,24 @@ function G.bind(R, over)
 
     ------------------------------------------------------------ dialogs
 
-    -- The open dialog's motion, on the engine's tween module. Popups appear
-    -- and close at once, with no entrance or exit motion: they must never
-    -- wait on the frame clock to become visible (a stalled clock on device
-    -- left a dim with no panel), and the backdrop blur already costs the
-    -- opening frame. A dialog's parts (the results card) still arrive on one
-    -- timeline in reels (--reel); a tap skips to its end.
-    local function new_dialog()
-        return {entry = 0, exit = 0, parts = {}, n = 0, tl = nil, fresh = true}
-    end
-
     function R.open_dialog(settled)
         local old = R.dialog
-        if old then
-            tween.kill(old)
-            if old.tl then old.tl:kill() end
-        end
-        local d = new_dialog()
-        R.dialog = d
-        R.modal_closing = false
-        d.settled = settled or not app.arg("reel")
-        d.entry = 1
+        if old and old.tl then old.tl:kill() end
+        R.dialog = {entry = (settled or R.reduced_motion) and 1 or 0, exit = 0,
+            settled = settled or R.reduced_motion or not app.arg("reel"), parts = {}, n = 0, fresh = true, ready = false}
     end
 
-    -- Bank the reward and leave the dialog immediately.
-    function R.close_dialog()
-        R.modal_closing = false
-        R.claim_reward()
-        R.modal_for = R.overlay
+    -- Keep the old screen and its input barrier until the card has left.
+    local function close_popup(action)
+        if R.reduced_motion then action()
+        else R.dialog.after_exit = action end
     end
 
     -- Has the entrance, parts included, finished?
     function R.dialog_settled()
         local d = R.dialog
-        return d ~= nil and d.entry >= 1 and (d.tl == nil or d.tl:is_done())
+        return R.modal_for == R.overlay and d ~= nil and d.entry >= 1 and not d.after_exit
+            and (d.tl == nil or d.tl:is_done())
     end
 
     -- Jump the parts to their places, as the first tap on a result does.
@@ -676,8 +656,8 @@ function G.bind(R, over)
                     :set("next_title", next_step.title or "")
             end
         end, handle=function(event)
-            if event.id ~= "claim" or R.modal_closing then return end
-            if R.dialog_settled() then R.close_dialog() else R.dialog_skip() end
+            if event.id ~= "claim" then return end
+            if R.dialog_settled() then close_popup(R.claim_reward) else R.dialog_skip() end
         end})
     end
 
@@ -916,6 +896,8 @@ function G.bind(R, over)
             local replay = R.quest_model and R.prog.level >= rules.LEVELS and R.g.level < R.prog.level
             R.notice(replay and W.quest.replay_paused or W.notices.quit:format(R.g.level + 1))
         end
+    end, live=function(event)
+        return event.kind == "change" or event.id == "leaderboard"
     end})
 
     local confirm_form = ui.form{kind="column",panel=true,padding={36,22,36,18},gap=14,children={
@@ -930,12 +912,13 @@ function G.bind(R, over)
     end})
 
     local failed = W.failed
-    popup(R.OV_FAILED, ui.form{kind="column",panel=true,padding={32,24,32,22},gap=14,children={
+    R.failed_form = ui.form{kind="column",panel=true,padding={32,24,32,22},gap=14,children={
         match3.popup_header(failed.title, failed.subtitle),
         {kind="label",text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
         {kind="button",id="retry",text=failed.retry,height=50},
         {kind="button",id="town",text=failed.town,height=42,role="secondary"},
-    }}, {width=404, dismiss=false, handle=function(event)
+    }}
+    popup(R.OV_FAILED, R.failed_form, {width=404, dismiss=false, handle=function(event)
         if event.id == "retry" then R.start_level(R.g.level) else R.on_island, R.overlay = true, R.OV_NONE end
     end})
 
@@ -979,40 +962,60 @@ function G.bind(R, over)
     function R.overlays(dt)
         if R.overlay ~= R.modal_for then   -- a new dialog opens
             R.modal_for = R.overlay
-            R.open_dialog()
+            if R.overlay ~= R.OV_NONE then R.open_dialog()
+            else R.dialog = nil end
         end
         if R.overlay == R.OV_NONE then return end
         if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
         if R.overlay == R.OV_STORY_CHOICE then R.draw_story_choice(dt); return end
         local d = R.dialog
+        if d.after_exit then
+            d.exit = R.reduced_motion and 1 or math.min(1, d.exit + dt / POPUP_OUT)
+            if d.exit == 1 then
+                d.after_exit()
+                d.after_exit = nil
+                if R.overlay == R.modal_for then R.open_dialog() end
+                return
+            end
+        elseif not d.fresh then
+            d.entry = R.reduced_motion and 1 or math.min(1, d.entry + dt / POPUP_IN)
+        end
         d.n = 0
-        local entry, exit = d.entry, d.exit
-        ui.modal_layer(7, rgba(5, 22, 22, 185))
-        local scale = .96 + .04 * entry
-        -- dialogs are laid out on the 900-tall design: centre them on a taller screen
-        R.hit_dy = R.drop / 2
-        P.scale, P.offset, P.alpha = scale, vec2(240 * (1 - scale), 450 * (1 - scale) + 22 * (1 - entry) + 18 * exit + R.hit_dy), entry * (1 - exit)
-        local before = R.overlay
-        local modal = assert(popups[before], "overlay has no vertical popup form")
-        if modal.prepare and modal.prepare(d) == false then R.overlay = R.OV_NONE; reset_paint(); R.hit_dy = 0; return end
+        local modal = assert(popups[R.overlay], "overlay has no vertical popup form")
+        if modal.prepare and not d.after_exit and modal.prepare(d) == false then R.overlay = R.OV_NONE; return end
         local width = math.min(modal.width, R.SCREEN_W - 32)
         local _, height = modal.form:measure(width, skin)
-        local bounds = rect.centered(vec2(240, 450 + (modal.shift or 0)), size2(width, height))
-        R.modal_bounds = pr(bounds)
+        local center = vec2(240, 450 + (modal.shift or 0))
+        local bounds = rect.centered(center, size2(width, height))
+        local entry, exit = ease.out_cubic(d.entry), ease.in_out_cubic(d.exit)
+        local opacity = (.18 + .82 * entry) * (1 - exit)
+        ui.modal_layer(0, rgba(5, 22, 22, 185 * opacity))
+        -- Centre the design-space card in the phone's safe layout.
+        local hit_offset = vec2(0, R.drop / 2)
+        -- Lift and fade at a fixed text size so glyphs can reuse their cached rasterization.
+        P.offset = hit_offset + vec2(0, 24 * (1 - entry) + 20 * exit)
+        P.alpha = opacity
         local covered = R.leaderboard_active()   -- a board above this dialog owns the input
-        local event = modal.form:draw(bounds, skin, {hit_offset=vec2(0, R.hit_dy), interactive=not covered and not d.fresh, dt=dt,
+        local inp = input.get()
+        local interactive = not covered and d.ready and not d.after_exit
+        local event = modal.form:draw(bounds, skin, {hit_offset=hit_offset, interactive=interactive,
+            dim_controls=false, dt=dt, input=inp, reduced_motion=R.reduced_motion,
             paint_scope=function(group, draw)
                 local previous = R.section(table.unpack(group))
                 local action = draw()
                 set_paint(previous)
                 return action
             end})
-        if event then modal.handle(event) end
-        if R.overlay == before and modal.dismiss ~= false and not R.modal_closing and not covered
-                and ui.modal_dismiss(R.modal_bounds, {fresh=d.fresh}) then R.overlay = R.OV_NONE end
+        local visible_bounds = pr(bounds)
         d.fresh = false
+        d.ready = d.ready or (d.entry == 1 and not inp.down and not inp.released)
         reset_paint()
-        R.hit_dy = 0
+        if event then
+            if R.overlay == R.OV_RESULT or (modal.live and modal.live(event)) then modal.handle(event)
+            else close_popup(function() modal.handle(event) end) end
+        elseif modal.dismiss ~= false and ui.modal_dismiss(visible_bounds, {interactive=interactive, input=inp}) then
+            close_popup(function() R.overlay = R.OV_NONE end)
+        end
     end
 
     ----------------------------------------------------- shop and levels
@@ -1519,6 +1522,19 @@ function G.app(R)
     local island = require("island")
     local journey = require("journey")
     local LEVELS = rules.LEVELS
+    local elements = require("match3.elements_view")
+    local still = app.arg("shot") and not app.arg("reel")
+    local board_exit
+
+    local function draw_board(world, dt, fade, banners)
+        if fade < 1 then
+            R.board_screen(world, dt)
+            R.vfx_draw()
+            R.vfx_particles()
+            if banners then R.draw_board_banners(dt) end
+        end
+        if fade > 0 then R.draw_board_background(fade) end
+    end
 
     -- Town <-> board: the screen being left is covered (the town's camera dives
     -- into its newest building), then the other screen is uncovered while the
@@ -1540,6 +1556,7 @@ function G.app(R)
            and (not R.quiet or app.arg("dive")) then
             local label = R.on_island and nil or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
             dive = {t = 0, from_island = shown_island, town = dive_focus(), board = R.BOARD_CLIP:center(),
+                    board_gone = not shown_island and board_exit == BOARD_OUT,
                     style = dive_styles.get(app.arg("dive-style") or (W.dive and W.dive.style)),
                     theme = dive_styles.theme(W.dive), label = label, say = R.say}
         end
@@ -1547,11 +1564,10 @@ function G.app(R)
     end
     local function dive_screen(world, dt)
         local s = dive.style
+        local fade = dive.board_gone and 1 or 0
         if s.wipe then   -- both screens at once, the town masked to its side of the edge
             local u = num.saturate(dive.t / s.inn)
-            R.board_screen(world, dt)
-            R.vfx_draw()
-            R.vfx_particles()
+            draw_board(world, dt, fade)
             dive.focus = dive.town
             s.mask(dive, u)
             R.island_screen(world, dt)
@@ -1575,9 +1591,7 @@ function G.app(R)
             R.island_screen(world, dt)
             R.island.cam = cam
         else
-            R.board_screen(world, dt)
-            R.vfx_draw()
-            R.vfx_particles()
+            draw_board(world, dt, fade)
         end
         gfx.bleed(true)
         s.draw(dive, leaving, u)
@@ -1599,7 +1613,6 @@ function G.app(R)
         local board = R.leaderboard_active()
         R.layout()
         dive_watch()
-        local world = (R.overlay ~= R.OV_NONE or talking or board or dive) and input{pos = inp.pos, pinch = 1} or input.world()
         tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
         if app.arg("smoke") then (app.arg("campaign") and R.campaign_smoke or R.smoke)() end
         R.debug_frame()
@@ -1609,13 +1622,28 @@ function G.app(R)
 
         if not (dive and dive.t < dive.style.out) then R.board_update(dt) end   -- the board waits behind the dive
         R.vfx_update(dt)
-        ui.set_enabled(R.overlay == R.OV_NONE and not talking and not board and not dive)
+
+        local drawn_overlay = R.overlay
+        local at_result = drawn_overlay == R.OV_RESULT
+        local outcome = at_result or drawn_overlay == R.OV_FAILED
+        local revealing = at_result and elements.reveal_holding(R, rules)
+        local clear_due = at_result and not R.quiet and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
+        local story_wait = talking or revealing or clear_due
+        if outcome then
+            ui.block(app.bleed())
+            if not story_wait and not R.on_island then
+                board_exit = (R.reduced_motion or still) and BOARD_OUT
+                    or board_exit and math.min(board_exit + dt, BOARD_OUT) or 0
+            end
+        else board_exit = nil end
+
+        local interactive = R.overlay == R.OV_NONE and not talking and not board and not dive
+        local world = interactive and input.world() or input{pos = inp.pos, pinch = 1}
+        ui.set_enabled(interactive)
         if dive then dive_screen(world, dt)
-        elseif R.on_island then R.island_screen(world, dt) else R.board_screen(world, dt) end
-        if not R.on_island and not dive then
-            R.vfx_draw()
-            R.vfx_particles()
-            R.draw_board_banners(dt)
+        elseif R.on_island then R.island_screen(world, dt)
+        else
+            draw_board(world, dt, ease.in_out_cubic((board_exit or 0) / BOARD_OUT), true)
         end
         if app.arg("debug-walkthrough") and not talking and not board and not dive
             and R.overlay == R.OV_NONE then
@@ -1630,17 +1658,15 @@ function G.app(R)
         end
         R.draw_toast()
         ui.set_enabled(true)
-        local at_result = R.overlay == R.OV_RESULT
-        local revealing = at_result and require("match3.elements_view").reveal_holding(R, rules)
-        local clear_due = at_result and not R.quiet and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
-        local scene = clear_due and R.clear_scene and R.clear_scene()
+        local scene = clear_due and not revealing and R.clear_scene and R.clear_scene()
         if scene then R.draw_clear_scene(scene, inp) end
-        if not talking and not revealing and not scene and not clear_due then R.overlays(dt) end
+        if not story_wait and not dive and drawn_overlay == R.overlay
+            and (not outcome or board_exit == BOARD_OUT) then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
-        -- Keep the HUD above ordinary dialogs. Results, the guide and
+        -- Keep the HUD above ordinary dialogs. Level endings, the guide and
         -- leaderboard own the whole foreground.
-        local hud_above = R.overlay ~= R.OV_RESULT and R.overlay ~= R.OV_GUIDE and not board
+        local hud_above = not outcome and R.overlay ~= R.OV_GUIDE and not board
         if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end

@@ -85,6 +85,8 @@ shot("kudos", "480x900", "--level 5 --kudos 3 --frames 20")
 shot("goals-met", "480x900", "--level 5 --goals-met")
 -- the result dialog arriving on the motion module: 16 pictures, 6 frames apart
 reel("christmas-market-reward-entrance", 16, 6, "480x900", "--victory --reel")
+reel("christmas-market-level-end", 29, 3, "390x844",
+    "--lua tests/fixtures/level-end;games/christmas-market/lua;. --dialog failed --reel --safe-area 0,47,0,34")
 reel("christmas-market-town-dive", 48, 4, "480x900", "--city 3 --dive --dive-back 120 --reel")   -- Play: the town dives into the board and back
 shot("pause", "480x900", "--level 4 --dialog pause")
 shot("phone-pause", "390x844", "--level 4 --dialog pause --safe-area 0,47,0,34")

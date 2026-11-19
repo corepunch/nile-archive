@@ -424,18 +424,14 @@ do
     end
 end
 
--- Popups and rewards settle before the clock advances, in both games (a
--- stalled clock on device once left a dim with no panel). Reels still play
--- the results card's parts, and a tap skips them.
+-- Reels can stagger the results card's parts and skip to their settled state.
 do
     testing.reset()
-    local claimed = 0
-    local claim = R.claim_reward
-    R.claim_reward = function() claimed = claimed + 1 end
+    R.overlay, R.modal_for = R.OV_RESULT, R.OV_RESULT
+    R.reduced_motion = false
     R.open_dialog()
-    check(R.dialog.entry == 1 and R.dialog.fresh and R.dialog_settled(), "a dialog is visible on its opening frame")
     local first = R.dialog_part(.2, .3)
-    check(first.f == 1 and first.u == 1 and R.dialog_settled(), "result parts appear without waiting for the clock")
+    check(first.f == 1 and first.u == 1 and not R.dialog_settled(), "result parts are ready during the card entrance")
     local arg = app.arg
     app.arg = function(name) if name == "reel" then return "" end end -- luacheck: ignore 122
     R.open_dialog()
@@ -450,18 +446,15 @@ do
     R.dialog.n = 0
     check(R.dialog_part(.2, .3) == part, "parts are keyed by draw order")
     R.dialog_skip()
-    check(part.f == 1 and part.u == 1 and R.dialog_settled(), "a tap skips the parts to their places")
-    R.close_dialog()
-    check(claimed == 1 and not R.modal_closing, "the reward is banked on the closing frame")
+    check(part.f == 1 and part.u == 1, "a tap skips the parts to their places")
     R.open_dialog(true)
     R.dialog.n = 0
     check(R.dialog.entry == 1 and R.dialog_part(.5, .3).f == 1 and R.dialog_settled(), "stills open a dialog settled")
-    tween.instant(true)
+    R.reduced_motion = true
     R.open_dialog()
-    tween.update(1 / 60)
-    check(R.dialog.entry == 1 and R.dialog_settled(), "reduced motion settles the entrance on the next frame")
-    tween.instant(false)
-    R.claim_reward = claim
+    check(R.dialog.entry == 1 and R.dialog_settled(), "reduced motion opens the card at rest")
+    R.reduced_motion = false
+    R.overlay, R.modal_for = R.OV_NONE, R.OV_NONE
     testing.reset()
 end
 

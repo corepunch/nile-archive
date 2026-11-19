@@ -455,6 +455,9 @@ expeditions, story choice and leaderboard use the same root contract through
 `paint_group` hands its subtree's painting to that scope, which must call
 `draw()` and return its event. The results reel uses this to fade and lift
 sections inside their measured layout while input uses the final boxes.
+Scroll clipping and the scrollbar follow the skin's paint transform. Use
+`interactive=false, dim_controls=false` to block actions during motion while
+keeping the controls' enabled artwork.
 
 Custom painted dialogs share `ui.modal_dismiss(visible_bounds, options)`. It
 registers the full bleed area for capture and returns true for Back or an eligible

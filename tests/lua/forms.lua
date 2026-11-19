@@ -95,6 +95,10 @@ local was=form:get("sound")
 local event=form:draw(rect(0,0,300,160),skin,{input={key=input.KEY_RETURN}})
 check(event and event.id=="sound" and form:get("sound")~=was,"Return activates a focused bound toggle")
 check(not form:draw(rect(0,0,300,160),skin,{interactive=false,input={key=input.KEY_RETURN}}),"lower modal cannot activate via keyboard")
+local painted_disabled
+local passive_skin={button=function(_,st,n) if n.id=="sound" then painted_disabled=st.disabled end end,label=function()end}
+check(not form:draw(rect(0,0,300,160),passive_skin,{interactive=false,dim_controls=false,input={key=input.KEY_RETURN}})
+    and painted_disabled==false,"transitions can block input while retaining the enabled artwork")
 -- Data source replacement, row ownership and stable-key keyboard focus.
 local builds=0
 local list=ui.form{kind="column",children={{kind="list",id="topics",gap=8,item=function(item)
