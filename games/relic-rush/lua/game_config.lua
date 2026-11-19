@@ -24,7 +24,7 @@ return {
         kudos = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"},
     },
     notices = {
-        reward_building = "Resources banked. Open Buildings for the crew’s next request.",
+        reward_building = "Resources banked. Open Buildings to see what you can restore.",
         reward_story = "Resources banked. Spend them in the Build Shop.",
         reward_replay = "Resources banked. Spend them in the Build Shop.",
         all_open = "Your whole island is open to explore.",

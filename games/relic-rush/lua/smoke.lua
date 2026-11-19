@@ -71,7 +71,7 @@ local function campaign()
         local z = c:next_zone(R.prog.wallet)
         if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
         elseif island.next_step(c, R.prog.level) then
-            if island.next_quest(c, R.prog.level) then app.inject_click(R.town.buttons.build); wait = 10
+            if island.next_quest(c, R.prog.level) then app.inject_click(R.town.rail_targets.build); wait = 10
             else R.island_begin(island.next_step(c, R.prog.level), true) end
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10
@@ -178,14 +178,17 @@ function R.smoke()
         -- short wallet is topped up to the price of the well and the shrub.
         local cost = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost
         for slot = 1, 3 do R.prog.wallet[slot] = math.max(R.prog.wallet[slot], cost[slot]) end
-        app.inject_click(R.town.buttons.build); stage = 2   -- CHOOSE A LOCATION
-    elseif stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
-        app.inject_click(R.wonder_form.boxes.action:center()); stage = 3
+        app.inject_click(R.town.buttons.build); stage = 2
+    elseif stage == 2 then
+        assert(R.overlay == R.OV_SHOP, "smoke: Build opens the shop even when a restoration is pending")
+        local _, well = R.catalogue_tile("well")
+        assert(well and well.available, "smoke: the shop offers the funded Well")
+        assert(press_tile("well")); stage = 3
     elseif stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 4   -- PLACE & BUILD
     elseif stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
         if R.island.count ~= 2 then error("smoke: the wonder was not built") end   -- beside the crew's tent
-        R.open_catalogue("building"); shop.categories = 0; stage = 20
+        app.inject_click(R.town.buttons.build); shop.categories = 0; stage = 20
     elseif stage == 20 and R.overlay == R.OV_SHOP then
         if shop.categories < 2 then
             app.inject_click(R.catalogue_form.boxes.category_next:center())
@@ -327,6 +330,8 @@ function R.smoke()
         assert(R.quest_form:get("action") == R.words.quest.deliver and not R.quest_form.boxes.needs,
                "smoke: a filled request offers to hand it in")
         app.inject_click(R.quest_form.boxes.action:center() + vec2(0, R.drop / 2)); stage = 49
+    elseif stage == 49 and R.overlay == R.OV_QUEST_HANDOFF and R.dialog_settled() then
+        app.inject_click(R.quest_handoff_form.boxes.continue:center() + vec2(0, R.drop / 2))
     elseif stage == 49 and R.overlay == R.OV_NONE then   -- its scene has been tapped through above
         local rail = R.quest_rail()
         assert(R.quest_state().done.chart and R.prog.story_seen["quest-chart"] and #rail == 2 and rail[2].id == "supper",

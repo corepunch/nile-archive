@@ -1157,17 +1157,6 @@ function G.bind(R, over)
 
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
 
-    local function open_building(filter)
-        if island.next_quest then
-            local quest, step = island.next_quest(R.island, R.prog.level)
-            if quest then
-                R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER
-                return
-            end
-        end
-        R.open_catalogue(filter)
-    end
-
     -- Play starts the next level, or resumes it. With every level cleared
     -- there is none, and it opens the "You won" card instead.
     local function can_play() return R.prog.level < LEVELS end
@@ -1185,11 +1174,14 @@ function G.bind(R, over)
             capsules = R.header_capsules,
             pause = function() R.overlay = R.OV_PAUSE end,
             middle_icon = function(at) R.town_middle_icon(at) end,
-            build = function() open_building(owes_building() and "wonder" or "building") end,
+            build = function() R.open_catalogue(owes_building() and "wonder" or "building") end,
             rail = function() return R.quest_rail and R.quest_rail() or {} end,
-            -- "build" is the next building: it opens the card Build opens.
             rail_tap = function(id)
-                if id == "build" then open_building(owes_building() and "wonder" or "building") else R.open_quest(id) end
+                if id ~= "build" then R.open_quest(id)
+                elseif island.next_quest then
+                    local quest, step = island.next_quest(R.island, R.prog.level)
+                    if quest then R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER end
+                end
             end,
             -- The toolbar's round face, with the request's piece on it.
             rail_paint = function(box, entry, st)
