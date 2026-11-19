@@ -59,11 +59,7 @@ return ui.skin{
                         gfx.ngon(out:center(), out.h * .5, 4, 0, color.alpha(color.hex(0xC9A464), alpha))
                     end},
                 }}},
-                -- The upright rule between groups of amounts, in the same ink.
-                popup_divider = {normal = {layers = {
-                    {fill = "#C9A464", radius = 1, inset = {8, 4, 8, 4}},
-                }}},
-                -- A gathered amount: the board goals' tick (Skin:paint_tick).
+                -- A gathered amount: the met-goal tick (Skin:paint_tick).
                 done_tick = {normal = {layers = {
                     {paint = function(box, _, _, skin) skin:paint_tick(box) end},
                 }}},

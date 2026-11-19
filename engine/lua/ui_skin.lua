@@ -427,13 +427,19 @@ function Skin:resource_icon_box(box, role)
     return rect(box.x - box.h * (spec.icon_overhang or .12), box:center().y - side * .5, side, side)
 end
 
--- The met-goal tick filling `box` (logical coordinates), in the resource
--- spec's colours (done, done_outline, done_shadow) for `role`. Goal capsules
--- and the cards' gathered amounts share it.
+-- The met-goal tick filling `box` (logical coordinates): the skin's `tick`
+-- image when the game registers one (skin.images.tick), otherwise strokes in
+-- the resource spec's colours (done, done_outline, done_shadow) for `role`.
+-- Goal capsules and the cards' gathered amounts share it.
 function Skin:paint_tick(box, role)
-    local spec = control_spec(self, 'resource', {kind = 'resource', role = role}) or {}
     local side = math.min(box.w, box.h)
     local out, scale, alpha = transformed(self, rect.centered(box:center(), size2(side, side)))
+    local image = rawget(self.images, 'tick')
+    if image then
+        gfx.image(image, out:fit(texture.size(image)), color(255, 255, 255, math.floor(255 * alpha + .5)))
+        return
+    end
+    local spec = control_spec(self, 'resource', {kind = 'resource', role = role}) or {}
     local pts = {out:point(vec2(.12, .52)), out:point(vec2(.4, .8)), out:point(vec2(.9, .2))}
     local function tint(v, default) return color.alpha(parse_color(self, v or default), alpha) end
     local width = out.w

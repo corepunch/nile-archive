@@ -671,8 +671,8 @@ function G.bind(R, over)
     -- and what the building brings sit side by side, after Cradle of Rome,
     -- and the amounts narrow together when five share the row. The list
     -- grows into the row's height, so a group of icons alone stands as tall
-    -- as one of figures. A rule in the skin's popup_divider divides groups.
-    local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 18, 372
+    -- as one of figures. A wider gap, with no rule, sets the groups apart.
+    local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 30, 372
     local amount_width = 96
     local function amounts(id, caption, visible, width)
         return {kind="column", gap=5, visible_field=visible, children={
@@ -682,8 +682,8 @@ function G.bind(R, over)
             end},
         }}
     end
-    local function divider(visible)
-        return {kind="spacer",panel=true,role="popup_divider",width=GROUP_GAP,visible_field=visible}
+    local function group_gap(visible)
+        return {kind="spacer",width=GROUP_GAP,visible_field=visible}
     end
 
     -- The building card: a story building or a shop item, to build or move.
@@ -700,7 +700,7 @@ function G.bind(R, over)
             {kind="row", visible_field="show_amounts", children={
                 {kind="spacer",grow=1},
                 amounts("price", W.card.price, "show_price"),
-                divider("show_both"),
+                group_gap("show_both"),
                 amounts("gets", W.card.gets, "show_gets"),
                 {kind="spacer",grow=1},
             }},
@@ -796,7 +796,7 @@ function G.bind(R, over)
             {kind="row",visible_field="show_amounts",children={
                 {kind="spacer",grow=1},
                 amounts("needs", W.card.missing, "show_needs", 96),
-                divider("show_both"),
+                group_gap("show_both"),
                 amounts("gets", W.card.gets, "show_gets", 96),
                 {kind="spacer",grow=1},
             }},
@@ -1721,6 +1721,8 @@ function G.app(R)
         R.board_art = art.load()
         R.hud_art = art.load_hud()
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
+        -- The painted green tick marks every met amount: board goals and cards.
+        R.skin.images.tick = R.shop_built_art
         -- The neutral skin has no life icon: borrow the game's own HUD atlas.
         R.life_art = R.hud_art.life or require("match3").hud(require("match3_hud")).life
         if app.arg("art-states") then
