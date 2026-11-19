@@ -93,9 +93,11 @@ Buildings stand on a grid of whole tiles. [docs/BUILDINGS.md](docs/BUILDINGS.md)
 - **Space buildings with `city.clearance`, not `size`.** `size` is the base the art shows. To keep buildings further apart, raise `city.clearance`, which adds tiles around every base. Don't inflate `size` for that: it scales the sprite up.
 - **Snap with the type.** Pass the building type to `city_snap` / `c:snap(p, type)` so the footprint lands on whole tiles. Points you hand-place on the island (seed buildings, showcase spots) should go through it too.
 
-## Canonical hex tile artwork
+## Board artwork registration
 
-All games use the engine's flat-top hex registration in [engine/art/hex-tile/README.md](engine/art/hex-tile/README.md). When art fills a board tile, author every state against that mask or the matching source-atlas template; apply the same canonical mask when registering full-bleed artwork. Draw at the board's actual face radius. Do not use a perspective box or a point-up hex to fill the cell. Verify each filled runtime state with `python3 tools/hex_tile_art.py <art.png> --mode fill --strict --overlay-dir /tmp/hex-review`; use the documented `frame` or `object` mode only for intentionally open or free-standing artwork. Inspect the overlays and representative in-game captures at supported sizes. Record all source images, authored states and registration transforms in the game's catalogue.
+Register artwork against the geometry of the board that draws it. Square boards use square cells. Fit free-standing pieces inside the square at their center of opacity and allow for the live scale and selection animation. Author full-cell art and its states against the square tile template.
+
+For hex boards, use the flat-top mask in [engine/art/hex-tile/README.md](engine/art/hex-tile/README.md) and draw full-cell sprites at the actual face radius. Verify fills with `python3 tools/hex_tile_art.py <art.png> --mode fill --strict --overlay-dir /tmp/hex-review`. Use `frame` or `object` for intentionally open or free-standing artwork. Inspect representative in-game captures at supported sizes. Record source images, authored states and registration transforms in the game's catalogue.
 
 ## Repository conventions
 

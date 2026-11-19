@@ -37,7 +37,6 @@ function M.reward_breakdown(g, wonders, progress)
     local kind = M.wonder_at(g.level + 1)
     local w = kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    -- The rink's and presents' takings pay on every win, as Rome's citizens do.
     local income = g.win_income or purse()
     local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
     if first and w and app.arg("debug-walkthrough") then

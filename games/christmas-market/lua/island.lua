@@ -25,7 +25,11 @@ M.buildings, M.wonders = M.catalogue, {}
 -- (big pieces on a foundation slab). The "building" category here is props
 -- (benches, lamps, snowmen, presents), so it is decoration unless marked.
 local HOUSES = {wonder = true, cottage = true}
-for _, d in ipairs(M.buildings) do d.decoration = not (HOUSES[d.category] or d.road) end
+M.kinds = {}
+for i, d in ipairs(M.buildings) do
+    d.decoration = not (HOUSES[d.category] or d.road)
+    M.kinds[d.key] = i - 1
+end
 for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
 
 function M.wonder_count(c)

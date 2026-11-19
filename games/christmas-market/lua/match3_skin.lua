@@ -3,14 +3,14 @@ local atlases = require("match3_atlases")
 return {
     sheets={atlases.pieces, atlases.blockers, atlases.cells, atlases.fx},
     button_centers={
-        ["booster-firework-icon"]={0.4880637,0.5172557},
-        ["booster-hourglass-icon"]={0.4996101,0.4992696},
-        ["booster-mixer-icon"]={0.4964805,0.5280475},
-        ["booster-plus-icon"]={0.4992401,0.5035030},
-        ["booster-shield-icon"]={0.4963791,0.4848329},
-        ["booster-star-icon"]={0.5083288,0.5081434},
-        ["market-10"]={0.5002468,0.5594651},
-        ["market-5"]={0.4960938,0.5000000},
+        ["booster-firework-icon"]={0.5032413,0.5007027},
+        ["booster-hourglass-icon"]={0.5013453,0.4987591},
+        ["booster-mixer-icon"]={0.5006438,0.4962045},
+        ["booster-plus-icon"]={0.4986646,0.5003072},
+        ["booster-shield-icon"]={0.5023374,0.5019992},
+        ["booster-star-icon"]={0.5003707,0.4961590},
+        ["market-10"]={0.4994015,0.5035466},
+        ["market-5"]={0.4992643,0.4973654},
     },
     images={
         ["background"]="board/backs/background.jpg",

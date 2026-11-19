@@ -108,20 +108,23 @@ function A.draw_catalogue(R)
     R.say_at("ARTWORK CATALOGUE", vec2(240, 125), 26, R.PAL_GOLD, 420)
     local pieces = economy.pieces
     for k = 0, #pieces do
-        local x, y = 65 + k % 4 * 100, 147 + k // 4 * 60
-        gfx.image(R.board_art["market-" .. k], rect(x, y, 46, 46), color.WHITE)
-        R.say_at(pieces[k].name, vec2(x + 23, y + 50), 11, R.PAL_CREAM, 98)
+        local x, y = 65 + k % 4 * 100, 146 + k // 4 * 49
+        gfx.image(R.board_art["market-" .. k], rect(x, y, 43, 43), color.WHITE)
+        R.say_at(pieces[k].name, vec2(x + 21.5, y + 43), 11, R.PAL_CREAM, 98)
     end
-    for i, name in ipairs{"cell-normal", "tablet-single", "tablet-double"} do
+    for i, cell in ipairs{{"square-plain", "Plain cell"}, {"square-target", "Teal pane"}, {"square-double", "Green pane"}} do
         local x = 104 + (i - 1) * 112
-        gfx.image(R.board_art["tile-" .. name], rect(x, 395, 48, 48), color.WHITE)
-        R.say_at(name, vec2(x + 24, 448), 11, R.PAL_CREAM, 88)
+        gfx.image(R.board_art[cell[1]], rect(x, 395, 48, 48), color.WHITE)
+        R.say_at(cell[2], vec2(x + 24, 448), 11, R.PAL_CREAM, 88)
     end
-    local names = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
-    for i, name in ipairs(names) do
-        local x, y = 46 + (i - 1) * 68, 473
-        gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
-        R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
+    local overlays = {{"chain-square-1", "Chain"}, {"chain-square-2", "Two chains"},
+        {"ice-square-1", "Cracked ice"}, {"ice-square-2", "Ice"}, {"square-selected", "Selection"}}
+    for i, layer in ipairs(overlays) do
+        local x, y = 56 + (i - 1) * 80, 473
+        local tile = rect(x, y, 48, 48)
+        gfx.image(R.board_art["square-target"], tile, color.WHITE)
+        gfx.image(R.board_art[layer[1]], tile, color.WHITE)
+        R.say_at(layer[2], vec2(x + 24, y + 60), 11, R.PAL_CREAM, 76)
     end
     for col, state in ipairs(A.states) do
         R.say_at(state, vec2(62 + (col - 1) * 88, 571), 12, R.PAL_GOLD, 86)

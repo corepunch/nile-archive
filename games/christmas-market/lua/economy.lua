@@ -10,24 +10,28 @@ local E = {
         {name="Materials", kind=4},
     },
     pieces={
-        [0]={name="Holly"},
+        [0]={name="Snow-dusted fir"},
         {name="Blue mitten"},
-        {name="Silver star coin", slot=1, amount=3},
+        {name="Silver snowflake coin", slot=1, amount=3},
         {name="Gold bell coin", slot=1, amount=5},
         {name="Bundled pine", slot=3, amount=5},
         {name="Farrier's hammer"},
-        {name="Toy blocks", slot=3, amount=7},
-        {name="Gingerbread star", slot=2, amount=4},
-        {name="Spiced cider", slot=2, amount=3},
-        {name="Wrapped gift", slot=1, amount=6},
+        {name="Toy blocks", slot=1, amount=6},
+        {name="Gingerbread man", slot=2, amount=4},
+        {name="Mulled wine", slot=2, amount=3},
+        {name="Wrapped gift", slot=1, amount=7},
         {name="Candle lantern"},
         {name="Hot cocoa", slot=2, amount=5},
-        {name="Carol bell", slot=1, amount=7},
+        {name="Dressed stone", slot=3, amount=7},
         {name="Ice pendant", slot=1, amount=8},
         {name="Glass bauble", slot=1, amount=9},
         {name="Candy cane"},
+        {name="Pretzel", slot=2, amount=6},
+        {name="Ceramic snowman", slot=1, amount=10},
+        {name="Carved reindeer", slot=1, amount=11},
+        {name="Santa hat", slot=1, amount=12},
     },
-    CAMPAIGN_VERSION=5,
+    CAMPAIGN_VERSION=6,
     BONUS_THRESHOLD=bonuses.THRESHOLD,
     SPECIAL_KIND=0,
 }
@@ -41,12 +45,11 @@ E.bonus_slots, B = bonuses.slots{
     hourglass={icon="booster-hourglass", frame="booster-hourglass-icon"},
     mixer={icon="booster-mixer", frame="booster-mixer-icon", name="Wind-up top"},
     lightning={icon="booster-lantern", frame="market-10", name="Candle lantern"},
-    star={icon="booster-star", frame="booster-star-icon", name="Shooting Star"},
+    star={icon="booster-star", frame="booster-star-icon"},
 }
 E.bonuses = B
 
--- The five positions start green, blue, silver, gold and red. The pine
--- bundle replaces the blue mitten while keeping a blue accent on its tie.
+-- The five positions start green, blue, silver, gold and red.
 local BASE = {0, 1, 2, 3, 15}
 
 -- Building keys and clear gates are campaign data. The engine manages bonus
@@ -57,21 +60,21 @@ E.unlocks = {
     {building="lumber", after=4, line=2, kind=4},
     {building="gingerbread_house", after=5, bonus=B.bomb},
     {building="bakery", after=7, line=5, kind=7},
+    {building="chapel", after=8, line=2, kind=12},
     {building="cocoa", after=9, line=5, kind=11},
     {building="santa_workshop", after=11, bonus=B.shield},
-    {building="toys", after=13, line=2, kind=6},
+    {building="toys", after=13, line=4, kind=6},
     {building="post_office", after=14, bonus=B.hourglass},
     {building="gifts", after=16, line=4, kind=9, bonus=B.plus},
-    {building="log_cabin", after=17, income=purse(0, 15, 0)},
+    {building="log_cabin", after=17, line=5, kind=16},
     {building="candles", after=19, bonus=B.lightning},
-    {building="chapel", after=20, line=4, kind=12},
     {building="igloo", after=21, line=4, kind=13},
     {building="carousel", after=23, bonus=B.mixer, income=purse(0, 30, 0)},
     {building="sleigh", after=24, bonus=B.star},
     {building="giant_ornament", after=25, line=4, kind=14},
-    {building="rink", after=26, income=purse(25, 0, 0)},
-    {building="presents", after=27, income=purse(0, 0, 20)},
-    {building="tree", after=29, income=purse(0, 25, 0)},
+    {building="rink", after=26, line=4, kind=17},
+    {building="presents", after=27, line=4, kind=18},
+    {building="tree", after=29, line=4, kind=19},
 }
 bonuses.index_unlocks(E.unlocks)
 

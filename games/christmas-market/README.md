@@ -101,7 +101,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 ## Story
 
-The ten playable wishes reach the first market chapter. The Welcome arch, Lumber workshop, Gingerbread bakery and Hot cocoa kiosk carry the story. The Reindeer stable and Gingerbread house join between them. The full [story archive](docs/story.md) includes the later chapters.
+The ten playable wishes reach the first market chapter. The Welcome arch, Lumber workshop, Gingerbread bakery and Hot cocoa kiosk carry the story. The Reindeer stable, Gingerbread house and Snowy chapel join between them. The full [story archive](docs/story.md) includes the later chapters.
 
 `lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/lua/match3/game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
 
@@ -114,7 +114,7 @@ The ten playable wishes reach the first market chapter. The Welcome arch, Lumber
 Build with `make CFLAGS="-O2 -g -Werror" christmas-market build/test/christmas-market`.
 Run `build/test/christmas-market --extended "rules campaign_play" "rules christmas" "smoke game" "smoke campaign"`
 under Xvfb on Linux. The extended campaign earns its wallet from real
-matches and checks the ten wishes and six playable purchases. The standard
+matches and checks the ten wishes and seven playable purchases. The standard
 smoke uses real input for a win, construction, building pickup and movement,
 decoration shopping, replay and the next level. The campaign smoke prepares
 each board and the wallet for one real winning move, then drives Collect,

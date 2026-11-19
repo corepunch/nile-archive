@@ -140,73 +140,73 @@ Play is the largest control.
 ## Campaign booster buttons
 
 The four slots use the [shared enamel painter](../../../art/match3-buttons/README.md).
-The [asset manifest](../art/manifest.json) assigns a frame to each rank. The
-hammer centers the bounds of its silhouette. The other boosters use their
-centers of opacity. Both the full-color artwork and the disabled inset use
-the same anchor. The shared engine shows the fill arriving at the meter, and
-each slot stops at one use. [All eight icons in all five button states](screenshots/review/shared-bonuses/art-states.jpg).
+The [asset manifest](../art/manifest.json) assigns a painted frame to each rank.
+The full-color artwork and the disabled inset both use its center of opacity.
+The engine fills the meter up to one use. [Eight icons in all five button states](screenshots/review/winter-stalls/bonus-states.jpg).
 
 ## Market goods and tools
 
-Built-in ImageGen revised the [previous 4×4 sheet](../art/market-goods/winter-pieces.png)
-into the transparent [4×5 master](../art/market-goods/winter-coins-and-boosters.png).
-The [prompt](../art/market-goods/winter-coins-and-boosters-prompt.txt) includes
-the two coins, natural wood and the original four booster motifs. The
-first sixteen cells hold market pieces, and the final row starts with the
-firework and comet. A targeted [ImageGen revision](../art/market-goods/winter-thick-hammer.png)
-supplies the thicker hammer in row two, column two. Its [edit prompt](../art/market-goods/winter-thick-hammer-prompt.txt)
-specifies the larger enamel head and wider handle. The [shared bonus sheet](../art/market-goods/shared-bonuses.png)
-contains all eight coordinated designs from [one prompt](../art/market-goods/shared-bonuses-prompt.txt).
-The four additional ranks register from its authored shield, cross, hourglass
-and top bays, with the four existing motifs taken from their prior masters. The [registration record](../art/market-goods/registration.json)
-stores each source crop, proportional fit and offset in its 128 px slot.
-The crop takes the object's solid bounds with four pixels of edge padding.
-The fit preserves source alpha inside the engine's flat-top hex inset.
+Built-in ImageGen painted the [4×6 winter stalls atlas](../art/market-goods/winter-stalls.png)
+in one pass from the [full atlas prompt](../art/market-goods/winter-stalls-prompt.txt).
+The [expanded 4×7 atlas](../art/market-goods/winter-stalls-premium.png) repeats
+the full set and paints the three late collectibles together in its final row.
+Its [prompt](../art/market-goods/winter-stalls-premium-prompt.txt) references the
+first atlas, the Rome II comparison strip and the Relic Rush bonus pieces.
+The first atlas's wider gutters make it the source for the main set. Dressed
+stone reuses the exact painted Relic Rush piece at column five, row one of
+[its campaign atlas](../../relic-rush/art/registered/campaign-pieces.png).
+The [registration record](../art/market-goods/registration.json) saves each
+source crop, proportional fit, offset and alpha-weighted center in its 128 px
+slot. The crop takes the object's solid bounds with four pixels of edge
+padding. The fit preserves source alpha inside the square cell's 9 px inset.
+Every center of opacity is within half a pixel of the slot center on both axes.
 
-| Slot | Piece | Dominant color | Role |
+| Atlas slot | Piece | Dominant color | Role |
 | ---: | --- | --- | --- |
-| 0 | Holly | Green | Score at the opening. |
-| 1 | Blue mitten | Blue | Score until the lumber workshop. |
-| 2 | Silver star coin | Silver | +3 Tokens. |
+| 0 | Snow-dusted fir | Evergreen | Score at the opening. |
+| 1 | Blue mitten | Royal blue | Score until the lumber workshop. |
+| 2 | Silver snowflake coin | Silver | +3 Tokens. |
 | 3 | Gold bell coin | Gold | +5 Tokens and the Tokens wallet icon. |
-| 4 | Bundled pine | Brown with a blue tie | +5 Materials from the lumber workshop and the Materials wallet icon. |
-| 5 | Farrier's hammer | Green | +3 Hammer charge from the stable. |
-| 6 | Toy blocks | Brown with a blue tie | +7 Materials from the later Toymaker's workshop. |
-| 7 | Gingerbread star | Red | +4 Treats from the bakery. |
-| 8 | Spiced cider | Red | +3 Treats from the Welcome arch. |
-| 9 | Wrapped gift | Violet | +6 Tokens from the later wrapping pavilion. |
-| 10 | Candle lantern | Green | +3 Lightning charge from the later Candlelight shop. |
-| 11 | Hot cocoa | Red | +5 Treats from the cocoa kiosk and the Treats wallet icon. |
-| 12 | Carol bell | Violet | +7 Tokens from the later snowy chapel. |
-| 13 | Ice pendant | Violet | +8 Tokens from the later igloo. |
-| 14 | Glass bauble | Violet | +9 Tokens from the later giant bauble. |
-| 15 | Candy cane | Red | Score until the Welcome arch. |
-| 16 | Firework Bomb | Cranberry | Replaces the hammer in the first slot and hits a 3×3 square. |
-| 17 | Shooting Star | Ice blue | Replaces the lantern and clears the chosen kind. |
-| 18 | Frost shield | Blue | Hits the chosen row. |
-| 19 | Wish cross | Purple | Replaces the shield and replenishes a resource or part of another charge. |
-| 20 | Hourglass | Gold and blue | Adds five moves. |
-| 21 | Wind-up top | Blue and silver | Replaces the hourglass and shuffles the pieces. |
+| 4 | Bundled pine | Chestnut brown | +5 Materials from the lumber workshop and the Materials wallet icon. |
+| 5 | Farrier's hammer | Dark steel and oiled wood | +3 Hammer charge from the stable. |
+| 6 | Toy blocks | Honey wood | +6 Tokens from the later Toymaker's workshop. |
+| 7 | Gingerbread man | Baked brown with ivory icing | +4 Treats from the bakery. |
+| 8 | Mulled wine | Cranberry | +3 Treats from the Welcome arch. |
+| 9 | Wrapped gift | Ruby red and cream | +7 Tokens from the later wrapping pavilion. |
+| 10 | Candle lantern | Black iron and amber | +3 Lightning charge from the later Candlelight shop. |
+| 11 | Hot cocoa | Ivory and chocolate | +5 Treats from the cocoa kiosk and the Treats wallet icon. |
+| 12 | Dressed stone | Slate gray | +7 Materials from the chapel. |
+| 13 | Ice pendant | Sapphire blue | +8 Tokens from the later Igloo. |
+| 14 | Glass bauble | Amber gold | +9 Tokens from the later Giant bauble. |
+| 15 | Candy cane | Red and ivory | Score until the Welcome arch. |
+| 16 | Firework Bomb | Midnight indigo | Replaces the hammer and hits a 3×3 square. |
+| 17 | Faceted star | Turquoise | Replaces the lantern and clears the chosen kind. |
+| 18 | Frost shield | Fir green and pewter | Hits the chosen row. |
+| 19 | Wish cross | Copper orange | Replaces the shield and replenishes a resource or part of another charge. |
+| 20 | Hourglass | Dark brass and teal | Adds five moves. |
+| 21 | Wind-up top | Royal blue and brass | Replaces the hourglass and shuffles the pieces. |
+| 22 | Pretzel | Baked amber | +6 Treats from the later Log cabin. |
+| 23 | Ceramic snowman | Ivory and plum | +10 Tokens from the later Winter skating rink. |
+| 24 | Carved reindeer | Walnut | +11 Tokens from the later Pile of presents. |
+| 25 | Santa hat | Crimson and ivory | +12 Tokens from the later Christmas tree. |
 
 `art/registered/market-goods.png` packs into `data/board/pieces.png` as
-`market-0` through `market-15` and six named `booster-*-icon` frames. The board uses each idle sprite for swaps
-and clears, with the existing selection and hint overlays and authored
-single and double tinsel and ice layers. Every charging piece also sits on its enamel booster face in normal,
-selected, pressed, hover and disabled states.
-The wallet, prices and results share the three
-currency icons. The [color map and review](market-pieces.md) include native
-captures of the board at both phone sizes, the bakery's reward card, the
-guide, the win result and the booster catalogue.
+`market-0` through `market-19` and six named `booster-*-icon` frames. Each base
+sprite is used for idle, swap and clear, with the game's selection and hint
+overlays and authored tinsel and ice. The eight charging pieces each sit on
+the shared enamel face in normal, selected, pressed, hover and disabled states.
+The wallet, prices and results share the three currency icons.
+[Native board, construction and artwork captures](market-pieces.md#in-game-review).
 
-Live pieces draw their 128 px canvas, including its transparent margins, at
-106% of the cell step. This is about 12% larger than the former board scale.
-The [size review](square-match3.md#piece-size) shows the new silhouettes and
-clearance around chains and ice.
+Live pieces draw their 128 px canvas at 106% of the cell step. The square
+registration retains the corners for diagonal tools and keeps silhouettes
+inside a cell at the maximum selection scale. The
+[size review](square-match3.md#piece-size) shows the live result.
 
 ```sh
 python3 games/christmas-market/tools/prepare_market_goods.py
 python3 tools/match3_atlas.py
-python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x6 --cells 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 --mode object --strict --overlay-dir build/winter-boosters-registration
+python3 games/christmas-market/tools/prepare_market_goods.py --check
 ```
 
 ## Story pieces

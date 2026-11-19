@@ -106,7 +106,7 @@ for level=1,rules.LEVELS do
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
 check(finds == 1, "the cocoa find does not consume a piece slot")
-check(c.count==6 and c.open==7 and p.wallet[4]==10,'ten clears open six stalls and two new regions')
+check(c.count==7 and c.open==7 and p.wallet[4]==10,'ten clears open seven stalls and two new regions')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth stall')
 
 R.prog = {level=0, wallet=purse(), completed={level=0, rng=4, moves=10, score=400, earnings={33, 6, 9}}}
@@ -135,6 +135,19 @@ save.write("shared-market-tools", R.serialize_campaign)
 R.prog.bonus_charge = nil
 save.read("shared-market-tools", R.serialize_campaign)
 check(R.prog.bonus_charge[1] == 90 and R.prog.bonus_charge[4] == 37, "shared slot storage round-trips")
+
+local chapel = island.ladder_position[island.kinds.chapel]
+local cocoa = island.ladder_position[island.kinds.cocoa]
+save.write("pre-chapel-permits", function(s)
+    s:int("market_resources", 5)
+    s:int("ladder_waived", 1 << 5) -- Cocoa was the sixth permit.
+end)
+R.prog.level = 8
+save.read("pre-chapel-permits", R.serialize_campaign)
+check(island.waived(c)[cocoa] and not island.waived(c)[chapel], "old permit waivers still belong to their stalls")
+R.prog.level = 9
+save.read("pre-chapel-permits", R.serialize_campaign)
+check(island.waived(c)[chapel], "existing players who passed the chapel gate can build it at their leisure")
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false

@@ -26,7 +26,9 @@ sprite, footprint, ownership and price, with a disabled action for unavailable
 stock. The category arrows stay above the list.
 
 Prices show the Tokens, Treats and Materials deducted at confirmed placement.
-The bakery costs 300 Tokens and 200 Materials. The shop reserves the cost of
+The bakery costs 300 Tokens and 200 Materials. The chapel costs 80 Tokens and
+65 Materials, and adds dressed stone to the next board after the eighth wish.
+The shop reserves the cost of
 earned stalls when checking decoration purchases. Older saves retain their
 wallet and buildings and can afford any previously earned stall.
 [First 20 wishes and price sources](resource-prototype.md)

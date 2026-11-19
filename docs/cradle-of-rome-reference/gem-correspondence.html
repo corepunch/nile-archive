@@ -69,6 +69,7 @@
     input { accent-color: var(--clay); }
     section { margin: 30px 0; scroll-margin-top: 16px; }
     .description { margin-bottom: 13px; }
+    .extra-piece { margin: 16px 0 6px; }
     .table-wrap { border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--surface); }
     table { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: .92rem; }
     thead { background: #e7ded0; color: var(--navy); text-align: left; }
@@ -100,8 +101,8 @@
     }
     .market {
       background-image: url("../../games/christmas-market/art/registered/market-goods.png");
-      background-size: 400% 600%;
-      background-position: calc(var(--col) * 100% / 3) calc(var(--row) * 20%);
+      background-size: 400% 700%;
+      background-position: calc(var(--col) * 100% / 3) calc(var(--row) * 100% / 6);
     }
     .relic-bonus {
       background-image: url("../../games/relic-rush/art/registered/bonus-gems.png");
@@ -119,7 +120,7 @@
     }
     .same { background: #e3eddf; color: #254e3b; }
     .role { background: #e4ebf1; color: #254962; }
-    .gap, .proposal { background: #f6e4d7; color: #80391e; }
+    .gap { background: #f6e4d7; color: #80391e; }
     .name-list { list-style: none; margin: 0; padding: 0; }
     .name-list li { padding: 6px 0; border-bottom: 1px solid var(--line); }
     .name-list p { margin-top: 3px; color: var(--muted); font-size: .9rem; }
@@ -180,13 +181,13 @@
   </nav>
 
   <div class="legend">
-    <p><strong>Same motif</strong> means the object and purpose carry over. <strong>Role adapted</strong> pairs different objects by wallet tier or score function. Yields are per piece before any Rome multipliers. Christmas Market <strong>Catalogue</strong> entries sit beyond its ten playable wishes. <strong>Proposal</strong> marks a suggested Christmas Market piece or revision.</p>
+    <p><strong>Same motif</strong> means the object and purpose carry over. <strong>Role adapted</strong> pairs different objects by wallet tier or score function. Yields are per piece before any Rome multipliers. Christmas Market <strong>Catalogue</strong> entries sit beyond its ten playable wishes.</p>
     <label id="filter" hidden><input id="gaps" type="checkbox"> Show Relic Rush gaps only</label>
   </div>
 
   <section id="rome-2">
     <h2>Cradle of Rome 2</h2>
-    <p class="description">The sequel sets the purchase order and resource tiers. Christmas Market opens with green holly, a blue mitten, silver and gold coins, and a red candy cane for score. The cane gives way to cider, then gingerbread and cocoa in a single red slot. Keep pine warm brown and masonry matte slate gray, with a blocky silhouette distinct from the bright, round silver coin.</p>
+    <p class="description">The sequel sets the purchase order and resource tiers. Christmas Market opens with a snowy fir, a blue mitten, silver and gold coins, and a red candy cane for score. Mulled wine, gingerbread and cocoa take the cane’s slot in order. Natural pine and slate-gray masonry share the Materials slot. The masonry has the same silhouette as Relic Rush’s cut stone.</p>
     <div class="table-wrap">
       <table aria-label="Cradle of Rome 2 regular pieces">
         <thead><tr><th scope="col">Cradle of Rome 2</th><th scope="col">Relic Rush</th><th scope="col">Christmas Market</th><th scope="col">Relic Rush mapping</th></tr></thead>
@@ -194,7 +195,7 @@
           <tr class="comparison" data-status="same" data-rome-type="1">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:0;--row:0" aria-hidden="true"></span><div><strong>Leaf</strong><small>Score only · #01</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:4" aria-hidden="true"></span><div><strong>Leaf</strong><small>Score only · opening</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:0" aria-hidden="true"></span><div><strong>Holly sprig</strong><small>Evergreen · Score only</small><small>Opening</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:0" aria-hidden="true"></span><div><strong>Snow-dusted fir</strong><small>Evergreen · Score only</small><small>Opening</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Both use a leaf as a score piece.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="2">
@@ -206,7 +207,7 @@
           <tr class="comparison" data-status="same" data-rome-type="3">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Gold · #03</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:0;--row:5" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Coins · opening</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Silver star coin</strong><small>Silver · 3 Tokens</small><small>Opening</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Silver snowflake coin</strong><small>Silver · 3 Tokens</small><small>Opening</small></div></div></td>
             <td><span class="status same">Same motif</span><p>The silver and gold coins can appear on the same opening board.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="4">
@@ -218,79 +219,81 @@
           <tr class="comparison" data-status="same" data-rome-type="5">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:4;--row:0" aria-hidden="true"></span><div><strong>Water bucket</strong><small>3 Food · #05</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:1;--row:1" aria-hidden="true"></span><div><strong>Water bucket</strong><small>3 Food · Well · exp. 2</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:2" aria-hidden="true"></span><div><strong>Spiced cider</strong><small>Cranberry red · 3 Treats</small><small>Welcome arch · wish 2</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:2" aria-hidden="true"></span><div><strong>Mulled wine (Glühwein)</strong><small>Cranberry · 3 Treats</small><small>Welcome arch · wish 2</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Same motif, yield and Well unlock.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="6">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:5;--row:0" aria-hidden="true"></span><div><strong>Lumber</strong><small>5 Supplies · #06</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:0" aria-hidden="true"></span><div><strong>Timber</strong><small>5 Supplies · Sawmill · exp. 8</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:1" aria-hidden="true"></span><div><strong>Bundled pine</strong><small>Natural chestnut brown · 5 Materials</small><small>Lumber workshop · wish 5</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:1" aria-hidden="true"></span><div><strong>Bundled pine</strong><small>Bare chestnut wood · 5 Materials</small><small>Lumber workshop · wish 5</small></div></div></td>
             <td><span class="status same">Same motif</span><p>A bundle of textured logs.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="7">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:6;--row:0" aria-hidden="true"></span><div><strong>Meat</strong><small>4 Food · #07</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:1" aria-hidden="true"></span><div><strong>Ration jar</strong><small>4 Food · Farm · exp. 12</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:3;--row:1" aria-hidden="true"></span><div><strong>Gingerbread star</strong><small>Red glaze · 4 Treats</small><small>Gingerbread bakery · wish 8</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:1" aria-hidden="true"></span><div><strong>Gingerbread man</strong><small>Baked brown · 4 Treats</small><small>Gingerbread bakery · wish 8</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The same Food tier uses a jar.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="8">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:7;--row:0" aria-hidden="true"></span><div><strong>Stone</strong><small>7 Supplies · #08</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:4;--row:0" aria-hidden="true"></span><div><strong>Dressed stone</strong><small>7 Supplies · Quarry · exp. 13</small></div></div></td>
-            <td><div class="tile"><div><strong>Dressed stone</strong><small>Matte slate gray · 7 Materials</small><small>Snowy chapel · between the bakery and cocoa kiosk</small></div></div><p><span class="status proposal">Proposal</span> The masons supply foundation blocks. This takes the Materials tier currently assigned to Toy blocks.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:3" aria-hidden="true"></span><div><strong>Dressed stone</strong><small>Matte slate gray · 7 Materials</small><small>Snowy chapel · wish 9</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Stone replaces timber in the Supplies slot.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="9">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:8;--row:0" aria-hidden="true"></span><div><strong>Bread</strong><small>5 Food · #09</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:0;--row:2" aria-hidden="true"></span><div><strong>Grain bundle</strong><small>5 Food · Mill · exp. 13</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Hot cocoa</strong><small>Cranberry mug · 5 Treats</small><small>Hot cocoa kiosk · wish 10</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Hot cocoa</strong><small>Ivory mug · 5 Treats</small><small>Hot cocoa kiosk · wish 10</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The same Food tier uses a grain bundle.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="10">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:9;--row:0" aria-hidden="true"></span><div><strong>Shrimp</strong><small>6 Food · #10</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Shrimp</strong><small>6 Food · Port · exp. 14</small></div></div></td>
-            <td><div class="tile"><div><strong>Soft pretzel</strong><small>Golden brown · 6 Treats</small><small>A later Gingerbread bakery upgrade.</small></div></div><p><span class="status proposal">Proposal</span></p></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:5" aria-hidden="true"></span><div><strong>Pretzel</strong><small>Baked amber · 6 Treats</small><small>Catalogue · Log cabin</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Shrimp replaces the water bucket.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="11">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:10;--row:0" aria-hidden="true"></span><div><strong>Helmet</strong><small>6 Gold · #11</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:4;--row:1" aria-hidden="true"></span><div><strong>Helmet</strong><small>6 Coins · Coliseum · exp. 18</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Toy blocks</strong><small>Warm wood with a blue tie · 6 Tokens</small><small>Toymaker’s workshop sells the blocks it makes.</small></div></div><p><span class="status proposal">Proposal</span> Moves to the shop goods slot.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Toy blocks</strong><small>Honey wood · 6 Tokens</small><small>Catalogue · Toymaker’s workshop</small></div></div></td>
             <td><span class="status same">Same motif</span><p>A crested helmet for the premium coin slot.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="12">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:11;--row:0" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Gold · #12</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Coins · Aqueduct · exp. 20</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:1;--row:2" aria-hidden="true"></span><div><strong>Wrapped gift</strong><small>Violet · 7 Tokens</small><small>Gift wrapping pavilion</small></div></div><p><span class="status proposal">Proposal</span> Currently 6 Tokens in the catalogue.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:1;--row:2" aria-hidden="true"></span><div><strong>Wrapped gift</strong><small>Ruby red · 7 Tokens</small><small>Catalogue · Gift wrapping pavilion</small></div></div></td>
             <td><span class="status same">Same motif</span><p>A gold ring with a dark-green inset.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="13">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:12;--row:0" aria-hidden="true"></span><div><strong>Scarab</strong><small>8 Gold · #13</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:2;--row:5" aria-hidden="true"></span><div><strong>Scarab</strong><small>8 Coins · Nero’s Golden House</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:1;--row:3" aria-hidden="true"></span><div><strong>Ice pendant</strong><small>Icy violet · 8 Tokens</small><small>Catalogue · Igloo</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:1;--row:3" aria-hidden="true"></span><div><strong>Ice pendant</strong><small>Sapphire blue · 8 Tokens</small><small>Catalogue · Igloo</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Relic Rush catalogue · after expedition 20.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="14">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:13;--row:0" aria-hidden="true"></span><div><strong>Sandal</strong><small>9 Gold · #14</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:4;--row:5" aria-hidden="true"></span><div><strong>Sandal</strong><small>9 Coins · Pantheon</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:3" aria-hidden="true"></span><div><strong>Glass bauble</strong><small>Plum · 9 Tokens</small><small>Catalogue · Giant bauble</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:3" aria-hidden="true"></span><div><strong>Glass bauble</strong><small>Amber gold · 9 Tokens</small><small>Catalogue · Giant bauble</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Relic Rush catalogue · after expedition 20.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="15">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:14;--row:0" aria-hidden="true"></span><div><strong>Harp</strong><small>10 Gold · #15</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:5" aria-hidden="true"></span><div><strong>Harp</strong><small>10 Coins · Theatre</small></div></div></td>
-            <td><span class="none">No corresponding tier planned</span></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:5" aria-hidden="true"></span><div><strong>Ceramic snowman</strong><small>Snow white · 10 Tokens</small><small>Catalogue · Winter skating rink</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Relic Rush catalogue · after expedition 20.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="16">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:15;--row:0" aria-hidden="true"></span><div><strong>Emerald / Amethyst</strong><small>11 Gold · #16</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Emerald</strong><small>11 Coins · Fountain</small></div></div></td>
-            <td><span class="none">No corresponding tier planned</span></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:6" aria-hidden="true"></span><div><strong>Carved reindeer</strong><small>Walnut · 11 Tokens</small><small>Catalogue · Pile of presents</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Relic Rush catalogue · after expedition 20. The Rome 2 Windows tutorial says Emerald. Awem’s guide says Amethyst.</p></td>
           </tr>
         </tbody>
       </table>
       <p class="empty" hidden>No gaps in the regular Cradle of Rome 2 pieces.</p>
     </div>
+    <p class="description extra-piece">Bellmere’s Christmas Eve fair adds one final Token tier.</p>
+    <div class="tile"><span class="icon market" style="--col:1;--row:6" aria-hidden="true"></span><div><strong>Santa hat</strong><small>Crimson and ivory · 12 Tokens</small><small>Catalogue · Christmas tree</small></div></div>
   </section>
 
   <section id="rome-1">
@@ -303,7 +306,7 @@
           <tr class="comparison" data-status="same" data-rome-type="1">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:0;--row:1" aria-hidden="true"></span><div><strong>Leaf</strong><small>Score only · #01</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:4" aria-hidden="true"></span><div><strong>Leaf</strong><small>Score only · opening</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:0" aria-hidden="true"></span><div><strong>Holly sprig</strong><small>Evergreen · Score only</small><small>Opening</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:0" aria-hidden="true"></span><div><strong>Snow-dusted fir</strong><small>Evergreen · Score only</small><small>Opening</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Both use a leaf as a score piece.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="2">
@@ -315,7 +318,7 @@
           <tr class="comparison" data-status="same" data-rome-type="3">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Gold · #03</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:0;--row:5" aria-hidden="true"></span><div><strong>Silver coin</strong><small>3 Coins · opening</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Silver star coin</strong><small>Silver · 3 Tokens</small><small>Opening</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:0" aria-hidden="true"></span><div><strong>Silver snowflake coin</strong><small>Silver · 3 Tokens</small><small>Opening</small></div></div></td>
             <td><span class="status same">Same motif</span><p>The silver and gold coins can appear on the same opening board.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="4">
@@ -327,79 +330,79 @@
           <tr class="comparison" data-status="role" data-rome-type="5">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:4;--row:1" aria-hidden="true"></span><div><strong>Meat</strong><small>3 Food · #05</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:1;--row:1" aria-hidden="true"></span><div><strong>Water bucket</strong><small>3 Food · Well · exp. 2</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:2" aria-hidden="true"></span><div><strong>Spiced cider</strong><small>Cranberry red · 3 Treats</small><small>Welcome arch · wish 2</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:2" aria-hidden="true"></span><div><strong>Mulled wine (Glühwein)</strong><small>Cranberry · 3 Treats</small><small>Welcome arch · wish 2</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>Relic Rush uses a water bucket in the same Food tier. The beta labels its meat sprite WATER BUCKET.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="6">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:5;--row:1" aria-hidden="true"></span><div><strong>Lumber</strong><small>5 Supplies · #06</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:0" aria-hidden="true"></span><div><strong>Timber</strong><small>5 Supplies · Sawmill · exp. 8</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:1" aria-hidden="true"></span><div><strong>Bundled pine</strong><small>Natural chestnut brown · 5 Materials</small><small>Lumber workshop · wish 5</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:1" aria-hidden="true"></span><div><strong>Bundled pine</strong><small>Bare chestnut wood · 5 Materials</small><small>Lumber workshop · wish 5</small></div></div></td>
             <td><span class="status same">Same motif</span><p>A bundle of textured logs.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="7">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:6;--row:1" aria-hidden="true"></span><div><strong>Flour</strong><small>4 Food · #07</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:1" aria-hidden="true"></span><div><strong>Ration jar</strong><small>4 Food · Farm · exp. 12</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:3;--row:1" aria-hidden="true"></span><div><strong>Gingerbread star</strong><small>Red glaze · 4 Treats</small><small>Gingerbread bakery · wish 8</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:1" aria-hidden="true"></span><div><strong>Gingerbread man</strong><small>Baked brown · 4 Treats</small><small>Gingerbread bakery · wish 8</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The same Food tier uses a jar.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="8">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:7;--row:1" aria-hidden="true"></span><div><strong>Stone</strong><small>7 Supplies · #08</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:4;--row:0" aria-hidden="true"></span><div><strong>Dressed stone</strong><small>7 Supplies · Quarry · exp. 13</small></div></div></td>
-            <td><div class="tile"><div><strong>Dressed stone</strong><small>Matte slate gray · 7 Materials</small><small>Snowy chapel · between the bakery and cocoa kiosk</small></div></div><p><span class="status proposal">Proposal</span> The masons supply foundation blocks. This takes the Materials tier currently assigned to Toy blocks.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:3" aria-hidden="true"></span><div><strong>Dressed stone</strong><small>Matte slate gray · 7 Materials</small><small>Snowy chapel · wish 9</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Stone replaces timber in the Supplies slot.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="9">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:8;--row:1" aria-hidden="true"></span><div><strong>Barrel</strong><small>5 Food · #09</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:0;--row:2" aria-hidden="true"></span><div><strong>Grain bundle</strong><small>5 Food · Mill · exp. 13</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Hot cocoa</strong><small>Cranberry mug · 5 Treats</small><small>Hot cocoa kiosk · wish 10</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:2" aria-hidden="true"></span><div><strong>Hot cocoa</strong><small>Ivory mug · 5 Treats</small><small>Hot cocoa kiosk · wish 10</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The same Food tier uses a grain bundle.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="10">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:9;--row:1" aria-hidden="true"></span><div><strong>Watermelon</strong><small>6 Food · #10</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Shrimp</strong><small>6 Food · Port · exp. 14</small></div></div></td>
-            <td><div class="tile"><div><strong>Soft pretzel</strong><small>Golden brown · 6 Treats</small><small>A later Gingerbread bakery upgrade.</small></div></div><p><span class="status proposal">Proposal</span></p></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:5" aria-hidden="true"></span><div><strong>Pretzel</strong><small>Baked amber · 6 Treats</small><small>Catalogue · Log cabin</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The beta tutorial calls this tile Vegetables. Relic Rush uses the sequel’s shrimp in the same Food tier.</p></td>
           </tr>
           <tr class="comparison" data-status="gap" data-rome-type="11">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:10;--row:1" aria-hidden="true"></span><div><strong>Fish</strong><small>7 Food · #11</small></div></div></th>
             <td><span class="none">No campaign piece</span></td>
-            <td><span class="none">No corresponding tier planned</span></td>
+            <td><span class="none">No corresponding tier</span></td>
             <td><span class="status gap">Gap</span><p>Relic Rush has no 7-Food tier.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="12">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:11;--row:1" aria-hidden="true"></span><div><strong>Ring</strong><small>6 Gold · #12</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Coins · Aqueduct · exp. 20</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Toy blocks</strong><small>Warm wood with a blue tie · 6 Tokens</small><small>Toymaker’s workshop sells the blocks it makes.</small></div></div><p><span class="status proposal">Proposal</span> Moves to the shop goods slot.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Toy blocks</strong><small>Honey wood · 6 Tokens</small><small>Catalogue · Toymaker’s workshop</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Both use a gold ring with a coloured inset. Relic Rush pays 7 Coins.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="13">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:12;--row:1" aria-hidden="true"></span><div><strong>Pearl</strong><small>7 Gold · #13</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Coins · Aqueduct · exp. 20</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:1;--row:2" aria-hidden="true"></span><div><strong>Wrapped gift</strong><small>Violet · 7 Tokens</small><small>Gift wrapping pavilion</small></div></div><p><span class="status proposal">Proposal</span> Currently 6 Tokens in the catalogue.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:1;--row:2" aria-hidden="true"></span><div><strong>Wrapped gift</strong><small>Ruby red · 7 Tokens</small><small>Catalogue · Gift wrapping pavilion</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The same currency tier uses a ring.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="14">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:13;--row:1" aria-hidden="true"></span><div><strong>Brooch</strong><small>10 Gold · #14</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:3;--row:5" aria-hidden="true"></span><div><strong>Harp</strong><small>10 Coins · Theatre</small></div></div></td>
-            <td><span class="none">No corresponding tier planned</span></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:5" aria-hidden="true"></span><div><strong>Ceramic snowman</strong><small>Snow white · 10 Tokens</small><small>Catalogue · Winter skating rink</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>Relic Rush catalogue · after expedition 20.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="15">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:14;--row:1" aria-hidden="true"></span><div><strong>Goblet</strong><small>9 Gold · #15</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:4;--row:5" aria-hidden="true"></span><div><strong>Sandal</strong><small>9 Coins · Pantheon</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:3" aria-hidden="true"></span><div><strong>Glass bauble</strong><small>Plum · 9 Tokens</small><small>Catalogue · Giant bauble</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:3" aria-hidden="true"></span><div><strong>Glass bauble</strong><small>Amber gold · 9 Tokens</small><small>Catalogue · Giant bauble</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>Relic Rush catalogue · after expedition 20.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="16">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:15;--row:1" aria-hidden="true"></span><div><strong>Diamond</strong><small>8 Gold · #16</small></div></div></th>
             <td><div class="tile"><span class="icon relic" style="--col:2;--row:5" aria-hidden="true"></span><div><strong>Scarab</strong><small>8 Coins · Nero’s Golden House</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:1;--row:3" aria-hidden="true"></span><div><strong>Ice pendant</strong><small>Icy violet · 8 Tokens</small><small>Catalogue · Igloo</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:1;--row:3" aria-hidden="true"></span><div><strong>Ice pendant</strong><small>Sapphire blue · 8 Tokens</small><small>Catalogue · Igloo</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>Relic Rush catalogue · after expedition 20.</p></td>
           </tr>
           <tr class="comparison" data-status="gap" data-rome-type="17">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:16;--row:1" aria-hidden="true"></span><div><strong>Vase</strong><small>Score only · #17</small></div></div></th>
             <td><span class="none">No campaign piece</span></td>
-            <td><span class="none">No corresponding tier planned</span></td>
+            <td><span class="none">No corresponding tier</span></td>
             <td><span class="status gap">Gap</span><p>Named SKULL-vase in the field file. Relic Rush’s amphora is in the atlas for previews and fallback art.</p></td>
           </tr>
         </tbody>
@@ -443,7 +446,7 @@
 
   <section id="bonuses">
     <h2>Bonuses and special pieces</h2>
-    <p class="description">Both square campaigns share the same four slots. Match 30 bonus pieces to earn one use. A replacement inherits the charge. For the Christmas Market art pass, centre every board piece and toolbar icon with the existing <a href="../../tools/match3_buttons.py">alpha-weighted centre-of-mass tool</a>.</p>
+    <p class="description">Both square campaigns share the same four slots. Match 30 bonus pieces to earn one use. A replacement inherits the charge. Every Christmas Market piece and toolbar icon is registered with the <a href="../../tools/match3_buttons.py">alpha-weighted centre-of-mass tool</a>.</p>
     <div class="table-wrap">
       <table aria-label="Bonuses in Cradle of Rome 2, Relic Rush and Christmas Market">
         <thead><tr><th scope="col">Cradle of Rome 2</th><th scope="col">Relic Rush</th><th scope="col">Christmas Market</th><th scope="col">Shared effect</th></tr></thead>
@@ -451,49 +454,49 @@
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:17;--row:0" aria-hidden="true"></span><div><strong>Hammer</strong><small>Rome 1 desktop · Hammer</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:0" aria-hidden="true"></span><div><strong>Hammer</strong><small>Hunter’s Hut · exp. 5</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:1;--row:1" aria-hidden="true"></span><div><strong>Farrier’s hammer</strong><small>Steel head and oiled wood</small><small>Reindeer stable · wish 3</small></div></div><p><span class="status proposal">Proposal</span> Use a tilted, full-length mallet like the Rome and Relic Rush tools.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:1;--row:1" aria-hidden="true"></span><div><strong>Farrier’s hammer</strong><small>Diagonal steel head and wooden handle</small><small>Reindeer stable · wish 3</small></div></div></td>
             <td>Hit one cell.</td>
           </tr>
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:18;--row:0" aria-hidden="true"></span><div><strong>Bomb</strong><small>Rome 1 desktop · Bomb</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:1" aria-hidden="true"></span><div><strong>Bomb</strong><small>Village · exp. 11</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:4" aria-hidden="true"></span><div><strong>Firework Bomb</strong><small>Midnight-blue cracker · small amber fuse</small><small>Gingerbread house · wish 6</small></div></div><p><span class="status proposal">Proposal</span> Use blue paper so the cracker reads beside red Treats. The blue mitten has already given way to pine.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:4" aria-hidden="true"></span><div><strong>Firework Bomb</strong><small>Indigo paper and amber fuse</small><small>Gingerbread house · wish 6</small></div></div></td>
             <td>Hit a 3 × 3 square around a cell. Replaces Hammer.</td>
           </tr>
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:19;--row:0" aria-hidden="true"></span><div><strong>Fireball</strong><small>Rome 1 desktop · Shield</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:2" aria-hidden="true"></span><div><strong>Shield</strong><small>Thermae · exp. 14</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:4" aria-hidden="true"></span><div><strong>Frost shield</strong><small>Ice blue</small><small>Catalogue · Santa’s workshop</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:4" aria-hidden="true"></span><div><strong>Frost shield</strong><small>Fir green with a pewter rim</small><small>Catalogue · Santa’s workshop</small></div></div></td>
             <td>Hit the row through a chosen cell.</td>
           </tr>
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:20;--row:0" aria-hidden="true"></span><div><strong>Hourglass</strong><small>Rome 1 desktop · Hour-Glass</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:3" aria-hidden="true"></span><div><strong>Hourglass</strong><small>Curia Octavia · exp. 17</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:5" aria-hidden="true"></span><div><strong>Hourglass</strong><small>Dark brass · teal glass · pale sand</small><small>Catalogue · North Pole post office</small></div></div><p><span class="status proposal">Proposal</span> Tilt the whole hourglass diagonally, following Rome II. Let the glass carry the color beside the gold coin.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:5" aria-hidden="true"></span><div><strong>Hourglass</strong><small>Tilted brass frame and teal glass</small><small>Catalogue · North Pole post office</small></div></div></td>
             <td>Add five moves.</td>
           </tr>
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:21;--row:0" aria-hidden="true"></span><div><strong>Lightning Bolt</strong><small>Rome 1 desktop · Lightning</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:4" aria-hidden="true"></span><div><strong>Lightning</strong><small>House of the Vestals · exp. 19</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Candle lantern</strong><small>Warm amber light</small><small>Catalogue · Candlelight shop</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:2" aria-hidden="true"></span><div><strong>Candle lantern</strong><small>Dark iron and amber glass</small><small>Catalogue · Candlelight shop</small></div></div></td>
             <td>Strike up to fifteen random cells.</td>
           </tr>
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:22;--row:0" aria-hidden="true"></span><div><strong>Super Bomb</strong><small>Rome 1 desktop · Plus-Sign</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:5" aria-hidden="true"></span><div><strong>Plus</strong><small>Lighthouse · after exp. 20</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:3;--row:4" aria-hidden="true"></span><div><strong>Wish cross</strong><small>Plum</small><small>Catalogue · Gift wrapping pavilion</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:4" aria-hidden="true"></span><div><strong>Wish cross</strong><small>Copper orange</small><small>Catalogue · Gift wrapping pavilion</small></div></div></td>
             <td>Give 100 of the chosen resource or add a quarter charge to another bonus. Replaces Shield.</td>
           </tr>
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:23;--row:0" aria-hidden="true"></span><div><strong>Mixer</strong><small>Rome 1 desktop · Orb</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:6" aria-hidden="true"></span><div><strong>Mixer</strong><small>Mausoleum of Augustus · after exp. 20</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Wind-up top</strong><small>Royal blue</small><small>Catalogue · Reindeer carousel</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Wind-up top</strong><small>Royal blue and brass</small><small>Catalogue · Reindeer carousel</small></div></div></td>
             <td>Shuffle the pieces. Replaces Hourglass.</td>
           </tr>
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:24;--row:0" aria-hidden="true"></span><div><strong>Star</strong><small>Rome 1 desktop · Star</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:7" aria-hidden="true"></span><div><strong>Star</strong><small>Forum · after exp. 20</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:1;--row:4" aria-hidden="true"></span><div><strong>Faceted star</strong><small>Ice blue</small><small>Catalogue · Santa’s sleigh</small></div></div><p><span class="status proposal">Proposal</span> Replace the comet with a clean five-point star with no trail, like the Relic Rush silhouette.</p></td>
+            <td><div class="tile"><span class="icon market" style="--col:1;--row:4" aria-hidden="true"></span><div><strong>Faceted star</strong><small>Turquoise · Five clean points</small><small>Catalogue · Santa’s sleigh</small></div></div></td>
             <td>Clear all pieces of the chosen kind. Replaces Lightning.</td>
           </tr>
         </tbody>

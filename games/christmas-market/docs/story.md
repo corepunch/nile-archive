@@ -367,9 +367,10 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 
 Light the panes to finish a board. The first clear shows the find and
 advances its scene at the normal story checkpoint. Replays bank matched
-goods. The arch serves spiced cider and the first Treats help fund the
-stable and Theo’s lumber workshop. The workshop adds Materials for
-construction. The cocoa kiosk upgrades the Treats piece to hot cocoa.
+goods. The arch serves mulled wine and the first Treats help fund the
+stable and Theo’s lumber workshop. The workshop supplies pine for
+construction. The chapel masons later introduce dressed stone for foundations.
+The cocoa kiosk upgrades the Treats piece to hot cocoa.
 The candle shop both charges the lantern tool and lights the undelivered
 letter. The [construction ladder](market-pieces.md) traces the playable
 purchases against Rome II.

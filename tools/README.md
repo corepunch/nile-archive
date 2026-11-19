@@ -141,7 +141,7 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `fit_match3_edges.py` | Hex-edge remapping for the tinsel ring, used by `prepare_assets.py` |
 | `check_assets.py` | Checks shipped inventory, state coverage and icon exports (`make test-assets`) |
 | `prepare_catalogue.py` | Builds the catalogue around the rendered sprites (`--check` in `make test-assets`) |
-| `prepare_market_goods.py` | Registers the market pieces in one 4x4 atlas |
+| `prepare_market_goods.py` | Centres the market pieces and boosters against square cells and packs one atlas. Run with `--check` to verify. |
 | `prepare_character.py` | Resizes the character cutout and the app-icon master |
 | `prepare_hud.py` | Exports the navigation cells |
 | `prepare_story.py` | Compiles the reviewed story's lines; `--check` detects drift |

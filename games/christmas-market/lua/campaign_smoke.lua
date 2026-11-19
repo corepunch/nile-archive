@@ -8,6 +8,10 @@ local island = require("island")
 
 local frames, wait, partner = 0, 0, -1
 local played = {}
+local due = 0
+for _, step in ipairs(island.ladder) do
+    if step.after <= rules.LEVELS then due = due + 1 end
+end
 
 function R.campaign_smoke()
     frames = frames + 1
@@ -31,7 +35,7 @@ function R.campaign_smoke()
     local c = R.island
     if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
-    elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == 6
+    elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == due
         and R.overlay == R.OV_NONE and R.prog.story_seen["after-10"] then
         print(("campaign smoke passed: %d winter wishes, %d story beats, %d stalls"):format(
             R.prog.level, #played, island.campaign_count(c)))

@@ -22,10 +22,10 @@ check(p.wallet[1] == 60 and p.wallet[4] == 1 and p.level == 1, "replays pay actu
 check(island.island_place_next(c, p.wallet, p.level, 0), "funded arch can be built")
 check(p.wallet[1] == 10, "confirmed placement debits Gold once")
 
-local cider = rules.game_start(1, 18, island.wonder_count(c))
-check(#cider.spawn_kinds == 5 and cider.resource_yields[8].amount == 3, "confirmed arch adds cider")
+local wine = rules.game_start(1, 18, island.wonder_count(c))
+check(#wine.spawn_kinds == 5 and wine.resource_yields[8].amount == 3, "confirmed arch adds mulled wine")
 local plain = rules.game_start(1, 18, 0)
-check(not plain.resource_yields[8], "a cleared board alone does not add cider")
+check(not plain.resource_yields[8], "a cleared board alone does not add mulled wine")
 
 -- The top of the first column of four playable cells, straight down.
 local function column_top(board)
@@ -49,8 +49,8 @@ local function line(board, kind, length, wave)
     rules.game_apply(board, wave)
 end
 local wave = rules.new_match()
-line(cider, 8, 3, wave)
-check(cider.earnings[2] == 9 and cider.earnings[3] == 0, "cider earns treats to fund the stable")
+line(wine, 8, 3, wave)
+check(wine.earnings[2] == 9 and wine.earnings[3] == 0, "mulled wine earns treats to fund the stable")
 local wood = rules.game_start(4, 18)
 check(#wood.spawn_kinds == 5 and wood.resource_yields[4].slot == 3
       and not rules.game_start(3, 18).resource_yields[4], "pine materials start after the workshop opens")
@@ -69,9 +69,25 @@ check(rules.game_tool(hammer, 0, column_top(hammer), wave) and hammer.tools[1] =
 
 local bakery, cocoa = rules.game_start(7, 42), rules.game_start(9, 42)
 check(#bakery.spawn_kinds == 5 and bakery.resource_yields[7].amount == 4 and not bakery.resource_yields[8],
-      "the bakery replaces cider with gingerbread")
+      "the bakery replaces mulled wine with gingerbread")
 check(#cocoa.spawn_kinds == 5 and cocoa.resource_yields[11].amount == 5 and not cocoa.resource_yields[7],
       "the kiosk replaces gingerbread with cocoa")
+local quarried = {lumber=true, chapel=true}
+local masonry = rules.game_start(8, 42, quarried)
+check(#masonry.spawn_kinds == 5 and masonry.resource_yields[12].slot == 3 and masonry.resource_yields[12].amount == 7
+      and not masonry.resource_yields[4], "the chapel gives dressed stone the timber slot")
+check(rules.game_start(7, 42, quarried).resource_yields[4].amount == 5,
+      "replays of earlier wishes retain the timber")
+check(not rules.game_start(8, 42, {lumber=true}).resource_yields[12], "dressed stone requires construction")
+local later = economy.board_loadout(18, {chapel=true, toys=true, log_cabin=true}, 42)
+check(later[6].slot == 1 and later[6].amount == 6 and later[12].slot == 3 and later[16].amount == 6,
+      "toys earn tokens and the log cabin's pretzels earn treats alongside dressed stone")
+local gifts = {gifts=true, igloo=true, giant_ornament=true, rink=true, presents=true, tree=true}
+local snowman, reindeer, cap = economy.board_loadout(27, gifts), economy.board_loadout(28, gifts), economy.board_loadout(30, gifts)
+check(snowman[17].amount == 10 and not snowman[14] and reindeer[18].amount == 11 and not reindeer[17]
+      and cap[19].amount == 12 and not cap[18], "premium goods upgrade the same coin slot one at a time")
+local _, carousel = economy.board_loadout(24, {carousel=true})
+check(carousel.win_income[2] == 30, "the carousel still pays its Treats per win")
 
 local lightning = rules.game_start(9, 7, {candles=true, bonus_charge={[4]=90}})
 check(rules.game_tool_area(lightning, 3, rules.hex_center()) == nil,

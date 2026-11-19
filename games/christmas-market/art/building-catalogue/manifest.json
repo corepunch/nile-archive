@@ -31,7 +31,7 @@
     0
    ],
    "stars": 0,
-   "about": "A cup of spiced cider for the walk from the station.",
+   "about": "Hot mulled wine welcomes visitors from the station.",
    "road": false,
    "image": [
     416,
@@ -91,7 +91,7 @@
     200
    ],
    "stars": 0,
-   "about": "Cranberry-glazed gingerbread stars, fresh from the oven.",
+   "about": "Fresh gingerbread figures with piped icing.",
    "road": false,
    "image": [
     416,
@@ -151,7 +151,7 @@
     300
    ],
    "stars": 0,
-   "about": "Henrik's toy lanterns shine just like the big ones.",
+   "about": "Henrik sells wooden blocks from his toy bench.",
    "road": false,
    "image": [
     417,
@@ -271,7 +271,7 @@
     60
    ],
    "stars": 0,
-   "about": "A place to skate, laugh and make winter memories.",
+   "about": "The rink kiosk sells hand-painted ceramic snowmen.",
    "road": false,
    "image": [
     427,
@@ -301,7 +301,7 @@
     80
    ],
    "stars": 0,
-   "about": "Meet at the fir on Christmas Eve. Bring a lantern.",
+   "about": "The Christmas Eve fair under the tree sells red wool caps.",
    "road": false,
    "image": [
     423,
@@ -421,7 +421,7 @@
     60
    ],
    "stars": 0,
-   "about": "No peeking before Christmas morning.",
+   "about": "A collection of carved reindeer, wrapped for the gift stall.",
    "road": false,
    "image": [
     95,
@@ -952,7 +952,7 @@
     100
    ],
    "stars": 0,
-   "about": "A crackling fire and boots drying by the door.",
+   "about": "Salted pretzels come out of the wood-fired oven.",
    "road": false,
    "image": [
     278,
@@ -1037,12 +1037,12 @@
    ],
    "base_width": 273.205,
    "cost": [
-    120,
-    250,
-    40
+    80,
+    0,
+    65
    ],
    "stars": 0,
-   "about": "Its bell rings the carols in.",
+   "about": "The chapel masons cut stone for the market’s foundations.",
    "road": false,
    "image": [
     282,
@@ -1072,7 +1072,7 @@
     0
    ],
    "stars": 0,
-   "about": "The farrier keeps a green hammer by the door.",
+   "about": "The farrier keeps a heavy hammer by the door.",
    "road": false,
    "image": [
     377,

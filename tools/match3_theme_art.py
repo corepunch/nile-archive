@@ -63,7 +63,7 @@ def object_offset(sprite, mask):
     return best[1:] if best else None
 
 
-def fit_object(sprite, mask, max_side, target_area):
+def fit_object(sprite, mask, max_side, target_area, *, anchor=None):
     if target_area:
         scale = sqrt(target_area / silhouette(sprite).histogram()[255])
         max_side = min(max_side, round(max(sprite.size) * scale))
@@ -77,7 +77,13 @@ def fit_object(sprite, mask, max_side, target_area):
                 frame.paste(fitted, offset)
                 return frame, list(fitted.size), list(offset)
             continue
-        offset = ((SIZE - fitted.width) // 2, (SIZE - fitted.height) // 2)
+        if anchor:
+            cx, cy = anchor(fitted)
+            offset = (round(SIZE / 2 - cx), round(SIZE / 2 - cy))
+            if not (0 <= offset[0] <= SIZE - fitted.width and 0 <= offset[1] <= SIZE - fitted.height):
+                continue
+        else:
+            offset = ((SIZE - fitted.width) // 2, (SIZE - fitted.height) // 2)
         frame.paste(fitted, offset)
         spill = ImageChops.subtract(frame.getchannel('A'), mask).point(lambda alpha: 255 if alpha >= 128 else 0)
         if not spill.getbbox():

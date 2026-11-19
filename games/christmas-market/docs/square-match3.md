@@ -1,6 +1,6 @@
 # Square match-3
 
-Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery and Hot cocoa kiosk. The stable introduces the farrier's hammer. The Gingerbread house upgrades its slot to Firework Bomb and keeps its charge.
+Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery, Snowy chapel and Hot cocoa kiosk. The workshop introduces pine and the chapel replaces it with dressed stone. The stable introduces the farrier's hammer. The Gingerbread house upgrades its slot to Firework Bomb and keeps its charge.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
@@ -73,17 +73,18 @@ build/test/christmas-market "shot booster-toolbar" "shot square-winter-wreath" "
 
 ### Piece size
 
-Every live piece draws about 12% larger. The farrier's hammer also has a
-thicker green head and handle, with the same silhouette on the board and
-all five toolbar states.
+All pieces are sized to the square cell and centered by their opacity-weighted
+mass. The square corners leave space for the diagonal hammer and cracker.
+The farrier's hammer uses the same painted head and wooden handle on the board
+and in all five toolbar states.
 
 | Size | Before | After |
 | --- | --- | --- |
-| 480 × 900 | [Board](screenshots/review/square-frame/board-480.jpg) | [Board](screenshots/review/large-pieces/board-480.jpg) |
-| 390 × 844 | [Board](screenshots/review/square-frame/board-390.jpg) | [Board](screenshots/review/large-pieces/board-390.jpg) |
+| 480 × 900 | [Board](screenshots/review/winter-stalls/board-480-before.jpg) | [Board](screenshots/review/winter-stalls/board-480.jpg) |
+| 390 × 844 | [Board](screenshots/review/winter-stalls/board-390-before.jpg) | [Board](screenshots/review/winter-stalls/board-390.jpg) |
 
-[Dense board with chains and ice](screenshots/review/large-pieces/blockers.jpg) ·
-[Five hammer button states](screenshots/review/large-pieces/art-states.jpg)
+[Dense board with chains and ice](screenshots/review/winter-stalls/final-480.jpg) ·
+[Five bonus button states](screenshots/review/winter-stalls/bonus-states.jpg)
 
 ### Shared bonus slots
 

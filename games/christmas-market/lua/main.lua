@@ -27,6 +27,21 @@ function R.serialize_campaign(s)
     -- already passed stay optional rather than holding its next wish. Waive
     -- them before any wallet top-up, which reserves only what is still owed.
     island.serialize_waivers(s, R.island, R.prog.level, reading and version < 3)
+    if reading and version >= 3 and version < 6 then
+        -- Chapel moved from the thirteenth permit to before the cocoa kiosk.
+        -- Keep old waivers attached to their buildings.
+        local chapel = island.ladder_position[island.kinds.chapel]
+        local old_chapel = 13
+        local old, moved = island.waived(R.island), {}
+        for n in ipairs(island.ladder) do
+            local previous = n
+            if n == chapel then previous = old_chapel
+            elseif n > chapel and n <= old_chapel then previous = n - 1 end
+            moved[n] = old[previous]
+        end
+        if R.prog.level > economy.unlock_of("chapel").after then moved[chapel] = true end
+        island.set_waived(R.island, moved)
+    end
     if reading and version < 2 then island.migrate_wallet(R.prog, R.island) end
     local legacy
     if reading and version < 5 then

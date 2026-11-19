@@ -42,6 +42,7 @@ local replay = rules.game_start(0,50)
 replay.won, replay.moves, replay.earnings = true, 0, {12, 3, 4}
 assert(rules.progress_reward(p,replay,island.wonders))
 assert(p.wallet[1]==before+12 and p.wallet[4]==rules.LEVELS and p.level==rules.LEVELS, 'Replays do not count as cleared wishes')
+local stall_count = c.count
 for kind=10,11 do
     assert(island.can_buy(c,p.wallet,p.level,kind))
     local ok,spot = c:find_spot(kind,vec2(760,2010))
@@ -49,12 +50,13 @@ for kind=10,11 do
     before = p.wallet[1]
     c:begin_place(kind,spot)
     c:cancel()
-    assert(p.wallet[1]==before and c.count==6+kind-10, 'Cancelled purchase must be free')
+    assert(p.wallet[1]==before and c.count==stall_count+kind-10, 'Cancelled purchase must be free')
     c:begin_place(kind,spot)
     assert(c:confirm(p.wallet,0).result==city.BUILT)
     assert(p.wallet[1]==before-island.catalogue[kind+1].cost[1])
 end
-assert(c.count==8 and island.wonder_count(c)==4 and island.campaign_count(c)==6, 'Decorations cannot advance the campaign')
+assert(c.count==stall_count+2 and island.wonder_count(c)==4 and island.campaign_count(c)==stall_count,
+       'Decorations cannot advance the campaign')
 
 local first_wish = rules.game_start(0, 123478, {})
 check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,0,0,0",
