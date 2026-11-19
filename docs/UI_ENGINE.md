@@ -648,9 +648,9 @@ The engine animation clock supplies one timeline to shared tweens, scroll decele
 `navigation_play` button flanked by equally sized `navigation_build` and
 `navigation_pause` buttons. `bottom.build` and `bottom.secondary_height` size
 both secondary controls; `bottom.play` and `bottom.height` size Play. Play's
-caption comes from the `play_label()` hook: the match-3 games write the number
-of the level it starts, and the skin's `navigation_play` variant places it
-(`text`, `em`, `text_align`, `text_inset`). There is no level list; this layout
+optional caption comes from the `play_label()` hook, and the skin's
+`navigation_play` variant places it (`text`, `em`, `text_align`, `text_inset`);
+the match-3 games leave it empty, so Play shows only its painted face. There is no level list; this layout
 has no middle control. Other town layouts retain theirs. All three roles use
 authored skin states.
 In this layout `bottom.bottom` is measured from the physical display edge

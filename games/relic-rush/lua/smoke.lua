@@ -183,7 +183,7 @@ function R.smoke()
         end
     elseif stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        assert(R.town.navigation:get("play") == "2", "smoke: Play names the next expedition")
+        assert((R.town.navigation:get("play") or "") == "", "smoke: Play shows no level number")
         -- The balance tests measure income; this run only needs the flow, so a
         -- short wallet is topped up to the price of the well and the shrub.
         local cost = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost
@@ -318,7 +318,7 @@ function R.smoke()
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
-        assert(R.town.navigation:get("play") == "2", "smoke: Play still names the unfinished expedition")
+        assert((R.town.navigation:get("play") or "") == "", "smoke: Play still shows no level number")
         -- The crew's requests stand down the left edge: the next building, then the well's two.
         local rail = R.quest_rail()
         assert(#rail == 3 and rail[1].id == "build" and rail[2].id == "chart" and rail[3].id == "supper"

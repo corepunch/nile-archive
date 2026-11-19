@@ -27,7 +27,7 @@
 --                           markers down the left edge, under the header (requests, tasks)
 --   rail_tap(id)            a rail marker was tapped
 --   rail_paint(box, entry, state, ready_time)   paints one marker's face and icon (default: a plain disc)
---   play_label()            the caption on Play (the next level's number)
+--   play_label()            optional caption on Play
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
 --   about(item)             the bubble's words for a placed building (0-based item)

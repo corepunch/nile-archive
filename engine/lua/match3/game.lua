@@ -1236,7 +1236,6 @@ function G.bind(R, over)
                 end
             end,
             play = R.play_next,
-            play_label = function() return can_play() and tostring(R.prog.level + 1) or "" end,
             about = R.building_words,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,

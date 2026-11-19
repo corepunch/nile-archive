@@ -92,7 +92,7 @@ function R.smoke()
         end
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        assert(R.town.navigation:get("play") == "2", "smoke: Play names the next wish")
+        assert((R.town.navigation:get("play") or "") == "", "smoke: Play shows no level number")
         app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
     elseif smoke_stage == 2 and R.overlay == R.OV_SHOP then
         assert(press_tile("arch"), "smoke: the earned stall is in the shop"); smoke_stage = 3
