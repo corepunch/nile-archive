@@ -432,8 +432,11 @@ by the form test and Relic Rush's 390 x 844 expedition-browser input smoke test.
 The shared match-3 popup renderer also requires a column-root form. It owns
 measurement, centering, hit testing and dismissal for Results, Settings, the
 Guide, restart confirmation, building details, the out-of-moves prompt, region
-unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form. Results show the
-banked currencies as `resource_indicator` prefabs in a one-row `uniform_grid`: equal
+unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form.
+
+Pass a close action ID as the third argument to `match3.popup_header(title, subtitle, close_id)` for a dismissible card. The header reserves a 44-unit button beside the wrapped title. The game skin supplies its `popup_close` state artwork.
+
+Results show the banked currencies as `resource_indicator` prefabs in a one-row `uniform_grid`: equal
 columns across the dialog, however many currencies the game has. Each is an icon above
 its figure, with no caption because the icon names the resource. The building
 card lists its price and what the building brings with the same element, side

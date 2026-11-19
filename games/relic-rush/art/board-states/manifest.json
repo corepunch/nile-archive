@@ -1,4 +1,10 @@
 {
+  "popup_close": {
+    "source": "art/popup-close/source.png",
+    "registration": "art/popup-close/README.md",
+    "atlas": "data/board/pieces.png",
+    "frames": ["close-normal", "close-selected", "close-pressed", "close-hover", "close-disabled"]
+  },
   "matching_rules": "Campaign matches clear straight lines of three or more among six kinds and never create special pieces (Cradle of Rome rules). The sixth kind shows quartz, or the piece of an open crew request. Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",

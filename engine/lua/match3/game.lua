@@ -693,7 +693,7 @@ function G.bind(R, over)
     -- without it the card falls back to the building's unlock text.
     local wonder_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
-            match3.popup_header("Building details"),
+            match3.popup_header("Building details", nil, W.corner_close and "close"),
             {kind="image", id="sprite", height=205},
             {kind="label", id="about", wrap=true, em=19, text_style="body"},
             {kind="label", id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
@@ -707,7 +707,7 @@ function G.bind(R, over)
             {kind="label",id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
             {kind="button",id="action",height=56},
             {kind="button",id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
-            {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16},
+            not W.corner_close and {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
         }},
         bindings={
             {id="sprite",field="sprite",type="texture",readonly=true},
@@ -776,32 +776,25 @@ function G.bind(R, over)
     -- A request's card. Requests are the game's: R.quest_rail() lists the open
     -- ones for the town's left edge ({id, icon, value, ready, waiting}; the id
     -- "build" stands for the next building and opens its card), and
-    -- R.quest_model(id) describes one: {title, subtitle, icon, about, needs
-    -- (resource records still missing), ready, waiting, level (playable
+    -- R.quest_model(id) describes one: {title, speaker, portrait, icon, about, needs
+    -- (collected/required resource indicators), ready, waiting, level (playable
     -- zero-based destination), handoff ({title, image}, optional)}.
     local quest_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
-            match3.popup_header(W.quest.header),
-            {kind="row", height=132, children={
-                {kind="spacer",grow=1},
-                {kind="image",id="portrait",width=132,visible_field="show_portrait"},
-                {kind="image",id="icon",width=132,visible_field="show_icon"},
-                {kind="spacer",grow=1},
+            match3.popup_header(W.quest.header, nil, W.corner_close and "close"),
+            {kind="row",align="center",gap=14,children={
+                {kind="image",id="portrait",width=90,height=108,visible_field="show_portrait"},
+                {kind="label",id="about",grow=1,wrap=true,text_align="start",em=19,text_style="body"},
             }},
-            {kind="label", id="about", wrap=true, em=19, text_style="body"},
-            {kind="column",visible_field="show_needs",gap=5,children={
-                {kind="label",id="needs_caption",em=13,text_style="caption"},
-                {kind="row",children={
-                    {kind="spacer",grow=1},
-                    {kind="list",id="needs",direction="row",gap=AMOUNT_GAP,item=function(entry)
-                        return match3.resource_indicator(entry, 96)
-                    end},
-                    {kind="spacer",grow=1},
-                }},
+            {kind="label",id="notice",wrap=true,em=16,text_style="body",visible_field="show_notice"},
+            {kind="row",align="center",gap=12,children={
+                {kind="list",id="needs",direction="row",gap=AMOUNT_GAP,visible_field="show_needs",item=function(entry)
+                    return match3.resource_indicator(entry, 76)
+                end},
+                {kind="image",id="icon",width=72,height=72,visible_field="show_icon"},
+                {kind="button",id="action",grow=1,height=55,em=21,visible_field="show_action"},
             }},
-            {kind="label",id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
-            {kind="button",id="action",height=56},
-            {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16},
+            not W.corner_close and {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
         }},
         bindings={
             {id="icon",field="icon",type="texture",readonly=true},
@@ -821,7 +814,7 @@ function G.bind(R, over)
         local quest = R.quest_card and R.quest_model(R.quest_card)
         if not quest then return false end
         quest_model = quest
-        match3.set_popup_header(quest_form, quest.title, R.quest_offer and quest.offer_subtitle or quest.subtitle)
+        match3.set_popup_header(quest_form, quest.speaker or quest.title)
         local action = W.card.back
         if quest.ready then action = W.quest.deliver
         elseif quest.level then
@@ -829,14 +822,14 @@ function G.bind(R, over)
         end
         assert(quest_form:push{icon=quest.icon, about=quest.about, action=quest.action or action})
         quest_form.values.show_portrait = quest.portrait ~= nil
-        quest_form.values.show_icon = not quest.portrait or quest.ready
+        quest_form.values.show_icon = quest.ready
+        quest_form.values.show_action = quest.ready or quest.level ~= nil or not W.corner_close
         if quest.portrait then quest_form:set("portrait", quest.portrait) end
-        quest_form:set("close", R.quest_offer and W.quest.later or W.card.close)
-        quest_form:set("needs_caption", quest.needs_caption or W.card.missing)
+        if not W.corner_close then quest_form:set("close", R.quest_offer and W.quest.later or W.card.close) end
         local needs = quest.ready and {} or quest.needs or {}
         quest_form.values.show_needs = #needs > 0
         assert(quest_form:set_items("needs", needs))
-        local notice = quest.notice or (quest.ready and W.quest.ready or quest.waiting and W.quest.waiting)
+        local notice = quest.notice or (quest.waiting and W.quest.waiting)
         quest_form.values.show_notice = notice and true or false
         quest_form:set("notice", notice or "")
     end, handle=function(event)
@@ -881,7 +874,7 @@ function G.bind(R, over)
         R.quest_deliver(R.quest_card)
     end})
 
-    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard)
+    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard, W.corner_close)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         local level
@@ -894,7 +887,7 @@ function G.bind(R, over)
         if event.kind == "change" then
             assert(pause_form:pull(R))
             sfx.enable(R.sound)
-        elseif action == "resume" then R.overlay = R.OV_NONE
+        elseif action == "resume" or action == "close" then R.overlay = R.OV_NONE
         elseif action == "guide" then R.overlay = R.OV_GUIDE
         elseif action == "restart" then R.overlay = R.OV_CONFIRM
         elseif action == "leaderboard" then R.open_leaderboard()
@@ -908,7 +901,7 @@ function G.bind(R, over)
     end})
 
     local confirm_form = ui.form{kind="column",panel=true,padding={36,22,36,18},gap=14,children={
-        match3.popup_header(W.confirm.title, W.confirm.body),
+        match3.popup_header(W.confirm.title, W.confirm.body, W.corner_close and "close"),
         {kind="button",id="confirm",text=W.confirm.restart,height=50},
         {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
     }}
@@ -931,11 +924,11 @@ function G.bind(R, over)
 
     local region = W.zone
     local zone_form = ui.form{kind="column",panel=true,padding={32,24,32,20},gap=14,children={
-        match3.popup_header("Region"),
+        match3.popup_header("Region", nil, W.corner_close and "close"),
         {kind="label",id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
         {kind="label",text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
         {kind="button",id="open",height=47},
-        {kind="button",id="close",text=region.close,height=32,role="link",em=16},
+        not W.corner_close and {kind="button",id="close",text=region.close,height=32,role="link",em=16} or nil,
     }}
     popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
         local z = R.zone_card
@@ -1068,7 +1061,7 @@ function G.bind(R, over)
             R.paragraph(record.action, rect(right.x, box.y + 36, right.w, box.h - 42), 11, PAL_CREAM)
         else R.paragraph(record.action, right:inflate(-2), 11, PAL_CREAM) end
     end
-    local catalogue_form = match3.catalogue_form(C.title, C.close, paint_row)
+    local catalogue_form = match3.catalogue_form(C.title, C.close, paint_row, W.corner_close)
     R.catalogue_form = catalogue_form
 
     local tiles = {}   -- building key -> its row record
@@ -1444,7 +1437,7 @@ function G.bind(R, over)
     end
 
     -- The Game Center leaderboard tracks boards cleared when rewards are claimed.
-    local boards = require("leaderboard").boards{skin = skin, width = 400, header = match3.popup_header, texts = W.leaderboard and W.leaderboard.texts}
+    local boards = require("leaderboard").boards{skin = skin, width = 400, header = match3.popup_header, corner_close = W.corner_close, texts = W.leaderboard and W.leaderboard.texts}
     function R.submit_leaderboard_progress()
         local c = W.leaderboard
         if c then gamecenter.submit(c.board, R.prog.level) end

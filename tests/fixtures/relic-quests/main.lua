@@ -30,7 +30,12 @@ function R.smoke()
     assert(frames < 1000, "quest flow stalled at stage " .. stage)
     if R.diving() then return end
     if stage == 0 and press(R.OV_QUEST, R.quest_form, "action") then
-        assert(R.quest_offer and R.quest_card == "chart" and R.quest_form:get("action") == "FIND CHART PAGES")
+        assert(R.quest_offer and R.quest_card == "chart" and R.quest_form:get("action") == "PLAY EXPEDITION 2")
+        local card = R.quest_form
+        assert(card:get("title") == "Elena Voss" and not card.boxes.subtitle)
+        assert(card.boxes.close.x >= card.boxes.title:max().x and card.boxes.close:max().y <= card.boxes.about.y,
+            "the X occupies its own header target above the request")
+        assert(card:get_item("needs", "chart").amount == "0/25", "the offer shows banked pages against the goal")
         assert(R.quest_state().introduced.chart and not R.quest_state().introduced.supper)
         R.quiet = true
         stage = 1

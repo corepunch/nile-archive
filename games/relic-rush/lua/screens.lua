@@ -129,8 +129,7 @@ function R.quest_model(id)
     local giver = story.character(quest.giver)
     if id == "shutter" then
         local painting = art.quest_handoffs.shutter
-        return {title=quest.title, subtitle="Field test with " .. giver.name,
-            offer_subtitle="Investigation unlocked · " .. giver.name, portrait=giver.portrait,
+        return {title=quest.title, speaker=giver.name, portrait=giver.portrait,
             about=quest.request, icon=R.board_art["shutter-closed"], ready=true,
             action="LIFT THE SHUTTER", notice="Lower quay lookout",
             handoff={title=painting.title, image=R.board_art[painting.path], detail=R.board_art["shutter-open"],
@@ -144,14 +143,12 @@ function R.quest_model(id)
     local ready = quests.ready(state, quest)
     local level, items = quest_board()
     local handoff = art.quest_handoffs[id]
-    return {title=quest.title, subtitle="Request from " .. giver.name,
-        offer_subtitle=(ready and "Ready to hand in · " or "New request · ") .. giver.name, portrait=giver.portrait, icon=quest_icon(quest),
-        needs_caption="MATCH " .. quest.name:upper() .. " · STILL NEEDED",
-        action=not ready and items[id] and level == R.prog.level and ("FIND " .. quest.name:upper()) or nil,
+    return {title=quest.title, speaker=giver.name, portrait=giver.portrait, icon=quest_icon(quest),
+        action=not ready and items[id] and level == R.prog.level and ("PLAY EXPEDITION %d"):format(level + 1) or nil,
         about=ready and quest.ready_line or quest.request, ready=ready, waiting=not ready and not items[id],
         level=not ready and items[id] and level or nil,
         handoff=handoff and {title=handoff.title, image=R.board_art[handoff.path]},
-        needs={{id=quest.key, icon=quest_icon(quest), amount=quest.need - quests.have(state, quest)}}}
+        needs={{id=quest.key, icon=quest_icon(quest), amount=("%d/%d"):format(quests.have(state, quest), quest.need)}}}
 end
 
 -- Hand a filled request in: its scene plays on the island.
@@ -249,7 +246,7 @@ end
 local guide_form = match3.guide_form({
     title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",
     done = "LET'S EXPLORE",
-}, guide_icon)
+}, guide_icon, R.words.corner_close)
 assert(guide_form:set_items("topics",guide_entries))
 R.guide_form,R.guide_entries=guide_form,guide_entries -- measured bounds and the source rows are checked by the input smoke test
 R.register_guide(guide_form)

@@ -46,9 +46,11 @@ round markers down the island's left edge, under the next building.
 
 ## Request card
 
+The top-right X dismisses a request. Tap its island marker to reopen it.
+
 | Short · 480×900 | Short · 390×844 | Filled · 480×900 |
 | --- | --- | --- |
-| ![Card with the amount still needed](card.jpg) | ![Phone card](phone-card.jpg) | ![Card offering to hand the request in](card-ready.jpg) |
+| ![Card with collected pages and the target](card.jpg) | ![Phone card](phone-card.jpg) | ![Card offering to hand the request in](card-ready.jpg) |
 
 ## Illustrated hand-ins
 

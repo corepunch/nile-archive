@@ -65,7 +65,7 @@ function L.new(options)
     local visible_rows = options.rows or 8
     local me_suffix = " " .. texts.you
     self.form = ui.form{root = {kind = "column", panel = true, padding = 24, gap = 14, children = {
-        options.header and options.header(texts.title) or
+        options.header and options.header(texts.title, nil, options.corner_close and "close") or
             {kind = "label", id = "title", text = texts.title, role = "title", height = 44},
         -- the chosen tab is an accent button, the other a flat caption, whatever the skin does for "selected"
         {kind = "row", gap = 10, height = 46, children = {
@@ -87,9 +87,9 @@ function L.new(options)
                 {kind = "spacer", width = 10},
             }}
         end},
-        {kind = "row", gap = 10, height = 50, children = {
+        {kind = "row", gap = 10, height = 50, visible_field = options.corner_close and "show_native", children = {
             {kind = "button", id = "native", text = texts.native, grow = 1, visible_field = "show_native"},
-            {kind = "button", id = "close", text = texts.close, grow = 1, accent = true},
+            not options.corner_close and {kind = "button", id = "close", text = texts.close, grow = 1, accent = true} or nil,
         }},
     }}}
     return self

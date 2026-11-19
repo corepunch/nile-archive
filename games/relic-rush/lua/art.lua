@@ -106,6 +106,10 @@ function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
     local own = own_board()
+    for _, state in ipairs({"normal", "selected", "pressed", "hover", "disabled"}) do
+        local name = "close-" .. state
+        require("skin").images[name] = assert(own[name], "missing close button: " .. name)
+    end
     local function piece(name) return assert(own[name], "missing pieces frame: " .. name) end
     for _, key in ipairs(A.bonus_atlas_order) do textures[key] = piece(key) end
     -- The packed Hammer bounds are centered. Its heavier head pulls the

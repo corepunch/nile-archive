@@ -1,5 +1,9 @@
 # Relic Rush artwork and state catalogue
 
+## Popup close button
+
+The red enamel X sits at the right of dismissible popup headers. Its five authored frames are packed in `data/board/pieces.png`. The [source atlas](../art/popup-close/source.png) runs from normal through selected, pressed, hover and disabled. [Registration and prompt](../art/popup-close/README.md).
+
 ## Themed board art
 
 The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets serve the previews and imported-board diagnostics.

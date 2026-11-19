@@ -3,6 +3,7 @@
 -- field, lists replace.
 return {
     app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F"},
+    corner_close = true,
     packs = {"relics", "jewels", "resources"},
     dive = {
         style = "wipe",
@@ -36,6 +37,7 @@ return {
         board = "stars",
         title = "Top explorers",
     },
+    quest = {waiting = "Finish another crew request to make room for this piece."},
     confirm = {title = "Restart this expedition?"},
     failed = {title = "One more adventure?", subtitle = "THE RUINS WILL WAIT FOR YOU.", town = "VISIT ISLAND"},
     zone = {

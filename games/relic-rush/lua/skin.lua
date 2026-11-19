@@ -11,6 +11,11 @@
 local buttons = require("match3.buttons")
 local resource_fill = color(13, 47, 41, 0xD7)
 
+local close_button = {}
+for _, state in ipairs({"normal", "selected", "pressed", "hover", "disabled"}) do
+    close_button[state] = {offset={0,0}, layers={{image="close-" .. state, fit="contain", inset=3}}}
+end
+
 return ui.skin{
     fonts = {
         -- Lilita One measures ascent to descent: 1.17 of its em.
@@ -85,6 +90,7 @@ return ui.skin{
             pressed = {offset = {0, 2}},
             disabled = {set = {body = {fill = "#4B5E50"}, face = {fill = "#6E7E6C"}, gloss = {fill = "#82917D"}}},
             variants = {
+                popup_close = close_button,
                 navigation_build=buttons.navigation("build"),
                 navigation_play = buttons.navigation("play", {text = "cream", em = 28, text_inset = {45, 0}, text_align = {.5, .45}, text_fit = true}),
                 navigation_pause = buttons.navigation("pause"),

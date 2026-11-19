@@ -330,7 +330,7 @@ function R.smoke()
         app.inject_click(marker); stage = 46
     -- A short request's card plays on; a filled one hands in and plays its scene.
     elseif stage == 46 and R.overlay == R.OV_QUEST and R.dialog_settled() then
-        assert(R.quest_card == "chart" and R.quest_form:get("action") == "FIND CHART PAGES"
+        assert(R.quest_card == "chart" and R.quest_form:get("action") == ("PLAY EXPEDITION %d"):format(R.prog.level + 1)
                and R.quest_form.boxes.needs, "smoke: a short request shows what is missing and offers Play")
         app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)); stage = 47
     elseif stage == 47 and R.overlay == R.OV_NONE then
