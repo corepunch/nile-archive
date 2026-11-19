@@ -38,11 +38,11 @@ using the [board layout](../art/papyrus-board/contact-layout.png), the
 `cell_normal.png` and `cell_puzzle_one.png` studies, and the
 [paint-over prompt](../art/papyrus-board/contact-prompt.txt).
 
-The [square frame generator](../../../tools/square_board_frame.py) uses the
-distance to the board to round exposed corners and place the dark contact
-shadow on the side facing the floor. The narrow sandstone face uses the
-hex rim's seeded grain and cracks, with dark angled joints and light
-shoulders along the cuts. The corner studies were
+The [square frame generator](../../../tools/square_board_frame.py) rounds
+outside corners and joins recessed corners at right angles. It uses the
+distance to the board to place the dark contact shadow on the side facing
+the floor. The flat sandstone face has a narrow outer bevel, seeded grain,
+and dark angled joints with light shoulders along the cuts. The corner studies were
 `gmf_corner_2.png`, `gmf_corner_9.png`, `gmf_corner_11.png` and
 `gmf_corner_17.png`, plus the rounded silhouette in the supplied game capture.
 The generator joins sections halfway along each exposed cell edge. It bakes

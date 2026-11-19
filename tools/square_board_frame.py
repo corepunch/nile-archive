@@ -21,11 +21,11 @@ PROFILE = (
     (0, (40, 27, 16), 245),
     (3, (60, 40, 24), 255),
     (6, (104, 74, 45), 255),
-    (8, (164, 127, 83), 255),
-    (11, (174, 136, 91), 255),
-    (13, (200, 158, 107), 255),
-    (15, (139, 101, 62), 255),
-    (REACH, (84, 55, 30), 255),
+    (7, (174, 136, 91), 255),
+    (14, (174, 136, 91), 255),
+    (15, (188, 149, 102), 255),
+    (16, (166, 126, 83), 255),
+    (REACH, (133, 96, 60), 255),
 )
 
 
@@ -44,12 +44,8 @@ def outside(x, y):
 
 
 def inside(x, y):
-    depth = -quadrant(-x, -y)
-    # Round the outer silhouette of the notch while keeping its contact
-    # line at the square floor edge.
-    rounding = max(0, min(1, (depth - 8) / 10))
-    depth -= rounding * max(0, 12 - abs(x - y)) ** 2 / 48
-    return depth, x if x < y else y
+    # The two straight faces meet at a square re-entrant corner.
+    return -max(x, y), min(x, y)
 
 
 def diagonal(x, y):
@@ -110,7 +106,7 @@ def plant(stone):
         sprig = board_frame_decor.register(image, spec, side)
 
     corner = Image.new('RGBA', (side, side))
-    mount = (-REACH - 2, -REACH - 2)
+    mount = (1 - REACH, 1 - REACH)
     # Keep the plant wholly within the empty square, even under the
     # translucent part of the stone's shadow.
     x, y = mount

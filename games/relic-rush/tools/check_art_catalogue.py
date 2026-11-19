@@ -69,6 +69,11 @@ with Image.open(ROOT / square["runtime"]) as sheet:
     alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
     assert alpha.getpixel((47, 47)) < 128 < alpha.getpixel((52, 52)), "Round the exposed stone corner"
 
+    x, y, w, h = atlas["frames"]["square-frame-inner-bare"]["box"]
+    alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
+    lip = alpha.crop((0, 0, 1, h)).getbbox()[1]
+    assert alpha.getpixel((lip - 1, lip - 1)) == 0 < alpha.getpixel((lip, lip)), "Keep the recessed corner square"
+
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
 pieces = [*resources["slots"], *resources["from_campaign"]]
