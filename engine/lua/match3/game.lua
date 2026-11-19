@@ -925,6 +925,7 @@ function G.bind(R, over)
         {kind="button",id="open",height=47},
         not W.corner_close and {kind="button",id="close",text=region.close,height=32,role="link",em=16} or nil,
     }}
+    R.zone_form = zone_form   -- the campaign smoke runs press its Open button
     popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
         local z = R.zone_card
         local zone = R.island.zones[z + 1]

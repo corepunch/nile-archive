@@ -69,7 +69,7 @@ local function campaign()
     elseif R.overlay == R.OV_WONDER then
         if R.dialog_settled() then app.inject_click(R.wonder_form.boxes.action:center()); wait = 10 end
     elseif R.overlay == R.OV_ZONE then
-        if R.dialog_settled() then app.inject_click(rect(72, 487, 336, 47):center() + vec2(0, R.drop / 2)); wait = 20 end
+        if R.dialog_settled() then app.inject_click(R.zone_form.boxes.open:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif c.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); wait = 10
     elseif R.on_island and R.overlay == R.OV_NONE then
