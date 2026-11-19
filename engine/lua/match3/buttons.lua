@@ -43,11 +43,11 @@ function B.wallet(fill)
     end}}}
 end
 
-function B.paint(box, image, state, alpha)
+function B.paint(box, image, state, alpha, face_colors)
     local side = math.min(box.w, box.h) * .90
     if side <= 0 then return end
     local disabled, pressed = state == "disabled", state == "pressed"
-    local rim, face = disabled and pewter or brass, faces[state]
+    local rim, face = disabled and pewter or brass, face_colors or faces[state]
     local function ink(c) return alpha and alpha < 1 and color.alpha(c, alpha) or c end
     local center = box:center()
     local body = rect.centered(center, size2(side, side))
@@ -70,12 +70,12 @@ end
 
 -- `caption` adds the control's caption keys (text, em, text_align, text_fit)
 -- for a button that also shows a figure, as Play shows its level.
-function B.navigation(name, caption)
+function B.navigation(name, caption, palette)
     local spec = {}
     for key, value in pairs(caption or {}) do spec[key] = value end
     for state in pairs(faces) do
         spec[state] = {offset={0, 0}, layers={{paint=function(_, _, _, skin, out, alpha)
-            B.paint(out, skin.images["action-" .. name], state, alpha)
+            B.paint(out, skin.images["action-" .. name], state, alpha, palette and palette[state])
         end}}}
     end
     return spec

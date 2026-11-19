@@ -2,7 +2,7 @@
 
 ## Popup close button
 
-The red enamel X sits at the right of dismissible popup headers. Its five authored frames are packed in `data/board/pieces.png`. The [source atlas](../art/popup-close/source.png) runs from normal through selected, pressed, hover and disabled. [Registration and prompt](../art/popup-close/README.md).
+The shared round-button renderer draws the red enamel face, brass rim and shadow at the size of the popup control. All five interaction states share the [ivory X glyph](../art/popup-close/source.png), packed as `action-close` in `data/board/pieces.png`. [Registration and prompt](../art/popup-close/README.md).
 
 ## Themed board art
 

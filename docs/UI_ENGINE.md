@@ -434,7 +434,7 @@ measurement, centering, hit testing and dismissal for Results, Settings, the
 Guide, restart confirmation, building details, the out-of-moves prompt, region
 unlock and finale. Every match-3 popup starts with `match3.popup_header(title, subtitle)`, including the sheets, choices and leaderboard. A nonblank title is required. An absent, empty or whitespace-only subtitle removes its row and gap. Use `match3.set_popup_header` when the context changes on a reused form.
 
-Pass a close action ID as the third argument to `match3.popup_header(title, subtitle, close_id)` for a dismissible card. The header reserves a 44-unit button beside the wrapped title. The game skin supplies its `popup_close` state artwork.
+Pass a close action ID as the third argument to `match3.popup_header(title, subtitle, close_id)` for a dismissible card. The header reserves a 44-unit button beside the wrapped title. The Relic Rush skin uses the shared round-button renderer for `popup_close` and supplies a red face palette and the `action-close` glyph.
 
 Results show the banked currencies as `resource_indicator` prefabs in a one-row `uniform_grid`: equal
 columns across the dialog, however many currencies the game has. Each is an icon above

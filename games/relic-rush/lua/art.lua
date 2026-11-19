@@ -94,10 +94,10 @@ function A.draw_hud_catalogue(R)
     gfx.image(R.hud_art.complete,rect(148,397,46,46),color.WHITE)
     R.say_at("score",vec2(79,464),14,R.PAL_CREAM,90)
     R.say_at("complete",vec2(171,464),14,R.PAL_CREAM,90)
-    for row,kind in ipairs{"build","play","pause"} do
+    for row,role in ipairs{"navigation_build","navigation_play","navigation_pause","popup_close"} do
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
-            R.skin:paint_button(rect(28+(i-1)*89,505+(row-1)*94,72,72),st,{role="navigation_"..kind})
+            R.skin:paint_button(rect(28+(i-1)*89,495+(row-1)*82,72,72),st,{role=role})
         end
     end
 end
@@ -106,11 +106,8 @@ function A.load()
     local textures, skin = {}, A.skin()
     local function load(name) textures[name] = skin[name] end
     local own = own_board()
-    for _, state in ipairs({"normal", "selected", "pressed", "hover", "disabled"}) do
-        local name = "close-" .. state
-        require("skin").images[name] = assert(own[name], "missing close button: " .. name)
-    end
     local function piece(name) return assert(own[name], "missing pieces frame: " .. name) end
+    require("skin").images["action-close"] = piece("action-close")
     for _, key in ipairs(A.bonus_atlas_order) do textures[key] = piece(key) end
     -- The packed Hammer bounds are centered. Its heavier head pulls the
     -- opacity anchor upward, making the whole silhouette sit low on the face.

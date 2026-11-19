@@ -69,10 +69,19 @@
         128
       ]
     },
-    "action-levels": {
+    "action-close": {
       "atlas": "pieces",
       "box": [
         128,
+        0,
+        128,
+        128
+      ]
+    },
+    "action-levels": {
+      "atlas": "pieces",
+      "box": [
+        256,
         0,
         128,
         128
@@ -81,7 +90,7 @@
     "action-pause": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         0,
         128,
         128
@@ -90,7 +99,7 @@
     "action-play": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         0,
         128,
         128
@@ -99,7 +108,7 @@
     "bonus-bomb": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         0,
         128,
         128
@@ -108,7 +117,7 @@
     "bonus-hammer": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         0,
         128,
         128
@@ -117,7 +126,7 @@
     "bonus-hourglass": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         0,
         128,
         128
@@ -126,8 +135,8 @@
     "bonus-lightning": {
       "atlas": "pieces",
       "box": [
-        896,
         0,
+        128,
         128,
         128
       ]
@@ -135,7 +144,7 @@
     "bonus-mixer": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         128,
         128,
         128
@@ -144,7 +153,7 @@
     "bonus-plus": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         128,
         128,
         128
@@ -153,7 +162,7 @@
     "bonus-shield": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         128,
         128,
         128
@@ -162,7 +171,7 @@
     "bonus-star": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         128,
         128,
         128
@@ -171,7 +180,7 @@
     "campaign-amphora": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         128,
         128,
         128
@@ -180,7 +189,7 @@
     "campaign-apple": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         128,
         128,
         128
@@ -189,7 +198,7 @@
     "campaign-berries": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         128,
         128,
         128
@@ -198,8 +207,8 @@
     "campaign-cable": {
       "atlas": "pieces",
       "box": [
-        896,
-        128,
+        0,
+        256,
         128,
         128
       ]
@@ -207,7 +216,7 @@
     "campaign-chart": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         256,
         128,
         128
@@ -216,7 +225,7 @@
     "campaign-coin": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         256,
         128,
         128
@@ -225,7 +234,7 @@
     "campaign-cut-blocks": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         256,
         128,
         128
@@ -234,7 +243,7 @@
     "campaign-emerald": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         256,
         128,
         128
@@ -243,7 +252,7 @@
     "campaign-flower": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         256,
         128,
         128
@@ -252,7 +261,7 @@
     "campaign-gear": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         256,
         128,
         128
@@ -261,7 +270,7 @@
     "campaign-grain": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         256,
         128,
         128
@@ -270,8 +279,8 @@
     "campaign-harp": {
       "atlas": "pieces",
       "box": [
-        896,
-        256,
+        0,
+        384,
         128,
         128
       ]
@@ -279,7 +288,7 @@
     "campaign-helmet": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         384,
         128,
         128
@@ -288,7 +297,7 @@
     "campaign-leaf": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         384,
         128,
         128
@@ -297,7 +306,7 @@
     "campaign-lens": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         384,
         128,
         128
@@ -306,7 +315,7 @@
     "campaign-marker": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         384,
         128,
         128
@@ -315,7 +324,7 @@
     "campaign-note": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         384,
         128,
         128
@@ -324,7 +333,7 @@
     "campaign-pliers": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         384,
         128,
         128
@@ -333,7 +342,7 @@
     "campaign-quartz": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         384,
         128,
         128
@@ -342,8 +351,8 @@
     "campaign-rations": {
       "atlas": "pieces",
       "box": [
-        896,
-        384,
+        0,
+        512,
         128,
         128
       ]
@@ -351,7 +360,7 @@
     "campaign-ring": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         512,
         128,
         128
@@ -360,7 +369,7 @@
     "campaign-sandal": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         512,
         128,
         128
@@ -369,7 +378,7 @@
     "campaign-scarab": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         512,
         128,
         128
@@ -378,7 +387,7 @@
     "campaign-shrimp": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         512,
         128,
         128
@@ -387,7 +396,7 @@
     "campaign-silver-coin": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         512,
         128,
         128
@@ -396,7 +405,7 @@
     "campaign-stone": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         512,
         128,
         128
@@ -405,7 +414,7 @@
     "campaign-supplies": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         512,
         128,
         128
@@ -414,8 +423,8 @@
     "campaign-timber": {
       "atlas": "pieces",
       "box": [
-        896,
-        512,
+        0,
+        640,
         128,
         128
       ]
@@ -423,7 +432,7 @@
     "campaign-tools": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         640,
         128,
         128
@@ -432,52 +441,7 @@
     "campaign-water": {
       "atlas": "pieces",
       "box": [
-        128,
-        640,
-        128,
-        128
-      ]
-    },
-    "close-disabled": {
-      "atlas": "pieces",
-      "box": [
         256,
-        640,
-        128,
-        128
-      ]
-    },
-    "close-hover": {
-      "atlas": "pieces",
-      "box": [
-        384,
-        640,
-        128,
-        128
-      ]
-    },
-    "close-normal": {
-      "atlas": "pieces",
-      "box": [
-        512,
-        640,
-        128,
-        128
-      ]
-    },
-    "close-pressed": {
-      "atlas": "pieces",
-      "box": [
-        640,
-        640,
-        128,
-        128
-      ]
-    },
-    "close-selected": {
-      "atlas": "pieces",
-      "box": [
-        768,
         640,
         128,
         128
@@ -486,7 +450,7 @@
     "complete": {
       "atlas": "pieces",
       "box": [
-        896,
+        384,
         640,
         128,
         128
@@ -495,8 +459,8 @@
     "discovery-star": {
       "atlas": "pieces",
       "box": [
-        0,
-        768,
+        512,
+        640,
         128,
         128
       ]
@@ -504,8 +468,8 @@
     "jewels-0": {
       "atlas": "pieces",
       "box": [
-        128,
-        768,
+        640,
+        640,
         128,
         128
       ]
@@ -513,8 +477,8 @@
     "jewels-1": {
       "atlas": "pieces",
       "box": [
-        256,
         768,
+        640,
         128,
         128
       ]
@@ -522,8 +486,8 @@
     "jewels-2": {
       "atlas": "pieces",
       "box": [
-        384,
-        768,
+        896,
+        640,
         128,
         128
       ]
@@ -531,7 +495,7 @@
     "jewels-3": {
       "atlas": "pieces",
       "box": [
-        512,
+        0,
         768,
         128,
         128
@@ -540,7 +504,7 @@
     "jewels-4": {
       "atlas": "pieces",
       "box": [
-        640,
+        128,
         768,
         128,
         128
@@ -549,7 +513,7 @@
     "jewels-5": {
       "atlas": "pieces",
       "box": [
-        768,
+        256,
         768,
         128,
         128
@@ -558,7 +522,7 @@
     "life": {
       "atlas": "pieces",
       "box": [
-        896,
+        384,
         768,
         128,
         128
@@ -567,8 +531,8 @@
     "next-clue": {
       "atlas": "pieces",
       "box": [
-        0,
-        896,
+        512,
+        768,
         128,
         128
       ]
@@ -576,8 +540,8 @@
     "relics-0": {
       "atlas": "pieces",
       "box": [
-        128,
-        896,
+        640,
+        768,
         128,
         128
       ]
@@ -585,8 +549,8 @@
     "relics-1": {
       "atlas": "pieces",
       "box": [
-        256,
-        896,
+        768,
+        768,
         128,
         128
       ]
@@ -594,8 +558,8 @@
     "relics-2": {
       "atlas": "pieces",
       "box": [
-        384,
         896,
+        768,
         128,
         128
       ]
@@ -603,7 +567,7 @@
     "relics-3": {
       "atlas": "pieces",
       "box": [
-        512,
+        0,
         896,
         128,
         128
@@ -612,7 +576,7 @@
     "relics-4": {
       "atlas": "pieces",
       "box": [
-        640,
+        128,
         896,
         128,
         128
@@ -621,7 +585,7 @@
     "relics-5": {
       "atlas": "pieces",
       "box": [
-        768,
+        256,
         896,
         128,
         128
@@ -630,7 +594,7 @@
     "resource-berries": {
       "atlas": "pieces",
       "box": [
-        896,
+        384,
         896,
         128,
         128
@@ -639,8 +603,8 @@
     "resource-coin": {
       "atlas": "pieces",
       "box": [
-        0,
-        1024,
+        512,
+        896,
         128,
         128
       ]
@@ -648,8 +612,8 @@
     "resource-emerald": {
       "atlas": "pieces",
       "box": [
-        128,
-        1024,
+        640,
+        896,
         128,
         128
       ]
@@ -657,8 +621,8 @@
     "resource-rations": {
       "atlas": "pieces",
       "box": [
-        256,
-        1024,
+        768,
+        896,
         128,
         128
       ]
@@ -666,8 +630,8 @@
     "resource-stone": {
       "atlas": "pieces",
       "box": [
-        384,
-        1024,
+        896,
+        896,
         128,
         128
       ]
@@ -675,7 +639,7 @@
     "resource-timber": {
       "atlas": "pieces",
       "box": [
-        512,
+        0,
         1024,
         128,
         128
@@ -684,7 +648,7 @@
     "resource-wallet-food": {
       "atlas": "pieces",
       "box": [
-        640,
+        128,
         1024,
         128,
         128
@@ -693,7 +657,7 @@
     "resource-wallet-supplies": {
       "atlas": "pieces",
       "box": [
-        768,
+        256,
         1024,
         128,
         128
@@ -702,7 +666,7 @@
     "resource-water": {
       "atlas": "pieces",
       "box": [
-        896,
+        384,
         1024,
         128,
         128
@@ -711,8 +675,8 @@
     "resources-0": {
       "atlas": "pieces",
       "box": [
-        0,
-        1152,
+        512,
+        1024,
         128,
         128
       ]
@@ -720,8 +684,8 @@
     "resources-1": {
       "atlas": "pieces",
       "box": [
-        128,
-        1152,
+        640,
+        1024,
         128,
         128
       ]
@@ -729,8 +693,8 @@
     "resources-2": {
       "atlas": "pieces",
       "box": [
-        256,
-        1152,
+        768,
+        1024,
         128,
         128
       ]
@@ -738,8 +702,8 @@
     "resources-3": {
       "atlas": "pieces",
       "box": [
-        384,
-        1152,
+        896,
+        1024,
         128,
         128
       ]
@@ -747,7 +711,7 @@
     "resources-4": {
       "atlas": "pieces",
       "box": [
-        512,
+        0,
         1152,
         128,
         128
@@ -756,7 +720,7 @@
     "resources-5": {
       "atlas": "pieces",
       "box": [
-        640,
+        128,
         1152,
         128,
         128
@@ -765,7 +729,7 @@
     "score": {
       "atlas": "pieces",
       "box": [
-        768,
+        256,
         1152,
         128,
         128
@@ -774,7 +738,7 @@
     "shop-built": {
       "atlas": "pieces",
       "box": [
-        896,
+        384,
         1152,
         128,
         128
@@ -783,8 +747,8 @@
     "shop-locked": {
       "atlas": "pieces",
       "box": [
-        0,
-        1280,
+        512,
+        1152,
         128,
         128
       ]
@@ -792,8 +756,8 @@
     "story-cable": {
       "atlas": "pieces",
       "box": [
-        128,
-        1280,
+        640,
+        1152,
         128,
         128
       ]
@@ -801,8 +765,8 @@
     "story-chart": {
       "atlas": "pieces",
       "box": [
-        256,
-        1280,
+        768,
+        1152,
         128,
         128
       ]
@@ -810,8 +774,8 @@
     "story-gear": {
       "atlas": "pieces",
       "box": [
-        384,
-        1280,
+        896,
+        1152,
         128,
         128
       ]
@@ -819,7 +783,7 @@
     "story-lens": {
       "atlas": "pieces",
       "box": [
-        512,
+        0,
         1280,
         128,
         128
@@ -828,7 +792,7 @@
     "story-marker": {
       "atlas": "pieces",
       "box": [
-        640,
+        128,
         1280,
         128,
         128
@@ -837,7 +801,7 @@
     "story-note": {
       "atlas": "pieces",
       "box": [
-        768,
+        256,
         1280,
         128,
         128
@@ -846,7 +810,7 @@
     "story-supplies": {
       "atlas": "pieces",
       "box": [
-        896,
+        384,
         1280,
         128,
         128
@@ -855,8 +819,8 @@
     "story-tools": {
       "atlas": "pieces",
       "box": [
-        0,
-        1408,
+        512,
+        1280,
         128,
         128
       ]
@@ -1181,12 +1145,8 @@
     "resources-3": "art/registered/tile-sets/resources/3.png",
     "resources-4": "art/registered/tile-sets/resources/4.png",
     "resources-5": "art/registered/tile-sets/resources/5.png",
+    "action-close": "art/registered/board-states/action-close.png",
     "cell-mask": "art/registered/board-states/cell-mask.png",
-    "close-disabled": "art/registered/board-states/close-disabled.png",
-    "close-hover": "art/registered/board-states/close-hover.png",
-    "close-normal": "art/registered/board-states/close-normal.png",
-    "close-pressed": "art/registered/board-states/close-pressed.png",
-    "close-selected": "art/registered/board-states/close-selected.png",
     "guide": "art/registered/board-states/guide.png",
     "hint": "art/registered/board-states/hint.png",
     "selected": "art/registered/board-states/selected.png",
@@ -1580,12 +1540,8 @@
       "games/relic-rush/art/particles/kenney/star_07.png": "ae3e59099231a3daf031a56b5e0c841aad60ec2fb7549df79412da4c75bb3bcf",
       "games/relic-rush/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
       "games/relic-rush/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
+      "games/relic-rush/art/registered/board-states/action-close.png": "62c678f46528bd2ff0128a75b3577dcde38f60d361e814870e1fb38cdbc2ab19",
       "games/relic-rush/art/registered/board-states/cell-mask.png": "e51da6f444ca0f877436eb32bb3d3de943f8a1739a39a333c02ab7cff73ad719",
-      "games/relic-rush/art/registered/board-states/close-disabled.png": "d26be32e94a1ee0a7bc4a8d6b2640d1499493d61d5f8fe7a5ec6f71755b919ee",
-      "games/relic-rush/art/registered/board-states/close-hover.png": "5e8c6f73cfee4271d0dcee8ad46a912d144eb30f6aed910c499eea3e070d48c8",
-      "games/relic-rush/art/registered/board-states/close-normal.png": "cd3fc1990813229b0fc1dfb3ce8540dddbbac08c1a5185d8b893377c3a7712b4",
-      "games/relic-rush/art/registered/board-states/close-pressed.png": "bffc32e88d9def73afca83453482354c7e7c5f0b4b4f7163584003ea88c72ab1",
-      "games/relic-rush/art/registered/board-states/close-selected.png": "922a7e269fe6925fe30d4f981402cad1b003840b79a64d0fe752c635c9e0dadf",
       "games/relic-rush/art/registered/board-states/guide.png": "3c3dfce86d4833b5fd71b2bed2d012fd4d4f0c45d8c41fffc42b182bcf1f7306",
       "games/relic-rush/art/registered/board-states/hint.png": "07cf83ac91b4b02f3ea076455a4116326cfcbf0b0ad0345afead940828142777",
       "games/relic-rush/art/registered/board-states/selected.png": "a7c3541a46c33606fd8ef2ce5a46e71db51b2eae814822a7a3ba2a4de47a9aff",
@@ -1652,8 +1608,8 @@
       "games/relic-rush/data/board/cells.png": "f51ae923c801eb2dd8ce2f001870e8588cc30d1975ac4122c11c2e279bdd4d1a",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
-      "games/relic-rush/data/board/pieces.png": "8840e56ec3ac8f800ba35ae5bcd77c2616091d9d05cc6221804222b3cbf5cfb0",
-      "games/relic-rush/lua/match3_atlases.lua": "234499d70b9884c7fa4e18a3f7252ee40ffe394f0587ba7e4f82bb44edc8cb38",
+      "games/relic-rush/data/board/pieces.png": "1cdd3bd444e44335b1c1e9806e187392042af2845bf259d6a951f66dfb7a901b",
+      "games/relic-rush/lua/match3_atlases.lua": "383cbc9bcf9a6102ae99f45013d42ff9a9c1dc3ab5214ec9ebc79d20b84145a4",
       "games/relic-rush/lua/match3_hud.lua": "0525d0783e4ff80f06d488507903c04b685b3017445414f0b0779af9a848bf11",
       "games/relic-rush/lua/match3_skin.lua": "8f808605b0cc29149eefa9e51fda795e94d7c2554a65f145f3433e69a16ba05f"
     }
