@@ -2,17 +2,30 @@
 
 ## Square board
 
-The current campaign uses mottled matte papyrus for ordinary and cleared cells, deep blue for single-layer plaques, and olive green for double plaques. The square perimeter uses five generated sandstone tiles in `data/board/cells.png`. The four floor cells around each grid vertex determine which frame tile to draw and how to turn it. All five share an irregular stone grain, shallow cracks and a board-facing shadow that fades onto the floor.
+The campaign uses matte papyrus for ordinary cells, deep blue for single-layer plaques, and olive green for double plaques. The square frame has fourteen stone layouts and four leafy variants in `data/board/cells.png`. Each draws in one empty 128 px cell and rotates to suit its neighbours. The number encodes neighbour directions clockwise from north. A rounded cap connects the two rails around a diagonally adjacent tile.
 
-| Runtime frame | Board position |
+| Runtime frame | Stone and foliage within the cell |
 | --- | --- |
-| `square-frame-edge` | Two adjacent floor cells meet at a straight boundary. |
-| `square-frame-outer` | One floor cell makes a rounded outside corner. |
-| `square-frame-inner` | Three floor cells make a notch. The larger leaf fan is baked over the rails in one corner sprite, drawn after neighbouring frame sections. |
-| `square-frame-inner-bare` | Alternate recessed corner with matching sandstone rails and contact shadow. |
-| `square-frame-diagonal` | Two diagonally touching floor cells meet at a stepped sandstone join. |
+| `square-frame-1` | North rail. |
+| `square-frame-2` | Northeast rounded cap. |
+| `square-frame-5` | North and east rails with a square inside corner. |
+| `square-frame-5-leaf` | North and east rails with a square inside corner and leaves in the northeast corner. |
+| `square-frame-9` | North rail and southeast cap. |
+| `square-frame-10` | Northeast and southeast caps. |
+| `square-frame-17` | North and south rails. |
+| `square-frame-18` | South rail and northeast cap. |
+| `square-frame-21` | North, east and south rails. |
+| `square-frame-21-leaf` | North, east and south rails and leaves in the northeast corner. |
+| `square-frame-34` | Northeast and southwest caps. |
+| `square-frame-37` | North and east rails with a southwest cap. |
+| `square-frame-37-leaf` | North and east rails with a southwest cap and leaves in the northeast corner. |
+| `square-frame-41` | North rail with southeast and southwest caps. |
+| `square-frame-42` | Northeast, southeast and southwest caps. |
+| `square-frame-85` | Four rails around an enclosed empty cell. |
+| `square-frame-85-leaf` | Four rails around an enclosed empty cell and leaves in the northeast corner. |
+| `square-frame-170` | Four rounded caps. |
 
-Built-in ImageGen painted the [current floors](../art/papyrus-board/contact.png) using the [layout](../art/papyrus-board/contact-layout.png) and [prompt](../art/papyrus-board/contact-prompt.txt). The [square frame generator](../../../tools/square_board_frame.py) bakes the shadows and the [painted leaves](../../../engine/art/board-frame/decorations-source.png) into the stone geometry. The catalogue check samples the packed tile interiors and the shadow and rounding of the packed frame. The [square campaign guide](square-match3.md) links the registration transforms and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
+Built-in ImageGen painted the [floor faces](../art/papyrus-board/contact.png) and the [cracked sandstone material](../art/papyrus-board/stone-cracks.png). The [square frame generator](../../../tools/square_board_frame.py) bakes the material in Multiply mode, followed by the stone joints and the existing [painted leaves](../../../engine/art/board-frame/decorations-source.png). The [square campaign guide](square-match3.md) links the prompts, registration and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
 
 ## Popup close button
 

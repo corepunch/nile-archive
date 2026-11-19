@@ -1,131 +1,137 @@
-"""Bake the square board's rounded sandstone rim and its leafy notch."""
+"""Bake full-size tiles for the empty cells bordering a square board."""
 import json
 import math
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
-import board_frame
 import board_frame_decor
-import board_grain
 
 CELL = 128
-LEAF_PAD = 48
-REACH, SHADOW = 17, 7
+REACH = 17
 
-# Distance from the board, sandstone colour, and opacity. Negative distance
-# is the contact shadow that falls just inside the floor's edge.
+# Distance from the board into the frame cell, and sandstone colour. The
+# contact shadow is part of the rim and ends at the shared tile edge.
 PROFILE = (
-    (-SHADOW, (0, 0, 0), 0),
-    (-3, (0, 0, 0), 80),
-    (0, (0, 0, 0), 170),
-    (2, (89, 65, 41), 255),
-    (5, (150, 112, 70), 255),
-    (7, (168, 132, 86), 255),
-    (10, (168, 132, 86), 255),
-    (11, (113, 57, 18), 255),
-    (13, (100, 69, 38), 255),
-    (15, (89, 58, 29), 255),
-    (REACH, (82, 43, 14), 255),
+    (0, (24, 13, 5)),
+    (2, (89, 65, 41)),
+    (5, (150, 112, 70)),
+    (7, (168, 132, 86)),
+    (10, (168, 132, 86)),
+    (11, (113, 57, 18)),
+    (13, (100, 69, 38)),
+    (15, (89, 58, 29)),
+    (REACH, (82, 43, 14)),
 )
 
 
-def quadrant(x, y):
-    if x >= 0 and y >= 0:
-        return -min(x, y)
-    return math.hypot(min(x, 0), min(y, 0))
+def frame_masks():
+    """Neighbour bits run clockwise from north, interleaving edges and corners."""
+    canonical = set()
+    for mask in range(1, 256):
+        for k in range(0, 8, 2):
+            if mask & (1 << k | 1 << ((k + 2) % 8)):
+                mask &= ~(2 << k)  # This corner is already covered by a side.
+        rotations = [(mask << k | mask >> (8 - k)) & 255 for k in range(0, 8, 2)]
+        canonical.add(min(rotations))
+    return sorted(canonical)
 
 
-def straight(x, y):
-    return -y, x
+def contour(mask):
+    sides = [k for k in range(4) if mask & (1 << (2 * k))]
+    corners = [(k, (k + 1) % 4) for k in range(4) if mask & (2 << (2 * k))]
+    half = CELL / 2
 
+    def sample(x, y):
+        distance = (y, CELL - x, CELL - y, x)
+        along = (x - half, y - half, half - x, half - y)
+        depth, run = REACH, 0
+        for side in sides:
+            if distance[side] < depth:
+                depth, run = distance[side], along[side]
+        for a, b in corners:
+            corner = math.hypot(distance[a], distance[b])
+            if corner < depth:
+                depth, run = corner, half - min(distance[a], distance[b])
+        return depth, run
 
-def outside(x, y):
-    return quadrant(x, y), y if x < y else x
-
-
-def inside(x, y):
-    # The two straight faces meet at a square re-entrant corner.
-    return -max(x, y), min(x, y)
-
-
-def diagonal(x, y):
-    south = outside(x, y)
-    north = outside(-x, -y)
-    return south if south[0] <= north[0] else north
+    return sample
 
 
 def bake(sample, grain):
     scale = 2
     side = CELL * scale
     bands = []
-    for (a, lit, alpha), (b, shade, next_alpha) in zip(PROFILE, PROFILE[1:]):
+    for (a, lit), (b, shade) in zip(PROFILE, PROFILE[1:]):
         steps = (b - a) * 16
         for i in range(steps):
             f = i / steps
-            bands.append((tuple(c + (d - c) * f for c, d in zip(lit, shade)),
-                          round(alpha + (next_alpha - alpha) * f)))
+            bands.append(tuple(c + (d - c) * f for c, d in zip(lit, shade)))
     texture = grain.load()
     pixels = []
     for py in range(side):
-        y = (py + .5) / scale - CELL / 2
+        y = (py + .5) / scale
         for px in range(side):
-            x = (px + .5) / scale - CELL / 2
+            x = (px + .5) / scale
             depth, along = sample(x, y)
-            if not -SHADOW < depth < REACH:
+            if depth >= REACH:
                 pixels.append((0, 0, 0, 0))
                 continue
-            colour, alpha = bands[int((depth + SHADOW) * 16)]
-            u = round(along * 2 + grain.width / 2) % grain.width
-            v = round(max(0, depth) * (grain.height - 1) / REACH)
-            r, g, b, strength = texture[u, v]
-            # The stone's veins and occasional cracks stay visible across
-            # the face. Fade them near the ports for a continuous joint.
+            colour = bands[int(depth * 16)]
+            u = int(along + CELL / 2)
+            v = 24 + int(depth * 3)
+            # Multiply the painted stone grain over the coloured face.
+            # Fade the grain near the joins so adjacent cells meet cleanly.
             seam = max(0, min(1, (CELL / 2 - 1 - abs(along)) / 5))
             face = min(1, max(0, (depth - 3) / 5)) * seam
-            mix = strength / 255 * face * .85
+            multiply = 1 - (1 - texture[u, v] / 255) * face * .82
             # The pale shoulder of each deep, angled joint picks up light.
             cut = (along + depth * .62 + abs(depth - 11) * .24) % (CELL / 2) - CELL / 4
             joint = max(0, 1 - abs(cut) / 2.4) * .85 * face
             shoulder = max(0, 1 - abs(cut - 2.7) / 1.5) * .32 * face
-            mottled = (a + (b - a) * mix for a, b in zip(colour, (r, g, b)))
+            mottled = (c * multiply for c in colour)
             stone = [round(base + (dark - base) * joint + (lit - base) * shoulder)
                      for base, dark, lit in zip(mottled, (55, 34, 18), (234, 196, 145))]
-            pixels.append((*stone, alpha))
+            pixels.append((*stone, 255))
     image = Image.new('RGBA', (side, side))
     image.putdata(pixels)
     return image.resize((CELL, CELL), Image.Resampling.BOX)
 
 
-def plant(stone):
+def foliage():
     reference = json.loads(board_frame_decor.SPEC.read_text())
     root = board_frame_decor.ROOT
     source = root / reference['source']
-    spec = dict(reference['games']['relic-rush']['leaves'], scale=.38, turn=-45)
-    side = CELL + 2 * LEAF_PAD
+    # All canonical leafy layouts have their first inside corner at NE.
+    spec = dict(reference['games']['relic-rush']['leaves'], scale=.35, turn=-119)
     with Image.open(source) as image:
-        sprig = board_frame_decor.register(image, spec, side)
-
-    corner = Image.new('RGBA', (side, side))
-    mount = (2 - REACH, 2 - REACH)
-    corner.alpha_composite(stone, (LEAF_PAD, LEAF_PAD))
-    corner.alpha_composite(sprig, mount)
+        sprig = board_frame_decor.register(image, spec, 2 * CELL)
+    mount = (CELL - REACH + 1, 36)
+    x, y = (CELL - coord for coord in mount)
+    left, top, right, bottom = sprig.getchannel('A').point(lambda a: 255 if a >= 32 else 0).getbbox()
+    assert x < left and y < top and right < x + CELL and bottom < y + CELL, 'Leaves must fit the frame cell'
+    tile = sprig.crop((x, y, x + CELL, y + CELL))
     spec['source'] = reference['source']
     spec['mount'] = mount
-    spec['size'] = [side, side]
-    return corner, spec, [source, root / reference['prompt'], board_frame_decor.SPEC]
+    spec['size'] = [CELL, CELL]
+    return tile, spec, [source, root / reference['prompt'], board_frame_decor.SPEC]
 
 
-def generate():
-    grain = board_frame.stone_strip()
-    sections = {
-        'edge': straight,
-        'outer': outside,
-        'inner-bare': inside,
-        'diagonal': diagonal,
-    }
-    sprites = {f'square-frame-{name}': bake(sample, grain) for name, sample in sections.items()}
-    leafy, leaf_spec, assets = plant(sprites['square-frame-inner-bare'])
-    sprites['square-frame-inner'] = leafy
-    recipe_inputs = [Path(module.__file__) for module in (board_frame, board_frame_decor, board_grain)]
-    return sprites, leaf_spec, [Path(__file__), *recipe_inputs, *assets]
+def generate(grain_source):
+    with Image.open(grain_source) as image:
+        grain = image.convert('L').resize((CELL, CELL), Image.Resampling.LANCZOS)
+    # Keep the thin dark fissures legible when a full cell is drawn at 40 px.
+    grain = grain.filter(ImageFilter.MinFilter(3)).point(lambda value: min(255, value + 18))
+    leaves, leaf_spec, assets = foliage()
+    sprites = {}
+    for mask in frame_masks():
+        name = f'square-frame-{mask}'
+        sprites[name] = bake(contour(mask), grain)
+        if (mask & 5) == 5:  # North and east rails meet.
+            planted = sprites[name].copy()
+            planted.alpha_composite(leaves)
+            sprites[f'{name}-leaf'] = planted
+    texture_inputs = [grain_source.with_name(name) for name in (
+        'stone-grain.png', 'stone-grain-prompt.txt', 'stone-cracks.png', 'stone-cracks-prompt.txt',
+    )]
+    return sprites, leaf_spec, [Path(__file__), Path(board_frame_decor.__file__), *texture_inputs, *assets]

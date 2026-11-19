@@ -137,5 +137,58 @@ do
     check(not V.reveal_holding(view,C), 'the hold ends and lets the beat play')
 end
 
-print('match3 elements: stones and tablets passed')
+-- A frame tile is placed once at the centre of each neighbouring empty
+-- cell. Include a diagonal cap outside the grid and a planted notch.
+do
+    local view = require('match3.elements_view')
+    local board = E.new{square=true, columns=3, rows=3}
+    local g = {active={}, oil={}}
+    local step, origin = 24, vec2(80, 100)
+    local expected = {}
+    for _, pos in ipairs{{-1,-1}, {0,-1}, {-1,0}} do
+        local q, row = pos[1], pos[2]
+        local cell_id = board.hex_index(q, row)
+        g.active[cell_id], g.oil[cell_id] = true, 0
+        for dx = -1, 1 do
+            for dy = -1, 1 do
+                expected[(q + dx) * 16 + row + dy] = true
+            end
+        end
+    end
+    for i in pairs(g.active) do expected[board.hex_q(i) * 16 + board.hex_r(i)] = nil end
+
+    local art = {}
+    local skin = setmetatable({}, {__index=function(_, key)
+        if key:sub(-5) ~= "-leaf" or key == "square-frame-5-leaf" then return key end
+    end})
+    view.load_square(art, skin, true)
+    local model = {g=g, HEX_R=step/2, board_origin=origin, board_art=art, GROUND={seam_width=.5}}
+    model.cell_pos = function(i) return origin + vec2(board.hex_q(i) * step, board.hex_r(i) * step) end
+    local frame_draws, draw = {}, gfx.image_rot
+    gfx.image_rot = function(sprite, box, angle) -- luacheck: ignore 122
+        if sprite:match("^square%-frame%-") then
+            frame_draws[#frame_draws + 1] = {sprite=sprite, box=box, angle=angle}
+        end
+    end
+    local ok, err = pcall(view.ground, model, board, 0, {normal="square-plain"})
+    gfx.image_rot = draw -- luacheck: ignore 122
+    check(ok, err)
+    local planted, cap
+    for _, frame in ipairs(frame_draws) do
+        local centre = frame.box:center() - origin
+        local q, row = centre.x / step, centre.y / step
+        local key = q * 16 + row
+        check(frame.box.w == step and frame.box.h == step, 'frame uses the full tile footprint')
+        check(q % 1 == 0 and row % 1 == 0 and expected[key], 'frame is drawn once in an empty cell')
+        expected[key] = nil
+        if q == 0 and row == 0 then planted = frame.sprite end
+        if q == -2 and row == -2 then cap = frame end
+    end
+    check(next(expected) == nil, 'frame covers the entire empty ring')
+    check(planted == "square-frame-5-leaf", 'the notch uses a single tile with baked foliage')
+    check(cap and cap.sprite == "square-frame-2", 'the diagonal cap uses its own tile')
+    near(cap.angle, math.pi / 2, 0.0001)
+end
+
+print('match3 elements: stones, tablets and square frame passed')
 return 0

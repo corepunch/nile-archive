@@ -367,7 +367,7 @@ PAPYRUS_FLOORS = {
 
 
 def square_frame_sprites(root):
-    sprites, leaf_spec, inputs = square_board_frame.generate()
+    sprites, leaf_spec, inputs = square_board_frame.generate(root / 'art/papyrus-board/stone-cracks.png')
     recipe = relpath(square_board_frame.__file__, root)
     registration = {}
     for name, sprite in sprites.items():
@@ -379,7 +379,8 @@ def square_frame_sprites(root):
             'registered': relpath(registered, root),
         }
         inputs.append(registered)
-    registration['square-frame-inner']['foliage'] = leaf_spec
+        if name.endswith('-leaf'):
+            registration[name]['foliage'] = leaf_spec
     return sprites, inputs, registration
 
 
@@ -569,6 +570,9 @@ def build_game(game, check):
                           'layout': 'art/papyrus-board/contact-layout.png',
                           'prompt': 'art/papyrus-board/contact-prompt.txt',
                           'frame_recipe': '../../tools/square_board_frame.py',
+                          'frame_texture': 'art/papyrus-board/stone-cracks.png',
+                          'frame_texture_prompt': 'art/papyrus-board/stone-cracks-prompt.txt',
+                          'frame_texture_blend': 'multiply',
                           'selection_and_grout': '../../art/match3-square/source.png'}
     else:
         square_sources = {'source': '../../art/match3-square/source.png',

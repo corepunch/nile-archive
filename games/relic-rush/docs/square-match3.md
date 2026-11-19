@@ -52,20 +52,22 @@ using the [board layout](../art/papyrus-board/contact-layout.png), the
 `cell_normal.png` and `cell_puzzle_one.png` studies, and the
 [paint-over prompt](../art/papyrus-board/contact-prompt.txt).
 
+The frame occupies whole 128 px cells in the empty ring and in board holes.
+Each cell selects one sprite and a quarter turn from its eight neighbours.
 The [square frame generator](../../../tools/square_board_frame.py) rounds
-outside corners and joins recessed corners at right angles. It uses the
-distance to the board to place the dark contact shadow on the side facing
-the floor. The sandstone has a dark warm outer edge and a flat tan face
-with seeded grain and angled joints. The palette follows the stone and
-shadow samples in `gmf_corner_1.png`, `gmf_corner_9.png` and
-`gmf_corner_11.png`. The rounded outline follows the supplied game capture.
-The generator joins sections halfway along each exposed cell edge. It bakes
-the [painted foliage](../../../engine/art/board-frame/decorations-source.png)
-over the stone in a single 224 px corner sprite, on the same grid pivot
-as the 128 px bare corner. The two inset corners alternate. Leafy corners
-draw after the other frame sections so the leaves stay visible across joins.
+exposed corner caps and joins the arms of recessed corners at right angles.
+It bakes the dark contact shadow into the edge of the frame tile.
+The [cracked stone texture](../art/papyrus-board/stone-cracks.png) multiplies
+over the sandstone face. ImageGen first painted the
+[stone grain](../art/papyrus-board/stone-grain.png) from its
+[material prompt](../art/papyrus-board/stone-grain-prompt.txt), then added
+angular fractures using [the crack prompt](../art/papyrus-board/stone-cracks-prompt.txt)
+and the supplied `gmf_corner_10.png` study. The generator bakes the angled
+joints and [painted foliage](../../../engine/art/board-frame/decorations-source.png)
+into each variant. Bare and leafy variants alternate at recessed corners. Stone,
+shadow and leaves fit inside the same empty square.
 [Atlas registration](../art/match3-atlas.json) records the source crops,
-pivots and runtime atlas regions.
+texture blend, pivots and runtime atlas regions.
 Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 
 ## Construction balance

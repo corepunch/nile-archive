@@ -17,7 +17,7 @@
     "cells": {
       "runtime": "data/board/cells.png",
       "size": [
-        512,
+        1024,
         1024
       ]
     },
@@ -927,13 +927,49 @@
     "square-double": {
       "atlas": "cells",
       "box": [
+        512,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-1": {
+      "atlas": "cells",
+      "box": [
+        640,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-10": {
+      "atlas": "cells",
+      "box": [
+        768,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-17": {
+      "atlas": "cells",
+      "box": [
+        896,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-170": {
+      "atlas": "cells",
+      "box": [
         0,
         128,
         128,
         128
       ]
     },
-    "square-frame-diagonal": {
+    "square-frame-18": {
       "atlas": "cells",
       "box": [
         128,
@@ -942,7 +978,7 @@
         128
       ]
     },
-    "square-frame-edge": {
+    "square-frame-2": {
       "atlas": "cells",
       "box": [
         256,
@@ -951,16 +987,7 @@
         128
       ]
     },
-    "square-frame-inner": {
-      "atlas": "cells",
-      "box": [
-        2,
-        770,
-        224,
-        224
-      ]
-    },
-    "square-frame-inner-bare": {
+    "square-frame-21": {
       "atlas": "cells",
       "box": [
         384,
@@ -969,10 +996,100 @@
         128
       ]
     },
-    "square-frame-outer": {
+    "square-frame-21-leaf": {
+      "atlas": "cells",
+      "box": [
+        512,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-34": {
+      "atlas": "cells",
+      "box": [
+        640,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-37": {
+      "atlas": "cells",
+      "box": [
+        768,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-37-leaf": {
+      "atlas": "cells",
+      "box": [
+        896,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-41": {
       "atlas": "cells",
       "box": [
         0,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-42": {
+      "atlas": "cells",
+      "box": [
+        128,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-5": {
+      "atlas": "cells",
+      "box": [
+        256,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-5-leaf": {
+      "atlas": "cells",
+      "box": [
+        384,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-85": {
+      "atlas": "cells",
+      "box": [
+        512,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-85-leaf": {
+      "atlas": "cells",
+      "box": [
+        640,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-9": {
+      "atlas": "cells",
+      "box": [
+        768,
         256,
         128,
         128
@@ -981,7 +1098,7 @@
     "square-grout": {
       "atlas": "cells",
       "box": [
-        128,
+        896,
         256,
         128,
         128
@@ -990,8 +1107,8 @@
     "square-plain": {
       "atlas": "cells",
       "box": [
-        256,
-        256,
+        0,
+        384,
         128,
         128
       ]
@@ -999,8 +1116,8 @@
     "square-selected": {
       "atlas": "cells",
       "box": [
+        128,
         384,
-        256,
         128,
         128
       ]
@@ -1008,7 +1125,7 @@
     "square-target": {
       "atlas": "cells",
       "box": [
-        0,
+        256,
         384,
         128,
         128
@@ -1017,7 +1134,7 @@
     "tile-bonus-area": {
       "atlas": "cells",
       "box": [
-        128,
+        384,
         384,
         128,
         128
@@ -1026,7 +1143,7 @@
     "tile-cell-normal": {
       "atlas": "cells",
       "box": [
-        256,
+        512,
         384,
         128,
         128
@@ -1035,7 +1152,7 @@
     "tile-hover": {
       "atlas": "cells",
       "box": [
-        384,
+        640,
         384,
         128,
         128
@@ -1044,8 +1161,8 @@
     "tile-ice": {
       "atlas": "cells",
       "box": [
-        0,
-        512,
+        768,
+        384,
         128,
         128
       ]
@@ -1053,8 +1170,8 @@
     "tile-light-wave": {
       "atlas": "cells",
       "box": [
-        128,
-        512,
+        896,
+        384,
         128,
         128
       ]
@@ -1062,7 +1179,7 @@
     "tile-selected": {
       "atlas": "cells",
       "box": [
-        256,
+        0,
         512,
         128,
         128
@@ -1071,7 +1188,7 @@
     "tile-tablet-double": {
       "atlas": "cells",
       "box": [
-        384,
+        128,
         512,
         128,
         128
@@ -1080,8 +1197,8 @@
     "tile-tablet-single": {
       "atlas": "cells",
       "box": [
-        0,
-        640,
+        256,
+        512,
         128,
         128
       ]
@@ -1588,6 +1705,9 @@
     "layout": "art/papyrus-board/contact-layout.png",
     "prompt": "art/papyrus-board/contact-prompt.txt",
     "frame_recipe": "../../tools/square_board_frame.py",
+    "frame_texture": "art/papyrus-board/stone-cracks.png",
+    "frame_texture_prompt": "art/papyrus-board/stone-cracks-prompt.txt",
+    "frame_texture_blend": "multiply",
     "selection_and_grout": "../../art/match3-square/source.png",
     "frames": {
       "square-plain": {
@@ -1666,7 +1786,7 @@
         ],
         "registered": "art/registered/square-cells/square-grout.png"
       },
-      "square-frame-edge": {
+      "square-frame-1": {
         "generator": "../../tools/square_board_frame.py",
         "size": [
           128,
@@ -1676,9 +1796,9 @@
           64,
           64
         ],
-        "registered": "art/registered/square-cells/square-frame-edge.png"
+        "registered": "art/registered/square-cells/square-frame-1.png"
       },
-      "square-frame-outer": {
+      "square-frame-2": {
         "generator": "../../tools/square_board_frame.py",
         "size": [
           128,
@@ -1688,9 +1808,9 @@
           64,
           64
         ],
-        "registered": "art/registered/square-cells/square-frame-outer.png"
+        "registered": "art/registered/square-cells/square-frame-2.png"
       },
-      "square-frame-inner-bare": {
+      "square-frame-5": {
         "generator": "../../tools/square_board_frame.py",
         "size": [
           128,
@@ -1700,9 +1820,9 @@
           64,
           64
         ],
-        "registered": "art/registered/square-cells/square-frame-inner-bare.png"
+        "registered": "art/registered/square-cells/square-frame-5.png"
       },
-      "square-frame-diagonal": {
+      "square-frame-5-leaf": {
         "generator": "../../tools/square_board_frame.py",
         "size": [
           128,
@@ -1712,19 +1832,7 @@
           64,
           64
         ],
-        "registered": "art/registered/square-cells/square-frame-diagonal.png"
-      },
-      "square-frame-inner": {
-        "generator": "../../tools/square_board_frame.py",
-        "size": [
-          224,
-          224
-        ],
-        "pivot": [
-          112,
-          112
-        ],
-        "registered": "art/registered/square-cells/square-frame-inner.png",
+        "registered": "art/registered/square-cells/square-frame-5-leaf.png",
         "foliage": {
           "crop": [
             80,
@@ -1736,18 +1844,255 @@
             280,
             898
           ],
-          "scale": 0.38,
-          "turn": -45,
+          "scale": 0.35,
+          "turn": -119,
           "source": "engine/art/board-frame/decorations-source.png",
           "mount": [
-            -15,
-            -15
+            112,
+            36
           ],
           "size": [
-            224,
-            224
+            128,
+            128
           ]
         }
+      },
+      "square-frame-9": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-9.png"
+      },
+      "square-frame-10": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-10.png"
+      },
+      "square-frame-17": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-17.png"
+      },
+      "square-frame-18": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-18.png"
+      },
+      "square-frame-21": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-21.png"
+      },
+      "square-frame-21-leaf": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-21-leaf.png",
+        "foliage": {
+          "crop": [
+            80,
+            588,
+            464,
+            921
+          ],
+          "anchor": [
+            280,
+            898
+          ],
+          "scale": 0.35,
+          "turn": -119,
+          "source": "engine/art/board-frame/decorations-source.png",
+          "mount": [
+            112,
+            36
+          ],
+          "size": [
+            128,
+            128
+          ]
+        }
+      },
+      "square-frame-34": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-34.png"
+      },
+      "square-frame-37": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-37.png"
+      },
+      "square-frame-37-leaf": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-37-leaf.png",
+        "foliage": {
+          "crop": [
+            80,
+            588,
+            464,
+            921
+          ],
+          "anchor": [
+            280,
+            898
+          ],
+          "scale": 0.35,
+          "turn": -119,
+          "source": "engine/art/board-frame/decorations-source.png",
+          "mount": [
+            112,
+            36
+          ],
+          "size": [
+            128,
+            128
+          ]
+        }
+      },
+      "square-frame-41": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-41.png"
+      },
+      "square-frame-42": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-42.png"
+      },
+      "square-frame-85": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-85.png"
+      },
+      "square-frame-85-leaf": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-85-leaf.png",
+        "foliage": {
+          "crop": [
+            80,
+            588,
+            464,
+            921
+          ],
+          "anchor": [
+            280,
+            898
+          ],
+          "scale": 0.35,
+          "turn": -119,
+          "source": "engine/art/board-frame/decorations-source.png",
+          "mount": [
+            112,
+            36
+          ],
+          "size": [
+            128,
+            128
+          ]
+        }
+      },
+      "square-frame-170": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-170.png"
       }
     },
     "review": "docs/square-match3.md"
@@ -1757,7 +2102,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "6a90cdc47ecee57f43080445b2f8c560e8d1815914a4d5b984822a9004bdc2c7",
+    "recipe": "c95868b5d34a35c0ddf97dc73a944925e7716902666b6d74ff77ad2886c453a4",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1801,6 +2146,10 @@
       "games/relic-rush/art/papyrus-board/contact-layout.png": "df0a25c1b3a482d7ebff5857aabbe3ba54101d7d64172b419187bf826c32b7a3",
       "games/relic-rush/art/papyrus-board/contact-prompt.txt": "997fe55407e1b1f7363ffa3c947375693538534011fe17340d4a988ebe2ac427",
       "games/relic-rush/art/papyrus-board/contact.png": "9d6bf1ad5c433661c133136d1b26029b6f3e1a133ebb8d76c70a29c3d9b70b74",
+      "games/relic-rush/art/papyrus-board/stone-cracks-prompt.txt": "70221cb96d486e16d9932bedf42e8b59b6bfe306d8dd9d699b0000b2469fb42d",
+      "games/relic-rush/art/papyrus-board/stone-cracks.png": "994fd28093723bc14df96d3dd716261f6fc58a4a16360a6d139ea97f5c0e418d",
+      "games/relic-rush/art/papyrus-board/stone-grain-prompt.txt": "71d65ecd584cbf681e73fc77bdf433e45f409ce4a04078f2ff5fe9d819f814a7",
+      "games/relic-rush/art/papyrus-board/stone-grain.png": "b4ff790a11c0dd2c6116bf3473aae705deda5079121e451b95e0be44841d00d7",
       "games/relic-rush/art/particles/kenney/circle_02.png": "697e6fa5948cc35cc779ae0b22995f5b17f0e02746406d05ec8548921e82ad1b",
       "games/relic-rush/art/particles/kenney/circle_03.png": "ecd5e1328a591878c9ad6055e551ff76a390ed5ca1a5bebee28dd850f875c00e",
       "games/relic-rush/art/particles/kenney/light_01.png": "c9e0e947892b87cb71e110e60d85798810142b11aed154542c50b17dc93033b0",
@@ -1839,11 +2188,24 @@
       "games/relic-rush/art/registered/resource-pieces/water.png": "5eaaa529bf7de275198e08ddaba50abbd4e2248299991406da9511898f7be4b5",
       "games/relic-rush/art/registered/result-icons.png": "a4f1254f574a9d287b8d2d2345cb7823ea1b5c3407baed8b96e3b7407e102a5e",
       "games/relic-rush/art/registered/square-cells/square-double.png": "58035e2c993c644898cedf15d74cf4d50b2785301a7d0a0c03ea842242a00dc7",
-      "games/relic-rush/art/registered/square-cells/square-frame-diagonal.png": "f06fafbd29a7cdc70326fad50ac8e2d141acb50df9bfdf3e4659081ba58a1cf7",
-      "games/relic-rush/art/registered/square-cells/square-frame-edge.png": "523766cfba698f99bea03227f6438e5a9662b0c3015b8935d82fa03ce459b39a",
-      "games/relic-rush/art/registered/square-cells/square-frame-inner-bare.png": "aa7c495eab3d997cf1b433f89966caefc0f101e64f4a421e9326a4e57c5a02a6",
-      "games/relic-rush/art/registered/square-cells/square-frame-inner.png": "0782805fb8f57dc0610357be67a8b93d1ef9431ccbfc6803f7f1ccb2984a2b54",
-      "games/relic-rush/art/registered/square-cells/square-frame-outer.png": "f616c4e3dc755347edc029141e29842954751709ccbf4276e4757e00d85e05c3",
+      "games/relic-rush/art/registered/square-cells/square-frame-1.png": "f6c4233bb969893c2411d26a2a7633ffc62482d291aef60bd51e5fff924bb543",
+      "games/relic-rush/art/registered/square-cells/square-frame-10.png": "f71b2d92352a5330626c7035db56f697938471d58801b0addb75a0a9d85b66c0",
+      "games/relic-rush/art/registered/square-cells/square-frame-17.png": "3cf0822d8ed47309e8a0240331def983430fb55ef87cb390e624f3311bef268c",
+      "games/relic-rush/art/registered/square-cells/square-frame-170.png": "0c6f5eeb9e73016e47d05e82f6374d7fb81bac61f1544c58aefa8fadb010b348",
+      "games/relic-rush/art/registered/square-cells/square-frame-18.png": "86b2e116113bbfde914b753b533add5473a11f287670649a443fd61710113e04",
+      "games/relic-rush/art/registered/square-cells/square-frame-2.png": "27467de458952f9aa7c1a99873180106915cbe39f868ed07642b3ad7191c6ce3",
+      "games/relic-rush/art/registered/square-cells/square-frame-21-leaf.png": "c332ea499649ee1b28821eae5bb16bef5d20159856b46ae3977c3118a2b5b721",
+      "games/relic-rush/art/registered/square-cells/square-frame-21.png": "da006ea24da7667ba5b9ae331c6445cc6059b94c529f91c78bd26de067e788ee",
+      "games/relic-rush/art/registered/square-cells/square-frame-34.png": "6ad18320e65efea6275e0f52f4eef37daa31f2030e1eb1e26f4c1e4709807826",
+      "games/relic-rush/art/registered/square-cells/square-frame-37-leaf.png": "26faf936efab01b67b42891c1579bf263f04a7179f241ca14be0ea8c06290b3b",
+      "games/relic-rush/art/registered/square-cells/square-frame-37.png": "456a2eb10611cfdf257d8349b6f6ff8a0fcd9c1df495c017da2eea4a54be75ca",
+      "games/relic-rush/art/registered/square-cells/square-frame-41.png": "e73883e3c3c86dc58caef0ee96bcb91af9f7aa69ab7daa0232b392c57c26f51e",
+      "games/relic-rush/art/registered/square-cells/square-frame-42.png": "1a4bec05e57324f005f8be568f65ef7f00d64a38bf04147931ffba101da98678",
+      "games/relic-rush/art/registered/square-cells/square-frame-5-leaf.png": "683f8793ab90ac123564c2b3e1ea6002b948464aa2c09104ca02be415c063800",
+      "games/relic-rush/art/registered/square-cells/square-frame-5.png": "3652ed51ed5b0403beffff6ed6fad1b76113e15d7abdd3993c37563c2b75bff2",
+      "games/relic-rush/art/registered/square-cells/square-frame-85-leaf.png": "b4b153f8b45afd85b41067c63c4185083bcf31a6f77311fe62dbc739f7f9ceca",
+      "games/relic-rush/art/registered/square-cells/square-frame-85.png": "b1524c1ea19034871808fb3b444e4c7517b37ce862c9485a553cb0fb194f1f86",
+      "games/relic-rush/art/registered/square-cells/square-frame-9.png": "a13c59b0673d99456cb680236772c0a1315021f2fb8ec831a55facb6c0b35dfc",
       "games/relic-rush/art/registered/square-cells/square-grout.png": "9ed8a7ade23737f7c325ec4878d9cc22530e525748bf5a0e90d4d44734c41c30",
       "games/relic-rush/art/registered/square-cells/square-plain.png": "fe2b1608a494c03778e6caa6d6ee6b48a0a4d15817ce39ef0f985aa8948418b4",
       "games/relic-rush/art/registered/square-cells/square-selected.png": "fddece0db27db24b2ef8ad346c0341228edf91febfb67f5edee541a2a67ef579",
@@ -1874,24 +2236,22 @@
       "games/relic-rush/data/board/backs/scene-1.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
       "games/relic-rush/data/board/backs/scene-2.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
       "games/relic-rush/tools/prepare_assets.py": "34f0b6e59c10e6fcf0088ccb2ab0606a5c16c0ff92358c69c7565f2b7bb751a8",
-      "tools/board_frame.py": "1edf69a6a11d7682d88858f6962b814efca5143c6dff1d87328ac70d5077135c",
       "tools/board_frame_decor.py": "80b0c5ac9248e2c73659f1d6977899d2494bf0b9ab9208afc4e5db6da84aed73",
-      "tools/board_grain.py": "c3c3000f33a3db12df3395290e9f562f8a1f6115874a4db6ff640f78928b947d",
       "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "77d1488d6c5005236dc0c1cb35dc98fcae22b686d7010c99ca3392273d2c5ce8",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368",
-      "tools/square_board_frame.py": "731cf4473ea90e92d1d23364d9a008597112cf38c6cf4604e1290e36abdafaeb"
+      "tools/square_board_frame.py": "2e7553155f7036749bb2b569cdccd16cf0341c9b7fa7b82d3974a99cbc6be66c"
     },
     "outputs": {
       "games/relic-rush/art/registered/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
       "games/relic-rush/art/registered/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/art/registered/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
       "games/relic-rush/data/board/blockers.png": "ce55e86bc3272fb5e8b67d5e0608bce7d4a3e370c807a155c6a81964df366502",
-      "games/relic-rush/data/board/cells.png": "97c3d0725b056b29bdba480f2f647866999ad8517626d6439815df803a8e0541",
+      "games/relic-rush/data/board/cells.png": "a60edd5ecb2c5edbeccbe194ea47693b19d87146143e6bdaa80503dade130fdc",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
       "games/relic-rush/data/board/pieces.png": "1cdd3bd444e44335b1c1e9806e187392042af2845bf259d6a951f66dfb7a901b",
-      "games/relic-rush/lua/match3_atlases.lua": "2b86efcf156b830134a9d1201f57b71f07e7652a995d043d1c382c59810d326d",
+      "games/relic-rush/lua/match3_atlases.lua": "7978f1add5f7856e7e2b726b08576c5d045ee706d01d9cdbb1221df17bc34b50",
       "games/relic-rush/lua/match3_hud.lua": "0525d0783e4ff80f06d488507903c04b685b3017445414f0b0779af9a848bf11",
       "games/relic-rush/lua/match3_skin.lua": "8f808605b0cc29149eefa9e51fda795e94d7c2554a65f145f3433e69a16ba05f"
     }

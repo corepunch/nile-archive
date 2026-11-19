@@ -527,64 +527,73 @@ local square_corners = {
 }
 local square_cells = {"square-plain", "square-target", "square-double", "square-selected", "square-grout"}
 local square_trim = {"square-trim", "square-foliage", "square-joint", "square-medallion"}
-local square_frame = {"square-frame-edge", "square-frame-outer", "square-frame-inner", "square-frame-diagonal",
-    "square-frame-inner-bare"}
+
+-- Neighbour bits are ordered clockwise from north, with one diagonal
+-- between each pair of sides. Match the masks baked by square_board_frame.py.
+local square_frame_neighbours = {{0,-1}, {1,-1}, {1,0}, {1,1}, {0,1}, {-1,1}, {-1,0}, {-1,-1}}
+
+local function square_frame_art(skin)
+    local frames = {}
+    for mask = 1, 255 do
+        local shape = mask
+        for k = 0, 6, 2 do
+            if shape & ((1 << k) | (1 << ((k + 2) % 8))) ~= 0 then
+                shape = shape & ~(2 << k)   -- the side already covers this corner
+            end
+        end
+        local best, turn = shape, 0
+        for k = 1, 3 do
+            shape = ((shape << 2) | (shape >> 6)) & 255
+            if shape < best then best, turn = shape, 4 - k end
+        end
+        local key = "square-frame-" .. best
+        frames[mask] = {stone=assert(skin[key], key), leaf=skin[key .. "-leaf"], turn=turn}
+    end
+    return frames
+end
 
 function E.load_square(art, skin, modular_frame)
     for _, key in ipairs(square_cells) do art[key] = assert(skin[key], key) end
-    for _, key in ipairs(modular_frame and square_frame or square_trim) do art[key] = assert(skin[key], key) end
+    if modular_frame then
+        art.square_frame = square_frame_art(skin)
+    else
+        for _, key in ipairs(square_trim) do art[key] = assert(skin[key], key) end
+    end
 end
-
--- Each frame tile is centred at a grid vertex, with bits for the four
--- surrounding floor cells in clockwise order from the northwest.
--- The entry selects a painted tile and its clockwise quarter turns.
-local EDGE, OUTER, INNER, DIAGONAL, BARE = 1, 2, 3, 4, 5
-local square_frame_tiles = {
-    [12]={EDGE, 0}, [9]={EDGE, 1}, [3]={EDGE, 2}, [6]={EDGE, 3},
-    [4]={OUTER, 0}, [8]={OUTER, 1}, [1]={OUTER, 2}, [2]={OUTER, 3},
-    [14]={INNER, 0}, [13]={INNER, 1}, [11]={INNER, 2}, [7]={INNER, 3},
-    [5]={DIAGONAL, 0}, [10]={DIAGONAL, 1},
-}
 
 local function draw_square_frame(R, rules, sx, tint)
     if tint.a <= 0 then return end
-    local r, art = R.HEX_R, R.board_art
+    local step, frames = 2 * R.HEX_R, R.board_art.square_frame
+    local size = size2.splat(step)
     local origin = R.board_origin + vec2(sx, 0)
-    -- The art uses 128 pixels per grid step. A larger canvas can extend
-    -- beyond the joins while keeping the same scale and vertex pivot.
-    local scale = 2 * r / 128
-    local function occupied(q, row, bit)
-        return rules.game_cell_active(R.g, rules.hex_index(q, row)) and bit or 0
-    end
-    local function paint(kind, turn, at)
-        local sprite = art[square_frame[kind]]
-        local box = rect.centered(at, size2.splat(sprite.w * scale))
-        gfx.image_rot(sprite, box, turn * math.pi / 2, tint)
+    local function occupied(q, row)
+        return rules.game_cell_active(R.g, rules.hex_index(q, row))
     end
     local q0, row0 = rules.hex_q(0), rules.hex_r(0)
-    -- Alternate along each facing direction so mirrored staircases do
-    -- not put every sprig on the same side of the board.
-    local leafy = {[0]=true, false, true, false}
-    local planted = {}
-    for q = q0, q0 + rules.COLUMNS do
-        for row = row0, row0 + rules.ROWS do
-            local mask = occupied(q - 1, row - 1, 1) | occupied(q, row - 1, 2)
-                | occupied(q, row, 4) | occupied(q - 1, row, 8)
-            local tile = square_frame_tiles[mask]
-            if tile then
-                local at = origin + vec2((2 * q - 1) * r, (2 * row - 1) * r)
-                local kind, turn = tile[1], tile[2]
-                if kind == INNER then
-                    kind = leafy[turn] and INNER or BARE
-                    leafy[turn] = not leafy[turn]
+    local leafy = {[0]=false, true, false, true}
+    -- Include the empty ring just outside the configured grid. Each
+    -- occupied floor cell keeps its entire rectangle clear of frame art.
+    for q = q0 - 1, q0 + rules.COLUMNS do
+        for row = row0 - 1, row0 + rules.ROWS do
+            if not occupied(q, row) then
+                local mask = 0
+                for i, offset in ipairs(square_frame_neighbours) do
+                    if occupied(q + offset[1], row + offset[2]) then mask = mask | (1 << (i - 1)) end
                 end
-                if kind == INNER then planted[#planted + 1] = {at=at, turn=turn}
-                else paint(kind, turn, at) end
+                local tile = frames[mask]
+                if tile then
+                    local sprite, turn = tile.stone, tile.turn
+                    -- The planted NE corner also needs a diagonal floor cell.
+                    if tile.leaf and mask & (2 << (2 * turn)) ~= 0 then
+                        if leafy[turn] then sprite = tile.leaf end
+                        leafy[turn] = not leafy[turn]
+                    end
+                    local box = rect.centered(origin + vec2(step * q, step * row), size)
+                    gfx.image_rot(sprite, box, turn * math.pi / 2, tint)
+                end
             end
         end
     end
-    -- The full leafy corner sits over its neighbours at the rail joins.
-    for _, corner in ipairs(planted) do paint(INNER, corner.turn, corner.at) end
 end
 
 local function draw_square_corners(R, rules, sx, tint)
@@ -628,7 +637,7 @@ end
 local function draw_square_ground(R, rules, sx, floor, alpha, frame_alpha)
     local active, game = rules.game_cell_active, R.g
     local r, art = R.HEX_R, R.board_art
-    local modular_frame = art["square-frame-edge"]
+    local modular_frame = art.square_frame
     local rim = modular_frame and 0 or r * .36
     local tint = color(255, 255, 255, 255 * frame_alpha)
     each_ground_cell(R, rules, sx, function(_, at, scale, turn)

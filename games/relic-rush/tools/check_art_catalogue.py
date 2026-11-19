@@ -38,6 +38,7 @@ for name, record in atlas["square_cells"]["frames"].items():
     assert square["runtime"] == f'data/board/{atlas["frames"][name]["atlas"]}.png'
     if name.startswith("square-frame-"):
         assert f"`{name}`" in doc
+        assert atlas["frames"][name]["box"][2:] == [128, 128], "Frame art must occupy a single empty cell"
 
 # Measure the painted light on the packed faces, away from the highlight on
 # the bevel. A nearly flat interior can look lit at atlas size and flat in play.
@@ -54,25 +55,25 @@ with Image.open(ROOT / square["runtime"]) as sheet:
         else:
             assert upper > centre > lower and upper - lower >= contrast, f"{name} needs its upper-left lighting"
 
-    # The canonical straight rail faces a cell below it. Its dark side
-    # extends into the cell and fades over the floor.
-    x, y, w, h = atlas["frames"]["square-frame-edge"]["box"]
+    # The north-facing rail starts at the shared edge. Both the dark
+    # contact strip and the textured face are inside the frame tile.
+    x, y, w, h = atlas["frames"]["square-frame-1"]["box"]
     edge = sheet.crop((x, y, x + w, y + h))
     luma = edge.convert("RGB").convert("L", luma_matrix)
-    face = ImageStat.Stat(luma.crop((10, 54, 40, 58))).mean[0]
-    contact = ImageStat.Stat(luma.crop((10, 62, 40, 65))).mean[0]
+    face = ImageStat.Stat(luma.crop((10, 6, 40, 10))).mean[0]
+    contact = ImageStat.Stat(luma.crop((10, 0, 40, 2))).mean[0]
     assert face - contact >= 55, "The stone rim needs a deep board-facing contact shadow"
     alpha = edge.getchannel("A")
-    assert 0 < alpha.getpixel((20, 70)) < alpha.getpixel((20, 66)) < alpha.getpixel((20, 63))
+    assert alpha.getpixel((20, 0)) == 255 and alpha.getbbox()[3] < h // 2
 
-    x, y, w, h = atlas["frames"]["square-frame-outer"]["box"]
+    x, y, w, h = atlas["frames"]["square-frame-2"]["box"]
     alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
-    assert alpha.getpixel((47, 47)) < 128 < alpha.getpixel((52, 52)), "Round the exposed stone corner"
+    assert alpha.getpixel((112, 15)) < 128 < alpha.getpixel((118, 9)), "Round the exposed stone corner"
 
-    x, y, w, h = atlas["frames"]["square-frame-inner-bare"]["box"]
+    x, y, w, h = atlas["frames"]["square-frame-5"]["box"]
     alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
-    lip = alpha.crop((0, 0, 1, h)).getbbox()[1]
-    assert alpha.getpixel((lip - 1, lip - 1)) == 0 < alpha.getpixel((lip, lip)), "Keep the recessed corner square"
+    lip = alpha.crop((0, 0, 1, h)).getbbox()[3]
+    assert alpha.getpixel((w - lip - 1, lip)) == 0 < alpha.getpixel((w - lip, lip - 1)), "Keep the recessed corner square"
 
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
