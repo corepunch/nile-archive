@@ -4,6 +4,7 @@
     python3 tools/balance.py relic-rush            # or: make balance GAME=relic-rush
     python3 tools/balance.py christmas-market
     python3 tools/balance.py relic-rush --trim     # first trim boards that run long
+    python3 tools/balance.py relic-rush --report   # prices and expected campaign only; writes nothing
 
 Steps, each from the level files in games/<game>/levels:
 
@@ -75,7 +76,7 @@ def tagged(log, tag):
     return [json.loads(line.split(tag + ' ', 1)[1]) for line in log.splitlines() if tag + ' ' in line]
 
 
-def fit_prices(game, seeds):
+def fit_prices(game, seeds, write=True):
     test, source, generator = PRICED[game]
     started = time.time()
     count = len(list((ROOT / f'games/{game}/levels').glob('level_*.txt')))
@@ -89,6 +90,10 @@ def fit_prices(game, seeds):
         for row in incomes) + '}\n'
     log = rules_run(game, test, {'BALANCE_RUNS': str(seeds)}, {'balance_incomes.lua': module})
     prices = tagged(log, 'PRICE_JSON')
+    if not write:   # the runner's own report: fitted prices and both expected campaigns
+        print(log[log.index('fitted prices'):].split('PASS')[0].rstrip())
+        print(f'income and price report in {time.time() - started:.0f} s')
+        return
     path = ROOT / 'games' / game / source
     text, changed = path.read_text(), 0
     for price in prices:   # edit the cost in place: the file keeps its hand formatting
@@ -116,9 +121,13 @@ def main():
     parser.add_argument('game')
     parser.add_argument('--seeds', type=int, default=40, help='games the bot plays per board')
     parser.add_argument('--trim', action='store_true', help='first trim boards whose median game runs long')
+    parser.add_argument('--report', action='store_true',
+                        help='only print the income-fitted prices and the expected campaign; write nothing')
     args = parser.parse_args()
     started = time.time()
     step('build', ['make', f'build/test/{args.game}'])
+    if args.report:
+        return fit_prices(args.game, args.seeds, write=False)
     if args.trim:
         step('trim', [sys.executable, 'tools/balance_plaques.py', args.game, '--trim', '--seeds', str(args.seeds)])
     step('boards', [sys.executable, 'tools/hex_levels.py', args.game, '--lua'])

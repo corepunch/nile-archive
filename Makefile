@@ -207,10 +207,10 @@ balance:
 	python3 tools/balance.py $(GAME) $(BALANCE_ARGS)
 
 .PHONY: test-balance
-test-balance: export BALANCE_RUNS ?= 10
-test-balance: build/test/relic-rush
+test-balance: export BALANCE_RUNS ?= 40
+test-balance:
 	@test "$$BALANCE_RUNS" -gt 0 || { echo "BALANCE_RUNS must be a positive integer" >&2; exit 2; }
-	./build/test/relic-rush --extended "rules relic_balance"
+	python3 tools/balance.py relic-rush --report --seeds $$BALANCE_RUNS
 
 # Full integration with capture export is available on demand.
 test-full: gen-check xcode-check test-assets build/test/all $(TEST_AUX_BINS)

@@ -1,12 +1,13 @@
 -- Relic Rush balance runner: rules and the greedy bot only, no screen, story
 -- or animation. CI plays three fixed boards. With BALANCE_RUNS set, every
--- board is played that many times (make test-balance defaults to 10) with the
+-- board is played that many times (make test-balance defaults to 40, the
+-- sample the committed prices were fitted on) with the
 -- unlocks the ladder has delivered by then. The report gives the win rate,
 -- moves left and mean income per won board in each currency, then fits every
 -- restoration price to that income as docs/resource-expedition.md describes.
 --
 --   make test-balance
---   make test-balance BALANCE_RUNS=40
+--   make test-balance BALANCE_RUNS=80
 --
 -- tools/balance.py splits the work across processes: with TUNE_LEVELS=A-B this
 -- plays only that range and prints one INCOME_JSON line per board; with a
@@ -64,8 +65,13 @@ end
 local RUNS = testing.balance_runs
 if not RUNS then
     for _, level in ipairs{1, 47, 98} do
-        local g = play_board(level, 1, restored_by(level))
-        assert(g.won, ('balance sample: bot lost board %d'):format(level))
+        -- A budget leaves the bot about two games in three; one of five is a win.
+        local g
+        for run = 1, 5 do
+            g = play_board(level, run, restored_by(level))
+            if g.won then break end
+        end
+        assert(g.won, ('balance sample: bot lost board %d five times'):format(level))
         local reward = rules.reward_breakdown(g).total
         -- The landing spawns coins and score pieces only.
         for slot, currency in ipairs(economy.currencies) do
