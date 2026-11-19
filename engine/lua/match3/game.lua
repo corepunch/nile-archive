@@ -1204,10 +1204,13 @@ function G.bind(R, over)
                 end
             end,
             -- The toolbar's round face, with the request's piece on it.
-            rail_paint = function(box, entry, st)
+            rail_paint = function(box, entry, st, ready_time)
                 local state = entry.waiting and "disabled" or st.held and "pressed" or entry.ready and "selected"
                     or st.hot and "hover" or "normal"
                 require("match3.buttons").paint(box, entry.icon, state)
+                if ready_time and entry.id ~= "build" then
+                    R.vfx_quest_rim(box:center(), box.w * .46, ready_time)
+                end
             end,
             play = R.play_next,
             play_label = function() return can_play() and tostring(R.prog.level + 1) or "" end,

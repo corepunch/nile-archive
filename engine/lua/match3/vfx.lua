@@ -88,6 +88,32 @@ function V.bind(R, rules)
         if time and time < HINT_DURATION then return time end
     end
 
+    local function rim_particle(at, radius, time, n, behind, ink, bright)
+        local wake = math.max(0, 1 - behind * 2.4)
+        local head = math.max(0, 1 - behind * 7)
+        sprite("tablet-glow", at, radius * (1.08 + .20 * wake), 0,
+            color.alpha(ink.glow, bright * (.22 + .39 * wake)))
+        if head > 0 then
+            sprite("tablet-glow", at, radius * .74, 0, color.alpha(ink.spark, bright * head * .75))
+        end
+        if n % 3 == 0 and wake > 0 then
+            local flicker = .75 + .25 * math.sin(time * 18 + n * 2.3)
+            sprite("tablet-spark", at, radius * .38, time + n,
+                color.alpha(ink.spark, bright * wake * flicker * .45))
+        end
+    end
+
+    function R.vfx_quest_rim(center, radius, time)
+        -- Only the bright head and fading wake trace the brass rim. The face
+        -- and count stay clear, even with two hand-ins beside each other.
+        local angle = 2 * PI * (time / HINT_LAP - .25)
+        for n = 14, 0, -1 do
+            local behind = n / TRAIL_PARTICLES
+            local at = center + vec2.polar(angle - 2 * PI * behind, radius)
+            rim_particle(at, radius, time, n, behind, blue_hint, 1 - behind * 2.4)
+        end
+    end
+
     function R.vfx_tablet_hint(center, radius, vertices, time, double)
         local bright = num.saturate(time / .42) * num.saturate((HINT_DURATION - time) / .55)
         local phase = 5.5 + 6 * time / HINT_LAP
@@ -101,18 +127,7 @@ function V.bind(R, rules)
             local distance = phase - 6 * behind
             local edge = math.floor(distance)
             local at = center + vertices[edge % 6]:lerp(vertices[(edge + 1) % 6], distance - edge):scale(radius)
-            local wake = math.max(0, 1 - behind * 2.4)
-            local head = math.max(0, 1 - behind * 7)
-            sprite("tablet-glow", at, radius * (1.08 + .20 * wake), 0,
-                color.alpha(ink.glow, bright * (.22 + .39 * wake)))
-            if head > 0 then
-                sprite("tablet-glow", at, radius * .74, 0, color.alpha(ink.spark, bright * head * .75))
-            end
-            if n % 3 == 0 and wake > 0 then
-                local flicker = .75 + .25 * math.sin(time * 18 + n * 2.3)
-                sprite("tablet-spark", at, radius * .38, time + n,
-                    color.alpha(ink.spark, bright * wake * flicker * .45))
-            end
+            rim_particle(at, radius, time, n, behind, ink, bright)
         end
     end
 

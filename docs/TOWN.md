@@ -24,6 +24,7 @@ R.town:frame(inp, dt, R.overlay == R.OV_NONE)   -- once per frame
 - Placement: `view:begin(kind, focus, item)` lifts a new or placed building.
   Cancel and Confirm stand under it, and nothing is charged until Confirm
   (`hooks.can_buy`, `hooks.placed`).
+- The optional upper-left rail holds quest markers above their counters. Its paint hook receives a staggered animation time for ready entries while motion is enabled and the marker is released.
 - The header: wallet capsules (`hooks.capsules`, left- or right-aligned) and
   the menu button (`hooks.menu`) in the top-right corner.
 - The bottom row: the Build badge (`navigation_build`), the Play badge

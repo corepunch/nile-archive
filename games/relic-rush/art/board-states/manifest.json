@@ -816,7 +816,7 @@
         "normal",
         "hover",
         "pressed",
-        "ready (selected face lifts 5 px and grows 6 px over a 2.2 s cycle; steady with reduced motion)",
+        "ready (fx-tablet-glow and fx-tablet-spark circle the fixed selected rim clockwise; steady face and glow with reduced motion)",
         "waiting (disabled face)"
       ],
       "readout": "the wallet resource look, with banked/needed"

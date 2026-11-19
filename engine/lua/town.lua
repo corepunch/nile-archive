@@ -25,7 +25,7 @@
 --   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool}, ...}: round
 --                           markers down the left edge, under the header (requests, tasks)
 --   rail_tap(id)            a rail marker was tapped
---   rail_paint(box, entry, state)   paints one marker's face and icon (default: a plain disc)
+--   rail_paint(box, entry, state, ready_time)   paints one marker's face and icon (default: a plain disc)
 --   play_label()            the caption on Play (the next level's number)
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
@@ -444,8 +444,7 @@ function View:rail_layout(count)
     return boxes
 end
 
--- The rail: one round marker per entry, its figure in a readout beneath. A
--- ready face lifts and settles against a steady readout and hit area.
+-- Each marker and its readout stay anchored while the skin draws any ready effect.
 function View:rail()
     local h, cfg, skin = self.hooks, self.cfg.rail, self.hooks.skin
     local entries = h.rail and h.rail() or {}
@@ -455,32 +454,24 @@ function View:rail()
     for i, entry in ipairs(entries) do
         local box = boxes[i]
         self.rail_targets[entry.id] = box:center()
-        -- Include the full lift in a fixed touch target. Keep the count anchored.
+        -- Ready markers keep their generous touch target.
         local target = entry.ready and box:inflate(5):offset(vec2(0, -3)) or box
         ui.block(target)
         local st = ui.hit(target, 0)
-        local face = box
+        local ready_time
         if entry.ready then
             local g = rgba(cfg.glow)
-            -- One gentle lift per cycle, with a rest between lifts. Stagger
-            -- multiple hand-ins so the whole rail doesn't move as a column.
-            local lift = 0
-            if not reduced and not st.held then
-                local phase = (self.time / 2.2 + (i - 1) * .23) % 1
-                lift = math.sin(math.pi * math.min(1, phase * 2)) ^ 2
-            end
-            face = box:inflate(3 * lift):offset(vec2(0, -5 * lift))
-            gfx.glow(face:center(), cfg.size * (.8 + .08 * lift),
-                color(g.r, g.g, g.b, 185 + math.floor(70 * lift)), color(g.r, g.g, g.b, 0))
+            gfx.glow(box:center(), cfg.size * .8, color(g.r, g.g, g.b, 185), color(g.r, g.g, g.b, 0))
+            if not reduced and not st.held then ready_time = self.time + (i - 1) * .61 end
         end
-        if h.rail_paint then h.rail_paint(face, entry, st)
+        if h.rail_paint then h.rail_paint(box, entry, st, ready_time)
         else
             local lift = st.held and vec2(0, 2) or vec2(0, 0)
-            local centre, radius = face:center(), face.w / 2
+            local centre, radius = box:center(), box.w / 2
             gfx.circle(centre + vec2(0, 3), radius, rgba(cfg.shadow))
             gfx.circle(centre + lift, radius, rgba(cfg.rim))
             gfx.circle(centre + lift, radius - 4, rgba(entry.ready and cfg.ready or cfg.face))
-            if entry.icon then gfx.image(entry.icon, face:inflate(-10):offset(lift), color(255, 255, 255, entry.waiting and 120 or 255)) end
+            if entry.icon then gfx.image(entry.icon, box:inflate(-10):offset(lift), color(255, 255, 255, entry.waiting and 120 or 255)) end
         end
         if entry.value then
             local readout = rect(box.x, box:max().y + 2, box.w, cfg.caption)

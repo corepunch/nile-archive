@@ -119,7 +119,7 @@ shot("harbor-story-opening", "480x900", "--story-beat restore-01 --story-line 3 
 shot("harbor-story-plan-phone", "390x844", "--story-beat after-20 --frames 180 --safe-area 0,47,0,34")
 shot("quest-rail", "480x900", "--city 2 --quest-have 12")
 shot("quest-rail-phone", "390x844", "--city 2 --quest-have 12 --safe-area 0,47,0,34")
-reel("quest-rail-hand-in", 24, 6, "390x844", "--city 2 --quest-have 99 --safe-area 0,47,0,34 --reel")
+reel("quest-rail-hand-in", 27, 6, "390x844", "--city 2 --quest-have 99 --safe-area 0,47,0,34 --reel")
 shot("quest-rail-ready", "480x900", "--city 2 --quest-have 99")
 shot("quest-rail-waiting", "480x900", "--city 3 --quest-have 5")
 shot("quest-card", "480x900", "--city 2 --quest-have 12 --quest-card chart")

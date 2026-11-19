@@ -22,7 +22,7 @@ Collect & Return follows the expedition earnings. On the island the building mar
 
 ![Ready quest circles on the island](quest-ready.gif)
 
-The ready faces lift, grow slightly, and settle back. Each counter and touch target stays in place. Reduced motion keeps the selected face and steady glow.
+A blue spark travels clockwise around each ready request, using the same particles as the last-hex hint. The icon and count stay still. Reduced motion shows the selected face and a steady glow.
 The building card shows each new board piece above the amount it banks.
 
 | Building | Previous reward | Current reward |
