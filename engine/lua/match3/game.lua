@@ -464,11 +464,6 @@ function G.bind(R, over)
             say_at(R.toast, vec2(240, 724 + R.drop), 14, PAL_CREAM, 424)
         else   -- just below the HUD, above the board
             local bounds = R.board_toast
-            local quests = R.board_quest_bounds
-            if quests and bounds.y < quests:max().y and bounds:max().y > quests.y then
-                local x = quests:max().x + 8
-                bounds = rect(x, bounds.y, bounds:max().x - x, bounds.h)
-            end
             R.rrect(bounds, 11, rgba(10, 37, 31, 235))
             say_at(R.toast, bounds:center(), 14, PAL_CREAM, bounds.w - 16)
         end

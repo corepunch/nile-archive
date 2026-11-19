@@ -515,39 +515,6 @@ function E.bind_town_board_hud(R)
     end
 end
 
--- Optional quest counters below the campaign wallet. Keep the measured list
--- until its stable entries change, since the board redraws between matches.
-function E.bind_board_quest_hud(R)
-    local width, gap = 62, 6
-    local form = ui.form{kind="list",id="items",direction="row",gap=gap,item=function(entry)
-        return E.resource_indicator(entry, width, true)
-    end}
-    local previous = {}
-    function R.draw_board_quests()
-        local items = R.board_quest_items()
-        local changed = #items ~= #previous
-        for i, entry in ipairs(items) do
-            local last = previous[i]
-            if not last or entry.id ~= last.id or entry.amount ~= last.amount or entry.icon ~= last.icon then
-                changed = true
-                break
-            end
-        end
-        if changed then
-            assert(form:set_items("items", items))
-            previous = items
-        end
-        R.board_quest_bounds = nil
-        if #items == 0 then return end
-        local size = #items * (width + gap) - gap
-        local _, height = form:measure(size, R.skin)
-        local safe = app.screen()
-        local bounds = rect(safe.x + 25, safe.y + 68, size, height)
-        R.board_quest_bounds = bounds
-        form:draw(bounds, R.skin, {interactive=false})
-    end
-end
-
 function E.guide_form(copy, guide_icon, corner)
     return ui.form{kind="column",panel=true,children={
         E.popup_header(copy.title, copy.instructions, corner and "done"),

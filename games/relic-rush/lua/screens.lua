@@ -73,23 +73,6 @@ local function quest_board()
     return level, items
 end
 
-function R.board_quest_items()
-    local g, entries = R.g, {}
-    local on_board = {}
-    for _, piece in pairs(g.resource_yields) do
-        if piece.item then on_board[piece.item] = true end
-    end
-    local state = R.quest_state()
-    for _, quest in ipairs(quests.list) do
-        if on_board[quest.key] and not state.done[quest.key] then
-            local pending = not (g.lost or g.reward_claimed) and g.items[quest.key] or 0
-            local total = math.min(quest.need, quests.have(state, quest) + pending)
-            entries[#entries + 1] = {id=quest.key, icon=quest_icon(quest), amount=("%d/%d"):format(total, quest.need)}
-        end
-    end
-    return entries
-end
-
 function R.quest_rail()
     local state, entries = R.quest_state(), {}
     local quest, step = island.next_quest(R.island, R.prog.level)

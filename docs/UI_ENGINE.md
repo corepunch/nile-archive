@@ -670,11 +670,6 @@ in one bottom row. The town's `bottom.pause` option adds Pause to Build,
 Play and Wishes. Play is the largest control. Both surfaces use the same
 [runtime enamel button and painted icon strip](../art/match3-buttons/README.md).
 
-Match-3 games can bind `match3.bind_board_quest_hud(R)` and supply
-`R.board_quest_items()` as a list of stable `{id, icon, amount}` records.
-The display-only row uses compact resource indicators under the wallet. Board
-notices share that band to the right of the counters.
-
 ## Town rail
 
 `engine/lua/town.lua` can stack round markers down the town's left edge, under

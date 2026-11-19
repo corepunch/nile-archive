@@ -163,9 +163,8 @@ On the island each open request is a round marker on the [shared enamel button](
 
 Reproduce: `./build/relic-rush --headless --mute --fresh --size 480x900 --city 2 --quest-have 12 --shot out.png`; add `--quest-card chart` for the card and use `--quest-have 99` for the ready state. `--level 3`, `--level 6` and `--level 9` show the pieces on their boards.
 
-The board counters reuse the same campaign frames in display-only compact
-resource indicators. Each shows banked plus pending pieces over the request's
-total. Requests absent from the board have no counter.
+The board shows no request counters; progress appears on the island marker
+and the results card.
 
 ### Crew request hand-in paintings
 

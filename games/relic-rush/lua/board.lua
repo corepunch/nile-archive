@@ -26,7 +26,6 @@ board_intro.bind(R, rules)
 local match3 = require("match3")
 match3.bind_board_ui(R, rules)
 match3.bind_town_board_hud(R)
-match3.bind_board_quest_hud(R)
 
 local CELLS, HEX_R = rules.CELLS, R.HEX_R
 local cell_active = rules.game_cell_active
@@ -161,7 +160,6 @@ function R.board_screen(inp, dt)
     draw_motes()
     local intro = R.intro
     R.draw_board_hud()
-    R.draw_board_quests()
     local sx = (not R.reduced_motion and R.shake > 0) and math.sin(R.now * 110) * R.shake * 15 or 0
     elements.ground(R, rules, sx, R.board_floor())
     draw_relics(sx)
