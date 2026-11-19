@@ -131,7 +131,8 @@ function R.quest_model(id)
         about=ready and quest.ready_line or quest.request, ready=ready, waiting=not ready and not items[id],
         level=not ready and items[id] and level or nil,
         handoff=handoff and {title=handoff.title, image=R.board_art[handoff.path]},
-        needs={{id=quest.key, icon=quest_icon(quest), amount=("%d/%d"):format(quests.have(state, quest), quest.need)}}}
+        needs={{id=quest.key, icon=quest_icon(quest), amount=("%d/%d"):format(quests.have(state, quest), quest.need)}},
+        gets={{id="coins", icon=currency_icon(rules.GOLD), amount=quest.coins}}}
 end
 
 -- Hand a filled request in: its scene plays on the island.
@@ -139,7 +140,9 @@ function R.quest_deliver(id)
     local state = R.quest_state()
     if not R.quest_model(id) then return false end
     if id == "shutter" then state.done.shutter = true
-    elseif not quests.deliver(state, quests.by_key[id]) then return false end
+    elseif quests.deliver(state, quests.by_key[id]) then
+        R.prog.wallet[rules.GOLD] = R.prog.wallet[rules.GOLD] + quests.by_key[id].coins
+    else return false end
     state.offered_visit = nil
     state.pending = id
     R.tone(740)

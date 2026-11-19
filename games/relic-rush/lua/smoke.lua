@@ -339,6 +339,7 @@ function R.smoke()
     elseif stage == 48 and R.overlay == R.OV_QUEST and R.dialog_settled() then
         assert(R.quest_form:get("action") == R.words.quest.deliver and not R.quest_form.boxes.needs,
                "smoke: a filled request offers to hand it in")
+        shop.quest_gold = R.prog.wallet[rules.GOLD]
         app.inject_click(R.quest_form.boxes.action:center() + vec2(0, R.drop / 2)); stage = 49
     elseif stage == 49 and R.overlay == R.OV_QUEST_HANDOFF and R.dialog_settled() then
         app.inject_click(R.quest_handoff_form.boxes.continue:center() + vec2(0, R.drop / 2))
@@ -346,6 +347,8 @@ function R.smoke()
         local rail = R.quest_rail()
         assert(R.quest_state().done.chart and R.prog.story_seen["quest-chart"] and #rail == 2 and rail[2].id == "supper",
                "smoke: handing a request in plays its scene and clears its marker")
+        assert(R.prog.wallet[rules.GOLD] == shop.quest_gold + quests.by_key.chart.coins,
+               "smoke: handing a request in pays its Coins")
         app.inject_click(R.town.buttons.play); stage = 45
     elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and R.g.moves == shop.resume_moves, "returning from island must preserve the suspended attempt")

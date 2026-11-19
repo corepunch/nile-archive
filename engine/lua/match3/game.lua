@@ -669,15 +669,24 @@ function G.bind(R, over)
 
     -- A captioned group of resource amounts on the building card. The price
     -- and what the building brings sit side by side, after Cradle of Rome,
-    -- and the amounts narrow together when five share the row.
+    -- and the amounts narrow together when five share the row. The list
+    -- grows into the row's height, so a group of icons alone stands as tall
+    -- as one of figures. A rule in the skin's popup_divider divides groups.
     local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 18, 372
     local amount_width = 96
-    local function amounts(id, caption, visible)
+    local function amounts(id, caption, visible, width)
         return {kind="column", gap=5, visible_field=visible, children={
             {kind="label", id=id .. "_caption", text=caption, em=13, text_style="caption"},
-            {kind="list",id=id,direction="row",gap=AMOUNT_GAP,item=function(entry)
-                return match3.resource_indicator(entry, amount_width)
+            {kind="list",id=id,direction="row",gap=AMOUNT_GAP,grow=1,item=function(entry)
+                return match3.resource_indicator(entry, width or amount_width)
             end},
+        }}
+    end
+    local function divider(visible)
+        -- A padded column, so the line takes the row's full height.
+        local side = (GROUP_GAP - 2) / 2
+        return {kind="column",padding={side,4,side,4},visible_field=visible,children={
+            {kind="spacer",panel=true,role="popup_divider",grow=1},
         }}
     end
 
@@ -695,7 +704,7 @@ function G.bind(R, over)
             {kind="row", visible_field="show_amounts", children={
                 {kind="spacer",grow=1},
                 amounts("price", W.card.price, "show_price"),
-                {kind="spacer",width=GROUP_GAP,visible_field="show_both"},
+                divider("show_both"),
                 amounts("gets", W.card.gets, "show_gets"),
                 {kind="spacer",grow=1},
             }},
@@ -772,23 +781,35 @@ function G.bind(R, over)
     -- ones for the town's left edge ({id, icon, value, ready, waiting}; the id
     -- "build" stands for the next building and opens its card), and
     -- R.quest_model(id) describes one: {title, speaker, portrait, icon, about, needs
-    -- (collected/required resource indicators), ready, waiting, level (playable
-    -- zero-based destination), handoff ({title, image}, optional)}.
+    -- (collected/required resource indicators), gets (the reward's resource
+    -- indicators, optional), ready, waiting, level (playable zero-based
+    -- destination), handoff ({title, image}, optional)}. The giver's portrait
+    -- sits in a round brass medallion; what is still needed and what the
+    -- request gives stand side by side, as on the building card. A request
+    -- with neither shows its icon.
     local quest_form = ui.form{
         root = {kind="column", panel=true, children={
             match3.popup_header(W.quest.header, nil, W.corner_close and "close"),
-            {kind="row",align="center",gap=14,children={
-                {kind="image",id="portrait",width=90,height=108,visible_field="show_portrait"},
+            {kind="row",align="center",gap=16,children={
+                {kind="custom",id="portrait",width=112,height=112,visible_field="show_portrait",paint=function(box, image)
+                    require("match3.buttons").medallion(box, image)
+                end},
                 {kind="label",id="about",grow=1,wrap=true,text_align="start",em=19,text_style="body"},
             }},
-            {kind="label",id="notice",wrap=true,em=16,text_style="body",visible_field="show_notice"},
-            {kind="row",align="center",gap=12,children={
-                {kind="list",id="needs",direction="row",gap=AMOUNT_GAP,visible_field="show_needs",item=function(entry)
-                    return match3.resource_indicator(entry, 76)
-                end},
-                {kind="image",id="icon",width=72,height=72,visible_field="show_icon"},
-                {kind="button",id="action",grow=1,height=55,em=21,visible_field="show_action"},
+            {kind="row",visible_field="show_amounts",children={
+                {kind="spacer",grow=1},
+                amounts("needs", W.card.missing, "show_needs", 96),
+                divider("show_both"),
+                amounts("gets", W.card.gets, "show_gets", 96),
+                {kind="spacer",grow=1},
             }},
+            {kind="row",visible_field="show_icon",children={
+                {kind="spacer",grow=1},
+                {kind="image",id="icon",width=72,height=72},
+                {kind="spacer",grow=1},
+            }},
+            {kind="label",id="notice",wrap=true,em=16,text_style="body",visible_field="show_notice"},
+            {kind="button",id="action",height=56,visible_field="show_action"},
             not W.corner_close and {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
         }},
         bindings={
@@ -817,13 +838,17 @@ function G.bind(R, over)
         end
         assert(quest_form:push{icon=quest.icon, about=quest.about, action=quest.action or action})
         quest_form.values.show_portrait = quest.portrait ~= nil
-        quest_form.values.show_icon = quest.ready
+        quest_form.values.portrait = quest.portrait
         quest_form.values.show_action = quest.ready or quest.level ~= nil or not W.corner_close
-        if quest.portrait then quest_form:set("portrait", quest.portrait) end
         if not W.corner_close then quest_form:set("close", R.quest_offer and W.quest.later or W.card.close) end
         local needs = quest.ready and {} or quest.needs or {}
-        quest_form.values.show_needs = #needs > 0
+        local gets = quest.gets or {}
+        quest_form.values.show_needs, quest_form.values.show_gets = #needs > 0, #gets > 0
+        quest_form.values.show_both = #needs > 0 and #gets > 0
+        quest_form.values.show_amounts = #needs > 0 or #gets > 0
+        quest_form.values.show_icon = not quest_form.values.show_amounts and quest.icon ~= nil
         assert(quest_form:set_items("needs", needs))
+        assert(quest_form:set_items("gets", gets))
         local notice = quest.notice or (quest.waiting and W.quest.waiting)
         quest_form.values.show_notice = notice and true or false
         quest_form:set("notice", notice or "")

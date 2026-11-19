@@ -83,6 +83,8 @@ ui.prefab("resource_indicator", function(p)
     end
     children[#children + 1] = figure
     if p.label then children[#children + 1] = {kind="label",text=p.label,height=15,em=12,text_style="caption"} end
+    -- A lone icon stays centred when its row stretches it to a neighbour's height.
+    if #children == 1 then children = {{kind="spacer",grow=1},children[1],{kind="spacer",grow=1}} end
     return {kind="border",role="resource_indicator",padding=p.compact and {4,2,4,3} or {4,5,4,7},children={
         {kind="column",gap=1,children=children},
     }}

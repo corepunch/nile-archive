@@ -68,6 +68,51 @@ function B.paint(box, image, state, alpha, face_colors)
     end
 end
 
+-- A circle's signed distance field for gfx.sdf_mask, built once. The circle's
+-- radius is CIRCLE_RADIUS of the field's CIRCLE_TEXELS; outside is positive.
+local CIRCLE_TEXELS, CIRCLE_RADIUS, CIRCLE_RANGE = 64, 28, 8
+local circle_field
+local function circle_mask(face)
+    if not circle_field then
+        local px, half = {}, CIRCLE_TEXELS / 2
+        for y = 0, CIRCLE_TEXELS - 1 do
+            for x = 0, CIRCLE_TEXELS - 1 do
+                local d = math.sqrt((x + .5 - half) ^ 2 + (y + .5 - half) ^ 2) - CIRCLE_RADIUS
+                local v = math.floor(num.saturate(.5 + d / (2 * CIRCLE_RANGE)) * 255 + .5)
+                px[#px + 1] = string.char(v, v, v, 255)
+            end
+        end
+        circle_field = texture.from_pixels(table.concat(px), CIRCLE_TEXELS, CIRCLE_TEXELS)
+    end
+    local texel = face.w / (2 * CIRCLE_RADIUS)
+    gfx.sdf_mask(circle_field, rect.centered(face:center(), size2(CIRCLE_TEXELS * texel, CIRCLE_TEXELS * texel)),
+        CIRCLE_RANGE * texel, 0, 0)
+end
+
+-- A character's portrait in the round buttons' brass rim: the picture fills
+-- the enamel face, its top at the face's top so the head sits in the upper
+-- half and the shoulders meet the rim.
+function B.medallion(box, image)
+    local side = math.min(box.w, box.h)
+    if side <= 0 then return end
+    local center = box:center()
+    local body = rect.centered(center, size2(side, side))
+    local depth, bezel, well, enamel = frame_boxes(body, false)
+    gfx.circle(center + vec2(0, depth), side * .5, shade)
+    gfx.circle(center, side * .5, brass.edge)
+    gfx.round_rect_grad(bezel, bezel.w / 2, brass.top, brass.bottom)
+    gfx.circle(well:center(), well.w / 2, brass.lip)
+    gfx.round_rect_grad(enamel, enamel.w / 2, faces.normal.top, faces.normal.bottom)
+    if not image then return end
+    local size = texture.size(image)
+    if size.w <= 0 or size.h <= 0 then return end
+    local w = enamel.w * 1.08
+    local h = math.max(enamel.h, w * size.h / size.w)
+    circle_mask(enamel)
+    gfx.image(image, rect(enamel:center().x - w / 2, enamel.y - enamel.h * .02, w, h), color.WHITE)
+    gfx.sdf_unmask()
+end
+
 -- `caption` adds the control's caption keys (text, em, text_align, text_fit)
 -- for a button that also shows a figure, as Play shows its level.
 function B.navigation(name, caption, palette)

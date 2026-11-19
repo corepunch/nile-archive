@@ -44,6 +44,8 @@ for index, quest in ipairs(Q.list) do
     quest.index = index
     -- The board piece: the engine counts each one matched under `item`.
     quest.yield = {key=quest.piece, name=quest.name, item=quest.key, amount=1}
+    -- Handing it in pays Coins: two for every piece it asked for.
+    quest.coins = quest.coins or 2 * quest.need
     Q.by_key[quest.key] = quest
 end
 
