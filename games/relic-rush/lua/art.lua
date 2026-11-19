@@ -122,6 +122,9 @@ function A.load()
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
     for _, key in ipairs(A.campaign_pieces) do textures["campaign-" .. key] = piece("campaign-" .. key) end
+    -- Trim the leaf's transparent gutter for its live board view.
+    local leaf = textures["campaign-leaf"]
+    textures["board-leaf"] = texture.region(leaf, texture.rect(leaf):inflate(-7))
     for _, key in ipairs(A.campaign_resources) do
         textures["resource-" .. key] = textures["campaign-" .. key]
     end

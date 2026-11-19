@@ -58,14 +58,16 @@ end
 
 function R.draw_relic(t, at, scale, alpha, aspect, board)
     if t.kind < 0 then return end
-    -- Preserve the original piece canvas, including its transparent gutter.
-    -- Filling the cell with the opaque interior makes pieces crowd its edges.
+    -- Leave room at the cell edges for the piece's transparent gutter and shadow.
     local draw_scale = scale * (board and BOARD_SCALE or 1)
     local s = ART_CELL_SIZE * .95 * draw_scale
     local tint = rgba(255, 255, 255, alpha)
-    local tex, area = board and R.board_piece_texture(t.kind) or R.relics[t.kind+1],
-        rect.centered(at,size2(s*aspect,s/aspect))
-    if board then elements.piece_shadow(tex, area, alpha, s) end
+    local tex = board and R.board_piece_texture(t.kind) or R.relics[t.kind + 1]
+    local area = rect.centered(at, size2(s * aspect, s / aspect))
+    if board then
+        if tex and tex == R.board_art["campaign-leaf"] then tex = R.board_art["board-leaf"] end
+        elements.piece_shadow(tex, area, alpha, s)
+    end
     gfx.image(tex, area, tint)
 end
 local draw_relic = R.draw_relic
