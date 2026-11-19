@@ -59,8 +59,8 @@ with Image.open(ROOT / square["runtime"]) as sheet:
     x, y, w, h = atlas["frames"]["square-frame-edge"]["box"]
     edge = sheet.crop((x, y, x + w, y + h))
     luma = edge.convert("RGB").convert("L", luma_matrix)
-    face = ImageStat.Stat(luma.crop((10, 48, 40, 54))).mean[0]
-    contact = ImageStat.Stat(luma.crop((10, 59, 40, 65))).mean[0]
+    face = ImageStat.Stat(luma.crop((10, 54, 40, 58))).mean[0]
+    contact = ImageStat.Stat(luma.crop((10, 62, 40, 65))).mean[0]
     assert face - contact >= 55, "The stone rim needs a deep board-facing contact shadow"
     alpha = edge.getchannel("A")
     assert 0 < alpha.getpixel((20, 70)) < alpha.getpixel((20, 66)) < alpha.getpixel((20, 63))

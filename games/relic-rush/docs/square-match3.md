@@ -49,14 +49,15 @@ using the [board layout](../art/papyrus-board/contact-layout.png), the
 The [square frame generator](../../../tools/square_board_frame.py) rounds
 outside corners and joins recessed corners at right angles. It uses the
 distance to the board to place the dark contact shadow on the side facing
-the floor. The flat sandstone face has a narrow outer bevel, seeded grain,
-and dark angled joints with light shoulders along the cuts. The corner studies were
-`gmf_corner_2.png`, `gmf_corner_9.png`, `gmf_corner_11.png` and
-`gmf_corner_17.png`, plus the rounded silhouette in the supplied game capture.
+the floor. The sandstone has a dark warm outer edge and a flat tan face
+with seeded grain and angled joints. The palette follows the stone and
+shadow samples in `gmf_corner_1.png`, `gmf_corner_9.png` and
+`gmf_corner_11.png`. The rounded outline follows the supplied game capture.
 The generator joins sections halfway along each exposed cell edge. It bakes
 the [painted foliage](../../../engine/art/board-frame/decorations-source.png)
-under the stone in a single 224 px corner sprite, on the same grid pivot
-as the 128 px bare corner. The two inset corners alternate.
+over the stone in a single 224 px corner sprite, on the same grid pivot
+as the 128 px bare corner. The two inset corners alternate. Leafy corners
+draw after the other frame sections so the leaves stay visible across joins.
 [Atlas registration](../art/match3-atlas.json) records the source crops,
 pivots and runtime atlas regions.
 Rebuild from the repository root with `python3 tools/match3_atlas.py`.

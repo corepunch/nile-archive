@@ -556,10 +556,16 @@ local function draw_square_frame(R, rules, sx, tint)
     local function occupied(q, row, bit)
         return rules.game_cell_active(R.g, rules.hex_index(q, row)) and bit or 0
     end
+    local function paint(kind, turn, at)
+        local sprite = art[square_frame[kind]]
+        local box = rect.centered(at, size2.splat(sprite.w * scale))
+        gfx.image_rot(sprite, box, turn * math.pi / 2, tint)
+    end
     local q0, row0 = rules.hex_q(0), rules.hex_r(0)
     -- Alternate along each facing direction so mirrored staircases do
     -- not put every sprig on the same side of the board.
     local leafy = {[0]=true, false, true, false}
+    local planted = {}
     for q = q0, q0 + rules.COLUMNS do
         for row = row0, row0 + rules.ROWS do
             local mask = occupied(q - 1, row - 1, 1) | occupied(q, row - 1, 2)
@@ -572,12 +578,13 @@ local function draw_square_frame(R, rules, sx, tint)
                     kind = leafy[turn] and INNER or BARE
                     leafy[turn] = not leafy[turn]
                 end
-                local sprite = art[square_frame[kind]]
-                local box = rect.centered(at, size2.splat(sprite.w * scale))
-                gfx.image_rot(sprite, box, turn * math.pi / 2, tint)
+                if kind == INNER then planted[#planted + 1] = {at=at, turn=turn}
+                else paint(kind, turn, at) end
             end
         end
     end
+    -- The full leafy corner sits over its neighbours at the rail joins.
+    for _, corner in ipairs(planted) do paint(INNER, corner.turn, corner.at) end
 end
 
 local function draw_square_corners(R, rules, sx, tint)

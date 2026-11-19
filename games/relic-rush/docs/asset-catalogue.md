@@ -8,7 +8,7 @@ The current campaign uses mottled matte papyrus for ordinary and cleared cells, 
 | --- | --- |
 | `square-frame-edge` | Two adjacent floor cells meet at a straight boundary. |
 | `square-frame-outer` | One floor cell makes a rounded outside corner. |
-| `square-frame-inner` | Three floor cells make a notch. The leaf fan is baked beneath the rails in one corner sprite. |
+| `square-frame-inner` | Three floor cells make a notch. The larger leaf fan is baked over the rails in one corner sprite, drawn after neighbouring frame sections. |
 | `square-frame-inner-bare` | Alternate recessed corner with matching sandstone rails and contact shadow. |
 | `square-frame-diagonal` | Two diagonally touching floor cells meet at a stepped sandstone join. |
 

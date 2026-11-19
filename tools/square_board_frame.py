@@ -16,16 +16,17 @@ REACH, SHADOW = 17, 7
 # Distance from the board, sandstone colour, and opacity. Negative distance
 # is the contact shadow that falls just inside the floor's edge.
 PROFILE = (
-    (-SHADOW, (32, 20, 10), 0),
-    (-3, (31, 20, 11), 175),
-    (0, (40, 27, 16), 245),
-    (3, (60, 40, 24), 255),
-    (6, (104, 74, 45), 255),
-    (7, (174, 136, 91), 255),
-    (14, (174, 136, 91), 255),
-    (15, (188, 149, 102), 255),
-    (16, (166, 126, 83), 255),
-    (REACH, (133, 96, 60), 255),
+    (-SHADOW, (0, 0, 0), 0),
+    (-3, (0, 0, 0), 80),
+    (0, (0, 0, 0), 170),
+    (2, (89, 65, 41), 255),
+    (5, (150, 112, 70), 255),
+    (7, (168, 132, 86), 255),
+    (10, (168, 132, 86), 255),
+    (11, (113, 57, 18), 255),
+    (13, (100, 69, 38), 255),
+    (15, (89, 58, 29), 255),
+    (REACH, (82, 43, 14), 255),
 )
 
 
@@ -100,23 +101,18 @@ def plant(stone):
     reference = json.loads(board_frame_decor.SPEC.read_text())
     root = board_frame_decor.ROOT
     source = root / reference['source']
-    spec = dict(reference['games']['relic-rush']['leaves'], scale=.29, turn=-45)
+    spec = dict(reference['games']['relic-rush']['leaves'], scale=.38, turn=-45)
     side = CELL + 2 * LEAF_PAD
     with Image.open(source) as image:
         sprig = board_frame_decor.register(image, spec, side)
 
     corner = Image.new('RGBA', (side, side))
-    mount = (1 - REACH, 1 - REACH)
-    # Keep the plant wholly within the empty square, even under the
-    # translucent part of the stone's shadow.
-    x, y = mount
-    pivot = side // 2
-    corner.paste(sprig.crop((0, 0, pivot - x, pivot - y)), mount)
+    mount = (2 - REACH, 2 - REACH)
     corner.alpha_composite(stone, (LEAF_PAD, LEAF_PAD))
+    corner.alpha_composite(sprig, mount)
     spec['source'] = reference['source']
     spec['mount'] = mount
     spec['size'] = [side, side]
-    spec['clip'] = [0, 0, pivot, pivot]
     return corner, spec, [source, root / reference['prompt'], board_frame_decor.SPEC]
 
 
