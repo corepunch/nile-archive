@@ -113,7 +113,7 @@ check(rules.LEVELS==100 and #journey.beats==35,'all chapters and their restorati
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
-        check(line[1]==nil or ({elena=true,mara=true,tomas=true,adrian=true,kessler=true,ines=true,keeper=true})[line[1]],
+        check(({elena=true,mara=true,tomas=true,adrian=true,kessler=true,ines=true,keeper=true})[line[1]],
             'each voiced line has a cast member')
     end
 end
@@ -151,9 +151,9 @@ for level=1,30 do
     check(level<=10 and reveal==nil or reveal and reveal.level==level,
         'chapter one has no first-clear scene; later chapters keep theirs')
     if level==13 then
-        check(reveal.lines[1][2]:find('I. R.',1,true), 'Elena reads the initials before the courtyard is built')
+        check(reveal.lines[1][2]:find('I. R.',1,true), 'Elena reads the initials before the Port scene')
         check(journey.find('restore-13').lines[1][2]:find('Ines Reed',1,true),
-            'Tomas names the sender at the courtyard')
+            'Tomas names the sender using the port register')
     end
     local kind=journey.wonder_at(level)
     -- This test skips matches to isolate the story, so supply the board income
@@ -190,15 +190,21 @@ for level=1,30 do
     check(not island.island_place_next(c,p.wallet,p.level,0),'a clear opens only its own restorations')
     if kind then
         if level==4 then
-            check(not journey.next(p,owned(c),nil),'the well scene waits for the harbor keeper to join')
+            check(not journey.next(p,owned(c),nil),'the hut scene waits for the harbor keeper to join')
             U.emit('island')
             check(U.state().done.city_well, 'Tomas joins through the well construction event')
         end
         local placed=journey.next(p,owned(c),nil)
         check(placed and placed.key==(level==10 and 'after-10' or ('restore-%02d'):format(level)),
             'confirmed construction or citizen arrival releases its scene')
+        local built = island.buildings[island.wonder_kinds[kind] + 1]
+        check(placed.building == built.name, 'the reviewed scene must match the purchase: ' .. built.name)
+        if level==1 then
+            check(placed.lines[1][1]=='mara' and placed.lines[1][2]:lower():find('well',1,true),
+                'the first bucket opens the Well scene with Mara on screen')
+        end
         if level==10 then
-            check(placed.phase=='restore' and placed.lines[5][1]=='keeper', 'the ancient keeper appears at the repaired steps')
+            check(placed.phase=='restore' and placed.lines[5][1]=='keeper', 'the village watch book introduces the ancient keeper')
         end
         p.story_seen[placed.key]=true
     end
@@ -243,7 +249,7 @@ R.story_tick()
 check(not story.active(),'the first board opens without a scene')
 R.prog.level, R.on_island = 1, true
 R.story_tick()
-check(story.active() and R.story_current.key=='restore-01','building camp opens with Mara’s signal')
+check(story.active() and R.story_current.key=='restore-01','the Well opens with Mara drawing water')
 story.next()
 check(not R.prog.story_seen['restore-01'],'a partially read beat is not acknowledged')
 save.write('story-interrupted',function(s) journey.serialize(s,R.prog) end)

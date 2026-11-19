@@ -273,15 +273,15 @@ reel("phone-catalogue-scroll",24,3,"390x844","--catalogue all --scroll-review --
 shot("phone-island-bubble","390x844","--dialog bubble --safe-area 0,47,0,34")
 
 -- Full-script representative reads: longest line, thought, shout and the finale.
-shot("story-opening", "480x900", "--story-beat before-01 --frames 240")
-shot("phone-story-opening", "390x844", "--story-beat before-01 --frames 240 --safe-area 0,47,0,34")
+shot("story-opening", "480x900", "--city 1 --story-beat restore-01 --frames 240")
+shot("phone-story-opening", "390x844", "--city 1 --story-beat restore-01 --frames 240 --safe-area 0,47,0,34")
 shot("story-longest", "480x900", "--story-beat before-11 --frames 240")
 shot("phone-story-longest", "390x844", "--story-beat before-11 --frames 240 --safe-area 0,47,0,34")
 shot("story-shout", "480x900", "--story-beat after-28 --frames 240")
 shot("phone-story-shout", "390x844", "--story-beat after-28 --frames 240 --safe-area 0,47,0,34")
 shot("story-finale", "480x900", "--story-beat after-30 --story-line 3 --frames 240")
-shot("story-radio", "480x900", "--story-beat after-05 --story-line 2 --frames 240")   -- Kessler: heard, never seen
-shot("phone-story-radio", "390x844", "--story-beat after-05 --story-line 2 --frames 240 --safe-area 0,47,0,34")
+shot("story-radio", "480x900", "--story-beat after-25 --story-line 1 --frames 240")   -- Kessler: heard, never seen
+shot("phone-story-radio", "390x844", "--story-beat after-25 --story-line 1 --frames 240 --safe-area 0,47,0,34")
 shot("phone-story-finale", "390x844", "--story-beat after-30 --story-line 3 --frames 240 --safe-area 0,47,0,34")
 shot("story-level-20", "480x900", "--level 20")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")

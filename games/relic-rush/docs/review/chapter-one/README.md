@@ -1,7 +1,11 @@
 # Chapter 1 native review
 
-When the player confirms the quay repair, the story enters a short flashback
-with the ancient keeper. The steps sit at a fixed site on the coast.
+Confirming the Well brings up Mara with the first bucket. The Sawmill supplies a timber tread for the quay. Confirming the Village starts the night watch. The old keeper’s portrait voices two orders from the village watch book.
+
+| Phone | Earlier Well scene | Current Well scene |
+| --- | --- | --- |
+| 480 × 900 | ![Former landing caption](well-dialogue-before-480.jpg) | ![Mara with the first bucket](well-dialogue-480.jpg) |
+| 390 × 844 | ![Former caption on a narrow phone](well-dialogue-before-390.jpg) | ![Mara speaking on a narrow phone](well-dialogue-390.jpg) |
 
 | Keeper at 480 × 900 | Keeper at 390 × 844 with safe areas |
 | --- | --- |

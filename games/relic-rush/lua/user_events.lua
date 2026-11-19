@@ -81,7 +81,7 @@ local events = {
     {id="hint_12",
         If={"IF_GAME_SHOP_ENTER"},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_CITY",
-            text="Restorations cost Coins, Supplies and Food. Story buildings open the next expedition."}}},
+            text="Restorations cost Coins, Supplies and Food. Winning an expedition opens the next one."}}},
 
     ---------------------------------------------------------------- the city
     -- Placing a building lets its citizen arrive (Rome: city_view.xml).
@@ -118,7 +118,7 @@ local events = {
     {id="man_01", available=false, test=true, citizen="The carpenter",
         If={"IF_PLAYER_MAKE_MATCH", length=5},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the workshop: timber earns 6 Supplies each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the Sawmill: timber earns 6 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_01"},
             {"THEN_CITY_UPGRADE_BUILDING", id="workshop"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="timber", amount=6},
@@ -127,7 +127,7 @@ local events = {
     {id="man_02", available=false, citizen="The trapper", to_level=12,
         If={"IF_PLAYER_GET_RESOURCE", id="coins", amount=250},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper packs more powder: Hammer gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper brings a hammer: Hammer gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_02"},
             {"THEN_CITY_UPGRADE_BUILDING", id="log_cabin"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hammer", amount=9},
@@ -136,7 +136,7 @@ local events = {
     {id="man_03", available=false, citizen="The stonecutter",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=120},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the archive: dressed stone earns 8 Supplies each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the Aqueduct crew: dressed stone earns 8 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_03"},
             {"THEN_CITY_UPGRADE_BUILDING", id="archive"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="stone", amount=8},
@@ -154,7 +154,7 @@ local events = {
     {id="man_05", available=false, citizen="The forager",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=80},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="80 Food in one go! The forager joins the lodge: grain bundles earn 6 Food each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="80 Food in one go! The forager supplies Curia Octavia: grain bundles earn 6 Food each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_05"},
             {"THEN_CITY_UPGRADE_BUILDING", id="lodge"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="grain", amount=6},
@@ -172,7 +172,7 @@ local events = {
     {id="man_07", available=false, citizen="The astronomer",
         If={"IF_PLAYER_COMPLETE_LEVELS_IN_TIME", amount=1, time=120},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Done in two minutes! The astronomer tunes the lens: Mixer gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Done in two minutes! The astronomer joins the watch. Mixer gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_07"},
             {"THEN_CITY_UPGRADE_BUILDING", id="observatory"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="mixer", amount=9},
@@ -181,7 +181,7 @@ local events = {
     {id="man_08", available=false, citizen="The cartographer",
         If={"IF_PLAYER_MAKE_COMBO", length=4},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Three waves from one move! The cartographer joins: Lightning gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Four waves from one move! The cartographer joins: Lightning gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_08"},
             {"THEN_CITY_UPGRADE_BUILDING", id="map_room"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=9},
@@ -201,7 +201,7 @@ local events = {
     {id="man_010", available=false, citizen="The performer",
         If={"IF_PLAYER_MAKE_AUTOMATCH_CHAIN", amount=2},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="A chain reaction! The performer fills the amphitheatre: Shield gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="A chain reaction! The performer fills the Coliseum: Shield gems charge faster."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_10"},
             {"THEN_CITY_UPGRADE_BUILDING", id="amphitheater"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shield", amount=9},

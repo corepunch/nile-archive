@@ -8,13 +8,13 @@ return {
     supper={
         {"elena", "Berries, flatbread and the last of the ship's cheese. A proper supper."},
         {"mara", "You're writing at the table again."},
-        {"elena", "Two flashes out, two back, that first night. I write down what we saw, not what we hoped."},
+        {"elena", "Two flashes out, two back, at the well. I write down what we saw, not what we hoped."},
         {"mara", "Then write that I counted them twice."},
     },
     trail={
         {"tomas", "Green means the stone will hold. I painted those every spring."},
         {"mara", "The last one is this year's paint."},
-        {"tomas", "Habit. Nobody has come down this path but me."},
+        {"tomas", "Habit. Even when the boats stopped coming, I kept a tin of green paint."},
     },
     tools={
         {"tomas", "My father's chisels. I had counted those gone."},

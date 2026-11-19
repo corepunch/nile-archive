@@ -127,7 +127,7 @@ The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived w
 
 ## Ancient keeper portrait
 
-The Workshop repairs the Quay Steps. Its dialogue shows the ancient keeper during the flashback. The
+The Sawmill repairs the Quay Steps. When the Village takes up the night watch, the crew reads the keeper’s words from the watch book. The
 static portrait has transparent edges and uses the standard story speaker slot.
 The [ImageGen original](../art/art-direction/ancient-keeper.png) and [prompt](../art/art-direction/ancient-keeper-prompt.txt)
 are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-only`
