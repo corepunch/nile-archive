@@ -93,9 +93,10 @@ end
 function R.quest_rail()
     local state, entries = R.quest_state(), {}
     local quest, step = island.next_quest(R.island, R.prog.level)
-    if quest then
+    if step and (quest or R.prog.level >= step.after) then
+        local ready = island.can_buy(R.island, R.prog.wallet, R.prog.level, step.kind)
         entries[1] = {id="build", icon=R.buildings[step.kind + 1].sprite,
-            ready=island.can_buy(R.island, R.prog.wallet, R.prog.level, step.kind)}
+            value=ready and "BUILD" or nil, ready=ready}
     end
     local open_quests = R.open_quests()
     if quests.shutter_open(state) then
@@ -185,15 +186,10 @@ R.register_result(function()
             resources[#resources+1] = {id=quest.key, amount=counted, icon=quest_icon(quest)}
         end
     end
-    local level = breakdown.first and R.g.level + 1 or R.prog.level
-    local quest, step = island.next_quest(R.island, level)
-    local next_kind = quest and step.kind or island.next_step(R.island, level)
-    local w = next_kind and R.buildings[next_kind + 1]
-    local next_step = w and R.result_next(w, R.currency_prices(economy.shortfall(w.cost, R.prog.wallet + reward)))
     return {
         title=breakdown.first and "Expedition complete" or "Replay complete",
         subtitle=("LEVEL %d · %s"):format(R.g.level + 1, rules.level_of(R.g).name),
-        resources=resources, next_step=next_step, action="COLLECT & RETURN",
+        resources=resources, action="COLLECT & RETURN",
     }
 end)
 

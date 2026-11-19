@@ -437,7 +437,7 @@ banked currencies as `resource_indicator` prefabs in a one-row `uniform_grid`: e
 columns across the dialog, however many currencies the game has. Each is an icon above
 its figure, with no caption because the icon names the resource. The building
 card lists its price and what the building brings with the same element, side
-by side under PRICE and YOU GET captions; while a quest is being funded the price group lists what is missing under STILL NEEDED. The results card's next-building block uses it too: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
+by side under PRICE and YOU GET captions; while a quest is being funded the price group lists what is missing under STILL NEEDED. Games may also opt into a results-card next-building block: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
 shows its icon alone, and `label` adds one word under a larger figure only
 for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
@@ -657,7 +657,7 @@ building is being placed.
 | --- | --- | --- |
 | Normal | — | The disc and icon |
 | Hover, pressed | pointer | The control's own hover and pressed faces |
-| Ready | `ready = true` | A pulsing glow behind the marker (steady with reduced motion) and the selected face |
+| Ready | `ready = true` | The selected face lifts and grows over its glow. Reduced motion holds it steady. The count and touch target stay fixed. |
 | Waiting | `waiting = true` | The disabled face |
 
 `rail_paint(box, entry, state)` replaces the default disc. The match-3 games

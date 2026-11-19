@@ -739,19 +739,19 @@ function G.bind(R, over)
         local movable = built and not fixed
         local quest, step
         if not built and island.next_quest then quest, step = island.next_quest(R.island, R.prog.level) end
-        if quest and step.kind ~= i then quest = nil end
-        local needs_funding = quest ~= nil and not can_build
+        if step and (step.kind ~= i or not quest and R.prog.level < step.after) then quest, step = nil, nil end
+        local needs_funding = step ~= nil and not can_build
         quest_funding = needs_funding and R.prog.level < rules.LEVELS
         local subtitle = quest and W.card.quest_subtitle:format(w.name, island.ladder_position[i])
         match3.set_popup_header(wonder_form, quest and quest.title or w.name, subtitle)
         local ok, message = wonder_form:push{sprite=w.sprite, about=quest and quest.request or journey.building_about(i, R.prog.level, w.about),
             action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or quest_funding and W.card.play or W.card.back}
         assert(ok, message)
-        local show_price = quest ~= nil or not built and (can_build or R.currency_prices and w.needs and
+        local show_price = step ~= nil or not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
         wonder_form.values.show_price = show_price
-        wonder_form.values.show_notice = not show_price or quest ~= nil and not can_build
-        wonder_form.values.show_shop = quest ~= nil
+        wonder_form.values.show_notice = not show_price or step ~= nil
+        wonder_form.values.show_shop = step ~= nil
         local gets, gets_caption = {}, nil
         if R.building_gets then gets, gets_caption = R.building_gets(i) end
         local price = show_price and price_parts(w.cost) or {}
@@ -776,7 +776,7 @@ function G.bind(R, over)
             elseif #missing == 0 then funding = W.catalogue.poor
             else wonder_form.values.show_notice = false end
         end
-        wonder_form:set("notice", funding or built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
+        wonder_form:set("notice", funding or step and can_build and W.result.ready or built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
         wonder_action = (can_build or movable) and {kind=i, item=movable and R.inspect_item or nil} or nil
     end, handle=function(event)
         local action = wonder_action
@@ -1199,8 +1199,8 @@ function G.bind(R, over)
             rail_tap = function(id)
                 if id ~= "build" then R.open_quest(id)
                 elseif island.next_quest then
-                    local quest, step = island.next_quest(R.island, R.prog.level)
-                    if quest then R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER end
+                    local _, step = island.next_quest(R.island, R.prog.level)
+                    if step then R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER end
                 end
             end,
             -- The toolbar's round face, with the request's piece on it.

@@ -117,6 +117,22 @@ function R.smoke()
         end
         assert(steps and R.building_words(steps):find("marks the reef in red", 1, true),
             "the quay should remember the result of the field test")
+        -- Later ladder steps have no opening-epoch story request. The rail
+        -- still has to route a funded purchase to its own placement card.
+        while story.active() do story.next() end
+        R.quiet = true
+        R.island_with(0, 4)
+        R.prog.level = island.ladder[5].after
+        R.prog.wallet = purse(10000, 10000, 10000, R.prog.level)
+        stage = 17
+    elseif stage == 17 and R.town.rail_targets.build then
+        assert(R.quest_rail()[1].value == "BUILD", "the island flags an affordable restoration")
+        app.inject_click(R.town.rail_targets.build)
+        stage = 18
+    elseif stage == 18 and press(R.OV_WONDER, R.wonder_form, "action") then
+        assert(R.inspect == island.ladder[5].kind and R.wonder_form:get("notice") == "READY TO BUILD")
+        stage = 19
+    elseif stage == 19 and R.island.placing == island.ladder[5].kind then
         app.quit()
     end
 end

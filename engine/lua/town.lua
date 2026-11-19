@@ -445,7 +445,7 @@ function View:rail_layout(count)
 end
 
 -- The rail: one round marker per entry, its figure in a readout beneath. A
--- ready entry glows; a waiting one is drawn disabled.
+-- ready face lifts and settles against a steady readout and hit area.
 function View:rail()
     local h, cfg, skin = self.hooks, self.cfg.rail, self.hooks.skin
     local entries = h.rail and h.rail() or {}
@@ -454,22 +454,33 @@ function View:rail()
     self.rail_targets = {}
     for i, entry in ipairs(entries) do
         local box = boxes[i]
-        local centre = box:center()
-        self.rail_targets[entry.id] = centre
-        ui.block(box)
-        local st = ui.hit(box, 0)
+        self.rail_targets[entry.id] = box:center()
+        -- Include the full lift in a fixed touch target. Keep the count anchored.
+        local target = entry.ready and box:inflate(5):offset(vec2(0, -3)) or box
+        ui.block(target)
+        local st = ui.hit(target, 0)
+        local face = box
         if entry.ready then
             local g = rgba(cfg.glow)
-            local pulse = reduced and 200 or math.floor(185 + 70 * math.sin(self.time * 3))
-            gfx.glow(centre, cfg.size * .85, color(g.r, g.g, g.b, pulse), color(g.r, g.g, g.b, 0))
+            -- One gentle lift per cycle, with a rest between lifts. Stagger
+            -- multiple hand-ins so the whole rail doesn't move as a column.
+            local lift = 0
+            if not reduced and not st.held then
+                local phase = (self.time / 2.2 + (i - 1) * .23) % 1
+                lift = math.sin(math.pi * math.min(1, phase * 2)) ^ 2
+            end
+            face = box:inflate(3 * lift):offset(vec2(0, -5 * lift))
+            gfx.glow(face:center(), cfg.size * (.8 + .08 * lift),
+                color(g.r, g.g, g.b, 185 + math.floor(70 * lift)), color(g.r, g.g, g.b, 0))
         end
-        if h.rail_paint then h.rail_paint(box, entry, st)
+        if h.rail_paint then h.rail_paint(face, entry, st)
         else
             local lift = st.held and vec2(0, 2) or vec2(0, 0)
-            gfx.circle(centre + vec2(0, 3), cfg.size / 2, rgba(cfg.shadow))
-            gfx.circle(centre + lift, cfg.size / 2, rgba(cfg.rim))
-            gfx.circle(centre + lift, cfg.size / 2 - 4, rgba(entry.ready and cfg.ready or cfg.face))
-            if entry.icon then gfx.image(entry.icon, box:inflate(-10):offset(lift), color(255, 255, 255, entry.waiting and 120 or 255)) end
+            local centre, radius = face:center(), face.w / 2
+            gfx.circle(centre + vec2(0, 3), radius, rgba(cfg.shadow))
+            gfx.circle(centre + lift, radius, rgba(cfg.rim))
+            gfx.circle(centre + lift, radius - 4, rgba(entry.ready and cfg.ready or cfg.face))
+            if entry.icon then gfx.image(entry.icon, face:inflate(-10):offset(lift), color(255, 255, 255, entry.waiting and 120 or 255)) end
         end
         if entry.value then
             local readout = rect(box.x, box:max().y + 2, box.w, cfg.caption)

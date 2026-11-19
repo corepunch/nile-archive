@@ -120,7 +120,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The result card fits its contents. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Score, a row of three resource totals, one line about the next restoration and Collect stack vertically. Resource totals and any crew-request counts display as icons above plain numbers. The next restoration shows what it still needs after this win, as the same icon-and-figure amounts, or its picture under READY TO BUILD once the wallet covers it. The quest title, story sentence and price stay on the building card. If no restoration is available, Collect follows the resources directly. See the [results review](docs/review/chapter-one/README.md).
+The expedition result shows the score, earned resources and collected request pieces, followed by Collect & Return. On the island, the next building’s upper-left marker says BUILD when it can be placed. Its card shows the price or shortfall and opens placement. A filled crew request lifts and settles in its circle until handed in. [Results and town review](docs/review/chapter-one/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 
