@@ -1,4 +1,4 @@
-"""Register the signal plate and the safe-landing scene from their authored sources."""
+"""Register the finale and request hand-in paintings from their authored sources."""
 import argparse
 from io import BytesIO
 import json
@@ -7,12 +7,12 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageStat
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = json.loads((ROOT / "art/board-states/manifest.json").read_text())["finale"]
+spec = json.loads((ROOT / "art/board-states/manifest.json").read_text())
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--check", action="store_true")
 args = parser.parse_args()
 
-for name, item in spec["assets"].items():
+for name, item in (spec["finale"]["assets"] | spec["crew_requests"]["handoffs"]).items():
     with Image.open(ROOT / item["source"]) as master:
         if "crop" in item:
             sprite = master.crop(item["crop"])

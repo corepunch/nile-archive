@@ -345,7 +345,9 @@
     "data/story/characters/mara.png",
     "data/story/characters/tomas.png",
     "data/story/finale/safe-landing.jpg",
-    "data/story/finale/signal-plate.png"
+    "data/story/finale/signal-plate.png",
+    "data/story/scenes/broken-cable.jpg",
+    "data/story/scenes/harbor-chart.jpg"
   ],
   "hex_slot": {
     "orientation": "flat-top",
@@ -797,7 +799,26 @@
       "readout": "the wallet resource look, with banked/needed"
     },
     "card": "the shared request card (match3.game R.OV_QUEST): the piece at 132 px, the request, STILL NEEDED as a resource amount",
-    "source": "existing campaign-pieces atlas; no new artwork",
+    "board_counter": "compact resource_indicator using each available piece's campaign frame, above banked plus pending matches / required; hidden when no request is available",
+    "source": "existing campaign-pieces atlas for the pieces and counters",
+    "handoffs": {
+      "chart": {
+        "source": "art/story-pictures/harbor-chart.png",
+        "prompt": "art/story-pictures/harbor-chart.prompt.txt",
+        "runtime": "data/story/scenes/harbor-chart.jpg",
+        "size": [768, 768],
+        "state": "static full-frame painting on the ready chart request's hand-in card",
+        "review": "docs/screenshots/review/crew-requests/chart-handoff.jpg"
+      },
+      "cable": {
+        "source": "art/story-pictures/broken-cable.png",
+        "prompt": "art/story-pictures/broken-cable.prompt.txt",
+        "runtime": "data/story/scenes/broken-cable.jpg",
+        "size": [768, 768],
+        "state": "static full-frame painting on the ready relay cable request's hand-in card",
+        "review": "docs/screenshots/review/crew-requests/cable-handoff-phone.jpg"
+      }
+    },
     "review": "docs/screenshots/review/crew-requests/README.md"
   },
   "story_pieces": {

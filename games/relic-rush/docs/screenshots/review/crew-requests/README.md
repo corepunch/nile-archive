@@ -5,7 +5,14 @@ shows quartz, or the piece of an open crew request. Open requests stand as
 round markers down the island's left edge, under the next building.
 [Rules](../../../match4-rules.md#crew-requests) · [Story](../../../story.md#crew-requests)
 
-## Board
+## Quest counters above the board
+
+| View | Before the counters | With the counters |
+| --- | --- | --- |
+| Expedition 3 · 480×900 | ![Chart and berries without counters](board3-after.jpg) | ![Chart and berries with counters below the wallet](board3-counters.jpg) |
+| Expedition 3 · 390×844 | ![Narrow phone without counters](phone-board3-after.jpg) | ![Narrow phone with two counters](phone-board3-counters.jpg) |
+
+## Original board comparison
 
 | View | Before: lines of four, five kinds | After: lines of three, six kinds |
 | --- | --- | --- |
@@ -34,5 +41,12 @@ round markers down the island's left edge, under the next building.
 | --- | --- | --- |
 | ![Card with the amount still needed](card.jpg) | ![Phone card](phone-card.jpg) | ![Card offering to hand the request in](card-ready.jpg) |
 
-`build/test/relic-rush "shot quest-"` renders the after views. The before views
-come from the previous commit with `--level 1`, `--level 3` and `--city 2`.
+## Illustrated hand-ins
+
+| Harbor chart · 480×900 | Broken cable · 390×844 |
+| --- | --- |
+| ![The assembled harbor chart before the dialogue](chart-handoff.jpg) | ![Tomas's pliers clamped to the broken relay cable](cable-handoff-phone.jpg) |
+
+`build/test/relic-rush "shot quest-board" "shot quest-handoff" "smoke quest-flow"`
+renders the expedition and illustrated cards, and checks the request flow
+from a paused board through a post-campaign replay and hand-in.

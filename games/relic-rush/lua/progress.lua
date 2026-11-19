@@ -60,25 +60,22 @@ function R.update_bonus_charges()
     end
 end
 
--- Apply restorations made while an unfinished board was parked on the island.
--- Existing tile kinds, charge and the position of every socket stay in place.
+-- Apply the same loadout to a parked board that a new deal would get. Resource
+-- and request pieces change in their existing slots, so the deal, progress and
+-- resources already earned survive the trip to the island.
 function R.refresh_board_bonuses()
     local g = R.g
     if not g.tool_slots or g.bonus_preview then return end
-    local slots, meters = economy.active_bonus_slots(g.level + 1, R.board_context())
-    for tool, charge in pairs(meters) do
+    local spec, restored = rules.level_of(g), R.board_context()
+    local yields, loadout, bonus, debut = economy.board_loadout(spec, g.level + 1, restored, g.loadout_seed)
+    for tool, charge in pairs(loadout.tool_meter) do
         if g.tool_meter[tool] == nil then
             g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
         end
     end
-    local bonus = g.bonus
-    if bonus and slots[bonus.tool] ~= bonus then
-        g.bonus, g.bonus_debut = slots[bonus.tool], nil
-        for kind, reward in pairs(g.resource_yields) do
-            if reward == bonus then g.resource_yields[kind] = g.bonus end
-        end
-    end
-    g.tool_slots = slots
+    g.resource_yields, g.tool_slots = yields, loadout.tool_slots
+    g.bonus, g.bonus_debut = bonus, debut
+    g.backdrop = economy.board_backdrop(spec, g.level + 1, restored)
 end
 
 local function opening_unlock(g)
@@ -190,6 +187,7 @@ end
 -- Review entry points for the crew's requests, after the engine's own:
 --   --quest-have N     every open request has N pieces banked (up to its need)
 --   --quest-card KEY   the island, with that request's card open
+--   --quest-handoff KEY   the island, with the request's hand-in painting open
 local debug_screens = R.debug_screens
 function R.debug_screens()
     debug_screens()
@@ -205,5 +203,11 @@ function R.debug_screens()
     if card and quests.by_key[card] then
         R.on_island, R.toast_time = true, 0
         R.open_quest(card)
+    end
+    local handoff = quests.by_key[app.arg("quest-handoff")]
+    if handoff then
+        R.on_island, R.toast_time = true, 0
+        R.quest_state().have[handoff.key] = handoff.need
+        assert(R.open_quest_handoff(handoff.key))
     end
 end

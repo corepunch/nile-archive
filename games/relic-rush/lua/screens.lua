@@ -62,14 +62,32 @@ function R.town_middle_icon(at) R.compass_icon(at, 17) end
 -- next building: each open one with its piece and how much of it is banked.
 local function quest_icon(quest) return R.board_art["campaign-" .. quest.piece] end
 
--- Whether an open request's piece stands on the next expedition's board.
-local function has_board_slot(quest)
-    local number = math.min(R.prog.level, rules.LEVELS - 1) + 1
-    local yields = economy.board_loadout(rules.levels[number], number, R.board_context())
+-- Use the next expedition, or a replay with two free slots after the finale.
+local function quest_board()
+    local level = R.prog.level < rules.LEVELS and R.prog.level or quests.REPLAY_LEVEL - 1
+    local yields = economy.board_loadout(rules.levels[level + 1], level + 1, R.board_context())
+    local items = {}
     for _, piece in pairs(yields) do
-        if piece == quest.yield then return true end
+        if piece.item then items[piece.item] = true end
     end
-    return false
+    return level, items
+end
+
+function R.board_quest_items()
+    local g, entries = R.g, {}
+    local on_board = {}
+    for _, piece in pairs(g.resource_yields) do
+        if piece.item then on_board[piece.item] = true end
+    end
+    local state = R.quest_state()
+    for _, quest in ipairs(quests.list) do
+        if on_board[quest.key] and not state.done[quest.key] then
+            local pending = not (g.lost or g.reward_claimed) and g.items[quest.key] or 0
+            local total = math.min(quest.need, quests.have(state, quest) + pending)
+            entries[#entries + 1] = {id=quest.key, icon=quest_icon(quest), amount=("%d/%d"):format(total, quest.need)}
+        end
+    end
+    return entries
 end
 
 function R.quest_rail()
@@ -79,11 +97,14 @@ function R.quest_rail()
         entries[1] = {id="build", icon=R.buildings[step.kind + 1].sprite,
             ready=island.can_buy(R.island, R.prog.wallet, R.prog.level, step.kind)}
     end
-    for _, open in ipairs(R.open_quests()) do
+    local open_quests = R.open_quests()
+    if #open_quests == 0 then return entries end
+    local _, items = quest_board()
+    for _, open in ipairs(open_quests) do
         local ready = quests.ready(state, open)
         entries[#entries + 1] = {id=open.key, icon=quest_icon(open), ready=ready,
             value=("%d/%d"):format(quests.have(state, open), open.need),
-            waiting=not ready and not has_board_slot(open)}
+            waiting=not ready and not items[open.key]}
     end
     return entries
 end
@@ -92,8 +113,12 @@ function R.quest_model(id)
     local quest, state = quests.by_key[id], R.quest_state()
     if not quest or state.done[id] then return nil end
     local ready = quests.ready(state, quest)
+    local level, items = quest_board()
+    local handoff = art.quest_handoffs[id]
     return {title=quest.title, subtitle=("%s · A Light Below"):format(quest.name), icon=quest_icon(quest),
-        about=quest.request, ready=ready, waiting=not ready and not has_board_slot(quest),
+        about=quest.request, ready=ready, waiting=not ready and not items[id],
+        level=not ready and items[id] and level or nil,
+        handoff=handoff and {title=handoff.title, image=R.board_art[handoff.path]},
         needs={{id=quest.key, icon=quest_icon(quest), amount=quest.need - quests.have(state, quest)}}}
 end
 

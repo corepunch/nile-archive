@@ -285,7 +285,7 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 ## Play
 
 - Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
-- Fill the crew's requests. Round markers down the island's left edge show the next building and each open request with its piece and count. A request's piece joins the boards while it is open; matching it fills the request, and a filled request is handed in from its card for a short scene. [Crew requests](docs/match4-rules.md#crew-requests)
+- Fill the crew's requests. Round markers down the island's upper-left edge show the next building and each open request. The counters above an expedition show matching progress for the pieces available there. Win to bank the pieces, then hand them in from the island card. The chart and cable hand-ins show a close-up before the dialogue. After the finale, an unfinished request card offers a replay of expedition 5. [Crew requests](docs/match4-rules.md#crew-requests)
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and, as icon amounts, what the next restoration still needs.
 - Restore buildings to unlock four bonus families. A later restoration

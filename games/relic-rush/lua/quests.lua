@@ -7,7 +7,8 @@
 -- the one before it on its line is handed in. Open requests take the board's
 -- free score slots in list order (economy.QUEST_KINDS); one with no slot
 -- waits for the next free one.
-local Q = {}
+-- Vault Door leaves two score slots open even after the whole ladder is built.
+local Q = {REPLAY_LEVEL=5}
 
 -- `levels` is the stretch a request is written for: previews and review
 -- boards show it there. `need` is fitted to the pieces a won board banks

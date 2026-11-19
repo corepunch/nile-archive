@@ -130,7 +130,7 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `prepare_resource_pieces.py` | Registers match pieces and wallet icons |
 | `prepare_result_icons.py` | Registers the two result icons |
 | `prepare_hud.py` | Registers the expedition HUD atlas (`--check` in `make test-assets`) |
-| `prepare_finale_art.py` | Registers the signal plate and the landing scene |
+| `prepare_finale_art.py` | Registers the signal plate, landing scene and crew-request hand-in paintings |
 | `prepare_story.py` | Compiles the reviewed story's lines; `--check` detects drift |
 | `prepare_story_pieces.py` | Registers Relic Rush story pieces for alternate art packs |
 | `capture_buildings.py` | Real-game before/after captures for building art and shadows |

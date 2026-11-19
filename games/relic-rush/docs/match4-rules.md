@@ -27,10 +27,11 @@ A board with a legal move never reshuffles, and with lines of three there is alm
 Between purchases the crew asks for things of its own. [Story and scenes](story.md#crew-requests) · [Request data](../lua/quests.lua)
 
 - **A request has its own piece.** It stands on the boards only while the request is open and short of pieces. It matches like any other piece and banks nothing in the wallet. Each one matched counts toward the request. A tool hit does not count, as with resources.
-- **Pieces bank on a win.** The count carries across expeditions up to the request's need. A lost or abandoned board banks none. The results card lists them beside the resources.
+- **Pieces bank on a win.** The counters above the board show the banked pieces plus this expedition's matches, up to the request's need. Only requests present on the board show a counter. A lost or abandoned board banks none. The results card lists them beside the resources.
 - **Requests take the free score slots.** Open requests take the slots of quartz, the amphora and the flower, in that order, while no restoration's piece holds them. The leaf's slot belongs to the bonus gem. A request with no free slot waits for the next one, and its marker says so.
 - **Two lines run side by side.** A request opens once its building stands and the one before it on its line is handed in. Expeditions 2–7 carry two requests at once; from the Sawmill on, one slot is left.
-- **Hand it in on the island.** Round markers down the left edge show the next building, then each open request with its piece and count. A marker opens the request's card. A filled request glows; its card hands it in and plays its scene. Nothing else waits for a request.
+- **Hand it in on the island.** Round markers down the upper-left edge show the next building, then each open request with its piece and count. A filled request glows. The chart and cable hand-ins open an illustrated card before their dialogue. Requests remain optional.
+- **Resume or replay from a request card.** A paused board updates its piece lineup when you return from the island, keeping its tiles and progress. After expedition 100, unfinished requests can replay Vault Door (expedition 5), which has two free score slots.
 - **The amounts follow the boards.** A request asks for about four fifths of the pieces the bot banks on the expeditions it is written for: 25 on expeditions 2–4, 45 on 5–7 and 60 on 8–10.
 
 ## Board shape

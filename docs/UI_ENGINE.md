@@ -638,6 +638,11 @@ in one bottom row. The town's `bottom.pause` option adds Pause to Build,
 Play and Wishes. Play is the largest control. Both surfaces use the same
 [runtime enamel button and painted icon strip](../art/match3-buttons/README.md).
 
+Match-3 games can bind `match3.bind_board_quest_hud(R)` and supply
+`R.board_quest_items()` as a list of stable `{id, icon, amount}` records.
+The display-only row uses compact resource indicators under the wallet. Board
+notices share that band to the right of the counters.
+
 ## Town rail
 
 `engine/lua/town.lua` can stack round markers down the town's left edge, under
@@ -661,6 +666,12 @@ record's icon, in its normal, hover, pressed, selected (ready) and disabled
 (waiting) states. `town_config.lua` places the rail with `rail.x`, `rail.top`,
 `rail.size`, `rail.gap` and `rail.caption`; `View:rail_layout(count)` returns
 the marker boxes for tests.
+
+A request card's game model supplies its playable expedition as a zero-based
+`level`. The card offers Play for the current expedition, Replay for a
+cleared one, and a return action while the request waits for a board slot.
+A ready request can supply a `handoff` title and image. Continue on the
+illustrated card calls the same delivery handler as a request without art.
 
 ## Town building popups
 

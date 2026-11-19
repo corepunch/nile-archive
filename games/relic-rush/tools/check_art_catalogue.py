@@ -16,6 +16,17 @@ for field, key in [("states", "tool_states")]:
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
+handoffs = manifest["crew_requests"]["handoffs"]
+declaration = re.search(r"A\.quest_handoffs = \{(.*?)\n\}", art, re.S).group(1)
+paths = dict(re.findall(r'(\w+)=\{title="[^"]+", path="([^"]+)"\}', declaration))
+assert {key: "data/" + path for key, path in paths.items()} == {
+    key: scene["runtime"] for key, scene in handoffs.items()
+}, "Runtime hand-in paintings need catalogue coverage"
+for scene in handoffs.values():
+    assert all((ROOT / scene[key]).is_file() for key in ("source", "prompt", "review"))
+    assert scene["runtime"] in actual and f'`{scene["runtime"]}`' in doc
+    with Image.open(ROOT / scene["runtime"]) as image:
+        assert image.mode == "RGB" and list(image.size) == scene["size"]
 # Registered sprites ship packed in the typed atlases (data/board/<kind>.png).
 atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
 registered = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "art/registered").rglob("*") if p.is_file())

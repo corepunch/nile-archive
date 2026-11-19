@@ -9,6 +9,10 @@ A.story={cast={"elena","mara","tomas","adrian","keeper"},keeper_source="art/art-
 -- Both ice frames come from the shared painted overlay atlas.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
+A.quest_handoffs = {
+    chart={title="The Harbor Chart", path="story/scenes/harbor-chart.jpg"},
+    cable={title="The Broken Cable", path="story/scenes/broken-cable.jpg"},
+}
 -- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
 -- engine/art/board-tiles/tiles.json and loaded under "tile-" keys.
 A.floor_tiles = {"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"}
@@ -136,6 +140,7 @@ function A.load()
     end
     textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
+    for _, handoff in pairs(A.quest_handoffs) do textures[handoff.path] = texture.load(handoff.path) end
     for _, name in ipairs(A.layers) do load(name) end
     return textures
 end

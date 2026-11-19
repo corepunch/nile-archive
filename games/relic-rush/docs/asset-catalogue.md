@@ -136,7 +136,7 @@ to register `data/story/characters/keeper.png`. See the native review at
 
 ## Crew request pieces
 
-The crew's requests reuse five paintings from the campaign atlas; no artwork was added. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
+The crew's request pieces reuse five paintings from the campaign atlas. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
 
 | Request | Frame | Expeditions written for | Pieces on the same board |
 | --- | --- | --- | --- |
@@ -152,6 +152,21 @@ The green arrow is scheduled from expedition 5, after the Hammer has taken the l
 On the island each open request is a round marker on the [shared enamel button](../../../art/match3-buttons/README.md) with its piece and a banked/needed readout in the wallet look. States: normal, hover, pressed, ready (the selected face with a glow) and waiting for a board slot (the disabled face). The first marker is the next building's sprite and opens its card. The request card shows the piece at 132 px and the amount still needed as a resource amount.
 
 Reproduce: `./build/relic-rush --headless --mute --fresh --size 480x900 --city 2 --quest-have 12 --shot out.png`; add `--quest-card chart` for the card and use `--quest-have 99` for the ready state. `--level 3`, `--level 6` and `--level 9` show the pieces on their boards.
+
+The board counters reuse the same campaign frames in display-only compact
+resource indicators. Each shows banked plus pending pieces over the request's
+total. Requests absent from the board have no counter.
+
+### Crew request hand-in paintings
+
+| Painting | Rule and state | ImageGen source and review |
+| --- | --- | --- |
+| `data/story/scenes/harbor-chart.jpg` | Static hand-in painting showing the pieced chart, reef and warning light before the chart dialogue. | [Master](../art/story-pictures/harbor-chart.png) · [Prompt](../art/story-pictures/harbor-chart.prompt.txt) · [480×900](screenshots/review/crew-requests/chart-handoff.jpg) |
+| `data/story/scenes/broken-cable.jpg` | Static hand-in painting showing the two parted ends and Tomas's rusted pliers before the cable dialogue. | [Master](../art/story-pictures/broken-cable.png) · [Prompt](../art/story-pictures/broken-cable.prompt.txt) · [390×844](screenshots/review/crew-requests/cable-handoff-phone.jpg) |
+
+Run `python3 games/relic-rush/tools/prepare_finale_art.py` to reproduce the
+uncropped 768×768 JPEGs from their square masters. Capture both in one run with
+`build/test/relic-rush "shot quest-handoff-"`.
 
 ## Story pieces
 

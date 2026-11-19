@@ -55,10 +55,11 @@ end
 -- it fills its cell.
 ui.prefab("resource_indicator", function(p)
     local narrow = p.width and p.width < 76
-    local figure = p.amount and {kind="label",text=tostring(p.amount),em=narrow and 21 or 25,text_style="gold"}
+    local figure = p.amount and {kind="label",text=tostring(p.amount),
+        em=p.compact and 16 or narrow and 21 or 25,text_style="gold"}
     local children = {}
     if p.icon then
-        children[1] = {kind="image",image=p.icon,height=figure and 36 or 62}
+        children[1] = {kind="image",image=p.icon,height=p.compact and 24 or figure and 36 or 62}
         if figure and p.unit then
             local side = narrow and 18 or 24
             figure = {kind="row",gap=narrow and 2 or 3,align="center",children={
@@ -70,14 +71,15 @@ ui.prefab("resource_indicator", function(p)
     end
     children[#children + 1] = figure
     if p.label then children[#children + 1] = {kind="label",text=p.label,height=15,em=12,text_style="caption"} end
-    return {kind="border",role="resource_indicator",padding={4,5,4,7},children={
+    return {kind="border",role="resource_indicator",padding=p.compact and {4,2,4,3} or {4,5,4,7},children={
         {kind="column",gap=1,children=children},
     }}
 end)
 
 -- A resource record ({icon, amount, unit, label}) as that element.
-function E.resource_indicator(entry, width)
-    return {kind="resource_indicator",width=width,icon=entry.icon,amount=entry.amount,unit=entry.unit,label=entry.label}
+function E.resource_indicator(entry, width, compact)
+    return {kind="resource_indicator",width=width,icon=entry.icon,amount=entry.amount,
+        unit=entry.unit,label=entry.label,compact=compact}
 end
 
 -- Full-screen sheets under the wallet row. One building per row: the whole
@@ -498,6 +500,39 @@ function E.bind_town_board_hud(R)
 
     function R.mission(...)
         if app.arg("mission") then mission(...) end
+    end
+end
+
+-- Optional quest counters below the campaign wallet. Keep the measured list
+-- until its stable entries change, since the board redraws between matches.
+function E.bind_board_quest_hud(R)
+    local width, gap = 62, 6
+    local form = ui.form{kind="list",id="items",direction="row",gap=gap,item=function(entry)
+        return E.resource_indicator(entry, width, true)
+    end}
+    local previous = {}
+    function R.draw_board_quests()
+        local items = R.board_quest_items()
+        local changed = #items ~= #previous
+        for i, entry in ipairs(items) do
+            local last = previous[i]
+            if not last or entry.id ~= last.id or entry.amount ~= last.amount or entry.icon ~= last.icon then
+                changed = true
+                break
+            end
+        end
+        if changed then
+            assert(form:set_items("items", items))
+            previous = items
+        end
+        R.board_quest_bounds = nil
+        if #items == 0 then return end
+        local size = #items * (width + gap) - gap
+        local _, height = form:measure(size, R.skin)
+        local safe = app.screen()
+        local bounds = rect(safe.x + 25, safe.y + 68, size, height)
+        R.board_quest_bounds = bounds
+        form:draw(bounds, R.skin, {interactive=false})
     end
 end
 

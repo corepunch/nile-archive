@@ -47,6 +47,11 @@ do
     check(y[5] == Q.trail.yield and y[4] == economy.unlock_of("workshop"), "timber keeps its slot: the second request waits")
     y = yields(3, {well=true})
     check(y[5] == nil and y[4] == nil, "with nothing asked the score pieces return")
+    local fully_restored = {quests={Q.tools, Q.cable}}
+    for _, unlock in ipairs(economy.unlocks) do fully_restored[unlock.building] = true end
+    y = yields(quests.REPLAY_LEVEL, fully_restored)
+    check(y[5] == Q.tools.yield and y[4] == Q.cable.yield,
+        "the replay has room for two requests even with the full ladder built")
     for number = 1, 12 do
         local seen = {}
         for _, piece in pairs(yields(number, {preview=true, well=true, log_cabin=true, workshop=true, camp=true})) do

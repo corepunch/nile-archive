@@ -63,7 +63,8 @@ G.DEFAULTS = {
             gets = "YOU GET", price = "PRICE", missing = "STILL NEEDED", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     quest = {header = "Request", deliver = "HAND IT OVER", play = "PLAY", ready = "EVERYTHING IS HERE.",
-             waiting = "ITS PIECE JOINS THE BOARD WHEN A PLACE IS FREE."},
+             waiting = "ITS PIECE JOINS THE BOARD WHEN A PLACE IS FREE.", replay = "REPLAY EXPEDITION %d",
+             replay_paused = "Your board is saved. Open a crew request to resume.", continue = "CONTINUE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
@@ -110,7 +111,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_QUEST = 12,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_QUEST = 12, OV_QUEST_HANDOFF = 13,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -467,6 +468,11 @@ function G.bind(R, over)
             say_at(R.toast, vec2(240, 724 + R.drop), 14, PAL_CREAM, 424)
         else   -- just below the HUD, above the board
             local bounds = R.board_toast
+            local quests = R.board_quest_bounds
+            if quests and bounds.y < quests:max().y and bounds:max().y > quests.y then
+                local x = quests:max().x + 8
+                bounds = rect(x, bounds.y, bounds:max().x - x, bounds.h)
+            end
             R.rrect(bounds, 11, rgba(10, 37, 31, 235))
             say_at(R.toast, bounds:center(), 14, PAL_CREAM, bounds.w - 16)
         end
@@ -784,8 +790,8 @@ function G.bind(R, over)
     -- ones for the town's left edge ({id, icon, value, ready, waiting}; the id
     -- "build" stands for the next building and opens its card), and
     -- R.quest_model(id) describes one: {title, subtitle, icon, about, needs
-    -- (resource records still missing), ready, waiting}. The action hands a
-    -- ready request in through R.quest_deliver(id); otherwise it plays on.
+    -- (resource records still missing), ready, waiting, level (playable
+    -- zero-based destination), handoff ({title, image}, optional)}.
     local quest_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
             match3.popup_header(W.quest.header),
@@ -811,20 +817,23 @@ function G.bind(R, over)
         },
     }
     R.quest_form = quest_form
-    local quest_ready
+    local quest_model
     function R.open_quest(id)
         if not R.quest_model or not R.quest_model(id) then return false end
         R.quest_card, R.overlay = id, R.OV_QUEST
         return true
     end
     popup(R.OV_QUEST, quest_form, {width=420, prepare=function()
-        local quest = R.quest_card and R.quest_model and R.quest_model(R.quest_card)
+        local quest = R.quest_card and R.quest_model(R.quest_card)
         if not quest then return false end
-        quest_ready = quest.ready
+        quest_model = quest
         match3.set_popup_header(quest_form, quest.title, quest.subtitle)
-        local playable = R.prog.level < rules.LEVELS
-        assert(quest_form:push{icon=quest.icon, about=quest.about,
-            action=quest.ready and W.quest.deliver or playable and W.quest.play or W.card.back})
+        local action = W.card.back
+        if quest.ready then action = W.quest.deliver
+        elseif quest.level then
+            action = quest.level == R.prog.level and W.quest.play or W.quest.replay:format(quest.level + 1)
+        end
+        assert(quest_form:push{icon=quest.icon, about=quest.about, action=action})
         local needs = quest.ready and {} or quest.needs or {}
         quest_form.values.show_needs = #needs > 0
         assert(quest_form:set_items("needs", needs))
@@ -835,8 +844,34 @@ function G.bind(R, over)
         local id = R.quest_card
         R.overlay = R.OV_NONE
         if event.id ~= "action" then return end
-        if quest_ready then R.quest_deliver(id)
-        elseif R.prog.level < rules.LEVELS then R.play_next() end
+        if quest_model.ready then
+            if quest_model.handoff then R.open_quest_handoff(id) else R.quest_deliver(id) end
+        elseif quest_model.level then R.play_level(quest_model.level) end
+    end})
+
+    -- The painting is part of the hand-in. Continue records the delivery and
+    -- lets the game queue the existing dialogue.
+    local handoff_form = ui.form{
+        root={kind="column",panel=true,padding=24,gap=14,children={
+            match3.popup_header(W.quest.header),
+            {kind="image",id="painting",height=372},
+            {kind="button",id="continue",height=56,text=W.quest.continue},
+        }},
+        bindings={{id="painting",field="image",type="texture",readonly=true}},
+    }
+    R.quest_handoff_form = handoff_form
+    function R.open_quest_handoff(id)
+        local quest = R.quest_model(id)
+        if not quest or not quest.ready or not quest.handoff then return false end
+        R.quest_card, R.overlay = id, R.OV_QUEST_HANDOFF
+        match3.set_popup_header(handoff_form, quest.handoff.title)
+        assert(handoff_form:push(quest.handoff))
+        return true
+    end
+    popup(R.OV_QUEST_HANDOFF, handoff_form, {width=420,dismiss=false,handle=function(event)
+        if event.id ~= "continue" then return end
+        R.overlay = R.OV_NONE
+        R.quest_deliver(R.quest_card)
     end})
 
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard)
@@ -858,7 +893,8 @@ function G.bind(R, over)
         elseif action == "leaderboard" then R.open_leaderboard()
         elseif action == "quit" then   -- the unfinished board waits in town
             R.on_island, R.overlay = true, R.OV_NONE
-            R.notice(W.notices.quit:format(R.g.level + 1))
+            local replay = R.quest_model and R.prog.level >= rules.LEVELS and R.g.level < R.prog.level
+            R.notice(replay and W.quest.replay_paused or W.notices.quit:format(R.g.level + 1))
         end
     end})
 

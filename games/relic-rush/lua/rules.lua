@@ -46,6 +46,7 @@ function M.game_start(level, seed, restored)
     while has_winning_opening(g) do
         g = start(level, g.rng, yields, loadout)
     end
+    g.loadout_seed = seed
     g.bonus, g.bonus_debut = bonus, debut
     g.bonus_preview = restored and restored.preview
     g.backdrop = economy.board_backdrop(spec, number, restored)
