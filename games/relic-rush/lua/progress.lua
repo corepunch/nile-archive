@@ -26,7 +26,7 @@ function R.quest_opened(id)
 end
 
 -- Restoration dialogue plays first. Introduce one actionable request per
--- visit. A new purchase or hand-in can give the crew a fresh lead in town.
+-- visit. A filled request is not offered here: its marker glows instead. A new purchase or hand-in can give the crew a fresh lead in town.
 local story_tick = R.story_tick
 function R.story_tick()
     local state = R.quest_state()
@@ -47,12 +47,6 @@ function R.story_tick()
         return
     end
     local open = R.open_quests()
-    for _, quest in ipairs(open) do
-        if quests.ready(state, quest) and not state.ready_seen[quest.key] then
-            R.open_quest(quest.key, true)
-            return
-        end
-    end
     for _, quest in ipairs(open) do
         if not state.introduced[quest.key] and not R.quest_model(quest.key).waiting then
             R.open_quest(quest.key, true)

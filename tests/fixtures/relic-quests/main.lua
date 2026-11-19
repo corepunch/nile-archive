@@ -66,10 +66,14 @@ function R.smoke()
         R.quiet = false
         stage = 5
     elseif stage == 5 and R.on_island and R.overlay == R.OV_QUEST then
+        assert(R.quest_card ~= "chart", "returning with enough pieces must not pop the hand-in card")
+        R.overlay = R.OV_NONE   -- a fresh request's introduction may still greet the visit
+    elseif stage == 5 and R.on_island and R.overlay == R.OV_NONE and not story.active()
+            and R.quest_state().offered_visit == R.island.count then
         assert(R.prog.level == rules.LEVELS and R.quest_model("chart").ready,
             "a replay should bank request pieces without advancing the campaign")
-        assert(R.quest_card == "chart" and R.quest_offer and R.quest_state().ready_seen.chart,
-            "returning with enough pieces automatically offers the hand-in")
+        assert(not R.quest_state().ready_seen.chart, "the filled request waits on its glowing marker")
+        assert(R.open_quest("chart"))
         stage = 6
     elseif stage == 6 and press(R.OV_QUEST, R.quest_form, "action") then
         stage = 7
