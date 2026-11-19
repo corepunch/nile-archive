@@ -37,7 +37,7 @@ Each row connects a character’s request with the expedition clears and confirm
 | Chapter and story objective | Expeditions and confirmed placement | Outcome and next request |
 | --- | --- | --- |
 | 1. Draw fresh water | Clear 1 and restore the Well. | Mara draws the first bucket. Elena sees a flash, and the rope brings up a scrap of chart. |
-| 1. Meet the harbor keeper | Clear through 4 and place the Hunter’s Hut. | Tomas recognizes his father’s hammer and takes the crew into his confidence about the severed relay. |
+| 1. Meet the harbor keeper | Clear through 4 and place the Hunter’s Hut. | Tomas welcomes the crew to his father’s hut and takes the crew into his confidence about the severed relay. |
 | 1. Make a reel for the cable | Clear through 7 and place the Sawmill. | Tomas uses the first timber to make a reel. Mara learns where to look for the lost cable. |
 | 1. Take the harbor watch | Clear through 10 and place the Village. | The village takes up the night watch. The crew reads the keeper’s orders and gets three flashes back from across the gap. |
 | 2. Find the sender — Mara wants to answer safely | 11 follow the reply; 12 find recently delivered supplies; 13 recover the note; **restore the Port** to consult its register. | The note warns about the wall and bears the initials I. R. Tomas matches the handwriting in the port register. |
@@ -90,7 +90,7 @@ The Sawmill supplies timber for a cable reel. The village watch signals across t
 | 1 | — | — | Well and chart scrap at 1, Hunter’s Hut and Tomas at 4, Sawmill at 7, Village and reply at 10 |
 | 2 | 11 and 20 | 11–20 | Port at 13, Curia Octavia at 16, Aqueduct at 19 |
 
-The Well, Hut and Sawmill use five, five and four lines. At the Village, the old keeper voices two orders from the watch book. Mara takes the next watch and the player chooses who replies. Ines appears through the warning and her records until the finale.
+Every scene has two or three lines: the crew's delight at what they finished, then what to do next. At the Village, the old keeper voices one order from the watch book and the player chooses who replies. Ines appears through the warning and her records until the finale.
 
 ### More story to put on the board
 
@@ -100,41 +100,27 @@ The Well, Hut and Sawmill use five, five and four lines. At the Village, the old
 
 **After restoration 1 · Well**
 
-- **Mara:** First bucket from the well. Taste it, Elena. Can we fill the casks?
-- **Elena:** Sweet water. Hold your lamp still, Mara. I saw a flash down by the cliff.
-- **Mara:** I'll give it two flashes. Look! Two back.
-- **Elena:** It could be our own light on the water. Here, take the bucket. Something's caught in the rope.
-- **Mara:** A scrap of a harbor chart. Mind the wet corner.
+- **Mara:** Fresh water from the well at last! Taste it, Elena.
+- **Elena:** Sweet! The rope brought up a scrap of harbor chart, too. And look, a flash by the cliff!
+- **Mara:** Two flashes back! Someone's down there. Let's fix up the old hut and look around.
 
 **After restoration 4 · Hunter's Hut**
 
-- **Tomas:** Mind if I borrow the hammer from the hut? The head's loose. I can wedge it for you.
-- **Mara:** You knew just where to reach. Is this your place?
-- **Tomas:** My father's. I'm Tomas Reed. I keep the harbor.
-- **Mara:** Then who flashed a light back at me below the cliff?
-- **Tomas:** Ines and I wired a warning lamp down there. The storm cut the cable. Come see at low tide.
+- **Tomas:** My father's hut, standing again! I'm Tomas Reed. I keep this harbor.
+- **Mara:** Then you know who flashed back at me under the cliff?
+- **Tomas:** Ines and I wired a warning lamp there. The storm cut its cable. Bring timber for a reel.
 
 **After restoration 7 · Sawmill**
 
-- **Mara:** That's good timber. What are you making out of the offcuts, Tomas?
-- **Tomas:** A reel. Ever tried hauling wet cable into a skiff?
-- **Mara:** Once. Spent longer untangling my boots than I did rowing. Where does your cable run?
-- **Tomas:** Along the lower quay. Look for loose coils round the mooring posts.
+- **Tomas:** Good timber at last! Here's your reel for the cable.
+- **Mara:** Brilliant. Where do I look?
+- **Tomas:** Loose coils round the mooring posts. Then light the village, so we can keep watch.
 
 **After restoration 10 · Village**
 
-- **Mara:** Once the village lamps are lit, can you still pick out the warning?
-- **Tomas:** From the shore, yes. My father kept the night watch there.
-- **Elena:** Is that his watch book? Someone copied the old keeper's orders inside the cover.
-- **Tomas:** He made me learn them by heart. Start with the line about the reef.
+- **Mara:** The village lamps are lit! Tomas, your father's watch book has the keeper's orders.
 - **Ancient keeper:** When the tide covers the reef, open the warning shutter. Let the boats see the light.
-- **Ancient keeper:** Stay on watch until the next keeper takes the lamp from your hand.
-- **Mara:** I'll take first watch. Tomas, hold the book. I need both hands for my lamp.
-- **Tomas:** Stand where you can see the far bank. Stay this side of the crack.
-- **Mara:** Two flashes out. Wait. Three back this time.
-- **Elena:** I was wrong about the reflection. Someone across the gap counted your flashes.
-- **Tomas:** Ines used to work the far shutter. I haven't seen her since she went for the plans.
-- **Mara:** They're still watching. Who's going to answer?
+- **Mara:** Two flashes out, and three back this time! Someone's on watch. Who answers?
 
 Choice prompt: Who should answer the signal?
 
@@ -153,114 +139,117 @@ Choice prompt: Who should answer the signal?
 
 **Before level 11**
 
-- **Elena:** We sent one long flash. The terrace should give us a view across the gap.
+- **Elena:** We answered with one long flash!
+- **Mara:** Up to the terrace, then. It looks right across the gap.
 
 **Level 11**
 
-- **Mara:** A short flash back. They saw us.
-- **Elena:** Someone can see the terrace. Let’s look for signs they’ve been up here.
+- **Mara:** A short flash back. They saw us!
+- **Elena:** Someone's been up here. Let's look for their tracks.
 
 **Level 12**
 
-- **Elena:** The crates are soaked. This food bag on top is dry, with last week’s date on it.
-- **Mara:** Keep looking. Whoever left it may have marked a way down.
+- **Elena:** A dry food bag, dated last week. Someone really is out here!
+- **Mara:** Keep searching. They may have marked a way down.
 
 **Level 13**
 
-- **Elena:** A fresh note: “Wall unsafe. I. R.”
-- **Mara:** Let's take it to the port. Someone there may know the hand.
+- **Elena:** A fresh note: “Wall unsafe. I. R.” We've found them!
+- **Mara:** Let's restore the port. Its register may know the hand.
 
 **After restoration 13 · Port**
 
-- **Tomas:** Ines Reed. See her R in the port register? Same hook as the one on your note.
-- **Mara:** She's back. I'll take the terrace and see if there's a way past that wall.
+- **Tomas:** Ines Reed! Her R in the port register matches your note. She's back!
+- **Mara:** Then let's reach her. I'll find a way past that wall.
 
 **Level 14**
 
-- **Mara:** The tide’s already over the low end of the terrace.
-- **Tomas:** Stay on the upper stones. See if that crack reaches the quay wall.
+- **Mara:** Across the terrace before the tide!
+- **Tomas:** Well done. Now see if that crack runs into the quay wall.
 
 **Level 15**
 
-- **Elena:** My sounding line went right through the crack. The deckhands need to see this.
-- **Mara:** I'll call them in. Bring Ines's note so we can show them where it's unsafe.
+- **Elena:** Found it. The crack goes right through the quay wall.
+- **Mara:** The deckhands must see this. Let's call them together.
 
 **Level 16**
 
-- **Elena:** I can't hold a meeting out here. Every gust takes another sheet off my board.
+- **Elena:** Everyone came! But the wind keeps stealing my notes. We need a hall.
+- **Mara:** Then let's open Curia Octavia.
 
 **After restoration 16 · Curia Octavia**
 
-- **Mara:** Everyone's in the hall at Curia Octavia. Tomas, what have you got for the deckhands?
-- **Tomas:** Ines's harbor log. Pass it round the table. She measured that crack herself.
+- **Mara:** Curia Octavia stands! The whole crew fits round one table.
+- **Tomas:** Here's Ines's harbor log. She measured that crack herself. Let's follow her notes.
 
 **Level 17**
 
-- **Elena:** The last page is torn. There’s a mark for six feet and a number for a chart cabinet.
-- **Tomas:** Check the stone gauge by the lantern steps. She took her measurements there.
+- **Elena:** Her torn last page: six feet, and a chart cabinet number.
+- **Tomas:** Check the stone gauge by the lantern steps. She measured there.
 
 **Level 18**
 
-- **Elena:** Six feet where the old bypass meets the wall. It’s cut into the gauge.
-- **Tomas:** If the cabinet still has her drawing, we can find where to open the bypass.
+- **Elena:** Six feet, cut right into the gauge! That's where her bypass meets the wall.
+- **Tomas:** Now we need her drawing to open it.
 
 **Level 19**
 
-- **Tomas:** The gauge numbers are aqueduct numbers. Ines kept the drawings in the inspection cabinet.
+- **Tomas:** The gauge numbers match the aqueduct! Her drawings are in its cabinet.
+- **Mara:** Then let's get the aqueduct running.
 
 **After restoration 19 · Aqueduct**
 
-- **Elena:** Listen to the water in the aqueduct. This is the right arch. Six feet on the gauge.
-- **Mara:** And there's the numbered cabinet. Tomas, do you have the key?
+- **Elena:** The aqueduct flows again! And there's Ines's numbered cabinet.
+- **Mara:** Tomas, do you have the key?
 
 **Before level 20**
 
-- **Tomas:** The tide-room key fits that cabinet too. Here. Ines used to carry it.
-- **Elena:** Then let’s see what she left where you could find it.
+- **Tomas:** Here's the tide-room key. Ines used to carry it. It fits her cabinet too.
+- **Elena:** Let's see what Ines left for us.
 
 **Level 20**
 
-- **Elena:** Here’s Ines’s signature. Open her bypass and we can drain the foot of the wall.
-- **Mara:** That gives us room to work. What’s that paper, Adrian?
-- **Adrian:** Kessler paid for the expedition. I signed over exclusive rights to what we found.
-- **Tomas:** Ines drew those plans so we could keep the quay safe.
-- **Elena:** The plans stay here. Mara, look where Ines marked a second landing.
+- **Elena:** Ines's signed plan! Open her bypass and the wall can be saved.
+- **Adrian:** Splendid. I must confess, though: I signed our finds over to Kessler, the sponsor.
+- **Elena:** Then the plans stay here. Look, Ines marked a second landing.
 
 
 ## Chapter 3: Keep the Light — provisional bridge
 
 **Before level 21**
 
-- **Mara:** The chart shows another landing. We can guide Ines around the quay.
+- **Mara:** A second landing! We can guide Ines around the broken quay.
 - **Adrian:** And I will deal with Kessler.
 
 **Level 21**
 
-- **Mara:** These bearings lead around the broken wall.
-- **Elena:** What could Ines steer by once she loses sight of the quay?
+- **Mara:** Bearings found! They lead around the broken wall.
+- **Elena:** Next, the steps down to that landing.
 
 **Before level 22**
 
-- **Mara:** These steps lead to the other landing. Let’s see if a boat can reach it.
+- **Mara:** These steps go down to the other landing.
+- **Tomas:** Let's see if a boat can reach it.
 
 **Level 22**
 
-- **Mara:** The alternate landing is clear enough for a small boat.
-- **Tomas:** Ines can come ashore without the quay.
+- **Mara:** The landing is clear! A small boat can get in.
+- **Tomas:** Ines can come ashore without the quay. She'll need a mark to steer by.
 
 **Level 23**
 
-- **Mara:** From the skiff the headland disappears against the trees. I need a mark above them.
+- **Mara:** From the skiff the headland vanishes against the trees.
+- **Elena:** We need a landmark above them. The mausoleum roof would do.
 
 **After restoration 23 · Mausoleum of Augustus**
 
-- **Mara:** I can pick out the Mausoleum of Augustus from the skiff. Even at dusk that roof stands out.
-- **Elena:** I'll hang the guide lamp there. Ines can steer for it until she sees the landing.
+- **Mara:** The Mausoleum of Augustus! I can see its roof from the skiff, even at dusk.
+- **Elena:** I'll hang the guide lamp there. Next, we measure the wall.
 
 **Level 24**
 
-- **Elena:** The tide is low enough to measure the wall.
-- **Tomas:** Ines marked the same level on her plan.
+- **Elena:** Low tide, and the wall is measured!
+- **Tomas:** The same level Ines marked. Her plan holds.
 
 **Level 25**
 
@@ -269,47 +258,46 @@ Choice prompt: Who should answer the signal?
 
 **Level 26**
 
-- **Elena:** When we open the bypass, someone needs to keep people off the damaged quay.
+- **Elena:** Materials secured! But workers must keep off the damaged quay.
+- **Tomas:** Then we'll post a warning in the Forum.
 
 **After restoration 26 · Forum**
 
-- **Tomas:** I'll post the warning in the Forum. Everyone coming for work will pass it.
-- **Mara:** Give me a second copy for the boats. I'll keep the quay clear from the water.
+- **Tomas:** The Forum's open! Everyone coming for work will see the warning.
+- **Mara:** I'll take a copy to the boats. Now let's ready the wall.
 
 **Level 27**
 
-- **Tomas:** I've set a chalk mark at the foot of the wall. We'll know when the water starts to drop.
-- **Mara:** I'll stand watch. Call me when that mark shows.
+- **Tomas:** The chalk mark's set at the foot of the wall. We'll see when the water drops.
+- **Mara:** I'll stand watch.
 
 **Level 28**
 
 - **Adrian:** Kessler, I surrender the claim. The records stay here.
 - **Kessler:** That will be expensive, Mr Vale.
-- **Adrian:** I know. Send the bill to me.
+- **Adrian:** Worth every penny. Send the bill to me.
 
 **Level 29**
 
-- **Elena:** Ines drew the bypass outlet feeding a fountain. If we get it flowing, we can test her plan.
+- **Elena:** Ines's bypass feeds a fountain! Get it flowing and we can test her plan.
+- **Mara:** Let's restore the Fountain.
 
 **After restoration 29 · Fountain**
 
-- **Elena:** Water in the fountain basin! Tomas, can you see your chalk mark?
-- **Tomas:** Dry. The bypass is taking the water away from the wall, just as Ines drew it.
-- **Mara:** Keep the quay closed. I'll take my lamp and guide her round to the other landing.
+- **Elena:** Water in the fountain! Tomas, your chalk mark?
+- **Tomas:** Dry! The bypass works, just as Ines drew it.
+- **Mara:** Then I'll guide her round to the other landing.
 
 **Before level 30**
 
-- **Mara:** Once the signal plate is in the lamp, I can send our long flash.
-- **Tomas:** The last brace is holding. I'll take the key down to meet her.
+- **Mara:** The signal plate's in the lamp. Time for our long flash.
+- **Tomas:** I'll take the key down to meet her.
 
 **Level 30**
 
-- **Mara:** Ines! Your lantern flashed three times from the landing.
-- **Elena:** Just like the light under the cliff.
-- **Ines:** That was me under the cliff, too. I had to steer you away from the broken quay.
-- **Tomas:** Here’s the key, Ines. We can keep the light together.
-- **Ines:** Then you take the first watch. I’ve brought a chart of the other lights.
-- **Mara:** Let’s see who keeps them. After tea.
+- **Mara:** Three flashes from the landing! It was you under the cliff, Ines!
+- **Tomas:** Welcome home. Here's the key. We'll keep the light together.
+- **Ines:** Gladly. I've brought a chart of the other lights. They need keepers too.
 
 ## Crew requests
 
@@ -390,6 +378,8 @@ The spare is a test rig at the near lookout. The Village scene can still exchang
 The Well, Hut, Sawmill and Village play on the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the Village scene. Elena reads the initials on expedition 13. Tomas compares them with the Port register only after the Port is built. A cold read caught a late trail hand-in, confusing near and far lamps, and two meanings for the same long flash. Each now holds across the optional request and either reply choice.
 
 ## Changelog
+
+- 2026-11-19: Cut every scene to two or three lines: joy at what was finished, then the next step. The clue chain, the reply choice and its save key are unchanged.
 
 - 2026-11-19: Retired the standalone Quay Steps. The Sawmill scene introduces a cable reel, the village keeps watch from shore, and Elena’s reef bearing can be read at the Sawmill.
 

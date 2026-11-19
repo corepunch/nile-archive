@@ -172,7 +172,7 @@ for level=1,rules.LEVELS do
                 'the first bucket opens the Well scene with Mara on screen')
         end
         if level==10 then
-            check(placed.phase=='restore' and placed.lines[5][1]=='keeper', 'the village watch book introduces the ancient keeper')
+            check(placed.phase=='restore' and placed.lines[2][1]=='keeper', 'the village watch book introduces the ancient keeper')
         end
         p.story_seen[placed.key]=true
     end

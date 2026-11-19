@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BEATS, LINES = 36, 198
+BEATS, LINES = 36, 95
 source = (ROOT / 'docs/story.md').read_text().split('## Small lines')[0]
 beats, beat = [], None
 speakers = {'Noelle': 'noelle', 'Theo': 'theo', 'Agnes': 'agnes', 'Henrik': 'henrik', 'Pip': 'pip', 'Mr Wren': 'wren'}

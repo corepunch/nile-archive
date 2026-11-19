@@ -49,7 +49,7 @@ for _,b in ipairs(journey.beats) do
         lines=lines+1
     end
 end
-check(lines==198,'the entire reviewed script ships')
+check(lines==95,'the entire reviewed script ships')
 local finds = 0
 for level=1,rules.LEVELS do
     local before=journey.next(p,owned(c),level-1)
