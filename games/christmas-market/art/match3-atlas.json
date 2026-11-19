@@ -1511,7 +1511,7 @@
       "games/christmas-market/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
       "games/christmas-market/art/registered/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
       "games/christmas-market/art/registered/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
-      "games/christmas-market/art/registered/market-goods.png": "7158aae3eabf4a2b11343ff23f9d9c0b82256017fb4ad388c48c5a41f0151640",
+      "games/christmas-market/art/registered/market-goods.png": "62e89bd8ed316f7b824a628fcb4738ab01ea016226d7d2035ac84304fb7bbd0c",
       "games/christmas-market/art/registered/square-cells/square-double.png": "1a2c38828aed85d93f6a799de9bb576b7d2c07990b09da580be80e638f273149",
       "games/christmas-market/art/registered/square-cells/square-foliage.png": "6485df18aeb299855c30cf1d0ba58fa1183390ad60bbb706cb88f18707ad10bd",
       "games/christmas-market/art/registered/square-cells/square-grout.png": "443abe77cdbd1f28afdf7db3d928c212520cec348e86c40d342c84ee0e086f1e",
@@ -1538,10 +1538,10 @@
       "games/christmas-market/data/board/cells.png": "a55c1493f055fb1ee5576652944b339ac30a9f9b1ce8a373c4a1092c8692caea",
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
-      "games/christmas-market/data/board/pieces.png": "9013ad6380f8216727beffdc8e92c2fb5c715507ddb24c2aee8b4d3cb062bad3",
+      "games/christmas-market/data/board/pieces.png": "14f4f664cf644d92a044094a43a3080a0ce49377575a57c3ee8afc76a69fc6b4",
       "games/christmas-market/lua/match3_atlases.lua": "5bba11ab0c1a5a5698705b36d1d199c4fe6c6f00832afca9893bf2ea5e5b3d4e",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
-      "games/christmas-market/lua/match3_skin.lua": "f1e95ebc231c836426a3da0282bc8c28982455cd2b30d85386fdba4055cdb727"
+      "games/christmas-market/lua/match3_skin.lua": "8b211a3192bf432d3a1a1ab734903cce0f8a80867fc9c779013282548e3d4dd5"
     }
   }
 }

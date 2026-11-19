@@ -59,13 +59,13 @@ assert(c.count==8 and island.wonder_count(c)==4 and island.campaign_count(c)==6,
 local first_wish = rules.game_start(0, 123478, {})
 check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,0,0,0",
       'locked boosters keep all four slots')
-local star_wish = rules.game_start(2, 123478, {reindeer_stable=true})
-check(star_wish.tools[4] == 1 and star_wish.tools[2] == 0 and next(star_wish.tool_meter) == nil,
-      'the stable grants one Shooting Star on its first eligible wish')
-local boosters = rules.game_start(9, 123478, {reindeer_stable=true, lumber=true})
+local hammer_wish = rules.game_start(2, 123478, {reindeer_stable=true})
+check(hammer_wish.tools[1] == 0 and hammer_wish.tools[2] == 0 and hammer_wish.tool_meter[1] == 0,
+      'the stable unlocks an empty Hammer on its first eligible wish')
+local boosters = rules.game_start(5, 123478, {reindeer_stable=true, gingerbread_house=true})
 local center = rules.hex_center()
 check(boosters.tools[1] == 0 and boosters.tool_meter[1] == 0 and boosters.tool_meter[3] == nil
-      and boosters.tools[2] == 0 and boosters.tools[4] == 1, 'banked and per-wish boosters use separate stock')
+      and boosters.tools[2] == 1 and boosters.tools[4] == 0, 'banked and per-wish boosters use separate stock')
 local wave = rules.new_match()
 local function use_once(slot)
     local area = rules.game_tool_area(boosters, slot, center)
@@ -73,6 +73,7 @@ local function use_once(slot)
     for cell in pairs(area) do check(wave.mask[cell], 'the effect follows its aiming preview') end
     check(not rules.game_tool(boosters, slot, center, wave), 'the per-wish booster has been spent')
 end
-use_once(3)
-check(rules.game_start(2, 123478, {reindeer_stable=true}).tools[4] == 1,
-      'a fresh attempt starts with its own booster use')
+use_once(1)
+check(rules.game_start(5, 123478, {gingerbread_house=true}).tools[2] == 1
+      and rules.game_start(4, 123478, {gingerbread_house=true}).tools[2] == 0,
+      'a fresh attempt gets a firework from wish six onward')

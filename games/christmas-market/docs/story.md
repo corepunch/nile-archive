@@ -367,15 +367,16 @@ Every wish has a fixed set of blue lantern panes. A match or tool lights a pane 
 
 Light the panes to finish a board. The first clear shows the find and
 advances its scene at the normal story checkpoint. Replays bank matched
-goods. The arch adds the offcuts that pay for Theo’s lumber workshop.
-The cocoa kiosk starts supplying Food, which helps open Henrik’s workshop.
+goods. The arch serves spiced cider and the first Treats help fund the
+stable and Theo’s lumber workshop. The workshop adds Materials for
+construction. The cocoa kiosk upgrades the Treats piece to hot cocoa.
 The candle shop both charges the lantern tool and lights the undelivered
-letter. The [prototype](resource-prototype.md) traces these purchases
-against the two Rome references.
+letter. The [construction ladder](market-pieces.md) traces the playable
+purchases against Rome II.
 
 ## Implementation
 
-- **Wonder order is unchanged:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. Every win banks matched Gold, Food and Supplies. Regions and decorations open by wishes cleared (the purse's fourth slot, `CLEARED`).
+- **Wonder order:** arch 1, lumber 4, bakery 7, cocoa 9, workshop 13, pavilion 16, candles 19, carousel 23, rink 26, tree 29. `campaign.wonder_levels` holds the schedule, and `journey.earned` gates building, the reserve and the next wish. Every win banks matched Tokens, Treats and Materials. Regions and decorations open by wishes cleared (the purse's fourth slot, `CLEARED`).
 - **Regions** open after 6, 9, 15, 21 and 27 wishes cleared. Players open regions from their markers. Pip's region lines replace Noelle's one repeated line.
 - **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast). Most scenes play over the live market.
 - **Story floors:** The first clears of 24, 25 and 28 show the finished board painting, then play the existing scene over it before the reward card. Collecting the reward acknowledges the scene. Replaying the wish uses the ordinary floor. The paintings and stage captures are in the [asset catalogue](asset-catalogue.md#story-floors).

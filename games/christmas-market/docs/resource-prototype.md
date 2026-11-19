@@ -1,5 +1,8 @@
 # Christmas Market · first 20 wishes
 
+This is the historical prototype. The [current ten-wish campaign](market-pieces.md)
+has the revised color map, construction rewards and measured playthrough.
+
 Noelle lights the old market at Bellmere. Winning a board banks the goods
 cleared on it. Spending those goods puts a stall in the market and puts
 that stall’s piece into the board pool. Story scenes pick up after the

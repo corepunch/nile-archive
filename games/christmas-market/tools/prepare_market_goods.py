@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Register the authored market pieces in one 4x4 runtime atlas.
-
-Rows 1-3 are the market goods source. Row 4 reuses earlier painted festive
-pieces for the later stalls' treasures and candy cane (kinds 12-15)."""
+"""Register the 4×4 painted match-piece sheet with its original alpha."""
 import argparse
 import json
 from pathlib import Path
@@ -12,14 +9,8 @@ from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 SLOT = 128
-COLUMNS, ROWS = 4, 3
-# Kinds 12-15: (source, crop box), the festive pieces in the game's own sheets.
-REUSED = [
-    ('art/festive-pieces/source.png', (0, 0, 512, 512)),       # golden handbell
-    ('art/icons.png', None),                                  # snowflake bauble, icon cell 3
-    ('art/festive-pieces/source.png', (512, 512, 1024, 1024)), # plum bauble
-    ('art/festive-pieces/source.png', (512, 0, 1024, 512)),    # candy cane
-]
+COLUMNS, ROWS = 4, 4
+EDGE_PADDING = 4
 sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
 from match3_theme_art import fit_object, silhouette
 
@@ -30,32 +21,37 @@ def main():
     args = parser.parse_args()
     goods = json.loads((ROOT / 'art/manifest.json').read_text())['market_goods']
     sizes = goods['piece_max_side']
-    source = Image.open(ROOT / 'art/market-goods/source.png')
+    source = Image.open(ROOT / goods['source'])
     assert source.mode == 'RGBA' and source.getchannel('A').getextrema() == (0, 255)
     mask = silhouette(Image.open(ROOT.parents[1] / 'engine/art/hex-tile/hex-mask-128.png')).filter(ImageFilter.MinFilter(5))
-    atlas = Image.new('RGBA', (COLUMNS * SLOT, (ROWS + 1) * SLOT))
-    for row in range(ROWS):
-        for col in range(COLUMNS):
-            sprite = source.crop((col * source.width // COLUMNS, row * source.height // ROWS,
-                                  (col + 1) * source.width // COLUMNS, (row + 1) * source.height // ROWS))
-            sprite = sprite.crop(sprite.getchannel('A').getbbox())
-            name = goods['frames'][row * COLUMNS + col]
-            frame, _, _ = fit_object(sprite, mask, sizes.get(name, 112), None)
-            atlas.paste(frame, (col * SLOT, row * SLOT))
-    for col, (path, box) in enumerate(REUSED):
-        sheet = Image.open(ROOT / path).convert('RGBA')
-        if box is None:   # tools/prepare_assets.py's icon grid: eight columns, first row ends at 232
-            box = (round(3 * sheet.width / 8), 0, round(4 * sheet.width / 8), 232)
-        sprite = sheet.crop(box)
-        sprite = sprite.crop(sprite.getchannel('A').getbbox())
-        frame, _, _ = fit_object(sprite, mask, 112, None)
-        atlas.paste(frame, (col * SLOT, ROWS * SLOT))
-    output = ROOT / 'art/registered/market-goods.png'
+    atlas = Image.new('RGBA', (COLUMNS * SLOT, ROWS * SLOT))
+    assert len(goods['frames']) == COLUMNS * ROWS
+    frames = {}
+    for kind, name in enumerate(goods['frames']):
+        row, col = divmod(kind, COLUMNS)
+        left, top = col * source.width // COLUMNS, row * source.height // ROWS
+        bay = (left, top, (col + 1) * source.width // COLUMNS, (row + 1) * source.height // ROWS)
+        sprite = source.crop(bay)
+        x0, y0, x1, y1 = silhouette(sprite).getbbox()
+        # Include the painted edge while cropping away stray gutter pixels.
+        crop = (max(0, x0 - EDGE_PADDING), max(0, y0 - EDGE_PADDING),
+                min(sprite.width, x1 + EDGE_PADDING), min(sprite.height, y1 + EDGE_PADDING))
+        frame, fitted, offset = fit_object(sprite.crop(crop), mask, sizes.get(name, 112), None)
+        x, y = col * SLOT, row * SLOT
+        atlas.paste(frame, (x, y))
+        frames[f'market-{kind}'] = dict(name=name, source_crop=[left + crop[0], top + crop[1],
+                                                               left + crop[2], top + crop[3]],
+                                       fitted_size=fitted, offset=offset, registered_box=[x, y, SLOT, SLOT])
+    record = ROOT / goods['transforms']
+    content = json.dumps(dict(source=goods['source'], frames=frames), indent=2) + '\n'
+    output = ROOT / goods['runtime']
     if args.check:
         previous = Image.open(output)
         assert atlas.size == previous.size and atlas.tobytes() == previous.tobytes(), output
+        assert record.read_text() == content, record
     else:
         atlas.save(output, optimize=True)
+        record.write_text(content)
 
 
 if __name__ == '__main__':

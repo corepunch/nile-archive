@@ -60,8 +60,12 @@ def main():
                     '--game', ROOT.name, '--check', str(ROOT/frame['stone'])], check=True)
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)
     goods = manifest['market_goods']
-    assert (ROOT/goods['prompt']).is_file() and (ROOT/goods['review']).is_file()
+    for name in ('source', 'prompt', 'edit_target', 'edit_target_prompt', 'transforms', 'review'):
+        assert (ROOT/goods[name]).is_file(), name
     assert png(ROOT/goods['runtime']) == ((512, 512), 6) and len(set(goods['frames'])) == 16
+    for kind in range(len(goods['frames'])):
+        frame = atlas['frames'][f'market-{kind}']
+        assert frame['atlas'] == 'pieces' and frame['box'][2:] == [128, 128]
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
     assert (ROOT/manifest['campaign_buttons']).is_file()
     buttons = manifest['bonus_buttons']

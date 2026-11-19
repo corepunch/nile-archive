@@ -21,10 +21,10 @@ check(p.wallet[1] == 60 and p.wallet[4] == 1 and p.level == 1, "replays pay actu
 check(island.island_place_next(c, p.wallet, p.level, 0), "funded arch can be built")
 check(p.wallet[1] == 10, "confirmed placement debits Gold once")
 
-local wood = rules.game_start(1, 18, island.wonder_count(c))
-check(#wood.spawn_kinds == 5 and wood.resource_yields[4].amount == 5, "confirmed arch adds firewood")
+local cider = rules.game_start(1, 18, island.wonder_count(c))
+check(#cider.spawn_kinds == 5 and cider.resource_yields[8].amount == 3, "confirmed arch adds cider")
 local plain = rules.game_start(1, 18, 0)
-check(not plain.resource_yields[4], "a cleared board alone does not add firewood")
+check(not plain.resource_yields[8], "a cleared board alone does not add cider")
 
 -- The top of the first column of four playable cells, straight down.
 local function column_top(board)
@@ -48,10 +48,15 @@ local function line(board, kind, length, wave)
     rules.game_apply(board, wave)
 end
 local wave = rules.new_match()
+line(cider, 8, 3, wave)
+check(cider.earnings[2] == 9 and cider.earnings[3] == 0, "cider earns treats to fund the stable")
+local wood = rules.game_start(4, 18)
+check(#wood.spawn_kinds == 5 and wood.resource_yields[4].slot == 3
+      and not rules.game_start(3, 18).resource_yields[4], "pine materials start after the workshop opens")
 line(wood, 4, 4, wave)
 check(wood.earnings[3] == 40 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
       "four pieces credit eight times the base resource")
-local hammer = rules.game_start(4, 42, 2)
+local hammer = rules.game_start(2, 42, {reindeer_stable=true})
 for _ = 1, 7 do line(hammer, 5, 4, wave) end
 check(hammer.tools[1] == 0 and hammer.tool_meter[1] == 84, "28 matched hammers leave the tool uncharged")
 line(hammer, 5, 3, wave)
@@ -59,6 +64,12 @@ check(hammer.tools[1] == 1 and hammer.tool_meter[1] == 3 and hammer.earnings[1] 
       "matching hammers earns a charge and no Gold")
 check(rules.game_tool(hammer, 0, column_top(hammer), wave) and hammer.tools[1] == 0,
       "the charged hammer can be spent")
+
+local bakery, cocoa = rules.game_start(7, 42), rules.game_start(9, 42)
+check(#bakery.spawn_kinds == 5 and bakery.resource_yields[7].amount == 4 and not bakery.resource_yields[8],
+      "the bakery replaces cider with gingerbread")
+check(#cocoa.spawn_kinds == 5 and cocoa.resource_yields[11].amount == 5 and not cocoa.resource_yields[7],
+      "the kiosk replaces gingerbread with cocoa")
 
 local lightning = rules.game_start(9, 7)
 lightning.tool_meter[3] = 0

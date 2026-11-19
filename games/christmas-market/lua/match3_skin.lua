@@ -5,8 +5,8 @@ return {
     button_centers={
         ["booster-firework-icon"]={0.4951368,0.4913088},
         ["booster-star-icon"]={0.4989082,0.4989539},
-        ["market-10"]={0.5025806,0.4997476},
-        ["market-5"]={0.5259965,0.4592430},
+        ["market-10"]={0.5045760,0.5591321},
+        ["market-5"]={0.4754821,0.4606361},
     },
     images={
         ["background"]="board/backs/background.jpg",

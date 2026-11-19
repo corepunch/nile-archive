@@ -1,30 +1,28 @@
--- Wallet slots are save data. Prices are Gold, Food, Supplies.
+-- Wallet slots are save data: Tokens, Treats, Materials.
 local E = {
     GOLD=1, FOOD=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
     currencies={
-        {name="Gold", kind=3},
-        {name="Food", kind=11},
-        {name="Supplies", kind=4},
+        {name="Tokens", kind=3},
+        {name="Treats", kind=11},
+        {name="Materials", kind=4},
     },
     pieces={
         [0]={name="Holly"},
-        {name="Mitten"},
-        {name="Silver coin", slot=1, amount=3},
-        {name="Gold coin", slot=1, amount=5},
-        {name="Firewood", slot=3, amount=5},
-        {name="Toy hammer", tool=1, amount=3},
-        {name="Packing blocks", slot=3, amount=7},
-        {name="Gingerbread", slot=2, amount=5},
-        {name="Milk", slot=2, amount=3},
-        {name="Winter apple", slot=2, amount=6},
-        {name="Lantern star", tool=3, amount=3},
-        {name="Cocoa", slot=2, amount=4},
-        -- Kinds 12-15 are Gold treasures and a Food piece from later stalls.
-        {name="Golden bell", slot=1, amount=6},
-        {name="Snowflake bauble", slot=1, amount=7},
-        {name="Plum bauble", slot=1, amount=8},
-        {name="Candy cane", slot=2, amount=7},
+        {name="Blue mitten"},
+        {name="Star token", slot=1, amount=3},
+        {name="Bell token", slot=1, amount=5},
+        {name="Bundled pine", slot=3, amount=5},
+        {name="Farrier's hammer", tool=1, amount=3},
+        {name="Toy blocks", slot=3, amount=7},
+        {name="Gingerbread star", slot=2, amount=4},
+        {name="Spiced cider", slot=2, amount=3},
+        {name="Wrapped gift", slot=1, amount=6},
+        {name="Candle lantern", tool=3, amount=3},
+        {name="Hot cocoa", slot=2, amount=5},
+        {name="Carol bell", slot=1, amount=7},
+        {name="Ice pendant", slot=1, amount=8},
+        {name="Glass bauble", slot=1, amount=9},
         {name="Candy cane"},
     },
     CAMPAIGN_VERSION=4,
@@ -38,32 +36,32 @@ E.tool_slots = {
     {icon="booster-star", frame="booster-star-icon", action="row", effect="Tap a cell to clear its row with Shooting Star."},
 }
 
--- Every wish's five ordinary kinds sit on five lines; a stall's new piece
--- takes the place of the one below it on its line. The arch’s firewood replaces the score-only candy cane.
-local BASE = {0, 1, 2, 3, 16}
+-- The five positions start green, blue, silver, violet and red. Yellow
+-- materials take the blue position. Later replacements keep the current hues.
+local BASE = {0, 1, 2, 3, 15}
 
--- The twenty-stall ladder after Cradle of Rome: each stall adds one piece or
+-- The twenty-stall ladder after Cradle of Rome 2: each stall adds one piece or
 -- one bonus, from the wish after it is placed. `building` is the catalogue
 -- key and `after` the clear it opens on. Pieces name a `line`; tools charge
 -- from their own `piece`; `opening_tool` grants one more use per wish of
 -- that booster (a second stall for the same booster makes it two);
 -- `moves` adds moves; `charge` speeds tool charge; `income` pays every win.
 E.unlocks = {
-    {building="arch", after=1, line=5, kind=4},
-    {building="reindeer_stable", after=2, opening_tool=4, name="Shooting Star"},
-    {building="lumber", after=4, tool=1, piece=5},
-    {building="gingerbread_house", after=5, moves=3},
-    {building="bakery", after=7, line=3, kind=6},
+    {building="arch", after=1, line=5, kind=8},
+    {building="reindeer_stable", after=2, tool=1, piece=5},
+    {building="lumber", after=4, line=2, kind=4},
+    {building="gingerbread_house", after=5, opening_tool=2, name="Firework Bomb"},
+    {building="bakery", after=7, line=5, kind=7},
     {building="cocoa", after=9, line=5, kind=11},
     {building="santa_workshop", after=11, opening_tool=2, name="Firework Bomb"},
-    {building="toys", after=13, line=2, kind=8},
+    {building="toys", after=13, line=2, kind=6},
     {building="post_office", after=14, charge=2},
-    {building="gifts", after=16, line=2, kind=9},
-    {building="log_cabin", after=17, line=2, kind=15},
+    {building="gifts", after=16, line=4, kind=9},
+    {building="log_cabin", after=17, moves=3},
     {building="candles", after=19, tool=3, piece=10},
     {building="chapel", after=20, line=4, kind=12},
     {building="igloo", after=21, line=4, kind=13},
-    {building="carousel", after=23, line=5, kind=7},
+    {building="carousel", after=23, income=purse(0, 30, 0)},
     {building="sleigh", after=24, opening_tool=4, name="Shooting Star"},
     {building="giant_ornament", after=25, line=4, kind=14},
     {building="rink", after=26, income=purse(25, 0, 0)},

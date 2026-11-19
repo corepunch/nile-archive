@@ -1,8 +1,8 @@
 [
-["arch", "Welcome arch", "wonder", 3, 3, [50, 0, 0], 0, "A light for everyone walking up from the station."],
-["lumber", "Lumber workshop", "wonder", 3, 3, [100, 0, 100], 0, "Theo's offcuts have already built one arch."],
-["bakery", "Gingerbread bakery", "wonder", 3, 3, [300, 0, 200], 0, "Follow the smell of cinnamon and warm gingerbread."],
-["cocoa", "Hot cocoa kiosk", "wonder", 3, 3, [400, 0, 500], 0, "Mrs Alder has paid for the next cup."],
+["arch", "Welcome arch", "wonder", 3, 3, [50, 0, 0], 0, "A cup of spiced cider for the walk from the station."],
+["lumber", "Lumber workshop", "wonder", 3, 3, [100, 75, 0], 0, "Theo bundles split pine for the market's stalls."],
+["bakery", "Gingerbread bakery", "wonder", 3, 3, [300, 0, 200], 0, "Cranberry-glazed gingerbread stars, fresh from the oven."],
+["cocoa", "Hot cocoa kiosk", "wonder", 3, 3, [400, 100, 300], 0, "Mrs Alder has paid for the next cup."],
 ["toys", "Toymaker’s workshop", "wonder", 3, 3, [300, 200, 300], 0, "Henrik's toy lanterns shine just like the big ones."],
 ["gifts", "Gift wrapping pavilion", "wonder", 3, 3, [500, 400, 400], 0, "Paper, string and a spare tag for Pip’s scarf."],
 ["candles", "Candlelight shop", "wonder", 3, 3, [500, 500, 600], 0, "Take a lantern if you have a long walk home."],
@@ -31,9 +31,9 @@
 ["fir_decorated", "Decorated fir", "tree", 1, 1, [70, 0, 12], 3, "Baubles, a golden star and twinkling lights."],
 ["pine_grove", "Pine grove", "tree", 2, 2, [105, 0, 10], 6, "Four firs keep each other warm."],
 ["log_cabin", "Log cabin", "wonder", 2, 2, [250, 350, 100], 0, "A crackling fire and boots drying by the door."],
-["gingerbread_house", "Gingerbread house", "wonder", 2, 2, [150, 0, 80], 0, "Sweet enough to eat, if the icing holds."],
+["gingerbread_house", "Gingerbread house", "wonder", 2, 2, [150, 40, 80], 0, "The roof sparkles with sugar-frosted fireworks."],
 ["post_office", "North Pole post office", "wonder", 2, 2, [250, 250, 100], 0, "Every letter finds its way north."],
 ["chapel", "Snowy chapel", "wonder", 2, 2, [120, 250, 40], 0, "Its bell rings the carols in."],
-["reindeer_stable", "Reindeer stable", "wonder", 3, 2, [60, 0, 20], 0, "Hay, harness bells and nine sleepy reindeer."],
+["reindeer_stable", "Reindeer stable", "wonder", 3, 2, [60, 20, 0], 0, "The farrier keeps a green hammer by the door."],
 ["santa_workshop", "Santa's workshop", "wonder", 3, 3, [200, 150, 100], 0, "Hammers, ribbons and cocoa until the last toy is wrapped."]
 ]

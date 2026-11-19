@@ -31,7 +31,7 @@
     0
    ],
    "stars": 0,
-   "about": "A light for everyone walking up from the station.",
+   "about": "A cup of spiced cider for the walk from the station.",
    "road": false,
    "image": [
     416,
@@ -57,11 +57,11 @@
    "base_width": 409.808,
    "cost": [
     100,
-    0,
-    100
+    75,
+    0
    ],
    "stars": 0,
-   "about": "Theo's offcuts have already built one arch.",
+   "about": "Theo bundles split pine for the market's stalls.",
    "road": false,
    "image": [
     417,
@@ -91,7 +91,7 @@
     200
    ],
    "stars": 0,
-   "about": "Follow the smell of cinnamon and warm gingerbread.",
+   "about": "Cranberry-glazed gingerbread stars, fresh from the oven.",
    "road": false,
    "image": [
     416,
@@ -117,8 +117,8 @@
    "base_width": 409.808,
    "cost": [
     400,
-    0,
-    500
+    100,
+    300
    ],
    "stars": 0,
    "about": "Mrs Alder has paid for the next cup.",
@@ -978,11 +978,11 @@
    "base_width": 273.205,
    "cost": [
     150,
-    0,
+    40,
     80
    ],
    "stars": 0,
-   "about": "Sweet enough to eat, if the icing holds.",
+   "about": "The roof sparkles with sugar-frosted fireworks.",
    "road": false,
    "image": [
     285,
@@ -1068,11 +1068,11 @@
    "base_width": 359.808,
    "cost": [
     60,
-    0,
-    20
+    20,
+    0
    ],
    "stars": 0,
-   "about": "Hay, harness bells and nine sleepy reindeer.",
+   "about": "The farrier keeps a green hammer by the door.",
    "road": false,
    "image": [
     377,

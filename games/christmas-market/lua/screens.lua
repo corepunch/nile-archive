@@ -9,20 +9,20 @@ local economy = require("economy")
 local island = require("island")
 local picture = R.picture
 
-function R.wallet_icons() return {R.life_art, R.board_art["market-3"], R.hud_art.complete} end
-function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
-
 local function currency_icon(slot)
     return R.board_art["market-" .. economy.currencies[slot].kind]
 end
+
+function R.wallet_icons() return {R.life_art, currency_icon(economy.GOLD), R.hud_art.complete} end
+function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
 
 function R.currency_capsules(balance)
     local out = {}
     local earned = not R.on_island and R.g and not R.g.lost and not R.g.reward_claimed and R.g.earnings
     for slot, currency in ipairs(economy.currencies) do
         out[slot] = {id=currency.name:lower(), icon=currency_icon(slot), value=tostring(balance[slot] + (earned and earned[slot] or 0)), width=90,
-            note=earned and currency.name .. " from matches is banked on a win."
-                or currency.name .. " from matches pays for stalls and decorations."}
+            note=earned and currency.name .. " from matches are banked on a win."
+                or currency.name .. " from matches pay for stalls and decorations."}
     end
     return out
 end
@@ -106,22 +106,22 @@ end)
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Line up three or more", description="Match treats in a straight line horizontally or vertically.",
+    {id="neighbors", title="Line up three or more", description="Match identical pieces in a straight line horizontally or vertically.",
      icon={front="market-3"}},
     {id="panes", title="Light the panes", description="Match on a pane or hit it with a tool to light it. Light them all to finish.",
      icon={back="square-target"}},
     {id="double-panes", title="Green panes", description="A green pane turns blue after its first hit. Match again to light it.",
      icon={back="square-double"}},
-    {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
+    {id="blockers", title="Untangle tinsel", description="Match the tied piece or hit it with a tool. Then clear the piece to light the pane.",
      icon={back="square-target", piece="market-1", front="chain-square-1"}},
-    {id="supplies", title="Stock the market", description="Coins pay Gold. After you build stalls, their wood, food and other goods appear on the board. Holly, mittens and candy canes earn score.",
+    {id="supplies", title="Stock the market", description="Match tokens to fund the arch. Its spiced cider earns treats. The lumber workshop adds yellow pine for materials.",
      icon={front="market-3"}},
     {id="long-lines", title="Long lines pay more", description="A line of four pays twice per piece. A line of five pays four times per piece.",
      icon={front="market-4"}},
-    {id="hammer", title="Hammer", description="Build Theo's workshop and match 30 toy hammers to charge a hit on one cell.", icon={tool="booster-hammer"}},
-    {id="boosters", title="Shooting Star", description="The reindeer stable gives you one Shooting Star per wish. Choose it and tap the row you want to clear.",
-     icon={tool="booster-star"}},
-    {id="helpers", title="Gingerbread house", description="The gingerbread house adds 3 moves to every wish.", icon={front="market-7"}},
+    {id="hammer", title="Farrier's hammer", description="Build the reindeer stable and match 30 green hammers to charge a hit on one cell.", icon={tool="booster-hammer"}},
+    {id="boosters", title="Firework Bomb", description="The gingerbread house gives you one firework per wish. Tap a cell to hit a 3×3 square around it.",
+     icon={tool="booster-firework"}},
+    {id="bakery", title="Winter treats", description="The bakery swaps cider for gingerbread stars. The cocoa kiosk puts hot cocoa on the board.", icon={front="market-7"}},
 }
 local function guide_icon(box, icon)
     local at = box:center()
@@ -132,7 +132,7 @@ local function guide_icon(box, icon)
     if icon.tool then picture(R.board_art[icon.tool], layer, 255) end
 end
 local guide_form = match3.guide_form({
-    title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING TREATS",
+    title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING PIECES",
     done = "LET'S MAKE MAGIC",
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))

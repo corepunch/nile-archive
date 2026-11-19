@@ -25,8 +25,8 @@ The build shop scrolls through the selected category. Its rows show each object'
 sprite, footprint, ownership and price, with a disabled action for unavailable
 stock. The category arrows stay above the list.
 
-Prices show the Gold, Food and Supplies deducted at confirmed placement.
-The bakery costs 300 Gold and 200 Supplies. The shop reserves the cost of
+Prices show the Tokens, Treats and Materials deducted at confirmed placement.
+The bakery costs 300 Tokens and 200 Materials. The shop reserves the cost of
 earned stalls when checking decoration purchases. Older saves retain their
 wallet and buildings and can afford any previously earned stall.
 [First 20 wishes and price sources](resource-prototype.md)
@@ -105,12 +105,12 @@ A full render of all 37 objects takes about two minutes on four CPU cores.
 
 ## Runtime inventory
 
-| ID / key | Name | Category | Tiles | Cost (Gold / Food / Supplies) | Stars | Reviewed city capture |
+| ID / key | Name | Category | Tiles | Cost (Tokens / Treats / Materials) | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
 | 0 / `arch` | Welcome arch | wonder | 3 x 3 | 50 / 0 / 0 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 100 / 0 / 100 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 100 / 75 / 0 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 2 / `bakery` | Gingerbread bakery | wonder | 3 x 3 | 300 / 0 / 200 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 400 / 0 / 500 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 400 / 100 / 300 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 4 / `toys` | Toymaker’s workshop | wonder | 3 x 3 | 300 / 200 / 300 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 5 / `gifts` | Gift wrapping pavilion | wonder | 3 x 3 | 500 / 400 / 400 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 6 / `candles` | Candlelight shop | wonder | 3 x 3 | 500 / 500 / 600 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
@@ -139,10 +139,10 @@ A full render of all 37 objects takes about two minutes on four CPU cores.
 | 29 / `fir_decorated` | Decorated fir | tree | 1 x 1 | 70 / 0 / 12 | 3 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 30 / `pine_grove` | Pine grove | tree | 2 x 2 | 105 / 0 / 10 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 31 / `log_cabin` | Log cabin | wonder | 2 x 2 | 250 / 350 / 100 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
-| 32 / `gingerbread_house` | Gingerbread house | wonder | 2 x 2 | 150 / 0 / 80 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 32 / `gingerbread_house` | Gingerbread house | wonder | 2 x 2 | 150 / 40 / 80 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 33 / `post_office` | North Pole post office | wonder | 2 x 2 | 250 / 250 / 100 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 34 / `chapel` | Snowy chapel | wonder | 2 x 2 | 120 / 250 / 40 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 35 / `reindeer_stable` | Reindeer stable | wonder | 3 x 2 | 60 / 0 / 20 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 35 / `reindeer_stable` | Reindeer stable | wonder | 3 x 2 | 60 / 20 / 0 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 36 / `santa_workshop` | Santa's workshop | wonder | 3 x 3 | 200 / 150 / 100 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
 
 ## Style and prompt provenance

@@ -9,6 +9,7 @@ function game.init()
     R.art_review, R.toast_time, R.reduced_motion = not app.arg("spend-booster"), 0, true
     local g = R.g
     g.tools[1], g.tool_meter[1] = 2, 0
+    g.tools[2], g.tools[4] = 1, 1
     g.tool_meter[3] = g.tool_threshold // 3
     target = rules.hex_center()
 end

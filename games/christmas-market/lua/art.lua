@@ -92,18 +92,18 @@ function A.draw_catalogue(R)
     R.say_at("ARTWORK CATALOGUE", vec2(240, 125), 26, R.PAL_GOLD, 420)
     local pieces = economy.pieces
     for k = 0, #pieces do
-        local x, y = 39 + k % 6 * 68, 145 + k // 6 * 60
+        local x, y = 65 + k % 4 * 100, 147 + k // 4 * 60
         gfx.image(R.board_art["market-" .. k], rect(x, y, 46, 46), color.WHITE)
-        R.say_at(pieces[k].name, vec2(x + 23, y + 50), 10, R.PAL_CREAM, 68)
+        R.say_at(pieces[k].name, vec2(x + 23, y + 50), 11, R.PAL_CREAM, 98)
     end
     for i, name in ipairs{"cell-normal", "tablet-single", "tablet-double"} do
         local x = 104 + (i - 1) * 112
-        gfx.image(R.board_art["tile-" .. name], rect(x, 327, 48, 48), color.WHITE)
-        R.say_at(name, vec2(x + 24, 380), 11, R.PAL_CREAM, 88)
+        gfx.image(R.board_art["tile-" .. name], rect(x, 395, 48, 48), color.WHITE)
+        R.say_at(name, vec2(x + 24, 448), 11, R.PAL_CREAM, 88)
     end
     local names = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
     for i, name in ipairs(names) do
-        local x, y = 39 + (i - 1) % 6 * 68, 385
+        local x, y = 46 + (i - 1) * 68, 473
         gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
         R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end

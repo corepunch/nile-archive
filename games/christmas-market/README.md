@@ -29,7 +29,7 @@ The ten original winter wishes use square boards up to 9 × 12. Swap two neighbo
 
 ## Shared match engine and atlas
 
-Each board spawns five piece kinds. After building Theo’s workshop, match 30 toy hammers to charge a hit on a chosen cell. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing.
+Each board spawns five piece kinds. After building the Reindeer stable, match 30 farrier's hammers to charge a hit on a chosen cell. The Gingerbread house supplies one Firework Bomb per wish. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing.
 
 The puzzle and town use the same wallet and blue Settings gear. Each green resource
 capsule has the brass rim and drop shadow of the round buttons. The remaining moves
@@ -61,16 +61,14 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 
 ## Market economy
 
-Silver coins pay 3 Gold and gold coins pay 5. Holly, mittens and candy canes earn score.
-The arch replaces candy canes with firewood for Supplies. Later stalls add more materials,
-Food and chargeable tools. Longer lines multiply the yield (a longer line just clears; there are no special pieces). Each win
+Silver star tokens pay 3 Tokens and violet bell tokens pay 5. Holly, blue mittens and candy canes earn score.
+The Welcome arch serves spiced cider for Treats. The Lumber workshop introduces yellow bundled pine for Materials.
+The bakery and cocoa kiosk upgrade the red Treats piece. Longer lines multiply the yield. Each win
 banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).
 
-Confirmed placement spends Gold, Supplies and Food from that wallet.
-The lower-left Build button opens the next stall and shows its price or shortfall. A circling trail signals when you can choose a location. Play another wish to earn the missing resources. The [first 20 wishes](docs/resource-prototype.md) compare both
-Cradle of Rome editions and record prices, unlocks and a measured payout
-for every board in the prototype.
+Confirmed placement spends Tokens, Treats and Materials from that wallet.
+The lower-left Build button opens the next stall and shows its price or shortfall. A circling trail signals when you can choose a location. Play another wish to earn the missing resources. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
 There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
@@ -113,7 +111,15 @@ The ten playable wishes reach the first market chapter. The Welcome arch, Lumber
 | --- | --- | --- |
 | ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/spruce-palette/letter.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
 
-Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all twenty ladder stalls fit the land open by their levels, in order, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty story levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays the thirty story levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board’s panes and the scheduled building’s test wallet are prepared before one real swap. The separate extended campaign run earns its own wallet through actual play. All 36 scenes must play once, in script order, and the run must end on the end screen with twenty stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
+Build with `make CFLAGS="-O2 -g -Werror" christmas-market build/test/christmas-market`.
+Run `build/test/christmas-market --extended "rules campaign_play" "rules christmas" "smoke game" "smoke campaign"`
+under Xvfb on Linux. The extended campaign earns its wallet from real
+matches and checks the ten wishes and six playable purchases. The standard
+smoke uses real input for a win, construction, building pickup and movement,
+decoration shopping, replay and the next level. The campaign smoke prepares
+each board and the wallet for one real winning move, then drives Collect,
+region opening, construction, dialogue and Play through the end screen.
+`rules christmas_story` covers the story scheduler and saved progress.
 
 ## Leaderboard
 
@@ -138,7 +144,7 @@ Board artwork fills its registered square slots. In dialogue, portraits face eac
 The board enters after dialogue with a cell ripple, falling treats, blocker landings and a final light sweep. Tap to skip; reduced motion uses a short fade. See [the engine timeline](../../docs/ENGINE.md#board-entrance).
 During refills, each treat gives a small bounce when it comes to rest in its slot. Reduce Motion suppresses the bounce.
 
-Popups use measured vertical forms. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Results display Gold, Food and Supplies in three equal columns, with each icon above a plain number. Above Collect, the card shows the amounts the next stall still needs, its picture once the wallet covers it, or a first clear's story find. In reels the result sections still settle on one timeline, which the first tap skips. See [docs/MOTION.md](../../docs/MOTION.md) and the [dialog motion review](docs/review/dialog-motion/README.md).
+Popups use measured vertical forms. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Results display Tokens, Treats and Materials in three equal columns, with each icon above a plain number. Above Collect, the card shows the amounts the next stall still needs, its picture once the wallet covers it, or a first clear's story find. In reels the result sections still settle on one timeline, which the first tap skips. See [docs/MOTION.md](../../docs/MOTION.md) and the [dialog motion review](docs/review/dialog-motion/README.md).
 
 ![The result dialog arriving](docs/screenshots/reward-entrance-reel.gif)
 

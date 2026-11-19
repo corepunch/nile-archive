@@ -114,11 +114,11 @@ The font and its license are inherited unmodified from Relic Rush in `data/commo
 
 ## Campaign board header
 
-The centered, display-only row contains Moves, Gold, Food and Supplies.
+The centered, display-only row contains Moves, Tokens, Treats and Materials.
 Pending earnings appear in the counters and matched resources fly to their
 icons. The board is centered vertically, with four boosters and Pause in
-one bottom row. The town centers its readouts for Lives, Gold, Food,
-Supplies and Christmas Stars above a row of Build, Play, Wishes and Pause.
+one bottom row. The town shows the resource wallet above the Build, Play,
+Wishes and Pause controls.
 Play is the largest control.
 [480 × 900 board](screenshots/booster-toolbar.jpg) · [390 × 844 board](screenshots/booster-toolbar-phone.jpg)
 
@@ -128,9 +128,9 @@ The four circular boosters share the [runtime enamel painter](../../../art/match
 with Build, Play, Wishes and Pause. The [manifest](../art/manifest.json) maps
 Hammer and Lantern to market goods 5 and 10, and the other two to the bomb
 and rocket frames. The inset and the colored piece share the frame's center of opacity on the button face. Cards and the guide show those same pieces. The [state
-review](screenshots/art-states.jpg) covers all four boosters.
+review](screenshots/review/winter-pieces/art-states.jpg) covers all four boosters.
 
-Matched toy hammers and lantern stars use the engine's resource flight arc,
+Matched farrier's hammers and candle lanterns use the engine's resource flight arc,
 trail and landing flash. They follow the same timing as currency and land in
 their respective booster buttons. The meter or stored-use badge updates on
 arrival. Reduce Motion shows the earned charge immediately.
@@ -141,55 +141,50 @@ currency and a booster match in the same move for each charging piece.
 
 ## Market goods and tools
 
-The first twelve pieces were authored together in one transparent ImageGen
-[master](../art/market-goods/source.png) from the [recorded prompt](../art/market-goods/prompt.txt).
-The registrar crops the 4×3 bays (and the reused fourth row below), trims transparent borders, fits each
-object to the inner flat-top mask at up to 112 px, centers the result in
-a 128 px slot and preserves authored alpha. On the board all pieces share
-the idle sprite, selection and hint overlays, and the standard swap and
-clear poses. The existing hammer and star controls use the already authored
-normal, selected, pressed, hover and disabled art.
+Built-in ImageGen authored all sixteen pieces together in a transparent 4×4
+[draft](../art/market-goods/winter-draft.png) using the [initial prompt](../art/market-goods/winter-prompt.txt).
+The [second pass](../art/market-goods/winter-revision-prompt.txt) gave the red
+gingerbread star an all-red face and separated the tall cider tumbler from
+the round cocoa mug. The [final source](../art/market-goods/winter-pieces.png)
+preserves the same order. The [registration record](../art/market-goods/registration.json)
+stores each source crop, proportional fit and offset in its 128 px slot.
+The crop takes the object's solid bounds with four pixels of edge padding.
+The fit preserves source alpha inside the engine's flat-top hex inset.
 
-| Slot | Piece | Role |
-| ---: | --- | --- |
-| 0 | Holly | Score |
-| 1 | Red mitten | Score |
-| 2 | Silver coin | 3 Gold |
-| 3 | Gold coin | 5 Gold |
-| 4 | Firewood | 5 Supplies |
-| 5 | Toy hammer | 3 Hammer charge |
-| 6 | Packing blocks | 7 Supplies |
-| 7 | Gingerbread | 5 Food |
-| 8 | Milk | 3 Food |
-| 9 | Winter apple | 6 Food |
-| 10 | Lantern star | 3 Lightning charge |
-| 11 | Cocoa | 4 Food |
-| 12 | Golden bell | 6 Gold, from the snowy chapel |
-| 13 | Snowflake bauble | 7 Gold, from the igloo |
-| 14 | Plum bauble | 8 Gold, from the giant bauble |
-| 15 | Candy cane | 7 Food, from the log cabin |
+| Slot | Piece | Dominant color | Role |
+| ---: | --- | --- | --- |
+| 0 | Holly | Green | Score at the opening. |
+| 1 | Blue mitten | Blue | Score until the lumber workshop. |
+| 2 | Star token | Silver | +3 Tokens. |
+| 3 | Bell token | Violet | +5 Tokens and the Tokens wallet icon. |
+| 4 | Bundled pine | Yellow | +5 Materials from the lumber workshop and the Materials wallet icon. |
+| 5 | Farrier's hammer | Green | +3 Hammer charge from the stable. |
+| 6 | Toy blocks | Yellow | +7 Materials from the later Toymaker's workshop. |
+| 7 | Gingerbread star | Red | +4 Treats from the bakery. |
+| 8 | Spiced cider | Red | +3 Treats from the Welcome arch. |
+| 9 | Wrapped gift | Violet | +6 Tokens from the later wrapping pavilion. |
+| 10 | Candle lantern | Green | +3 Lightning charge from the later Candlelight shop. |
+| 11 | Hot cocoa | Red | +5 Treats from the cocoa kiosk and the Treats wallet icon. |
+| 12 | Carol bell | Violet | +7 Tokens from the later snowy chapel. |
+| 13 | Ice pendant | Violet | +8 Tokens from the later igloo. |
+| 14 | Glass bauble | Violet | +9 Tokens from the later giant bauble. |
+| 15 | Candy cane | Red | Score until the Welcome arch. |
 
-Slots 12–15 form the atlas's fourth row. They reuse earlier painted festive
-pieces rather than new paintings: the golden handbell, candy cane and plum
-bauble from [the festive pieces](../art/festive-pieces/source.png) and the
-snowflake bauble from cell 3 of [the icon sheet](../art/icons.png).
-`tools/prepare_market_goods.py` registers them with the same mask and fit.
-The Shooting Star and Firework Bomb that later stalls grant are toolbar
-boosters with their own button art; no stall places a piece on the board.
-
-The runtime atlas is `art/registered/market-goods.png`. The Gold coin, firewood and
-cocoa sprites identify their wallets and appear on prices and result
-cards. The wallet uses the [round button painter](../../../engine/lua/match3/buttons.lua)
-for its brass rim and shadow. The skin supplies the translucent green fill and the
-bezel lowers on press. The [390×844 header comparison](screenshots/review/wallet-rim-390.png)
-shows `shot phone-board` before (top) and after (bottom).
-On the board, each spendable total includes goods earned on
-the current attempt. The [review](screenshots/review/cradle-market/README.md)
-shows the full atlas, the board at both phone sizes and the double panes.
+`art/registered/market-goods.png` packs into `data/board/pieces.png` as
+`market-0` through `market-15`. The board uses each idle sprite for swaps
+and clears, with the existing selection and hint overlays and authored
+single and double tinsel and ice layers. The hammer and lantern sprites
+also sit on the existing enamel booster faces in normal, selected, pressed,
+hover and disabled states. Firework Bomb and Shooting Star use their
+existing toolbar icons. The wallet, prices and results share the three
+currency icons. The [color map and review](market-pieces.md) include native
+captures of the board at both phone sizes, the bakery's reward card, the
+guide, the win result and the booster catalogue.
 
 ```sh
 python3 games/christmas-market/tools/prepare_market_goods.py
-python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x3 --mode object --strict --overlay-dir /tmp/market-hex-review
+python3 tools/match3_atlas.py
+python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x4 --mode object --strict --overlay-dir build/winter-pieces-registration
 ```
 
 ## Story pieces

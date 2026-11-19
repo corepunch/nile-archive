@@ -56,8 +56,7 @@ local function place_due(level)
         if not placed then break end
     end
 end
-local function check_unlock(index, reward, already_placed)
-    local level = journey.wonder_levels[index]
+local function check_unlock(level, reward, already_placed)
     R.prog.level = level
     if not already_placed then
         -- A ladder places the stalls between story buildings first.
@@ -83,9 +82,10 @@ local function check_unlock(index, reward, already_placed)
 end
 
 local first_tool = relic and economy.bonuses.hammer or economy.pieces[5]
-local resource = relic and economy.unlock_of("well") or economy.pieces[4]
-check_unlock(1, resource, true)
-local board = check_unlock(2, first_tool)
+local resource = relic and economy.unlock_of("well") or economy.pieces[economy.unlock_of("arch").kind]
+check_unlock(journey.wonder_levels[1], resource, true)
+local hammer_level = relic and journey.wonder_levels[2] or economy.unlock_of("reindeer_stable").after
+local board = check_unlock(hammer_level, first_tool)
 
 local tool = first_tool.tool
 local stock_key = relic and 'bonus_charge' or 'tool_stock'

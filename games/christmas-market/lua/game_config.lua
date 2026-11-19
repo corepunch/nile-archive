@@ -24,8 +24,8 @@ return {
     board = {
         kudos = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"},
         tool_notes = {
-            "Hammer: tap a treat to break it.",
-            "Firecracker: tap a treat to blast around it.",
+            "Hammer: tap a piece to hit its cell.",
+            "Firework Bomb: tap a piece to hit the square around it.",
             "Lantern lightning: strike 15 cells across the board.",
         },
         locked = "Match the tied piece to untangle the tinsel.",
@@ -37,7 +37,7 @@ return {
         all_open = "The whole market is open.",
         quit = "Your board is saved. Tap Play to continue wish %d.",
     },
-    capsules = {show = {"gold", "food", "supplies"}},
+    capsules = {show = {"tokens", "treats", "materials"}},
     pause = {
         guide = "MARKET GUIDE",
         quit = "QUIT TO MARKET",

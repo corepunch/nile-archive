@@ -1,6 +1,6 @@
 # Square match-3
 
-Match treats to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery and Hot cocoa kiosk. The stable grants a Shooting Star for one row per wish.
+Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery and Hot cocoa kiosk. The stable introduces the farrier's hammer. The Gingerbread house supplies one Firework Bomb per wish.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
@@ -9,7 +9,7 @@ points and the meter fills at 90. Long matches count each Hammer once.
 
 Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
-all the targets within the move budget and collect the matched Gold, Food and Supplies.
+all the targets within the move budget and collect the matched Tokens, Treats and Materials.
 
 When one to three panes remain, a trail follows their four edges after a
 short pause. It glows blue on a single pane and green on a double pane.
@@ -24,6 +24,9 @@ site, then confirm to pay once. The card links to the decoration shop.
 After level ten, a pending purchase can offer a replay for resources.
 
 ## Levels and art
+
+The [color map](market-pieces.md) pairs Cradle of Rome 2 pieces and purchase
+rewards with the Christmas Market artwork, yields and prices.
 
 The [ten ASCII layouts](../lua/campaign.lua) use a maximum field of nine
 columns by twelve rows. Dots are ordinary cells, asterisks single targets,
