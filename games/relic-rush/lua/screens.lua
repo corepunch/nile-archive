@@ -74,13 +74,26 @@ local function quest_board()
     return level, items
 end
 
+-- How much of a price the wallet holds, 0 to 1: the mean share of each
+-- currency it asks for. A building still waiting for its clear stops short of
+-- a full ring, which only a ready marker leaves bare.
+local function funded(cost)
+    local share, count = 0, 0
+    for slot in ipairs(economy.currencies) do
+        if cost[slot] > 0 then
+            share, count = share + math.min(1, R.prog.wallet[slot] / cost[slot]), count + 1
+        end
+    end
+    return count > 0 and math.min(.99, share / count) or .99
+end
+
 function R.quest_rail()
     local state, entries = R.quest_state(), {}
     local quest, step = island.next_quest(R.island, R.prog.level)
     if step and (quest or R.prog.level >= step.after) then
         local ready = island.can_buy(R.island, R.prog.wallet, R.prog.level, step.kind)
         entries[1] = {id="build", icon=R.buildings[step.kind + 1].sprite,
-            value=ready and "BUILD" or nil, ready=ready}
+            value=ready and "BUILD" or nil, ready=ready, progress=ready and 1 or funded(R.buildings[step.kind + 1].cost)}
     end
     local open_quests = R.open_quests()
     if quests.shutter_open(state) then

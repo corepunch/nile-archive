@@ -1221,9 +1221,10 @@ function G.bind(R, over)
                     if step then R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER end
                 end
             end,
-            -- A request with a giver is that character's medallion, its ring
-            -- filled to the request's progress; anything else is the
-            -- toolbar's round face with its icon.
+            -- A request with a giver is that character's medallion; anything
+            -- else is the toolbar's round face with its icon. Either rings its
+            -- brass band with the entry's progress, and a ready one (a filled
+            -- request, an affordable building) is circled by the trail.
             rail_paint = function(box, entry, st, ready_time)
                 local buttons = require("match3.buttons")
                 local state = entry.waiting and "disabled" or st.held and "pressed" or entry.ready and "selected"
@@ -1231,8 +1232,8 @@ function G.bind(R, over)
                 if entry.portrait then
                     buttons.medallion(box, entry.portrait, {state=state ~= "selected" and state or "normal",
                         progress=entry.progress or (entry.ready and 1 or 0)})
-                else buttons.paint(box, entry.icon, state) end
-                if ready_time and entry.id ~= "build" then
+                else buttons.paint(box, entry.icon, state, nil, nil, entry.progress) end
+                if ready_time then
                     R.vfx_quest_rim(box:center(), box.w * .46, ready_time)
                 end
             end,

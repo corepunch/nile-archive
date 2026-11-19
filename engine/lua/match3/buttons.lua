@@ -43,7 +43,59 @@ function B.wallet(fill)
     end}}}
 end
 
-function B.paint(box, image, state, alpha, face_colors)
+-- The progress ring sits on the brass band between the bezel's edge and the
+-- well. Its two round edges come from an anti-aliased signed distance field
+-- of that band, built once in the bezel's proportions; a stroke wider than
+-- the band fills it, so only the stroke's ends, where the percentage cuts it,
+-- are its own. A dark groove shows the part still to fill.
+-- The field spans RING_PAD times the bezel, so the ring stays clear of the
+-- texture's clamped edge.
+local RING_TEXELS, RING_RANGE, RING_PAD = 128, 4, 1.25
+local ring_field
+local groove = color(58, 34, 16, 150)
+local progress_fill = rgb(0x71B953)
+local function ring_mask(bezel, well)
+    local half = RING_TEXELS / 2
+    if not ring_field then
+        local outer = half / RING_PAD
+        local band = outer * (1 - .856 / .962)   -- frame_boxes: well 0.856, bezel 0.962 of the side
+        local mid, width = outer - band / 2, band * .315
+        local px = {}
+        for y = 0, RING_TEXELS - 1 do
+            for x = 0, RING_TEXELS - 1 do
+                local r = math.sqrt((x + .5 - half) ^ 2 + (y + .5 - half) ^ 2)
+                local d = math.abs(r - mid) - width
+                local v = math.floor(num.saturate(.5 + d / (2 * RING_RANGE)) * 255 + .5)
+                px[#px + 1] = string.char(v, v, v, 255)
+            end
+        end
+        ring_field = texture.from_pixels(table.concat(px), RING_TEXELS, RING_TEXELS)
+    end
+    local area = rect.centered(bezel:center(), size2(bezel.w * RING_PAD, bezel.h * RING_PAD))
+    gfx.sdf_mask(ring_field, area, RING_RANGE * area.w / RING_TEXELS, 0, 0)
+end
+
+-- Progress from 0 to 1, clockwise from the top. A full ring is not drawn:
+-- the ready marker's glow and trail say it instead.
+local function progress_ring(bezel, well, progress)
+    local amount = num.saturate(progress)
+    if amount >= 1 then return end
+    ring_mask(bezel, well)
+    gfx.rect(bezel, groove)
+    if amount > 0 then
+        local center, radius = bezel:center(), (bezel.w + well.w) / 4
+        local steps = math.max(2, math.ceil(96 * amount))
+        local points = {}
+        for i = 0, steps do
+            points[#points + 1] = center + vec2.polar(2 * math.pi * amount * i / steps - math.pi / 2, radius)
+        end
+        gfx.polyline(points, (bezel.w - well.w), progress_fill)
+    end
+    gfx.sdf_unmask()
+end
+
+-- `progress` (0 to 1, optional) rings the brass band as on the medallion.
+function B.paint(box, image, state, alpha, face_colors, progress)
     local side = math.min(box.w, box.h) * .90
     if side <= 0 then return end
     local disabled, pressed = state == "disabled", state == "pressed"
@@ -55,6 +107,7 @@ function B.paint(box, image, state, alpha, face_colors)
     gfx.circle(center + vec2(0, depth), side * .5, ink(shade))
     gfx.circle(center, side * .5, ink(rim.edge))
     gfx.round_rect_grad(bezel, bezel.w / 2, ink(rim.top), ink(rim.bottom))
+    if progress then progress_ring(bezel, well, progress) end
     gfx.circle(well:center(), well.w / 2, ink(rim.lip))
     gfx.round_rect_grad(enamel, enamel.w / 2, ink(face.top), ink(face.bottom))
     local dst = rect.centered(enamel:center(), size2(side * .78, side * .78)):fit(texture.size(image))
@@ -89,22 +142,6 @@ local function circle_mask(face)
         CIRCLE_RANGE * texel, 0, 0)
 end
 
--- The progress ring's ink: a dark groove, then jade filling clockwise from
--- the top, gold once full.
-local groove = color(58, 34, 16, 150)
-local progress_ink = {fill = rgb(0x71B953), edge = rgb(0x2E7046), full = rgb(0xFFD25A), full_edge = rgb(0xA8651F)}
-
-local function ring_arc(center, radius, from, to, width, ink)
-    local steps = math.max(2, math.ceil(48 * (to - from)))
-    local points = {}
-    for i = 0, steps do
-        points[#points + 1] = center + vec2.polar(2 * math.pi * (from + (to - from) * i / steps) - math.pi / 2, radius)
-    end
-    gfx.polyline(points, width, ink)
-    gfx.circle(points[1], width / 2, ink)
-    gfx.circle(points[#points], width / 2, ink)
-end
-
 -- A character's portrait in the round buttons' brass rim: the picture fills
 -- the enamel face, its top at the face's top so the head sits in the upper
 -- half and the shoulders meet the rim. `options` may give a `state` (normal,
@@ -125,17 +162,7 @@ function B.medallion(box, image, options)
     gfx.circle(center + vec2(0, depth), side * .5, shade)
     gfx.circle(center, side * .5, rim.edge)
     gfx.round_rect_grad(bezel, bezel.w / 2, rim.top, rim.bottom)
-    if options.progress then
-        local band = (bezel.w - well.w) / 2
-        local mid = (bezel.w + well.w) / 4
-        local amount = num.saturate(options.progress)
-        local full = amount >= 1
-        gfx.ring(bezel:center(), mid, band * .9, groove)
-        if amount > 0 then
-            ring_arc(bezel:center(), mid, 0, amount, band * .9, full and progress_ink.full_edge or progress_ink.edge)
-            ring_arc(bezel:center(), mid, 0, amount, band * .55, full and progress_ink.full or progress_ink.fill)
-        end
-    end
+    if options.progress then progress_ring(bezel, well, options.progress) end
     gfx.circle(well:center(), well.w / 2, rim.lip)
     gfx.round_rect_grad(enamel, enamel.w / 2, face.top, face.bottom)
     if not image then return end
