@@ -363,67 +363,69 @@ def folder_sprites(folder, prefix):
 # 128 px square maps to one board step. The inset corner adds 48 px of
 # padding on each side, so its ports move by 48 and the pivot stays centred.
 SQUARE_INNER_PAD = 48
+PAPYRUS_FLOORS = {
+    'square-plain': (41, 43, 377, 377),
+    'square-target': (459, 43, 795, 377),
+    'square-double': (878, 44, 1214, 378),
+}
 SQUARE_FRAME_STOPS = {
     'square-frame-edge': (
-        [(0, 30), (128, 598)],
-        [(42, 210), (44, 219), (68, 332), (70, 341)],
+        [(0, 107), (128, 311)],
+        [(42, 590), (44, 594), (68, 636), (70, 640)],
     ),
     'square-frame-outer': (
-        [(42, 806), (44, 816), (68, 933), (128, 1221)],
-        [(42, 210), (44, 219), (68, 332), (128, 595)],
+        [(42, 590), (44, 594), (68, 635), (128, 729)],
+        [(42, 590), (44, 594), (68, 635), (128, 728)],
     ),
     'square-frame-inner': (
-        [(0, 28), (48, 206), (92, 360), (116, 452), (118, 460)],
-        [(0, 633), (48, 806), (92, 961), (116, 1056), (118, 1064)],
+        [(0, 27), (48, 107), (92, 177), (116, 217), (118, 221)],
+        [(0, 880), (48, 941), (92, 1013), (116, 1054), (118, 1058)],
+    ),
+    'square-frame-inner-bare': (
+        [(0, 945), (44, 1014), (68, 1054), (70, 1058)],
+        [(0, 527), (44, 594), (68, 636), (70, 640)],
     ),
     'square-frame-diagonal': (
-        [(0, 650), (44, 839), (60, 917), (68, 953), (84, 1031), (128, 1223)],
-        [(0, 652), (44, 848), (60, 921), (68, 960), (84, 1035), (128, 1222)],
+        [(0, 525), (44, 594), (60, 620), (68, 634), (84, 661), (128, 729)],
+        [(0, 942), (44, 1012), (60, 1038), (68, 1054), (84, 1079), (128, 1146)],
     ),
 }
 
 
-def square_frame_sprites(root):
-    source = root / 'art/square-frame/source.png'
-    foliage = source.with_name('large-foliage.png')
-    inputs = [source, foliage, *[source.with_name(name) for name in (
-        'layout.png', 'prompt.txt', 'foliage.png', 'retouch-prompt.txt',
-        'large-foliage-layout.png', 'large-foliage-prompt.txt',
-    )]]
-    sprites, registration = {}, {}
-    for name, (x_stops, y_stops) in SQUARE_FRAME_STOPS.items():
-        inner = name == 'square-frame-inner'
-        path = foliage if inner else source
-        padding = SQUARE_INNER_PAD if inner else 0
-        side = CELL + 2 * padding
-        rail = 44 + padding
-        mesh = []
-        for (dx0, sx0), (dx1, sx1) in zip(x_stops, x_stops[1:]):
-            for (dy0, sy0), (dy1, sy1) in zip(y_stops, y_stops[1:]):
-                # Extend the foliage into the notch while trimming the two
-                # stone ends at the same midpoint as their straight neighbours.
-                if inner and ((dx1 <= padding and dy0 >= rail) or (dy1 <= padding and dx0 >= rail)):
-                    continue
-                mesh.append(((dx0, dy0, dx1, dy1), (sx0, sy0, sx0, sy1, sx1, sy1, sx1, sy0)))
-        with Image.open(path) as sheet:
-            sprite = sheet.convert('RGBA').transform((side, side), Image.Transform.MESH, mesh, Image.Resampling.BICUBIC)
-        registered = root / 'art/registered/square-cells' / f'{name}.png'
-        write_asset(registered, png(sprite))
-        sprites[name] = sprite
-        registration[name] = {
-            'source': relpath(path, root), 'size': list(sprite.size),
-            'x_stops': x_stops, 'y_stops': y_stops, 'registered': relpath(registered, root),
-        }
-        if inner:
-            registration[name]['join_padding'] = padding
-        inputs.append(registered)
+def square_frame_sprites(root, source):
+    sprites, registration, inputs = {}, {}, []
+    with Image.open(source) as image:
+        sheet = image.convert('RGBA')
+        for name, (x_stops, y_stops) in SQUARE_FRAME_STOPS.items():
+            padding = SQUARE_INNER_PAD if name == 'square-frame-inner' else 0
+            side = CELL + 2 * padding
+            rail = 44 + padding
+            mesh = []
+            for (dx0, sx0), (dx1, sx1) in zip(x_stops, x_stops[1:]):
+                for (dy0, sy0), (dy1, sy1) in zip(y_stops, y_stops[1:]):
+                    # Keep the larger leaf silhouette while cutting the two
+                    # stone ends at the same midpoint as their neighbours.
+                    if padding and ((dx1 <= padding and dy0 >= rail) or (dy1 <= padding and dx0 >= rail)):
+                        continue
+                    mesh.append(((dx0, dy0, dx1, dy1), (sx0, sy0, sx0, sy1, sx1, sy1, sx1, sy0)))
+            sprite = sheet.transform((side, side), Image.Transform.MESH, mesh, Image.Resampling.BICUBIC)
+            registered = root / 'art/registered/square-cells' / f'{name}.png'
+            write_asset(registered, png(sprite))
+            sprites[name] = sprite
+            registration[name] = {
+                'source': relpath(source, root), 'size': list(sprite.size),
+                'x_stops': x_stops, 'y_stops': y_stops, 'registered': relpath(registered, root),
+            }
+            if padding:
+                registration[name]['join_padding'] = padding
+            inputs.append(registered)
     return sprites, inputs, registration
 
 
 def square_cells(game, root):
     source = SQUARE_DIR / 'source.png'
     ornaments = SQUARE_DIR / 'ornaments.png'
-    row = 0 if game == 'relic-rush' else 512
+    papyrus = root / 'art/papyrus-board/source.png'
     materials = {
         'square-plain': (0, 0, 256, 256),
         'square-target': (256, 0, 512, 256),
@@ -435,18 +437,19 @@ def square_cells(game, root):
     sprites, registration = {}, {}
     inputs = [source, SQUARE_DIR / 'prompt.txt', SQUARE_DIR / 'lighting-prompt.txt']
     decorations = {}
-    sheets = [(source, materials)]
     if game == 'relic-rush':
-        del materials['square-trim']
+        sheets = [(papyrus, PAPYRUS_FLOORS, 0),
+                  (source, {name: materials[name] for name in ('square-selected', 'square-grout')}, 0)]
+        inputs += [papyrus, papyrus.with_name('layout.png'), papyrus.with_name('prompt.txt')]
     else:
         decorations = {
             'square-foliage': (0, 0, 512, 512),
             'square-joint': (512, 0, 1024, 512),
             'square-medallion': (1024, 0, 1536, 512),
         }
-        sheets.append((ornaments, decorations))
+        sheets = [(source, materials, 512), (ornaments, decorations, 512)]
         inputs += [ornaments, SQUARE_DIR / 'ornaments-prompt.txt']
-    for path, crops in sheets:
+    for path, crops, row in sheets:
         with Image.open(path) as sheet:
             for name, (x0, y0, x1, y1) in crops.items():
                 box = (x0, y0 + row, x1, y1 + row)
@@ -477,7 +480,7 @@ def square_cells(game, root):
                     registration[name]['transparent_center'] = [11, 11, 117, 117]
                 inputs.append(registered)
     if game == 'relic-rush':
-        frame_sprites, frame_inputs, frame_registration = square_frame_sprites(root)
+        frame_sprites, frame_inputs, frame_registration = square_frame_sprites(root, papyrus)
         sprites.update(frame_sprites)
         registration.update(frame_registration)
         inputs.extend(frame_inputs)
@@ -601,15 +604,16 @@ def build_game(game, check):
         write_asset(root / name, text)
         outputs.append(root / name)
     if game == 'relic-rush':
-        square_frame_sources = {'frame_source': 'art/square-frame/source.png',
-                                'frame_layout': 'art/square-frame/layout.png',
-                                'frame_prompt': 'art/square-frame/prompt.txt',
-                                'foliage_source': 'art/square-frame/large-foliage.png',
-                                'foliage_layout': 'art/square-frame/large-foliage-layout.png',
-                                'foliage_prompt': 'art/square-frame/large-foliage-prompt.txt'}
+        square_sources = {'source': 'art/papyrus-board/source.png',
+                          'layout': 'art/papyrus-board/layout.png',
+                          'prompt': 'art/papyrus-board/prompt.txt',
+                          'selection_and_grout': '../../art/match3-square/source.png'}
     else:
-        square_frame_sources = {'ornaments': '../../art/match3-square/ornaments.png',
-                                'ornaments_prompt': '../../art/match3-square/ornaments-prompt.txt'}
+        square_sources = {'source': '../../art/match3-square/source.png',
+                          'prompt': '../../art/match3-square/prompt.txt',
+                          'lighting_prompt': '../../art/match3-square/lighting-prompt.txt',
+                          'ornaments': '../../art/match3-square/ornaments.png',
+                          'ornaments_prompt': '../../art/match3-square/ornaments-prompt.txt'}
     manifest = {'atlases': {group: {'runtime': f'data/board/{group}.png', 'size': list(sheet.size)}
                             for group, (sheet, _) in packed.items()},
                 'board': BOARD_GROUPS, 'hud': hud_groups,
@@ -624,10 +628,7 @@ def build_game(game, check):
                               'crop': list(signboard_crop), 'size': list(signboard.size),
                               'state': 'static backplate', 'frame': 'signboard'},
                 'board_theme': theme_registration,
-                'square_cells': {'source': '../../art/match3-square/source.png',
-                                 'prompt': '../../art/match3-square/prompt.txt',
-                                 'lighting_prompt': '../../art/match3-square/lighting-prompt.txt',
-                                 **square_frame_sources,
+                'square_cells': {**square_sources,
                                  'frames': square_registration,
                                  'review': 'docs/square-match3.md'},
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',

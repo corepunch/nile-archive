@@ -1695,12 +1695,13 @@
   },
   "archived_navigation": "art/navigation/manifest.json",
   "square_board": {
-    "source": "../../art/match3-square/source.png",
-    "prompt": "../../art/match3-square/prompt.txt",
+    "source": "art/papyrus-board/source.png",
+    "layout": "art/papyrus-board/layout.png",
+    "prompt": "art/papyrus-board/prompt.txt",
     "runtime": "data/board/cells.png",
     "registration": "art/match3-atlas.json#square_cells",
     "states": {
-      "square-plain": "ordinary or cleared cell",
+      "square-plain": "ordinary or cleared cell on matte papyrus",
       "square-target": "plaque or pane remaining",
       "square-selected": "selected cell or tool target preview",
       "square-grout": "backing inside playable cell seams",
@@ -1708,15 +1709,10 @@
       "square-frame-edge": "straight sandstone rim between two adjacent cells",
       "square-frame-outer": "outside corner around one playable cell",
       "square-frame-inner": "recessed corner between three playable cells with foliage painted into the stone",
+      "square-frame-inner-bare": "alternate recessed corner with a jade fitting and bare sandstone",
       "square-frame-diagonal": "stepped sandstone join between two diagonal cells"
     },
     "review": "docs/square-match3.md#captures",
-    "frame_source": "art/square-frame/source.png",
-    "frame_layout": "art/square-frame/layout.png",
-    "frame_prompt": "art/square-frame/prompt.txt",
-    "foliage_source": "art/square-frame/large-foliage.png",
-    "foliage_layout": "art/square-frame/large-foliage-layout.png",
-    "foliage_prompt": "art/square-frame/large-foliage-prompt.txt",
-    "lighting_prompt": "../../art/match3-square/lighting-prompt.txt"
+    "selection_and_grout": "../../art/match3-square/source.png"
   }
 }

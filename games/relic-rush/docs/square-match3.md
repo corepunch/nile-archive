@@ -27,22 +27,23 @@ plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes.
 
 The [shared floor study](../../../art/match3-square/README.md) records the
-Cradle of Rome palette references for the limestone and plaques. The
-Relic Rush rim is carved sandstone with jade inlays, inspired by Maya jungle
-temples. Each perimeter tile sits on a vertex of the square grid. It joins
-its neighbours halfway along each exposed cell edge. The recessed corner
-includes the tropical leaves and their shadows in the same painting.
+Cradle of Rome references for papyrus and plaques. Ordinary cells have
+cross-laid papyrus fibres and a shallow matte rim. Single and double plaques
+are matte turquoise and olive green. The perimeter is carved sandstone
+with jade inlays. Each perimeter tile sits on a vertex of the square grid
+and joins its neighbours halfway along each exposed edge. Inset corners
+alternate between leafy and bare stone for each facing direction. Leaves and their contact shadows
+are painted directly into the leafy corner.
 
-Built-in ImageGen painted the [four-tile sheet](../art/square-frame/source.png)
-from the [layout guide](../art/square-frame/layout.png) and
-[initial prompt](../art/square-frame/prompt.txt). A
-[second pass](../art/square-frame/foliage.png) retouched the plant with
-the [foliage prompt](../art/square-frame/retouch-prompt.txt). The current
-[corner painting](../art/square-frame/large-foliage.png) grows a larger fan
-into the recess, using an [expanded layout](../art/square-frame/large-foliage-layout.png)
-and [paint-over prompt](../art/square-frame/large-foliage-prompt.txt).
+Built-in ImageGen painted all three floor faces and five frame sections
+together in the [current atlas](../art/papyrus-board/source.png). The
+[layout guide](../art/papyrus-board/layout.png) uses the earlier
+[sandstone study](../art/square-frame/source.png) and
+[large-leaf study](../art/square-frame/large-foliage.png). The
+[paint-over prompt](../art/papyrus-board/prompt.txt) records the papyrus
+reference and the two recessed corner variants.
 [Atlas registration](../art/match3-atlas.json) records the source coordinates and
-runtime atlas regions. One grid step spans 128 px. The inset corner uses a
+runtime atlas regions. One grid step spans 128 px. The leafy corner uses a
 224 px canvas centred on the same vertex so the foliage can extend beyond
 the stone joins.
 Rebuild from the repository root with `python3 tools/match3_atlas.py`.

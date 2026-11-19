@@ -36,7 +36,7 @@ Scrolling uses the engine animation clock: a scalar `CAAnimation` drives the iOS
 
 ## Shared match engine and atlas
 
-Match through every turquoise plaque to win. A chained piece absorbs one hit, or two with a heavy chain, before a match clears the plaque beneath it. The square fields have a carved sandstone rim with leaves growing from the inset corners. The [square campaign guide](docs/square-match3.md) lists the ten boards and the painted tiles.
+Match through every turquoise plaque to win. A chained piece absorbs one hit, or two with a heavy chain, before a match clears the plaque beneath it. Papyrus fills the ordinary cells. The carved sandstone rim alternates leafy and bare inset corners. The [square campaign guide](docs/square-match3.md) lists the ten boards and the painted tiles.
 
 The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns all matching,
 swaps, blockers, trickling gravity, cascades, hints, tools and board
@@ -406,4 +406,4 @@ The walkthrough has its own save. Add `--fresh` to start at the opening without 
 
 ### Board
 
-Two straight axes and five pieces form the square board. Original honey limestone and carved gold trim define the playable outline.
+Two straight axes and five pieces form the square board. Papyrus cells and carved sandstone trim define the playable outline.

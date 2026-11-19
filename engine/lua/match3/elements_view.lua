@@ -527,7 +527,8 @@ local square_corners = {
 }
 local square_cells = {"square-plain", "square-target", "square-double", "square-selected", "square-grout"}
 local square_trim = {"square-trim", "square-foliage", "square-joint", "square-medallion"}
-local square_frame = {"square-frame-edge", "square-frame-outer", "square-frame-inner", "square-frame-diagonal"}
+local square_frame = {"square-frame-edge", "square-frame-outer", "square-frame-inner", "square-frame-diagonal",
+    "square-frame-inner-bare"}
 
 function E.load_square(art, skin, modular_frame)
     for _, key in ipairs(square_cells) do art[key] = assert(skin[key], key) end
@@ -537,7 +538,7 @@ end
 -- Each frame tile is centred at a grid vertex, with bits for the four
 -- surrounding floor cells in clockwise order from the northwest.
 -- The entry selects a painted tile and its clockwise quarter turns.
-local EDGE, OUTER, INNER, DIAGONAL = 1, 2, 3, 4
+local EDGE, OUTER, INNER, DIAGONAL, BARE = 1, 2, 3, 4, 5
 local square_frame_tiles = {
     [12]={EDGE, 0}, [9]={EDGE, 1}, [3]={EDGE, 2}, [6]={EDGE, 3},
     [4]={OUTER, 0}, [8]={OUTER, 1}, [1]={OUTER, 2}, [2]={OUTER, 3},
@@ -556,6 +557,9 @@ local function draw_square_frame(R, rules, sx, tint)
         return rules.game_cell_active(R.g, rules.hex_index(q, row)) and bit or 0
     end
     local q0, row0 = rules.hex_q(0), rules.hex_r(0)
+    -- Alternate along each facing direction so mirrored staircases do
+    -- not put every sprig on the same side of the board.
+    local leafy = {[0]=true, false, true, false}
     for q = q0, q0 + rules.COLUMNS do
         for row = row0, row0 + rules.ROWS do
             local mask = occupied(q - 1, row - 1, 1) | occupied(q, row - 1, 2)
@@ -563,9 +567,14 @@ local function draw_square_frame(R, rules, sx, tint)
             local tile = square_frame_tiles[mask]
             if tile then
                 local at = origin + vec2((2 * q - 1) * r, (2 * row - 1) * r)
-                local sprite = art[square_frame[tile[1]]]
+                local kind, turn = tile[1], tile[2]
+                if kind == INNER then
+                    kind = leafy[turn] and INNER or BARE
+                    leafy[turn] = not leafy[turn]
+                end
+                local sprite = art[square_frame[kind]]
                 local box = rect.centered(at, size2.splat(sprite.w * scale))
-                gfx.image_rot(sprite, box, tile[2] * math.pi / 2, tint)
+                gfx.image_rot(sprite, box, turn * math.pi / 2, tint)
             end
         end
     end

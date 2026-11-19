@@ -1,14 +1,14 @@
 # Square match-3 tiles and frames
 
 The built-in ImageGen tile sheet, [source.png](source.png), supplies the
-square faces and grout for both games, and the strip for Christmas Market.
+selection rim and grout for both games, plus the Christmas Market faces and trim.
 [The first prompt](prompt.txt) specifies
 the two material families. [Lighting revisions](lighting-prompt.txt)
 record the target colors and the final correction to the ordinary tile.
 [Christmas Market ornaments](ornaments.png) use a separate transparent sheet, with its
 [export prompt](ornaments-prompt.txt). All painted objects are original.
-The [Relic Rush rim](../../games/relic-rush/docs/square-match3.md#levels-and-art)
-has its own modular sandstone atlas.
+The [Relic Rush board](../../games/relic-rush/docs/square-match3.md#levels-and-art)
+has its own papyrus floor and sandstone frame atlas.
 
 ## Reference study
 
@@ -25,7 +25,8 @@ to 84% along both axes. The center box spans 43% to 57%.
 | --- | --- | --- | --- | ---: |
 | Cradle of Rome I papyrus | 240, 222, 141 | 201, 169, 91 | 180, 138, 70 | 78.0 |
 | Cradle of Rome II plain | 198, 166, 105 | 229, 201, 129 | 218, 188, 119 | −21.0 |
-| Relic Rush limestone | 250, 220, 114 | 224, 175, 73 | 189, 132, 49 | 80.6 |
+| Earlier Relic Rush limestone | 250, 220, 114 | 224, 175, 73 | 189, 132, 49 | 80.6 |
+| Relic Rush papyrus | 238, 212, 152 | 223, 192, 128 | 203, 170, 107 | 40.8 |
 | Christmas Market maple | 250, 221, 116 | 225, 175, 75 | 191, 133, 51 | 80.2 |
 
 Cradle of Rome I stores the wood and leaf frame at
@@ -33,9 +34,9 @@ Cradle of Rome I stores the wood and leaf frame at
 `resources/settings/scenes/city/city_graphics.xml` identifies its frame
 strip as the bottom row in `textures/scenes/city/construct/ct_built_01.png`.
 In both reference games, tile type 10 places its leaf art in an empty frame
-cell that touches two playable cells at right angles. Relic Rush paints the
-sprig directly into its recessed corner tile. Christmas Market places its
-ornaments over the carved strip.
+cell that touches two playable cells at right angles. Relic Rush alternates
+bare and leafy recessed corner tiles. Christmas Market places its ornaments
+over the carved strip.
 
 ## Register and review
 

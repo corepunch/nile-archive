@@ -2,16 +2,17 @@
 
 ## Square board
 
-The current campaign uses warm limestone, turquoise plaques and olive-green double plaques. The square perimeter uses four painted Maya-inspired sandstone tiles in `data/board/cells.png`. The four floor cells around each grid vertex determine which frame tile to draw and how to turn it.
+The current campaign uses matte papyrus for ordinary and cleared cells, turquoise for single-layer plaques, and olive green for double plaques. The square perimeter uses five painted Maya-inspired sandstone tiles in `data/board/cells.png`. The four floor cells around each grid vertex determine which frame tile to draw and how to turn it.
 
 | Runtime frame | Board position |
 | --- | --- |
 | `square-frame-edge` | Two adjacent floor cells meet at a straight boundary. |
 | `square-frame-outer` | One floor cell makes an outside corner. |
 | `square-frame-inner` | Three floor cells make a notch. A broad leaf fan and its contact shadows are painted into the stone corner. The larger canvas holds the leaf tips beyond the ends of the stone rails. |
+| `square-frame-inner-bare` | Alternate inner corner with the same open rail ends, carved stone and a jade inlay. |
 | `square-frame-diagonal` | Two diagonally touching floor cells meet at a stepped sandstone join. |
 
-The built-in ImageGen sheet and foliage paint-over, their prompts and the exact registration transforms are linked from the [square campaign guide](square-match3.md). Rebuild with `python3 tools/match3_atlas.py`. The guide also links the reviewed in-game captures.
+Built-in ImageGen painted the [floor and frame atlas](../art/papyrus-board/source.png) from the [layout guide](../art/papyrus-board/layout.png) and [prompt](../art/papyrus-board/prompt.txt). The [square campaign guide](square-match3.md) links the registration transforms and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
 
 ## Popup close button
 
@@ -25,7 +26,7 @@ Every popup writes its title on the parchment in flat ink (`popup_title`), with 
 
 ## Themed board art
 
-The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets serve the previews and imported-board diagnostics.
+The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pale papyrus. Turquoise and olive plaques mark the cells required to win. The older Relics, Jewels and Resources sheets serve the previews and imported-board diagnostics.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
