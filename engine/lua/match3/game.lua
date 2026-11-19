@@ -1230,7 +1230,8 @@ function G.bind(R, over)
                 local state = entry.waiting and "disabled" or st.held and "pressed" or entry.ready and "selected"
                     or st.hot and "hover" or "normal"
                 if entry.portrait then
-                    buttons.medallion(box, entry.portrait, {state=state ~= "selected" and state or "normal",
+                    -- The same 90% of the box the enamel buttons' circles take.
+                    buttons.medallion(rect.centered(box:center(), size2(box.w * .9, box.h * .9)), entry.portrait, {state=state ~= "selected" and state or "normal",
                         progress=entry.progress or (entry.ready and 1 or 0)})
                 else buttons.paint(box, entry.icon, state, nil, nil, entry.progress) end
                 if ready_time then

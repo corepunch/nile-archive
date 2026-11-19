@@ -93,7 +93,7 @@ function R.quest_rail()
     if step and (quest or R.prog.level >= step.after) then
         local ready = island.can_buy(R.island, R.prog.wallet, R.prog.level, step.kind)
         entries[1] = {id="build", icon=R.buildings[step.kind + 1].sprite,
-            value=ready and "BUILD" or nil, ready=ready, progress=ready and 1 or funded(R.buildings[step.kind + 1].cost)}
+            ready=ready, progress=ready and 1 or funded(R.buildings[step.kind + 1].cost)}
     end
     local open_quests = R.open_quests()
     if quests.shutter_open(state) then

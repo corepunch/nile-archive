@@ -127,7 +127,7 @@ function R.smoke()
         R.prog.wallet = purse(10000, 10000, 10000, R.prog.level)
         stage = 17
     elseif stage == 17 and R.town.rail_targets.build then
-        assert(R.quest_rail()[1].value == "BUILD", "the island flags an affordable restoration")
+        assert(R.quest_rail()[1].ready and not R.quest_rail()[1].value, "the island flags an affordable restoration by its trail alone")
         app.inject_click(R.town.rail_targets.build)
         stage = 18
     elseif stage == 18 and press(R.OV_WONDER, R.wonder_form, "action") then
