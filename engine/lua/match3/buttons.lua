@@ -65,6 +65,13 @@ local function progress_gauge(center, side, progress)
     end
 end
 
+-- The same gauge over any round button drawn by B.paint in `box`, as the
+-- town puts the next purchase's funding under its Build button.
+function B.gauge(box, progress)
+    local side = math.min(box.w, box.h) * .90
+    if side > 0 then progress_gauge(box:center(), side, progress) end
+end
+
 -- `progress` (0 to 1, optional) shows a gauge as on the medallion.
 function B.paint(box, image, state, alpha, face_colors, progress)
     local side = math.min(box.w, box.h) * .90

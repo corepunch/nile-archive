@@ -4,6 +4,7 @@
 -- (engine/lua/match3/game.lua); words are lua/game_config.lua.
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
+local buttons = require("match3.buttons")
 local rules = require("rules")
 local economy = require("economy")
 local art = require("art")
@@ -62,18 +63,13 @@ function R.funding_shortfall(cost)
     return short and parts or {}
 end
 
--- Keep the next purchase's shortfall attached to the existing Build button.
-local AMOUNT_WIDTH, AMOUNT_GAP = 48, 3
-local build_progress = ui.form{kind="column",children={
-    {kind="column",panel=true,role="group",gap=3,padding={6,4,6,5},children={
+-- The next purchase's funding is the quest markers' jade gauge across the
+-- bottom of the Build button, filled by the share of the price the wallet
+-- holds (the mean over the currencies it asks for), as on the markers. A full gauge is not drawn; the ready rim says it instead. A
+-- funded purchase still waiting on a level keeps that level as a caption.
+local level_gate = ui.form{kind="column",children={
+    {kind="column",panel=true,role="group",padding={6,4,6,5},children={
         {kind="label",id="caption",em=13,text_style="caption"},
-        {kind="row",visible_field="show_amounts",children={
-            {kind="spacer",grow=1},
-            {kind="list",id="shortfall",direction="row",gap=AMOUNT_GAP,item=function(entry)
-                return match3.resource_indicator(entry, AMOUNT_WIDTH, true)
-            end},
-            {kind="spacer",grow=1},
-        }},
     }},
 }}
 
@@ -82,23 +78,25 @@ local function draw_build_progress(screen)
     local _, position = island.next_step(R.island, R.prog.level)
     local step = island.ladder[position]
     if not step or step.after > rules.LEVELS then return end
-    local missing = economy.shortfall(island.buildings[step.kind + 1].cost, R.prog.wallet)
-    local key = table.concat({position, missing[1], missing[2], missing[3]}, "/")
-    local list = build_progress.nodes.shortfall
-    if list.funding_key ~= key then
-        local parts = R.currency_prices(missing)
-        assert(build_progress:set_items("shortfall", parts))
-        list.funding_key = key
+    local cost = island.buildings[step.kind + 1].cost
+    local missing = economy.shortfall(cost, R.prog.wallet)
+    local share, asked, short = 0, 0, false
+    for slot in ipairs(economy.currencies) do
+        if cost[slot] > 0 then
+            share, asked = share + 1 - missing[slot] / cost[slot], asked + 1
+            short = short or missing[slot] > 0
+        end
     end
-    local count = #list.children
-    if count == 0 and step.after <= R.prog.level then return end
-    build_progress.values.show_amounts = count > 0
-    build_progress:set("caption", count > 0 and R.words.card.missing or R.words.catalogue.complete:format(step.after))
-    local width = count == 0 and 164 or math.max(112, count * (AMOUNT_WIDTH + AMOUNT_GAP) - AMOUNT_GAP + 12)
-    local _, height = build_progress:measure(width, R.skin)
     local button = R.town.navigation.boxes.build
-    local x = num.clamp(button:center().x - width / 2, screen.x + 6, screen:max().x - width - 6)
-    build_progress:draw(rect(x, button.y - height - 6, width, height), R.skin, {interactive=false})
+    if short then
+        buttons.gauge(button, share / asked)
+    elseif step.after > R.prog.level then
+        local width = 164
+        level_gate:set("caption", R.words.catalogue.complete:format(step.after))
+        local _, height = level_gate:measure(width, R.skin)
+        local x = num.clamp(button:center().x - width / 2, screen.x + 6, screen:max().x - width - 6)
+        level_gate:draw(rect(x, button.y - height - 6, width, height), R.skin, {interactive=false})
+    end
 end
 
 local town_setup = R.town_setup
