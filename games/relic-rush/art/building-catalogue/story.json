@@ -1,11 +1,11 @@
 {
   "camp": {
     "about": "Unlocks Bomb. Hit a cell and its six neighbors.",
-    "cost": [1010, 385, 530]
+    "cost": [585, 225, 325]
   },
   "well": {
     "about": "Water buckets earn 3 Food each.",
-    "cost": [50, 0, 0]
+    "cost": [35, 0, 0]
   },
   "quay_steps": {
     "about": "The Workshop's first tread opens the way to the viewing shutter.",
@@ -29,39 +29,39 @@
   },
   "workshop": {
     "about": "Timber bundles earn 5 Supplies each.",
-    "cost": [790, 295, 0]
+    "cost": [420, 150, 0]
   },
   "market": {
     "about": "Ration jars earn 4 Food each.",
-    "cost": [475, 175, 270]
+    "cost": [290, 110, 170]
   },
   "gateway": {
     "about": "Shrimp earn 6 Food each.",
-    "cost": [25, 90, 80]
+    "cost": [15, 50, 40]
   },
   "lodge": {
     "about": "Unlocks Hourglass. Add five moves.",
-    "cost": [420, 965, 590]
+    "cost": [330, 715, 465]
   },
   "archive": {
     "about": "Rings earn 7 Coins each.",
-    "cost": [260, 490, 305]
+    "cost": [180, 335, 200]
   },
   "observatory": {
     "about": "Unlocks Mixer. Shuffle the pieces.",
-    "cost": [765, 1065, 690]
+    "cost": [405, 570, 365]
   },
   "fountain": {
     "about": "Emeralds earn 11 Coins each.",
-    "cost": [1250, 1425, 895]
+    "cost": [940, 1040, 660]
   },
   "temple": {
     "about": "Unlocks Star. Clear all pieces of a chosen kind.",
-    "cost": [400, 450, 285]
+    "cost": [225, 260, 160]
   },
   "log_cabin": {
     "about": "Unlocks Hammer. Hit one cell.",
-    "cost": [335, 120, 0]
+    "cost": [225, 80, 0]
   },
   "apothecary": {
     "cost": [220, 15, 0]
@@ -74,45 +74,45 @@
   },
   "map_room": {
     "about": "Unlocks Lightning. Strike up to fifteen random cells.",
-    "cost": [160, 325, 195]
+    "cost": [105, 195, 125]
   },
   "greenhouse": {
     "cost": [300, 20, 0]
   },
   "trading_post": {
     "about": "Dressed stones earn 7 Supplies each.",
-    "cost": [85, 60, 60]
+    "cost": [55, 40, 40]
   },
   "water_mill": {
     "about": "Grain bundles earn 5 Food each.",
-    "cost": [110, 115, 100]
+    "cost": [70, 80, 65]
   },
   "clock_tower": {
     "about": "Unlocks Shield. Hit the row through a chosen cell.",
-    "cost": [15, 85, 70]
+    "cost": [10, 50, 35]
   },
   "lighthouse": {
     "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
-    "cost": [190, 310, 205]
+    "cost": [160, 250, 165]
   },
   "treehouse": {
     "cost": [400, 0, 27]
   },
   "aviary": {
     "about": "Sandals earn 9 Coins each.",
-    "cost": [385, 505, 335]
+    "cost": [250, 330, 215]
   },
   "beached_ship": {
     "about": "Scarabs earn 8 Coins each.",
-    "cost": [300, 470, 290]
+    "cost": [195, 290, 200]
   },
   "amphitheater": {
     "about": "Helmets earn 6 Coins each.",
-    "cost": [185, 405, 260]
+    "cost": [135, 290, 190]
   },
   "museum": {
     "about": "Harps earn 10 Coins each.",
-    "cost": [310, 390, 245]
+    "cost": [180, 220, 140]
   },
   "hanging_gardens": {
     "cost": [550, 37, 0]

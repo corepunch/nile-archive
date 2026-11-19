@@ -18,6 +18,8 @@
 --   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
 --   R.wallet_icons()        three icons: unused, gold, unused (the gold capsule's is the second)
 --   R.town_middle_icon(at)  the round middle button's icon in the town
+--   R.quest_rail(), R.quest_model(id), R.quest_deliver(id)   optional requests: the round
+--                           markers down the town's left edge and their card (below)
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
 --   game_config.lua "leaderboard" {board, title, level_board, level_title}   Game Center boards (below)
@@ -60,6 +62,8 @@ G.DEFAULTS = {
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
             gets = "YOU GET", price = "PRICE", missing = "STILL NEEDED", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
+    quest = {header = "Request", deliver = "HAND IT OVER", play = "PLAY", ready = "EVERYTHING IS HERE.",
+             waiting = "ITS PIECE JOINS THE BOARD WHEN A PLACE IS FREE."},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
@@ -106,7 +110,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_QUEST = 12,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -776,6 +780,65 @@ function G.bind(R, over)
         else R.overlay = R.OV_NONE end
     end})
 
+    -- A request's card. Requests are the game's: R.quest_rail() lists the open
+    -- ones for the town's left edge ({id, icon, value, ready, waiting}; the id
+    -- "build" stands for the next building and opens its card), and
+    -- R.quest_model(id) describes one: {title, subtitle, icon, about, needs
+    -- (resource records still missing), ready, waiting}. The action hands a
+    -- ready request in through R.quest_deliver(id); otherwise it plays on.
+    local quest_form = ui.form{
+        root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
+            match3.popup_header(W.quest.header),
+            {kind="image", id="icon", height=132},
+            {kind="label", id="about", wrap=true, em=19, text_style="body"},
+            {kind="row", visible_field="show_needs", children={
+                {kind="spacer",grow=1},
+                {kind="column", gap=5, children={
+                    {kind="label", text=W.card.missing, em=13, text_style="caption"},
+                    {kind="list",id="needs",direction="row",gap=AMOUNT_GAP,item=function(entry)
+                        return match3.resource_indicator(entry, 96)
+                    end},
+                }},
+                {kind="spacer",grow=1},
+            }},
+            {kind="label",id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
+            {kind="button",id="action",height=56},
+            {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16},
+        }},
+        bindings={
+            {id="icon",field="icon",type="texture",readonly=true},
+            {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
+        },
+    }
+    R.quest_form = quest_form
+    local quest_ready
+    function R.open_quest(id)
+        if not R.quest_model or not R.quest_model(id) then return false end
+        R.quest_card, R.overlay = id, R.OV_QUEST
+        return true
+    end
+    popup(R.OV_QUEST, quest_form, {width=420, prepare=function()
+        local quest = R.quest_card and R.quest_model and R.quest_model(R.quest_card)
+        if not quest then return false end
+        quest_ready = quest.ready
+        match3.set_popup_header(quest_form, quest.title, quest.subtitle)
+        local playable = R.prog.level < rules.LEVELS
+        assert(quest_form:push{icon=quest.icon, about=quest.about,
+            action=quest.ready and W.quest.deliver or playable and W.quest.play or W.card.back})
+        local needs = quest.ready and {} or quest.needs or {}
+        quest_form.values.show_needs = #needs > 0
+        assert(quest_form:set_items("needs", needs))
+        local notice = quest.ready and W.quest.ready or quest.waiting and W.quest.waiting
+        quest_form.values.show_notice = notice and true or false
+        quest_form:set("notice", notice or "")
+    end, handle=function(event)
+        local id = R.quest_card
+        R.overlay = R.OV_NONE
+        if event.id ~= "action" then return end
+        if quest_ready then R.quest_deliver(id)
+        elseif R.prog.level < rules.LEVELS then R.play_next() end
+    end})
+
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
@@ -1087,6 +1150,17 @@ function G.bind(R, over)
             pause = function() R.overlay = R.OV_PAUSE end,
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function() open_building(owes_building() and "wonder" or "building") end,
+            rail = function() return R.quest_rail and R.quest_rail() or {} end,
+            -- "build" is the next building: it opens the card Build opens.
+            rail_tap = function(id)
+                if id == "build" then open_building(owes_building() and "wonder" or "building") else R.open_quest(id) end
+            end,
+            -- The toolbar's round face, with the request's piece on it.
+            rail_paint = function(box, entry, st)
+                local state = entry.waiting and "disabled" or st.held and "pressed" or entry.ready and "selected"
+                    or st.hot and "hover" or "normal"
+                require("match3.buttons").paint(box, entry.icon, state)
+            end,
             play = R.play_next,
             play_label = function() return can_play() and tostring(R.prog.level + 1) or "" end,
             about = R.building_words,
@@ -1351,7 +1425,7 @@ function G.bind_completed_rewards(R, rules)
         local g = R.g
         if not g.earnings then return end
         R.prog.completed = {level=g.level, rng=g.rng, moves=g.moves, score=g.score,
-            earnings={table.unpack(g.earnings)}}
+            earnings={table.unpack(g.earnings)}, items=g.items}
         R.save_progress()
     end
 
@@ -1367,9 +1441,15 @@ function G.bind_completed_rewards(R, rules)
         local moves = s:int("completed_moves", completed and completed.moves or 0)
         local score = s:int("completed_score", completed and completed.score or 0)
         local earnings = s:ints("completed_earnings", purse(table.unpack(completed and completed.earnings or {})))
+        -- Quest pieces the board had counted, by the keys the game lists in R.item_keys.
+        local items = {}
+        for _, key in ipairs(R.item_keys or {}) do
+            local amount = s:int("completed_item." .. key, completed and completed.items and completed.items[key] or 0)
+            if amount > 0 then items[key] = amount end
+        end
         if reading then
             R.prog.completed = {level=level, rng=rng, moves=moves, score=score,
-                earnings={earnings[1],earnings[2],earnings[3]}}
+                earnings={earnings[1],earnings[2],earnings[3]}, items=items}
         end
     end
 
@@ -1378,6 +1458,7 @@ function G.bind_completed_rewards(R, rules)
         if not completed then return end
         local g = R.make_board(completed.level,completed.rng)
         g.rng, g.moves, g.score, g.earnings = completed.rng, completed.moves, completed.score, completed.earnings
+        g.items = completed.items or g.items
         local spec = rules.level_of(g)
         g.won, g.relics, g.oil_left = true, spec.relics, 0
         for i = 0, rules.CELLS-1 do g.oil[i] = 0 end

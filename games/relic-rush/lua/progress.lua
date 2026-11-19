@@ -2,6 +2,17 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local economy = require("economy")
+local quests = require("quests")
+
+-- The crew's requests (lua/quests.lua): what this save has banked and handed in.
+R.item_keys = {}
+for i, quest in ipairs(quests.list) do R.item_keys[i] = quest.key end
+function R.quest_state()
+    R.prog.quests = R.prog.quests or quests.new_state()
+    return R.prog.quests
+end
+local function owns(building) return island.owned(R.island, island.kinds[building]) > 0 end
+function R.open_quests() return quests.open(R.quest_state(), owns) end
 
 function R.debug_fill_earnings(g)
     if g.level ~= R.prog.level then return end
@@ -21,6 +32,7 @@ end
 -- every one unless --before-<key> names it.
 function R.board_context(preview)
     local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
+    if not preview and R.prog then restored.quests = quests.collecting(R.quest_state(), owns) end
     for _, unlock in ipairs(economy.unlocks) do
         local key = unlock.building
         if preview then
@@ -105,6 +117,15 @@ function R.present_board()
         local text, building = opening_unlock(g)
         if text then
             R.notice(building and building .. " · " .. text or text)
+        else
+            -- A request's piece on its first board.
+            local state = R.quest_state()
+            for _, piece in pairs(g.resource_yields or {}) do
+                if piece.item and not g.bonus_preview and (state.have[piece.item] or 0) == 0 then
+                    R.notice(piece.name .. " · Match them to fill the crew's request.")
+                    break
+                end
+            end
         end
     end
 end
@@ -162,5 +183,27 @@ function R.serialize_campaign(s)
         charges[tool] = num.clampi(charge, 0, economy.BONUS_THRESHOLD)
     end
     R.prog.bonus_charge = charges
+    quests.serialize(s, R.quest_state())
     serialize_completed(s)
+end
+
+-- Review entry points for the crew's requests, after the engine's own:
+--   --quest-have N     every open request has N pieces banked (up to its need)
+--   --quest-card KEY   the island, with that request's card open
+local debug_screens = R.debug_screens
+function R.debug_screens()
+    debug_screens()
+    local have = tonumber(app.arg("quest-have") or "")
+    if have then
+        local state = R.quest_state()
+        for _, quest in ipairs(R.open_quests()) do state.have[quest.key] = math.min(quest.need, have) end
+    end
+    if have and app.arg("victory") and R.g and R.g.items then   -- a won board with request pieces to bank
+        for _, quest in ipairs(quests.scheduled(R.g.level + 1)) do R.g.items[quest.key] = 9 end
+    end
+    local card = app.arg("quest-card")
+    if card and quests.by_key[card] then
+        R.on_island, R.toast_time = true, 0
+        R.open_quest(card)
+    end
 end

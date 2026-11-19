@@ -76,7 +76,7 @@ end
 local story_slots = {[13]=0}
 for board, target in pairs(story_slots) do
     local omitted = rules.levels[board].omit_kind
-    local expected_count = 5   -- every board spawns all five kinds
+    local expected_count = 6   -- every board spawns all six kinds
     local g = rules.game_start(board-1,123)
     R.g = g
     local kinds, free = {}, {}

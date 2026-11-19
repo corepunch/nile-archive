@@ -134,6 +134,25 @@ are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-onl
 to register `data/story/characters/keeper.png`. See the native review at
 [480 × 900](review/chapter-one/keeper-480.jpg) and [390 × 844](review/chapter-one/keeper-390.jpg).
 
+## Crew request pieces
+
+The crew's requests reuse five paintings from the campaign atlas; no artwork was added. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
+
+| Request | Frame | Expeditions written for | Pieces on the same board |
+| --- | --- | --- | --- |
+| Piece the harbor chart together | `campaign-chart` | 2–4 | Coins, leaf, water, berries |
+| Fill the supper pot | `campaign-berries` | 2–4 | Coins, leaf, water, chart |
+| Uncover the painted arrows | `campaign-marker` | 5–7 | Coins, bonus gem, water, tool roll |
+| Dig out the keeper's tools | `campaign-tools` | 5–7 | Coins, bonus gem, water, arrow |
+| Haul up the relay cable | `campaign-cable` | 8–10 | Coins, bonus gem, water, timber |
+| No request (sixth slot) | `campaign-quartz` | every board | Score only |
+
+The green arrow is scheduled from expedition 5, after the Hammer has taken the leaf's slot, so two green pieces never share a board. On the board a request piece has the same states as any piece: normal, selected, hint and refill, through the standard overlays.
+
+On the island each open request is a round marker on the [shared enamel button](../../../art/match3-buttons/README.md) with its piece and a banked/needed readout in the wallet look. States: normal, hover, pressed, ready (the selected face with a glow) and waiting for a board slot (the disabled face). The first marker is the next building's sprite and opens its card. The request card shows the piece at 132 px and the amount still needed as a resource amount.
+
+Reproduce: `./build/relic-rush --headless --mute --fresh --size 480x900 --city 2 --quest-have 12 --shot out.png`; add `--quest-card chart` for the card and use `--quest-have 99` for the ready state. `--level 3`, `--level 6` and `--level 9` show the pieces on their boards.
+
 ## Story pieces
 
 Board 13 still uses the folded note. Selection, hints and refills use the standard board overlays. The earlier Chapter 1 atlas slots are retained for asset review. The assignments below record where the art debuted.
@@ -294,7 +313,7 @@ the game does not recolour one gem into other kinds.
 | 2 / LEAF | Jade leaf | Green square gem | Timber | Ordinary matching kind; reused Wood purse icon |
 | 3 / SCARAB | Turquoise scarab | Blue teardrop | Water | Ordinary matching kind |
 | 4 / CRYSTAL | Purple crystal cluster | Purple diamond | Stone | Ordinary matching kind; reused Stone purse icon |
-| 5 / AMPHORA | Amber amphora | Orange star | Wheat | Not spawned: boards use five kinds (0–4); art kept for previews |
+| 5 / AMPHORA | Amber amphora | Orange star | Wheat | Ordinary matching kind; the campaign shows quartz or a crew request's piece here |
 
 Source: `art/tile-sets/source.png`, six columns × three packs. Runtime:
 `art/registered/tile-sets/{relics,jewels,resources}/{0..5}.png`. Import:

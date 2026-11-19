@@ -6,6 +6,7 @@
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
+local quests = require("quests")
 
 local stage, frames, wait, partner = -2, 0, 0, -1
 local smoke_sound   -- the sound setting before the smoke run toggles it
@@ -305,10 +306,35 @@ function R.smoke()
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
         assert(R.town.navigation:get("play") == "2", "smoke: Play still names the unfinished expedition")
+        -- The crew's requests stand down the left edge: the next building, then the well's two.
+        local rail = R.quest_rail()
+        assert(#rail == 3 and rail[1].id == "build" and rail[2].id == "chart" and rail[3].id == "supper"
+               and rail[2].value == "0/" .. quests.by_key.chart.need and not rail[2].ready and not rail[2].waiting,
+               "smoke: the well opens one request on each line")
+        local marker = R.town.rail_targets.chart
+        assert(marker and marker.x < 80 and marker.y > R.town.header_form.boxes.cap1:max().y,
+               "smoke: request markers stand at the left edge, under the wallet")
+        app.inject_click(marker); stage = 46
+    -- A short request's card plays on; a filled one hands in and plays its scene.
+    elseif stage == 46 and R.overlay == R.OV_QUEST and R.dialog_settled() then
+        assert(R.quest_card == "chart" and R.quest_form:get("action") == R.words.quest.play
+               and R.quest_form.boxes.needs, "smoke: a short request shows what is missing and offers Play")
+        app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)); stage = 47
+    elseif stage == 47 and R.overlay == R.OV_NONE then
+        R.quest_state().have.chart = quests.by_key.chart.need
+        app.inject_click(R.town.rail_targets.chart); stage = 48
+    elseif stage == 48 and R.overlay == R.OV_QUEST and R.dialog_settled() then
+        assert(R.quest_form:get("action") == R.words.quest.deliver and not R.quest_form.boxes.needs,
+               "smoke: a filled request offers to hand it in")
+        app.inject_click(R.quest_form.boxes.action:center() + vec2(0, R.drop / 2)); stage = 49
+    elseif stage == 49 and R.overlay == R.OV_NONE then   -- its scene has been tapped through above
+        local rail = R.quest_rail()
+        assert(R.quest_state().done.chart and R.prog.story_seen["quest-chart"] and #rail == 2 and rail[2].id == "supper",
+               "smoke: handing a request in plays its scene and clears its marker")
         app.inject_click(R.town.buttons.play); stage = 45
     elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and R.g.moves == shop.resume_moves, "returning from island must preserve the suspended attempt")
-        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> level 2 from Play -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> resume expedition")
+        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> level 2 from Play -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> request card (short, then handed in with its scene) -> resume expedition")
         app.quit()
     end
 end

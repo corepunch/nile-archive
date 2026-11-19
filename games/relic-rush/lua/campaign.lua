@@ -8,7 +8,7 @@ local boards, budgets = require(here .. "boards"), require(here .. "level_moves"
 
 local dress = {floor={normal="tile-cell-normal", covered="tile-tablet-single", tablet_hint=true}}
 local opening_lessons = {
-    [4] = "Match four through the chained piece to free it. Then clear its plaque.",
+    [4] = "Match three through the chained piece to free it. Then clear its plaque.",
     [9] = "Break the chain at the entrance to feed the empty terrace below.",
     [12] = "Match frozen pieces to break the ice. Match beside carved stones to break them.",
     [34] = "Break the gate chains to refill the gallery below.",
@@ -25,11 +25,11 @@ for i, b in ipairs(boards) do
         goals={"oil"}, dress=dress, background=(i - 1) // 5 % 2 + 1}
 end
 
--- Later chapters still use a story piece in one of the five colour slots.
+-- Later chapters still use a story piece in one of the six colour slots.
 levels[13].story_piece, levels[13].goal_kind = "note", 0 -- gold replaces the sun idol
 levels[30].signal = "landing"
 
 local shapes = {}
 for i, l in ipairs(levels) do shapes[i] = l.name end
 
-return {levels=levels, colors=5, shapes=shapes, wonder_levels={1,4,7,10,13,16,19,23,26,29}}
+return {levels=levels, colors=6, shapes=shapes, wonder_levels={1,4,7,10,13,16,19,23,26,29}}

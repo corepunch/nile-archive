@@ -77,7 +77,7 @@ do
     check(island.island_place_next(c,bank,11,0),'confirm the farm')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
-        check(g.spawn_kinds==nil and rules.COLORS==5,'every expedition keeps its five kinds')
+        check(g.spawn_kinds==nil and rules.COLORS==6,'every expedition keeps its six kinds')
         local charge_kinds=0
         for _,piece in pairs(g.resource_yields) do if piece.tool then charge_kinds=charge_kinds+1 end end
         check(charge_kinds==(g.bonus and 1 or 0),'only the selected family spawns')
@@ -87,13 +87,13 @@ do
     check(economy.board_backdrop(rules.levels[14],14,{gateway=true})==2,'port opens the temple backdrop')
 end
 
--- The landing opens with Cradle of Rome's pool. Its leaf, flower and amphora
--- use the normal scoring path and pay nothing; only the two coins pay.
+-- The landing opens with Cradle of Rome's pool and quartz. Its leaf, flower,
+-- amphora and quartz use the normal scoring path and pay nothing; only the two coins pay.
 do
     local g = rules.game_start(0,123)
     local keys = {}
     for kind = 0, rules.COLORS - 1 do keys[kind + 1] = economy.pieces[kind].key end
-    check(table.concat(keys,' ')=='coin silver-coin leaf flower amphora',"the base pool is Cradle of Rome's first level")
+    check(table.concat(keys,' ')=='coin silver-coin leaf flower amphora quartz',"the base pool is Cradle of Rome's first level and quartz")
     for kind, piece in pairs(g.resource_yields) do
         check(piece.slot==economy.GOLD,'before any restoration a board pays Coins only: ' .. kind)
     end

@@ -404,7 +404,7 @@ def main():
         problems = []
         layout = board(rows, problems)
         symmetry(rows, layout, problems)
-        info = summarize(number, head, layout, problems, 4 if args.game == "relic-rush" else 3, game=args.game) if layout else {}
+        info = summarize(number, head, layout, problems, 3, game=args.game) if layout else {}
         levels.append((number, head, layout))
         status = 'ok ' if not problems else 'BAD'
         failed += bool(problems)
