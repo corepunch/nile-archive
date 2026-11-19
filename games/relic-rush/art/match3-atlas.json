@@ -1835,21 +1835,21 @@
         "registered": "art/registered/square-cells/square-frame-5-leaf.png",
         "foliage": {
           "crop": [
-            80,
-            588,
-            464,
-            921
+            85,
+            90,
+            1168,
+            1105
           ],
           "anchor": [
-            280,
-            898
+            841,
+            366
           ],
-          "scale": 0.35,
-          "turn": -119,
-          "source": "engine/art/board-frame/decorations-source.png",
+          "scale": 0.1,
+          "turn": -29,
+          "source": "games/relic-rush/art/papyrus-board/overhead-leaves.png",
           "mount": [
-            112,
-            36
+            94,
+            17
           ],
           "size": [
             128,
@@ -1930,21 +1930,21 @@
         "registered": "art/registered/square-cells/square-frame-21-leaf.png",
         "foliage": {
           "crop": [
-            80,
-            588,
-            464,
-            921
+            85,
+            90,
+            1168,
+            1105
           ],
           "anchor": [
-            280,
-            898
+            841,
+            366
           ],
-          "scale": 0.35,
-          "turn": -119,
-          "source": "engine/art/board-frame/decorations-source.png",
+          "scale": 0.1,
+          "turn": -29,
+          "source": "games/relic-rush/art/papyrus-board/overhead-leaves.png",
           "mount": [
-            112,
-            36
+            94,
+            17
           ],
           "size": [
             128,
@@ -1989,21 +1989,21 @@
         "registered": "art/registered/square-cells/square-frame-37-leaf.png",
         "foliage": {
           "crop": [
-            80,
-            588,
-            464,
-            921
+            85,
+            90,
+            1168,
+            1105
           ],
           "anchor": [
-            280,
-            898
+            841,
+            366
           ],
-          "scale": 0.35,
-          "turn": -119,
-          "source": "engine/art/board-frame/decorations-source.png",
+          "scale": 0.1,
+          "turn": -29,
+          "source": "games/relic-rush/art/papyrus-board/overhead-leaves.png",
           "mount": [
-            112,
-            36
+            94,
+            17
           ],
           "size": [
             128,
@@ -2060,21 +2060,21 @@
         "registered": "art/registered/square-cells/square-frame-85-leaf.png",
         "foliage": {
           "crop": [
-            80,
-            588,
-            464,
-            921
+            85,
+            90,
+            1168,
+            1105
           ],
           "anchor": [
-            280,
-            898
+            841,
+            366
           ],
-          "scale": 0.35,
-          "turn": -119,
-          "source": "engine/art/board-frame/decorations-source.png",
+          "scale": 0.1,
+          "turn": -29,
+          "source": "games/relic-rush/art/papyrus-board/overhead-leaves.png",
           "mount": [
-            112,
-            36
+            94,
+            17
           ],
           "size": [
             128,
@@ -2125,9 +2125,6 @@
       "art/match3-square/lighting-prompt.txt": "44648f991d91d3af80a399361aa7054486eab14e22779a9296c803b4809de78c",
       "art/match3-square/prompt.txt": "9f05ab473fdaf872c8a7c6c4523e9d3e5481e8ac43dc4bad4db73b2c47f00261",
       "art/match3-square/source.png": "0d0d99c3ddd4c37aba26bb6f0d6f40af86d10b91ce77ca68aa39fdf4cc03e354",
-      "engine/art/board-frame/decorations-source.png": "f05b1c1c9f487daad786bd8f14653dd2ab38d352d5524f9bf706ab1e9c3f3138",
-      "engine/art/board-frame/decorations.json": "1c47b879da60acbd6c11321443f52e9282aa5708976e4f3b07867c7eb76c0f63",
-      "engine/art/board-frame/decorations.prompt.txt": "1c796b97b6da4a40b92044b183c2e73eef4b258891a18f3ba785f783e1d49690",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
       "engine/art/hex-tile/hex-mask-preview.png": "43b59e7300f7f4377f03d65db8f33f0e6920ee94694e14e7c401af93fcdd344f",
       "engine/art/match3/kenney-smoke/whitePuff00.png": "6a94cdfef4752465348840e1c127493ce9cafbe65093541d348c64d3985d7b9b",
@@ -2146,6 +2143,8 @@
       "games/relic-rush/art/papyrus-board/contact-layout.png": "df0a25c1b3a482d7ebff5857aabbe3ba54101d7d64172b419187bf826c32b7a3",
       "games/relic-rush/art/papyrus-board/contact-prompt.txt": "997fe55407e1b1f7363ffa3c947375693538534011fe17340d4a988ebe2ac427",
       "games/relic-rush/art/papyrus-board/contact.png": "9d6bf1ad5c433661c133136d1b26029b6f3e1a133ebb8d76c70a29c3d9b70b74",
+      "games/relic-rush/art/papyrus-board/overhead-leaves-prompt.txt": "84798be51cfb6cb1a67bb8dda4e2205d93ac210bbe307276fdb6e93aa7e115e6",
+      "games/relic-rush/art/papyrus-board/overhead-leaves.png": "605f00bc5bc2336a28a0793f0f6e5cc8541ef438dd0d8966cae03fb773bc93d0",
       "games/relic-rush/art/papyrus-board/stone-cracks-prompt.txt": "70221cb96d486e16d9932bedf42e8b59b6bfe306d8dd9d699b0000b2469fb42d",
       "games/relic-rush/art/papyrus-board/stone-cracks.png": "994fd28093723bc14df96d3dd716261f6fc58a4a16360a6d139ea97f5c0e418d",
       "games/relic-rush/art/papyrus-board/stone-grain-prompt.txt": "71d65ecd584cbf681e73fc77bdf433e45f409ce4a04078f2ff5fe9d819f814a7",
@@ -2188,24 +2187,24 @@
       "games/relic-rush/art/registered/resource-pieces/water.png": "5eaaa529bf7de275198e08ddaba50abbd4e2248299991406da9511898f7be4b5",
       "games/relic-rush/art/registered/result-icons.png": "a4f1254f574a9d287b8d2d2345cb7823ea1b5c3407baed8b96e3b7407e102a5e",
       "games/relic-rush/art/registered/square-cells/square-double.png": "58035e2c993c644898cedf15d74cf4d50b2785301a7d0a0c03ea842242a00dc7",
-      "games/relic-rush/art/registered/square-cells/square-frame-1.png": "f7b163f71716f4ff17ad5dfb017b6565eb4cf62a8c35821ca2b1d90bbb9eb0d8",
-      "games/relic-rush/art/registered/square-cells/square-frame-10.png": "ed2402a5b8840f6c1e73c1de97bd7655f7fbfd84856e5d4612208892bd404d6e",
-      "games/relic-rush/art/registered/square-cells/square-frame-17.png": "ed842c1edbd25eedebf360bae2e5199f48febf5cc3b18dc6edca4c1942971416",
-      "games/relic-rush/art/registered/square-cells/square-frame-170.png": "da6ada012963985bbee7acf5eeac59f51d9732b750de42b66977d584071171be",
-      "games/relic-rush/art/registered/square-cells/square-frame-18.png": "fb8cf88fadf8beb17aaf35089d4563e33c1960d19b2c22d18dfa6b89535fdea7",
-      "games/relic-rush/art/registered/square-cells/square-frame-2.png": "5cf7b774b453d980d183e08320671534b841819d802359c9a4e2940486d29da6",
-      "games/relic-rush/art/registered/square-cells/square-frame-21-leaf.png": "9be153fe1857459e41c6b6ff7ceef59e67ad38a6118f11c04311d884897ccee8",
-      "games/relic-rush/art/registered/square-cells/square-frame-21.png": "fba34728e97004abfe296c42de527b3d2c0ba989e674453667e38887d7c16b4b",
-      "games/relic-rush/art/registered/square-cells/square-frame-34.png": "58b1854fed843d16f180a6ddee212b78c3bc647c3bc3fdd1fd70c1f7c94ddcbe",
-      "games/relic-rush/art/registered/square-cells/square-frame-37-leaf.png": "e454a05b30be5001271a062821e12d9d59d15fcbe4c1182a013f526dced120b1",
-      "games/relic-rush/art/registered/square-cells/square-frame-37.png": "38b32875a37310cb3647d74c23d3f9f79ee3379cda8a88432abfec7b99654e3f",
-      "games/relic-rush/art/registered/square-cells/square-frame-41.png": "e364e0d9c7809c6b0926b850c5487b77e92a70303d8cf26e226875669f3f6f14",
-      "games/relic-rush/art/registered/square-cells/square-frame-42.png": "99baf67b5c1d74ad0a5589aa06e29d6764df3f1bdc98343989673491c4946afb",
-      "games/relic-rush/art/registered/square-cells/square-frame-5-leaf.png": "59dd0cf45e3219803b668a9eb77b07c255b0ca705e74b41a74850a1b137181d5",
-      "games/relic-rush/art/registered/square-cells/square-frame-5.png": "78afdc7033ec6b0709deee772a75af01118449a574925e4e5ddb0071a267a8d9",
-      "games/relic-rush/art/registered/square-cells/square-frame-85-leaf.png": "93d4807a5b9f70629664b3ca011f66bbc0b9e91f446bea948a8c7f47b0075783",
-      "games/relic-rush/art/registered/square-cells/square-frame-85.png": "75aad9f135d090720ac6f372712f0a43281f855e55ce1a56144941488b53aa69",
-      "games/relic-rush/art/registered/square-cells/square-frame-9.png": "10ed6d61bc59987ab20f912f16e1b20caafbe12f5f0272bbef05305392aeea0a",
+      "games/relic-rush/art/registered/square-cells/square-frame-1.png": "67fc40a6a3360190e45dce1dd17e4a1293b2ff2ae54c62ca45f5ced3e2809f6f",
+      "games/relic-rush/art/registered/square-cells/square-frame-10.png": "cece30d0d0f52d48d13c70f8f5adeed5f33211ce4f1032217fdb22c0999784a3",
+      "games/relic-rush/art/registered/square-cells/square-frame-17.png": "4744e4e1d7e11c6fd7c5ed72e993723615718a0951cfe77ccaaadf1904e86ec6",
+      "games/relic-rush/art/registered/square-cells/square-frame-170.png": "950b4b8038e304f3e40a965bfe545cfc77ea739ebddf3952a9cc477317986685",
+      "games/relic-rush/art/registered/square-cells/square-frame-18.png": "b5bf6a160c5f27892ebba37ea6aa7a32ecce17e19f26fa024e05a159227d6808",
+      "games/relic-rush/art/registered/square-cells/square-frame-2.png": "b501a43418ecddd4bc6842a81f676c5e0286d26bf18fced6fc33f00a42e16aa5",
+      "games/relic-rush/art/registered/square-cells/square-frame-21-leaf.png": "5cd3a4c640d1f4ae546e481572dc99cdb18adb3737efb54e18420b597b3f978e",
+      "games/relic-rush/art/registered/square-cells/square-frame-21.png": "12ba5445cb130640b7b5cfda5f47dae1ba33439589c24efccec7f247db83c89a",
+      "games/relic-rush/art/registered/square-cells/square-frame-34.png": "f4f9570b20c6ae7b0cf6a9b2edb58937d80873acf47b6a9c4dad6af0c6d5bdfd",
+      "games/relic-rush/art/registered/square-cells/square-frame-37-leaf.png": "0d08a1e191d7cdca0aa0c927d54a0faccbe82f7a6571c25b0f72d5c04c1e1ff7",
+      "games/relic-rush/art/registered/square-cells/square-frame-37.png": "eb0ad30823a6e46595879e44b1fa2cdbde277f7152c99031fe76070d512ab01d",
+      "games/relic-rush/art/registered/square-cells/square-frame-41.png": "0f584598d81b407632b49198b8077aa0314bc7ca98467a6ae21f2494a446f367",
+      "games/relic-rush/art/registered/square-cells/square-frame-42.png": "69827c47ada3bfbd9473cb823f0ba63189aa1457e54052ab2012a707e159f382",
+      "games/relic-rush/art/registered/square-cells/square-frame-5-leaf.png": "bfdc5b66a6f258bac5473e3c66fcd93f73732e171873e1dc03dea5dc63c365c8",
+      "games/relic-rush/art/registered/square-cells/square-frame-5.png": "9a536994ec57127480eaa8f0a2bd0058597ad6c113b2923fdb983a6df94a4b18",
+      "games/relic-rush/art/registered/square-cells/square-frame-85-leaf.png": "07a26d8fb7dbb3a3b6a282d47061c4abf88fe7e7329fe33e65398929baf2b6c2",
+      "games/relic-rush/art/registered/square-cells/square-frame-85.png": "b978e638e8535aab2cc1c8899549b7d8640e70067be22ef35710ca7e68fdf563",
+      "games/relic-rush/art/registered/square-cells/square-frame-9.png": "45564a5b31d616729e88855ca3441b65ae2f76ec510957f7d9270d65a776f0f7",
       "games/relic-rush/art/registered/square-cells/square-grout.png": "9ed8a7ade23737f7c325ec4878d9cc22530e525748bf5a0e90d4d44734c41c30",
       "games/relic-rush/art/registered/square-cells/square-plain.png": "fe2b1608a494c03778e6caa6d6ee6b48a0a4d15817ce39ef0f985aa8948418b4",
       "games/relic-rush/art/registered/square-cells/square-selected.png": "fddece0db27db24b2ef8ad346c0341228edf91febfb67f5edee541a2a67ef579",
@@ -2240,14 +2239,14 @@
       "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "77d1488d6c5005236dc0c1cb35dc98fcae22b686d7010c99ca3392273d2c5ce8",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368",
-      "tools/square_board_frame.py": "67d0cf3a1c7cbf2a37e98a461e419f888b3169b3161fb0a3f4a8a5e5a5458e89"
+      "tools/square_board_frame.py": "ebc128bf411c58a53cd99f44a0be41008a26f3cbe6e177c0cdae7128d92ebab2"
     },
     "outputs": {
       "games/relic-rush/art/registered/tile-sets/jewels/0.png": "1bf21afc104f2c59a3016acd1a4ce89739fb17da324f884b5ea771c2845c3311",
       "games/relic-rush/art/registered/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/art/registered/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
       "games/relic-rush/data/board/blockers.png": "ce55e86bc3272fb5e8b67d5e0608bce7d4a3e370c807a155c6a81964df366502",
-      "games/relic-rush/data/board/cells.png": "0753410c64ef99aa85da803451a7ba945fa49242b113aec8ce34fa00f8c78862",
+      "games/relic-rush/data/board/cells.png": "97eb61a91c4695e297492ecd956816572dbabe77d46f96188cf45998d0295eae",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
       "games/relic-rush/data/board/pieces.png": "1cdd3bd444e44335b1c1e9806e187392042af2845bf259d6a951f66dfb7a901b",
