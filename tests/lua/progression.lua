@@ -14,11 +14,11 @@ check(p.wallet[1] == 0 and p.wallet[4] == 1 and p.level == 1, "first clear only 
 check(not island.can_buy(c, p.wallet, p.level, 0), "story checkpoint does not give away the arch")
 
 local replay = rules.game_start(0, 7, 0)
-replay.earnings, replay.moves = {60, 0, 0}, 999
+replay.earnings, replay.moves = {80, 0, 0}, 999
 check(not rules.progress_reward(p, replay, island.wonders), "a failed wish banks nothing")
 replay.won = true
 check(rules.progress_reward(p, replay, island.wonders), "replay can bank resources")
-check(p.wallet[1] == 60 and p.wallet[4] == 1 and p.level == 1, "replays pay actual matches")
+check(p.wallet[1] == 80 and p.wallet[4] == 1 and p.level == 1, "replays pay actual matches")
 check(island.island_place_next(c, p.wallet, p.level, 0), "funded arch can be built")
 check(p.wallet[1] == 10, "confirmed placement debits Gold once")
 
@@ -51,13 +51,13 @@ end
 local wave = rules.new_match()
 line(wine, 8, 3, wave)
 check(wine.earnings[2] == 9 and wine.earnings[3] == 0, "mulled wine earns treats to fund the stable")
-local wood = rules.game_start(4, 18)
+local wood = rules.game_start(11, 18)
 check(#wood.spawn_kinds == 5 and wood.resource_yields[4].slot == 3
-      and not rules.game_start(3, 18).resource_yields[4], "pine materials start after the workshop opens")
+      and not rules.game_start(10, 18).resource_yields[4], "pine materials start after the workshop opens")
 line(wood, 4, 4, wave)
 check(wood.earnings[3] == 20 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
       "four pieces credit four times the base resource")
-local hammer = rules.game_start(2, 42, {reindeer_stable=true})
+local hammer = rules.game_start(6, 42, {reindeer_stable=true})
 local has_vase = false
 for _, kind in ipairs(hammer.spawn_kinds) do if kind == 20 then has_vase = true end end
 check(has_vase and #hammer.spawn_kinds == 5 and not hammer.resource_yields[20],
@@ -71,30 +71,30 @@ check(hammer.tools[1] == 1 and hammer.tool_meter[1] == hammer.tool_threshold and
 check(rules.game_tool(hammer, 0, column_top(hammer), wave) and hammer.tools[1] == 0,
       "the charged hammer can be spent")
 
-local bakery, cocoa = rules.game_start(7, 42), rules.game_start(9, 42)
+local bakery, cocoa = rules.game_start(21, 42), rules.game_start(31, 42)
 check(#bakery.spawn_kinds == 5 and bakery.resource_yields[7].amount == 4 and not bakery.resource_yields[8],
       "the bakery replaces mulled wine with gingerbread")
 check(#cocoa.spawn_kinds == 5 and cocoa.resource_yields[11].amount == 5 and not cocoa.resource_yields[7],
       "the kiosk replaces gingerbread with cocoa")
 local quarried = {lumber=true, chapel=true}
-local masonry = rules.game_start(8, 42, quarried)
+local masonry = rules.game_start(26, 42, quarried)
 check(#masonry.spawn_kinds == 5 and masonry.resource_yields[12].slot == 3 and masonry.resource_yields[12].amount == 7
       and not masonry.resource_yields[4], "the chapel gives dressed stone the timber slot")
-check(rules.game_start(7, 42, quarried).resource_yields[4].amount == 5,
+check(rules.game_start(25, 42, quarried).resource_yields[4].amount == 5,
       "replays of earlier wishes retain the timber")
-check(not rules.game_start(8, 42, {lumber=true}).resource_yields[12], "dressed stone requires construction")
-local later = economy.board_loadout(18, {chapel=true, toys=true, log_cabin=true}, 42)
-check(later[6].slot == 1 and later[6].amount == 6 and later[12].slot == 3 and later[16].amount == 6,
-      "toys earn tokens and the log cabin's pretzels earn treats alongside dressed stone")
-local gifts = {gifts=true, igloo=true, giant_ornament=true, rink=true, presents=true, tree=true}
-local snowman, reindeer, cap = economy.board_loadout(27, gifts), economy.board_loadout(28, gifts), economy.board_loadout(30, gifts)
+check(not rules.game_start(26, 42, {lumber=true}).resource_yields[12], "dressed stone requires construction")
+local later = economy.board_loadout(55, {chapel=true, toys=true, log_cabin=true}, 42)
+check(later[6].slot == 1 and later[6].amount == 7 and later[12].slot == 3 and later[21].amount == 6,
+      "toys earn tokens and the lakeside smokehouse's trout earns treats alongside dressed stone")
+local gifts = {glassblower=true, rink=true, santa_workshop=true, sleigh=true, tree=true}
+local snowman, reindeer, cap = economy.board_loadout(82, gifts), economy.board_loadout(87, gifts), economy.board_loadout(97, gifts)
 check(snowman[17].amount == 10 and not snowman[14] and reindeer[18].amount == 11 and not reindeer[17]
       and cap[19].amount == 12 and not cap[18], "premium goods upgrade the same coin slot one at a time")
-local _, carousel = economy.board_loadout(24, {carousel=true})
+local _, carousel = economy.board_loadout(77, {carousel=true})
 check(carousel.win_income[2] == 30, "the carousel still pays its Treats per win")
-local winter_catch = economy.board_loadout(25, {log_cabin=true, sleigh=true})
-check(winter_catch[21].slot == 2 and winter_catch[21].amount == 7 and not winter_catch[16],
-      "the sleigh's smoked trout upgrades the late Treats slot")
+local winter_catch = economy.board_loadout(47, {log_cabin=true, station_kiosk=true})
+check(winter_catch[16].slot == 2 and winter_catch[16].amount == 7 and not winter_catch[21],
+      "the station kiosk's pretzels upgrade the smokehouse's trout in the late Treats slot")
 
 local lightning = rules.game_start(9, 7, {candles=true, bonus_charge={[4]=90}})
 check(rules.game_tool_area(lightning, 3, rules.hex_center()) == nil,

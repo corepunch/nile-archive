@@ -173,6 +173,7 @@ if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-christmas-market-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
     for epoch = 1, 5 do frame("scenario-christmas-market-town-epoch-" .. epoch, "480x900", "--epoch " .. epoch .. " --frames 3") end
 end
+rules("relic_balance")
 rules("tune_moves")
 
 shot("square-winter-wreath", "390x844", "--level 2 --frames 6 --safe-area 0,47,0,34")

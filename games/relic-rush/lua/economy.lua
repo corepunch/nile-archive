@@ -33,28 +33,29 @@ E.bonuses = B
 
 -- The twenty purchases in the Windows sequel's epochs.xml. Stable catalogue keys
 -- retain the island's original artwork and old saves. The eight bonus IDs use
--- their first-game identities. first_level sets the small board's pacing.
+-- their first-game identities. One purchase opens every five expeditions,
+-- four to each of the five epochs; first_level is the first board it supplies.
 E.unlocks = {
     {building="well", rome="city_well", tile=5, first_level=2, backdrop=1, key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3},
-    {building="log_cabin", rome="city_hunter", tile=600, first_level=5, bonus=B.hammer},
-    {building="workshop", rome="city_sawmill", tile=6, first_level=8, backdrop=1, key="timber", name="Timber bundles", kind=4, slot=E.SUPPLIES, amount=5},
-    {building="camp", rome="city_village", tile=601, first_level=11, backdrop=1, bonus=B.bomb},
-    {building="market", rome="city_farm", tile=7, first_level=12, key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4},
-    {building="trading_post", rome="city_mine", tile=8, first_level=13, key="stone", name="Dressed stones", kind=4, slot=E.SUPPLIES, amount=7},
-    {building="water_mill", rome="city_mill", tile=9, first_level=13, key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5},
-    {building="clock_tower", rome="city_thermae", tile=602, first_level=14, bonus=B.shield},
-    {building="gateway", rome="city_port", tile=10, first_level=14, backdrop=2, key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6},
-    {building="lodge", rome="city_oktavia", tile=603, first_level=17, backdrop=1, bonus=B.hourglass, key="fish", name="Red mullet", kind=3, slot=E.PROVISIONS, amount=7},
-    {building="amphitheater", rome="city_coliseum", tile=11, first_level=18, key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6},
-    {building="map_room", rome="city_vestalki", tile=604, first_level=19, bonus=B.lightning, key="pearl", name="Pearls", kind=0, slot=E.GOLD, amount=7},
-    {building="archive", rome="city_aqueduct", tile=12, first_level=20, backdrop=2, key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7},
-    {building="lighthouse", rome="city_lighthouse", tile=605, first_level=21, bonus=B.plus},
-    {building="beached_ship", rome="city_neron", tile=13, first_level=22, key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8},
-    {building="observatory", rome="city_mausoleum", tile=606, first_level=24, backdrop=2, bonus=B.mixer},
-    {building="aviary", rome="city_pantheon", tile=14, first_level=25, key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9},
-    {building="museum", rome="city_theatre", tile=15, first_level=26, key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10},
-    {building="temple", rome="city_forum", tile=607, first_level=27, backdrop=2, bonus=B.star},
-    {building="fountain", rome="city_center", tile=16, first_level=30, backdrop=1, key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11},
+    {building="log_cabin", rome="city_hunter", tile=600, first_level=7, bonus=B.hammer},
+    {building="workshop", rome="city_sawmill", tile=6, first_level=12, backdrop=1, key="timber", name="Timber bundles", kind=4, slot=E.SUPPLIES, amount=5},
+    {building="camp", rome="city_village", tile=601, first_level=17, backdrop=1, bonus=B.bomb},
+    {building="market", rome="city_farm", tile=7, first_level=22, key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4},
+    {building="trading_post", rome="city_mine", tile=8, first_level=27, key="stone", name="Dressed stones", kind=4, slot=E.SUPPLIES, amount=7},
+    {building="water_mill", rome="city_mill", tile=9, first_level=32, key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5},
+    {building="clock_tower", rome="city_thermae", tile=602, first_level=37, bonus=B.shield},
+    {building="gateway", rome="city_port", tile=10, first_level=42, backdrop=2, key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6},
+    {building="lodge", rome="city_oktavia", tile=603, first_level=47, backdrop=1, bonus=B.hourglass, key="fish", name="Red mullet", kind=3, slot=E.PROVISIONS, amount=7},
+    {building="amphitheater", rome="city_coliseum", tile=11, first_level=52, key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6},
+    {building="map_room", rome="city_vestalki", tile=604, first_level=57, bonus=B.lightning, key="pearl", name="Pearls", kind=0, slot=E.GOLD, amount=7},
+    {building="archive", rome="city_aqueduct", tile=12, first_level=62, backdrop=2, key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7},
+    {building="lighthouse", rome="city_lighthouse", tile=605, first_level=67, bonus=B.plus},
+    {building="beached_ship", rome="city_neron", tile=13, first_level=72, key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8},
+    {building="observatory", rome="city_mausoleum", tile=606, first_level=77, backdrop=2, bonus=B.mixer},
+    {building="aviary", rome="city_pantheon", tile=14, first_level=82, key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9},
+    {building="museum", rome="city_theatre", tile=15, first_level=87, key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10},
+    {building="temple", rome="city_forum", tile=607, first_level=92, backdrop=2, bonus=B.star},
+    {building="fountain", rome="city_center", tile=16, first_level=97, backdrop=1, key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11},
 }
 bonuses.index_unlocks(E.unlocks)
 

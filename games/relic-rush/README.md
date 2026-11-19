@@ -6,7 +6,7 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first square match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch into the first of twenty expeditions. Swap adjacent pieces, match horizontally or vertically, and clear the turquoise plaques within the move budget. Claim the resources and tap Build to see the next restoration. Each board uses five piece kinds and fits inside a 9 × 12 square grid.
+Launch into the first of 100 expeditions. Swap adjacent pieces, match horizontally or vertically, and clear the turquoise plaques within the move budget. Claim the resources and tap Build to see the next restoration. Each board uses five piece kinds and fits inside a 9 × 12 square grid.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
@@ -24,8 +24,7 @@ The cottage at the lower left opens the next restoration. The card shows the pri
 The top wallet shows Coins, Supplies and Food on both screens. Matches
 preview in the wallet during an expedition and bank after a successful clear.
 The completion dialog shows the expedition score.
-The Well costs Coins. The Workshop, Market, Archive and Temple use all three
-resources. Boards cleared unlock shop stock and land. There are no lives: a failed
+The Spring well costs Coins alone. Later restorations add Food and Supplies, and from the Expedition camp on every purchase uses all three. Boards cleared unlock shop stock and land. There are no lives: a failed
 board can be retried at once.
 
 Tap a placed building for its name and subtitle above it. Only one stays open. The next press dismisses it. A stationary hold picks up a building through the shared mover, with Confirm/Cancel preserving saved state.
@@ -147,9 +146,13 @@ Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, T
 
 ## Story and world
 
-In **A Light Below** (levels 1–10), Mara draws the first bucket at the Well and Elena spots a light below the cliff. Tomas makes a cable reel from Sawmill timber. The Village takes up the watch from shore.
+The [script](docs/story.md) runs 100 expeditions in five chapters of twenty. Every expedition has a scene on its first clear, and ten story restorations (after levels 1, 16, 21, 36, 41, 46, 61, 66, 91 and 96) play a scene when placed. The question is who is signalling back to Mara's lamp.
 
-In **The Keeper’s Return** (levels 11–20), the crew uses the Port register, the meeting hall at Curia Octavia and the Aqueduct inspection cabinet. Ines’s note identifies the signaler, and her signed plan gives the crew a way to repair the quay wall. Chapter 3 carries the repair and ownership dispute to the finale. The signal plate and Ines’s reply on board 30 pay off the three flashes seen from shore.
+1. **A Light Below** (1–20): the crew restores the Spring well, finds the watch book at the Expedition camp and sees three flashes from under the cliff. The reply choice is at the camp (16).
+2. **Tracks on the Terrace** (21–40): the Jungle market and Tide clock tower lead to a note, "Wall unsafe. I. R.", and a crack through the quay wall.
+3. **The Keeper's Return** (41–60): the Harbour plaza register and the Harbour lodge name Ines, Tomas's sister, and point to cabinet seventeen.
+4. **The Claim** (61–80): the Keeper's archive and the Lighthouse bring Ines's signed plan and second landing, and Adrian's claim on the island.
+5. **Keep the Light** (81–100): the Temple of the Sun and Jade fountain end it. Adrian surrenders the claim, the bypass holds, and Ines answers with three flashes and comes home.
 
 A first clear advances the expedition counter. Every won expedition banks its matched resources. Construction, currency and story progress persist across saves.
 
@@ -172,10 +175,10 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 3. Claim the matched resources. A first clear counts as a cleared board.
 4. Return to the island. At a restoration milestone, check the price and play the next expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. If you build later, the island story picks up where you left it.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
-6. See how the crew uses what you built, then set out again. The twenty boards open the first fourteen restorations.
+6. See how the crew uses what you built, then set out again. The 100 boards open twenty restorations, one after every fifth board.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
-The Well costs 35 Coins. Its buckets earn 3 Food each from expedition 2. The Hunter's Hut introduces Hammer, and the Sawmill introduces timber worth 5 Supplies per piece. Buying the Village replaces Hammer with Bomb. The Build card shows the price or the amounts still needed.
+The Spring well costs 70 Coins. Its water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The Build card shows the price or the amounts still needed.
 
 ### Tutorials and citizens (`lua/user_events.lua`)
 
@@ -201,28 +204,34 @@ has no art yet.
 
 ## Campaign
 
-The twenty square fields introduce single chains on level 4 and double chains on level 9. Tide Chamber closes Chapter 1. The second chapter crosses Choked Gateway’s two arms, Broken Aqueduct’s offset terraces and Moss Bridge’s diagonal before the double plaques in Heart of the Temple. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
+The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels: A Light Below (1–20), Tracks on the Terrace (21–40), The Keeper’s Return (41–60), The Claim (61–80) and Keep the Light (81–100). Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
 
 ## Buildings
 
-The playable ladder follows the first fourteen purchase positions from the Windows edition of Cradle of Rome 2. The [campaign balance check](docs/square-match3.md#construction-balance) measures the resources earned by clearing boards in order.
+The ladder has twenty purchases, one available after every fifth board (after levels 1, 6, 11 … 96), four per epoch. It follows the purchase order of the Windows edition of Cradle of Rome 2, with names that match the artwork (the Rome name is in brackets). The Spring well, Expedition camp, Jungle market, Tide clock tower, Harbour plaza, Harbour lodge, Keeper's archive, Lighthouse, Temple of the Sun and Jade fountain are story restorations with a placement scene and hold the next level; the others must be bought before the next story restoration. The [campaign balance check](docs/square-match3.md#construction-balance) fits the prices to the resources the bot earns by clearing boards in order, so the expected campaign needs no replays.
 
-| # | Building | After clear | Coins / Food / Supplies | Board reward |
-| --- | --- | ---: | --- | --- |
-| 1 | Well | 1 | 35 / 0 / 0 | Water buckets earn 3 Food each. |
-| 2 | Hunter's Hut | 4 | 225 / 65 / 0 | Unlocks Hammer. Hit one cell. |
-| 3 | Sawmill | 7 | 420 / 135 / 0 | Timber bundles earn 5 Supplies each. |
-| 4 | Village | 10 | 585 / 225 / 325 | Unlocks Bomb. Hit a 3 × 3 area. |
-| 5 | Farm | 11 | 290 / 110 / 170 | Ration jars earn 4 Food each. |
-| 6 | Quarry | 12 | 55 / 40 / 40 | Dressed stones earn 7 Supplies each. |
-| 7 | Mill | 12 | 70 / 80 / 65 | Grain bundles earn 5 Food each. |
-| 8 | Thermae | 13 | 10 / 50 / 35 | Unlocks Shield. Hit one row. |
-| 9 | Port | 13 | 15 / 50 / 40 | Shrimp earn 6 Food each. |
-| 10 | Curia Octavia | 16 | 330 / 715 / 465 | Red mullet earns 7 Food each. Hourglass adds five moves. |
-| 11 | Coliseum | 17 | 135 / 290 / 190 | Helmets earn 6 Coins each. |
-| 12 | House of the Vestals | 18 | 105 / 195 / 125 | Pearls earn 7 Coins each. Lightning strikes up to fifteen random cells. |
-| 13 | Aqueduct | 19 | 180 / 335 / 200 | Rings earn 7 Coins each. |
-| 14 | Lighthouse | 20 | 160 / 250 / 165 | Plus replaces Shield and inherits its charge. |
+| After level | Restoration | Reward | Coins / Food / Supplies |
+| ---: | --- | --- | --- |
+| 1 | Spring well (Well) | Water buckets | 70 / 0 / 0 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 645 / 235 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 1255 / 470 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 1180 / 445 / 600 |
+| 21 | Jungle market (Farm) | Ration jars | 1220 / 465 / 765 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 705 / 720 / 620 |
+| 31 | Water mill (Mill) | Grain bundles | 715 / 965 / 935 |
+| 36 | Tide clock tower (Thermae) | Shield | 710 / 1080 / 990 |
+| 41 | Harbour plaza (Port) | Shrimp | 620 / 995 / 890 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 695 / 1465 / 970 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 805 / 1900 / 1145 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 695 / 1475 / 855 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 970 / 1650 / 965 |
+| 66 | Lighthouse | Plus | 775 / 1345 / 790 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 970 / 1650 / 955 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1050 / 1585 / 945 |
+| 81 | Great aviary (Pantheon) | Sandals | 1645 / 2430 / 1420 |
+| 86 | Relic museum (Theatre) | Harps | 1780 / 2400 / 1420 |
+| 91 | Temple of the Sun (Forum) | Star | 2150 / 2640 / 1555 |
+| 96 | Jade fountain (Fountain) | Emeralds | 1825 / 2230 / 1285 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
@@ -240,11 +249,11 @@ The 1920 × 2880 world scrolls beyond the phone screen. Hidden six-neighbor land
 | Region | Boards cleared to open |
 | --- | ---: |
 | Harbor glade | 0 |
-| Sunlit coast | 6 |
-| Fern meadow | 9 |
-| Sun garden | 15 |
-| Ancient heights | 21 |
-| Temple ridge | 27 |
+| Sunlit coast | 15 |
+| Fern meadow | 30 |
+| Sun garden | 50 |
+| Ancient heights | 70 |
+| Temple ridge | 85 |
 
 A region must touch opened land and meet its boards-cleared gate. Expansion spends nothing. Regions do not open on a timer, and players do not need to build roads.
 
@@ -311,7 +320,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 - `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every board at least once in its seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
-- `--smoke --campaign` plays the thirty story expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap. All 47 story beats must play once, in script order, and be acknowledged, and the run must end on the finale with ten wonders and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
+- `--smoke --campaign` plays the 100 expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap. Every story beat must play once, in script order, and be acknowledged, and the run must end on the finale with the ten story restorations placed and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.
 
@@ -342,7 +351,7 @@ effects and the debug entry points are the engine's (`engine/lua/match3/game.lua
 - `lua/campaign.lua`, `lua/story_content.lua`, `lua/buildings.lua`, `lua/building_sprites.lua`: levels, the script and the building catalogue.
 - `lua/journey.lua`: the restoration schedule, recap and changing tap lines.
 - `lua/narrative.lua`: the cast.
-- `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten wonders as engine building definitions.
+- `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten story restorations as engine building definitions.
 - `lua/board.lua`: how cells, resource pieces and chains are painted.
 - `lua/screens.lua`: the results card, the guide's rows and icons, and the wallet and compass icons.
 - `lua/skin.lua`: the look as data (`ui.skin`).
@@ -372,7 +381,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-The offline prototype has twenty square boards, fourteen campaign purchases, repeatable scenery, six regions and local saves.
+The offline prototype has 100 square boards, twenty campaign purchases, repeatable scenery, six regions and local saves.
 
 ## Fast rule tests
 

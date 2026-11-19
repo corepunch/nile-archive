@@ -42,6 +42,13 @@ function R.serialize_campaign(s)
         if R.prog.level > economy.unlock_of("chapel").after then moved[chapel] = true end
         island.set_waived(R.island, moved)
     end
+    if reading and version < 7 then
+        -- Version 7 spread the twenty stalls over a hundred wishes and changed
+        -- their order, so old positions name other stalls. Start again from
+        -- what the save owns: stalls already passed stay optional.
+        island.set_waived(R.island, {})
+        island.waive_passed(R.island, R.prog.level)
+    end
     if reading and version < 2 then island.migrate_wallet(R.prog, R.island) end
     local legacy
     if reading and version < 5 then

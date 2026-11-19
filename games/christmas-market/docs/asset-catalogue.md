@@ -101,7 +101,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 
 | Asset | Source | Draft runtime | Meaning and supported states |
 | --- | --- | --- | --- |
-| 37 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration) | `data/city/buildings/<key>.png` | Ten sequential construction milestones, 15 decorations, 4 trees and 6 cottages, one Blender render each; placed and placement-preview use the same sprite, with engine lift/footprint feedback. See the [building catalogue](building-catalogue.md) |
+| 40 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration) | `data/city/buildings/<key>.png` | Ten sequential construction milestones, three more stalls (`firework_stall`, `station_kiosk`, `glassblower`: geometry render, awaiting paint-over, brief and repro command in the [building catalogue](building-catalogue.md#second-market-row-geometry-renders-awaiting-paint-over)), 15 decorations, 4 trees and 6 cottages, one Blender render each; placed and placement-preview use the same sprite, with engine lift/footprint feedback. See the [building catalogue](building-catalogue.md) |
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
 | Six festive puzzle kinds | `art/festive-pieces/source.png` | `data/board/pieces.png` | Gold bell, candy cane, holly, blue mitten, plum bauble and gingerbread. The original `art/icons.png` crops under `art/registered/tile-sets/festive/` are legacy exports. |

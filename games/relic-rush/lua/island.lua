@@ -29,8 +29,9 @@ for i, d in ipairs(M.buildings) do
     d.decoration = not (HOUSES[d.category] or d.road)
     M.kinds[d.key] = i - 1
 end
-M.wonder_kinds = {M.kinds.well, M.kinds.log_cabin, M.kinds.workshop, M.kinds.camp,
-    M.kinds.gateway, M.kinds.lodge, M.kinds.archive, M.kinds.observatory, M.kinds.temple, M.kinds.fountain}
+-- Two story restorations in each epoch of twenty expeditions (docs/story.md).
+M.wonder_kinds = {M.kinds.well, M.kinds.camp, M.kinds.market, M.kinds.clock_tower,
+    M.kinds.gateway, M.kinds.lodge, M.kinds.archive, M.kinds.lighthouse, M.kinds.temple, M.kinds.fountain}
 local story_kind = {}
 for i, kind in ipairs(M.wonder_kinds) do
     M.wonders[i] = M.buildings[kind + 1]
@@ -114,7 +115,7 @@ function M.restore_saved(c)
 end
 
 local zone_names = {"Harbor glade", "Sunlit coast", "Fern meadow", "Sun garden", "Ancient heights", "Temple ridge"}
-local zone_cleared = {0, 6, 9, 15, 21, 27}   -- boards cleared before each region opens
+local zone_cleared = {0, 15, 30, 50, 70, 85}   -- boards cleared before each region opens
 local zone_centers = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}

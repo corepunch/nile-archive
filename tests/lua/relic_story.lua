@@ -78,7 +78,8 @@ end
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 R.prog, R.island, R.quiet = p, c, true
-check(rules.LEVELS==20 and #journey.beats==35,'the first two chapters are playable')
+-- A hundred expeditions: one scene after each clear, ten restoration scenes and nine openings.
+check(rules.LEVELS==100 and #journey.beats==119,'all five chapters are playable')
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
@@ -117,12 +118,12 @@ for level=1,rules.LEVELS do
     check(g.won and g.score==0 and g.relics==0, 'clearing all plaques wins without a score or item quota')
     g.moves=0
     local reveal=journey.result_beat(p,g)
-    check(level<=10 and reveal==nil or reveal and reveal.level==level,
-        'chapter one has no first-clear scene; later chapters keep theirs')
-    if level==13 then
-        check(reveal.lines[1][2]:find('I. R.',1,true), 'Elena reads the initials before the Port scene')
-        check(journey.find('restore-13').lines[1][2]:find('Ines Reed',1,true),
-            'Tomas names the sender using the port register')
+    check(reveal and reveal.key==('after-%02d'):format(level) and reveal.level==level,
+        'every first clear plays its own scene')
+    if level==40 then
+        check(reveal.lines[1][2]:find('I. R.',1,true), 'Elena reads the initials before the plaza scene')
+        check(journey.find('restore-41').lines[1][2]:find('Ines Reed',1,true),
+            'Tomas names the sender using the harbour register')
     end
     local kind=journey.wonder_at(level)
     -- This test skips matches to isolate the story, so supply the board income
@@ -137,13 +138,9 @@ for level=1,rules.LEVELS do
     g.earnings={income[1],income[2],income[3]}
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
     local after=journey.next(p,owned(c),nil)
-    if level<=10 then
-        check(not after, 'a chapter-one win cannot start the story')
-    else
-        check(after and after.key==('after-%02d'):format(level),'later first clears play their assigned beat')
-        check(R.start_level(level),'an unread result leaves the next expedition open')
-        p.story_seen[after.key]=true
-    end
+    check(after and after.key==('after-%02d'):format(level),'every first clear plays its assigned beat')
+    check(R.start_level(level),'an unread result leaves the next expedition open')
+    p.story_seen[after.key]=true
     for z=1,5 do c:unlock(z,p.wallet) end
     for _, step in ipairs(opened) do
         check(island.next_step(c,p.level)==step.kind,'restorations open in ladder order')
@@ -158,22 +155,22 @@ for level=1,rules.LEVELS do
     end
     check(not island.island_place_next(c,p.wallet,p.level,0),'a clear opens only its own restorations')
     if kind then
-        if level==4 then
-            check(not journey.next(p,owned(c),nil),'the hut scene waits for the harbor keeper to join')
+        if level==16 then
+            check(not journey.next(p,owned(c),nil),'the camp scene waits for the harbor keeper to join')
             U.emit('island')
             check(U.state().done.city_well, 'Tomas joins through the well construction event')
         end
         local placed=journey.next(p,owned(c),nil)
-        check(placed and placed.key==(level==10 and 'after-10' or ('restore-%02d'):format(level)),
+        check(placed and placed.key==('restore-%02d'):format(level),
             'confirmed construction or citizen arrival releases its scene')
         local built = island.buildings[island.wonder_kinds[kind] + 1]
         check(placed.building == built.name, 'the reviewed scene must match the purchase: ' .. built.name)
         if level==1 then
-            check(placed.lines[1][1]=='mara' and placed.lines[1][2]:lower():find('well',1,true),
+            check(placed.lines[1][1]=='mara' and placed.lines[1][2]:lower():find('bucket',1,true),
                 'the first bucket opens the Well scene with Mara on screen')
         end
-        if level==10 then
-            check(placed.phase=='restore' and placed.lines[2][1]=='keeper', 'the village watch book introduces the ancient keeper')
+        if level==16 then
+            check(placed.phase=='restore' and placed.lines[3][1]=='keeper', 'the camp watch book introduces the ancient keeper')
         end
         p.story_seen[placed.key]=true
     end
@@ -182,10 +179,11 @@ for level=1,rules.LEVELS do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[rules.CLEARED]==cleared,'replay does not advance the clear count')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(island.campaign_count(c)==14 and p.wallet[rules.CLEARED]==rules.LEVELS,
-    'twenty clears open the first fourteen purchases')
-check(journey.next(p,owned(c),20) and journey.next(p,owned(c),20).key=='before-21',
-    'the third chapter still waits for its first board')
+check(island.campaign_count(c)==#island.ladder and #island.ladder==20 and p.wallet[rules.CLEARED]==rules.LEVELS,
+    'a hundred clears open all twenty purchases')
+local unread=0
+for _,b in ipairs(journey.beats) do if not p.story_seen[b.key] then unread=unread+1 end end
+check(unread==0 and not journey.next(p,owned(c),rules.LEVELS-1),'the whole script has been read')
 
 -- Take the normal Play, resume and Collect paths with an empty island.
 R.island=city.new(); island.island_setup(R.island)
@@ -202,13 +200,23 @@ for level=1,rules.LEVELS do
     rules.game_check_end(board)
     R.quiet=false
     R.story_tick()
-    check(not story.active() and not R.story_current,'playing ahead leaves island scenes unread')
+    if level==1 then
+        check(story.active() and R.story_current and R.story_current.key=='after-01',
+            'the first result plays its own clear scene')
+        empty_queue();R.story_tick()
+    else
+        check(not story.active() and not R.story_current,
+            'an unbuilt restoration scene holds every later scene unread')
+    end
     R.claim_reward()
     R.story_tick()
     check(R.prog.level==level and R.on_island and not story.active(),'Collect opens the next expedition')
     R.quiet=true
 end
-check(R.island.count==0 and not next(R.prog.story_seen),'all twenty expeditions clear without building or dialogue')
+local read=0
+for key in pairs(R.prog.story_seen) do read=read+1 end
+check(R.island.count==0 and read==1 and R.prog.story_seen['after-01'],
+    'all hundred expeditions clear without building; only the first clear scene played')
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false
@@ -218,12 +226,13 @@ empty_queue();R.story_current=nil
 R.story_tick()
 check(not story.active(),'the first board opens without a scene')
 R.prog.level, R.on_island = 1, true
+R.prog.story_seen['after-01']=true   -- the clear scene has played; the Well scene follows construction
 R.story_tick()
 check(story.active() and R.story_current.key=='restore-01','the Well opens with Mara drawing water')
 story.next()
 check(not R.prog.story_seen['restore-01'],'a partially read beat is not acknowledged')
 save.write('story-interrupted',function(s) journey.serialize(s,R.prog) end)
-empty_queue();R.story_current=nil;R.prog={level=1,story_seen={}}
+empty_queue();R.story_current=nil;R.prog={level=1,story_seen={['after-01']=true}}
 save.read('story-interrupted',function(s) journey.serialize(s,R.prog) end)
 R.story_tick()
 check(story.active() and R.story_current.key=='restore-01','reload recovers the interrupted scene')
@@ -234,29 +243,31 @@ R.prog={level=0,story_seen={}}
 save.read('story-completed',function(s) journey.serialize(s,R.prog) end)
 check(R.prog.story_seen['restore-01'],'completed keys survive save/read')
 
--- A legacy player keeps all ten purchased wonders and starts episode two.
-local old={level=10,seed=55,wallet=purse(1234,12,34,30,7)}
-journey.migrate(old,3)
-check(old.level==10 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
-check(journey.next(old,owned(c),10).key=='before-11','old completion opens the new episode without replaying episode one')
+-- A player from the twenty-expedition script keeps their clears and meets the next opening.
+local old={level=20,seed=55,wallet=purse(1234,12,34,30,7)}
+journey.migrate(old,5)
+check(old.level==20 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
+check(journey.next(old,owned(c),20).key=='before-21','old completion opens the next epoch without replaying the earlier scenes')
 local preserved=city.new();island.island_setup(preserved);preserved.open=63
 preserved:add(c.items[1].pos,9,0)
-island.restore_saved(preserved,10)
+island.restore_saved(preserved,20)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy temple')
-check(journey.building_about(9,29,'ordinary')~=journey.building_about(9,30,'ordinary'),'the island responds to the restored warning')
+check(journey.building_about(9,90,'ordinary')~=journey.building_about(9,91,'ordinary'),'the island responds to the restored warning')
 
 -- Save a branch selection before its reply finishes. Reload must replay the
 -- selected reply, then acknowledge the reveal once and unlock chapter two.
-local reveal=journey.find('after-10')
-local selected={level=10,story_seen={},story_choices={['after-10']=2}}
-for _, b in ipairs(journey.beats) do if b.level<10 or b.phase=='before' and b.level==10 then selected.story_seen[b.key]=true end end
+local reveal=journey.find('restore-16')
+local selected={level=16,story_seen={},story_choices={['restore-16']=2}}
+for _, b in ipairs(journey.beats) do if b.level<=16 and b.key~='restore-16' then selected.story_seen[b.key]=true end end
 save.write('story-choice',function(s) journey.serialize(s,selected) end)
-R.prog={level=10,story_seen={}}
+R.prog={level=16,story_seen={}}
 save.read('story-choice',function(s) journey.serialize(s,R.prog) end)
+R.prog.user_events={done={city_well=true}}   -- Tomas joined at the well; the camp scene waits for him
 R.on_island=true;R.overlay=R.OV_NONE;R.story_current=nil
 R.story_tick()
 check(R.story_current and R.story_current.lines==reveal.choices[2].lines,'reload resumes Tomas’s chosen reply')
 empty_queue();R.story_tick()
-check(R.prog.story_seen['after-10'] and journey.next(R.prog,owned(c),10).key=='before-11',
-    'finishing the reply unlocks chapter two')
+R.prog.level=17
+check(R.prog.story_seen['restore-16'] and journey.next(R.prog,owned(c),nil).key=='after-17',
+    'finishing the reply releases the next clear scene')
 empty_queue()

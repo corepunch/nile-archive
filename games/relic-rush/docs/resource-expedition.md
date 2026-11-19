@@ -2,7 +2,7 @@
 
 Clear all blue plaques to win the expedition. The matches made along the
 way bring back Coins, Supplies and Food to restore the valley. The story
-campaign runs across twenty square boards and opens fourteen restorations.
+campaign runs across 100 square boards and opens twenty restorations, one after every fifth board.
 The third episode and signal finale remain in the story archive. Each
 restoration spends the resources the crew brought home.
 
@@ -71,7 +71,7 @@ The currencies and their order of introduction follow the [Windows economy expor
 
 ## Release status and checks
 
-All twenty boards use blue targets on the papyrus floor. The
+All 100 boards use blue targets on the papyrus floor. The
 [square campaign captures](square-match3.md#captures) show the board and
 wallet at both phone sizes.
 
@@ -79,7 +79,7 @@ For release balancing, play the first restoration through a fresh save on
 both supported phone sizes and sample a migrated save midway through chapter two.
 Verify that matching every resource kind, including through a cascade, agrees with the result and the wallet after a restart. Confirm the
 shop's price and reserve through Confirm, Cancel, exhausted tool counts, replay
-and claim interruption. The seeded campaign test plays all twenty square boards with
+and claim interruption. The seeded campaign test plays all 100 square boards with
 the live wallet and confirms every ladder purchase. For release tuning, record
 wallet shortfalls across more seeds and watch people play on both phone sizes.
 Review tablet and resource piece recognition with Reduce Motion enabled at

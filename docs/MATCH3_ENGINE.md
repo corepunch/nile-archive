@@ -133,7 +133,7 @@ order supplies three island hooks, which the ladder installs. `next_build(city, 
 building to place next. `ladder_blocked(city, level, kind)` returns
 `"built"`, `"later"` with the clear it waits for, `"earlier"`, false when the
 building can be placed, or nil for shop items. `catalogue_order` lists catalogue
-rows in shop order. Relic Rush's twenty-step ladder uses all three; without
+rows in shop order. Relic Rush's and Christmas Market's twenty-step ladders use all three; without
 them the engine keeps the story-only rules.
 
 A swap into a chain, ice or a carved stone sends the movable gem halfway toward

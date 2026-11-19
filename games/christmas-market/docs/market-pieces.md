@@ -10,44 +10,42 @@ The opening has five kinds: a green snowy fir, a cranberry knitted mitten,
 a silver snowflake coin, a gold Sun coin and an ivory-striped candy cane.
 The mitten has opaque red wool and a cream snowflake. Mulled wine takes the candy
 cane's place. The bakery's brown gingerbread man and the kiosk's ivory cocoa
-mug follow in the same Treats slot. The stable replaces the mitten with a
-cobalt vase for score. Natural pine takes that slot after the workshop opens. The
+mug follow in the same Treats slot. The stable brings a cobalt vase for score,
+which replaces the mitten. The lumber workshop brings natural pine, which takes that slot. The
 chapel replaces it with the same slate-gray dressed stone used in Relic Rush.
 Its blocky profile and matte faces distinguish it from the bright round coin.
 The Firework bundles three indigo crackers and stands out beside the red mulled wine.
 
-## Playable construction sequence
+## Construction sequence
 
-| Purchase | After wish | Rome II counterpart | Bellmere reward | Price (Tokens / Treats / Materials) |
-| --- | ---: | --- | --- | ---: |
-| Welcome arch | 1 | Well | Mulled wine (Glühwein), +3 Treats. | 50 / 0 / 0 |
-| Reindeer stable | 2 | Hunter's Hut | Winter vase for score and the farrier's hammer. Match 30 hammers to charge a single-cell hit. | 60 / 20 / 0 |
-| Lumber workshop | 4 | Sawmill | Theo's bare pine logs, +5 Materials. | 100 / 75 / 0 |
-| Gingerbread house | 5 | Village | Firework Bomb replaces the Hammer and keeps its charge. Hits a 3×3 square. | 150 / 40 / 80 |
-| Gingerbread bakery | 7 | Farm | Gingerbread man, +4 Treats. | 300 / 0 / 200 |
-| Snowy chapel | 8 | Mine | Cut foundation stone, +7 Materials. | 80 / 0 / 65 |
-| Hot cocoa kiosk | 9 | Mill | Hot cocoa, +5 Treats. | 400 / 100 / 300 |
+Twenty purchases, one available after every fifth level (1, 6, 11 … 96), four per Advent of twenty levels. Story stalls are in bold: they play a placement scene and hold the next level, and the others must be bought before the next story stall. The order follows Cradle of Rome 2 except that the gift pavilion (gold) comes before the candle shop (Lightning), because story stalls keep catalogue order. The Gingerbread house, Giant bauble and Pile of presents left the ladder and stay in the shop. `python3 tools/balance.py christmas-market` fits the prices to the bot's measured income, so the expected campaign needs no replays.
 
-Confirmed placement turns on a new piece from the following wish. Replays use
-the regular goods of their own wish. A save that already passed the chapel
+| After level | Stall | Reward | Price (Tokens / Treats / Materials) |
+| ---: | --- | --- | ---: |
+| 1 | **Welcome arch** | Mulled wine +3 Treats | 70 / 0 / 0 |
+| 6 | Reindeer stable | Farrier's hammer; winter vase (score) | 605 / 220 / 0 |
+| 11 | **Lumber workshop** | Bundled pine +5 Materials | 1245 / 455 / 0 |
+| 16 | Firework stall | Firework Bomb | 930 / 345 / 430 |
+| 21 | **Gingerbread bakery** | Gingerbread man +4 Treats | 1070 / 0 / 640 |
+| 26 | Snowy chapel | Dressed stone +7 Materials | 1010 / 0 / 630 |
+| 31 | **Hot cocoa kiosk** | Hot cocoa +5 Treats | 1355 / 1395 / 1165 |
+| 36 | Ice house (was Igloo) | Frost shield; ice pendant +6 Tokens | 1155 / 835 / 1000 |
+| 41 | Lakeside smokehouse (was Log cabin) | Smoked trout +6 Treats | 1665 / 930 / 1265 |
+| 46 | Station kiosk | Hourglass; pretzel +7 Treats | 1275 / 840 / 1040 |
+| 51 | **Toymaker's workshop** | Toy blocks +7 Tokens | 1455 / 1110 / 1170 |
+| 56 | **Gift wrapping pavilion** | Wrapped gift +8 Tokens | 1540 / 1080 / 1090 |
+| 61 | **Candlelight shop** | Candle lantern (Lightning) | 1965 / 1235 / 1255 |
+| 66 | North Pole post office | Wish cross (Plus) | 2315 / 1485 / 1455 |
+| 71 | Glassblower's stall | Glass bauble +9 Tokens | 1920 / 1190 / 1210 |
+| 76 | **Reindeer carousel** | Wind-up top (Mixer); +30 Treats per win | 1990 / 1190 / 1185 |
+| 81 | **Winter skating rink** | Ceramic snowman +10 Tokens | 1880 / 1210 / 1070 |
+| 86 | Woodcarvers' hall (was Santa's workshop) | Carved reindeer +11 Tokens | 1870 / 1175 / 990 |
+| 91 | **Christmas tree** | Star | 2520 / 1440 / 1240 |
+| 96 | Santa's sleigh | Santa hat +12 Tokens | 2445 / 1360 / 1215 |
+
+Confirmed placement turns on a new piece from the following level. Replays use
+the regular goods of their own level. A save that already passed a stall's
 gate can buy it from the shop.
-
-## Later market catalogue
-
-These goods extend the construction ladder past the ten playable wishes. Each
-new premium good replaces the previous one in the gold coin slot.
-
-| Purchase | After wish | Piece | Yield and color |
-| --- | ---: | --- | --- |
-| Toymaker's workshop | 13 | Wooden toy blocks | +6 Tokens · honey wood |
-| Gift wrapping pavilion | 16 | Wrapped gift | +7 Tokens · ruby red |
-| Log cabin | 17 | Wood-fired pretzel | +6 Treats · baked amber |
-| Igloo | 21 | Ice pendant | +8 Tokens · sapphire blue |
-| Santa's sleigh | 24 | Smoked trout | +7 Treats · russet |
-| Giant bauble | 25 | Glass bauble | +9 Tokens · amber gold |
-| Winter skating rink | 26 | Ceramic snowman | +10 Tokens · snow white |
-| Pile of presents | 27 | Carved reindeer | +11 Tokens · walnut |
-| Christmas tree | 29 | Santa hat | +12 Tokens · crimson and ivory |
 
 ## In-game review
 

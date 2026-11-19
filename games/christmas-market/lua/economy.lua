@@ -16,24 +16,24 @@ local E = {
         {name="Sun coin", slot=1, amount=5},
         {name="Bundled pine", slot=3, amount=5},
         {name="Farrier's hammer"},
-        {name="Toy blocks", slot=1, amount=6},
+        {name="Toy blocks", slot=1, amount=7},
         {name="Gingerbread man", slot=2, amount=4},
         {name="Mulled wine", slot=2, amount=3},
-        {name="Wrapped gift", slot=1, amount=7},
+        {name="Wrapped gift", slot=1, amount=8},
         {name="Candle lantern"},
         {name="Hot cocoa", slot=2, amount=5},
         {name="Dressed stone", slot=3, amount=7},
-        {name="Ice pendant", slot=1, amount=8},
+        {name="Ice pendant", slot=1, amount=6},
         {name="Glass bauble", slot=1, amount=9},
         {name="Candy cane"},
-        {name="Pretzel", slot=2, amount=6},
+        {name="Pretzel", slot=2, amount=7},
         {name="Ceramic snowman", slot=1, amount=10},
         {name="Carved reindeer", slot=1, amount=11},
         {name="Santa hat", slot=1, amount=12},
         {name="Winter vase"},
-        {name="Smoked trout", slot=2, amount=7},
+        {name="Smoked trout", slot=2, amount=6},
     },
-    CAMPAIGN_VERSION=6,
+    CAMPAIGN_VERSION=7,
     BONUS_THRESHOLD=bonuses.THRESHOLD,
     SPECIAL_KIND=0,
 }
@@ -54,29 +54,32 @@ E.bonuses = B
 -- The five positions start green, blue, silver, gold and red.
 local BASE = {0, 1, 2, 3, 15}
 
--- Building keys and clear gates are campaign data. The engine manages bonus
--- ranks and their charges. Material and treat pieces replace their palette line.
+-- The twenty purchases follow Cradle of Rome 2's epochs.xml, one every five
+-- wishes, four to each Advent (docs/market-pieces.md). Each building gives
+-- what its stall sells: material and treat pieces replace their palette line.
+-- The engine manages bonus ranks and their charges. The gift pavilion opens
+-- one stall before the candle shop because story stalls keep catalogue order.
 E.unlocks = {
     {building="arch", after=1, line=5, kind=8},
-    {building="reindeer_stable", after=2, bonus=B.hammer, line=2, kind=20},
-    {building="lumber", after=4, line=2, kind=4},
-    {building="gingerbread_house", after=5, bonus=B.bomb},
-    {building="bakery", after=7, line=5, kind=7},
-    {building="chapel", after=8, line=2, kind=12},
-    {building="cocoa", after=9, line=5, kind=11},
-    {building="santa_workshop", after=11, bonus=B.shield},
-    {building="toys", after=13, line=4, kind=6},
-    {building="post_office", after=14, bonus=B.hourglass},
-    {building="gifts", after=16, line=4, kind=9, bonus=B.plus},
-    {building="log_cabin", after=17, line=5, kind=16},
-    {building="candles", after=19, bonus=B.lightning},
-    {building="igloo", after=21, line=4, kind=13},
-    {building="carousel", after=23, bonus=B.mixer, income=purse(0, 30, 0)},
-    {building="sleigh", after=24, bonus=B.star, line=5, kind=21},
-    {building="giant_ornament", after=25, line=4, kind=14},
-    {building="rink", after=26, line=4, kind=17},
-    {building="presents", after=27, line=4, kind=18},
-    {building="tree", after=29, line=4, kind=19},
+    {building="reindeer_stable", after=6, bonus=B.hammer, line=2, kind=20},
+    {building="lumber", after=11, line=2, kind=4},
+    {building="firework_stall", after=16, bonus=B.bomb},
+    {building="bakery", after=21, line=5, kind=7},
+    {building="chapel", after=26, line=2, kind=12},
+    {building="cocoa", after=31, line=5, kind=11},
+    {building="igloo", after=36, bonus=B.shield, line=4, kind=13},
+    {building="log_cabin", after=41, line=5, kind=21},
+    {building="station_kiosk", after=46, bonus=B.hourglass, line=5, kind=16},
+    {building="toys", after=51, line=4, kind=6},
+    {building="gifts", after=56, line=4, kind=9},
+    {building="candles", after=61, bonus=B.lightning},
+    {building="post_office", after=66, bonus=B.plus},
+    {building="glassblower", after=71, line=4, kind=14},
+    {building="carousel", after=76, bonus=B.mixer, income=purse(0, 30, 0)},
+    {building="rink", after=81, line=4, kind=17},
+    {building="santa_workshop", after=86, line=4, kind=18},
+    {building="tree", after=91, bonus=B.star},
+    {building="sleigh", after=96, line=4, kind=19},
 }
 bonuses.index_unlocks(E.unlocks)
 

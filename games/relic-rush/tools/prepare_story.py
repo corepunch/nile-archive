@@ -14,8 +14,7 @@ for line in source.splitlines():
     if heading:
         phase = {'Before level': 'before', 'Level': 'after', 'After restoration': 'restore'}[heading[1]]
         level = int(heading[2])
-        # Keep the save key when moving the old Chapter 1 choice to the steps.
-        key = 'after-10' if (phase, level) == ('restore', 10) else f'{phase}-{level:02}'
+        key = f'{phase}-{level:02}'
         beat = {'key': key, 'phase': phase, 'level': level, 'lines': [], 'choices': []}
         if phase == 'restore':
             site = re.fullmatch(r'\*\*After restoration \d+ · ([^*]+)\*\*', line)
@@ -35,8 +34,11 @@ for line in source.splitlines():
         assert spoken, 'Relic Rush dialogue requires a named cast member: ' + line
     if spoken and beat:
         (choice['lines'] if choice else beat['lines']).append((speakers[spoken[1]], spoken[3], spoken[2]))
-expected = {f'after-{n:02}' for n in range(10, 31)} | {f'before-{n:02}' for n in (11, 20, 21, 22, 30)} | {f'restore-{n:02}' for n in (1, 4, 7, 13, 16, 19, 23, 26, 29)}
-assert len(beats) == len(expected) and {b['key'] for b in beats} == expected
+# One beat after every expedition's first clear and one scene per story restoration.
+keys = [b['key'] for b in beats]
+assert len(set(keys)) == len(keys), 'a level has two beats of one phase'
+assert {b['level'] for b in beats if b['phase'] == 'after'} == set(range(1, 101))
+assert {b['level'] for b in beats if b['phase'] == 'restore'} == {1, 16, 21, 36, 41, 46, 61, 66, 91, 96}
 assert all(b['lines'] and len(b['lines']) <= 48 for b in beats)
 assert all(bool(b.get('prompt')) == bool(b['choices']) for b in beats)
 assert all(len({c['id'] for c in b['choices']}) == len(b['choices']) and all(c['lines'] for c in b['choices']) for b in beats)

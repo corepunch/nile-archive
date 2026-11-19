@@ -1,4 +1,4 @@
--- campaign_smoke.lua — --smoke --campaign: the ten square wishes, through the
+-- campaign_smoke.lua — --smoke --campaign: the hundred square wishes, through the
 -- real result, Collect, region, stall card, placement, dialogue and Play
 -- controls. Each board's goals are met before one real swap, so this checks
 -- the flow; the extended greedy-bot rules test checks the boards themselves.
@@ -15,7 +15,7 @@ end
 
 function R.campaign_smoke()
     frames = frames + 1
-    if frames > 32000 then   -- 108-cell boards take longer to present than the old 61
+    if frames > 48000 then   -- a hundred boards of up to 108 cells
         error(("campaign smoke stalled at level %d (overlay %d, market %s, story %s)"):format(
             R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
@@ -36,7 +36,8 @@ function R.campaign_smoke()
     if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == due
-        and R.overlay == R.OV_NONE and R.prog.story_seen["after-10"] then
+        and R.prog.story_seen["after-100"] and (R.overlay == R.OV_NONE or R.overlay == R.OV_FINALE) then
+        -- The last beat ends the story with the finale card.
         print(("campaign smoke passed: %d winter wishes, %d story beats, %d stalls"):format(
             R.prog.level, #played, island.campaign_count(c)))
         app.quit()

@@ -176,7 +176,7 @@ The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived w
 
 ## Ancient keeper portrait
 
-The Sawmill supplies timber for Tomas’s cable reel. When the Village takes up the night watch, the crew reads the keeper’s words from the watch book. The
+The Carpenter’s workshop supplies timber for Tomas’s cable reel. When the Expedition camp takes up the night watch, the crew reads the keeper’s words from the watch book. The
 static portrait has transparent edges and uses the standard story speaker slot.
 The [ImageGen original](../art/art-direction/ancient-keeper.png) and [prompt](../art/art-direction/ancient-keeper-prompt.txt)
 are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-only`

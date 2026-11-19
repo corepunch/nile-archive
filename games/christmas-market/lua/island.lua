@@ -78,7 +78,7 @@ function M.restore_saved(c,level)
 end
 
 local zone_names = {"Welcome Square", "Lantern Lane", "Gingerbread Green", "Carolers Court", "Starlight Terrace", "Evergreen Hill"}
-local zone_cleared = {0, 6, 9, 15, 21, 27}   -- boards cleared before each region opens
+local zone_cleared = {0, 15, 30, 50, 70, 85}   -- boards cleared before each region opens
 local zone_centers = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}

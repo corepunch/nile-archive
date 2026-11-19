@@ -118,7 +118,7 @@ local events = {
     {id="man_01", available=false, test=true, citizen="The carpenter",
         If={"IF_PLAYER_MAKE_MATCH", length=5},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the Sawmill: timber earns 6 Supplies each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the Carpenter's workshop: timber earns 6 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_01"},
             {"THEN_CITY_UPGRADE_BUILDING", id="workshop"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="timber", amount=6},
@@ -127,7 +127,7 @@ local events = {
     {id="man_02", available=false, citizen="The trapper", to_level=12,
         If={"IF_PLAYER_GET_RESOURCE", id="coins", amount=250},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper joins the Hunter’s Hut."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper moves into the Trapper's cabin."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_02"},
             {"THEN_CITY_UPGRADE_BUILDING", id="log_cabin"},
         }},
@@ -135,7 +135,7 @@ local events = {
     {id="man_03", available=false, citizen="The stonecutter",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=120},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the Aqueduct crew: dressed stone earns 8 Supplies each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the Keeper's archive crew: dressed stone earns 8 Supplies each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_03"},
             {"THEN_CITY_UPGRADE_BUILDING", id="archive"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="stone", amount=8},
@@ -153,7 +153,7 @@ local events = {
     {id="man_05", available=false, citizen="The forager",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=80},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="80 Food in one go! The forager supplies Curia Octavia: grain bundles earn 6 Food each."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="80 Food in one go! The forager supplies the Harbour lodge: grain bundles earn 6 Food each."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_05"},
             {"THEN_CITY_UPGRADE_BUILDING", id="lodge"},
             {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="grain", amount=6},
@@ -197,7 +197,7 @@ local events = {
     {id="man_010", available=false, citizen="The performer",
         If={"IF_PLAYER_MAKE_AUTOMATCH_CHAIN", amount=2},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="A chain reaction! The performer fills the Coliseum."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="A chain reaction! The performer fills the Stone amphitheatre."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_10"},
             {"THEN_CITY_UPGRADE_BUILDING", id="amphitheater"},
         }},

@@ -1,4 +1,4 @@
--- Relic Rush balance runner: rules and the greedy bot only, no screen, story
+-- Balance runner for the square campaigns (Relic Rush and Christmas Market): rules and the greedy bot only, no screen, story
 -- or animation. CI plays three fixed boards. With BALANCE_RUNS set, every
 -- board is played that many times (make test-balance defaults to 40, the
 -- sample the committed prices were fitted on) with the
@@ -64,6 +64,7 @@ end
 
 local RUNS = testing.balance_runs
 if not RUNS then
+    if not economy.PROVISIONS then return end   -- the CI sample checks Relic Rush's currencies
     for _, level in ipairs{1, 5, rules.LEVELS} do
         -- A budget leaves the bot about two games in three; one of five is a win.
         local g
@@ -97,7 +98,7 @@ for level = first, found and 0 or last do
     for run = 1, RUNS do
         local g = play_board(level, run, restored)
         if g.won then
-            local reward = rules.reward_breakdown(g).total
+            local reward = rules.reward_breakdown(g, {}).total
             stats.wins, stats.moves = stats.wins + 1, stats.moves + g.moves
             for slot = 1, CURRENCIES do stats.income[slot] = stats.income[slot] + reward[slot] end
         end

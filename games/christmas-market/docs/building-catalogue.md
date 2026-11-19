@@ -1,12 +1,18 @@
 # Building catalogue
 
-Christmas Market has **37 objects**, all modelled and rendered in Blender as
+Christmas Market has **40 objects**, all modelled and rendered in Blender as
 [docs/BUILDING_ART.md](../../../docs/BUILDING_ART.md) describes:
 
-- **20 market stalls on the campaign ladder**: the 10 market wishes in story order and
-  10 stalls between them (stable, gingerbread house, Santa's workshop, post office,
-  log cabin, chapel, igloo, sleigh, giant bauble and presents), each placed once.
-  See the [ladder](resource-prototype.md#the-twenty-stall-ladder).
+- **20 market stalls on the campaign ladder**, one every five levels: the 10 story stalls and
+  10 between them (stable, Firework stall, chapel, ice house (key `igloo`), lakeside smokehouse
+  (key `log_cabin`), Station kiosk, post office, Glassblower's stall, Woodcarvers' hall
+  (key `santa_workshop`) and sleigh), each placed once. The Gingerbread house, Giant bauble and
+  Pile of presents left the ladder and stay in the shop. The keys stay; only the names changed:
+  `igloo` is the Ice house, `log_cabin` the Lakeside smokehouse and `santa_workshop`
+  the Woodcarvers' hall.
+  See the [ladder](market-pieces.md#construction-sequence).
+- **The Firework stall, Station kiosk and Glassblower's stall** are the three new ladder stalls, see
+  [the second market row](#second-market-row-geometry-renders-awaiting-paint-over).
 - **15 decorations**: Lantern firs and Snowman bench, plus 13 more.
 - **4 snowy trees.**
 - **6 cottages.**
@@ -14,7 +20,7 @@ Christmas Market has **37 objects**, all modelled and rendered in Blender as
 The first twelve follow the building direction sheet
 (`art/building-reference-sheet.png`). They keep their identities, names and
 footprints, and keep their row order, which is save data. The 25 rows after them
-are new shop objects. All 37 runtime sprites now have a category ImageGen
+are new shop objects; the three stalls after those are the second market row. The first 37 runtime sprites have a category ImageGen
 paint-over on the current Blender renders, matching the direction sheet's timber,
 snow, garlands, ribbons and warm amber lighting. This addresses the building paint
 portion of [#34](https://github.com/corepunch/nile-archive/issues/34).
@@ -26,8 +32,7 @@ sprite, footprint, ownership and price, with a disabled action for unavailable
 stock. The category arrows stay above the list.
 
 Prices show the Tokens, Treats and Materials deducted at confirmed placement.
-The bakery costs 300 Tokens and 200 Materials. The chapel costs 80 Tokens and
-65 Materials, and adds dressed stone to the next board after the eighth wish.
+Each stall's price is in the [construction sequence](market-pieces.md#construction-sequence).
 The shop reserves the cost of
 earned stalls when checking decoration purchases. Older saves retain their
 wallet and buildings and can afford any previously earned stall.
@@ -47,7 +52,7 @@ wallet and buildings and can afford any previously earned stall.
 - **Modelling.** One Blender unit is one tile side and the pivot is the
   footprint's ground centre. The [city camera](../../../docs/BUILDINGS.md#the-camera)
   is the same as every other game's.
-- **Bases.** The ten wishes and the two original decorations stand on a
+- **Bases.** The ten story stalls and the two original decorations stand on a
   snow-covered brick slab that is exactly the footprint. Cottages stand on a
   cobble slab. The other decorations and the trees stand on the snow, and
   their footprint is a virtual base.
@@ -103,7 +108,7 @@ To inspect or tweak the scene in a running Blender, send `build_scene.py` throug
 the MCP socket bridge:
 `python3 games/emergency/source/tools/blender_mcp.py games/christmas-market/art/building-catalogue/build_scene.py`.
 It builds the collections there and does not overwrite the open file.
-A full render of all 37 objects takes about two minutes on four CPU cores.
+A full render of all 40 objects takes about two minutes on four CPU cores.
 
 ## Runtime inventory
 
@@ -135,17 +140,47 @@ A full render of all 37 objects takes about two minutes on four CPU cores.
 | 23 / `penguins` | Penguin pair | building | 1 x 1 | 100 / 8 | 9 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
 | 24 / `wreath_arch` | Wreath arch | building | 2 x 1 | 125 / 0 / 20 | 6 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 25 / `sleigh` | Santa's sleigh | wonder | 2 x 1 | 150 / 350 / 50 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
-| 26 / `igloo` | Igloo | wonder | 2 x 2 | 130 / 300 / 40 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 26 / `igloo` | Ice house | wonder | 2 x 2 | 130 / 300 / 40 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 27 / `fir_snowy` | Snowy fir | tree | 1 x 1 | 20 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 28 / `birch` | Frosted birch | tree | 1 x 1 | 25 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 29 / `fir_decorated` | Decorated fir | tree | 1 x 1 | 70 / 0 / 12 | 3 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 30 / `pine_grove` | Pine grove | tree | 2 x 2 | 105 / 0 / 10 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
-| 31 / `log_cabin` | Log cabin | wonder | 2 x 2 | 250 / 350 / 100 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 31 / `log_cabin` | Lakeside smokehouse | wonder | 2 x 2 | 250 / 350 / 100 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 32 / `gingerbread_house` | Gingerbread house | wonder | 2 x 2 | 150 / 40 / 80 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 33 / `post_office` | North Pole post office | wonder | 2 x 2 | 250 / 250 / 100 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 34 / `chapel` | Snowy chapel | wonder | 2 x 2 | 120 / 250 / 40 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 35 / `reindeer_stable` | Reindeer stable | wonder | 3 x 2 | 60 / 20 / 0 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 36 / `santa_workshop` | Santa's workshop | wonder | 3 x 3 | 200 / 150 / 100 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 36 / `santa_workshop` | Woodcarvers' hall | wonder | 3 x 3 | 200 / 150 / 100 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 37 / `firework_stall` | Firework stall | wonder | 2 x 2 | 100 / 100 / 50 | 0 | [Footprints](review/second-market-row/footprints.jpg), geometry render only |
+| 38 / `station_kiosk` | Station kiosk | wonder | 2 x 2 | 100 / 100 / 50 | 0 | [Footprints](review/second-market-row/footprints.jpg), geometry render only |
+| 39 / `glassblower` | Glassblower's stall | wonder | 2 x 2 | 100 / 100 / 50 | 0 | [Footprints](review/second-market-row/footprints.jpg), geometry render only |
+
+## Second market row: geometry renders, awaiting paint-over
+
+`firework_stall`, `station_kiosk` and `glassblower` (rows 37 to 39) are registered Blender/Scener
+renders of the shared city camera with no painted-v1 pass yet, so they currently look
+simpler and flatter than the 37 painted sprites beside them. Each is a 2 x 2 `wonder` on the
+brick-and-snow market slab, main facade towards -Y. They are on the campaign ladder after levels 16, 46 and 71 at the fitted prices in the
+[construction sequence](market-pieces.md#construction-sequence).
+Review captures: [renders](review/second-market-row/renders.jpg) and
+[footprints](review/second-market-row/footprints.jpg) (`--building-review 10 --footprints`, 480x900).
+
+Reproduce: `make buildings GAME=christmas-market KEYS="firework_stall station_kiosk glassblower"`
+(Scener; needs an orion-ui checkout via `ORION_UI=...`), then
+`python3 games/christmas-market/tools/check_assets.py --update`.
+
+Paint-over brief for all three: keep the render's geometry, lighting, camera and registration,
+and add the same hand-painted surface as the existing Christmas stalls (see
+[BUILDING_STYLE.md](../../../docs/BUILDING_STYLE.md) and the painted cocoa kiosk, candlelight
+shop and log cabin as style references): thick soft snow caps and drip edges, garlands with
+warm bulbs and red bows, carved timber grain, glowing amber windows. Use the render as the edit
+target and run the importer for the three keys.
+
+| Key | Paint | Materials and colours |
+| --- | --- | --- |
+| `firework_stall` | Open timber stall whose counter holds crates of indigo/midnight-blue paper cracker bundles (tied in threes with gold string) and rockets on sticks; pale back wall with gold sparks, a wooden sign board with a gold star on the front gable, indigo-and-cream striped awning over the right of the counter, a small lantern, a window on the +X wall. | Midnight and indigo (#1C2162, #3A3C9E) paper and stall front, cream awning stripes and trim, honey timber counter, gold string and star, snow roof over a midnight gable. No red or green fireworks: keep the New Year palette indigo and gold. |
+| `station_kiosk` | Small railway kiosk with a round clock on the front gable (cream face, gold rim, iron hands, 12 ticks), a serving hatch with a striped awning and an iron pole of salted pretzels, a short snowy platform edge with a yellow safety line and a bench, a lamp post with wreath and a suitcase. | Railway green walls (#1F6E3A) with cream trim and a dark red roof under snow, red-and-cream awning, baked amber pretzels with white salt, grey stone platform, gold safety line, iron lamp. |
+| `glassblower` | Dark timber stall with a lit amber shop window holding two shelves of round glass baubles, more baubles hanging on strings under the eave and on the counter, a red-brick furnace on the +X side with a glowing mouth and a tall chimney with a snow cap and smoke, a blowpipe leaning out, a crate of baubles and a dressed fir. | Dark brown planks with cream trim, green roof under snow, brick red (#A8503A) furnace, glass in amber and gold (#E48A1E, #F8C45A, #F0B83A) with bright highlights, warm firelight on the snow below the mouth. |
 
 ## Style and prompt provenance
 

@@ -15,7 +15,7 @@
     {
       "id": 0,
       "key": "camp",
-      "name": "Village",
+      "name": "Expedition camp",
       "category": "wonder",
       "size": [
         2,
@@ -26,7 +26,7 @@
         159.719
       ],
       "base_width": 273.205,
-      "gold": 585,
+      "gold": 1180,
       "stars": 0,
       "runtime": "data/city/buildings/camp.png",
       "image": [
@@ -36,9 +36,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        585,
-        225,
-        325
+        1180,
+        445,
+        600
       ],
       "about": "Unlocks Bomb. Hit a 3\u00d73 square around a cell.",
       "road": false,
@@ -55,7 +55,7 @@
     {
       "id": 1,
       "key": "well",
-      "name": "Well",
+      "name": "Spring well",
       "category": "wonder",
       "size": [
         2,
@@ -66,7 +66,7 @@
         191.175
       ],
       "base_width": 273.205,
-      "gold": 35,
+      "gold": 70,
       "stars": 0,
       "runtime": "data/city/buildings/well.png",
       "image": [
@@ -76,7 +76,7 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        35,
+        70,
         0,
         0
       ],
@@ -95,7 +95,7 @@
     {
       "id": 2,
       "key": "workshop",
-      "name": "Sawmill",
+      "name": "Carpenter's workshop",
       "category": "wonder",
       "size": [
         3,
@@ -106,7 +106,7 @@
         225.83
       ],
       "base_width": 359.808,
-      "gold": 420,
+      "gold": 1255,
       "stars": 0,
       "runtime": "data/city/buildings/workshop.png",
       "image": [
@@ -116,8 +116,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        420,
-        135,
+        1255,
+        470,
         0
       ],
       "about": "Timber bundles earn 5 Supplies each.",
@@ -135,7 +135,7 @@
     {
       "id": 3,
       "key": "market",
-      "name": "Farm",
+      "name": "Jungle market",
       "category": "building",
       "size": [
         3,
@@ -146,7 +146,7 @@
         211.408
       ],
       "base_width": 359.808,
-      "gold": 290,
+      "gold": 1220,
       "stars": 30,
       "runtime": "data/city/buildings/market.png",
       "image": [
@@ -156,9 +156,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Farmers Market",
       "cost": [
-        290,
-        110,
-        170
+        1220,
+        465,
+        765
       ],
       "about": "Ration jars earn 4 Food each.",
       "road": false,
@@ -175,7 +175,7 @@
     {
       "id": 4,
       "key": "gateway",
-      "name": "Port",
+      "name": "Harbour plaza",
       "category": "wonder",
       "size": [
         3,
@@ -186,7 +186,7 @@
         202.13
       ],
       "base_width": 359.808,
-      "gold": 15,
+      "gold": 620,
       "stars": 0,
       "runtime": "data/city/buildings/gateway.png",
       "image": [
@@ -196,9 +196,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Original dry gathering plaza",
       "cost": [
-        15,
-        50,
-        40
+        620,
+        995,
+        890
       ],
       "about": "Shrimp earn 6 Food each.",
       "road": false,
@@ -215,7 +215,7 @@
     {
       "id": 5,
       "key": "lodge",
-      "name": "Curia Octavia",
+      "name": "Harbour lodge",
       "category": "wonder",
       "size": [
         3,
@@ -226,7 +226,7 @@
         306.197
       ],
       "base_width": 409.808,
-      "gold": 330,
+      "gold": 695,
       "stars": 0,
       "runtime": "data/city/buildings/lodge.png",
       "image": [
@@ -236,9 +236,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Estate",
       "cost": [
-        330,
-        715,
-        465
+        695,
+        1465,
+        970
       ],
       "about": "Unlocks Hourglass. Add five moves.",
       "road": false,
@@ -255,7 +255,7 @@
     {
       "id": 6,
       "key": "archive",
-      "name": "Aqueduct",
+      "name": "Keeper's archive",
       "category": "wonder",
       "size": [
         3,
@@ -266,7 +266,7 @@
         258.785
       ],
       "base_width": 409.808,
-      "gold": 180,
+      "gold": 970,
       "stars": 0,
       "runtime": "data/city/buildings/archive.png",
       "image": [
@@ -276,9 +276,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lavish Library",
       "cost": [
-        180,
-        335,
-        200
+        970,
+        1650,
+        965
       ],
       "about": "Rings earn 7 Coins each.",
       "road": false,
@@ -295,7 +295,7 @@
     {
       "id": 7,
       "key": "observatory",
-      "name": "Mausoleum of Augustus",
+      "name": "Star observatory",
       "category": "wonder",
       "size": [
         2,
@@ -306,7 +306,7 @@
         271.521
       ],
       "base_width": 273.205,
-      "gold": 405,
+      "gold": 1050,
       "stars": 0,
       "runtime": "data/city/buildings/observatory.png",
       "image": [
@@ -316,9 +316,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Observatory",
       "cost": [
-        405,
-        570,
-        365
+        1050,
+        1585,
+        945
       ],
       "about": "Unlocks Mixer. Shuffle the pieces.",
       "road": false,
@@ -335,7 +335,7 @@
     {
       "id": 8,
       "key": "fountain",
-      "name": "Fountain",
+      "name": "Jade fountain",
       "category": "wonder",
       "size": [
         3,
@@ -346,7 +346,7 @@
         291.86
       ],
       "base_width": 409.808,
-      "gold": 940,
+      "gold": 1825,
       "stars": 0,
       "runtime": "data/city/buildings/fountain.png",
       "image": [
@@ -356,9 +356,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fountain",
       "cost": [
-        940,
-        1040,
-        660
+        1825,
+        2230,
+        1285
       ],
       "about": "Emeralds earn 11 Coins each.",
       "road": false,
@@ -375,7 +375,7 @@
     {
       "id": 9,
       "key": "temple",
-      "name": "Forum",
+      "name": "Temple of the Sun",
       "category": "wonder",
       "size": [
         4,
@@ -386,7 +386,7 @@
         339.44
       ],
       "base_width": 546.41,
-      "gold": 225,
+      "gold": 2150,
       "stars": 0,
       "runtime": "data/city/buildings/temple.png",
       "image": [
@@ -396,9 +396,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story finale, as a landmark",
       "cost": [
-        225,
-        260,
-        160
+        2150,
+        2640,
+        1555
       ],
       "about": "Unlocks Star. Clear all pieces of a chosen kind.",
       "road": false,
@@ -415,7 +415,7 @@
     {
       "id": 10,
       "key": "log_cabin",
-      "name": "Hunter's Hut",
+      "name": "Trapper's cabin",
       "category": "wonder",
       "size": [
         2,
@@ -426,7 +426,7 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 225,
+      "gold": 645,
       "stars": 0,
       "runtime": "data/city/buildings/log_cabin.png",
       "image": [
@@ -436,8 +436,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        225,
-        65,
+        645,
+        235,
         0
       ],
       "about": "Unlocks Hammer. Hit one cell.",
@@ -575,7 +575,7 @@
     {
       "id": 14,
       "key": "map_room",
-      "name": "House of the Vestals",
+      "name": "Cartographer's house",
       "category": "wonder",
       "size": [
         3,
@@ -586,7 +586,7 @@
         233.232
       ],
       "base_width": 359.808,
-      "gold": 105,
+      "gold": 695,
       "stars": 0,
       "runtime": "data/city/buildings/map_room.png",
       "image": [
@@ -596,9 +596,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Schoolhouse",
       "cost": [
-        105,
-        195,
-        125
+        695,
+        1475,
+        855
       ],
       "about": "Unlocks Lightning. Strike up to fifteen random cells.",
       "road": false,
@@ -655,7 +655,7 @@
     {
       "id": 16,
       "key": "trading_post",
-      "name": "Quarry",
+      "name": "Stone trading post",
       "category": "wonder",
       "size": [
         3,
@@ -666,7 +666,7 @@
         260.814
       ],
       "base_width": 409.808,
-      "gold": 55,
+      "gold": 705,
       "stars": 0,
       "runtime": "data/city/buildings/trading_post.png",
       "image": [
@@ -676,9 +676,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Central Station",
       "cost": [
-        55,
-        40,
-        40
+        705,
+        720,
+        620
       ],
       "about": "Dressed stones earn 7 Supplies each.",
       "road": false,
@@ -695,7 +695,7 @@
     {
       "id": 17,
       "key": "water_mill",
-      "name": "Mill",
+      "name": "Water mill",
       "category": "wonder",
       "size": [
         3,
@@ -706,7 +706,7 @@
         232.79
       ],
       "base_width": 409.808,
-      "gold": 70,
+      "gold": 715,
       "stars": 0,
       "runtime": "data/city/buildings/water_mill.png",
       "image": [
@@ -716,9 +716,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Windmill",
       "cost": [
-        70,
-        80,
-        65
+        715,
+        965,
+        935
       ],
       "about": "Grain bundles earn 5 Food each.",
       "road": false,
@@ -735,7 +735,7 @@
     {
       "id": 18,
       "key": "clock_tower",
-      "name": "Thermae",
+      "name": "Tide clock tower",
       "category": "wonder",
       "size": [
         2,
@@ -746,7 +746,7 @@
         306.519
       ],
       "base_width": 273.205,
-      "gold": 10,
+      "gold": 710,
       "stars": 0,
       "runtime": "data/city/buildings/clock_tower.png",
       "image": [
@@ -756,9 +756,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Clock Tower",
       "cost": [
-        10,
-        50,
-        35
+        710,
+        1080,
+        990
       ],
       "about": "Unlocks Shield. Hit the row through a chosen cell.",
       "road": false,
@@ -786,7 +786,7 @@
         281.74
       ],
       "base_width": 273.205,
-      "gold": 160,
+      "gold": 775,
       "stars": 0,
       "runtime": "data/city/buildings/lighthouse.png",
       "image": [
@@ -796,9 +796,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lighthouse",
       "cost": [
-        160,
-        250,
-        165
+        775,
+        1345,
+        790
       ],
       "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
       "road": false,
@@ -855,7 +855,7 @@
     {
       "id": 21,
       "key": "aviary",
-      "name": "Pantheon",
+      "name": "Great aviary",
       "category": "wonder",
       "size": [
         3,
@@ -866,7 +866,7 @@
         224.8
       ],
       "base_width": 409.808,
-      "gold": 250,
+      "gold": 1645,
       "stars": 0,
       "runtime": "data/city/buildings/aviary.png",
       "image": [
@@ -876,9 +876,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Aviary",
       "cost": [
-        250,
-        330,
-        215
+        1645,
+        2430,
+        1420
       ],
       "about": "Sandals earn 9 Coins each.",
       "road": false,
@@ -895,7 +895,7 @@
     {
       "id": 22,
       "key": "beached_ship",
-      "name": "Nero's Golden House",
+      "name": "Beached schooner",
       "category": "wonder",
       "size": [
         4,
@@ -906,7 +906,7 @@
         274.276
       ],
       "base_width": 446.41,
-      "gold": 195,
+      "gold": 970,
       "stars": 0,
       "runtime": "data/city/buildings/beached_ship.png",
       "image": [
@@ -916,9 +916,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Pirate Ship",
       "cost": [
-        195,
-        290,
-        200
+        970,
+        1650,
+        955
       ],
       "about": "Scarabs earn 8 Coins each.",
       "road": false,
@@ -935,7 +935,7 @@
     {
       "id": 23,
       "key": "amphitheater",
-      "name": "Coliseum",
+      "name": "Stone amphitheatre",
       "category": "wonder",
       "size": [
         4,
@@ -946,7 +946,7 @@
         226.211
       ],
       "base_width": 496.41,
-      "gold": 135,
+      "gold": 805,
       "stars": 0,
       "runtime": "data/city/buildings/amphitheater.png",
       "image": [
@@ -956,9 +956,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Amphitheater",
       "cost": [
-        135,
-        290,
-        190
+        805,
+        1900,
+        1145
       ],
       "about": "Helmets earn 6 Coins each.",
       "road": false,
@@ -975,7 +975,7 @@
     {
       "id": 24,
       "key": "museum",
-      "name": "Theatre",
+      "name": "Relic museum",
       "category": "wonder",
       "size": [
         4,
@@ -986,7 +986,7 @@
         304.224
       ],
       "base_width": 496.41,
-      "gold": 180,
+      "gold": 1780,
       "stars": 0,
       "runtime": "data/city/buildings/museum.png",
       "image": [
@@ -996,9 +996,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Museum",
       "cost": [
-        180,
-        220,
-        140
+        1780,
+        2400,
+        1420
       ],
       "about": "Harps earn 10 Coins each.",
       "road": false,

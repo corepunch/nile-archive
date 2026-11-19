@@ -1,6 +1,6 @@
 # Designing match-3 levels
 
-The active square campaigns are authored in each game’s `lua/campaign.lua`. See the [Relic Rush guide](../games/relic-rush/docs/square-match3.md) and [Christmas Market guide](../games/christmas-market/docs/square-match3.md). The hex schedule and tools below describe the archived campaign.
+The active square campaigns are authored in each game’s `lua/campaign.lua`. See the [Relic Rush guide](../games/relic-rush/docs/square-match3.md) and [Christmas Market guide](../games/christmas-market/docs/square-match3.md). Each campaign has 100 boards, and every board carries a `tier` (1-4 tutorial, then per ten levels `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`). Check and shape them with `python3 tools/square_boards.py <game>` (validates the layouts), `python3 tools/square_trim.py <game> --levels A-B` (trims the last-cleared targets until each board's median fits its tier) and `python3 tools/tune_moves.py <game>` (fits each board's `moves` in `campaign.lua`). The hex schedule and tools below describe the archived campaign.
 
 Relic Rush and Christmas Market each have 100 hex boards that follow Cradle of
 Rome's progression. This guide says what a board must be, how to write one and

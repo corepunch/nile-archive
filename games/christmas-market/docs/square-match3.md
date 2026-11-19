@@ -1,6 +1,6 @@
 # Square match-3
 
-Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery, Snowy chapel and Hot cocoa kiosk. The stable introduces a cobalt vase for score and the farrier's hammer. The workshop replaces the vase with pine, and the chapel introduces dressed stone. The Gingerbread house upgrades its tool slot to the three-cracker Firework Bomb and keeps its charge.
+Match Christmas pieces to light the teal panes. The 100-level campaign opens twenty stalls, one after every fifth level (see the [construction sequence](market-pieces.md#construction-sequence)). The first Advent opens the Welcome arch, Reindeer stable, Lumber workshop and Firework stall. The stable introduces a cobalt vase for score and the farrier's hammer. The workshop replaces the vase with pine, and the chapel later introduces dressed stone. The Firework stall upgrades the tool slot to the three-cracker Firework Bomb and keeps its charge.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
@@ -23,15 +23,15 @@ The lower-left Build button opens the next purchase. The card shows the
 price or the amounts still needed. The particle trail runs when the level
 gate and resource price are met. Open placement from the card, choose a
 site, then confirm to pay once. The card links to the decoration shop.
-After level ten, a pending purchase can offer a replay for resources.
+After level 100, a pending purchase can offer a replay for resources.
 
 ## Levels and art
 
 The [color map](market-pieces.md) pairs Cradle of Rome 2 pieces and purchase
 rewards with the Christmas Market artwork, yields and prices.
 
-The [ten ASCII layouts](../lua/campaign.lua) use a maximum field of nine
-columns by twelve rows. Dots are ordinary cells, asterisks single targets,
+The [100 ASCII layouts](../lua/campaign.lua) use a maximum field of nine
+columns by twelve rows. Each carries a `tier` (levels 1–4 tutorial, then per ten levels easy, easy, normal, normal, hard, easy, normal, normal, hard, boss), checked by `python3 tools/square_boards.py christmas-market`, trimmed by `tools/square_trim.py` and given its `moves` by `tools/tune_moves.py`. Dots are ordinary cells, asterisks single targets,
 plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes.
 

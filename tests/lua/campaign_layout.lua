@@ -3,7 +3,7 @@
 local rules = require('rules')
 local campaign = require('campaign')
 check(rules.square and rules.COLUMNS == 9 and rules.ROWS == 12, '9×12 square envelope')
-local expected = testing.game == 'relic-rush' and 20 or 10
+local expected = 100
 check(rules.LEVELS == expected and rules.COLORS == 5, 'campaign length and five piece slots')
 for level, entry in ipairs(campaign.levels) do
     local label = ('level %d: '):format(level)

@@ -8,10 +8,10 @@ local function owned(c) return function(kind) return island.owned(c,kind)>0 end 
 local cast={}
 for _,who in ipairs(R.cast) do cast[who.id]=true end
 
--- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
+-- Follow the actual rewards, purchase gate and scheduler through all 100 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
-check(rules.LEVELS==10 and #journey.beats==36,'the first ten winter wishes are playable')
+check(rules.LEVELS==100 and #journey.beats==110,'all hundred winter wishes are playable')
 local stocked = rules.game_start(0, 1)
 check(#stocked.spawn_kinds == 5 and stocked.tools[1] == 0, "opening board has three score pieces and two coins")
 check(stocked.resource_yields[2].amount == 3 and stocked.resource_yields[3].amount == 5,
@@ -42,7 +42,7 @@ for _,b in ipairs(journey.beats) do
         lines=lines+1
     end
 end
-check(lines==95,'the entire reviewed script ships')
+check(lines==331,'the entire reviewed script ships')
 local finds = 0
 for level=1,rules.LEVELS do
     local before=journey.next(p,owned(c),level-1)
@@ -73,21 +73,22 @@ for level=1,rules.LEVELS do
     for z=1,5 do c:unlock(z,p.wallet) end
     local kind=journey.wonder_at(level)
     if kind then
-        if level == 7 then
-            -- An older market has the first two stalls and the old bakery grant.
-            R.island, R.prog = c, {level=7, wallet=purse()}
+        if level == 21 then
+            -- An older market has the first four stalls and the old bakery grant.
+            R.island, R.prog = c, {level=21, wallet=purse()}
             local function wallet(s)
                 R.prog.wallet = s:ints("wallet", R.prog.wallet)
                 R.serialize_campaign(s)
             end
+            local bakery = island.buildings[island.kinds.bakery + 1].cost
             save.write("old-market-prices", function(s) s:ints("wallet", purse(100)) end)
             save.read("old-market-prices", wallet)
-            check(R.prog.wallet[1] == 300 and R.prog.wallet[2] == 0 and R.prog.wallet[3] == 200, "the revised bakery has enough Gold and Supplies")
-            check(island.can_buy(c, R.prog.wallet, 7, 2), "the bakery can be built before continuing")
-            check(not island.can_buy(c, R.prog.wallet, 7, 15), "the reserved grant cannot buy a lamp post")
+            check(R.prog.wallet[1] == bakery[1] and R.prog.wallet[2] == 0 and R.prog.wallet[3] == bakery[3], "the revised bakery has enough Gold and Supplies")
+            check(island.can_buy(c, R.prog.wallet, 21, 2), "the bakery can be built before continuing")
+            check(not island.can_buy(c, R.prog.wallet, 21, 15), "the reserved grant cannot buy a lamp post")
             save.write("new-market-prices", wallet)
             save.read("new-market-prices", wallet)
-            check(R.prog.wallet[1] == 300 and R.prog.wallet[2] == 0 and R.prog.wallet[3] == 200, "saving the migrated wallet prevents a second top-up")
+            check(R.prog.wallet[1] == bakery[1] and R.prog.wallet[2] == 0 and R.prog.wallet[3] == bakery[3], "saving the migrated wallet prevents a second top-up")
         end
         check(not journey.next(p,owned(c),nil),'stall story waits for confirmed construction')
     end
@@ -105,9 +106,9 @@ for level=1,rules.LEVELS do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(finds == 1, "the cocoa find does not consume a piece slot")
-check(c.count==7 and c.open==7 and p.wallet[4]==10,'ten clears open seven stalls and two new regions')
-check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth stall')
+check(finds == 6, "the six story finds do not consume a piece slot")
+check(c.count==20 and c.open==63 and p.wallet[4]==100,'a hundred clears open all twenty stalls and all five new regions')
+check(journey.next(p,owned(c),100)==nil,'finale ends at the hundredth wish, not the last stall')
 
 R.prog = {level=0, wallet=purse(), completed={level=0, rng=4, moves=10, score=400, earnings={33, 6, 9}}}
 save.write("pending-market-resources", R.serialize_campaign)
@@ -138,16 +139,24 @@ check(R.prog.bonus_charge[1] == 90 and R.prog.bonus_charge[4] == 37, "shared slo
 
 local chapel = island.ladder_position[island.kinds.chapel]
 local cocoa = island.ladder_position[island.kinds.cocoa]
+local stable = island.ladder_position[island.kinds.reindeer_stable]
+-- A save older than version 7 names the stalls by their old ladder positions
+-- (here bit 5, the old sixth permit, which is the chapel now). Its waivers are
+-- discarded and rebuilt from what the save owns and how far the story has got.
+local fresh = city.new(); island.island_setup(fresh)
+R.island = fresh
 save.write("pre-chapel-permits", function(s)
     s:int("market_resources", 5)
-    s:int("ladder_waived", 1 << 5) -- Cocoa was the sixth permit.
+    s:int("ladder_waived", 1 << 5)
 end)
-R.prog.level = 8
+R.prog.level = 30
 save.read("pre-chapel-permits", R.serialize_campaign)
-check(island.waived(c)[cocoa] and not island.waived(c)[chapel], "old permit waivers still belong to their stalls")
-R.prog.level = 9
+check(island.waived(fresh)[stable] and not island.waived(fresh)[chapel] and not island.waived(fresh)[cocoa],
+      "old permit waivers are rebuilt: stalls before the latest earned story stall are optional, later ones still owed")
+R.prog.level = 31
 save.read("pre-chapel-permits", R.serialize_campaign)
-check(island.waived(c)[chapel], "existing players who passed the chapel gate can build it at their leisure")
+check(island.waived(fresh)[chapel], "existing players who passed the chapel gate can build it at their leisure")
+R.island = c
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false
@@ -172,13 +181,13 @@ save.read('story-completed',function(s) journey.serialize(s,R.prog) end)
 check(R.prog.story_seen['before-01'],'completed keys survive save/read')
 
 -- A version 2 player keeps every stall already built and starts episode two.
-local old={level=10,seed=55,wallet=purse(1234,12,34,30,7)}
+local old={level=19,seed=55,wallet=purse(1234,12,34,30,7)}
 journey.migrate(old,2)
-check(old.level==10 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
-check(journey.next(old,owned(c),10).key=='before-11','old completion opens the new episode without replaying episode one')
+check(old.level==19 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
+check(journey.next(old,owned(c),19).key=='before-20','old progress opens the next scene without replaying what it has read')
 local preserved=city.new();island.island_setup(preserved);preserved.open=63
 preserved:add(c.items[1].pos,9,0)
 island.restore_saved(preserved,10)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy Christmas tree')
-check(journey.building_about(4,19,'ordinary')~=journey.building_about(4,20,'ordinary'),'the market answers the letter at level 20')
+check(journey.building_about(9,99,'ordinary')~=journey.building_about(9,100,'ordinary'),'the Christmas tree answers at level 100')
 empty_queue()

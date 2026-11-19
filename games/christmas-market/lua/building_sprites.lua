@@ -37,4 +37,7 @@ return {
     chapel={sprite_path="city/buildings/chapel.png", size=size2(2,2), pivot=vec2(139.287,214.202), base_width=273.205, shadow_path="city/building-shadows/chapel.png", shadow_pivot=vec2(120.112,88.05), shadow_base_width=232.224},
     reindeer_stable={sprite_path="city/buildings/reindeer_stable.png", size=size2(3,2), pivot=vec2(184.054,227.545), base_width=359.808, shadow_path="city/building-shadows/reindeer_stable.png", shadow_pivot=vec2(157.413,112.942), shadow_base_width=305.836},
     santa_workshop={sprite_path="city/buildings/santa_workshop.png", size=size2(3,3), pivot=vec2(208.15,303.101), base_width=409.808, shadow_path="city/building-shadows/santa_workshop.png", shadow_pivot=vec2(178.936,150.607), shadow_base_width=348.336},
+    firework_stall={sprite_path="city/buildings/firework_stall.png", size=size2(2,2), pivot=vec2(138.603,210.371), base_width=273.205, shadow_path="city/building-shadows/firework_stall.png", shadow_pivot=vec2(140.63,106.965), shadow_base_width=232.224},
+    station_kiosk={sprite_path="city/buildings/station_kiosk.png", size=size2(2,2), pivot=vec2(138.603,184.887), base_width=273.205, shadow_path="city/building-shadows/station_kiosk.png", shadow_pivot=vec2(137.309,91.304), shadow_base_width=232.224},
+    glassblower={sprite_path="city/buildings/glassblower.png", size=size2(2,2), pivot=vec2(138.603,177.951), base_width=273.205, shadow_path="city/building-shadows/glassblower.png", shadow_pivot=vec2(136.317,94.558), shadow_base_width=232.224},
 }

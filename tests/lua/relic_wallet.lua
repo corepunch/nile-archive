@@ -47,30 +47,30 @@ do
     check(R.make_board(1,19).resource_yields[3]==nil,'cancelling keeps water locked')
     check(island.island_place_next(c,bank,1,0),'confirm the well')
     check(R.make_board(1,19).resource_yields[3]==economy.unlock_of("well"),'water follows construction')
-    check(not island.island_place_next(c,bank,3,0),'the hut waits for clear four')
-    check(island.island_place_next(c,bank,4,0),'confirm the hut')
-    local first = R.make_board(4,19)
-    check(first.bonus_debut == economy.bonuses.hammer and first.tool_meter[1]==0,'the hut debuts Hammer')
+    check(not island.island_place_next(c,bank,5,0),'the cabin waits for clear six')
+    check(island.island_place_next(c,bank,6,0),'confirm the cabin')
+    local first = R.make_board(6,19)
+    check(first.bonus_debut == economy.bonuses.hammer and first.tool_meter[1]==0,'the cabin debuts Hammer')
     local workshop = island.kinds.workshop
     fits,spot = c:find_spot(workshop,island.island_suggestion(workshop))
-    check(fits,'sawmill has a placement spot')
+    check(fits,'workshop has a placement spot')
     c:begin_place(workshop,spot)
-    check(R.make_board(7,19).resource_yields[4]==nil,'timber waits for confirmation')
+    check(R.make_board(11,19).resource_yields[4]==nil,'timber waits for confirmation')
     c:cancel()
     local steps, price = island.kinds.quay_steps, island.buildings[workshop+1].cost
-    check(island.owned(c,steps)==0 and not island.can_buy(c,bank,7,steps),'the retired staircase stays off sale')
+    check(island.owned(c,steps)==0 and not island.can_buy(c,bank,11,steps),'the retired staircase stays off sale')
     local balance=purse(table.unpack(bank))
-    check(island.island_place_next(c,bank,7,0),'confirm the sawmill')
-    for slot=1,3 do check(bank[slot]==balance[slot]-price[slot],'the Sawmill charges its listed price') end
-    check(c.items[c.count].type==workshop and island.owned(c,steps)==0,'the Sawmill stands on its own')
-    check(island.island_place_next(c,bank,10,0),'confirm the village')
+    check(island.island_place_next(c,bank,11,0),'confirm the workshop')
+    for slot=1,3 do check(bank[slot]==balance[slot]-price[slot],'the workshop charges its listed price') end
+    check(c.items[c.count].type==workshop and island.owned(c,steps)==0,'the workshop stands on its own')
+    check(island.island_place_next(c,bank,16,0),'confirm the camp')
     local previous=R.g
     R.g,first.tool_meter[1]=first,first.tool_threshold//2
     R.refresh_board_bonuses()
     R.g=previous
     check(first.tool_slots[1]==economy.bonuses.bomb and first.bonus==economy.bonuses.bomb
         and first.tool_meter[1]==first.tool_threshold//2,'a parked board replaces Hammer and preserves its charge')
-    check(island.island_place_next(c,bank,11,0),'confirm the farm')
+    check(island.island_place_next(c,bank,21,0),'confirm the market')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
         check(g.spawn_kinds==nil and rules.COLORS==5,'every expedition keeps its five kinds')
@@ -117,10 +117,10 @@ end
 
 do
     local restored = {gateway=true, lodge=true, amphitheater=true, map_room=true, archive=true}
-    local port = rules.game_start(13, 123, restored)
-    local fish = rules.game_start(16, 123, restored)
-    local pearl = rules.game_start(18, 123, restored)
-    local ring = rules.game_start(19, 123, restored)
+    local port = rules.game_start(41, 123, restored)
+    local fish = rules.game_start(46, 123, restored)
+    local pearl = rules.game_start(56, 123, restored)
+    local ring = rules.game_start(61, 123, restored)
     check(port.resource_yields[3].key == "shrimp" and fish.resource_yields[3].key == "fish"
         and fish.resource_yields[3].amount == 7, "fish upgrades shrimp in the original 7-Food tier")
     check(pearl.resource_yields[0].key == "pearl" and pearl.resource_yields[0].amount == 7
@@ -146,9 +146,9 @@ end
 do
     local B = economy.bonuses
     local restored = {log_cabin=true, bonus_charge={}}
-    local g, m = rules.game_start(4, 73, restored), rules.new_match()
+    local g, m = rules.game_start(6, 73, restored), rules.new_match()
     local kind = economy.SPECIAL_KIND
-    check(g.bonus_debut == B.hammer and g.resource_yields[kind] == B.hammer, 'the Camp debuts Hammer')
+    check(g.bonus_debut == B.hammer and g.resource_yields[kind] == B.hammer, 'the cabin debuts Hammer')
     local line = require('support').open_line(rules, g)
     for match = 1, 11 do
         for _, cell in ipairs(line) do
@@ -225,48 +225,51 @@ do
     local c = city.new(); island.island_setup(c)
     local bank = purse(5000, 5000, 5000, 90)
     for z = 1, 5 do c:unlock(z, bank) end
-    for kind = 0, 3 do
+    local market = island.kinds.market
+    for _, n in ipairs{1, 4} do   -- the well and the camp, the story buildings before the market
+        local kind = island.ladder[n].kind
         local ok, spot = c:find_spot(kind, island.island_suggestion(kind))
         c:begin_place(kind, spot)
-        check(ok and c:confirm(bank, 0).result == city.BUILT, 'an old save owns its first four restorations')
+        check(ok and c:confirm(bank, 0).result == city.BUILT, 'an old save owns its first story restorations')
     end
-    check(not island.can_buy(c, bank, 13, 4), 'without a waiver the courtyard waits for the earlier ladder')
-    island.waive_passed(c, 13)
+    check(not island.can_buy(c, bank, 21, market), 'without a waiver the market waits for the earlier ladder')
+    island.waive_passed(c, 21)
     island.waived(c)[island.ladder_position[island.kinds.log_cabin]] = true -- this pre-epoch save had already passed the cabin
-    check(island.next_step(c, 13) == 4 and island.can_buy(c, bank, 13, 4), 'the waived save builds its courtyard')
-    local reserved, courtyard = island.reserved_cost(c, 13), island.buildings[5].cost
-    check(reserved:covers(courtyard) and courtyard:covers(reserved), 'waived restorations are not reserved')
+    check(island.next_step(c, 21) == market and island.can_buy(c, bank, 21, market), 'the waived save builds its market')
+    local reserved, price = island.reserved_cost(c, 21), island.buildings[market + 1].cost
+    check(reserved:covers(price) and price:covers(reserved), 'waived restorations are not reserved')
     local cabin = island.kinds.log_cabin
-    check(island.can_buy(c, bank, 13, cabin) and island.ladder_blocked(c, 13, cabin) == false,
+    check(island.can_buy(c, bank, 21, cabin) and island.ladder_blocked(c, 21, cabin) == false,
         'a waived restoration stays on sale')
-    R.island, R.prog = c, {level=13, wallet=purse(1, 2, 3), story_seen={}, bonus_charge={}}
+    R.island, R.prog = c, {level=21, wallet=purse(1, 2, 3), story_seen={}, bonus_charge={}}
     save.write("relic-ladder-waived", R.serialize_campaign)
     local fresh = city.new(); island.island_setup(fresh)
     R.island = fresh
     save.read("relic-ladder-waived", R.serialize_campaign)
     local waived = island.waived(fresh)
-    check(waived[2] and waived[6] and waived[7] and waived[8] and not waived[9] and not waived[10],
+    check(waived[2] and waived[3] and not waived[5] and not waived[6],
         'the waived positions survive a save')
     local wallet = R.prog.wallet
     check(wallet[1] == 1 and wallet[2] == 2 and wallet[3] == 3, 'reading a current save leaves the wallet alone')
     -- A version 3 save read at the same point waives them itself.
     local old = city.new(); island.island_setup(old)
     for z = 1, 5 do old:unlock(z, bank) end
-    for kind = 0, 3 do
+    for _, n in ipairs{1, 4} do
+        local kind = island.ladder[n].kind
         local _, spot = old:find_spot(kind, island.island_suggestion(kind))
         old:begin_place(kind, spot); old:confirm(bank, 0)
     end
     save.write("relic-ladder-v3", function(s) s:int("resource_version", 3) end)
     R.island = old
     save.read("relic-ladder-v3", R.serialize_campaign)
-    check(island.waived(old)[2] and island.next_step(old, 13) == 4, 'a version 3 save waives the passed restorations')
+    check(island.waived(old)[2] and island.next_step(old, 21) == market, 'a version 3 save waives the passed restorations')
     R.island, R.prog = saved_island, saved_prog
 end
 
 -- Clear regular pieces through the real match resolver. A blocker absorbs
 -- the first hit and the preview solver cannot alter the live ledger.
 do
-    local g=R.make_board(4,19)
+    local g=R.make_board(6,19)
     local b=open_cell(g)
     local a,c=rules.hex_neighbor(b,3),rules.hex_neighbor(b,0)
     for _,i in ipairs{a,b,c} do g.ice[i],g.oil[i]=0,0 end
@@ -315,42 +318,43 @@ end
 do
     R.island=city.new();island.island_setup(R.island)
     R.wonders=island.wonders
-    R.prog={level=4,seed=1,wallet=purse(),story_seen={}}
-    local bank=purse(700,90,90,12)
-    check(island.island_place_next(R.island,bank,4,0),'legacy camp already placed')
+    R.prog={level=16,seed=1,wallet=purse(),story_seen={}}
+    local bank=purse(9000,9000,9000,12)
+    check(island.island_place_next(R.island,bank,1,0) and island.island_place_next(R.island,bank,6,0),
+        'legacy well and cabin already placed')
     check(save.write('relic-resource-legacy',function(s)
         s:int('version',require('journey').version)
-        s:int('level',4)
+        s:int('level',16)
         s:ints('wallet',purse(155,7,2,12))
         R.island:serialize(s)
     end),'write legacy fixture')
     check(save.read('relic-resource-legacy',R.serialize),'load legacy fixture')
-    check(R.make_board(4, 93).tool_meter[1] == nil, 'older saves start their unlocked bonus meters empty')
+    check(R.make_board(6, 93).tool_meter[1] == 0, 'older saves start their unlocked bonus meters empty')
     local w=R.prog.wallet
-    local well=island.wonders[2].cost[1]
-    check(w[1]==math.max(155,well) and w[2]==island.wonders[2].cost[2] and w[3]==9 and w[4]==4 and island.wonder_count(R.island)==1,
+    local camp=island.wonders[2].cost
+    check(w[1]==math.max(155,camp[1]) and w[2]==camp[2] and w[3]==math.max(camp[3],9) and w[4]==16 and island.wonder_count(R.island)==1,
         'legacy saves preserve Gold, placements and combined Supplies; old stars become boards cleared')
-    local spare=w[1]-well
-    check(not island.can_spend(R.island,w,4,purse(spare+1)) and (spare==0 or island.can_spend(R.island,w,4,purse(spare))),
-        'optional building cannot spend the Gold reserved for the well')
+    local spare=w[1]-camp[1]
+    check(not island.can_spend(R.island,w,16,purse(spare+1)) and (spare==0 or island.can_spend(R.island,w,16,purse(spare))),
+        'optional building cannot spend the Gold reserved for the camp')
     check(save.write('relic-resource-v1',function(s)
         s:int('version',require('journey').version)
         s:int('resource_version',1)
-        s:int('level',4)
+        s:int('level',16)
         s:ints('wallet',purse(20,10,22,12))
         R.island:serialize(s)
-    end),'write an old wallet with the previous well price')
+    end),'write an old wallet with the previous camp price')
     check(save.read('relic-resource-v1',R.serialize),'load the old price')
     w=R.prog.wallet
-    check(w[1]==math.max(20,well) and w[2]==math.max(10,island.wonders[2].cost[2]) and w[3]==22 and w[4]==4,
+    check(w[1]==math.max(20,camp[1]) and w[2]==math.max(10,camp[2]) and w[3]==math.max(22,camp[3]) and w[4]==16,
         'migration covers an earned restoration at the new price and preserves other balances')
-    check(island.island_place_next(R.island,w,4,0),'migrated well is affordable')
+    check(island.island_place_next(R.island,w,16,0),'migrated camp is affordable')
     -- Relic Rush serializes each meter by name. Reordered tools retain their
     -- own charges, and neither retired bonus can be selected or inherited.
     check(save.write('relic-eight-bonuses', function(s)
         s:int('version', require('journey').version)
         s:int('resource_version', 4)
-        s:int('level', 4)
+        s:int('level', 16)
         s:int('bonus_hammer', 4)
         s:int('bonus_dynamite', 7)
         s:int('bonus_shield', 6)
@@ -366,7 +370,7 @@ do
     check(charges[B.hammer.tool] == 55 and charges[B.lightning.tool] == 60 and charges[B.shield.tool] == economy.BONUS_THRESHOLD
         and charges[B.hourglass.tool] == economy.BONUS_THRESHOLD and charges[5] == nil,
         'legacy paired meters merge by name, keep their fractions and cap at one use')
-    R.g=R.make_board(4,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true
+    R.g=R.make_board(6,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true
     R.g.tool_meter[1] = R.g.tool_threshold // 2
     R.update_bonus_charges()
     R.stash_completed()
@@ -389,17 +393,17 @@ do
     check(save.write('relic-old-quay', function(s)
         s:int('version', require('journey').version)
         s:int('resource_version', 5)
-        s:int('level', 10)
+        s:int('level', 16)
         s:ints('wallet', purse(12, 34, 56, 10))
-        s:int('narrative.v1.after-10', 1)
-        s:int('narrative.choice.after-10', 2)
+        s:int('narrative.v1.restore-16', 1)
+        s:int('narrative.choice.restore-16', 2)
         R.island:serialize(s)
     end), 'write a pre-repair save after the chapter-one choice')
     check(save.read('relic-old-quay', R.serialize), 'load the pre-repair save')
     w = R.prog.wallet
     check(island.owned(R.island, market) == 1 and island.owned(R.island, steps) == 0
         and w[1] == 12 and w[2] == 34 and w[3] == 56, 'drop the saved staircase and preserve the market and wallet')
-    check(R.prog.story_seen['after-10'] and R.prog.story_choices['after-10'] == 2,
+    check(R.prog.story_seen['restore-16'] and R.prog.story_choices['restore-16'] == 2,
         'keep the chosen reply and acknowledged scene')
 end
 

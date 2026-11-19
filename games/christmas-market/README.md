@@ -9,7 +9,7 @@ An in-progress Christmas market game based on Relic Rush's square match-3 and fr
 
 ![The 37 Blender-rendered buildings and decorations](docs/screenshots/buildings.jpg)
 
-The [reference sheet](art/building-reference-sheet.png) covers ten campaign buildings: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, an igloo, a chapel, a log cabin, Santa's workshop and more.
+The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.
 
 Direction: snow-covered timber and cream plaster, evergreen garlands, red ribbons, warm amber windows and lights, cool blue snow, readable isometric silhouettes. The Blender models resolve perspective and footprints exactly. The renders can still guide an ImageGen repaint ([#34](https://github.com/corepunch/nile-archive/issues/34)).
 
@@ -25,7 +25,7 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-The ten original winter wishes use square boards up to 9 × 12. Swap two neighboring treats to match three in a row or column. Every blue pane must light. Single and crossed chains mark treats that need one or two hits before the pane can clear. The last few panes get a trail around their square edges during idle play. The [square campaign guide](docs/square-match3.md) lists the levels and artwork.
+The 100 winter wishes use square boards up to 9 × 12. Swap two neighboring treats to match three in a row or column. Every blue pane must light. Single and crossed chains mark treats that need one or two hits before the pane can clear. The last few panes get a trail around their square edges during idle play. The five Advents run levels 1–20, 21–40, 41–60, 61–80 and 81–100, and each board has a tier (levels 1–4 teach, then easy, easy, normal, normal, hard, easy, normal, normal, hard, boss per ten). `python3 tools/square_boards.py christmas-market` validates them, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. The [square campaign guide](docs/square-match3.md) lists the levels and artwork.
 
 ## Shared match engine and atlas
 
@@ -74,7 +74,7 @@ There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
 flakes still.
 
-`make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has ten square puzzles, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
+`make run-christmas-market` launches the native draft. `--showcase` previews the campaign buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has 100 square puzzles, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or
 use the mouse wheel. Both are full-screen sheets under the wallet row. The shop
@@ -101,7 +101,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 ## Story
 
-The ten playable wishes reach the first market chapter. The Welcome arch, Lumber workshop, Gingerbread bakery and Hot cocoa kiosk carry the story. The Reindeer stable, Gingerbread house and Snowy chapel join between them. The full [story archive](docs/story.md) includes the later chapters.
+The 100 playable wishes run through five Advents. Ten stalls carry the story (Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree) and ten more fill the ladder between them: one purchase every five levels. The [script](docs/story.md) runs five Advents of twenty wishes to Christmas Eve: Noelle arrives to help for Advent, lights the market's lane, and by the last Advent a late passenger and a light to come home to bring everyone together. There is no villain.
 
 `lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/lua/match3/game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
 
@@ -114,7 +114,7 @@ The ten playable wishes reach the first market chapter. The Welcome arch, Lumber
 Build with `make CFLAGS="-O2 -g -Werror" christmas-market build/test/christmas-market`.
 Run `build/test/christmas-market --extended "rules campaign_play" "rules christmas" "smoke game" "smoke campaign"`
 under Xvfb on Linux. The extended campaign earns its wallet from real
-matches and checks the ten wishes and seven playable purchases. The standard
+matches and checks the 100 wishes and twenty purchases. The standard
 smoke uses real input for a win, construction, building pickup and movement,
 decoration shopping, replay and the next level. The campaign smoke prepares
 each board and the wallet for one real winning move, then drives Collect,
@@ -174,4 +174,4 @@ charge carry between wishes.
 
 ### Board
 
-Honey maple, teal panes and brass trim with snowy fir sprigs frame the ten winter wishes.
+Honey maple, teal panes and brass trim with snowy fir sprigs frame the winter wishes.

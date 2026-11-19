@@ -26,7 +26,7 @@
    ],
    "base_width": 409.808,
    "cost": [
-    50,
+    70,
     0,
     0
    ],
@@ -56,8 +56,8 @@
    ],
    "base_width": 409.808,
    "cost": [
-    100,
-    75,
+    1245,
+    455,
     0
    ],
    "stars": 0,
@@ -86,9 +86,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    300,
+    1070,
     0,
-    200
+    640
    ],
    "stars": 0,
    "about": "Fresh gingerbread figures with piped icing.",
@@ -116,9 +116,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    400,
-    100,
-    300
+    1355,
+    1395,
+    1165
    ],
    "stars": 0,
    "about": "Mrs Alder has paid for the next cup.",
@@ -146,9 +146,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    300,
-    200,
-    300
+    1455,
+    1110,
+    1170
    ],
    "stars": 0,
    "about": "Henrik sells wooden blocks from his toy bench.",
@@ -176,9 +176,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    500,
-    400,
-    400
+    1540,
+    1080,
+    1090
    ],
    "stars": 0,
    "about": "Paper, string and a spare tag for Pip’s scarf.",
@@ -206,9 +206,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    500,
-    500,
-    600
+    1965,
+    1235,
+    1255
    ],
    "stars": 0,
    "about": "Take a lantern if you have a long walk home.",
@@ -236,9 +236,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    700,
-    600,
-    700
+    1990,
+    1190,
+    1185
    ],
    "stars": 0,
    "about": "Twelve wooden horses. A different household painted each one.",
@@ -266,9 +266,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    180,
-    450,
-    60
+    1880,
+    1210,
+    1070
    ],
    "stars": 0,
    "about": "The rink kiosk sells hand-painted ceramic snowmen.",
@@ -296,9 +296,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    250,
-    600,
-    80
+    2520,
+    1440,
+    1240
    ],
    "stars": 0,
    "about": "The Christmas Eve fair under the tree sells red wool caps.",
@@ -771,9 +771,9 @@
    ],
    "base_width": 223.205,
    "cost": [
-    150,
-    350,
-    50
+    2445,
+    1360,
+    1215
    ],
    "stars": 0,
    "about": "The sleigh brings smoked trout from the lakeside stalls.",
@@ -789,7 +789,7 @@
   {
    "id": 26,
    "key": "igloo",
-   "name": "Igloo",
+   "name": "Ice house",
    "category": "wonder",
    "size": [
     2,
@@ -801,9 +801,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    130,
-    300,
-    40
+    1155,
+    835,
+    1000
    ],
    "stars": 0,
    "about": "Snow blocks outside, a warm glow within.",
@@ -935,7 +935,7 @@
   {
    "id": 31,
    "key": "log_cabin",
-   "name": "Log cabin",
+   "name": "Lakeside smokehouse",
    "category": "wonder",
    "size": [
     2,
@@ -947,9 +947,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    250,
-    350,
-    100
+    1665,
+    930,
+    1265
    ],
    "stars": 0,
    "about": "Salted pretzels come out of the wood-fired oven.",
@@ -1007,9 +1007,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    250,
-    250,
-    100
+    2315,
+    1485,
+    1455
    ],
    "stars": 0,
    "about": "Every letter finds its way north.",
@@ -1037,9 +1037,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    80,
+    1010,
     0,
-    65
+    630
    ],
    "stars": 0,
    "about": "The chapel masons cut stone for the market’s foundations.",
@@ -1067,8 +1067,8 @@
    ],
    "base_width": 359.808,
    "cost": [
-    60,
-    20,
+    605,
+    220,
     0
    ],
    "stars": 0,
@@ -1085,7 +1085,7 @@
   {
    "id": 36,
    "key": "santa_workshop",
-   "name": "Santa's workshop",
+   "name": "Woodcarvers' hall",
    "category": "wonder",
    "size": [
     3,
@@ -1097,9 +1097,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    200,
-    150,
-    100
+    1870,
+    1175,
+    990
    ],
    "stars": 0,
    "about": "Hammers, ribbons and cocoa until the last toy is wrapped.",
@@ -1111,6 +1111,96 @@
    "runtime": "data/city/buildings/santa_workshop.png",
    "shadow": "data/city/building-shadows/santa_workshop.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#santa_workshop"
+  },
+  {
+   "id": 37,
+   "key": "firework_stall",
+   "name": "Firework stall",
+   "category": "wonder",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    138.603,
+    210.371
+   ],
+   "base_width": 273.205,
+   "cost": [
+    930,
+    345,
+    430
+   ],
+   "stars": 0,
+   "about": "Indigo crackers for the New Year sky, sold in threes.",
+   "road": false,
+   "image": [
+    278,
+    300
+   ],
+   "runtime": "data/city/buildings/firework_stall.png",
+   "shadow": "data/city/building-shadows/firework_stall.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#firework_stall"
+  },
+  {
+   "id": 38,
+   "key": "station_kiosk",
+   "name": "Station kiosk",
+   "category": "wonder",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    138.603,
+    184.887
+   ],
+   "base_width": 273.205,
+   "cost": [
+    1275,
+    840,
+    1040
+   ],
+   "stars": 0,
+   "about": "The kiosk clock keeps the trains honest. Pretzels while you wait.",
+   "road": false,
+   "image": [
+    278,
+    275
+   ],
+   "runtime": "data/city/buildings/station_kiosk.png",
+   "shadow": "data/city/building-shadows/station_kiosk.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#station_kiosk"
+  },
+  {
+   "id": 39,
+   "key": "glassblower",
+   "name": "Glassblower's stall",
+   "category": "wonder",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    138.603,
+    177.951
+   ],
+   "base_width": 273.205,
+   "cost": [
+    1920,
+    1190,
+    1210
+   ],
+   "stars": 0,
+   "about": "Every bauble is blown by hand, one breath at a time.",
+   "road": false,
+   "image": [
+    278,
+    268
+   ],
+   "runtime": "data/city/buildings/glassblower.png",
+   "shadow": "data/city/building-shadows/glassblower.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#glassblower"
   }
  ]
 }

@@ -41,7 +41,8 @@ function R.smoke()
             assert(R.g.resource_yields[water.kind] == water and next(R.g.tool_meter) == nil,
                 'the well adds water buckets to the second board')
         else
-            assert(R.g.resource_yields[4] == economy.pieces[4], 'the arch adds firewood to the second board')
+            local wine = economy.unlock_of('arch').kind
+            assert(R.g.resource_yields[wine] == economy.pieces[wine], 'the arch adds mulled wine to the second board')
         end
         print('walkthrough pointer smoke passed: skip, reward, confirmed building and next board reward')
         app.quit()

@@ -45,7 +45,7 @@ end
 -- Compact square layouts, centred in a common column-major envelope.
 -- Space outside the drawn rows and hyphens are holes. Dots are plain cells,
 -- asterisks are targets, plus signs are two-layer targets, and c/C are
--- targets with single/double chains.
+-- targets with single/double chains. `tier` sets the tuner's move margin.
 function S.square_levels(boards, columns, rows, lesson, dress)
     local levels, names = {}, {}
     for n, board in ipairs(boards) do
@@ -68,7 +68,7 @@ function S.square_levels(boards, columns, rows, lesson, dress)
             end
         end
         assert(#oil > 0, "square board needs at least one target")
-        levels[n] = {name=board.name, moves=board.moves, lesson=board.lesson or lesson,
+        levels[n] = {name=board.name, tier=board.tier, moves=board.moves, lesson=board.lesson or lesson,
             mask=table.concat(mask), oil=oil, oil_double=double, chain_cells=chains, goals={"oil"},
             score=0, relics=0, chains=0, ice=0, dress=dress}
         names[n] = board.name

@@ -1,6 +1,6 @@
 # Christmas Market · first 20 wishes
 
-This is the historical prototype. The [current ten-wish campaign](market-pieces.md)
+This is the historical prototype. The [current 100-level campaign](market-pieces.md)
 has the revised color map, construction rewards and measured playthrough.
 
 Noelle lights the old market at Bellmere. Winning a board banks the goods
@@ -116,6 +116,8 @@ Market mirrors that rhythm. [Board progression](board-progression.md)
 
 ## The twenty-stall ladder
 
+> This is the earlier thirty-wish prototype ladder, kept as design history. The current 100-level ladder, with one purchase every five levels and fitted prices, is the [construction sequence](market-pieces.md#construction-sequence).
+
 Bellmere now has twenty stalls, after Cradle of Rome's twenty constructions:
 each adds one piece or one bonus from the wish after it is placed. The ten
 market wishes (★) keep their story beats and never block the next new wish. The ten
@@ -161,7 +163,7 @@ and the snowflake bauble from `art/icons.png`. Firewood leaves the board when
 cocoa arrives, so after wish 10 Supplies come only from packing blocks; the
 new stalls' prices lean on Food, which the later goods make plentiful.
 
-The extended campaign run (below) places all twenty stalls in thirty wishes
+The extended campaign run (below) placed all twenty stalls in thirty wishes
 with one replay for income. The wallet runs low around wishes 24–26 (86 Gold
 after the giant bauble) and recovers by the finale.
 

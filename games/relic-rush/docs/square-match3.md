@@ -1,6 +1,6 @@
 # Square match-3
 
-Match relics to clear the turquoise plaques. The first chapter opens the Well, Hunter’s Hut, Sawmill and Village. The Village upgrades the Hammer to a Bomb that clears a 3 × 3 area. The replacement carries across the existing charge.
+Match relics to clear the turquoise plaques. The first epoch opens the Spring well, Trapper’s cabin, Carpenter’s workshop and Expedition camp. The camp upgrades the Hammer to a Bomb that clears a 3 × 3 area. The replacement carries across the existing charge.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
@@ -18,32 +18,36 @@ Reduce Motion hides the trail.
 ## Build
 
 Only gold and silver coins pay into the wallet on the first expedition.
-The Well introduces water buckets worth 3 Food from expedition 2. The
-Sawmill adds timber worth 5 Supplies from expedition 8. The Hunter’s Hut
-introduces the Hammer from expedition 5. Later purchases replace existing
-pieces, including stone for timber and shrimp for water. Curia Octavia
-introduces red mullet for 7 Food and the House of the Vestals introduces
-pearls for 7 Coins. The Aqueduct replaces pearls with rings on expedition 20.
+The Spring well introduces water buckets from expedition 2. The
+Carpenter’s workshop adds timber. The Trapper’s cabin
+introduces the Hammer. Later purchases replace existing
+pieces, including stone for timber and shrimp for water. The Harbour lodge
+introduces red mullet and the Cartographer’s house introduces
+pearls. The Keeper’s archive replaces pearls with rings.
 Amphoras are playable score pieces from the opening. See the
-[fourteen prices and unlocks](../README.md#buildings).
+[twenty prices and unlocks](../README.md#buildings).
 
 The lower-left house opens the next purchase. Its readout shows the
 remaining amount for each required resource. If the wallet covers the price
 early, the readout shows the expedition to clear. A particle trail circles
 the house when both the level requirement and price are met. Open placement
 from the card, choose a site, then confirm to pay once. The card links to the
-decoration shop. After level twenty, a pending purchase can offer a replay for
+decoration shop. After level 100, a pending purchase can offer a replay for
 resources.
 
 ## Levels and art
 
-The [twenty ASCII layouts](../lua/campaign.lua) use a maximum field of nine
+The [100 ASCII layouts](../lua/campaign.lua) use a maximum field of nine
 columns by twelve rows. Dots are ordinary cells, asterisks single targets,
 plus signs double targets, `c` and `C` single and double chains over
-targets, and hyphens holes.
+targets, and hyphens holes. Each board has a `tier` (levels 1–4 tutorial,
+then per ten levels easy, easy, normal, normal, hard, easy, normal, normal,
+hard, boss). `python3 tools/square_boards.py relic-rush` validates them,
+`tools/square_trim.py` trims long ones to the tier (easy 30, normal 45, hard
+60, boss 70 targets at the bot's median) and `tools/tune_moves.py` fits each
+board's `moves`.
 
-Expeditions 11–20 use new square layouts for the sites of the previous hex
-chapter. The existing first-clear and construction scenes tell Ines’s story.
+The existing first-clear and construction scenes tell Ines’s story.
 Plaques are still the goal and the five slots carry the regular resource,
 score and bonus pieces.
 
@@ -83,13 +87,13 @@ Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 
 ## Construction balance
 
-The seeded campaign check funded and placed all fourteen buildings in order
-using matches from the first win of each of the twenty boards. Two failed
-attempts were retried and contributed no resources. The final wallet held
-865 Coins, 1,053 Food and 657 Supplies. The separate balance sample tries
-40 deals per board and applies the average income per win to the purchase
-order. At the measured income, each purchase was affordable on its first
-eligible clear. Earnings vary with the deals and matches.
+`python3 tools/balance.py relic-rush` fits the twenty purchase prices to the
+bot's measured income: the balance sample tries 40 deals per board and
+applies the average income per win to the purchase order. With the fitted
+prices the expected campaign needs no replays, and each purchase is
+affordable on its first eligible clear. Earnings vary with the deals and
+matches. The seeded campaign check funds and places every ladder purchase
+in order from the first win of each board.
 
 ```sh
 BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules relic_balance'

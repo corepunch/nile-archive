@@ -906,6 +906,78 @@
    ],
    "shadow_base_width": 348.336,
    "painted_foundation": true
+  },
+  "firework_stall": {
+   "title": "Firework stall",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/firework_stall.png",
+   "image": [
+    278,
+    300
+   ],
+   "pivot": [
+    138.603,
+    210.371
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/firework_stall.png",
+   "shadow_pivot": [
+    140.63,
+    106.965
+   ],
+   "shadow_base_width": 232.224
+  },
+  "station_kiosk": {
+   "title": "Station kiosk",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/station_kiosk.png",
+   "image": [
+    278,
+    275
+   ],
+   "pivot": [
+    138.603,
+    184.887
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/station_kiosk.png",
+   "shadow_pivot": [
+    137.309,
+    91.304
+   ],
+   "shadow_base_width": 232.224
+  },
+  "glassblower": {
+   "title": "Glassblower's stall",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/glassblower.png",
+   "image": [
+    278,
+    268
+   ],
+   "pivot": [
+    138.603,
+    177.951
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/glassblower.png",
+   "shadow_pivot": [
+    136.317,
+    94.558
+   ],
+   "shadow_base_width": 232.224
   }
  },
  "generator": "tools/buildings.py",
@@ -953,7 +1025,10 @@
   "post_office",
   "chapel",
   "reindeer_stable",
-  "santa_workshop"
+  "santa_workshop",
+  "firework_stall",
+  "station_kiosk",
+  "glassblower"
  ],
  "paintover": {
   "version": "painted-v1",

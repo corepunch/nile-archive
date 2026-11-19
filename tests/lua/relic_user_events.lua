@@ -72,7 +72,7 @@ do
     R.island:add(vec2(0,0),U.kinds.workshop,0)
     U.emit("island")
     check(st.done.city_workshop and st.available.man_01,'placing the workshop opens the carpenter')
-    local g=R.make_board(8,7)
+    local g=R.make_board(11,7)
     U.emit("wave",{g=g,runs={4},longest=4})
     check(not st.done.man_01,'a line of four is not the carpenter feat')
     U.emit("wave",{g=g,runs={5},longest=5})

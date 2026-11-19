@@ -84,7 +84,7 @@ end
 local first_tool = economy.bonuses.hammer
 local resource = relic and economy.unlock_of("well") or economy.pieces[economy.unlock_of("arch").kind]
 check_unlock(journey.wonder_levels[1], resource, true)
-local hammer_level = relic and journey.wonder_levels[2] or economy.unlock_of("reindeer_stable").after
+local hammer_level = relic and economy.unlock_of("log_cabin").first_level - 1 or economy.unlock_of("reindeer_stable").after
 local board = check_unlock(hammer_level, first_tool)
 
 local tool = first_tool.tool
