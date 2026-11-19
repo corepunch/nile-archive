@@ -42,6 +42,9 @@ function E.popup_header(title, subtitle, close_id, tucked)
         {kind="label",id="title",value=header_title(title),wrap=true,em=30,text_style="popup_title"},
         {kind="label",id="subtitle",value=header_subtitle(subtitle),visible_field="subtitle",
             wrap=true,em=14,text_style="popup_subtitle"},
+        -- The card's padding plus the font's leading sit above the caps; this
+        -- gives the rule the same room below the text, centring the title.
+        {kind="spacer",height=8},
         {kind="spacer",panel=true,role="popup_rule",height=14},
         close_id and {kind="button",id=close_id,role="popup_close",width=44,height=44,
             pin={1,0},pin_offset=tucked and {-26,26} or {-8,8}} or nil,
