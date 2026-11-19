@@ -116,7 +116,7 @@ end
 local building_words = R.building_words
 function R.building_words(item)
     local building = R.island.items[item + 1]
-    if building.type == island.kinds.quay_steps and R.quest_state().done.shutter then
+    if building.type == island.kinds.workshop and R.quest_state().done.shutter then
         return R.buildings[building.type + 1].name .. "\n" .. "Elena’s chart marks the reef in red. White light means clear water."
     end
     return building_words(item)

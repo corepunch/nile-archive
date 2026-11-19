@@ -172,9 +172,9 @@ Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, T
 
 ## Story and world
 
-In **A Light Below** (levels 1–10), Mara draws the first bucket at the Well and Elena spots a light below the cliff. The Sawmill supplies the quay repair. The Well and the repaired steps have fixed sites.
+In **A Light Below** (levels 1–10), Mara draws the first bucket at the Well and Elena spots a light below the cliff. Tomas makes a cable reel from Sawmill timber. The Village takes up the watch from shore.
 
-In **The Keeper’s Return** (levels 11–20), the crew uses the Port register, the meeting hall at Curia Octavia and the Aqueduct inspection cabinet. Ines’s note identifies the signaler, and her signed plan gives the crew a way to repair the quay wall. Chapter 3 carries the repair and ownership dispute to the finale. The signal plate and Ines’s reply on board 30 pay off the three flashes at the restored steps.
+In **The Keeper’s Return** (levels 11–20), the crew uses the Port register, the meeting hall at Curia Octavia and the Aqueduct inspection cabinet. Ines’s note identifies the signaler, and her signed plan gives the crew a way to repair the quay wall. Chapter 3 carries the repair and ownership dispute to the finale. The signal plate and Ines’s reply on board 30 pay off the three flashes seen from shore.
 
 A first clear advances the expedition counter. Every won expedition banks its matched resources. Construction, currency and story progress persist across saves.
 
@@ -257,7 +257,7 @@ The twenty campaign purchases follow the Windows edition of Cradle of Rome 2. Ea
 | 19 | Forum | 26 | 225 / 260 / 160 | Unlocks Star. Clear all pieces of a chosen kind. |
 | 20 | Fountain | 29 | 940 / 1040 / 660 | Emeralds earn 11 Coins each. |
 
-A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. The Sawmill also repairs the fixed quay as part of the island story. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
+A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
 confirm. Cancelling is free. The resources
 needed for an earned restoration are reserved until placement. Purchases save

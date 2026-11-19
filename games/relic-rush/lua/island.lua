@@ -59,34 +59,18 @@ for _, entry in ipairs(economy.unlocks) do
     if unlock then M.buildings[M.kinds[entry.building] + 1].unlock_text = "Unlocks " .. unlock end
 end
 
--- The quay is a fixed part of the Workshop purchase. Keep its catalogue ID
--- for saved cities and its footprint reserved, but never offer it for sale.
-local steps = M.kinds.quay_steps
 local function scenery_building(kind)
     local item = M.catalogue[kind + 1]
     return item and HOUSES[item.category] and not M.ladder_position[kind]
 end
 for i = #M.catalogue_order, 1, -1 do
     local kind = M.catalogue_order[i] - 1
-    if kind == steps or scenery_building(kind) then table.remove(M.catalogue_order, i) end
-end
-
-function M.restore_quay(c, now)
-    if M.owned(c, steps) > 0 then return end
-    local site = c:snap(M.buildings[steps + 1].fixed_site, steps)
-    assert(c:add(site, steps, now) >= 0, "no room for the Workshop's quay repair")
-end
-
-function M.purchase_confirmed(c, kind, now)
-    if kind == M.kinds.workshop then
-        M.restore_quay(c, now)
-        return M.buildings[steps + 1].fixed_site
-    end
+    if scenery_building(kind) then table.remove(M.catalogue_order, i) end
 end
 
 local can_buy = M.can_buy
 function M.can_buy(c, wallet, level, kind)
-    if kind == steps or scenery_building(kind) then return false end
+    if scenery_building(kind) then return false end
     return can_buy(c, wallet, level, kind)
 end
 
@@ -115,12 +99,13 @@ end
 
 function M.restore_saved(c)
     -- Purchased decorations do not count toward campaign restoration progress.
+    -- Discard the retired Quay Steps before checking the remaining footprints.
     -- Rehome saved buildings whose footprints no longer fit without charging again.
     local items,seen=c.items,{}
     local needs_relocation=false
     c.count=0
     for _,b in ipairs(items) do
-        local valid=M.buildings[b.type+1] and (not story_kind[b.type] or not seen[b.type])
+        local valid=b.type ~= M.kinds.quay_steps and M.buildings[b.type+1] and (not story_kind[b.type] or not seen[b.type])
         if valid then
             local spot=c:snap(b.pos,b.type)
             local ok=c:can_place(spot,b.type,-1)
@@ -281,7 +266,6 @@ function M.island_place_next(c, wallet, built_limit, now)
     if not ok then return false end
     c:begin_place(nxt, spot)
     if c:confirm(wallet, now).result == city.BUILT then
-        M.purchase_confirmed(c, nxt, now)
         return true
     end
     c:cancel()

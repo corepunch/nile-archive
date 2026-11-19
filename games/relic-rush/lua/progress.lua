@@ -198,7 +198,6 @@ function R.serialize_campaign(s)
             island.set_waived(c, waived)
         end
         if version < 7 and (island.owned(c, island.kinds.workshop) > 0 or version < 6 and p.level >= 10) then
-            island.restore_quay(c, 0)
             if island.owned(c, island.kinds.log_cabin) == 0 then
                 waived[island.ladder_position[island.kinds.log_cabin]] = true
                 p.story_seen["restore-07"] = true

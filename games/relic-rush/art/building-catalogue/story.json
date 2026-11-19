@@ -8,9 +8,8 @@
     "cost": [35, 0, 0]
   },
   "quay_steps": {
-    "about": "The Workshop's first tread opens the way to the viewing shutter.",
+    "about": "",
     "cost": [0, 0, 0],
-    "fixed_site": [925, 2195],
     "paint": {
       "geometry": "art/building-catalogue/painted-v1/quay-steps-geometry.png",
       "source": "art/building-catalogue/painted-v1/quay-steps-output.png",

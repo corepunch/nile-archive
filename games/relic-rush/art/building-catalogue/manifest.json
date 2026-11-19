@@ -3880,7 +3880,7 @@
         0,
         0
       ],
-      "about": "The Workshop's first tread opens the way to the viewing shutter.",
+      "about": "",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/quay_steps.png",
@@ -3891,10 +3891,6 @@
         ],
         "base_width": 232.224
       },
-      "fixed_site": [
-        925,
-        2195
-      ],
       "paint": {
         "geometry": "art/building-catalogue/painted-v1/quay-steps-geometry.png",
         "source": "art/building-catalogue/painted-v1/quay-steps-output.png",

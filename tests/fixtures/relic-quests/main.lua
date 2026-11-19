@@ -80,7 +80,6 @@ function R.smoke()
         while story.active() do story.next() end
         R.story_tick()
         R.island_with(3)
-        island.restore_quay(R.island, 0)
         R.prog.level, R.overlay = 9, R.OV_NONE
         local state = R.quest_state()
         state.done.trail, state.have.cable = true, quests.by_key.cable.need
@@ -111,12 +110,12 @@ function R.smoke()
     elseif stage == 16 and R.quest_state().done.shutter then
         assert(story.active() and R.story_current.key == "quest-shutter")
         assert(R.prog.level == 9 and not R.open_quest("shutter"), "the field test resolves once without advancing a level")
-        local steps
+        local mill
         for index, building in ipairs(R.island.items) do
-            if building.type == island.kinds.quay_steps then steps = index - 1 end
+            if building.type == island.kinds.workshop then mill = index - 1 end
         end
-        assert(steps and R.building_words(steps):find("marks the reef in red", 1, true),
-            "the quay should remember the result of the field test")
+        assert(mill and R.building_words(mill):find("marks the reef in red", 1, true),
+            "the Sawmill should remember the result of the field test")
         -- Later ladder steps have no opening-epoch story request. The rail
         -- still has to route a funded purchase to its own placement card.
         while story.active() do story.next() end

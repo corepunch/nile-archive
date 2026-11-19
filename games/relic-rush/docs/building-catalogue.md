@@ -63,7 +63,7 @@ Reproduce with `python3 tools/import_painted_buildings.py relic-rush`. See the
 [before/after and complete footprint review](review/painted-buildings/current-camera/README.md).
 This completes the building paint pass tracked in [#41](https://github.com/corepunch/nile-archive/issues/41).
 
-The Quay Steps use the [Blender render](../art/building-catalogue/painted-v1/quay-steps-geometry.png) as the ImageGen edit target and the Spring Well as the painting reference. The [prompt](../art/building-catalogue/painted-v1/quay-steps-prompt.txt), [paint output](../art/building-catalogue/painted-v1/quay-steps-output.png) and [three ground corners](../art/building-catalogue/story.json) reproduce the affine registration in `prepare_buildings.py`. It writes the art to `data/city/buildings/quay_steps.png`; the shadow takes its registration from the original render. See the [review](review/chapter-one/quay-footprint.jpg).
+The retired Quay Steps use the [Blender render](../art/building-catalogue/painted-v1/quay-steps-geometry.png) as the ImageGen edit target and the Spring Well as the painting reference. The [prompt](../art/building-catalogue/painted-v1/quay-steps-prompt.txt), [paint output](../art/building-catalogue/painted-v1/quay-steps-output.png) and [three ground corners](../art/building-catalogue/story.json) reproduce the affine registration in `prepare_buildings.py`. It writes the art to `data/city/buildings/quay_steps.png`; the shadow takes its registration from the original render. See the [review](review/chapter-one/quay-footprint.jpg).
 
 ## Separate ground shadows
 
@@ -79,7 +79,7 @@ below all building sprites. Held previews keep the shadow grounded.
 ## Supported presentation and interactions
 
 Every object has one authored, finished normal/restored sprite. It has no damaged,
-construction or upgrade state. Map tap opens details. A stationary 0.5-second hold lifts movable items. The Spring Well and Quay Steps stay where they are restored. Ordinary drag pans. The engine's existing **transient** placement
+construction or upgrade state. Map tap opens details. A stationary 0.5-second hold lifts movable items. Ordinary drag pans. The engine's existing **transient** placement
 preview uses alpha, lift animation, a valid/invalid grid and its invalid-location
 red overlay; these remain placement feedback, not additional authored sprite
 states. Catalogue item images always use the normal sprite without tinting;
@@ -100,7 +100,7 @@ make test
 
 On Linux, run renderer captures and smoke under Xvfb with
 `LIBGL_ALWAYS_SOFTWARE=1`; the reviewed captures here use the installed native
-macOS renderer. The first 96 entries share the existing footprint gallery. The [Quay Steps review](review/chapter-one/quay-footprint.jpg) shows the appended entry at its original site. The [review gallery](review/building-catalogue/README.md)
+macOS renderer. The first 96 entries share the existing footprint gallery. The [Quay Steps review](review/chapter-one/quay-footprint.jpg) records the retired entry at its former site. The [review gallery](review/building-catalogue/README.md)
 also includes normal/blocked placement, details and 480 x 900 / 390 x 844 layouts.
 Generated masters and editable sources are preserved in the repository; rendering
 needs only Blender.
@@ -211,7 +211,7 @@ sprite file is always `data/city/buildings/<key>.png`.
 | 93 / `boulder` | Boulder | rock | 1 x 1 | 15 Coins | 0 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
 | 94 / `crystal` | Crystal cluster | rock | 1 x 1 | 120 Coins | 18 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
 | 95 / `mossy_rocks` | Mossy boulders | rock | 2 x 2 | 60 Coins | 3 | [Page 24](review/painted-buildings/current-camera/after-building-review-24.jpg) |
-| 96 / `quay_steps` | Quay steps | wonder | 2 x 2 | Included with Artisan Workshop | 0 | [Fixed site](review/chapter-one/quay-footprint.jpg) |
+| 96 / `quay_steps` | Quay steps | wonder | 2 x 2 | Retired · reserved save ID | 0 | [Historical capture](review/chapter-one/quay-footprint.jpg) |
 
 ## Style and prompt provenance
 

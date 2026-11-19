@@ -71,7 +71,7 @@ E.bonuses = B
 E.quests = {
     well={title="Draw fresh water", request="Restore the well to bring water buckets onto the board."},
     log_cabin={title="Build the Hunter's Hut", request="The hunter brings a hammer. Match hammer pieces to charge it."},
-    workshop={title="Open the Sawmill", request="The mill supplies timber for the village."},
+    workshop={title="Open the Sawmill", request="I can make a cable reel from the mill's offcuts."},
     camp={title="Build the Village", request="The village unlocks bombs. Match them to charge a blast."},
 }
 

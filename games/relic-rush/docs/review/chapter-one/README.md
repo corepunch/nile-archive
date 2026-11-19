@@ -1,6 +1,6 @@
 # Chapter 1 native review
 
-Confirming the Well brings up Mara with the first bucket. The Sawmill supplies a timber tread for the quay. Confirming the Village starts the night watch. The old keeper’s portrait voices two orders from the village watch book.
+Confirming the Well brings up Mara with the first bucket. The Sawmill supplies timber for Tomas’s cable reel. Confirming the Village starts the night watch. The old keeper’s portrait voices two orders from the village watch book.
 
 | Phone | Earlier Well scene | Current Well scene |
 | --- | --- | --- |
@@ -11,7 +11,12 @@ Confirming the Well brings up Mara with the first bucket. The Sawmill supplies a
 | --- | --- |
 | ![Keeper dialogue](keeper-480.jpg) | ![Keeper dialogue on a narrow phone](keeper-390.jpg) |
 
-![Quay Steps footprint and pivot on the coast](quay-footprint.jpg)
+Buying the Sawmill places one building. The grass where the staircase stood is available for placement.
+
+| Phone | Earlier coast | Current coast |
+| --- | --- | --- |
+| 480 × 900 | ![Sawmill and staircase](sawmill-shore-before-480.jpg) | ![Only the Sawmill purchase](sawmill-shore-480.jpg) |
+| 390 × 844 | ![Former staircase on phone](sawmill-shore-before-390.jpg) | ![Cleared coastal plot on phone](sawmill-shore-390.jpg) |
 
 Collect & Return follows the expedition earnings. On the island the building marker opens the purchase card, where the player can check the remaining cost or start placement.
 

@@ -299,10 +299,10 @@ local function test_island()
         check(p.wallet[rules.GOLD] == gold and p.level == i + 1, "reward once")
         for z = 1, island.ISLAND_ZONES - 1 do c:unlock(z, p.wallet) end
         while island.island_place_next(c, p.wallet, p.level, 0) do end
-        check(c.count == due + island.owned(c, island.kinds.quay_steps) and island.campaign_count(c) == due, "every opened ladder restoration fits, in order")
+        check(c.count == due and island.campaign_count(c) == due, "every opened ladder restoration fits, in order")
         check(island.wonder_count(c) == require("journey").earned(p.level), "story restorations keep their schedule")
     end
-    check(c.count == #island.ladder + 1, "the Workshop also restores the quay")
+    check(c.count == #island.ladder, "each purchase places one campaign building")
     check(p.wallet[rules.CLEARED] == LEVELS, "every first clear counts once")
 
     -- shoreline, collisions, failed builds change nothing, moving is free

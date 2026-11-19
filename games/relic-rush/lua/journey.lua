@@ -19,7 +19,7 @@ return require("match3.game").journey{
         {20, {"tomas", "Ines came back to warn boats away. Her repair plan can make the quay safe."},
              {"adrian", "My agreement gave Kessler a claim on the discoveries. We need those plans here."}},
         {10, {"elena", "Someone at the tide room changed the old warning. We need to learn who."}},
-        {4, {"mara", "The light answered my lamp. Tomas knows the steps to the lower quay."}},
+        {4, {"mara", "The light answered my lamp. Tomas knows the way to the lower quay."}},
         {0, {"mara", "The landing is clear. Keep an eye on the light below the cliff."}},
     },
     regions = {
@@ -31,11 +31,11 @@ return require("match3.game").journey{
     },
     -- {kind, from level, line}: the latest reached replaces the catalogue line.
     about = {
-        {0, 10, "The village shares the night watch at the quay steps."},
+        {0, 10, "The village shares the night watch on the shore."},
         {economy.WELL_KIND, 4, economy.unlock_text(economy.unlock_of("well"))},
         {economy.WELL_KIND, 6, "Tomas helps keep the well running for the expedition."},
         {economy.WORKSHOP_KIND, 7, economy.unlock_text(economy.unlock_of("workshop"))},
-        {economy.WORKSHOP_KIND, 9, "The sawmill cut the timber tread for the quay steps."},
+        {economy.WORKSHOP_KIND, 9, "Tomas made a cable reel from the sawmill's first offcuts."},
         {3, 9, economy.unlock_text(economy.unlock_of("market"))},
         {4, 13, "The port keeps a register of the harbor crews."},
         {5, 16, "The deckhands have a table in the hall to go over the harbor log."},

@@ -97,7 +97,7 @@ local items = {
     {key="boulder", name="Boulder", category="rock", cleared=0, about="Place this treasure anywhere on open grass.", cost=purse(15,0,0), needs=purse(0,0,0,0)},
     {key="crystal", name="Crystal cluster", category="rock", cleared=6, about="Place this treasure anywhere on open grass.", cost=purse(120,0,0), needs=purse(0,0,0,6)},
     {key="mossy_rocks", name="Mossy boulders", category="rock", cleared=1, about="Place this treasure anywhere on open grass.", cost=purse(60,0,0), needs=purse(0,0,0,1)},
-    {key="quay_steps", name="Quay steps", category="wonder", cleared=0, about="The Workshop's first tread opens the way to the viewing shutter.", cost=purse(0,0,0), needs=purse(0,0,0,0), fixed_site=vec2(925,2195)},
+    {key="quay_steps", name="Quay steps", category="wonder", cleared=0, about="", cost=purse(0,0,0), needs=purse(0,0,0,0)},
 }
 for _, b in ipairs(items) do
     for field, value in pairs(sprites[b.key]) do b[field] = value end

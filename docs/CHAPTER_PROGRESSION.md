@@ -4,7 +4,7 @@
 
 ## The epoch is the chapter
 
-Keep the rhythm of Cradle of Rome. The player matches pieces, banks resources and spends them on the next building. A purchase has a practical consequence worth showing on the build card. The Spring Well puts water buckets on future boards. The Sawmill lets the crew cut a tread to reach the viewing shutter on the quay. [Rome's twenty purchases](cradle-of-rome-reference/GAME_DESIGN.md#5-every-building-in-the-original-20-purchase-ladder)
+Keep the rhythm of Cradle of Rome. The player matches pieces, banks resources and spends them on the next building. A purchase has a practical consequence worth showing on the build card. The Spring Well puts water buckets on future boards. The Sawmill supplies timber for Tomas’s cable reel. [Rome's twenty purchases](cradle-of-rome-reference/GAME_DESIGN.md#5-every-building-in-the-original-20-purchase-ladder)
 
 - **Tell one story in four required purchases.** Give the epoch a question or wish. The first purchase sets it up, the middle two move it forward, and confirming the fourth pays it off. Twenty required purchases give each game five story epochs. Optional buildings, decorations and citizen arrivals do not fill a slot. [Relic Rush ladder](../games/relic-rush/lua/economy.lua) · [Christmas Market ladder](../games/christmas-market/lua/economy.lua)
 - **Let citizens add scenes between purchases.** Use the building and play conditions that already bring someone to town. Their arrival gives the writer an occasion for an exchange with another character. The player can finish the epoch whether or not an optional resident has arrived.
@@ -21,7 +21,7 @@ For the shipped Well, Hunter’s Hut, Sawmill and Village order and the cable in
 | --- | --- | --- |
 | Well | Water buckets earn Food | Mara draws fresh water. Elena sees a light flash and takes the scrap from the wet rope. |
 | Hunter’s Hut | Hammer | Tomas reaches for his father’s hammer. Mara asks him about the light, and he tells her the relay was cut. |
-| Sawmill | Timber earns Supplies | A notched plank fits the missing quay tread. The steps are repaired with this purchase. |
+| Sawmill | Timber earns Supplies | Tomas makes a reel from the offcuts and points Mara toward the loose cable. |
 | Village | Bomb replaces Hammer | The village takes up the night watch. The keeper’s orders give Mara a reason to signal again. The reply changes from two flashes to three. |
 
 The cable hand-in opens a separate experiment with a spare shutter. [Story and choices](../games/relic-rush/docs/story.md#chapter-1-a-light-below)
@@ -30,7 +30,7 @@ The cable hand-in opens a separate experiment with a spare shutter. [Story and c
 
 Give each citizen a name, a workplace, a reason to stay and someone they have business with. Introduce them doing their job. Bring them back when another resident or a later purchase gives them something new to do. A short exchange at a stall or a detail the player can tap on a return visit can carry a relationship between the larger scenes.
 
-- **People the chapter depends on arrive reliably.** Restoring the well brings Tomas into camp. At the Sawmill, Tomas shows Mara how the new plank fits the old quay steps. By the quay, the player can choose him to answer the signal. His citizen event belongs to the Well. The Hunter’s Hut introduces him in dialogue.
+- **People the chapter depends on arrive reliably.** Restoring the well brings Tomas into camp. At the Sawmill, Tomas tells Mara where to look for the cable. By the quay, the player can choose him to answer the signal. His citizen event belongs to the Well. The Hunter’s Hut introduces him in dialogue.
 - **Give Rome-style citizen feats a scene.** Rome pairs an owned building with a feat such as a five-piece match, two successive combos, or collecting a resource in one level. Relic Rush already uses these conditions at its own scale. With the Sawmill built, a match of five brings the carpenter and raises matched timber from five Supplies to six. Let Mara welcome the carpenter at the bench when the player returns to town. With the Water Mill built, a two-stage cascade brings the miller. Use the same arrival event for the exchange and the existing perk. [Rome’s citizen challenges](cradle-of-rome-reference/GAME_DESIGN.md#7-citizen-challenges-buildings-can-have-a-second-payoff) · [Relic Rush citizen events](../games/relic-rush/lua/user_events.lua)
 - **Christmas Market already shows how this can feel.** When Agnes opens the bakery, Henrik sends Pip with a penny for a bun he insists he doesn't want. Agnes saves one at the back of the tray. Later, Henrik's workshop gives him a window facing hers. Still later, a tap at the bakery reveals two cups on the sill. The player gets to see a relationship change through the ordinary business of running the market. Use the existing cast, stalls and tap bubbles for more of these encounters. [Christmas Market script](../games/christmas-market/docs/story.md)
 
@@ -57,8 +57,8 @@ The [Christmas Market wireframe](mockups/chapter-progression.svg) illustrates th
 
 ## Implementation sketch
 
-- Derive the epoch and its four slots from the ordered required purchases. Preserve waived ladder positions in existing saves. Use confirmation of the fourth purchase to trigger the closing scene once. Keep the first four Relic Rush purchases in their current order. On Workshop confirmation, resolve the quay repair and reply choice once for the same purchase. Retire the later paid Quay Steps gate and preserve access for existing saves. When laying out the later epochs, account for the purchase slot this frees.
-- Use shared engine forms for the card and strip with each game's skin. Verify funding, placement, fixed-site repair and chapter-end states at 480 × 900 and 390 × 844. [Engine skins](UI_ENGINE.md#skins)
+- Derive the epoch and its four slots from the ordered required purchases. Preserve waived ladder positions in existing saves. Use confirmation of the fourth purchase to trigger the closing scene once. Keep the first four Relic Rush purchases in their current order. The Sawmill adds timber to the boards. The Village opens the reply choice once.
+- Use shared engine forms for the card and strip with each game's skin. Verify funding, placement and chapter-end states at 480 × 900 and 390 × 844. [Engine skins](UI_ENGINE.md#skins)
 - Keep arrivals and scenes in each game's campaign data. Record an arrival once, resume an unread scene on reload, and condition optional exchanges on the residents present. Track who takes part and what changes in the game's story sheet. [Story writing guide](STORY_WRITING.md)
 - Record dressing sets in the building catalogue and the wreath and strip states in the asset catalogue. [Building art](BUILDING_ART.md) · [Building registration](BUILDINGS.md)
 
