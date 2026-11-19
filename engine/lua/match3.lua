@@ -61,7 +61,9 @@ ui.prefab("resource_indicator", function(p)
     if p.icon then
         children[1] = {kind="image",image=p.icon,height=p.compact and 24 or figure and 36 or 62}
         if figure and p.unit then
+            -- A single digit leaves room for a larger unit beside it.
             local side = narrow and 18 or 24
+            if #figure.text == 1 then side = side + 10 end
             figure = {kind="row",gap=narrow and 2 or 3,align="center",children={
                 {kind="spacer",grow=1},{kind="image",image=p.unit,width=side,height=side},figure,{kind="spacer",grow=1},
             }}

@@ -238,7 +238,7 @@ function R.building_gets(kind)
         if island.kinds[unlock.building] == kind then
             if unlock.kind then
                 gets[#gets + 1] = {id=unlock.key, icon=R.board_art[chip_prefix .. unlock.key],
-                    amount=("+%d"):format(unlock.amount), unit=currency_icon(unlock.slot)}
+                    amount=unlock.amount, unit=currency_icon(unlock.slot)}
             end
             if unlock.bonus then gets[#gets + 1] = {id=unlock.bonus.key, icon=R.board_art[unlock.bonus.icon]} end
         end

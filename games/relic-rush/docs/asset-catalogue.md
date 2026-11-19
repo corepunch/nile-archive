@@ -1016,8 +1016,7 @@ Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.jso
 The building card lists its price and what the building brings side by side as
 the engine's icon-and-figure amounts (the `resource_indicator` prefab). It reuses
 existing art and adds none. `R.building_gets` in `lua/screens.lua` maps each
-ladder unlock: a new piece shows its board art above `+N` beside the currency a
-match banks, and a bonus shows its `bonus-<key>` gem alone. Reproduce with
+ladder unlock to its reward. A new piece shows its board art above the currency icon and a plain number. The food and supplies icons use the extra space beside a single digit. A bonus shows its `bonus-<key>` gem alone. Reproduce with
 `./build/relic-rush --headless --mute --fresh --size 390x844 --card 3 --shot out.png`.
 Reviewed in game at 480×900 and 390×844 for a piece (Workshop, Well, Temple), a
 bonus (Camp), a built building with both (Museum) and five amounts in one row.

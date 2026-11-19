@@ -19,6 +19,11 @@ Collect & Return follows the expedition earnings. On the island the building mar
 ![Ready quest circles on the island](quest-ready.gif)
 
 The ready faces lift, grow slightly, and settle back. Each counter and touch target stays in place. Reduced motion keeps the selected face and steady glow.
-[Ready building on its town card](ready-to-build.jpg)
+The building card shows each new board piece above the amount it banks.
+
+| Building | Previous reward | Current reward |
+| --- | --- | --- |
+| Well · 480 × 900 | ![Previous food reward](well-reward-before.jpg) | ![Well awards 3 food per water bucket](ready-to-build.jpg) |
+| Sawmill · 390 × 844 | ![Previous supplies reward](sawmill-reward-before.jpg) | ![Sawmill awards 5 supplies per timber bundle](sawmill-reward.jpg) |
 
 Capture the results, town card and motion together with `build/test/relic-rush "shot economy-result" "shot build-ready-in-town" "reel quest-rail-hand-in"`.
