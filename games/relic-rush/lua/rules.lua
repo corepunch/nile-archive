@@ -2,7 +2,8 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
-local M = match3.new{flags=match3.LINE_MATCHES | match3.COLOR_TOOL, columns=9, rows=12, colors=campaign.colors, match_min=4,
+local quests = require("quests")
+local M = match3.new{flags=match3.LINE_MATCHES | match3.COLOR_TOOL, columns=9, rows=12, colors=campaign.colors, match_min=3,
     lightning_hits=15, refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
     kind_flags={[0]=match3.GOAL,  [2]=match3.WOOD, [4]=match3.STONE}}
 -- The final hall reveals the signal plate from its centre plaque.
@@ -11,7 +12,13 @@ local start = M.game_start
 
 -- A fresh expedition must leave a plaque for a second player move. Try each
 -- legal opening on a copy, including its deterministic falls and refills.
+-- Only the small opening fields can fall to one exchange: with lines of three
+-- a board offers some forty openings, and trying each on every board tripled
+-- the time a start takes. A larger field is not tried; one exchange clearing
+-- seventeen plaques or more would need a cascade the boards do not produce.
+local OPENING_REACH = 16
 local function has_winning_opening(g)
+    if g.oil_left > OPENING_REACH then return false end
     local wave = M.new_match()
     for a = 0, M.CELLS - 1 do
         for axis = 0, 2 do
@@ -68,6 +75,8 @@ function M.progress_reward(p, g)
     if not g.won or g.reward_claimed or g.level < 0 or g.level >= LEVELS or g.level > p.level then return false end
     local reward = M.reward_breakdown(g,p)
     p.wallet = p.wallet + reward.total
+    p.quests = p.quests or quests.new_state()
+    quests.bank(p.quests, g.items)   -- the crew's requests fill on a win, like the wallet
     if reward.first then p.level = p.level + 1 end
     p.seed = g.rng
     p.completed = nil

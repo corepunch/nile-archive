@@ -1,11 +1,11 @@
 # Hex straight-line matching rules and boards
 
-This supersedes the prototype's connected-group match-4 rules.
+Relic Rush matches straight lines of three with six piece kinds. This supersedes the earlier line-of-four rule with five kinds, and the prototype's connected groups before it.
 
 ## Matching
 
 - Exchange two side-adjacent movable relics, by swiping or tapping both.
-- A contiguous **straight line of four or more identical relics** matches along any of the three hex axes. Bends, triangles, diamonds and rings do not count on their own. Side branches are not part of a line.
+- A contiguous **straight line of three or more identical relics** matches along any of the three hex axes. Bends, triangles, diamonds and rings do not count on their own, and neither does a pair. Side branches are not part of a line.
 - A swap without a line through either swapped cell returns without spending a move.
 - Any line clears normally, whatever its length. There are no special pieces of any kind: like Cradle of Rome, power comes only from the bonus tools along the bottom edge (Hammer/Dynamite, Shield/Lightning, Star/Star II, Plus/Plus II), charged by matching bonus gems and unlocked by restoring buildings.
 - Crossing lines clear their union once. There are no T/L or ring recipes.
@@ -16,11 +16,28 @@ This supersedes the prototype's connected-group match-4 rules.
 
 The shared engine's `LINE_MATCHES` flag selects this detector for both Relic Rush and Christmas Market. The engine has no special pieces at all. Generation, hints, reshuffling and cascades respect each game’s configured minimum.
 
+## Why three, and what it costs
+
+A line of three leaves room for a sixth kind. With lines of four, a sixth kind halved the legal moves and the board reshuffled eight times as often. With lines of three, six kinds give about four times the moves of the old rule, and the reference bot clears a board in about half the moves: its median game averages 21 moves across the campaign, against 39 with lines of four on the same boards. [Move budgets](level-moves.md) · [Board length](board-progression.md#length)
+
+A board with a legal move never reshuffles, and with lines of three there is almost always one. Under the old rule the reshuffle also re-dealt the pieces in tight pockets. Now the last plaque in a pocket waits for a line through it or for a tool. Keep plaques out of dead-end pockets: on an earlier, denser set of boards the bot, which plays without tools, could not finish four of them.
+
+## Crew requests
+
+Between purchases the crew asks for things of its own. [Story and scenes](story.md#crew-requests) · [Request data](../lua/quests.lua)
+
+- **A request has its own piece.** It stands on the boards only while the request is open and short of pieces. It matches like any other piece and banks nothing in the wallet. Each one matched counts toward the request. A tool hit does not count, as with resources.
+- **Pieces bank on a win.** The count carries across expeditions up to the request's need. A lost or abandoned board banks none. The results card lists them beside the resources.
+- **Requests take the free score slots.** Open requests take the slots of quartz, the amphora and the flower, in that order, while no restoration's piece holds them. The leaf's slot belongs to the bonus gem. A request with no free slot waits for the next one, and its marker says so.
+- **Two lines run side by side.** A request opens once its building stands and the one before it on its line is handed in. Expeditions 2–7 carry two requests at once; from the Sawmill on, one slot is left.
+- **Hand it in on the island.** Round markers down the left edge show the next building, then each open request with its piece and count. A marker opens the request's card. A filled request glows; its card hands it in and plays its scene. Nothing else waits for a request.
+- **The amounts follow the boards.** A request asks for about four fifths of the pieces the bot banks on the expeditions it is written for: 25 on expeditions 2–4, 45 on 5–7 and 60 on 8–10.
+
 ## Board shape
 
 Every board is authored on a 9 x 12 rectangle of flat-top hexes; holes and the outline make its shape ([level design guide](../../../docs/LEVEL_DESIGN.md), [board progression](board-progression.md)). Missing cells are excluded from rendering, matching, tile selection, swapping, tool targeting, obstacle placement and refill. Matching never crosses a gap. Gravity moves gems straight down whenever the cell beneath them is empty. Diagonal movement is allowed only when that cell is occupied, locked or missing. Every active cell with no active cell directly above spawns vertically before considering side donors, so the whole stepped top edge refills together. Interior cells spawn only when all upstream donors are blocked. Gems flow around holes and immovable blockers through real neighboring cells; they never jump a gap or consume a locked gem. The shared engine animates each edge and waits for the complete fall before checking a cascade. Tool hits may travel across gaps but only affect actual cells.
 
-All 100 boards are won by clearing their blue tablets; green double tablets take two hits. Blockers are chains (single and double), ice (single and double) and carved stones, and they gate the fall below them. Boards spawn five piece kinds. The story and the twenty restorations run across boards 1-30; boards 31-100 are playable without story yet.
+All 100 boards are won by clearing their blue tablets; green double tablets take two hits. Blockers are chains (single and double), ice (single and double) and carved stones, and they gate the fall below them. Boards spawn six piece kinds. The story and the twenty restorations run across boards 1-30; boards 31-100 are playable without story yet.
 
 ## Idol
 
@@ -31,7 +48,7 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 ## Validation
 
 - Seeded startup boards across all 100 boards: no pre-existing straight match and at least one legal opening move. Every opening exchange, including its cascades, leaves at least one tablet.
-- Three/four/five/six runs on all axes, rejected triangles/diamonds/rings, excluded branches, crossing lines of four, swap rollback, and hole-separated runs.
+- Pair/three/four/six runs on all axes, rejected triangles/diamonds/rings, excluded branches, crossing lines, swap rollback, and hole-separated runs.
 - Independent coordinate-based line oracle and exhaustive runs in both directions for every color and length.
 - Existing blockers, gravity, tools, update-loop cascades, hints and reshuffles.
 
@@ -42,4 +59,4 @@ See [shared engine and atlas contract](../../../docs/MATCH3_ENGINE.md) and [befo
 - [Match 4 – Hex, developer page](https://dimcairion.itch.io/match-4-hex): an independent hex swap/match-4 prototype demonstrating the genre. No code or assets were imported.
 - [Candy Crush official modes guide](https://candycrush.zendesk.com/hc/en-us/articles/360000754897-Which-game-modes-will-I-find): varying objectives and mixed modes complement level-layout variety.
 
-The hexagonal grid does not mandate a four-piece minimum. Relic Rush uses four in a straight line; longer lines earn no extra piece.
+Relic Rush uses three in a straight line; longer lines earn no extra piece.

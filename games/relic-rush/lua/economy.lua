@@ -1,6 +1,7 @@
 -- Three wallet slots. Score-only pieces have no wallet yield.
 -- Every piece has a Cradle of Rome 2 counterpart with the same wallet and
 -- yield (docs/cradle-of-rome-reference/gem-correspondence.html).
+local quests = require("quests")
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
@@ -9,22 +10,27 @@ local E = {
         {key="food", name="Food"},
         {key="supplies", name="Supplies"},
     },
-    -- The opening pool, the five pieces of Cradle of Rome's first level: two
+    -- The opening pool: the five pieces of Cradle of Rome's first level (two
     -- coins that pay Coins and a leaf, a flower and an amphora that only
-    -- score. Food and Supplies pieces come from restorations; each takes the
-    -- slot of the piece below it (E.unlocks, `kind`).
+    -- score) and a sixth score piece, quartz. Food and Supplies pieces come
+    -- from restorations; each takes the slot of the piece below it
+    -- (E.unlocks, `kind`).
     pieces={
         [0]={key="coin", name="Sun coin", slot=1, amount=5},
         {key="silver-coin", name="Silver coins", slot=1, amount=3},
         {key="leaf", name="Leaf"},
         {key="flower", name="Flower"},
         {key="amphora", name="Amphora"},
+        {key="quartz", name="Quartz"},
     },
     WELL_KIND=1, WORKSHOP_KIND=2,
-    -- Boards spawn five kinds, as in Cradle of Rome. The leaf's slot carries
+    -- Boards spawn six kinds and match lines of three. The leaf's slot carries
     -- the bonus gem or a story item; the silver slot takes the bonus when a
     -- story item holds the leaf's.
     SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
+    -- The score slots a crew request's piece may take, first choice first
+    -- (lua/quests.lua). A slot is free until a restoration's piece holds it.
+    QUEST_KINDS={5, 4, 3},
     CAMPAIGN_VERSION=8,
 }
 -- Presentation order is independent of the persisted purse slots.
@@ -168,6 +174,14 @@ function E.board_loadout(level, number, restored, seed)
     local kind = level.goal_kind == E.SPECIAL_KIND and E.SPECIAL_FALLBACK or E.SPECIAL_KIND
     if not debut and yields[kind] and yields[kind].first_level == number then bonus = nil end
     if bonus then yields[kind] = bonus end
+    -- The crew's open requests put their pieces in the free score slots.
+    local requests = restored and (restored.preview and quests.scheduled(number) or restored.quests) or {}
+    local request = 1
+    for _, slot in ipairs(E.QUEST_KINDS) do
+        if requests[request] and open(slot) and not yields[slot] then
+            yields[slot], request = requests[request].yield, request + 1
+        end
+    end
     return yields, {match_only_resources=true, tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,
         tool_slots=slots, single_charge_tools=true}, bonus, debut
 end

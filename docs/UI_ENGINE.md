@@ -638,6 +638,30 @@ in one bottom row. The town's `bottom.pause` option adds Pause to Build,
 Play and Wishes. Play is the largest control. Both surfaces use the same
 [runtime enamel button and painted icon strip](../art/match3-buttons/README.md).
 
+## Town rail
+
+`engine/lua/town.lua` can stack round markers down the town's left edge, under
+the header: requests, tasks or anything else the player returns to. The
+`rail()` hook returns `{id, icon, value, ready, waiting}` records and
+`rail_tap(id)` receives a tap. Each marker is a pressable disc with the
+record's icon; `value` is a figure in a readout beneath it, in the skin's
+`resource` look for the role named in `rail.role`. The rail is hidden while a
+building is being placed.
+
+| State | Record | Drawn as |
+| --- | --- | --- |
+| Normal | — | The disc and icon |
+| Hover, pressed | pointer | The control's own hover and pressed faces |
+| Ready | `ready = true` | A pulsing glow behind the marker (steady with reduced motion) and the selected face |
+| Waiting | `waiting = true` | The disabled face |
+
+`rail_paint(box, entry, state)` replaces the default disc. The match-3 games
+paint the [shared enamel button](../art/match3-buttons/README.md) with the
+record's icon, in its normal, hover, pressed, selected (ready) and disabled
+(waiting) states. `town_config.lua` places the rail with `rail.x`, `rail.top`,
+`rail.size`, `rail.gap` and `rail.caption`; `View:rail_layout(count)` returns
+the marker boxes for tests.
+
 ## Town building popups
 
 `engine/lua/town.lua` draws the label above a tapped building. The game's

@@ -1,4 +1,4 @@
--- Relic Rush rules: hex grid, straight-line match-4 detection, blockers, gravity,
+-- Relic Rush rules: hex grid, straight-line match-3 detection, blockers, gravity,
 -- tools, the campaign's boards and economy, and the island on the engine
 -- city. Ported from the original tests/test_relic.c.
 local rules = require("rules")
@@ -86,13 +86,17 @@ local function test_matching()
     for axis = 0, 2 do
         local start = hex_neighbor(hex_neighbor(c, axis + 3), axis + 3)
         local g = blank()
-        line(g, start, axis, 3, 2)
+        line(g, hex_neighbor(start, axis), axis, 2, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 0, "a straight triple stays on the board")
+        check(m.hits == 0, "a straight pair stays on the board")
+        g = blank()
+        line(g, hex_neighbor(start, axis), axis, 3, 2)
+        rules.game_matches(g, m, c)
+        check(m.hits == 3, "three only clear: power is earned, not matched")
         g = blank()
         line(g, start, axis, 4, 2)
         rules.game_matches(g, m, c)
-        check(m.hits == 4, "four only clear: power is earned, not matched")
+        check(m.hits == 4, "four clear the same way")
         rules.game_apply(g, m)
         check(g.tiles[c].kind < 0, "a long line leaves no rocket")
         g = blank()
@@ -208,7 +212,7 @@ local function test_holes_and_shapes()
         end
         -- A gated chamber may be larger than the open part, as in Cradle of Rome 2
         -- (levels 9 and 59); the open part still needs room to make matches.
-        check(refilling >= 20, ("level %d has room for match-fours before opening its gates"):format(lvl + 1))
+        check(refilling >= 20, ("level %d has room for matches before opening its gates"):format(lvl + 1))
     end
     check(family_count >= 4, "campaign has at least four recognizable board families")
 end

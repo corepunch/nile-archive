@@ -315,6 +315,63 @@ Choice prompt: Who should answer the signal?
 - **Ines:** Then you take the first watch. I’ve brought a chart of the other lights.
 - **Mara:** Let’s see who keeps them. After tea.
 
+## Crew requests
+
+Between two purchases the crew asks for smaller things. A request puts one piece of its own on the expedition boards. It banks nothing in the wallet. Matching it fills the request across expeditions, and the open requests stand as round markers down the island's left edge, under the next building. Handing a filled request in plays its scene. [Request data](../lua/quests.lua) · [Board rules](match4-rules.md#crew-requests)
+
+Two lines run side by side. **Search** follows the light: Mara and the keeper's old route. **Crew** is about the people at the table. A request opens once its building stands and the one before it on its line is handed in. Nothing waits for a request, so a player may hand one in late. Each scene therefore holds on its own: it names nothing that only a later restoration establishes, and no restoration scene relies on it.
+
+| Request | Line | Piece | Opens with | What it adds |
+| --- | --- | --- | --- | --- |
+| Piece the harbor chart together | Search | Chart pages | Well | The chart shows a reef across the harbor mouth and a warning light on the far side of the inlet. |
+| Fill the supper pot | Crew | Berries | Well | Elena writes down what they saw. Restates the two flashes. |
+| Uncover the painted arrows | Search | Trail arrows | Hunter's Hut | Tomas has kept the cliff path alone, every spring. |
+| Dig out the keeper's tools | Crew | Tool rolls | Hunter's Hut | Tomas left his pliers at the break in the cable. |
+| Haul up the relay cable | Search | Relay cable | Sawmill | Pliers are still on the break. The wire has been dead since the storm, and Elena records it. |
+
+The pieces are the campaign's existing paintings. Each stands where no like-coloured piece shares the board: the cream chart and red berries beside the green leaf on expeditions 2–4, and the green arrow only once the Hammer has taken the leaf's slot.
+
+| Plant | Payoff |
+| --- | --- |
+| A reef and a warning light on the far side (chart) | The ancient keeper opens the warning shutter for a boat nearing the reef (restoration 10). |
+| Elena writes down what they saw (supper) | She records the dead wire with its date (cable). |
+| Nobody but Tomas walks the path (trail) | Someone answers from the far side (restoration 10). |
+| Tomas left his pliers at the break (tools) | Pliers are rusted onto the cut cable (cable). Either scene may come first. |
+| The wire has carried nothing since the storm (cable) | Three flashes come back from a hand shutter (restoration 10). |
+
+**Request chart**
+
+- **Elena:** It's a harbor chart. Look, a reef drawn right across the mouth.
+- **Mara:** And a station on the far side of the inlet, with a lamp inked beside it.
+- **Elena:** A warning light. Somebody had to keep boats off that reef every night.
+
+**Request supper**
+
+- **Elena:** Berries, flatbread and the last of the ship's cheese. A proper supper.
+- **Mara:** You're writing at the table again.
+- **Elena:** Two flashes out, two back, that first night. I write down what we saw, not what we hoped.
+- **Mara:** Then write that I counted them twice.
+
+**Request trail**
+
+- **Tomas:** Green means the stone will hold. I painted those every spring.
+- **Mara:** The last one is this year's paint.
+- **Tomas:** Habit. Nobody has come down this path but me.
+
+**Request tools**
+
+- **Tomas:** My father's chisels. I had counted those gone.
+- **Mara:** There's an empty loop in the roll.
+- **Tomas:** The pliers. I left them at the break in the cable, the night of the storm.
+
+**Request cable**
+
+- **Mara:** There's the break. And a pair of pliers clamped on it.
+- **Tomas:** Mine. Rusted shut. Nothing has run through this wire since the storm.
+- **Elena:** Dead since the storm. I'll put that in the book, with the date.
+
+A cold reader followed all five. They found four lines that broke when a request came late: a question Tomas had already answered, a tide explained after the crew had used it, pliers one scene assumed from another, and a closing inference that fell flat after the three flashes. Those lines now state a fact of their own. The reader judged that the cable scene strengthens the reply at the steps.
+
 ## Small lines
 
 **The delayed reply.** Mara counts two flashes from the camp and a delayed three when the viewing shutter opens. On board 30, the signal plate appears after the last blue plaque is removed, and Ines answers with the same three flashes from the safe landing. With reduced motion, the lamp holds steady and the dialogue names the pattern.
@@ -326,6 +383,8 @@ A cold reader followed the two shutters and suspected Ines. They asked for a cle
 The Chapter 2 cold read followed the fresh supplies to the note and Tomas’s recognition. The note and the terrace chart are both legible across the courtyard, where Tomas compares the handwriting. The log, gauge and signed plan establish how to drain the foot of the wall.
 
 ## Changelog
+
+- 2026-11-19: Added five crew requests to epoch one, in two lines. Each puts its own piece on the boards and plays a short scene when handed in. The scenes hold in any order against the four restoration scenes, which are unchanged.
 
 - 2026-11-18: Epoch-one build cards state each need as narration and no longer quote a character. Scene dialogue is unchanged.
 - 2026-11-17: Each epoch-one build card carries its character’s request. The Cabin supplies the measurement. The Workshop repairs the quay and keeps the original keeper scene and saved reply.

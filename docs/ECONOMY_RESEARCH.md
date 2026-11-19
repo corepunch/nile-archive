@@ -2,7 +2,7 @@
 
 Research checked 30–31 October 2026. This document separates documented publisher
 mechanics, our interpretation, implemented changes, and proposed future work.
-It covers Relic Rush (the Lost Valley match-4 game) and Nile Archive (the
+It covers Relic Rush (the Lost Valley match-3 game) and Nile Archive (the
 hidden-object estate game). All tuning numbers below are our own prototype
 budgets, not claimed Playrix or Wooga reward tables.
 

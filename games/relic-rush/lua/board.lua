@@ -45,6 +45,7 @@ function R.board_piece_texture(kind)
     local campaign = campaign_pieces
     local piece = g.resource_yields and g.resource_yields[kind]
     if piece and piece.tool then return R.board_art[piece.icon] end
+    if piece and piece.item then return R.board_art["campaign-" .. piece.key] end   -- a request's piece, in every pack
     if level.story_piece and kind == level.goal_kind then
         return R.board_art[(campaign and "campaign-" or "story-") .. level.story_piece]
     end

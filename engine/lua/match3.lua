@@ -840,8 +840,12 @@ function E.new(config)
                                 if resource then
                                     local length = m.match_lengths and m.match_lengths[i]
                                     local amount = resource.amount * (length and g.resource_multipliers[length] or 1)
-                                    if resource.slot and (not g.match_only_resources or not m.direct[i] or m.ordinary[i]) then
+                                    local banked = not g.match_only_resources or not m.direct[i] or m.ordinary[i]
+                                    if resource.slot and banked then
                                         g.earnings[resource.slot] = g.earnings[resource.slot] + amount
+                                    elseif resource.item and banked then
+                                        -- A quest piece: counted by its own key, apart from the wallet.
+                                        g.items[resource.item] = (g.items[resource.item] or 0) + amount
                                     elseif resource.tool and m.ordinary[i] and g.tool_meter and g.tool_meter[resource.tool] then
                                         local tool = resource.tool
                                         local meter = g.tool_meter[tool]
@@ -1018,6 +1022,10 @@ function E.new(config)
             for tool, charge in pairs(g.tool_meter) do c.tool_meter[tool] = charge end
         end
         if g.earnings then c.earnings = {table.unpack(g.earnings)} end
+        if g.items then
+            c.items = {}
+            for item, amount in pairs(g.items) do c.items[item] = amount end
+        end
         return c
     end
     local game_copy = M.game_copy
@@ -1215,7 +1223,7 @@ function E.new(config)
         }
         local l = M.levels[lvl + 1]
         g.resource_yields = resource_yields
-        if g.resource_yields then g.earnings = {0, 0, 0} end
+        if g.resource_yields then g.earnings, g.items = {0, 0, 0}, {} end
         if loadout then
             g.match_only_resources = loadout.match_only_resources
             g.spawn_kinds = loadout.kinds

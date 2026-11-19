@@ -4,7 +4,7 @@ From the repository root, `make -C games/relic-rush ios` builds, signs, installs
 and launches on the connected iPhone. Set `DEVICE="name or UDID"` to select one.
 See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
-A portrait mobile-first hex match-4 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
+A portrait mobile-first hex match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
 Launch straight into level one. Swipe adjacent relics, or tap one and then its neighbor. Clear every plaque within the move budget, claim resources, restore the next building on the island, and set out again. The story runs across the first thirty of the hundred boards, in three episodes: it restores the ten wonders and ends with the valley singing and five lights answering at sea. Boards 31-100 are playable without story yet. The island is a scrollable 1920 × 2880 world with six unlockable regions, freely placed buildings and persistent positions.
 
@@ -73,7 +73,7 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 
 | Hexagonal expeditions | Restored island |
 | --- | --- |
-| ![First hex match-4 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
+| ![First hex match-3 level](docs/screenshots/hex-first.jpg) | ![Settlement with freely placed buildings](docs/screenshots/island-village.jpg) |
 | ![Chains and blue tablets on board 22](docs/review/chains-only/board-after-480x900.jpg) | ![Choose and confirm a building location](docs/screenshots/island-placement.jpg) |
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Boards required to open land](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
@@ -100,9 +100,9 @@ identifiers `com.corepunch.relicrush.stars` and `com.corepunch.relicrush.level_0
 shows sample rivals for captures; `--dialog leaderboard` and `--victory --dialog level-leaderboard`
 open the dialogs.
 
-Board 1, The Landing, is a nine-column hex with seven blue plaques in its centre. It uses Cradle of Rome's opening pool: sun coins and silver coins (Coins) plus a leaf, a flower and an amphora that only score. Food and Supplies pieces arrive with the restorations.
+Board 1, The Landing, is a nine-column hex with seven blue plaques in its centre. It uses Cradle of Rome's opening pool and a sixth score piece: sun coins and silver coins (Coins) plus a leaf, a flower, an amphora and quartz that only score. Food and Supplies pieces arrive with the restorations.
 Boards 2–10 and 13 show a story piece in place of one matching colour.
-Every board spawns five kinds, so those boards use four regular kinds plus the story piece.
+Every board spawns six kinds, so board 13 uses five regular kinds plus the story piece. On expeditions 2–10 the crew's open requests put their own pieces in the free score slots. [Crew requests](docs/match4-rules.md#crew-requests)
 [Story pieces and board captures](docs/screenshots/review/story-collection/README.md)
 
 Clear every blue plaque to finish the expedition. The opening chapter’s dialogue follows island construction.
@@ -141,16 +141,16 @@ Coloured match fragments, resource trails and cascade chimes follow each clear. 
 
 See [effect reference study](docs/effects.md). The reel uses deterministic test boards; actual iPhone/Android performance still needs device testing.
 
-## Current match-4 rules and boards
+## Current match-3 rules and boards
 
 The widest nine-cell board spans 448 of the 480 logical screen units, using a 32-unit cell radius and 16-unit side margins. Gems and cell artwork scale together from their authored sizes: gems retain their transparent padding, and cell faces and state panels retain a small inset so neighbouring cells do not overlap. The entrance returns to a 1× pose when it finishes or is skipped. The board remains centred between the goals and tools on both phone sizes. See the [wide-board and cell-fit correction](docs/review/gem-cell-fit/README.md).
 
 The pale limestone and blue tablets meet at hairline seams on one continuous
 board surface. [Before and after at both phone sizes](../../docs/review/match3-board-seams/README.md).
 
-The minimum match is **four identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are no special pieces: a longer line just clears. The 100 boards sit on a 9 x 12 rectangle of flat-top hexes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
+The minimum match is **three identical relics in a straight line** along any of the three hex axes. Bends and diamonds do not count. Ready lines resolve automatically before further input and after each fall. There are no special pieces: a longer line just clears. The 100 boards sit on a 9 x 12 rectangle of flat-top hexes, with real holes and diagonal refill routes. The gold idol now has a six-sided silhouette.
 
-All 100 expeditions use five piece kinds. Each board has a move limit fitted to its difficulty tier. See the [campaign balance and board comparisons](docs/board-progression.md#match-four-difficulty).
+All 100 expeditions use six piece kinds. Each board has a move limit fitted to its difficulty tier. See the [campaign balance and board comparisons](docs/board-progression.md#match-three-difficulty) and [what the change from lines of four costs](docs/match4-rules.md#why-three-and-what-it-costs).
 
 After five idle seconds, a legal swap is highlighted. If there is no legal swap, the board reshuffles for free and displays “No moves. Board reshuffled.” This recovery also runs after cascades. Movable pieces fly to their new cells during either a free shuffle or a Mixer use. Locked pieces and blue tablets stay put. Reduce Motion settles the pieces immediately. See the [dead-board regression and captures](docs/review/dead-board/README.md).
 
@@ -163,7 +163,7 @@ See [matching rules, board shape, implementation notes and reference sources](do
 
 ## New art direction
 
-The match-4 scenes now use two original runtime backgrounds: **Sunlit Lagoon** for levels 1–5 and **Moonlit Sun Temple** for levels 6–10; each later episode reuses those paintings, opening on the lagoon and moving into the temple. The study draws on Tropicats and Candy Crush for playable-screen readability, and June's Journey / Pearl's Peril for garden islands and adult adventure characters.
+The match-3 scenes now use two original runtime backgrounds: **Sunlit Lagoon** for levels 1–5 and **Moonlit Sun Temple** for levels 6–10; each later episode reuses those paintings, opening on the lagoon and moving into the temple. The study draws on Tropicats and Candy Crush for playable-screen readability, and June's Journey / Pearl's Peril for garden islands and adult adventure characters.
 
 See the [reference study, original cast and asset gallery](docs/art-direction-v2.md) and [complete generation prompts](docs/art-direction-v2-prompts.json).
 
@@ -193,7 +193,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 
 ## Expedition and restoration loop
 
-1. Start directly in the first match-4 level; there is no title-screen or friend-road detour.
+1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all blue tablets within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
 4. Return to the island. At a restoration milestone, check the price and play the next expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. You can finish all 100 with an empty island. If you build later, the island story picks up where you left it.
@@ -213,7 +213,7 @@ condition and effect it supports. Each event fires once per profile, and the
 save keeps which events are done.
 
 - **Tutorials.** The move hint repeats with the board's 1st, 2nd, 3rd and
-  5th suggestion until the first line of four. Toasts introduce tablets,
+  5th suggestion until the first line of three. Toasts introduce tablets,
   double tablets, chains, double chains, ice, the low-moves warning, each
   charged bonus and the catalogue.
 - **Citizens.** Tomas joins as soon as the Well is restored. Other building events open a citizen’s challenge. Examples: a line of five after the Workshop, 120 Supplies on
@@ -237,26 +237,26 @@ The twenty campaign purchases follow the Windows edition of Cradle of Rome 2. Ea
 
 | # | Building | After clear | Coins / Food / Supplies | Board reward |
 | --- | --- | ---: | --- | --- |
-| 1 | Well | 1 | 50 / 0 / 0 | Water buckets earn 3 Food each. |
-| 2 | Hunter's Hut | 4 | 335 / 120 / 0 | Unlocks Hammer. Hit one cell. |
-| 3 | Sawmill | 7 | 790 / 295 / 0 | Timber bundles earn 5 Supplies each. |
-| 4 | Village | 10 | 1010 / 385 / 530 | Unlocks Bomb. Hit a cell and its six neighbors. |
-| 5 | Farm | 11 | 475 / 175 / 270 | Ration jars earn 4 Food each. |
-| 6 | Quarry | 12 | 85 / 60 / 60 | Dressed stones earn 7 Supplies each. |
-| 7 | Mill | 12 | 110 / 115 / 100 | Grain bundles earn 5 Food each. |
-| 8 | Thermae | 13 | 15 / 85 / 70 | Unlocks Shield. Hit the row through a chosen cell. |
-| 9 | Port | 13 | 25 / 90 / 80 | Shrimp earn 6 Food each. |
-| 10 | Curia Octavia | 16 | 420 / 965 / 590 | Unlocks Hourglass. Add five moves. |
-| 11 | Coliseum | 17 | 185 / 405 / 260 | Helmets earn 6 Coins each. |
-| 12 | House of the Vestals | 18 | 160 / 325 / 195 | Unlocks Lightning. Strike up to fifteen random cells. |
-| 13 | Aqueduct | 19 | 260 / 490 / 305 | Rings earn 7 Coins each. |
-| 14 | Lighthouse | 20 | 190 / 310 / 205 | Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge. |
-| 15 | Nero's Golden House | 21 | 300 / 470 / 290 | Scarabs earn 8 Coins each. |
-| 16 | Mausoleum of Augustus | 23 | 765 / 1065 / 690 | Unlocks Mixer. Shuffle the pieces. |
-| 17 | Pantheon | 24 | 385 / 505 / 335 | Sandals earn 9 Coins each. |
-| 18 | Theatre | 25 | 310 / 390 / 245 | Harps earn 10 Coins each. |
-| 19 | Forum | 26 | 400 / 450 / 285 | Unlocks Star. Clear all pieces of a chosen kind. |
-| 20 | Fountain | 29 | 1250 / 1425 / 895 | Emeralds earn 11 Coins each. |
+| 1 | Well | 1 | 35 / 0 / 0 | Water buckets earn 3 Food each. |
+| 2 | Hunter's Hut | 4 | 225 / 80 / 0 | Unlocks Hammer. Hit one cell. |
+| 3 | Sawmill | 7 | 420 / 150 / 0 | Timber bundles earn 5 Supplies each. |
+| 4 | Village | 10 | 585 / 225 / 325 | Unlocks Bomb. Hit a cell and its six neighbors. |
+| 5 | Farm | 11 | 290 / 110 / 170 | Ration jars earn 4 Food each. |
+| 6 | Quarry | 12 | 55 / 40 / 40 | Dressed stones earn 7 Supplies each. |
+| 7 | Mill | 12 | 70 / 80 / 65 | Grain bundles earn 5 Food each. |
+| 8 | Thermae | 13 | 10 / 50 / 35 | Unlocks Shield. Hit the row through a chosen cell. |
+| 9 | Port | 13 | 15 / 50 / 40 | Shrimp earn 6 Food each. |
+| 10 | Curia Octavia | 16 | 330 / 715 / 465 | Unlocks Hourglass. Add five moves. |
+| 11 | Coliseum | 17 | 135 / 290 / 190 | Helmets earn 6 Coins each. |
+| 12 | House of the Vestals | 18 | 105 / 195 / 125 | Unlocks Lightning. Strike up to fifteen random cells. |
+| 13 | Aqueduct | 19 | 180 / 335 / 200 | Rings earn 7 Coins each. |
+| 14 | Lighthouse | 20 | 160 / 250 / 165 | Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge. |
+| 15 | Nero's Golden House | 21 | 195 / 290 / 200 | Scarabs earn 8 Coins each. |
+| 16 | Mausoleum of Augustus | 23 | 405 / 570 / 365 | Unlocks Mixer. Shuffle the pieces. |
+| 17 | Pantheon | 24 | 250 / 330 / 215 | Sandals earn 9 Coins each. |
+| 18 | Theatre | 25 | 180 / 220 / 140 | Harps earn 10 Coins each. |
+| 19 | Forum | 26 | 225 / 260 / 160 | Unlocks Star. Clear all pieces of a chosen kind. |
+| 20 | Fountain | 29 | 940 / 1040 / 660 | Emeralds earn 11 Coins each. |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. The Sawmill also repairs the fixed quay as part of the island story. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
@@ -284,7 +284,8 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 
 ## Play
 
-- Swap adjacent pieces to make a straight line of four or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
+- Swap adjacent pieces to make a straight line of three or more identical pieces along any hex axis. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
+- Fill the crew's requests. Round markers down the island's left edge show the next building and each open request with its piece and count. A request's piece joins the boards while it is open; matching it fills the request, and a filled request is handed in from its card for a short scene. [Crew requests](docs/match4-rules.md#crew-requests)
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and, as icon amounts, what the next restoration still needs.
 - Restore buildings to unlock four bonus families. A later restoration

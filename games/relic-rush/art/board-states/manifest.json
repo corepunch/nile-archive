@@ -1,5 +1,5 @@
 {
-  "matching_rules": "Campaign matches clear straight lines of four or more and never create special pieces (Cradle of Rome rules). Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
+  "matching_rules": "Campaign matches clear straight lines of three or more among six kinds and never create special pieces (Cradle of Rome rules). The sixth kind shows quartz, or the piece of an open crew request. Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/reference/cradle-of-rome/export_art.py --board-only",
@@ -773,6 +773,32 @@
     "tile_mask": "../../engine/art/hex-tile/hex-mask-128.png",
     "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask. No recoloring or derived damage states.",
     "retired": "Crate, tunnel, hidden-object, growth and delivery cells stay in the master but are not registered: the engine no longer has those mechanics."
+  },
+  "crew_requests": {
+    "rule": "lua/quests.lua. A request's piece stands in a free score slot (kinds 5, 4, 3) while the request is open and short of pieces. It matches like any piece, counts toward the request and banks nothing in the wallet.",
+    "frames": {
+      "chart": "campaign-chart",
+      "supper": "campaign-berries",
+      "trail": "campaign-marker",
+      "tools": "campaign-tools",
+      "cable": "campaign-cable"
+    },
+    "idle_slot": "campaign-quartz",
+    "board_states": "normal, selected, hint and refill use the standard board overlays, as for every piece",
+    "island_marker": {
+      "face": "../../art/match3-buttons/README.md",
+      "states": [
+        "normal",
+        "hover",
+        "pressed",
+        "ready (selected face, glow)",
+        "waiting (disabled face)"
+      ],
+      "readout": "the wallet resource look, with banked/needed"
+    },
+    "card": "the shared request card (match3.game R.OV_QUEST): the piece at 132 px, the request, STILL NEEDED as a resource amount",
+    "source": "existing campaign-pieces atlas; no new artwork",
+    "review": "docs/screenshots/review/crew-requests/README.md"
   },
   "story_pieces": {
     "registration": "tools/prepare_story_pieces.py",

@@ -4,6 +4,8 @@
 
 Use the GameTop Windows edition of Cradle of Rome 2 as the design reference for rules, construction order and building rewards. Use the eight bonus identities, silhouettes and effects from the first Cradle of Rome, mapped to the same eight purchase positions in the sequel. Verify changes against the [source inventory](docs/cradle-of-rome-reference/README.md) and [twenty purchases](docs/cradle-of-rome-reference/rome-2-economy.json). Each campaign building introduces exactly its resource piece or bonus when purchased. Use original artwork, a hex board, movable city buildings and the island story. Fit prices to the measured income of the smaller board while preserving the reference currencies and progression.
 
+Relic Rush matches straight lines of three among six piece kinds. The sixth slot carries the crew's requests: each has a piece of its own that stands on the boards only while the request is open, banks nothing in the wallet and fills the request across expeditions. Requests are handed in from the round markers down the island's left edge and never hold a purchase or an expedition. Their scenes must read correctly in any order against the restoration scenes. [Rules](games/relic-rush/docs/match4-rules.md#crew-requests) · [Script](games/relic-rush/docs/story.md#crew-requests)
+
 Relic Rush groups the eight tools into four permanent slots. Hammer → Bomb, Shield → Plus, Hourglass → Mixer, and Lightning → Star. A replacement inherits the slot's single charge and replaces its predecessor on the board and toolbar. Expeditions retain a move budget, so the Hourglass awards extra moves. Each tool has its own painted piece. Its icon identifies it without a rank badge.
 
 ## Commit your work

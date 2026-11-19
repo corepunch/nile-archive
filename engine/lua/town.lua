@@ -22,6 +22,10 @@
 --                             reserve=n, decorate=fn(box)}, ...}
 --   menu(bounds)            draw and handle an optional header menu
 --   build(), play(), middle(), pause()   bottom actions
+--   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool}, ...}: round
+--                           markers down the left edge, under the header (requests, tasks)
+--   rail_tap(id)            a rail marker was tapped
+--   rail_paint(box, entry, state)   paints one marker's face and icon (default: a plain disc)
 --   play_label()            the caption on Play (the next level's number)
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
@@ -49,6 +53,10 @@ local DEFAULTS = {
                         colors = {shadow = "#051E1C96", rim = "#744A21", gold = "#ECC470", bronze = "#B07830",
                                   face = "#0C3E34", glow = "#288464"}}},
     placement = {button = 56, min_width = 152, max_width = 416, gap = 12, margin = 16, top = 110, bottom = 78},
+    -- Markers of `size` stacked from `top` below the safe screen's top edge;
+    -- each figure sits in a `caption`-tall readout of the `role` resource look.
+    rail = {x = 10, top = 96, size = 60, gap = 12, caption = 22, role = "wallet", text = "cream",
+            glow = "#FFDC786E", rim = "#668765E6", face = "#E7E0B9", ready = "#F9D368", shadow = "#1F23185A"},
     markers = {visible = true, label = 15, label_width = 160, glow = "#FFDC786E", text = "cream"},
     bubble = {width = 300, seconds = 0, fill = "#FFF6DEF5", edge = "#664427"},
     focus = {lift = 90, min_zoom = .65},
@@ -426,6 +434,55 @@ function View:bottom()
     elseif event and event.id == "pause" and h.pause then h.pause() end
 end
 
+-- Where the rail's markers stand, in screen units; tests click these.
+function View:rail_layout(count)
+    local cfg, s = self.cfg.rail, app.screen()
+    local boxes = {}
+    for i = 1, count do
+        boxes[i] = rect(s.x + cfg.x, s.y + cfg.top + (i - 1) * (cfg.size + cfg.caption + cfg.gap), cfg.size, cfg.size)
+    end
+    return boxes
+end
+
+-- The rail: one round marker per entry, its figure in a readout beneath. A
+-- ready entry glows; a waiting one is drawn disabled.
+function View:rail()
+    local h, cfg, skin = self.hooks, self.cfg.rail, self.hooks.skin
+    local entries = h.rail and h.rail() or {}
+    local boxes = self:rail_layout(#entries)
+    local reduced = h.reduced_motion and h.reduced_motion()
+    self.rail_targets = {}
+    for i, entry in ipairs(entries) do
+        local box = boxes[i]
+        local centre = box:center()
+        self.rail_targets[entry.id] = centre
+        ui.block(box)
+        local st = ui.hit(box, 0)
+        if entry.ready then
+            local g = rgba(cfg.glow)
+            local pulse = reduced and 200 or math.floor(185 + 70 * math.sin(self.time * 3))
+            gfx.glow(centre, cfg.size * .85, color(g.r, g.g, g.b, pulse), color(g.r, g.g, g.b, 0))
+        end
+        if h.rail_paint then h.rail_paint(box, entry, st)
+        else
+            local lift = st.held and vec2(0, 2) or vec2(0, 0)
+            gfx.circle(centre + vec2(0, 3), cfg.size / 2, rgba(cfg.shadow))
+            gfx.circle(centre + lift, cfg.size / 2, rgba(cfg.rim))
+            gfx.circle(centre + lift, cfg.size / 2 - 4, rgba(entry.ready and cfg.ready or cfg.face))
+            if entry.icon then gfx.image(entry.icon, box:inflate(-10):offset(lift), color(255, 255, 255, entry.waiting and 120 or 255)) end
+        end
+        if entry.value then
+            local readout = rect(box.x, box:max().y + 2, box.w, cfg.caption)
+            skin:paint("resource", readout, nil, {kind = "resource", radius = readout.h * .5, role = cfg.role})
+            text.inside(skin:text(cfg.text, cfg.caption * .72), readout, vec2(.5, .5), entry.value)
+        end
+        if st.clicked then
+            haptic.play(haptic.TICK, .6)
+            if h.rail_tap then h.rail_tap(entry.id) end
+        end
+    end
+end
+
 -- Cancel and Confirm stand under the lifted building, kept on screen.
 function View:placement()
     local c, p = self.city, self.cfg.placement
@@ -495,7 +552,10 @@ function View:frame(inp, dt, active)
     -- The HUD is drawn after the map, so tall buildings never cover buttons.
     self:header()
     if c.placing >= 0 then self:placement()
-    elseif not (h.hide_bottom and h.hide_bottom()) then self:bottom() end
+    elseif not (h.hide_bottom and h.hide_bottom()) then
+        self:bottom()
+        if h.rail then self:rail() end
+    end
     if h.extras then h.extras(app.screen()) end
 end
 
