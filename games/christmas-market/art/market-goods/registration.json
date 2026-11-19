@@ -31,31 +31,32 @@
       ]
     },
     "market-1": {
-      "name": "blue mitten",
+      "name": "knitted mitten",
       "source_crop": [
-        298,
-        18,
-        494,
-        246
+        262,
+        9,
+        461,
+        226
       ],
       "fitted_size": [
-        95,
-        110
+        99,
+        108
       ],
       "offset": [
-        22,
+        20,
         7
       ],
       "alpha_center": [
-        64.2185,
-        64.1501
+        64.3971,
+        63.5838
       ],
       "registered_box": [
         128,
         0,
         128,
         128
-      ]
+      ],
+      "source": "art/market-goods/cranberry-mitten.png"
     },
     "market-2": {
       "name": "silver snowflake coin",

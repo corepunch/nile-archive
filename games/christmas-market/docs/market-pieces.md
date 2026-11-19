@@ -6,8 +6,9 @@ Market. Bellmere uses three wallet slots in save order: **Tokens**, **Treats**
 and **Materials**. Gold bell coins, cocoa and bundled pine identify those
 totals on the board, in town, and in prices and results.
 
-The opening has five kinds: a green snowy fir, a blue mitten, a round silver
-coin, an octagonal gold coin and a red candy cane. Mulled wine takes the candy
+The opening has five kinds: a green snowy fir, a cranberry knitted mitten,
+a round silver coin, an octagonal gold coin and an ivory-striped candy cane.
+The mitten has opaque red wool and a cream snowflake. Mulled wine takes the candy
 cane's place. The bakery's brown gingerbread man and the kiosk's ivory cocoa
 mug follow in the same Treats slot. The stable replaces the mitten with a
 cobalt vase for score. Natural pine takes that slot after the workshop opens. The
@@ -65,3 +66,10 @@ new premium good replaces the previous one in the gold coin slot.
 [Eight bonuses in five states](screenshots/review/rome-coverage/bonus-states.jpg) ·
 [Spent bonus](screenshots/review/winter-stalls/spent.jpg) ·
 [Registration and prompts](asset-catalogue.md#market-goods-and-tools)
+
+## Red mitten review
+
+| Opening board | Before | After |
+| --- | --- | --- |
+| 480 × 900 | [Blue mitten](screenshots/review/red-mitten/opening-480-before.jpg) | [Cranberry mitten](screenshots/review/red-mitten/opening-480.jpg) |
+| 390 × 844 | [Blue mitten](screenshots/review/red-mitten/opening-390-before.jpg) | [Cranberry mitten](screenshots/review/red-mitten/opening-390.jpg) |

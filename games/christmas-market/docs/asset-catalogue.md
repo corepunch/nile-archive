@@ -159,6 +159,11 @@ The [vase and winter catch atlas](../art/market-goods/vase-and-winter-catch.png)
 supplies the three-cracker Firework, broad ice pendant, cobalt vase and smoked trout.
 Its [ImageGen prompt](../art/market-goods/vase-and-winter-catch-prompt.txt)
 records the complete atlas edit. Only those four crops enter the registered sheet.
+The [cranberry mitten atlas](../art/market-goods/cranberry-mitten.png) keeps the
+square atlas layout and reauthors the mitten in cranberry wool with a cream
+snowflake. The [full ImageGen prompt](../art/market-goods/cranberry-mitten-prompt.txt)
+records the edit. The new crop registers into `market-1`.
+[Compare opening boards](market-pieces.md#red-mitten-review).
 The [registration record](../art/market-goods/registration.json) saves each
 source crop, proportional fit, offset and alpha-weighted center in its 128 px
 slot. The crop takes the object's solid bounds with four pixels of edge
@@ -168,7 +173,7 @@ Every center of opacity is within half a pixel of the slot center on both axes.
 | Atlas slot | Piece | Dominant color | Role |
 | ---: | --- | --- | --- |
 | 0 | Snow-dusted fir | Evergreen | Score at the opening. |
-| 1 | Blue mitten | Royal blue | Score until the lumber workshop. |
+| 1 | Knitted mitten | Cranberry red | Opening score piece until the stable. |
 | 2 | Silver snowflake coin | Silver | +3 Tokens. |
 | 3 | Gold bell coin | Gold | +5 Tokens and the Tokens wallet icon. |
 | 4 | Bundled pine | Chestnut brown | +5 Materials from the lumber workshop and the Materials wallet icon. |

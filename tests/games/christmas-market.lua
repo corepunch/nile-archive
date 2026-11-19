@@ -25,6 +25,7 @@ shot("debug-phone-town", "390x844", "--debug-walkthrough --city 2 --frames 180 -
 shot("market", "480x900", "--showcase")
 shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
 shot("lantern-opening", "480x900", "--level 1")
+shot("lantern-opening-phone", "390x844", "--level 1 --safe-area 0,47,0,34")
 shot("main-character-board", "480x900", "--level 4")
 local bonus_fixture = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. "
 local booster_review = bonus_fixture .. "--level 10 "
