@@ -2,7 +2,20 @@
 
 ## Square board
 
-The current campaign uses honey maple, frosted teal panes, olive-green double panes and gilded oak edging. Fir sprigs, berries and brass fittings decorate the perimeter. See the [source, registration and game captures](square-match3.md).
+The current campaign uses honey maple, frosted teal panes and olive-green
+double panes. Aged oak forms a narrow rail with rounded outside caps and
+bare or leafy inside joins. Built-in ImageGen painted eight original rail
+profiles and a holly sprig together in one [transparent sheet](../art/square-frame/variants.png)
+from the [recorded prompt](../art/square-frame/prompt.txt).
+The [style file](../art/square-frame/styles.json) selects the first profile.
+The registrar trims the painted ends, scales the selected profile to
+128 × 17 px, blends its ends across six pixels for continuous straight runs,
+then wraps the cross-section around the same perimeter masks as Relic Rush.
+The sprig is cropped and scaled proportionally and baked into eligible
+inside-corner modules. The [atlas registration](../art/match3-atlas.json)
+records the exact source crops and offsets. All perimeter modules pack into
+`data/board/cells.png`. The [review and reproduction commands](square-match3.md#modular-perimeter)
+cover all eight profiles and native views of the selected frame.
 
 ## Themed board art
 

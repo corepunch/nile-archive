@@ -520,22 +520,7 @@ function E.cell_highlights(R, rules, sx, alpha)
     draw(R.selected or -1, tiles.selected, 1)
 end
 
--- The trim is a painted top-edge strip. Turn it onto the exposed edges
--- and leave the inside seams to the dark grout underneath.
-local square_edges = {
-    {direction=4, turn=0},
-    {direction=0, turn=math.pi / 2},
-    {direction=1, turn=math.pi},
-    {direction=3, turn=-math.pi / 2},
-}
-local square_corners = {
-    {x=-1, y=-1, a=4, b=3, turn=0},
-    {x=1, y=-1, a=4, b=0, turn=math.pi / 2},
-    {x=1, y=1, a=1, b=0, turn=math.pi},
-    {x=-1, y=1, a=1, b=3, turn=-math.pi / 2},
-}
 local square_cells = {"square-plain", "square-target", "square-double", "square-selected", "square-grout"}
-local square_trim = {"square-trim", "square-foliage", "square-joint", "square-medallion"}
 
 -- Neighbour bits are ordered clockwise from north, with one diagonal
 -- between each pair of sides. Match the masks baked by square_board_frame.py.
@@ -561,16 +546,12 @@ local function square_frame_art(skin)
     return frames
 end
 
-function E.load_square(art, skin, modular_frame)
+function E.load_square(art, skin)
     for _, key in ipairs(square_cells) do art[key] = assert(skin[key], key) end
     for _, states in ipairs{square_ice, square_chain} do
         for _, key in ipairs(states) do art[key] = assert(skin[key], key) end
     end
-    if modular_frame then
-        art.square_frame = square_frame_art(skin)
-    else
-        for _, key in ipairs(square_trim) do art[key] = assert(skin[key], key) end
-    end
+    art.square_frame = square_frame_art(skin)
 end
 
 local function draw_square_frame(R, rules, sx, tint)
@@ -608,63 +589,21 @@ local function draw_square_frame(R, rules, sx, tint)
     end
 end
 
-local function draw_square_corners(R, rules, sx, tint)
-    local r, game = R.HEX_R, R.g
-    local active, neighbor = rules.game_cell_active, rules.hex_neighbor
-    each_ground_cell(R, rules, sx, function(i, at, scale, turn)
-        local q, row = rules.hex_q(i), rules.hex_r(i)
-        for _, corner in ipairs(square_corners) do
-            local a, b = active(game, neighbor(i, corner.a)), active(game, neighbor(i, corner.b))
-            local position = at + vec2.polar(math.atan(corner.y, corner.x) + turn, math.sqrt(2) * r * scale)
-            local angle = corner.turn + turn
-            if a and b and not active(game, rules.hex_index(q + corner.x, row + corner.y)) then
-                -- The two adjacent cells enclose a 90-degree pocket in the rim.
-                -- The painted bracket hugs its corner and the leaves fan into the pocket.
-                local size = r * 1.94 * scale
-                local outward = vec2.polar(angle - 3 * math.pi / 4, size * .52)
-                gfx.image_rot(R.board_art["square-foliage"],
-                    rect.centered(position + outward, size2.splat(size)), angle, tint)
-            elseif not a and not b then
-                local key = (q + row) % 3 == 0 and "square-medallion" or "square-joint"
-                gfx.image_rot(R.board_art[key],
-                    rect.centered(position, size2.splat(r * .66 * scale)), angle, tint)
-            end
-        end
-    end)
-end
-
-local function draw_square_edges(R, rules, sx, rim, tint)
-    local active, game, r = rules.game_cell_active, R.g, R.HEX_R
-    each_ground_cell(R, rules, sx, function(i, at, scale, turn)
-        for _, edge in ipairs(square_edges) do
-            if not active(game, rules.hex_neighbor(i, edge.direction)) then
-                local center = at + vec2.polar(edge.turn + turn - math.pi / 2, 1):scale((r + rim * .4) * scale)
-                local box = rect.centered(center, size2((2 * r + rim * 1.7) * scale, rim * 1.8 * scale))
-                gfx.image_rot(R.board_art["square-trim"], box, edge.turn + turn, tint)
-            end
-        end
-    end)
-end
-
 local function draw_square_ground(R, rules, sx, floor, alpha, frame_alpha)
     local active, game = rules.game_cell_active, R.g
     local r, art = R.HEX_R, R.board_art
-    local modular_frame = art.square_frame
-    local rim = modular_frame and 0 or r * .36
     local tint = color(255, 255, 255, 255 * frame_alpha)
     each_ground_cell(R, rules, sx, function(_, at, scale, turn)
-        local box = rect.centered(at, size2.splat((2 * r + rim * 2) * scale))
+        local box = rect.centered(at, size2.splat(2 * r * scale))
         gfx.image_rot(art["square-grout"], box, turn, tint)
     end)
-    if not modular_frame then draw_square_edges(R, rules, sx, rim, tint) end
     each_ground_cell(R, rules, sx, function(i, at, scale, turn)
         local box = rect.centered(at, size2.splat(2 * (r - R.GROUND.seam_width) * scale))
         local layers = game.oil[i]
         local key = layers > 1 and floor.double or layers > 0 and floor.covered or floor.normal
         gfx.image_rot(art[key], box, turn, color(255, 255, 255, 255 * alpha))
     end)
-    if modular_frame then draw_square_frame(R, rules, sx, tint)
-    else draw_square_corners(R, rules, sx, tint) end
+    draw_square_frame(R, rules, sx, tint)
     local function outline(i, opacity)
         draw_floor_cell(R, i, R.cell_pos(i) + vec2(sx, 0), "square-selected", alpha * opacity)
     end

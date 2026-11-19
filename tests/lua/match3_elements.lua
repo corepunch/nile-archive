@@ -161,7 +161,7 @@ do
     local skin = setmetatable({}, {__index=function(_, key)
         if key:sub(-5) ~= "-leaf" or key == "square-frame-5-leaf" then return key end
     end})
-    view.load_square(art, skin, true)
+    view.load_square(art, skin)
     local model = {g=g, HEX_R=step/2, board_origin=origin, board_art=art, GROUND={seam_width=.5}}
     model.cell_pos = function(i) return origin + vec2(board.hex_q(i) * step, board.hex_r(i) * step) end
     local frame_draws, draw = {}, gfx.image_rot

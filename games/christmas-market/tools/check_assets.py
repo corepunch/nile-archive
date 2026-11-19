@@ -58,6 +58,17 @@ def main():
     assert 'require("board_frame_atlas")' in art
     subprocess.run([sys.executable, str(ROOT.parents[1]/frame['generator']),
                     '--game', ROOT.name, '--check', str(ROOT/frame['stone'])], check=True)
+    square = manifest['square_frame']
+    square_cells = atlas['square_cells']
+    styles = json.loads((ROOT/square['styles']).read_text())
+    assert square['runtime'] in inventory and (ROOT/square['review']).is_file()
+    assert len(styles['styles']) == 8 and styles['active'] in styles['styles']
+    assert square['source'] == square_cells['frame_source'] and square['prompt'] == square_cells['frame_prompt']
+    for name, sprite in square_cells['frames'].items():
+        if name.startswith('square-frame-'):
+            assert sprite['rail']['style'] == styles['active']
+            assert png(ROOT/sprite['registered']) == ((128, 128), 6), name
+            assert atlas['frames'][name]['atlas'] == 'cells'
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)
     goods = manifest['market_goods']
     for name in ('source', 'prompt', 'edit_target', 'edit_target_prompt', 'transforms', 'review'):

@@ -402,8 +402,12 @@ PAPYRUS_FLOORS = {
 }
 
 
-def square_frame_sprites(root):
-    sprites, leaf_spec, inputs = square_board_frame.generate(root / 'art/papyrus-board/stone-cracks.png')
+def square_frame_sprites(game, root):
+    rail = None
+    if game == 'christmas-market':
+        sprites, leaf_spec, rail, inputs = square_board_frame.generate_christmas(root / 'art/square-frame')
+    else:
+        sprites, leaf_spec, inputs = square_board_frame.generate(root / 'art/papyrus-board/stone-cracks.png')
     recipe = relpath(square_board_frame.__file__, root)
     registration = {}
     for name, sprite in sprites.items():
@@ -415,6 +419,8 @@ def square_frame_sprites(root):
             'registered': relpath(registered, root),
         }
         inputs.append(registered)
+        if rail:
+            registration[name]['rail'] = rail
         if name.endswith('-leaf'):
             registration[name]['foliage'] = leaf_spec
     return sprites, inputs, registration
@@ -422,50 +428,28 @@ def square_frame_sprites(root):
 
 def square_cells(game, root):
     source = SQUARE_DIR / 'source.png'
-    ornaments = SQUARE_DIR / 'ornaments.png'
     papyrus = root / 'art/papyrus-board/contact.png'
     materials = {
         'square-plain': (0, 0, 256, 256),
         'square-target': (256, 0, 512, 256),
         'square-selected': (512, 0, 768, 256),
         'square-double': (768, 0, 1024, 256),
-        'square-trim': (1024, 0, 1280, 76),
         'square-grout': (1312, 32, 1504, 224),
     }
     sprites, registration = {}, {}
     inputs = [source, SQUARE_DIR / 'prompt.txt', SQUARE_DIR / 'lighting-prompt.txt']
-    decorations = {}
     if game == 'relic-rush':
         sheets = [(papyrus, PAPYRUS_FLOORS, 0),
                   (source, {name: materials[name] for name in ('square-selected', 'square-grout')}, 0)]
         inputs += [papyrus, papyrus.with_name('contact-layout.png'), papyrus.with_name('contact-prompt.txt')]
     else:
-        decorations = {
-            'square-foliage': (0, 0, 512, 512),
-            'square-joint': (512, 0, 1024, 512),
-            'square-medallion': (1024, 0, 1536, 512),
-        }
-        sheets = [(source, materials, 512), (ornaments, decorations, 512)]
-        inputs += [ornaments, SQUARE_DIR / 'ornaments-prompt.txt']
+        sheets = [(source, materials, 512)]
     for path, crops, row in sheets:
         with Image.open(path) as sheet:
             for name, (x0, y0, x1, y1) in crops.items():
                 box = (x0, y0 + row, x1, y1 + row)
-                image = sheet.crop(box).convert('RGBA')
-                if name in decorations:
-                    # Ignore stray low-alpha pixels when measuring the crop, then retain the authored alpha.
-                    left, top, right, bottom = image.getchannel('A').point(lambda a: 255 if a >= 16 else 0).getbbox()
-                    left, top, right, bottom = left - 4, top - 4, right + 4, bottom + 4
-                    assert 0 <= left < right <= image.width and 0 <= top < bottom <= image.height, name
-                    image = image.crop((left, top, right, bottom))
-                    box = (box[0] + left, box[1] + top, box[0] + right, box[1] + bottom)
-                size = (128, 38) if name == 'square-trim' else (128, 128)
-                if name in decorations:
-                    image.thumbnail(size, Image.Resampling.LANCZOS)
-                    sprite = Image.new('RGBA', size)
-                    sprite.paste(image, ((128 - image.width) // 2, (128 - image.height) // 2))
-                else:
-                    sprite = image.resize(size, Image.Resampling.LANCZOS)
+                size = (128, 128)
+                sprite = sheet.crop(box).convert('RGBA').resize(size, Image.Resampling.LANCZOS)
                 # Isolate the painted rim so the active target remains visible through it.
                 if name == 'square-selected':
                     sprite.paste((0, 0, 0, 0), (11, 11, 117, 117))
@@ -477,11 +461,10 @@ def square_cells(game, root):
                 if name == 'square-selected':
                     registration[name]['transparent_center'] = [11, 11, 117, 117]
                 inputs.append(registered)
-    if game == 'relic-rush':
-        frame_sprites, frame_inputs, frame_registration = square_frame_sprites(root)
-        sprites.update(frame_sprites)
-        registration.update(frame_registration)
-        inputs.extend(frame_inputs)
+    frame_sprites, frame_inputs, frame_registration = square_frame_sprites(game, root)
+    sprites.update(frame_sprites)
+    registration.update(frame_registration)
+    inputs.extend(frame_inputs)
     return sprites, inputs, registration
 
 
@@ -616,8 +599,10 @@ def build_game(game, check):
         square_sources = {'source': '../../art/match3-square/source.png',
                           'prompt': '../../art/match3-square/prompt.txt',
                           'lighting_prompt': '../../art/match3-square/lighting-prompt.txt',
-                          'ornaments': '../../art/match3-square/ornaments.png',
-                          'ornaments_prompt': '../../art/match3-square/ornaments-prompt.txt'}
+                          'frame_recipe': '../../tools/square_board_frame.py',
+                          'frame_styles': 'art/square-frame/styles.json',
+                          'frame_source': 'art/square-frame/variants.png',
+                          'frame_prompt': 'art/square-frame/prompt.txt'}
     manifest = {'atlases': {group: {'runtime': f'data/board/{group}.png', 'size': list(sheet.size)}
                             for group, (sheet, _) in packed.items()},
                 'board': BOARD_GROUPS, 'hud': hud_groups,

@@ -1,12 +1,14 @@
 # Square match-3 tiles and frames
 
 The built-in ImageGen tile sheet, [source.png](source.png), supplies the
-selection rim and grout for both games, plus the Christmas Market faces and trim.
+selection rim and grout for both games, plus the Christmas Market faces.
 [The first prompt](prompt.txt) specifies
 the two material families. [Lighting revisions](lighting-prompt.txt)
 record the target colors and the final correction to the ordinary tile.
-[Christmas Market ornaments](ornaments.png) use a separate transparent sheet, with its
-[export prompt](ornaments-prompt.txt). All painted objects are original.
+[The earlier Christmas Market ornaments](ornaments.png) use a separate
+transparent sheet with its [export prompt](ornaments-prompt.txt). The current
+[Christmas Market frame](../../games/christmas-market/docs/square-match3.md#modular-perimeter)
+uses its own painted oak and holly sheet. All painted objects are original.
 The [Relic Rush board](../../games/relic-rush/docs/square-match3.md#levels-and-art)
 has its own papyrus floor and sandstone frame atlas.
 
@@ -35,14 +37,14 @@ Cradle of Rome I stores the wood and leaf frame at
 strip as the bottom row in `textures/scenes/city/construct/ct_built_01.png`.
 In both reference games, tile type 10 places its leaf art in an empty frame
 cell that touches two playable cells at right angles. Relic Rush alternates
-bare and leafy recessed corner tiles. Christmas Market places its ornaments
-over the carved strip.
+bare and leafy recessed corner tiles. Christmas Market uses the same
+corner rules with painted oak and smaller holly sprigs.
 
 ## Register and review
 
 Run `python3 tools/match3_atlas.py` from the repository root. It crops and
-resizes the painted square faces and trim, isolates the painted gold
-selection rim, and registers the ornament crops with their original alpha.
+resizes the painted square faces, isolates the painted gold selection rim
+and packs each game's modular perimeter tiles.
 The runtime frames and exact crop rectangles are recorded in each game's
 `art/match3-atlas.json` under `square_cells`.
 

@@ -17,7 +17,7 @@
     "cells": {
       "runtime": "data/board/cells.png",
       "size": [
-        512,
+        1024,
         1024
       ]
     },
@@ -514,13 +514,49 @@
     "square-double": {
       "atlas": "cells",
       "box": [
+        512,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-1": {
+      "atlas": "cells",
+      "box": [
+        640,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-10": {
+      "atlas": "cells",
+      "box": [
+        768,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-17": {
+      "atlas": "cells",
+      "box": [
+        896,
+        0,
+        128,
+        128
+      ]
+    },
+    "square-frame-170": {
+      "atlas": "cells",
+      "box": [
         0,
         128,
         128,
         128
       ]
     },
-    "square-foliage": {
+    "square-frame-18": {
       "atlas": "cells",
       "box": [
         128,
@@ -529,7 +565,7 @@
         128
       ]
     },
-    "square-grout": {
+    "square-frame-2": {
       "atlas": "cells",
       "box": [
         256,
@@ -538,7 +574,7 @@
         128
       ]
     },
-    "square-joint": {
+    "square-frame-21": {
       "atlas": "cells",
       "box": [
         384,
@@ -547,10 +583,109 @@
         128
       ]
     },
-    "square-medallion": {
+    "square-frame-21-leaf": {
+      "atlas": "cells",
+      "box": [
+        512,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-34": {
+      "atlas": "cells",
+      "box": [
+        640,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-37": {
+      "atlas": "cells",
+      "box": [
+        768,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-37-leaf": {
+      "atlas": "cells",
+      "box": [
+        896,
+        128,
+        128,
+        128
+      ]
+    },
+    "square-frame-41": {
       "atlas": "cells",
       "box": [
         0,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-42": {
+      "atlas": "cells",
+      "box": [
+        128,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-5": {
+      "atlas": "cells",
+      "box": [
+        256,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-5-leaf": {
+      "atlas": "cells",
+      "box": [
+        384,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-85": {
+      "atlas": "cells",
+      "box": [
+        512,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-85-leaf": {
+      "atlas": "cells",
+      "box": [
+        640,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-frame-9": {
+      "atlas": "cells",
+      "box": [
+        768,
+        256,
+        128,
+        128
+      ]
+    },
+    "square-grout": {
+      "atlas": "cells",
+      "box": [
+        896,
         256,
         128,
         128
@@ -559,8 +694,8 @@
     "square-plain": {
       "atlas": "cells",
       "box": [
-        128,
-        256,
+        0,
+        384,
         128,
         128
       ]
@@ -568,8 +703,8 @@
     "square-selected": {
       "atlas": "cells",
       "box": [
-        256,
-        256,
+        128,
+        384,
         128,
         128
       ]
@@ -577,25 +712,16 @@
     "square-target": {
       "atlas": "cells",
       "box": [
-        384,
         256,
+        384,
         128,
         128
-      ]
-    },
-    "square-trim": {
-      "atlas": "cells",
-      "box": [
-        2,
-        642,
-        128,
-        38
       ]
     },
     "tile-bonus-area": {
       "atlas": "cells",
       "box": [
-        0,
+        384,
         384,
         128,
         128
@@ -604,7 +730,7 @@
     "tile-cell-normal": {
       "atlas": "cells",
       "box": [
-        128,
+        512,
         384,
         128,
         128
@@ -613,7 +739,7 @@
     "tile-hover": {
       "atlas": "cells",
       "box": [
-        256,
+        640,
         384,
         128,
         128
@@ -622,7 +748,7 @@
     "tile-ice": {
       "atlas": "cells",
       "box": [
-        384,
+        768,
         384,
         128,
         128
@@ -631,8 +757,8 @@
     "tile-light-wave": {
       "atlas": "cells",
       "box": [
-        0,
-        512,
+        896,
+        384,
         128,
         128
       ]
@@ -640,7 +766,7 @@
     "tile-selected": {
       "atlas": "cells",
       "box": [
-        128,
+        0,
         512,
         128,
         128
@@ -649,7 +775,7 @@
     "tile-tablet-double": {
       "atlas": "cells",
       "box": [
-        256,
+        128,
         512,
         128,
         128
@@ -658,7 +784,7 @@
     "tile-tablet-single": {
       "atlas": "cells",
       "box": [
-        384,
+        256,
         512,
         128,
         128
@@ -1198,8 +1324,10 @@
     "source": "../../art/match3-square/source.png",
     "prompt": "../../art/match3-square/prompt.txt",
     "lighting_prompt": "../../art/match3-square/lighting-prompt.txt",
-    "ornaments": "../../art/match3-square/ornaments.png",
-    "ornaments_prompt": "../../art/match3-square/ornaments-prompt.txt",
+    "frame_recipe": "../../tools/square_board_frame.py",
+    "frame_styles": "art/square-frame/styles.json",
+    "frame_source": "art/square-frame/variants.png",
+    "frame_prompt": "art/square-frame/prompt.txt",
     "frames": {
       "square-plain": {
         "source": "../../art/match3-square/source.png",
@@ -1263,20 +1391,6 @@
         ],
         "registered": "art/registered/square-cells/square-double.png"
       },
-      "square-trim": {
-        "source": "../../art/match3-square/source.png",
-        "crop": [
-          1024,
-          512,
-          1280,
-          588
-        ],
-        "size": [
-          128,
-          38
-        ],
-        "registered": "art/registered/square-cells/square-trim.png"
-      },
       "square-grout": {
         "source": "../../art/match3-square/source.png",
         "crop": [
@@ -1291,47 +1405,519 @@
         ],
         "registered": "art/registered/square-cells/square-grout.png"
       },
-      "square-foliage": {
-        "source": "../../art/match3-square/ornaments.png",
-        "crop": [
-          91,
-          591,
-          430,
-          914
-        ],
+      "square-frame-1": {
+        "generator": "../../tools/square_board_frame.py",
         "size": [
           128,
           128
         ],
-        "registered": "art/registered/square-cells/square-foliage.png"
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-1.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
       },
-      "square-joint": {
-        "source": "../../art/match3-square/ornaments.png",
-        "crop": [
-          630,
-          636,
-          899,
-          879
-        ],
+      "square-frame-2": {
+        "generator": "../../tools/square_board_frame.py",
         "size": [
           128,
           128
         ],
-        "registered": "art/registered/square-cells/square-joint.png"
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-2.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
       },
-      "square-medallion": {
-        "source": "../../art/match3-square/ornaments.png",
-        "crop": [
-          1119,
-          612,
-          1408,
-          898
-        ],
+      "square-frame-5": {
+        "generator": "../../tools/square_board_frame.py",
         "size": [
           128,
           128
         ],
-        "registered": "art/registered/square-cells/square-medallion.png"
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-5.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-5-leaf": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-5-leaf.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        },
+        "foliage": {
+          "crop": [
+            934,
+            894,
+            1145,
+            1101
+          ],
+          "size": [
+            52,
+            51
+          ],
+          "offset": [
+            62,
+            13
+          ]
+        }
+      },
+      "square-frame-9": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-9.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-10": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-10.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-17": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-17.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-18": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-18.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-21": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-21.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-21-leaf": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-21-leaf.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        },
+        "foliage": {
+          "crop": [
+            934,
+            894,
+            1145,
+            1101
+          ],
+          "size": [
+            52,
+            51
+          ],
+          "offset": [
+            62,
+            13
+          ]
+        }
+      },
+      "square-frame-34": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-34.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-37": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-37.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-37-leaf": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-37-leaf.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        },
+        "foliage": {
+          "crop": [
+            934,
+            894,
+            1145,
+            1101
+          ],
+          "size": [
+            52,
+            51
+          ],
+          "offset": [
+            62,
+            13
+          ]
+        }
+      },
+      "square-frame-41": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-41.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-42": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-42.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-85": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-85.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
+      },
+      "square-frame-85-leaf": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-85-leaf.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        },
+        "foliage": {
+          "crop": [
+            934,
+            894,
+            1145,
+            1101
+          ],
+          "size": [
+            52,
+            51
+          ],
+          "offset": [
+            62,
+            13
+          ]
+        }
+      },
+      "square-frame-170": {
+        "generator": "../../tools/square_board_frame.py",
+        "size": [
+          128,
+          128
+        ],
+        "pivot": [
+          64,
+          64
+        ],
+        "registered": "art/registered/square-cells/square-frame-170.png",
+        "rail": {
+          "style": "aged-oak",
+          "crop": [
+            63,
+            200,
+            379,
+            262
+          ],
+          "size": [
+            128,
+            17
+          ]
+        }
       }
     },
     "review": "docs/square-match3.md"
@@ -1389,7 +1975,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "14b1a88b50eb42a954b8ec83079cf63596afb79ef2b8d2ac969f035e0abaa506",
+    "recipe": "f2211e6a9c32197dbeb12d93df17208061518ab975bdf83ac3018a1578b29d01",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1414,8 +2000,6 @@
       "art/match3-square/blockers-prompt.txt": "959f34623cb0f12a702ebce85f668ecc8b340b1fe49e4ef53d89226d56f4cdff",
       "art/match3-square/blockers.png": "4ca1f9a176638af1ec5c4e4242268951c1efc297f4e8ef0fea4cf43126b9a8fd",
       "art/match3-square/lighting-prompt.txt": "44648f991d91d3af80a399361aa7054486eab14e22779a9296c803b4809de78c",
-      "art/match3-square/ornaments-prompt.txt": "c4156812cc922f3f0d0ae78e0b0f6a08265ef29eee93e5316172d06fd3fa39f0",
-      "art/match3-square/ornaments.png": "eb76969acec901820e09a1aaa6cd5612082af8ea2ab1a52cbc01fe6e14a8ae82",
       "art/match3-square/prompt.txt": "9f05ab473fdaf872c8a7c6c4523e9d3e5481e8ac43dc4bad4db73b2c47f00261",
       "art/match3-square/source.png": "0d0d99c3ddd4c37aba26bb6f0d6f40af86d10b91ce77ca68aa39fdf4cc03e354",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
@@ -1459,33 +2043,51 @@
       "games/christmas-market/art/registered/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
       "games/christmas-market/art/registered/market-goods.png": "2f2f4c7ba32849182a30bc1c4574ef014a1338942bc76203028837b15fd73c67",
       "games/christmas-market/art/registered/square-cells/square-double.png": "1a2c38828aed85d93f6a799de9bb576b7d2c07990b09da580be80e638f273149",
-      "games/christmas-market/art/registered/square-cells/square-foliage.png": "6485df18aeb299855c30cf1d0ba58fa1183390ad60bbb706cb88f18707ad10bd",
+      "games/christmas-market/art/registered/square-cells/square-frame-1.png": "2cfc113d1a21e3a311eef493f0d6175728f3f73737df03cfa5bfd313f40be9f0",
+      "games/christmas-market/art/registered/square-cells/square-frame-10.png": "c162ea2ebed2360b64ad4f1ed63021e08b719b0ad4df9e44905c9e1c24ddcf63",
+      "games/christmas-market/art/registered/square-cells/square-frame-17.png": "a535c464e57a138914b9f9b84bfc0f76243045d629f004923894bbdfe1b8dc59",
+      "games/christmas-market/art/registered/square-cells/square-frame-170.png": "a9094630d6355a4fec0a598841af6b94905d026c8241f8c6d325c4813f552724",
+      "games/christmas-market/art/registered/square-cells/square-frame-18.png": "76f37d56c0d4ec63e6a6c34c51fafe82f9c19f3687f755b067eacc6827f1ec0d",
+      "games/christmas-market/art/registered/square-cells/square-frame-2.png": "dabdfae0e9db9194a2fd364f26a62a9f54cc211678375c72c4de873ef2f80971",
+      "games/christmas-market/art/registered/square-cells/square-frame-21-leaf.png": "5bc6def88ee4dce89ffecbbe758f124dc04e808b63b0dfd53cafa80176fc08ba",
+      "games/christmas-market/art/registered/square-cells/square-frame-21.png": "3fdfe8aec2ee9bd3d56d36544fc906c2a4e521ecfdde486ebbc6bc522c866ecd",
+      "games/christmas-market/art/registered/square-cells/square-frame-34.png": "a45162d678ea27dd5c1299b83ade9a64e02295d947b2db1c1d77ffb953d6538a",
+      "games/christmas-market/art/registered/square-cells/square-frame-37-leaf.png": "b1988e7e1877c6cb65d5841c3928ab5a33fcc9fa7969676030f8650865f9ef59",
+      "games/christmas-market/art/registered/square-cells/square-frame-37.png": "f7c26690e18750dcfb17ee4bdbbc3ae86743f4c4b0450ebbce77c00cee30ec5c",
+      "games/christmas-market/art/registered/square-cells/square-frame-41.png": "fc4f9dfaa7e44a39721406391172a9556c93f73eb2770ae912c3e58b6c34dfcb",
+      "games/christmas-market/art/registered/square-cells/square-frame-42.png": "a36a30ce94085a9d72cadf2d586545e0385be4157331e65c2e7dc22f3f5a83d2",
+      "games/christmas-market/art/registered/square-cells/square-frame-5-leaf.png": "561c6c0a2ab5fd6af4bc1cb9495fbf64ad367f7b7dd1727e2d4ab4696aec2702",
+      "games/christmas-market/art/registered/square-cells/square-frame-5.png": "dd6bcddf410d7d24175a66dbb05488cee085649b68aaa780597a263d82dce379",
+      "games/christmas-market/art/registered/square-cells/square-frame-85-leaf.png": "4167f18be817a400774fda3e542e25f3d258d11ed3a8f73643ead06297fd2337",
+      "games/christmas-market/art/registered/square-cells/square-frame-85.png": "9660bdb766f6f1d78c9e0d266582d73495d871a4aee6d188fc0935ea38d947ea",
+      "games/christmas-market/art/registered/square-cells/square-frame-9.png": "a1528187e2d24ce47a58a042550744527bc504454a8bb6b986c2887b00b58ec0",
       "games/christmas-market/art/registered/square-cells/square-grout.png": "443abe77cdbd1f28afdf7db3d928c212520cec348e86c40d342c84ee0e086f1e",
-      "games/christmas-market/art/registered/square-cells/square-joint.png": "3ad026e25a64b1ad6e66a694a1efd36aa8ba26feefdbc0bda755d15c258e58fa",
-      "games/christmas-market/art/registered/square-cells/square-medallion.png": "9898928488cae07c134f0ddfb3ac6d8f8892138766c198519302a7a455a092ce",
       "games/christmas-market/art/registered/square-cells/square-plain.png": "3ba890d23d639a2ba753274773ecb8ee8cbde70ed86be7ed6235b1e354a44938",
       "games/christmas-market/art/registered/square-cells/square-selected.png": "6b9c7f8fa400c1ac31d847e12373d14e67b46932fb30b8ab111a6b8be273e7ac",
       "games/christmas-market/art/registered/square-cells/square-target.png": "12b3224c5bf28bcc68bbcc78dd6a9dfb20b224cef8100cac70b86c818173ff6b",
-      "games/christmas-market/art/registered/square-cells/square-trim.png": "ca9c2dba08308a15386ea82b97f30f62d56d359538c270211051f2c6153802f5",
       "games/christmas-market/art/registered/story-pieces/cocoa.png": "864159376cf89a1133dbfadada1ccf53dae86e86274f8b9eb13e9b6b403d3417",
       "games/christmas-market/art/registered/story-pieces/lantern.png": "1d972fbb8eaf61751fd11c77d0ddce2742f67dac79b780464eb560b3d5a99f84",
       "games/christmas-market/art/registered/story-pieces/letter.png": "8f90982671454af25c96c27485cf35d5af20e5bdc66f76248e3ade7fc168ffc5",
       "games/christmas-market/art/registered/story-pieces/ribbon.png": "eeb31326273b44077d7505875ad9904adee339ff9d3438cd11ed7995933e585a",
       "games/christmas-market/art/registered/story-pieces/scarf.png": "d0f1287e1f8537db369d6a5e46218e2e1dac9cfb8d386eb51fa9b42804c6e9ac",
       "games/christmas-market/art/registered/story-pieces/telegram.png": "da4dcb762ad7bb9d46765606c49d59ff20ca49901defbc74906b85be5b291870",
+      "games/christmas-market/art/square-frame/prompt.txt": "61654f1a60c447e5776e90df66755fe5fee92ca4283df25ef1451b8b08dd40eb",
+      "games/christmas-market/art/square-frame/styles.json": "029f01b1130d9cbc5588eebc1d00faacb371a2463fdc9e27a4919a57b8bff214",
+      "games/christmas-market/art/square-frame/variants.png": "3df9d5d0d095006246bf3244c48cb652bc088f7170ecb8a598ae5ae0a797ee0b",
       "games/christmas-market/data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
       "games/christmas-market/data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
       "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "ea4126a5f9a2b973972c7105078acb0d36dead10babf379d3b50a8269c9ecc18",
-      "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368"
+      "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368",
+      "tools/square_board_frame.py": "41bb626ad3fb530ceb632e972f5872ba7c188e630f650c5f5f7d3df383983877"
     },
     "outputs": {
       "games/christmas-market/data/board/blockers.png": "40168b602b9a3e02fc516f43e50feec377202ac3938ede3e2dde1ea855b3e9c6",
-      "games/christmas-market/data/board/cells.png": "a55c1493f055fb1ee5576652944b339ac30a9f9b1ce8a373c4a1092c8692caea",
+      "games/christmas-market/data/board/cells.png": "97947f0b5e7b3669ca08b0147db8ed3551fb8cce6f04b50c671f379792b29e5f",
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
       "games/christmas-market/data/board/pieces.png": "cc871ce785df4a8c824c82a2a3dd2f26b69c9f6f263397b7412944ab5da46530",
-      "games/christmas-market/lua/match3_atlases.lua": "5bba11ab0c1a5a5698705b36d1d199c4fe6c6f00832afca9893bf2ea5e5b3d4e",
+      "games/christmas-market/lua/match3_atlases.lua": "b750be1b6e0f638017e0d6ac3f25b76cc5136922aaa416d48a7bd26a6c9ea246",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
       "games/christmas-market/lua/match3_skin.lua": "28b9569e3b2eb545cc3b96540d394a66415ae669aeb5ae0fe96b48791f6370be"
     }

@@ -33,11 +33,41 @@ columns by twelve rows. Dots are ordinary cells, asterisks single targets,
 plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes.
 
-Honey maple, lightly frosted teal panes, holly-engraved gilded oak, and spruce, berry and brass corner ornaments. The [source and lighting measurements](../../../art/match3-square/README.md)
-describe the Cradle of Rome 2 palette study and original painted frames.
-See [atlas registration](../art/match3-atlas.json) for the source crop and
-runtime region of each tile and ornament. Rebuild from the repository root
-with `python3 tools/match3_atlas.py`.
+Honey maple and lightly frosted teal panes sit inside a narrow aged-oak frame.
+The [source and lighting measurements](../../../art/match3-square/README.md)
+describe the Cradle of Rome 2 palette study and original tile paintings.
+
+### Modular perimeter
+
+The engine checks the eight neighbors of each empty cell around the playfield,
+including the ring just outside the level grid. It selects one baked
+128 × 128 module and rotates it in quarter turns. Touching one playable side
+produces a rail, touching only a diagonal produces a rounded outer cap, and
+touching two playable sides produces an inside join. Eligible inside joins
+alternate between bare oak and the same oak with holly baked into the module.
+Both square games use the same placement rules. Each game packs its own
+materials in `data/board/cells.png`. Frame pixels stay in the empty cells.
+
+[Eight finishes compared on an identical stepped board](screenshots/review/square-frame/variants.jpg).
+The live finish is **Aged oak**. Its dark rim, narrow warm shoulder and small
+diagonal cuts follow the Cradle of Rome 2 frame's visual hierarchy. The other
+seven materials remain in the [source atlas](../art/square-frame/variants.png).
+The [paint prompt](../art/square-frame/prompt.txt), [style order](../art/square-frame/styles.json)
+and [registration](../art/match3-atlas.json) record the source and fitted rail.
+
+| Native capture | Before | After |
+| --- | --- | --- |
+| 480 × 900 | [Previous frame](screenshots/review/winter-boosters/toolbar-480.jpg) | [Aged oak](screenshots/review/square-frame/board-480.jpg) |
+| 390 × 844 | [Previous frame](screenshots/review/winter-boosters/toolbar-390.jpg) | [Aged oak](screenshots/review/square-frame/board-390.jpg) |
+
+[Winter Wreath's stepped edges](screenshots/review/square-frame/wreath.jpg) ·
+[Deep notch with chains and ice](screenshots/review/square-frame/notch.jpg)
+
+```sh
+python3 tools/match3_atlas.py
+python3 tools/square_board_frame.py --review games/christmas-market/docs/screenshots/review/square-frame/variants.jpg
+build/test/christmas-market "shot booster-toolbar" "shot square-winter-wreath" "shot phone-pieces-board"
+```
 
 ## Captures
 

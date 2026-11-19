@@ -66,7 +66,7 @@ are the guides.
 | `board_tiles.py` | Bakes the shared board tiles into hex sprites for every game | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
 | `board_frame.py` | Bakes the hex border atlas and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |
-| `square_board_frame.py` | Bakes textured sandstone into complete cells for the square perimeter, with rounded caps and leafy variants | imported by `match3_atlas.py` |
+| `square_board_frame.py` | Bakes painted oak and textured sandstone into square perimeter modules and compares the eight winter materials | imported by `match3_atlas.py` or `python3 tools/square_board_frame.py --review build/square-frames.jpg` |
 | `board_frame_decor.py` | Registers separately painted board decorations | imported by `board_frame.py` |
 | `hex_tile_art.py` | Checks sprites against the engine's flat-top tile face | `python3 tools/hex_tile_art.py <art.png> --mode fill --strict` |
 | `artkit.py` | Shared Pillow and NumPy helpers for the art scripts | imported |

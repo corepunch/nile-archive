@@ -1,0 +1,15 @@
+{
+  "source": "variants.png",
+  "prompt": "prompt.txt",
+  "active": "aged-oak",
+  "styles": {
+    "aged-oak": "Aged oak",
+    "antique-bronze": "Antique bronze",
+    "travertine": "Travertine",
+    "honey-maple": "Honey maple",
+    "evergreen-oak": "Evergreen oak",
+    "blue-slate": "Blue slate",
+    "incised-walnut": "Incised walnut",
+    "cranberry-chestnut": "Cranberry chestnut"
+  }
+}

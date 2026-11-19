@@ -33,7 +33,7 @@
   "runtime": {
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
     "data/board/blockers.png": "40168b602b9a3e02fc516f43e50feec377202ac3938ede3e2dde1ea855b3e9c6",
-    "data/board/cells.png": "a55c1493f055fb1ee5576652944b339ac30a9f9b1ce8a373c4a1092c8692caea",
+    "data/board/cells.png": "97947f0b5e7b3669ca08b0147db8ed3551fb8cce6f04b50c671f379792b29e5f",
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
@@ -398,6 +398,14 @@
     "decoration_review": "docs/review/board-frame-decorations/front.md",
     "layout": "lua/board_frame_atlas.lua",
     "reference": "engine/art/board-frame/rim-attachment-guide.png"
+  },
+  "square_frame": {
+    "source": "art/square-frame/variants.png",
+    "prompt": "art/square-frame/prompt.txt",
+    "styles": "art/square-frame/styles.json",
+    "runtime": "data/board/cells.png",
+    "registration": "art/match3-atlas.json",
+    "review": "docs/screenshots/review/square-frame/variants.jpg"
   },
   "campaign_buttons": "../../art/match3-buttons/manifest.json",
   "bonus_buttons": {
