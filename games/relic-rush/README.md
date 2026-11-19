@@ -218,9 +218,9 @@ The playable ladder follows the first fourteen purchase positions from the Windo
 | 7 | Mill | 12 | 70 / 80 / 65 | Grain bundles earn 5 Food each. |
 | 8 | Thermae | 13 | 10 / 50 / 35 | Unlocks Shield. Hit one row. |
 | 9 | Port | 13 | 15 / 50 / 40 | Shrimp earn 6 Food each. |
-| 10 | Curia Octavia | 16 | 330 / 715 / 465 | Unlocks Hourglass. Add five moves. |
+| 10 | Curia Octavia | 16 | 330 / 715 / 465 | Red mullet earns 7 Food each. Hourglass adds five moves. |
 | 11 | Coliseum | 17 | 135 / 290 / 190 | Helmets earn 6 Coins each. |
-| 12 | House of the Vestals | 18 | 105 / 195 / 125 | Unlocks Lightning. Strike up to fifteen random cells. |
+| 12 | House of the Vestals | 18 | 105 / 195 / 125 | Pearls earn 7 Coins each. Lightning strikes up to fifteen random cells. |
 | 13 | Aqueduct | 19 | 180 / 335 / 200 | Rings earn 7 Coins each. |
 | 14 | Lighthouse | 20 | 160 / 250 / 165 | Plus replaces Shield and inherits its charge. |
 

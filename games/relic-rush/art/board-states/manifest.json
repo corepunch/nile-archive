@@ -1267,6 +1267,24 @@
       "yield": {
         "supplies": 5
       }
+    },
+    "fish": {
+      "building": "lodge",
+      "first_level": 17,
+      "kind": 3,
+      "yield": {
+        "provisions": 7
+      },
+      "runtime": "art/registered/campaign-pieces.png"
+    },
+    "pearl": {
+      "building": "map_room",
+      "first_level": 19,
+      "kind": 0,
+      "yield": {
+        "gold": 7
+      },
+      "runtime": "art/registered/campaign-pieces.png"
     }
   },
   "resource_pieces": {
@@ -1468,6 +1486,27 @@
         },
         "generator": "built-in ImageGen, full-atlas edit of both masonry pieces",
         "review": "docs/screenshots/review/gray-masonry/board.jpg"
+      },
+      {
+        "source": "art/campaign-pieces/pearl-and-fish.png",
+        "prompt": "art/campaign-pieces/pearl-and-fish-prompt.txt",
+        "boxes": {
+          "pearl": [
+            18,
+            1240,
+            209,
+            1434
+          ],
+          "fish": [
+            214,
+            1245,
+            427,
+            1435
+          ]
+        },
+        "square_inset": 9,
+        "generator": "Built-in ImageGen, full atlas edit with two new pieces in the last row",
+        "review": "docs/screenshots/review/rome-coverage/pearl.jpg"
       }
     ],
     "cell_size": 128,
@@ -1526,6 +1565,10 @@
         "scarab",
         "harp",
         "sandal"
+      ],
+      [
+        "pearl",
+        "fish"
       ]
     ],
     "states": "One authored sprite per match kind. Selection, hints, chains, press and motion use the existing board overlays and transforms.",

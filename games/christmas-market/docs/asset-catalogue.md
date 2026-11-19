@@ -25,7 +25,7 @@ The earlier festive set remains available to the inherited preview surfaces.
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `festive-0` through `festive-5` | Bell, candy cane, holly, knitted mitten, bauble and gingerbread, in atlas order. |
-| `booster-star-icon`, `booster-firework-icon` | A blue comet for a row clear and a cranberry Christmas cracker for a 3×3 burst. Both are toolbar icons from the market atlas. |
+| `booster-star-icon`, `booster-firework-icon` | A turquoise star for a kind clear and three bundled indigo crackers for a 3×3 burst. Both use the matching piece on the toolbar. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
@@ -155,6 +155,10 @@ first atlas, the Rome II comparison strip and the Relic Rush bonus pieces.
 The first atlas's wider gutters make it the source for the main set. Dressed
 stone reuses the exact painted Relic Rush piece at column five, row one of
 [its campaign atlas](../../relic-rush/art/registered/campaign-pieces.png).
+The [vase and winter catch atlas](../art/market-goods/vase-and-winter-catch.png)
+supplies the three-cracker Firework, broad ice pendant, cobalt vase and smoked trout.
+Its [ImageGen prompt](../art/market-goods/vase-and-winter-catch-prompt.txt)
+records the complete atlas edit. Only those four crops enter the registered sheet.
 The [registration record](../art/market-goods/registration.json) saves each
 source crop, proportional fit, offset and alpha-weighted center in its 128 px
 slot. The crop takes the object's solid bounds with four pixels of edge
@@ -176,10 +180,10 @@ Every center of opacity is within half a pixel of the slot center on both axes.
 | 10 | Candle lantern | Black iron and amber | +3 Lightning charge from the later Candlelight shop. |
 | 11 | Hot cocoa | Ivory and chocolate | +5 Treats from the cocoa kiosk and the Treats wallet icon. |
 | 12 | Dressed stone | Slate gray | +7 Materials from the chapel. |
-| 13 | Ice pendant | Sapphire blue | +8 Tokens from the later Igloo. |
+| 13 | Ice pendant | Sapphire blue | A broad faceted gem, +8 Tokens from the later Igloo. |
 | 14 | Glass bauble | Amber gold | +9 Tokens from the later Giant bauble. |
 | 15 | Candy cane | Red and ivory | Score until the Welcome arch. |
-| 16 | Firework Bomb | Midnight indigo | Replaces the hammer and hits a 3×3 square. |
+| 16 | Firework Bomb | Midnight indigo | Three crackers in a brass band. Replaces the hammer and hits a 3×3 square. |
 | 17 | Faceted star | Turquoise | Replaces the lantern and clears the chosen kind. |
 | 18 | Frost shield | Fir green and pewter | Hits the chosen row. |
 | 19 | Wish cross | Copper orange | Replaces the shield and replenishes a resource or part of another charge. |
@@ -189,9 +193,11 @@ Every center of opacity is within half a pixel of the slot center on both axes.
 | 23 | Ceramic snowman | Ivory and plum | +10 Tokens from the later Winter skating rink. |
 | 24 | Carved reindeer | Walnut | +11 Tokens from the later Pile of presents. |
 | 25 | Santa hat | Crimson and ivory | +12 Tokens from the later Christmas tree. |
+| 26 | Winter vase | Cobalt glaze | Score only, from the stable until the Lumber workshop. |
+| 27 | Smoked trout | Russet | +7 Treats from the later sleigh. |
 
 `art/registered/market-goods.png` packs into `data/board/pieces.png` as
-`market-0` through `market-19` and six named `booster-*-icon` frames. Each base
+`market-0` through `market-21` and six named `booster-*-icon` frames. Each base
 sprite is used for idle, swap and clear, with the game's selection and hint
 overlays and authored tinsel and ice. The eight charging pieces each sit on
 the shared enamel face in normal, selected, pressed, hover and disabled states.

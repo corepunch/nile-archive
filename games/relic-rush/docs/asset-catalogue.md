@@ -79,6 +79,12 @@ nine motifs together in built-in ImageGen. The [prompt](../art/campaign-pieces/r
 uses the extracted Cradle of Rome 2 pieces for motif reference and the
 existing campaign artwork for style. The three-log bundle replaces the old
 single log in matches.
+The [pearl and fish revision](../art/campaign-pieces/pearl-and-fish.png)
+adds the original Rome motifs from one full atlas edit. The
+[prompt](../art/campaign-pieces/pearl-and-fish-prompt.txt) and manifest
+record the two crops. The new pieces use opacity-weighted centers and
+square-cell registration. [Fish in play](screenshots/review/rome-coverage/fish.jpg) ·
+[Pearl in play](screenshots/review/rome-coverage/pearl.jpg).
 [Side-by-side sheet](../../../docs/cradle-of-rome-reference/gem-correspondence.html) ·
 [In-game review](screenshots/review/rome-treasures/README.md)
 
@@ -90,6 +96,7 @@ single log in matches.
 | 4 | Relay cable, tide chart, trail arrow, tool roll, relay pliers |
 | 5 | Supply satchel, shutter gear, folded note, leaf, flower |
 | 6 | Silver coin, ring, scarab, harp, sandal |
+| 7 | Pearl, red mullet |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
 measured row bands, columns and revision boxes, trim the transparent exterior and
@@ -100,8 +107,7 @@ in matches, refills, resource flights and the guide. The existing selection,
 hint and chain overlays supply their respective states. The game's shop and
 wallet use their own currency artwork. The level 8 first-clear card also uses the
 pliers from this atlas.
-The sprites are free-standing objects. At the board's actual draw size the
-30 pieces fit the canonical face in strict object mode.
+The sprites are free-standing objects with clearance for the square board.
 [Fruit and score review](screenshots/review/fruit-and-score/README.md).
 [Relay pliers review](screenshots/review/relay-pliers/README.md).
 [Board fit at 480 × 900](screenshots/review/piece-fit/board-480x900.jpg) ·
@@ -130,12 +136,11 @@ The regular campaign and resource pack share the revised stone cutout.
 The pieces retain their soft-edged alpha and proportional fit on the same
 128 px canvas. [Native board review](screenshots/review/gray-masonry/board.jpg).
 
-The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `helmet`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). That table records their earnings and purchase order. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
+The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `fish`, `helmet`, `pearl`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). Red mullet pays 7 Food from expedition 17. Pearls pay 7 Coins from expedition 19 and give way to rings on expedition 20. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
-Leaves and flowers use the same board match and scoring behavior as other
-pieces. Their authored slots carry no wallet yield. The amphora asset serves
-legacy art previews.
+Leaves, flowers and amphoras use the normal board match and scoring rules.
+These opening pieces carry no wallet yield.
 Cut blocks use `art/registered/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The alternate packs still supply separate grain and quartz sprites at their

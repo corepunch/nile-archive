@@ -30,6 +30,8 @@ local E = {
         {name="Ceramic snowman", slot=1, amount=10},
         {name="Carved reindeer", slot=1, amount=11},
         {name="Santa hat", slot=1, amount=12},
+        {name="Winter vase"},
+        {name="Smoked trout", slot=2, amount=7},
     },
     CAMPAIGN_VERSION=6,
     BONUS_THRESHOLD=bonuses.THRESHOLD,
@@ -56,7 +58,7 @@ local BASE = {0, 1, 2, 3, 15}
 -- ranks and their charges. Material and treat pieces replace their palette line.
 E.unlocks = {
     {building="arch", after=1, line=5, kind=8},
-    {building="reindeer_stable", after=2, bonus=B.hammer},
+    {building="reindeer_stable", after=2, bonus=B.hammer, line=2, kind=20},
     {building="lumber", after=4, line=2, kind=4},
     {building="gingerbread_house", after=5, bonus=B.bomb},
     {building="bakery", after=7, line=5, kind=7},
@@ -70,7 +72,7 @@ E.unlocks = {
     {building="candles", after=19, bonus=B.lightning},
     {building="igloo", after=21, line=4, kind=13},
     {building="carousel", after=23, bonus=B.mixer, income=purse(0, 30, 0)},
-    {building="sleigh", after=24, bonus=B.star},
+    {building="sleigh", after=24, bonus=B.star, line=5, kind=21},
     {building="giant_ornament", after=25, line=4, kind=14},
     {building="rink", after=26, line=4, kind=17},
     {building="presents", after=27, line=4, kind=18},

@@ -26,7 +26,7 @@ local items = {
     {key="reindeer",name="Reindeer",category="building",cleared=3,about="Ready for the long flight.",cost=purse(110,12),needs=purse(0,0,0,3)},
     {key="penguins",name="Penguin pair",category="building",cleared=3,about="Visitors from the other pole, in scarves.",cost=purse(100,8),needs=purse(0,0,0,3)},
     {key="wreath_arch",name="Wreath arch",category="building",cleared=2,about="Walk under the evergreen and bells.",cost=purse(125,0,20),needs=purse(0,0,0,2)},
-    {key="sleigh",name="Santa's sleigh",category="wonder",cleared=0,about="Polished runners, a sack of toys and room for one more.",cost=purse(150,350,50),needs=purse()},
+    {key="sleigh",name="Santa's sleigh",category="wonder",cleared=0,about="The sleigh brings smoked trout from the lakeside stalls.",cost=purse(150,350,50),needs=purse()},
     {key="igloo",name="Igloo",category="wonder",cleared=0,about="Snow blocks outside, a warm glow within.",cost=purse(130,300,40),needs=purse()},
     {key="fir_snowy",name="Snowy fir",category="tree",cleared=0,about="A fir heavy with fresh snow.",cost=purse(20),needs=purse()},
     {key="birch",name="Frosted birch",category="tree",cleared=0,about="White bark and snow on every twig.",cost=purse(25),needs=purse()},
@@ -36,7 +36,7 @@ local items = {
     {key="gingerbread_house",name="Gingerbread house",category="wonder",cleared=0,about="The roof sparkles with sugar-frosted fireworks.",cost=purse(150,40,80),needs=purse()},
     {key="post_office",name="North Pole post office",category="wonder",cleared=0,about="Every letter finds its way north.",cost=purse(250,250,100),needs=purse()},
     {key="chapel",name="Snowy chapel",category="wonder",cleared=0,about="The chapel masons cut stone for the market’s foundations.",cost=purse(80,0,65),needs=purse()},
-    {key="reindeer_stable",name="Reindeer stable",category="wonder",cleared=0,about="The farrier keeps a heavy hammer by the door.",cost=purse(60,20,0),needs=purse()},
+    {key="reindeer_stable",name="Reindeer stable",category="wonder",cleared=0,about="A blue pottery vase holds water for the farrier’s forge.",cost=purse(60,20,0),needs=purse()},
     {key="santa_workshop",name="Santa's workshop",category="wonder",cleared=0,about="Hammers, ribbons and cocoa until the last toy is wrapped.",cost=purse(200,150,100),needs=purse()},
 }
 for _, b in ipairs(items) do

@@ -3,7 +3,7 @@ local atlases = require("match3_atlases")
 return {
     sheets={atlases.pieces, atlases.blockers, atlases.cells, atlases.fx},
     button_centers={
-        ["booster-firework-icon"]={0.5032413,0.5007027},
+        ["booster-firework-icon"]={0.4970279,0.4978559},
         ["booster-hourglass-icon"]={0.5013453,0.4987591},
         ["booster-mixer-icon"]={0.5006438,0.4962045},
         ["booster-plus-icon"]={0.4986646,0.5003072},

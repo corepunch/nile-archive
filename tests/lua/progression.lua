@@ -58,6 +58,10 @@ line(wood, 4, 4, wave)
 check(wood.earnings[3] == 20 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
       "four pieces credit four times the base resource")
 local hammer = rules.game_start(2, 42, {reindeer_stable=true})
+local has_vase = false
+for _, kind in ipairs(hammer.spawn_kinds) do if kind == 20 then has_vase = true end end
+check(has_vase and #hammer.spawn_kinds == 5 and not hammer.resource_yields[20],
+      "the stable adds a score-only vase in the mitten's slot")
 for _ = 1, 7 do line(hammer, economy.SPECIAL_KIND, 4, wave) end
 check(hammer.tools[1] == 0 and hammer.tool_meter[1] == 84, "28 matched hammers leave the tool uncharged")
 line(hammer, economy.SPECIAL_KIND, 3, wave)
@@ -88,6 +92,9 @@ check(snowman[17].amount == 10 and not snowman[14] and reindeer[18].amount == 11
       and cap[19].amount == 12 and not cap[18], "premium goods upgrade the same coin slot one at a time")
 local _, carousel = economy.board_loadout(24, {carousel=true})
 check(carousel.win_income[2] == 30, "the carousel still pays its Treats per win")
+local winter_catch = economy.board_loadout(25, {log_cabin=true, sleigh=true})
+check(winter_catch[21].slot == 2 and winter_catch[21].amount == 7 and not winter_catch[16],
+      "the sleigh's smoked trout upgrades the late Treats slot")
 
 local lightning = rules.game_start(9, 7, {candles=true, bonus_charge={[4]=90}})
 check(rules.game_tool_area(lightning, 3, rules.hex_center()) == nil,

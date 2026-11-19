@@ -37,7 +37,7 @@
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
-    "data/board/pieces.png": "3e34d373da5bfbb6dd876a28d786e034b2a9189cee45604c55ea3b29920705c5",
+    "data/board/pieces.png": "a3d6b7d9b5274144a613ed83fb7f88e1103cbff176acdbd081af848b5f97355e",
     "data/city/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/city/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/city/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -464,12 +464,52 @@
           709,
           1655
         ]
+      },
+      "market-13": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          251,
+          728,
+          455,
+          935
+        ]
+      },
+      "booster-firework-icon": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          11,
+          944,
+          227,
+          1175
+        ]
+      },
+      "market-20": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          712,
+          1192,
+          934,
+          1405
+        ]
+      },
+      "market-21": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          702,
+          1441,
+          939,
+          1614
+        ]
       }
     },
     "transforms": "art/market-goods/registration.json",
     "runtime": "art/registered/market-goods.png",
     "registration": "tools/prepare_market_goods.py",
-    "review": "docs/screenshots/review/winter-stalls/bonus-states.jpg",
+    "review": "docs/screenshots/review/rome-coverage/bonus-states.jpg",
     "frames": {
       "market-0": "snow-dusted fir",
       "market-1": "blue mitten",
@@ -496,7 +536,9 @@
       "market-16": "pretzel",
       "market-17": "ceramic snowman",
       "market-18": "carved reindeer",
-      "market-19": "santa hat"
+      "market-19": "santa hat",
+      "market-20": "winter vase",
+      "market-21": "smoked trout"
     }
   },
   "square_blockers": {

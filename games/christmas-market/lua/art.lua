@@ -108,9 +108,9 @@ function A.draw_catalogue(R)
     R.say_at("ARTWORK CATALOGUE", vec2(240, 125), 26, R.PAL_GOLD, 420)
     local pieces = economy.pieces
     for k = 0, #pieces do
-        local x, y = 65 + k % 4 * 100, 146 + k // 4 * 49
+        local x, y = 38 + k % 5 * 89, 146 + k // 5 * 49
         gfx.image(R.board_art["market-" .. k], rect(x, y, 43, 43), color.WHITE)
-        R.say_at(pieces[k].name, vec2(x + 21.5, y + 43), 11, R.PAL_CREAM, 98)
+        R.say_at(pieces[k].name, vec2(x + 21.5, y + 43), 10, R.PAL_CREAM, 88)
     end
     for i, cell in ipairs{{"square-plain", "Plain cell"}, {"square-target", "Teal pane"}, {"square-double", "Green pane"}} do
         local x = 104 + (i - 1) * 112

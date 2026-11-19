@@ -2,21 +2,30 @@
 import argparse
 import json
 from pathlib import Path
+import sys
 
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
+from match3_buttons import alpha_center
+from match3_theme_art import fit_object
+
 MANIFEST = json.loads((ROOT / 'art/board-states/manifest.json').read_text())
 SPEC = MANIFEST['resource_pieces']
 
 
-def fit_sprite(tile, name, size, extent):
+def fit_sprite(tile, name, size, extent, square_inset=None):
     transparent, opaque = tile.getchannel('A').getextrema()
     assert transparent == 0 and opaque >= 250, name
     alpha = tile.getchannel('A').point(lambda value: 255 if value > SPEC['content_alpha'] else 0)
     x0, y0, x1, y1 = alpha.getbbox()
     pad = SPEC['padding']
     sprite = tile.crop((max(0, x0-pad), max(0, y0-pad), min(tile.width, x1+pad), min(tile.height, y1+pad)))
+    if square_inset is not None:
+        mask = Image.new('L', (size, size))
+        mask.paste(255, (square_inset, square_inset, size - square_inset, size - square_inset))
+        return fit_object(sprite, mask, extent, None, anchor=alpha_center)[0]
     sprite.thumbnail((extent, extent), Image.Resampling.LANCZOS)
     canvas = Image.new('RGBA', (size, size))
     canvas.paste(sprite, ((size-sprite.width)//2, (size-sprite.height)//2))
@@ -49,11 +58,13 @@ def register(spec, check):
 
 def register_campaign(spec, check):
     atlas = Image.open(ROOT / spec['source'])
-    replacements = {}
+    replacements, square_insets = {}, {}
     for revision in spec['revisions']:
         with Image.open(ROOT / revision['source']) as revised:
             assert revised.mode == 'RGBA'
             replacements.update({key: revised.crop(box) for key, box in revision['boxes'].items()})
+            if 'square_inset' in revision:
+                square_insets.update(dict.fromkeys(revision['boxes'], revision['square_inset']))
     for key, (size, extent) in SPEC['from_campaign'].items():
         register_piece(replacements[key], key, size, extent, check)
     edges = spec['row_edges']
@@ -68,7 +79,8 @@ def register_campaign(spec, check):
             if tile is None:
                 tile = atlas.crop((col*atlas.width//columns, edges[row],
                                    (col+1)*atlas.width//columns, edges[row+1]))
-            packed.paste(fit_sprite(tile, key, size, extents.get(key, spec['extent'])), (col*size, row*size))
+            canvas = fit_sprite(tile, key, size, extents.get(key, spec['extent']), square_insets.get(key))
+            packed.paste(canvas, (col*size, row*size))
     target = ROOT / spec['runtime']
     if check:
         with Image.open(target) as current:

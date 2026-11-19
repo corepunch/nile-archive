@@ -1,6 +1,6 @@
 # Square match-3
 
-Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery, Snowy chapel and Hot cocoa kiosk. The workshop introduces pine and the chapel replaces it with dressed stone. The stable introduces the farrier's hammer. The Gingerbread house upgrades its slot to Firework Bomb and keeps its charge.
+Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery, Snowy chapel and Hot cocoa kiosk. The stable introduces a cobalt vase for score and the farrier's hammer. The workshop replaces the vase with pine, and the chapel introduces dressed stone. The Gingerbread house upgrades its tool slot to the three-cracker Firework Bomb and keeps its charge.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind

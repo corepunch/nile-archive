@@ -96,8 +96,8 @@
     }
     .relic {
       background-image: url("../../games/relic-rush/art/registered/campaign-pieces.png");
-      background-size: 500% 600%;
-      background-position: calc(var(--col) * 25%) calc(var(--row) * 20%);
+      background-size: 500% 700%;
+      background-position: calc(var(--col) * 25%) calc(var(--row) * 100% / 6);
     }
     .market {
       background-image: url("../../games/christmas-market/art/registered/market-goods.png");
@@ -120,7 +120,6 @@
     }
     .same { background: #e3eddf; color: #254e3b; }
     .role { background: #e4ebf1; color: #254962; }
-    .gap { background: #f6e4d7; color: #80391e; }
     .name-list { list-style: none; margin: 0; padding: 0; }
     .name-list li { padding: 6px 0; border-bottom: 1px solid var(--line); }
     .name-list p { margin-top: 3px; color: var(--muted); font-size: .9rem; }
@@ -152,16 +151,10 @@
       .tile { gap: 6px; line-height: 1.3; overflow-wrap: anywhere; }
       table .tile { flex-direction: column; align-items: flex-start; }
     }
-    .empty { padding: 12px; color: var(--muted); }
-    [hidden] { display: none !important; }
     @media print {
       main { width: 100%; padding: 0; }
       header { background: white; color: var(--ink); padding: 0 0 12px; }
       header p { color: var(--ink); }
-      .legend label { display: none; }
-      .comparison[hidden] { display: table-row !important; }
-      table[hidden] { display: table !important; }
-      .empty { display: none; }
       tr { break-inside: avoid; }
       * { print-color-adjust: exact; }
     }
@@ -171,7 +164,7 @@
 <main>
   <header>
     <h1>Cradle of Rome gem correspondence</h1>
-    <p>Compare pieces and construction rewards from both Cradle of Rome editions, Relic Rush and Christmas Market. Thumbnails show the current artwork.</p>
+    <p>Compare all 33 regular piece entries across the two Cradle of Rome editions, plus all eight bonuses. Each row has a Relic Rush and Christmas Market counterpart.</p>
   </header>
 
   <nav class="overview" aria-label="Correspondence tables">
@@ -182,7 +175,6 @@
 
   <div class="legend">
     <p><strong>Same motif</strong> means the object and purpose carry over. <strong>Role adapted</strong> pairs different objects by wallet tier or score function. Yields are per piece before any Rome multipliers. Christmas Market <strong>Catalogue</strong> entries sit beyond its ten playable wishes.</p>
-    <label id="filter" hidden><input id="gaps" type="checkbox"> Show Relic Rush gaps only</label>
   </div>
 
   <section id="rome-2">
@@ -290,7 +282,6 @@
           </tr>
         </tbody>
       </table>
-      <p class="empty" hidden>No gaps in the regular Cradle of Rome 2 pieces.</p>
     </div>
     <p class="description extra-piece">Bellmere’s Christmas Eve fair adds one final Token tier.</p>
     <div class="tile"><span class="icon market" style="--col:1;--row:6" aria-hidden="true"></span><div><strong>Santa hat</strong><small>Crimson and ivory · 12 Tokens</small><small>Catalogue · Christmas tree</small></div></div>
@@ -363,11 +354,11 @@
             <td><div class="tile"><span class="icon market" style="--col:2;--row:5" aria-hidden="true"></span><div><strong>Pretzel</strong><small>Baked amber · 6 Treats</small><small>Catalogue · Log cabin</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>The beta tutorial calls this tile Vegetables. Relic Rush uses the sequel’s shrimp in the same Food tier.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="11">
+          <tr class="comparison" data-status="same" data-rome-type="11">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:10;--row:1" aria-hidden="true"></span><div><strong>Fish</strong><small>7 Food · #11</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="none">No corresponding tier</span></td>
-            <td><span class="status gap">Gap</span><p>Relic Rush has no 7-Food tier.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:1;--row:6" aria-hidden="true"></span><div><strong>Red mullet</strong><small>7 Food · Curia Octavia · exp. 17</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:3;--row:6" aria-hidden="true"></span><div><strong>Smoked trout</strong><small>Russet · 7 Treats</small><small>Catalogue · Santa’s sleigh</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>Fish takes over the Port’s shrimp slot.</p></td>
           </tr>
           <tr class="comparison" data-status="same" data-rome-type="12">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:11;--row:1" aria-hidden="true"></span><div><strong>Ring</strong><small>6 Gold · #12</small></div></div></th>
@@ -375,11 +366,11 @@
             <td><div class="tile"><span class="icon market" style="--col:2;--row:1" aria-hidden="true"></span><div><strong>Toy blocks</strong><small>Honey wood · 6 Tokens</small><small>Catalogue · Toymaker’s workshop</small></div></div></td>
             <td><span class="status same">Same motif</span><p>Both use a gold ring with a coloured inset. Relic Rush pays 7 Coins.</p></td>
           </tr>
-          <tr class="comparison" data-status="role" data-rome-type="13">
+          <tr class="comparison" data-status="same" data-rome-type="13">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:12;--row:1" aria-hidden="true"></span><div><strong>Pearl</strong><small>7 Gold · #13</small></div></div></th>
-            <td><div class="tile"><span class="icon relic" style="--col:1;--row:5" aria-hidden="true"></span><div><strong>Ring</strong><small>7 Coins · Aqueduct · exp. 20</small></div></div></td>
+            <td><div class="tile"><span class="icon relic" style="--col:0;--row:6" aria-hidden="true"></span><div><strong>Pearl</strong><small>7 Coins · House of the Vestals · exp. 19</small></div></div></td>
             <td><div class="tile"><span class="icon market" style="--col:1;--row:2" aria-hidden="true"></span><div><strong>Wrapped gift</strong><small>Ruby red · 7 Tokens</small><small>Catalogue · Gift wrapping pavilion</small></div></div></td>
-            <td><span class="status role">Role adapted</span><p>The same currency tier uses a ring.</p></td>
+            <td><span class="status same">Same motif</span><p>A pearl in an open shell. The Ring takes over on expedition 20.</p></td>
           </tr>
           <tr class="comparison" data-status="role" data-rome-type="14">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:13;--row:1" aria-hidden="true"></span><div><strong>Brooch</strong><small>10 Gold · #14</small></div></div></th>
@@ -399,11 +390,11 @@
             <td><div class="tile"><span class="icon market" style="--col:1;--row:3" aria-hidden="true"></span><div><strong>Ice pendant</strong><small>Sapphire blue · 8 Tokens</small><small>Catalogue · Igloo</small></div></div></td>
             <td><span class="status role">Role adapted</span><p>Relic Rush catalogue · after expedition 20.</p></td>
           </tr>
-          <tr class="comparison" data-status="gap" data-rome-type="17">
+          <tr class="comparison" data-status="same" data-rome-type="17">
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:16;--row:1" aria-hidden="true"></span><div><strong>Vase</strong><small>Score only · #17</small></div></div></th>
-            <td><span class="none">No campaign piece</span></td>
-            <td><span class="none">No corresponding tier</span></td>
-            <td><span class="status gap">Gap</span><p>Named SKULL-vase in the field file. Relic Rush’s amphora is in the atlas for previews and fallback art.</p></td>
+            <td><div class="tile"><span class="icon relic" style="--col:0;--row:1" aria-hidden="true"></span><div><strong>Amphora</strong><small>Score only · opening</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:2;--row:6" aria-hidden="true"></span><div><strong>Winter vase</strong><small>Cobalt glaze · Score only</small><small>Reindeer stable · wish 3</small></div></div></td>
+            <td><span class="status same">Same motif</span><p>The original file calls it SKULL-vase. Both counterparts are working score pieces.</p></td>
           </tr>
         </tbody>
       </table>
@@ -422,7 +413,7 @@
   </section>
 
   <details>
-    <summary>Story pieces and the legacy amphora</summary>
+    <summary>Story pieces in earlier expeditions</summary>
     <p>These nine campaign pieces occupy a colour slot and serve story recovery. Camp timber on expedition 1 is the ordinary Timber chip.</p>
     <ul class="name-list story-grid">
         <li><div class="tile"><span class="icon relic" style="--col:4;--row:2" aria-hidden="true"></span><div><strong>Lamp lens</strong><small>Expedition 2</small></div></div></li>
@@ -435,7 +426,6 @@
         <li><div class="tile"><span class="icon relic" style="--col:1;--row:4" aria-hidden="true"></span><div><strong>Shutter gear</strong><small>Expedition 10</small></div></div></li>
         <li><div class="tile"><span class="icon relic" style="--col:2;--row:4" aria-hidden="true"></span><div><strong>Folded note</strong><small>Expedition 13</small></div></div></li>
     </ul>
-    <p>The atlas also contains an Amphora for preview and fallback art. The authored campaign palettes use a story piece, a score piece, or an omitted slot in its place.</p>
   </details>
 
   <details>
@@ -460,7 +450,7 @@
           <tr>
             <th scope="row"><div class="tile"><span class="icon rome" style="--col:18;--row:0" aria-hidden="true"></span><div><strong>Bomb</strong><small>Rome 1 desktop · Bomb</small></div></div></th>
             <td><div class="tile"><span class="icon relic-bonus" style="--col:1" aria-hidden="true"></span><div><strong>Bomb</strong><small>Village · exp. 11</small></div></div></td>
-            <td><div class="tile"><span class="icon market" style="--col:0;--row:4" aria-hidden="true"></span><div><strong>Firework Bomb</strong><small>Indigo paper and amber fuse</small><small>Gingerbread house · wish 6</small></div></div></td>
+            <td><div class="tile"><span class="icon market" style="--col:0;--row:4" aria-hidden="true"></span><div><strong>Firework Bomb</strong><small>Three indigo crackers with one amber fuse</small><small>Gingerbread house · wish 6</small></div></div></td>
             <td>Hit a 3 × 3 square around a cell. Replaces Hammer.</td>
           </tr>
           <tr>
@@ -515,19 +505,5 @@
     </ul>
   </footer>
 </main>
-<script>
-  const gaps = document.querySelector("#gaps");
-  const rows = document.querySelectorAll(".comparison");
-  const completeTable = document.querySelector("#rome-2 table");
-  const empty = document.querySelector("#rome-2 .empty");
-  function filterRows() {
-    for (const row of rows) row.hidden = gaps.checked && row.dataset.status !== "gap";
-    completeTable.hidden = gaps.checked;
-    empty.hidden = !gaps.checked;
-  }
-  gaps.addEventListener("change", filterRows);
-  document.querySelector("#filter").hidden = false;
-  filterRows();
-</script>
 </body>
 </html>

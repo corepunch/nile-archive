@@ -1,8 +1,8 @@
 local bonuses = require("match3.bonuses")
 
 -- Three wallet slots. Score-only pieces have no wallet yield.
--- Every piece has a Cradle of Rome 2 counterpart with the same wallet and
--- yield (docs/cradle-of-rome-reference/gem-correspondence.html).
+-- The sequel sets the construction order. Fish, Pearl and Amphora cover
+-- the original game's additional regular motifs.
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
@@ -44,9 +44,9 @@ E.unlocks = {
     {building="water_mill", rome="city_mill", tile=9, first_level=13, key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5},
     {building="clock_tower", rome="city_thermae", tile=602, first_level=14, bonus=B.shield},
     {building="gateway", rome="city_port", tile=10, first_level=14, backdrop=2, key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6},
-    {building="lodge", rome="city_oktavia", tile=603, first_level=17, backdrop=1, bonus=B.hourglass},
+    {building="lodge", rome="city_oktavia", tile=603, first_level=17, backdrop=1, bonus=B.hourglass, key="fish", name="Red mullet", kind=3, slot=E.PROVISIONS, amount=7},
     {building="amphitheater", rome="city_coliseum", tile=11, first_level=18, key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6},
-    {building="map_room", rome="city_vestalki", tile=604, first_level=19, bonus=B.lightning},
+    {building="map_room", rome="city_vestalki", tile=604, first_level=19, bonus=B.lightning, key="pearl", name="Pearls", kind=0, slot=E.GOLD, amount=7},
     {building="archive", rome="city_aqueduct", tile=12, first_level=20, backdrop=2, key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7},
     {building="lighthouse", rome="city_lighthouse", tile=605, first_level=21, bonus=B.plus},
     {building="beached_ship", rome="city_neron", tile=13, first_level=22, key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8},

@@ -358,29 +358,30 @@
     "market-13": {
       "name": "ice pendant",
       "source_crop": [
-        331,
-        771,
-        436,
-        1017
+        255,
+        732,
+        451,
+        931
       ],
       "fitted_size": [
-        47,
+        108,
         110
       ],
       "offset": [
-        41,
-        11
+        10,
+        7
       ],
       "alpha_center": [
-        64.3786,
-        64.1759
+        63.9395,
+        64.1987
       ],
       "registered_box": [
         128,
         384,
         128,
         128
-      ]
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
     },
     "market-14": {
       "name": "glass bauble",
@@ -439,29 +440,30 @@
     "booster-firework-icon": {
       "name": "firework bomb",
       "source_crop": [
-        22,
-        1039,
-        232,
-        1261
+        15,
+        948,
+        223,
+        1171
       ],
       "fitted_size": [
-        98,
+        97,
         104
       ],
       "offset": [
-        20,
+        11,
         7
       ],
       "alpha_center": [
-        64.4149,
-        64.0899
+        63.6196,
+        63.7256
       ],
       "registered_box": [
         0,
         512,
         128,
         128
-      ]
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
     },
     "booster-star-icon": {
       "name": "faceted star",
@@ -708,6 +710,62 @@
         128
       ],
       "source": "art/market-goods/winter-stalls-premium.png"
+    },
+    "market-20": {
+      "name": "winter vase",
+      "source_crop": [
+        716,
+        1196,
+        930,
+        1401
+      ],
+      "fitted_size": [
+        114,
+        109
+      ],
+      "offset": [
+        7,
+        9
+      ],
+      "alpha_center": [
+        63.6775,
+        63.6472
+      ],
+      "registered_box": [
+        256,
+        768,
+        128,
+        128
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
+    },
+    "market-21": {
+      "name": "smoked trout",
+      "source_crop": [
+        706,
+        1445,
+        935,
+        1610
+      ],
+      "fitted_size": [
+        104,
+        75
+      ],
+      "offset": [
+        7,
+        22
+      ],
+      "alpha_center": [
+        63.7378,
+        63.7196
+      ],
+      "registered_box": [
+        384,
+        768,
+        128,
+        128
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
     }
   }
 }

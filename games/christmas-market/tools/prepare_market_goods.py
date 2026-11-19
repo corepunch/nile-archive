@@ -39,7 +39,7 @@ def main():
     max_side = SLOT - 2 * CELL_INSET + 2 * EDGE_PADDING
     atlas = Image.new('RGBA', (COLUMNS * SLOT, ROWS * SLOT))
     sprites = goods['frames']
-    assert len(sprites) < COLUMNS * ROWS and edits.keys() <= sprites.keys()
+    assert len(sprites) <= COLUMNS * ROWS and edits.keys() <= sprites.keys()
     frames = {}
     for slot, (key, name) in enumerate(sprites.items()):
         edit = edits.get(key)

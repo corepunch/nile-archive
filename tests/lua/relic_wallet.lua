@@ -115,6 +115,18 @@ for _, entry in ipairs{{1, 2, 'leaf'}, {1, 3, 'flower'}, {6, 4, 'amphora'}} do
         'leaf, flower and amphora matches pay score only')
 end
 
+do
+    local restored = {gateway=true, lodge=true, amphitheater=true, map_room=true, archive=true}
+    local port = rules.game_start(13, 123, restored)
+    local fish = rules.game_start(16, 123, restored)
+    local pearl = rules.game_start(18, 123, restored)
+    local ring = rules.game_start(19, 123, restored)
+    check(port.resource_yields[3].key == "shrimp" and fish.resource_yields[3].key == "fish"
+        and fish.resource_yields[3].amount == 7, "fish upgrades shrimp in the original 7-Food tier")
+    check(pearl.resource_yields[0].key == "pearl" and pearl.resource_yields[0].amount == 7
+        and ring.resource_yields[0].key == "ring", "Pearl and Ring are separate live pieces")
+end
+
 -- Like Cradle of Rome's ladder, each new piece pays toward the next purchase.
 for n, step in ipairs(island.ladder) do
     local unlock=step.unlock

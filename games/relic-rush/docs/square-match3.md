@@ -21,7 +21,10 @@ Only gold and silver coins pay into the wallet on the first expedition.
 The Well introduces water buckets worth 3 Food from expedition 2. The
 Sawmill adds timber worth 5 Supplies from expedition 8. The Hunter’s Hut
 introduces the Hammer from expedition 5. Later purchases replace existing
-pieces, including stone for timber and shrimp for water. See the
+pieces, including stone for timber and shrimp for water. Curia Octavia
+introduces red mullet for 7 Food and the House of the Vestals introduces
+pearls for 7 Coins. The Aqueduct replaces pearls with rings on expedition 20.
+Amphoras are playable score pieces from the opening. See the
 [fourteen prices and unlocks](../README.md#buildings).
 
 The lower-left house opens the next purchase. Its readout shows the
@@ -93,6 +96,11 @@ BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules re
 ```
 
 ## Captures
+
+| Expedition | Before | After |
+| --- | --- | --- |
+| 17 · 480 × 900 | [Shrimp](screenshots/review/rome-coverage/fish-before.jpg) | [Red mullet](screenshots/review/rome-coverage/fish.jpg) |
+| 19 · 390 × 844 | [Helmet and shrimp](screenshots/review/rome-coverage/pearl-before.jpg) | [Pearl and red mullet](screenshots/review/rome-coverage/pearl.jpg) |
 
 - [Jade Steps, 480 × 900](screenshots/square-jade-steps.jpg)
 - [Tide Chamber, 390 × 844](screenshots/square-tide-chamber.jpg)

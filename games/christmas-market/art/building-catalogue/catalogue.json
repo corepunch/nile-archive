@@ -24,7 +24,7 @@
 ["reindeer", "Reindeer", "building", 1, 1, [110, 12], 9, "Ready for the long flight."],
 ["penguins", "Penguin pair", "building", 1, 1, [100, 8], 9, "Visitors from the other pole, in scarves."],
 ["wreath_arch", "Wreath arch", "building", 2, 1, [125, 0, 20], 6, "Walk under the evergreen and bells."],
-["sleigh", "Santa's sleigh", "wonder", 2, 1, [150, 350, 50], 0, "Polished runners, a sack of toys and room for one more."],
+["sleigh", "Santa's sleigh", "wonder", 2, 1, [150, 350, 50], 0, "The sleigh brings smoked trout from the lakeside stalls."],
 ["igloo", "Igloo", "wonder", 2, 2, [130, 300, 40], 0, "Snow blocks outside, a warm glow within."],
 ["fir_snowy", "Snowy fir", "tree", 1, 1, [20], 0, "A fir heavy with fresh snow."],
 ["birch", "Frosted birch", "tree", 1, 1, [25], 0, "White bark and snow on every twig."],
@@ -34,6 +34,6 @@
 ["gingerbread_house", "Gingerbread house", "wonder", 2, 2, [150, 40, 80], 0, "The roof sparkles with sugar-frosted fireworks."],
 ["post_office", "North Pole post office", "wonder", 2, 2, [250, 250, 100], 0, "Every letter finds its way north."],
 ["chapel", "Snowy chapel", "wonder", 2, 2, [80, 0, 65], 0, "The chapel masons cut stone for the market’s foundations."],
-["reindeer_stable", "Reindeer stable", "wonder", 3, 2, [60, 20, 0], 0, "The farrier keeps a heavy hammer by the door."],
+["reindeer_stable", "Reindeer stable", "wonder", 3, 2, [60, 20, 0], 0, "A blue pottery vase holds water for the farrier’s forge."],
 ["santa_workshop", "Santa's workshop", "wonder", 3, 3, [200, 150, 100], 0, "Hammers, ribbons and cocoa until the last toy is wrapped."]
 ]

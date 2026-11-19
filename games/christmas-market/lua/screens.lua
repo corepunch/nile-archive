@@ -52,7 +52,7 @@ function R.building_gets(kind)
             if unlock.kind then
                 local piece = economy.pieces[unlock.kind]
                 gets[#gets + 1] = {id="piece", icon=R.board_art["market-" .. unlock.kind],
-                    amount=piece.amount, unit=currency_icon(piece.slot)}
+                    amount=piece.amount, unit=piece.slot and currency_icon(piece.slot)}
             end
             if unlock.bonus then
                 gets[#gets + 1] = {id=unlock.bonus.key, icon=R.board_art[unlock.bonus.icon]}
@@ -110,14 +110,14 @@ local guide_entries = {
      icon={back="square-double"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied piece or hit it with a tool. Then clear the piece to light the pane.",
      icon={back="square-target", piece="market-1", front="chain-square-1"}},
-    {id="supplies", title="Stock the market", description="Match coins to fund the arch. Its spiced cider earns treats. The lumber workshop adds bundled pine for materials.",
+    {id="supplies", title="Stock the market", description="Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials.",
      icon={front="market-3"}},
     {id="banking", title="Bank your matches", description="Each matched piece pays its own value. Clear the board to bank what you earned.",
      icon={front="market-4"}},
     {id="hammer", title="Farrier's hammer", description="Build the reindeer stable. Match 30 hammers to charge one hit. Use it before charging again.", icon={tool="booster-hammer"}},
     {id="boosters", title="Firework Bomb", description="The gingerbread house upgrades the hammer and keeps its charge. Tap a cell to hit a 3×3 square.",
      icon={tool="booster-firework"}},
-    {id="bakery", title="Winter treats", description="The bakery swaps cider for gingerbread stars. The cocoa kiosk puts hot cocoa on the board.", icon={front="market-7"}},
+    {id="bakery", title="Winter treats", description="The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board.", icon={front="market-7"}},
 }
 local function guide_icon(box, icon)
     local at = box:center()

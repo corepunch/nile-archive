@@ -33,6 +33,7 @@ shot("booster-toolbar-phone", "390x844", booster_review .. "--frames 10 --safe-a
 shot("hammer-toolbar-phone", "390x844", bonus_fixture .. "--level 4 --frames 10 --safe-area 0,47,0,34")
 shot("booster-spent", "390x844", booster_review .. "--spend-bonus --frames 25 --safe-area 0,47,0,34")
 shot("chapel-reward", "480x900", "--catalogue-card 34 --frames 35")
+shot("stable-reward", "480x900", "--catalogue-card 35 --frames 35")
 local booster_flight = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. --fly-bonus "
 local booster_safe = " --safe-area 0,47,0,34"
 reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 5" .. booster_safe)

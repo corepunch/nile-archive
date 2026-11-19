@@ -77,7 +77,7 @@ def main():
         assert (ROOT/edit['source']).is_file() and (ROOT/edit['prompt']).is_file(), edit
     assert png(ROOT/goods['runtime']) == ((512, 896), 6)
     icons = manifest['bonus_buttons']['icons']
-    assert set(goods['frames']) == {f'market-{kind}' for kind in range(20)} | set(icons.values())
+    assert set(goods['frames']) == {f'market-{kind}' for kind in range(22)} | set(icons.values())
     for name in goods['frames']:
         frame = atlas['frames'][name]
         assert frame['atlas'] == 'pieces' and frame['box'][2:] == [128, 128]
