@@ -28,29 +28,28 @@ targets, and hyphens holes.
 
 The [shared floor study](../../../art/match3-square/README.md) records the
 Cradle of Rome references for papyrus and plaques. Ordinary cells have
-cross-laid papyrus fibres, with light falling from the upper left into a
-warm lower-right shadow. The single plaque shades from turquoise to deep
-blue-teal along the same diagonal. The double plaque has a soft olive
-highlight from lower left to upper right. The perimeter is carved sandstone
-with jade inlays. Each perimeter tile sits on a vertex of the square grid
-and joins its neighbours halfway along each exposed edge. Inset corners
-alternate between leafy and bare stone for each facing direction. Leaves and their contact shadows
-are painted directly into the leafy corner.
+fine mottled papyrus grain, with light falling from the upper left into a
+warm lower-right shadow. The single plaque shades from petrol blue to navy
+along the same diagonal. The double plaque has a soft olive highlight from
+lower left to upper right.
 
-Built-in ImageGen painted all three floor faces and five frame sections
-together in the [original atlas](../art/papyrus-board/source.png). The
-[layout guide](../art/papyrus-board/layout.png) uses the earlier
-[sandstone study](../art/square-frame/source.png) and
-[large-leaf study](../art/square-frame/large-foliage.png). The
-[paint-over prompt](../art/papyrus-board/prompt.txt) records the papyrus
-reference and the two recessed corner variants.
-[The lighting strip](../art/papyrus-board/lighting.png) repaints the three
-floor faces together, using the [original faces](../art/papyrus-board/lighting-layout.png)
-as its edit target and the [lighting prompt](../art/papyrus-board/lighting-prompt.txt).
-[Atlas registration](../art/match3-atlas.json) records the source coordinates and
-runtime atlas regions. One grid step spans 128 px. The leafy corner uses a
-224 px canvas centred on the same vertex so the foliage can extend beyond
-the stone joins.
+Built-in ImageGen painted the [current floor faces](../art/papyrus-board/contact.png)
+using the [board layout](../art/papyrus-board/contact-layout.png), the
+`cell_normal.png` and `cell_puzzle_one.png` studies, and the
+[paint-over prompt](../art/papyrus-board/contact-prompt.txt).
+
+The [square frame generator](../../../tools/square_board_frame.py) uses the
+distance to the board to round exposed corners and place the dark contact
+shadow on the side facing the floor. The lighter sandstone face uses the
+hex rim's seeded grain and cracks. The corner studies were
+`gmf_corner_2.png`, `gmf_corner_9.png`, `gmf_corner_11.png` and
+`gmf_corner_17.png`, plus the rounded silhouette in the supplied game capture.
+The generator joins sections halfway along each exposed cell edge. It bakes
+the [painted foliage](../../../engine/art/board-frame/decorations-source.png)
+under the stone in a single 224 px corner sprite, on the same grid pivot
+as the 128 px bare corner. The two inset corners alternate.
+[Atlas registration](../art/match3-atlas.json) records the source crops,
+pivots and runtime atlas regions.
 Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 
 ## Captures

@@ -2,17 +2,17 @@
 
 ## Square board
 
-The current campaign uses matte papyrus for ordinary and cleared cells, turquoise for single-layer plaques, and olive green for double plaques. The square perimeter uses five painted Maya-inspired sandstone tiles in `data/board/cells.png`. The four floor cells around each grid vertex determine which frame tile to draw and how to turn it.
+The current campaign uses mottled matte papyrus for ordinary and cleared cells, deep blue for single-layer plaques, and olive green for double plaques. The square perimeter uses five generated sandstone tiles in `data/board/cells.png`. The four floor cells around each grid vertex determine which frame tile to draw and how to turn it. All five share an irregular stone grain, shallow cracks and a board-facing shadow that fades onto the floor.
 
 | Runtime frame | Board position |
 | --- | --- |
 | `square-frame-edge` | Two adjacent floor cells meet at a straight boundary. |
-| `square-frame-outer` | One floor cell makes an outside corner. |
-| `square-frame-inner` | Three floor cells make a notch. A broad leaf fan and its contact shadows are painted into the stone corner. The larger canvas holds the leaf tips beyond the ends of the stone rails. |
-| `square-frame-inner-bare` | Alternate inner corner with the same open rail ends, carved stone and a jade inlay. |
+| `square-frame-outer` | One floor cell makes a rounded outside corner. |
+| `square-frame-inner` | Three floor cells make a notch. The leaf fan is baked beneath the rails in one corner sprite. |
+| `square-frame-inner-bare` | Alternate recessed corner with matching sandstone rails and contact shadow. |
 | `square-frame-diagonal` | Two diagonally touching floor cells meet at a stepped sandstone join. |
 
-Built-in ImageGen painted the [floor and frame atlas](../art/papyrus-board/source.png) from the [layout guide](../art/papyrus-board/layout.png) and [prompt](../art/papyrus-board/prompt.txt). The [lighting pass](../art/papyrus-board/lighting.png) gives papyrus and turquoise an upper-left light falloff and the olive plaque a diagonal highlight. The catalogue check samples the interiors of the packed faces so a bright bevel alone cannot satisfy the lighting check. The [square campaign guide](square-match3.md) links the registration transforms and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
+Built-in ImageGen painted the [current floors](../art/papyrus-board/contact.png) using the [layout](../art/papyrus-board/contact-layout.png) and [prompt](../art/papyrus-board/contact-prompt.txt). The [square frame generator](../../../tools/square_board_frame.py) bakes the shadows and the [painted leaves](../../../engine/art/board-frame/decorations-source.png) into the stone geometry. The catalogue check samples the packed tile interiors and the shadow and rounding of the packed frame. The [square campaign guide](square-match3.md) links the registration transforms and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
 
 ## Popup close button
 

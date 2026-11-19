@@ -26,7 +26,7 @@ to 84% along both axes. The center box spans 43% to 57%.
 | Cradle of Rome I papyrus | 240, 222, 141 | 201, 169, 91 | 180, 138, 70 | 78.0 |
 | Cradle of Rome II plain | 198, 166, 105 | 229, 201, 129 | 218, 188, 119 | −21.0 |
 | Earlier Relic Rush limestone | 250, 220, 114 | 224, 175, 73 | 189, 132, 49 | 80.6 |
-| Relic Rush papyrus | 243, 217, 151 | 214, 175, 110 | 175, 127, 70 | 84.6 |
+| Relic Rush papyrus | 243, 218, 131 | 212, 174, 91 | 173, 120, 57 | 89.9 |
 | Christmas Market maple | 250, 221, 116 | 225, 175, 75 | 191, 133, 51 | 80.2 |
 
 Cradle of Rome I stores the wood and leaf frame at

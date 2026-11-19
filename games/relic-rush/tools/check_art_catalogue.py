@@ -41,17 +41,33 @@ for name, record in atlas["square_cells"]["frames"].items():
 
 # Measure the painted light on the packed faces, away from the highlight on
 # the bevel. A nearly flat interior can look lit at atlas size and flat in play.
+luma_matrix = (0.2126, 0.7152, 0.0722, 0)
 with Image.open(ROOT / square["runtime"]) as sheet:
     for name, contrast in [("square-plain", 65), ("square-target", 45), ("square-double", 25)]:
         x, y, w, h = atlas["frames"][name]["box"]
         tile = sheet.crop((x, y, x + w, y + h)).convert("RGB")
-        luma = tile.convert("L", (0.2126, 0.7152, 0.0722, 0))
+        luma = tile.convert("L", luma_matrix)
         upper, centre, lower = (ImageStat.Stat(luma.crop((a, a, b, b))).mean[0]
                                 for a, b in [(20, 41), (55, 73), (87, 108)])
         if name == "square-double":
             assert centre - max(upper, lower) >= contrast, "Olive plaque needs its broad diagonal highlight"
         else:
             assert upper > centre > lower and upper - lower >= contrast, f"{name} needs its upper-left lighting"
+
+    # The canonical straight rail faces a cell below it. Its dark side
+    # extends into the cell and fades over the floor.
+    x, y, w, h = atlas["frames"]["square-frame-edge"]["box"]
+    edge = sheet.crop((x, y, x + w, y + h))
+    luma = edge.convert("RGB").convert("L", luma_matrix)
+    face = ImageStat.Stat(luma.crop((10, 48, 40, 54))).mean[0]
+    contact = ImageStat.Stat(luma.crop((10, 59, 40, 65))).mean[0]
+    assert face - contact >= 55, "The stone rim needs a deep board-facing contact shadow"
+    alpha = edge.getchannel("A")
+    assert 0 < alpha.getpixel((20, 70)) < alpha.getpixel((20, 66)) < alpha.getpixel((20, 63))
+
+    x, y, w, h = atlas["frames"]["square-frame-outer"]["box"]
+    alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
+    assert alpha.getpixel((47, 47)) < 128 < alpha.getpixel((52, 52)), "Round the exposed stone corner"
 
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
