@@ -1204,6 +1204,33 @@ function G.bind(R, over)
         return false
     end
 
+    -- --medallion-review: every progress style for the rail markers, a row
+    -- each, at three amounts on a portrait and one on a building, over the
+    -- island so the scenery behind them is the real one.
+    function R.draw_medallion_review()
+        local buttons = require("match3.buttons")
+        local portrait, icon
+        for _, entry in ipairs(R.quest_rail and R.quest_rail() or {}) do
+            portrait = portrait or entry.portrait
+            if not entry.portrait then icon = icon or entry.icon end
+        end
+        local size, label = R.town.cfg.rail.size, R.speech_style(15)
+        for style = 1, buttons.RING_STYLES do
+            local y = 96 + (style - 1) * 84
+            local tag = rect.centered(vec2(112, y + size / 2), size2(28, 28))
+            gfx.circle(tag:center(), 14, color.hex(0xFFF4D1))
+            text.box(label, tag, vec2(.5, .5), tostring(style))
+            for column, amount in ipairs({.15, .5, .85}) do
+                local box = rect(56 + column * 82, y, size, size)
+                buttons.medallion(rect.centered(box:center(), size2(size * .9, size * .9)), portrait,
+                    {progress = amount, style = style})
+            end
+            if icon then
+                buttons.paint(rect(56 + 4 * 82, y, size, size), icon, "normal", nil, nil, .5, style)
+            end
+        end
+    end
+
     function R.town_setup()
         R.town = town.new(R.island, require("town_config"), {
             skin = skin,
@@ -1255,7 +1282,10 @@ function G.bind(R, over)
             end,
             bubble_text = function() return R.speech_style(15) end,
             reduced_motion = function() return R.reduced_motion end,
-            overlay = R.vfx_particles,
+            overlay = function()
+                R.vfx_particles()
+                if R.medallion_review then R.draw_medallion_review() end
+            end,
         })
         R.placement_form = R.town.placement_form
     end

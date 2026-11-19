@@ -4,7 +4,7 @@
 -- --level, --city, --epoch, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
 -- --catalogue, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
--- --element-states reviews the authored surfaces.
+-- --element-states reviews the authored surfaces; --medallion-review the rail's progress styles.
 -- --floor-reel oil plays three swaps that clear tablets on the chosen campaign level.
 -- Nothing here runs in a normal game.
 local D = {}
@@ -337,6 +337,7 @@ function D.bind(R, W)
             R.inspect_item = R.island:add(spot, kind, 0)
             R.inspect = kind; R.overlay = R.OV_WONDER; R.toast_time = 0
         end
+        R.medallion_review = app.arg("medallion-review") ~= nil   -- every rail progress style side by side
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
         if app.arg("element-states") then
             -- Review neighbouring stones and the tablet floor material.
