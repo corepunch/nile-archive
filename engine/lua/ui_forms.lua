@@ -406,7 +406,8 @@ function StackPanel.arrange_override(n, inner, skin, form)
             if child.grow and child.grow>0 then main=remaining*child.grow/weight end
             main=math.max(0,math.min(main, (across and inner.x+inner.w or inner.y+inner.h)-cursor))
             local cross=(n.align or 'stretch')=='stretch' and (across and inner.h or inner.w) or math.min(across and ch or cw,across and inner.h or inner.w)
-            local explicit=across and child.height or child.width
+            local explicit -- a row's child fixes its height, a column's its width
+            if across then explicit=child.height else explicit=child.width end
             if explicit then cross=math.min(cross,explicit) end
             local free=(across and inner.h or inner.w)-cross
             local offset=n.align=='center' and free/2 or n.align=='end' and free or 0

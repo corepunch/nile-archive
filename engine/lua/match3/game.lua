@@ -64,7 +64,7 @@ G.DEFAULTS = {
             gets = "YOU GET", price = "PRICE", missing = "STILL NEEDED", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     quest = {header = "Request", later = "LATER", deliver = "HAND IT OVER", play = "PLAY", ready = "EVERYTHING IS HERE.",
-             waiting = "ITS PIECE JOINS THE BOARD WHEN A PLACE IS FREE.", replay = "REPLAY EXPEDITION %d",
+             waiting = "ITS PIECE JOINS THE BOARD WHEN A PLACE IS FREE.", replay = "REPLAY EXPEDITION %d", gathered = "ALL GATHERED",
              replay_paused = "Your board is saved. Open a crew request to resume.", continue = "CONTINUE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
@@ -683,11 +683,7 @@ function G.bind(R, over)
         }}
     end
     local function divider(visible)
-        -- A padded column, so the line takes the row's full height.
-        local side = (GROUP_GAP - 2) / 2
-        return {kind="column",padding={side,4,side,4},visible_field=visible,children={
-            {kind="spacer",panel=true,role="popup_divider",grow=1},
-        }}
+        return {kind="spacer",panel=true,role="popup_divider",width=GROUP_GAP,visible_field=visible}
     end
 
     -- The building card: a story building or a shop item, to build or move.
@@ -785,8 +781,9 @@ function G.bind(R, over)
     -- indicators, optional), ready, waiting, level (playable zero-based
     -- destination), handoff ({title, image}, optional)}. The giver's portrait
     -- sits in a round brass medallion; what is still needed and what the
-    -- request gives stand side by side, as on the building card. A request
-    -- with neither shows its icon.
+    -- request gives stand side by side, as on the building card; once ready
+    -- the piece stays, checked off under W.quest.gathered. A request with
+    -- neither shows its icon.
     local quest_form = ui.form{
         root = {kind="column", panel=true, children={
             match3.popup_header(W.quest.header, nil, W.corner_close and "close"),
@@ -841,7 +838,13 @@ function G.bind(R, over)
         quest_form.values.portrait = quest.portrait
         quest_form.values.show_action = quest.ready or quest.level ~= nil or not W.corner_close
         if not W.corner_close then quest_form:set("close", R.quest_offer and W.quest.later or W.card.close) end
-        local needs = quest.ready and {} or quest.needs or {}
+        -- A filled request keeps its piece, checked off, under ALL GATHERED.
+        local needs = {}
+        for i, need in ipairs(quest.needs or {}) do
+            needs[i] = {done=quest.ready or nil}
+            for key, value in pairs(need) do needs[i][key] = value end
+        end
+        quest_form:set("needs_caption", quest.ready and W.quest.gathered or W.card.missing)
         local gets = quest.gets or {}
         quest_form.values.show_needs, quest_form.values.show_gets = #needs > 0, #gets > 0
         quest_form.values.show_both = #needs > 0 and #gets > 0
@@ -1218,11 +1221,17 @@ function G.bind(R, over)
                     if step then R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER end
                 end
             end,
-            -- The toolbar's round face, with the request's piece on it.
+            -- A request with a giver is that character's medallion, its ring
+            -- filled to the request's progress; anything else is the
+            -- toolbar's round face with its icon.
             rail_paint = function(box, entry, st, ready_time)
+                local buttons = require("match3.buttons")
                 local state = entry.waiting and "disabled" or st.held and "pressed" or entry.ready and "selected"
                     or st.hot and "hover" or "normal"
-                require("match3.buttons").paint(box, entry.icon, state)
+                if entry.portrait then
+                    buttons.medallion(box, entry.portrait, {state=state ~= "selected" and state or "normal",
+                        progress=entry.progress or (entry.ready and 1 or 0)})
+                else buttons.paint(box, entry.icon, state) end
                 if ready_time and entry.id ~= "build" then
                     R.vfx_quest_rim(box:center(), box.w * .46, ready_time)
                 end

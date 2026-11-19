@@ -322,7 +322,7 @@ function R.smoke()
         -- The crew's requests stand down the left edge: the next building, then the well's two.
         local rail = R.quest_rail()
         assert(#rail == 3 and rail[1].id == "build" and rail[2].id == "chart" and rail[3].id == "supper"
-               and rail[2].value == "0/" .. quests.by_key.chart.need and not rail[2].ready and not rail[2].waiting,
+               and rail[2].progress == 0 and rail[2].portrait and not rail[2].ready and not rail[2].waiting,
                "smoke: the well opens one request on each line")
         local marker = R.town.rail_targets.chart
         assert(marker and marker.x < 80 and marker.y > R.town.header_form.boxes.cap1:max().y,
@@ -337,7 +337,8 @@ function R.smoke()
         R.quest_state().have.chart = quests.by_key.chart.need
         app.inject_click(R.town.rail_targets.chart); stage = 48
     elseif stage == 48 and R.overlay == R.OV_QUEST and R.dialog_settled() then
-        assert(R.quest_form:get("action") == R.words.quest.deliver and not R.quest_form.boxes.needs,
+        assert(R.quest_form:get("action") == R.words.quest.deliver and R.quest_form.boxes.needs
+               and R.quest_form:get("needs_caption") == R.words.quest.gathered,
                "smoke: a filled request offers to hand it in")
         shop.quest_gold = R.prog.wallet[rules.GOLD]
         app.inject_click(R.quest_form.boxes.action:center() + vec2(0, R.drop / 2)); stage = 49

@@ -89,27 +89,63 @@ local function circle_mask(face)
         CIRCLE_RANGE * texel, 0, 0)
 end
 
+-- The progress ring's ink: a dark groove, then jade filling clockwise from
+-- the top, gold once full.
+local groove = color(58, 34, 16, 150)
+local progress_ink = {fill = rgb(0x71B953), edge = rgb(0x2E7046), full = rgb(0xFFD25A), full_edge = rgb(0xA8651F)}
+
+local function ring_arc(center, radius, from, to, width, ink)
+    local steps = math.max(2, math.ceil(48 * (to - from)))
+    local points = {}
+    for i = 0, steps do
+        points[#points + 1] = center + vec2.polar(2 * math.pi * (from + (to - from) * i / steps) - math.pi / 2, radius)
+    end
+    gfx.polyline(points, width, ink)
+    gfx.circle(points[1], width / 2, ink)
+    gfx.circle(points[#points], width / 2, ink)
+end
+
 -- A character's portrait in the round buttons' brass rim: the picture fills
 -- the enamel face, its top at the face's top so the head sits in the upper
--- half and the shoulders meet the rim.
-function B.medallion(box, image)
+-- half and the shoulders meet the rim. `options` may give a `state` (normal,
+-- hover, pressed or disabled, as for the buttons: pressed sinks, disabled
+-- turns the rim pewter and fades the picture) and a `progress` from 0 to 1,
+-- drawn as a ring filling the brass band clockwise from the top.
+function B.medallion(box, image, options)
+    options = options or {}
     local side = math.min(box.w, box.h)
     if side <= 0 then return end
+    local state = options.state or "normal"
+    local disabled, pressed = state == "disabled", state == "pressed"
+    local rim = disabled and pewter or brass
+    local face = faces[state == "hover" and "hover" or "normal"]
     local center = box:center()
     local body = rect.centered(center, size2(side, side))
-    local depth, bezel, well, enamel = frame_boxes(body, false)
+    local depth, bezel, well, enamel = frame_boxes(body, pressed)
     gfx.circle(center + vec2(0, depth), side * .5, shade)
-    gfx.circle(center, side * .5, brass.edge)
-    gfx.round_rect_grad(bezel, bezel.w / 2, brass.top, brass.bottom)
-    gfx.circle(well:center(), well.w / 2, brass.lip)
-    gfx.round_rect_grad(enamel, enamel.w / 2, faces.normal.top, faces.normal.bottom)
+    gfx.circle(center, side * .5, rim.edge)
+    gfx.round_rect_grad(bezel, bezel.w / 2, rim.top, rim.bottom)
+    if options.progress then
+        local band = (bezel.w - well.w) / 2
+        local mid = (bezel.w + well.w) / 4
+        local amount = num.saturate(options.progress)
+        local full = amount >= 1
+        gfx.ring(bezel:center(), mid, band * .9, groove)
+        if amount > 0 then
+            ring_arc(bezel:center(), mid, 0, amount, band * .9, full and progress_ink.full_edge or progress_ink.edge)
+            ring_arc(bezel:center(), mid, 0, amount, band * .55, full and progress_ink.full or progress_ink.fill)
+        end
+    end
+    gfx.circle(well:center(), well.w / 2, rim.lip)
+    gfx.round_rect_grad(enamel, enamel.w / 2, face.top, face.bottom)
     if not image then return end
     local size = texture.size(image)
     if size.w <= 0 or size.h <= 0 then return end
     local w = enamel.w * 1.08
     local h = math.max(enamel.h, w * size.h / size.w)
     circle_mask(enamel)
-    gfx.image(image, rect(enamel:center().x - w / 2, enamel.y - enamel.h * .02, w, h), color.WHITE)
+    gfx.image(image, rect(enamel:center().x - w / 2, enamel.y - enamel.h * .02, w, h),
+        disabled and color(255, 255, 255, 140) or color.WHITE)
     gfx.sdf_unmask()
 end
 

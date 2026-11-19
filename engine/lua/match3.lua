@@ -62,7 +62,8 @@ end
 -- of it banks); without an amount the icon stands alone. Only an amount with
 -- no art of its own takes a `label`: a larger figure over one word. A width
 -- fixes the element, and a narrow one sets a smaller figure; without a width
--- it fills its cell.
+-- it fills its cell. `done` marks an amount fully gathered: a check badge
+-- (the skin's check_badge panel) stands beside a green figure.
 ui.prefab("resource_indicator", function(p)
     local narrow = p.width and p.width < 76
     local figure = p.amount and {kind="label",text=tostring(p.amount),
@@ -70,7 +71,14 @@ ui.prefab("resource_indicator", function(p)
     local children = {}
     if p.icon then
         children[1] = {kind="image",image=p.icon,height=p.compact and 24 or figure and 36 or 62}
-        if figure and p.unit then
+        if figure and p.done then
+            -- A gathered amount: the skin's check_badge beside the figure, in green.
+            local side = narrow and 20 or 26
+            figure.text_style = "green"
+            figure = {kind="row",gap=narrow and 3 or 5,align="center",children={
+                {kind="spacer",grow=1},{kind="spacer",panel=true,role="check_badge",width=side,height=side},figure,{kind="spacer",grow=1},
+            }}
+        elseif figure and p.unit then
             -- A single digit leaves room for a larger unit beside it.
             local side = narrow and 18 or 24
             if #figure.text == 1 then side = side + 10 end
@@ -93,7 +101,7 @@ end)
 -- A resource record ({icon, amount, unit, label}) as that element.
 function E.resource_indicator(entry, width, compact)
     return {kind="resource_indicator",width=width,icon=entry.icon,amount=entry.amount,
-        unit=entry.unit,label=entry.label,compact=compact}
+        unit=entry.unit,label=entry.label,done=entry.done,compact=compact}
 end
 
 -- Full-screen sheets under the wallet row. One building per row: the whole

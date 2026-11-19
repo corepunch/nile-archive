@@ -22,7 +22,8 @@
 --                             reserve=n, decorate=fn(box)}, ...}
 --   menu(bounds)            draw and handle an optional header menu
 --   build(), play(), middle(), pause()   bottom actions
---   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool}, ...}: round
+--   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool,
+--                            portrait=texture, progress=0..1}, ...}: round
 --                           markers down the left edge, under the header (requests, tasks)
 --   rail_tap(id)            a rail marker was tapped
 --   rail_paint(box, entry, state, ready_time)   paints one marker's face and icon (default: a plain disc)

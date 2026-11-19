@@ -59,7 +59,8 @@ function R.town_middle_icon(at) R.compass_icon(at, 17) end
 ------------------------------------------------------------------ requests
 
 -- The crew's requests (lua/quests.lua) down the island's left edge, after the
--- next building: each open one with its piece and how much of it is banked.
+-- next building: each open one as its giver's portrait, ringed by how much of
+-- the request is banked.
 local function quest_icon(quest) return R.board_art["campaign-" .. quest.piece] end
 
 -- Use the next expedition, or a replay with two free slots after the finale.
@@ -90,7 +91,7 @@ function R.quest_rail()
     for _, open in ipairs(open_quests) do
         local ready = quests.ready(state, open)
         entries[#entries + 1] = {id=open.key, icon=quest_icon(open), ready=ready,
-            value=("%d/%d"):format(quests.have(state, open), open.need),
+            portrait=story.character(open.giver).portrait, progress=quests.progress(state, open),
             waiting=not ready and not items[open.key]}
     end
     return entries

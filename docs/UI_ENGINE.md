@@ -65,7 +65,9 @@ also holds visibility/enabled predicates.
 
 Every node may have `width`, `height`, `min_width`, `min_height`, `grow`, `padding`,
 `gap`, `visible=false`, or `visible_field`. Containers support cross-axis
-`align="start|center|end|stretch"`. Buttons support `enabled=false`,
+`align="start|center|end|stretch"`; across a row only a child's `height` caps it,
+and across a column only its `width`, so a row child with just a width still
+stretches to the row's height. Buttons support `enabled=false`,
 `enabled_field`, `accent` and `flat`. Interactive controls require unique string
 IDs. Templates reject duplicate IDs, unknown kinds, invalid sizes/bindings and
 excessive nesting. Construction copies the node tree so instances have independent
