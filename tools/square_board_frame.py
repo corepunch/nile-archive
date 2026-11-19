@@ -10,19 +10,20 @@ import board_frame_decor
 CELL = 128
 REACH = 17
 
-# Distance from the board into the frame cell, and sandstone colour. The
-# contact shadow is part of the rim and ends at the shared tile edge.
+# Distance from the board into the frame cell, and the lit sandstone colour.
+# Like Cradle of Rome, the rim is a flat face with only a slight rounding at
+# its edges; the board sits higher and casts SHADOW across its inner part.
 PROFILE = (
-    (0, (24, 13, 5)),
-    (2, (89, 65, 41)),
-    (5, (150, 112, 70)),
-    (7, (168, 132, 86)),
-    (10, (168, 132, 86)),
-    (11, (113, 57, 18)),
-    (13, (100, 69, 38)),
-    (15, (89, 58, 29)),
-    (REACH, (82, 43, 14)),
+    (0, (120, 84, 44)),
+    (1.5, (182, 138, 80)),
+    (13.5, (188, 144, 84)),
+    (14.5, (222, 182, 116)),
+    (15.5, (170, 120, 64)),
+    (REACH, (66, 36, 14)),
 )
+# The board's cast shadow: full strength at its edge, gone by this depth.
+SHADOW = 7
+SHADOW_STRENGTH = .6
 
 
 def frame_masks():
@@ -63,7 +64,7 @@ def bake(sample, grain):
     side = CELL * scale
     bands = []
     for (a, lit), (b, shade) in zip(PROFILE, PROFILE[1:]):
-        steps = (b - a) * 16
+        steps = round((b - a) * 16)
         for i in range(steps):
             f = i / steps
             bands.append(tuple(c + (d - c) * f for c, d in zip(lit, shade)))
@@ -89,8 +90,11 @@ def bake(sample, grain):
             cut = (along + depth * .62 + abs(depth - 11) * .24) % (CELL / 2) - CELL / 4
             joint = max(0, 1 - abs(cut) / 2.4) * .85 * face
             shoulder = max(0, 1 - abs(cut - 2.7) / 1.5) * .32 * face
+            # The board casts a soft shadow across the inner half of the rim.
+            fade = min(1, depth / SHADOW)
+            shade = 1 - SHADOW_STRENGTH * (1 - fade * fade * (3 - 2 * fade))
             mottled = (c * multiply for c in colour)
-            stone = [round(base + (dark - base) * joint + (lit - base) * shoulder)
+            stone = [round((base + (dark - base) * joint + (lit - base) * shoulder) * shade)
                      for base, dark, lit in zip(mottled, (55, 34, 18), (234, 196, 145))]
             pixels.append((*stone, 255))
     image = Image.new('RGBA', (side, side))
