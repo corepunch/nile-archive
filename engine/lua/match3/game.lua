@@ -900,7 +900,7 @@ function G.bind(R, over)
         return event.kind == "change" or event.id == "leaderboard"
     end})
 
-    local confirm_form = ui.form{kind="column",panel=true,padding={36,22,36,18},gap=14,children={
+    local confirm_form = ui.form{kind="column",panel=true,padding={18,22,18,18},gap=14,children={
         match3.popup_header(W.confirm.title, W.confirm.body, W.corner_close and "close"),
         {kind="button",id="confirm",text=W.confirm.restart,height=50},
         {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
@@ -912,7 +912,7 @@ function G.bind(R, over)
     end})
 
     local failed = W.failed
-    R.failed_form = ui.form{kind="column",panel=true,padding={32,24,32,22},gap=14,children={
+    R.failed_form = ui.form{kind="column",panel=true,padding={16,24,16,22},gap=14,children={
         match3.popup_header(failed.title, failed.subtitle),
         {kind="label",text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
         {kind="button",id="retry",text=failed.retry,height=50},
@@ -923,7 +923,7 @@ function G.bind(R, over)
     end})
 
     local region = W.zone
-    local zone_form = ui.form{kind="column",panel=true,padding={32,24,32,20},gap=14,children={
+    local zone_form = ui.form{kind="column",panel=true,padding={16,24,16,20},gap=14,children={
         match3.popup_header("Region", nil, W.corner_close and "close"),
         {kind="label",id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
         {kind="label",text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},

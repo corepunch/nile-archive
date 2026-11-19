@@ -571,7 +571,7 @@ end
 
 function E.pause_form(guide_label, quit_label, leaderboard_label, corner)
     return ui.form{
-        root={kind="column",panel=true,padding={40,20,40,22},gap=16,children={
+        root={kind="column",panel=true,padding={20,20,20,22},gap=16,children={
             E.popup_header("Settings", nil, corner and "close"),
             {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
                 {kind="checkbox",id="sound",text="SOUND",height=50},
