@@ -64,7 +64,7 @@ end
 
 local RUNS = testing.balance_runs
 if not RUNS then
-    for _, level in ipairs{1, 47, 98} do
+    for _, level in ipairs{1, 5, rules.LEVELS} do
         -- A budget leaves the bot about two games in three; one of five is a win.
         local g
         for run = 1, 5 do
@@ -75,7 +75,9 @@ if not RUNS then
         local reward = rules.reward_breakdown(g).total
         -- The landing spawns coins and score pieces only.
         for slot, currency in ipairs(economy.currencies) do
-            check((reward[slot] > 0) == (level > 1 or slot == economy.GOLD), ('board %d pays %s'):format(level, currency.name))
+            local available = slot == economy.GOLD or slot == economy.PROVISIONS and level >= 2
+                or slot == economy.SUPPLIES and level >= 8
+            check((reward[slot] > 0) == available, ('board %d pays %s'):format(level, currency.name))
         end
     end
     return
@@ -115,6 +117,7 @@ if testing.tune_levels then return end
 -- Stops are the ladder's `after` clears.
 local stops, order = {}, {}
 for _, step in ipairs(island.ladder) do
+    if step.after > rules.LEVELS then break end
     local stop = stops[step.after]
     if not stop then stop = {}; stops[step.after] = stop; order[#order + 1] = step.after end
     stop[#stop + 1] = island.buildings[step.kind + 1]
@@ -214,7 +217,7 @@ local function walk(label, price_of)
                 extra, wallet[1], wallet[2], wallet[3]))
         end
     end
-    check(next_purchase > #island.ladder, 'the expected campaign buys every restoration at ' .. label .. ' prices')
+    check(not island.ladder[next_purchase] or island.ladder[next_purchase].after > rules.LEVELS, 'the expected campaign buys every earned restoration at ' .. label .. ' prices')
     print(('expected campaign (%s): %d replays, lowest wallet after a purchase %.0f/%.0f/%.0f, final %.0f/%.0f/%.0f'):format(
         label, replays, lowest[1], lowest[2], lowest[3], wallet[1], wallet[2], wallet[3]))
 end

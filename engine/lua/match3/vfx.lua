@@ -103,9 +103,9 @@ function V.bind(R, rules)
         end
     end
 
-    function R.vfx_quest_rim(center, radius, time)
+    function R.vfx_ready_rim(center, radius, time)
         -- Only the bright head and fading wake trace the brass rim. The face
-        -- and count stay clear, even with two hand-ins beside each other.
+        -- stays clear under the spinning particles.
         local angle = 2 * PI * (time / HINT_LAP - .25)
         for n = 14, 0, -1 do
             local behind = n / TRAIL_PARTICLES

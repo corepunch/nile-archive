@@ -1,5 +1,9 @@
 # Christmas art direction catalogue
 
+## Square board
+
+The current campaign uses honey maple, frosted teal panes, olive-green double panes and gilded oak edging. Fir sprigs, berries and brass fittings decorate the perimeter. See the [source, registration and game captures](square-match3.md).
+
 ## Themed board art
 
 The live campaign uses [the Market goods atlas](#market-goods-and-tools).

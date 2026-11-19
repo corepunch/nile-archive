@@ -31,8 +31,8 @@ return {
         locked = "Match the tied piece to untangle the tinsel.",
     },
     notices = {
-        reward_building = "Visit the Build shop to check the next stall.",
-        reward_story = "Something's happening in the market square.",
+        reward_building = "Tap Build for the next stall.",
+        reward_story = "Tap Build for the next stall.",
         reward_replay = "Resources collected. Visit the build shop.",
         all_open = "The whole market is open.",
         quit = "Your board is saved. Tap Play to continue wish %d.",

@@ -18,9 +18,9 @@ local function board(cells)
     end
     return g
 end
-local center, left, right, above = index(0, 0), index(-1, 0), index(1, -1), index(0, -1)
+local center, left, right, above = index(0, 0), index(-1, -1), index(1, -1), index(0, -1)
 -- A gem directly above falls before either diagonal donor.
-for _, side in ipairs({{-1, 0}, {1, -1}}) do
+for _, side in ipairs({{-1, -1}, {1, -1}}) do
     local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4}})
     local source = index(side[1], side[2])
     local donor = g.tiles[source]
@@ -30,14 +30,14 @@ for _, side in ipairs({{-1, 0}, {1, -1}}) do
 end
 -- A distant diagonal donor must not delay an available straight fall.
 do
-    local g = board({{0, 0}, {0, -1, 2}, {-1, 0}, {-1, -1}, {-2, 0, 5}})
+    local g = board({{0, 0}, {0, -1, 2}, {-1, -1}, {-1, -2}, {-2, -2, 4}})
     local _, steps = rules.game_collapse(g)
     check(steps[1].from[center] == above, "do not wait for a distant diagonal gem")
-    check(steps[1].from[left] == index(-2, 0) and g.tiles[center].kind == 2, "side route fills independently")
+    check(steps[1].from[left] == index(-2, -2) and g.tiles[center].kind == 2, "side route fills independently")
 end
 -- A diagonal destination must not steal a donor with an empty cell below it,
 -- even when that destination is visited before the straight destination.
-for _, side in ipairs({{-1, 0}, {1, -1}}) do
+for _, side in ipairs({{-1, -1}, {1, -1}}) do
     local source = index(side[1], side[2])
     local down = rules.hex_neighbor(source, 1)
     local g = board({{0, 0}, {0, -1, 2}, {side[1], side[2], 4},
@@ -93,11 +93,11 @@ end
 -- Ice and chains block donors; an empty diagonal inlet supplies from its edge,
 -- never by spawning directly in the lower cell behind the blocker.
 for _, blocker in ipairs({"ice", "chain"}) do
-    local g = board({{0, 0}, {-1, 0, 3}, {0, -1, 2}})
+    local g = board({{0, 0}, {-1, -1, 3}, {0, -1, 2}})
     g[blocker][left] = 1
     local _, steps = rules.game_collapse(g)
     check(steps[1].from[center] == above and g.tiles[left].kind == 3, blocker .. " cannot donate")
-    g = board({{0, 0}, {0, -1, 2}, {-1, 0}})
+    g = board({{0, 0}, {0, -1, 2}, {-1, -1}})
     g[blocker][above] = 1
     _, steps = rules.game_collapse(g)
     check(steps[1].tiles[center].kind < 0 and steps[2].from[center] == left, "side inlet feeds below " .. blocker)
@@ -129,8 +129,7 @@ do
     near(aspect, 1, "reduced motion skips the landing squash")
 end
 -- Audit each simultaneous step, including competing destinations and deep gaps,
--- on every campaign silhouette, and repeat to check determinism. With 100
--- boards one deal each fits the local budget; --extended runs twelve, which
+-- on every campaign silhouette, and repeat to check determinism. One deal per board fits the local budget; --extended runs twelve, which
 -- cover every emptying pattern.
 for level = 0, rules.LEVELS - 1 do
     for seed = 1, testing.extended and 12 or 1 do
@@ -152,8 +151,8 @@ for level = 0, rules.LEVELS - 1 do
                     if source >= 0 then
                         check(not used[source] and previous[source] == step.tiles[i], "gem moves once per step, preserving identity")
                         used[source] = true
-                        check(source == rules.hex_neighbor(i, 3) or source == rules.hex_neighbor(i, 4)
-                              or source == rules.hex_neighbor(i, 5), "one downward edge, never across voids")
+                        check(source == rules.hex_neighbor(i, 6) or source == rules.hex_neighbor(i, 4)
+                              or source == rules.hex_neighbor(i, 7), "one downward edge, never across voids")
                         if source ~= rules.hex_neighbor(i, 4) then
                             local down = rules.hex_neighbor(source, 1)
                             check(not rules.game_cell_active(old, down) or old.chain[down] > 0
@@ -163,7 +162,7 @@ for level = 0, rules.LEVELS - 1 do
                         check(old.active[source] and old.chain[source] == 0 and old.ice[source] == 0, "donor is movable")
                     else
                         if rules.game_cell_active(old, rules.hex_neighbor(i, 4)) then
-                            for _, d in ipairs({3, 4, 5}) do
+                            for _, d in ipairs({6, 4, 7}) do
                                 local p = rules.hex_neighbor(i, d)
                                 check(not rules.game_cell_active(old, p), "only inlets spawn")
                             end

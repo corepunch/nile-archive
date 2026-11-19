@@ -3,7 +3,7 @@
 The engine follows Cradle of Rome: matches only clear, and the board elements are chains, ice, carved stones and tablets. See [Match-3 elements](MATCH3_ELEMENTS.md).
 
 `require("match3")` is built into the engine on native, iOS and WebAssembly.
-`engine/lua/match3.lua` owns the hex grid, matching, swaps, blockers,
+`engine/lua/match3.lua` owns the board grid, matching, swaps, blockers,
 collection, seeded refill, free reshuffle, hints, tools, objectives and move
 budget. It also owns board selection, tap/swipe input, phase transitions,
 cascade timing and piece animation poses. Games provide graphics, level data
@@ -52,7 +52,7 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `NO_TOOLS` | Disable tool use and preserve charges |
 | `NO_HINTS` | Suppress idle hint search/highlighting |
 | `NO_RESHUFFLE` | Do not automatically reshuffle a dead board at settlement |
-| `LINE_MATCHES` | Default: straight runs along three hex axes. Hints and refill use the same shape rule. |
+| `LINE_MATCHES` | Default: straight runs along the grid axes. Hints and refill use the same shape rule. |
 | `COLOR_TOOL` | Sunburst hits all pieces of the tapped kind. A chain absorbs a hit on its piece. |
 
 | Kind flag | Meaning |
@@ -61,23 +61,16 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `WOOD` | Count the piece toward the second resource total |
 | `STONE` | Count it toward the third resource total |
 
-Both games use a `columns` x `rows` rectangle of flat-top hexes (9 x 12, odd
-columns half a cell lower) with arbitrary missing cells. The hexagon mode
-(`radius`, 1 to 16) still exists and the engine tests use it. The default is
-`match_min=3` with `LINE_MATCHES`; explicit `flags=0` retains legacy
-connected-group matching. A match is a straight line of one kind along any of the three hex axes.
-Relic Rush requires four pieces and Christmas Market requires three. Matches only clear. As in Cradle of
-Rome, no line length or shape creates a special piece; a player's extra power
-comes from the game's tools and boosters. Overlapping runs form one group and
-count each cell once. Longer runs can still pay more through
-`resource_multipliers`.
+Relic Rush and Christmas Market use `square=true`, `columns=9` and `rows=12`.
+Each tile has four swap neighbors and two match axes. Refills may also slide
+diagonally around obstructions. A square blast hits the active cells in a
+3 × 3 area. Without `square=true`, rectangular fields use flat-top hexes, as
+does the hexagonal `radius` mode. The default is `match_min=3` with
+`LINE_MATCHES`. Overlapping runs clear each cell once.
 
-Level descriptors are content. Each game's boards are text files in
-`games/<game>/levels`, validated by `tools/hex_levels.py` (see
-[Level design](LEVEL_DESIGN.md)), which generates `lua/boards.lua`; move
-budgets come from `tools/tune_moves.py`. A descriptor holds the name, lesson,
-moves, tablets (`oil`), chains and ice. Optional `mask`
-is a string of `CELLS` zero/one entries in axial column order; optional
+Each square campaign authors ten maps in its `lua/campaign.lua` using
+`match3.shapes.square_levels`. A descriptor holds the name, lesson, move
+budget, targets (`oil` and `oil_double`) and chains. Its mask is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits
 strong ice, and `double_chains=N` makes the first N of `chains` take two hits. Each entry in `stones` reserves a cell for one carved hex stone.
 An adjacent match or a direct hit clears that stone. Optional `goals` lists
@@ -150,7 +143,7 @@ a hole or an empty cell is ignored: no sound, haptic or notice.
 
 ## Diagonal refill
 
-A gravity step moves each gem at most one downward hex edge. A gem falls
+A gravity step moves each gem one cell straight down or diagonally down. A gem falls
 straight down whenever its cell below is empty and movable. Only when that
 cell is occupied, locked or missing may the gem slide diagonally. Each empty
 destination takes the gem directly above before considering eligible side
@@ -270,8 +263,7 @@ continued inactivity. Reduce Motion hides it. See the
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
 When a hit removes a floor layer (ice, a double tablet's green face or a
 tablet), `engine/lua/match3/shatter.lua` breaks that cell's own artwork apart.
-At bind it makes eight Voronoi fractures of the unit hex; each break picks one
-and one of the hex's twelve symmetries. The pieces are cut from the layer's
+At bind it makes eight Voronoi fractures of the cell shape. A break picks a pattern and rotates or mirrors it within the cell. The pieces are cut from the layer's
 texture with `gfx.image_poly`. Cracks glow for 0.07 s, then the shards burst outwards,
 spin and tumble (a darker side face shows their thickness), fall under gravity
 and fade over about 0.55 s above a puff of earth-coloured dust (`S.DUST`). No

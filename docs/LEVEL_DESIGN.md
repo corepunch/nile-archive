@@ -1,5 +1,7 @@
 # Designing match-3 levels
 
+The active square campaigns are authored in each game’s `lua/campaign.lua`. See the [Relic Rush guide](../games/relic-rush/docs/square-match3.md) and [Christmas Market guide](../games/christmas-market/docs/square-match3.md). The hex schedule and tools below describe the archived campaign.
+
 Relic Rush and Christmas Market each have 100 hex boards that follow Cradle of
 Rome's progression. This guide says what a board must be, how to write one and
 how to check it. The data behind it comes from Cradle of Rome's own level files:

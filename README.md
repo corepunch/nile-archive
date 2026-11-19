@@ -5,8 +5,8 @@ One repository, one small **C11 + platform** engine, games driven by **Lua** on 
 | | Game | Core loop | Meta-game |
 | --- | --- | --- | --- |
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
-| ![](games/relic-rush/docs/screenshots/hex-first.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Hex match-4 (a Cradle of Rome style clone) on 100 boards of 9 x 12 hexes with chains, ice and carved stones | Restore an island: twenty buildings placed freely, regions and decorations opened by boards cleared |
-| ![](games/christmas-market/docs/screenshots/market.jpg) | **[Christmas Market](games/christmas-market/README.md)** (English, prototype) | Festive hex match-3 on 100 boards of 9 x 12 hexes | Build a snowy Christmas market with twenty stalls and attractions, repeatable decorations and Noelle as the market keeper |
+| ![](games/relic-rush/docs/screenshots/square-jade-steps.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Square match-3 on 10 boards up to 9 × 12 with plaques and chains | Restore four island buildings, place decorations and open regions |
+| ![](games/christmas-market/docs/screenshots/market.jpg) | **[Christmas Market](games/christmas-market/README.md)** (English, prototype) | Festive square match-3 on 10 boards up to 9 × 12 | Build a snowy Christmas market with six campaign stalls, repeatable decorations and Noelle as the market keeper |
 | ![](games/emergency/docs/screenshots/outskirts.jpg) | **[Emergency · After the Eruption](games/emergency/README.md)** (English) | Dispatch workers, clear routes, repair supply stations and evacuate five districts | A linked rescue campaign with recruits, pet escorts and saved chapter progress |
 
 [Clayfight](https://github.com/corepunch/clayfight) is maintained separately in `~/Developer/clayfight`, with its native C simulation, arcade ROM pipeline and photo workshop.

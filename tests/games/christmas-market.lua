@@ -168,3 +168,6 @@ if getenv("SPRITE_SCENARIO") == "1" then
     for epoch = 1, 5 do frame("scenario-christmas-market-town-epoch-" .. epoch, "480x900", "--epoch " .. epoch .. " --frames 3") end
 end
 rules("tune_moves")
+
+shot("square-winter-wreath", "390x844", "--level 2 --frames 6 --safe-area 0,47,0,34")
+shot("square-christmas-star", "480x900", "--level 10 --frames 6")

@@ -116,6 +116,7 @@ function A.load()
     elements_view.load(textures, own)
     for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
     elements_view.load_frame(textures, A.board_frame)
+    elements_view.load_square(textures, own)
     for _, key in ipairs(A.result_icons) do textures[key] = piece(key) end
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
@@ -142,10 +143,6 @@ function A.load()
     end
     textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
-    for _, state in ipairs{"closed", "open"} do
-        textures["shutter-" .. state] = texture.load("story/scenes/shutter-" .. state .. ".png")
-    end
-    for _, handoff in pairs(A.quest_handoffs) do textures[handoff.path] = texture.load(handoff.path) end
     for _, name in ipairs(A.layers) do load(name) end
     return textures
 end

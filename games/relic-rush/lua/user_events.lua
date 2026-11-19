@@ -59,7 +59,7 @@ local events = {
     {id="hint_02_1", available=false,
         If={"IF_GAME_PUZZLE_TILE_APPEAR"},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", delay=7,
-            text="Match on the blue plaques to clear them. Clear every plaque to finish the expedition."}}},
+            text="Match on the turquoise plaques to clear them. Clear every plaque to finish the expedition."}}},
     {id="hint_02_2",
         If={"IF_GAME_DOUBLE_PUZZLE_TILE_APPEAR"},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="A double plaque needs two matches on it."}}},
@@ -127,10 +127,9 @@ local events = {
     {id="man_02", available=false, citizen="The trapper", to_level=12,
         If={"IF_PLAYER_GET_RESOURCE", id="coins", amount=250},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper brings a hammer: Hammer gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper joins the Hunter’s Hut."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_02"},
             {"THEN_CITY_UPGRADE_BUILDING", id="log_cabin"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hammer", amount=9},
         }},
     -- Rome: miner, Quarry, 2,000 materials in a level.
     {id="man_03", available=false, citizen="The stonecutter",
@@ -172,20 +171,17 @@ local events = {
     {id="man_07", available=false, citizen="The astronomer",
         If={"IF_PLAYER_COMPLETE_LEVELS_IN_TIME", amount=1, time=120},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Done in two minutes! The astronomer joins the watch. Mixer gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Done in two minutes! The astronomer joins the watch."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_07"},
             {"THEN_CITY_UPGRADE_BUILDING", id="observatory"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="mixer", amount=9},
         }},
     -- Rome: scholar, Tabularium, a combo of three.
     {id="man_08", available=false, citizen="The cartographer",
         If={"IF_PLAYER_MAKE_COMBO", length=4},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Four waves from one move! The cartographer joins: Lightning gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="Four waves from one move! The cartographer joins the watch."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_08"},
             {"THEN_CITY_UPGRADE_BUILDING", id="map_room"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=9},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="star", amount=9},
         }},
     -- Rome: fisherman, Port, three matches of five in a level.
     {id="man_09", available=false, citizen="The fisher",
@@ -201,27 +197,17 @@ local events = {
     {id="man_010", available=false, citizen="The performer",
         If={"IF_PLAYER_MAKE_AUTOMATCH_CHAIN", amount=2},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="A chain reaction! The performer fills the Coliseum: Shield gems charge faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="A chain reaction! The performer fills the Coliseum."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_10"},
             {"THEN_CITY_UPGRADE_BUILDING", id="amphitheater"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shield", amount=9},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=9},
         }},
     -- Rome: orator, Forum, 3,000 gold in a level: every bonus piece pays more.
     {id="man_011", available=false, citizen="The trader's clerk",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=150},
         Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="150 Coins in one go! The clerk keeps the books: every bonus gem charges faster."},
+            {"THEN_SHOW_HINT", id="HINT_INFO", text="150 Coins in one go! The clerk keeps the books."},
             {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_11"},
             {"THEN_CITY_UPGRADE_BUILDING", id="trading_post"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hammer", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="bomb", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hourglass", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="mixer", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shield", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="star", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=8},
         }},
 }
 

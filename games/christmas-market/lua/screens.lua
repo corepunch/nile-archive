@@ -37,6 +37,12 @@ function R.currency_prices(cost)
     return parts
 end
 
+function R.funding_shortfall(cost)
+    local missing = purse()
+    for slot in ipairs(economy.currencies) do missing[slot] = math.max(0, cost[slot] - R.prog.wallet[slot]) end
+    return R.currency_prices(missing)
+end
+
 -- What a stall adds, as icons for its card: a new piece with what each match
 -- of it banks or charges, a booster, moves, faster tool charge or takings.
 -- The caption says when a recurring gift arrives.
@@ -100,25 +106,22 @@ end)
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Line up three or more", description="Match treats in a straight line along any of the three axes.",
+    {id="neighbors", title="Line up three or more", description="Match treats in a straight line horizontally or vertically.",
      icon={front="market-3"}},
     {id="panes", title="Light the panes", description="Match on a pane or hit it with a tool to light it. Light them all to finish.",
-     icon={back="tile-tablet-single"}},
+     icon={back="square-target"}},
+    {id="double-panes", title="Green panes", description="A green pane turns blue after its first hit. Match again to light it.",
+     icon={back="square-double"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
-     icon={back="tile-tablet-single", piece="market-1", front="chain"}},
-    {id="supplies", title="Stock the market", description="Coins pay Gold. After you build stalls, their wood, food and other goods appear on the board. Holly and mittens earn score.",
+     icon={back="square-target", piece="market-1", front="chain"}},
+    {id="supplies", title="Stock the market", description="Coins pay Gold. After you build stalls, their wood, food and other goods appear on the board. Holly, mittens and candy canes earn score.",
      icon={front="market-3"}},
     {id="long-lines", title="Long lines pay more", description="A line of four pays twice per piece. A line of five pays four times per piece.",
      icon={front="market-4"}},
-    {id="double-panes", title="Green double panes", description="A green pane turns blue after the first hit. Match again to light it.", icon={back="tile-tablet-double"}},
-    {id="hammer", title="Hammer", description="Build Theo's workshop and match toy hammers to charge a hit on one cell.", icon={tool="booster-hammer"}},
-    {id="wand", title="Lantern lightning", description="Build the candle shop and match lantern stars to charge a strike across 15 cells.", icon={tool="booster-lantern"}},
-    {id="boosters", title="One use per wish", description="The reindeer stable gives you a Shooting Star to clear a row and Santa's workshop a Firework Bomb to blast a cell and its neighbors. The sleigh and the Christmas tree add a second of each. Choose a booster and tap the board.",
-     icon={tool="booster-firework"}},
-    {id="treasures", title="Bells and baubles", description="The chapel, the igloo and the giant bauble change gold coins into golden bells, snowflake baubles and plum baubles: 6, 7 and 8 Gold each.",
-     icon={front="market-12"}},
-    {id="helpers", title="Market helpers", description="The gingerbread house adds 3 moves to every wish and the post office charges tools twice as fast. The skating rink and the presents pay on every win.",
-     icon={front="market-7"}},
+    {id="hammer", title="Hammer", description="Build Theo's workshop and match 30 toy hammers to charge a hit on one cell.", icon={tool="booster-hammer"}},
+    {id="boosters", title="Shooting Star", description="The reindeer stable gives you one Shooting Star per wish. Choose it and tap the row you want to clear.",
+     icon={tool="booster-star"}},
+    {id="helpers", title="Gingerbread house", description="The gingerbread house adds 3 moves to every wish.", icon={front="market-7"}},
 }
 local function guide_icon(box, icon)
     local at = box:center()

@@ -1,5 +1,9 @@
 # Relic Rush artwork and state catalogue
 
+## Square board
+
+The current campaign uses warm limestone, turquoise plaques, olive-green double plaques and carved honey-gold edging. Agave sprigs, jade joints and sunrise medallions break up the perimeter. See the [source, registration and game captures](square-match3.md).
+
 ## Popup close button
 
 The shared round-button renderer draws the red enamel face, brass rim and shadow at the size of the popup control. All five interaction states share the [ivory X glyph](../art/popup-close/source.png), packed as `action-close` in `data/board/pieces.png`. [Registration and prompt](../art/popup-close/README.md).

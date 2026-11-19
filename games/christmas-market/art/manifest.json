@@ -33,7 +33,7 @@
   "runtime": {
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
     "data/board/blockers.png": "7cdb71ae145aff3536efc78f1f09d3f47b3e7fef283c43b2e7cbef791fac68a9",
-    "data/board/cells.png": "fa56306b5707dd8ce4c62f2e1e39ba168e473e71d0709e560927f77968c788cf",
+    "data/board/cells.png": "a55c1493f055fb1ee5576652944b339ac30a9f9b1ce8a373c4a1092c8692caea",
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
@@ -461,5 +461,26 @@
       "candy cane": "art/festive-pieces/source.png, top centre",
       "note": "Kinds 12-15 reuse the game's earlier festive pieces for the stalls added by the twenty-stall ladder; no new painting."
     }
+  },
+  "square_board": {
+    "source": "../../art/match3-square/source.png",
+    "prompt": "../../art/match3-square/prompt.txt",
+    "runtime": "data/board/cells.png",
+    "registration": "art/match3-atlas.json#square_cells",
+    "states": {
+      "square-plain": "ordinary or cleared cell",
+      "square-target": "plaque or pane remaining",
+      "square-selected": "selected cell or tool target preview",
+      "square-trim": "exposed perimeter",
+      "square-grout": "cell seams and frame joins",
+      "square-double": "two target layers remaining",
+      "square-foliage": "foliage in the frame\u2019s 90-degree notch",
+      "square-joint": "bare fitting on an outer corner",
+      "square-medallion": "medallion on an outer corner"
+    },
+    "review": "docs/square-match3.md#captures",
+    "ornaments": "../../art/match3-square/ornaments.png",
+    "ornaments_prompt": "../../art/match3-square/ornaments-prompt.txt",
+    "lighting_prompt": "../../art/match3-square/lighting-prompt.txt"
   }
 }

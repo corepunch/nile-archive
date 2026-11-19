@@ -276,78 +276,20 @@ for _, reduced in ipairs({false, true}) do
 end
 R.reduced_motion = false
 
-if testing.game == "relic-rush" then
-    local next_level = rules.game_start(1, 982)
-    R.reset_board(next_level)
-    local default_radius = R.HEX_R
-    local opening = rules.game_start(0, 982)
+-- Square centres, corners and holes all agree with the live board hit test.
+do
+    local opening = rules.game_start(rules.LEVELS - 1, 982)
     R.reset_board(opening)
     R.layout()
-    local centre = rules.hex_center()
+    local radius = R.cell_width / 2
     for i = 0, rules.CELLS - 1 do
-        local distance = rules.hex_distance(centre, i)
-        local active = distance <= 4
-        check(rules.game_cell_active(opening, i) == active, "The Landing fills a complete hex")
-        check(opening.oil[i] == (distance <= 1 and 1 or 0), "The Landing has seven single plaques in the centre")
-        check(R.cell_at(R.cell_pos(i)) == (active and i or -1), "The Landing's input follows its cells")
+        local expected = opening.active[i] and i or -1
+        local at = R.cell_pos(i)
+        check(R.cell_at(at) == expected, "hit test honours the mask")
+        check(R.cell_at(at + vec2(radius - 1, radius - 1)) == expected, "cell corners are square")
     end
-    local left = R.cell_pos(rules.hex_index(-4, 2)).x - R.HEX_R
-    local right = R.cell_pos(rules.hex_index(4, -2)).x + R.HEX_R
-    near(R.HEX_R, default_radius, "The Landing uses the same cell size as later boards")
-    near(left, R.SCREEN_W - right, "The Landing is centered across the screen")
-    check(left >= R.SCREEN_W * .05, "The Landing leaves room beside its outer columns")
-
-    local terraces = rules.game_start(8, 982)
-    local entrance = rules.hex_index(0, -1)
-    local empty = {}
-    for i = 0, rules.CELLS - 1 do
-        if terraces.active[i] and terraces.tiles[i].kind < 0 then empty[#empty+1] = i end
-    end
-    check(terraces.chain[entrance] == 1 and #empty >= 30, "the entrance chain holds back the lower terrace")
-    local wave = rules.new_match()
-    wave.mask[entrance] = true
-    rules.game_apply(terraces, wave)
-    rules.game_collapse(terraces)
-    for _, i in ipairs(empty) do
-        check(terraces.tiles[i].kind >= 0, "opening the chain feeds the lower terrace")
-    end
-
-    -- The same gate with two links: the terrace stays empty until the second hit.
-    local links
-    for _, entry in ipairs(rules.levels[9].chain_cells) do
-        if entry.cell == entrance then links = entry end
-    end
-    links.hits = 2
-    local shrines = rules.game_start(8, 982)
-    links.hits = 1
-    local gated = {}
-    for i = 0, rules.CELLS - 1 do
-        if shrines.active[i] and shrines.tiles[i].kind < 0 then gated[#gated+1] = i end
-    end
-    check(shrines.chain[entrance] == 2 and #gated >= 30, "a double chain holds back the lower terrace")
-    for hit = 1, 2 do
-        local strike = rules.new_match()
-        strike.mask[entrance] = true
-        rules.game_apply(shrines, strike)
-        rules.game_collapse(shrines)
-        for _, i in ipairs(gated) do
-            check((shrines.tiles[i].kind >= 0) == (hit == 2), "the terrace refills after the second hit")
-        end
-    end
-
-    local temple = rules.game_start(99, 982)
-    local frozen
-    for i = 0, rules.CELLS - 1 do
-        if temple.ice[i] > 0 then frozen = i; break end
-    end
-    check(frozen and temple.ice[frozen] == 1 and temple.oil[frozen] == 2, "the final boss places ice over a green plaque")
-    for _, layers in ipairs{2, 1, 0} do
-        local strike = rules.new_match()
-        strike.mask[frozen] = true
-        rules.game_apply(temple, strike)
-        check(temple.ice[frozen] == 0 and temple.oil[frozen] == layers, "ice absorbs a separate hit before the two plaque layers")
-        rules.game_collapse(temple)
-    end
+    local a, b = rules.hex_center(), rules.hex_index(1, 1)
+    check(not rules.game_can_swap(opening, a, b), "diagonal touch cannot swap")
 end
 
 -- Entrance uses the real shared view: dialogue and overlays freeze its clock,
@@ -397,7 +339,7 @@ do
                   "widest board retains narrow phone side margins")
             -- A 1x pose alone misses an enlarged sprite canvas. Check the
             -- rectangles actually submitted for every normal piece, including
-            -- the hex idol, against the space between adjacent cell rows.
+            -- the sun idol, against the space between adjacent cell rows.
             local image, hex_kind, board_art, boxes = gfx.image, R.hex_piece_kind, R.board_art, {}
             R.hex_piece_kind = rules.RELIC_IDOL
             R.board_art = R.board_art or {}
@@ -407,12 +349,12 @@ do
             gfx.image = function(_, box) last = box end -- luacheck: ignore 122
             gfx.image_striped = function() end -- luacheck: ignore 122
             local function draw(t, board) R.draw_relic(t, pos, scale, 255, aspect, board); boxes[#boxes + 1] = last end
-            for kind = 0, 5 do draw(rules.tile(kind), true) end
+            for kind = 0, rules.COLORS - 1 do draw(rules.tile(kind), true) end
             gfx.image, gfx.image_striped, R.hex_piece_kind = image, striped, hex_kind -- luacheck: ignore 122
             R.board_art = board_art
-            check(#boxes == 6, "all six resting pieces are drawn")
-            local pitch = math.sqrt(3) * R.HEX_R
-            for i = 1, 6 do
+            check(#boxes == rules.COLORS, "all five resting pieces are drawn")
+            local pitch = R.cell_width
+            for i = 1, #boxes do
                 local box = boxes[i]
                 check(box.w > .9 * pitch and box.w < pitch and box.h > .9 * pitch and box.h < pitch,
                       "resting piece fills its cell while preserving a gutter")

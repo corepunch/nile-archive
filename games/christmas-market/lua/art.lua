@@ -80,6 +80,7 @@ function A.load()
         textures["tile-" .. key] = piece("tile-" .. key)
     end
     elements_view.load_frame(textures, A.board_frame)
+    elements_view.load_square(textures, own)
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
     return textures

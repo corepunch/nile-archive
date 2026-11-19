@@ -90,12 +90,12 @@ end
 -- A chip weight changes what a piece pays while clearing, without replacing the economy's tables.
 do
     local st=U.state()
-    local g={resource_yields={[5]=economy.bonuses.hammer,[0]=economy.pieces[0]}}
+    local g={resource_yields={[2]=economy.bonuses.hammer,[0]=economy.pieces[0]}}
     U.apply_weights(g)
     check(g.yield_amounts==nil,'no citizen, no weights')
     st.done.man_02=true
     U.apply_weights(g)
-    check(g.yield_amounts and g.yield_amounts[5]==9 and not g.yield_amounts[0],'the trapper makes Hammer gems charge 9')
+    check(g.yield_amounts==nil,'the trapper preserves the thirty-piece Hammer charge')
     local board=R.make_board(1,7)
     local kind,piece=next(board.resource_yields)
     board.yield_amounts={[kind]=piece.amount+1}

@@ -11,9 +11,9 @@ for _,who in ipairs(R.cast) do cast[who.id]=true end
 -- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
-check(rules.LEVELS==100 and #journey.beats==36,'all three episodes are playable')
+check(rules.LEVELS==10 and #journey.beats==36,'the first ten winter wishes are playable')
 local stocked = rules.game_start(0, 1)
-check(#stocked.spawn_kinds == 4 and stocked.tools[1] == 0, "opening board has two score pieces and two coins")
+check(#stocked.spawn_kinds == 5 and stocked.tools[1] == 0, "opening board has three score pieces and two coins")
 local cell = rules.hex_center()
 for kind = 0, 3 do
     local wave = rules.new_match()
@@ -23,7 +23,7 @@ for kind = 0, 3 do
 end
 check(stocked.earnings[1] == 8 and stocked.earnings[2] == 0 and stocked.earnings[3] == 0,
       "only the coins pay on the opening board")
-local intro = rules.game_start(5, 1)   -- wish 6 first ties tinsel over panes
+local intro = rules.game_start(3, 1)   -- wish 4 first ties tinsel over panes
 intro.tools[1] = 1
 local tied
 for _, i in ipairs(rules.level_of(intro).oil) do
@@ -51,7 +51,7 @@ for _,b in ipairs(journey.beats) do
 end
 check(lines==198,'the entire reviewed script ships')
 local finds = 0
-for level=1,30 do
+for level=1,rules.LEVELS do
     local before=journey.next(p,owned(c),level-1)
     if before then
         check(before.phase=='before' and before.level==level,'opening comes before its winter wish')
@@ -61,9 +61,9 @@ for level=1,30 do
     local spec = rules.level_of(g)
     check(g.oil_left == #spec.oil and g.oil_left > 0, "every wish opens with fixed blue panes")
     check(#spec.goals == 1 and spec.goals[1] == "oil", "only the blue panes count toward the win")
-    local layers = #spec.stones
+    local layers = #(spec.stones or {})
     for _, e in ipairs(spec.chain_cells) do layers = layers + e.hits end
-    for _, e in ipairs(spec.ice_cells) do layers = layers + e.layers end
+    for _, e in ipairs(spec.ice_cells or {}) do layers = layers + e.layers end
     check(g.initial_obstacles == layers, "every wish places exactly its authored tinsel, frost and stones")
     if spec.story_piece then
         finds = finds + 1
@@ -112,8 +112,8 @@ for level=1,30 do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(finds == 6, "six story wishes have authored finds")
-check(c.count==20 and c.open==63 and p.wallet[4]==30,'thirty clears build twenty stalls and open every region')
+check(finds == 1, "the cocoa find does not consume a piece slot")
+check(c.count==6 and c.open==7 and p.wallet[4]==10,'ten clears open six stalls and two new regions')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth stall')
 
 R.prog = {level=0, wallet=purse(), completed={level=0, rng=4, moves=10, score=400, earnings={33, 6, 9}}}
@@ -154,36 +154,9 @@ local old={level=10,seed=55,wallet=purse(1234,12,34,30,7)}
 journey.migrate(old,2)
 check(old.level==10 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
 check(journey.next(old,owned(c),10).key=='before-11','old completion opens the new episode without replaying episode one')
-old.level=13;old.story_seen['before-11']=true
-old.story_seen['after-11'],old.story_seen['after-12']=true,true
-check(journey.next(old,owned(c),nil).key=='after-13','an already-built later stall satisfies its story gate')
 local preserved=city.new();island.island_setup(preserved);preserved.open=63
-preserved:add(c.items[10].pos,9,0)
+preserved:add(c.items[1].pos,9,0)
 island.restore_saved(preserved,10)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy Christmas tree')
 check(journey.building_about(4,19,'ordinary')~=journey.building_about(4,20,'ordinary'),'the market answers the letter at level 20')
 empty_queue()
-
--- The picture holds on its own, then its existing scene plays before Collect.
-for _, level in ipairs{24, 25, 28} do
-    local key = ('after-%02d'):format(level)
-    local index = level - 1
-    R.g, R.overlay, R.now = rules.game_start(index, 1), R.OV_RESULT, 0
-    R.g.won = true
-    R.prog = {level=index, wallet=purse(), story_seen={}}
-    R.story_tick()
-    check(not story.active(), 'level ' .. level .. ' holds its finished picture before speaking')
-    R.now = 2
-    R.story_tick()
-    check(story.active() and R.story_current.key == key, 'the picture hands off to ' .. key)
-    empty_queue(); R.story_tick()
-    check(R.g.story_clear == key and not R.prog.story_seen[key], 'the scene waits for reward collection')
-    R.wonders = island.wonders
-    R.claim_reward()
-    check(R.prog.level == level and R.prog.story_seen[key], 'Collect banks the scene with the win')
-    R.g, R.overlay = rules.game_start(index, 1), R.OV_RESULT
-    R.g.won = true
-    R.story_tick()
-    check(not story.active() and not require('match3.elements_view').reveal_holding(R, rules),
-          'a replay skips the picture and its scene')
-end

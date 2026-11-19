@@ -83,7 +83,6 @@ local function check_unlock(index, reward, already_placed)
 end
 
 local first_tool = relic and economy.bonuses.hammer or economy.pieces[5]
-local second_tool = relic and economy.unlock_of("observatory").bonus or economy.pieces[10]
 local resource = relic and economy.unlock_of("well") or economy.pieces[4]
 check_unlock(1, resource, true)
 local board = check_unlock(2, first_tool)
@@ -124,35 +123,15 @@ check(save.write('walkthrough-tool-stock', R.serialize), 'write stock to the wal
 R.prog[stock_key] = nil
 check(save.read('walkthrough-tool-stock', R.serialize), 'read stock from the walkthrough save fixture')
 
-for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
-for zone = 1, 5 do R.island:unlock(zone, R.prog.wallet) end
-local later = relic and 8 or 7
-for i = 3, later - 1 do place_due(journey.wonder_levels[i]) end
-if island.next_step then place_due(journey.wonder_levels[later] - 1) end
-local newest = check_unlock(later, second_tool)
-check(reward_piece(newest, second_tool) and not reward_piece(newest, first_tool),
-    'the first eligible board features only the newly unlocked bonus pieces')
--- Christmas Market banks points, so a lower threshold (its post office)
--- turns the same points into more uses.
-local banked = R.prog[stock_key][tool]
-local function stored(g)
-    if relic then return 1, ready_meter end
-    return banked // g.tool_threshold, banked % g.tool_threshold
-end
-local uses, meter = stored(newest)
-check(uses >= 1 and newest.tools[tool] == uses and newest.tool_meter[tool] == meter,
-    'a saved tool is available on the other family’s board')
-local next_level = newest.level + 1
-local even, odd = R.make_board(next_level, 2), R.make_board(next_level, 3)
-check(even.bonus ~= odd.bonus or reward_piece(even, first_tool) ~= reward_piece(odd, first_tool),
-    'later boards select a bonus family by seed')
-check(even.tool_meter[tool] == select(2, stored(even)) and odd.tool_meter[tool] == select(2, stored(odd)),
-    'each family keeps its inventory on later boards')
-R.reset_board(newest)
+local next_level = new_board.level + 1
+local resumed = R.make_board(next_level, 2)
+check(resumed.tools[tool] == 1 and resumed.tool_meter[tool] == ready_meter,
+    'a saved use is ready on the next board')
+R.reset_board(resumed)
 local target = 0
-while not newest.active[target] do target = target + 1 end
-check(rules.game_tool(newest, tool - 1, target, R.pending), 'spend the previously banked use')
+while not resumed.active[target] do target = target + 1 end
+check(rules.game_tool(resumed, tool - 1, target, R.pending), 'spend the previously banked use')
 R.finish_wave()
-local left = relic and 0 or (uses - 1) * newest.tool_threshold + meter
-check(R.make_board(next_level, 2).tools[tool] == (relic and 0 or uses - 1) and R.prog[stock_key][tool] == left,
+local left = relic and 0 or ready_meter
+check(R.make_board(next_level, 2).tools[tool] == 0 and R.prog[stock_key][tool] == left,
     'changing boards cannot recover a spent tool')

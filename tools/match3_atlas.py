@@ -36,6 +36,7 @@ ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'open-hex.png', 'concept
                                          'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt',
                                          'filled-pane-prompt.txt')]
 ICE_INPUTS += [HEX_MASK, ROOT / 'engine/art/hex-tile/hex-mask-preview.png']
+SQUARE_DIR = ROOT / 'art/match3-square'
 SIGNBOARD_DIR = ROOT / 'art/match3-signboards'
 SIGNBOARD_CROPS = {
     # Centre each crop on the painted face so live counters share its axis.
@@ -70,7 +71,7 @@ def group_of(name):
         return 'fx'
     if name.startswith(('chain', 'ice-', 'stone-', 'crate-')):
         return 'blockers'
-    if name.startswith('tile-') or name in ('selected', 'hint', 'guide', 'cell-mask', 'board-frame'):
+    if name.startswith(('tile-', 'square-')) or name in ('selected', 'hint', 'guide', 'cell-mask', 'board-frame'):
         return 'cells'
     if name in HUD_NAMES or name.startswith(('pause-', 'board-pause-', 'shop-')):
         return 'hud'
@@ -357,6 +358,59 @@ def folder_sprites(folder, prefix):
     return {prefix + path.stem: path for path in sorted(folder.glob('*.png'))}
 
 
+def square_cells(game, root):
+    source = SQUARE_DIR / 'source.png'
+    ornaments = SQUARE_DIR / 'ornaments.png'
+    row = 0 if game == 'relic-rush' else 512
+    materials = {
+        'square-plain': (0, 0, 256, 256),
+        'square-target': (256, 0, 512, 256),
+        'square-selected': (512, 0, 768, 256),
+        'square-double': (768, 0, 1024, 256),
+        'square-trim': (1024, 0, 1280, 76),
+        'square-grout': (1312, 32, 1504, 224),
+    }
+    decorations = {
+        'square-foliage': (0, 0, 512, 512),
+        'square-joint': (512, 0, 1024, 512),
+        'square-medallion': (1024, 0, 1536, 512),
+    }
+    sprites, registration = {}, {}
+    inputs = [source, ornaments, SQUARE_DIR / 'prompt.txt', SQUARE_DIR / 'lighting-prompt.txt',
+              SQUARE_DIR / 'ornaments-prompt.txt']
+    for path, crops in ((source, materials), (ornaments, decorations)):
+        with Image.open(path) as sheet:
+            for name, (x0, y0, x1, y1) in crops.items():
+                box = (x0, y0 + row, x1, y1 + row)
+                image = sheet.crop(box).convert('RGBA')
+                if name in decorations:
+                    # Ignore stray low-alpha pixels when measuring the crop, then retain the authored alpha.
+                    left, top, right, bottom = image.getchannel('A').point(lambda a: 255 if a >= 16 else 0).getbbox()
+                    left, top, right, bottom = left - 4, top - 4, right + 4, bottom + 4
+                    assert 0 <= left < right <= image.width and 0 <= top < bottom <= image.height, name
+                    image = image.crop((left, top, right, bottom))
+                    box = (box[0] + left, box[1] + top, box[0] + right, box[1] + bottom)
+                size = (128, 38) if name == 'square-trim' else (128, 128)
+                if name in decorations:
+                    image.thumbnail(size, Image.Resampling.LANCZOS)
+                    sprite = Image.new('RGBA', size)
+                    sprite.paste(image, ((128 - image.width) // 2, (128 - image.height) // 2))
+                else:
+                    sprite = image.resize(size, Image.Resampling.LANCZOS)
+                # Isolate the painted rim so the active target remains visible through it.
+                if name == 'square-selected':
+                    sprite.paste((0, 0, 0, 0), (11, 11, 117, 117))
+                registered = root / 'art/registered/square-cells' / f'{name}.png'
+                write_asset(registered, png(sprite))
+                sprites[name] = sprite
+                registration[name] = {'source': relpath(path, root), 'crop': list(box), 'size': list(size),
+                                      'registered': relpath(registered, root)}
+                if name == 'square-selected':
+                    registration[name]['transparent_center'] = [11, 11, 117, 117]
+                inputs.append(registered)
+    return sprites, inputs, registration
+
+
 def game_sprites(game, root):
     """The game's other registered sprite sets, under the keys its art.lua uses."""
     registered = root / 'art/registered'
@@ -416,6 +470,7 @@ def build_game(game, check):
     if game == 'relic-rush':
         images |= {'scene-1': 'board/backs/scene-1.jpg', 'scene-2': 'board/backs/scene-2.jpg'}
     else:
+        aliases['market-16'] = 'festive-1'
         aliases |= {'scene-1': 'background', 'scene-2': 'background'}
         hud_images['character'] = 'story/characters/noelle.png'
         hud_aliases['score'] = 'complete'
@@ -443,6 +498,8 @@ def build_game(game, check):
     extra, extra_inputs, bonus_frames = game_sprites(game, root)
     assert not set(extra) & set(loaded), set(extra) & set(loaded)
     loaded.update(extra)
+    squares, square_inputs, square_registration = square_cells(game, root)
+    loaded.update(squares)
     button_centers = {}
     for name in sorted(set(bonus_frames)):
         image = loaded[name]
@@ -484,10 +541,17 @@ def build_game(game, check):
                               'crop': list(signboard_crop), 'size': list(signboard.size),
                               'state': 'static backplate', 'frame': 'signboard'},
                 'board_theme': theme_registration,
+                'square_cells': {'source': '../../art/match3-square/source.png',
+                                 'prompt': '../../art/match3-square/prompt.txt',
+                                 'lighting_prompt': '../../art/match3-square/lighting-prompt.txt',
+                                 'ornaments': '../../art/match3-square/ornaments.png',
+                                 'ornaments_prompt': '../../art/match3-square/ornaments-prompt.txt',
+                                 'frames': square_registration,
+                                 'review': 'docs/square-match3.md'},
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
-    inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs + [Path(match3_buttons.__file__)]
+    inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs + [Path(match3_buttons.__file__)] + square_inputs
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
     inputs += ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
     inputs += [root / 'data' / path for path in (images | hud_images).values()]

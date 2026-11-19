@@ -19,10 +19,10 @@ local function plaques_of(g)
     return locked, plain
 end
 do
-    local g=rules.game_start(5,123)
+    local g=rules.game_start(3,123)
     local a,b=plaques_of(g)
     local initial=g.oil_left
-    check(a and b and initial==#rules.levels[6].oil, 'blue plaques are authored under both locked and ordinary pieces')
+    check(a and b and initial==#rules.levels[4].oil, 'blue plaques are authored under both locked and ordinary pieces')
     local m=rules.new_match()
     m.mask[a]=true
     g.chain[a]=1
@@ -34,11 +34,11 @@ end
 
 -- A double tablet takes two hits and counts once toward the goal.
 do
-    local _,b=plaques_of(rules.game_start(5,123))
-    local level=rules.levels[6]
+    local _,b=plaques_of(rules.game_start(3,123))
+    local level=rules.levels[4]
     local saved=level.oil_double
     level.oil_double={b}
-    local g=rules.game_start(5,123)
+    local g=rules.game_start(3,123)
     level.oil_double=saved
     local initial=g.oil_left
     check(g.oil[b]==2 and initial==#level.oil, 'oil_double starts a plaque at two layers without adding a goal')
@@ -52,15 +52,15 @@ end
 
 -- The bonus-area preview names exactly the cells a tool would hit, without using it.
 do
-    local hammer=rules.game_start(5,123,{log_cabin=true})
-    local g=rules.game_start(5,123,{camp=true,log_cabin=true})
+    local hammer=rules.game_start(3,123,{log_cabin=true})
+    local g=rules.game_start(3,123,{camp=true,log_cabin=true})
     local _,b=plaques_of(g)
     hammer.tools[1], g.tools[1] = 1, 1
     local single, area=rules.game_tool_area(hammer,0,b), rules.game_tool_area(g,0,b)
     local n=0
     for i in pairs(area) do
         n=n+1
-        check(rules.hex_distance(i,b)<=1 and rules.game_cell_active(g,i), 'dynamite area stays within one step on the board')
+        check(math.max(math.abs(rules.hex_q(i)-rules.hex_q(b)), math.abs(rules.hex_r(i)-rules.hex_r(b)))<=1 and rules.game_cell_active(g,i), 'dynamite area stays within one step on the board')
     end
     check(single[b] and next(single,b)==nil and next(single)==b, 'the pickaxe area is its own cell')
     check(n>1 and g.tools[1]==1, 'previewing does not spend a charge')
@@ -73,43 +73,11 @@ for level=1,10 do
     local spec=rules.levels[level]
     check(not spec.story_piece and not spec.signal, 'chapter one has only board resources and goals')
 end
-local story_slots = {[13]=0}
-for board, target in pairs(story_slots) do
-    local omitted = rules.levels[board].omit_kind
-    local expected_count = 6   -- every board spawns all six kinds
-    local g = rules.game_start(board-1,123)
-    R.g = g
-    local kinds, free = {}, {}
-    for i=0,rules.CELLS-1 do
-        if g.active[i] and g.tiles[i].kind>=0 then
-            kinds[g.tiles[i].kind] = true
-            if g.chain[i]==0 and g.ice[i]==0 then free[#free+1] = i end
-        end
-    end
-    local count = 0
-    for _ in pairs(kinds) do count = count+1 end
-    -- An authored opening may show fewer kinds; refills bring the rest.
-    check((count==expected_count or rules.levels[board].opening) and kinds[target] and not kinds[omitted],
-        'opening uses the configured palette including the story piece')
-    local a,b=free[1],free[2]
-    local regular=target~=rules.RELIC_IDOL and omitted~=rules.RELIC_IDOL and rules.RELIC_IDOL or rules.RELIC_FLAME
-    g.tiles[a],g.tiles[b]=rules.tile(target),rules.tile(regular)
-    local m=rules.new_match()
-    m.mask[a],m.mask[b]=true,true
-    rules.game_apply(g,m)
-    check(g.relics==1 and g.tiles[a].kind<0, 'the story piece matches like an ordinary piece')
-    rules.game_collapse(g)
-    for i=0,rules.CELLS-1 do
-        local kind=g.tiles[i].kind
-        check(kind>=-1 and kind<rules.COLORS and kind~=omitted, 'refill stays within the configured palette')
-    end
-end
-
 -- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 R.prog, R.island, R.quiet = p, c, true
-check(rules.LEVELS==100 and #journey.beats==35,'all chapters and their restoration scenes are playable')
+check(rules.LEVELS==10 and #journey.beats==35,'all chapters and their restoration scenes are playable')
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
@@ -117,7 +85,7 @@ for _,b in ipairs(journey.beats) do
             'each voiced line has a cast member')
     end
 end
-for level=1,30 do
+for level=1,rules.LEVELS do
     check(R.start_level(level-1), 'the next board opens once its story and restorations are complete')
     local before=journey.next(p,owned(c),level-1)
     if before then
@@ -128,8 +96,8 @@ for level=1,30 do
     local specs=rules.level_of(g)
     local layers=0
     for _,e in ipairs(specs.chain_cells) do layers=layers+e.hits end
-    for _,e in ipairs(specs.ice_cells) do layers=layers+e.layers end
-    check(g.initial_obstacles==layers+#specs.stones,
+    for _,e in ipairs(specs.ice_cells or {}) do layers=layers+e.layers end
+    check(g.initial_obstacles==layers+#(specs.stones or {}),
         'Relic Rush expeditions place exactly their authored blockers')
     check(#specs.goals==1 and specs.goals[1]=='oil',
         'fixed blue plaques are the only win condition')
@@ -179,7 +147,7 @@ for level=1,30 do
     for _, step in ipairs(opened) do
         check(island.next_step(c,p.level)==step.kind,'restorations open in ladder order')
         if step.story then
-            check(R.start_level(level),'the next board opens before construction')
+            if level < rules.LEVELS then check(R.start_level(level),'the next board opens before construction') end
             check(not journey.next(p,owned(c),nil),'restoration story waits for confirmed construction')
             local reserve,cost=island.reserved_cost(c,p.level),island.buildings[step.kind+1].cost
             check(reserve:covers(cost) and cost:covers(reserve),'reserve covers all costs of the earned building')
@@ -213,8 +181,8 @@ for level=1,30 do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[rules.CLEARED]==cleared,'replay does not advance the clear count')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(island.campaign_count(c)==20 and c.count==20 and c.open==63 and p.wallet[rules.CLEARED]==30,
-    'thirty clears restore twenty buildings and open every region')
+check(island.campaign_count(c)==4 and p.wallet[rules.CLEARED]==rules.LEVELS,
+    'ten clears restore the first four buildings')
 check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth wonder')
 
 -- Take the normal Play, resume and Collect paths with an empty island.
@@ -238,7 +206,7 @@ for level=1,rules.LEVELS do
     check(R.prog.level==level and R.on_island and not story.active(),'Collect opens the next expedition')
     R.quiet=true
 end
-check(R.island.count==0 and not next(R.prog.story_seen),'all 100 expeditions clear without building or dialogue')
+check(R.island.count==0 and not next(R.prog.story_seen),'all ten expeditions clear without building or dialogue')
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false
@@ -269,14 +237,8 @@ local old={level=10,seed=55,wallet=purse(1234,12,34,30,7)}
 journey.migrate(old,3)
 check(old.level==10 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
 check(journey.next(old,owned(c),10).key=='before-11','old completion opens the new episode without replaying episode one')
-old.level=13
-check(journey.next(old,owned(c),nil).key=='before-11','a deferred chapter opening can play back on the island')
-old.story_seen['before-11']=true
-old.story_seen['after-11'],old.story_seen['after-12']=true,true
-old.story_seen['after-13']=true
-check(journey.next(old,owned(c),nil).key=='restore-13','an already-owned later wonder satisfies its story gate')
 local preserved=city.new();island.island_setup(preserved);preserved.open=63
-preserved:add(c.items[10].pos,9,0)
+preserved:add(c.items[1].pos,9,0)
 island.restore_saved(preserved,10)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy temple')
 check(journey.building_about(9,29,'ordinary')~=journey.building_about(9,30,'ordinary'),'the island responds to the restored warning')
@@ -296,47 +258,3 @@ empty_queue();R.story_tick()
 check(R.prog.story_seen['after-10'] and journey.next(R.prog,owned(c),10).key=='before-11',
     'finishing the reply unlocks chapter two')
 empty_queue()
-
--- The first clear hands straight to the scene that reveals the note.
-R.prog.level=12
-journey.migrate(R.prog, 0)
-R.g=rules.game_start(12,1)
-R.g.won=true
-R.on_island,R.overlay=false,R.OV_RESULT
-R.story_tick()
-check(story.active() and R.story_current.key=='after-13','the note scene begins as soon as the clear is ready')
-empty_queue(); R.story_tick()
-check(R.g.story_clear=='after-13','the note scene is ready to record when the reward is claimed')
-
--- The final plaque reveals the signal plate and plays the landing scene
--- before the first-clear dialogue.
-R.g=rules.game_start(29,1)
-R.prog={level=29,story_seen={}}
-journey.migrate(R.prog, 0)
-R.prog.story_seen["before-30"]=true
-R.on_island,R.overlay=false,R.OV_RESULT
-local g=R.g
-local level=rules.level_of(g)
-local signal=level.signal_cell
-check(signal==rules.hex_center() and g.oil[signal]==2, 'the central double plaque covers the signal plate')
-for _, i in ipairs(level.oil) do
-    if i~=signal then g.oil[i]=0 end
-end
-g.chain[level.oil[1]],g.obstacles=1,1 -- exercise a win with an ordinary blocker left on the board
-g.oil_left=1
-local m=rules.new_match()
-m.mask[signal]=true
-for _=1,g.chain[signal]+g.ice[signal]+g.oil[signal] do rules.game_apply(g,m) end
-rules.game_check_end(g)
-check(g.won and g.oil[signal]==0 and g.obstacles>0,'the final plaque wins even while ordinary blockers remain')
-R.story_tick()
-local scene=R.clear_scene()
-check(scene and scene.cell==signal and not story.active(),'the recovered plate runs the landing scene before dialogue')
-R.now=R.now+5
-R.story_tick()
-check(R.story_current and R.story_current.key=='after-30','the landing scene hands off to the finale dialogue')
-empty_queue(); R.story_tick()
-R.g=rules.game_start(29,2)
-R.g.won=true
-R.prog.level=30
-check(not R.clear_scene(),'a replay cannot run the landing scene again')

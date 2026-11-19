@@ -1,4 +1,4 @@
--- board.lua — the expedition screen: HUD, hex board, relic animation phases,
+-- board.lua — the expedition screen: HUD, square board, relic animation phases,
 -- tools and swipe / tap input.
 --
 -- Phases: SWAP (relics trade places, then the wave clears), REJECT (they
@@ -8,17 +8,13 @@ local rules = require("rules")
 local economy = require("economy")
 local art = require("art")
 local elements = require("match3.elements_view")
-local skin = require("skin")
 local neutral = app.arg("default-match3")
 local pack = app.arg("tiles")
 local campaign_pieces = art.use_campaign_pieces()
-R.piece_width = 2 * R.HEX_R * 128 / 112   -- conservative canvas width for animated refill clipping
+R.HEX_R = 24
+R.piece_width = 2 * R.HEX_R
 rules.bind_view(R)
-if not neutral then
-    -- Cradle of Rome's frame, grout and cell-state tiles, shared with the other match-3 game.
-    elements.cradle_ground(R)
-    R.GROUND.face = skin:color("board_face")
-end
+R.GROUND.seam_width = .65
 local words = require("match3.game").config().board   -- lua/game_config.lua
 R.kudos_words, R.tool_notes = words.kudos or R.kudos_words, words.tool_notes or R.tool_notes
 R.locked_notice = words.locked
@@ -32,8 +28,8 @@ local cell_active = rules.game_cell_active
 local rgba = color
 
 -- Preserve the guide's icon size; only live board pieces follow the board's geometry.
-local ART_HEX_R, ART_CELL_SIZE = 26.5, 46
-local BOARD_SCALE = HEX_R / ART_HEX_R
+local ART_CELL_SIZE = 46
+local BOARD_SCALE = R.cell_width / ART_CELL_SIZE
 local CELL_FACE_SIZE = 2 * (HEX_R - .65)
 local cell_pos = R.cell_pos
 
@@ -45,7 +41,6 @@ function R.board_piece_texture(kind)
     local campaign = campaign_pieces
     local piece = g.resource_yields and g.resource_yields[kind]
     if piece and piece.tool then return R.board_art[piece.icon] end
-    if piece and piece.item then return R.board_art["campaign-" .. piece.key] end   -- a request's piece, in every pack
     if level.story_piece and kind == level.goal_kind then
         return R.board_art[(campaign and "campaign-" or "story-") .. level.story_piece]
     end

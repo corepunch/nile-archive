@@ -25,9 +25,9 @@ return {
         kudos = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"},
     },
     notices = {
-        reward_building = "Resources banked. Open Buildings to see what you can restore.",
-        reward_story = "Resources banked. Spend them in the Build Shop.",
-        reward_replay = "Resources banked. Spend them in the Build Shop.",
+        reward_building = "Resources banked. Tap Build for the next restoration.",
+        reward_story = "Resources banked. Tap Build for the next restoration.",
+        reward_replay = "Resources banked. Tap Build for the next restoration.",
         all_open = "Your whole island is open to explore.",
         quit = "Your board is saved. Tap Play to continue expedition %d.",
     },
@@ -37,7 +37,6 @@ return {
         board = "stars",
         title = "Top explorers",
     },
-    quest = {waiting = "Finish another crew request to make room for this piece."},
     confirm = {title = "Restart this expedition?"},
     failed = {title = "One more adventure?", subtitle = "THE RUINS WILL WAIT FOR YOU.", town = "VISIT ISLAND"},
     zone = {
@@ -62,7 +61,6 @@ return {
         button = "BACK TO MY ISLAND",
     },
     card = {
-        quest_subtitle = "%s · A Light Below · %d/4",
         back = "BACK TO ISLAND",
         moving = "HOLD AND DRAG ON THE ISLAND TO MOVE",
         locked = "COMPLETE MORE LEVELS TO RESTORE THIS WONDER",

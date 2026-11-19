@@ -1,7 +1,6 @@
 -- Three wallet slots. Score-only pieces have no wallet yield.
 -- Every piece has a Cradle of Rome 2 counterpart with the same wallet and
 -- yield (docs/cradle-of-rome-reference/gem-correspondence.html).
-local quests = require("quests")
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
@@ -10,37 +9,26 @@ local E = {
         {key="food", name="Food"},
         {key="supplies", name="Supplies"},
     },
-    -- The opening pool: the five pieces of Cradle of Rome's first level (two
-    -- coins that pay Coins and a leaf, a flower and an amphora that only
-    -- score) and a sixth score piece, quartz. Food and Supplies pieces come
-    -- from restorations; each takes the slot of the piece below it
-    -- (E.unlocks, `kind`).
     pieces={
         [0]={key="coin", name="Sun coin", slot=1, amount=5},
         {key="silver-coin", name="Silver coins", slot=1, amount=3},
         {key="leaf", name="Leaf"},
         {key="flower", name="Flower"},
         {key="amphora", name="Amphora"},
-        {key="quartz", name="Quartz"},
     },
     WELL_KIND=1, WORKSHOP_KIND=2,
-    -- Boards spawn six kinds and match lines of three. The leaf's slot carries
-    -- the bonus gem or a story item; the silver slot takes the bonus when a
-    -- story item holds the leaf's.
-    SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
-    -- The score slots a crew request's piece may take, first choice first
-    -- (lua/quests.lua). A slot is free until a restoration's piece holds it.
-    QUEST_KINDS={5, 4, 3},
-    CAMPAIGN_VERSION=8,
+    -- The bonus piece takes the leaf's slot.
+    SPECIAL_KIND=2,
+    CAMPAIGN_VERSION=9,
 }
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
 
-E.BONUS_THRESHOLD = 36
+E.BONUS_THRESHOLD = 90
 E.bonus_slots = {
     {key="impact", legacy_slot="blast", levels={
         {key="hammer", name="Hammer", action="hit", effect="Hit one cell."},
-        {key="bomb", name="Bomb", action="blast", effect="Hit a cell and its six neighbors."},
+        {key="bomb", name="Bomb", action="blast", effect="Hit a 3×3 square around a cell."},
     }},
     {key="shield", legacy_slot="sweep", levels={
         {key="shield", name="Shield", action="row", effect="Hit the row through a chosen cell."},
@@ -58,22 +46,12 @@ E.bonus_slots = {
 local B = {}
 for tool, slot in ipairs(E.bonus_slots) do
     for rank, bonus in ipairs(slot.levels) do
-        bonus.tool, bonus.rank, bonus.amount = tool, rank, 6
+        bonus.tool, bonus.rank, bonus.amount = tool, rank, 3
         bonus.icon = "bonus-" .. bonus.key
         B[bonus.key] = bonus
     end
 end
 E.bonuses = B
-
--- The next-building card states each need as narration: who needs the
--- building and why. Characters speak in the scenes, which play once. Costs
--- and board unlocks come from the building catalogue and ladder.
-E.quests = {
-    well={title="Draw fresh water", request="Restore the well to bring water buckets onto the board."},
-    log_cabin={title="Build the Hunter's Hut", request="The hunter brings a hammer. Match hammer pieces to charge it."},
-    workshop={title="Open the Sawmill", request="I can make a cable reel from the mill's offcuts."},
-    camp={title="Build the Village", request="The village unlocks bombs. Match them to charge a blast."},
-}
 
 -- The twenty purchases in the Windows sequel's epochs.xml. Stable catalogue keys
 -- retain the island's original artwork and old saves. The eight bonus IDs use
@@ -128,7 +106,7 @@ function E.bonus_lesson(bonus)
         local first = E.bonus_slots[bonus.tool].levels[1]
         return ("%s replaces %s and keeps its charge."):format(bonus.name, first.name)
     end
-    return "Match " .. bonus.name .. " gems to charge the bonus."
+    return ("Match %d %s pieces for one charge."):format(E.BONUS_THRESHOLD // bonus.amount, bonus.name)
 end
 
 function E.active_bonus_slots(number, restored)
@@ -145,19 +123,15 @@ function E.active_bonus_slots(number, restored)
     return slots, meter
 end
 
-function E.board_loadout(level, number, restored, seed)
+function E.board_loadout(number, restored, seed)
     local yields, available = {}, {}
     local slots, meter = E.active_bonus_slots(number, restored)
     local debut
-    -- A slot is open unless the board omits it or a story item holds it.
-    local function open(kind)
-        return kind ~= level.omit_kind and not (level.story_piece and level.goal_kind == kind)
-    end
     for kind, piece in pairs(E.pieces) do
-        if piece.amount and open(kind) then yields[kind] = piece end
+        if piece.amount then yields[kind] = piece end
     end
     for _, unlock in ipairs(E.unlocks) do
-        if number >= unlock.first_level and restored and restored[unlock.building] and unlock.kind and open(unlock.kind) then
+        if number >= unlock.first_level and restored and restored[unlock.building] and unlock.kind then
             yields[unlock.kind] = unlock
         end
     end
@@ -169,19 +143,9 @@ function E.board_loadout(level, number, restored, seed)
         end
     end
     local bonus = debut or (#available > 0 and available[(seed or 1) % #available + 1])
-    -- Use the special slot, or the red slot when a story item holds it.
-    -- Give a newly unlocked resource (such as board 10's rations) its debut.
-    local kind = level.goal_kind == E.SPECIAL_KIND and E.SPECIAL_FALLBACK or E.SPECIAL_KIND
+    local kind = E.SPECIAL_KIND
     if not debut and yields[kind] and yields[kind].first_level == number then bonus = nil end
     if bonus then yields[kind] = bonus end
-    -- The crew's open requests put their pieces in the free score slots.
-    local requests = restored and (restored.preview and quests.scheduled(number) or restored.quests) or {}
-    local request = 1
-    for _, slot in ipairs(E.QUEST_KINDS) do
-        if requests[request] and open(slot) and not yields[slot] then
-            yields[slot], request = requests[request].yield, request + 1
-        end
-    end
     return yields, {match_only_resources=true, tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,
         tool_slots=slots, single_charge_tools=true}, bonus, debut
 end

@@ -1,5 +1,7 @@
 # Hex straight-line matching rules and boards
 
+The [square campaign guide](square-match3.md) describes the current branch. This document records the previous hex campaign.
+
 Relic Rush matches straight lines of three with six piece kinds. This supersedes the earlier line-of-four rule with five kinds, and the prototype's connected groups before it.
 
 ## Matching

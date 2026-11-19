@@ -1,4 +1,4 @@
--- Christmas Market · Winter Wishes — hex straight-line match-3 winter wishes that build a Christmas market.
+-- Christmas Market · Winter Wishes — square-grid match-3 winter wishes that build a Christmas market.
 --
 -- The game is data: lua/game_config.lua (words), lua/town_config.lua (the town), the
 -- campaign, story and building tables, skin.lua, art.lua and the PNGs. The
@@ -67,6 +67,11 @@ function R.serialize_campaign(s)
     island.serialize_waivers(s, R.island, R.prog.level, reading and version < 3)
     if reading and version < 2 then island.migrate_wallet(R.prog, R.island) end
     R.prog.tool_stock = s:ints("tool_stock", not reading and R.prog.tool_stock or purse())
+    if reading and version < 4 then
+        for tool in ipairs(economy.tool_slots) do
+            R.prog.tool_stock[tool] = math.floor(math.max(0, R.prog.tool_stock[tool]) * economy.BONUS_THRESHOLD / 200)
+        end
+    end
     serialize_completed(s)
 end
 

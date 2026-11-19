@@ -195,7 +195,7 @@ function board_intro.bind(R, rules)
     function R.present_board()
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
         local g, cells, center = R.g, {}, rules.hex_center()
-        local dy = math.sqrt(3) * R.HEX_R
+        local dy = R.cell_height
         for i = 0, rules.CELLS - 1 do
             if rules.game_cell_active(g, i) then
                 local q, lo, hi = rules.hex_q(i), rules.hex_r(i), rules.hex_r(i)

@@ -2,59 +2,6 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local economy = require("economy")
-local quests = require("quests")
-
--- The crew's requests (lua/quests.lua): what this save has banked and handed in.
-R.item_keys = {}
-for i, quest in ipairs(quests.list) do R.item_keys[i] = quest.key end
-function R.quest_state()
-    R.prog.quests = R.prog.quests or quests.new_state()
-    return R.prog.quests
-end
-local function owns(building) return island.owned(R.island, island.kinds[building]) > 0 end
-function R.open_quests() return quests.open(R.quest_state(), owns) end
-
-function R.quest_opened(id)
-    local state = R.quest_state()
-    local quest = quests.by_key[id]
-    local ready = quest and quests.ready(state, quest)
-    if not state.introduced[id] or ready and not state.ready_seen[id] then
-        state.introduced[id] = true
-        if ready then state.ready_seen[id] = true end
-        R.save_progress()
-    end
-end
-
--- Restoration dialogue plays first. Introduce one actionable request per
--- visit. A filled request is not offered here: its marker glows instead. A new purchase or hand-in can give the crew a fresh lead in town.
-local story_tick = R.story_tick
-function R.story_tick()
-    local state = R.quest_state()
-    if state.pending and R.story_current and R.story_current.key == "quest-" .. state.pending and not story.active() then
-        state.pending = nil  -- the base tick acknowledges and saves this beat
-    end
-    story_tick()
-    if not R.on_island then state.offered_visit = nil; return end
-    if not R.town or R.quiet or R.overlay ~= R.OV_NONE or story.active() or R.island.placing >= 0 or R.diving() then return end
-    if state.pending then
-        R.queue_story({key="quest-" .. state.pending, lines=require("quest_scenes")[state.pending]})
-        return
-    end
-    if state.offered_visit == R.island.count then return end
-    state.offered_visit = R.island.count
-    if quests.shutter_open(state) and not state.introduced.shutter then
-        R.open_quest("shutter", true)
-        return
-    end
-    local open = R.open_quests()
-    for _, quest in ipairs(open) do
-        if not state.introduced[quest.key] and not R.quest_model(quest.key).waiting then
-            R.open_quest(quest.key, true)
-            return
-        end
-    end
-end
-
 function R.debug_fill_earnings(g)
     if g.level ~= R.prog.level then return end
     local level = g.level + 1
@@ -73,7 +20,6 @@ end
 -- every one unless --before-<key> names it.
 function R.board_context(preview)
     local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
-    if not preview and R.prog then restored.quests = quests.collecting(R.quest_state(), owns) end
     for _, unlock in ipairs(economy.unlocks) do
         local key = unlock.building
         if preview then
@@ -101,14 +47,14 @@ function R.update_bonus_charges()
     end
 end
 
--- Apply the same loadout to a parked board that a new deal would get. Resource
--- and request pieces change in their existing slots, so the deal, progress and
+-- Apply the same loadout to a parked board that a new deal would get. Resources and
+-- bonus pieces change in their existing slots, so the deal, progress and
 -- resources already earned survive the trip to the island.
 function R.refresh_board_bonuses()
     local g = R.g
     if not g.tool_slots or g.bonus_preview then return end
     local spec, restored = rules.level_of(g), R.board_context()
-    local yields, loadout, bonus, debut = economy.board_loadout(spec, g.level + 1, restored, g.loadout_seed)
+    local yields, loadout, bonus, debut = economy.board_loadout(g.level + 1, restored, g.loadout_seed)
     for tool, charge in pairs(loadout.tool_meter) do
         if g.tool_meter[tool] == nil then
             g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
@@ -155,15 +101,6 @@ function R.present_board()
         local text, building = opening_unlock(g)
         if text then
             R.notice(building and building .. " · " .. text or text)
-        else
-            -- A request's piece on its first board.
-            local state = R.quest_state()
-            for _, piece in pairs(g.resource_yields or {}) do
-                if piece.item and not g.bonus_preview and (state.have[piece.item] or 0) == 0 then
-                    R.notice(piece.name .. " · Match them to fill the crew's request.")
-                    break
-                end
-            end
         end
     end
 end
@@ -217,49 +154,9 @@ function R.serialize_campaign(s)
                 charge = charge + 2 * num.clampi(s:int("bonus_" .. key, 0), 0, 18)
             end
         else charge = s:int(name, reading and 0 or saved[tool] or 0) end
+        if reading and version < 9 then charge = math.floor(charge * economy.BONUS_THRESHOLD / 36) end
         charges[tool] = num.clampi(charge, 0, economy.BONUS_THRESHOLD)
     end
     R.prog.bonus_charge = charges
-    quests.serialize(s, R.quest_state())
     serialize_completed(s)
-end
-
--- Review entry points for the crew's requests, after the engine's own:
---   --quest-have N     every open request has N pieces banked (up to its need)
---   --quest-card KEY   the island, with that request's card open
---   --quest-handoff KEY   the island, with the request's hand-in painting open
-local debug_screens = R.debug_screens
-function R.debug_screens()
-    debug_screens()
-    local have = tonumber(app.arg("quest-have") or "")
-    if have then
-        local state = R.quest_state()
-        for _, quest in ipairs(R.open_quests()) do state.have[quest.key] = math.min(quest.need, have) end
-    end
-    if have and app.arg("victory") and R.g and R.g.items then   -- a won board with request pieces to bank
-        for _, quest in ipairs(quests.scheduled(R.g.level + 1)) do R.g.items[quest.key] = 9 end
-    end
-    local handoff = app.arg("quest-handoff")
-    local offer = app.arg("quest-offer")
-    local id = handoff or offer or app.arg("quest-card")
-    if id == "shutter" or quests.by_key[id] then
-        R.on_island, R.toast_time = true, 0
-        local state = R.quest_state()
-        -- An interactive review starts at this story moment, with earlier
-        -- restoration dialogue settled, just as it would be after play.
-        for _, beat in ipairs(require("journey").beats) do
-            if beat.level <= R.prog.level then R.prog.story_seen[beat.key] = true end
-        end
-        local target = quests.by_key[id] or quests.by_key.cable
-        for _, earlier in ipairs(quests.list) do
-            if earlier == target then break end
-            if earlier.line == target.line then state.done[earlier.key] = true end
-        end
-        if id == "shutter" then state.done.cable = true
-        elseif have then state.have[id] = math.min(have, target.need) end
-        if handoff then
-            if quests.by_key[id] then state.have[id] = target.need end
-            assert(R.open_quest_handoff(id))
-        else assert(R.open_quest(id, offer ~= nil)) end
-    end
 end

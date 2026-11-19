@@ -25,21 +25,22 @@ local E = {
         {name="Snowflake bauble", slot=1, amount=7},
         {name="Plum bauble", slot=1, amount=8},
         {name="Candy cane", slot=2, amount=7},
+        {name="Candy cane"},
     },
-    CAMPAIGN_VERSION=3,
+    CAMPAIGN_VERSION=4,
+    BONUS_THRESHOLD=90,
 }
 
 E.tool_slots = {
     {icon="booster-hammer", frame="market-5", action="hit", effect="Tap a cell to hit it with the Hammer."},
-    {icon="booster-firework", frame="booster-firework-icon", action="blast", effect="Tap a cell to blast it and its neighbors."},
+    {icon="booster-firework", frame="booster-firework-icon", action="blast", effect="Tap a cell to blast a 3×3 square."},
     {icon="booster-lantern", frame="market-10", action="sunburst", effect="Tap a cell to strike across 15 cells."},
     {icon="booster-star", frame="booster-star-icon", action="row", effect="Tap a cell to clear its row with Shooting Star."},
 }
 
 -- Every wish's five ordinary kinds sit on five lines; a stall's new piece
--- takes the place of the one below it on its line. The fifth line opens with
--- the arch's firewood.
-local BASE = {0, 1, 2, 3}
+-- takes the place of the one below it on its line. The arch’s firewood replaces the score-only candy cane.
+local BASE = {0, 1, 2, 3, 16}
 
 -- The twenty-stall ladder after Cradle of Rome: each stall adds one piece or
 -- one bonus, from the wish after it is placed. `building` is the catalogue
@@ -101,14 +102,14 @@ function E.loadout(restored, number, seed)
     -- One tool charges per wish: the newest on its first wish, then by seed.
     local charging = tools[#tools]
     if #tools > 1 and number ~= charging.first_level and seed % 2 == 1 then charging = tools[1] end
-    if charging then kinds[#kinds + 1] = charging.piece end
+    if charging then kinds[1] = charging.piece end
     local yields = {}
     for _, kind in ipairs(kinds) do
         local piece = E.pieces[kind]
         if piece.amount then yields[kind] = piece end
     end
     -- Faster charge lowers the meter a use needs; stored points convert with it.
-    return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=200 // charge, tool_meter=meter,
+    return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=E.BONUS_THRESHOLD // charge, tool_meter=meter,
         tool_slots=E.tool_slots, opening_tools=opening_tools, charge_tool=charging and charging.tool,
         extra_moves=moves, win_income=income}
 end

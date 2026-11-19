@@ -2,7 +2,7 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
-local M = match3.new{flags=match3.LINE_MATCHES, columns=9, rows=12, colors=#economy.pieces + 1, match_min=3,
+local M = match3.new{flags=match3.LINE_MATCHES, square=true, columns=9, rows=12, colors=campaign.colors, match_min=3,
     levels=campaign.levels, level_shapes=campaign.shapes,
     sunburst_targets=economy.lightning_targets,
     kind_flags={[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE}}
@@ -26,6 +26,7 @@ end
 
 local start = M.game_start
 function M.game_start(level, seed, built)
+    level = math.max(0, math.min(level, LEVELS - 1))
     local yields, loadout = economy.loadout(restored_from(built, level), level + 1, seed or 1)
     local g = start(level, seed, yields, loadout)
     g.win_income, g.opening_tools = loadout.win_income, loadout.opening_tools

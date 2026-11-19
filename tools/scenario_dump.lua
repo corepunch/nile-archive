@@ -221,7 +221,7 @@ else
             if step.after < i then restored[island.buildings[step.kind + 1].key] = true end
         end
         local yields
-        if economy.board_loadout then yields = economy.board_loadout(l, i, restored, 123478)
+        if economy.board_loadout then yields = economy.board_loadout(i, restored, 123478)
         else yields = economy.loadout(restored, i, 123478) end
         local resources = {}
         for kind = 0, 15 do

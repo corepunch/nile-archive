@@ -3,13 +3,15 @@ local economy=require("economy")
 local island=require("island")
 local R=require("state")
 require("main")
--- A plain cell whose six neighbours are all playable, for tool checks.
+-- A plain cell inside a playable 3×3 area, for tool checks.
 local function open_cell(g)
     for i=0,rules.CELLS-1 do
         local ok=rules.game_cell_active(g,i) and g.stone_hp[i]==0
-        for d=0,5 do
-            local j=rules.hex_neighbor(i,d)
-            ok=ok and j>=0 and rules.game_cell_active(g,j) and g.stone_hp[j]==0
+        for x=-1,1 do
+            for y=-1,1 do
+                local j=rules.hex_index(rules.hex_q(i)+x,rules.hex_r(i)+y)
+                ok=ok and rules.game_cell_active(g,j) and g.chain[j]==0 and g.stone_hp[j]==0
+            end
         end
         if ok then return i end
     end
@@ -71,23 +73,23 @@ do
     check(island.island_place_next(c,bank,11,0),'confirm the farm')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
-        check(g.spawn_kinds==nil and rules.COLORS==6,'every expedition keeps its six kinds')
+        check(g.spawn_kinds==nil and rules.COLORS==5,'every expedition keeps its five kinds')
         local charge_kinds=0
         for _,piece in pairs(g.resource_yields) do if piece.tool then charge_kinds=charge_kinds+1 end end
         check(charge_kinds==(g.bonus and 1 or 0),'only the selected family spawns')
         local spec=rules.level_of(g)
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces keep their slot') end
     end
-    check(economy.board_backdrop(rules.levels[14],14,{gateway=true})==2,'port opens the temple backdrop')
+    check(economy.board_backdrop(rules.levels[10],14,{gateway=true})==2,'port opens the temple backdrop')
 end
 
--- The landing opens with Cradle of Rome's pool and quartz. Its leaf, flower,
--- amphora and quartz use the normal scoring path and pay nothing; only the two coins pay.
+-- The landing opens with five pieces. Its leaf, flower,
+-- amphora use the normal scoring path and pay nothing; only the two coins pay.
 do
     local g = rules.game_start(0,123)
     local keys = {}
     for kind = 0, rules.COLORS - 1 do keys[kind + 1] = economy.pieces[kind].key end
-    check(table.concat(keys,' ')=='coin silver-coin leaf flower amphora quartz',"the base pool is Cradle of Rome's first level and quartz")
+    check(table.concat(keys,' ')=='coin silver-coin leaf flower amphora',"the base pool has five pieces")
     for kind, piece in pairs(g.resource_yields) do
         check(piece.slot==economy.GOLD,'before any restoration a board pays Coins only: ' .. kind)
     end
@@ -113,37 +115,6 @@ for _, entry in ipairs{{1, 2, 'leaf'}, {1, 3, 'flower'}, {6, 4, 'amphora'}} do
         'leaf, flower and amphora matches pay score only')
 end
 
--- Roman finds change the appearance and payout of the same slot. The
--- Courtyard gates its whole sequence and the Temple owns the final emerald.
-do
-    local finds = {
-        {2, "coin", 5}, {5, "coin", 5},
-        {18, "helmet", 6}, {20, "ring", 7}, {22, "scarab", 8},
-        {25, "sandal", 9}, {26, "harp", 10}, {30, "emerald", 11},
-    }
-    for _, find in ipairs(finds) do
-        local number, key, amount = table.unpack(find)
-        local g = rules.game_start(number - 1, 73, {amphitheater=true, archive=true, beached_ship=true,
-            aviary=true, museum=true, fountain=true})
-        local piece = g.resource_yields[0]
-        check(piece.key == key and piece.slot == economy.GOLD, "the coin slot uses " .. key)
-        local m = rules.new_match()
-        for cell=0,rules.CELLS-1 do
-            if rules.game_cell_active(g,cell) then
-                g.chain[cell],g.ice[cell],g.stone_hp[cell] = 0,0,0
-                g.tiles[cell] = rules.tile(0)
-                m.mask[cell] = true
-                break
-            end
-        end
-        rules.game_apply(g,m)
-        check(g.earnings[economy.GOLD] == amount,key .. " banks its listed Coins")
-    end
-    check(rules.game_start(27,73,{}).resource_yields[0].key == "coin","each find waits for its restoration")
-    check(rules.game_start(27,73,{amphitheater=true}).resource_yields[0].key == "helmet","the Courtyard alone keeps helmets")
-    check(rules.game_start(29,73,{gateway=true, museum=true}).resource_yields[0].key == "harp","the Temple gates emeralds")
-end
-
 -- Like Cradle of Rome's ladder, each new piece pays toward the next purchase.
 for n, step in ipairs(island.ladder) do
     local unlock=step.unlock
@@ -152,61 +123,6 @@ for n, step in ipairs(island.ladder) do
     if unlock.slot and next_building then
         check(next_building.cost[unlock.slot]>0,unlock.name .. ' helps pay for ' .. next_building.name)
     end
-end
-
--- Late restorations charge the real wallet and change only subsequent boards.
-do
-    local c=R.island
-    local wallet=purse(100000,100000,100000,90)   -- more than every fitted price together
-    for z=1,5 do c:unlock(z,wallet) end
-    for i=6,#island.ladder do
-        local unlock=island.ladder[i].unlock
-        local building=island.buildings[island.ladder[i].kind+1]
-        local before=R.make_board(unlock.first_level-1,41)
-        if unlock.bonus then
-            local bonus = unlock.bonus
-            check(before.tool_slots[bonus.tool].rank == 1
-                and (before.tool_meter[bonus.tool] ~= nil) == (bonus.rank == 2),
-                'construction unlocks a slot or raises its current rank')
-        end
-        if unlock.kind then check(before.resource_yields[unlock.kind]~=unlock, unlock.name .. ' is locked until construction') end
-        local cost=building.cost
-        local balance=purse(table.unpack(wallet))
-        check(island.island_place_next(c,wallet,unlock.after,0),'confirm ' .. building.name)
-        for slot=1,3 do check(wallet[slot]==balance[slot]-cost[slot],'restoration spends the listed price') end
-        local g=R.make_board(unlock.first_level-1,41)
-        local cell=rules.hex_center()
-        if not rules.game_cell_active(g,cell) then
-            for n=0,rules.CELLS-1 do
-                if rules.game_cell_active(g,n) then cell=n; break end
-            end
-        end
-        g.chain[cell],g.ice[cell],g.stone_hp[cell]=0,0,0
-        local m=rules.new_match()
-        if unlock.bonus then
-            check(g.bonus_debut == unlock.bonus and g.tool_meter[unlock.bonus.tool] == 0, 'newly restored bonus gets its first board')
-        end
-        if unlock.kind then
-            check(g.resource_yields[unlock.kind]==unlock,'opening uses ' .. unlock.name)
-            g.tiles[cell]=rules.tile(unlock.kind)
-            m.mask[cell]=true
-            rules.game_apply(g,m)
-            check(g.earnings[unlock.slot]==unlock.amount,unlock.name .. ' pays its configured yield')
-        end
-    end
-    local final=R.make_board(29,41)
-    check(final.resource_yields[0]==economy.unlock_of("fountain") and final.resource_yields[1]==economy.unlock_of("water_mill") and
-          final.resource_yields[3]==economy.unlock_of("gateway") and final.resource_yields[4]==economy.unlock_of("trading_post"),
-          'the last board combines all current chip upgrades')
-    local seen = {}
-    for seed = 1, #economy.bonus_slots do
-        local g = R.make_board(29, seed)
-        seen[g.bonus] = true
-        for tool, bonus in ipairs(g.tool_slots) do
-            check(g.tool_meter[tool] == 0 and bonus.rank == 2, 'all four upgraded sockets remain available across boards')
-        end
-    end
-    for _, bonus in ipairs(final.tool_slots) do check(seen[bonus], 'seeded rotation includes ' .. bonus.name) end
 end
 
 local function charge(g, bonus)
@@ -219,16 +135,17 @@ do
     local B = economy.bonuses
     local restored = {log_cabin=true, bonus_charge={}}
     local g, m = rules.game_start(4, 73, restored), rules.new_match()
-    local kind = rules.level_of(g).goal_kind == economy.SPECIAL_KIND and economy.SPECIAL_FALLBACK or economy.SPECIAL_KIND
+    local kind = economy.SPECIAL_KIND
     check(g.bonus_debut == B.hammer and g.resource_yields[kind] == B.hammer, 'the Camp debuts Hammer')
     local line = require('support').open_line(rules, g)
-    for _ = 1, 3 do
+    for match = 1, 11 do
         for _, cell in ipairs(line) do
             g.chain[cell], g.ice[cell], g.stone_hp[cell] = 0, 0, 0
             g.tiles[cell] = rules.tile(kind)
         end
         rules.game_matches(g, m, -1)
         rules.game_apply(g, m)
+        check(g.tools[B.hammer.tool] == (match < 10 and 0 or 1), 'the charge arrives on the thirtieth Hammer piece')
     end
     local tool = B.hammer.tool
     check(g.tools[tool] == 1 and g.tool_meter[tool] == g.tool_threshold, 'extra matches cannot bank a second use')
@@ -238,15 +155,15 @@ do
     R.g, R.prog, R.test_mode = g, {bonus_charge=restored.bonus_charge}, true
     R.update_bonus_charges()
     restored.camp = true
-    local later = rules.game_start(29, 1, restored)
+    local later = rules.game_start(rules.LEVELS - 1, 1, restored)
     check(later.tool_slots[tool] == B.bomb and later.tools[tool] == 1
         and later.tool_meter[tool] == g.tool_threshold, 'the stored Hammer use becomes a Dynamite use')
     local center = open_cell(later)
-    check(rules.game_tool(later, tool - 1, center, m) and m.hits == 7
-        and later.moves == rules.level_of(later).moves, 'Dynamite blasts seven cells without spending a move')
+    check(rules.game_tool(later, tool - 1, center, m) and m.hits == 9
+        and later.moves == rules.level_of(later).moves, 'Bomb blasts nine cells without spending a move')
     R.g = later
     R.update_bonus_charges()
-    check(rules.game_start(29, 1, restored).tool_meter[tool] == 0, 'spending a charge clears it across boards')
+    check(rules.game_start(rules.LEVELS - 1, 1, restored).tool_meter[tool] == 0, 'spending a charge clears it across boards')
 end
 
 -- Compare targeted previews with the actual hit mask, and verify instant tools on live boards.
@@ -254,7 +171,7 @@ do
     local B = economy.bonuses
     for _, key in ipairs{"shield","star"} do
         local bonus = B[key]
-        local g = rules.game_start(29,3,{clock_tower=true,temple=true})
+        local g = rules.game_start(rules.LEVELS - 1,3,{clock_tower=true,temple=true})
         local m, center = rules.new_match(), open_cell(g)
         local tool = charge(g,bonus)
         local preview = rules.game_tool_area(g,tool,center)
@@ -266,7 +183,7 @@ do
         end
     end
     do
-        local g, m = rules.game_start(29,3,{lighthouse=true,log_cabin=true}),rules.new_match()
+        local g, m = rules.game_start(rules.LEVELS - 1,3,{lighthouse=true,log_cabin=true}),rules.new_match()
         local tool, cell = charge(g,B.plus),open_cell(g)
         g.tiles[cell] = rules.tile(0)
         check(rules.game_tool(g,tool,cell,m) and g.earnings[economy.GOLD]==100 and m.hits==0,
@@ -279,7 +196,7 @@ do
     end
     for _, key in ipairs{"lightning","hourglass","mixer"} do
         local bonus = B[key]
-        local g = rules.game_start(29,3,{map_room=true,lodge=true,observatory=key=="mixer"})
+        local g = rules.game_start(rules.LEVELS - 1,3,{map_room=true,lodge=true,observatory=key=="mixer"})
         local m, moves = rules.new_match(), g.moves
         local tool = charge(g,bonus)
         check(rules.game_tool_untargeted(tool,g) and rules.game_tool(g,tool,nil,m),key .. " activates from its socket")
@@ -434,7 +351,7 @@ do
     check(save.read('relic-eight-bonuses', R.serialize), 'load a save from the eight-bonus version')
     local charges = R.prog.bonus_charge
     local B = economy.bonuses
-    check(charges[B.hammer.tool] == 22 and charges[B.lightning.tool] == 24 and charges[B.shield.tool] == economy.BONUS_THRESHOLD
+    check(charges[B.hammer.tool] == 55 and charges[B.lightning.tool] == 60 and charges[B.shield.tool] == economy.BONUS_THRESHOLD
         and charges[B.hourglass.tool] == economy.BONUS_THRESHOLD and charges[5] == nil,
         'legacy paired meters merge by name, keep their fractions and cap at one use')
     R.g=R.make_board(4,93);R.g.won=true;R.g.moves=4;R.g.earnings={8,3,7};R.test_mode=true

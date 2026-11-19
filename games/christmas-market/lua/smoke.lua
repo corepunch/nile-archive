@@ -14,11 +14,6 @@ local smoke_city_move
 local function same_wallet(a, b)
     return a:covers(b) and b:covers(a)
 end
-local function press_tile(key)
-    local node = R.catalogue_tile(key)
-    if node then app.inject_click(R.catalogue_form.boxes[node.id]:center()) end
-    return node
-end
 -- Every guide topic from the screen's data source is built, and the list
 -- lays out its visible rows (it skips the ones scrolled out of view).
 local function guide_laid_out()
@@ -94,8 +89,8 @@ function R.smoke()
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
         assert((R.town.navigation:get("play") or "") == "", "smoke: Play shows no level number")
         app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
-    elseif smoke_stage == 2 and R.overlay == R.OV_SHOP then
-        assert(press_tile("arch"), "smoke: the earned stall is in the shop"); smoke_stage = 3
+    elseif smoke_stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
+        app.inject_click(R.wonder_form.boxes.action:center()); smoke_stage = 3
     elseif smoke_stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then

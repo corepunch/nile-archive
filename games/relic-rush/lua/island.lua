@@ -74,12 +74,6 @@ function M.can_buy(c, wallet, level, kind)
     return can_buy(c, wallet, level, kind)
 end
 
-function M.next_quest(c, level)
-    local _, position = M.next_step(c, level)
-    local step = M.ladder[position]
-    if step then return economy.quests[step.unlock.building], step end
-end
-
 function M.migrate_wallet(progress, c)
     local wallet = progress.wallet
     local reserved = M.reserved_cost(c,progress.level)

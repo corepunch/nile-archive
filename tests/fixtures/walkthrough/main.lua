@@ -31,13 +31,7 @@ function R.smoke()
             R.quiet = false
             if story.active() then story.next() end
             if not R.prog.story_seen['restore-01'] then return end
-            if R.overlay == R.OV_QUEST then
-                if R.dialog_settled() then
-                    assert(R.quest_card == "chart" and R.quest_offer)
-                    app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2))
-                end
-                return
-            end
+
         end
         app.inject_click(vec2(394, 136)); stage = 4
     elseif stage == 4 and not R.on_island then

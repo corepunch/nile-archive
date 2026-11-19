@@ -43,7 +43,7 @@ local function play(g)
     while not g.won and not g.lost do
         local best, a, b = -1, -1, -1
         for i = 0, rules.CELLS - 1 do
-            for d = 0, 2 do
+            for d = 0, rules.AXES - 1 do
                 local j = rules.hex_neighbor(i, d)
                 local value = rules.game_evaluate_move(g, i, j)
                 if value > best then best, a, b = value, i, j end
@@ -65,10 +65,7 @@ local function play(g)
     end
 end
 
--- The story and the building ladder end at the finale's board; the boards
--- after it are covered by the move tuner and the balance runner.
-local STORY_LEVELS = journey.beats[#journey.beats].level
-for level = 1, STORY_LEVELS do
+for level = 1, rules.LEVELS do
     R.on_island, R.overlay = false, R.OV_NONE
     R.g = rules.game_start(level - 1, 1)
     local next_beat = journey.next(R.prog, owns_wonder, level - 1)
@@ -100,6 +97,7 @@ for level = 1, STORY_LEVELS do
     local reward = rules.reward_breakdown(R.g, R.prog)
     local before = R.prog.wallet[1]
     R.claim_reward()
+    if R.overlay == R.OV_COMPLETE then R.overlay = R.OV_NONE end
     check(R.prog.level == level and R.prog.wallet[1] == before + reward.total[1], 'win pays once and advances')
     earned = earned + reward.total[1]
     if rules.FOOD then
@@ -154,9 +152,16 @@ for level = 1, STORY_LEVELS do
         pending = journey.next(R.prog, owns_wonder, nil)
     end
 end
-check(#played == #journey.beats, 'every story beat played')
-for i, beat in ipairs(journey.beats) do check(played[i] == beat.key, 'story order: ' .. beat.key) end
-check(island.wonder_count(R.island) == island.WONDERS, 'all story buildings placed')
-if island.ladder then check(island.campaign_count(R.island) == #island.ladder, 'every ladder restoration placed') end
+local due = 0
+for _, step in ipairs(island.ladder) do if step.after <= rules.LEVELS then due = due + 1 end end
+check(island.wonder_count(R.island) == journey.earned(rules.LEVELS), 'all earned story buildings placed')
+check(island.campaign_count(R.island) == due, 'every earned purchase placed')
+local index = 0
+for _, beat in ipairs(journey.beats) do
+    if beat.level <= rules.LEVELS then
+        index = index + 1
+        check(played[index] == beat.key, 'story order: ' .. beat.key)
+    end
+end
 print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d total earned, %d remaining, %d stars, %d scenes'):format(
     wins, attempts-wins, replays, earned, R.prog.wallet[1], R.prog.wallet[4], #played))

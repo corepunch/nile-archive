@@ -22,6 +22,7 @@
 --                             reserve=n, decorate=fn(box)}, ...}
 --   menu(bounds)            draw and handle an optional header menu
 --   build(), play(), middle(), pause()   bottom actions
+--   build_rim(center, radius)           optional effect around the Build button
 --   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool,
 --                            portrait=texture, progress=0..1}, ...}: round
 --                           markers down the left edge, under the header (requests, tasks)
@@ -435,6 +436,10 @@ function View:bottom()
     -- Play's caption is the game's: the number of the level it starts.
     if h.play_label then self.navigation:set("play", h.play_label()) end
     local event = self.navigation:draw(self.bottom_row, skin)
+    if h.build_rim then
+        local box = self.navigation.boxes.build
+        h.build_rim(box:center(), math.min(box.w, box.h) * .46)
+    end
     if primary then gfx.bleed(false) end
     if event and (event.id == "build" or event.id == "play" or event.id == "pause") then
         haptic.play(haptic.TICK, .6)

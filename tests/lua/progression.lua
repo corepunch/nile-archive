@@ -52,14 +52,16 @@ line(wood, 4, 4, wave)
 check(wood.earnings[3] == 40 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
       "four pieces credit eight times the base resource")
 local hammer = rules.game_start(4, 42, 2)
-hammer.tool_meter[1] = 194
+for _ = 1, 7 do line(hammer, 5, 4, wave) end
+check(hammer.tools[1] == 0 and hammer.tool_meter[1] == 84, "28 matched hammers leave the tool uncharged")
 line(hammer, 5, 3, wave)
 check(hammer.tools[1] == 1 and hammer.tool_meter[1] == 3 and hammer.earnings[1] == 0,
       "matching hammers earns a charge and no Gold")
 check(rules.game_tool(hammer, 0, column_top(hammer), wave) and hammer.tools[1] == 0,
       "the charged hammer can be spent")
 
-local lightning = rules.game_start(19, 7, 7)
+local lightning = rules.game_start(9, 7)
+lightning.tool_meter[3] = 0
 lightning.tools[3] = 1
 local at = rules.hex_center()
 local area = rules.game_tool_area(lightning, 2, at)

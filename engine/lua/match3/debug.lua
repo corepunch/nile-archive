@@ -2,7 +2,7 @@
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
 -- --level, --city, --epoch, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
--- --catalogue, --dialog, --present, --mission, --goals-met,
+-- --catalogue, --build-review, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces.
 -- --floor-reel oil plays three swaps that clear tablets on the chosen campaign level.
@@ -176,6 +176,16 @@ function D.bind(R, W)
         end
         a = app.arg("city")
         if a then island_with(num.clampi(tonumber(a), 0, WONDERS)); R.on_island = true; R.toast_time = 0 end
+        a = app.arg("build-review")
+        if a then
+            island_with(0)
+            R.prog.level = island.ladder[1].after
+            R.prog.wallet = a == "short" and purse(15, 0, 0, R.prog.level) or wallet(340, R.prog.level)
+            R.on_island, R.toast_time = true, 0
+            if a == "short" then
+                R.inspect, R.inspect_item, R.overlay = island.ladder[1].kind, -1, R.OV_WONDER
+            end
+        end
         a = app.arg("epoch")   -- --epoch N: the town once N epochs of four ladder purchases are bought
         if a then island_with(0, num.clampi(4 * tonumber(a), 0, #island.ladder)); R.on_island = true; R.toast_time = 0 end
         if app.arg("showcase") then

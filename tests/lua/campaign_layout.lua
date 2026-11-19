@@ -1,20 +1,21 @@
 -- Content contracts for both authored campaigns, using their real rules.
--- tools/hex_levels.py validates the sources; this checks what the engine builds.
+-- Check the authored geometry and the engine’s opening deals.
 local rules = require('rules')
 local campaign = require('campaign')
+check(rules.square and rules.COLUMNS == 9 and rules.ROWS == 12, '9×12 square envelope')
+check(rules.LEVELS == 10 and rules.COLORS == 5, 'ten boards and five piece slots')
 for level, entry in ipairs(campaign.levels) do
     local label = ('level %d: '):format(level)
     check(#entry.mask == rules.CELLS and not entry.mask:find('[^01]'), label .. 'valid cell mask')
     local g = rules.game_start(level - 1, 1)
-    local count, chains, ice = 0, 0, 0
+    local count, chains = 0, 0
     for i = 0, rules.CELLS - 1 do
         if g.active[i] then
             count = count + 1
             chains = chains + (g.chain[i] > 0 and 1 or 0)
-            ice = ice + (g.ice[i] > 0 and 1 or 0)
             -- No tip or pocket requires a booster just to make a local match.
             local supported = false
-            for axis = 0, 2 do
+            for axis = 0, rules.AXES - 1 do
                 local length = 1
                 for _, direction in ipairs{axis, axis+3} do
                     local j = rules.hex_neighbor(i, direction)
@@ -31,8 +32,8 @@ for level, entry in ipairs(campaign.levels) do
                 label .. 'no target or piece in a hole')
         end
     end
-    check(chains == #entry.chain_cells and ice == #entry.ice_cells, label .. 'every authored blocker places')
-    check(count >= 49, label .. 'at least 49 cells')
+    check(chains == #entry.chain_cells, label .. 'every authored blocker places')
+    check(count >= 32, label .. 'at least 32 cells')
     for seed = 1, 4 do
         g = rules.game_start(level - 1, seed)
         local m = rules.new_match()

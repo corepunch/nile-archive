@@ -1,4 +1,4 @@
--- Reusable deterministic hex match-3 engine. Game configuration is data and
+-- Reusable deterministic match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
 local buttons = require("match3.buttons")
 local E = {
@@ -571,10 +571,16 @@ function E.new(config)
     assert(math.type(flags) == "integer" and flags >= 0 and flags < 512, "invalid match3 flags")
     assert(not config.radius or math.type(config.radius) == "integer" and config.radius >= 1 and config.radius <= 16, "invalid hex radius")
     assert((config.columns == nil) == (config.rows == nil), "a rectangular board needs both columns and rows")
-    assert(not config.columns or math.type(config.columns) == "integer" and config.columns % 2 == 1
-        and config.columns <= 31 and math.type(config.rows) == "integer" and config.rows >= 2 and config.rows <= 31,
-        "a rectangular board has an odd number of columns")
-    local M = {flags=flags}
+    local square = config.square
+    assert(not square or config.columns, "a square-cell grid needs columns and rows")
+    assert(not config.columns or math.type(config.columns) == "integer" and config.columns >= 1
+        and config.columns <= 31 and (square or config.columns % 2 == 1)
+        and math.type(config.rows) == "integer" and config.rows >= 2 and config.rows <= 31,
+        "invalid rectangular grid")
+    local axes = square and 2 or 3
+    local M = {flags=flags, square=square, AXES=axes}
+    -- Keep the opposite direction at axis + 3. Diagonal gravity has separate
+    -- directions so square boards never accept a diagonal swap or match.
     -- Axial hex grid of flat-top cells; neighbours are numbered 0..5 and
     -- opposite directions differ by 3. The envelope is a hexagon of `radius`
     -- or a rectangle of `columns` x `rows`, whose odd columns sit half a cell
@@ -587,9 +593,11 @@ function E.new(config)
         local function add(q, r) qs[n], rs[n], index[key(q, r)] = q, r, n; n = n + 1 end
         if config.columns then
             M.COLUMNS, M.ROWS = config.columns, config.rows
-            local half = (config.columns - 1) // 2
-            for q = -half, half do
-                for row = 0, config.rows - 1 do add(q, row - q // 2 - config.rows // 2) end
+            local half = config.columns // 2
+            for q = -half, config.columns - half - 1 do
+                for row = 0, config.rows - 1 do
+                    add(q, row - config.rows // 2 - (square and 0 or q // 2))
+                end
             end
             M.HEX_RADIUS = math.max(half, config.rows // 2)
         else
@@ -605,12 +613,18 @@ function E.new(config)
     local radius = M.HEX_RADIUS
     -- direction d: 0 = (+1, 0), 1 = (0, +1), 2 = (-1, +1), 3..5 the opposites
     local dirs = {[0] = {1, 0}, {0, 1}, {-1, 1}, {-1, 0}, {0, -1}, {1, -1}}
+    if square then
+        dirs[2], dirs[5] = nil, nil
+        dirs[6], dirs[7] = {-1, -1}, {1, -1}
+    end
+    local upper_left, upper_right = square and 6 or 3, square and 7 or 5
     local neighbors = {}
     for i = 0, CELLS - 1 do
         neighbors[i] = {}
-        for d = 0, 5 do
-            neighbors[i][d] = index[key(qs[i] + dirs[d][1], rs[i] + dirs[d][2])] or -1
+        for d, delta in pairs(dirs) do
+            neighbors[i][d] = index[key(qs[i] + delta[1], rs[i] + delta[2])] or -1
         end
+        neighbors[i][2], neighbors[i][5] = neighbors[i][2] or -1, neighbors[i][5] or -1
     end
 
     function M.hex_index(q, r) return index[key(q, r)] or -1 end
@@ -626,13 +640,16 @@ function E.new(config)
     function M.hex_distance(a, b)
         if a < 0 or a >= CELLS or b < 0 or b >= CELLS then return 10000 end
         local q, r = qs[a] - qs[b], rs[a] - rs[b]
+        if square then return math.abs(q) + math.abs(r) end
         return (math.abs(q) + math.abs(r) + math.abs(q + r)) // 2
     end
-    -- The envelope's extent in cell units: q, and screen rows (r + q / 2).
+    local stagger = square and 0 or .5
+    local function screen_row(cell) return rs[cell] + qs[cell] * stagger end
+    -- The envelope's extent in cell units.
     do
         local min_q, max_q, min_y, max_y = math.huge, -math.huge, math.huge, -math.huge
         for i = 0, CELLS - 1 do
-            local y = rs[i] + qs[i] * .5
+            local y = screen_row(i)
             min_q, max_q, min_y, max_y = math.min(min_q, qs[i]), math.max(max_q, qs[i]), math.min(min_y, y), math.max(max_y, y)
         end
         M.envelope = {min_q=min_q, max_q=max_q, min_y=min_y, max_y=max_y}
@@ -710,7 +727,7 @@ function E.new(config)
         return n
     end
 
-    -- Flood fill of identical relics through shared hex edges.
+    -- Flood fill of identical relics through shared edges.
     local function collect_group(g, start, cells)
         if not cell_active(g, start) or g.tiles[start].kind < 0 then return 0 end
         local seen = {[start] = true}
@@ -746,7 +763,9 @@ function E.new(config)
 
     local function mark_area(g, m, cell, blast_radius)
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and hex_distance(cell, i) <= blast_radius then m.mask[i], m.direct[i] = true, true end
+            local distance = square and math.max(math.abs(qs[i] - qs[cell]), math.abs(rs[i] - rs[cell]))
+                or hex_distance(cell, i)
+            if cell_active(g, i) and distance <= blast_radius then m.mask[i], m.direct[i] = true, true end
         end
     end
 
@@ -870,6 +889,7 @@ function E.new(config)
                                         -- A quest piece: counted by its own key, apart from the wallet.
                                         g.items[resource.item] = (g.items[resource.item] or 0) + amount
                                     elseif resource.tool and m.ordinary[i] and g.tool_meter and g.tool_meter[resource.tool] then
+                                        if square then amount = resource.amount end
                                         local tool = resource.tool
                                         local meter = g.tool_meter[tool]
                                         if g.single_charge_tools then amount = math.min(amount, g.tool_threshold - meter) end
@@ -901,7 +921,7 @@ function E.new(config)
     end
     local game_apply = M.game_apply
 
-    -- Gravity follows the three downward hex edges, preferring straight down.
+    -- Gravity prefers straight down and trickles diagonally around obstructions.
     -- A gem can slide diagonally only when its own cell below is unavailable;
     -- every exposed column top creates new pieces directly from above. Interior
     -- cells still trickle around locks, or spawn when all parents are blocked.
@@ -910,7 +930,7 @@ function E.new(config)
     local fall_order = {}
     for i = 0, CELLS - 1 do fall_order[#fall_order + 1] = i end
     table.sort(fall_order, function(a, b)
-        local ay, by = 2 * hex_r(a) + hex_q(a), 2 * hex_r(b) + hex_q(b)
+        local ay, by = screen_row(a), screen_row(b)
         return ay == by and a < b or ay > by
     end)
 
@@ -941,7 +961,7 @@ function E.new(config)
                 local above = hex_neighbor(i, 4)
                 local yes = inlet_of(g, i) or fed[above]
                 if not yes and flags & E.NO_TRICKLE == 0 then
-                    local left, right = hex_neighbor(i, 3), hex_neighbor(i, 5)
+                    local left, right = hex_neighbor(i, upper_left), hex_neighbor(i, upper_right)
                     yes = fed[left] or fed[right]
                 end
                 fed[i] = yes or nil
@@ -983,7 +1003,7 @@ function E.new(config)
                     empty = empty + 1
                     -- Alternate equal left/right choices spatially, without using RNG.
                     local left, right = -1, -1
-                    if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, 3), hex_neighbor(i, 5) end
+                    if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, upper_left), hex_neighbor(i, upper_right) end
                     if (hex_q(i) + hex_r(i)) % 2 == 0 then left, right = right, left end
                     local above, source = hex_neighbor(i, 4), nil
                     local inlet = inlet_of(g, i)
@@ -1058,7 +1078,7 @@ function E.new(config)
     local function shape_at(g, cell)
         local kind = match_kind(g, cell)
         if not kind then return false end
-        for axis = 0, 2 do
+        for axis = 0, axes - 1 do
             local length = 1
             for dir = axis, axis + 3, 3 do
                 local side = neighbors[cell][dir]
@@ -1122,7 +1142,7 @@ function E.new(config)
     function M.game_hint(g)
         if g.won or g.lost then return false end
         for i = 0, CELLS - 1 do
-            for d = 0, 2 do
+            for d = 0, axes - 1 do
                 local j = hex_neighbor(i, d)
                 if game_swap_matches(g, i, j) then return true, i, j end
             end
@@ -1443,7 +1463,7 @@ function E.new(config)
             local kind = g.tiles[cell].kind
             mark_color(g, m, kind)
             if effect == "color_pierce" then m.pierce_kind = kind end
-        else for z = 0, 2 do mark_line(g, m, cell, z) end end
+        else for z = 0, axes - 1 do mark_line(g, m, cell, z) end end
         return true
     end
 
@@ -1536,9 +1556,11 @@ function E.new(config)
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
     local BONUS_GAP, BONUS_MARGIN = 4, 4   -- the round button art carries its own clear border
     local neutral_hud = app.arg("default-match3")
-    local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
+    local HEX_R = R.HEX_R
+    local dx, dy = (square and 2 or 1.5) * HEX_R, (square and 2 or math.sqrt(3)) * HEX_R
+    R.cell_width, R.cell_height = square and dx or 2 * HEX_R, dy
     local env = M.envelope
-    local board_size = size2(((env.max_q - env.min_q) * 1.5 + 2) * HEX_R + 12, (env.max_y - env.min_y + 1) * HEX_DY + 12)
+    local board_size = size2((env.max_q - env.min_q) * dx + R.cell_width + 12, (env.max_y - env.min_y + 1) * dy + 12)
     local centred_game, centre_q, centre_row = nil, 0, 0
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
@@ -1554,7 +1576,7 @@ function E.new(config)
                 for i = 0, CELLS - 1 do
                     if cell_active(g, i) then
                         local q = hex_q(i)
-                        local row = hex_r(i) + q * .5
+                        local row = screen_row(i)
                         min_q, max_q = math.min(min_q, q), math.max(max_q, q)
                         min_row, max_row = math.min(min_row, row), math.max(max_row, row)
                     end
@@ -1563,7 +1585,7 @@ function E.new(config)
             end
         end
         local board_center = vec2(w / 2, bonuses and h / 2 or h - BOARD_FROM_BOTTOM)
-        local shift = vec2(centre_q * 1.5 * HEX_R, bonuses and centre_row * HEX_DY or 0)
+        local shift = vec2(centre_q * dx, bonuses and centre_row * dy or 0)
         R.board_origin = board_center - shift
         R.BOARD_CLIP = rect.centered(board_center, board_size)
         local hud_y = h - HUD_FROM_BOTTOM
@@ -1596,7 +1618,7 @@ function E.new(config)
     end
     R.layout = layout
     layout()
-    local CELL_SIZE = R.piece_width or HEX_DY
+    local CELL_SIZE = R.piece_width or dy
     local PI = math.pi
     local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE = 0, 1, 2, 3, 4, 6
     local REJECT_LEG = .16
@@ -1604,7 +1626,7 @@ function E.new(config)
     local SHUFFLE_DURATION = SHUFFLE_FLIGHT + SHUFFLE_STAGGER * (SHUFFLE_GROUPS - 1)
     R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL, R.PH_SHUFFLE =
         PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE
-    function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * 1.5 * HEX_R, (hex_r(i) + hex_q(i) * .5) * HEX_DY) end
+    function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * dx, screen_row(i) * dy) end
     local cell_pos = R.cell_pos
 
     R.GROUND = {seam = color(69, 73, 80), face = color(82, 86, 93)}
@@ -1612,8 +1634,12 @@ function E.new(config)
     -- Screen point to the active cell under it, by rounding cube coordinates.
     function R.cell_at(p)
         local d = p - R.board_origin
-        local q = d.x * 2 / (3 * HEX_R)
-        local r = -d.x / (3 * HEX_R) + d.y / HEX_DY
+        local q, r = d.x / dx, d.y / dy
+        if square then
+            local cell = hex_index(math.floor(q + .5), math.floor(r + .5))
+            return cell_active(R.g, cell) and cell or -1
+        end
+        r = r - q * stagger
         local s = -q - r
         local iq, ir, is = math.floor(q + .5), math.floor(r + .5), math.floor(s + .5)
         local dq, dr, ds = math.abs(iq - q), math.abs(ir - r), math.abs(is - s)
@@ -1946,17 +1972,17 @@ function E.new(config)
         local f = elapsed_steps - completed
         if step then t = step.tiles[i] end
         if from ~= i then
-            local source = from >= 0 and cell_pos(from) or cell_pos(i) - vec2(0, HEX_DY)
+            local source = from >= 0 and cell_pos(from) or cell_pos(i) - vec2(0, dy)
             at = (source + vec2(sx, 0)):lerp(at, f)
             if from < 0 then
                 -- Clip only the inlet; sideways moves need the whole board.
-                local top = cell_pos(i).y - HEX_DY / 2
+                local top = cell_pos(i).y - dy / 2
                 clip = rect(at.x - CELL_SIZE / 2 - 1, top, CELL_SIZE + 2, R.BOARD_CLIP.h)
             end
         elseif not R.reduced_motion and landed and landed.from[i] ~= i
             and t == landed.tiles[i] and t.kind >= 0 then
             -- Rebound only while the piece rests in the cell it just reached.
-            at.y = at.y - HEX_DY * .07 * (4 * f * (1 - f))
+            at.y = at.y - dy * .07 * (4 * f * (1 - f))
             aspect = 1 + .08 * (1 - f)^3
         end
     end
