@@ -198,6 +198,14 @@ test-ci: build/test/all $(TEST_AUX_BINS)
 	./build/test-audio
 	BALANCE_RUNS= ./build/test/all --with-quick-smoke --extended
 
+# Bots play every board and write the fitted values: move budgets for both
+# match-3 games, restoration prices for Relic Rush (tools/balance.py).
+#   make balance GAME=relic-rush
+#   make balance GAME=christmas-market BALANCE_ARGS=--trim
+.PHONY: balance
+balance:
+	python3 tools/balance.py $(GAME) $(BALANCE_ARGS)
+
 .PHONY: test-balance
 test-balance: export BALANCE_RUNS ?= 10
 test-balance: build/test/relic-rush

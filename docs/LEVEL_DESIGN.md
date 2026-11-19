@@ -308,8 +308,17 @@ does what its `teaches:` line says.
 
 ## Move budgets
 
-You never write a move budget. Once the boards pass, compile them and fit the
-budgets:
+You never write a move budget or a price. After changing boards, one command
+compiles them, has the bot play every board, and writes the move budgets and,
+for Relic Rush, the restoration prices fitted to the new income (about two
+minutes; the bots run the rules alone, without window, renderer or audio):
+
+```sh
+make balance GAME=relic-rush
+make balance GAME=christmas-market BALANCE_ARGS=--trim   # trim boards that run long first
+```
+
+The steps it runs can also be run one at a time:
 
 ```sh
 python3 tools/hex_levels.py relic-rush --lua           # lua/boards.lua

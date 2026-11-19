@@ -7,6 +7,11 @@
 --
 --   make test-balance
 --   make test-balance BALANCE_RUNS=40
+--
+-- tools/balance.py splits the work across processes: with TUNE_LEVELS=A-B this
+-- plays only that range and prints one INCOME_JSON line per board; with a
+-- `balance_incomes` module on the path (the collected lines) it plays nothing
+-- and fits from them, printing one PRICE_JSON line per restoration.
 if not testing.extended then return end
 
 local rules = require('rules')
@@ -70,8 +75,14 @@ if not RUNS then
     return
 end
 
-local boards = {}
-for level = 1, rules.LEVELS do
+local found, given = pcall(require, 'balance_incomes')
+local boards = found and given or {}
+local first, last = 1, rules.LEVELS
+if testing.tune_levels then
+    first, last = testing.tune_levels:match('^(%d+)%-(%d+)$')
+    first, last = tonumber(first), tonumber(last)
+end
+for level = first, found and 0 or last do
     local stats = {wins = 0, moves = 0, income = {}}
     for slot = 1, CURRENCIES do stats.income[slot] = 0 end
     local restored = restored_by(level)
@@ -89,8 +100,11 @@ for level = 1, rules.LEVELS do
     boards[level] = stats
     print(('board %02d · wins %d/%d · moves left %.1f · income %s'):format(level, stats.wins, RUNS, stats.moves,
         table.concat((function() local t = {} for s = 1, CURRENCIES do t[s] = ('%.0f'):format(stats.income[s]) end return t end)(), '/')))
+    print(('INCOME_JSON {"level":%d,"wins":%d,"moves":%.2f,"income":[%s]}'):format(level, stats.wins, stats.moves,
+        table.concat((function() local t = {} for s = 1, CURRENCIES do t[s] = ('%.3f'):format(stats.income[s]) end return t end)(), ',')))
     check(stats.wins > 0, ('the bot wins board %d at least once'):format(level))
 end
+if testing.tune_levels then return end
 
 -- Stops are the ladder's `after` clears.
 local stops, order = {}, {}
@@ -151,6 +165,7 @@ for _, after in ipairs(order) do
         local f = fitted[b.key]
         print(('  after %02d  %-14s %d/%d/%d -> %d/%d/%d'):format(after, b.key,
             b.cost[1], b.cost[2], b.cost[3], f[1], f[2], f[3]))
+        print(('PRICE_JSON {"key":"%s","after":%d,"cost":[%d,%d,%d]}'):format(b.key, after, f[1], f[2], f[3]))
     end
 end
 

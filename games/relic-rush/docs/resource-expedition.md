@@ -66,7 +66,7 @@ The opening pool contains sun coins (5 Coins), silver coins (3 Coins), leaves, f
 
 ## Restoration prices and earnings
 
-The building currencies and their order of introduction follow the [Windows economy export](../../../docs/cradle-of-rome-reference/rome-2-economy.json). The hex game prices use its own income. Run `make test-balance BALANCE_RUNS=10` to play the 100 boards with ten seeds each and calculate income per win. At each purchase stop the fit spends 80% of the available wallet in the currencies required by the reference. Buildings offered on the same clear divide this budget in proportion to their reference prices. The mean-income simulation bought all twenty buildings by clear 29 without replays. Individual deals and player decisions vary.
+The building currencies and their order of introduction follow the [Windows economy export](../../../docs/cradle-of-rome-reference/rome-2-economy.json). The hex game prices use its own income. Run `make balance GAME=relic-rush` to play the 100 boards with forty seeds each, calculate income per win and write the fitted prices to the catalogue, `lua/buildings.lua` and the README table; `make test-balance BALANCE_RUNS=10` prints the same report without writing. At each purchase stop the fit spends 80% of the available wallet in the currencies required by the reference. Buildings offered on the same clear divide this budget in proportion to their reference prices. The mean-income simulation bought all twenty buildings by clear 29 without replays. Individual deals and player decisions vary.
 
 ## Release status and checks
 

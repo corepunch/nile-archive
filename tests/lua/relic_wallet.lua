@@ -163,7 +163,7 @@ end
 -- Late restorations charge the real wallet and change only subsequent boards.
 do
     local c=R.island
-    local wallet=purse(5000,5000,5000,90)
+    local wallet=purse(100000,100000,100000,90)   -- more than every fitted price together
     for z=1,5 do c:unlock(z,wallet) end
     for i=6,#island.ladder do
         local unlock=island.ladder[i].unlock

@@ -238,25 +238,25 @@ The twenty campaign purchases follow the Windows edition of Cradle of Rome 2. Ea
 | # | Building | After clear | Coins / Food / Supplies | Board reward |
 | --- | --- | ---: | --- | --- |
 | 1 | Well | 1 | 50 / 0 / 0 | Water buckets earn 3 Food each. |
-| 2 | Hunter's Hut | 4 | 195 / 75 / 0 | Unlocks Hammer. Hit one cell. |
-| 3 | Sawmill | 7 | 360 / 135 / 0 | Timber bundles earn 5 Supplies each. |
-| 4 | Village | 10 | 480 / 180 / 210 | Unlocks Bomb. Hit a cell and its six neighbors. |
-| 5 | Farm | 11 | 165 / 70 / 90 | Ration jars earn 4 Food each. |
-| 6 | Quarry | 12 | 40 / 30 / 35 | Dressed stones earn 7 Supplies each. |
-| 7 | Mill | 12 | 50 / 60 / 60 | Grain bundles earn 5 Food each. |
-| 8 | Thermae | 13 | 5 / 55 / 40 | Unlocks Shield. Hit the row through a chosen cell. |
-| 9 | Port | 13 | 10 / 60 / 45 | Shrimp earn 6 Food each. |
-| 10 | Curia Octavia | 16 | 180 / 410 / 230 | Unlocks Hourglass. Add five moves. |
-| 11 | Coliseum | 17 | 80 / 195 / 100 | Helmets earn 6 Coins each. |
-| 12 | House of the Vestals | 18 | 100 / 245 / 145 | Unlocks Lightning. Strike up to fifteen random cells. |
-| 13 | Aqueduct | 19 | 80 / 155 / 100 | Rings earn 7 Coins each. |
-| 14 | Lighthouse | 20 | 115 / 185 / 120 | Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge. |
-| 15 | Nero's Golden House | 21 | 80 / 140 / 95 | Scarabs earn 8 Coins each. |
-| 16 | Mausoleum of Augustus | 23 | 175 / 260 / 160 | Unlocks Mixer. Shuffle the pieces. |
-| 17 | Pantheon | 24 | 115 / 165 / 100 | Sandals earn 9 Coins each. |
-| 18 | Theatre | 25 | 220 / 280 / 200 | Harps earn 10 Coins each. |
-| 19 | Forum | 26 | 135 / 175 / 115 | Unlocks Star. Clear all pieces of a chosen kind. |
-| 20 | Fountain | 29 | 485 / 625 / 410 | Emeralds earn 11 Coins each. |
+| 2 | Hunter's Hut | 4 | 335 / 120 / 0 | Unlocks Hammer. Hit one cell. |
+| 3 | Sawmill | 7 | 790 / 295 / 0 | Timber bundles earn 5 Supplies each. |
+| 4 | Village | 10 | 1010 / 385 / 530 | Unlocks Bomb. Hit a cell and its six neighbors. |
+| 5 | Farm | 11 | 475 / 175 / 270 | Ration jars earn 4 Food each. |
+| 6 | Quarry | 12 | 85 / 60 / 60 | Dressed stones earn 7 Supplies each. |
+| 7 | Mill | 12 | 110 / 115 / 100 | Grain bundles earn 5 Food each. |
+| 8 | Thermae | 13 | 15 / 85 / 70 | Unlocks Shield. Hit the row through a chosen cell. |
+| 9 | Port | 13 | 25 / 90 / 80 | Shrimp earn 6 Food each. |
+| 10 | Curia Octavia | 16 | 420 / 965 / 590 | Unlocks Hourglass. Add five moves. |
+| 11 | Coliseum | 17 | 185 / 405 / 260 | Helmets earn 6 Coins each. |
+| 12 | House of the Vestals | 18 | 160 / 325 / 195 | Unlocks Lightning. Strike up to fifteen random cells. |
+| 13 | Aqueduct | 19 | 260 / 490 / 305 | Rings earn 7 Coins each. |
+| 14 | Lighthouse | 20 | 190 / 310 / 205 | Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge. |
+| 15 | Nero's Golden House | 21 | 300 / 470 / 290 | Scarabs earn 8 Coins each. |
+| 16 | Mausoleum of Augustus | 23 | 765 / 1065 / 690 | Unlocks Mixer. Shuffle the pieces. |
+| 17 | Pantheon | 24 | 385 / 505 / 335 | Sandals earn 9 Coins each. |
+| 18 | Theatre | 25 | 310 / 390 / 245 | Harps earn 10 Coins each. |
+| 19 | Forum | 26 | 400 / 450 / 285 | Unlocks Star. Clear all pieces of a chosen kind. |
+| 20 | Fountain | 29 | 1250 / 1425 / 895 | Emeralds earn 11 Coins each. |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. The Sawmill also repairs the fixed quay as part of the island story. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and

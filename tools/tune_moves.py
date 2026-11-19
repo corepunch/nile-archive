@@ -56,7 +56,7 @@ def main():
     parser.add_argument('game')
     parser.add_argument('--levels', help='A-B, one-based and inclusive (default: all)')
     parser.add_argument('--seeds', type=int, default=40)
-    parser.add_argument('--chunk', type=int, default=5)
+    parser.add_argument('--chunk', type=int, default=1, help='boards per process')
     args = parser.parse_args()
     game = ROOT / 'games' / args.game
     count = len(list((game / 'levels').glob('level_*.txt')))
