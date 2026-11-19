@@ -40,8 +40,9 @@ using the [board layout](../art/papyrus-board/contact-layout.png), the
 
 The [square frame generator](../../../tools/square_board_frame.py) uses the
 distance to the board to round exposed corners and place the dark contact
-shadow on the side facing the floor. The lighter sandstone face uses the
-hex rim's seeded grain and cracks. The corner studies were
+shadow on the side facing the floor. The narrow sandstone face uses the
+hex rim's seeded grain and cracks, with dark angled joints and light
+shoulders along the cuts. The corner studies were
 `gmf_corner_2.png`, `gmf_corner_9.png`, `gmf_corner_11.png` and
 `gmf_corner_17.png`, plus the rounded silhouette in the supplied game capture.
 The generator joins sections halfway along each exposed cell edge. It bakes

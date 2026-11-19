@@ -11,7 +11,7 @@ import board_grain
 
 CELL = 128
 LEAF_PAD = 48
-REACH, SHADOW = 20, 7
+REACH, SHADOW = 17, 7
 
 # Distance from the board, sandstone colour, and opacity. Negative distance
 # is the contact shadow that falls just inside the floor's edge.
@@ -21,10 +21,10 @@ PROFILE = (
     (0, (40, 27, 16), 245),
     (3, (60, 40, 24), 255),
     (6, (104, 74, 45), 255),
-    (9, (164, 127, 83), 255),
-    (14, (174, 136, 91), 255),
-    (16, (200, 158, 107), 255),
-    (18, (139, 101, 62), 255),
+    (8, (164, 127, 83), 255),
+    (11, (174, 136, 91), 255),
+    (13, (200, 158, 107), 255),
+    (15, (139, 101, 62), 255),
     (REACH, (84, 55, 30), 255),
 )
 
@@ -85,13 +85,16 @@ def bake(sample, grain):
             # The stone's veins and occasional cracks stay visible across
             # the face. Fade them near the ports for a continuous joint.
             seam = max(0, min(1, (CELL / 2 - 1 - abs(along)) / 5))
-            light = min(1, max(0, (depth - 3) / 5))
-            mix = strength / 255 * seam * light * .85
-            # Cut a shallow angled masonry joint across the mottled face.
+            face = min(1, max(0, (depth - 3) / 5)) * seam
+            mix = strength / 255 * face * .85
+            # The pale shoulder of each deep, angled joint picks up light.
             cut = (along + depth * .62 + abs(depth - 11) * .24) % (CELL / 2) - CELL / 4
-            joint = max(0, 1 - abs(cut) / 1.7) * .68 * light * seam
+            joint = max(0, 1 - abs(cut) / 2.4) * .85 * face
+            shoulder = max(0, 1 - abs(cut - 2.7) / 1.5) * .32 * face
             mottled = (a + (b - a) * mix for a, b in zip(colour, (r, g, b)))
-            pixels.append((*[round(a + (b - a) * joint) for a, b in zip(mottled, (69, 45, 26))], alpha))
+            stone = [round(base + (dark - base) * joint + (lit - base) * shoulder)
+                     for base, dark, lit in zip(mottled, (55, 34, 18), (234, 196, 145))]
+            pixels.append((*stone, alpha))
     image = Image.new('RGBA', (side, side))
     image.putdata(pixels)
     return image.resize((CELL, CELL), Image.Resampling.BOX)
@@ -107,7 +110,7 @@ def plant(stone):
         sprig = board_frame_decor.register(image, spec, side)
 
     corner = Image.new('RGBA', (side, side))
-    mount = (-22, -22)
+    mount = (-REACH - 2, -REACH - 2)
     # Keep the plant wholly within the empty square, even under the
     # translucent part of the stone's shadow.
     x, y = mount
