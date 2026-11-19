@@ -118,7 +118,7 @@ end
 -- half and the shoulders meet the rim. `options` may give a `state` (normal,
 -- hover, pressed or disabled, as for the buttons: pressed sinks, disabled
 -- turns the rim pewter and fades the picture) and a `progress` from 0 to 1,
--- drawn as a gauge across the bottom.
+-- drawn as a gauge across the bottom; `alpha` (0 to 1) fades it with a popup.
 function B.medallion(box, image, options)
     options = options or {}
     local side = math.min(box.w, box.h)
@@ -127,21 +127,23 @@ function B.medallion(box, image, options)
     local disabled, pressed = state == "disabled", state == "pressed"
     local rim = disabled and pewter or brass
     local face = faces[state == "hover" and "hover" or "normal"]
+    local alpha = options.alpha or 1
+    local function ink(c) return alpha < 1 and color.alpha(c, alpha) or c end
     local center = box:center()
     local body = rect.centered(center, size2(side, side))
     local depth, bezel, well, enamel = frame_boxes(body, pressed)
-    gfx.circle(center + vec2(0, depth), side * .5, shade)
-    gfx.circle(center, side * .5, rim.edge)
-    gfx.round_rect_grad(bezel, bezel.w / 2, rim.top, rim.bottom)
-    gfx.circle(well:center(), well.w / 2, rim.lip)
-    gfx.round_rect_grad(enamel, enamel.w / 2, face.top, face.bottom)
+    gfx.circle(center + vec2(0, depth), side * .5, ink(shade))
+    gfx.circle(center, side * .5, ink(rim.edge))
+    gfx.round_rect_grad(bezel, bezel.w / 2, ink(rim.top), ink(rim.bottom))
+    gfx.circle(well:center(), well.w / 2, ink(rim.lip))
+    gfx.round_rect_grad(enamel, enamel.w / 2, ink(face.top), ink(face.bottom))
     local size = image and texture.size(image)
     if size and size.w > 0 and size.h > 0 then
         local w = enamel.w * 1.08
         local h = math.max(enamel.h, w * size.h / size.w)
         circle_mask(enamel)
         gfx.image(image, rect(enamel:center().x - w / 2, enamel.y - enamel.h * .02, w, h),
-            disabled and color(255, 255, 255, 140) or color.WHITE)
+            color(255, 255, 255, math.floor((disabled and 140 or 255) * alpha + .5)))
         gfx.sdf_unmask()
     end
     if options.progress then progress_gauge(center, side, options.progress) end

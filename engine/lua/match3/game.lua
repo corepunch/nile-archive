@@ -672,7 +672,7 @@ function G.bind(R, over)
     -- and the amounts narrow together when five share the row. The list
     -- grows into the row's height, so a group of icons alone stands as tall
     -- as one of figures. A wider gap, with no rule, sets the groups apart.
-    local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 30, 372
+    local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 20, 372
     local amount_width = 96
     local function amounts(id, caption, visible, width)
         return {kind="column", gap=5, visible_field=visible, children={
@@ -789,7 +789,8 @@ function G.bind(R, over)
             match3.popup_header(W.quest.header, nil, W.corner_close and "close"),
             {kind="row",align="center",gap=16,children={
                 {kind="custom",id="portrait",width=112,height=112,visible_field="show_portrait",paint=function(box, image)
-                    require("match3.buttons").medallion(box, image)
+                    -- Custom paint gets layout coordinates: follow the popup's scale, slide and fade.
+                    require("match3.buttons").medallion(pr(box), image, {alpha=P.alpha})
                 end},
                 {kind="label",id="about",grow=1,wrap=true,text_align="start",em=19,text_style="body"},
             }},
