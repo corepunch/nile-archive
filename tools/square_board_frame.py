@@ -80,12 +80,13 @@ def bake(sample, grain):
                 continue
             colour = bands[int(depth * 16)]
             u = int(along + CELL / 2)
-            v = 24 + int(depth * 3)
+            v = 42 + int(depth * 2)
             # Multiply the painted stone grain over the coloured face.
             # Fade the grain near the joins so adjacent cells meet cleanly.
             seam = max(0, min(1, (CELL / 2 - 1 - abs(along)) / 5))
             face = min(1, max(0, (depth - 3) / 5)) * seam
-            multiply = 1 - (1 - texture[u, v] / 255) * face * .82
+            grain_weight = min(1, depth / 3) * seam
+            multiply = 1 - (1 - texture[u, v] / 255) * grain_weight * .83
             # The pale shoulder of each deep, angled joint picks up light.
             cut = (along + depth * .62 + abs(depth - 11) * .24) % (CELL / 2) - CELL / 4
             joint = max(0, 1 - abs(cut) / 2.4) * .85 * face
@@ -124,8 +125,10 @@ def foliage():
 def generate(grain_source):
     with Image.open(grain_source) as image:
         grain = image.convert('L').resize((CELL, CELL), Image.Resampling.LANCZOS)
-    # Keep the thin dark fissures legible when a full cell is drawn at 40 px.
-    grain = grain.filter(ImageFilter.MinFilter(3)).point(lambda value: min(255, value + 18))
+    # Widen the painted fissures at atlas resolution. Map pale sandstone
+    # to white so Multiply keeps the face bright between the dark cracks.
+    grain = grain.filter(ImageFilter.MinFilter(5))
+    grain = grain.point(lambda value: round(255 * max(0, min(1, (value - 75) / (211 - 75)))))
     leaves, leaf_spec, assets = foliage()
     sprites = {}
     for mask in frame_masks():
