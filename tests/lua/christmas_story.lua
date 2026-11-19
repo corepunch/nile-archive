@@ -14,17 +14,10 @@ local c=city.new();island.island_setup(c)
 check(rules.LEVELS==10 and #journey.beats==36,'the first ten winter wishes are playable')
 local stocked = rules.game_start(0, 1)
 check(#stocked.spawn_kinds == 5 and stocked.tools[1] == 0, "opening board has three score pieces and two coins")
-local cell = rules.hex_center()
-for kind = 0, 3 do
-    local wave = rules.new_match()
-    stocked.tiles[cell], stocked.tools[1] = rules.tile(kind), 1
-    check(rules.game_tool(stocked, 0, cell, wave), "hammer can hit a regular piece")
-    rules.game_apply(stocked, wave)
-end
-check(stocked.earnings[1] == 8 and stocked.earnings[2] == 0 and stocked.earnings[3] == 0,
-      "only the coins pay on the opening board")
+check(stocked.resource_yields[2].amount == 3 and stocked.resource_yields[3].amount == 5,
+      "both opening coins keep their wallet values")
 local intro = rules.game_start(3, 1)   -- wish 4 first ties tinsel over panes
-intro.tools[1] = 1
+intro.tools[1], intro.tool_meter[1] = 1, intro.tool_threshold
 local tied
 for _, i in ipairs(rules.level_of(intro).oil) do
     if intro.chain[i] > 0 and intro.ice[i] == 0 then tied = i; break end
@@ -35,7 +28,7 @@ if tied then
     check(rules.game_tool(intro, 0, tied, wave), "hammer can hit tinsel")
     rules.game_apply(intro, wave)
     check(intro.chain[tied] == 0 and intro.oil[tied] == 1, "untangling tinsel leaves the pane blue")
-    intro.tools[1] = 1
+    intro.tools[1], intro.tool_meter[1] = 1, intro.tool_threshold
     check(rules.game_tool(intro, 0, tied, wave), "hammer can hit the freed treat")
     rules.game_apply(intro, wave)
     check(intro.oil[tied] == 0, "clearing the freed treat lights the pane")
@@ -126,6 +119,22 @@ check(R.g.earnings[1] == 33 and R.g.earnings[2] == 6 and R.g.earnings[3] == 9,
       "an unclaimed win retains every matched resource after reloading")
 check(rules.progress_reward(R.prog, R.g, island.wonders) and not R.prog.completed,
       "Collect consumes the completed snapshot")
+
+R.island, R.prog = c, {level=10, wallet=purse()}
+save.write("stacked-market-tools", function(s)
+    s:int("market_resources", 4)
+    s:ints("tool_stock", purse(183, 0, 37, 0))
+end)
+save.read("stacked-market-tools", R.serialize_campaign)
+check(R.prog.bonus_charge[1] == 90 and R.prog.bonus_charge[2] == 0 and R.prog.bonus_charge[4] == 37,
+      "legacy stock clamps Hammer to one use and moves Lantern's partial meter to its shared slot")
+local migrated = R.make_board(9, 123)
+check(migrated.tool_slots[1].key == "bomb" and migrated.tools[1] == 1,
+      "the upgraded slot carries exactly one use from the old save")
+save.write("shared-market-tools", R.serialize_campaign)
+R.prog.bonus_charge = nil
+save.read("shared-market-tools", R.serialize_campaign)
+check(R.prog.bonus_charge[1] == 90 and R.prog.bonus_charge[4] == 37, "shared slot storage round-trips")
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false

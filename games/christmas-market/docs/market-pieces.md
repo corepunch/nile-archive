@@ -18,10 +18,10 @@ across the board, town, prices and results.
 | Brown bucket with blue water (`gmbn_5`, Food +3) | Cranberry red | Spiced cider in a tall, fluted tumbler, +3 Treats. |
 | Steel and wood hammer (`600`) | Spruce green | Farrier's hammer, +3 charge. |
 | Brown logs (`gmbn_6`, Supplies +5) | Chestnut brown and royal blue | Bundled pine with a blue tie, +5 Materials. |
-| Charcoal bomb (`601`) | Cranberry red | A Christmas cracker for Firework Bomb, one use per wish. |
+| Charcoal bomb (`601`) | Cranberry red | A Christmas cracker for Firework Bomb. It replaces the Hammer and inherits its one-use meter. |
 | Red meat and golden bread (`gmbn_7`, `gmbn_9`, Food +4 and +5) | Cranberry red | Glazed gingerbread star, then hot cocoa in a round mug with a cream cap. |
 | Gray stone (`gmbn_8`, Supplies +7) | Walnut brown and royal blue | Wooden toy blocks, +7 Materials, reserved for the later Toymaker's workshop. |
-| Star tool (`607`) | Ice blue | A comet with a horizontal trail for Shooting Star. |
+| Star tool (`607`) | Ice blue | A comet for Shooting Star, which clears the selected piece's kind. |
 
 Every wish spawns five kinds. The first four wishes use green, blue, silver,
 gold and red. The wood on wish five uses chestnut brown and carries the
@@ -37,7 +37,7 @@ recognizable even when shown together in a reward or wallet.
 | Welcome arch | 1 | Well | Spiced cider. A hot drink for arrivals from the station. | 50 / 0 / 0 |
 | Reindeer stable | 2 | Hunter's Hut | Farrier's hammer. Match 30 to charge a single-cell hit. | 60 / 20 / 0 |
 | Lumber workshop | 4 | Sawmill | Bundled pine. Theo's cut wood pays for the market's next stalls. | 100 / 75 / 0 |
-| Gingerbread house | 5 | Village | One Firework Bomb per wish for a 3×3 burst. | 150 / 40 / 80 |
+| Gingerbread house | 5 | Village | Firework Bomb replaces the Hammer. It inherits the Hammer's charge and hits a 3×3 area. | 150 / 40 / 80 |
 | Gingerbread bakery | 7 | Farm | Glazed gingerbread stars take over the Treats position at +4. | 300 / 0 / 200 |
 | Hot cocoa kiosk | 9 | Mine slot, with the Mill's +5 Food role | The kiosk's cocoa takes over the Treats position at +5. The Toymaker's workshop later takes the Mine's +7 Materials role. | 400 / 100 / 300 |
 

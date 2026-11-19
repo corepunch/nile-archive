@@ -16,46 +16,8 @@ require("narrative")
 require("smoke")
 require("campaign_smoke")
 
--- The stalls in force, by building key; a preview counts every stall due.
-function R.board_context(preview)
-    if preview then return end
-    local restored = {}
-    for _, step in ipairs(island.ladder) do
-        restored[step.unlock.building] = island.owned(R.island, step.kind) > 0
-    end
-    return restored
-end
-
-local make_board = R.make_board
-function R.make_board(level, seed, preview)
-    local g = make_board(level, seed, preview)
-    if not preview and g.tool_meter and R.prog then
-        g.bank_tools = true
-        local stock = R.prog.tool_stock
-        for tool in pairs(g.tool_meter) do
-            local points = stock and math.max(0, stock[tool]) or 0
-            g.tools[tool] = points // g.tool_threshold
-            g.tool_meter[tool] = points % g.tool_threshold
-        end
-    end
-    return g
-end
-
--- Carry uses and partial meters through retries and restarts.
-function R.update_bonus_charges()
-    local g = R.g
-    if not g.bank_tools then return end
-    local stock = R.prog.tool_stock or purse()
-    local changed = false
-    for tool, meter in pairs(g.tool_meter) do
-        local points = g.tools[tool] * g.tool_threshold + meter
-        if stock[tool] ~= points then stock[tool], changed = points, true end
-    end
-    if changed then
-        R.prog.tool_stock = stock
-        R.save_progress()
-    end
-end
+local bonuses = require("match3.bonuses")
+match3_game.bind_campaign_bonuses(R, island, economy.board_loadout)
 
 local serialize_completed = match3_game.bind_completed_rewards(R, rules)
 function R.serialize_campaign(s)
@@ -66,12 +28,21 @@ function R.serialize_campaign(s)
     -- them before any wallet top-up, which reserves only what is still owed.
     island.serialize_waivers(s, R.island, R.prog.level, reading and version < 3)
     if reading and version < 2 then island.migrate_wallet(R.prog, R.island) end
-    R.prog.tool_stock = s:ints("tool_stock", not reading and R.prog.tool_stock or purse())
-    if reading and version < 4 then
-        for tool in ipairs(economy.tool_slots) do
-            R.prog.tool_stock[tool] = math.floor(math.max(0, R.prog.tool_stock[tool]) * economy.BONUS_THRESHOLD / 200)
+    local legacy
+    if reading and version < 5 then
+        local stock = s:ints("tool_stock", purse())
+        local threshold = version < 4 and 200 or bonuses.THRESHOLD
+        -- The post office halved the threshold in the old extended campaign.
+        if R.prog.level >= 14 and island.owned(R.island, island.kinds.post_office) > 0 then threshold = threshold // 2 end
+        legacy = function(tool)
+            if tool == 1 or tool == 4 then
+                local old_slot = tool == 1 and 1 or 3
+                return math.floor(math.max(0, stock[old_slot]) * bonuses.THRESHOLD / threshold)
+            end
+            return 0
         end
     end
+    R.prog.bonus_charge = bonuses.serialize(s, R.prog.bonus_charge, legacy)
     serialize_completed(s)
 end
 

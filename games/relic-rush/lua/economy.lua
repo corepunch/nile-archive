@@ -1,3 +1,5 @@
+local bonuses = require("match3.bonuses")
+
 -- Three wallet slots. Score-only pieces have no wallet yield.
 -- Every piece has a Cradle of Rome 2 counterpart with the same wallet and
 -- yield (docs/cradle-of-rome-reference/gem-correspondence.html).
@@ -24,33 +26,9 @@ local E = {
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
 
-E.BONUS_THRESHOLD = 90
-E.bonus_slots = {
-    {key="impact", legacy_slot="blast", levels={
-        {key="hammer", name="Hammer", action="hit", effect="Hit one cell."},
-        {key="bomb", name="Bomb", action="blast", effect="Hit a 3×3 square around a cell."},
-    }},
-    {key="shield", legacy_slot="sweep", levels={
-        {key="shield", name="Shield", action="row", effect="Hit the row through a chosen cell."},
-        {key="plus", name="Plus", action="replenish", resource_amount=100, effect="Choose a resource piece for 100 resources or another bonus to add a quarter charge."},
-    }},
-    {key="hourglass", legacy_slot="recharge", levels={
-        {key="hourglass", name="Hourglass", action="moves", effect="Add five moves."},
-        {key="mixer", name="Mixer", action="shuffle", effect="Shuffle the pieces."},
-    }},
-    {key="lightning", legacy_slot="star", levels={
-        {key="lightning", name="Lightning", action="lightning", effect="Strike up to fifteen random cells."},
-        {key="star", name="Star", action="color", effect="Clear all pieces of a chosen kind."},
-    }},
-}
-local B = {}
-for tool, slot in ipairs(E.bonus_slots) do
-    for rank, bonus in ipairs(slot.levels) do
-        bonus.tool, bonus.rank, bonus.amount = tool, rank, 3
-        bonus.icon = "bonus-" .. bonus.key
-        B[bonus.key] = bonus
-    end
-end
+E.BONUS_THRESHOLD = bonuses.THRESHOLD
+local B
+E.bonus_slots, B = bonuses.slots()
 E.bonuses = B
 
 -- The twenty purchases in the Windows sequel's epochs.xml. Stable catalogue keys
@@ -78,11 +56,7 @@ E.unlocks = {
     {building="temple", rome="city_forum", tile=607, first_level=27, backdrop=2, bonus=B.star},
     {building="fountain", rome="city_center", tile=16, first_level=30, backdrop=1, key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11},
 }
--- A restoration is placed after the clear before its first board.
-for _, unlock in ipairs(E.unlocks) do
-    unlock.after = unlock.after or unlock.first_level - 1
-    if unlock.bonus then unlock.bonus.first_level = unlock.first_level end
-end
+bonuses.index_unlocks(E.unlocks)
 
 function E.unlock_of(building)
     for _, unlock in ipairs(E.unlocks) do
@@ -109,24 +83,8 @@ function E.bonus_lesson(bonus)
     return ("Match %d %s pieces for one charge."):format(E.BONUS_THRESHOLD // bonus.amount, bonus.name)
 end
 
-function E.active_bonus_slots(number, restored)
-    local slots, meter = {}, {}
-    for tool, slot in ipairs(E.bonus_slots) do slots[tool] = slot.levels[1] end
-    for _, unlock in ipairs(E.unlocks) do
-        local bonus = unlock.bonus
-        if bonus and restored and restored[unlock.building] and (not restored.preview or number >= unlock.first_level) then
-            local tool = bonus.tool
-            slots[tool] = bonus
-            meter[tool] = restored.bonus_charge and restored.bonus_charge[tool] or 0
-        end
-    end
-    return slots, meter
-end
-
 function E.board_loadout(number, restored, seed)
-    local yields, available = {}, {}
-    local slots, meter = E.active_bonus_slots(number, restored)
-    local debut
+    local yields = {}
     for kind, piece in pairs(E.pieces) do
         if piece.amount then yields[kind] = piece end
     end
@@ -135,19 +93,7 @@ function E.board_loadout(number, restored, seed)
             yields[unlock.kind] = unlock
         end
     end
-    for tool, slot in ipairs(E.bonus_slots) do
-        if meter[tool] and number >= slot.levels[1].first_level then
-            local bonus = slots[tool]
-            available[#available + 1] = bonus
-            if number == bonus.first_level then debut = bonus end
-        end
-    end
-    local bonus = debut or (#available > 0 and available[(seed or 1) % #available + 1])
-    local kind = E.SPECIAL_KIND
-    if not debut and yields[kind] and yields[kind].first_level == number then bonus = nil end
-    if bonus then yields[kind] = bonus end
-    return yields, {match_only_resources=true, tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,
-        tool_slots=slots, single_charge_tools=true}, bonus, debut
+    return yields, bonuses.loadout(number, restored, seed, E.bonus_slots, E.unlocks, yields, E.SPECIAL_KIND)
 end
 
 -- Like Cradle of Rome, the board shows the latest restoration in force on this

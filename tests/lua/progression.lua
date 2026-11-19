@@ -1,5 +1,6 @@
 local rules = require("rules")
 local island = require("island")
+local economy = require("economy")
 
 local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
@@ -54,14 +55,15 @@ local wood = rules.game_start(4, 18)
 check(#wood.spawn_kinds == 5 and wood.resource_yields[4].slot == 3
       and not rules.game_start(3, 18).resource_yields[4], "pine materials start after the workshop opens")
 line(wood, 4, 4, wave)
-check(wood.earnings[3] == 40 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
-      "four pieces credit eight times the base resource")
+check(wood.earnings[3] == 20 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
+      "four pieces credit four times the base resource")
 local hammer = rules.game_start(2, 42, {reindeer_stable=true})
-for _ = 1, 7 do line(hammer, 5, 4, wave) end
+for _ = 1, 7 do line(hammer, economy.SPECIAL_KIND, 4, wave) end
 check(hammer.tools[1] == 0 and hammer.tool_meter[1] == 84, "28 matched hammers leave the tool uncharged")
-line(hammer, 5, 3, wave)
-check(hammer.tools[1] == 1 and hammer.tool_meter[1] == 3 and hammer.earnings[1] == 0,
-      "matching hammers earns a charge and no Gold")
+line(hammer, economy.SPECIAL_KIND, 3, wave)
+line(hammer, economy.SPECIAL_KIND, 3, wave)
+check(hammer.tools[1] == 1 and hammer.tool_meter[1] == hammer.tool_threshold and hammer.earnings[1] == 0,
+      "extra matched hammers cannot bank a second hit")
 check(rules.game_tool(hammer, 0, column_top(hammer), wave) and hammer.tools[1] == 0,
       "the charged hammer can be spent")
 
@@ -71,18 +73,12 @@ check(#bakery.spawn_kinds == 5 and bakery.resource_yields[7].amount == 4 and not
 check(#cocoa.spawn_kinds == 5 and cocoa.resource_yields[11].amount == 5 and not cocoa.resource_yields[7],
       "the kiosk replaces gingerbread with cocoa")
 
-local lightning = rules.game_start(9, 7)
-lightning.tool_meter[3] = 0
-lightning.tools[3] = 1
-local at = rules.hex_center()
-local area = rules.game_tool_area(lightning, 2, at)
-check(rules.game_tool(lightning, 2, at, wave) and wave.hits == 15, "lightning hits 15 cells")
-local pane_hit = false
-for i = 0, rules.CELLS - 1 do
-    check(area[i] == wave.mask[i], "lightning previews exactly the cells it hits")
-    if area[i] and lightning.oil[i] > 0 then pane_hit = true end
-end
-check(pane_hit and lightning.tools[3] == 0, "lightning spends one charge and reaches a blue pane")
+local lightning = rules.game_start(9, 7, {candles=true, bonus_charge={[4]=90}})
+check(rules.game_tool_area(lightning, 3, rules.hex_center()) == nil,
+      "the lantern's lightning is an instant tool")
+check(rules.game_tool(lightning, 3, nil, wave) and wave.hits == 15
+      and lightning.tools[4] == 0 and lightning.tool_meter[4] == 0,
+      "the lantern spends a single charge to hit fifteen cells")
 local future = rules.game_start(5, 99)
 future.won = true
 check(not rules.progress_reward(p, future, island.wonders), "future wish cannot be claimed")

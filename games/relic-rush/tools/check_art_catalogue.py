@@ -87,6 +87,8 @@ for name in pieces:
     assert path in shipped and f"`{name}`" in doc
 wallet = manifest["wallet_icons"]
 assert all((ROOT / wallet[key]).is_file() for key in ("source", "prompt", "review"))
+for edit in wallet.get("source_overrides", {}).values():
+    assert all((ROOT / edit[key]).is_file() for key in ("source", "prompt"))
 declaration = re.search(r"A\.wallet_icons\s*=\s*\{([^}]+)\}", art).group(1)
 assert {name: f"art/registered/resource-pieces/{key}.png" for name, key in re.findall(r'(\w+)="([^"]+)"', declaration)} == wallet["runtime"]
 for path in wallet["runtime"].values():
@@ -144,11 +146,12 @@ for building, _, tile, row in rows:
     else:
         wallet = {1: "GOLD", 2: "SUPPLIES", 3: "PROVISIONS"}[credit["type"]]
         assert f'slot=E.{wallet}, amount={credit["amount"]}' in row, building
-variants = re.findall(r'\{key="([^"]+)", name="[^"]+", action="[^"]+"(?:, art="([^"]+)")?', economy)
+bonus_rules = (ROOT.parents[1] / "engine/lua/match3/bonuses.lua").read_text()
+variants = re.findall(r'\{key="([^"]+)", name="[^"]+", action="[^"]+"(?:, art="([^"]+)")?', bonus_rules)
 variant_art = {key: art_key or key for key, art_key in variants}
 assert variant_art == {key: bonus["art"] for key, bonus in gems["bonuses"].items()}
 assert set(variant_art.values()) == set(gems["columns"])
-assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", legacy_slot="[^"]+", levels=\{', economy)
+assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", legacy_slot="[^"]+", levels=\{', bonus_rules)
 match3 = (ROOT.parent.parent / "engine/lua/match3.lua").read_text()
 assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())

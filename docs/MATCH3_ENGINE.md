@@ -97,11 +97,13 @@ changes. `match3.TOOL_SIZE` (86 points) is the toolbar's button width. The
 slots and Pause share one row with 4-point gaps and margins, and narrower
 screens shrink all five evenly. At 480 points a button's glyph draws about a
 fifth larger than a board piece; keep it at least piece-sized everywhere.
-Relic Rush uses `single_charge_tools` to cap a slot at one use.
-Christmas Market keeps a count and a remainder. Both games persist the
-inventory through `update_bonus_charges` as waves resolve. Tool hits still
-earn the base wallet yield. A game can supply `sunburst_targets` for the
-legacy earned tool so the preview and hit share the same cell mask.
+The square campaigns use `match3.square_campaign` for their common rules
+and `match3.bonuses` for four fixed slots and their ranks. An ordinary
+match adds three points for each bonus piece. A full meter holds one
+use at 90 points and stops filling. Spending empties the slot. An upgrade
+inherits the same meter and replaces its earlier piece and icon. The shared
+campaign binder persists those meters and refreshes a parked board after
+construction. Resources pay their per-piece value from matches.
 
 Targeted slot actions include `hit`, `blast`, `row`, `row_lightning`,
 `color` and `color_pierce`. The row-lightning preview runs the same

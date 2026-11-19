@@ -41,10 +41,9 @@ package.path = ("games/%s/lua/?.lua;"):format(game) .. package.path
 local loaded = {state = {}}
 function require(name)
     if loaded[name] ~= nil then return loaded[name] end
-    -- match3.game defines the ladder and the journey's bookkeeping as plain
-    -- functions, so the real file loads here; the rest of the engine is a stub.
-    local engine = name == "match3.game"
-    local file = engine and "engine/lua/match3/game.lua" or package.searchpath(name, package.path)
+    -- These engine modules build campaign data without opening a game.
+    local engine = name == "match3.game" or name == "match3.bonuses" or name == "match3.shapes"
+    local file = engine and "engine/lua/" .. name:gsub("%.", "/") .. ".lua" or package.searchpath(name, package.path)
     local value = stub
     if file and (engine or not name:match("^match3")) then
         local ok, result = pcall(dofile, file)
@@ -164,7 +163,7 @@ else
     -- What a ladder purchase puts on later boards, from its economy.unlocks row.
     local function gets_of(unlock)
         local gets = {}
-        local bonus = unlock.bonus   -- Relic Rush: a bonus gem, or the upgrade of one
+        local bonus = unlock.bonus
         if bonus then
             local first = economy.bonus_slots[bonus.tool].levels[1]
             gets[#gets + 1] = {type = "bonus", icon = icon(bonus.icon), name = bonus.name, effect = bonus.effect,
@@ -174,15 +173,8 @@ else
             local piece = unlock.slot and unlock or economy.pieces[unlock.kind]
             gets[#gets + 1] = {type = "piece", icon = piece_icon(piece, unlock.kind), name = piece.name,
                                amount = piece.amount, currency = economy.currencies[piece.slot].name}
-        elseif unlock.tool then   -- Christmas Market: a piece that charges a booster
-            local piece, slot = economy.pieces[unlock.piece], economy.tool_slots[unlock.tool]
-            gets[#gets + 1] = {type = "charge", icon = piece_icon(piece, unlock.piece), name = piece.name, effect = slot.effect}
-        elseif unlock.opening_tool then
-            local slot = economy.tool_slots[unlock.opening_tool]
-            gets[#gets + 1] = {type = "opening", icon = icon(slot.icon .. "-normal"), name = unlock.name, effect = slot.effect}
-        elseif unlock.moves then gets[#gets + 1] = {type = "moves", amount = unlock.moves}
-        elseif unlock.charge then gets[#gets + 1] = {type = "faster", amount = unlock.charge}
-        elseif unlock.income then
+        end
+        if unlock.income then
             for _, part in ipairs(price_of(unlock.income)) do
                 gets[#gets + 1] = {type = "income", amount = part.amount, currency = part.name}
             end
@@ -209,7 +201,7 @@ else
         local materials
         if l.dress then
             materials = {}
-            if l.chains > 0 then materials[#materials + 1] = l.dress.lock or "iron-chain" end
+            if type(l.chains) == "number" and l.chains > 0 then materials[#materials + 1] = l.dress.lock or "iron-chain" end
             if l.dress.cover then materials[#materials + 1] = l.dress.cover end
             if l.dress.floor then materials[#materials + 1] = l.dress.floor.covered
             elseif l.oil then materials[#materials + 1] = "river-silt" end
@@ -220,9 +212,7 @@ else
         for _, step in ipairs(island.ladder) do
             if step.after < i then restored[island.buildings[step.kind + 1].key] = true end
         end
-        local yields
-        if economy.board_loadout then yields = economy.board_loadout(i, restored, 123478)
-        else yields = economy.loadout(restored, i, 123478) end
+        local yields = economy.board_loadout(i, restored, 123478)
         local resources = {}
         for kind = 0, 15 do
             local piece = yields[kind]

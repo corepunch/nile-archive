@@ -94,6 +94,12 @@ walkthrough uses its own save and does not report scores to Game Center.
 
 ## Inventory (November 2026)
 
+The two square campaigns use the same board constructor, modular border
+renderer and one-use bonus slots. The rules, rank effects and saved charge
+live in `match3`, `match3.bonuses` and `match3.game`. The skins supply
+tool art and names. Their campaigns place the shared ranks on different
+buildings and boards.
+
 Every difference between the two games' copies, sorted into content, skin,
 or accidental drift. Line counts are `diff` lines before this work.
 

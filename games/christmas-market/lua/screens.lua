@@ -43,36 +43,32 @@ function R.funding_shortfall(cost)
     return R.currency_prices(missing)
 end
 
--- What a stall adds, as icons for its card: a new piece with what each match
--- of it banks or charges, a booster, moves, faster tool charge or takings.
--- The caption says when a recurring gift arrives.
+-- This card presents the same bonus ranks and shared slots as the board.
 function R.building_gets(kind)
-    local unlock
-    for _, step in ipairs(island.ladder) do if step.kind == kind then unlock = step.unlock end end
-    if not unlock then return {} end
-    local card = R.words.card
-    local function booster(tool) return R.board_art[economy.tool_slots[tool].icon] end
-    local function piece_icon(piece) return R.board_art["market-" .. piece] end
-    local function plus(n) return ("+%d"):format(n) end
-    if unlock.kind then
-        local piece = economy.pieces[unlock.kind]
-        return {{id="piece", icon=piece_icon(unlock.kind), amount=plus(piece.amount), unit=currency_icon(piece.slot)}}
-    elseif unlock.tool then
-        return {{id="tool", icon=piece_icon(unlock.piece), amount=plus(economy.pieces[unlock.piece].amount), unit=booster(unlock.tool)}}
-    elseif unlock.opening_tool then
-        return {{id="booster", icon=booster(unlock.opening_tool), amount=plus(1)}}, card.every_wish
-    elseif unlock.moves then
-        return {{id="moves", amount=plus(unlock.moves), label=card.moves}}, card.every_wish
-    elseif unlock.charge then
-        for _, earlier in ipairs(economy.unlocks) do
-            if earlier.tool then return {{id="charge", icon=piece_icon(earlier.piece), amount=("x%d"):format(unlock.charge)}} end
+    local gets = {}
+    for _, step in ipairs(island.ladder) do
+        if step.kind == kind then
+            local unlock = step.unlock
+            if unlock.kind then
+                local piece = economy.pieces[unlock.kind]
+                gets[#gets + 1] = {id="piece", icon=R.board_art["market-" .. unlock.kind],
+                    amount=piece.amount, unit=currency_icon(piece.slot)}
+            end
+            if unlock.bonus then
+                gets[#gets + 1] = {id=unlock.bonus.key, icon=R.board_art[unlock.bonus.icon]}
+            end
+            if unlock.income then
+                for slot in ipairs(economy.currencies) do
+                    if unlock.income[slot] > 0 then
+                        gets[#gets + 1] = {id="income-" .. slot, icon=currency_icon(slot),
+                            amount=("+%d"):format(unlock.income[slot])}
+                    end
+                end
+                return gets, R.words.card.every_win
+            end
         end
     end
-    local gets = {}
-    for slot in ipairs(economy.currencies) do
-        if unlock.income[slot] > 0 then gets[#gets + 1] = {id="income-" .. slot, icon=currency_icon(slot), amount=plus(unlock.income[slot])} end
-    end
-    return gets, card.every_win
+    return gets
 end
 
 R.register_result(function()
@@ -116,10 +112,10 @@ local guide_entries = {
      icon={back="square-target", piece="market-1", front="chain-square-1"}},
     {id="supplies", title="Stock the market", description="Match coins to fund the arch. Its spiced cider earns treats. The lumber workshop adds bundled pine for materials.",
      icon={front="market-3"}},
-    {id="long-lines", title="Long lines pay more", description="A line of four pays twice per piece. A line of five pays four times per piece.",
+    {id="banking", title="Bank your matches", description="Each matched piece pays its own value. Clear the board to bank what you earned.",
      icon={front="market-4"}},
-    {id="hammer", title="Farrier's hammer", description="Build the reindeer stable and match 30 green hammers to charge a hit on one cell.", icon={tool="booster-hammer"}},
-    {id="boosters", title="Firework Bomb", description="The gingerbread house gives you one firework per wish. Tap a cell to hit a 3×3 square around it.",
+    {id="hammer", title="Farrier's hammer", description="Build the reindeer stable. Match 30 hammers to charge one hit. Use it before charging again.", icon={tool="booster-hammer"}},
+    {id="boosters", title="Firework Bomb", description="The gingerbread house upgrades the hammer and keeps its charge. Tap a cell to hit a 3×3 square.",
      icon={tool="booster-firework"}},
     {id="bakery", title="Winter treats", description="The bakery swaps cider for gingerbread stars. The cocoa kiosk puts hot cocoa on the board.", icon={front="market-7"}},
 }

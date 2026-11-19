@@ -9,7 +9,7 @@ from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 SLOT = 128
-COLUMNS, ROWS = 4, 5
+COLUMNS, SOURCE_ROWS, ROWS = 4, 5, 6
 EDGE_PADDING = 4
 sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
 from match3_theme_art import fit_object, silhouette
@@ -29,26 +29,31 @@ def main():
     sizes = goods['piece_max_side']
     source = open_sheet(goods['source'])
     edits = goods.get('source_overrides', {})
-    edited_sheets = {key: open_sheet(edit['source']) for key, edit in edits.items()}
+    edited_sheets = {path: open_sheet(path) for path in {edit['source'] for edit in edits.values()}}
     mask = silhouette(Image.open(ROOT.parents[1] / 'engine/art/hex-tile/hex-mask-128.png')).filter(ImageFilter.MinFilter(5))
     atlas = Image.new('RGBA', (COLUMNS * SLOT, ROWS * SLOT))
     sprites = [(f'market-{kind}', name) for kind, name in enumerate(goods['frames'])]
-    sprites.extend(goods['toolbar_only'].items())
-    assert len(sprites) == 18
-    assert edited_sheets.keys() <= dict(sprites).keys()
+    sprites.extend(goods['bonus_frames'].items())
+    assert len(sprites) == 22
+    assert edits.keys() <= dict(sprites).keys()
     frames = {}
     for slot, (key, name) in enumerate(sprites):
-        sheet = edited_sheets.get(key, source)
-        row, col = divmod(slot, COLUMNS)
-        left, top = col * sheet.width // COLUMNS, row * sheet.height // ROWS
-        bay = (left, top, (col + 1) * sheet.width // COLUMNS, (row + 1) * sheet.height // ROWS)
+        edit = edits.get(key)
+        sheet = edited_sheets[edit['source']] if edit else source
+        source_slot = edit.get('slot', slot) if edit else slot
+        source_rows = edit.get('rows', SOURCE_ROWS) if edit else SOURCE_ROWS
+        row, col = divmod(source_slot, COLUMNS)
+        assert row < source_rows
+        left, top = col * sheet.width // COLUMNS, row * sheet.height // source_rows
+        bay = (left, top, (col + 1) * sheet.width // COLUMNS, (row + 1) * sheet.height // source_rows)
         sprite = sheet.crop(bay)
         x0, y0, x1, y1 = silhouette(sprite).getbbox()
         # Include the painted edge while cropping away stray gutter pixels.
         crop = (max(0, x0 - EDGE_PADDING), max(0, y0 - EDGE_PADDING),
                 min(sprite.width, x1 + EDGE_PADDING), min(sprite.height, y1 + EDGE_PADDING))
         frame, fitted, offset = fit_object(sprite.crop(crop), mask, sizes.get(name, 112), None)
-        x, y = col * SLOT, row * SLOT
+        atlas_row, atlas_col = divmod(slot, COLUMNS)
+        x, y = atlas_col * SLOT, atlas_row * SLOT
         atlas.paste(frame, (x, y))
         source_crop = [left + crop[0], top + crop[1], left + crop[2], top + crop[3]]
         frames[key] = dict(name=name, source_crop=source_crop, fitted_size=fitted,

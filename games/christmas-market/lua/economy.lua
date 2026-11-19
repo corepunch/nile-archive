@@ -1,3 +1,5 @@
+local bonuses = require("match3.bonuses")
+
 -- Wallet slots are save data: Tokens, Treats, Materials.
 local E = {
     GOLD=1, FOOD=2, SUPPLIES=3,
@@ -13,62 +15,65 @@ local E = {
         {name="Silver star coin", slot=1, amount=3},
         {name="Gold bell coin", slot=1, amount=5},
         {name="Bundled pine", slot=3, amount=5},
-        {name="Farrier's hammer", tool=1, amount=3},
+        {name="Farrier's hammer"},
         {name="Toy blocks", slot=3, amount=7},
         {name="Gingerbread star", slot=2, amount=4},
         {name="Spiced cider", slot=2, amount=3},
         {name="Wrapped gift", slot=1, amount=6},
-        {name="Candle lantern", tool=3, amount=3},
+        {name="Candle lantern"},
         {name="Hot cocoa", slot=2, amount=5},
         {name="Carol bell", slot=1, amount=7},
         {name="Ice pendant", slot=1, amount=8},
         {name="Glass bauble", slot=1, amount=9},
         {name="Candy cane"},
     },
-    CAMPAIGN_VERSION=4,
-    BONUS_THRESHOLD=90,
+    CAMPAIGN_VERSION=5,
+    BONUS_THRESHOLD=bonuses.THRESHOLD,
+    SPECIAL_KIND=0,
 }
 
-E.tool_slots = {
-    {icon="booster-hammer", frame="market-5", action="hit", effect="Tap a cell to hit it with the Hammer."},
-    {icon="booster-firework", frame="booster-firework-icon", action="blast", effect="Tap a cell to blast a 3×3 square."},
-    {icon="booster-lantern", frame="market-10", action="sunburst", effect="Tap a cell to strike across 15 cells."},
-    {icon="booster-star", frame="booster-star-icon", action="row", effect="Tap a cell to clear its row with Shooting Star."},
+local B
+E.bonus_slots, B = bonuses.slots{
+    hammer={icon="booster-hammer", frame="market-5", name="Farrier's hammer"},
+    bomb={icon="booster-firework", frame="booster-firework-icon", name="Firework Bomb"},
+    shield={icon="booster-shield", frame="booster-shield-icon", name="Frost shield"},
+    plus={icon="booster-plus", frame="booster-plus-icon", name="Wish cross"},
+    hourglass={icon="booster-hourglass", frame="booster-hourglass-icon"},
+    mixer={icon="booster-mixer", frame="booster-mixer-icon", name="Wind-up top"},
+    lightning={icon="booster-lantern", frame="market-10", name="Candle lantern"},
+    star={icon="booster-star", frame="booster-star-icon", name="Shooting Star"},
 }
+E.bonuses = B
 
 -- The five positions start green, blue, silver, gold and red. The pine
 -- bundle replaces the blue mitten while keeping a blue accent on its tie.
 local BASE = {0, 1, 2, 3, 15}
 
--- The twenty-stall ladder after Cradle of Rome 2: each stall adds one piece or
--- one bonus, from the wish after it is placed. `building` is the catalogue
--- key and `after` the clear it opens on. Pieces name a `line`; tools charge
--- from their own `piece`; `opening_tool` grants one more use per wish of
--- that booster (a second stall for the same booster makes it two);
--- `moves` adds moves; `charge` speeds tool charge; `income` pays every win.
+-- Building keys and clear gates are campaign data. The engine manages bonus
+-- ranks and their charges. Material and treat pieces replace their palette line.
 E.unlocks = {
     {building="arch", after=1, line=5, kind=8},
-    {building="reindeer_stable", after=2, tool=1, piece=5},
+    {building="reindeer_stable", after=2, bonus=B.hammer},
     {building="lumber", after=4, line=2, kind=4},
-    {building="gingerbread_house", after=5, opening_tool=2, name="Firework Bomb"},
+    {building="gingerbread_house", after=5, bonus=B.bomb},
     {building="bakery", after=7, line=5, kind=7},
     {building="cocoa", after=9, line=5, kind=11},
-    {building="santa_workshop", after=11, opening_tool=2, name="Firework Bomb"},
+    {building="santa_workshop", after=11, bonus=B.shield},
     {building="toys", after=13, line=2, kind=6},
-    {building="post_office", after=14, charge=2},
-    {building="gifts", after=16, line=4, kind=9},
-    {building="log_cabin", after=17, moves=3},
-    {building="candles", after=19, tool=3, piece=10},
+    {building="post_office", after=14, bonus=B.hourglass},
+    {building="gifts", after=16, line=4, kind=9, bonus=B.plus},
+    {building="log_cabin", after=17, income=purse(0, 15, 0)},
+    {building="candles", after=19, bonus=B.lightning},
     {building="chapel", after=20, line=4, kind=12},
     {building="igloo", after=21, line=4, kind=13},
-    {building="carousel", after=23, income=purse(0, 30, 0)},
-    {building="sleigh", after=24, opening_tool=4, name="Shooting Star"},
+    {building="carousel", after=23, bonus=B.mixer, income=purse(0, 30, 0)},
+    {building="sleigh", after=24, bonus=B.star},
     {building="giant_ornament", after=25, line=4, kind=14},
     {building="rink", after=26, income=purse(25, 0, 0)},
     {building="presents", after=27, income=purse(0, 0, 20)},
-    {building="tree", after=29, opening_tool=2, name="Firework Bomb"},
+    {building="tree", after=29, income=purse(0, 25, 0)},
 }
-for _, unlock in ipairs(E.unlocks) do unlock.first_level = unlock.after + 1 end
+bonuses.index_unlocks(E.unlocks)
 
 function E.unlock_of(building)
     for _, unlock in ipairs(E.unlocks) do
@@ -76,61 +81,24 @@ function E.unlock_of(building)
     end
 end
 
-local multipliers = {[3]=1, [4]=2, [5]=4, [6]=6, [7]=6, [8]=6, [9]=6}
-
--- `restored` maps building keys to true for the stalls placed. A wish uses
--- what was in force by its number: a replay keeps its own pool.
-function E.loadout(restored, number, seed)
-    local lines = {table.unpack(BASE)}
-    local meter, tools, opening_tools, income = {}, {}, {}, purse()
-    local moves, charge = 0, 1
+-- Replays keep the regular goods that belonged to their board number.
+function E.board_loadout(number, restored, seed)
+    local kinds = {table.unpack(BASE)}
+    local income = purse()
     for _, unlock in ipairs(E.unlocks) do
         if restored[unlock.building] and number >= unlock.first_level then
-            if unlock.kind then lines[unlock.line] = unlock.kind
-            elseif unlock.tool then meter[unlock.tool], tools[#tools + 1] = 0, unlock
-            elseif unlock.opening_tool then
-                opening_tools[unlock.opening_tool] = (opening_tools[unlock.opening_tool] or 0) + 1
-            elseif unlock.moves then moves = moves + unlock.moves
-            elseif unlock.charge then charge = charge * unlock.charge
-            elseif unlock.income then income = income + unlock.income end
+            if unlock.kind then kinds[unlock.line] = unlock.kind end
+            if unlock.income then income = income + unlock.income end
         end
     end
-    local kinds = {}
-    for line = 1, 5 do if lines[line] then kinds[#kinds + 1] = lines[line] end end
-    -- One tool charges per wish: the newest on its first wish, then by seed.
-    local charging = tools[#tools]
-    if #tools > 1 and number ~= charging.first_level and seed % 2 == 1 then charging = tools[1] end
-    if charging then kinds[1] = charging.piece end
     local yields = {}
     for _, kind in ipairs(kinds) do
         local piece = E.pieces[kind]
         if piece.amount then yields[kind] = piece end
     end
-    -- Faster charge lowers the meter a use needs; stored points convert with it.
-    return yields, {kinds=kinds, multipliers=multipliers, tool_threshold=E.BONUS_THRESHOLD // charge, tool_meter=meter,
-        tool_slots=E.tool_slots, opening_tools=opening_tools, charge_tool=charging and charging.tool,
-        extra_moves=moves, win_income=income}
-end
-
--- Rome I Beta lightning hits 15 cells and reserves one hit for a plaque.
--- The board seed determines the order so the aiming preview matches the hit.
-function E.lightning_targets(g, cell, cells)
-    local mask = {}
-    local first = (g.rng + cell) % cells
-    local count = 0
-    for step = 0, cells - 1 do
-        local i = (first + 13 * step) % cells
-        if g.active[i] and g.oil[i] > 0 and g.chain[i] == 0 then
-            mask[i], count = true, 1
-            break
-        end
-    end
-    for step = 0, cells - 1 do
-        if count == 15 then break end
-        local i = (first + 13 * step) % cells
-        if g.active[i] and not mask[i] then mask[i], count = true, count + 1 end
-    end
-    return mask
+    local loadout = bonuses.loadout(number, restored, seed, E.bonus_slots, E.unlocks, yields, E.SPECIAL_KIND)
+    loadout.kinds, loadout.win_income = kinds, income
+    return yields, loadout
 end
 
 return E

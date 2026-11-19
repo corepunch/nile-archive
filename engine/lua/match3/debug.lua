@@ -166,7 +166,7 @@ function D.bind(R, W)
             g.ice[open[#open]], g.obstacles = 1, g.obstacles + 1
             local tool = g.tool_slots and 1 or 2
             g.tools[tool] = math.max(g.tools[tool], 1)
-            if g.single_charge_tools then g.tool_meter[tool] = g.tool_threshold end
+            if g.tool_slots then g.tool_meter[tool] = g.tool_threshold end
             R.selected, R.tool = open[1], tool - 1
             R.cell_state_review = {hover = open[#open // 2], aim = open[#open - 3]}
         end
@@ -392,8 +392,9 @@ function D.bind(R, W)
                 end
             end
             R.selected, R.hint_a, R.hint_b = rules.hex_index(-2, 1), rules.hex_index(1, 1), rules.hex_index(2, 1)
-            R.g.tools[1], R.g.tools[2], R.g.tools[3] = 2, 2, 0
-            R.tool, R.toast_time, R.on_island = 1, 0, false
+            R.g.tools[1], R.g.tools[2] = 1, 1
+            R.g.tool_meter[1], R.g.tool_meter[2] = R.g.tool_threshold, R.g.tool_threshold
+            R.tool, R.toast_time, R.on_island = 0, 0, false
             R.art_review = true
         end
         if app.arg("present") then R.present_board() end

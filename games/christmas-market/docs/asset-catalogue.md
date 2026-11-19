@@ -139,35 +139,26 @@ Play is the largest control.
 
 ## Campaign booster buttons
 
-The four circular boosters share the [runtime enamel painter](../../../art/match3-buttons/README.md)
-with Build, Play, Wishes and Pause. The [manifest](../art/manifest.json) maps
-Hammer and Lantern to market goods 5 and 10, and the other two to the
-Christmas cracker and comet frames. The farrier's hammer centers the bounds
-of its silhouette on the enamel face. The other boosters use their centers of
-opacity. The colored icon and the disabled inset use the same anchor.
-Cards and the guide show those same pieces. The
-[state review](screenshots/review/large-pieces/art-states.jpg) covers
-all four boosters. The stock badge appears when the player has more than
-one use. The toolbar capture gives the hammer two uses to show that state.
-
-Matched farrier's hammers and candle lanterns use the engine's resource flight arc,
-trail and landing flash. They follow the same timing as currency and land in
-their respective booster buttons. The meter or stored-use badge updates on
-arrival. Reduce Motion shows the earned charge immediately.
-
-The [flight timing review](screenshots/booster-flights.gif) shows a
-currency and a booster match in the same move for each charging piece.
+The four slots use the [shared enamel painter](../../../art/match3-buttons/README.md).
+The [asset manifest](../art/manifest.json) assigns a frame to each rank. The
+hammer centers the bounds of its silhouette. The other boosters use their
+centers of opacity. Both the full-color artwork and the disabled inset use
+the same anchor. The shared engine shows the fill arriving at the meter, and
+each slot stops at one use. [All eight icons in all five button states](screenshots/review/shared-bonuses/art-states.jpg).
 
 ## Market goods and tools
 
 Built-in ImageGen revised the [previous 4×4 sheet](../art/market-goods/winter-pieces.png)
 into the transparent [4×5 master](../art/market-goods/winter-coins-and-boosters.png).
 The [prompt](../art/market-goods/winter-coins-and-boosters-prompt.txt) includes
-the two coins, natural wood and all four booster icons. The first sixteen
-cells are board pieces. The bottom row holds two toolbar-only icons and two
-empty bays. A targeted [ImageGen revision](../art/market-goods/winter-thick-hammer.png)
+the two coins, natural wood and the original four booster motifs. The
+first sixteen cells hold market pieces, and the final row starts with the
+firework and comet. A targeted [ImageGen revision](../art/market-goods/winter-thick-hammer.png)
 supplies the thicker hammer in row two, column two. Its [edit prompt](../art/market-goods/winter-thick-hammer-prompt.txt)
-specifies the larger enamel head and wider handle. The [registration record](../art/market-goods/registration.json)
+specifies the larger enamel head and wider handle. The [shared bonus sheet](../art/market-goods/shared-bonuses.png)
+contains all eight coordinated designs from [one prompt](../art/market-goods/shared-bonuses-prompt.txt).
+The four additional ranks register from its authored shield, cross, hourglass
+and top bays, with the four existing motifs taken from their prior masters. The [registration record](../art/market-goods/registration.json)
 stores each source crop, proportional fit and offset in its 128 px slot.
 The crop takes the object's solid bounds with four pixels of edge padding.
 The fit preserves source alpha inside the engine's flat-top hex inset.
@@ -190,16 +181,18 @@ The fit preserves source alpha inside the engine's flat-top hex inset.
 | 13 | Ice pendant | Violet | +8 Tokens from the later igloo. |
 | 14 | Glass bauble | Violet | +9 Tokens from the later giant bauble. |
 | 15 | Candy cane | Red | Score until the Welcome arch. |
-| 16 | Firework Bomb | Cranberry | Toolbar Christmas cracker that hits a 3×3 square. |
-| 17 | Shooting Star | Ice blue | Toolbar comet that hits a row. |
+| 16 | Firework Bomb | Cranberry | Replaces the hammer in the first slot and hits a 3×3 square. |
+| 17 | Shooting Star | Ice blue | Replaces the lantern and clears the chosen kind. |
+| 18 | Frost shield | Blue | Hits the chosen row. |
+| 19 | Wish cross | Purple | Replaces the shield and replenishes a resource or part of another charge. |
+| 20 | Hourglass | Gold and blue | Adds five moves. |
+| 21 | Wind-up top | Blue and silver | Replaces the hourglass and shuffles the pieces. |
 
 `art/registered/market-goods.png` packs into `data/board/pieces.png` as
-`market-0` through `market-15`, `booster-firework-icon` and
-`booster-star-icon`. The board uses each idle sprite for swaps
+`market-0` through `market-15` and six named `booster-*-icon` frames. The board uses each idle sprite for swaps
 and clears, with the existing selection and hint overlays and authored
-single and double tinsel and ice layers. The hammer and lantern sprites
-also sit on the existing enamel booster faces in normal, selected, pressed,
-hover and disabled states, along with the cracker and comet.
+single and double tinsel and ice layers. Every charging piece also sits on its enamel booster face in normal,
+selected, pressed, hover and disabled states.
 The wallet, prices and results share the three
 currency icons. The [color map and review](market-pieces.md) include native
 captures of the board at both phone sizes, the bakery's reward card, the
@@ -213,7 +206,7 @@ clearance around chains and ice.
 ```sh
 python3 games/christmas-market/tools/prepare_market_goods.py
 python3 tools/match3_atlas.py
-python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x5 --cells 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17 --mode object --strict --overlay-dir build/winter-boosters-registration
+python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x6 --cells 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 --mode object --strict --overlay-dir build/winter-boosters-registration
 ```
 
 ## Story pieces
@@ -686,14 +679,9 @@ unlock:
 | Unlock | Caption | Icon | Figure |
 |---|---|---|---|
 | New piece | YOU GET | the piece, `market-<kind>` | `+N` beside the currency it banks |
-| Tool piece | YOU GET | the piece | `+N` beside the booster it charges |
-| Booster per wish | EVERY WISH | the booster's standalone piece | `+1` |
-| More moves | EVERY WISH | none: the word MOVES under a larger figure | `+3` |
-| Faster charge | YOU GET | the first tool piece | `x2` |
+| Bonus rank | YOU GET | the piece that charges the slot | |
 | Takings | EVERY WIN | the currency | `+N` |
 
-The Moves row is a temporary fallback until the HUD atlas has a Moves icon:
-[#105](https://github.com/corepunch/nile-archive/issues/105). Reproduce a card
-with `./build/christmas-market --headless --mute --fresh --size 390x844 --card 2 --shot out.png`
+Reproduce a card with `./build/christmas-market --headless --mute --fresh --size 390x844 --card 2 --shot out.png`
 (`--catalogue-card <kind>` for a built stall). Reviewed in game at 390×844 for
 every row and at 480×900 for a piece.

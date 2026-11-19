@@ -1354,6 +1354,49 @@ end
 
 ---------------------------------------------------------------------- app
 
+-- Construction supplies the slot descriptors. Charge, persistence and
+-- refreshing a parked board follow the same rules in every square campaign.
+function G.bind_campaign_bonuses(R, island, loadout_for, backdrop_for)
+    function R.board_context(preview)
+        local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
+        for _, step in ipairs(island.ladder) do
+            local key = step.unlock.building
+            if preview then restored[key] = not app.arg("before-" .. key)
+            else restored[key] = island.owned(R.island, step.kind) > 0 end
+        end
+        return restored
+    end
+
+    function R.update_bonus_charges()
+        local g = R.g
+        if g.bonus_preview or not g.tool_slots then return end
+        local saved = R.prog.bonus_charge or {}
+        local changed = false
+        for tool, charge in pairs(g.tool_meter) do
+            if (saved[tool] or 0) ~= charge then saved[tool], changed = charge, true end
+        end
+        if changed then
+            R.prog.bonus_charge = saved
+            R.save_progress()
+        end
+    end
+
+    function R.refresh_board_bonuses()
+        local g = R.g
+        if not g.tool_slots or g.bonus_preview then return end
+        local number, restored = g.level + 1, R.board_context()
+        local yields, loadout = loadout_for(number, restored, g.loadout_seed)
+        for tool, charge in pairs(loadout.tool_meter) do
+            if g.tool_meter[tool] == nil then
+                g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
+            end
+        end
+        g.resource_yields, g.tool_slots = yields, loadout.tool_slots
+        g.bonus, g.bonus_debut = loadout.bonus, loadout.bonus_debut
+        if backdrop_for then g.backdrop = backdrop_for(g, number, restored) end
+    end
+end
+
 -- Keep a completed board's unclaimed earnings across a restart.
 -- Each game owns its wallet migration and calls the returned serializer.
 function G.bind_completed_rewards(R, rules)

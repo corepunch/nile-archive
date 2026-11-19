@@ -64,7 +64,7 @@ function A.load()
     local function load(name) textures[name] = skin[name] end
     local own = own_board()
     local function piece(name) return assert(own[name], "missing atlas frame: " .. name) end
-    for _, slot in ipairs(economy.tool_slots) do textures[slot.icon] = piece(slot.frame) end
+    for _, bonus in pairs(economy.bonuses) do textures[bonus.icon] = piece(bonus.frame) end
     -- New mechanic art uses this game's authored atlas even with the neutral skin.
     elements_view.load(textures, own)
     for _, level in ipairs(require("campaign").levels) do
@@ -89,6 +89,22 @@ end
 -- Rendered by the game, so review covers the same textures as the live board.
 function A.draw_catalogue(R)
     gfx.rect(rect(18, 100, 444, 770), color(12, 47, 41, 250))
+    if app.arg("art-states") == "bonuses" then
+        R.say_at("BONUS ARTWORK", vec2(240, 125), 26, R.PAL_GOLD, 420)
+        for col, state in ipairs(A.states) do
+            R.say_at(state, vec2(158 + (col - 1) * 64, 175), 11, R.PAL_GOLD, 62)
+        end
+        for tool, slot in ipairs(economy.bonus_slots) do
+            for rank, bonus in ipairs(slot.levels) do
+                local y = 190 + ((tool - 1) * 2 + rank - 1) * 79
+                R.say_at(bonus.name, vec2(79, y + 30), 11, R.PAL_CREAM, 109)
+                for col, state in ipairs(A.states) do
+                    buttons.paint(rect(128 + (col - 1) * 64, y, 60, 60), R.board_art[bonus.icon], state)
+                end
+            end
+        end
+        return
+    end
     R.say_at("ARTWORK CATALOGUE", vec2(240, 125), 26, R.PAL_GOLD, 420)
     local pieces = economy.pieces
     for k = 0, #pieces do
@@ -110,7 +126,8 @@ function A.draw_catalogue(R)
     for col, state in ipairs(A.states) do
         R.say_at(state, vec2(62 + (col - 1) * 88, 571), 12, R.PAL_GOLD, 86)
     end
-    for row, booster in ipairs(economy.tool_slots) do
+    for row, slot in ipairs(economy.bonus_slots) do
+        local booster = slot.levels[1]
         for col, state in ipairs(A.states) do
             buttons.paint(rect(30 + (col - 1) * 88, 584 + (row - 1) * 67, 66, 66), R.board_art[booster.icon], state)
         end

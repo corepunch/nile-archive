@@ -302,7 +302,6 @@ local function test_island()
         check(c.count == due and island.campaign_count(c) == due, "every opened ladder restoration fits, in order")
         check(island.wonder_count(c) == require("journey").earned(p.level), "story restorations keep their schedule")
     end
-    check(c.count == 4, "each purchase places one campaign building")
     check(p.wallet[rules.CLEARED] == LEVELS, "every first clear counts once")
 
     -- shoreline, collisions, failed builds change nothing, moving is free

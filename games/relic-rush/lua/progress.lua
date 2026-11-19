@@ -16,54 +16,11 @@ function R.debug_fill_earnings(g)
     for i = 1, #g.earnings do g.earnings[i] = g.earnings[i] + needed[i] end
 end
 
--- Which ladder restorations are in force, by building key. A preview counts
--- every one unless --before-<key> names it.
-function R.board_context(preview)
-    local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
-    for _, unlock in ipairs(economy.unlocks) do
-        local key = unlock.building
-        if preview then
-            restored[key] = not app.arg("before-" .. key)
-        else
-            restored[key] = island.owned(R.island, island.kinds[key]) > 0
-        end
-    end
-    return restored
-end
-
-function R.update_bonus_charges()
-    local g = R.g
-    if g.bonus_preview or not g.single_charge_tools then return end
-    local saved = R.prog.bonus_charge or {}
-    local changed = false
-    for tool, charge in pairs(g.tool_meter) do
-        if (saved[tool] or 0) ~= charge then
-            saved[tool], changed = charge, true
-        end
-    end
-    if changed then
-        R.prog.bonus_charge = saved
-        R.save_progress()
-    end
-end
-
--- Apply the same loadout to a parked board that a new deal would get. Resources and
--- bonus pieces change in their existing slots, so the deal, progress and
--- resources already earned survive the trip to the island.
-function R.refresh_board_bonuses()
-    local g = R.g
-    if not g.tool_slots or g.bonus_preview then return end
-    local spec, restored = rules.level_of(g), R.board_context()
-    local yields, loadout, bonus, debut = economy.board_loadout(g.level + 1, restored, g.loadout_seed)
-    for tool, charge in pairs(loadout.tool_meter) do
-        if g.tool_meter[tool] == nil then
-            g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
-        end
-    end
-    g.resource_yields, g.tool_slots = yields, loadout.tool_slots
-    g.bonus, g.bonus_debut = bonus, debut
-    g.backdrop = economy.board_backdrop(spec, g.level + 1, restored)
-end
+local game = require("match3.game")
+local bonuses = require("match3.bonuses")
+game.bind_campaign_bonuses(R, island, economy.board_loadout, function(g, number, restored)
+    return economy.board_backdrop(rules.level_of(g), number, restored)
+end)
 
 local function opening_unlock(g)
     local level = rules.level_of(g)
@@ -105,7 +62,7 @@ function R.present_board()
     end
 end
 
-local serialize_completed = require("match3.game").bind_completed_rewards(R, rules)
+local serialize_completed = game.bind_completed_rewards(R, rules)
 function R.serialize_campaign(s)
     local reading = save.is_reading(s)
     local version = s:int("resource_version", reading and 0 or economy.CAMPAIGN_VERSION)
@@ -141,11 +98,9 @@ function R.serialize_campaign(s)
         local wallet = R.prog.wallet
         R.prog.wallet = wallet + economy.shortfall(island.reserved_cost(R.island, R.prog.level), wallet)
     end
-    local saved, charges = R.prog.bonus_charge or {}, {}
-    for tool, slot in ipairs(economy.bonus_slots) do
-        local name = "bonus_slot_" .. (reading and version < 8 and slot.legacy_slot or slot.key)
+    R.prog.bonus_charge = bonuses.serialize(s, R.prog.bonus_charge, reading and version < 9 and function(_, slot)
         local charge
-        if reading and version < 5 then
+        if version < 5 then
             -- Old tools were independent and used half as many points per use.
             charge = 0
             local old = {impact={"hammer","dynamite"}, shield={"shield","fireball","superbomb","plus"},
@@ -153,10 +108,10 @@ function R.serialize_campaign(s)
             for _, key in ipairs(old[slot.key]) do
                 charge = charge + 2 * num.clampi(s:int("bonus_" .. key, 0), 0, 18)
             end
-        else charge = s:int(name, reading and 0 or saved[tool] or 0) end
-        if reading and version < 9 then charge = math.floor(charge * economy.BONUS_THRESHOLD / 36) end
-        charges[tool] = num.clampi(charge, 0, economy.BONUS_THRESHOLD)
-    end
-    R.prog.bonus_charge = charges
+        else
+            charge = s:int("bonus_slot_" .. (version < 8 and slot.legacy_slot or slot.key), 0)
+        end
+        return math.floor(charge * economy.BONUS_THRESHOLD / 36)
+    end)
     serialize_completed(s)
 end

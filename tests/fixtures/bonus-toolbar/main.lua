@@ -44,7 +44,7 @@ local function check_layout(g)
 end
 
 local function stored_points(g)
-    return g.tool_meter[tool] + (not g.single_charge_tools and g.tools[tool] * g.tool_threshold or 0)
+    return g.tool_meter[tool]
 end
 
 local function find_flight_swap(g)
@@ -52,9 +52,6 @@ local function find_flight_swap(g)
         if resource.tool then tool, match_charge = resource.tool, resource.amount * rules.MATCH_MIN end
     end
     assert(tool, "flight review needs an unlocked charging piece")
-    if not g.single_charge_tools then
-        g.tools[tool], g.tool_meter[tool] = 1, g.tool_threshold - 4
-    end
     initial_points = stored_points(g)
     for a = 0, rules.CELLS - 1 do
         for d = 0, 2 do
@@ -63,9 +60,7 @@ local function find_flight_swap(g)
                 local copy, wave = rules.game_copy(g), rules.new_match()
                 if rules.game_swap(copy, a, b, wave) then
                     rules.game_apply(copy, wave)
-                    -- In Christmas Market capture currency and boosters in the same wave.
-                    local income = copy.earnings[1] + copy.earnings[2] + copy.earnings[3]
-                    if stored_points(copy) == initial_points + match_charge and (g.single_charge_tools or income > 0) then
+                    if stored_points(copy) == initial_points + match_charge then
                         swap_a, swap_b = a, b
                         return true
                     end
@@ -105,7 +100,7 @@ function game.init()
 end
 
 local function review_flight()
-    if ticks == 2 and R.g.single_charge_tools then app.inject_click(R.board_tool_bounds(3):center()) end
+    if ticks == 2 then app.inject_click(R.board_tool_bounds(3):center()) end
     if ticks == 6 then
         assert(R.tool == -1, "the swap starts without an active booster")
         app.inject_click(R.cell_pos(swap_a))
@@ -126,16 +121,16 @@ end
 function game.frame(dt)
     frame(dt)
     ticks = ticks + 1
-    if ticks == 1 and testing.game == "relic-rush" then check_layout(R.g) end
+    if ticks == 1 then check_layout(R.g) end
     if tool then return review_flight() end
     if ticks == 3 then app.inject_click(R.board_tool_bounds(0):center()) end
     if ticks == 7 then
-        assert(R.tool == 0 and R.g.tools[1] == 1, "selecting a stored Dynamite must leave its charge intact")
+        assert(R.tool == 0 and R.g.tools[1] == 1, "selecting a stored impact tool must leave its charge intact")
         if app.arg("spend-bonus") then app.inject_click(R.cell_pos(rules.hex_center())) end
     end
     if ticks == 11 and app.arg("spend-bonus") then
         assert(R.g.tools[1] == 0 and R.g.tool_meter[1] == 0 and R.g.tools[2] == 1,
-            "using Dynamite must drain just the selected bonus")
+            "using the impact tool must drain just the selected bonus")
     end
 end
 

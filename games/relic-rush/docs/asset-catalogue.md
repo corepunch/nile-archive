@@ -123,6 +123,13 @@ authored sprite with existing motion and separate indicators. Specials use
 their own authored art. The original scenario sheet is still the source of
 the other story pieces below, alongside the trail arrow from the outlined atlas.
 
+The gray masonry revision uses neutral granite for `stone` and ash-gray
+limestone for `cut-blocks`. Both were painted in one [ImageGen atlas](../art/campaign-pieces/gray-masonry.png)
+from the [masonry prompt](../art/campaign-pieces/gray-masonry-prompt.txt).
+The regular campaign and resource pack share the revised stone cutout.
+The pieces retain their soft-edged alpha and proportional fit on the same
+128 px canvas. [Native board review](screenshots/review/gray-masonry/board.jpg).
+
 The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `helmet`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). That table records their earnings and purchase order. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
@@ -984,6 +991,10 @@ The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-
 
 Built-in ImageGen painted the timber-and-stone bundle and bread-and-fruit
 basket in one [transparent atlas](../art/resource-pieces/wallet-supplies-food.png).
+The [gray supplies revision](../art/resource-pieces/wallet-gray-supplies.png)
+puts gray masonry in front of the timber, so the counter remains distinct
+from Coins at wallet size. The [edit prompt](../art/resource-pieces/wallet-gray-supplies-prompt.txt)
+records the two-icon pass. [Board and wallet review](screenshots/review/gray-masonry/board.jpg).
 The [prompt](../art/resource-pieces/wallet-supplies-food.prompt.txt) and [asset manifest](../art/board-states/manifest.json)
 record the source and registration. Run `python3 games/relic-rush/tools/prepare_resource_pieces.py`
 to crop the left and right cells, fit each to 120 px and center it on a 128 px

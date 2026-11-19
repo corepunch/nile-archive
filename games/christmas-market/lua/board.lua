@@ -36,7 +36,9 @@ local cell_pos = R.cell_pos
 -------------------------------------------------------------------- drawing
 
 function R.board_piece_texture(kind)
-    if R.g.resource_multipliers then return R.board_art["market-" .. kind] end
+    local piece = R.g.resource_yields and R.g.resource_yields[kind]
+    if piece and piece.tool then return R.board_art[piece.icon] end
+    if R.g.resource_yields then return R.board_art["market-" .. kind] end
     return R.relics[kind + 1]
 end
 

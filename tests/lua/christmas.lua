@@ -59,21 +59,21 @@ assert(c.count==8 and island.wonder_count(c)==4 and island.campaign_count(c)==6,
 local first_wish = rules.game_start(0, 123478, {})
 check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,0,0,0",
       'locked boosters keep all four slots')
+local B = require("economy").bonuses
 local hammer_wish = rules.game_start(2, 123478, {reindeer_stable=true})
-check(hammer_wish.tools[1] == 0 and hammer_wish.tools[2] == 0 and hammer_wish.tool_meter[1] == 0,
-      'the stable unlocks an empty Hammer on its first eligible wish')
-local boosters = rules.game_start(5, 123478, {reindeer_stable=true, gingerbread_house=true})
-local center = rules.hex_center()
-check(boosters.tools[1] == 0 and boosters.tool_meter[1] == 0 and boosters.tool_meter[3] == nil
-      and boosters.tools[2] == 1 and boosters.tools[4] == 0, 'banked and per-wish boosters use separate stock')
-local wave = rules.new_match()
-local function use_once(slot)
-    local area = rules.game_tool_area(boosters, slot, center)
-    check(area and area[center] and rules.game_tool(boosters, slot, center, wave), 'the booster targets the board')
-    for cell in pairs(area) do check(wave.mask[cell], 'the effect follows its aiming preview') end
-    check(not rules.game_tool(boosters, slot, center, wave), 'the per-wish booster has been spent')
-end
-use_once(1)
-check(rules.game_start(5, 123478, {gingerbread_house=true}).tools[2] == 1
-      and rules.game_start(4, 123478, {gingerbread_house=true}).tools[2] == 0,
-      'a fresh attempt gets a firework from wish six onward')
+check(hammer_wish.tool_slots[1] == B.hammer and hammer_wish.tools[1] == 0,
+      'the stable unlocks an empty Hammer')
+local restored = {reindeer_stable=true, gingerbread_house=true, bonus_charge={180}}
+local bomb = rules.game_start(5, 123478, restored)
+local slot = B.bomb.tool
+local center, wave = rules.hex_center(), rules.new_match()
+check(bomb.tool_slots[slot] == B.bomb and bomb.bonus == B.bomb and bomb.tools[slot] == 1,
+      'the house replaces the charging piece and clamps its inherited stock')
+local area = rules.game_tool_area(bomb, slot - 1, center)
+check(area and area[center] and rules.game_tool(bomb, slot - 1, center, wave), 'the bomb targets the board')
+for cell in pairs(area) do check(wave.mask[cell], 'the effect follows its aiming preview') end
+check(bomb.tool_meter[slot] == 0 and not rules.game_tool(bomb, slot - 1, center, wave),
+      'the bomb spends its only use')
+restored.bonus_charge = {37}
+local next_wish = rules.game_start(6, 123478, restored)
+check(next_wish.tool_meter[slot] == 37 and next_wish.tools[slot] == 0, 'a partial charge carries without a free use')

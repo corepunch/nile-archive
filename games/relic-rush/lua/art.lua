@@ -21,7 +21,7 @@ A.floor_tiles = {"cell-normal", "tablet-single", "tablet-double", "light-wave", 
 A.elements = elements_view.assets
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "marker"}
 A.story_campaign_frames = {"pliers"}
-A.resource_pieces = {"coin", "berries", "stone", "water", "rations", "timber", "emerald"}
+A.resource_pieces = {"coin", "berries", "water", "rations", "timber", "emerald", "stone"}
 A.campaign_pieces = {
     "coin", "berries", "apple", "timber", "stone",
     "amphora", "water", "cut-blocks", "rations", "helmet",

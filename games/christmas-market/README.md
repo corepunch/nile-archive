@@ -29,7 +29,7 @@ The ten original winter wishes use square boards up to 9 × 12. Swap two neighbo
 
 ## Shared match engine and atlas
 
-Each board spawns five piece kinds. After building the Reindeer stable, match 30 farrier's hammers to charge a hit on a chosen cell. The Gingerbread house supplies one Firework Bomb per wish. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing.
+Each board spawns five piece kinds. After building the Reindeer stable, match 30 farrier's hammers to charge a hit on a chosen cell. The Gingerbread house replaces the Hammer with Firework Bomb in the same slot and carries over its charge. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing for both square campaigns.
 
 The puzzle and town use the same wallet and blue Settings gear. Each green resource
 capsule has the brass rim and drop shadow of the round buttons. The remaining moves
@@ -63,7 +63,7 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 
 Silver star coins pay 3 Tokens and gold bell coins pay 5. Holly, blue mittens and candy canes earn score.
 The Welcome arch serves spiced cider for Treats. The Lumber workshop introduces brown pine bundles tied with blue ribbon for Materials.
-The bakery and cocoa kiosk upgrade the red Treats piece. Longer lines multiply the yield. Each win
+The bakery and cocoa kiosk upgrade the red Treats piece. Each matched piece pays its own value. Each win
 banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).
 

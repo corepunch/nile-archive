@@ -1,11 +1,13 @@
 # Square match-3
 
-Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery and Hot cocoa kiosk. The stable introduces the farrier's hammer. The Gingerbread house supplies one Firework Bomb per wish.
+Match Christmas pieces to light the teal panes. The campaign opens the Welcome arch, Reindeer stable, Lumber workshop, Gingerbread house, Gingerbread bakery and Hot cocoa kiosk. The stable introduces the farrier's hammer. The Gingerbread house upgrades its slot to Firework Bomb and keeps its charge.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
-once its building is confirmed. Each matched Hammer piece gives 3 charge
-points and the meter fills at 90. Long matches count each Hammer once.
+once its building is confirmed. Thirty matched bonus pieces fill their
+permanent slot exactly once. Spending the tool empties the slot. The
+[shared ranks and charge rules](../../../docs/MATCH3_ENGINE.md) apply to both
+Christmas Market and Relic Rush.
 
 Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
@@ -55,8 +57,6 @@ seven materials remain in the [source atlas](../art/square-frame/variants.png).
 The [paint prompt](../art/square-frame/prompt.txt), [style order](../art/square-frame/styles.json)
 and [registration](../art/match3-atlas.json) record the source and fitted rail.
 
-The toolbar preview preloads two uses for the hammer to show its stock badge.
-
 | Native capture | Before | After |
 | --- | --- | --- |
 | 480 × 900 | [Previous frame](screenshots/review/winter-boosters/toolbar-480.jpg) | [Aged oak](screenshots/review/square-frame/board-480.jpg) |
@@ -84,6 +84,16 @@ all five toolbar states.
 
 [Dense board with chains and ice](screenshots/review/large-pieces/blockers.jpg) ·
 [Five hammer button states](screenshots/review/large-pieces/art-states.jpg)
+
+### Shared bonus slots
+
+| Size | Earlier toolbar | Shared slots |
+| --- | --- | --- |
+| 480 × 900 | [Board](screenshots/review/large-pieces/board-480.jpg) | [Board](screenshots/review/shared-bonuses/toolbar-480.jpg) |
+| 390 × 844 | [Board](screenshots/review/large-pieces/board-390.jpg) | [Board](screenshots/review/shared-bonuses/toolbar-390.jpg) |
+
+[One use spent](screenshots/review/shared-bonuses/spent.jpg) ·
+[Eight bonus pieces and five interaction states](screenshots/review/shared-bonuses/art-states.jpg)
 
 ## Captures
 

@@ -26,10 +26,10 @@ shot("market", "480x900", "--showcase")
 shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
 shot("lantern-opening", "480x900", "--level 1")
 shot("main-character-board", "480x900", "--level 4")
-local booster_review = "--lua tests/fixtures/christmas-boosters;games/christmas-market/lua;. --level 20 "
+local booster_review = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. --level 10 "
 shot("booster-toolbar", "480x900", booster_review .. "--frames 10")
 shot("booster-toolbar-phone", "390x844", booster_review .. "--frames 10 --safe-area 0,47,0,34")
-shot("booster-spent", "390x844", booster_review .. "--spend-booster --frames 16 --safe-area 0,47,0,34")
+shot("booster-spent", "390x844", booster_review .. "--spend-bonus --frames 25 --safe-area 0,47,0,34")
 local booster_flight = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. --fly-bonus "
 local booster_safe = " --safe-area 0,47,0,34"
 reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 5" .. booster_safe)
@@ -103,6 +103,7 @@ local footprints = "--lua tests/fixtures/christmas-footprints;games/christmas-ma
 shot("adjacent-foundations", "480x900", footprints)
 shot("phone-adjacent-foundations", "390x844", footprints .. " --safe-area 0,47,0,34")
 shot("art-states", "480x900", "--art-states")
+shot("bonus-art-states", "480x900", "--art-states bonuses")
 shot("hud-states", "480x900", "--hud-states")
 shot("pieces-board", "480x900", "--art-board")
 shot("building-card", "480x900", "--card 2")

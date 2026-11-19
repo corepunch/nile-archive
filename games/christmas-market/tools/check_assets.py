@@ -75,10 +75,10 @@ def main():
         assert (ROOT/goods[name]).is_file(), name
     for edit in goods.get('source_overrides', {}).values():
         assert (ROOT/edit['source']).is_file() and (ROOT/edit['prompt']).is_file(), edit
-    assert png(ROOT/goods['runtime']) == ((512, 640), 6) and len(set(goods['frames'])) == 16
+    assert png(ROOT/goods['runtime']) == ((512, 768), 6) and len(set(goods['frames'])) == 16
     icons = manifest['bonus_buttons']['icons']
-    assert set(goods['toolbar_only']) == {frame for frame in icons.values() if not frame.startswith('market-')}
-    for name in [f'market-{kind}' for kind in range(len(goods['frames']))] + list(goods['toolbar_only']):
+    assert set(goods['bonus_frames']) == {frame for frame in icons.values() if not frame.startswith('market-')}
+    for name in [f'market-{kind}' for kind in range(len(goods['frames']))] + list(goods['bonus_frames']):
         frame = atlas['frames'][name]
         assert frame['atlas'] == 'pieces' and frame['box'][2:] == [128, 128]
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)

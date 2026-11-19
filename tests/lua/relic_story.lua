@@ -56,6 +56,7 @@ do
     local g=rules.game_start(3,123,{camp=true,log_cabin=true})
     local _,b=plaques_of(g)
     hammer.tools[1], g.tools[1] = 1, 1
+    hammer.tool_meter[1], g.tool_meter[1] = hammer.tool_threshold, g.tool_threshold
     local single, area=rules.game_tool_area(hammer,0,b), rules.game_tool_area(g,0,b)
     local n=0
     for i in pairs(area) do

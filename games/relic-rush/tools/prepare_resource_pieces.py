@@ -34,11 +34,13 @@ def register_piece(tile, name, size, extent, check, folder=ROOT / 'art/registere
 
 
 def register(spec, check):
-    atlas = Image.open(ROOT / spec['source'])
-    assert atlas.mode == 'RGBA'
+    source = Image.open(ROOT / spec['source'])
+    edits = spec.get('source_overrides', {})
     cols, rows = spec['grid']
-    width, height = atlas.size
     for name, slot in spec['slots'].items():
+        atlas = Image.open(ROOT / edits[name]['source']) if name in edits else source
+        assert atlas.mode == 'RGBA'
+        width, height = atlas.size
         size, extent = spec.get('resize', {}).get(name, (SPEC['size'], SPEC['extent']))
         row, col = divmod(slot - 1, cols)
         tile = atlas.crop((col*width//cols, row*height//rows, (col+1)*width//cols, (row+1)*height//rows))

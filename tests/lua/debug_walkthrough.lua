@@ -34,7 +34,7 @@ check(R.debug_advance_town() and island.owned(R.island, island.wonder_kinds and 
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
 
-local relic = economy.bonuses ~= nil
+local relic = testing.game == "relic-rush"
 local function reward_piece(g, reward)
     for kind, piece in pairs(g.resource_yields) do
         if piece == reward then return kind end
@@ -81,14 +81,14 @@ local function check_unlock(level, reward, already_placed)
     return next_board
 end
 
-local first_tool = relic and economy.bonuses.hammer or economy.pieces[5]
+local first_tool = economy.bonuses.hammer
 local resource = relic and economy.unlock_of("well") or economy.pieces[economy.unlock_of("arch").kind]
 check_unlock(journey.wonder_levels[1], resource, true)
 local hammer_level = relic and journey.wonder_levels[2] or economy.unlock_of("reindeer_stable").after
 local board = check_unlock(hammer_level, first_tool)
 
 local tool = first_tool.tool
-local stock_key = relic and 'bonus_charge' or 'tool_stock'
+local stock_key = "bonus_charge"
 check(board.tools[tool] == 0 and board.tool_meter[tool] == 0, 'construction unlocks an empty tool')
 local function charge_match(g)
     R.reset_board(g)
@@ -103,8 +103,7 @@ local function charge_match(g)
     R.finish_wave()
     local airborne = 0
     for _, points in pairs(R.pending.bonus_charge_by_cell) do airborne = airborne + points end
-    local expected_charge = first_tool.amount * rules.MATCH_MIN
-    if relic then expected_charge = math.min(expected_charge, g.tool_threshold - previous) end
+    local expected_charge = math.min(first_tool.amount * rules.MATCH_MIN, g.tool_threshold - previous)
     check(airborne == expected_charge, 'the cleared cells carry the full awarded charge to their booster')
 end
 R.reduced_motion, R.sound = true, false
@@ -117,7 +116,7 @@ check(new_board.tool_meter[tool] == match_charge, 'partial charge carries to the
 -- Start near a full meter so the same test works with both games' thresholds.
 new_board.tool_meter[tool] = new_board.tool_threshold - 8
 charge_match(new_board)
-local ready_meter = relic and new_board.tool_threshold or 1
+local ready_meter = new_board.tool_threshold
 check(new_board.tools[tool] == 1 and new_board.tool_meter[tool] == ready_meter, 'a full meter grants a use')
 check(save.write('walkthrough-tool-stock', R.serialize), 'write stock to the walkthrough save fixture')
 R.prog[stock_key] = nil
@@ -132,6 +131,5 @@ local target = 0
 while not resumed.active[target] do target = target + 1 end
 check(rules.game_tool(resumed, tool - 1, target, R.pending), 'spend the previously banked use')
 R.finish_wave()
-local left = relic and 0 or ready_meter
-check(R.make_board(next_level, 2).tools[tool] == 0 and R.prog[stock_key][tool] == left,
+check(R.make_board(next_level, 2).tools[tool] == 0 and R.prog[stock_key][tool] == 0,
     'changing boards cannot recover a spent tool')

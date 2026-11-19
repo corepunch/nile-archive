@@ -140,11 +140,10 @@ function V.bind(R, rules)
     ------------------------------------------------------------------ particles
 
 
-    -- Rules bank charge immediately. The meter and stored-use badge update on arrival.
+    -- Rules bank charge immediately. The meter updates on arrival.
     function R.bonus_display_charge(tool)
         local g = R.g
         local points = g.tool_meter[tool]
-        if not g.single_charge_tools then points = points + g.tools[tool] * g.tool_threshold end
         return math.max(0, points - (not R.reduced_motion and bonus_in_flight[tool] or 0))
     end
 

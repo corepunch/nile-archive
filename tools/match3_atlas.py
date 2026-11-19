@@ -492,7 +492,7 @@ def game_sprites(game, root):
         bonus_frames = {name: name in outline_frames for name in buttons['icons'].values()}
         assert outline_frames <= bonus_frames.keys(), outline_frames
         goods = manifest['market_goods']
-        names = [f'market-{i}' for i in range(len(goods['frames']))] + list(goods['toolbar_only'])
+        names = [f'market-{i}' for i in range(len(goods['frames']))] + list(goods['bonus_frames'])
         sprites |= grid_sprites(registered / 'market-goods.png', names, 4)
         inputs.append(registered / 'market-goods.png')
     for name, path in files.items():

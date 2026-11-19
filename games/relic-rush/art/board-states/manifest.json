@@ -1283,7 +1283,6 @@
     "slots": {
       "coin": 1,
       "berries": 2,
-      "stone": 5,
       "water": 6,
       "rations": 9
     },
@@ -1294,6 +1293,10 @@
         114
       ],
       "emerald": [
+        128,
+        114
+      ],
+      "stone": [
         128,
         114
       ]
@@ -1328,7 +1331,13 @@
     },
     "states": "Static currency readouts. The shared capsule handles pressed feedback.",
     "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
-    "review": "docs/screenshots/review/three-resource-wallet/README.md"
+    "review": "docs/screenshots/review/three-resource-wallet/README.md",
+    "source_overrides": {
+      "wallet-supplies": {
+        "source": "art/resource-pieces/wallet-gray-supplies.png",
+        "prompt": "art/resource-pieces/wallet-gray-supplies-prompt.txt"
+      }
+    }
   },
   "campaign_pieces": {
     "source": "art/campaign-pieces/source.png",
@@ -1439,6 +1448,26 @@
         "generator": "Built-in ImageGen, all nine motifs in one transparent atlas",
         "reference": "../../reference/cradle-of-rome-2/visuals/board-pieces.png",
         "review": "docs/screenshots/review/rome-treasures/README.md"
+      },
+      {
+        "source": "art/campaign-pieces/gray-masonry.png",
+        "prompt": "art/campaign-pieces/gray-masonry-prompt.txt",
+        "boxes": {
+          "stone": [
+            1003,
+            0,
+            1254,
+            268
+          ],
+          "cut-blocks": [
+            501,
+            268,
+            752,
+            510
+          ]
+        },
+        "generator": "built-in ImageGen, full-atlas edit of both masonry pieces",
+        "review": "docs/screenshots/review/gray-masonry/board.jpg"
       }
     ],
     "cell_size": 128,

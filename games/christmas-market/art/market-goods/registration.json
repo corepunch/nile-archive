@@ -415,6 +415,102 @@
         128,
         128
       ]
+    },
+    "booster-shield-icon": {
+      "name": "frost shield",
+      "source_crop": [
+        938,
+        28,
+        1277,
+        418
+      ],
+      "fitted_size": [
+        89,
+        102
+      ],
+      "offset": [
+        19,
+        13
+      ],
+      "registered_box": [
+        256,
+        512,
+        128,
+        128
+      ],
+      "source": "art/market-goods/shared-bonuses.png"
+    },
+    "booster-plus-icon": {
+      "name": "wish cross",
+      "source_crop": [
+        1364,
+        44,
+        1742,
+        414
+      ],
+      "fitted_size": [
+        108,
+        106
+      ],
+      "offset": [
+        10,
+        11
+      ],
+      "registered_box": [
+        384,
+        512,
+        128,
+        128
+      ],
+      "source": "art/market-goods/shared-bonuses.png"
+    },
+    "booster-hourglass-icon": {
+      "name": "hourglass",
+      "source_crop": [
+        81,
+        469,
+        363,
+        860
+      ],
+      "fitted_size": [
+        76,
+        106
+      ],
+      "offset": [
+        26,
+        11
+      ],
+      "registered_box": [
+        0,
+        640,
+        128,
+        128
+      ],
+      "source": "art/market-goods/shared-bonuses.png"
+    },
+    "booster-mixer-icon": {
+      "name": "wind-up top",
+      "source_crop": [
+        486,
+        468,
+        847,
+        863
+      ],
+      "fitted_size": [
+        101,
+        110
+      ],
+      "offset": [
+        13,
+        9
+      ],
+      "registered_box": [
+        128,
+        640,
+        128,
+        128
+      ],
+      "source": "art/market-goods/shared-bonuses.png"
     }
   }
 }

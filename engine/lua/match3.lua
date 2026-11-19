@@ -466,12 +466,6 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
                         gfx.unclip()
                     end
                 end
-                if charges > 1 and not R.g.single_charge_tools then
-                    local at = vec2(drawn.x + drawn.w * .78, drawn.y + drawn.h * .22)
-                    gfx.circle(at, 10, rgba(116, 74, 33))
-                    gfx.circle(at, 8, rgba(46, 112, 70))
-                    R.say(tostring(charges), rect.centered(at, size2(20, 20)), 12, PAL_CREAM)
-                end
             else
                 gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
                 gfx.image(R.hud_art[icon .. "-" .. state], drawn:inflate(5), color.WHITE)
@@ -892,16 +886,11 @@ function E.new(config)
                                         if square then amount = resource.amount end
                                         local tool = resource.tool
                                         local meter = g.tool_meter[tool]
-                                        if g.single_charge_tools then amount = math.min(amount, g.tool_threshold - meter) end
+                                        amount = math.min(amount, g.tool_threshold - meter)
                                         m.bonus_charge_by_cell = m.bonus_charge_by_cell or {}
                                         m.bonus_charge_by_cell[i] = amount
                                         local charge = meter + amount
-                                        if g.single_charge_tools then
-                                            g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
-                                        else
-                                            g.tools[tool] = g.tools[tool] + charge // g.tool_threshold
-                                            g.tool_meter[tool] = charge % g.tool_threshold
-                                        end
+                                        g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
                                     end
                                 end
                             end
@@ -1271,13 +1260,21 @@ function E.new(config)
             g.match_only_resources = loadout.match_only_resources
             g.spawn_kinds = loadout.kinds
             g.resource_multipliers = loadout.multipliers
-            g.tool_threshold, g.tool_meter = loadout.tool_threshold, loadout.tool_meter
-            g.single_charge_tools = loadout.single_charge_tools
+            g.tool_threshold = loadout.tool_threshold
+            g.tool_meter = loadout.tool_meter and {}
             g.tool_slots = loadout.tool_slots
+            g.bonus, g.bonus_debut = loadout.bonus, loadout.bonus_debut
+            g.bonus_preview, g.loadout_seed = loadout.bonus_preview, loadout.loadout_seed
+            g.win_income = loadout.win_income
             g.tools = {}
             local count = g.tool_slots and #g.tool_slots or 3 + #(config.extra_tools or {})
             for i = 1, count do
-                g.tools[i] = g.single_charge_tools and (g.tool_meter[i] or 0) // g.tool_threshold or 0
+                local charge = loadout.tool_meter and loadout.tool_meter[i]
+                if charge then
+                    charge = num.clampi(charge, 0, g.tool_threshold)
+                    g.tool_meter[i] = charge
+                end
+                g.tools[i] = charge and charge // g.tool_threshold or 0
             end
         elseif l.omit_kind ~= nil then
             -- The palette contains stable colour slots. Board copies share it read-only.
@@ -1409,6 +1406,7 @@ function E.new(config)
         local count = g.tool_slots and #g.tool_slots or #default_tools + #extra_tools
         return flags & E.NO_TOOLS == 0 and tool >= 0 and tool < count
             and (g.tools[tool + 1] or 0) > 0 and not g.won and not g.lost
+            and (not g.tool_slots or g.tool_meter[tool + 1] == g.tool_threshold)
     end
     local INSTANT = {shuffle=true, lightning=true, moves=true, charge=true}
     function M.game_tool_effect(tool, g)
@@ -1456,8 +1454,6 @@ function E.new(config)
             if effect == "row_lightning" then
                 lightning(g, m, 20 - count_hits(m), preview and {rng=g.rng} or g)
             end
-        elseif effect == "sunburst" and config.sunburst_targets and g.tool_meter and g.tool_meter[3] then
-            m.mask = config.sunburst_targets(g, cell, CELLS)
         elseif effect == "color" or effect == "color_pierce" or flags & E.COLOR_TOOL ~= 0 then
             if not equal(g, cell, cell) then return false end
             local kind = g.tiles[cell].kind
@@ -1489,14 +1485,19 @@ function E.new(config)
                 g.earnings[piece.slot] = g.earnings[piece.slot] + tool_slot(g, tool).resource_amount
             else return false end
         elseif effect == "charge" then
-            if not g.tool_meter or not g.single_charge_tools then return false end
+            if not g.tool_meter then return false end
             local descriptor = tool_slot(g, tool)
             local amount = g.tool_threshold // (descriptor and descriptor.charge_divisor or 2)
             if not charge_others(g, tool, amount) then return false end
-        elseif effect == "lightning" then lightning(g, m, config.lightning_hits or 20, g)
+        elseif effect == "lightning" then
+            local descriptor = tool_slot(g, tool)
+            lightning(g, m, descriptor and descriptor.hits or config.lightning_hits or 20, g)
         elseif not target_tool(g, effect, cell, m) then return false end
-        g.tools[tool + 1] = g.tools[tool + 1] - 1
-        if g.single_charge_tools and g.tool_meter[tool + 1] then g.tool_meter[tool + 1] = 0 end
+        if g.tool_slots then
+            g.tools[tool + 1], g.tool_meter[tool + 1] = 0, 0
+        else
+            g.tools[tool + 1] = g.tools[tool + 1] - 1
+        end
         g.combo = 0
         count_hits(m)
         -- Effects that clear nothing skip the clearing animation.
@@ -1661,7 +1662,7 @@ function E.new(config)
         if used then
             R.tool = -1
             R.play("tool")
-            if R.g.single_charge_tools then R.toast_time = 0 end
+            if R.g.tool_slots then R.toast_time = 0 end
             if still then
                 R.hint_a, R.hint_b, R.idle_time = -1, -1, 0
                 if shuffle_from then animate_shuffle(shuffle_from) end
@@ -1683,8 +1684,6 @@ function E.new(config)
             R.tool = R.tool == k and -1 or k
             local descriptor = tool_slot(R.g, k)
             R.notice(R.tool < 0 and "Tool put away." or descriptor and descriptor.effect or R.tool_notes[k + 1])
-        elseif R.g.opening_tools and R.g.opening_tools[k + 1] then
-            R.notice("This booster has been used for this wish.")
         elseif R.g.tool_meter then
             R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Restore its building to unlock this tool.")
         else R.notice("No charges left. More tools next expedition.") end
@@ -1992,4 +1991,40 @@ function E.new(config)
 
     return M
 end
+-- The portrait campaigns share board dimensions, refill behavior and the
+-- guarantee that a small opening field survives its first exchange.
+function E.square_campaign(campaign)
+    local rules = E.new{flags=E.LINE_MATCHES | E.COLOR_TOOL, square=true, columns=9, rows=12,
+        colors=campaign.colors, match_min=3, refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
+        kind_flags={[0]=E.GOAL, [2]=E.WOOD, [4]=E.STONE}}
+    local start = rules.game_start
+    local function wins_in_one(g)
+        if g.oil_left > 16 then return false end
+        local wave = rules.new_match()
+        for a = 0, rules.CELLS - 1 do
+            for axis = 0, rules.AXES - 1 do
+                local b = rules.hex_neighbor(a, axis)
+                if rules.game_swap_matches(g, a, b) then
+                    local trial = rules.game_copy(g)
+                    rules.game_swap(trial, a, b, wave)
+                    repeat
+                        rules.game_apply(trial, wave)
+                        if trial.oil_left == 0 then return true end
+                        rules.game_collapse(trial)
+                        rules.game_matches(trial, wave)
+                    until wave.hits == 0
+                end
+            end
+        end
+        return false
+    end
+
+    function rules.start_campaign_board(level, seed, yields, loadout)
+        local g = start(level, seed, yields, loadout)
+        while wins_in_one(g) do g = start(level, g.rng, yields, loadout) end
+        return g
+    end
+    return rules
+end
+
 return E

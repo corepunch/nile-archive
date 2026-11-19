@@ -23,11 +23,6 @@ return {
     region_speaker = "pip",
     board = {
         kudos = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"},
-        tool_notes = {
-            "Hammer: tap a piece to hit its cell.",
-            "Firework Bomb: tap a piece to hit the square around it.",
-            "Lantern lightning: strike 15 cells across the board.",
-        },
         locked = "Match the tied piece to untangle the tinsel.",
     },
     notices = {
