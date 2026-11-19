@@ -82,7 +82,7 @@ player portraits and the player's own row. When offline, it shows the player's b
 Use `com.corepunch.relicrush.stars` in [Game Center](../../docs/GAMECENTER.md). Capture the dialog
 with sample rivals using `--gamecenter-demo --dialog leaderboard`.
 
-The Landing starts with sun coins, silver coins, leaves, flowers and amphoras. Water, timber and a bonus piece take existing slots once their buildings are confirmed.
+The Landing starts with gold coins, silver coins, leaves, flowers and amphoras. Water, timber and a bonus piece take existing slots once their buildings are confirmed.
 
 Clear every turquoise plaque to finish the expedition. The opening chapter’s dialogue follows island construction.
 
@@ -104,7 +104,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The expedition result shows earned resources and Collect & Return. Build opens the restoration card, including the resource shortfall and the reward. The spinning trail pauses with Reduce Motion. [Square build review](docs/square-match3.md#captures).
+The expedition result shows earned resources and Collect & Return. Above the Build house, each icon shows how much of that resource the next restoration still needs. When the price and level requirement are met, a particle trail circles the house. Tap it for the restoration card and its reward. Reduce Motion hides the trail. [Square build review](docs/square-match3.md#captures).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 

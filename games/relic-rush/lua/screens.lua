@@ -62,6 +62,51 @@ function R.funding_shortfall(cost)
     return short and parts or {}
 end
 
+-- Keep the next purchase's shortfall attached to the existing Build button.
+local AMOUNT_WIDTH, AMOUNT_GAP = 48, 3
+local build_progress = ui.form{kind="column",children={
+    {kind="column",panel=true,role="group",gap=3,padding={6,4,6,5},children={
+        {kind="label",id="caption",em=13,text_style="caption"},
+        {kind="row",visible_field="show_amounts",children={
+            {kind="spacer",grow=1},
+            {kind="list",id="shortfall",direction="row",gap=AMOUNT_GAP,item=function(entry)
+                return match3.resource_indicator(entry, AMOUNT_WIDTH, true)
+            end},
+            {kind="spacer",grow=1},
+        }},
+    }},
+}}
+
+local function draw_build_progress(screen)
+    if R.island.placing >= 0 then return end
+    local _, position = island.next_step(R.island, R.prog.level)
+    local step = island.ladder[position]
+    if not step or step.after > rules.LEVELS then return end
+    local missing = economy.shortfall(island.buildings[step.kind + 1].cost, R.prog.wallet)
+    local key = table.concat({position, missing[1], missing[2], missing[3]}, "/")
+    local list = build_progress.nodes.shortfall
+    if list.funding_key ~= key then
+        local parts = R.currency_prices(missing)
+        assert(build_progress:set_items("shortfall", parts))
+        list.funding_key = key
+    end
+    local count = #list.children
+    if count == 0 and step.after <= R.prog.level then return end
+    build_progress.values.show_amounts = count > 0
+    build_progress:set("caption", count > 0 and R.words.card.missing or R.words.catalogue.complete:format(step.after))
+    local width = count == 0 and 164 or math.max(112, count * (AMOUNT_WIDTH + AMOUNT_GAP) - AMOUNT_GAP + 12)
+    local _, height = build_progress:measure(width, R.skin)
+    local button = R.town.navigation.boxes.build
+    local x = num.clamp(button:center().x - width / 2, screen.x + 6, screen:max().x - width - 6)
+    build_progress:draw(rect(x, button.y - height - 6, width, height), R.skin, {interactive=false})
+end
+
+local town_setup = R.town_setup
+function R.town_setup()
+    town_setup()
+    R.town.hooks.extras = draw_build_progress
+end
+
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
 R.register_result(function()
@@ -101,6 +146,7 @@ local function guide_piece(unlock, title, availability)
     guide_entries[#guide_entries+1] = {id=unlock.key, title=title,
         description=description, icon={front=chip_prefix .. unlock.key}}
 end
+guide_piece(economy.pieces[0], "Gold coins", "From expedition 1.")
 guide_piece(economy.pieces[1], "Silver coins", "From expedition 1.")
 for _, unlock in ipairs(economy.unlocks) do
     local building = island.buildings[island.kinds[unlock.building] + 1].name

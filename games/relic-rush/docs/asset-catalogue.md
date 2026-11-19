@@ -158,7 +158,13 @@ are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-onl
 to register `data/story/characters/keeper.png`. See the native review at
 [480 × 900](review/chapter-one/keeper-480.jpg) and [390 × 844](review/chapter-one/keeper-390.jpg).
 
-## Crew request pieces
+## Build progress
+
+Above the existing lower-left `action-build` house, the town reuses the skin's inset resource indicators for Coins, Supplies and Food still needed for the next campaign purchase. Each compact tile uses the corresponding painted wallet icon above the missing quantity. A fully funded purchase still waiting for a clear shows its expedition requirement. Once the purchase opens, the readout clears and the existing blue `fx-tablet-glow` and `fx-tablet-spark` trail circles the enamel rim. Reduce Motion hides the trail. The same house opens the card in each state. [Review and capture commands](square-match3.md#build-progress-captures).
+
+## Archived crew request pieces
+
+The following records describe the former hex campaign's optional requests and their review captures. The active square campaign uses the Build house for construction progress. Its board pieces credit score, resources or bonus charges.
 
 The crew's request pieces reuse five paintings from the campaign atlas. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
 

@@ -13,11 +13,19 @@ all the targets within the move budget and collect the matched Coins, Food and S
 
 ## Build
 
-The lower-left Build button opens the next purchase. The card shows the
-price or the amounts still needed. The particle trail runs when the level
-gate and resource price are met. Open placement from the card, choose a
-site, then confirm to pay once. The card links to the decoration shop.
-After level ten, a pending purchase can offer a replay for resources.
+Only gold and silver coins pay into the wallet on the first expedition.
+The confirmed Well introduces water buckets worth 3 Food on expeditions
+2–10. The confirmed Sawmill adds timber worth 5 Supplies on expeditions
+8–10. The Hunter’s Hut introduces the Hammer from expedition 5.
+Leaves, flowers and amphoras give score in the slots still available to them.
+
+The lower-left house opens the next purchase. Its readout shows the
+remaining amount for each required resource. If the wallet covers the price
+early, the readout shows the expedition to clear. A particle trail circles
+the house when both the level requirement and price are met. Open placement
+from the card, choose a site, then confirm to pay once. The card links to the
+decoration shop. After level ten, a pending purchase can offer a replay for
+resources.
 
 ## Levels and art
 
@@ -61,3 +69,11 @@ Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 - [Still needed](screenshots/square-build-cost.jpg)
 
 Capture from the game using `build/test/all --suite=relic-rush "shot square-"`.
+
+### Build progress captures
+
+- [480 × 900](screenshots/square-build-progress.jpg)
+- [390 × 844 with safe areas](screenshots/square-build-progress-phone.jpg)
+- [Waiting for an expedition clear](screenshots/square-build-gate.jpg)
+
+Capture these states with `build/test/relic-rush "shot square-build-progress" "shot square-build-gate"`.
