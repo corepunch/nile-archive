@@ -1,5 +1,7 @@
 # A light below · first-epoch playtest
 
+[Epoch one outline](epoch-one-outline.md): the whole epoch in play order.
+
 **Question for this build.** After the player finds the cable, will they choose to test the lamp? Ask them what prompted that choice and what they learned from the skiff. The first ten expeditions, four purchases and two returning characters give us enough room to try the whole loop.
 
 | When | What the player sees and does | What changes |
