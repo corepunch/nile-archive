@@ -1356,7 +1356,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "7d974467e01d6e0d163dcc14627d3b06648aee3e936fb29605df2586b897d783",
+    "recipe": "5a808917ff17ce2a94da07584bfd453b843d92e7ca00ebe8531e1b02bcd64efe",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",

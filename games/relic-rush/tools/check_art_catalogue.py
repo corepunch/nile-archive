@@ -2,7 +2,7 @@
 import json
 import re
 import struct
-from PIL import Image
+from PIL import Image, ImageStat
 from pathlib import Path
 from prepare_bonus_gems import pack, png_matches
 
@@ -38,6 +38,21 @@ for name, record in atlas["square_cells"]["frames"].items():
     assert square["runtime"] == f'data/board/{atlas["frames"][name]["atlas"]}.png'
     if name.startswith("square-frame-"):
         assert f"`{name}`" in doc
+
+# Measure the painted light on the packed faces, away from the highlight on
+# the bevel. A nearly flat interior can look lit at atlas size and flat in play.
+with Image.open(ROOT / square["runtime"]) as sheet:
+    for name, contrast in [("square-plain", 65), ("square-target", 45), ("square-double", 25)]:
+        x, y, w, h = atlas["frames"][name]["box"]
+        tile = sheet.crop((x, y, x + w, y + h)).convert("RGB")
+        luma = tile.convert("L", (0.2126, 0.7152, 0.0722, 0))
+        upper, centre, lower = (ImageStat.Stat(luma.crop((a, a, b, b))).mean[0]
+                                for a, b in [(20, 41), (55, 73), (87, 108)])
+        if name == "square-double":
+            assert centre - max(upper, lower) >= contrast, "Olive plaque needs its broad diagonal highlight"
+        else:
+            assert upper > centre > lower and upper - lower >= contrast, f"{name} needs its upper-left lighting"
+
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
 pieces = [*resources["slots"], *resources["from_campaign"]]

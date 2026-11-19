@@ -28,20 +28,25 @@ targets, and hyphens holes.
 
 The [shared floor study](../../../art/match3-square/README.md) records the
 Cradle of Rome references for papyrus and plaques. Ordinary cells have
-cross-laid papyrus fibres and a shallow matte rim. Single and double plaques
-are matte turquoise and olive green. The perimeter is carved sandstone
+cross-laid papyrus fibres, with light falling from the upper left into a
+warm lower-right shadow. The single plaque shades from turquoise to deep
+blue-teal along the same diagonal. The double plaque has a soft olive
+highlight from lower left to upper right. The perimeter is carved sandstone
 with jade inlays. Each perimeter tile sits on a vertex of the square grid
 and joins its neighbours halfway along each exposed edge. Inset corners
 alternate between leafy and bare stone for each facing direction. Leaves and their contact shadows
 are painted directly into the leafy corner.
 
 Built-in ImageGen painted all three floor faces and five frame sections
-together in the [current atlas](../art/papyrus-board/source.png). The
+together in the [original atlas](../art/papyrus-board/source.png). The
 [layout guide](../art/papyrus-board/layout.png) uses the earlier
 [sandstone study](../art/square-frame/source.png) and
 [large-leaf study](../art/square-frame/large-foliage.png). The
 [paint-over prompt](../art/papyrus-board/prompt.txt) records the papyrus
 reference and the two recessed corner variants.
+[The lighting strip](../art/papyrus-board/lighting.png) repaints the three
+floor faces together, using the [original faces](../art/papyrus-board/lighting-layout.png)
+as its edit target and the [lighting prompt](../art/papyrus-board/lighting-prompt.txt).
 [Atlas registration](../art/match3-atlas.json) records the source coordinates and
 runtime atlas regions. One grid step spans 128 px. The leafy corner uses a
 224 px canvas centred on the same vertex so the foliage can extend beyond

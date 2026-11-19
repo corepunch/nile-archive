@@ -364,9 +364,9 @@ def folder_sprites(folder, prefix):
 # padding on each side, so its ports move by 48 and the pivot stays centred.
 SQUARE_INNER_PAD = 48
 PAPYRUS_FLOORS = {
-    'square-plain': (41, 43, 377, 377),
-    'square-target': (459, 43, 795, 377),
-    'square-double': (878, 44, 1214, 378),
+    'square-plain': (63, 66, 643, 644),
+    'square-target': (772, 66, 1355, 644),
+    'square-double': (1484, 66, 2067, 644),
 }
 SQUARE_FRAME_STOPS = {
     'square-frame-edge': (
@@ -426,6 +426,7 @@ def square_cells(game, root):
     source = SQUARE_DIR / 'source.png'
     ornaments = SQUARE_DIR / 'ornaments.png'
     papyrus = root / 'art/papyrus-board/source.png'
+    floor_lighting = papyrus.with_name('lighting.png')
     materials = {
         'square-plain': (0, 0, 256, 256),
         'square-target': (256, 0, 512, 256),
@@ -438,9 +439,10 @@ def square_cells(game, root):
     inputs = [source, SQUARE_DIR / 'prompt.txt', SQUARE_DIR / 'lighting-prompt.txt']
     decorations = {}
     if game == 'relic-rush':
-        sheets = [(papyrus, PAPYRUS_FLOORS, 0),
+        sheets = [(floor_lighting, PAPYRUS_FLOORS, 0),
                   (source, {name: materials[name] for name in ('square-selected', 'square-grout')}, 0)]
         inputs += [papyrus, papyrus.with_name('layout.png'), papyrus.with_name('prompt.txt')]
+        inputs += [floor_lighting, papyrus.with_name('lighting-layout.png'), papyrus.with_name('lighting-prompt.txt')]
     else:
         decorations = {
             'square-foliage': (0, 0, 512, 512),
@@ -607,6 +609,9 @@ def build_game(game, check):
         square_sources = {'source': 'art/papyrus-board/source.png',
                           'layout': 'art/papyrus-board/layout.png',
                           'prompt': 'art/papyrus-board/prompt.txt',
+                          'floor_source': 'art/papyrus-board/lighting.png',
+                          'floor_layout': 'art/papyrus-board/lighting-layout.png',
+                          'floor_prompt': 'art/papyrus-board/lighting-prompt.txt',
                           'selection_and_grout': '../../art/match3-square/source.png'}
     else:
         square_sources = {'source': '../../art/match3-square/source.png',

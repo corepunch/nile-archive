@@ -1713,6 +1713,9 @@
       "square-frame-diagonal": "stepped sandstone join between two diagonal cells"
     },
     "review": "docs/square-match3.md#captures",
+    "floor_source": "art/papyrus-board/lighting.png",
+    "floor_layout": "art/papyrus-board/lighting-layout.png",
+    "floor_prompt": "art/papyrus-board/lighting-prompt.txt",
     "selection_and_grout": "../../art/match3-square/source.png"
   }
 }

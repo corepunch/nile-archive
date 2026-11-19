@@ -12,7 +12,7 @@ The current campaign uses matte papyrus for ordinary and cleared cells, turquois
 | `square-frame-inner-bare` | Alternate inner corner with the same open rail ends, carved stone and a jade inlay. |
 | `square-frame-diagonal` | Two diagonally touching floor cells meet at a stepped sandstone join. |
 
-Built-in ImageGen painted the [floor and frame atlas](../art/papyrus-board/source.png) from the [layout guide](../art/papyrus-board/layout.png) and [prompt](../art/papyrus-board/prompt.txt). The [square campaign guide](square-match3.md) links the registration transforms and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
+Built-in ImageGen painted the [floor and frame atlas](../art/papyrus-board/source.png) from the [layout guide](../art/papyrus-board/layout.png) and [prompt](../art/papyrus-board/prompt.txt). The [lighting pass](../art/papyrus-board/lighting.png) gives papyrus and turquoise an upper-left light falloff and the olive plaque a diagonal highlight. The catalogue check samples the interiors of the packed faces so a bright bevel alone cannot satisfy the lighting check. The [square campaign guide](square-match3.md) links the registration transforms and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
 
 ## Popup close button
 

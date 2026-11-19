@@ -1587,15 +1587,18 @@
     "source": "art/papyrus-board/source.png",
     "layout": "art/papyrus-board/layout.png",
     "prompt": "art/papyrus-board/prompt.txt",
+    "floor_source": "art/papyrus-board/lighting.png",
+    "floor_layout": "art/papyrus-board/lighting-layout.png",
+    "floor_prompt": "art/papyrus-board/lighting-prompt.txt",
     "selection_and_grout": "../../art/match3-square/source.png",
     "frames": {
       "square-plain": {
-        "source": "art/papyrus-board/source.png",
+        "source": "art/papyrus-board/lighting.png",
         "crop": [
-          41,
-          43,
-          377,
-          377
+          63,
+          66,
+          643,
+          644
         ],
         "size": [
           128,
@@ -1604,12 +1607,12 @@
         "registered": "art/registered/square-cells/square-plain.png"
       },
       "square-target": {
-        "source": "art/papyrus-board/source.png",
+        "source": "art/papyrus-board/lighting.png",
         "crop": [
-          459,
-          43,
-          795,
-          377
+          772,
+          66,
+          1355,
+          644
         ],
         "size": [
           128,
@@ -1618,12 +1621,12 @@
         "registered": "art/registered/square-cells/square-target.png"
       },
       "square-double": {
-        "source": "art/papyrus-board/source.png",
+        "source": "art/papyrus-board/lighting.png",
         "crop": [
-          878,
-          44,
-          1214,
-          378
+          1484,
+          66,
+          2067,
+          644
         ],
         "size": [
           128,
@@ -1910,7 +1913,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "7d974467e01d6e0d163dcc14627d3b06648aee3e936fb29605df2586b897d783",
+    "recipe": "5a808917ff17ce2a94da07584bfd453b843d92e7ca00ebe8531e1b02bcd64efe",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -1949,6 +1952,9 @@
       "games/relic-rush/art/board-theme/sun-coin/prompt.txt": "d7b001dc0f0c0f2924be22570bc2f34038cc494ef10090a1fb2c21bc59346aa9",
       "games/relic-rush/art/board-theme/sun-coin/source.png": "ecf6c65d8a3d66bea3c0d11ea51e6b215da7ad5765b6d4d98fd53dd4bad59e04",
       "games/relic-rush/art/papyrus-board/layout.png": "da05ec7ac07b4101089f471b144c495aab3311bfbf753b51e58114c1a210f4c3",
+      "games/relic-rush/art/papyrus-board/lighting-layout.png": "dafd1d8fd21b27271b58e14fb2b5c6016f66626e8e2d5f26f6d2b24c9d0f786c",
+      "games/relic-rush/art/papyrus-board/lighting-prompt.txt": "731041538b9d52dbb700ae5c9a861ccd3d568b374c356fedb4fafd5d0495c725",
+      "games/relic-rush/art/papyrus-board/lighting.png": "5907551a3601d669500fcf4155432a16cc8b9560bd7cae1771f27d3768d4a8e5",
       "games/relic-rush/art/papyrus-board/prompt.txt": "2da943f1fb0525fab7703f3fcc8013e9499851f7deade7f88d9c780ce37b226a",
       "games/relic-rush/art/papyrus-board/source.png": "e8c8bee48955684ac9723eedf6789aefa447a86d1acf637d9f82b63bcb1fcb00",
       "games/relic-rush/art/particles/kenney/circle_02.png": "697e6fa5948cc35cc779ae0b22995f5b17f0e02746406d05ec8548921e82ad1b",
@@ -1988,16 +1994,16 @@
       "games/relic-rush/art/registered/resource-pieces/wallet-supplies.png": "ddd2114a9e7ee18eb76e213f8d6085a5569033c8c6dec7d7dd4f2e75c0ec2d81",
       "games/relic-rush/art/registered/resource-pieces/water.png": "5eaaa529bf7de275198e08ddaba50abbd4e2248299991406da9511898f7be4b5",
       "games/relic-rush/art/registered/result-icons.png": "a4f1254f574a9d287b8d2d2345cb7823ea1b5c3407baed8b96e3b7407e102a5e",
-      "games/relic-rush/art/registered/square-cells/square-double.png": "14d9c90ea9dc537dbccc8cf2d759652569668ec8a9ca7ed00a2003d6a8d62953",
+      "games/relic-rush/art/registered/square-cells/square-double.png": "8985a4bfab1e8603283aead8a63d81717b93a34c1c725ddf45870840ea31a1ea",
       "games/relic-rush/art/registered/square-cells/square-frame-diagonal.png": "7a4050a4081a880fcaaa136cc0f99db9390bbae40548536e9081474833a2429e",
       "games/relic-rush/art/registered/square-cells/square-frame-edge.png": "ad9505e3fc45bc83296f83e44103662747aa778bb1473dcf6cf246b59d04b522",
       "games/relic-rush/art/registered/square-cells/square-frame-inner-bare.png": "6b5b087f6e274c7ead887ebd64aec4fd5be886a8ffff89c8a59666a5badf7521",
       "games/relic-rush/art/registered/square-cells/square-frame-inner.png": "6e38e02813e275a4b40993f3431ff7eaf529b6d19ac460a74b05a8994cf8f169",
       "games/relic-rush/art/registered/square-cells/square-frame-outer.png": "3133725cd56826a7391c1df35c24163bf43d93f08efc1b63f044f4d82c71be2b",
       "games/relic-rush/art/registered/square-cells/square-grout.png": "9ed8a7ade23737f7c325ec4878d9cc22530e525748bf5a0e90d4d44734c41c30",
-      "games/relic-rush/art/registered/square-cells/square-plain.png": "285867e45875ba1872fc712f66a8d2b3a7cdcbb6b9f3c940d49c55e9c1a11499",
+      "games/relic-rush/art/registered/square-cells/square-plain.png": "7848d039713b5f4d4bbe3307c35ef0ce36a12400d123fc1e062ba92dce4a8827",
       "games/relic-rush/art/registered/square-cells/square-selected.png": "fddece0db27db24b2ef8ad346c0341228edf91febfb67f5edee541a2a67ef579",
-      "games/relic-rush/art/registered/square-cells/square-target.png": "9b281f43342d1438bd49510ab38fa049775a732b8f0ef306bbd9fe136a3a89e6",
+      "games/relic-rush/art/registered/square-cells/square-target.png": "0f0d8a0886fbf250a2c78b7abc573b42f252dfcb0078d5242eb11af2e22d0415",
       "games/relic-rush/art/registered/story-pieces/cable.png": "6c5610eab0f83b7fe8836983bccf5eaa7f9d1868fece7e92866607e8083e5044",
       "games/relic-rush/art/registered/story-pieces/chart.png": "56573300ba922558e781aea265c4a7306bcb718d794a7fcdec53c326e210ecf4",
       "games/relic-rush/art/registered/story-pieces/gear.png": "1380006113a1ccb9bfb043dea16fe685374f360746529f190777a0dc0961e873",
@@ -2033,7 +2039,7 @@
       "games/relic-rush/art/registered/tile-sets/relics/0.png": "6d7112d7edae25cd5bc3466204b653bc5cbbc1498cbf8db828994b5e3b56086f",
       "games/relic-rush/art/registered/tile-sets/relics/1.png": "1ce14a5dc0eae495e60b1cb036c63dc18873f33e63ecb2f018e44cb9377b1d26",
       "games/relic-rush/data/board/blockers.png": "ce55e86bc3272fb5e8b67d5e0608bce7d4a3e370c807a155c6a81964df366502",
-      "games/relic-rush/data/board/cells.png": "dd7bf51ccb891988184824ad187a46a1e963dd458b963c1c12b5b28af967b45d",
+      "games/relic-rush/data/board/cells.png": "2ed6d8ceec067fae039324de77ab16946ed529aa9bd4c8f5debb23cba9522970",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
       "games/relic-rush/data/board/pieces.png": "1cdd3bd444e44335b1c1e9806e187392042af2845bf259d6a951f66dfb7a901b",
