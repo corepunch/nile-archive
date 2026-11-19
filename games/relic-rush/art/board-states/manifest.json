@@ -1714,8 +1714,9 @@
     "frame_source": "art/square-frame/source.png",
     "frame_layout": "art/square-frame/layout.png",
     "frame_prompt": "art/square-frame/prompt.txt",
-    "foliage_source": "art/square-frame/foliage.png",
-    "foliage_prompt": "art/square-frame/retouch-prompt.txt",
+    "foliage_source": "art/square-frame/large-foliage.png",
+    "foliage_layout": "art/square-frame/large-foliage-layout.png",
+    "foliage_prompt": "art/square-frame/large-foliage-prompt.txt",
     "lighting_prompt": "../../art/match3-square/lighting-prompt.txt"
   }
 }

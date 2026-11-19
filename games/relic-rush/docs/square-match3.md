@@ -37,9 +37,14 @@ Built-in ImageGen painted the [four-tile sheet](../art/square-frame/source.png)
 from the [layout guide](../art/square-frame/layout.png) and
 [initial prompt](../art/square-frame/prompt.txt). A
 [second pass](../art/square-frame/foliage.png) retouched the plant with
-the [foliage prompt](../art/square-frame/retouch-prompt.txt).
-[Atlas registration](../art/match3-atlas.json) lists the source coordinates,
-the 128 px registered square for each section, and the runtime atlas regions.
+the [foliage prompt](../art/square-frame/retouch-prompt.txt). The current
+[corner painting](../art/square-frame/large-foliage.png) grows a larger fan
+into the recess, using an [expanded layout](../art/square-frame/large-foliage-layout.png)
+and [paint-over prompt](../art/square-frame/large-foliage-prompt.txt).
+[Atlas registration](../art/match3-atlas.json) records the source coordinates and
+runtime atlas regions. One grid step spans 128 px. The inset corner uses a
+224 px canvas centred on the same vertex so the foliage can extend beyond
+the stone joins.
 Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 
 ## Captures

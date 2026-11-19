@@ -8,7 +8,7 @@ The current campaign uses warm limestone, turquoise plaques and olive-green doub
 | --- | --- |
 | `square-frame-edge` | Two adjacent floor cells meet at a straight boundary. |
 | `square-frame-outer` | One floor cell makes an outside corner. |
-| `square-frame-inner` | Three floor cells make a notch. Leaves and their contact shadows are painted into the stone corner. |
+| `square-frame-inner` | Three floor cells make a notch. A broad leaf fan and its contact shadows are painted into the stone corner. The larger canvas holds the leaf tips beyond the ends of the stone rails. |
 | `square-frame-diagonal` | Two diagonally touching floor cells meet at a stepped sandstone join. |
 
 The built-in ImageGen sheet and foliage paint-over, their prompts and the exact registration transforms are linked from the [square campaign guide](square-match3.md). Rebuild with `python3 tools/match3_atlas.py`. The guide also links the reviewed in-game captures.

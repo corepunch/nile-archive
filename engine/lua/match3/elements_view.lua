@@ -549,7 +549,9 @@ local function draw_square_frame(R, rules, sx, tint)
     if tint.a <= 0 then return end
     local r, art = R.HEX_R, R.board_art
     local origin = R.board_origin + vec2(sx, 0)
-    local size = size2.splat(2 * r)
+    -- The art uses 128 pixels per grid step. A larger canvas can extend
+    -- beyond the joins while keeping the same scale and vertex pivot.
+    local scale = 2 * r / 128
     local function occupied(q, row, bit)
         return rules.game_cell_active(R.g, rules.hex_index(q, row)) and bit or 0
     end
@@ -561,7 +563,9 @@ local function draw_square_frame(R, rules, sx, tint)
             local tile = square_frame_tiles[mask]
             if tile then
                 local at = origin + vec2((2 * q - 1) * r, (2 * row - 1) * r)
-                gfx.image_rot(art[square_frame[tile[1]]], rect.centered(at, size), tile[2] * math.pi / 2, tint)
+                local sprite = art[square_frame[tile[1]]]
+                local box = rect.centered(at, size2.splat(sprite.w * scale))
+                gfx.image_rot(sprite, box, tile[2] * math.pi / 2, tint)
             end
         end
     end

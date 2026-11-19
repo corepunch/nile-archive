@@ -360,7 +360,9 @@ def folder_sprites(folder, prefix):
 
 # (destination, source) axis stops for the painted Relic Rush frame. Each
 # port spans 44:68, or 60:84 on the opposite side of a diagonal join. The
-# 128 px square maps to one board step, centred at the grid vertex.
+# 128 px square maps to one board step. The inset corner adds 48 px of
+# padding on each side, so its ports move by 48 and the pivot stays centred.
+SQUARE_INNER_PAD = 48
 SQUARE_FRAME_STOPS = {
     'square-frame-edge': (
         [(0, 30), (128, 598)],
@@ -371,8 +373,8 @@ SQUARE_FRAME_STOPS = {
         [(42, 210), (44, 219), (68, 332), (128, 595)],
     ),
     'square-frame-inner': (
-        [(0, 30), (44, 222), (68, 334), (70, 344)],
-        [(0, 652), (39, 825), (44, 848), (68, 960), (70, 970)],
+        [(0, 28), (48, 206), (92, 360), (116, 452), (118, 460)],
+        [(0, 633), (48, 806), (92, 961), (116, 1056), (118, 1064)],
     ),
     'square-frame-diagonal': (
         [(0, 650), (44, 839), (60, 917), (68, 953), (84, 1031), (128, 1223)],
@@ -383,23 +385,28 @@ SQUARE_FRAME_STOPS = {
 
 def square_frame_sprites(root):
     source = root / 'art/square-frame/source.png'
-    foliage = source.with_name('foliage.png')
-    inputs = [source, foliage, source.with_name('layout.png'), source.with_name('prompt.txt'),
-              source.with_name('retouch-prompt.txt')]
+    foliage = source.with_name('large-foliage.png')
+    inputs = [source, foliage, *[source.with_name(name) for name in (
+        'layout.png', 'prompt.txt', 'foliage.png', 'retouch-prompt.txt',
+        'large-foliage-layout.png', 'large-foliage-prompt.txt',
+    )]]
     sprites, registration = {}, {}
     for name, (x_stops, y_stops) in SQUARE_FRAME_STOPS.items():
         inner = name == 'square-frame-inner'
         path = foliage if inner else source
-        # Leave room for the leaf tip above the left rail's terminal cut.
-        left_edge = {652: 8, 825: 8} if inner else {}
+        padding = SQUARE_INNER_PAD if inner else 0
+        side = CELL + 2 * padding
+        rail = 44 + padding
         mesh = []
         for (dx0, sx0), (dx1, sx1) in zip(x_stops, x_stops[1:]):
             for (dy0, sy0), (dy1, sy1) in zip(y_stops, y_stops[1:]):
-                tl = left_edge.get(sy0, sx0) if dx0 == 0 else sx0
-                bl = left_edge.get(sy1, sx0) if dx0 == 0 else sx0
-                mesh.append(((dx0, dy0, dx1, dy1), (tl, sy0, bl, sy1, sx1, sy1, sx1, sy0)))
+                # Extend the foliage into the notch while trimming the two
+                # stone ends at the same midpoint as their straight neighbours.
+                if inner and ((dx1 <= padding and dy0 >= rail) or (dy1 <= padding and dx0 >= rail)):
+                    continue
+                mesh.append(((dx0, dy0, dx1, dy1), (sx0, sy0, sx0, sy1, sx1, sy1, sx1, sy0)))
         with Image.open(path) as sheet:
-            sprite = sheet.convert('RGBA').transform((CELL, CELL), Image.Transform.MESH, mesh, Image.Resampling.BICUBIC)
+            sprite = sheet.convert('RGBA').transform((side, side), Image.Transform.MESH, mesh, Image.Resampling.BICUBIC)
         registered = root / 'art/registered/square-cells' / f'{name}.png'
         write_asset(registered, png(sprite))
         sprites[name] = sprite
@@ -407,8 +414,8 @@ def square_frame_sprites(root):
             'source': relpath(path, root), 'size': list(sprite.size),
             'x_stops': x_stops, 'y_stops': y_stops, 'registered': relpath(registered, root),
         }
-        if left_edge:
-            registration[name]['left_edge_source_x_by_y'] = left_edge
+        if inner:
+            registration[name]['join_padding'] = padding
         inputs.append(registered)
     return sprites, inputs, registration
 
@@ -597,8 +604,9 @@ def build_game(game, check):
         square_frame_sources = {'frame_source': 'art/square-frame/source.png',
                                 'frame_layout': 'art/square-frame/layout.png',
                                 'frame_prompt': 'art/square-frame/prompt.txt',
-                                'foliage_source': 'art/square-frame/foliage.png',
-                                'foliage_prompt': 'art/square-frame/retouch-prompt.txt'}
+                                'foliage_source': 'art/square-frame/large-foliage.png',
+                                'foliage_layout': 'art/square-frame/large-foliage-layout.png',
+                                'foliage_prompt': 'art/square-frame/large-foliage-prompt.txt'}
     else:
         square_frame_sources = {'ornaments': '../../art/match3-square/ornaments.png',
                                 'ornaments_prompt': '../../art/match3-square/ornaments-prompt.txt'}
