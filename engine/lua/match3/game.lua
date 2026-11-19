@@ -988,7 +988,7 @@ function G.bind(R, over)
                     set_paint(previous)
                     return action
                 end})
-        end, {dim=rgba(5, 22, 22, 185)})
+        end, {dim=rgba(5, 22, 22, 185), blur=7})
         local visible_bounds = pr(bounds)
         reset_paint()
         if event then
@@ -1010,7 +1010,7 @@ function G.bind(R, over)
         local top = screen.y + header.y + (header.band_height or header.height)
         return rect(screen.x + 8, top, screen.w - 16, screen:max().y - 10 - top)
     end
-    local MODAL = {bounds=sheet, dim=color(5, 22, 22, 185), cancel="close"}
+    local MODAL = {bounds=sheet, blur=7, dim=color(5, 22, 22, 185), cancel="close"}
     local C = W.catalogue
     local categories, category = C.categories, 1
     for i, cat in ipairs(categories) do if cat[1] == C.category then category = i end end
