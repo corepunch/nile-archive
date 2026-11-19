@@ -56,11 +56,12 @@ The frame occupies whole 128 px cells in the empty ring and in board holes.
 Each cell selects one sprite and a quarter turn from its eight neighbours.
 The [square frame generator](../../../tools/square_board_frame.py) rounds
 exposed corner caps and joins the arms of recessed corners at right angles.
-It bakes the dark contact shadow into the edge of the frame tile.
+It bakes the board's contact shadow along the inner edge and a soft
+backdrop shadow beyond the brighter outer bevel, within the frame tile.
 The [cracked stone texture](../art/papyrus-board/stone-cracks.png) multiplies
-over the sandstone face. The generator widens the fissures and lifts the
-unbroken stone to white in the Multiply map so the cracks read at phone
-size. ImageGen first painted the
+over the sandstone face. The generator keeps the fissures fine and adds
+slight contrast in the Multiply map so they read at phone size.
+ImageGen first painted the
 [stone grain](../art/papyrus-board/stone-grain.png) from its
 [material prompt](../art/papyrus-board/stone-grain-prompt.txt), then added
 angular fractures using [the crack prompt](../art/papyrus-board/stone-cracks-prompt.txt)

@@ -60,18 +60,20 @@ with Image.open(ROOT / square["runtime"]) as sheet:
     x, y, w, h = atlas["frames"]["square-frame-1"]["box"]
     edge = sheet.crop((x, y, x + w, y + h))
     luma = edge.convert("RGB").convert("L", luma_matrix)
-    face = ImageStat.Stat(luma.crop((10, 6, 40, 10))).mean[0]
+    face = ImageStat.Stat(luma.crop((10, 9, 40, 14))).mean[0]
     contact = ImageStat.Stat(luma.crop((10, 0, 40, 2))).mean[0]
     assert face - contact >= 55, "The stone rim needs a deep board-facing contact shadow"
     alpha = edge.getchannel("A")
     assert alpha.getpixel((20, 0)) == 255 and alpha.getbbox()[3] < h // 2
+    solid = alpha.point(lambda value: 255 if value >= 128 else 0).getbbox()[3]
+    assert 0 < alpha.getpixel((20, solid + 4)) < alpha.getpixel((20, solid)) < 128, "The rim shadow fades onto the backdrop"
 
     x, y, w, h = atlas["frames"]["square-frame-2"]["box"]
     alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
     assert alpha.getpixel((112, 15)) < 128 < alpha.getpixel((118, 9)), "Round the exposed stone corner"
 
     x, y, w, h = atlas["frames"]["square-frame-5"]["box"]
-    alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
+    alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A").point(lambda value: 255 if value >= 128 else 0)
     lip = alpha.crop((0, 0, 1, h)).getbbox()[3]
     assert alpha.getpixel((w - lip - 1, lip)) == 0 < alpha.getpixel((w - lip, lip - 1)), "Keep the recessed corner square"
 

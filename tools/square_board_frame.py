@@ -14,16 +14,19 @@ REACH = 17
 # Like Cradle of Rome, the rim is a flat face with only a slight rounding at
 # its edges; the board sits higher and casts SHADOW across its inner part.
 PROFILE = (
-    (0, (120, 84, 44)),
-    (1.5, (182, 138, 80)),
-    (13.5, (188, 144, 84)),
-    (14.5, (222, 182, 116)),
-    (15.5, (170, 120, 64)),
-    (REACH, (66, 36, 14)),
+    (0, (116, 74, 40)),
+    (1.5, (175, 129, 75)),
+    (13.5, (196, 153, 91)),
+    (14.5, (225, 184, 115)),
+    (15.5, (184, 136, 78)),
+    (REACH, (97, 61, 33)),
 )
 # The board's cast shadow: full strength at its edge, gone by this depth.
-SHADOW = 7
-SHADOW_STRENGTH = .6
+SHADOW = 8.5
+SHADOW_STRENGTH = .72
+# The stone in turn casts a soft shadow on the backdrop inside its tile.
+RIM_SHADOW = 7
+RIM_SHADOW_ALPHA = 92
 
 
 def frame_masks():
@@ -46,7 +49,7 @@ def contour(mask):
     def sample(x, y):
         distance = (y, CELL - x, CELL - y, x)
         along = (x - half, y - half, half - x, half - y)
-        depth, run = REACH, 0
+        depth, run = REACH + RIM_SHADOW, 0
         for side in sides:
             if distance[side] < depth:
                 depth, run = distance[side], along[side]
@@ -76,17 +79,17 @@ def bake(sample, grain):
             x = (px + .5) / scale
             depth, along = sample(x, y)
             if depth >= REACH:
-                pixels.append((0, 0, 0, 0))
+                fade = 1 - (depth - REACH) / RIM_SHADOW
+                pixels.append((24, 17, 12, round(RIM_SHADOW_ALPHA * fade * fade)))
                 continue
             colour = bands[int(depth * 16)]
             u = int(along + CELL / 2)
-            v = 42 + int(depth * 2)
+            v = 24 + int(depth * 3)
             # Multiply the painted stone grain over the coloured face.
             # Fade the grain near the joins so adjacent cells meet cleanly.
             seam = max(0, min(1, (CELL / 2 - 1 - abs(along)) / 5))
             face = min(1, max(0, (depth - 3) / 5)) * seam
-            grain_weight = min(1, depth / 3) * seam
-            multiply = 1 - (1 - texture[u, v] / 255) * grain_weight * .83
+            multiply = 1 - (1 - texture[u, v] / 255) * face * .86
             # The pale shoulder of each deep, angled joint picks up light.
             cut = (along + depth * .62 + abs(depth - 11) * .24) % (CELL / 2) - CELL / 4
             joint = max(0, 1 - abs(cut) / 2.4) * .85 * face
@@ -125,10 +128,8 @@ def foliage():
 def generate(grain_source):
     with Image.open(grain_source) as image:
         grain = image.convert('L').resize((CELL, CELL), Image.Resampling.LANCZOS)
-    # Widen the painted fissures at atlas resolution. Map pale sandstone
-    # to white so Multiply keeps the face bright between the dark cracks.
-    grain = grain.filter(ImageFilter.MinFilter(5))
-    grain = grain.point(lambda value: round(255 * max(0, min(1, (value - 75) / (211 - 75)))))
+    # Keep hairline fissures legible with a restrained Multiply pass.
+    grain = grain.filter(ImageFilter.MinFilter(3)).point(lambda value: min(255, round(value * 1.10)))
     leaves, leaf_spec, assets = foliage()
     sprites = {}
     for mask in frame_masks():
