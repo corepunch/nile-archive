@@ -122,7 +122,7 @@ and [shared UI API](../../docs/UI_ENGINE.md).
 
 ## Result screens and typography
 
-The expedition result shows the score, earned resources and collected request pieces, followed by Collect & Return. On the island, the next building’s upper-left marker says BUILD when it can be placed. Its card shows the price or shortfall and opens placement. A blue spark trails clockwise around a filled crew request until hand-in. With Reduce Motion, the marker holds a steady glow. [Results and town review](docs/review/chapter-one/README.md).
+The expedition result shows the score, earned resources and collected request pieces, followed by Collect & Return. On the island, the next building’s upper-left marker glows, with a blue spark trailing clockwise around it, when it can be placed; a filled crew request does the same until hand-in. Its card shows the price, or under STILL NEEDED what is left of each currency with a green tick for those already covered, and opens placement. With Reduce Motion, the marker holds a steady glow. [Results and town review](docs/review/chapter-one/README.md).
 
 Text is aligned by its visible ink bounds (the engine's `text_in`), shared by buttons and counters, and paragraphs wrap into balanced lines (`text_box`).
 

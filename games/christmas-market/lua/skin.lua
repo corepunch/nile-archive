@@ -63,12 +63,9 @@ return ui.skin{
                 popup_divider = {normal = {layers = {
                     {fill = "#C9A464", radius = 1, inset = {8, 4, 8, 4}},
                 }}},
-                -- A jade disc with a cream tick: an amount fully gathered.
-                check_badge = {normal = {layers = {
-                    {fill = "#0D362B", radius = 99, offset = {0, 2}},
-                    {fill = "#2E7046", radius = 99},
-                    {fill = "#71B953", radius = 99, inset = 2},
-                    {check = "#FFF9E2", width = 3, inset = 4},
+                -- A gathered amount: the board goals' tick (Skin:paint_tick).
+                done_tick = {normal = {layers = {
+                    {paint = function(box, _, _, skin) skin:paint_tick(box) end},
                 }}},
                 group = {normal = {layers = {
             {fill = "#E8CC8E", fill2 = "#F6E2B0", radius = 14},

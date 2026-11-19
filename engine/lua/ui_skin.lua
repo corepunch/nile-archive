@@ -427,6 +427,22 @@ function Skin:resource_icon_box(box, role)
     return rect(box.x - box.h * (spec.icon_overhang or .12), box:center().y - side * .5, side, side)
 end
 
+-- The met-goal tick filling `box` (logical coordinates), in the resource
+-- spec's colours (done, done_outline, done_shadow) for `role`. Goal capsules
+-- and the cards' gathered amounts share it.
+function Skin:paint_tick(box, role)
+    local spec = control_spec(self, 'resource', {kind = 'resource', role = role}) or {}
+    local side = math.min(box.w, box.h)
+    local out, scale, alpha = transformed(self, rect.centered(box:center(), size2(side, side)))
+    local pts = {out:point(vec2(.12, .52)), out:point(vec2(.4, .8)), out:point(vec2(.9, .2))}
+    local function tint(v, default) return color.alpha(parse_color(self, v or default), alpha) end
+    local width = out.w
+    gfx.polyline({pts[1] + vec2(0, 2 * scale), pts[2] + vec2(0, 2 * scale), pts[3] + vec2(0, 2 * scale)},
+                 width * .3, tint(spec.done_shadow, '#00000060'))
+    gfx.polyline(pts, width * .3, tint(spec.done_outline, '#1F4A2A'))
+    gfx.polyline(pts, width * .18, tint(spec.done, '#7BE36A'))
+end
+
 -- `icon` is a texture, a function painting into a logical box (it applies any
 -- skin.transform itself), or nil. Returns true when tapped. Options: role (a
 -- variant of the control), interactive (default true; false never takes input),
@@ -461,15 +477,9 @@ function Skin:draw_resource(box, icon, value, opts)
     if opts.done then
         -- A met goal: a plain tick in place of the figure, as Candy Crush does.
         -- Its size follows the capsule height only, so every capsule draws the
-        -- same tick. Colours come from the resource spec (done, done_outline).
+        -- same tick.
         local side = box.h * .78
-        local out, scale, alpha = transformed(self, rect.centered(slot:center() + vec2(0, -1), size2(side, side)))
-        local pts = {out:point(vec2(.12, .52)), out:point(vec2(.4, .8)), out:point(vec2(.9, .2))}
-        local function tint(v, default) return color.alpha(parse_color(self, v or default), alpha) end
-        gfx.polyline({pts[1] + vec2(0, 2 * scale), pts[2] + vec2(0, 2 * scale), pts[3] + vec2(0, 2 * scale)},
-                     side * .3, tint(spec.done_shadow, '#00000060'))
-        gfx.polyline(pts, side * .3, tint(spec.done_outline, '#1F4A2A'))
-        gfx.polyline(pts, side * .18, tint(spec.done, '#7BE36A'))
+        self:paint_tick(rect.centered(slot:center() + vec2(0, -1), size2(side, side)), opts.role)
     elseif opts.value_icon then
         local side = math.min(slot.w, box.h)
         local out, _, alpha = transformed(self, rect.centered(slot:center(), size2(side, side)))

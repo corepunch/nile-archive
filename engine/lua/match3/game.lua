@@ -839,11 +839,7 @@ function G.bind(R, over)
         quest_form.values.show_action = quest.ready or quest.level ~= nil or not W.corner_close
         if not W.corner_close then quest_form:set("close", R.quest_offer and W.quest.later or W.card.close) end
         -- A filled request keeps its piece, checked off, under ALL GATHERED.
-        local needs = {}
-        for i, need in ipairs(quest.needs or {}) do
-            needs[i] = {done=quest.ready or nil}
-            for key, value in pairs(need) do needs[i][key] = value end
-        end
+        local needs = quest.needs or {}
         quest_form:set("needs_caption", quest.ready and W.quest.gathered or W.card.missing)
         local gets = quest.gets or {}
         quest_form.values.show_needs, quest_form.values.show_gets = #needs > 0, #gets > 0

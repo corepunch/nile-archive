@@ -49,9 +49,18 @@ function R.currency_prices(cost)
     return parts
 end
 
--- What the wallet still lacks of a price, as resource amounts.
+-- What the wallet still lacks of a price, as resource amounts: each currency
+-- the price asks for, by what is left to gather, and a currency already
+-- covered marked done (a check in place of 0). Empty once all are covered.
 function R.funding_shortfall(cost)
-    return R.currency_prices(economy.shortfall(cost, R.prog.wallet))
+    local missing = economy.shortfall(cost, R.prog.wallet)
+    local parts, short = R.currency_prices(cost), false
+    for _, part in ipairs(parts) do
+        part.amount = missing[part.slot]
+        part.done = part.amount == 0 or nil
+        short = short or not part.done
+    end
+    return short and parts or {}
 end
 
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
@@ -145,7 +154,7 @@ function R.quest_model(id)
         about=ready and quest.ready_line or quest.request, ready=ready, waiting=not ready and not items[id],
         level=not ready and items[id] and level or nil,
         handoff=handoff and {title=handoff.title, image=R.board_art[handoff.path]},
-        needs={{id=quest.key, icon=quest_icon(quest), amount=("%d/%d"):format(quests.have(state, quest), quest.need)}},
+        needs={{id=quest.key, icon=quest_icon(quest), amount=math.max(0, quest.need - quests.have(state, quest)), done=ready or nil}},
         gets={{id="coins", icon=currency_icon(rules.GOLD), amount=quest.coins}}}
 end
 

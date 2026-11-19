@@ -36,7 +36,8 @@ function R.smoke()
         assert(card:get("title") == "Elena Voss" and not card.boxes.subtitle)
         assert(card.boxes.close.x >= card.boxes.title:max().x and card.boxes.close:max().y <= card.boxes.about.y,
             "the X occupies its own header target above the request")
-        assert(card:get_item("needs", "chart").amount == "0/25", "the offer shows banked pages against the goal")
+        local need = card:get_item("needs", "chart")
+        assert(need.amount == 25 and not need.done, "the offer shows how many pages are still needed")
         assert(R.quest_state().introduced.chart and not R.quest_state().introduced.supper)
         R.quiet = true
         stage = 1
