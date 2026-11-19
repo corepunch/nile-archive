@@ -13,7 +13,7 @@ local E = {
         [0]={name="Snow-dusted fir"},
         {name="Knitted mitten"},
         {name="Silver snowflake coin", slot=1, amount=3},
-        {name="Gold bell coin", slot=1, amount=5},
+        {name="Sun coin", slot=1, amount=5},
         {name="Bundled pine", slot=3, amount=5},
         {name="Farrier's hammer"},
         {name="Toy blocks", slot=1, amount=6},

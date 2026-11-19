@@ -86,31 +86,32 @@
       ]
     },
     "market-3": {
-      "name": "gold bell coin",
+      "name": "sun coin",
       "source_crop": [
-        784,
-        25,
-        1003,
-        238
+        9,
+        7,
+        120,
+        122
       ],
       "fitted_size": [
-        114,
-        111
+        111,
+        115
       ],
       "offset": [
-        7,
-        8
+        9,
+        7
       ],
       "alpha_center": [
-        64.2674,
-        63.8223
+        64.2375,
+        64.366
       ],
       "registered_box": [
         384,
         0,
         128,
         128
-      ]
+      ],
+      "source": "../relic-rush/art/registered/campaign-pieces.png"
     },
     "market-4": {
       "name": "bundled pine",

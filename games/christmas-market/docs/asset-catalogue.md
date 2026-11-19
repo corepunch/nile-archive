@@ -164,6 +164,9 @@ square atlas layout and reauthors the mitten in cranberry wool with a cream
 snowflake. The [full ImageGen prompt](../art/market-goods/cranberry-mitten-prompt.txt)
 records the edit. The new crop registers into `market-1`.
 [Compare opening boards](market-pieces.md#red-mitten-review).
+The gold Sun coin uses the first cell of the [Relic Rush campaign atlas](../../relic-rush/art/registered/campaign-pieces.png).
+The board, wallet, prices and results all use this shared artwork.
+[Compare the coin on the opening board and price card](market-pieces.md#shared-sun-coin-review).
 The [registration record](../art/market-goods/registration.json) saves each
 source crop, proportional fit, offset and alpha-weighted center in its 128 px
 slot. The crop takes the object's solid bounds with four pixels of edge
@@ -175,7 +178,7 @@ Every center of opacity is within half a pixel of the slot center on both axes.
 | 0 | Snow-dusted fir | Evergreen | Score at the opening. |
 | 1 | Knitted mitten | Cranberry red | Opening score piece until the stable. |
 | 2 | Silver snowflake coin | Silver | +3 Tokens. |
-| 3 | Gold bell coin | Gold | +5 Tokens and the Tokens wallet icon. |
+| 3 | Sun coin | Gold | +5 Tokens and the Tokens wallet icon. Shared artwork with Relic Rush. |
 | 4 | Bundled pine | Chestnut brown | +5 Materials from the lumber workshop and the Materials wallet icon. |
 | 5 | Farrier's hammer | Dark steel and oiled wood | +3 Hammer charge from the stable. |
 | 6 | Toy blocks | Honey wood | +6 Tokens from the later Toymaker's workshop. |
