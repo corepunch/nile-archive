@@ -758,9 +758,9 @@ end
 -- art: the piece's silhouette inked dark blue (a single full-width stripe),
 -- dropped and spread over a ring of faint taps. size is the piece's drawn
 -- width in logical pixels. Square-board pieces nearly fill their cells, so the
--- shadow drops a tenth of the piece to clear its rim and read on the floor.
+-- shadow drops 7% of the piece to clear its rim and read on the floor.
 local SHADOW_TAPS = 12
-local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .1, .06, 20
+local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .07, .06, 14
 local SHADOW_INK = color(22, 38, 92, 255)
 function E.piece_shadow(tex, dst, alpha, size)
     local drop, spread = size * SHADOW_DROP, size * SHADOW_SPREAD
