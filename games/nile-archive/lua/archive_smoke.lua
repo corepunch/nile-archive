@@ -62,6 +62,8 @@ function M.step()
     if frames > (app.arg("quick") and 360 or 6000) then error("Nile smoke timed out at step " .. tostring(step)) end
     if frames % 6 ~= 0 then return end
     if story.active() then story.next() return end
+    if G.modal ~= MODAL_NONE and (not G.dialog.ready or G.dialog.after_exit) then return end
+    if G.tray and (not island.tray.motion.ready or island.tray.motion.after_exit) then return end
     if step == 0 then
         assert(G.island.clearance.w == 1 and G.island.clearance.h == 1,
             "Nile island must keep its street spacing: one tile of clearance around every base")

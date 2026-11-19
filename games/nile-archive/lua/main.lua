@@ -37,11 +37,14 @@ local function frame(dt)
     local board = dialogs.boards:active()   -- a leaderboard has the input, and the back key
     if G.modal ~= MODAL_NONE or talking or board then world = input{pos = inp.pos, pinch = 1} end
     if inp.back and not talking and not board then
-        if G.modal == MODAL_WIN or G.modal == G.MODAL_CACHE then scene.go_home()
-        elseif G.modal == G.MODAL_JOURNAL then G.open_modal(MODAL_CHAPTERS)
-        elseif G.modal ~= MODAL_NONE then G.modal = MODAL_NONE
-        elseif G.island.placing >= 0 then G.island:cancel()
-        elseif G.tray then G.tray = false; G.island.selected = -1
+        if G.modal == MODAL_NONE and G.island.placing >= 0 then G.island:cancel()
+        elseif G.modal ~= MODAL_NONE then
+            if G.dialog.ready then
+                if G.modal == MODAL_WIN or G.modal == G.MODAL_CACHE then G.close_modal(scene.go_home)
+                elseif G.modal == G.MODAL_JOURNAL then G.close_modal(function() G.open_modal(MODAL_CHAPTERS) end)
+                else G.close_modal() end
+            end
+        elseif G.tray then island.close_tray(function() G.island.selected = -1 end)
         elseif G.scene then G.open_modal(MODAL_PAUSE) end
     end
     tween.instant(G.reduced_motion)   -- reduced motion: every tween settles on its next frame
@@ -54,11 +57,14 @@ local function frame(dt)
 
     if G.modal ~= MODAL_NONE and not story.active() then   -- the reward waits for dialogue, even on the last tap
         local d = G.dialog
-        if d.tl.paused then d.tl:resume() end
-        ui.modal_backdrop(d.backdrop)
-        if board then ui.set_enabled(false) end
-        dialogs.draw(G.modal)
-        ui.set_enabled(true)
+        if board then d.ready = false end
+        if d:step(dt, inp, G.reduced_motion) then
+            if d.tl and d.tl.paused then d.tl:resume() end
+            local interactive = not board and d.interactive
+            ui.set_enabled(interactive)
+            d:paint(function() dialogs.draw(G.modal, interactive) end)
+            ui.set_enabled(true)
+        end
     end
     if not talking then dialogs.boards:draw(dt, {reduced_motion = G.reduced_motion}) end
     story.frame(dt)

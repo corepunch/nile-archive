@@ -417,6 +417,7 @@
     <field name="hot" type="bool"/><field name="held" type="bool"/><field name="clicked" type="bool"/>
   </struct>
   <module name="ui" doc="Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.">
+    <function name="popup_transform" c="ui_popup_transform" doc="Renderer state used by Lua popup motion. Shifts drawing and clips in logical units and fades subsequent drawing. Input coordinates stay fixed."><arg name="shift" type="vec2"/><arg name="opacity" type="float"/></function>
     <enum name="flags" prefix="UI_" doc="Button flags, combined with |.">
       <value name="ACCENT" doc="Primary call to action."/><value name="DISABLED"/><value name="ACTIVE" doc="Selected / toggled on."/><value name="FLAT" doc="No background."/>
     </enum>

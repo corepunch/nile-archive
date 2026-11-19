@@ -4,6 +4,7 @@
  * Every widget registers its rect; presses that start on last frame's UI rects
  * are marked `captured` so the world (camera, board, city) ignores them. */
 #include "engine.h"
+#include "render.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -138,6 +139,8 @@ void ui_modal_layer(float radius, color dim)
     gfx_backdrop(radius, dim);
     ui_block(app_bleed());
 }
+
+void ui_popup_transform(vec2 shift, float opacity) { render_layer(shift, opacity); }
 
 void ui_modal_backdrop(float t)
 {

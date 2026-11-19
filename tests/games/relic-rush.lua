@@ -210,6 +210,7 @@ reel("result", 36, 3, "480x900", "--victory --reel")
 reel("relic-rush-level-end", 29, 3, "480x900", "--lua tests/fixtures/level-end;games/relic-rush/lua;. --victory 1 --reel")
 frame("ui-skins", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --frames 3")
 frame("ui-layers", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --nested --frames 3")
+reel("ui-layer-motion", 9, 3, "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --nested --reel")
 frame("ui-layout", "900x700", "--lua tests/fixtures/ui --data games/relic-rush/data --layout --frames 3")
 
 hold("relic-long-press", "480x900", "240,440", "--city 3 --look 760,1980")

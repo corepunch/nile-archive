@@ -1,6 +1,8 @@
 -- Engine-owned declarative forms. Compiled into the runtime by make gen.
 -- Templates own layout/bindings; skins own paint; games handle command IDs.
 local Form, Stack = {}, {}
+local Popup = {}
+Popup.__index = Popup
 local default_skin = {}
 Form.__index, Stack.__index = Form, Stack
 -- Every node kind is an element class, and layout is two passes, as in WPF and
@@ -741,7 +743,58 @@ function ui.modal_dismiss(bounds,options)
         and not inp.dragging and not inp.multi_touch and inp.pos and inp.press_pos
         and not bounds:contains(inp.pos) and not bounds:contains(inp.press_pos) or false
 end
+
+function ui.popup_motion(settled)
+    return setmetatable({entry=settled and 1 or 0,exit=0,fresh=true,ready=false},Popup)
+end
+
+function Popup:close(action, instant)
+    if self.after_exit or self.closed then return false end
+    if instant or self.fresh then self.closed=true;action()
+    else self.after_exit=action end
+    return true
+end
+
+function Popup:step(dt, inp, instant)
+    if self.closed then return false end
+    if self.after_exit then
+        self.exit=instant and 1 or math.min(1,self.exit+dt/.18)
+        if self.exit==1 then
+            local action=self.after_exit
+            self.after_exit=nil;self.closed=true;action()
+            return false
+        end
+    elseif not self.fresh or instant then
+        self.entry=instant and 1 or math.min(1,self.entry+dt/.24)
+    end
+    self.interactive=self.ready and not self.after_exit
+    self.ready=self.ready or (self.entry==1 and not inp.down and not inp.released)
+    return true
+end
+
+local no_shift=vec2(0,0)
+function Popup:paint(draw, config)
+    config=config or {}
+    local entry,exit=ease.out_cubic(self.entry),ease.in_out_cubic(self.exit)
+    local opacity=(.18+.82*entry)*(1-exit)
+    local backdrop=config.snap_backdrop and 1 or opacity
+    if not config.floating then
+        ui.modal_layer((config.blur or 0)*backdrop,color.alpha(config.dim or ui.theme().dim,backdrop))
+    end
+    self.fresh=false
+    if opacity==1 then return draw() end
+    ui.popup_transform(vec2(0,24*(1-entry)+20*exit),opacity)
+    local ok,result=pcall(draw)
+    ui.popup_transform(no_shift,1)
+    if not ok then error(result,0) end
+    return result
+end
+
 function Stack:active() return #self.layers>0 end
+function Stack:ready()
+    local top=self.layers[#self.layers]
+    return top~=nil and top.motion.ready and not top.motion.after_exit
+end
 function Stack:begin()
     ui.set_enabled(not self:active())
     if self:active() then ui.block(app.bleed()) end
@@ -751,24 +804,32 @@ function Stack:open(id,form,model,options)
     if getmetatable(form)~=Form or form.root.kind~='column' then return false,'modal requires a vertical form' end
     for _,layer in ipairs(self.layers) do if layer.id==id then fail('modal already open: '..id) end end
     local ok,message=form:push(model or {});if not ok then return false,message end
-    local layer={id=id,form=form,model=model or {},options=options or {},fade=0,fresh=true}
+    local layer={id=id,form=form,options=options or {},motion=ui.popup_motion()}
     self.layers[#self.layers+1]=layer
-    tween.to(layer,.2,{fade=1}):ease('linear')   -- the backdrop fades in on the engine's tween module
     ui.block(app.bleed());return true
 end
-function Stack:close(id)
+function Stack:close(id, after, immediate)
     local top=self.layers[#self.layers]
     if not top or (id and id~=top.id) then return false end
-    self.layers[#self.layers]=nil;return true
+    local function finish()
+        table.remove(self.layers)
+        local under=self.layers[#self.layers]
+        if under then under.motion.ready=false end
+        if after then after() end
+    end
+    if immediate then finish();return true end
+    return top.motion:close(finish,top.instant)
 end
 function Stack:draw(dt,options)
-    options=options or {};local event;local top_fresh=false;local top_bounds
+    options=options or {}
+    local inp=options.input or input.get()
+    local instant=options.reduced_motion or (app.arg('shot') and not app.arg('reel'))
+    local top=self.layers[#self.layers]
     ui.set_enabled(true)
-    for i,layer in ipairs(self.layers) do
-        local config=layer.options;local fade=options.reduced_motion and 1 or layer.fade
-        local theme=self.skin.theme or ui.theme()
-        local backdrop=config.snap_backdrop and 1 or fade
-        ui.modal_layer((config.blur or theme.backdrop_blur or 0)*backdrop,color.alpha(config.dim or theme.dim,backdrop))
+    for _,layer in ipairs(self.layers) do
+        local config,motion=layer.options,layer.motion
+        layer.instant=instant
+        if (layer==top or not motion.after_exit) and not motion:step(dt,inp,instant) then break end
         local bounds=config.bounds
         if type(bounds)=='function' then bounds=bounds(app.screen()) end   -- e.g. a full-screen sheet
         if not bounds then
@@ -776,17 +837,14 @@ function Stack:draw(dt,options)
             local _,height=layer.form:measure(width,self.skin)
             bounds=rect.centered(screen:center(),size2(width,math.min(config.height or height,screen.h-32)))
         end
-        -- The release/key that opened a modal belongs to the previous screen.
-        -- In particular it must not activate a new button underneath that tap.
-        if i==#self.layers then top_fresh,top_bounds=layer.fresh,bounds end
-        local result=layer.form:draw(bounds,self.skin,{interactive=i==#self.layers and not layer.fresh,input=options.input or input.get(),dt=dt,reduced_motion=options.reduced_motion})
-        layer.fresh=false
-        if result then event={modal=layer.id,id=result.id,kind=result.kind,value=result.value,source=result.source,key=result.key} end
+        local interactive=layer==top and motion.interactive
+        local result=motion:paint(function()
+            return layer.form:draw(bounds,self.skin,{interactive=interactive,dim_controls=false,
+                input=inp,dt=dt,reduced_motion=options.reduced_motion})
+        end,{dim=config.dim or (self.skin.theme or ui.theme()).dim,blur=config.blur,snap_backdrop=config.snap_backdrop})
+        if result then return {modal=layer.id,id=result.id,kind=result.kind,value=result.value,source=result.source,key=result.key} end
+        if interactive and ui.modal_dismiss(bounds,{input=inp,close_on_background=config.close_on_background}) then
+            return {modal=layer.id,id=config.cancel or 'cancel',kind='cancel'}
+        end
     end
-    local top=self.layers[#self.layers]
-    if top and not event and ui.modal_dismiss(top_bounds,{fresh=top_fresh,input=options.input,
-            close_on_background=top.options.close_on_background}) then
-        event={modal=top.id,id=top.options.cancel or 'cancel',kind='cancel'}
-    end
-    return event
 end

@@ -50,18 +50,26 @@ local G = {
     backgrounds = {}, coin = nil, influence = nil,
 }
 
--- Open a popup over the island or the scene. Its motion runs on the engine's
--- tween module: the box pops in with a little overshoot while the backdrop
--- fades, and the stars of a result arrive one by one (archive_dialogs.lua
--- reads `G.dialog`). `settled` opens it at rest, for stills.
 function G.open_modal(kind, settled)
+    if G.dialog and G.dialog.tl then G.dialog.tl:kill() end
     G.modal = kind
-    local d = {pop = 0, backdrop = 0, stars = {{s = 0}, {s = 0}, {s = 0}}}
-    d.tl = tween.timeline{paused = true}   -- main.lua plays it once any dialogue is over
-    d.tl:to(d, .25, {pop = 1}, 0):ease("out_back")
-    d.tl:to(d, .25, {backdrop = 1}, 0):ease("linear")
-    d.tl:to(d.stars, .33, {s = 1}, .43):ease("out_back"):stagger(.18)
-    if settled then d.tl:complete() end
+    local instant = settled or G.reduced_motion
+    local d = ui.popup_motion(instant)
+    if kind == G.MODAL_WIN then
+        d.stars = {{s = 0}, {s = 0}, {s = 0}}
+        d.tl = tween.timeline{paused = true}   -- the stars wait for any dialogue
+        d.tl:to(d.stars, .33, {s = 1}, .43):ease("out_back"):stagger(.18)
+        if instant then d.tl:complete() end
+    end
     G.dialog = d
+end
+
+function G.close_modal(after)
+    local d = G.dialog
+    d:close(function()
+        if d.tl then d.tl:kill() end
+        G.modal, G.dialog = G.MODAL_NONE, nil
+        if after then after() end
+    end, G.reduced_motion)
 end
 return G

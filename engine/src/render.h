@@ -27,6 +27,7 @@ void render_texture_free(struct render_texture *tex);
 void render_texture_additive(struct render_texture *tex, bool on);
 void render_additive(bool on);
 void render_clip(const rect *r);   /* NULL: the logical screen, or the display while bleeding */
+void render_layer(vec2 shift, float opacity);
 void render_bleed(bool on);
 void render_backdrop(float radius, color dim);
 void render_image(texture tex, rect src, rect dst, float angle, color tint);

@@ -31,10 +31,10 @@ enum { BATCH_VERTICES = 4096, BATCH_INDICES = 8192 };
 static struct {
     GLuint program, vao, vertices, indices, white;
     GLint inset_offset, inset_bounds;
-    GLint screen, origin, mask_rect, mask_uv, mask_params;
+    GLint screen, origin, opacity, mask_rect, mask_uv, mask_params;
     size2 pixels, logical;
     float scale;
-    vec2 offset;
+    vec2 offset, layer_shift;
     bool additive, bleed;
     struct {
         render_vertex vertices[BATCH_VERTICES];
@@ -95,11 +95,11 @@ static void texture_forget(struct render_texture *t)
 bool render_init(void)
 {
     GLuint vs = render_shader(GL_VERTEX_SHADER,
-        "in vec2 position; in vec4 color; in vec2 uv, stripe; in vec4 stripe_ink; uniform vec2 screen, origin;\n"
+        "in vec2 position; in vec4 color; in vec2 uv, stripe; in vec4 stripe_ink; uniform vec2 screen, origin; uniform float opacity;\n"
         "out vec4 tint; out vec2 texcoord, point;\n"
         "out float stripe_phase; flat out float stripe_width; flat out vec4 stripe_color;\n"
         "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);"
-        "tint=color;texcoord=uv;point=position;stripe_phase=stripe.x;stripe_width=stripe.y;stripe_color=stripe_ink;}\n");
+        "tint=vec4(color.rgb,color.a*opacity);texcoord=uv;point=position;stripe_phase=stripe.x;stripe_width=stripe.y;stripe_color=stripe_ink;}\n");
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
         "in vec4 tint; in vec2 texcoord, point; uniform sampler2D image; out vec4 pixel;\n"
         "in float stripe_phase; flat in float stripe_width; flat in vec4 stripe_color;\n"
@@ -156,6 +156,7 @@ bool render_init(void)
     }
     R.screen = glGetUniformLocation(R.program, "screen");
     R.origin = glGetUniformLocation(R.program, "origin");
+    R.opacity = glGetUniformLocation(R.program, "opacity");
     R.inset_offset = glGetUniformLocation(R.program, "inset_offset");
     R.inset_bounds = glGetUniformLocation(R.program, "inset_bounds");
     R.mask_rect = glGetUniformLocation(R.program, "mask_rect");
@@ -212,7 +213,7 @@ void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
     render_flush();
     R.pixels = pixels; R.logical = logical;
     R.scale = viewport.size.w / logical.w;
-    R.offset = viewport.pos;
+    R.offset = viewport.pos; R.layer_shift = v2(0, 0);
     R.bleed = false;
     if (R.program) { glUseProgram(R.program); glUniform4f(R.mask_params, 0, 0, 0, 0); }   /* a frame never starts masked */
     glDisable(GL_SCISSOR_TEST); glDisable(GL_DEPTH_TEST); glDisable(GL_CULL_FACE);
@@ -223,6 +224,7 @@ void render_begin(size2 pixels, size2 logical, rect viewport, color clear)
     glUseProgram(R.program);
     glUniform2f(R.screen, pixels.w / R.scale, pixels.h / R.scale);
     glUniform2f(R.origin, R.offset.x / R.scale, R.offset.y / R.scale);
+    glUniform1f(R.opacity, 1);
     glActiveTexture(GL_TEXTURE0); glBindVertexArray(R.vao);
     render_clip(NULL);
 }
@@ -408,11 +410,20 @@ void render_bleed(bool on)
     render_clip(NULL);
 }
 
+void render_layer(vec2 shift, float opacity)
+{
+    if (!render_ready()) return;
+    render_flush();
+    R.layer_shift = shift;
+    glUniform2f(R.origin, R.offset.x / R.scale + shift.x, R.offset.y / R.scale + shift.y);
+    glUniform1f(R.opacity, saturate(opacity));
+}
+
 void render_clip(const rect *r)
 {
     if (!render_ready()) return;
     render_flush();
-    rect clipped = rect_intersect(r ? *r : render_bounds(), render_bounds());
+    rect clipped = rect_intersect(r ? rect_offset(*r, R.layer_shift) : render_bounds(), render_bounds());
     int x = (int)floorf(R.offset.x + clipped.pos.x * R.scale);
     int y = (int)floorf(R.pixels.h - R.offset.y - (clipped.pos.y + clipped.size.h) * R.scale);
     /* Round both endpoints. Rounding an origin just below zero to -1 and

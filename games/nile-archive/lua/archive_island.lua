@@ -166,13 +166,26 @@ local project_confirm = ui.form{kind = "column", panel = true, radius = 20, padd
 }}
 
 -- Opens the tray on a category, with an optional starting group for captures.
+local settled_preview = app.arg("shot") and not app.arg("reel")
+local function tray_motion()
+    return ui.popup_motion(settled_preview or G.reduced_motion)
+end
+
 function M.open_tray(category, review_page)
     local tray = M.tray
     for i, c in ipairs(M.TRAY_CATEGORIES) do
         if c[1] == category then tray.category = i end
     end
     tray.dirty, tray.review_page, tray.pending = true, review_page, nil
+    tray.motion = tray_motion()
     G.tray = true
+end
+
+function M.close_tray(after)
+    M.tray.motion:close(function()
+        G.tray = false
+        if after then after() end
+    end, G.reduced_motion)
 end
 
 -- One tray card: the price, what the building gives and why it can't be bought yet.
@@ -220,8 +233,9 @@ local function refresh_tray(tray)
     tray.dirty, tray.review_page = false, nil
 end
 
-local function draw_tray(r)
+local function paint_tray(r, interactive)
     local tray = M.tray
+    local opts = {interactive=interactive, dim_controls=false, reduced_motion=G.reduced_motion}
     if tray.pending then
         local project = economy.projects[tray.pending]
         project_confirm:set("title", project.name)
@@ -229,17 +243,18 @@ local function draw_tray(r)
         local _, height = project_confirm:measure(r.w, build_skin)
         r = r:bottom(height)
         ui.block(r)
-        local event = project_confirm:draw(r, build_skin, {interactive = G.modal == MODAL_NONE, reduced_motion = G.reduced_motion})
+        local event = project_confirm:draw(r, build_skin, opts)
         G.spots.project_form = project_confirm
-        if event and event.id == "cancel" then tray.pending = nil; tray.dirty = true
-        elseif event and event.id == "confirm" then
-            if economy.claim_project(G, tray.pending) then
-                progress.save()
-                ui.toast(("Работы завершены · +%d влияния"):format(project.influence))
-            else
-                ui.toast("Работы больше недоступны")
-            end
-            tray.pending, tray.dirty = nil, true
+        if event then
+            tray.motion:close(function()
+                if event.id == "confirm" then
+                    if economy.claim_project(G, tray.pending) then
+                        progress.save()
+                        ui.toast(("Работы завершены · +%d влияния"):format(project.influence))
+                    else ui.toast("Работы больше недоступны") end
+                end
+                tray.pending, tray.dirty, tray.motion = nil, true, tray_motion()
+            end, G.reduced_motion)
         end
         return
     end
@@ -247,22 +262,36 @@ local function draw_tray(r)
     local _, height = build_form:measure(r.w, build_skin)
     r = r:bottom(height)
     ui.block(r)
-    local event = build_form:draw(r, build_skin, {interactive = G.modal == MODAL_NONE, reduced_motion = G.reduced_motion})
+    local event = build_form:draw(r, build_skin, opts)
     G.spots.build_form = build_form
     if not event then return end
-    if event.id == "close" then G.tray = false
+    if event.id == "close" then M.close_tray()
     elseif event.id == "category_prev" or event.id == "category_next" then
         tray.category = (tray.category - 1 + (event.id == "category_next" and 1 or -1)) % #M.TRAY_CATEGORIES + 1
         tray.dirty = true
     elseif event.source == "stock" then
         if M.TRAY_CATEGORIES[tray.category][1] == "projects" then
             local id = tonumber(event.key:match("^project%-(%d+)$"))
-            if id and not economy.project_lock(G, id) then tray.pending = id end
-        elseif M.town:begin(event.key - 1, false) then
-            G.island.selected = -1
-            G.tray = false
+            if id and not economy.project_lock(G, id) then
+                tray.motion:close(function()
+                    tray.pending, tray.motion = id, tray_motion()
+                end, G.reduced_motion)
+            end
+        else
+            tray.motion:close(function()
+                if M.town:begin(event.key - 1, false) then
+                    G.island.selected, G.tray = -1, false
+                else tray.motion = tray_motion() end
+            end, G.reduced_motion)
         end
     end
+end
+
+local function draw_tray(r)
+    local motion = M.tray.motion
+    motion:paint(function()
+        paint_tray(r, motion.interactive == true and G.modal == MODAL_NONE and not story.active())
+    end, {floating=true})
 end
 
 ---------------------------------------------------------------- placement
@@ -372,7 +401,9 @@ function M.town_setup()
 end
 
 function M.frame(_, world)
-    M.town:frame(world, app.dt(), G.modal == MODAL_NONE and not story.active())
+    local dt = app.dt()
+    if G.tray then M.tray.motion:step(dt, input.get(), G.reduced_motion) end
+    M.town:frame(world, dt, G.modal == MODAL_NONE and not story.active())
     G.spots.build, G.spots.chapters = M.town.buttons.build, M.town.buttons.play
 end
 

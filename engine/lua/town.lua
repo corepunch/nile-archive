@@ -213,7 +213,7 @@ function View:begin(kind, focus, item)
         if not ok then notice(self, "no_room"); return false end
         c:begin_place(kind, spot)
     end
-    self.bubble = nil
+    self:dismiss_bubble()
     if focus then self:focus(c.ghost - vec2(0, self.cfg.focus.lift), math.max(self.cfg.focus.min_zoom, c.cam.zoom)) end
     local site = c.defs[kind + 1].fixed_site
     notice(self, (site.x ~= 0 or site.y ~= 0) and "restoring" or "placing")
@@ -242,9 +242,18 @@ end
 -- A word bubble over a placed building (0-based item).
 function View:say(item, text, seconds)
     text = text or (self.hooks.about and self.hooks.about(item))
-    if not text or text == "" then self.bubble = nil; return end
+    if not text or text == "" then self:dismiss_bubble(); return end
     local s = seconds or self.cfg.bubble.seconds
-    self.bubble = {item = item, text = text, left = s > 0 and s or nil}
+    local instant = self.hooks.reduced_motion and self.hooks.reduced_motion()
+        or (app.arg("shot") and not app.arg("reel"))
+    self.bubble = {item = item, text = text, left = s > 0 and s or nil, motion=ui.popup_motion(instant)}
+end
+
+function View:dismiss_bubble()
+    local b = self.bubble
+    if b then
+        b.motion:close(function() self.bubble = nil end, self.hooks.reduced_motion and self.hooks.reduced_motion())
+    end
 end
 
 ------------------------------------------------------------------ drawing
@@ -517,7 +526,7 @@ function View:frame(inp, dt, active)
         city_input = input{pos = p, press_pos = p, down = true, dragging = true, pressed = not self.held_for_shot, pinch = 1}
         self.held_for_shot = true
     end
-    if city_input.pressed then self.bubble = nil end   -- a tap anywhere dismisses the bubble; a building tap reopens it
+    if city_input.pressed then self:dismiss_bubble() end
     local ev = c:update(city_input, h.wallet(), app.clock(), dt)
     if active and ev.result ~= city.NONE then
         if ev.result == city.PICKED then self:say(ev.building)
@@ -536,9 +545,10 @@ function View:frame(inp, dt, active)
     local b = self.bubble
     if b and b.left then
         b.left = b.left - dt
-        if b.left <= 0 then self.bubble, b = nil, nil end
+        if b.left <= 0 then b.left = nil; self:dismiss_bubble() end
     end
-    if b and b.item >= 0 and b.item < c.count and c.placing < 0 then
+    if b and b.motion:step(dt, city_input, h.reduced_motion and h.reduced_motion())
+        and b.item >= 0 and b.item < c.count and (c.placing < 0 or b.motion.after_exit) then
         local sprite = c.cam:rect_to_screen(c:sprite_rect(c.items[b.item + 1]))
         local bubble, skin = self.cfg.bubble, h.skin
         local em = bubble.em or 15
@@ -546,8 +556,10 @@ function View:frame(inp, dt, active)
             or h.bubble_text and h.bubble_text() or skin:text(self.cfg.markers.text, 15)
         local title = bubble.title and skin:text(bubble.title, (bubble.text and em or style.size) * TITLE_SCALE)
         gfx.clip(view)
-        bubble_draw(sprite:point(vec2(.5, .08)), b.text, style, skin:color(bubble.fill), skin:color(bubble.edge),
-                    bubble.width, title)
+        b.motion:paint(function()
+            bubble_draw(sprite:point(vec2(.5, .08)), b.text, style, skin:color(bubble.fill), skin:color(bubble.edge),
+                        bubble.width, title)
+        end, {floating=true})
         gfx.unclip()
     end
 

@@ -25,7 +25,7 @@
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
 -- See docs/PORTRAIT_GAMES.md.
 local G = {}
-local POPUP_IN, POPUP_OUT, BOARD_OUT = .24, .18, .30
+local BOARD_OUT = .30
 
 ------------------------------------------------------------------- words
 
@@ -505,23 +505,30 @@ function G.bind(R, over)
 
     ------------------------------------------------------------ dialogs
 
+    local shop, choices
+
     function R.open_dialog(settled)
         local old = R.dialog
         if old and old.tl then old.tl:kill() end
-        R.dialog = {entry = (settled or R.reduced_motion) and 1 or 0, exit = 0,
-            settled = settled or R.reduced_motion or not app.arg("reel"), parts = {}, n = 0, fresh = true, ready = false}
+        local d = ui.popup_motion(settled or R.reduced_motion)
+        d.settled, d.parts, d.n = settled or R.reduced_motion or not app.arg("reel"), {}, 0
+        R.dialog = d
     end
 
     -- Keep the old screen and its input barrier until the card has left.
     local function close_popup(action)
-        if R.reduced_motion then action()
-        else R.dialog.after_exit = action end
+        R.dialog:close(function()
+            action()
+            if R.overlay == R.modal_for then R.open_dialog() end
+        end, R.reduced_motion)
     end
 
     -- Has the entrance, parts included, finished?
     function R.dialog_settled()
+        if R.overlay == R.OV_SHOP then return shop:ready() end
+        if R.overlay == R.OV_STORY_CHOICE then return choices:ready() end
         local d = R.dialog
-        return R.modal_for == R.overlay and d ~= nil and d.entry >= 1 and not d.after_exit
+        return R.modal_for == R.overlay and d ~= nil and d.entry >= 1 and not (d.after_exit or d.closed)
             and (d.tl == nil or d.tl:is_done())
     end
 
@@ -969,17 +976,10 @@ function G.bind(R, over)
         if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
         if R.overlay == R.OV_STORY_CHOICE then R.draw_story_choice(dt); return end
         local d = R.dialog
-        if d.after_exit then
-            d.exit = R.reduced_motion and 1 or math.min(1, d.exit + dt / POPUP_OUT)
-            if d.exit == 1 then
-                d.after_exit()
-                d.after_exit = nil
-                if R.overlay == R.modal_for then R.open_dialog() end
-                return
-            end
-        elseif not d.fresh then
-            d.entry = R.reduced_motion and 1 or math.min(1, d.entry + dt / POPUP_IN)
-        end
+        local inp = input.get()
+        local covered = R.leaderboard_active()
+        if covered then d.ready = false end
+        if not d:step(dt, inp, R.reduced_motion) then return end
         d.n = 0
         local modal = assert(popups[R.overlay], "overlay has no vertical popup form")
         if modal.prepare and not d.after_exit and modal.prepare(d) == false then R.overlay = R.OV_NONE; return end
@@ -987,28 +987,21 @@ function G.bind(R, over)
         local _, height = modal.form:measure(width, skin)
         local center = vec2(240, 450 + (modal.shift or 0))
         local bounds = rect.centered(center, size2(width, height))
-        local entry, exit = ease.out_cubic(d.entry), ease.in_out_cubic(d.exit)
-        local opacity = (.18 + .82 * entry) * (1 - exit)
-        ui.modal_layer(0, rgba(5, 22, 22, 185 * opacity))
         -- Centre the design-space card in the phone's safe layout.
         local hit_offset = vec2(0, R.drop / 2)
-        -- Lift and fade at a fixed text size so glyphs can reuse their cached rasterization.
-        P.offset = hit_offset + vec2(0, 24 * (1 - entry) + 20 * exit)
-        P.alpha = opacity
-        local covered = R.leaderboard_active()   -- a board above this dialog owns the input
-        local inp = input.get()
-        local interactive = not covered and d.ready and not d.after_exit
-        local event = modal.form:draw(bounds, skin, {hit_offset=hit_offset, interactive=interactive,
-            dim_controls=false, dt=dt, input=inp, reduced_motion=R.reduced_motion,
-            paint_scope=function(group, draw)
-                local previous = R.section(table.unpack(group))
-                local action = draw()
-                set_paint(previous)
-                return action
-            end})
+        P.offset = hit_offset
+        local interactive = not covered and d.interactive
+        local event = d:paint(function()
+            return modal.form:draw(bounds, skin, {hit_offset=hit_offset, interactive=interactive,
+                dim_controls=false, dt=dt, input=inp, reduced_motion=R.reduced_motion,
+                paint_scope=function(group, draw)
+                    local previous = R.section(table.unpack(group))
+                    local action = draw()
+                    set_paint(previous)
+                    return action
+                end})
+        end, {dim=rgba(5, 22, 22, 185)})
         local visible_bounds = pr(bounds)
-        d.fresh = false
-        d.ready = d.ready or (d.entry == 1 and not inp.down and not inp.released)
         reset_paint()
         if event then
             if R.overlay == R.OV_RESULT or (modal.live and modal.live(event)) then modal.handle(event)
@@ -1021,7 +1014,7 @@ function G.bind(R, over)
     ----------------------------------------------------- shop and levels
 
     -- Modal lists: the engine owns measured rows, focus, hit testing and
-    -- input capture. Backdrops snap in, like every popup.
+    -- input capture and motion.
     -- Both lists are full-screen sheets from under the wallet row to the
     -- bottom of the safe screen; a tap on the strip around them closes.
     local function sheet(screen)
@@ -1029,11 +1022,11 @@ function G.bind(R, over)
         local top = screen.y + header.y + (header.band_height or header.height)
         return rect(screen.x + 8, top, screen.w - 16, screen:max().y - 10 - top)
     end
-    local MODAL = {bounds=sheet, snap_backdrop=true, blur=7, dim=color(5, 22, 22, 185), cancel="close"}
+    local MODAL = {bounds=sheet, dim=color(5, 22, 22, 185), cancel="close"}
     local C = W.catalogue
     local categories, category = C.categories, 1
     for i, cat in ipairs(categories) do if cat[1] == C.category then category = i end end
-    local shop = ui.modals(skin)
+    shop = ui.modals(skin)
     local ACTION_W = 100   -- the right-hand column: the action pill or why it waits
     local function row_card(box, face)
         R.rrect(box:offset(vec2(0, 2)), 13, rgba(201, 164, 100))
@@ -1132,7 +1125,7 @@ function G.bind(R, over)
         if filter then
             for i, cat in ipairs(categories) do if cat[1] == filter then category = i end end
         end
-        if shop:active() then shop:close() end
+        if shop:active() then shop:close(nil, nil, true) end
         local records = refresh_catalogue()
         if review_page and #records > 0 then   -- review pages are six rows apart
             catalogue_form:scroll_to("stock", records[num.clampi((math.floor(review_page) - 1) * 6 + 1, 1, #records)].id)
@@ -1144,14 +1137,19 @@ function G.bind(R, over)
     function R.draw_catalogue(dt)
         local event = shop:draw(dt, {reduced_motion=R.reduced_motion})
         if not event then return end
-        if event.id == "close" or event.kind == "cancel" then shop:close(); R.overlay = R.OV_NONE
+        if event.id == "close" or event.kind == "cancel" then shop:close(nil, function() R.overlay = R.OV_NONE end)
         elseif event.id == "category_prev" or event.id == "category_next" then
             category = (category - 1 + (event.id == "category_next" and 1 or -1)) % #categories + 1
             refresh_catalogue()
             catalogue_form:scroll_to("stock")
         elseif event.source == "stock" then
             local record = catalogue_form:get_item("stock", event.key)
-            if record and record.available then shop:close(); R.island_begin(record.kind, true) end
+            if record and record.available then
+                shop:close(nil, function()
+                    R.overlay = R.OV_NONE
+                    R.island_begin(record.kind, true)
+                end)
+            end
         end
     end
 
@@ -1253,7 +1251,7 @@ function G.bind(R, over)
         for _, line in ipairs(beat.lines) do story.add(line) end
     end
 
-    local choices = ui.modals(skin)
+    choices = ui.modals(skin)
 
     local function choice_reply(beat, index, preview)
         R.queue_story({key=beat.key, lines=beat.choices[index].lines}, preview)
@@ -1265,8 +1263,8 @@ function G.bind(R, over)
             children[#children + 1] = {kind="button", id=tostring(index), text=option.label, height=54}
         end
         R.choice_form = ui.form{root={kind="column", panel=true, padding=22, gap=14, children=children}}
-        if choices:active() then choices:close() end
-        assert(choices:open(beat.key, R.choice_form, {}, {width=416, snap_backdrop=true, close_on_background=false}))
+        if choices:active() then choices:close(nil, nil, true) end
+        assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=false}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
         R.overlay = R.OV_STORY_CHOICE
     end
@@ -1274,7 +1272,7 @@ function G.bind(R, over)
     function R.choose_story_option(index)
         local beat, preview = R.story_choice_beat, R.story_choice_preview
         if not beat or not beat.choices[index] then return false end
-        choices:close()
+        if choices:active() then choices:close(nil, nil, true) end
         R.story_choice_beat, R.story_choice_preview = nil, nil
         R.overlay = R.OV_NONE
         if not preview then
@@ -1288,7 +1286,9 @@ function G.bind(R, over)
 
     function R.draw_story_choice(dt)
         local event = choices:draw(dt, {reduced_motion=R.reduced_motion})
-        if event and event.kind == "click" then R.choose_story_option(tonumber(event.id)) end
+        if event and event.kind == "click" then
+            choices:close(nil, function() R.choose_story_option(tonumber(event.id)) end)
+        end
     end
 
     function R.next_story(before_level)

@@ -8,6 +8,7 @@ local C={cream=color.hex(0xFFF2D2),ink=color.hex(0x193D43),gold=color.hex(0xF4CB
 local white=color.WHITE
 -- The look lives in emergency_skin.lua; lettering is one of its text styles at a size.
 local skin=require('emergency_skin')
+local still=app.arg('shot') and not app.arg('reel')
 -- The Game Center rescue leaderboard adds up the best speed score from each district.
 local boards=require('leaderboard').boards{skin=skin,width=600}
 local function speed_score(seconds) return math.floor(1e9/(1000+math.floor(seconds*10))) end
@@ -29,6 +30,16 @@ local function serialize(s)
     story.serialize(s)
 end
 local function persist() if not S.testing then save.write('campaign',serialize) end end
+local function open_modal(kind)
+    S.modal,S.motion=kind,ui.popup_motion(still)
+    ui.block(app.bleed())
+end
+local function close_modal(after)
+    S.motion:close(function()
+        S.modal,S.motion=nil,nil
+        if after then after() end
+    end,still)
+end
 local function rescue_total()
     local total=0
     for i=1,#levels do if S.best[i]>0 then total=total+speed_score(S.best[i]) end end
@@ -132,7 +143,7 @@ local function hud()
             S.cam=S.cam:look(vec2(S.selected.x,S.selected.y));ui.toast(S.selected.def.title..': '..sim.detail(g,S.selected))
         else ui.toast('Let the team finish its jobs and the stations deliver supplies.') end
     end
-    if button(rect(1230,24,110,44),'Pause') then S.modal='pause';g.paused=true end
+    if button(rect(1230,24,110,44),'Pause') then open_modal('pause');g.paused=true end
     panel(rect(14,932,1340,80))
     label(rect(34,943,440,26),S.selected and S.selected.def.title or 'Restore the city, one route at a time',23)
     label(rect(34,975,900,24),sim.detail(g,S.selected),17,nil,'white')
@@ -153,7 +164,7 @@ local function menu()
         local title=('%02d   %s%s'):format(i,level.title,done and '   - restored' or '')
         if button(rect(380,340+(i-1)*82,608,64),title,i>S.unlocked and ui.DISABLED or (i==S.unlocked and ui.ACCENT or 0)) then start(i,false) end
     end
-    if button(rect(380,774,182,54),'How to play') then S.modal='help' end
+    if button(rect(380,774,182,54),'How to play') then open_modal('help') end
     if button(rect(576,774,214,54),'Leaderboard') then open_rescue_board() end
     -- Sound is a checkbox, centred in the slot beside them.
     local width=skin:checkbox_size({kind='checkbox'},'Sound')
@@ -162,29 +173,28 @@ local function menu()
     if sound~=S.sound then S.sound=sound;sfx.enable(S.sound);persist() end
     label(rect(374,850,620,27),'Five districts. One rescue team. A fresh start.',20,vec2(.5,.5))
 end
-local function modal()
+local function paint_modal()
     local kind=S.modal
-    if not kind then return end
     -- each panel fits its content: no empty band under the last button
-    ui.set_enabled(not boards:active());ui.modal_backdrop(1);panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
+    panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
     local title=kind=='pause' and 'Rescue paused' or kind=='win' and 'District restored!' or 'Every route matters'
     label(rect(385,267,598,62),title,42,vec2(.5,.5),'gold')
     if kind=='win' then
         local g=S.g
         label(rect(390,342,588,112),('All %d residents and %d pets are safe.\n%d roads restored in %d:%02d.'):format(g.rescued,g.animals,g.routes,math.floor(g.time/60),math.floor(g.time%60)),27,vec2(.5,.5))
         if button(rect(414,495,540,64),S.chapter<#levels and 'Next district' or 'Play the episode again',ui.ACCENT) then
-            start(S.chapter<#levels and S.chapter+1 or 1,false)
+            close_modal(function() start(S.chapter<#levels and S.chapter+1 or 1,false) end)
         end
-        if button(rect(414,580,540,58),'Replay district') then start(S.chapter,false) end
-        if button(rect(414,660,540,58),'Districts') then S.screen='menu';S.modal=nil end
+        if button(rect(414,580,540,58),'Replay district') then close_modal(function() start(S.chapter,false) end) end
+        if button(rect(414,660,540,58),'Districts') then close_modal(function() S.screen='menu' end) end
     elseif kind=='pause' then
         label(rect(398,350,572,52),'Your team and production are paused.',25,vec2(.5,.5))
-        if button(rect(414,442,540,64),'Resume rescue',ui.ACCENT) then S.modal=nil;S.g.paused=false end
-        if button(rect(414,533,540,58),'Restart district') then start(S.chapter,true) end
-        if button(rect(414,620,540,58),'Districts') then S.screen='menu';S.modal=nil end
+        if button(rect(414,442,540,64),'Resume rescue',ui.ACCENT) then close_modal(function() S.g.paused=false end) end
+        if button(rect(414,533,540,58),'Restart district') then close_modal(function() start(S.chapter,true) end) end
+        if button(rect(414,620,540,58),'Districts') then close_modal(function() S.screen='menu' end) end
     else
         label(rect(390,342,588,262),'Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n\nKitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n\nDrag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home.',23,vec2(0,0))
-        if button(rect(414,630,540,62),'Ready',ui.ACCENT) then S.modal=nil end
+        if button(rect(414,630,540,62),'Ready',ui.ACCENT) then close_modal() end
     end
 end
 local function smoke()
@@ -193,6 +203,7 @@ local function smoke()
     if S.smoke_frames%5~=0 then return end
     S.smoke_stage=S.smoke_stage or 0
     if story.active() then app.inject_click(vec2(680,510));return end
+    if S.modal and (not S.motion.ready or S.motion.after_exit) then return end
     if S.screen=='menu' and (S.smoke_sound or 0)<3 then   -- the Sound checkbox: off, then on again
         local n=S.smoke_sound or 0
         if n==1 then assert(not S.sound,'smoke: the Sound checkbox turns sound off') end
@@ -241,12 +252,13 @@ local function smoke()
 end
 local function frame(dt)
     if S.smoke then dt=1/30 end
+    local inp=input.get()
     local board=boards:active()   -- a leaderboard has the input, and the back key
-    if input.get().back and not board then
+    if inp.back and not board then
         if story.active() then story.next()
-        elseif S.modal=='pause' then S.modal=nil;S.g.paused=false
-        elseif S.screen=='play' and not S.modal then S.modal='pause';S.g.paused=true
-        elseif S.modal=='help' then S.modal=nil end
+        elseif S.modal=='pause' and S.motion.ready then close_modal(function() S.g.paused=false end)
+        elseif S.screen=='play' and not S.modal then open_modal('pause');S.g.paused=true
+        elseif S.modal=='help' and S.motion.ready then close_modal() end
     end
     if S.g and S.screen=='play' then
         if not S.modal and not story.active() then
@@ -256,7 +268,7 @@ local function frame(dt)
             S.banked=true;S.completed=S.completed|(1<<(S.chapter-1));S.unlocked=math.max(S.unlocked,math.min(S.chapter+1,#levels))
             if S.best[S.chapter]==0 or S.g.time<S.best[S.chapter] then S.best[S.chapter]=math.floor(S.g.time) end
             gamecenter.submit('rescue',rescue_total())
-            persist();S.modal='win';sfx.tone(880,.4);feedback.win()
+            persist();open_modal('win');sfx.tone(880,.4);feedback.win()
         end
         for _,ev in ipairs(S.g.events) do
             feedback.event(ev)
@@ -275,7 +287,12 @@ local function frame(dt)
         end
         world();hud()
     else ui.set_enabled(not S.modal and not board);menu() end
-    modal();fx.update(dt);fx.draw()
+    if S.modal and S.motion:step(dt,inp,still) then
+        ui.set_enabled(not board and not story.active() and S.motion.interactive)
+        S.motion:paint(paint_modal)
+    end
+    ui.set_enabled(true)
+    fx.update(dt);fx.draw()
     if not story.active() then boards:draw(dt) end
     story.frame(dt)
     if S.smoke then smoke() end
@@ -308,7 +325,7 @@ local function init()
         end
         assert(steps<18000,'preview playthrough stalled')
     end
-    if app.arg('pause') and S.g then S.modal='pause';S.g.paused=true end
+    if app.arg('pause') and S.g then open_modal('pause');S.g.paused=true end
     if not S.testing then gamecenter.submit('rescue',rescue_total()) end   -- progress made before the boards
     if app.arg('leaderboard') then gamecenter.submit('rescue',5*speed_score(300));open_rescue_board() end
 end

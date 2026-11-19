@@ -186,22 +186,20 @@ needs no second code path.
 
 ## In the games
 
+The engine's modal stack and custom popups share a .24 s lift and fade in
+and a .18 s drop and fade out. The renderer keeps text at its final size and
+modal backdrops use a translucent dim layer by default. Reduced motion
+settles both directions immediately where the game offers that setting.
+
 - **Christmas Market and Relic Rush** (`match3/game.lua`): the board fades into
   its background over .30 s before a win or loss card enters. Picture reveals
-  and their dialogue finish before the board starts fading. The shared popup
-  cards lift and fade in over .24 s, then drift down and fade out over .18 s.
-  They keep text at its settled size and dim the scene with a translucent layer.
-  Navigation and reward collection happen at the end of the exit. Reduced
-  motion settles these transitions immediately. `R.open_dialog(true)` opens
-  a card at rest for stills. In reels, the results sections join one timeline
+  and their dialogue finish before the board starts fading. Navigation and
+  reward collection happen at the end of the exit. In reels, the results sections join one timeline
   through `R.dialog_part(delay, duration)`; the first tap completes that timeline.
-- **Nile Archive**: `G.open_modal(kind)` builds a paused timeline for a popup's
-  pop (`out_back`), its backdrop and the staggered stars; `main.lua` plays it once
-  any dialogue is over. In a scene, each name pill's arrival, strike-through and
+- **Nile Archive**: The reward stars animate on a separate timeline that starts
+  once any dialogue is over. In a scene, each name pill's arrival, strike-through and
   drop, the ring on a found item and the combo bar are tweens on records in
   `G.pills`, `G.marks` and `G` (`archive_scene.lua`).
-- **The engine's modal stack** (`ui.modals`): a layer's backdrop fade is a tween
-  on the layer.
 - **Reduced motion**: each game calls `tween.instant(R.reduced_motion)` every
   frame, so its tweens settle on their next update.
 

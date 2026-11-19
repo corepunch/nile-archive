@@ -2044,6 +2044,15 @@ Native widgets plus shared Lua form resources. ui.form(template) provides layout
 | `ui.ACTIVE` | Selected / toggled on. |
 | `ui.FLAT` | No background. |
 
+### `ui.popup_transform(shift, opacity)`
+
+Renderer state used by Lua popup motion. Shifts drawing and clips in logical units and fades subsequent drawing. Input coordinates stay fixed.
+
+| Argument | Type | |
+|---|---|---|
+| `shift` | `vec2` |  |
+| `opacity` | `number` |  |
+
 ### `ui.set_theme(t)`
 
 The theme every widget reads from now on.

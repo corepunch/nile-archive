@@ -32,6 +32,7 @@ local function campaign()
             R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
     if R.diving() then return end   -- the town HUD, Confirm included, is not drawn during the dive
+    if R.overlay == R.OV_STORY_CHOICE and not R.dialog_settled() then return end
     if wait > 0 then wait = wait - 1; return end
     wait = 2
     if story.active() then
@@ -113,6 +114,7 @@ function R.smoke()
         error(("smoke test failed at stage %d (overlay %d, level %d)"):format(stage, R.overlay, R.g.level))
     end
     if R.diving() then return end   -- the town <-> board dive takes no input
+    if R.overlay == R.OV_SHOP and not R.dialog_settled() then return end
     if wait > 0 then   -- one click per few frames, so each press and release is its own frame
         wait = wait - 1
         return

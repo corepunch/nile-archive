@@ -779,13 +779,24 @@ function ui.modals(skin) end
 ---@return boolean
 function ui_modal_stack:active() end
 ---@return boolean
+function ui_modal_stack:ready() end
+---@return boolean
 function ui_modal_stack:begin() end
 ---@return boolean, string?
 function ui_modal_stack:open(id, form, model, options) end
 ---@return boolean
-function ui_modal_stack:close(id) end
+function ui_modal_stack:close(id, after, immediate) end
 ---@return table?
 function ui_modal_stack:draw(dt, options) end
+---@class ui_popup_motion
+local ui_popup_motion = {}
+---@return ui_popup_motion
+function ui.popup_motion(settled) end
+---@return boolean
+function ui_popup_motion:step(dt, inp, instant) end
+---@return boolean
+function ui_popup_motion:close(action, instant) end
+function ui_popup_motion:paint(draw, config) end
 ---Smoke-test driver for the deliberate building pickup (engine/lua/city_smoke.lua): call the returned function once per tick while it returns true
 ---@param c city
 ---@param opts {look: fun(at: vec2), wallet: fun(): number, cancel: fun(), confirm: fun(), offset: vec2?}

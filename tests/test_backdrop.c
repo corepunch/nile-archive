@@ -59,6 +59,17 @@ static void frame(float dt)
     gfx_backdrop(0,rgba(0,0,0,128));
     CHECK(render_read_pixels(pixels,w,h));
     c=sample(440,800);CHECK(c.r>=125 && c.r<=128);
+    /* A moving popup keeps its own scissor and opacity at both sizes. */
+    ui_popup_transform(v2(0,24),.5f);
+    gfx_clip(rc(30,40,30,20));
+    draw_rect(rc(25,35,40,30),WHITE);
+    gfx_unclip();
+    ui_popup_transform(v2(0,0),1);
+    draw_rect(rc(80,40,20,20),WHITE);
+    CHECK(render_read_pixels(pixels,w,h));
+    CHECK(sample(40,50).r<2 && sample(29,75).r<2);
+    c=sample(40,75);CHECK(c.r>=125 && c.r<=129);
+    CHECK(sample(90,50).r>250 && sample(90,75).r<2);
     frames++;
     if (frames == 5) { axSetSize(320,600,false); present_pending=true; }
     if (frames == 8) { axSetSize(480,900,false); present_pending=true; }

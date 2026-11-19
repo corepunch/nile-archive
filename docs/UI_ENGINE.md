@@ -402,11 +402,11 @@ its release.
 
 ## Modal layers and input ownership
 
-![Nested layers: game and first dialog blurred, top dialog sharp](screenshots/ui-layers.jpg)
+![Nested modal layers](screenshots/ui-layers.jpg)
 
 ```lua
 local modals = ui.modals(skin)
-assert(modals:open("settings", form, settings, {width=400, blur=7}))
+assert(modals:open("settings", form, settings, {width=400}))
 -- frame:
 if modals:begin() then update_game() end -- disable underlying UI/world input
 render_game()
@@ -470,10 +470,19 @@ omit the helper entirely when they require an explicit choice.
 
 List actions retain their `source` list ID and stable item `key` through the modal
 stack, so refreshing or reordering catalogue rows does not change their commands.
-`close(id?)` closes only the top layer; duplicate open IDs are rejected.
-`active()` reports whether any modal is open. Call `begin()` before underlying
-widgets/update, then `draw()` after the game. Screen-wide blocking includes safe
-areas. Reduced motion makes the backdrop transition immediate.
+`close(id?, after?, immediate?)` closes the top layer and runs `after` once it has
+left. Use the callback for navigation. Use `immediate=true` when replacing
+an existing layer programmatically. `active()` includes closing layers and
+`ready()` tells input drivers when the top layer has settled. Call `begin()`
+before underlying widgets and updates, then `draw()` after drawing the game.
+
+Custom-painted popups use `ui.popup_motion(settled?)`. Call
+`motion:step(dt, input, reduced_motion)` before painting. When it returns true,
+gate input with `motion.interactive` and wrap the panel's drawing in
+`motion:paint(draw, options?)`. The renderer shifts drawing and clips at the
+original text size. `motion:close(after, reduced_motion)` runs `after` at exit.
+For anchored elements such as town labels, `floating=true` applies the
+animation while preserving world input and the scene's brightness.
 
 Existing screens can use `ui.modal_layer(radius,dim)` directly before their
 custom dialog. `gfx.backdrop(radius,dim)` is the drawing-only equivalent. Drawing
@@ -686,4 +695,5 @@ A handoff can pair its painting with a detail icon and observation.
 `town_config.lua` can select skin text palettes with `bubble.title` and
 `bubble.text`. Set `bubble.em` to size the configured subtitle. The title
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex
-values.
+values. The bubble uses the shared transition when it appears and fades away
+on a tap or timeout.

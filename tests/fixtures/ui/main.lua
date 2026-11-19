@@ -42,7 +42,7 @@ local function frame(dt)
     local event
     if stack then
         if ui.button(rect(20,600,200,60),'UNDERLYING',ui.FLAT) then clicked_under=clicked_under+1 end
-        event=stack:draw(dt,{reduced_motion=true})
+        event=stack:draw(dt)
         if event and event.id=='apply' then
             local i=event.modal=='second' and 2 or 1
             assert(forms[i]:pull(models[i]));assert(stack:close(event.modal))
@@ -55,7 +55,11 @@ local function frame(dt)
         end
     end
     if app.arg('smoke') then
+        assert(clock<240,'nested modal input timed out')
         if clock%4==0 then
+            if stage>=1 and stage<7 and not stack:ready() then return end
+            if stage==5 and #stack.layers~=1 then return end
+            if stage==7 and stack:active() then return end
             stage=stage+1
             if stage==1 then app.inject_click(vec2(100,630)) -- modal must block this
             elseif stage==2 then assert(clicked_under==0);app.inject_click(forms[2].boxes.sound:center())

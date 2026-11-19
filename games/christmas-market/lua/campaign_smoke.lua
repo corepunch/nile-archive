@@ -17,6 +17,7 @@ function R.campaign_smoke()
             R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
     if R.diving() then return end   -- the town HUD, Confirm included, is not drawn during the dive
+    if R.overlay == R.OV_STORY_CHOICE and not R.dialog_settled() then return end
     if wait > 0 then wait = wait - 1; return end
     wait = 2
     if story.active() then

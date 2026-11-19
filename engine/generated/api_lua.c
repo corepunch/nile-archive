@@ -3561,6 +3561,15 @@ static int l_sfx_enabled(lua_State *L)
     return 1;
 }
 
+/* ui.popup_transform(shift, opacity) */
+static int l_ui_popup_transform(lua_State *L)
+{
+    vec2 a_shift = api_check_vec2(L, 1);
+    float a_opacity = (float)luaL_checknumber(L, 2);
+    ui_popup_transform(a_shift, a_opacity);
+    return 0;
+}
+
 /* ui.theme() */
 static int l_ui_theme(lua_State *L)
 {
@@ -4606,6 +4615,7 @@ static void open_sfx(lua_State *L)
 static void open_ui(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
+        {"popup_transform", l_ui_popup_transform},
         {"set_theme", lui_set_theme},
         {"theme", l_ui_theme},
         {"block", l_ui_block},

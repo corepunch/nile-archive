@@ -63,6 +63,7 @@ outside.captured=true
 assert(backdrop_stack:open("lower",readonly,model,{bounds=modal_bounds}))
 assert(backdrop_stack:open("upper",readonly,model,{bounds=modal_bounds}))
 check(not backdrop_stack:draw(0,{input=outside,reduced_motion=true}),"fresh nested layer ignores opening background release")
+backdrop_stack:draw(0,{input={},reduced_motion=true})
 local cancel=backdrop_stack:draw(0,{input=outside,reduced_motion=true})
 check(cancel and cancel.kind=="cancel" and cancel.modal=="upper","only top nested layer receives background cancel")
 check(#backdrop_stack.layers==2,"cancel event does not mutate modal stack implicitly")
@@ -71,6 +72,20 @@ assert(backdrop_stack:open("required",readonly,model,{bounds=modal_bounds,close_
 backdrop_stack:draw(0,{input=outside,reduced_motion=true})
 check(not backdrop_stack:draw(0,{input=outside,reduced_motion=true}),"required modal ignores background taps")
 backdrop_stack:close()
+do
+    local motion_stack=ui.modals({label=function()end})
+    local closed=0
+    assert(motion_stack:open("motion",readonly,model,{bounds=modal_bounds}))
+    motion_stack:draw(0,{input={}})
+    check(not motion_stack:draw(.12,{input=outside}) and not motion_stack:ready(),"a popup blocks taps during its entrance")
+    motion_stack:draw(.12,{input={}})
+    check(motion_stack:ready(),"the popup accepts input after it settles")
+    assert(motion_stack:close("motion",function() closed=closed+1 end))
+    check(not motion_stack:close("motion") and motion_stack:active(),"exit retains the layer and accepts just one close")
+    check(not motion_stack:draw(.09,{input=outside}) and closed==0 and motion_stack:active(),"the exiting popup still owns input")
+    motion_stack:draw(.10,{input={}})
+    check(closed==1 and not motion_stack:active(),"the close callback runs once after the exit")
+end
 -- Snap backdrops stay at full strength throughout the entrance, including frame zero.
 do
     local widgets = ui

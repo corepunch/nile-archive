@@ -92,6 +92,9 @@ python3 games/emergency/tools/preserve_source.py --verify
 
 ## Leaderboard
 
+Pause, help, district results and the leaderboard use the same fade and slide
+transition when they open and close.
+
 The menu's Leaderboard button opens the overall **rescue** rankings. The score adds up each district's
 best speed score, `floor(1e9 / (1000 + tenths of a second))`, so a faster replay can raise the total.
 The game submits the total at launch and when a district is restored. Use `com.corepunch.volcano.rescue`

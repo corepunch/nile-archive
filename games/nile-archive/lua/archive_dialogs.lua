@@ -10,7 +10,7 @@ local K = require("archive_kit")
 local S = K.styles
 local beats = require("archive_story")
 local scenes, cast = content.scenes, content.cast
-local MODAL_NONE, MODAL_WIN, MODAL_CHAPTERS, MODAL_PAUSE = G.MODAL_NONE, G.MODAL_WIN, G.MODAL_CHAPTERS, G.MODAL_PAUSE
+local MODAL_WIN, MODAL_CHAPTERS, MODAL_PAUSE = G.MODAL_WIN, G.MODAL_CHAPTERS, G.MODAL_PAUSE
 local WHITE = K.WHITE
 
 local M = {}
@@ -25,19 +25,17 @@ M.boards = require("leaderboard").boards{skin = K.skin, width = 520, texts = {
 }}
 function M.open_leaderboard() M.boards:open("influence", "Влияние") end
 
--- A framed box with a ribbon title, popping in as G.dialog arrives.
+-- A framed box with a ribbon title.
 local function popup(w, h, title)
     local s = app.screen()
     local box = rect.centered(s:center() + vec2(0, 14), size2(math.min(w, s.w - 40), math.min(h, s.h - 70)))
-    local k = .9 + .1 * G.dialog.pop
-    box = box:scale(k)
     local inner = K.frame(box, false, 24)
     K.ribbon(vec2(box:center().x, box.y + 2), math.min(420, box.w * .6), title)
     return box, inner
 end
 
 local function close_button(box)
-    if K.round_button(box:point(vec2(1, 0)) + vec2(-6, 6), 22, K.icon_close) then G.modal = MODAL_NONE end
+    if K.round_button(box:point(vec2(1, 0)) + vec2(-6, 6), 22, K.icon_close) then G.close_modal() end
 end
 
 local function win_dialog()
@@ -75,11 +73,13 @@ local function win_dialog()
     G.spots.continue = continue:center()
     local goal, _, restore = progress.chapter_goal()
     if K.button(continue, restore and "Строить за монеты" or "На остров", "green") then
-        scene.go_home()
-        if restore then
-            local is_project = goal and goal >= 6 and goal <= content.SCENES and economy.lock(G, goal) == "influence"
-            island.open_tray(is_project and "projects" or "story")
-        end
+        G.close_modal(function()
+            scene.go_home()
+            if restore then
+                local is_project = goal and goal >= 6 and goal <= content.SCENES and economy.lock(G, goal) == "influence"
+                island.open_tray(is_project and "projects" or "story")
+            end
+        end)
     end
 end
 
@@ -99,9 +99,9 @@ local function pause_dialog()
     if reduced ~= G.reduced_motion then G.reduced_motion = reduced; progress.save() end
     r:cut_top(10)
     local buttons = r:cut_top(56):inflate2(vec2(-40, 0))
-    if K.button(buttons:col(2, 0, 20), "На остров", "blue") then scene.go_home() end
+    if K.button(buttons:col(2, 0, 20), "На остров", "blue") then G.close_modal(scene.go_home) end
     G.spots.resume = buttons:col(2, 1, 20):center()
-    if K.button(buttons:col(2, 1, 20), "Продолжить", "green") then G.modal = MODAL_NONE end
+    if K.button(buttons:col(2, 1, 20), "Продолжить", "green") then G.close_modal() end
 end
 
 local browser = ui.form{kind = "column", gap = 8, children = {
@@ -155,7 +155,7 @@ local function refresh_chapters()
 end
 
 local browser_dialog
-local function chapters_dialog()
+local function chapters_dialog(interactive)
     if browser_dialog ~= G.dialog then
         refresh_chapters()
         browser_dialog = G.dialog
@@ -165,12 +165,12 @@ local function chapters_dialog()
     close_button(box)
     r = r:inflate2(vec2(-19, 0))
     r:cut_top(40)
-    local event = browser:draw(r, K.skin, {reduced_motion = G.reduced_motion})
+    local event = browser:draw(r, K.skin, {interactive=interactive, dim_controls=false, reduced_motion=G.reduced_motion})
     G.spots.browser = browser
     if not event then return end
-    if event.id == "journal" then G.open_modal(G.MODAL_JOURNAL)
+    if event.id == "journal" then G.close_modal(function() G.open_modal(G.MODAL_JOURNAL) end)
     elseif event.id == "leaderboard" then M.open_leaderboard()
-    elseif event.source == "searches" then scene.start(event.key) end
+    elseif event.source == "searches" then G.close_modal(function() scene.start(event.key) end) end
 end
 
 local journal = ui.form{kind = "column", gap = 8, children = {
@@ -185,7 +185,7 @@ local journal = ui.form{kind = "column", gap = 8, children = {
     {kind = "button", id = "back", text = "К поискам", height = 42},
 }}
 
-local function journal_dialog()
+local function journal_dialog(interactive)
     local notes = progress.journal()
     journal:set("summary", #notes == 0 and "Записи появятся после первого поиска." or ("Записей: %d"):format(#notes))
     assert(journal:set_items("notes", notes))
@@ -194,9 +194,9 @@ local function journal_dialog()
     close_button(box)
     r = r:inflate2(vec2(-19, 0))
     r:cut_top(40)
-    local event = journal:draw(r, K.skin)
+    local event = journal:draw(r, K.skin, {interactive=interactive, dim_controls=false, reduced_motion=G.reduced_motion})
     G.spots.journal = journal
-    if event and event.id == "back" then G.open_modal(MODAL_CHAPTERS) end
+    if event and event.id == "back" then G.close_modal(function() G.open_modal(MODAL_CHAPTERS) end) end
 end
 
 local cache_result = ui.form{kind = "column", gap = 16, children = {
@@ -209,7 +209,7 @@ local cache_result = ui.form{kind = "column", gap = 16, children = {
     {kind = "button", id = "home", text = "На остров", accent = true, height = 48},
 }}
 
-local function cache_dialog()
+local function cache_dialog(interactive)
     local chapter = content.cache_chapter(G.scene) or 1
     cache_result:set("chapter", ("Глава %d завершена"):format(chapter))
     cache_result:set("note", beats[("c%dt2"):format(chapter)].note)
@@ -219,9 +219,9 @@ local function cache_dialog()
     local _, r = popup(620, height + 88, "Тайник открыт")
     r = r:inflate2(vec2(-19, 0))
     r:cut_top(40)
-    local event = cache_result:draw(r, K.skin)
+    local event = cache_result:draw(r, K.skin, {interactive=interactive, dim_controls=false, reduced_motion=G.reduced_motion})
     G.spots.cache_result = cache_result
-    if event and event.id == "home" then scene.go_home() end
+    if event and event.id == "home" then G.close_modal(scene.go_home) end
 end
 
 local function cast_dialog()
@@ -249,8 +249,8 @@ local dialogs = {
 }
 
 -- Draws the open dialog; the cast gallery otherwise.
-function M.draw(modal)
-    (dialogs[modal] or cast_dialog)()
+function M.draw(modal, interactive)
+    (dialogs[modal] or cast_dialog)(interactive)
 end
 
 return M

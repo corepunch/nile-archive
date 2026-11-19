@@ -529,6 +529,7 @@ void ui_toast(const char *utf8);
 /* Dim everything drawn so far and block input outside dialogs. Call before drawing a modal. */
 void ui_modal_backdrop(float t);
 void ui_modal_layer(float radius, color dim); /* blur/dim all earlier layers and block world input */
+void ui_popup_transform(vec2 shift, float opacity);
 /* While false, widgets draw but ignore input (e.g. under a modal). */
 void ui_set_enabled(bool enabled);
 
