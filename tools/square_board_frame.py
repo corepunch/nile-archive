@@ -1,4 +1,5 @@
 """Bake full-size tiles for the empty cells bordering a square board."""
+import json
 import math
 from pathlib import Path
 
@@ -9,16 +10,20 @@ import board_frame_decor
 CELL = 128
 REACH = 17
 
-# End depths and colours of the two planar faces and the outer chamfer.
-# The inner bevel meets the flat top at a crisp ridge.
-INNER_BEVEL = 6
-FACES = (
-    (INNER_BEVEL, (128, 86, 45)),
-    (15.5, (185, 140, 87)),
-    (REACH, (124, 79, 41)),
+# Distance from the board into the frame cell, and the lit sandstone colour.
+# Like Cradle of Rome, the rim is a flat face with only a slight rounding at
+# its edges; the board sits higher and casts SHADOW across its inner part.
+PROFILE = (
+    (0, (116, 74, 40)),
+    (1.5, (175, 129, 75)),
+    (13.5, (196, 153, 91)),
+    (14.5, (225, 184, 115)),
+    (15.5, (184, 136, 78)),
+    (REACH, (97, 61, 33)),
 )
-# The board casts a soft contact shadow on the inner bevel.
-SHADOW_STRENGTH = .64
+# The board's cast shadow: full strength at its edge, gone by this depth.
+SHADOW = 8.5
+SHADOW_STRENGTH = .72
 # The stone in turn casts a soft shadow on the backdrop inside its tile.
 RIM_SHADOW = 7
 RIM_SHADOW_ALPHA = 92
@@ -61,8 +66,11 @@ def bake(sample, grain):
     scale = 2
     side = CELL * scale
     bands = []
-    for end, colour in FACES:
-        bands.extend([colour] * (round(end * 16) - len(bands)))
+    for (a, lit), (b, shade) in zip(PROFILE, PROFILE[1:]):
+        steps = round((b - a) * 16)
+        for i in range(steps):
+            f = i / steps
+            bands.append(tuple(c + (d - c) * f for c, d in zip(lit, shade)))
     texture = grain.load()
     pixels = []
     for py in range(side):
@@ -86,8 +94,8 @@ def bake(sample, grain):
             cut = (along + depth * .62 + abs(depth - 11) * .24) % (CELL / 2) - CELL / 4
             joint = max(0, 1 - abs(cut) / 2.4) * .85 * face
             shoulder = max(0, 1 - abs(cut - 2.7) / 1.5) * .32 * face
-            # Keep the shadow on the inward plane so the ridge stays sharp.
-            fade = min(1, depth / INNER_BEVEL)
+            # The board casts a soft shadow across the inner half of the rim.
+            fade = min(1, depth / SHADOW)
             shade = 1 - SHADOW_STRENGTH * (1 - fade * fade * (3 - 2 * fade))
             mottled = (c * multiply for c in colour)
             stone = [round((base + (dark - base) * joint + (lit - base) * shoulder) * shade)
@@ -98,20 +106,24 @@ def bake(sample, grain):
     return image.resize((CELL, CELL), Image.Resampling.BOX)
 
 
-def foliage(source):
+def foliage():
+    reference = json.loads(board_frame_decor.SPEC.read_text())
+    root = board_frame_decor.ROOT
+    source = root / reference['source']
     # All canonical leafy layouts have their first inside corner at NE.
-    spec = {'crop': [85, 90, 1168, 1105], 'anchor': [841, 366], 'scale': .10, 'turn': -29}
+    spec = dict(reference['games']['relic-rush']['leaves'], scale=.25, turn=-133)
     with Image.open(source) as image:
         sprig = board_frame_decor.register(image, spec, 2 * CELL)
-    mount = (94, REACH)
+    # Set the stem at the bend, with the fan pointing into the empty cell.
+    mount = (CELL - REACH - 1, REACH + 2)
     x, y = (CELL - coord for coord in mount)
     left, top, right, bottom = sprig.getchannel('A').point(lambda a: 255 if a >= 32 else 0).getbbox()
     assert x < left and y < top and right < x + CELL and bottom < y + CELL, 'Leaves must fit the frame cell'
     tile = sprig.crop((x, y, x + CELL, y + CELL))
-    spec['source'] = source.relative_to(board_frame_decor.ROOT).as_posix()
+    spec['source'] = reference['source']
     spec['mount'] = mount
     spec['size'] = [CELL, CELL]
-    return tile, spec, [source, source.with_name('overhead-leaves-prompt.txt')]
+    return tile, spec, [source, root / reference['prompt'], board_frame_decor.SPEC]
 
 
 def generate(grain_source):
@@ -119,7 +131,7 @@ def generate(grain_source):
         grain = image.convert('L').resize((CELL, CELL), Image.Resampling.LANCZOS)
     # Keep hairline fissures legible with a restrained Multiply pass.
     grain = grain.filter(ImageFilter.MinFilter(3)).point(lambda value: min(255, round(value * 1.10)))
-    leaves, leaf_spec, assets = foliage(grain_source.with_name('overhead-leaves.png'))
+    leaves, leaf_spec, assets = foliage()
     sprites = {}
     for mask in frame_masks():
         name = f'square-frame-{mask}'

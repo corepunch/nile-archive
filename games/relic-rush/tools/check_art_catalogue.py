@@ -63,8 +63,6 @@ with Image.open(ROOT / square["runtime"]) as sheet:
     face = ImageStat.Stat(luma.crop((10, 9, 40, 14))).mean[0]
     contact = ImageStat.Stat(luma.crop((10, 0, 40, 2))).mean[0]
     assert face - contact >= 55, "The stone rim needs a deep board-facing contact shadow"
-    bevel, top = (ImageStat.Stat(luma.crop((10, row, 40, row + 1))).mean[0] for row in (5, 6))
-    assert top - bevel >= 18, "The flat top and inner bevel need a sharp ridge"
     alpha = edge.getchannel("A")
     assert alpha.getpixel((20, 0)) == 255 and alpha.getbbox()[3] < h // 2
     solid = alpha.point(lambda value: 255 if value >= 128 else 0).getbbox()[3]

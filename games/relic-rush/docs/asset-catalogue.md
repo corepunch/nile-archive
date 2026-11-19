@@ -25,7 +25,7 @@ The campaign uses matte papyrus for ordinary cells, deep blue for single-layer p
 | `square-frame-85-leaf` | Four rails around an enclosed empty cell and leaves in the northeast corner. |
 | `square-frame-170` | Four rounded caps. |
 
-Built-in ImageGen painted the [floor faces](../art/papyrus-board/contact.png), [cracked sandstone material](../art/papyrus-board/stone-cracks.png) and [overhead leaf fan](../art/papyrus-board/overhead-leaves.png). The [square frame generator](../../../tools/square_board_frame.py) builds the sharp ridge between the flat stone face and shaded inner bevel, then bakes the texture in Multiply mode and adds the joints and leaves. The [square campaign guide](square-match3.md) links the prompts, registration and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
+Built-in ImageGen painted the [floor faces](../art/papyrus-board/contact.png) and the [cracked sandstone material](../art/papyrus-board/stone-cracks.png). The [square frame generator](../../../tools/square_board_frame.py) bakes the material in Multiply mode, followed by the stone joints and, as in Cradle of Rome, a soft shadow the board casts across the inner half of the rim, over a flat face with only a slight rounding at its outer edge, and the existing [painted leaves](../../../engine/art/board-frame/decorations-source.png). The [square campaign guide](square-match3.md) links the prompts, registration and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
 
 ## Popup close button
 

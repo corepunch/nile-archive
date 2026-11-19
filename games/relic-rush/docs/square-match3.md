@@ -56,9 +56,8 @@ The frame occupies whole 128 px cells in the empty ring and in board holes.
 Each cell selects one sprite and a quarter turn from its eight neighbours.
 The [square frame generator](../../../tools/square_board_frame.py) rounds
 exposed corner caps and joins the arms of recessed corners at right angles.
-Its dark inner bevel meets the lighter outer face at a sharp stone ridge.
-The board casts a soft shadow over the inner bevel, and the stone casts a
-soft backdrop shadow within the frame tile.
+It bakes the board's contact shadow along the inner edge and a soft
+backdrop shadow beyond the brighter outer bevel, within the frame tile.
 The [cracked stone texture](../art/papyrus-board/stone-cracks.png) multiplies
 over the sandstone face. The generator keeps the fissures fine and adds
 slight contrast in the Multiply map so they read at phone size.
@@ -67,11 +66,10 @@ ImageGen first painted the
 [material prompt](../art/papyrus-board/stone-grain-prompt.txt), then added
 angular fractures using [the crack prompt](../art/papyrus-board/stone-cracks-prompt.txt)
 and the supplied `gmf_corner_10.png` study. The generator bakes the angled
-joints and [top-down foliage](../art/papyrus-board/overhead-leaves.png)
-into each variant. ImageGen painted the overhead leaf fan from its
-[prompt](../art/papyrus-board/overhead-leaves-prompt.txt) and the
-`gmf_corner_11.png` reference. Bare and leafy variants alternate at
-recessed corners. Stone, shadow and leaves fit inside the same empty square.
+joints and [painted foliage](../../../engine/art/board-frame/decorations-source.png)
+into each variant. The leaf stem sits at the bend and the fan points into
+the empty cell. Bare and leafy variants alternate at recessed corners.
+Stone, shadow and leaves fit inside the same empty square.
 [Atlas registration](../art/match3-atlas.json) records the source crops,
 texture blend, pivots and runtime atlas regions.
 Rebuild from the repository root with `python3 tools/match3_atlas.py`.
