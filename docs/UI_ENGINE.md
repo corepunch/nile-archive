@@ -431,18 +431,18 @@ if action and action.id == "accept" then
 elseif action and action.kind == "cancel" then modals:close(action.modal) end
 ```
 
-Each layer's backdrop fades in over 0.2 s on the engine's tween module
-([MOTION.md](MOTION.md)); `reduced_motion` shows it at once.
+`ui.modals` animates every layer by default. The form lifts and fades in over
+.24 s with a dimming backdrop, then lowers and fades out over .18 s.
+The top layer captures input throughout its transition. It accepts actions
+after it settles and the opening gesture ends. Pass `reduced_motion=true`
+to settle both directions immediately.
 `open(id,form,model,options)` pushes model values and a layer. The form must have a `column` root. Rows within it can hold side-by-side content such as the three resource totals. Options include
 `bounds`, `width`, `height`, `blur`, `dim`, `snap_backdrop` (default false), `close_on_background` (default true), and a `cancel` command ID (default
-`cancel`). Set `snap_backdrop=true` to apply the full blur and dim on the first frame, independently of entrance animation. Automatic bounds centre the measured form within the logical screen.
-Each layer blurs/dims all earlier drawing; the next layer can blur the previous
-dialog too. Only the top form receives input. Escape or a background tap emits
-its cancel action. Set `close_on_background=false` for required confirmations.
-A newly opened modal paints once with input disabled, so the release or
-key that opened it cannot also press a newly appeared button or cancel it. The
-next draw accepts input normally; lower layers remain inactive. This is covered
-by the form test and Relic Rush's 390 x 844 expedition-browser input smoke test.
+`cancel`). Blur defaults to zero. Set `blur` to opt in and `snap_backdrop=true`
+to apply the full backdrop effect from the first frame. Automatic bounds centre
+the measured form within the logical screen. Escape or a background tap emits
+the top layer's cancel action. Set `close_on_background=false` for required
+choices.
 
 The shared match-3 popup renderer also requires a column-root form. It owns
 measurement, centering, hit testing and dismissal for Results, Settings, the
