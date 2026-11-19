@@ -62,7 +62,7 @@ G.DEFAULTS = {
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
             gets = "YOU GET", price = "PRICE", missing = "STILL NEEDED", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
-    quest = {header = "Request", deliver = "HAND IT OVER", play = "PLAY", ready = "EVERYTHING IS HERE.",
+    quest = {header = "Request", later = "LATER", deliver = "HAND IT OVER", play = "PLAY", ready = "EVERYTHING IS HERE.",
              waiting = "ITS PIECE JOINS THE BOARD WHEN A PLACE IS FREE.", replay = "REPLAY EXPEDITION %d",
              replay_paused = "Your board is saved. Open a crew request to resume.", continue = "CONTINUE"},
     catalogue = {
@@ -795,17 +795,22 @@ function G.bind(R, over)
     local quest_form = ui.form{
         root = {kind="column", panel=true, padding={24,20,24,18}, gap=14, children={
             match3.popup_header(W.quest.header),
-            {kind="image", id="icon", height=132},
-            {kind="label", id="about", wrap=true, em=19, text_style="body"},
-            {kind="row", visible_field="show_needs", children={
+            {kind="row", height=132, children={
                 {kind="spacer",grow=1},
-                {kind="column", gap=5, children={
-                    {kind="label", text=W.card.missing, em=13, text_style="caption"},
+                {kind="image",id="portrait",width=132,visible_field="show_portrait"},
+                {kind="image",id="icon",width=132,visible_field="show_icon"},
+                {kind="spacer",grow=1},
+            }},
+            {kind="label", id="about", wrap=true, em=19, text_style="body"},
+            {kind="column",visible_field="show_needs",gap=5,children={
+                {kind="label",id="needs_caption",em=13,text_style="caption"},
+                {kind="row",children={
+                    {kind="spacer",grow=1},
                     {kind="list",id="needs",direction="row",gap=AMOUNT_GAP,item=function(entry)
                         return match3.resource_indicator(entry, 96)
                     end},
+                    {kind="spacer",grow=1},
                 }},
-                {kind="spacer",grow=1},
             }},
             {kind="label",id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
             {kind="button",id="action",height=56},
@@ -818,26 +823,33 @@ function G.bind(R, over)
     }
     R.quest_form = quest_form
     local quest_model
-    function R.open_quest(id)
+    function R.open_quest(id, offer)
         if not R.quest_model or not R.quest_model(id) then return false end
         R.quest_card, R.overlay = id, R.OV_QUEST
+        R.quest_offer = offer == true
+        if R.quest_opened then R.quest_opened(id) end
         return true
     end
     popup(R.OV_QUEST, quest_form, {width=420, prepare=function()
         local quest = R.quest_card and R.quest_model(R.quest_card)
         if not quest then return false end
         quest_model = quest
-        match3.set_popup_header(quest_form, quest.title, quest.subtitle)
+        match3.set_popup_header(quest_form, quest.title, R.quest_offer and quest.offer_subtitle or quest.subtitle)
         local action = W.card.back
         if quest.ready then action = W.quest.deliver
         elseif quest.level then
             action = quest.level == R.prog.level and W.quest.play or W.quest.replay:format(quest.level + 1)
         end
-        assert(quest_form:push{icon=quest.icon, about=quest.about, action=action})
+        assert(quest_form:push{icon=quest.icon, about=quest.about, action=quest.action or action})
+        quest_form.values.show_portrait = quest.portrait ~= nil
+        quest_form.values.show_icon = not quest.portrait or quest.ready
+        if quest.portrait then quest_form:set("portrait", quest.portrait) end
+        quest_form:set("close", R.quest_offer and W.quest.later or W.card.close)
+        quest_form:set("needs_caption", quest.needs_caption or W.card.missing)
         local needs = quest.ready and {} or quest.needs or {}
         quest_form.values.show_needs = #needs > 0
         assert(quest_form:set_items("needs", needs))
-        local notice = quest.ready and W.quest.ready or quest.waiting and W.quest.waiting
+        local notice = quest.notice or (quest.ready and W.quest.ready or quest.waiting and W.quest.waiting)
         quest_form.values.show_notice = notice and true or false
         quest_form:set("notice", notice or "")
     end, handle=function(event)
@@ -855,6 +867,10 @@ function G.bind(R, over)
         root={kind="column",panel=true,padding=24,gap=14,children={
             match3.popup_header(W.quest.header),
             {kind="image",id="painting",height=372},
+            {kind="row",height=52,gap=8,visible_field="evidence",children={
+                {kind="image",id="detail",width=56},
+                {kind="label",id="observation",grow=1,wrap=true,em=17,text_style="body"},
+            }},
             {kind="button",id="continue",height=56,text=W.quest.continue},
         }},
         bindings={{id="painting",field="image",type="texture",readonly=true}},
@@ -866,6 +882,10 @@ function G.bind(R, over)
         R.quest_card, R.overlay = id, R.OV_QUEST_HANDOFF
         match3.set_popup_header(handoff_form, quest.handoff.title)
         assert(handoff_form:push(quest.handoff))
+        handoff_form.values.evidence = quest.handoff.detail ~= nil
+        if quest.handoff.detail then
+            handoff_form:set("detail", quest.handoff.detail):set("observation", quest.handoff.observation)
+        end
         return true
     end
     popup(R.OV_QUEST_HANDOFF, handoff_form, {width=420,dismiss=false,handle=function(event)

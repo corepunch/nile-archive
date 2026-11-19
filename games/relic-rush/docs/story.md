@@ -36,10 +36,10 @@ Each row connects a character’s request with the expedition clears and confirm
 
 | Chapter and story objective | Expeditions and confirmed placement | Outcome and next request |
 | --- | --- | --- |
-| 1. Set up camp | Clear 1 and place the Expedition Camp. | Mara uses the old lookout and gets two flashes back. The crew needs water. |
-| 1. Restore water | Clear through 4 and restore the Spring Well. | Tomas joins, explains the severed relay and points the crew toward the lower quay. |
-| 1. Catch the low tide | Clear through 7 and place the Trapper’s Cabin. | Tomas and Mara set out before dawn and knot a line to the width of the missing tread. |
-| 1. Reach the lower quay | Clear through 10 and place the Artisan Workshop. Its first tread repairs the quay on the same purchase. | The restored tread cues the ancient keeper’s scene. Back in the present, the crew opens the viewing shutter, sees three flashes and chooses who answers. |
+| 1. Set up camp | Clear 1 and restore the Well. | Mara gets two flashes back and spots a scrap of chart behind the lamp bracket. |
+| 1. Restore water | Clear through 4 and place the Hunter’s Hut. | Tomas joins, explains the severed relay and points the crew toward the lower quay. |
+| 1. Catch the low tide | Clear through 7 and place the Sawmill. | Tomas and Mara set out before dawn and knot a line to the width of the missing tread. |
+| 1. Reach the lower quay | Clear through 10 and place the Village. The Sawmill has opened the quay site. | The restored tread cues the ancient keeper’s scene. Back in the present, the crew sees three flashes from the repaired tread and chooses who answers. |
 | 2. Find the sender — Mara wants to answer safely | 11 follow the reply; 12 find recently delivered supplies; 13 recover the note; **confirm Sunstone courtyard** as a working space. | The note warns about the wall and bears the initials I. R. Tomas names Ines at the courtyard. |
 | 2. Make a way home — Tomas wants to reach Ines | 14 test the terrace route; 15 trace the crack through the quay wall; 16 prepare shelter; **confirm Explorer's lodge**. | The repair crew has a dry base. The direct quay is unsafe. |
 | 2. Keep the record — Elena needs the repair plans | 17 recover the keeper's log fragment; 18 check its measurements against the quay; 19 secure the records; **confirm Lost-world archive**; 20 open the locked chart cabinet. | Tomas hands over the key. Ines's signed plan shows how to divert the tide and repair the wall. Adrian's claim threatens access to the records. |
@@ -62,17 +62,17 @@ Each row connects a character’s request with the expedition clears and confirm
 | Plant | Inference later / payoff |
 | --- | --- |
 | Two flashes answer Mara’s lamp (camp) | The answer changes to three at the steps. Ines confirms her identity with the same delayed pattern at the safe landing (30). |
-| Tomas tells the crew the relay cable is severed (well) | The crew checks the working hand shutter instead (steps). |
+| Tomas tells the crew the relay cable is severed (well) | The cable hand-in prompts a field test of the hand shutter at the lookout. |
 | Tomas knots a line between the empty sockets (cabin) | The restored tread seats at the ancient keeper’s high-tide notch (steps). |
-| The crew can reach the viewing shutter (steps) | The far warning shutter can answer across the gap. The crew follows the answer at 11. |
+| The crew can see across the inlet from the repaired steps | The far warning shutter can answer across the gap. The crew follows the answer at 11. |
 | Tomas names Ines as an earlier operator (steps) | He recognizes her handwriting at the courtyard (13), then hands over her cabinet key (20). |
 | Tomas finds a pencilled measurement in the torn log (17) | The stone gauge confirms it (18). The signed plan explains where the harbor can divert the tide (20). |
 
-Elena proposes a reflection at camp. The severed relay and the changed reply make a person at the hand shutter the likeliest answer. The viewing shutter gives them a line of sight after the repair, and the note identifies Ines at 13.
+Elena proposes a reflection at camp. The severed relay and the changed reply make a person at the hand shutter the likeliest answer. The new tread gives them a line of sight after the repair, and the note identifies Ines at 13.
 
 ## Delivery and choices
 
-Expeditions 1–10 give matched resources on Claim. Their first clears advance the board count and make buildings available. Every Chapter 1 scene follows a confirmed placement, with Tomas’s arrival also recorded by the well’s citizen event. The quay repair opens the chapter’s final scene and its choice. Chapters 2 and 3 retain their existing story delivery. On reload, an unread scene or selected reply resumes. Saves that already reached the tide room receive the restored steps and keep their recorded choice.
+Expeditions 1–10 give matched resources on Claim. Their first clears advance the board count and make buildings available. The four Chapter 1 campaign scenes follow confirmed placements. The Well allows its citizen arrival, and Tomas introduces himself at the next restoration. The Village opens the final campaign scene and its choice. The separate hand-shutter test opens on the cable hand-in. Chapters 2 and 3 retain their existing story delivery. On reload, an unread scene or selected reply resumes. Saves that already reached the tide room receive the restored steps and keep their recorded choice.
 
 ## Chains and blue plaques
 
@@ -89,7 +89,7 @@ where a boat can reach them.
 
 | Chapter | Before-level scenes | First-clear scenes | Placement scenes |
 | --- | --- | --- | --- |
-| 1 | — | — | Camp at 1, Well and Tomas at 4, Cabin at 7, Workshop with quay repair and reply at 10 |
+| 1 | — | — | Well and chart scrap at 1, Hunter’s Hut and Tomas at 4, Sawmill at 7, Village and reply at 10 |
 | 2 | 11 and 20 | 11–20 | Courtyard at 13, Lodge at 16, Archive at 19 |
 
 The first three scenes use five lines each. The quay scene uses captions to enter and leave a two-line flashback and ends with the player’s reply choice. The ancient keeper appears in the portrait dialogue while the island stays on screen. Ines appears through the warning and her records until the finale.
@@ -106,7 +106,7 @@ The first three scenes use five lines each. The quay scene uses captions to ente
 - **Elena:** Try your lamp from the old lookout. There's a bracket in the cliff wall.
 - **Mara:** Two flashes out. Two back, right under the cliff.
 - **Elena:** Could be our light off the water. Try again when we can see what's down there.
-- **Mara:** Morning already? That's the last water in the cask. Let's get the old pump working.
+- **Mara:** There's paper wedged behind the bracket. Elena, is that the edge of a chart?
 
 **After restoration 4**
 
@@ -122,7 +122,7 @@ The first three scenes use five lines each. The quay scene uses captions to ente
 - **Tomas:** Bring a line. We'll want to measure whatever's gone from those steps.
 - **Narrator:** Before dawn, low tide bares the path to the steps. One tread is missing.
 - **Mara:** Hold that end. I'll knot the line at mine.
-- **Tomas:** There's the width of our missing tread. Now we need a bench to cut it square.
+- **Tomas:** There's the width of our missing tread. Take that line back to the mill.
 
 **After restoration 10**
 
@@ -133,8 +133,8 @@ The first three scenes use five lines each. The quay scene uses captions to ente
 - **Ancient keeper:** Set the tread up to that notch. The night watch needs dry footing at high tide.
 - **Ancient keeper:** Come up with me. A boat's nearing the reef. We'll open the warning shutter.
 - **Narrator:** The lower quay, that evening.
-- **Mara:** The steps held. Tomas, can you open the viewing shutter from here?
-- **Tomas:** I’ve opened it. Stay this side of the crack. The warning light’s across the flooded gap.
+- **Mara:** The steps held. I can see the far bank from this tread.
+- **Tomas:** Stay this side of the crack. See that square of light across the gap?
 - **Mara:** I'll try two again. One, two… Wait. Three back this time.
 - **Elena:** A reflection can't stop and change its mind. Someone wants us to see them.
 - **Tomas:** Ines used to work the far shutter by hand. I haven't seen her since she left for the plans.
@@ -319,7 +319,7 @@ Choice prompt: Who should answer the signal?
 
 Between two purchases the crew asks for smaller things. A request puts one piece of its own on the expedition boards. It banks nothing in the wallet. Matching it fills the request across expeditions, and the open requests stand as round markers down the island's left edge, under the next building. Handing a filled request in plays its scene. [Request data](../lua/quests.lua) · [Board rules](match4-rules.md#crew-requests)
 
-Two lines run side by side. **Search** follows the light: Mara and the keeper's old route. **Crew** is about the people at the table. A request opens once its building stands and the one before it on its line is handed in. Nothing waits for a request, so a player may hand one in late. Each scene therefore holds on its own: it names nothing that only a later restoration establishes, and no restoration scene relies on it.
+Two lines run side by side. **Search** follows the light: Mara and the keeper's old route. **Crew** is about the people at the table. A request opens once its building stands and the one before it on its line is handed in. The cable hand-in opens a field test at the lookout. A player may hand requests in even after the campaign ends. Each scene therefore holds on its own: it names nothing that only a later restoration establishes, and no restoration scene relies on it.
 
 | Request | Line | Piece | Opens with | What it adds |
 | --- | --- | --- | --- | --- |
@@ -327,17 +327,18 @@ Two lines run side by side. **Search** follows the light: Mara and the keeper's 
 | Fill the supper pot | Crew | Berries | Well | Elena writes down what they saw. Restates the two flashes. |
 | Uncover the painted arrows | Search | Trail arrows | Hunter's Hut | Tomas has kept the cliff path alone, every spring. |
 | Dig out the keeper's tools | Crew | Tool rolls | Hunter's Hut | Tomas left his pliers at the break in the cable. |
-| Haul up the relay cable | Search | Relay cable | Sawmill | Pliers are still on the break. The wire has been dead since the storm, and Elena records it. |
+| Haul up the relay cable | Search | Relay cable | Sawmill and trail hand-in | Tomas recognizes his pliers. The break opens a field test with the spare warning lamp. |
+| Test the hand shutter | Search | Lift the brass ring on the island | Cable handed in | Mara rows out to test where the red glass shows. Elena adds the reef bearing to the recovered chart. |
 
 The pieces are the campaign's existing paintings. Each stands where no like-coloured piece shares the board: the cream chart and red berries beside the green leaf on expeditions 2–4, and the green arrow only once the Hammer has taken the leaf's slot.
 
 | Plant | Payoff |
 | --- | --- |
 | A reef and a warning light on the far side (chart) | The ancient keeper opens the warning shutter for a boat nearing the reef (restoration 10). |
-| Elena writes down what they saw (supper) | She records the dead wire with its date (cable). |
+| Elena writes down what they saw (supper) | She marks the red sector on the chart after Mara tests it from the skiff. |
 | Nobody but Tomas walks the path (trail) | Someone answers from the far side (restoration 10). |
 | Tomas left his pliers at the break (tools) | Pliers are rusted onto the cut cable (cable). Either scene may come first. |
-| The wire has carried nothing since the storm (cable) | Three flashes come back from a hand shutter (restoration 10). |
+| The wire has carried nothing since the storm (cable) and the chart marks a reef | The spare shutter works by hand. From the skiff, Mara sees red precisely when the reef lies ahead. |
 
 **Request chart**
 
@@ -368,13 +369,25 @@ The pieces are the campaign's existing paintings. Each stands where no like-colo
 
 - **Mara:** There's the break. And a pair of pliers clamped on it.
 - **Tomas:** Mine. Rusted shut. Nothing has run through this wire since the storm.
-- **Elena:** Dead since the storm. I'll put that in the book, with the date.
+- **Mara:** If the wire's dead, what would a boat offshore have seen?
+- **Tomas:** I've a spare shutter for the lookout lamp. Take your skiff out and I'll show you.
+
+**Request shutter**
+
+- **Mara:** Red! The rocks are dead ahead of me.
+- **Tomas:** I'll hold the ring up. Pull two strokes to starboard.
+- **Mara:** White now. And there's clear water over my bow.
+- **Elena:** Pass me the chart. I'll mark where the light turns red.
 
 A cold reader followed all five. They found four lines that broke when a request came late: a question Tomas had already answered, a tide explained after the crew had used it, pliers one scene assumed from another, and a closing inference that fell flat after the three flashes. Those lines now state a fact of their own. The reader judged that the cable scene strengthens the reply at the steps.
 
+A cold reader tested both scene orders and caught an ambiguity in the experiment. Tomas holds the ring steady while Mara rows across the bearing. Red changes to white because the boat moves. Afterward the Quay Steps retain Elena’s finding in their inspection text.
+
+The spare is a test rig at the near lookout. The Village scene can still exchange flashes across the gap. Ines and the far station are never required for the skiff test. The experiment can happen before that exchange, after it, or after the finale.
+
 ## Small lines
 
-**The delayed reply.** Mara counts two flashes from the camp and a delayed three when the viewing shutter opens. On board 30, the signal plate appears after the last blue plaque is removed, and Ines answers with the same three flashes from the safe landing. With reduced motion, the lamp holds steady and the dialogue names the pattern.
+**The delayed reply.** Mara counts two flashes from the camp and a delayed three from the repaired steps. On board 30, the signal plate appears after the last blue plaque is removed, and Ines answers with the same three flashes from the safe landing. With reduced motion, the lamp holds steady and the dialogue names the pattern.
 
 ## Checks and implementation notes
 
@@ -383,6 +396,8 @@ A cold reader followed the two shutters and suspected Ines. They asked for a cle
 The Chapter 2 cold read followed the fresh supplies to the note and Tomas’s recognition. The note and the terrace chart are both legible across the courtyard, where Tomas compares the handwriting. The log, gauge and signed plan establish how to drain the foot of the wall.
 
 ## Changelog
+
+- 2026-11-19: The recovered cable leads to a playable test of the hand shutter. Mara takes a skiff out, Tomas works the lamp, and Elena marks the reef bearing on the recovered chart.
 
 - 2026-11-19: Added five crew requests to epoch one, in two lines. Each puts its own piece on the boards and plays a short scene when handed in. The scenes hold in any order against the four restoration scenes, which are unchanged.
 

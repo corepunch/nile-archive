@@ -110,3 +110,23 @@ do
         check(quest.levels[1] >= economy.unlock_of(quest.after).first_level, quest.key .. " is scheduled after its building")
     end
 end
+
+-- A player who leaves supper unfinished can reach the cable and do the
+-- investigation. Old saves with a delivered cable get the same lead.
+do
+    local state = quests.new_state()
+    local owns = owner("well", "log_cabin", "workshop")
+    state.done.chart, state.done.trail = true, true
+    check(keys(quests.collecting(state, owns)) == "cable supper", "the mystery gets the last free slot")
+    state.have.cable = Q.cable.need
+    check(not quests.shutter_open(state), "a full cable still needs handing in")
+    check(quests.deliver(state, Q.cable) and quests.shutter_open(state), "the cable unlocks the field test")
+    state.introduced.shutter, state.pending = true, "cable"
+    save.write("relic-field-test", function(s) quests.serialize(s, state) end)
+    local loaded = quests.new_state()
+    save.read("relic-field-test", function(s) quests.serialize(s, loaded) end)
+    check(loaded.introduced.shutter and loaded.pending == "cable" and quests.shutter_open(loaded),
+        "reload remembers Later, the unread cable dialogue and the available investigation")
+    loaded.done.shutter = true
+    check(not quests.shutter_open(loaded), "the shutter is investigated once")
+end

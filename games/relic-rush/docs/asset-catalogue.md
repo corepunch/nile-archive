@@ -149,7 +149,7 @@ The crew's request pieces reuse five paintings from the campaign atlas. A reques
 
 The green arrow is scheduled from expedition 5, after the Hammer has taken the leaf's slot, so two green pieces never share a board. On the board a request piece has the same states as any piece: normal, selected, hint and refill, through the standard overlays.
 
-On the island each open request is a round marker on the [shared enamel button](../../../art/match3-buttons/README.md) with its piece and a banked/needed readout in the wallet look. States: normal, hover, pressed, ready (the selected face with a glow) and waiting for a board slot (the disabled face). The first marker is the next building's sprite and opens its card. The request card shows the piece at 132 px and the amount still needed as a resource amount.
+On the island each open request is a round marker on the [shared enamel button](../../../art/match3-buttons/README.md) with its piece and a banked/needed readout in the wallet look. States: normal, hover, pressed, ready (the selected face with a glow) and waiting for a board slot (the disabled face). The first marker is the next building's sprite and opens its card. The request card uses the existing Elena, Mara or Tomas portrait, the painted campaign piece and its remaining amount. A ready card pairs the portrait and object.
 
 Reproduce: `./build/relic-rush --headless --mute --fresh --size 480x900 --city 2 --quest-have 12 --shot out.png`; add `--quest-card chart` for the card and use `--quest-have 99` for the ready state. `--level 3`, `--level 6` and `--level 9` show the pieces on their boards.
 
@@ -163,10 +163,10 @@ total. Requests absent from the board have no counter.
 | --- | --- | --- |
 | `data/story/scenes/harbor-chart.jpg` | Static hand-in painting showing the pieced chart, reef and warning light before the chart dialogue. | [Master](../art/story-pictures/harbor-chart.png) · [Prompt](../art/story-pictures/harbor-chart.prompt.txt) · [480×900](screenshots/review/crew-requests/chart-handoff.jpg) |
 | `data/story/scenes/broken-cable.jpg` | Static hand-in painting showing the two parted ends and Tomas's rusted pliers before the cable dialogue. | [Master](../art/story-pictures/broken-cable.png) · [Prompt](../art/story-pictures/broken-cable.prompt.txt) · [390×844](screenshots/review/crew-requests/cable-handoff-phone.jpg) |
+| `data/story/scenes/reef-warning.jpg` | From Mara’s skiff, the red lamp lines up with the reef. The reveal accompanies the raised shutter. | [Master](../art/story-pictures/reef-warning.png) · [Prompt](../art/story-pictures/reef-warning.prompt.txt) · [390×844](screenshots/review/crew-requests/quest-reef-phone.jpg) |
+| `data/story/scenes/shutter-closed.png` and `data/story/scenes/shutter-open.png` | The closed plate and pull ring appear on the marker and beside Tomas. The open plate exposes the red glass beside the observation. Both states were painted in one transparent strip. The marker uses the shared enamel button states. | [Master strip](../art/story-pictures/hand-shutter.png) · [Prompt](../art/story-pictures/hand-shutter.prompt.txt) · [480×900](screenshots/review/crew-requests/quest-offer-shutter.jpg) |
 
-Run `python3 games/relic-rush/tools/prepare_finale_art.py` to reproduce the
-uncropped 768×768 JPEGs from their square masters. Capture both in one run with
-`build/test/relic-rush "shot quest-handoff-"`.
+Run `python3 games/relic-rush/tools/prepare_finale_art.py` to reproduce the square 768 px paintings and the two centered 300 px shutter crops. The source regions and destinations are recorded in the [manifest](../art/board-states/manifest.json). Capture with `build/test/relic-rush "shot quest-handoff-" "shot quest-offer" "shot quest-reef"`.
 
 ## Story pieces
 

@@ -98,6 +98,9 @@ function R.quest_rail()
             ready=island.can_buy(R.island, R.prog.wallet, R.prog.level, step.kind)}
     end
     local open_quests = R.open_quests()
+    if quests.shutter_open(state) then
+        entries[#entries + 1] = {id="shutter", icon=R.board_art["shutter-closed"], ready=true}
+    end
     if #open_quests == 0 then return entries end
     local _, items = quest_board()
     for _, open in ipairs(open_quests) do
@@ -109,14 +112,42 @@ function R.quest_rail()
     return entries
 end
 
+local building_words = R.building_words
+function R.building_words(item)
+    local building = R.island.items[item + 1]
+    if building.type == island.kinds.quay_steps and R.quest_state().done.shutter then
+        return R.buildings[building.type + 1].name .. "\n" .. "Elena’s chart marks the reef in red. White light means clear water."
+    end
+    return building_words(item)
+end
+
 function R.quest_model(id)
     local quest, state = quests.by_key[id], R.quest_state()
+    if id == "shutter" and quests.shutter_open(state) then quest = quests.shutter end
     if not quest or state.done[id] then return nil end
+    local giver = story.character(quest.giver)
+    if id == "shutter" then
+        local painting = art.quest_handoffs.shutter
+        return {title=quest.title, subtitle="Field test with " .. giver.name,
+            offer_subtitle="Investigation unlocked · " .. giver.name, portrait=giver.portrait,
+            about=quest.request, icon=R.board_art["shutter-closed"], ready=true,
+            action="LIFT THE SHUTTER", notice="Lower quay lookout",
+            handoff={title=painting.title, image=R.board_art[painting.path], detail=R.board_art["shutter-open"],
+                observation="From the skiff, the lamp shines red directly over the reef."}}
+    end
+    local open = false
+    for _, active in ipairs(R.open_quests()) do
+        if active == quest then open = true; break end
+    end
+    if not open then return nil end
     local ready = quests.ready(state, quest)
     local level, items = quest_board()
     local handoff = art.quest_handoffs[id]
-    return {title=quest.title, subtitle=("%s · A Light Below"):format(quest.name), icon=quest_icon(quest),
-        about=quest.request, ready=ready, waiting=not ready and not items[id],
+    return {title=quest.title, subtitle="Request from " .. giver.name,
+        offer_subtitle=(ready and "Ready to hand in · " or "New request · ") .. giver.name, portrait=giver.portrait, icon=quest_icon(quest),
+        needs_caption="MATCH " .. quest.name:upper() .. " · STILL NEEDED",
+        action=not ready and items[id] and level == R.prog.level and ("FIND " .. quest.name:upper()) or nil,
+        about=ready and quest.ready_line or quest.request, ready=ready, waiting=not ready and not items[id],
         level=not ready and items[id] and level or nil,
         handoff=handoff and {title=handoff.title, image=R.board_art[handoff.path]},
         needs={{id=quest.key, icon=quest_icon(quest), amount=quest.need - quests.have(state, quest)}}}
@@ -124,8 +155,12 @@ end
 
 -- Hand a filled request in: its scene plays on the island.
 function R.quest_deliver(id)
-    local quest = quests.by_key[id]
-    if not quest or not quests.deliver(R.quest_state(), quest) then return false end
+    local state = R.quest_state()
+    if not R.quest_model(id) then return false end
+    if id == "shutter" then state.done.shutter = true
+    elseif not quests.deliver(state, quests.by_key[id]) then return false end
+    state.offered_visit = nil
+    state.pending = id
     R.tone(740)
     R.save_progress()
     local scene = require("quest_scenes")[id]

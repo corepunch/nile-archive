@@ -44,6 +44,10 @@ local function campaign()
         return
     end
     local c = R.island
+    if R.overlay == R.OV_QUEST and R.quest_offer then
+        if R.dialog_settled() then app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)) end
+        return
+    end
     if R.overlay == R.OV_FINALE then
         local want = {}
         for _, b in ipairs(journey.beats) do want[#want + 1] = b.key end
@@ -121,6 +125,10 @@ function R.smoke()
     end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
+        return
+    end
+    if R.overlay == R.OV_QUEST and R.quest_offer then
+        if R.dialog_settled() then app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)) end
         return
     end
     -- The board's entrance takes no moves. A tap skips the first; the rest play out.
@@ -320,7 +328,7 @@ function R.smoke()
         app.inject_click(marker); stage = 46
     -- A short request's card plays on; a filled one hands in and plays its scene.
     elseif stage == 46 and R.overlay == R.OV_QUEST and R.dialog_settled() then
-        assert(R.quest_card == "chart" and R.quest_form:get("action") == R.words.quest.play
+        assert(R.quest_card == "chart" and R.quest_form:get("action") == "FIND CHART PAGES"
                and R.quest_form.boxes.needs, "smoke: a short request shows what is missing and offers Play")
         app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)); stage = 47
     elseif stage == 47 and R.overlay == R.OV_NONE then

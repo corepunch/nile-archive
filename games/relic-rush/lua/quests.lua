@@ -15,22 +15,30 @@ local Q = {REPLAY_LEVEL=5}
 -- (tests/lua/relic_balance.lua reports them).
 Q.list = {
     {key="chart", line="search", piece="chart", name="Chart pages", need=25, after="well", levels={2, 4},
-        title="Piece the harbor chart together",
-        request="Torn pages of a harbor chart lie about the lookout. Gather them to see what the old keepers marked."},
+        title="Piece the harbor chart together", giver="elena", ready_line="That looks like the last corner. Lay the pages out on my desk.",
+        request="I've got a corner of the harbor chart. Bring me the loose pages. I want to see what lay off this shore."},
     {key="supper", line="crew", piece="berries", name="Berries", need=25, after="well", levels={2, 4},
-        title="Fill the supper pot",
-        request="The supper pot came ashore empty. Pick enough berries to feed the crew."},
+        title="Fill the supper pot", giver="mara", ready_line="The pot is on. Bring those berries over before Elena eats the lot.",
+        request="I've a pot, a spoon and nothing to stir. Will you pick the berries up by the lookout?"},
     {key="trail", line="search", piece="marker", name="Trail arrows", need=45, after="log_cabin", levels={5, 7},
-        title="Uncover the painted arrows",
-        request="The keeper painted arrows down the cliff path, and the vines took them. Uncover them to find the safe way down."},
+        title="Uncover the painted arrows", giver="tomas", ready_line="There's the last arrow. Come down with me. I'll show you where it leads.",
+        request="I painted arrows on the sound stones. Help me clear the vines so we can follow them down."},
     {key="tools", line="crew", piece="tools", name="Tool rolls", need=45, after="log_cabin", levels={5, 7},
-        title="Dig out the keeper's tools",
-        request="The storm buried the keeper's tool rolls in the sand. Dig them out before the damp gets to them."},
+        title="Dig out the keeper's tools", giver="tomas", ready_line="I know that stitching. Let's unroll them together.",
+        request="My father wrapped his chisels in oiled canvas. Help me dig the rolls out before the salt gets in."},
     {key="cable", line="search", piece="cable", name="Relay cable", need=60, after="workshop", levels={8, 10},
-        title="Haul up the relay cable",
-        request="The relay cable lies in coils along the lower quay. Haul it up and follow it to the break."},
+        title="Haul up the relay cable", giver="tomas", ready_line="That's the end of it. Bring the break up into the light.",
+        request="Take the loose coils from my end of the quay. Somewhere along this cable we'll find the break."},
 }
 
+-- A field action has no quota, board yield, or purchase requirement of its own.
+Q.shutter = {key="shutter", giver="tomas", title="Test the hand shutter",
+    request="Mara's skiff is off the reef. Lift the brass ring on the spare lamp. Let's see what she sees."}
+
+function Q.shutter_open(state) return state.done.cable and not state.done.shutter end
+
+Q.entries = {table.unpack(Q.list)}
+Q.entries[#Q.entries + 1] = Q.shutter
 Q.by_key = {}
 for index, quest in ipairs(Q.list) do
     quest.index = index
@@ -40,7 +48,7 @@ for index, quest in ipairs(Q.list) do
 end
 
 -- A save's request state: pieces banked and requests handed in, by key.
-function Q.new_state() return {have={}, done={}} end
+function Q.new_state() return {have={}, done={}, introduced={}, ready_seen={}} end
 
 function Q.have(state, quest) return math.min(quest.need, state.have[quest.key] or 0) end
 function Q.ready(state, quest) return (state.have[quest.key] or 0) >= quest.need end
@@ -62,7 +70,11 @@ end
 function Q.collecting(state, owns)
     local out = {}
     for _, quest in ipairs(Q.open(state, owns)) do
-        if not Q.ready(state, quest) then out[#out + 1] = quest end
+        if not Q.ready(state, quest) then
+            -- If timber leaves only one slot, an unfinished supper or tool
+            -- roll must never be a hidden prerequisite for finding the cable.
+            table.insert(out, quest.line == "search" and 1 or #out + 1, quest)
+        end
     end
     return out
 end
@@ -97,9 +109,18 @@ function Q.serialize(s, state)
     for _, quest in ipairs(Q.list) do
         local key = quest.key
         local have = s:int("quest.have." .. key, state.have[key] or 0)
+        state.ready_seen[key] = s:int("quest.ready_seen." .. key, state.ready_seen[key] and 1 or 0) == 1 or nil
         state.have[key] = have > 0 and math.min(quest.need, have) or nil
-        state.done[key] = s:int("quest.done." .. key, state.done[key] and 1 or 0) == 1 or nil
     end
+    -- Persist by name so a later epoch can add or reorder requests.
+    local pending
+    for _, quest in ipairs(Q.entries) do
+        local key = quest.key
+        state.done[key] = s:int("quest.done." .. key, state.done[key] and 1 or 0) == 1 or nil
+        state.introduced[key] = s:int("quest.intro." .. key, state.introduced[key] and 1 or 0) == 1 or nil
+        if s:int("quest.unread." .. key, state.pending == key and 1 or 0) == 1 then pending = key end
+    end
+    state.pending = pending
 end
 
 return Q

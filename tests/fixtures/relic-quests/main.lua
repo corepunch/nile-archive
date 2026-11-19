@@ -21,7 +21,8 @@ function game.init()
     parked.moves, parked.earnings[1] = parked.moves - 1, 15
     R.on_island = true
     assert(island.island_place_next(R.island, purse(10000, 10000, 10000), R.prog.level, 0))
-    assert(R.open_quest("chart"))
+    for _, beat in ipairs(require("journey").beats) do R.prog.story_seen[beat.key] = true end
+    R.quiet = false
 end
 
 function R.smoke()
@@ -29,6 +30,9 @@ function R.smoke()
     assert(frames < 1000, "quest flow stalled at stage " .. stage)
     if R.diving() then return end
     if stage == 0 and press(R.OV_QUEST, R.quest_form, "action") then
+        assert(R.quest_offer and R.quest_card == "chart" and R.quest_form:get("action") == "FIND CHART PAGES")
+        assert(R.quest_state().introduced.chart and not R.quest_state().introduced.supper)
+        R.quiet = true
         stage = 1
     elseif stage == 1 and not R.on_island and R.board_quest_bounds then
         assert(R.g == parked and R.g.moves == rules.level_of(parked).moves - 1 and R.g.earnings[1] == 15,
@@ -56,11 +60,13 @@ function R.smoke()
         assert(R.debug_skip_level())
         stage = 4
     elseif stage == 4 and press(R.OV_RESULT, R.result_form, "claim") then
+        R.quiet = false
         stage = 5
-    elseif stage == 5 and R.on_island and R.overlay == R.OV_NONE then
+    elseif stage == 5 and R.on_island and R.overlay == R.OV_QUEST then
         assert(R.prog.level == rules.LEVELS and R.quest_model("chart").ready,
             "a replay should bank request pieces without advancing the campaign")
-        assert(R.open_quest("chart"))
+        assert(R.quest_card == "chart" and R.quest_offer and R.quest_state().ready_seen.chart,
+            "returning with enough pieces automatically offers the hand-in")
         stage = 6
     elseif stage == 6 and press(R.OV_QUEST, R.quest_form, "action") then
         stage = 7
@@ -71,6 +77,46 @@ function R.smoke()
     elseif stage == 8 and R.quest_state().done.chart then
         assert(not R.quest_model("chart"), "the illustrated hand-in should deliver exactly once")
         assert(story.active() and R.story_current.key == "quest-chart", "Continue should play the chart dialogue")
+        while story.active() do story.next() end
+        R.story_tick()
+        R.island_with(3)
+        island.restore_quay(R.island, 0)
+        R.prog.level, R.overlay = 9, R.OV_NONE
+        local state = R.quest_state()
+        state.done.trail, state.have.cable = true, quests.by_key.cable.need
+        assert(not R.open_quest("shutter"), "finding all the coils alone must not unlock the shutter")
+        assert(R.open_quest("cable"))
+        stage = 9
+    elseif stage == 9 and press(R.OV_QUEST, R.quest_form, "action") then
+        stage = 10
+    elseif stage == 10 and press(R.OV_QUEST_HANDOFF, R.quest_handoff_form, "continue") then
+        stage = 11
+    elseif stage == 11 and R.story_current and R.story_current.key == "quest-cable" then
+        while story.active() do story.next() end
+        stage = 12
+    elseif stage == 12 and press(R.OV_QUEST, R.quest_form, "close") then
+        assert(R.quest_offer and R.quest_card == "shutter", "Tomas must introduce the test after the cable dialogue")
+        assert(R.quest_form:get("action") == "LIFT THE SHUTTER")
+        stage = 13
+    elseif stage == 13 and R.overlay == R.OV_NONE then
+        assert(R.quest_state().introduced.shutter and not R.quest_state().done.shutter)
+        assert(R.town.rail_targets.shutter and R.town.buttons.play and R.town.buttons.build)
+        app.inject_click(R.town.rail_targets.shutter)
+        stage = 14
+    elseif stage == 14 and press(R.OV_QUEST, R.quest_form, "action") then
+        stage = 15
+    elseif stage == 15 and press(R.OV_QUEST_HANDOFF, R.quest_handoff_form, "continue") then
+        assert(R.quest_handoff_form.boxes.detail and R.quest_handoff_form.boxes.observation)
+        stage = 16
+    elseif stage == 16 and R.quest_state().done.shutter then
+        assert(story.active() and R.story_current.key == "quest-shutter")
+        assert(R.prog.level == 9 and not R.open_quest("shutter"), "the field test resolves once without advancing a level")
+        local steps
+        for index, building in ipairs(R.island.items) do
+            if building.type == island.kinds.quay_steps then steps = index - 1 end
+        end
+        assert(steps and R.building_words(steps):find("marks the reef in red", 1, true),
+            "the quay should remember the result of the field test")
         app.quit()
     end
 end

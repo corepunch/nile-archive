@@ -5,6 +5,15 @@ shows quartz, or the piece of an open crew request. Open requests stand as
 round markers down the island's left edge, under the next building.
 [Rules](../../../match4-rules.md#crew-requests) · [Story](../../../story.md#crew-requests)
 
+## The first-epoch investigation
+
+| Phone | Elena introduces the chart | Tomas offers the shutter test | Mara sights the reef |
+| --- | --- | --- | --- |
+| 480×900 | ![Elena’s offer](quest-offer-chart.jpg) | ![Tomas and the closed shutter](quest-offer-shutter.jpg) | ![The raised shutter and the reef](quest-reef.jpg) |
+| 390×844 | ![Chart on a narrow phone](quest-offer-chart-phone.jpg) | ![Field test on a narrow phone](quest-offer-shutter-phone.jpg) | ![View from the skiff](quest-reef-phone.jpg) |
+
+[Updated ready-to-hand-in card](quest-card-ready.jpg) · [Playable review entries and design plan](../../../epoch-one-quests.md)
+
 ## Quest counters above the board
 
 | View | Before the counters | With the counters |

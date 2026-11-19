@@ -12,7 +12,8 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--check", action="store_true")
 args = parser.parse_args()
 
-for name, item in (spec["finale"]["assets"] | spec["crew_requests"]["handoffs"]).items():
+crew = spec["crew_requests"]
+for name, item in (spec["finale"]["assets"] | crew["handoffs"] | crew["shutter_states"]).items():
     with Image.open(ROOT / item["source"]) as master:
         if "crop" in item:
             sprite = master.crop(item["crop"])

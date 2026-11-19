@@ -24,6 +24,13 @@ return {
     cable={
         {"mara", "There's the break. And a pair of pliers clamped on it."},
         {"tomas", "Mine. Rusted shut. Nothing has run through this wire since the storm."},
-        {"elena", "Dead since the storm. I'll put that in the book, with the date."},
+        {"mara", "If the wire's dead, what would a boat offshore have seen?"},
+        {"tomas", "I've a spare shutter for the lookout lamp. Take your skiff out and I'll show you."},
+    },
+    shutter={
+        {"mara", "Red! The rocks are dead ahead of me."},
+        {"tomas", "I'll hold the ring up. Pull two strokes to starboard."},
+        {"mara", "White now. And there's clear water over my bow."},
+        {"elena", "Pass me the chart. I'll mark where the light turns red."},
     },
 }

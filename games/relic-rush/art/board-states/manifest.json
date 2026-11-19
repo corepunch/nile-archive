@@ -347,7 +347,10 @@
     "data/story/finale/safe-landing.jpg",
     "data/story/finale/signal-plate.png",
     "data/story/scenes/broken-cable.jpg",
-    "data/story/scenes/harbor-chart.jpg"
+    "data/story/scenes/harbor-chart.jpg",
+    "data/story/scenes/reef-warning.jpg",
+    "data/story/scenes/shutter-closed.png",
+    "data/story/scenes/shutter-open.png"
   ],
   "hex_slot": {
     "orientation": "flat-top",
@@ -785,6 +788,26 @@
       "tools": "campaign-tools",
       "cable": "campaign-cable"
     },
+    "shutter_states": {
+      "closed": {
+        "source": "art/story-pictures/hand-shutter.png",
+        "prompt": "art/story-pictures/hand-shutter.prompt.txt",
+        "crop": [0, 3, 768, 1024],
+        "paint_size": [300, 300],
+        "size": [300, 300],
+        "runtime": "data/story/scenes/shutter-closed.png",
+        "state": "investigation marker and object beside Tomas before raising the ring"
+      },
+      "open": {
+        "source": "art/story-pictures/hand-shutter.png",
+        "prompt": "art/story-pictures/hand-shutter.prompt.txt",
+        "crop": [768, 9, 1513, 1013],
+        "paint_size": [300, 300],
+        "size": [300, 300],
+        "runtime": "data/story/scenes/shutter-open.png",
+        "state": "raised shutter beside the observation from Mara's skiff"
+      }
+    },
     "idle_slot": "campaign-quartz",
     "board_states": "normal, selected, hint and refill use the standard board overlays, as for every piece",
     "island_marker": {
@@ -798,7 +821,7 @@
       ],
       "readout": "the wallet resource look, with banked/needed"
     },
-    "card": "the shared request card (match3.game R.OV_QUEST): the piece at 132 px, the request, STILL NEEDED as a resource amount",
+    "card": "shared quest form with the giver portrait, first-person request, board piece and remaining count; the field test pairs Tomas with the closed shutter",
     "board_counter": "compact resource_indicator using each available piece's campaign frame, above banked plus pending matches / required; hidden when no request is available",
     "source": "existing campaign-pieces atlas for the pieces and counters",
     "handoffs": {
@@ -817,6 +840,14 @@
         "size": [768, 768],
         "state": "static full-frame painting on the ready relay cable request's hand-in card",
         "review": "docs/screenshots/review/crew-requests/cable-handoff-phone.jpg"
+      },
+      "shutter": {
+        "source": "art/story-pictures/reef-warning.png",
+        "prompt": "art/story-pictures/reef-warning.prompt.txt",
+        "runtime": "data/story/scenes/reef-warning.jpg",
+        "size": [768, 768],
+        "state": "Mara's view from the reef bearing when the player lifts the shutter",
+        "review": "docs/screenshots/review/crew-requests/quest-reef-phone.jpg"
       }
     },
     "review": "docs/screenshots/review/crew-requests/README.md"

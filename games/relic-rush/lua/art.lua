@@ -12,6 +12,7 @@ A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423
 A.quest_handoffs = {
     chart={title="The Harbor Chart", path="story/scenes/harbor-chart.jpg"},
     cable={title="The Broken Cable", path="story/scenes/broken-cable.jpg"},
+    shutter={title="The view from Mara’s skiff", path="story/scenes/reef-warning.jpg"},
 }
 -- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
 -- engine/art/board-tiles/tiles.json and loaded under "tile-" keys.
@@ -140,6 +141,9 @@ function A.load()
     end
     textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
+    for _, state in ipairs{"closed", "open"} do
+        textures["shutter-" .. state] = texture.load("story/scenes/shutter-" .. state .. ".png")
+    end
     for _, handoff in pairs(A.quest_handoffs) do textures[handoff.path] = texture.load(handoff.path) end
     for _, name in ipairs(A.layers) do load(name) end
     return textures

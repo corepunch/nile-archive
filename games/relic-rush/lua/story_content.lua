@@ -5,7 +5,7 @@ return {
         {"elena", "Try your lamp from the old lookout. There's a bracket in the cliff wall."},
         {"mara", "Two flashes out. Two back, right under the cliff."},
         {"elena", "Could be our light off the water. Try again when we can see what's down there."},
-        {"mara", "Morning already? That's the last water in the cask. Let's get the old pump working."},
+        {"mara", "There's paper wedged behind the bracket. Elena, is that the edge of a chart?"},
     }},
     {key="restore-04", phase="restore", level=4, lines={
         {"mara", "One full cask. Want a turn at the pump?"},
@@ -19,7 +19,7 @@ return {
         {"tomas", "Bring a line. We'll want to measure whatever's gone from those steps."},
         {nil, "Before dawn, low tide bares the path to the steps. One tread is missing."},
         {"mara", "Hold that end. I'll knot the line at mine."},
-        {"tomas", "There's the width of our missing tread. Now we need a bench to cut it square."},
+        {"tomas", "There's the width of our missing tread. Take that line back to the mill."},
     }},
     {key="after-10", phase="restore", level=10, lines={
         {"tomas", "Lay the line along the bench. Cut the first block here, at Mara's knot."},
@@ -29,8 +29,8 @@ return {
         {"keeper", "Set the tread up to that notch. The night watch needs dry footing at high tide."},
         {"keeper", "Come up with me. A boat's nearing the reef. We'll open the warning shutter."},
         {nil, "The lower quay, that evening."},
-        {"mara", "The steps held. Tomas, can you open the viewing shutter from here?"},
-        {"tomas", "I’ve opened it. Stay this side of the crack. The warning light’s across the flooded gap."},
+        {"mara", "The steps held. I can see the far bank from this tread."},
+        {"tomas", "Stay this side of the crack. See that square of light across the gap?"},
         {"mara", "I'll try two again. One, two… Wait. Three back this time."},
         {"elena", "A reflection can't stop and change its mind. Someone wants us to see them."},
         {"tomas", "Ines used to work the far shutter by hand. I haven't seen her since she left for the plans."},

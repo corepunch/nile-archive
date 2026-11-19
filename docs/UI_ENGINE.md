@@ -672,6 +672,10 @@ A request card's game model supplies its playable expedition as a zero-based
 cleared one, and a return action while the request waits for a board slot.
 A ready request can supply a `handoff` title and image. Continue on the
 illustrated card calls the same delivery handler as a request without art.
+Call `R.open_quest(id, true)` for a giver’s introduction. The shared form
+accepts an optional portrait, offer subtitle, action label, needs caption and
+notice. The game can remember an opening through `R.quest_opened(id)`.
+A handoff can pair its painting with a detail icon and observation.
 
 ## Town building popups
 
