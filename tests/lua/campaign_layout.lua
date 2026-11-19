@@ -3,7 +3,8 @@
 local rules = require('rules')
 local campaign = require('campaign')
 check(rules.square and rules.COLUMNS == 9 and rules.ROWS == 12, '9×12 square envelope')
-check(rules.LEVELS == 10 and rules.COLORS == 5, 'ten boards and five piece slots')
+local expected = testing.game == 'relic-rush' and 20 or 10
+check(rules.LEVELS == expected and rules.COLORS == 5, 'campaign length and five piece slots')
 for level, entry in ipairs(campaign.levels) do
     local label = ('level %d: '):format(level)
     check(#entry.mask == rules.CELLS and not entry.mask:find('[^01]'), label .. 'valid cell mask')

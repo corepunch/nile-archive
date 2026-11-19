@@ -1,6 +1,6 @@
 {
   "camp": {
-    "about": "Unlocks Bomb. Hit a cell and its six neighbors.",
+    "about": "Unlocks Bomb. Hit a 3×3 square around a cell.",
     "cost": [585, 225, 325]
   },
   "well": {
@@ -28,7 +28,7 @@
   },
   "workshop": {
     "about": "Timber bundles earn 5 Supplies each.",
-    "cost": [420, 150, 0]
+    "cost": [420, 135, 0]
   },
   "market": {
     "about": "Ration jars earn 4 Food each.",
@@ -60,7 +60,7 @@
   },
   "log_cabin": {
     "about": "Unlocks Hammer. Hit one cell.",
-    "cost": [225, 80, 0]
+    "cost": [225, 65, 0]
   },
   "apothecary": {
     "cost": [220, 15, 0]

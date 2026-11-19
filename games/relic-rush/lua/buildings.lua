@@ -3,7 +3,7 @@ local sprites = require("building_sprites")
 local items = {
     {key="camp", name="Village", category="wonder", cleared=0, about="Unlocks Bomb. Hit a 3×3 square around a cell.", cost=purse(585,225,325), needs=purse(0,0,0,0)},
     {key="well", name="Well", category="wonder", cleared=0, about="Water buckets earn 3 Food each.", cost=purse(35,0,0), needs=purse(0,0,0,0)},
-    {key="workshop", name="Sawmill", category="wonder", cleared=0, about="Timber bundles earn 5 Supplies each.", cost=purse(420,150,0), needs=purse(0,0,0,0)},
+    {key="workshop", name="Sawmill", category="wonder", cleared=0, about="Timber bundles earn 5 Supplies each.", cost=purse(420,135,0), needs=purse(0,0,0,0)},
     {key="market", name="Farm", category="building", cleared=10, about="Ration jars earn 4 Food each.", cost=purse(290,110,170), needs=purse(0,0,0,10)},
     {key="gateway", name="Port", category="wonder", cleared=0, about="Shrimp earn 6 Food each.", cost=purse(15,50,40), needs=purse(0,0,0,0)},
     {key="lodge", name="Curia Octavia", category="wonder", cleared=0, about="Unlocks Hourglass. Add five moves.", cost=purse(330,715,465), needs=purse(0,0,0,0)},
@@ -11,7 +11,7 @@ local items = {
     {key="observatory", name="Mausoleum of Augustus", category="wonder", cleared=0, about="Unlocks Mixer. Shuffle the pieces.", cost=purse(405,570,365), needs=purse(0,0,0,0)},
     {key="fountain", name="Fountain", category="wonder", cleared=0, about="Emeralds earn 11 Coins each.", cost=purse(940,1040,660), needs=purse(0,0,0,0)},
     {key="temple", name="Forum", category="wonder", cleared=0, about="Unlocks Star. Clear all pieces of a chosen kind.", cost=purse(225,260,160), needs=purse(0,0,0,0)},
-    {key="log_cabin", name="Hunter's Hut", category="wonder", cleared=0, about="Unlocks Hammer. Hit one cell.", cost=purse(225,80,0), needs=purse(0,0,0,0)},
+    {key="log_cabin", name="Hunter's Hut", category="wonder", cleared=0, about="Unlocks Hammer. Hit one cell.", cost=purse(225,65,0), needs=purse(0,0,0,0)},
     {key="apothecary", name="Herbalist's hut", category="building", cleared=2, about="Place this treasure anywhere on open grass.", cost=purse(220,15,0), needs=purse(0,0,0,2)},
     {key="mess_hall", name="Mess hall", category="building", cleared=3, about="Place this treasure anywhere on open grass.", cost=purse(240,0,16), needs=purse(0,0,0,3)},
     {key="stilt_house", name="Stilt house", category="building", cleared=3, about="Place this treasure anywhere on open grass.", cost=purse(260,0,17), needs=purse(0,0,0,3)},

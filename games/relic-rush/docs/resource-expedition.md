@@ -2,9 +2,9 @@
 
 Clear all blue plaques to win the expedition. The matches made along the
 way bring back Coins, Supplies and Food to restore the valley. The story
-campaign runs across boards 1-30 (three episodes) with twenty restorations and
-the signal finale; boards 31-100 are playable without story yet. Each restoration should feel like spending what the crew
-just brought home.
+campaign runs across twenty square boards and opens fourteen restorations.
+The third episode and signal finale remain in the story archive. Each
+restoration spends the resources the crew brought home.
 
 ## What the reference games do
 
@@ -55,10 +55,11 @@ The original chips are available locally for comparison with `--rome-reference-a
 
 A beige cell is open ground. Clear the piece on a blue cell once to expose
 the pale stone; a green double tablet takes two hits. A chained piece takes one hit to free and a later hit to clear
-the tablet beneath it. Ice and carved stones also gate the cells below them. Each blue cell marks a target on the board.
+the tablet beneath it. Each blue cell marks a target on the board.
 
 Every expedition marks the work site with blue tablets. Clearing all of
-them wins. Chapter 1 tells its story through island construction. Board 13 features a story item, and board 30 shows the signal plate and Ines’s reply.
+them wins. Chapter 1 tells its story through island construction. Chapter 2
+uses first-clear and restoration scenes to tell the story of Ines’s return.
 Move limits fit short portrait play and give deliberate resource matches a
 visible cost.
 
@@ -66,20 +67,20 @@ The opening pool contains sun coins (5 Coins), silver coins (3 Coins), leaves, f
 
 ## Restoration prices and earnings
 
-The building currencies and their order of introduction follow the [Windows economy export](../../../docs/cradle-of-rome-reference/rome-2-economy.json). The hex game prices use its own income. Run `make balance GAME=relic-rush` to play the 100 boards with forty seeds each, calculate income per win and write the fitted prices to the catalogue, `lua/buildings.lua` and the README table; `make test-balance` prints the same report without writing. At each purchase stop the fit spends 80% of the available wallet in the currencies required by the reference. Buildings offered on the same clear divide this budget in proportion to their reference prices. The mean-income simulation bought all twenty buildings by clear 29 without replays. Individual deals and player decisions vary.
+The currencies and their order of introduction follow the [Windows economy export](../../../docs/cradle-of-rome-reference/rome-2-economy.json). The [square campaign balance check](square-match3.md#construction-balance) measures income from the active boards and confirms each purchase in order. The source prices live in `art/building-catalogue/story.json`. Run `python3 games/relic-rush/tools/prepare_buildings.py` to regenerate the runtime catalogue after an edit.
 
 ## Release status and checks
 
-All 100 boards use pale stone with fixed blue targets. They share the
-same clear condition. The [current review](review/blue-plaque-campaign/README.md)
-shows the board, new resource artwork and common wallet at both phone sizes.
+All twenty boards use blue targets on the papyrus floor. The
+[square campaign captures](square-match3.md#captures) show the board and
+wallet at both phone sizes.
 
 For release balancing, play the first restoration through a fresh save on
 both supported phone sizes and sample a migrated save midway through chapter two.
 Verify that matching every resource kind, including through a cascade, agrees with the result and the wallet after a restart. Confirm the
 shop's price and reserve through Confirm, Cancel, exhausted tool counts, replay
-and claim interruption. The seeded campaign test plays the 30 story boards with
+and claim interruption. The seeded campaign test plays all twenty square boards with
 the live wallet and confirms every ladder purchase. For release tuning, record
 wallet shortfalls across more seeds and watch people play on both phone sizes.
-Review tablet and story piece recognition with Reduce Motion enabled at
+Review tablet and resource piece recognition with Reduce Motion enabled at
 390×844 and 480×900.

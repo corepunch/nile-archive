@@ -68,7 +68,7 @@ diagonally around obstructions. A square blast hits the active cells in a
 does the hexagonal `radius` mode. The default is `match_min=3` with
 `LINE_MATCHES`. Overlapping runs clear each cell once.
 
-Each square campaign authors ten maps in its `lua/campaign.lua` using
+Each square campaign authors its maps in `lua/campaign.lua` using
 `match3.shapes.square_levels`. A descriptor holds the name, lesson, move
 budget, targets (`oil` and `oil_double`) and chains. Its mask is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits

@@ -1,6 +1,6 @@
 # Square match-3
 
-Match relics to clear the turquoise plaques. The first campaign opens the Well, Hunter’s Hut, Sawmill and Village. The Village upgrades the Hammer to a Bomb that clears a 3 × 3 area. The replacement carries across the existing charge.
+Match relics to clear the turquoise plaques. The first chapter opens the Well, Hunter’s Hut, Sawmill and Village. The Village upgrades the Hammer to a Bomb that clears a 3 × 3 area. The replacement carries across the existing charge.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
@@ -14,25 +14,31 @@ all the targets within the move budget and collect the matched Coins, Food and S
 ## Build
 
 Only gold and silver coins pay into the wallet on the first expedition.
-The confirmed Well introduces water buckets worth 3 Food on expeditions
-2–10. The confirmed Sawmill adds timber worth 5 Supplies on expeditions
-8–10. The Hunter’s Hut introduces the Hammer from expedition 5.
-Leaves, flowers and amphoras give score in the slots still available to them.
+The Well introduces water buckets worth 3 Food from expedition 2. The
+Sawmill adds timber worth 5 Supplies from expedition 8. The Hunter’s Hut
+introduces the Hammer from expedition 5. Later purchases replace existing
+pieces, including stone for timber and shrimp for water. See the
+[fourteen prices and unlocks](../README.md#buildings).
 
 The lower-left house opens the next purchase. Its readout shows the
 remaining amount for each required resource. If the wallet covers the price
 early, the readout shows the expedition to clear. A particle trail circles
 the house when both the level requirement and price are met. Open placement
 from the card, choose a site, then confirm to pay once. The card links to the
-decoration shop. After level ten, a pending purchase can offer a replay for
+decoration shop. After level twenty, a pending purchase can offer a replay for
 resources.
 
 ## Levels and art
 
-The [ten ASCII layouts](../lua/campaign.lua) use a maximum field of nine
+The [twenty ASCII layouts](../lua/campaign.lua) use a maximum field of nine
 columns by twelve rows. Dots are ordinary cells, asterisks single targets,
 plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes.
+
+Expeditions 11–20 use new square layouts for the sites of the previous hex
+chapter. The existing first-clear and construction scenes tell Ines’s story.
+Plaques are still the goal and the five slots carry the regular resource,
+score and bonus pieces.
 
 The [shared floor study](../../../art/match3-square/README.md) records the
 Cradle of Rome references for papyrus and plaques. Ordinary cells have
@@ -62,10 +68,26 @@ draw after the other frame sections so the leaves stay visible across joins.
 pivots and runtime atlas regions.
 Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 
+## Construction balance
+
+The seeded campaign check funded and placed all fourteen buildings in order
+using matches from the first win of each of the twenty boards. Two failed
+attempts were retried and contributed no resources. The final wallet held
+865 Coins, 1,053 Food and 657 Supplies. The separate balance sample tries
+40 deals per board and applies the average income per win to the purchase
+order. At the measured income, each purchase was affordable on its first
+eligible clear. Earnings vary with the deals and matches.
+
+```sh
+BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules relic_balance'
+```
+
 ## Captures
 
 - [Jade Steps, 480 × 900](screenshots/square-jade-steps.jpg)
 - [Tide Chamber, 390 × 844](screenshots/square-tide-chamber.jpg)
+- [Fallen Colonnade, 480 × 900](screenshots/square-fallen-colonnade.jpg)
+- [Heart of the Temple, 390 × 844](screenshots/square-heart-of-the-temple.jpg)
 - [Build ready](screenshots/square-build-ready.jpg)
 - [Still needed](screenshots/square-build-cost.jpg)
 

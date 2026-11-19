@@ -19,11 +19,15 @@ local function press_tile(key)
     return node
 end
 
--- --smoke --campaign: the ten square expeditions, through the real result, Claim,
+-- --smoke --campaign: both square chapters, through the real result, Claim,
 -- region, placement, dialogue and Play controls. Each board's goals are met
 -- before one real swap, so this checks the flow; the extended greedy-bot
 -- rules test checks that the boards themselves can be won.
 local played = {}
+local last_purchase = 0
+for n, step in ipairs(island.ladder) do
+    if step.after <= rules.LEVELS then last_purchase = n end
+end
 local function campaign()
     if frames > 32000 then   -- 108-cell boards take longer to present than the old 61
         error(("campaign smoke stalled at level %d (overlay %d, island %s, story %s)"):format(
@@ -45,8 +49,8 @@ local function campaign()
     local c = R.island
     if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
-    elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == 4
-        and R.overlay == R.OV_NONE and R.prog.story_seen["after-10"] then
+    elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == last_purchase
+        and R.overlay == R.OV_NONE and R.prog.story_seen["after-20"] then
         assert(R.prog.story_choices["after-10"] == 1, "campaign smoke: Mara answered the signal")
         print(("campaign smoke passed: %d expeditions, %d story beats, %d restorations"):format(
             R.prog.level, #played, island.campaign_count(c)))

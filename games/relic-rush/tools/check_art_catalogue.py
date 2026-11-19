@@ -300,9 +300,7 @@ for name, item in campaign_frames.items():
         assert board not in board_slots, f"Multiple story pieces on board {board}"
         board_slots[board] = name, item["kind"]
 declarations = re.findall(r'levels\[(\d+)\]\.story_piece, levels\[\1\]\.goal_kind = "([^"]+)", (\d+)', campaign)
-assert {int(board): (name, int(kind)) for board, name, kind in declarations} == {
-    board: slot for board, slot in board_slots.items() if board <= 10
-}
+assert {int(board): (name, int(kind)) for board, name, kind in declarations} == board_slots
 subprocess.run([sys.executable, str(ROOT / story["registration"]), "--check"], check=True)
 subprocess.run([sys.executable, str(ROOT / "tools/prepare_resource_pieces.py"), "--check"], check=True)
 

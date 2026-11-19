@@ -985,9 +985,7 @@
             "runtime": "art/registered/story-pieces/tools.png"
           },
           "note": {
-            "boards": [
-              13
-            ],
+            "boards": [],
             "kind": 0,
             "crop": [
               970,

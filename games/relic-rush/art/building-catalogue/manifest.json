@@ -40,7 +40,7 @@
         225,
         325
       ],
-      "about": "Unlocks Bomb. Hit a cell and its six neighbors.",
+      "about": "Unlocks Bomb. Hit a 3\u00d73 square around a cell.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/camp.png",
@@ -117,7 +117,7 @@
       "reference": "story restoration, as a landmark",
       "cost": [
         420,
-        150,
+        135,
         0
       ],
       "about": "Timber bundles earn 5 Supplies each.",
@@ -437,7 +437,7 @@
       "reference": "Summer House",
       "cost": [
         225,
-        80,
+        65,
         0
       ],
       "about": "Unlocks Hammer. Hit one cell.",

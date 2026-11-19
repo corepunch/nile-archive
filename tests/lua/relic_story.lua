@@ -73,11 +73,11 @@ for level=1,10 do
     local spec=rules.levels[level]
     check(not spec.story_piece and not spec.signal, 'chapter one has only board resources and goals')
 end
--- Follow the actual rewards, purchase gate and scheduler through all 30 clears.
+-- Follow the actual rewards, purchase gate and scheduler through both chapters.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 R.prog, R.island, R.quiet = p, c, true
-check(rules.LEVELS==10 and #journey.beats==35,'all chapters and their restoration scenes are playable')
+check(rules.LEVELS==20 and #journey.beats==35,'the first two chapters are playable')
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do
@@ -181,9 +181,10 @@ for level=1,rules.LEVELS do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[rules.CLEARED]==cleared,'replay does not advance the clear count')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(island.campaign_count(c)==4 and p.wallet[rules.CLEARED]==rules.LEVELS,
-    'ten clears restore the first four buildings')
-check(journey.next(p,owned(c),30)==nil,'finale ends at thirty, not the tenth wonder')
+check(island.campaign_count(c)==14 and p.wallet[rules.CLEARED]==rules.LEVELS,
+    'twenty clears open the first fourteen purchases')
+check(journey.next(p,owned(c),20) and journey.next(p,owned(c),20).key=='before-21',
+    'the third chapter still waits for its first board')
 
 -- Take the normal Play, resume and Collect paths with an empty island.
 R.island=city.new(); island.island_setup(R.island)
@@ -206,7 +207,7 @@ for level=1,rules.LEVELS do
     check(R.prog.level==level and R.on_island and not story.active(),'Collect opens the next expedition')
     R.quiet=true
 end
-check(R.island.count==0 and not next(R.prog.story_seen),'all ten expeditions clear without building or dialogue')
+check(R.island.count==0 and not next(R.prog.story_seen),'all twenty expeditions clear without building or dialogue')
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.
 R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false

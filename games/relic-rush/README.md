@@ -6,7 +6,7 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first square match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch into the first of ten expeditions. Swap adjacent pieces, match horizontally or vertically, and clear the turquoise plaques within the move budget. Claim the resources and tap Build to see the next restoration. Each board uses five piece kinds and fits inside a 9 × 12 square grid.
+Launch into the first of twenty expeditions. Swap adjacent pieces, match horizontally or vertically, and clear the turquoise plaques within the move budget. Claim the resources and tap Build to see the next restoration. Each board uses five piece kinds and fits inside a 9 × 12 square grid.
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
@@ -170,9 +170,9 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all turquoise plaques within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Return to the island. At a restoration milestone, check the price and play the next expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. You can finish all ten with an empty island. If you build later, the island story picks up where you left it.
+4. Return to the island. At a restoration milestone, check the price and play the next expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. If you build later, the island story picks up where you left it.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
-6. See how the crew uses what you built, then set out again. The ten boards open the first four restorations.
+6. See how the crew uses what you built, then set out again. The twenty boards open the first fourteen restorations.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
 The Well costs 35 Coins. Its buckets earn 3 Food each from expedition 2. The Hunter's Hut introduces Hammer, and the Sawmill introduces timber worth 5 Supplies per piece. Buying the Village replaces Hammer with Bomb. The Build card shows the price or the amounts still needed.
@@ -201,18 +201,28 @@ has no art yet.
 
 ## Campaign
 
-The ten square fields introduce shaped outlines, single chains on level 4 and double chains on level 9. The 9 × 12 Tide Chamber closes this branch’s campaign. The [previous hex campaign](docs/board-progression.md) remains available as design history.
+The twenty square fields introduce single chains on level 4 and double chains on level 9. Tide Chamber closes Chapter 1. The second chapter crosses Choked Gateway’s two arms, Broken Aqueduct’s offset terraces and Moss Bridge’s diagonal before the double plaques in Heart of the Temple. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
 
 ## Buildings
 
-The playable ladder follows the first four purchase positions from the Windows edition of Cradle of Rome 2. The later catalogue and story schedule remain in the project for future expeditions and existing saves.
+The playable ladder follows the first fourteen purchase positions from the Windows edition of Cradle of Rome 2. The [campaign balance check](docs/square-match3.md#construction-balance) measures the resources earned by clearing boards in order.
 
 | # | Building | After clear | Coins / Food / Supplies | Board reward |
 | --- | --- | ---: | --- | --- |
 | 1 | Well | 1 | 35 / 0 / 0 | Water buckets earn 3 Food each. |
-| 2 | Hunter's Hut | 4 | 225 / 80 / 0 | Unlocks Hammer. Hit one cell. |
-| 3 | Sawmill | 7 | 420 / 150 / 0 | Timber bundles earn 5 Supplies each. |
+| 2 | Hunter's Hut | 4 | 225 / 65 / 0 | Unlocks Hammer. Hit one cell. |
+| 3 | Sawmill | 7 | 420 / 135 / 0 | Timber bundles earn 5 Supplies each. |
 | 4 | Village | 10 | 585 / 225 / 325 | Unlocks Bomb. Hit a 3 × 3 area. |
+| 5 | Farm | 11 | 290 / 110 / 170 | Ration jars earn 4 Food each. |
+| 6 | Quarry | 12 | 55 / 40 / 40 | Dressed stones earn 7 Supplies each. |
+| 7 | Mill | 12 | 70 / 80 / 65 | Grain bundles earn 5 Food each. |
+| 8 | Thermae | 13 | 10 / 50 / 35 | Unlocks Shield. Hit one row. |
+| 9 | Port | 13 | 15 / 50 / 40 | Shrimp earn 6 Food each. |
+| 10 | Curia Octavia | 16 | 330 / 715 / 465 | Unlocks Hourglass. Add five moves. |
+| 11 | Coliseum | 17 | 135 / 290 / 190 | Helmets earn 6 Coins each. |
+| 12 | House of the Vestals | 18 | 105 / 195 / 125 | Unlocks Lightning. Strike up to fifteen random cells. |
+| 13 | Aqueduct | 19 | 180 / 335 / 200 | Rings earn 7 Coins each. |
+| 14 | Lighthouse | 20 | 160 / 250 / 165 | Plus replaces Shield and inherits its charge. |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
@@ -362,7 +372,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-Current scope is an offline prototype: ten square boards, four campaign purchases and repeatable scenery, six regions, local saves and a complete puzzle → reward → placement → next-level loop. There are no multiplayer services, advertisements, in-app purchases, production timers, implemented raids or native store releases.
+The offline prototype has twenty square boards, fourteen campaign purchases, repeatable scenery, six regions and local saves.
 
 ## Fast rule tests
 

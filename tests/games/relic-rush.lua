@@ -285,6 +285,8 @@ end
 
 shot("square-jade-steps", "480x900", "--level 2 --frames 6")
 shot("square-tide-chamber", "390x844", "--level 10 --frames 6 --safe-area 0,47,0,34")
+shot("square-fallen-colonnade", "480x900", "--level 11 --frames 6")
+shot("square-heart-of-the-temple", "390x844", "--level 20 --frames 6 --safe-area 0,47,0,34")
 shot("square-build-ready", "480x900", "--build-review ready --frames 48")
 shot("square-build-cost", "390x844", "--build-review short --frames 48 --safe-area 0,47,0,34")
 shot("square-build-progress", "480x900", "--city 3 --frames 48")

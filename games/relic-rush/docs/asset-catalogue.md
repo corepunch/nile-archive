@@ -197,9 +197,9 @@ and the results card.
 
 Run `python3 games/relic-rush/tools/prepare_finale_art.py` to reproduce the square 768 px paintings and the two centered 300 px shutter crops. The source regions and destinations are recorded in the [manifest](../art/board-states/manifest.json). Capture with `build/test/relic-rush "shot quest-handoff-" "shot quest-offer" "shot quest-reef"`.
 
-## Story pieces
+## Archived story pieces
 
-Board 13 still uses the folded note. Selection, hints and refills use the standard board overlays. The earlier Chapter 1 atlas slots are retained for asset review. The assignments below record where the art debuted.
+The active square campaign reveals the note in the first-clear scene on board 13. The old hex campaign placed a folded note on that board. The assignments below record where the art debuted, and selection, hints and refills used the standard board overlays.
 
 | Slot | Boards | Story sprite |
 | --- | --- | --- |
@@ -209,7 +209,7 @@ Board 13 still uses the folded note. Selection, hints and refills use the standa
 | Blue | 2, 9 | Lamp lens, supply pack |
 | Purple | 3 | Coiled relay cable |
 
-Board 1 uses the ordinary `timber` piece. The campaign atlas includes all nine
+The campaign atlas includes all nine
 story sprites. Alternate packs share its `pliers` frame. The other alternate
 sprites come from the [expedition atlas](../art/resource-pieces/scenario-atlas.png)
 and the [outlined source sheet](../art/resource-pieces/outlined-atlas.png).

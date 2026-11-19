@@ -18,7 +18,8 @@ R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, replays = 0, 0, 0, 0
 local played = {}
-local user_events = testing.game == 'relic-rush' and require('user_events_runtime')
+local relic_rush = testing.game == 'relic-rush'
+local user_events = relic_rush and require('user_events_runtime')
 local function owns_wonder(index)
     return island.owned(R.island, island.wonder_kinds and island.wonder_kinds[index + 1] or index) > 0
 end
@@ -118,13 +119,19 @@ for level = 1, rules.LEVELS do
         while true do
             local next_kind = island.next_step(R.island, R.prog.level)
             if not next_kind then break end
+            local building = island.buildings[next_kind + 1]
+            if relic_rush then
+                local w, cost = R.prog.wallet, building.cost
+                check(w:covers(cost), ('first clears fund %s after expedition %d (have %d/%d/%d, need %d/%d/%d)')
+                    :format(building.name, level, w[1], w[2], w[3], cost[1], cost[2], cost[3]))
+            end
             local owed = island.wonder_count(R.island) < journey.earned(R.prog.level)
             if island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0) then
-                placed[#placed + 1] = island.buildings[next_kind + 1].key
+                placed[#placed + 1] = building.key
             elseif not owed then break
             else
                 short = short + 1
-                assert(short <= 20, 'twenty replays could not fund ' .. island.buildings[next_kind + 1].key)
+                assert(short <= 20, 'twenty replays could not fund ' .. building.key)
                 local replay
                 for seed = 1, 4 do
                     replay = R.make_board(level - 1, 100 * short + seed)
