@@ -10,8 +10,8 @@ local E = {
     pieces={
         [0]={name="Holly"},
         {name="Blue mitten"},
-        {name="Star token", slot=1, amount=3},
-        {name="Bell token", slot=1, amount=5},
+        {name="Silver star coin", slot=1, amount=3},
+        {name="Gold bell coin", slot=1, amount=5},
         {name="Bundled pine", slot=3, amount=5},
         {name="Farrier's hammer", tool=1, amount=3},
         {name="Toy blocks", slot=3, amount=7},
@@ -36,8 +36,8 @@ E.tool_slots = {
     {icon="booster-star", frame="booster-star-icon", action="row", effect="Tap a cell to clear its row with Shooting Star."},
 }
 
--- The five positions start green, blue, silver, violet and red. Yellow
--- materials take the blue position. Later replacements keep the current hues.
+-- The five positions start green, blue, silver, gold and red. The pine
+-- bundle replaces the blue mitten while keeping a blue accent on its tie.
 local BASE = {0, 1, 2, 3, 15}
 
 -- The twenty-stall ladder after Cradle of Rome 2: each stall adds one piece or

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Register the 4×4 painted match-piece sheet with its original alpha."""
+"""Register the painted match pieces and boosters with their original alpha."""
 import argparse
 import json
 from pathlib import Path
@@ -9,7 +9,7 @@ from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 SLOT = 128
-COLUMNS, ROWS = 4, 4
+COLUMNS, ROWS = 4, 5
 EDGE_PADDING = 4
 sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
 from match3_theme_art import fit_object, silhouette
@@ -25,10 +25,12 @@ def main():
     assert source.mode == 'RGBA' and source.getchannel('A').getextrema() == (0, 255)
     mask = silhouette(Image.open(ROOT.parents[1] / 'engine/art/hex-tile/hex-mask-128.png')).filter(ImageFilter.MinFilter(5))
     atlas = Image.new('RGBA', (COLUMNS * SLOT, ROWS * SLOT))
-    assert len(goods['frames']) == COLUMNS * ROWS
+    sprites = [(f'market-{kind}', name) for kind, name in enumerate(goods['frames'])]
+    sprites.extend(goods['toolbar_only'].items())
+    assert len(sprites) == 18
     frames = {}
-    for kind, name in enumerate(goods['frames']):
-        row, col = divmod(kind, COLUMNS)
+    for slot, (key, name) in enumerate(sprites):
+        row, col = divmod(slot, COLUMNS)
         left, top = col * source.width // COLUMNS, row * source.height // ROWS
         bay = (left, top, (col + 1) * source.width // COLUMNS, (row + 1) * source.height // ROWS)
         sprite = source.crop(bay)
@@ -39,9 +41,9 @@ def main():
         frame, fitted, offset = fit_object(sprite.crop(crop), mask, sizes.get(name, 112), None)
         x, y = col * SLOT, row * SLOT
         atlas.paste(frame, (x, y))
-        frames[f'market-{kind}'] = dict(name=name, source_crop=[left + crop[0], top + crop[1],
-                                                               left + crop[2], top + crop[3]],
-                                       fitted_size=fitted, offset=offset, registered_box=[x, y, SLOT, SLOT])
+        source_crop = [left + crop[0], top + crop[1], left + crop[2], top + crop[3]]
+        frames[key] = dict(name=name, source_crop=source_crop, fitted_size=fitted,
+                           offset=offset, registered_box=[x, y, SLOT, SLOT])
     record = ROOT / goods['transforms']
     content = json.dumps(dict(source=goods['source'], frames=frames), indent=2) + '\n'
     output = ROOT / goods['runtime']

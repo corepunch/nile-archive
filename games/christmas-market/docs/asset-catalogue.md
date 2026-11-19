@@ -12,7 +12,7 @@ The earlier festive set remains available to the inherited preview surfaces.
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `festive-0` through `festive-5` | Bell, candy cane, holly, knitted mitten, bauble and gingerbread, in atlas order. |
-| `booster-star-icon`, `booster-firework-icon` | The Shooting Star and Firework Bomb booster icons: the painted cranberry-red row rocket with vanilla-ivory tips, and the evergreen bomb with a warm-gold belt, rope fuse and lit tip. Never drawn on the board: the engine has no special pieces. |
+| `booster-star-icon`, `booster-firework-icon` | A blue comet for a row clear and a cranberry Christmas cracker for a 3×3 burst. Both are toolbar icons from the market atlas. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
@@ -32,7 +32,9 @@ The [earlier base sheet](../art/board-theme/source.png) and
 festive palette. The base sheet remains the source for certain reference elements.
 [Earlier in-game art review](screenshots/review/board-palette/README.md).
 
-Built-in ImageGen painted the rocket axes, bomb and rainbow gem together for both games. Only this game's row rocket and bomb are still registered, as the two booster icons above. The [painted sheet](../../../art/match3-power-up-paint/source.png), its [prompt](../../../art/match3-power-up-paint/prompt.txt) and [edit target](../../../art/match3-power-up-paint/scener-strip.png) are their provenance. The [atlas manifest](../art/match3-atlas.json) records each icon's crop, fitted size and position inside the canonical inset hex, and the toolbar draws those same frames on its enamel faces. Rebuild with `python3 tools/match3_atlas.py`. The [painted power-up](screenshots/review/power-up-paint/README.md) and [Scener model](screenshots/review/scener-power-ups/README.md) reviews are historical.
+The [retired power-up paintings](screenshots/review/power-up-paint/README.md)
+and [Scener models](screenshots/review/scener-power-ups/README.md) document
+earlier artwork.
 
 The [edge-mounted hex chains](../../../art/match3-chain-paint/README.md) are retained as legacy previews. [Earlier in-game comparisons](screenshots/review/chain-anchors/README.md).
 
@@ -120,33 +122,34 @@ icons. The board is centered vertically, with four boosters and Pause in
 one bottom row. The town shows the resource wallet above the Build, Play,
 Wishes and Pause controls.
 Play is the largest control.
-[480 × 900 board](screenshots/booster-toolbar.jpg) · [390 × 844 board](screenshots/booster-toolbar-phone.jpg)
+[480 × 900 board](screenshots/review/winter-boosters/toolbar-480.jpg) · [390 × 844 board](screenshots/review/winter-boosters/toolbar-390.jpg)
 
 ## Campaign booster buttons
 
 The four circular boosters share the [runtime enamel painter](../../../art/match3-buttons/README.md)
 with Build, Play, Wishes and Pause. The [manifest](../art/manifest.json) maps
-Hammer and Lantern to market goods 5 and 10, and the other two to the bomb
-and rocket frames. The inset and the colored piece share the frame's center of opacity on the button face. Cards and the guide show those same pieces. The [state
-review](screenshots/review/winter-pieces/art-states.jpg) covers all four boosters.
+Hammer and Lantern to market goods 5 and 10, and the other two to the
+Christmas cracker and comet frames. The inset and the colored piece share
+the frame's center of opacity on the button face. Cards and the guide show
+those same pieces. The [state review](screenshots/review/winter-boosters/art-states.jpg)
+covers all four boosters.
 
 Matched farrier's hammers and candle lanterns use the engine's resource flight arc,
 trail and landing flash. They follow the same timing as currency and land in
 their respective booster buttons. The meter or stored-use badge updates on
 arrival. Reduce Motion shows the earned charge immediately.
 
-The [flight review](screenshots/booster-flights.gif) shows a
+The [flight timing review](screenshots/booster-flights.gif) shows a
 currency and a booster match in the same move for each charging piece.
-[Desktop toolbar](screenshots/booster-toolbar.jpg) · [Phone toolbar](screenshots/booster-toolbar-phone.jpg) · [Five interaction states](screenshots/art-states.jpg)
 
 ## Market goods and tools
 
-Built-in ImageGen authored all sixteen pieces together in a transparent 4×4
-[draft](../art/market-goods/winter-draft.png) using the [initial prompt](../art/market-goods/winter-prompt.txt).
-The [second pass](../art/market-goods/winter-revision-prompt.txt) gave the red
-gingerbread star an all-red face and separated the tall cider tumbler from
-the round cocoa mug. The [final source](../art/market-goods/winter-pieces.png)
-preserves the same order. The [registration record](../art/market-goods/registration.json)
+Built-in ImageGen revised the [previous 4×4 sheet](../art/market-goods/winter-pieces.png)
+into the transparent [4×5 master](../art/market-goods/winter-coins-and-boosters.png).
+The [prompt](../art/market-goods/winter-coins-and-boosters-prompt.txt) includes
+the two coins, natural wood and all four booster icons. The first sixteen
+cells are board pieces. The bottom row holds two toolbar-only icons and two
+empty bays. The [registration record](../art/market-goods/registration.json)
 stores each source crop, proportional fit and offset in its 128 px slot.
 The crop takes the object's solid bounds with four pixels of edge padding.
 The fit preserves source alpha inside the engine's flat-top hex inset.
@@ -155,11 +158,11 @@ The fit preserves source alpha inside the engine's flat-top hex inset.
 | ---: | --- | --- | --- |
 | 0 | Holly | Green | Score at the opening. |
 | 1 | Blue mitten | Blue | Score until the lumber workshop. |
-| 2 | Star token | Silver | +3 Tokens. |
-| 3 | Bell token | Violet | +5 Tokens and the Tokens wallet icon. |
-| 4 | Bundled pine | Yellow | +5 Materials from the lumber workshop and the Materials wallet icon. |
+| 2 | Silver star coin | Silver | +3 Tokens. |
+| 3 | Gold bell coin | Gold | +5 Tokens and the Tokens wallet icon. |
+| 4 | Bundled pine | Brown with a blue tie | +5 Materials from the lumber workshop and the Materials wallet icon. |
 | 5 | Farrier's hammer | Green | +3 Hammer charge from the stable. |
-| 6 | Toy blocks | Yellow | +7 Materials from the later Toymaker's workshop. |
+| 6 | Toy blocks | Brown with a blue tie | +7 Materials from the later Toymaker's workshop. |
 | 7 | Gingerbread star | Red | +4 Treats from the bakery. |
 | 8 | Spiced cider | Red | +3 Treats from the Welcome arch. |
 | 9 | Wrapped gift | Violet | +6 Tokens from the later wrapping pavilion. |
@@ -169,14 +172,17 @@ The fit preserves source alpha inside the engine's flat-top hex inset.
 | 13 | Ice pendant | Violet | +8 Tokens from the later igloo. |
 | 14 | Glass bauble | Violet | +9 Tokens from the later giant bauble. |
 | 15 | Candy cane | Red | Score until the Welcome arch. |
+| 16 | Firework Bomb | Cranberry | Toolbar Christmas cracker that hits a 3×3 square. |
+| 17 | Shooting Star | Ice blue | Toolbar comet that hits a row. |
 
 `art/registered/market-goods.png` packs into `data/board/pieces.png` as
-`market-0` through `market-15`. The board uses each idle sprite for swaps
+`market-0` through `market-15`, `booster-firework-icon` and
+`booster-star-icon`. The board uses each idle sprite for swaps
 and clears, with the existing selection and hint overlays and authored
 single and double tinsel and ice layers. The hammer and lantern sprites
 also sit on the existing enamel booster faces in normal, selected, pressed,
-hover and disabled states. Firework Bomb and Shooting Star use their
-existing toolbar icons. The wallet, prices and results share the three
+hover and disabled states, along with the cracker and comet.
+The wallet, prices and results share the three
 currency icons. The [color map and review](market-pieces.md) include native
 captures of the board at both phone sizes, the bakery's reward card, the
 guide, the win result and the booster catalogue.
@@ -184,7 +190,7 @@ guide, the win result and the booster catalogue.
 ```sh
 python3 games/christmas-market/tools/prepare_market_goods.py
 python3 tools/match3_atlas.py
-python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x4 --mode object --strict --overlay-dir build/winter-pieces-registration
+python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x5 --cells 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17 --mode object --strict --overlay-dir build/winter-boosters-registration
 ```
 
 ## Story pieces

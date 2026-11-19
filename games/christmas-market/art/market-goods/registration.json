@@ -1,21 +1,21 @@
 {
-  "source": "art/market-goods/winter-pieces.png",
+  "source": "art/market-goods/winter-coins-and-boosters.png",
   "frames": {
     "market-0": {
       "name": "holly",
       "source_crop": [
-        22,
-        34,
-        305,
-        284
+        15,
+        31,
+        280,
+        266
       ],
       "fitted_size": [
-        86,
-        76
+        88,
+        78
       ],
       "offset": [
-        21,
-        26
+        20,
+        25
       ],
       "registered_box": [
         0,
@@ -27,18 +27,18 @@
     "market-1": {
       "name": "blue mitten",
       "source_crop": [
-        366,
-        31,
-        594,
-        300
+        318,
+        27,
+        539,
+        278
       ],
       "fitted_size": [
-        86,
-        102
+        88,
+        100
       ],
       "offset": [
-        21,
-        13
+        20,
+        14
       ],
       "registered_box": [
         128,
@@ -48,20 +48,20 @@
       ]
     },
     "market-2": {
-      "name": "star token",
+      "name": "silver star coin",
       "source_crop": [
-        655,
-        46,
-        900,
-        293
+        573,
+        41,
+        804,
+        273
       ],
       "fitted_size": [
-        105,
-        106
+        108,
+        108
       ],
       "offset": [
-        11,
-        11
+        10,
+        10
       ],
       "registered_box": [
         256,
@@ -71,19 +71,19 @@
       ]
     },
     "market-3": {
-      "name": "bell token",
+      "name": "gold bell coin",
       "source_crop": [
-        954,
-        49,
-        1221,
-        284
+        848,
+        44,
+        1088,
+        272
       ],
       "fitted_size": [
-        112,
+        104,
         99
       ],
       "offset": [
-        8,
+        12,
         14
       ],
       "registered_box": [
@@ -96,18 +96,18 @@
     "market-4": {
       "name": "bundled pine",
       "source_crop": [
-        21,
-        351,
-        309,
-        599
+        14,
+        333,
+        280,
+        541
       ],
       "fitted_size": [
-        96,
-        83
+        98,
+        77
       ],
       "offset": [
-        16,
-        22
+        15,
+        25
       ],
       "registered_box": [
         0,
@@ -119,18 +119,18 @@
     "market-5": {
       "name": "farrier's hammer",
       "source_crop": [
-        351,
-        325,
-        600,
-        612
+        327,
+        298,
+        538,
+        552
       ],
       "fitted_size": [
-        82,
-        94
+        80,
+        96
       ],
       "offset": [
-        23,
-        17
+        24,
+        16
       ],
       "registered_box": [
         128,
@@ -142,18 +142,18 @@
     "market-6": {
       "name": "toy blocks",
       "source_crop": [
-        650,
-        348,
-        912,
-        597
+        570,
+        314,
+        812,
+        544
       ],
       "fitted_size": [
-        90,
-        86
+        88,
+        84
       ],
       "offset": [
-        19,
-        21
+        20,
+        22
       ],
       "registered_box": [
         256,
@@ -165,10 +165,10 @@
     "market-7": {
       "name": "gingerbread star",
       "source_crop": [
-        956,
-        335,
-        1222,
-        589
+        845,
+        306,
+        1092,
+        541
       ],
       "fitted_size": [
         102,
@@ -188,18 +188,18 @@
     "market-8": {
       "name": "spiced cider",
       "source_crop": [
-        41,
-        636,
-        273,
-        914
+        36,
+        577,
+        250,
+        831
       ],
       "fitted_size": [
         88,
-        106
+        104
       ],
       "offset": [
         20,
-        11
+        12
       ],
       "registered_box": [
         0,
@@ -211,18 +211,18 @@
     "market-9": {
       "name": "wrapped gift",
       "source_crop": [
-        334,
-        640,
-        602,
-        914
+        296,
+        579,
+        540,
+        833
       ],
       "fitted_size": [
         96,
-        98
+        100
       ],
       "offset": [
         16,
-        15
+        14
       ],
       "registered_box": [
         128,
@@ -234,18 +234,18 @@
     "market-10": {
       "name": "candle lantern",
       "source_crop": [
-        678,
-        631,
-        878,
-        918
+        577,
+        579,
+        799,
+        831
       ],
       "fitted_size": [
-        78,
-        112
+        88,
+        100
       ],
       "offset": [
-        25,
-        8
+        20,
+        14
       ],
       "registered_box": [
         256,
@@ -257,18 +257,18 @@
     "market-11": {
       "name": "hot cocoa",
       "source_crop": [
-        961,
-        640,
-        1239,
-        908
+        849,
+        579,
+        1102,
+        826
       ],
       "fitted_size": [
-        94,
-        91
+        96,
+        94
       ],
       "offset": [
-        17,
-        18
+        16,
+        17
       ],
       "registered_box": [
         384,
@@ -280,18 +280,18 @@
     "market-12": {
       "name": "carol bell",
       "source_crop": [
-        43,
-        951,
-        276,
-        1234
+        37,
+        855,
+        252,
+        1117
       ],
       "fitted_size": [
-        82,
-        100
+        84,
+        102
       ],
       "offset": [
-        23,
-        14
+        22,
+        13
       ],
       "registered_box": [
         0,
@@ -303,17 +303,17 @@
     "market-13": {
       "name": "ice pendant",
       "source_crop": [
-        417,
-        950,
-        523,
-        1243
+        369,
+        855,
+        473,
+        1121
       ],
       "fitted_size": [
-        40,
+        43,
         110
       ],
       "offset": [
-        44,
+        42,
         9
       ],
       "registered_box": [
@@ -326,18 +326,18 @@
     "market-14": {
       "name": "glass bauble",
       "source_crop": [
-        662,
-        949,
-        892,
-        1238
+        580,
+        857,
+        796,
+        1121
       ],
       "fitted_size": [
-        88,
-        110
+        92,
+        112
       ],
       "offset": [
-        20,
-        9
+        18,
+        8
       ],
       "registered_box": [
         256,
@@ -349,22 +349,68 @@
     "market-15": {
       "name": "candy cane",
       "source_crop": [
-        988,
-        953,
-        1166,
-        1238
+        875,
+        859,
+        1043,
+        1121
       ],
       "fitted_size": [
-        69,
+        71,
         110
       ],
       "offset": [
-        29,
+        28,
         9
       ],
       "registered_box": [
         384,
         384,
+        128,
+        128
+      ]
+    },
+    "booster-firework-icon": {
+      "name": "firework bomb",
+      "source_crop": [
+        27,
+        1139,
+        278,
+        1393
+      ],
+      "fitted_size": [
+        83,
+        84
+      ],
+      "offset": [
+        22,
+        22
+      ],
+      "registered_box": [
+        0,
+        512,
+        128,
+        128
+      ]
+    },
+    "booster-star-icon": {
+      "name": "shooting star",
+      "source_crop": [
+        287,
+        1174,
+        545,
+        1352
+      ],
+      "fitted_size": [
+        102,
+        70
+      ],
+      "offset": [
+        13,
+        29
+      ],
+      "registered_box": [
+        128,
+        512,
         128,
         128
       ]

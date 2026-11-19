@@ -62,15 +62,16 @@ def main():
     goods = manifest['market_goods']
     for name in ('source', 'prompt', 'edit_target', 'edit_target_prompt', 'transforms', 'review'):
         assert (ROOT/goods[name]).is_file(), name
-    assert png(ROOT/goods['runtime']) == ((512, 512), 6) and len(set(goods['frames'])) == 16
-    for kind in range(len(goods['frames'])):
-        frame = atlas['frames'][f'market-{kind}']
+    assert png(ROOT/goods['runtime']) == ((512, 640), 6) and len(set(goods['frames'])) == 16
+    icons = manifest['bonus_buttons']['icons']
+    assert set(goods['toolbar_only']) == {frame for frame in icons.values() if not frame.startswith('market-')}
+    for name in [f'market-{kind}' for kind in range(len(goods['frames']))] + list(goods['toolbar_only']):
+        frame = atlas['frames'][name]
         assert frame['atlas'] == 'pieces' and frame['box'][2:] == [128, 128]
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
     assert (ROOT/manifest['campaign_buttons']).is_file()
-    buttons = manifest['bonus_buttons']
     economy = (ROOT/'lua/economy.lua').read_text()
-    for key, frame in buttons['icons'].items():
+    for key, frame in icons.items():
         assert f'icon="{key}", frame="{frame}"' in economy and frame in atlas['frames'], key
         assert all(f'{key}-{state}' not in atlas['frames'] for state in STATES)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())

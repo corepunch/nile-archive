@@ -114,7 +114,7 @@ local guide_entries = {
      icon={back="square-double"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied piece or hit it with a tool. Then clear the piece to light the pane.",
      icon={back="square-target", piece="market-1", front="chain-square-1"}},
-    {id="supplies", title="Stock the market", description="Match tokens to fund the arch. Its spiced cider earns treats. The lumber workshop adds yellow pine for materials.",
+    {id="supplies", title="Stock the market", description="Match coins to fund the arch. Its spiced cider earns treats. The lumber workshop adds bundled pine for materials.",
      icon={front="market-3"}},
     {id="long-lines", title="Long lines pay more", description="A line of four pays twice per piece. A line of five pays four times per piece.",
      icon={front="market-4"}},

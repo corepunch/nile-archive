@@ -29,17 +29,13 @@ phone. Keep the game's own silhouettes and materials.
 | Violet | Bauble | Crystal cluster |
 | Orange | Gingerbread person | Amphora |
 
-## Booster icons from the retired power-ups
+## Christmas Market booster icons
 
-The engine has no special pieces, so no rocket, bomb, plane or rainbow ball is
-drawn on a board. Two paintings survive as booster icons. Christmas Market's
-Shooting Star and Firework Bomb buttons use the painted row rocket and bomb from
-the bottom row of the [power-up paint sheet](../art/match3-power-up-paint/source.png).
-`tools/match3_theme_art.py` registers them as `booster-star-icon` and
-`booster-firework-icon`, sized to fixed target areas (`REFERENCE_AREAS`).
-The toolbar draws those frames directly on its enamel faces. The sheet's [prompt](../art/match3-power-up-paint/prompt.txt)
-and [edit target](../art/match3-power-up-paint/scener-strip.png) are the
-provenance. The Scener models that set its geometry have been deleted.
+Christmas Market paints the four booster icons together with its market
+pieces. Hammer and Lantern are also board pieces. The red Christmas cracker
+and blue comet are toolbar icons for Firework Bomb and Shooting Star.
+The toolbar draws all four frames on the shared enamel faces.
+[Market goods catalogue](../games/christmas-market/docs/asset-catalogue.md#market-goods-and-tools)
 
 ## Author the atlas
 

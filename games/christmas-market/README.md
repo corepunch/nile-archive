@@ -61,8 +61,8 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 
 ## Market economy
 
-Silver star tokens pay 3 Tokens and violet bell tokens pay 5. Holly, blue mittens and candy canes earn score.
-The Welcome arch serves spiced cider for Treats. The Lumber workshop introduces yellow bundled pine for Materials.
+Silver star coins pay 3 Tokens and gold bell coins pay 5. Holly, blue mittens and candy canes earn score.
+The Welcome arch serves spiced cider for Treats. The Lumber workshop introduces brown pine bundles tied with blue ribbon for Materials.
 The bakery and cocoa kiosk upgrade the red Treats piece. Longer lines multiply the yield. Each win
 banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).

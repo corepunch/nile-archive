@@ -504,8 +504,9 @@ def game_sprites(game, root):
     else:
         manifest = json.loads((root / 'art/manifest.json').read_text())
         bonus_frames = manifest['bonus_buttons']['icons'].values()
-        goods = manifest['market_goods']['frames']
-        sprites |= grid_sprites(registered / 'market-goods.png', [f'market-{i}' for i in range(len(goods))], 4)
+        goods = manifest['market_goods']
+        names = [f'market-{i}' for i in range(len(goods['frames']))] + list(goods['toolbar_only'])
+        sprites |= grid_sprites(registered / 'market-goods.png', names, 4)
         inputs.append(registered / 'market-goods.png')
     for name, path in files.items():
         sprites[name] = Image.open(path).convert('RGBA')
@@ -544,7 +545,6 @@ def build_game(game, check):
     if game == 'relic-rush':
         images |= {'scene-1': 'board/backs/scene-1.jpg', 'scene-2': 'board/backs/scene-2.jpg'}
     else:
-        aliases['market-16'] = 'festive-1'
         aliases |= {'scene-1': 'background', 'scene-2': 'background'}
         hud_images['character'] = 'story/characters/noelle.png'
         hud_aliases['score'] = 'complete'
