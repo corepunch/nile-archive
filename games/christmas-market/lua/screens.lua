@@ -75,7 +75,7 @@ R.register_result(function()
     local reward, first = breakdown.total, breakdown.first
     local resources = {}
     for slot, currency in ipairs(economy.currencies) do
-        resources[slot] = {id=currency.name, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
+        resources[slot] = {id=currency.name, amount=reward[slot], icon=currency_icon(slot)}
     end
     -- A first clear's story find, or else the next stall on the ladder: what
     -- it still needs after this win, or its picture once the wallet covers it.

@@ -114,7 +114,7 @@ R.register_result(function()
     local resources = {}
     for _, slot in ipairs(economy.currency_order) do
         local kind = economy.currencies[slot]
-        resources[#resources+1] = {id=kind.key, amount=("+%d"):format(reward[slot]), icon=currency_icon(slot)}
+        resources[#resources+1] = {id=kind.key, amount=reward[slot], icon=currency_icon(slot)}
     end
     -- The request pieces this board banks, up to what each request still needs.
     local state = R.quest_state()
@@ -122,7 +122,7 @@ R.register_result(function()
         local matched = R.g.items and R.g.items[quest.key] or 0
         if matched > 0 and not state.done[quest.key] then
             local counted = R.g.reward_claimed and matched or math.min(matched, quest.need - quests.have(state, quest))
-            resources[#resources+1] = {id=quest.key, amount=("+%d"):format(counted), icon=quest_icon(quest)}
+            resources[#resources+1] = {id=quest.key, amount=counted, icon=quest_icon(quest)}
         end
     end
     local level = breakdown.first and R.g.level + 1 or R.prog.level
