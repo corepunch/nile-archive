@@ -142,10 +142,13 @@ Play is the largest control.
 The four circular boosters share the [runtime enamel painter](../../../art/match3-buttons/README.md)
 with Build, Play, Wishes and Pause. The [manifest](../art/manifest.json) maps
 Hammer and Lantern to market goods 5 and 10, and the other two to the
-Christmas cracker and comet frames. The inset and the colored piece share
-the frame's center of opacity on the button face. Cards and the guide show
-those same pieces. The [state review](screenshots/review/winter-boosters/art-states.jpg)
-covers all four boosters.
+Christmas cracker and comet frames. The farrier's hammer centers the bounds
+of its silhouette on the enamel face. The other boosters use their centers of
+opacity. The colored icon and the disabled inset use the same anchor.
+Cards and the guide show those same pieces. The
+[state review](screenshots/review/hammer-centering/art-states.jpg) covers
+all four boosters. The stock badge appears when the player has more than
+one use. The toolbar capture gives the hammer two uses to show that state.
 
 Matched farrier's hammers and candle lanterns use the engine's resource flight arc,
 trail and landing flash. They follow the same timing as currency and land in

@@ -55,6 +55,8 @@ seven materials remain in the [source atlas](../art/square-frame/variants.png).
 The [paint prompt](../art/square-frame/prompt.txt), [style order](../art/square-frame/styles.json)
 and [registration](../art/match3-atlas.json) record the source and fitted rail.
 
+The toolbar preview preloads two uses for the hammer to show its stock badge.
+
 | Native capture | Before | After |
 | --- | --- | --- |
 | 480 × 900 | [Previous frame](screenshots/review/winter-boosters/toolbar-480.jpg) | [Aged oak](screenshots/review/square-frame/board-480.jpg) |

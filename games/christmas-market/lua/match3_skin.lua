@@ -6,7 +6,7 @@ return {
         ["booster-firework-icon"]={0.4880637,0.5172557},
         ["booster-star-icon"]={0.5083288,0.5081434},
         ["market-10"]={0.5002468,0.5594651},
-        ["market-5"]={0.4565231,0.4523982},
+        ["market-5"]={0.4960938,0.5039062},
     },
     images={
         ["background"]="board/backs/background.jpg",

@@ -2186,7 +2186,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "f2211e6a9c32197dbeb12d93df17208061518ab975bdf83ac3018a1578b29d01",
+    "recipe": "e4a34ed56e86c3cb2f4112aeb70d590afa569ae5c7808d1396a71d8f4e38d7de",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",

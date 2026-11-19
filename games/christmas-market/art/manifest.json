@@ -410,6 +410,7 @@
   "campaign_buttons": "../../art/match3-buttons/manifest.json",
   "bonus_buttons": {
     "painter": "../../engine/lua/match3/buttons.lua",
+    "center_on_outline": ["market-5"],
     "icons": {
       "booster-hammer": "market-5",
       "booster-firework": "booster-firework-icon",

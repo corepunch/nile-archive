@@ -483,10 +483,14 @@ def game_sprites(game, root):
         gems = manifest['bonus_gems']
         bonus_frames = [f'bonus-{key}' for key in gems['columns']]
         sprites |= grid_sprites(registered / 'bonus-gems.png', bonus_frames, len(bonus_frames))
+        bonus_frames = dict.fromkeys(bonus_frames, False)
         inputs += [registered / name for name in ('campaign-pieces.png', 'result-icons.png', 'bonus-gems.png')]
     else:
         manifest = json.loads((root / 'art/manifest.json').read_text())
-        bonus_frames = manifest['bonus_buttons']['icons'].values()
+        buttons = manifest['bonus_buttons']
+        outline_frames = set(buttons.get('center_on_outline', ()))
+        bonus_frames = {name: name in outline_frames for name in buttons['icons'].values()}
+        assert outline_frames <= bonus_frames.keys(), outline_frames
         goods = manifest['market_goods']
         names = [f'market-{i}' for i in range(len(goods['frames']))] + list(goods['toolbar_only'])
         sprites |= grid_sprites(registered / 'market-goods.png', names, 4)
@@ -560,9 +564,13 @@ def build_game(game, check):
     square_blockers, square_blocker_registration = registered_square_blockers(root)
     loaded.update(square_blockers)
     button_centers = {}
-    for name in sorted(set(bonus_frames)):
+    for name, center_on_outline in sorted(bonus_frames.items()):
         image = loaded[name]
-        x, y = match3_buttons.alpha_center(image)
+        if center_on_outline:
+            left, top, right, bottom = match3_theme_art.silhouette(image).getbbox()
+            x, y = (left + right) / 2, (top + bottom) / 2
+        else:
+            x, y = match3_buttons.alpha_center(image)
         button_centers[name] = (f'{x / image.width:.7f}', f'{y / image.height:.7f}')
     piece_icons = RELIC_HUD_ICONS if game == 'relic-rush' else ()
     hud_groups = ['pieces', *HUD_GROUPS] if piece_icons else HUD_GROUPS
