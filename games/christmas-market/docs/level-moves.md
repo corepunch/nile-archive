@@ -7,103 +7,103 @@ Slow runs do not increase it. "Within budget" measures this bot sample; it is no
 
 | # | Board | Tier | Moves | Median | Fastest | Within budget |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
-| 1 | Lantern Lane | tutorial | 9 | 7 | 4 | 32/40 |
-| 2 | Winter Wreath | tutorial | 12 | 9 | 5 | 30/40 |
-| 3 | Window Lights | tutorial | 14 | 11 | 4 | 36/40 |
-| 4 | Ribbon Street | tutorial | 13 | 10 | 5 | 29/40 |
-| 5 | Workshop Crossing | hard | 19 | 15 | 9 | 29/40 |
-| 6 | Snowflake Lane | easy | 19 | 15 | 7 | 32/40 |
-| 7 | Gingerbread Gables | normal | 17 | 13 | 7 | 35/40 |
-| 8 | Toy Shop Windows | normal | 19 | 15 | 6 | 33/40 |
-| 9 | Cocoa for Two | hard | 23 | 18 | 8 | 30/40 |
-| 10 | Christmas Star | boss | 19 | 15 | 6 | 28/40 |
-| 11 | Snowball Alley | easy | 9 | 7 | 3 | 29/40 |
-| 12 | Chestnut Corner | easy | 20 | 16 | 6 | 29/40 |
-| 13 | Sleigh Ride | normal | 19 | 15 | 5 | 31/40 |
-| 14 | Silver Bell | normal | 14 | 11 | 6 | 29/40 |
-| 15 | Sugar House | hard | 19 | 15 | 8 | 34/40 |
-| 16 | Mitten Line | easy | 12 | 9 | 4 | 27/40 |
-| 17 | Candy Cross | normal | 14 | 11 | 4 | 32/40 |
+| 1 | Lantern Lane | tutorial | 9 | 7 | 4 | 33/40 |
+| 2 | Winter Wreath | tutorial | 12 | 9 | 5 | 35/40 |
+| 3 | Window Lights | tutorial | 14 | 11 | 4 | 35/40 |
+| 4 | Ribbon Street | tutorial | 13 | 10 | 5 | 30/40 |
+| 5 | Workshop Crossing | hard | 19 | 15 | 9 | 35/40 |
+| 6 | Snowflake Lane | easy | 20 | 16 | 7 | 30/40 |
+| 7 | Gingerbread Gables | normal | 17 | 13 | 7 | 34/40 |
+| 8 | Toy Shop Windows | normal | 18 | 14 | 6 | 33/40 |
+| 9 | Cocoa for Two | hard | 22 | 17 | 6 | 31/40 |
+| 10 | Christmas Star | boss | 20 | 16 | 6 | 33/40 |
+| 11 | Snowball Alley | easy | 9 | 7 | 3 | 30/40 |
+| 12 | Chestnut Corner | easy | 18 | 14 | 6 | 27/40 |
+| 13 | Sleigh Ride | normal | 17 | 13 | 5 | 30/40 |
+| 14 | Silver Bell | normal | 14 | 11 | 6 | 27/40 |
+| 15 | Sugar House | hard | 18 | 14 | 8 | 37/40 |
+| 16 | Mitten Line | easy | 12 | 9 | 4 | 30/40 |
+| 17 | Candy Cross | normal | 14 | 11 | 4 | 33/40 |
 | 18 | Skating Rink | normal | 15 | 12 | 4 | 31/40 |
-| 19 | Snowman | hard | 20 | 16 | 8 | 31/40 |
-| 20 | Midnight Star | boss | 25 | 20 | 11 | 25/40 |
-| 21 | Holly Ring | easy | 14 | 11 | 7 | 31/40 |
-| 22 | Stocking Pair | easy | 19 | 15 | 4 | 25/40 |
-| 23 | Chapel Window | normal | 18 | 14 | 5 | 21/40 |
-| 24 | Lantern Pair | normal | 18 | 14 | 8 | 35/40 |
-| 25 | Cracker Bonbon | hard | 27 | 21 | 8 | 29/40 |
-| 26 | Little Angel | easy | 14 | 11 | 6 | 30/40 |
-| 27 | Ornament | normal | 20 | 16 | 7 | 30/40 |
-| 28 | Stall Row | normal | 40 | 32 | 12 | 27/40 |
-| 29 | Gift Box | hard | 27 | 21 | 13 | 31/40 |
-| 30 | Great Fir | boss | 29 | 23 | 10 | 33/40 |
-| 31 | Nutcracker | easy | 18 | 14 | 6 | 29/40 |
-| 32 | Honey Cake | easy | 13 | 10 | 6 | 30/40 |
-| 33 | Carousel Day | normal | 15 | 12 | 5 | 28/40 |
-| 34 | Frozen Pond | normal | 32 | 25 | 15 | 24/40 |
-| 35 | Frost Flower | hard | 20 | 16 | 8 | 32/40 |
-| 36 | Gingerbread Man | easy | 20 | 16 | 4 | 27/40 |
-| 37 | Peppermint Swirl | normal | 18 | 14 | 7 | 26/40 |
-| 38 | Hearth Glow | normal | 24 | 19 | 8 | 28/40 |
-| 39 | Twelfth Crown | hard | 40 | 32 | 17 | 30/40 |
-| 40 | Rose Window | boss | 45 | 36 | 18 | 31/40 |
-| 41 | Pine Whisper | easy | 15 | 12 | 4 | 32/40 |
-| 42 | Bell Tower Bells | easy | 14 | 11 | 4 | 29/40 |
-| 43 | Skate Pond | normal | 18 | 14 | 7 | 30/40 |
-| 44 | Ribbon and Bow | normal | 18 | 14 | 4 | 33/40 |
-| 45 | Frost on the Pane | hard | 22 | 17 | 9 | 33/40 |
-| 46 | Gingerbread Row | easy | 14 | 11 | 6 | 33/40 |
+| 19 | Snowman | hard | 19 | 15 | 8 | 31/40 |
+| 20 | Midnight Star | boss | 24 | 19 | 11 | 28/40 |
+| 21 | Holly Ring | easy | 14 | 11 | 6 | 30/40 |
+| 22 | Stocking Pair | easy | 20 | 16 | 4 | 27/40 |
+| 23 | Chapel Window | normal | 20 | 16 | 5 | 26/40 |
+| 24 | Lantern Pair | normal | 18 | 14 | 8 | 34/40 |
+| 25 | Cracker Bonbon | hard | 23 | 18 | 8 | 31/40 |
+| 26 | Little Angel | easy | 14 | 11 | 5 | 31/40 |
+| 27 | Ornament | normal | 19 | 15 | 7 | 29/40 |
+| 28 | Stall Row | normal | 42 | 33 | 12 | 29/40 |
+| 29 | Gift Box | hard | 27 | 21 | 11 | 31/40 |
+| 30 | Great Fir | boss | 28 | 22 | 9 | 27/40 |
+| 31 | Nutcracker | easy | 17 | 13 | 6 | 32/40 |
+| 32 | Honey Cake | easy | 14 | 11 | 6 | 30/40 |
+| 33 | Carousel Day | normal | 14 | 11 | 5 | 27/40 |
+| 34 | Frozen Pond | normal | 28 | 22 | 13 | 31/40 |
+| 35 | Frost Flower | hard | 19 | 15 | 8 | 34/40 |
+| 36 | Gingerbread Man | easy | 18 | 14 | 4 | 29/40 |
+| 37 | Peppermint Swirl | normal | 18 | 14 | 7 | 32/40 |
+| 38 | Hearth Glow | normal | 23 | 18 | 8 | 24/40 |
+| 39 | Twelfth Crown | hard | 37 | 29 | 17 | 31/40 |
+| 40 | Rose Window | boss | 39 | 31 | 16 | 28/40 |
+| 41 | Pine Whisper | easy | 14 | 11 | 4 | 31/40 |
+| 42 | Bell Tower Bells | easy | 14 | 11 | 4 | 33/40 |
+| 43 | Skate Pond | normal | 18 | 14 | 7 | 33/40 |
+| 44 | Ribbon and Bow | normal | 19 | 15 | 4 | 32/40 |
+| 45 | Frost on the Pane | hard | 20 | 16 | 9 | 31/40 |
+| 46 | Gingerbread Row | easy | 14 | 11 | 6 | 35/40 |
 | 47 | Hearth Stockings | normal | 32 | 25 | 12 | 27/40 |
-| 48 | Wreath Door | normal | 48 | 38 | 11 | 25/40 |
-| 49 | Spice Rack Glow | hard | 32 | 25 | 9 | 29/40 |
-| 50 | Midnight Mass | boss | 24 | 19 | 7 | 26/40 |
-| 51 | Angel Wings | easy | 15 | 12 | 7 | 30/40 |
-| 52 | Nutcracker Parade | easy | 14 | 11 | 4 | 31/40 |
-| 53 | Cinnamon Carousel | normal | 20 | 16 | 6 | 31/40 |
-| 54 | Hot Cider Kettle | normal | 24 | 19 | 8 | 26/40 |
-| 55 | Lantern Walk | hard | 29 | 23 | 12 | 29/40 |
+| 48 | Wreath Door | normal | 45 | 36 | 11 | 27/40 |
+| 49 | Spice Rack Glow | hard | 24 | 19 | 9 | 29/40 |
+| 50 | Midnight Mass | boss | 24 | 19 | 7 | 29/40 |
+| 51 | Angel Wings | easy | 15 | 12 | 8 | 27/40 |
+| 52 | Nutcracker Parade | easy | 13 | 10 | 4 | 32/40 |
+| 53 | Cinnamon Carousel | normal | 19 | 15 | 6 | 32/40 |
+| 54 | Hot Cider Kettle | normal | 23 | 18 | 9 | 31/40 |
+| 55 | Lantern Walk | hard | 29 | 23 | 10 | 28/40 |
 | 56 | Snowman Square | easy | 13 | 10 | 6 | 34/40 |
-| 57 | Santa Post Box | normal | 19 | 15 | 7 | 33/40 |
-| 58 | Carol Steps | normal | 19 | 15 | 9 | 31/40 |
-| 59 | Cracker Pop | hard | 33 | 26 | 11 | 31/40 |
-| 60 | Holly Berry Lane | boss | 22 | 17 | 10 | 32/40 |
-| 61 | Silver Bells Stall | easy | 15 | 12 | 7 | 25/40 |
-| 62 | Mistletoe Arch | easy | 14 | 11 | 5 | 26/40 |
-| 63 | Clock Tower Chimes | normal | 22 | 17 | 11 | 23/40 |
-| 64 | Marzipan Pantry | normal | 20 | 16 | 5 | 32/40 |
-| 65 | Toy Train Depot | hard | 28 | 22 | 13 | 28/40 |
+| 57 | Santa Post Box | normal | 18 | 14 | 7 | 29/40 |
+| 58 | Carol Steps | normal | 18 | 14 | 9 | 31/40 |
+| 59 | Cracker Pop | hard | 29 | 23 | 11 | 30/40 |
+| 60 | Holly Berry Lane | boss | 22 | 17 | 10 | 36/40 |
+| 61 | Silver Bells Stall | easy | 14 | 11 | 5 | 28/40 |
+| 62 | Mistletoe Arch | easy | 14 | 11 | 5 | 30/40 |
+| 63 | Clock Tower Chimes | normal | 22 | 17 | 9 | 33/40 |
+| 64 | Marzipan Pantry | normal | 20 | 16 | 5 | 34/40 |
+| 65 | Toy Train Depot | hard | 28 | 22 | 13 | 32/40 |
 | 66 | Tinsel Terrace | normal | 23 | 18 | 4 | 30/40 |
-| 67 | Pudding Hearth | easy | 14 | 11 | 6 | 31/40 |
-| 68 | Starlit Sleigh | normal | 28 | 22 | 9 | 26/40 |
-| 69 | Drum Roll Ball | hard | 30 | 24 | 13 | 33/40 |
-| 70 | Yule Crown Rink | boss | 28 | 22 | 11 | 30/40 |
-| 71 | Candle Glow | easy | 12 | 9 | 4 | 32/40 |
-| 72 | Sleigh Bells Ring | easy | 17 | 13 | 5 | 26/40 |
+| 67 | Pudding Hearth | easy | 14 | 11 | 6 | 34/40 |
+| 68 | Starlit Sleigh | normal | 25 | 20 | 9 | 34/40 |
+| 69 | Drum Roll Ball | hard | 29 | 23 | 12 | 36/40 |
+| 70 | Yule Crown Rink | boss | 28 | 22 | 11 | 33/40 |
+| 71 | Candle Glow | easy | 12 | 9 | 4 | 34/40 |
+| 72 | Sleigh Bells Ring | easy | 14 | 11 | 4 | 26/40 |
 | 73 | Frost Crystal | normal | 18 | 14 | 6 | 33/40 |
-| 74 | Ginger Cottage | normal | 30 | 24 | 8 | 29/40 |
-| 75 | Mantel Stockings | hard | 27 | 21 | 11 | 34/40 |
-| 76 | Ribboned Gift | easy | 18 | 14 | 5 | 29/40 |
-| 77 | Carousel Canopy | normal | 24 | 19 | 10 | 27/40 |
-| 78 | Skaters Pond | normal | 14 | 11 | 3 | 29/40 |
-| 79 | Frozen Fountain | hard | 28 | 22 | 11 | 35/40 |
-| 80 | Midnight Bells | boss | 27 | 21 | 14 | 30/40 |
-| 81 | Snowman Parade | easy | 17 | 13 | 4 | 27/40 |
-| 82 | Herald Angel | easy | 15 | 12 | 7 | 25/40 |
-| 83 | Nutcracker Watch | normal | 23 | 18 | 6 | 27/40 |
-| 84 | Glass Bauble | normal | 27 | 21 | 11 | 34/40 |
-| 85 | Paper Lantern Walk | hard | 43 | 34 | 14 | 28/40 |
-| 86 | Wreath on the Door | easy | 20 | 16 | 9 | 28/40 |
-| 87 | Stained Glass Glow | normal | 23 | 18 | 9 | 30/40 |
-| 88 | Striped Awnings | normal | 20 | 16 | 2 | 25/40 |
-| 89 | Last Train Home | hard | 30 | 24 | 12 | 30/40 |
-| 90 | Choir Loft | boss | 29 | 23 | 12 | 33/40 |
-| 91 | Sleigh at Dusk | easy | 18 | 14 | 6 | 28/40 |
-| 92 | Pine Boughs | easy | 13 | 10 | 4 | 33/40 |
-| 93 | Spiced Star | normal | 20 | 16 | 7 | 26/40 |
-| 94 | Fireside Tales | normal | 32 | 25 | 13 | 28/40 |
-| 95 | Gate of Lights | hard | 59 | 47 | 19 | 28/40 |
-| 96 | Snow Globe | easy | 18 | 14 | 7 | 33/40 |
-| 97 | Shepherds Star | normal | 23 | 18 | 10 | 26/40 |
-| 98 | Toy Soldier March | normal | 22 | 17 | 6 | 31/40 |
-| 99 | Twelve Chimes | hard | 33 | 26 | 8 | 35/40 |
-| 100 | Christmas Eve | boss | 29 | 23 | 10 | 32/40 |
+| 74 | Ginger Cottage | normal | 27 | 21 | 8 | 29/40 |
+| 75 | Mantel Stockings | hard | 24 | 19 | 5 | 30/40 |
+| 76 | Ribboned Gift | easy | 15 | 12 | 5 | 28/40 |
+| 77 | Carousel Canopy | normal | 23 | 18 | 10 | 32/40 |
+| 78 | Skaters Pond | normal | 13 | 10 | 3 | 29/40 |
+| 79 | Frozen Fountain | hard | 25 | 20 | 11 | 31/40 |
+| 80 | Midnight Bells | boss | 24 | 19 | 14 | 35/40 |
+| 81 | Snowman Parade | easy | 17 | 13 | 4 | 29/40 |
+| 82 | Herald Angel | easy | 15 | 12 | 6 | 29/40 |
+| 83 | Nutcracker Watch | normal | 22 | 17 | 6 | 32/40 |
+| 84 | Glass Bauble | normal | 24 | 19 | 10 | 34/40 |
+| 85 | Paper Lantern Walk | hard | 34 | 27 | 11 | 26/40 |
+| 86 | Wreath on the Door | easy | 20 | 16 | 7 | 29/40 |
+| 87 | Stained Glass Glow | normal | 23 | 18 | 9 | 31/40 |
+| 88 | Striped Awnings | normal | 17 | 13 | 2 | 29/40 |
+| 89 | Last Train Home | hard | 27 | 21 | 12 | 25/40 |
+| 90 | Choir Loft | boss | 27 | 21 | 8 | 33/40 |
+| 91 | Sleigh at Dusk | easy | 19 | 15 | 6 | 29/40 |
+| 92 | Pine Boughs | easy | 13 | 10 | 4 | 31/40 |
+| 93 | Spiced Star | normal | 22 | 17 | 7 | 31/40 |
+| 94 | Fireside Tales | normal | 29 | 23 | 11 | 27/40 |
+| 95 | Gate of Lights | hard | 49 | 39 | 19 | 28/40 |
+| 96 | Snow Globe | easy | 17 | 13 | 7 | 35/40 |
+| 97 | Shepherds Star | normal | 22 | 17 | 11 | 31/40 |
+| 98 | Toy Soldier March | normal | 20 | 16 | 4 | 33/40 |
+| 99 | Twelve Chimes | hard | 29 | 23 | 8 | 32/40 |
+| 100 | Christmas Eve | boss | 27 | 21 | 10 | 31/40 |

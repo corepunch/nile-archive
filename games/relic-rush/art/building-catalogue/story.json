@@ -1,7 +1,7 @@
 {
   "camp": {
     "about": "Unlocks Bomb. Hit a 3×3 square around a cell.",
-    "cost": [965, 365, 400]
+    "cost": [965, 355, 390]
   },
   "well": {
     "about": "Water buckets earn 3 Food each.",
@@ -28,39 +28,39 @@
   },
   "workshop": {
     "about": "Timber bundles earn 5 Supplies each.",
-    "cost": [945, 355, 0]
+    "cost": [985, 365, 0]
   },
   "market": {
     "about": "Ration jars earn 4 Food each.",
-    "cost": [895, 335, 500]
+    "cost": [905, 335, 495]
   },
   "gateway": {
     "about": "Shrimp earn 6 Food each.",
-    "cost": [560, 845, 770]
+    "cost": [555, 850, 780]
   },
   "lodge": {
     "about": "The dock crews turn this hourglass to time their watches. Adds five moves.",
-    "cost": [520, 1010, 725]
+    "cost": [505, 990, 705]
   },
   "archive": {
     "about": "The archive keeps the signet rings of the island's old keepers.",
-    "cost": [565, 1065, 685]
+    "cost": [580, 1060, 685]
   },
   "observatory": {
     "about": "Unlocks Mixer. Shuffle the pieces.",
-    "cost": [785, 1155, 735]
+    "cost": [790, 1160, 730]
   },
   "fountain": {
     "about": "Emeralds earn 11 Coins each.",
-    "cost": [1450, 1655, 1040]
+    "cost": [1415, 1620, 1020]
   },
   "temple": {
     "about": "Unlocks Star. Clear all pieces of a chosen kind.",
-    "cost": [1425, 1685, 1030]
+    "cost": [1415, 1625, 1010]
   },
   "log_cabin": {
     "about": "Unlocks Hammer. Hit one cell.",
-    "cost": [425, 150, 0]
+    "cost": [445, 155, 0]
   },
   "apothecary": {
     "cost": [220, 15, 0]
@@ -73,45 +73,45 @@
   },
   "map_room": {
     "about": "The cartographer's storm charts guide lightning to the board.",
-    "cost": [545, 1045, 685]
+    "cost": [545, 1005, 665]
   },
   "greenhouse": {
     "cost": [300, 20, 0]
   },
   "trading_post": {
     "about": "Dressed stones earn 7 Supplies each.",
-    "cost": [660, 565, 510]
+    "cost": [670, 570, 505]
   },
   "water_mill": {
     "about": "Grain bundles earn 5 Food each.",
-    "cost": [575, 710, 680]
+    "cost": [560, 695, 680]
   },
   "clock_tower": {
     "about": "Unlocks Shield. Hit the row through a chosen cell.",
-    "cost": [525, 750, 695]
+    "cost": [510, 745, 690]
   },
   "lighthouse": {
     "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
-    "cost": [610, 1055, 660]
+    "cost": [625, 1045, 665]
   },
   "treehouse": {
     "cost": [400, 0, 27]
   },
   "aviary": {
     "about": "The aviary keepers wear woven sandals on their rounds.",
-    "cost": [1060, 1520, 965]
+    "cost": [1065, 1500, 955]
   },
   "beached_ship": {
     "about": "The crew salvaged scarabs from the schooner's cargo.",
-    "cost": [740, 1175, 755]
+    "cost": [735, 1180, 750]
   },
   "amphitheater": {
     "about": "Helmets from the old contests survive beneath the arena seats.",
-    "cost": [505, 1060, 700]
+    "cost": [510, 1025, 670]
   },
   "museum": {
     "about": "The collection includes harps once played in the island's halls.",
-    "cost": [1150, 1480, 920]
+    "cost": [1135, 1475, 915]
   },
   "hanging_gardens": {
     "cost": [550, 37, 0]

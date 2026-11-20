@@ -26,25 +26,25 @@ Twenty purchases open at levels 1, 6, 11 … 96, four per Advent. Each unlocks e
 | After level | Stall | Reward | Price (Tokens / Treats / Materials) |
 | ---: | --- | --- | ---: |
 | 1 | **Welcome arch** | Mulled wine +3 Treats | 35 / 0 / 0 |
-| 6 | Reindeer stable | Reindeer (single-cell kick) | 460 / 170 / 0 |
-| 11 | **Lumber workshop** | Bundled pine +5 Materials | 915 / 330 / 0 |
-| 16 | Firework stall | Firework Bomb | 790 / 280 / 290 |
-| 21 | **Gingerbread bakery** | Gingerbread man +4 Treats | 830 / 300 / 435 |
-| 26 | Snowy chapel | Dressed stone +7 Materials | 780 / 345 / 450 |
-| 31 | **Hot cocoa kiosk** | Hot cocoa +5 Treats | 955 / 460 / 760 |
-| 36 | Ice house (was Igloo) | Frost shield | 945 / 545 / 790 |
-| 41 | Lakeside smokehouse (was Log cabin) | Smoked trout +6 Treats | 1020 / 620 / 880 |
-| 46 | Station kiosk | Station clock (adds five moves) | 995 / 680 / 855 |
-| 51 | **Toymaker's workshop** | Toy blocks +6 Tokens | 1095 / 795 / 940 |
-| 56 | **Candlelight shop** | Candle lantern (Lightning) | 1155 / 775 / 910 |
-| 61 | **Gift wrapping pavilion** | Wrapped gift +7 Tokens | 1220 / 775 / 945 |
-| 66 | North Pole post office | Wish cross (Plus) | 1275 / 785 / 885 |
-| 71 | Glassblower's stall | Glass bauble +8 Tokens | 1290 / 785 / 875 |
-| 76 | **Reindeer carousel** | Wind-up top (Mixer) | 1350 / 745 / 865 |
-| 81 | **Winter skating rink** | Ice skates +9 Tokens | 1365 / 750 / 855 |
-| 86 | Woodcarvers' hall (was Santa's workshop) | Carved reindeer +10 Tokens | 1420 / 720 / 840 |
-| 91 | **Christmas tree** | Star | 1610 / 755 / 890 |
-| 96 | Santa's sleigh | Santa hat +11 Tokens | 1625 / 770 / 870 |
+| 6 | Reindeer stable | Reindeer (single-cell kick) | 470 / 170 / 0 |
+| 11 | **Lumber workshop** | Bundled pine +5 Materials | 920 / 330 / 0 |
+| 16 | Firework stall | Firework Bomb | 770 / 280 / 280 |
+| 21 | **Gingerbread bakery** | Gingerbread man +4 Treats | 820 / 300 / 435 |
+| 26 | Snowy chapel | Dressed stone +7 Materials | 765 / 340 / 455 |
+| 31 | **Hot cocoa kiosk** | Hot cocoa +5 Treats | 945 / 455 / 770 |
+| 36 | Ice house (was Igloo) | Frost shield | 930 / 550 / 775 |
+| 41 | Lakeside smokehouse (was Log cabin) | Smoked trout +6 Treats | 1010 / 620 / 875 |
+| 46 | Station kiosk | Station clock (adds five moves) | 985 / 675 / 855 |
+| 51 | **Toymaker's workshop** | Toy blocks +6 Tokens | 1070 / 780 / 940 |
+| 56 | **Candlelight shop** | Candle lantern (Lightning) | 1150 / 780 / 890 |
+| 61 | **Gift wrapping pavilion** | Wrapped gift +7 Tokens | 1215 / 785 / 940 |
+| 66 | North Pole post office | Wish cross (Plus) | 1285 / 770 / 890 |
+| 71 | Glassblower's stall | Glass bauble +8 Tokens | 1295 / 775 / 885 |
+| 76 | **Reindeer carousel** | Wind-up top (Mixer) | 1335 / 750 / 875 |
+| 81 | **Winter skating rink** | Ice skates +9 Tokens | 1370 / 735 / 860 |
+| 86 | Woodcarvers' hall (was Santa's workshop) | Carved reindeer +10 Tokens | 1405 / 715 / 850 |
+| 91 | **Christmas tree** | Star | 1600 / 725 / 870 |
+| 96 | Santa's sleigh | Santa hat +11 Tokens | 1600 / 740 / 865 |
 
 Confirmed placement turns on a new piece from the following level. Replays use
 the regular goods of their own level. A save that already passed a stall's

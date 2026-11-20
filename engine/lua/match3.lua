@@ -1196,8 +1196,8 @@ function E.new(config)
     end
     local game_swap_matches = M.game_swap_matches
 
-    -- Optional shapes and chained activations use the full rules, as do
-    -- connected groups; the fast line probe is for ordinary play.
+    -- Awards and chained activations use the full rules, as do optional
+    -- shapes and connected groups.
     local function full_probe(g, a, b, m)
         local trial = game_copy(g)
         if not game_swap(trial, a, b, m) then return false end
@@ -1207,8 +1207,8 @@ function E.new(config)
         return true, progress, trial.score - g.score
     end
     -- First-wave preview on a settled board. Return legal, target/blocker
-    -- layers removed, score gained, and fill the caller's match. No copy,
-    -- resource banking, RNG, refill or lasting mutation of the live game.
+    -- layers removed, score gained, and fill the caller's match. No RNG,
+    -- refill or lasting mutation of the live game.
     function M.game_probe_swap(g, a, b, m)
         if m.hits > 0 then reset_match(m) end
         if g.won or g.lost or not game_can_swap(g, a, b) then return false end
@@ -1222,7 +1222,7 @@ function E.new(config)
             for i = 1, axes * 2 do runs[i] = {} end
             m.probe_runs = runs
         end
-        local count = 0
+        local count, long_run = 0, false
         swap_tiles(g, a, b)
         for side = 1, 2 do
             local cell = side == 1 and a or b
@@ -1232,8 +1232,10 @@ function E.new(config)
                 local first, last = member.position, member.position
                 while first > 1 and match_kind(g, line[first - 1]) == kind do first = first - 1 end
                 while last < #line and match_kind(g, line[last + 1]) == kind do last = last + 1 end
-                if last - first + 1 >= MATCH_MIN then
+                local length = last - first + 1
+                if length >= MATCH_MIN then
                     count = count + 1
+                    if length > MATCH_MIN then long_run = true end
                     local run = runs[count]
                     run.order, run.first, run.last = member.order, first, last
                 end
@@ -1241,6 +1243,9 @@ function E.new(config)
         end
         swap_tiles(g, a, b)
         if count == 0 then return false end
+        if specials and (long_run or specials.has_crossings and count > 1) then
+            return full_probe(g, a, b, m)
+        end
         -- Retain the full matcher's insertion order (including two runs on
         -- one line), so numeric tie-breaking is unchanged in reference bots.
         for i = 2, count do

@@ -174,13 +174,13 @@ the default animation-producing call.
 
 `game_probe_swap(g, a, b, match)` previews the first wave on a **settled**
 board and returns `legal, progress, score`. It fills `match.mask`, `hits`,
-`ordinary` and any resource match lengths. Progress counts target layers and
+`ordinary`, any resource match lengths and any special awards. Progress counts target layers and
 blocker damage; score is the real first-wave score delta. The line matcher
 checks only lines through the swapped cells, in the full matcher's order,
 and restores the live tile references before returning. It neither refills
-nor reads future RNG, banks resources or spends a move. Connected-group
-boards, optional shapes and any move that fires a special fall back to a copied
-simulation so chained activations retain their full behavior. The balancing bot caches immutable
+nor reads future RNG or changes the live game's wallet or move count. Connected-group
+boards and moves that can award or fire a special use a copied simulation to
+preserve placement and chained activations. The balancing bot caches immutable
 geometry and rejects locked, empty, inactive and ordinary same-kind endpoints before
 previewing candidates. Differential tests compare previews and simulation
 settlement with real swaps across both campaigns and all blocker types.
@@ -448,8 +448,8 @@ Swapping two specials always fires:
 A special's hits are direct, like a tool's, and marked `swept`. Under
 `match_only_resources` a tool clears without paying, but matched and swept
 pieces both bank their resource (`match_banks`); only matched bonus pieces
-charge a tool. `game_probe_swap` keeps its fast path until a special is
-swapped or lies in the previewed match.
+charge a tool. `game_probe_swap` keeps its fast path for ordinary three-piece
+matches on these boards and follows the full rules for awards and activations.
 
 Colored specials draw their own piece through `gfx.image_striped`: four cream
 bands along the axis they clear, masked to the painted alpha (`pieces.stripes`

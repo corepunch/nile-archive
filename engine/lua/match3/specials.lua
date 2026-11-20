@@ -178,6 +178,7 @@ function S.bind(board, names, kind_at, eligible)
     end
     return {
         has_shapes = enabled.plane ~= nil,
+        has_crossings = enabled.t_bomb ~= nil,
         at = function(g, cell)
             for _, shape in ipairs(by_cell[cell] or {}) do
                 if same(shape, function(i) return kind_at(g,i) end) then return true end

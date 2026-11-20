@@ -121,15 +121,15 @@ A full render of the catalogue takes about two minutes on four CPU cores.
 | ID / key | Name | Category | Tiles | Cost (Tokens / Treats / Materials) | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
 | 0 / `arch` | Welcome arch | wonder | 3 x 3 | 35 / 0 / 0 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 915 / 330 / 0 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 2 / `bakery` | Gingerbread bakery | wonder | 3 x 3 | 830 / 300 / 435 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 955 / 460 / 760 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 4 / `toys` | Toymaker’s workshop | wonder | 3 x 3 | 1095 / 795 / 940 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 5 / `gifts` | Gift wrapping pavilion | wonder | 3 x 3 | 1220 / 775 / 945 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 6 / `candles` | Candlelight shop | wonder | 3 x 3 | 1155 / 775 / 910 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 7 / `carousel` | Reindeer carousel | wonder | 3 x 3 | 1350 / 745 / 865 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 8 / `rink` | Winter skating rink | wonder | 3 x 3 | 1365 / 750 / 855 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 9 / `tree` | Christmas tree | wonder | 3 x 3 | 1610 / 755 / 890 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 1 / `lumber` | Lumber workshop | wonder | 3 x 3 | 920 / 330 / 0 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `bakery` | Gingerbread bakery | wonder | 3 x 3 | 820 / 300 / 435 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `cocoa` | Hot cocoa kiosk | wonder | 3 x 3 | 945 / 455 / 770 | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 4 / `toys` | Toymaker’s workshop | wonder | 3 x 3 | 1070 / 780 / 940 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 5 / `gifts` | Gift wrapping pavilion | wonder | 3 x 3 | 1215 / 785 / 940 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 6 / `candles` | Candlelight shop | wonder | 3 x 3 | 1150 / 780 / 890 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 7 / `carousel` | Reindeer carousel | wonder | 3 x 3 | 1335 / 750 / 875 | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 8 / `rink` | Winter skating rink | wonder | 3 x 3 | 1370 / 735 / 860 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 9 / `tree` | Christmas tree | wonder | 3 x 3 | 1600 / 725 / 870 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 10 / `firs` | Lantern firs | building | 2 x 2 | 55 / 0 / 8 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 11 / `bench` | Snowman bench | building | 2 x 2 | 65 / 0 / 10 | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 12 / `snowman` | Snowman | building | 1 x 1 | 0 / 3 / 3 | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
@@ -145,21 +145,21 @@ A full render of the catalogue takes about two minutes on four CPU cores.
 | 22 / `reindeer` | Reindeer | building | 1 x 1 | 110 / 12 | 9 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
 | 23 / `penguins` | Penguin pair | building | 1 x 1 | 100 / 8 | 9 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
 | 24 / `wreath_arch` | Wreath arch | building | 2 x 1 | 125 / 0 / 20 | 6 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
-| 25 / `sleigh` | Santa's sleigh | wonder | 2 x 1 | 1625 / 770 / 870 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
-| 26 / `igloo` | Ice house | wonder | 2 x 2 | 945 / 545 / 790 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 25 / `sleigh` | Santa's sleigh | wonder | 2 x 1 | 1600 / 740 / 865 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
+| 26 / `igloo` | Ice house | wonder | 2 x 2 | 930 / 550 / 775 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 27 / `fir_snowy` | Snowy fir | tree | 1 x 1 | 20 | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 28 / `birch` | Frosted birch | tree | 1 x 1 | 25 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 29 / `fir_decorated` | Decorated fir | tree | 1 x 1 | 70 / 0 / 12 | 3 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 30 / `pine_grove` | Pine grove | tree | 2 x 2 | 105 / 0 / 10 | 6 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
-| 31 / `log_cabin` | Lakeside smokehouse | wonder | 2 x 2 | 1020 / 620 / 880 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
+| 31 / `log_cabin` | Lakeside smokehouse | wonder | 2 x 2 | 1010 / 620 / 875 | 0 | [Page 8](review/painted-buildings/current-camera/after-building-review-8.jpg) |
 | 32 / `gingerbread_house` | Gingerbread house | wonder | 2 x 2 | 150 / 40 / 80 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 33 / `post_office` | North Pole post office | wonder | 2 x 2 | 1275 / 785 / 885 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 34 / `chapel` | Snowy chapel | wonder | 2 x 2 | 780 / 345 / 450 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 35 / `reindeer_stable` | Reindeer stable | wonder | 3 x 2 | 460 / 170 / 0 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
-| 36 / `santa_workshop` | Woodcarvers' hall | wonder | 3 x 3 | 1420 / 720 / 840 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
-| 37 / `firework_stall` | Firework stall | wonder | 2 x 2 | 790 / 280 / 290 | 0 | [Painted footprints](review/second-market-row/README.md) |
-| 38 / `station_kiosk` | Station kiosk | wonder | 2 x 2 | 995 / 680 / 855 | 0 | [Painted footprints](review/second-market-row/README.md) |
-| 39 / `glassblower` | Glassblower's stall | wonder | 2 x 2 | 1290 / 785 / 875 | 0 | [Painted footprints](review/second-market-row/README.md) |
+| 33 / `post_office` | North Pole post office | wonder | 2 x 2 | 1285 / 770 / 890 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 34 / `chapel` | Snowy chapel | wonder | 2 x 2 | 765 / 340 / 455 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 35 / `reindeer_stable` | Reindeer stable | wonder | 3 x 2 | 470 / 170 / 0 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
+| 36 / `santa_workshop` | Woodcarvers' hall | wonder | 3 x 3 | 1405 / 715 / 850 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
+| 37 / `firework_stall` | Firework stall | wonder | 2 x 2 | 770 / 280 / 280 | 0 | [Painted footprints](review/second-market-row/README.md) |
+| 38 / `station_kiosk` | Station kiosk | wonder | 2 x 2 | 985 / 675 / 855 | 0 | [Painted footprints](review/second-market-row/README.md) |
+| 39 / `glassblower` | Glassblower's stall | wonder | 2 x 2 | 1295 / 775 / 885 | 0 | [Painted footprints](review/second-market-row/README.md) |
 | 40 / `rosa_stall` | Gran’s old stall | starter | 2 x 2 | Starting building | 0 | [Opening footprint](screenshots/starter-stall-footprint.jpg) |
 
 ### Gran’s old stall
