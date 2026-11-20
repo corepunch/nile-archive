@@ -68,6 +68,9 @@ banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).
 
 Confirmed placement spends Tokens, Treats and Materials from that wallet.
+Welcome Square starts with a free, movable Gingerbread house. The Welcome arch
+is the first campaign purchase. [Opening market](docs/screenshots/opening-market.jpg)
+
 The lower-left Build button opens the next stall and shows its price or shortfall. A circling trail signals when you can choose a location. Play another wish to earn the missing resources. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
 There are no lives: a failed wish can be retried at once.

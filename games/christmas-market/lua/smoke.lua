@@ -94,7 +94,8 @@ function R.smoke()
     elseif smoke_stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
-        if R.island.count ~= 1 then error("smoke: the wonder was not built") end
+        assert(R.island.count == 2 and island.owned(R.island, island.kinds.gingerbread_house) == 1
+            and island.owned(R.island, island.kinds.arch) == 1, "the first stall must stand beside the starter house")
         smoke_city_move = city.move_test(R.island, {
             look = function(at) R.island_focus(at-vec2(0,80),math.max(.65,R.island.cam.zoom)) end,
             wallet = function() return R.prog.wallet[rules.GOLD] end,
@@ -135,7 +136,7 @@ function R.smoke()
         assert(R.island.placing==smoke_move.shop_kind,"catalogue action lost its stable item key")
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=23
     elseif smoke_stage==23 and R.island.placing<0 then
-        assert(R.island.count==1 and same_wallet(R.prog.wallet, smoke_move.shop_wallet),"cancelled purchase changed save state")
+        assert(R.island.count==2 and same_wallet(R.prog.wallet, smoke_move.shop_wallet),"cancelled purchase changed save state")
         R.open_catalogue();smoke_stage=24
     elseif smoke_stage==24 and R.overlay==R.OV_SHOP then
         local node=R.catalogue_tile("fir_snowy")
@@ -143,24 +144,27 @@ function R.smoke()
     elseif smoke_stage==25 and R.island.placing>=0 then
         app.inject_click(R.placement_form.boxes.confirm:center());smoke_stage=26
     elseif smoke_stage==26 and R.island.placing<0 then
-        assert(R.island.count==2 and island.wonder_count(R.island)==1,"decoration changed campaign restoration count")
+        assert(R.island.count==3 and island.wonder_count(R.island)==1,"decoration changed campaign restoration count")
         assert(same_wallet(R.prog.wallet + R.buildings[smoke_move.shop_kind + 1].cost, smoke_move.shop_wallet),"purchase must charge the catalogue price once")
         local c=R.island
-        R.island_focus(c.items[2].pos-vec2(0,80),.8)
-        local bounds=c.cam:rect_to_screen(c:sprite_rect(c.items[2]))
+        local item = c.count - 1
+        R.island_focus(c.items[item + 1].pos-vec2(0,80),.8)
+        local bounds=c.cam:rect_to_screen(c:sprite_rect(c.items[item + 1]))
         local target
         for y=1,9 do for x=1,9 do
             local point=bounds:point(vec2(x/10,y/10))
-            if point.y>110 and point.y<690+R.drop and c:building_at(c.cam:to_world(point))==1 then target=point end
+            if point.y>110 and point.y<690+R.drop and c:building_at(c.cam:to_world(point))==item then target=point end
         end end
         assert(target,"purchased decoration needs an exposed input target")
+        smoke_move.shop_item = item
         app.inject_click(target);smoke_stage=27
     elseif smoke_stage==27 then   -- a tap names the building in a bubble; no popup opens
-        assert(R.overlay==R.OV_NONE and R.town.bubble and R.town.bubble.item==1 and R.town.bubble.text:find(R.buildings[smoke_move.shop_kind + 1].name,1,true),
+        assert(R.overlay==R.OV_NONE and R.town.bubble and R.town.bubble.item==smoke_move.shop_item
+               and R.town.bubble.text:find(R.buildings[smoke_move.shop_kind + 1].name,1,true),
                "tap shows the purchased building's name and words")
-        R.island_begin(smoke_move.shop_kind,true,1);smoke_stage=28
+        R.island_begin(smoke_move.shop_kind,true,smoke_move.shop_item);smoke_stage=28
     elseif smoke_stage==28 and R.island.placing>=0 then
-        assert(R.island.moving==1 and R.island.placing==smoke_move.shop_kind,"move must lift the purchased instance")
+        assert(R.island.moving==smoke_move.shop_item and R.island.placing==smoke_move.shop_kind,"move must lift the purchased instance")
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=29
     elseif smoke_stage==29 and R.island.placing<0 then
         app.inject_click(R.town.buttons.play);smoke_stage=31

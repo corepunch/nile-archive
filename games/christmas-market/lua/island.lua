@@ -56,6 +56,13 @@ function M.migrate_wallet(progress, c)
     end
 end
 
+-- The Gingerbread house is already standing when the market opens.
+function M.new_game(c, now)
+    local house = M.kinds.gingerbread_house
+    local ok, spot = c:find_spot(house, vec2(760, 2070))
+    if ok then c:add(spot, house, now) end
+end
+
 function M.restore_saved(c,level)
     -- Purchased decorations do not count toward campaign restoration progress.
     -- Rehome saved buildings whose footprints no longer fit without charging again.

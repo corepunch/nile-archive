@@ -25,6 +25,8 @@ shot("debug-phone-board", "390x844", "--debug-walkthrough --level 4 --frames 180
 shot("debug-phone-town", "390x844", "--debug-walkthrough --city 2 --frames 180 --safe-area 0,47,0,34")
 shot("market", "480x900", "--showcase")
 shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
+shot("opening-market", "480x900", "")
+shot("phone-opening-market", "390x844", "--safe-area 0,47,0,34")
 shot("lantern-opening", "480x900", "--level 1")
 shot("lantern-opening-phone", "390x844", "--level 1 --safe-area 0,47,0,34")
 shot("main-character-board", "480x900", "--level 4")

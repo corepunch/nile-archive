@@ -6,6 +6,9 @@ local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
 island.island_setup(c)
 assert(#island.catalogue == 40 and island.WONDERS == 10 and rules.LEVELS == 100)
+island.new_game(c, 0)
+check(c.count == 1 and island.owned(c, island.kinds.gingerbread_house) == 1, 'Welcome Square starts with the Gingerbread house')
+check(island.campaign_count(c) == 0 and island.wonder_count(c) == 0, 'the house grants no campaign progress')
 -- Pip announces each region on the level the script gives it (docs/story.md#small-lines).
 local opens = {[15]=1, [30]=2, [50]=3, [70]=4, [85]=5}
 for level=0,rules.LEVELS-1 do
@@ -55,7 +58,7 @@ for kind=10,11 do
     assert(c:confirm(p.wallet,0).result==city.BUILT)
     assert(p.wallet[1]==before-island.catalogue[kind+1].cost[1])
 end
-assert(c.count==stall_count+2 and island.wonder_count(c)==island.WONDERS and island.campaign_count(c)==stall_count,
+assert(c.count==stall_count+2 and island.wonder_count(c)==island.WONDERS and island.campaign_count(c)==#island.ladder,
        'Decorations cannot advance the campaign')
 
 local first_wish = rules.game_start(0, 123478, {})

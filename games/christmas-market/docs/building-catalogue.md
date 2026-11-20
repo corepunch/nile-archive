@@ -38,6 +38,10 @@ earned stalls when checking decoration purchases. Older saves retain their
 wallet and buildings and can afford any previously earned stall.
 [First 20 wishes and price sources](resource-prototype.md)
 
+Welcome Square starts with one free Gingerbread house using the registered
+2 × 2 shop sprite and its existing chimney effect. It moves like a purchased
+house and is separate from the campaign ladder. [Opening market](screenshots/opening-market.jpg)
+
 ## Source and pipeline
 
 | Step | File |
