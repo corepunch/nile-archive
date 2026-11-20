@@ -159,15 +159,31 @@ A full render of all 40 objects takes about two minutes on four CPU cores.
 
 The Firework stall, Station kiosk and Glassblower's stall appear at wishes 16, 46 and 71. Each sits on a 2 × 2 brick-and-snow slab with its main façade towards -Y. Their ImageGen paint-overs use the registered Scener geometry strip and the painted cocoa kiosk as the style reference. Snow caps, timber grain, garland bulbs and amber light carry over to all three. [Construction sequence](market-pieces.md#construction-sequence) · [Issue #109](https://github.com/corepunch/nile-archive/issues/109)
 
-Each sprite retains the original ground registration and shadow. The Glassblower's sprite has 22 extra pixels above its registered pivot for the painted chimney smoke. The same painted sprite draws in town, on cards and in the placement preview. [Footprint captures at both phone sizes](review/second-market-row/README.md)
+Each sprite retains the original ground registration. The same painted sprite draws in town, on cards and in the placement preview. The latest chimney pass opens the Station kiosk's flue and replaces the Glassblower's painted plume with live smoke. [Footprint captures at both phone sizes](review/second-market-row/README.md) · [Chimney review](review/chimneys/README.md)
 
-Reimport the saved painted sprites with `python3 tools/import_painted_buildings.py christmas-market second-row`, then run `python3 games/christmas-market/tools/check_assets.py --update`. The layout records the source cells and foundation measurements. [Geometry guide](../art/building-catalogue/painted-v1/second-row-input.png) · [Painted source](../art/building-catalogue/painted-v1/second-row-output.png) · [Exact prompt](../art/building-catalogue/painted-v1/second-row-prompt.txt)
+Reimport the saved painted sprites with `python3 tools/import_painted_buildings.py christmas-market second-row`, reapply the [open chimney edits](#open-chimneys-and-live-smoke), then run `python3 games/christmas-market/tools/check_assets.py --update`. The layout records the source cells and foundation measurements. [Geometry guide](../art/building-catalogue/painted-v1/second-row-input.png) · [Painted source](../art/building-catalogue/painted-v1/second-row-output.png) · [Exact prompt](../art/building-catalogue/painted-v1/second-row-prompt.txt)
 
 | Key | Paint | Materials and colours |
 | --- | --- | --- |
 | `firework_stall` | Open timber stall whose counter holds crates of indigo/midnight-blue paper cracker bundles (tied in threes with gold string) and rockets on sticks; pale back wall with gold sparks, a wooden sign board with a gold star on the front gable, indigo-and-cream striped awning over the right of the counter, a small lantern, a window on the +X wall. | Midnight and indigo (#1C2162, #3A3C9E) paper and stall front, cream awning stripes and trim, honey timber counter, gold string and star, snow roof over a midnight gable. No red or green fireworks: keep the New Year palette indigo and gold. |
 | `station_kiosk` | Small railway kiosk with a round clock on the front gable (cream face, gold rim, iron hands, 12 ticks), a serving hatch with a striped awning and an iron pole of salted pretzels, a short snowy platform edge with a yellow safety line and a bench, a lamp post with wreath and a suitcase. | Railway green walls (#1F6E3A) with cream trim and a dark red roof under snow, red-and-cream awning, baked amber pretzels with white salt, grey stone platform, gold safety line, iron lamp. |
-| `glassblower` | Dark timber stall with a lit amber shop window holding two shelves of round glass baubles, more baubles hanging on strings under the eave and on the counter, a red-brick furnace on the +X side with a glowing mouth and a tall chimney with a snow cap and smoke, a blowpipe leaning out, a crate of baubles and a dressed fir. | Dark brown planks with cream trim, green roof under snow, brick red (#A8503A) furnace, glass in amber and gold (#E48A1E, #F8C45A, #F0B83A) with bright highlights, warm firelight on the snow below the mouth. |
+| `glassblower` | Dark timber stall with a lit amber shop window holding two shelves of round glass baubles, more baubles hanging on strings under the eave and on the counter, and a red-brick furnace on the +X side with a glowing mouth and an open flue. | Dark brown planks with cream trim, green roof under snow, brick red (#A8503A) furnace, glass in amber and gold (#E48A1E, #F8C45A, #F0B83A) with bright highlights, warm firelight on the snow below the mouth. |
+
+## Open chimneys and live smoke
+
+The Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Candlelight shop, Lakeside smokehouse, Gingerbread house, Woodcarvers' hall, Station kiosk and Glassblower's stall have open flues. The models use raised rim stones and a recessed soot floor. The accepted ImageGen edit replaces the chimney region on each sprite and clears the baked-in puffs from the cocoa kiosk and Glassblower's stall. Ground pivots and tile footprints are preserved.
+
+The cocoa kiosk and Glassblower's stall ground shadows also come from the open-flue models. Rebuild those two shadow layers with `python3 tools/buildings.py christmas-market cocoa glassblower --blender --shadows`.
+
+The layout records the painted crop and opening in each sprite's pixel coordinates. Run the following after importing the original building paintings.
+
+```sh
+python3 games/christmas-market/tools/prepare_chimneys.py
+python3 tools/buildings.py christmas-market --finish
+python3 games/christmas-market/tools/check_assets.py --update
+```
+
+Placed buildings emit smoke from their flues as the player pans, zooms and confirms placement. Cards and placement previews show the open chimney artwork. Reduce Motion suppresses the particles. [Edit guide](../art/building-catalogue/chimneys/guide.png) · [Painted source](../art/building-catalogue/chimneys/output.png) · [Exact prompt](../art/building-catalogue/chimneys/prompt.txt) · [Layout](../art/building-catalogue/chimneys/layout.json) · [In-game review](review/chimneys/README.md)
 
 ## Style and prompt provenance
 

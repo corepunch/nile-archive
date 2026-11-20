@@ -638,7 +638,9 @@ bomb's leading ring stay procedural.
 | `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, beam tips and births |
 | `twinkle` | `star_06` | Spark particles and shard heads |
 | `streak` | `trace_06` | Shard particles, aligned to their velocity |
-| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Smoke of a breaking layer, alpha-blended; Kenney CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets) in `engine/art/match3/kenney-smoke/` |
+| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Alpha-blended smoke for breaking layers and working chimneys. Kenney CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets) in `engine/art/match3/kenney-smoke/` |
+
+Town smoke reuses these four atlas frames. `lua/chimney_smoke.lua` rises, expands and fades them from the openings registered in `lua/chimney_flues.lua`. The effect follows the city camera and the placement bounce. Reduce Motion hides the plume. [Chimney source and registration](building-catalogue.md#open-chimneys-and-live-smoke) · [In-game captures and reel](review/chimneys/README.md)
 
 Review: [kenney-particles](review/kenney-particles/README.md) (bomb and shooting-star frames
 before and after; those special pieces and their `--fx` modes have since been removed, only

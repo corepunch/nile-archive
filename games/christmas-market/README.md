@@ -5,9 +5,9 @@ installs and launches on the connected iPhone (or iPad when no iPhone is
 available). Set `DEVICE="name or UDID"` to choose one. See the
 [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
-An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. Its 37 buildings and decorations are modelled and rendered in Blender after the building direction sheet. See the [building catalogue](docs/building-catalogue.md).
+An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. The market has 40 buildings and decorations. Smoke rises from nine working chimneys in town. See the [building catalogue](docs/building-catalogue.md).
 
-![The 37 Blender-rendered buildings and decorations](docs/screenshots/buildings.jpg)
+![The 40 market buildings and decorations](docs/screenshots/buildings.jpg)
 
 The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.
 

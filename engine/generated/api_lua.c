@@ -4016,6 +4016,16 @@ static int l_city_sprite_rect(lua_State *L)
     return 1;
 }
 
+/* city.placed_sprite_rect(c, index) */
+static int l_city_placed_sprite_rect(lua_State *L)
+{
+    city * a_c = api_check_city(L, 1);
+    int a_index = (int)luaL_checkinteger(L, 2);
+    rect r = city_placed_sprite_rect(a_c, a_index);
+    api_push_rect(L, r);
+    return 1;
+}
+
 /* city.shadow_rect(c, b) */
 static int l_city_shadow_rect(lua_State *L)
 {
@@ -4726,6 +4736,7 @@ static void open_city(lua_State *L)
         {"building_at", l_city_building_at},
         {"ready", l_city_ready},
         {"sprite_rect", l_city_sprite_rect},
+        {"placed_sprite_rect", l_city_placed_sprite_rect},
         {"shadow_rect", l_city_shadow_rect},
         {"zone_of", l_city_zone_at},
         {"zone_open", l_city_zone_open},

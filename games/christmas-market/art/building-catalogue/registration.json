@@ -95,8 +95,8 @@
    "base_width": 409.808,
    "shadow": "data/city/building-shadows/cocoa.png",
    "shadow_pivot": [
-    178.288,
-    146.96
+    181.68,
+    148.602
    ],
    "shadow_base_width": 348.336,
    "painted_foundation": true
@@ -976,8 +976,8 @@
    "base_width": 273.205,
    "shadow": "data/city/building-shadows/glassblower.png",
    "shadow_pivot": [
-    136.317,
-    94.558
+    135.528,
+    95.028
    ],
    "shadow_base_width": 232.224,
    "painted_foundation": true

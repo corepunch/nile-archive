@@ -517,8 +517,7 @@ def gable(k, x0, x1, y0, y1, z, h, roof, wall, ridge="x", over=.12, rake=CREAM, 
 
 def chimney(k, x, y, z0, z1, s=.24):
     k.box("stone", x, y, z0, s, s, z1 - z0, stone())
-    k.box("stone", x, y, z1, s + .07, s + .07, .07, STONE_L)
-    k.snow_cap(x, y, z1 + .07, s + .05, s + .05, .07, False)
+    market_wishes.flue_cap(k, x, y, z1, s + .07, STONE_L, SNOW)
 
 
 def trims(k, x0, x1, y0, y1, z0, z1, col=CREAM, t=.07):
@@ -1763,16 +1762,12 @@ def glassblower(k):
             k.box("stone", fx - .251, fy - .15 + j * .3 + (row % 2) * .07, G + .05 + row * .1, .01, .26, .08, J(REDBRICK, .08))
     k.box("stone", fx, fy, G + .55, .56, .62, .07, STONE_L)
     k.box("stone", fx, fy, G + .62, .3, .3, 1.0, J(REDBRICK, .03))
-    k.box("stone", fx, fy, G + 1.62, .38, .38, .07, STONE_L)
-    k.snow_cap(fx, fy, G + 1.69, .36, .36, .07, False)
+    market_wishes.flue_cap(k, fx, fy, G + 1.62, .38, STONE_L, SNOW)
     k.box("glow", fx, fy - .285, G + .12, .26, .02, .22, GLOW)                            # the glowing mouth
     k.lathe("glow", fx, fy - .285, G + .34, [(.13, 0), (.001, .09)], GLOW, 12, sy=.12)
     k.box("iron", fx, fy - .295, G + .1, .32, .02, .02, IRON)
     k.box("glow", fx - .26, fy - .14, G + .32, .02, .1, .1, GLOW)
-    k.box("glow", fx, fy, G + 1.5, .22, .22, .06, GLOW)                                   # warm light in the flue
     k.light((fx - .3, fy - .35, G + .25), 1.2, (1, .5, .2))
-    for i, (px, py, pr) in enumerate(((.0, .0, .09), (.08, .06, .12), (.17, .1, .15))):
-        k.ball("snow", fx + px - .04, fy + py - .04, G + 1.95 + i * .17, pr, SNOW_SH, 8)
     k.tube("iron", (fx - .06, fy - .34, G + .27), (.12, -.78, G + .62), .012, .012, IRON, 6)   # a blowpipe leaning out
     k.ball("glow", fx - .06, fy - .34, G + .27, .02, GLOW, 6)
     k.ball("glossy", .12, -.78, G + .62, .035, AMBER_L, 8)

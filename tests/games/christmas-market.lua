@@ -117,6 +117,11 @@ reel("christmas-market-board-intro", 18, 6, "480x900", "--level 4 --present --re
 for page = 1, 10 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
 shot("second-row-footprints", "480x900", "--building-review 10 --footprints")
 shot("second-row-footprints-phone", "390x844", "--building-review 10 --footprints --safe-area 0,47,0,34")
+for _, page in ipairs{1, 2, 8, 9, 10} do
+    shot("chimney-page-" .. page, "480x900", "--building-review " .. page .. " --frames 120")
+end
+shot("chimney-phone", "390x844", "--building-review 10 --frames 120 --safe-area 0,47,0,34")
+reel("chimney-smoke", 12, 12, "480x900", "--building-review 10 --reel")
 
 -- Shared-engine atlas and refill captures: all runs share this test process.
 for _, size in ipairs{"480x900", "390x844"} do

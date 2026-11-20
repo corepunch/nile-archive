@@ -56,6 +56,10 @@ static void frame(float dt)
     c.clearance = sz2(1, 1);
     c.items[0] = (building){v2(40, 70), 1, 0};
     c.items[1] = (building){v2(110, 100), 1, 0};
+    rect settled = city_placed_sprite_rect(&c, 0);
+    c.pop_index = 0; c.pop_time = .5f;
+    NEAR(city_placed_sprite_rect(&c, 0).pos.y, settled.pos.y - 8);
+    c.pop_time = 0;
     vec2 old_edge = vec2_add(c.items[0].pos, city_tile_to_world(&c, v2(0, 1)));
     vec2 neighbour_edge = vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(0, 1)));
     vec2 covered_edge = vec2_add(c.items[1].pos, city_tile_to_world(&c, v2(-.3f, -1)));
@@ -63,6 +67,8 @@ static void frame(float dt)
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(!guide_at(old_edge) && !guide_at(neighbour_edge));
     city_begin_move(&c, 0);
+    CHECK(city_placed_sprite_rect(&c, 0).size.w == 0);
+    CHECK(city_placed_sprite_rect(&c, 1).size.w > 0);
     c.ghost = v2(95, 45); c.held = true; c.lift = 1;
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
@@ -81,6 +87,7 @@ static void frame(float dt)
     CHECK(guide_at(covered_edge));
     c.show_footprints = false;
     city_cancel(&c);
+    NEAR(city_placed_sprite_rect(&c, 0).pos.y, settled.pos.y);
     city_draw(&c, (input){0}, 0);
     CHECK(render_read_pixels(pixels, w, h));
     CHECK(!guide_at(old_edge) && !guide_at(neighbour_edge));

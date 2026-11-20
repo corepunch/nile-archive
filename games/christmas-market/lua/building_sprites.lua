@@ -3,7 +3,7 @@ return {
     arch={sprite_path="city/buildings/arch.png", size=size2(3,3), pivot=vec2(208.673,298.065), base_width=409.808, shadow_path="city/building-shadows/arch.png", shadow_pivot=vec2(183.74,132.827), shadow_base_width=348.336},
     lumber={sprite_path="city/buildings/lumber.png", size=size2(3,3), pivot=vec2(208.777,321.212), base_width=409.808, shadow_path="city/building-shadows/lumber.png", shadow_pivot=vec2(185.635,155.15), shadow_base_width=348.336},
     bakery={sprite_path="city/buildings/bakery.png", size=size2(3,3), pivot=vec2(207.378,318.065), base_width=409.808, shadow_path="city/building-shadows/bakery.png", shadow_pivot=vec2(184.635,155.15), shadow_base_width=348.336},
-    cocoa={sprite_path="city/buildings/cocoa.png", size=size2(3,3), pivot=vec2(207.382,327.243), base_width=409.808, shadow_path="city/building-shadows/cocoa.png", shadow_pivot=vec2(178.288,146.96), shadow_base_width=348.336},
+    cocoa={sprite_path="city/buildings/cocoa.png", size=size2(3,3), pivot=vec2(207.382,327.243), base_width=409.808, shadow_path="city/building-shadows/cocoa.png", shadow_pivot=vec2(181.68,148.602), shadow_base_width=348.336},
     toys={sprite_path="city/buildings/toys.png", size=size2(3,3), pivot=vec2(208.742,333.266), base_width=409.808, shadow_path="city/building-shadows/toys.png", shadow_pivot=vec2(181.635,165.745), shadow_base_width=348.336},
     gifts={sprite_path="city/buildings/gifts.png", size=size2(3,3), pivot=vec2(208.668,310.717), base_width=409.808, shadow_path="city/building-shadows/gifts.png", shadow_pivot=vec2(194.686,167.602), shadow_base_width=348.336},
     candles={sprite_path="city/buildings/candles.png", size=size2(3,3), pivot=vec2(208.704,321.727), base_width=409.808, shadow_path="city/building-shadows/candles.png", shadow_pivot=vec2(179.635,155.15), shadow_base_width=348.336},
@@ -39,5 +39,5 @@ return {
     santa_workshop={sprite_path="city/buildings/santa_workshop.png", size=size2(3,3), pivot=vec2(208.15,303.101), base_width=409.808, shadow_path="city/building-shadows/santa_workshop.png", shadow_pivot=vec2(178.936,150.607), shadow_base_width=348.336},
     firework_stall={sprite_path="city/buildings/firework_stall.png", size=size2(2,2), pivot=vec2(138.603,210.371), base_width=273.205, shadow_path="city/building-shadows/firework_stall.png", shadow_pivot=vec2(140.63,106.965), shadow_base_width=232.224},
     station_kiosk={sprite_path="city/buildings/station_kiosk.png", size=size2(2,2), pivot=vec2(138.603,184.887), base_width=273.205, shadow_path="city/building-shadows/station_kiosk.png", shadow_pivot=vec2(137.309,91.304), shadow_base_width=232.224},
-    glassblower={sprite_path="city/buildings/glassblower.png", size=size2(2,2), pivot=vec2(138.603,199.951), base_width=273.205, shadow_path="city/building-shadows/glassblower.png", shadow_pivot=vec2(136.317,94.558), shadow_base_width=232.224},
+    glassblower={sprite_path="city/buildings/glassblower.png", size=size2(2,2), pivot=vec2(138.603,199.951), base_width=273.205, shadow_path="city/building-shadows/glassblower.png", shadow_pivot=vec2(135.528,95.028), shadow_base_width=232.224},
 }

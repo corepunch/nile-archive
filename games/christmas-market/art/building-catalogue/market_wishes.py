@@ -245,16 +245,25 @@ def deco_fir(k, x, y, z, h=.9, r=.27, ribbon=True, tiers=3):
             bow(k, 0, -.01, 0, .09)
     return x, y, t
 
+def flue_cap(k, x, y, z, span, stone_color, snow_color):
+    """Four rim stones and a recessed soot floor. The opening stays clear of snow."""
+    rim = span * .21
+    offset = (span - rim) / 2
+    inside = span - 2 * rim
+    for side in (-1, 1):
+        for dx, dy, w, h in ((side * offset, 0, rim, span), (0, side * offset, inside, rim)):
+            k.box("stone", x + dx, y + dy, z, w, h, .075, stone_color)
+            k.box("slab", x + dx, y + dy, z + .075, w, h, .035, snow_color)
+    k.box("matte", x, y, z, inside, inside, .012, COAL)
+
+
 def chimney(k, x, y, z0, z1, s=.42):
     k.box("stone", x, y, z0, s - .06, s - .06, z1 - z0, STONE_D)
     h = s / 2
     pts = [(x - h, y - h), (x + h, y - h), (x + h, y + h), (x - h, y + h)]
     for a, b in zip(pts, pts[1:] + pts[:1]):
         k.wall(a, b, z0, z1, t=.09, course=.13, length=.24, col=lambda: J(STONE if R.random() < .7 else STONE_L, .07))
-    k.box("stone", x, y, z1, s + .1, s + .1, .08, STONE_L)
-    k.box("matte", x, y, z1 + .02, s - .14, s - .14, .08, COAL)
-    k.ball("slab", x + s * .22, y, z1 + .1, s * .36, SNOW, 12, sz=.55)
-    k.ball("slab", x - s * .18, y + .04, z1 + .1, s * .33, SNOW, 12, sz=.5)
+    flue_cap(k, x, y, z1, s + .1, STONE_L, SNOW)
 
 def snow_sheet(k, s, xm, half, y0, y1, z, h, th=.15, lip=.15):
     """One slope's soft snow: gently lumpy, pouring over the eave and the gable end in waves."""
@@ -702,7 +711,7 @@ def bakery(k):
 
 
 def cocoa(k):
-    """Hot cocoa kiosk: red and green, candy-cane posts, gold urn, a smoking chimney."""
+    """Hot cocoa kiosk with candy-cane posts, a gold urn and an open chimney."""
     x0, x1, y0, y1 = -1.04, 1.04, -.5, .95
     zw, h = G + 1.56, 1.26
     yb = y0 + .6
@@ -727,9 +736,6 @@ def cocoa(k):
     side_garland(k, x1, y0, y1, zw)
     cx, cy = .5, .55
     chimney(k, cx, cy, zw + .42, zw + 1.26, .38)
-    # a soft plume of smoke, drifting to the right of the screen
-    for dx, dy, dz, r in ((.0, .0, 1.38, .09), (.06, .04, 1.5, .13), (.14, .08, 1.63, .17), (.3, .1, 1.72, .15), (.34, .22, 1.86, .22), (.54, .26, 1.92, .2), (.56, .36, 2.1, .16)):
-        k.ball("matte", cx + dx, cy + dy, zw + dz, r, C("#DADDE3"), 12, sz=.8)
     # the red counter on -Y and +X, with wreaths on its panels
     k.box("matte", 0, y0 + .08, G, x1 - x0 + .1, .2, zc - G, XRED)
     k.box("matte", x1 - .01, ym, G, .14, y1 - y0, zc - G, XRED)

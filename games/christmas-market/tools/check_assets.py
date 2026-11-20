@@ -97,6 +97,11 @@ def main():
         assert all(x > 0 and x % 1 == 0 for x in entry['size'])
         assert entry['base_width'] > 0 and len(entry['pivot']) == 2
     assert {p.name for p in (ROOT/'data/city/buildings').iterdir()} == {e['key'] + '.png' for e in buildings}
+    chimneys = manifest['chimneys']
+    for key in ('guide', 'source', 'original_crops', 'prompt', 'layout', 'outlets', 'renderer', 'review'):
+        assert (ROOT/chimneys[key]).is_file(), key
+    assert all(frame in atlas['frames'] for frame in chimneys['particle_frames'])
+    subprocess.run([sys.executable, str(ROOT/'tools/prepare_chimneys.py'), '--check'], check=True)
     for i in range(6):
         assert png(ROOT/'art/registered/tile-sets/festive'/f'{i}.png') == ((128,128),6)
     cast = manifest['story_cast']

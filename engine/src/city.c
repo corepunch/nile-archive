@@ -94,6 +94,13 @@ rect city_sprite_rect(const city *c, building b)
     return rect_make(vec2_sub(b.pos, vec2_scale(pivot, k)), size2_scale(tex, k));
 }
 
+rect city_placed_sprite_rect(const city *c, int index)
+{
+    if (index < 0 || index >= c->count || index == c->moving) return (rect){0};
+    float lift = index == c->pop_index && c->pop_time > 0 ? sinf((1 - c->pop_time) * ENGINE_PI) * 8 : 0;
+    return rect_offset(camera_rect_to_screen(c->cam, city_sprite_rect(c, c->items[index])), v2(0, -lift));
+}
+
 rect city_shadow_rect(const city *c, building b)
 {
     const building_def *d = &c->defs[b.type];
@@ -909,8 +916,7 @@ void city_draw(const city *c, input in, double now)
     int order[CITY_MAX], n = depth_order(c, order);
     for (int k = 0; k < n; k++) {
         int i = order[k];
-        float lift = i == c->pop_index && c->pop_time > 0 ? sinf((1 - c->pop_time) * ENGINE_PI) * 8 : 0;
-        draw_building(c, c->items[i], WHITE, lift);
+        draw_image(c->defs[c->items[i].type].sprite, city_placed_sprite_rect(c, i), WHITE);
     }
 
     for (int i = 0; i < c->count; i++) {

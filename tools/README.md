@@ -152,6 +152,7 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `prepare_story_pieces.py` | Fits the six story objects on the chip canvas |
 | **nile-archive** | |
 | `prepare_catalogue.py` | Builds the catalogue around the rendered sprites (after `tools/buildings.py`) |
+| `prepare_chimneys.py` | Imports the chimney paint-over and registers the smoke openings (`--check` verifies both) |
 | `import_buildings.py` | Recreates the colour-key building atlas from the accepted cutouts |
 | `make_icons.py` | Draws the coin and influence icons |
 | **emergency** | |

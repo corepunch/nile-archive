@@ -2597,6 +2597,17 @@ World rect of a building's sprite.
 
 **Returns:** `rect`
 
+### `city.placed_sprite_rect(c, index)  ·  c:placed_sprite_rect(index)`
+
+Drawn screen rect, including placement bounce. Empty while the building is held or the index is out of range.
+
+| Argument | Type | |
+|---|---|---|
+| `c` | `city` |  |
+| `index` | `integer` |  |
+
+**Returns:** `rect`
+
 ### `city.shadow_rect(c, b)  ·  c:shadow_rect(b)`
 
 World rect of the separately cropped ground shadow, registered to the same ground point.

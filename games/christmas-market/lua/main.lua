@@ -13,6 +13,7 @@ local match3_game = require("match3.game")
 require("screens")
 require("board")
 require("narrative")
+require("chimney_smoke")
 require("smoke")
 require("campaign_smoke")
 

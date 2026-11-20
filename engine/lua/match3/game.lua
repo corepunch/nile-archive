@@ -18,6 +18,7 @@
 --   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
 --   R.wallet_icons()        three icons: unused, gold, unused (the gold capsule's is the second)
 --   R.town_middle_icon(at)  the round middle button's icon in the town
+--   R.draw_town_world(view)  optional effects above the town and below its HUD
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
@@ -1156,6 +1157,7 @@ function G.bind(R, over)
             end,
             bubble_text = function() return R.speech_style(15) end,
             reduced_motion = function() return R.reduced_motion end,
+            draw_world = R.draw_town_world,
             overlay = R.vfx_particles,
         })
         R.placement_form = R.town.placement_form
