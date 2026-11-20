@@ -46,27 +46,29 @@ Balance is measured, never guessed. The greedy bot (`tests/lua/greedy_bot.lua`) 
 | What | Target | Tool |
 | --- | --- | --- |
 | Board validity | Fits 9 × 12; pieces can fall onto every target; at least 6 target layers and 45 cells | `python3 tools/square_boards.py <game>` |
-| Board length | The bot's median game within the tier ceiling: easy 30, normal 45, hard 60, boss 70 moves | `python3 tools/square_trim.py <game> --levels A-B` |
-| Move budget | Median × tier margin: tutorial 2.5, easy 2, normal 1.4, hard 1.2, boss 1 | `python3 tools/tune_moves.py <game>` |
-| Prices | Each purchase spends 70% of what the expected wallet holds in the currencies it uses; the expected campaign needs no replays | `python3 tools/balance.py <game>` |
+| Board length | Median clear at most 30 moves on tutorial and easy boards, 45 on normal, 60 on hard and 70 on bosses | `python3 tools/square_trim.py <game> --levels A-B --seeds 40` |
+| Move budget | Start at median × tier margin and allow for slower starts. Trim late targets when the fitted budget exceeds 55/80/90/100/105 moves by tier. | `python3 tools/tune_moves.py <game>` |
+| Prices | Budget from the average of the mean and lower-quartile winning income. Each purchase uses 65% of the projected wallet in its currencies, with 50% for the first purchase. | `python3 tools/balance.py <game>` |
+
+The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays without spending tools. The median margins for tutorial, easy, normal, hard and boss boards are 2.5, 2, 1.4, 1.2 and 1. If a board has a wide spread of clear times, the fitter allows enough moves for at least 90%, 80%, 75%, 70% or 65% of the sample respectively. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 
 - **Keep Rome's currency mix.** A purchase uses the currencies its Rome counterpart uses (Rome's Farm costs no Food, so neither does the bakery). Only the amounts are fitted.
-- **Fit to the bot's income without upgrades.** An upgrade is a reward for skill. Prices assume none, so a player who earns upgrades builds sooner and has spare resources for decorations, as in Rome.
-- **No replay should be needed.** `balance.py` walks the expected campaign; any replay it reports is a bug in the boards or prices, not a design choice. The extended `campaign_play` test plays the whole campaign with the bot on fixed seeds and allows at most five replays for income, since one below-average board can leave a purchase short.
-- **Prices rise.** A later purchase never costs less in total than the one before it. Income grows with each richer piece, so a price that drops tells the player nothing about progress.
+- **Fit to the bot's income without optional upgrades.** Players who earn upgrades build sooner and have more resources for decorations.
+- **Fund each purchase at its unlock.** The income forecast and the fixed-seed `campaign_play` test both require all twenty purchases on their scheduled levels with zero replays for income. Failed board attempts can be retried.
+- **Keep total prices nondecreasing.** The fitter caps any early price spike at the next purchase's total while retaining every currency it uses.
 - **Refit after any change** to boards, piece yields, unlock order or upgrade perks, and commit the regenerated catalogue.
 
 **What one board pays.** Measured with the current boards (bot, mean per won board, Coins/Tokens · Food/Treats · Supplies/Materials):
 
 | Levels | Relic Rush | Christmas Market |
 | --- | --- | --- |
-| 1–10 | 206 · 75 · 0 | 204 · 72 · 0 |
-| 21–30 | 126 · 162 · 146 | 234 · 121 · 181 |
-| 41–50 | 156 · 352 · 219 | 257 · 187 · 218 |
-| 61–70 | 181 · 307 · 177 | 446 · 281 · 281 |
-| 81–90 | 388 · 501 · 289 | 438 · 257 · 217 |
+| 1–20 | 231 · 85 · 73 | 196 · 72 · 58 |
+| 21–40 | 150 · 215 · 192 | 270 · 145 · 215 |
+| 41–60 | 158 · 324 · 195 | 319 · 218 · 227 |
+| 61–80 | 213 · 340 · 199 | 415 · 259 · 256 |
+| 81–100 | 425 · 511 · 302 | 503 · 283 · 253 |
 
 ## Upgrades: Rome's citizens, kept by the cast we know
 

@@ -2,9 +2,20 @@
 -- Check the authored geometry and the engine’s opening deals.
 local rules = require('rules')
 local campaign = require('campaign')
+local island = require('island')
 check(rules.square and rules.COLUMNS == 9 and rules.ROWS == 12, '9×12 square envelope')
 local expected = 100
 check(rules.LEVELS == expected and rules.COLORS == 5, 'campaign length and five piece slots')
+check(#rules.levels[4].chain_cells > 0, 'the tutorial that introduces chains contains a chain')
+check(#island.ladder == 20, 'twenty campaign purchases')
+local previous = 0
+for n, step in ipairs(island.ladder) do
+    check(step.after == 1 + (n - 1) * 5, 'one purchase every five clears')
+    local cost = island.buildings[step.kind + 1].cost
+    local total = cost[1] + cost[2] + cost[3]
+    check(total >= previous, 'price total does not fall at ' .. step.unlock.building)
+    previous = total
+end
 for level, entry in ipairs(campaign.levels) do
     local label = ('level %d: '):format(level)
     check(#entry.mask == rules.CELLS and not entry.mask:find('[^01]'), label .. 'valid cell mask')

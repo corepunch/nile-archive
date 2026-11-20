@@ -26,7 +26,7 @@
         159.719
       ],
       "base_width": 273.205,
-      "gold": 1065,
+      "gold": 980,
       "stars": 0,
       "runtime": "data/city/buildings/camp.png",
       "image": [
@@ -36,9 +36,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        1065,
-        400,
-        475
+        980,
+        365,
+        390
       ],
       "about": "Unlocks Bomb. Hit a 3\u00d73 square around a cell.",
       "road": false,
@@ -66,7 +66,7 @@
         191.175
       ],
       "base_width": 273.205,
-      "gold": 55,
+      "gold": 35,
       "stars": 0,
       "runtime": "data/city/buildings/well.png",
       "image": [
@@ -76,7 +76,7 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        55,
+        35,
         0,
         0
       ],
@@ -106,7 +106,7 @@
         225.83
       ],
       "base_width": 359.808,
-      "gold": 1085,
+      "gold": 940,
       "stars": 0,
       "runtime": "data/city/buildings/workshop.png",
       "image": [
@@ -116,8 +116,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        1085,
-        410,
+        940,
+        340,
         0
       ],
       "about": "Timber bundles earn 5 Supplies each.",
@@ -146,7 +146,7 @@
         211.408
       ],
       "base_width": 359.808,
-      "gold": 1090,
+      "gold": 1040,
       "stars": 30,
       "runtime": "data/city/buildings/market.png",
       "image": [
@@ -156,9 +156,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Farmers Market",
       "cost": [
-        1090,
-        415,
-        655
+        1040,
+        390,
+        565
       ],
       "about": "Ration jars earn 4 Food each.",
       "road": false,
@@ -186,7 +186,7 @@
         202.13
       ],
       "base_width": 359.808,
-      "gold": 660,
+      "gold": 595,
       "stars": 0,
       "runtime": "data/city/buildings/gateway.png",
       "image": [
@@ -196,9 +196,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Original dry gathering plaza",
       "cost": [
-        660,
-        1040,
-        935
+        595,
+        915,
+        815
       ],
       "about": "Shrimp earn 6 Food each.",
       "road": false,
@@ -226,7 +226,7 @@
         306.197
       ],
       "base_width": 409.808,
-      "gold": 690,
+      "gold": 570,
       "stars": 0,
       "runtime": "data/city/buildings/lodge.png",
       "image": [
@@ -236,9 +236,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Estate",
       "cost": [
-        690,
-        1405,
-        960
+        570,
+        1155,
+        770
       ],
       "about": "Unlocks Hourglass. Add five moves.",
       "road": false,
@@ -266,7 +266,7 @@
         258.785
       ],
       "base_width": 409.808,
-      "gold": 880,
+      "gold": 655,
       "stars": 0,
       "runtime": "data/city/buildings/archive.png",
       "image": [
@@ -276,9 +276,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lavish Library",
       "cost": [
-        880,
-        1550,
-        905
+        655,
+        1195,
+        690
       ],
       "about": "Rings earn 7 Coins each.",
       "road": false,
@@ -306,7 +306,7 @@
         271.521
       ],
       "base_width": 273.205,
-      "gold": 1035,
+      "gold": 805,
       "stars": 0,
       "runtime": "data/city/buildings/observatory.png",
       "image": [
@@ -316,9 +316,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Observatory",
       "cost": [
-        1035,
-        1590,
-        940
+        805,
+        1280,
+        750
       ],
       "about": "Unlocks Mixer. Shuffle the pieces.",
       "road": false,
@@ -346,7 +346,7 @@
         291.86
       ],
       "base_width": 409.808,
-      "gold": 1980,
+      "gold": 1655,
       "stars": 0,
       "runtime": "data/city/buildings/fountain.png",
       "image": [
@@ -356,9 +356,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fountain",
       "cost": [
-        1980,
-        2440,
-        1410
+        1655,
+        2045,
+        1215
       ],
       "about": "Emeralds earn 11 Coins each.",
       "road": false,
@@ -386,7 +386,7 @@
         339.44
       ],
       "base_width": 546.41,
-      "gold": 1960,
+      "gold": 1635,
       "stars": 0,
       "runtime": "data/city/buildings/temple.png",
       "image": [
@@ -396,9 +396,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story finale, as a landmark",
       "cost": [
-        1960,
-        2435,
-        1435
+        1635,
+        2085,
+        1185
       ],
       "about": "Unlocks Star. Clear all pieces of a chosen kind.",
       "road": false,
@@ -426,7 +426,7 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 625,
+      "gold": 465,
       "stars": 0,
       "runtime": "data/city/buildings/log_cabin.png",
       "image": [
@@ -436,8 +436,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        625,
-        225,
+        465,
+        165,
         0
       ],
       "about": "Unlocks Hammer. Hit one cell.",
@@ -586,7 +586,7 @@
         233.232
       ],
       "base_width": 359.808,
-      "gold": 760,
+      "gold": 575,
       "stars": 0,
       "runtime": "data/city/buildings/map_room.png",
       "image": [
@@ -596,9 +596,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Schoolhouse",
       "cost": [
-        760,
-        1625,
-        950
+        575,
+        1215,
+        740
       ],
       "about": "Unlocks Lightning. Strike up to fifteen random cells.",
       "road": false,
@@ -666,7 +666,7 @@
         260.814
       ],
       "base_width": 409.808,
-      "gold": 790,
+      "gold": 750,
       "stars": 0,
       "runtime": "data/city/buildings/trading_post.png",
       "image": [
@@ -676,9 +676,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Central Station",
       "cost": [
-        790,
-        720,
-        650
+        750,
+        675,
+        575
       ],
       "about": "Dressed stones earn 7 Supplies each.",
       "road": false,
@@ -706,7 +706,7 @@
         232.79
       ],
       "base_width": 409.808,
-      "gold": 725,
+      "gold": 690,
       "stars": 0,
       "runtime": "data/city/buildings/water_mill.png",
       "image": [
@@ -716,9 +716,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Windmill",
       "cost": [
-        725,
-        920,
-        895
+        690,
+        835,
+        785
       ],
       "about": "Grain bundles earn 5 Food each.",
       "road": false,
@@ -746,7 +746,7 @@
         306.519
       ],
       "base_width": 273.205,
-      "gold": 690,
+      "gold": 615,
       "stars": 0,
       "runtime": "data/city/buildings/clock_tower.png",
       "image": [
@@ -756,9 +756,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Clock Tower",
       "cost": [
-        690,
-        1015,
-        935
+        615,
+        890,
+        815
       ],
       "about": "Unlocks Shield. Hit the row through a chosen cell.",
       "road": false,
@@ -786,7 +786,7 @@
         281.74
       ],
       "base_width": 273.205,
-      "gold": 885,
+      "gold": 675,
       "stars": 0,
       "runtime": "data/city/buildings/lighthouse.png",
       "image": [
@@ -796,9 +796,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lighthouse",
       "cost": [
-        885,
-        1540,
-        910
+        675,
+        1200,
+        670
       ],
       "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
       "road": false,
@@ -866,7 +866,7 @@
         224.8
       ],
       "base_width": 409.808,
-      "gold": 1565,
+      "gold": 1215,
       "stars": 0,
       "runtime": "data/city/buildings/aviary.png",
       "image": [
@@ -876,9 +876,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Aviary",
       "cost": [
-        1565,
-        2325,
-        1360
+        1215,
+        1830,
+        1100
       ],
       "about": "Sandals earn 9 Coins each.",
       "road": false,
@@ -906,7 +906,7 @@
         274.276
       ],
       "base_width": 446.41,
-      "gold": 950,
+      "gold": 750,
       "stars": 0,
       "runtime": "data/city/buildings/beached_ship.png",
       "image": [
@@ -916,9 +916,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Pirate Ship",
       "cost": [
-        950,
-        1620,
-        940
+        750,
+        1325,
+        750
       ],
       "about": "Scarabs earn 8 Coins each.",
       "road": false,
@@ -946,7 +946,7 @@
         226.211
       ],
       "base_width": 496.41,
-      "gold": 705,
+      "gold": 550,
       "stars": 0,
       "runtime": "data/city/buildings/amphitheater.png",
       "image": [
@@ -956,9 +956,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Amphitheater",
       "cost": [
-        705,
-        1630,
-        1000
+        550,
+        1225,
+        745
       ],
       "about": "Helmets earn 6 Coins each.",
       "road": false,
@@ -986,7 +986,7 @@
         304.224
       ],
       "base_width": 496.41,
-      "gold": 1740,
+      "gold": 1385,
       "stars": 0,
       "runtime": "data/city/buildings/museum.png",
       "image": [
@@ -996,9 +996,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Museum",
       "cost": [
-        1740,
-        2370,
-        1400
+        1385,
+        1900,
+        1145
       ],
       "about": "Harps earn 10 Coins each.",
       "road": false,

@@ -17,7 +17,7 @@ R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, replays = 0, 0, 0, 0
-local played = {}
+local played, purchase_level = {}, {}
 local relic_rush = testing.game == 'relic-rush'
 local user_events = relic_rush and require('user_events_runtime')
 local function owns_wonder(index)
@@ -41,7 +41,7 @@ local function scene(expected, before_reward)
 end
 
 -- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua):
--- a boss's budget is that bot's median game, so a weaker bot would fail it.
+-- bosses leave less slack than other tiers.
 local best_move = require('greedy_bot')(rules)
 local function play(g)
     while not g.won and not g.lost do
@@ -70,7 +70,7 @@ for level = 1, rules.LEVELS do
     local won
     -- Fixed independent starts permit a failed board to be retried. They are
     -- a reproducible bot sample, not a prediction of human win rates.
-    -- A boss's budget is the bot's median game, so it gets more starts.
+    -- A boss is allowed more starts before the whole playthrough fails.
     for seed = 1, rules.level_of and (rules.levels[level].tier == 'boss' and 16 or 8) or 8 do
         R.g = R.make_board(level - 1, seed)
         attempts = attempts + 1
@@ -92,14 +92,17 @@ for level = 1, rules.LEVELS do
         end
         scene(after, true)
     end
-    local reward = rules.reward_breakdown(R.g, R.prog)
-    local before = R.prog.wallet[1]
+    local reward = rules.level_reward(R.g, R.wonders, R.prog)
+    local expected_wallet = R.prog.wallet + reward
     R.claim_reward()
     if R.overlay == R.OV_COMPLETE then R.overlay = R.OV_NONE end
-    check(R.prog.level == level and R.prog.wallet[1] == before + reward.total[1], 'win pays once and advances')
-    earned = earned + reward.total[1]
+    check(R.prog.level == level, 'first win advances one level')
+    for slot = 1, 4 do
+        check(R.prog.wallet[slot] == expected_wallet[slot], 'win pays once in wallet slot ' .. slot)
+    end
+    earned = earned + reward[1]
     if rules.FOOD then
-        local income, wallet = reward.total, R.prog.wallet
+        local income, wallet = reward, R.prog.wallet
         print(("wish %02d · earned %d/%d/%d · stock %d/%d/%d · %d moves left"):format(
             level, income[1], income[3], income[2], wallet[1], wallet[3], wallet[2], R.g.moves))
     end
@@ -120,6 +123,7 @@ for level = 1, rules.LEVELS do
             local owed = island.wonder_count(R.island) < journey.earned(R.prog.level)
             if island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0) then
                 placed[#placed + 1] = building.key
+                purchase_level[next_kind] = level
             elseif not owed then break
             else
                 short = short + 1
@@ -139,7 +143,7 @@ for level = 1, rules.LEVELS do
         replays = replays + short
         local wallet = R.prog.wallet
         print(("expedition %02d · earned %d/%d/%d · stock %d/%d/%d · replays %d · placed %s"):format(
-            level, reward.total[1], reward.total[3], reward.total[2], wallet[1], wallet[3], wallet[2], short,
+            level, reward[1], reward[3], reward[2], wallet[1], wallet[3], wallet[2], short,
             #placed > 0 and table.concat(placed, ", ") or "-"))
     elseif kind then
         assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
@@ -152,7 +156,12 @@ for level = 1, rules.LEVELS do
     end
 end
 local due = 0
-for _, step in ipairs(island.ladder) do if step.after <= rules.LEVELS then due = due + 1 end end
+for _, step in ipairs(island.ladder) do
+    if step.after <= rules.LEVELS then
+        due = due + 1
+        check(purchase_level[step.kind] == step.after, ('placed %s after clear %d'):format(step.unlock.building, step.after))
+    end
+end
 check(island.wonder_count(R.island) == journey.earned(rules.LEVELS), 'all earned story buildings placed')
 check(island.campaign_count(R.island) == due, 'every earned purchase placed')
 local index = 0
@@ -162,9 +171,6 @@ for _, beat in ipairs(journey.beats) do
         check(played[index] == beat.key, 'story order: ' .. beat.key)
     end
 end
--- Prices spend 70% of the mean income (docs/CAMPAIGN_DESIGN.md#balance): one
--- below-average board may leave a purchase short, but the campaign should
--- barely need replays for income.
-check(replays <= 5, ('the campaign needs %d replays for income, at most 5'):format(replays))
-print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d total earned, %d remaining, %d stars, %d scenes'):format(
-    wins, attempts-wins, replays, earned, R.prog.wallet[1], R.prog.wallet[4], #played))
+check(replays == 0, ('the reference playthrough needs %d replays for income'):format(replays))
+print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d of %d purchases, %d total earned, %d remaining, %d stars, %d scenes'):format(
+    wins, attempts-wins, replays, island.campaign_count(R.island), due, earned, R.prog.wallet[1], R.prog.wallet[4], #played))

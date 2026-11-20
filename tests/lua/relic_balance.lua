@@ -19,7 +19,7 @@ local rules = require('rules')
 local economy = require('economy')
 local island = require('island')
 
-local SHARE = .7   -- a stop spends 70% of the expected wallet in the currencies it uses
+local SHARE, OPENING_SHARE = .65, .5
 local CURRENCIES = #economy.currencies
 local m = rules.new_match()
 
@@ -50,8 +50,8 @@ local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 
 -- Board n is played with every ladder restoration due before it.
 local function restored_by(number)
     local restored = {}
-    for _, unlock in ipairs(economy.unlocks) do
-        if unlock.after < number then restored[unlock.building] = true end
+    for _, step in ipairs(island.ladder) do
+        if step.after < number then restored[step.unlock.building] = true end
     end
     return restored
 end
@@ -91,26 +91,41 @@ if testing.tune_levels then
     first, last = testing.tune_levels:match('^(%d+)%-(%d+)$')
     first, last = tonumber(first), tonumber(last)
 end
+local function amounts(values, format, separator)
+    local out = {}
+    for slot = 1, CURRENCIES do out[slot] = format:format(values[slot]) end
+    return table.concat(out, separator)
+end
+
 for level = first, found and 0 or last do
-    local stats = {wins = 0, moves = 0, income = {}}
-    for slot = 1, CURRENCIES do stats.income[slot] = 0 end
+    local stats = {wins = 0, moves = 0, income = {}, planning = {}}
+    local samples = {}
+    for slot = 1, CURRENCIES do stats.income[slot], samples[slot] = 0, {} end
     local restored = restored_by(level)
     for run = 1, RUNS do
-        local g = play_board(level, run, restored)
+        local g = play_board(level, 500 + run, restored)   -- separate seeds from the move fit
         if g.won then
             local reward = rules.reward_breakdown(g, {}).total
             stats.wins, stats.moves = stats.wins + 1, stats.moves + g.moves
-            for slot = 1, CURRENCIES do stats.income[slot] = stats.income[slot] + reward[slot] end
+            for slot = 1, CURRENCIES do
+                stats.income[slot] = stats.income[slot] + reward[slot]
+                samples[slot][stats.wins] = reward[slot]
+            end
         end
     end
     -- Mean income per win: a board pays when it is won, and a loss is retried.
-    for slot = 1, CURRENCIES do stats.income[slot] = stats.income[slot] / math.max(1, stats.wins) end
+    for slot = 1, CURRENCIES do
+        stats.income[slot] = stats.income[slot] / math.max(1, stats.wins)
+        table.sort(samples[slot])
+        local lower_quartile = samples[slot][math.ceil(stats.wins / 4)] or 0
+        stats.planning[slot] = (stats.income[slot] + math.min(lower_quartile, stats.income[slot])) / 2
+    end
     stats.moves = stats.wins > 0 and stats.moves / stats.wins or 0
     boards[level] = stats
-    print(('board %02d · wins %d/%d · moves left %.1f · income %s'):format(level, stats.wins, RUNS, stats.moves,
-        table.concat((function() local t = {} for s = 1, CURRENCIES do t[s] = ('%.0f'):format(stats.income[s]) end return t end)(), '/')))
-    print(('INCOME_JSON {"level":%d,"wins":%d,"moves":%.2f,"income":[%s]}'):format(level, stats.wins, stats.moves,
-        table.concat((function() local t = {} for s = 1, CURRENCIES do t[s] = ('%.3f'):format(stats.income[s]) end return t end)(), ',')))
+    print(('board %02d · wins %d/%d · moves left %.1f · income %s'):format(
+        level, stats.wins, RUNS, stats.moves, amounts(stats.income, '%.0f', '/')))
+    print(('INCOME_JSON {"level":%d,"wins":%d,"moves":%.2f,"income":[%s],"planning":[%s]}'):format(
+        level, stats.wins, stats.moves, amounts(stats.income, '%.3f', ','), amounts(stats.planning, '%.3f', ',')))
     check(stats.wins > 0, ('the bot wins board %d at least once'):format(level))
 end
 if testing.tune_levels then return end
@@ -126,14 +141,14 @@ end
 table.sort(order)
 local function round5(v) return v <= 0 and 0 or math.max(5, math.floor(v / 5 + .5) * 5) end
 
--- Fit: at each stop, spend SHARE of what the expected wallet holds in every
--- currency the stop's restorations use, split by their current prices. The
--- rest carries over, so every currency runs low and none piles up unused.
+-- Budget from the average of a typical and a lower-quartile win, then leave
+-- part of that wallet for later purchases. Keep the first buy cheap enough
+-- for a short tutorial clear.
 local fitted, carry = {}, {}
 for slot = 1, CURRENCIES do carry[slot] = 0 end
 local next_stop = 1
 for level = 1, rules.LEVELS do
-    for slot = 1, CURRENCIES do carry[slot] = carry[slot] + boards[level].income[slot] end
+    for slot = 1, CURRENCIES do carry[slot] = carry[slot] + boards[level].planning[slot] end
     local after = order[next_stop]
     if after == level then
         local totals = {}
@@ -143,9 +158,10 @@ for level = 1, rules.LEVELS do
         end
         for _, b in ipairs(stops[after]) do
             local price = {}
+            local budget = level == 1 and OPENING_SHARE or SHARE
             for slot = 1, CURRENCIES do
                 local share = totals[slot] > 0 and b.cost[slot] / totals[slot] or 0
-                price[slot] = round5(SHARE * carry[slot] * share)
+                price[slot] = round5(budget * carry[slot] * share)
             end
             fitted[b.key] = price
         end
@@ -169,32 +185,25 @@ for level = 1, rules.LEVELS do
         next_stop = next_stop + 1
     end
 end
--- Prices rise (docs/CAMPAIGN_DESIGN.md#balance): a later purchase never costs
--- less in total than an earlier one. Pool adjacent violators: a run whose
--- totals fall shares its mean total, keeping each purchase's currency mix.
--- Moving cost later never asks for more by any stop than the fit did.
+-- Work backwards and cap early price spikes at the next price. Only reduce
+-- prices so the wallet computed at each purchase still covers its cost.
 local ladder = {}
 for _, after in ipairs(order) do
     for _, b in ipairs(stops[after]) do ladder[#ladder + 1] = b end
 end
 local function total(price) local t = 0 for slot = 1, CURRENCIES do t = t + price[slot] end return t end
-local blocks = {}
-for i, b in ipairs(ladder) do
-    blocks[#blocks + 1] = {first = i, last = i, sum = total(fitted[b.key])}
-    while #blocks > 1 do
-        local a, z = blocks[#blocks - 1], blocks[#blocks]
-        if a.sum / (a.last - a.first + 1) <= z.sum / (z.last - z.first + 1) then break end
-        a.last, a.sum = z.last, a.sum + z.sum
-        blocks[#blocks] = nil
+local ceiling = math.huge
+for i = #ladder, 1, -1 do
+    local price = fitted[ladder[i].key]
+    local proposed = total(price)
+    if proposed > ceiling then
+        local scale = ceiling / proposed
+        for slot = 1, CURRENCIES do
+            if price[slot] > 0 then price[slot] = math.max(5, math.floor(price[slot] * scale / 5) * 5) end
+        end
+        assert(total(price) <= ceiling, 'price cap must keep every priced currency')
     end
-end
-for _, block in ipairs(blocks) do
-    local mean = block.sum / (block.last - block.first + 1)
-    for i = block.first, block.last do
-        local price = fitted[ladder[i].key]
-        local scale = mean / math.max(1, total(price))
-        for slot = 1, CURRENCIES do price[slot] = round5(price[slot] * scale) end
-    end
+    ceiling = total(price)
 end
 print('fitted prices (Coins/Food/Supplies), current -> fitted:')
 for _, after in ipairs(order) do
@@ -206,21 +215,20 @@ for _, after in ipairs(order) do
     end
 end
 
--- A purchase can wait for income from later expeditions until a story
--- restoration is due. In particular the Mill opens at 10, but its Supplies
--- first arrive on 11 after placing the Workshop.
+-- Report any delayed purchases or replays the current ladder would need.
+-- Require the fitted ladder to buy each building on its unlock clear.
 local story_due = {}
 for position, step in ipairs(island.ladder) do
     if step.story then story_due[step.after] = position end
 end
 
-local function walk(label, price_of)
+local function walk(label, price_of, planning)
     print(('expected campaign with %s prices (Coins/Food/Supplies):'):format(label))
-    local wallet, replays, lowest = {}, 0, {}
+    local wallet, replays, delayed = {}, 0, 0
     local next_purchase = 1
-    for slot = 1, CURRENCIES do wallet[slot], lowest[slot] = 0, math.huge end
+    for slot = 1, CURRENCIES do wallet[slot] = 0 end
     for level = 1, rules.LEVELS do
-        local income = boards[level].income
+        local income = boards[level][planning and 'planning' or 'income']
         for slot = 1, CURRENCIES do wallet[slot] = wallet[slot] + income[slot] end
         local bought, extra = {}, 0
         while island.ladder[next_purchase] and island.ladder[next_purchase].after <= level do
@@ -234,9 +242,9 @@ local function walk(label, price_of)
             assert(need < math.huge, ('board %d pays none of a currency %s needs'):format(level, b.key))
             for slot = 1, CURRENCIES do
                 wallet[slot] = wallet[slot] + need * income[slot] - price[slot]
-                lowest[slot] = math.min(lowest[slot], wallet[slot])
             end
             extra, bought[#bought + 1] = extra + need, b.key
+            if island.ladder[next_purchase].after < level then delayed = delayed + 1 end
             next_purchase = next_purchase + 1
         end
         replays = replays + extra
@@ -246,8 +254,11 @@ local function walk(label, price_of)
         end
     end
     check(not island.ladder[next_purchase] or island.ladder[next_purchase].after > rules.LEVELS, 'the expected campaign buys every earned restoration at ' .. label .. ' prices')
-    print(('expected campaign (%s): %d replays, lowest wallet after a purchase %.0f/%.0f/%.0f, final %.0f/%.0f/%.0f'):format(
-        label, replays, lowest[1], lowest[2], lowest[3], wallet[1], wallet[2], wallet[3]))
+    if planning then
+        check(replays == 0 and delayed == 0, ('the fitted ladder needs %d replays and delays %d purchases'):format(replays, delayed))
+    end
+    print(('expected campaign (%s): %d replays, %d delayed purchases, final wallet %s'):format(
+        label, replays, delayed, amounts(wallet, '%.0f', '/')))
 end
 walk('current', function(b) return b.cost end)
-walk('fitted', function(b) return fitted[b.key] end)
+walk('fitted', function(b) return fitted[b.key] end, true)

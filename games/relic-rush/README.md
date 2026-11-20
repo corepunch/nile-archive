@@ -218,26 +218,26 @@ The ladder has twenty purchases, one available after every fifth board (after le
 
 | After level | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
-| 1 | Spring well (Well) | Water buckets | 55 / 0 / 0 |
-| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 625 / 225 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 1085 / 410 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 1065 / 400 / 475 |
-| 21 | Jungle market (Farm) | Ration jars | 1090 / 415 / 655 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 790 / 720 / 650 |
-| 31 | Water mill (Mill) | Grain bundles | 725 / 920 / 895 |
-| 36 | Tide clock tower (Thermae) | Shield | 690 / 1015 / 935 |
-| 41 | Harbour plaza (Port) | Shrimp | 660 / 1040 / 935 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 690 / 1405 / 960 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 705 / 1630 / 1000 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 760 / 1625 / 950 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 880 / 1550 / 905 |
-| 66 | Lighthouse | Plus | 885 / 1540 / 910 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 950 / 1620 / 940 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1035 / 1590 / 940 |
-| 81 | Great aviary (Pantheon) | Sandals | 1565 / 2325 / 1360 |
-| 86 | Relic museum (Theatre) | Harps | 1740 / 2370 / 1400 |
-| 91 | Temple of the Sun (Forum) | Star | 1960 / 2435 / 1435 |
-| 96 | Jade fountain (Fountain) | Emeralds | 1980 / 2440 / 1410 |
+| 1 | Spring well (Well) | Water buckets | 35 / 0 / 0 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 465 / 165 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 940 / 340 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 980 / 365 / 390 |
+| 21 | Jungle market (Farm) | Ration jars | 1040 / 390 / 565 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 750 / 675 / 575 |
+| 31 | Water mill (Mill) | Grain bundles | 690 / 835 / 785 |
+| 36 | Tide clock tower (Thermae) | Shield | 615 / 890 / 815 |
+| 41 | Harbour plaza (Port) | Shrimp | 595 / 915 / 815 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 570 / 1155 / 770 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 550 / 1225 / 745 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 575 / 1215 / 740 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 655 / 1195 / 690 |
+| 66 | Lighthouse | Plus | 675 / 1200 / 670 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 750 / 1325 / 750 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 805 / 1280 / 750 |
+| 81 | Great aviary (Pantheon) | Sandals | 1215 / 1830 / 1100 |
+| 86 | Relic museum (Theatre) | Harps | 1385 / 1900 / 1145 |
+| 91 | Temple of the Sun (Forum) | Star | 1635 / 2085 / 1185 |
+| 96 | Jade fountain (Fountain) | Emeralds | 1655 / 2045 / 1215 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and

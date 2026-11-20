@@ -84,13 +84,20 @@ def fit_prices(game, seeds, write=True):
     test, source, generator = PRICED[game]
     started = time.time()
     count = len(parse((ROOT / f'games/{game}/lua/campaign.lua').read_text()))
-    with concurrent.futures.ThreadPoolExecutor(os.cpu_count() or 4) as pool:
-        logs = pool.map(lambda n: rules_run(game, test, {'TUNE_LEVELS': f'{n}-{n}', 'BALANCE_RUNS': str(seeds)}),
-                        range(1, count + 1))
+    workers = os.cpu_count() or 4
+    chunk = (count + workers - 1) // workers
+    with concurrent.futures.ThreadPoolExecutor(workers) as pool:
+        logs = pool.map(lambda n: rules_run(game, test, {
+            'TUNE_LEVELS': f'{n}-{min(count, n + chunk - 1)}', 'BALANCE_RUNS': str(seeds)}),
+            range(1, count + 1, chunk))
         incomes = sorted((row for log in logs for row in tagged(log, 'INCOME_JSON')), key=lambda row: row['level'])
     assert len(incomes) == count
+    for start in range(0, count, 20):
+        rows = incomes[start:start + 20]
+        mean = [round(sum(row['income'][slot] for row in rows) / len(rows)) for slot in range(3)]
+        print(f'{game} levels {start + 1}–{start + len(rows)}: mean income {"/".join(map(str, mean))}', flush=True)
     module = 'return {\n' + ''.join(
-        f"    {{wins={row['wins']}, moves={row['moves']}, income={{{', '.join(map(str, row['income']))}}}}},\n"
+        f"    {{income={{{', '.join(map(str, row['income']))}}}, planning={{{', '.join(map(str, row['planning']))}}}}},\n"
         for row in incomes) + '}\n'
     log = rules_run(game, test, {'BALANCE_RUNS': str(seeds)}, {'balance_incomes.lua': module})
     prices = tagged(log, 'PRICE_JSON')
@@ -180,7 +187,7 @@ def main():
         return fit_prices(args.game, args.seeds, write=False)
     if args.trim:
         count = len(parse((ROOT / f'games/{args.game}/lua/campaign.lua').read_text()))
-        step('trim', [sys.executable, 'tools/square_trim.py', args.game, '--levels', f'5-{count}'])
+        step('trim', [sys.executable, 'tools/square_trim.py', args.game, '--levels', f'1-{count}', '--seeds', str(args.seeds)])
     step('budgets', [sys.executable, 'tools/tune_moves.py', args.game, '--seeds', str(args.seeds)])
     if args.game in PRICED:
         fit_prices(args.game, args.seeds)
