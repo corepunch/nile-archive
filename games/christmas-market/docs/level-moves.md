@@ -8,6 +8,16 @@ it orders and spaces the boards and is not a human win rate.
 
 | # | Board | Tier | Moves | Median | Fastest | Within budget |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
+| 1 | Lantern Lane | tutorial | 18 | 7 | 4 | 40/40 |
+| 2 | Winter Wreath | tutorial | 25 | 10 | 6 | 38/40 |
+| 3 | Window Lights | tutorial | 30 | 12 | 4 | 31/40 |
+| 4 | Ribbon Street | tutorial | 35 | 14 | 9 | 25/40 |
+| 5 | Workshop Crossing | hard | 26 | 21 | 9 | 23/40 |
+| 6 | Snowflake Lane | easy | 82 | 41 | 12 | 28/40 |
+| 7 | Gingerbread Gables | normal | 21 | 15 | 9 | 31/40 |
+| 8 | Toy Shop Windows | normal | 24 | 17 | 11 | 27/40 |
+| 9 | Cocoa for Two | hard | 40 | 33 | 17 | 27/40 |
+| 10 | Christmas Star | boss | 22 | 22 | 9 | 20/40 |
 | 11 | Snowball Alley | easy | 14 | 7 | 4 | 37/40 |
 | 12 | Chestnut Corner | easy | 38 | 19 | 8 | 30/40 |
 | 13 | Sleigh Ride | normal | 47 | 33 | 13 | 21/40 |

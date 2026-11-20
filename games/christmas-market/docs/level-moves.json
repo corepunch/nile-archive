@@ -1,6 +1,106 @@
 [
  {
   "fastest": 4,
+  "level": 1,
+  "median": 7,
+  "moves": 18,
+  "seeds": 40,
+  "tier": "tutorial",
+  "wins": 40,
+  "within": 40
+ },
+ {
+  "fastest": 6,
+  "level": 2,
+  "median": 10,
+  "moves": 25,
+  "seeds": 40,
+  "tier": "tutorial",
+  "wins": 40,
+  "within": 38
+ },
+ {
+  "fastest": 4,
+  "level": 3,
+  "median": 12,
+  "moves": 30,
+  "seeds": 40,
+  "tier": "tutorial",
+  "wins": 40,
+  "within": 31
+ },
+ {
+  "fastest": 9,
+  "level": 4,
+  "median": 14,
+  "moves": 35,
+  "seeds": 40,
+  "tier": "tutorial",
+  "wins": 40,
+  "within": 25
+ },
+ {
+  "fastest": 9,
+  "level": 5,
+  "median": 21,
+  "moves": 26,
+  "seeds": 40,
+  "tier": "hard",
+  "wins": 40,
+  "within": 23
+ },
+ {
+  "fastest": 12,
+  "level": 6,
+  "median": 41,
+  "moves": 82,
+  "seeds": 40,
+  "tier": "easy",
+  "wins": 36,
+  "within": 28
+ },
+ {
+  "fastest": 9,
+  "level": 7,
+  "median": 15,
+  "moves": 21,
+  "seeds": 40,
+  "tier": "normal",
+  "wins": 40,
+  "within": 31
+ },
+ {
+  "fastest": 11,
+  "level": 8,
+  "median": 17,
+  "moves": 24,
+  "seeds": 40,
+  "tier": "normal",
+  "wins": 40,
+  "within": 27
+ },
+ {
+  "fastest": 17,
+  "level": 9,
+  "median": 33,
+  "moves": 40,
+  "seeds": 40,
+  "tier": "hard",
+  "wins": 40,
+  "within": 27
+ },
+ {
+  "fastest": 9,
+  "level": 10,
+  "median": 22,
+  "moves": 22,
+  "seeds": 40,
+  "tier": "boss",
+  "wins": 40,
+  "within": 20
+ },
+ {
+  "fastest": 4,
   "level": 11,
   "median": 7,
   "moves": 14,
