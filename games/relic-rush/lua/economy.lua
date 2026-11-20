@@ -1,8 +1,7 @@
 local bonuses = require("match3.bonuses")
 
 -- Three wallet slots. Score-only pieces have no wallet yield.
--- The sequel sets the construction order. Fish, Pearl and Amphora cover
--- the original game's additional regular motifs.
+-- The sequel sets the construction order. The amphora is an opening score piece.
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
@@ -45,9 +44,9 @@ E.unlocks = {
     {building="water_mill", rome="city_mill", tile=9, first_level=32, key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5},
     {building="clock_tower", rome="city_thermae", tile=602, first_level=37, bonus=B.shield},
     {building="gateway", rome="city_port", tile=10, first_level=42, backdrop=2, key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6},
-    {building="lodge", rome="city_oktavia", tile=603, first_level=47, backdrop=1, bonus=B.hourglass, key="fish", name="Red mullet", kind=3, slot=E.PROVISIONS, amount=7},
+    {building="lodge", rome="city_oktavia", tile=603, first_level=47, backdrop=1, bonus=B.hourglass},
     {building="amphitheater", rome="city_coliseum", tile=11, first_level=52, key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6},
-    {building="map_room", rome="city_vestalki", tile=604, first_level=57, bonus=B.lightning, key="pearl", name="Pearls", kind=0, slot=E.GOLD, amount=7},
+    {building="map_room", rome="city_vestalki", tile=604, first_level=57, bonus=B.lightning},
     {building="archive", rome="city_aqueduct", tile=12, first_level=62, backdrop=2, key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7},
     {building="lighthouse", rome="city_lighthouse", tile=605, first_level=67, bonus=B.plus},
     {building="beached_ship", rome="city_neron", tile=13, first_level=72, key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8},
@@ -70,10 +69,7 @@ function E.unlock_text(unlock, amount)
 end
 
 function E.building_unlock_text(unlock)
-    local bonus = unlock.bonus
-    if not bonus then return unlock.name end
-    local gems = bonus.name .. " gems"
-    return unlock.name and unlock.name .. " and " .. gems or gems
+    return unlock.bonus and unlock.bonus.name or unlock.name
 end
 
 function E.bonus_lesson(bonus)

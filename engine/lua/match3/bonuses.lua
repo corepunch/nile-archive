@@ -42,6 +42,8 @@ end
 
 function B.index_unlocks(unlocks)
     for _, unlock in ipairs(unlocks) do
+        assert((unlock.kind ~= nil) ~= (unlock.bonus ~= nil) and not unlock.income,
+            unlock.building .. " must unlock exactly one piece or tool")
         unlock.after = unlock.after or unlock.first_level - 1
         unlock.first_level = unlock.first_level or unlock.after + 1
         if unlock.bonus then unlock.bonus.first_level = unlock.first_level end

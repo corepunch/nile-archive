@@ -1282,7 +1282,6 @@ function E.new(config)
             g.tool_slots = loadout.tool_slots
             g.bonus, g.bonus_debut = loadout.bonus, loadout.bonus_debut
             g.bonus_preview, g.loadout_seed = loadout.bonus_preview, loadout.loadout_seed
-            g.win_income = loadout.win_income
             g.tools = {}
             local count = g.tool_slots and #g.tool_slots or 3 + #(config.extra_tools or {})
             for i = 1, count do

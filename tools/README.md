@@ -96,6 +96,7 @@ are the guides.
 | `capture_resource_icons.py` | Captures resource and hex review cases | `python3 tools/capture_resource_icons.py` |
 | `capture_trickling.py` | Captures vertical and diagonal refill reviews | `python3 tools/capture_trickling.py` |
 | `capture_economy_review.py` | Captures economy before/after comparisons with the native renderer | `python3 tools/capture_economy_review.py --before-ref <sha>` |
+| `building_rewards.py` | Exports both live campaign ladders and the Windows Cradle of Rome 2 building rewards as comparable HTML tables | `python3 tools/building_rewards.py` (requires Lua 5.4 or newer) |
 | `scenario_overview.py` | One HTML page of every game's cast, boards and story beats; with `--epoch N`, one epoch of the match-3 games: its four purchases, levels, scenes and town | `python3 tools/scenario_overview.py --capture`, `python3 tools/scenario_overview.py --epoch 1 --capture` |
 | `scenario_dump.lua` | Prints a game's scenario data (cast, levels, purchase ladder, story beats) as JSON for `scenario_overview.py` | run by `scenario_overview.py` |
 

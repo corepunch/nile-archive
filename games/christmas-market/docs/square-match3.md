@@ -1,6 +1,6 @@
 # Square match-3
 
-Match Christmas pieces to light the teal panes. The 100-level campaign opens twenty stalls, one after every fifth level (see the [construction sequence](market-pieces.md#construction-sequence)). The first Advent opens the Welcome arch, Reindeer stable, Lumber workshop and Firework stall. The stable introduces a cobalt vase for score and the farrier's hammer. The workshop replaces the vase with pine, and the chapel later introduces dressed stone. The Firework stall upgrades the tool slot to the three-cracker Firework Bomb and keeps its charge.
+Match Christmas pieces to light the teal panes. The 100-level campaign opens twenty stalls, one after every fifth level (see the [construction sequence](market-pieces.md#construction-sequence)). Each stall unlocks one item. The first Advent brings mulled wine, reindeer, bundled pine and the Firework Bomb. The reindeer charges a single-cell kick. The Firework Bomb inherits that slot and its charge. Bundled pine replaces the mitten, and dressed stone later replaces the pine.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
@@ -74,9 +74,9 @@ build/test/christmas-market "shot booster-toolbar" "shot square-winter-wreath" "
 ### Piece size
 
 All pieces are sized to the square cell and centered by their opacity-weighted
-mass. The square corners leave space for the diagonal hammer and cracker.
-The farrier's hammer uses the same painted head and wooden handle on the board
-and in all five toolbar states.
+mass. The square corners leave room for the reindeer's antlers and the diagonal
+cracker bundle. The same reindeer and station clock illustrations appear on the
+board and in all five toolbar states.
 
 | Size | Before | After |
 | --- | --- | --- |

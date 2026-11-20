@@ -39,24 +39,24 @@
     "cost": [595, 915, 815]
   },
   "lodge": {
-    "about": "Unlocks Hourglass. Add five moves.",
-    "cost": [570, 1155, 770]
+    "about": "The dock crews turn this hourglass to time their watches. Adds five moves.",
+    "cost": [545, 1110, 740]
   },
   "archive": {
-    "about": "Rings earn 7 Coins each.",
-    "cost": [655, 1195, 690]
+    "about": "The archive keeps the signet rings of the island's old keepers.",
+    "cost": [595, 1120, 700]
   },
   "observatory": {
     "about": "Unlocks Mixer. Shuffle the pieces.",
-    "cost": [805, 1280, 750]
+    "cost": [800, 1175, 750]
   },
   "fountain": {
     "about": "Emeralds earn 11 Coins each.",
-    "cost": [1655, 2045, 1215]
+    "cost": [1655, 1870, 1215]
   },
   "temple": {
     "about": "Unlocks Star. Clear all pieces of a chosen kind.",
-    "cost": [1635, 2085, 1185]
+    "cost": [1635, 1910, 1185]
   },
   "log_cabin": {
     "about": "Unlocks Hammer. Hit one cell.",
@@ -72,8 +72,8 @@
     "cost": [260, 0, 17]
   },
   "map_room": {
-    "about": "Unlocks Lightning. Strike up to fifteen random cells.",
-    "cost": [575, 1215, 740]
+    "about": "The cartographer's storm charts guide lightning to the board.",
+    "cost": [570, 1110, 730]
   },
   "greenhouse": {
     "cost": [300, 20, 0]
@@ -92,26 +92,26 @@
   },
   "lighthouse": {
     "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
-    "cost": [675, 1200, 670]
+    "cost": [645, 1105, 670]
   },
   "treehouse": {
     "cost": [400, 0, 27]
   },
   "aviary": {
-    "about": "Sandals earn 9 Coins each.",
-    "cost": [1215, 1830, 1100]
+    "about": "The aviary keepers wear woven sandals on their rounds.",
+    "cost": [1215, 1680, 1100]
   },
   "beached_ship": {
-    "about": "Scarabs earn 8 Coins each.",
-    "cost": [750, 1325, 750]
+    "about": "The crew salvaged scarabs from the schooner's cargo.",
+    "cost": [745, 1215, 755]
   },
   "amphitheater": {
-    "about": "Helmets earn 6 Coins each.",
-    "cost": [550, 1225, 745]
+    "about": "Helmets from the old contests survive beneath the arena seats.",
+    "cost": [535, 1135, 730]
   },
   "museum": {
-    "about": "Harps earn 10 Coins each.",
-    "cost": [1385, 1900, 1145]
+    "about": "The collection includes harps once played in the island's halls.",
+    "cost": [1385, 1745, 1145]
   },
   "hanging_gardens": {
     "cost": [550, 37, 0]

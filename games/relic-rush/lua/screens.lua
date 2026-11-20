@@ -166,20 +166,14 @@ local function guide_icon(box, icon)
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
 end
--- What a campaign building brings to the boards, as icons for its card: the
--- new piece with what each match of it banks, and the bonus gem.
-function R.building_gets(kind)
-    local gets = {}
-    for _, unlock in ipairs(economy.unlocks) do
-        if island.kinds[unlock.building] == kind then
-            if unlock.kind then
-                gets[#gets + 1] = {id=unlock.key, icon=R.board_art[chip_prefix .. unlock.key],
-                    amount=unlock.amount, unit=currency_icon(unlock.slot)}
-            end
-            if unlock.bonus then gets[#gets + 1] = {id=unlock.bonus.key, icon=R.board_art[unlock.bonus.icon]} end
-        end
-    end
-    return gets
+function R.building_reward(kind)
+    local step = island.ladder[island.ladder_position[kind]]
+    if not step then return end
+    local unlock = step.unlock
+    local bonus = unlock.bonus
+    if bonus then return {id=bonus.key, icon=R.board_art[bonus.icon]} end
+    return {id=unlock.key, icon=R.board_art[chip_prefix .. unlock.key],
+        amount=unlock.amount, unit=currency_icon(unlock.slot)}
 end
 
 local guide_form = match3.guide_form({

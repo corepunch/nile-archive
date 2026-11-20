@@ -4,13 +4,13 @@ return {
     sheets={atlases.pieces, atlases.blockers, atlases.cells, atlases.fx},
     button_centers={
         ["booster-firework-icon"]={0.4970279,0.4978559},
-        ["booster-hourglass-icon"]={0.5013453,0.4987591},
+        ["booster-hourglass-icon"]={0.5014470,0.4976896},
         ["booster-mixer-icon"]={0.5006438,0.4962045},
         ["booster-plus-icon"]={0.4986646,0.5003072},
         ["booster-shield-icon"]={0.5023374,0.5019992},
         ["booster-star-icon"]={0.5003707,0.4961590},
         ["market-10"]={0.4994015,0.5035466},
-        ["market-5"]={0.4992643,0.4973654},
+        ["market-5"]={0.5010406,0.4982173},
     },
     images={
         ["background"]="board/backs/background.jpg",

@@ -707,10 +707,7 @@ function G.bind(R, over)
     end
 
     -- The building card: a story building or a shop item, to build or move.
-    -- A game's R.building_gets(kind) lists what the building brings as icons
-    -- and may return a second value, a caption for when it comes (default
-    -- W.card.gets);
-    -- without it the card falls back to the building's unlock text.
+    -- R.building_reward(kind) returns the board piece with its payout, if any.
     local wonder_form = ui.form{
         root = N.column {panel=true,
             match3.popup_header("Building details", nil, W.corner_close and "close"),
@@ -766,8 +763,8 @@ function G.bind(R, over)
         wonder_form.values.show_price = show_price
         wonder_form.values.show_notice = not show_price or step ~= nil
         wonder_form.values.show_shop = step ~= nil
-        local gets, gets_caption = {}, nil
-        if R.building_gets then gets, gets_caption = R.building_gets(i) end
+        local reward = R.building_reward(i)
+        local gets = reward and {reward} or {}
         local price = show_price and price_parts(w.cost) or {}
         -- While the building is being funded the card lists what is still
         -- missing, as amounts, in place of the full price.
@@ -784,7 +781,6 @@ function G.bind(R, over)
         wonder_form.values.show_gets, wonder_form.values.show_amounts = #gets > 0, count > 0
         wonder_form.values.show_both = groups == 2
         assert(wonder_form:set_items("gets", gets))
-        wonder_form:set("gets_caption", gets_caption or W.card.gets)
         wonder_form.values.show_unlock = unlock_text ~= nil and #gets == 0
         wonder_form:set("unlock", unlock_text or "")
         assert(wonder_form:set_items("price", price))

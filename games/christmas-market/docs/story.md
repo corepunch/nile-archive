@@ -38,8 +38,8 @@ One stall opens every five wishes, four to each Advent. Story stalls (bold) hold
 | --- | --- | --- | --- |
 | 1. A Light by the Arch | 1–20 | **Welcome arch** 1, Reindeer stable 6, **Lumber workshop** 11, Firework stall 16 | First Sunday of Advent: the first candle at the arch and the first lights on the big fir |
 | 2. Gingerbread and Cocoa | 21–40 | **Gingerbread bakery** 21, Snowy chapel 26, **Hot cocoa kiosk** 31, Ice house 36 | Second Sunday: the Fenwick choir sings in the square |
-| 3. Paper and String | 41–60 | Lakeside smokehouse 41, Station kiosk 46, **Toymaker's workshop** 51, **Gift wrapping pavilion** 56 | Third Sunday, the rose-pink candle: Theo sees Noelle's signature and knows who Someone is |
-| 4. A Letter Forty Years Late | 61–80 | **Candlelight shop** 61, North Pole post office 66, Glassblower's stall 71, **Reindeer carousel** 76 | Fourth Sunday: Agnes and Henrik light the last candle together |
+| 3. Paper and String | 41–60 | Lakeside smokehouse 41, Station kiosk 46, **Toymaker's workshop** 51, **Candlelight shop** 56 | Third Sunday, the rose-pink candle: Theo sees Noelle's signature and knows who Someone is |
+| 4. A Letter Forty Years Late | 61–80 | **Gift wrapping pavilion** 61, North Pole post office 66, Glassblower's stall 71, **Reindeer carousel** 76 | Fourth Sunday: Agnes and Henrik light the last candle together |
 | 5. The Walk Home | 81–100 | **Winter skating rink** 81, Woodcarvers' hall 86, **Christmas tree** 91, Santa's sleigh 96 | Christmas Eve: the last train, the tree, Theo under the fir at midnight |
 
 **What gets in the way.** Bramble, Mr Finch's goat, gets into the market's tinsel and runs through the lanes with it. On the board a tinsel tie protects the treat underneath for one hit.
@@ -172,7 +172,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 - **Noelle:** Twenty logs for the workshop, Theo, for one loaf and my sincere thanks. Final offer.
 - **Theo:** Twenty logs for a mulled wine every morning, with the cloves. That's mine.
-- **Noelle:** Deal! Now fetch the farrier, Theo. The sleigh-horse in the stable has been waiting for shoes.
+- **Noelle:** Deal! Fetch Pip for me, Theo. The reindeer settles down when he hears Pip's voice.
 
 **Level 12 · Chestnut Corner**
 
@@ -182,9 +182,9 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 13 · Sleigh Ride**
 
-- **Pip:** Noelle, shut your eyes and listen! That's the sleigh-horse, in his new bells!
+- **Pip:** Noelle, shut your eyes and listen! Hear our reindeer's bells?
 - **Noelle:** Jingle, jingle! Pip, every child in the lane has run out in one boot!
-- **Theo:** Pip, find your other boot. And that horse thinks the bells are about him. He's not wrong.
+- **Theo:** Pip, find your other boot. Our reindeer thinks the bells are about him. He's not wrong.
 
 **Level 14 · Silver Bell**
 
@@ -408,7 +408,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 46 · Gingerbread Row**
 
-- **Pip:** Noelle, can I help Theo at his station kiosk? Pretzels! And I can watch the trains.
+- **Pip:** Noelle, can I wind Theo's station clock? I can watch the trains from there.
 - **Noelle:** Watching for your mum? You said you didn't mind.
 - **Pip:** I don't! I just check. Sometimes. Every train. Have a gingerbread man.
 
@@ -466,9 +466,9 @@ Order: result → market → place the stall → scene → next goal. A first cl
 - **Noelle:** Mrs Alder! The rule is never ask. Who's on your list?
 - **Mrs Alder:** Three names, and I'm not saying. Never ask is for you, dear. I'm only guessing.
 
-**Level 56 · Snowman Square · builds Gift wrapping pavilion**
+**Level 56 · Snowman Square · builds Candlelight shop**
 
-- **Pip:** Noelle, hold the string! The red scarf's for my mum. The blue one was my first try. Three arms.
+- **Pip:** Noelle, hold the lantern! The red scarf's for my mum. The blue one was my first try. Three arms.
 - **Noelle:** Pip, would you like Gran's parcel? "For whoever needs it most." I think it might be you.
 - **Pip:** Keep it. I said I don't mind about Mum. I mind. A bit. Quite a lot, actually.
 
@@ -508,9 +508,9 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 - **Noelle (thought):** Three candles lit, and Theo said good morning like he meant it. What's got into him?
 - **Pip (shout):** NOTHING'S GOT INTO HIM! I've got letters to run!
-- **Agnes:** Candles on the new shop's shelves by dark, love. The old postbox behind it wants its lining seen to.
+- **Agnes:** When you bring the wrapping paper, have a look at the old green postbox for me, love.
 
-**Level 61 · Silver Bells Stall · builds Candlelight shop**
+**Level 61 · Silver Bells Stall · builds Gift wrapping pavilion**
 
 - **Mrs Alder:** Hold my lantern, Noelle. Envelope behind that lining: H. Strand. Smells of Agnes's kitchen.
 - **Pip:** Henrik Strand! There's flour in the fold! Shall I run it over? A penny a message!
@@ -791,9 +791,9 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Theo:** Wine through a wall. Fine, but who ladles it? Not me. My gloves are sticky.
 - **Noelle:** Nobody ladles. Just stand under it and tell everyone it was your idea. Cinnamon first?
 
-**Upgrade man_04 · new shoes and bells for the sleigh-horse · Reindeer stable**
-- **Pip:** Mr Wren, hold his bridle! New shoes, and the bells are mine. I polished every one!
-- **Mr Wren:** Let him hear them first. A horse likes to know whose tune he's wearing.
+**Upgrade man_04 · a new harness and bells for the reindeer · Reindeer stable**
+- **Pip:** Mr Wren, hold his harness! The bells are mine. I polished every one!
+- **Mr Wren:** Let him hear them first. He likes to know whose tune he's wearing.
 - **Pip:** He keeps lifting his feet like a cat in snow. Does that mean he likes them?
 
 **Upgrade man_02 · a drying shed for the pine · Lumber workshop**
@@ -889,7 +889,7 @@ Optional scenes, one per building, played on the next return to town after its f
 | Hot cocoa kiosk | Level 32 | A cup waiting on the counter. Mrs Alder made sure of it. |
 | Gingerbread bakery | Level 66 | Two cups on the windowsill. |
 | Toymaker's workshop | Level 66 | The window's been cleaned. On both sides of the square. |
-| Reindeer carousel | Level 77 | Twelve horses, twelve families. The third one's a touch to the left. |
+| Reindeer carousel | Level 77 | Pip keeps a wind-up top in his pocket for anyone too small to ride. |
 | Christmas tree | Level 30 | A lamp for the last walker home. There’s one left by the fir. |
 
 ### Story finds
@@ -915,6 +915,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-20: Candlelight opens before Gift wrapping. Pip still shows his mum's scarf at wish 56, and the old postbox gives up Agnes's letter at wish 61.
 
 - 2026-11-20: Speech-only pass. Every line is now said by someone to someone (docs/STORY_WRITING.md#speech-only-no-narration); reports of what the screen shows were rewritten or cut (89 suspect lines to 5). New speakers: Mrs Alder (from 31), Mr Finch (from 41), Mary Larkin and Rosa (from 94), each with a small want that pays off. Sixteen optional upgrade scenes, one per Rome 2 citizen feat, each voiced by the building's keeper instead of a new character. Two cold reads; fixes include Theo learning Noelle's name without announcing it, Rosa alive and away from the start, and fewer repeated gags.
 

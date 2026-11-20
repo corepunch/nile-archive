@@ -180,7 +180,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 6. See how the crew uses what you built, then set out again. The 100 boards open twenty restorations, one after every fifth board.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
-The Spring well costs 70 Coins. Its water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The Build card shows the price or the amounts still needed.
+The Spring well's water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The Build card shows the price or the amounts still needed alongside its one reward.
 
 ### Tutorials and upgrades (`lua/user_events.lua`)
 
@@ -216,6 +216,8 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 ## Buildings
 
+[Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
+
 The ladder has twenty purchases, one available after every fifth board (after levels 1, 6, 11 … 96), four per epoch. It follows the purchase order of the Windows edition of Cradle of Rome 2, with names that match the artwork (the Rome name is in brackets). The Spring well, Expedition camp, Jungle market, Tide clock tower, Harbour plaza, Harbour lodge, Keeper's archive, Lighthouse, Temple of the Sun and Jade fountain are story restorations with a placement scene and hold the next level; the others must be bought before the next story restoration. The [campaign balance check](docs/square-match3.md#construction-balance) fits the prices to the resources the bot earns by clearing boards in order, so the expected campaign needs no replays.
 
 | After level | Restoration | Reward | Coins / Food / Supplies |
@@ -229,17 +231,17 @@ The ladder has twenty purchases, one available after every fifth board (after le
 | 31 | Water mill (Mill) | Grain bundles | 690 / 835 / 785 |
 | 36 | Tide clock tower (Thermae) | Shield | 615 / 890 / 815 |
 | 41 | Harbour plaza (Port) | Shrimp | 595 / 915 / 815 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 570 / 1155 / 770 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 550 / 1225 / 745 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 575 / 1215 / 740 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 655 / 1195 / 690 |
-| 66 | Lighthouse | Plus | 675 / 1200 / 670 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 750 / 1325 / 750 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 805 / 1280 / 750 |
-| 81 | Great aviary (Pantheon) | Sandals | 1215 / 1830 / 1100 |
-| 86 | Relic museum (Theatre) | Harps | 1385 / 1900 / 1145 |
-| 91 | Temple of the Sun (Forum) | Star | 1635 / 2085 / 1185 |
-| 96 | Jade fountain (Fountain) | Emeralds | 1655 / 2045 / 1215 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass | 545 / 1110 / 740 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 535 / 1135 / 730 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning | 570 / 1110 / 730 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 595 / 1120 / 700 |
+| 66 | Lighthouse | Plus | 645 / 1105 / 670 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 745 / 1215 / 755 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 800 / 1175 / 750 |
+| 81 | Great aviary (Pantheon) | Sandals | 1215 / 1680 / 1100 |
+| 86 | Relic museum (Theatre) | Harps | 1385 / 1745 / 1145 |
+| 91 | Temple of the Sun (Forum) | Star | 1635 / 1910 / 1185 |
+| 96 | Jade fountain (Fountain) | Emeralds | 1655 / 1870 / 1215 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and

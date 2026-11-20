@@ -27,7 +27,7 @@ return require("match3.game").journey{
         {2, 66, "Two cups on the windowsill."},
         {3, 32, "A cup waiting on the counter. Mrs Alder made sure of it."},
         {4, 66, "The window's been cleaned. On both sides of the square."},
-        {7, 77, "Twelve horses, twelve families. The third one's a touch to the left."},
+        {7, 77, "Pip keeps a wind-up top in his pocket for anyone too small to ride."},
         {9, 100, "A lamp for the last walker home. There's one left by the fir."},
     },
 }

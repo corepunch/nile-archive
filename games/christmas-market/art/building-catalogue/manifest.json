@@ -87,7 +87,7 @@
    "base_width": 409.808,
    "cost": [
     875,
-    0,
+    330,
     495
    ],
    "stars": 0,
@@ -116,9 +116,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    990,
-    925,
-    785
+    1095,
+    535,
+    870
    ],
    "stars": 0,
    "about": "Mrs Alder has paid for the next cup.",
@@ -146,9 +146,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1285,
-    925,
-    1005
+    1145,
+    815,
+    1000
    ],
    "stars": 0,
    "about": "Henrik sells wooden blocks from his toy bench.",
@@ -176,9 +176,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1335,
-    925,
-    960
+    1340,
+    905,
+    1050
    ],
    "stars": 0,
    "about": "Paper, string and a spare tag for Pip’s scarf.",
@@ -206,9 +206,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1595,
-    1050,
-    1050
+    1200,
+    805,
+    960
    ],
    "stars": 0,
    "about": "Take a lantern if you have a long walk home.",
@@ -236,12 +236,12 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1685,
-    995,
-    1030
+    1490,
+    825,
+    1000
    ],
    "stars": 0,
-   "about": "Twelve wooden horses. A different household painted each one.",
+   "about": "Pip hands out wind-up tops while riders wait for a turn.",
    "road": false,
    "image": [
     417,
@@ -266,12 +266,12 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1690,
-    1070,
-    960
+    1535,
+    830,
+    955
    ],
    "stars": 0,
-   "about": "The rink kiosk sells hand-painted ceramic snowmen.",
+   "about": "Lace up a pair of ice skates at the rink kiosk.",
    "road": false,
    "image": [
     427,
@@ -296,8 +296,8 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1900,
-    1090,
+    1755,
+    820,
     1005
    ],
    "stars": 0,
@@ -771,8 +771,8 @@
    ],
    "base_width": 223.205,
    "cost": [
-    1895,
-    1120,
+    1760,
+    835,
     990
    ],
    "stars": 0,
@@ -802,11 +802,11 @@
    "base_width": 273.205,
    "cost": [
     1045,
-    770,
+    600,
     895
    ],
    "stars": 0,
-   "about": "Snow blocks outside, a warm glow within.",
+   "about": "Theo carves frost shields from the lake ice.",
    "road": false,
    "image": [
     187,
@@ -947,8 +947,8 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1175,
-    700,
+    1085,
+    645,
     945
    ],
    "stars": 0,
@@ -1007,9 +1007,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1605,
-    1035,
-    1060
+    1395,
+    870,
+    1040
    ],
    "stars": 0,
    "about": "Every letter finds its way north.",
@@ -1038,7 +1038,7 @@
    "base_width": 273.205,
    "cost": [
     960,
-    0,
+    420,
     560
    ],
    "stars": 0,
@@ -1072,7 +1072,7 @@
     0
    ],
    "stars": 0,
-   "about": "A blue pottery vase holds water for the farrier’s forge.",
+   "about": "A reindeer from the stable can kick through a stubborn tile.",
    "road": false,
    "image": [
     377,
@@ -1097,8 +1097,8 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1715,
-    1060,
+    1580,
+    795,
     955
    ],
    "stars": 0,
@@ -1157,12 +1157,12 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1175,
-    740,
+    1055,
+    715,
     910
    ],
    "stars": 0,
-   "about": "The kiosk clock keeps the trains honest. Pretzels while you wait.",
+   "about": "Borrow the station clock when you need a little more time.",
    "road": false,
    "image": [
     278,
@@ -1187,9 +1187,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1630,
-    1020,
-    1055
+    1430,
+    855,
+    1025
    ],
    "stars": 0,
    "about": "Every bauble is blown by hand, one breath at a time.",

@@ -226,7 +226,7 @@
         306.197
       ],
       "base_width": 409.808,
-      "gold": 570,
+      "gold": 545,
       "stars": 0,
       "runtime": "data/city/buildings/lodge.png",
       "image": [
@@ -236,11 +236,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Estate",
       "cost": [
-        570,
-        1155,
-        770
+        545,
+        1110,
+        740
       ],
-      "about": "Unlocks Hourglass. Add five moves.",
+      "about": "The dock crews turn this hourglass to time their watches. Adds five moves.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/lodge.png",
@@ -266,7 +266,7 @@
         258.785
       ],
       "base_width": 409.808,
-      "gold": 655,
+      "gold": 595,
       "stars": 0,
       "runtime": "data/city/buildings/archive.png",
       "image": [
@@ -276,11 +276,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lavish Library",
       "cost": [
-        655,
-        1195,
-        690
+        595,
+        1120,
+        700
       ],
-      "about": "Rings earn 7 Coins each.",
+      "about": "The archive keeps the signet rings of the island's old keepers.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/archive.png",
@@ -306,7 +306,7 @@
         271.521
       ],
       "base_width": 273.205,
-      "gold": 805,
+      "gold": 800,
       "stars": 0,
       "runtime": "data/city/buildings/observatory.png",
       "image": [
@@ -316,8 +316,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Observatory",
       "cost": [
-        805,
-        1280,
+        800,
+        1175,
         750
       ],
       "about": "Unlocks Mixer. Shuffle the pieces.",
@@ -357,7 +357,7 @@
       "reference": "Fountain",
       "cost": [
         1655,
-        2045,
+        1870,
         1215
       ],
       "about": "Emeralds earn 11 Coins each.",
@@ -397,7 +397,7 @@
       "reference": "story finale, as a landmark",
       "cost": [
         1635,
-        2085,
+        1910,
         1185
       ],
       "about": "Unlocks Star. Clear all pieces of a chosen kind.",
@@ -586,7 +586,7 @@
         233.232
       ],
       "base_width": 359.808,
-      "gold": 575,
+      "gold": 570,
       "stars": 0,
       "runtime": "data/city/buildings/map_room.png",
       "image": [
@@ -596,11 +596,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Schoolhouse",
       "cost": [
-        575,
-        1215,
-        740
+        570,
+        1110,
+        730
       ],
-      "about": "Unlocks Lightning. Strike up to fifteen random cells.",
+      "about": "The cartographer's storm charts guide lightning to the board.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/map_room.png",
@@ -786,7 +786,7 @@
         281.74
       ],
       "base_width": 273.205,
-      "gold": 675,
+      "gold": 645,
       "stars": 0,
       "runtime": "data/city/buildings/lighthouse.png",
       "image": [
@@ -796,8 +796,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lighthouse",
       "cost": [
-        675,
-        1200,
+        645,
+        1105,
         670
       ],
       "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
@@ -877,10 +877,10 @@
       "reference": "Aviary",
       "cost": [
         1215,
-        1830,
+        1680,
         1100
       ],
-      "about": "Sandals earn 9 Coins each.",
+      "about": "The aviary keepers wear woven sandals on their rounds.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/aviary.png",
@@ -906,7 +906,7 @@
         274.276
       ],
       "base_width": 446.41,
-      "gold": 750,
+      "gold": 745,
       "stars": 0,
       "runtime": "data/city/buildings/beached_ship.png",
       "image": [
@@ -916,11 +916,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Pirate Ship",
       "cost": [
-        750,
-        1325,
-        750
+        745,
+        1215,
+        755
       ],
-      "about": "Scarabs earn 8 Coins each.",
+      "about": "The crew salvaged scarabs from the schooner's cargo.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/beached_ship.png",
@@ -946,7 +946,7 @@
         226.211
       ],
       "base_width": 496.41,
-      "gold": 550,
+      "gold": 535,
       "stars": 0,
       "runtime": "data/city/buildings/amphitheater.png",
       "image": [
@@ -956,11 +956,11 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Amphitheater",
       "cost": [
-        550,
-        1225,
-        745
+        535,
+        1135,
+        730
       ],
-      "about": "Helmets earn 6 Coins each.",
+      "about": "Helmets from the old contests survive beneath the arena seats.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/amphitheater.png",
@@ -997,10 +997,10 @@
       "reference": "Museum",
       "cost": [
         1385,
-        1900,
+        1745,
         1145
       ],
-      "about": "Harps earn 10 Coins each.",
+      "about": "The collection includes harps once played in the island's halls.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/museum.png",

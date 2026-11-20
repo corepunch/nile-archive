@@ -10,7 +10,9 @@ restoration, with a board that gives the changed piece a reason to matter.
 | Start here | What it covers |
 | --- | --- |
 | [Complete game-design reference](GAME_DESIGN.md) | Core loop, economy, all 20 Rome I buildings, all eight tool-building links, citizen tasks, version caveats and Christmas Market/Relic Rush implications. |
-| [Gem correspondence sheet](gem-correspondence.html) | Side-by-side pieces and bonuses for both Rome editions, Relic Rush and Christmas Market, including proposed market colors and building rewards. Open in a browser. |
+| [Campaign building rewards](building-rewards.html) | All 20 live pairs from both campaigns alongside the GameTop Windows reference. Open in a browser for the in-game artwork. |
+| [Cradle of Rome 2 building rewards](rome-2-building-rewards.html) | Standalone export of the original prices, piece names, yields and sprite IDs from the Windows release. |
+| [Gem correspondence study](gem-correspondence.html) | Earlier side-by-side motif and color study for both Rome editions and both campaigns. |
 | [Board design](BOARD_DESIGN.md) | All 115 numbered layouts, feature counts and worked examples of plaque placement, locks and supply. |
 | [Adventure comparison sheets](#adventure-comparison-sheets) | 100 board diagrams per game, aligned by level number. |
 | [Resources and city](ECONOMY_AND_CITY.md) | Piece yields, the finish bonus, all 20 purchases across five epochs, and examples of citizen rewards. |
@@ -143,7 +145,7 @@ The extracted pack's SHA-256 is
 ## Cradle of Rome 2 economy data
 
 The [Windows economy export](rome-2-economy.json) records the 20 priced
-constructions in order, their blueprint requirements, the tile or tool each
+constructions in order, their English display names, blueprint requirements, the tile or tool each
 construction unlocks, the exact credits by tile, and Adventure multipliers.
 The source files are `settings/scenes/shop/epochs.xml` and
 `settings/scenes/game/{game_balls,field_balls,game_settings}.xml`.
@@ -162,6 +164,7 @@ with its own three wallets, expedition lengths and story milestones.
 
 ```sh
 python3 tools/reference/cradle-of-rome/export_economy.py reference/cradle-of-rome-2/resources > docs/cradle-of-rome-reference/rome-2-economy.json
+python3 tools/building_rewards.py
 ```
 
 ## Reproduce the counts

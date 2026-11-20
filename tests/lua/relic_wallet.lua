@@ -117,14 +117,13 @@ end
 
 do
     local restored = {gateway=true, lodge=true, amphitheater=true, map_room=true, archive=true}
-    local port = rules.game_start(41, 123, restored)
-    local fish = rules.game_start(46, 123, restored)
-    local pearl = rules.game_start(56, 123, restored)
+    local lodge = rules.game_start(46, 123, restored)
+    local map_room = rules.game_start(56, 123, restored)
     local ring = rules.game_start(61, 123, restored)
-    check(port.resource_yields[3].key == "shrimp" and fish.resource_yields[3].key == "fish"
-        and fish.resource_yields[3].amount == 7, "fish upgrades shrimp in the original 7-Food tier")
-    check(pearl.resource_yields[0].key == "pearl" and pearl.resource_yields[0].amount == 7
-        and ring.resource_yields[0].key == "ring", "Pearl and Ring are separate live pieces")
+    check(lodge.bonus_debut == economy.bonuses.hourglass and lodge.resource_yields[3].key == "shrimp"
+        and lodge.resource_yields[3].amount == 6, "the lodge adds only the Hourglass")
+    check(map_room.bonus_debut == economy.bonuses.lightning and map_room.resource_yields[0].key == "helmet"
+        and ring.resource_yields[0].key == "ring", "only the archive replaces helmets with rings")
 end
 
 -- Like Cradle of Rome's ladder, each new piece pays toward the next purchase.

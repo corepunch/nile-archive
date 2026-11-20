@@ -3,19 +3,40 @@
 local rules = require('rules')
 local campaign = require('campaign')
 local island = require('island')
+local economy = require('economy')
+local R = require('screens')
 check(rules.square and rules.COLUMNS == 9 and rules.ROWS == 12, '9×12 square envelope')
 local expected = 100
 check(rules.LEVELS == expected and rules.COLORS == 5, 'campaign length and five piece slots')
 check(#rules.levels[4].chain_cells > 0, 'the tutorial that introduces chains contains a chain')
 check(#island.ladder == 20, 'twenty campaign purchases')
 local previous = 0
+local owned = {preview=true}
+R.board_art = setmetatable({}, {__index=function(_, frame) return frame end})
 for n, step in ipairs(island.ladder) do
     check(step.after == 1 + (n - 1) * 5, 'one purchase every five clears')
     local cost = island.buildings[step.kind + 1].cost
     local total = cost[1] + cost[2] + cost[3]
     check(total >= previous, 'price total does not fall at ' .. step.unlock.building)
     previous = total
+    local unlock = step.unlock
+    local label = unlock.building .. ': '
+    local before = rules.game_start(step.after, 21, owned)
+    owned[unlock.building] = true
+    local board = rules.game_start(step.after, 21, owned)
+    local card = R.building_reward(step.kind)
+    check(card and card.icon, label .. 'card shows one board item')
+    if unlock.bonus then
+        local bonus = unlock.bonus
+        check(board.bonus_debut == bonus and before.bonus_debut ~= bonus and card.icon == bonus.icon,
+            label .. 'card and first board agree on the purchased tool')
+    else
+        local piece = economy.FOOD and economy.pieces[unlock.kind] or unlock
+        check(board.resource_yields[unlock.kind] == piece and before.resource_yields[unlock.kind] ~= piece
+            and card.amount == piece.amount and card.unit, label .. 'card and first board agree on the matching yield')
+    end
 end
+check(not R.building_reward(island.kinds.bench), 'decorations have no campaign piece')
 for level, entry in ipairs(campaign.levels) do
     local label = ('level %d: '):format(level)
     check(#entry.mask == rules.CELLS and not entry.mask:find('[^01]'), label .. 'valid cell mask')
