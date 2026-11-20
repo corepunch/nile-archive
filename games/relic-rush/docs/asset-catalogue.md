@@ -174,6 +174,10 @@ See the [finale and sand review](screenshots/review/signal-finale/README.md).
 The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived with its
 [historical review](review/story-mosaic/README.md).
 
+## Speakers without a bust
+
+Kessler and Ines speak by radio and lamp and keep a name plate by design. Marisol and the sixteen citizens speak with a name plate only until their busts are painted ([issue #110](https://github.com/corepunch/nile-archive/issues/110)): no portrait, a named plate in the speaker's own colour from `lua/narrative.lua`. Review capture: `--story-beat citizen-man_05 --frames 240` at 390×844.
+
 ## Ancient keeper portrait
 
 The Carpenter’s workshop supplies timber for Tomas’s cable reel. When the Expedition camp takes up the night watch, the crew reads the keeper’s words from the watch book. The

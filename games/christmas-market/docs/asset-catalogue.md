@@ -503,7 +503,7 @@ retired rims.
 
 ## Story cast
 
-All six speaking characters have painted busts. One built-in ImageGen pass produced the [supporting cast sheet](../art/story-cast.png), using Noelle's existing cutout as the style reference. The exact prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). These five exports replace the cards tracked in [issue #76](https://github.com/corepunch/nile-archive/issues/76).
+The six leads have painted busts. Mrs Alder, Mr Finch, Mary Larkin, Rosa and the sixteen citizens speak with a name plate only until their busts are painted ([issue #110](https://github.com/corepunch/nile-archive/issues/110)): no portrait, a named plate in the speaker's own colour from `lua/narrative.lua`. Review capture: `--story-beat citizen-man_07 --frames 240` at 480×900. One built-in ImageGen pass produced the [supporting cast sheet](../art/story-cast.png), using Noelle's existing cutout as the style reference. The exact prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). These five exports replace the cards tracked in [issue #76](https://github.com/corepunch/nile-archive/issues/76).
 
 | Character | Runtime | Story cue |
 | --- | --- | --- |
