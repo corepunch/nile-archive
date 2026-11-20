@@ -59,8 +59,8 @@ One restoration opens every five expeditions. Story restorations (bold) play a s
 | Plant | Inference later / payoff |
 | --- | --- |
 | Two flashes answer Mara’s lamp (Spring well) | The answer changes to three at the Expedition camp. Ines confirms her identity with the same delayed pattern at the safe landing (100). |
-| Tomas tells the crew the relay cable is severed (Trapper’s cabin) | The cable hand-in prompts a field test of the hand shutter at the lookout. |
-| Tomas makes a reel from the first timber | His cable request asks the player to gather loose coils. |
+| Tomas tells the crew the relay cable is severed (Trapper’s cabin) | Open: the cable hand-in that paid this off went with the crew requests. |
+| Tomas makes a reel from the first timber | Open: the cable request that used the reel went with the crew requests. |
 | The crew can see across the inlet from the near shore | The far warning shutter can answer across the gap. The crew follows the answer at 21. |
 | Tomas names Ines as an earlier operator (Expedition camp) | He recognizes her handwriting in the harbour register (41), then hands over her cabinet key (61). |
 | Tomas finds a pencilled measurement in the torn log (47) | The stone gauge confirms it (49, 59). The signed plan explains where the harbour can divert the tide (61). |
@@ -69,7 +69,7 @@ Elena proposes a reflection at the Spring well. The severed relay and the change
 
 ## Delivery and choices
 
-Every first clear plays its expedition's scene; replays are silent. A story restoration's scene plays once it is placed. The Spring well brings Tomas to camp as a citizen, and the camp scene waits for that arrival. The Expedition camp opens the reply choice; later lines hold for either reply. The separate hand-shutter test opens on the cable hand-in. On reload, an unread scene or selected reply resumes. Saves from the twenty-expedition script skip the scenes before their level and get a short recap.
+Every first clear plays its expedition's scene; replays are silent. A story restoration's scene plays once it is placed. The Spring well brings Tomas to camp as a citizen, and the camp scene waits for that arrival. The Expedition camp opens the reply choice; later lines hold for either reply. On reload, an unread scene or selected reply resumes. Saves from the twenty-expedition script skip the scenes before their level and get a short recap.
 
 ## Chains and blue plaques
 
@@ -79,7 +79,7 @@ hit after the piece is free. See [board progression](board-progression.md) and t
 
 ### Beat budgets
 
-Every scene has two or three lines: the crew's delight at what they finished, then what to do next. Epoch openings (21, 41, 61, 81) and chapter closes (20, 40, 60, 80, 100) add a before-level scene. Ines speaks only at 99 and 100; Kessler is a radio voice.
+An expedition scene has two or three lines: the crew's delight at what they finished, then what to do next. Restoration scenes run longer (16, 61 and 66 most of all). Epoch openings (21, 41, 61, 81) and chapter closes (20, 40, 60, 80, 100) add a before-level scene. Ines speaks only at 100; Kessler is a radio voice.
 
 ## Chapter 1: A Light Below
 
@@ -209,7 +209,7 @@ Choice prompt: Who should answer the signal?
 **Level 17 · Moss Bridge**
 
 - **Mara:** One long flash went out at dusk. Nothing since. Moss has moved into my boots.
-- **Elena:** Before, they answered at once. This silence is a message too. They're thinking.
+- **Elena:** Before, they always answered the same night. This silence is a message too. They're thinking.
 - **Tomas:** Or deciding whether we're friends. I'd wait, too.
 
 **Level 18 · Twin Wells**
@@ -289,7 +289,7 @@ Choice prompt: Who should answer the signal?
 
 **Level 27 · Colonnade Walk**
 
-- **Mara:** New pattern! Long, short, short. Until now it was three, with a pause before the third.
+- **Mara:** New pattern! Long, short, short. Until now it was one lopsided flash.
 - **Elena:** A mechanism repeats itself. A person who wants noticing changes the tune.
 - **Tomas:** Then we answer politely. Whoever it is has waited a long while to be heard.
 
@@ -642,7 +642,7 @@ Choice prompt: Who should answer the signal?
 **Level 74 · Obsidian Lintel**
 
 - **Elena:** From the sea the island is a dark lump. We need something tall and distinct.
-- **Mara:** A star observatory, up on the headland? Planned, I mean. It's not up yet.
+- **Mara:** A star observatory? Planned, I mean. It's not up yet.
 - **Elena:** Plans are all we have. I've marked its site on the chart.
 
 **Level 75 · The Drowned Stair**
@@ -653,7 +653,7 @@ Choice prompt: Who should answer the signal?
 
 **Level 76 · Kapok Roots**
 
-- **Elena:** The star dome will stand on the headland, the landmark for any boat at dusk.
+- **Elena:** The star dome will be the landmark for any boat at dusk.
 - **Mara:** If the schooner's skiff floats. The tar is drying slowly and has opinions.
 - **Elena:** Bearings, then tar. In that order.
 
@@ -759,7 +759,7 @@ Choice prompt: Who should answer the signal?
 
 - **Mara:** Parrots on every step. That one just said "expensive, Mr Vale".
 - **Adrian:** I will not be taking questions about the parrot.
-- **Tomas:** The temple at the top is the place for our quay notice. Every worker passes it.
+- **Tomas:** The temple is the place for our quay notice. Every worker passes it.
 
 **After restoration 91 · Temple of the Sun**
 
@@ -831,79 +831,13 @@ Choice prompt: Who should answer the signal?
 
 - **Mara:** Long flash out, and three back with a pause before the third. That's her answer!
 - **Tomas:** Welcome home, Ines. Here's the key. We'll keep the light together.
-- **Ines:** The quay would have had me, so I came round by the far shore and worked the shutter by hand.
-- **Ines:** I changed its tune till a lamp I could trust answered. Yours, Tomas. You kept it lit.
-- **Ines:** Gladly. I've brought a chart of the other lights. They need keepers too.
+- **Ines:** Gladly. The quay would have had me, so I came round by the far shore and worked the shutter by hand.
+- **Ines:** I changed its tune till a lamp I could trust answered. And this one did.
+- **Ines:** I've brought a chart of the other lights. They need keepers too.
 
 ## Crew requests
 
-Between two purchases the crew asks for smaller things. A request puts one piece of its own on the expedition boards. It banks nothing in the wallet. Matching it fills the request across expeditions, and the open requests stand as round markers down the island's left edge, under the next building. Handing a filled request in plays its scene. [Request data](../lua/quests.lua) · [Board rules](match4-rules.md#crew-requests)
-
-Two lines run side by side. **Search** follows the light: Mara and the keeper's old route. **Crew** is about the people at the table. A request opens once its building stands and the one before it on its line is handed in. The cable hand-in opens a field test at the lookout. A player may hand requests in even after the campaign ends. Each scene therefore holds on its own: it names nothing that only a later restoration establishes, and no restoration scene relies on it.
-
-| Request | Line | Piece | Opens with | What it adds |
-| --- | --- | --- | --- | --- |
-| Piece the harbor chart together | Search | Chart pages | Well | The chart shows a reef across the harbor mouth and a warning light on the far side of the inlet. |
-| Fill the supper pot | Crew | Berries | Well | Elena writes down what they saw. Restates the two flashes. |
-| Uncover the painted arrows | Search | Trail arrows | Trapper's cabin | Tomas kept the cliff path marked even when the boats stopped coming. |
-| Dig out the keeper's tools | Crew | Tool rolls | Trapper's cabin | Tomas left his pliers at the break in the cable. |
-| Haul up the relay cable | Search | Relay cable | Carpenter’s workshop and trail hand-in | Tomas recognizes his pliers. The break opens a field test with the spare warning lamp. |
-| Test the hand shutter | Search | Lift the brass ring on the island | Cable handed in | Mara rows out to test where the red glass shows. Elena adds the reef bearing to the recovered chart. |
-
-The pieces are the campaign's existing paintings. Each stands where no like-coloured piece shares the board: the cream chart and red berries beside the green leaf on the first expeditions, and the green arrow only once the Hammer has taken the leaf's slot.
-
-| Plant | Payoff |
-| --- | --- |
-| A reef and a warning light on the far side (chart) | The watch book tells the village when to open the shutter for boats (restoration 16). |
-| Elena writes down what they saw (supper) | She marks the red sector on the chart after Mara tests it from the skiff. |
-| Tomas kept the arrows fresh when the boats stopped coming (trail) | Someone answers from the far side (restoration 16). |
-| Tomas left his pliers at the break (tools) | Pliers are rusted onto the cut cable (cable). Either scene may come first. |
-| The wire has carried nothing since the storm (cable) and the chart marks a reef | The spare shutter works by hand. From the skiff, Mara sees red precisely when the reef lies ahead. |
-
-**Request chart**
-
-- **Elena:** It's a harbor chart. Look, a reef drawn right across the mouth.
-- **Mara:** And a station on the far side of the inlet, with a lamp inked beside it.
-- **Elena:** A warning light. Somebody had to keep boats off that reef every night.
-
-**Request supper**
-
-- **Elena:** Berries, flatbread and the last of the ship's cheese. A proper supper.
-- **Mara:** You're writing at the table again.
-- **Elena:** Two flashes out, two back, at the well. I write down what we saw, not what we hoped.
-- **Mara:** Then write that I counted them twice.
-
-**Request trail**
-
-- **Tomas:** Green means the stone will hold. I painted those every spring.
-- **Mara:** The last one is this year's paint.
-- **Tomas:** Habit. Even when the boats stopped coming, I kept a tin of green paint.
-
-**Request tools**
-
-- **Tomas:** My father's chisels. I had counted those gone.
-- **Mara:** There's an empty loop in the roll.
-- **Tomas:** The pliers. I left them at the break in the cable, the night of the storm.
-
-**Request cable**
-
-- **Mara:** There's the break. And a pair of pliers clamped on it.
-- **Tomas:** Mine. Rusted shut. Nothing has run through this wire since the storm.
-- **Mara:** If the wire's dead, what would a boat offshore have seen?
-- **Tomas:** I've a spare shutter for the lookout lamp. Take your skiff out and I'll show you.
-
-**Request shutter**
-
-- **Mara:** Red! The rocks are dead ahead of me.
-- **Tomas:** I'll hold the ring up. Pull two strokes to starboard.
-- **Mara:** White now. And there's clear water over my bow.
-- **Elena:** Pass me the chart. I'll mark where the light turns red.
-
-A cold reader followed all five. They found four lines that broke when a request came late: a question Tomas had already answered, a tide explained after the crew had used it, pliers one scene assumed from another, and a closing inference that fell flat after the three flashes. Those lines now state a fact of their own. The reader judged that the cable scene strengthens the reply at the Expedition camp.
-
-A cold reader tested both scene orders and caught an ambiguity in the experiment. Tomas holds the ring steady while Mara rows across the bearing. Red changes to white because the boat moves. Afterward the Carpenter’s workshop retains Elena’s finding in its inspection text.
-
-The spare is a test rig at the near lookout. The Expedition camp scene can still exchange flashes across the gap. Ines and the far station are never required for the skiff test. The experiment can happen before that exchange, after it, or after the finale.
+Crew requests were removed from the game (commit f98aedd2), along with their scenes, which stay in git history. The reel and loose-coil lines at 7, 12 and 15 still point at the cable they used to pay off.
 
 ## Small lines
 
@@ -965,3 +899,4 @@ The scenes play over the live island with the speaking character’s portrait. T
 
 - 2026-11-15: Every expedition uses blue plaques. The previously collected objects and the signal plate now appear on first clear. Story dialogue is unchanged.
 - 2026-11-15: Simplified the expedition boards to chains and blue plaques. Updated the route and recovery dialogue to match.
+- 2026-11-20: A cold read fixed the flash record at 17 and 27, put Ines's "Gladly" straight after Tomas at 100 and made her last line hold for either reply, dropped where the observatory and temple stand, corrected the beat budgets and replaced the removed crew-request script with a note.

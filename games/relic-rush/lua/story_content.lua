@@ -104,7 +104,7 @@ return {
     }},
     {key="after-17", phase="after", level=17, lines={
         {"mara", "One long flash went out at dusk. Nothing since. Moss has moved into my boots."},
-        {"elena", "Before, they answered at once. This silence is a message too. They're thinking."},
+        {"elena", "Before, they always answered the same night. This silence is a message too. They're thinking."},
         {"tomas", "Or deciding whether we're friends. I'd wait, too."},
     }},
     {key="after-18", phase="after", level=18, lines={
@@ -169,7 +169,7 @@ return {
         {"elena", "That is the least comforting sentence I have heard all week."},
     }},
     {key="after-27", phase="after", level=27, lines={
-        {"mara", "New pattern! Long, short, short. Until now it was three, with a pause before the third."},
+        {"mara", "New pattern! Long, short, short. Until now it was one lopsided flash."},
         {"elena", "A mechanism repeats itself. A person who wants noticing changes the tune."},
         {"tomas", "Then we answer politely. Whoever it is has waited a long while to be heard."},
     }},
@@ -462,7 +462,7 @@ return {
     }},
     {key="after-74", phase="after", level=74, lines={
         {"elena", "From the sea the island is a dark lump. We need something tall and distinct."},
-        {"mara", "A star observatory, up on the headland? Planned, I mean. It's not up yet."},
+        {"mara", "A star observatory? Planned, I mean. It's not up yet."},
         {"elena", "Plans are all we have. I've marked its site on the chart."},
     }},
     {key="after-75", phase="after", level=75, lines={
@@ -471,7 +471,7 @@ return {
         {"elena", "Smudged, not faded. She was here this week."},
     }},
     {key="after-76", phase="after", level=76, lines={
-        {"elena", "The star dome will stand on the headland, the landmark for any boat at dusk."},
+        {"elena", "The star dome will be the landmark for any boat at dusk."},
         {"mara", "If the schooner's skiff floats. The tar is drying slowly and has opinions."},
         {"elena", "Bearings, then tar. In that order."},
     }},
@@ -558,7 +558,7 @@ return {
     {key="after-91", phase="after", level=91, lines={
         {"mara", "Parrots on every step. That one just said \"expensive, Mr Vale\"."},
         {"adrian", "I will not be taking questions about the parrot."},
-        {"tomas", "The temple at the top is the place for our quay notice. Every worker passes it."},
+        {"tomas", "The temple is the place for our quay notice. Every worker passes it."},
     }},
     {key="restore-91", phase="restore", level=91, building="Temple of the Sun", lines={
         {"tomas", "The warning's on the temple wall, where every worker passes. The museum crowd too."},
@@ -618,8 +618,8 @@ return {
     {key="after-100", phase="after", level=100, lines={
         {"mara", "Long flash out, and three back with a pause before the third. That's her answer!"},
         {"tomas", "Welcome home, Ines. Here's the key. We'll keep the light together."},
-        {"ines", "The quay would have had me, so I came round by the far shore and worked the shutter by hand."},
-        {"ines", "I changed its tune till a lamp I could trust answered. Yours, Tomas. You kept it lit."},
-        {"ines", "Gladly. I've brought a chart of the other lights. They need keepers too."},
+        {"ines", "Gladly. The quay would have had me, so I came round by the far shore and worked the shutter by hand."},
+        {"ines", "I changed its tune till a lamp I could trust answered. And this one did."},
+        {"ines", "I've brought a chart of the other lights. They need keepers too."},
     }},
 }

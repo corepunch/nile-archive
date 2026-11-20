@@ -136,7 +136,7 @@ The regular campaign and resource pack share the revised stone cutout.
 The pieces retain their soft-edged alpha and proportional fit on the same
 128 px canvas. [Native board review](screenshots/review/gray-masonry/board.jpg).
 
-The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `fish`, `helmet`, `pearl`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). Red mullet pays 7 Food from expedition 17. Pearls pay 7 Coins from expedition 19 and give way to rings on expedition 20. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
+The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `fish`, `helmet`, `pearl`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). Red mullet pays 7 Food from expedition 47. Pearls pay 7 Coins from expedition 57 and give way to rings on expedition 62. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 Leaves, flowers and amphoras use the normal board match and scoring rules.
