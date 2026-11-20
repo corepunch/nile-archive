@@ -28,7 +28,7 @@
 -- `M.upgrade_events(rows)` builds those events from compact rows.
 --
 -- Conditions (If). Board ones count on the current expedition only.
---   IF_PLAYER_MAKE_MATCH length                 a straight line of at least length
+--   IF_PLAYER_MAKE_MATCH length [max_length]    a straight line of at least length (and at most max_length)
 --   IF_PLAYER_MAKE_COMBO length                 one move clears in at least length waves
 --   IF_PLAYER_MAKE_AUTOMATCH_CHAIN amount       a move's cascade adds amount waves after the first
 --   IF_PLAYER_MAKE_MATCH_SERIES amount min_length       consecutive moves each with such a line
@@ -278,7 +278,9 @@ function M.install(R, cfg)
     local IF = {}
     U.IF = IF
 
-    IF.IF_PLAYER_MAKE_MATCH = {on="wave", test=function(c, ev) return ev.longest >= c.length end}
+    IF.IF_PLAYER_MAKE_MATCH = {on="wave", test=function(c, ev)
+        return ev.longest >= c.length and (not c.max_length or ev.longest <= c.max_length)
+    end}
     IF.IF_PLAYER_MAKE_COMBO = {on="move", test=function(c, ev) return ev.waves >= c.length end}
     IF.IF_PLAYER_MAKE_AUTOMATCH_CHAIN = {on="move", test=function(c, ev) return ev.waves - 1 >= c.amount end}
     local function series(ok)

@@ -58,15 +58,24 @@ function V.bind(R, rules, config, art, base_pieces)
     end
 
     local piece_size = R.cell_width * (pieces.scale or .95)
+    -- A colored special is its own piece under cream bands that run along the
+    -- axis it clears, masked to the piece's painted alpha.
+    local colored_specials = require("match3.specials").colored
+    local stripes = pieces.stripes or {repeats=4, width=.44, ink=color(255, 250, 224)}
+    local axis_angle = rules.square and math.pi / 2 or math.pi / 3
     function R.draw_relic(tile, at, scale, alpha, aspect)
-        if tile.special then return R.draw_match_special(tile, at, scale, alpha) end
+        local banded = colored_specials[tile.special]
+        if tile.special and not banded then return R.draw_match_special(tile, at, scale, alpha) end
         if tile.kind < 0 then return end
         local side = piece_size * scale
         local tex = R.board_piece_texture(tile.kind)
         tex = R.board_piece_crops and R.board_piece_crops[tex] or tex
         local area = rect.centered(at, size2(side * aspect, side / aspect))
         elements.piece_shadow(tex, area, alpha, side)
-        gfx.image(tex, area, color(255, 255, 255, alpha))
+        if banded then
+            local angle = (rules.square and 0 or math.pi / 6) + tile.axis * axis_angle
+            gfx.image_striped(tex, area, angle, stripes.repeats, stripes.width, stripes.ink, color(255, 255, 255, alpha))
+        else gfx.image(tex, area, color(255, 255, 255, alpha)) end
     end
 
     local image_alpha = background.opacity or 255

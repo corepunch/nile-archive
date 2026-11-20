@@ -143,7 +143,7 @@
     "data/story/floors/telegram.jpg": "a46376e609ce500b723e16256f94cadb9783abaf4972f8d05437f462b822be7c",
     "data/story/floors/wish-ribbon.jpg": "c5073a610b2ba986a4bdf24358f37a3e4d7a1d9f539b6d10213dc6a47e4e565c"
   },
-  "matching_rules": "Three hex axes: straight lines of three or more clear. Matches never create special pieces; power comes from boosters and tools.",
+  "matching_rules": "Rows and columns: straight lines of three or more clear. Four in a line leave a line gem of that color and five a rainbow gem; boosters and tools add the rest.",
   "particle_sprites": {
     "source": "art/particles/kenney/",
     "license": "art/particles/kenney/License.txt",

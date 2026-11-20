@@ -1,13 +1,17 @@
 -- Optional board rules. Higher priority wins when shapes overlap.
+-- A colored special keeps matching as its piece kind and fires when it is
+-- cleared; a colorless one never matches and fires on a tap or any swap.
 local S = {}
+-- A special's hit is direct, like a tool's, and swept: its pieces still pay.
 local function mark(m, cell)
     if not m.mask[cell] then m.hits = m.hits + 1 end
-    m.mask[cell], m.direct[cell] = true, true
+    m.swept = m.swept or {}
+    m.mask[cell], m.direct[cell], m.swept[cell] = true, true, true
 end
 
 local rules = {
     striped = {
-        priority = 20, accepts = function(run) return run.length == 4 end,
+        priority = 20, colored = true, accepts = function(run) return run.length == 4 end,
         effect = function(board, g, _, cell, axis, hit)
             for _, direction in ipairs{axis, axis + 3} do
                 local other = board.hex_neighbor(cell, direction)
@@ -60,6 +64,9 @@ local rules = {
     },
 }
 
+S.colored = {}
+for name, rule in pairs(rules) do S.colored[name] = rule.colored end
+
 function S.bind(board, names, kind_at, eligible)
     local enabled, ordered, rhombi, by_cell = {}, {}, {}, {}
     for _, name in ipairs(names) do
@@ -89,26 +96,85 @@ function S.bind(board, names, kind_at, eligible)
         local kind = kinds(shape[1])
         return kind ~= nil and kind == kinds(shape[2]) and kind == kinds(shape[3]) and kind == kinds(shape[4])
     end
-    local function activation(g, m, cell, kind)
+    local function special(g, cell)
+        local rule = enabled[g.tiles[cell].special]
+        return rule and eligible(g,cell) and rule or nil
+    end
+    -- One wave shares its chain: a special fires once however often it is hit.
+    local function chain(g, m)
         m.special_effects = m.special_effects or {}
         m.special_seen = m.special_seen or {}
-        local seen = m.special_seen
-        local function activate(i, color)
-            local t = g.tiles[i]
-            local rule = enabled[t.special]
-            if not rule or seen[i] or not eligible(g,i) then return end
-            seen[i] = true
-            local function hit(j) mark(m,j); activate(j) end
+        local seen, fire = m.special_seen, nil
+        local function hit(i)
             mark(m,i)
-            local event = {cell=i, name=t.special, axis=t.axis}
+            local rule = special(g,i)
+            if rule and not seen[i] then seen[i] = true; fire(i,rule,g.tiles[i].axis) end
+        end
+        function fire(i, rule, axis, color)
+            local event = {cell=i, name=g.tiles[i].special, axis=axis}
             m.special_effects[#m.special_effects + 1] = event
-            event.target = rule.effect(board,g,m,i,t.axis,hit,color)
+            event.target = rule.effect(board,g,m,i,axis,hit,color)
             if event.target then
                 m.plane_targets = m.plane_targets or {}
                 m.plane_targets[event.target] = true
             end
         end
-        activate(cell,kind)
+        local function start(i, color)
+            local rule = special(g,i)
+            if not rule or seen[i] then return end
+            seen[i] = true
+            mark(m,i)
+            return rule, color
+        end
+        return hit, fire, start
+    end
+    local function activation(g, m, cell, kind)
+        local _, fire, start = chain(g,m)
+        local rule = start(cell)
+        if rule then fire(cell,rule,g.tiles[cell].axis,kind) end
+    end
+    local function swap_fires(g, a, b)
+        local ra, rb = special(g,a), special(g,b)
+        if ra and rb then return true end
+        return (ra and not ra.colored or rb and not rb.colored) and true or false
+    end
+    -- The tiles have been exchanged: b holds the piece the player moved.
+    local function swap(g, m, a, b)
+        local ra, rb = special(g,a), special(g,b)
+        local ta, tb = g.tiles[a], g.tiles[b]
+        local bomb = rules.color_bomb
+        if not (ra and rb) then
+            if rb then activation(g,m,b,ta.kind) else activation(g,m,a,tb.kind) end
+            return
+        end
+        local hit, fire, start = chain(g,m)
+        if ra.colored and rb.colored then
+            -- Two colored specials cross: every axis through the moved piece.
+            start(a); start(b)
+            for axis = 0, board.AXES - 1 do fire(b,rb,axis) end
+        elseif ra == bomb and rb == bomb then
+            start(a); start(b)
+            fire(b,{effect=function()
+                for i = 0, board.CELLS - 1 do if g.active[i] then hit(i) end end
+            end})
+        elseif (ra == bomb and rb.colored) or (rb == bomb and ra.colored) then
+            -- A color bomb turns its partner's whole color into that special.
+            local at, gem = a, tb
+            if rb == bomb then at, gem = b, ta end
+            local count = 0
+            for i = 0, board.CELLS - 1 do
+                local t = g.tiles[i]
+                if g.active[i] and eligible(g,i) and t.kind == gem.kind and not t.special then
+                    g.tiles[i] = board.tile(gem.kind,gem.special,count % board.AXES)
+                    count = count + 1
+                end
+            end
+            start(at)
+            fire(at,bomb,nil,gem.kind)
+        else
+            activation(g,m,b,ta.kind)
+            activation(g,m,a,tb.kind)
+        end
     end
     return {
         has_shapes = enabled.plane ~= nil,
@@ -118,7 +184,14 @@ function S.bind(board, names, kind_at, eligible)
             end
             return false
         end,
-        active = function(g, cell) return enabled[g.tiles[cell].special] ~= nil and eligible(g,cell) end,
+        active = function(g, cell) return special(g,cell) ~= nil end,
+        -- A tap fires a colorless special on its own.
+        tappable = function(g, cell)
+            local rule = special(g,cell)
+            return rule ~= nil and not rule.colored
+        end,
+        swap_fires = swap_fires,
+        swap = swap,
         activate = activation,
         award = function(g, m, kinds, runs, preferred, alternate)
             for _, cells in ipairs(rhombi) do

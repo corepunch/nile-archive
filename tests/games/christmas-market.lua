@@ -52,6 +52,13 @@ local booster_safe = " --safe-area 0,47,0,34"
 reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 5" .. booster_safe)
 reel("booster-lantern-flight", 23, 4, "390x844", booster_flight .. "--level 20" .. booster_safe)
 shot("booster-reduced-motion", "480x900", booster_flight .. "--level 5 --flight-no-motion --frames 86")
+-- Line gems and the rainbow gem: both axes of every kind, then one real swap each.
+local gems = "--level 30 --special-states "
+shot("line-gem-states", "480x900", gems .. "--frames 60")
+shot("line-gem-states-phone", "390x844", gems .. "--frames 60 --safe-area 0,47,0,34")
+for _, fire in ipairs{"born", "sweep", "cross", "rainbow", "recolor"} do
+    reel("line-gem-" .. fire, 12, 4, "480x900", gems .. "--special-fire " .. fire .. " --reel")
+end
 shot("campaign-access", "480x900", "--level 13")
 shot("campaign-thaw", "480x900", "--level 19")
 shot("phone-campaign-thaw", "390x844", "--level 19 --safe-area 0,47,0,34")

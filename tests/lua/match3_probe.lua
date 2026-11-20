@@ -73,23 +73,24 @@ local function exercise(config)
 end
 for _, config in ipairs{
     {square=true, columns=7, rows=7, colors=5, refill_damping=2},
+    {square=true, columns=7, rows=7, colors=5, refill_damping=2, special_rules={'striped', 'color_bomb'}},
     {square=true, columns=7, rows=7, colors=5, match_min=4, refill_damping=1},
     {radius=3, colors=5, refill_damping=2},
     {radius=3, colors=5, flags=0},
     {square=true, columns=7, rows=7, colors=5, flags=match3.LINE_MATCHES | match3.NO_TRICKLE, refill_damping=1},
 } do exercise(config) end
 
--- A special can activate between same-kind neighbors with no ordinary line.
+-- A colorless special can activate between same-kind neighbors with no ordinary line.
 -- This guards the integration between optional power-ups and the fast bot.
 do
-    local rules = match3.new{radius=2, special_rules={'striped'},
+    local rules = match3.new{radius=2, special_rules={'color_bomb'},
         levels={{moves=20, score=0, relics=0, chains=0, ice=0, goals={'oil'}}}}
     local g = rules.game_start(0, 123)
     local center = rules.hex_center()
     local neighbor = rules.hex_neighbor(center, 0)
     for i = 0, rules.CELLS - 1 do g.active[i], g.oil[i] = false, 0 end
     g.active[center], g.active[neighbor] = true, true
-    g.tiles[center], g.tiles[neighbor] = rules.tile(1, 'striped', 0), rules.tile(1)
+    g.tiles[center], g.tiles[neighbor] = rules.tile(1, 'color_bomb'), rules.tile(1)
     g.oil[neighbor], g.oil_left = 1, 1
     local probe, actual = rules.new_match(), rules.new_match()
     local legal, progress, score = rules.game_probe_swap(g, center, neighbor, probe)

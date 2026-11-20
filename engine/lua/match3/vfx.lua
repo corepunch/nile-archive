@@ -254,7 +254,7 @@ function V.bind(R, rules)
                     if tool then
                         to = R.board_tool_bounds(tool - 1):center()
                     elseif R.resource_target and R.g.earnings then
-                        if not R.g.match_only_resources or not R.pending.direct[i] or R.pending.ordinary[i] then
+                        if rules.match_banks(R.g, R.pending, i) then
                             to = R.resource_target(was.kind)
                         end
                     elseif rules.is_goal_kind(R.g, was.kind) or was.kind == RELIC_LEAF or was.kind == RELIC_CRYSTAL then
@@ -313,10 +313,16 @@ function V.bind(R, rules)
             local e, t = entry.event, entry.age / .42
             local at, ink = R.cell_pos(e.cell), rgba(255, 236, 155, 240 * (1 - t))
             if e.name == "striped" then
-                local from, to = e.cell, e.cell
-                while rules.hex_neighbor(from,e.axis) >= 0 do from = rules.hex_neighbor(from,e.axis) end
-                while rules.hex_neighbor(to,e.axis + 3) >= 0 do to = rules.hex_neighbor(to,e.axis + 3) end
-                gfx.line(R.cell_pos(from), R.cell_pos(to), 2 + 7 * (1 - t), ink)
+                -- The sweep ends at the board's last cell on the axis, not the envelope's.
+                local function reach(direction)
+                    local last, cell = e.cell, rules.hex_neighbor(e.cell, direction)
+                    while cell >= 0 do
+                        if rules.game_cell_active(R.g, cell) then last = cell end
+                        cell = rules.hex_neighbor(cell, direction)
+                    end
+                    return R.cell_pos(last)
+                end
+                gfx.line(reach(e.axis), reach(e.axis + 3), 2 + 7 * (1 - t), ink)
             elseif e.name == "plane" then
                 if e.target and entry.age < .16 then
                     local target = R.cell_pos(e.target)

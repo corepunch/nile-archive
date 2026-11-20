@@ -1,7 +1,9 @@
 # Match-3 elements and board design
 
 The engine follows Cradle of Rome. A board has chains, ice, carved stones and
-tablets (blue plaques). Matches only clear and there are no special pieces; power comes from tools.
+tablets (blue plaques). Power comes from tools. A game may also let longer lines
+leave special pieces ([optional match specials](MATCH3_ENGINE.md#optional-match-specials)):
+Christmas Market's four-in-a-line gems and five-in-a-line rainbow gems. Relic Rush enables none.
 
 Relic Rush and Christmas Market share rules, but author their own shapes,
 terrain priorities, element placements and teaching order. The playable

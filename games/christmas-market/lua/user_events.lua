@@ -1,5 +1,6 @@
 -- user_events.lua — Christmas Market's user events, after Cradle of Rome's
--- settings/user_events.xml: the sixteen upgrades of docs/CAMPAIGN_DESIGN.md#upgrades.
+-- settings/user_events.xml: the sixteen upgrades of docs/CAMPAIGN_DESIGN.md#upgrades
+-- and one hint for each gem a longer line leaves.
 --
 -- Every entry is one event: when its If is met it runs each Then, once per
 -- profile, and is done. engine/lua/match3/user_events.lua implements the
@@ -49,6 +50,14 @@ local upgrades = {
 }
 
 local events = require("match3.user_events").upgrade_events(upgrades)
+
+-- The first line gem and the first rainbow gem each explain themselves once.
+events[#events + 1] = {id="hint_line_gem",
+    If={"IF_PLAYER_MAKE_MATCH", length=4, max_length=4},
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_LINE_GEM", text="Four in a line leave a striped gem. Match it to sweep its line."}}}
+events[#events + 1] = {id="hint_rainbow_gem",
+    If={"IF_PLAYER_MAKE_MATCH", length=5},
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_RAINBOW_GEM", text="Five in a line leave a rainbow gem. Swap it to clear one kind."}}}
 
 -- Rome kept trophy names in locale.xml: one trophy per upgrade, TROPHY_NN for man_NN.
 local trophies = {}

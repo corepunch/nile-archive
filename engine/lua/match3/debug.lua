@@ -46,6 +46,7 @@ function D.bind(R, W)
     -- --talk-through N moves the dialogue on every N frames, to film it;
     -- --scroll-review drags the open shop.
     local talk_frames, scroll_frames, dive_frames = 0, 0, 0
+    local special_swap, special_frames
     local floor_reel = app.arg("floor-reel")
     local floor_frames, floor_turn = 0, 0
 
@@ -99,6 +100,13 @@ function D.bind(R, W)
                 floor_turn = floor_turn + 1
             elseif floor_frames == 361 then
                 assert(floor_turn == 3 and not floor_expected, "floor reel ended before the last swap settled")
+            end
+        end
+        if special_swap then
+            special_frames = special_frames + 1
+            if special_frames == 20 then
+                R.attempt_swap(special_swap[1], special_swap[2])
+                assert(R.phase == R.PH_SWAP, "the special fixture's swap must be legal")
             end
         end
         if app.arg("dive") then   -- --city N --dive: Play is pressed on the third frame (the town -> board dive)
@@ -405,6 +413,51 @@ function D.bind(R, W)
             R.g.tool_meter[1], R.g.tool_meter[2] = R.g.tool_threshold, R.g.tool_threshold
             R.tool, R.toast_time, R.on_island = 0, 0, false
             R.art_review = true
+        end
+        if app.arg("special-states") and R.g and rules.square then
+            -- --level N --special-states: a row and a column line gem of every
+            -- kind on the board, and a rainbow gem.
+            local g, kinds = R.g, R.g.spawn_kinds
+            local function put(q, r, kind, special, axis)
+                local cell = rules.hex_index(q, r)
+                g.active[cell], g.stone_hp[cell], g.chain[cell], g.ice[cell] = true, 0, 0, 0
+                g.tiles[cell] = rules.tile(kind, special, axis)
+                return cell
+            end
+            local fire = app.arg("special-fire")
+            if not fire then
+                for axis = 0, 1 do
+                    for k = 1, #kinds do put(k - 1 - #kinds // 2, axis - 1, kinds[k], "striped", axis) end
+                end
+                put(0, 1, kinds[1], "color_bomb")
+                R.toast_time, R.art_review = 0, true
+            else
+                -- --special-fire born|sweep|cross|rainbow|recolor: one real swap on
+                -- frame 20 of a board with no other line, to film the gem at work.
+                for i = 0, rules.CELLS - 1 do
+                    if g.active[i] and g.tiles[i].kind >= 0 and g.chain[i] == 0 and g.ice[i] == 0 then
+                        g.tiles[i] = rules.tile(kinds[(rules.hex_q(i) + 2 * rules.hex_r(i)) % #kinds + 1])
+                    end
+                end
+                local one, two = kinds[2], kinds[4]
+                if fire == "born" then
+                    put(-2, 0, one); put(-1, 0, one); put(1, 0, one)
+                    special_swap = {put(0, 1, one), put(0, 0, two)}
+                elseif fire == "sweep" then
+                    put(0, 0, one, "striped", 0); put(0, 1, one)
+                    special_swap = {put(1, 2, one), put(0, 2, two)}
+                elseif fire == "cross" then
+                    special_swap = {put(0, 0, one, "striped", 0), put(1, 0, two, "striped", 0)}
+                elseif fire == "rainbow" then
+                    special_swap = {put(0, 0, one, "color_bomb"), put(1, 0, two)}
+                else
+                    special_swap = {put(0, 0, one, "color_bomb"), put(1, 0, two, "striped", 1)}
+                end
+                local m = rules.new_match()
+                rules.game_matches(g, m)
+                assert(m.hits == 0, "the special fixture must start settled")
+                R.toast_time, special_frames = 0, 0
+            end
         end
         if app.arg("present") then R.present_board() end
         if app.arg("mission") then   -- the level's mission banner, as a level starts

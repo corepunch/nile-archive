@@ -9,6 +9,28 @@ permanent slot exactly once. Spending the tool empties the slot. The
 [shared ranks and charge rules](../../../docs/MATCH3_ENGINE.md) apply to both
 Christmas Market and Relic Rush.
 
+## Line gems and rainbow gems
+
+Four in a row or column leave a **line gem** where the swap landed (or at the
+line's first cell in a cascade). It is still its piece: the same treat or
+token under four cream bands that run the way it clears. Match it with two of
+its kind and it sweeps its whole row or column. Five or more in a line leave a
+**rainbow gem**, which matches nothing. Swap it with a neighbor to clear every
+piece of that kind, or tap it to clear the kind it was made from.
+
+| Swap | Result |
+| --- | --- |
+| Line gem with line gem | A row and a column through the moved gem |
+| Rainbow gem with line gem | Every piece of the gem's kind becomes a line gem and fires |
+| Rainbow gem with rainbow gem | The whole board is hit |
+
+Swept pieces pay their Tokens, Treats and Materials like matched ones; a tool
+still clears without paying, and only matched bonus pieces charge a slot. A
+gem under a chain waits until the chain breaks. The first line gem and the
+first rainbow gem each show a one-line hint. The rules are the engine's
+`striped` and `color_bomb` ([optional match specials](../../../docs/MATCH3_ENGINE.md#optional-match-specials)),
+switched on in [`lua/campaign.lua`](../lua/campaign.lua).
+
 Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
 all the targets within the move budget and collect the matched Tokens, Treats and Materials.

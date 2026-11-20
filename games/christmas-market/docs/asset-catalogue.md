@@ -715,15 +715,36 @@ or charging piece from the same ladder that drives the board.
 Reproduce the reviewed states with `build/test/all --suite=christmas-market 'shot purchase-'`.
 The stable card and board were checked at 480×900 and 390×844.
 
-### Optional match specials
+### Line gems and rainbow gems
 
-`data/board/match-specials.png` contains the three striped axes, T bomb,
-color bomb and paper plane in six 128 px slots. The five painted power-ups
-come from `art/match3-power-up-paint/source.png` at the repository root
-(prompt kept beside it). The paper plane is cropped from Christmas Market's
-painted `art/board-theme/source.png`, with neighboring fragments removed.
-Regenerate both atlases with `python3 tools/pack_match_specials.py`.
-The shared effects layer draws an axis sweep, impact ring, colored burst and
-plane flight from the engine's activation events. Reduced motion skips these
-overlays and applies the ordinary clear presentation. Campaigns leave all
-four rules disabled.
+The campaign enables the engine's `striped` and `color_bomb` rules
+(`special_rules` in `lua/campaign.lua`; see [Line gems and rainbow gems](square-match3.md#line-gems-and-rainbow-gems)).
+
+| Piece | Rule meaning | Visual states | Source and runtime path |
+| --- | --- | --- | --- |
+| Line gem, row | Four in a row. Matches as its kind and sweeps its row when cleared | Any board piece under four horizontal cream bands | The piece's own frame in `data/board/pieces.png`, banded at draw time by `gfx.image_striped` (repeats 4, width 0.44, ink 255/250/224), masked to the painted alpha |
+| Line gem, column | Four in a column. Sweeps its column | The same piece under vertical bands | As above, turned a quarter |
+| Rainbow gem | Five or more in a line. Matches nothing; a swap clears the partner's kind | One painted ball | Slot 4 of `data/board/match-specials.png` |
+
+The bands are the engine's catalogued procedural state for a colored special:
+they follow the piece through selection, swap, fall and squash, and need no
+per-kind artwork, so every current and future piece kind has both axes. This
+restores the striped treats the board used until the 12 November
+Homescapes-style pass. A new gem swells in over 0.24 s where its line was
+made. Firing draws the shared axis sweep, and the rainbow gem an impact ring
+and colored burst, from the engine's activation events; Reduce Motion skips
+those overlays.
+
+Reproduce the state sheet (both axes of the board's five kinds and a rainbow
+gem) with
+`./build/christmas-market --headless --mute --fresh --size 480x900 --level 30 --special-states --frames 60 --shot out.png`.
+Reviewed in game at [480 × 900](screenshots/review/line-gems/states-480.jpg)
+and [390 × 844](screenshots/review/line-gems/states-390.jpg).
+
+`data/board/match-specials.png` also keeps the three hex striped axes, T bomb
+and paper plane in its six 128 px slots for the rules this campaign leaves
+off. The five painted power-ups come from
+`art/match3-power-up-paint/source.png` at the repository root (prompt kept
+beside it). The paper plane is cropped from Christmas Market's painted
+`art/board-theme/source.png`, with neighboring fragments removed. Regenerate
+both games' atlases with `python3 tools/pack_match_specials.py`.

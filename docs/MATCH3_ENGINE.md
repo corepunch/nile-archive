@@ -178,9 +178,9 @@ board and returns `legal, progress, score`. It fills `match.mask`, `hits`,
 blocker damage; score is the real first-wave score delta. The line matcher
 checks only lines through the swapped cells, in the full matcher's order,
 and restores the live tile references before returning. It neither refills
-nor reads future RNG, banks resources or spends a move. Connected-group and
-special-enabled boards fall back to a copied simulation so optional shapes and chained
-activations retain their full behavior. The balancing bot caches immutable
+nor reads future RNG, banks resources or spends a move. Connected-group
+boards, optional shapes and any move that fires a special fall back to a copied
+simulation so chained activations retain their full behavior. The balancing bot caches immutable
 geometry and rejects locked, empty, inactive and ordinary same-kind endpoints before
 previewing candidates. Differential tests compare previews and simulation
 settlement with real swaps across both campaigns and all blocker types.
@@ -412,18 +412,49 @@ See the [default skin review](review/match3/README.md) and each game's
 ### Optional match specials
 
 An engine caller can pass `special_rules = {"striped", "color_bomb", "plane", "t_bomb"}`
-to `match3.new` with straight match-3 rules. Each name is independent. An omitted
-or empty list enables none, as in both portrait campaigns.
+to `match3.new` with straight match-3 rules, on hex or square cells. Each name
+is independent. An omitted or empty list enables none. A square campaign sets
+`special_rules` in its `lua/campaign.lua`: Christmas Market enables `striped`
+and `color_bomb`, Relic Rush none.
 
-| Rule | Shape | On activation |
-| --- | --- | --- |
-| `striped` | Exactly four on an axis | Clear the axis, including across gaps |
-| `color_bomb` | At least five on an axis | Clear the color of the swap partner, or the original match color on tap |
-| `t_bomb` | The end of a straight run meets the interior of another | Hit the six neighboring cells |
-| `plane` | Four in a hex rhombus | Fly to a target, preferring plaques and blockers |
+| Rule | Shape | Matches as its color | On activation |
+| --- | --- | --- | --- |
+| `striped` | Exactly four on an axis | Yes | Clear the axis, including across gaps |
+| `color_bomb` | At least five on an axis | No | Clear the color of the swap partner, or the original match color on tap |
+| `t_bomb` | The end of a straight run meets the interior of another | No | Hit the neighboring cells |
+| `plane` | Four in a hex rhombus (a 2 × 2 block on square cells) | No | Fly to a target, preferring plaques and blockers |
 
 Overlapping rewards use the order color bomb, T bomb, striped, plane. The
-swapped cell that made the match takes precedence for placement. A special
-does not count as an ordinary color match. Tap or swap it to activate for one
-move. A hit can chain into another special in that wave. Sources, creation and
-activation are declared together in `engine/lua/match3/specials.lua`.
+swapped cell that made the match takes precedence for placement, and a
+cascade's line leaves its special too.
+
+A **colored** special (`colored = true` in its rule; the line gem) stays a
+piece of its kind, as a Candy Crush striped candy does. It matches with its
+color, counts for its resource and goal, and fires when it is cleared: by a
+match it belongs to, another special or a tool. A plain swap that makes no
+match is rejected. A **colorless** special never matches; tap or swap it to
+activate for one move. A locked special waits: the hit breaks its chain or ice
+first. A hit can chain into another special in that wave, once each.
+
+Swapping two specials always fires:
+
+| Pair | Effect |
+| --- | --- |
+| Two colored specials | Every axis through the moved piece: a row and a column on square cells |
+| Color bomb and a colored special | Every plain piece of that color becomes that special, on alternating axes, and all of them fire |
+| Two color bombs | Every active cell is hit |
+| Any other pair | Both fire where they stand |
+
+A special's hits are direct, like a tool's, and marked `swept`. Under
+`match_only_resources` a tool clears without paying, but matched and swept
+pieces both bank their resource (`match_banks`); only matched bonus pieces
+charge a tool. `game_probe_swap` keeps its fast path until a special is
+swapped or lies in the previewed match.
+
+Colored specials draw their own piece through `gfx.image_striped`: four cream
+bands along the axis they clear, masked to the painted alpha (`pieces.stripes`
+in the board art overrides `repeats`, `width` and `ink`). Colorless ones use
+the game's `board/match-specials.png`. A special swells in where its line was
+made. `--level N --special-states` shows both axes of every kind on a square
+board. Sources, creation and activation are declared together in
+`engine/lua/match3/specials.lua`.

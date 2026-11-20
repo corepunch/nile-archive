@@ -713,8 +713,8 @@ function E.new(config)
         local kinds = g.spawn_kinds or default_kinds
         return kinds[randn(g, #kinds) + 1]
     end
-    -- Matches only clear. As in Cradle of Rome, power is earned through tools,
-    -- never made by a longer line, so a piece is just its kind.
+    -- A piece is its kind, plus the special a longer line made of it when the
+    -- game enables match specials (config.special_rules).
     local function tile(kind, special, axis) return {kind = kind, special = special, axis = axis} end
     M.tile = tile
 
@@ -725,10 +725,11 @@ function E.new(config)
     local function cell_active(g, cell) return cell >= 0 and cell < CELLS and g.active[cell] end
     M.game_cell_active = cell_active
 
+    local colored_specials = require("match3.specials").colored
     local function match_kind(g, cell)
         if g.active[cell] and not solid(g, cell) then
             local t = g.tiles[cell]
-            if not t.special and t.kind >= 0 then return t.kind end
+            if t.kind >= 0 and (not t.special or colored_specials[t.special]) then return t.kind end
         end
     end
 
@@ -799,7 +800,7 @@ function E.new(config)
 
     local specials
     if config.special_rules and #config.special_rules > 0 then
-        assert(not square and lines and MATCH_MIN == 3, "special rules require straight hex match-3")
+        assert(lines and MATCH_MIN == 3, "special rules require straight match-3")
         specials = require("match3.specials").bind(M, config.special_rules, match_kind,
             function(g, i) return cell_active(g,i) and not locked(g,i) end)
     end
@@ -808,6 +809,13 @@ function E.new(config)
         m.mask, m.direct, m.ordinary, m.hits = {}, {}, {}, 0
         m.match_lengths, m.pierce_kind = nil, nil
         m.special_awards, m.special_effects, m.special_seen, m.plane_targets = nil, nil, nil, nil
+        m.swept = nil
+    end
+    -- With match-only resources a tool clears without paying. A match pays,
+    -- and so does everything a special made by a match sweeps away.
+    function M.match_banks(g, m, cell)
+        return not g.match_only_resources or not m.direct[cell] or m.ordinary[cell]
+            or m.swept ~= nil and m.swept[cell] == true
     end
 
     function M.game_matches(g, m, preferred, alternate)
@@ -855,10 +863,9 @@ function E.new(config)
     function M.game_swap(g, a, b, m)
         if g.won or g.lost or not game_can_swap(g, a, b) then return false end
         swap_tiles(g, a, b)
-        if specials and (specials.active(g,a) or specials.active(g,b)) then
+        if specials and specials.swap_fires(g,a,b) then
             reset_match(m)
-            if specials.active(g,b) then specials.activate(g,m,b,g.tiles[a].kind) end
-            if specials.active(g,a) then specials.activate(g,m,a,g.tiles[b].kind) end
+            specials.swap(g,m,a,b)
         else game_matches(g, m, b, a) end
         if not m.mask[a] and not m.mask[b] then
             swap_tiles(g, a, b)
@@ -923,7 +930,7 @@ function E.new(config)
                                 if resource then
                                     local length = m.match_lengths and m.match_lengths[i]
                                     local amount = resource.amount * (length and g.resource_multipliers[length] or 1)
-                                    local banked = not g.match_only_resources or not m.direct[i] or m.ordinary[i]
+                                    local banked = M.match_banks(g, m, i)
                                     if resource.slot and banked then
                                         g.earnings[resource.slot] = g.earnings[resource.slot] + amount
                                     elseif resource.item and banked then
@@ -1178,7 +1185,7 @@ function E.new(config)
     -- Whether swapping a and b makes a match, tested in place without a board copy.
     function M.game_swap_matches(g, a, b)
         if not game_can_swap(g, a, b) then return false end
-        if specials and (specials.active(g,a) or specials.active(g,b)) then return true end
+        if specials and specials.swap_fires(g,a,b) then return true end
         swap_tiles(g, a, b)
         local matched
         if flags & E.LINE_MATCHES ~= 0 then
@@ -1189,21 +1196,24 @@ function E.new(config)
     end
     local game_swap_matches = M.game_swap_matches
 
+    -- Optional shapes and chained activations use the full rules, as do
+    -- connected groups; the fast line probe is for ordinary play.
+    local function full_probe(g, a, b, m)
+        local trial = game_copy(g)
+        if not game_swap(trial, a, b, m) then return false end
+        game_apply(trial, m)
+        local progress = g.obstacles - trial.obstacles
+        for i = 0, CELLS - 1 do progress = progress + g.oil[i] - trial.oil[i] end
+        return true, progress, trial.score - g.score
+    end
     -- First-wave preview on a settled board. Return legal, target/blocker
     -- layers removed, score gained, and fill the caller's match. No copy,
     -- resource banking, RNG, refill or lasting mutation of the live game.
     function M.game_probe_swap(g, a, b, m)
         if m.hits > 0 then reset_match(m) end
         if g.won or g.lost or not game_can_swap(g, a, b) then return false end
-        if not lines or specials then
-            -- Optional shapes and chained activations use the full rules, as
-            -- do connected groups; the fast line probe is for ordinary play.
-            local trial = game_copy(g)
-            if not game_swap(trial, a, b, m) then return false end
-            game_apply(trial, m)
-            local progress = g.obstacles - trial.obstacles
-            for i = 0, CELLS - 1 do progress = progress + g.oil[i] - trial.oil[i] end
-            return true, progress, trial.score - g.score
+        if not lines or specials and (specials.has_shapes or specials.active(g,a) or specials.active(g,b)) then
+            return full_probe(g, a, b, m)
         end
         if g.tiles[a].kind == g.tiles[b].kind then return false end
         local runs = m.probe_runs
@@ -1251,6 +1261,14 @@ function E.new(config)
                 if not m.mask[cell] then m.hits = m.hits + 1 end
                 m.mask[cell], m.ordinary[cell] = true, true
                 if m.match_lengths then m.match_lengths[cell] = math.max(m.match_lengths[cell] or 0, length) end
+            end
+        end
+        if specials then   -- a matched special fires, which only the full rules resolve
+            for cell in pairs(m.mask) do
+                if specials.active(g,cell) then
+                    reset_match(m)
+                    return full_probe(g, a, b, m)
+                end
             end
         end
         local progress, score = 0, 0
@@ -1845,7 +1863,7 @@ function E.new(config)
             use_tool(R.tool, cell)
             return
         end
-        if specials and R.selected < 0 and not R.g.won and not R.g.lost and specials.active(R.g,cell) then
+        if specials and R.selected < 0 and not R.g.won and not R.g.lost and specials.tappable(R.g,cell) then
             reset_match(R.pending)
             specials.activate(R.g,R.pending,cell)
             R.g.moves, R.g.combo = R.g.moves - 1, 0
@@ -2108,7 +2126,12 @@ function E.new(config)
         end
     elseif R.phase == PH_CLEAR and R.pending.mask[i] then
         t = R.old_tiles[i]
-        if ((R.wave_chain[i] == 0 and R.wave_ice[i] == 0) or g.tiles[i].kind < 0)
+        local award = R.pending.special_awards and R.pending.special_awards[i]
+        if award and g.tiles[i].special == award.name then
+            -- A special is born where its line was made: the new piece swells in.
+            t = g.tiles[i]
+            scale = 1 + .22 * math.sin(PI * num.saturate(R.phase_time / .24))
+        elseif ((R.wave_chain[i] == 0 and R.wave_ice[i] == 0) or g.tiles[i].kind < 0)
             then   -- a small pop, then shrink away
             local delay = not R.reduced_motion and R.pending.plane_targets
                 and R.pending.plane_targets[i] and .16 or 0
@@ -2150,6 +2173,7 @@ end
 function E.square_campaign(campaign)
     local rules = E.new{flags=E.LINE_MATCHES | E.COLOR_TOOL, square=true, columns=9, rows=12,
         colors=campaign.colors, match_min=3, refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
+        special_rules=campaign.special_rules,
         kind_flags={[0]=E.GOAL, [2]=E.WOOD, [4]=E.STONE}}
     local start = rules.game_start
     local function wins_in_one(g)
