@@ -34,6 +34,7 @@
     "disabled"
   ],
   "runtime": {
+    "data/.DS_Store": "a03a04f1e684e38c7acb8a160503df44425cee8319ab355dc1dde83bcead2939",
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
     "data/board/blockers.png": "40168b602b9a3e02fc516f43e50feec377202ac3938ede3e2dde1ea855b3e9c6",
     "data/board/cells.png": "97947f0b5e7b3669ca08b0147db8ed3551fb8cce6f04b50c671f379792b29e5f",
@@ -41,7 +42,7 @@
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
     "data/board/match-specials.png": "ee509c093bfa2fe2e02181f726ab1cf5d807438565182da634e4315a62dafd7b",
-    "data/board/pieces.png": "d05b4cbd7f02fb7f006b9519edaefc0ebc6667c5e5385b355b14861c68b1017a",
+    "data/board/pieces.png": "95a061cd0e7a6cd3f7a24dca1028e13f1d13fe5b223598082957f9a6c2c16fd3",
     "data/city/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/city/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/city/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -570,7 +571,8 @@
     "registration": "tools/prepare_market_goods.py",
     "review": "docs/screenshots/review/rome-coverage/bonus-states.jpg",
     "silhouette_centered": [
-      "market-0"
+      "market-0",
+      "booster-shield-icon"
     ],
     "aliases": {
       "market-1": "festive-3"

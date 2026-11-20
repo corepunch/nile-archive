@@ -97,7 +97,8 @@ build/test/christmas-market "shot booster-toolbar" "shot square-winter-wreath" "
 ### Piece size
 
 Pieces fit the square cell. Most use their opacity-weighted center. The snowy
-fir uses its visible bounds so the tip and trunk have equal breathing room.
+fir uses its visible bounds so the tip and trunk have equal breathing room,
+and the frost shield does the same so its point and rim sit evenly.
 The square corners leave room for the reindeer's antlers and the diagonal
 cracker bundle. The same reindeer and station clock illustrations appear on the
 board and in all five toolbar states.

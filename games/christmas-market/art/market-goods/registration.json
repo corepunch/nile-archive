@@ -482,18 +482,19 @@
       ],
       "offset": [
         17,
-        13
+        10
       ],
       "alpha_center": [
         64.2992,
-        64.2559
+        61.2559
       ],
       "registered_box": [
         256,
         512,
         128,
         128
-      ]
+      ],
+      "anchor": "silhouette"
     },
     "booster-plus-icon": {
       "name": "wish cross",

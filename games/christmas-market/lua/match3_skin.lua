@@ -7,7 +7,7 @@ return {
         ["booster-hourglass-icon"]={0.5014470,0.4976896},
         ["booster-mixer-icon"]={0.5006438,0.4962045},
         ["booster-plus-icon"]={0.4986646,0.5003072},
-        ["booster-shield-icon"]={0.5023374,0.5019992},
+        ["booster-shield-icon"]={0.5023374,0.4785617},
         ["booster-star-icon"]={0.5003707,0.4961590},
         ["market-10"]={0.4994015,0.5035466},
         ["market-5"]={0.5010406,0.4982173},

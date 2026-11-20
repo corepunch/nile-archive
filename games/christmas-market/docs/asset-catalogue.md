@@ -178,9 +178,19 @@ source crop, proportional fit, offset and alpha-weighted center in its 128 px
 slot. The crop takes the object's solid bounds with four pixels of edge
 padding. The fit preserves source alpha inside the square cell's 9 px inset.
 Opacity-centered crops align within half a pixel on both axes. The snowy fir
-(`market-0`) centers on the visible silhouette, keeping opposite margins equal
-to within one pixel. The registration translates the already fitted fir and
-preserves its size and painted alpha.
+(`market-0`) and the frost shield (`booster-shield-icon`) center on the visible
+silhouette, keeping opposite margins equal to within one pixel: the shield's
+heavy upper half pulled its opacity center down, so it sat 3 px low. The
+registration translates the already fitted art and preserves its size and
+painted alpha (`silhouette_centered` in `art/manifest.json`).
+
+| Shield on the board (wish 37) | Before | After |
+| --- | --- | --- |
+| 480 × 900 | [3 px low](screenshots/review/shield-centre/before-480.jpg) | [Centered](screenshots/review/shield-centre/after-480.jpg) |
+| 390 × 844 | [3 px low](screenshots/review/shield-centre/before-390.jpg) | [Centered](screenshots/review/shield-centre/after-390.jpg) |
+
+Toolbar buttons anchor on each icon's recorded center (`lua/match3_skin.lua`),
+so the shield button itself does not move.
 
 | Atlas slot | Piece | Dominant color | Role |
 | ---: | --- | --- | --- |
