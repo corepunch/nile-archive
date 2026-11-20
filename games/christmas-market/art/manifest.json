@@ -40,7 +40,7 @@
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
-    "data/board/pieces.png": "a267a664395cc4a1a4a9eafb39542897428f280e823d59d875a2039c9aec09d5",
+    "data/board/pieces.png": "062ebec66fdce9ce3d05b6475c5ae2c2282a35263b757837cf1096fa602a529f",
     "data/city/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/city/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/city/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -529,16 +529,6 @@
           1441,
           939,
           1614
-        ]
-      },
-      "market-1": {
-        "source": "art/market-goods/cranberry-mitten.png",
-        "prompt": "art/market-goods/cranberry-mitten-prompt.txt",
-        "box": [
-          258,
-          5,
-          465,
-          230
         ]
       },
       "market-3": {

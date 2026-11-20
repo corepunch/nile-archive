@@ -6,10 +6,13 @@ Market. Bellmere uses three wallet slots in save order: **Tokens**, **Treats**
 and **Materials**. Sun coins, cocoa and bundled pine identify those
 totals on the board, in town, and in prices and results.
 
-The opening has five kinds: a green snowy fir, a cranberry knitted mitten,
-a silver snowflake coin, a gold Sun coin and an ivory-striped candy cane.
-The mitten has opaque red wool and a cream snowflake. Mulled wine takes the candy
-cane's place. The bakery's brown gingerbread man and the kiosk's ivory cocoa
+The opening has a green snowy fir, a blue knitted mitten, a silver snowflake
+coin, a gold Sun coin and a red-and-ivory candy cane. The first four echo the
+green leaf, blue flower, silver coin and gold coin in the GameTop Windows
+release of Cradle of Rome 2. Its first purchase adds a water bucket worth 3
+Food. In Christmas Market, the Welcome arch replaces the candy cane with red
+mulled wine worth 3 Treats. The blue mitten distinguishes the score piece from
+the wine. The bakery's brown gingerbread man and the kiosk's ivory cocoa
 mug follow in the same Treats slot. The stable brings a cobalt vase for score,
 which replaces the mitten. The lumber workshop brings natural pine, which takes that slot. The
 chapel replaces it with the same slate-gray dressed stone used in Relic Rush.
@@ -49,6 +52,11 @@ gate can buy it from the shop.
 
 ## In-game review
 
+| After the Welcome arch | Board |
+| --- | --- |
+| 480 × 900 | [Blue mitten and mulled wine](screenshots/review/blue-mitten/board-480.jpg) |
+| 390 × 844 | [Blue mitten and mulled wine](screenshots/review/blue-mitten/board-390.jpg) |
+
 | Board | Before | After |
 | --- | --- | --- |
 | 480 × 900 | [Mitten](screenshots/review/winter-stalls/board-480.jpg) | [Winter vase](screenshots/review/rome-coverage/vase-480.jpg) |
@@ -65,7 +73,7 @@ gate can buy it from the shop.
 [Spent bonus](screenshots/review/winter-stalls/spent.jpg) ·
 [Registration and prompts](asset-catalogue.md#market-goods-and-tools)
 
-## Red mitten review
+## Earlier red mitten review
 
 | Opening board | Before | After |
 | --- | --- | --- |

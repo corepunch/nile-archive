@@ -51,7 +51,7 @@ E.bonus_slots, B = bonuses.slots{
 }
 E.bonuses = B
 
--- The five positions start green, blue, silver, gold and red.
+-- Fir, mitten, silver coin, gold coin and candy cane. The cane's slot becomes Treats.
 local BASE = {0, 1, 2, 3, 15}
 
 -- The twenty purchases follow Cradle of Rome 2's epochs.xml, one every five

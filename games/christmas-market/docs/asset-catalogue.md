@@ -159,11 +159,11 @@ The [vase and winter catch atlas](../art/market-goods/vase-and-winter-catch.png)
 supplies the three-cracker Firework, broad ice pendant, cobalt vase and smoked trout.
 Its [ImageGen prompt](../art/market-goods/vase-and-winter-catch-prompt.txt)
 records the complete atlas edit. Only those four crops enter the registered sheet.
-The [cranberry mitten atlas](../art/market-goods/cranberry-mitten.png) keeps the
-square atlas layout and reauthors the mitten in cranberry wool with a cream
-snowflake. The [full ImageGen prompt](../art/market-goods/cranberry-mitten-prompt.txt)
-records the edit. The new crop registers into `market-1`.
-[Compare opening boards](market-pieces.md#red-mitten-review).
+`market-1` uses the blue knitted mitten from row one, column two of the
+winter stalls atlas. It reads separately from the red mulled wine after the
+Welcome arch. The [cranberry mitten atlas](../art/market-goods/cranberry-mitten.png)
+and its [prompt](../art/market-goods/cranberry-mitten-prompt.txt) document the
+earlier art pass. [Review both pieces in play](market-pieces.md#in-game-review).
 The gold Sun coin uses the first cell of the [Relic Rush campaign atlas](../../relic-rush/art/registered/campaign-pieces.png).
 The board, wallet, prices and results all use this shared artwork.
 [Compare the coin on the opening board and price card](market-pieces.md#shared-sun-coin-review).
@@ -176,7 +176,7 @@ Every center of opacity is within half a pixel of the slot center on both axes.
 | Atlas slot | Piece | Dominant color | Role |
 | ---: | --- | --- | --- |
 | 0 | Snow-dusted fir | Evergreen | Score at the opening. |
-| 1 | Knitted mitten | Cranberry red | Opening score piece until the stable. |
+| 1 | Knitted mitten | Blue with cream knitwork | Opening score piece until the stable. |
 | 2 | Silver snowflake coin | Silver | +3 Tokens. |
 | 3 | Sun coin | Gold | +5 Tokens and the Tokens wallet icon. Shared artwork with Relic Rush. |
 | 4 | Bundled pine | Chestnut brown | +5 Materials from the lumber workshop and the Materials wallet icon. |
@@ -204,7 +204,9 @@ Every center of opacity is within half a pixel of the slot center on both axes.
 | 26 | Winter vase | Cobalt glaze | Score only, from the stable until the Lumber workshop. |
 | 27 | Smoked trout | Russet | +7 Treats from the later sleigh. |
 
-`art/registered/market-goods.png` packs into `data/board/pieces.png` as
+`python3 games/christmas-market/tools/prepare_market_goods.py` registers the
+source crops. `python3 tools/match3_atlas.py` packs `art/registered/market-goods.png`
+into `data/board/pieces.png` as
 `market-0` through `market-21` and six named `booster-*-icon` frames. Each base
 sprite is used for idle, swap and clear, with the game's selection and hint
 overlays and authored tinsel and ice. The eight charging pieces each sit on
