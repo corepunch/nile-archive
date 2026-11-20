@@ -704,7 +704,7 @@ function E.new(config)
     end
     -- Matches only clear. As in Cradle of Rome, power is earned through tools,
     -- never made by a longer line, so a piece is just its kind.
-    local function tile(kind) return {kind = kind} end
+    local function tile(kind, special, axis) return {kind = kind, special = special, axis = axis} end
     M.tile = tile
 
     local function swap_tiles(g, a, b) g.tiles[a], g.tiles[b] = g.tiles[b], g.tiles[a] end
@@ -716,8 +716,8 @@ function E.new(config)
 
     local function match_kind(g, cell)
         if g.active[cell] and not solid(g, cell) then
-            local kind = g.tiles[cell].kind
-            if kind >= 0 then return kind end
+            local t = g.tiles[cell]
+            if not t.special and t.kind >= 0 then return t.kind end
         end
     end
 
@@ -786,12 +786,20 @@ function E.new(config)
         end
     end
 
+    local specials
+    if config.special_rules and #config.special_rules > 0 then
+        assert(not square and lines and MATCH_MIN == 3, "special rules require straight hex match-3")
+        specials = require("match3.specials").bind(M, config.special_rules, match_kind,
+            function(g, i) return cell_active(g,i) and not locked(g,i) end)
+    end
+
     local function reset_match(m)
         m.mask, m.direct, m.ordinary, m.hits = {}, {}, {}, 0
         m.match_lengths, m.pierce_kind = nil, nil
+        m.special_awards, m.special_effects, m.special_seen, m.plane_targets = nil, nil, nil, nil
     end
 
-    function M.game_matches(g, m)
+    function M.game_matches(g, m, preferred, alternate)
         reset_match(m)
         m.match_lengths = g.resource_multipliers and {}
         if lines then
@@ -799,7 +807,9 @@ function E.new(config)
             for i = 0, CELLS - 1 do
                 kinds[i] = match_kind(g, i)
             end
-            shapes.matches(lines, kinds, m, MATCH_MIN)
+            local runs = specials and {}
+            shapes.matches(lines, kinds, m, MATCH_MIN, runs)
+            if specials then specials.award(g, m, kinds, runs, preferred, alternate) end
             return
         end
         local seen = {}
@@ -834,7 +844,11 @@ function E.new(config)
     function M.game_swap(g, a, b, m)
         if g.won or g.lost or not game_can_swap(g, a, b) then return false end
         swap_tiles(g, a, b)
-        game_matches(g, m)
+        if specials and (specials.active(g,a) or specials.active(g,b)) then
+            reset_match(m)
+            if specials.active(g,b) then specials.activate(g,m,b,g.tiles[a].kind) end
+            if specials.active(g,a) then specials.activate(g,m,a,g.tiles[b].kind) end
+        else game_matches(g, m, b, a) end
         if not m.mask[a] and not m.mask[b] then
             swap_tiles(g, a, b)
             reset_match(m)
@@ -857,6 +871,11 @@ function E.new(config)
         local pierce_kind = m.pierce_kind
         m.bonus_charge_by_cell, m.pierce_kind = nil, nil
         m.direct, m.ordinary = m.direct or {}, m.ordinary or {}
+        if specials then
+            for i = 0, CELLS - 1 do
+                if m.mask[i] and specials.active(g,i) then specials.activate(g,m,i) end
+            end
+        end
         -- A wave deals at most one hit per blocker, even when several matches touch it.
         local damage = {}
         for i = 0, CELLS - 1 do
@@ -916,7 +935,8 @@ function E.new(config)
                             if (kind_flags[k] or 0) & E.STONE ~= 0 then g.stone, g.last_stone = g.stone + 1, g.last_stone + 1 end
                             g.score = g.score + 50 * g.combo
                             cleared = cleared + 1
-                            g.tiles[i] = tile(-1)
+                            local award = m.special_awards and m.special_awards[i]
+                            g.tiles[i] = award and tile(k,award.name,award.axis) or tile(-1)
                         end
                     end
                 end
@@ -1061,7 +1081,7 @@ function E.new(config)
         local c = {}
         for k, v in pairs(g) do c[k] = v end
         c.tiles = {}
-        for i = 0, CELLS - 1 do c.tiles[i] = tile(g.tiles[i].kind) end
+        for i = 0, CELLS - 1 do c.tiles[i] = tile(g.tiles[i].kind, g.tiles[i].special, g.tiles[i].axis) end
         c.active, c.chain, c.ice = copy_array(g.active), copy_array(g.chain), copy_array(g.ice)
         c.oil = g.oil and copy_array(g.oil)
         c.stone_hp = copy_array(g.stone_hp)
@@ -1095,7 +1115,7 @@ function E.new(config)
                 end
             end
         end
-        return false
+        return specials and specials.at(g,cell) or false
     end
 
     -- config.refill_damping = N: once a move's cascade reaches wave N, pieces
@@ -1110,7 +1130,7 @@ function E.new(config)
         local kinds, cells = g.spawn_kinds or default_kinds, {}
         for _, i in ipairs(fall_order) do
             local t = g.tiles[i]
-            if from[i] < 0 and cell_active(g, i) and not locked(g, i) and t.kind >= 0 then
+            if from[i] < 0 and cell_active(g, i) and not locked(g, i) and t.kind >= 0 and not t.special then
                 local matches = flags & E.LINE_MATCHES ~= 0 and shape_at(g, i)
                     or flags & E.LINE_MATCHES == 0 and collect_group(g, i, cells) >= MATCH_MIN
                 if matches then
@@ -1135,6 +1155,7 @@ function E.new(config)
     -- Whether swapping a and b makes a match, tested in place without a board copy.
     function M.game_swap_matches(g, a, b)
         if not game_can_swap(g, a, b) then return false end
+        if specials and (specials.active(g,a) or specials.active(g,b)) then return true end
         swap_tiles(g, a, b)
         local matched
         if flags & E.LINE_MATCHES ~= 0 then
@@ -1165,7 +1186,7 @@ function E.new(config)
         for i = 0, CELLS - 1 do
             if cell_active(g, i) and not locked(g, i) then
                 local choices, n = {}, 0
-                if flags & E.LINE_MATCHES ~= 0 and MATCH_MIN==3 then
+                if flags & E.LINE_MATCHES ~= 0 and MATCH_MIN==3 and not (specials and specials.has_shapes) then
                     local forbidden={}
                     local function forbid(a,b)
                         if equal(g,a,b) then forbidden[g.tiles[a].kind]=true end
@@ -1717,6 +1738,13 @@ function E.new(config)
             use_tool(R.tool, cell)
             return
         end
+        if specials and R.selected < 0 and not R.g.won and not R.g.lost and specials.active(R.g,cell) then
+            reset_match(R.pending)
+            specials.activate(R.g,R.pending,cell)
+            R.g.moves, R.g.combo = R.g.moves - 1, 0
+            R.finish_wave()
+            return
+        end
         if R.selected >= 0 and R.selected~=cell and hex_distance(R.selected,cell)==1 then R.attempt_swap(R.selected,cell)
         elseif R.selected == cell then R.selected=-1
         else R.selected = cell; R.play("select") end
@@ -1975,7 +2003,9 @@ function E.new(config)
         t = R.old_tiles[i]
         if ((R.wave_chain[i] == 0 and R.wave_ice[i] == 0) or g.tiles[i].kind < 0)
             then   -- a small pop, then shrink away
-            local f = num.saturate(R.phase_time / .24)
+            local delay = not R.reduced_motion and R.pending.plane_targets
+                and R.pending.plane_targets[i] and .16 or 0
+            local f = num.saturate((R.phase_time - delay) / (.24 - delay))
             scale = f < .22 and 1 + .18 * math.sin(f / .22 * PI) or 1 - .92 * ease.out_cubic((f - .22) / .78)
             alpha = 255 * (1 - f * f)
         end

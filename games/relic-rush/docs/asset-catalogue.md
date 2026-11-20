@@ -1121,3 +1121,16 @@ amethyst. The preview reads the authored cells directly as texture regions and
 uses the same icon scale, capsule, and count for all eight. Add
 `--moves-variants` to the command above and crop the top 141 logical pixels for
 the comparison sheet.
+
+### Optional match specials
+
+`data/board/match-specials.png` contains the three striped axes, T bomb,
+color bomb and paper plane in six 128 px slots. The five painted power-ups
+come from `art/match3-power-up-paint/source.png` at the repository root
+(prompt kept beside it). The paper plane is cropped from Christmas Market's
+painted `art/board-theme/source.png`, with neighboring fragments removed.
+Regenerate both atlases with `python3 tools/pack_match_specials.py`.
+The shared effects layer draws an axis sweep, impact ring, colored burst and
+plane flight from the engine's activation events. Reduced motion skips these
+overlays and applies the ordinary clear presentation. Campaigns leave all
+four rules disabled.

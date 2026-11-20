@@ -59,6 +59,7 @@ function V.bind(R, rules, config, art, base_pieces)
 
     local piece_size = R.cell_width * (pieces.scale or .95)
     function R.draw_relic(tile, at, scale, alpha, aspect)
+        if tile.special then return R.draw_match_special(tile, at, scale, alpha) end
         if tile.kind < 0 then return end
         local side = piece_size * scale
         local tex = R.board_piece_texture(tile.kind)

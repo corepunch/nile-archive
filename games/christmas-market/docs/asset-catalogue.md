@@ -708,3 +708,16 @@ unlock:
 Reproduce a card with `./build/christmas-market --headless --mute --fresh --size 390x844 --card 2 --shot out.png`
 (`--catalogue-card <kind>` for a built stall). Reviewed in game at 390×844 for
 every row and at 480×900 for a piece.
+
+### Optional match specials
+
+`data/board/match-specials.png` contains the three striped axes, T bomb,
+color bomb and paper plane in six 128 px slots. The five painted power-ups
+come from `art/match3-power-up-paint/source.png` at the repository root
+(prompt kept beside it). The paper plane is cropped from Christmas Market's
+painted `art/board-theme/source.png`, with neighboring fragments removed.
+Regenerate both atlases with `python3 tools/pack_match_specials.py`.
+The shared effects layer draws an axis sweep, impact ring, colored burst and
+plane flight from the engine's activation events. Reduced motion skips these
+overlays and applies the ordinary clear presentation. Campaigns leave all
+four rules disabled.

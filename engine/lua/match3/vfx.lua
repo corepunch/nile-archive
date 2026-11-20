@@ -54,7 +54,23 @@ function V.bind(R, rules)
         for k = 0, 3 do R.vfx_smoke[k + 1] = assert(board_skin["fx-smoke-" .. k], "missing match3 effect: smoke") end
     end
 
+    local special_art, special_fx = {}, {}
+    local special_frames = {color_bomb=4, t_bomb=3, plane=5}
+    local function special_texture(t)
+        local frame = special_frames[t.special] or t.axis
+        if not special_art[frame] then
+            special_art.sheet = special_art.sheet or texture.load("board/match-specials.png")
+            special_art[frame] = texture.region(special_art.sheet, rect(frame * 128, 0, 128, 128))
+        end
+        return special_art[frame]
+    end
+    function R.draw_match_special(t, at, scale, alpha)
+        gfx.image(special_texture(t), rect.centered(at, size2.splat(R.HEX_R * 2 * scale)),
+            rgba(255, 255, 255, alpha))
+    end
+
     function R.vfx_reset()
+        special_fx = {}
         for i = 1, FX_CAP do pool[i].type, pool[i].life = FX_NONE, 0 end
         for i = 1, PARTICLES do parts[i].life = 0 end
         pool_next, part_next = 0, 0
@@ -214,6 +230,11 @@ function V.bind(R, rules)
 
     -- Effects for one clearing wave, read from R.pending and the board before it.
     function R.vfx_wave(old_score)
+        if not R.reduced_motion then
+            for _, event in ipairs(R.pending.special_effects or {}) do
+                special_fx[#special_fx + 1] = {event=event, age=0}
+            end
+        end
         local sum, hits = vec2(0, 0), 0
         for i = 0, CELLS - 1 do
             if R.pending.mask[i] and rules.game_cell_active(R.g, i) then
@@ -222,8 +243,9 @@ function V.bind(R, rules)
                 sum = sum + at
                 hits = hits + 1
                 local kind = R.wave_ice[i] > 0 and 6 or R.wave_chain[i] > 0 and 7 or was.kind
-                add(FX_IMPACT, at, vec2(0, 0), kind, .3, 0, 0)
-                vfx_emit(at, kind, false)
+                local plane_hit = R.pending.plane_targets and R.pending.plane_targets[i]
+                add(FX_IMPACT, at, vec2(0, 0), kind, .3, plane_hit and .16 or 0, 0)
+                if not plane_hit then vfx_emit(at, kind, false) end
                 if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
                     local to
                     local bonus_hits = R.pending.bonus_charge_by_cell
@@ -249,6 +271,11 @@ function V.bind(R, rules)
     end
 
     function R.vfx_update(dt)
+        for i = #special_fx, 1, -1 do
+            local entry = special_fx[i]
+            entry.age = entry.age + dt
+            if entry.age >= .42 then table.remove(special_fx,i) end
+        end
         for i = 1, FX_CAP do
             local e = pool[i]
             if e.life > 0 then
@@ -282,6 +309,31 @@ function V.bind(R, rules)
 
     function R.vfx_draw()
         if R.on_island or R.reduced_motion then return end
+        for _, entry in ipairs(special_fx) do
+            local e, t = entry.event, entry.age / .42
+            local at, ink = R.cell_pos(e.cell), rgba(255, 236, 155, 240 * (1 - t))
+            if e.name == "striped" then
+                local from, to = e.cell, e.cell
+                while rules.hex_neighbor(from,e.axis) >= 0 do from = rules.hex_neighbor(from,e.axis) end
+                while rules.hex_neighbor(to,e.axis + 3) >= 0 do to = rules.hex_neighbor(to,e.axis + 3) end
+                gfx.line(R.cell_pos(from), R.cell_pos(to), 2 + 7 * (1 - t), ink)
+            elseif e.name == "plane" then
+                if e.target and entry.age < .16 then
+                    local target = R.cell_pos(e.target)
+                    local u = entry.age / .16
+                    local position = at:lerp(target,u) - vec2(0, 50 * math.sin(PI * u))
+                    R.draw_match_special({special="plane"},position,1,255)
+                end
+            else
+                ring_sprite("shock", at, R.HEX_R * (.5 + 2 * t), ink)
+                if e.name == "color_bomb" then
+                    for k = 0, 5 do
+                        spark(at + vec2.polar(k * PI / 3, R.HEX_R * (1 + t)), 10, 0,
+                            vfx_color(k, 230 * (1 - t)))
+                    end
+                end
+            end
+        end
         for i = 1, FX_CAP do
             local e = pool[i]
             if e.life > 0 and e.age >= e.delay and e.type ~= FX_SCORE then

@@ -40,6 +40,7 @@
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
+    "data/board/match-specials.png": "ee509c093bfa2fe2e02181f726ab1cf5d807438565182da634e4315a62dafd7b",
     "data/board/pieces.png": "8e6b4d9094c4cb3ae20fba0940092c0741fbe389f87dce85c9022b0da6cc6dbb",
     "data/city/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/city/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",

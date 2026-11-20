@@ -12,14 +12,14 @@ function S.lines(M, minimum)
                     line[#line + 1] = cell
                     cell = M.hex_neighbor(cell, axis)
                 end
-                if #line >= minimum then lines[#lines + 1] = line end
+                if #line >= minimum then line.axis = axis; lines[#lines + 1] = line end
             end
         end
     end
     return lines
 end
 
-function S.matches(lines, kinds, m, minimum)
+function S.matches(lines, kinds, m, minimum, runs)
     for _, line in ipairs(lines) do
         local start, kind = 1, kinds[line[1]]
         -- The extra iteration closes a run at the edge of the envelope.
@@ -28,6 +28,10 @@ function S.matches(lines, kinds, m, minimum)
             if next_kind ~= kind then
                 local length = pos - start
                 if kind and length >= minimum then
+                    if runs then
+                        runs[#runs + 1] = {cells={table.unpack(line,start,pos - 1)},
+                            length=length, axis=line.axis, crossings={}}
+                    end
                     for n = start, pos - 1 do
                         local cell = line[n]
                         if not m.mask[cell] then m.hits = m.hits + 1 end

@@ -389,3 +389,22 @@ nested UVs, partial drawing, additive views and ownership with real pixels.
 
 See the [default skin review](review/match3/README.md) and each game's
 `docs/review/trickling/README.md` for checked game captures.
+
+### Optional match specials
+
+An engine caller can pass `special_rules = {"striped", "color_bomb", "plane", "t_bomb"}`
+to `match3.new` with straight match-3 rules. Each name is independent. An omitted
+or empty list enables none, as in both portrait campaigns.
+
+| Rule | Shape | On activation |
+| --- | --- | --- |
+| `striped` | Exactly four on an axis | Clear the axis, including across gaps |
+| `color_bomb` | At least five on an axis | Clear the color of the swap partner, or the original match color on tap |
+| `t_bomb` | The end of a straight run meets the interior of another | Hit the six neighboring cells |
+| `plane` | Four in a hex rhombus | Fly to a target, preferring plaques and blockers |
+
+Overlapping rewards use the order color bomb, T bomb, striped, plane. The
+swapped cell that made the match takes precedence for placement. A special
+does not count as an ordinary color match. Tap or swap it to activate for one
+move. A hit can chain into another special in that wave. Sources, creation and
+activation are declared together in `engine/lua/match3/specials.lua`.
