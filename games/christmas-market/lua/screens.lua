@@ -13,6 +13,8 @@ local function currency_icon(slot)
     return R.board_art["market-" .. economy.currencies[slot].kind]
 end
 
+R.currency_icon = currency_icon   -- the citizens' perks on the building card
+
 function R.wallet_icons() return {R.life_art, currency_icon(economy.GOLD), R.hud_art.complete} end
 function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
 

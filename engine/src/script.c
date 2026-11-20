@@ -153,6 +153,7 @@ void script_open(const char *dir)
         {"lua/match3/shatter.lua", "match3.shatter"},
         {"lua/match3/debug.lua", "match3.debug"},
         {"lua/match3/dive.lua", "match3.dive"},
+        {"lua/match3/user_events.lua", "match3.user_events"},
         {"lua/match3/game.lua", "match3.game"},
     };
     for (size_t i = 0; i < sizeof files / sizeof files[0]; i++) {
@@ -325,7 +326,7 @@ int lgamecenter_entries(lua_State *S)
 
 /* story.setup(cast, style): the engine keeps the cast, so it lives here and
  * the Lua table stays referenced for its strings. */
-#define CAST_MAX 16
+#define CAST_MAX 64
 static character cast[CAST_MAX];
 
 int lstory_setup(lua_State *S)

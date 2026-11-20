@@ -68,4 +68,6 @@ function R.serialize_campaign(s)
     serialize_completed(s)
 end
 
+require("user_events_runtime")   -- after every hook it wraps
+
 return match3_game.app(R)

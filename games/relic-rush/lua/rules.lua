@@ -24,8 +24,9 @@ M.COMPASSES = 5   -- reserved slot retained in old saves
 function M.reward_breakdown(g, progress)
     local first = not progress or g.level == progress.level
     local matched = purse(table.unpack(g.earnings or {}))
-    local reward = matched + purse(0, 0, 0, first and 1 or 0)
-    return {first=first, total=reward}
+    local income = M.perk_income and M.perk_income() or purse()   -- the citizens' perks
+    local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
+    return {first=first, income=income, total=reward}
 end
 
 function M.level_reward(g, wonders, progress)

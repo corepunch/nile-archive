@@ -119,3 +119,18 @@ also shows full and chipped borderless ice over the treats.
 ```sh
 build/test/all --suite=christmas-market 'shot pieces-board' 'shot phone-pieces-board' 'shot guide' 'shot phone-guide' 'frame christmas-market-tablet-hints'
 ```
+
+## Citizens
+
+Sixteen stalls bring a citizen, after Cradle of Rome 2's `man_01` to `man_16`
+([the table](../../../docs/CAMPAIGN_DESIGN.md#citizens)): Clem at the Welcome arch, Ned at the Reindeer
+stable, Big Ivar, Dot, Hettie, Old Mags, Mrs Alder, Olaf, Mr Finch, Lotte, Lucia, Mr Penny, Gianna, Sid,
+Rolf and Mr Bellamy at the Christmas tree. The Station kiosk, Gift wrapping pavilion, Winter skating rink
+and Santa's sleigh have none. [`lua/user_events.lua`](../lua/user_events.lua) holds the feats and perks
+(Tokens, Treats and Materials in every win, or a tool that charges one point more per match); the
+runtime is the engine's ([`match3/user_events.lua`](../../../engine/lua/match3/user_events.lua)), wired in
+by `lua/user_events_runtime.lua`. Placing the stall arms the feat; meeting it brings the citizen, upgrades
+the stall and adds the perk. Their income shows in the results card's totals like the carousel's. The stall's
+card names the citizen and the feat or perk. The arrival scene is the citizen's section in `docs/story.md`,
+played on the next return to market (a toast if it is missing). Citizens have no painted bust yet: the
+dialogue shows a name plate.

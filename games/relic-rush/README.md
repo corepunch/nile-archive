@@ -184,23 +184,30 @@ The Spring well costs 70 Coins. Its water buckets earn Food from expedition 2. T
 
 [`lua/user_events.lua`](lua/user_events.lua) ports Cradle of Rome's
 `settings/user_events.xml`. It uses the same event ids, `If` conditions,
-`Then` effects and `available` chaining.
-[`lua/user_events_runtime.lua`](lua/user_events_runtime.lua) lists every
-condition and effect it supports. Each event fires once per profile, and the
-save keeps which events are done.
+`Then` effects and `available` chaining. The runtime is the engine's
+([`match3/user_events.lua`](../../engine/lua/match3/user_events.lua), shared with
+Christmas Market; see [the match-3 engine](../../docs/MATCH3_ENGINE.md#user-events-and-citizens));
+[`lua/user_events_runtime.lua`](lua/user_events_runtime.lua) only wires it to this
+game. Each event fires once per profile, and the save keeps which events are done.
 
 - **Tutorials.** The move hint repeats with the board's 1st, 2nd, 3rd and
   5th suggestion until the first line of three. Toasts introduce tablets,
   double tablets, chains, double chains, ice, the low-moves warning, each
   charged bonus and the catalogue.
-- **Citizens.** Tomas joins as soon as the Well is restored. Other building events open a citizen’s challenge. Examples: a line of five after the Workshop, 120 Supplies on
-  one expedition after the Archive. Meeting the challenge upgrades the
-  building and can improve a resource piece’s yield.
+- **Citizens.** Sixteen, with Rome 2's ids `man_01` to `man_16`, one per
+  building ([the table](../../docs/CAMPAIGN_DESIGN.md#citizens)): Lupe at the Spring well,
+  Old Bastian at the Trapper's cabin, Joaquín, Dita, Auntie Marisol, Basile, Hana, Ferro, Nilo,
+  Zaza, Ruth, Captain Ulla, Pike, Dr Amani, Mr Sato and Ixchel. Placing the building arms its
+  feat (a resource earned in one level, a long match or a run of moves); meeting it brings the
+  citizen, who upgrades the building, awards a trophy and gives a lasting perk: more Coins, Food
+  or Supplies in every won expedition, or a tool whose pieces charge one point more per match.
+  The building's card names the citizen and shows the feat while it is armed, then the perk. The
+  arrival scene is the citizen's section in `docs/story.md` and plays on the next return to town
+  (a toast if the section is missing).
 - **Test flag.** `--user-events-test` fires the `test=true` events at once,
   like Rome's F5 cheat.
 
-The citizen amounts are a first pass. The building upgrade is recorded but
-has no art yet.
+The building upgrade is recorded but has no art yet.
 
 ## Campaign
 
@@ -212,26 +219,26 @@ The ladder has twenty purchases, one available after every fifth board (after le
 
 | After level | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
-| 1 | Spring well (Well) | Water buckets | 60 / 0 / 0 |
-| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 710 / 255 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 1170 / 440 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 1075 / 410 / 540 |
-| 21 | Jungle market (Farm) | Ration jars | 1165 / 445 / 735 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 695 / 720 / 615 |
-| 31 | Water mill (Mill) | Grain bundles | 710 / 960 / 935 |
-| 36 | Tide clock tower (Thermae) | Shield | 710 / 1085 / 990 |
-| 41 | Harbour plaza (Port) | Shrimp | 620 / 995 / 890 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 695 / 1460 / 965 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 805 / 1900 / 1145 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 695 / 1475 / 855 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 970 / 1650 / 965 |
-| 66 | Lighthouse | Plus | 775 / 1345 / 795 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 970 / 1650 / 950 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1050 / 1585 / 945 |
-| 81 | Great aviary (Pantheon) | Sandals | 1645 / 2430 / 1420 |
-| 86 | Relic museum (Theatre) | Harps | 1780 / 2400 / 1420 |
-| 91 | Temple of the Sun (Forum) | Star | 2155 / 2640 / 1560 |
-| 96 | Jade fountain (Fountain) | Emeralds | 1820 / 2235 / 1285 |
+| 1 | Spring well (Well) | Water buckets | 55 / 0 / 0 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 625 / 225 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 1085 / 410 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 1065 / 400 / 475 |
+| 21 | Jungle market (Farm) | Ration jars | 1090 / 415 / 655 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 790 / 720 / 650 |
+| 31 | Water mill (Mill) | Grain bundles | 725 / 920 / 895 |
+| 36 | Tide clock tower (Thermae) | Shield | 690 / 1015 / 935 |
+| 41 | Harbour plaza (Port) | Shrimp | 660 / 1040 / 935 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 690 / 1405 / 960 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 705 / 1630 / 1000 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 760 / 1625 / 950 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 880 / 1550 / 905 |
+| 66 | Lighthouse | Plus | 885 / 1540 / 910 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 950 / 1620 / 940 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1035 / 1590 / 940 |
+| 81 | Great aviary (Pantheon) | Sandals | 1565 / 2325 / 1360 |
+| 86 | Relic museum (Theatre) | Harps | 1740 / 2370 / 1400 |
+| 91 | Temple of the Sun (Forum) | Star | 1960 / 2435 / 1435 |
+| 96 | Jade fountain (Fountain) | Emeralds | 1980 / 2440 / 1410 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and

@@ -13,6 +13,7 @@ rules("building_economy")
 default_frames = 3
 rules("christmas")
 rules("christmas_story")
+rules("citizens")
 rules("christmas_leaderboard")
 smoke()
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer", "quick")

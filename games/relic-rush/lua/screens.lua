@@ -26,6 +26,8 @@ local function currency_icon(slot)
     return R.board_art["resource-" .. wallet_art[economy.currencies[slot].key]]
 end
 
+R.currency_icon = currency_icon   -- the citizens' perks on the building card
+
 function R.wallet_icons()
     return {R.life_art, currency_icon(rules.GOLD), R.board_art["discovery-star"]}
 end

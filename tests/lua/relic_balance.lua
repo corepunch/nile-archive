@@ -19,7 +19,7 @@ local rules = require('rules')
 local economy = require('economy')
 local island = require('island')
 
-local SHARE = .8   -- a stop spends 80% of the expected wallet in the currencies it uses
+local SHARE = .7   -- a stop spends 70% of the expected wallet in the currencies it uses
 local CURRENCIES = #economy.currencies
 local m = rules.new_match()
 
@@ -167,6 +167,33 @@ for level = 1, rules.LEVELS do
             for slot = 1, CURRENCIES do carry[slot] = carry[slot] - fitted[b.key][slot] end
         end
         next_stop = next_stop + 1
+    end
+end
+-- Prices rise (docs/CAMPAIGN_DESIGN.md#balance): a later purchase never costs
+-- less in total than an earlier one. Pool adjacent violators: a run whose
+-- totals fall shares its mean total, keeping each purchase's currency mix.
+-- Moving cost later never asks for more by any stop than the fit did.
+local ladder = {}
+for _, after in ipairs(order) do
+    for _, b in ipairs(stops[after]) do ladder[#ladder + 1] = b end
+end
+local function total(price) local t = 0 for slot = 1, CURRENCIES do t = t + price[slot] end return t end
+local blocks = {}
+for i, b in ipairs(ladder) do
+    blocks[#blocks + 1] = {first = i, last = i, sum = total(fitted[b.key])}
+    while #blocks > 1 do
+        local a, z = blocks[#blocks - 1], blocks[#blocks]
+        if a.sum / (a.last - a.first + 1) <= z.sum / (z.last - z.first + 1) then break end
+        a.last, a.sum = z.last, a.sum + z.sum
+        blocks[#blocks] = nil
+    end
+end
+for _, block in ipairs(blocks) do
+    local mean = block.sum / (block.last - block.first + 1)
+    for i = block.first, block.last do
+        local price = fitted[ladder[i].key]
+        local scale = mean / math.max(1, total(price))
+        for slot = 1, CURRENCIES do price[slot] = round5(price[slot] * scale) end
     end
 end
 print('fitted prices (Coins/Food/Supplies), current -> fitted:')

@@ -59,12 +59,43 @@ Genre films are a good source of technique. Take the mechanism, not the plot: st
 ## Writing lines
 
 - **The screen shows only the story.** Dialogue never names moves, amulets, boards cleared or tiles. Mechanics go in the level `lesson`, a separate slot. The simulation stays underneath.
-- **Text and picture divide the work.** Over an illustrated panel, do not describe what is drawn: say what it means or what happens next. Busts over a blurred island have no scene behind them, so there a line needs one strong concrete anchor: "Twelve bunks. Plates still on the table."
+- **Text and picture divide the work.** The town, the board and any painting already show what happened. A line says what it means to the speaker or what happens next, never what the player can see. A concrete detail belongs inside something a person says to someone ("You've laid twelve plates. Who's the twelfth for?"), never as a caption ("Twelve bunks. Plates still on the table."). See [Speech only](#speech-only-no-narration).
 - **Short and concrete.** Aim for under 100 characters per line, and one idea per line. Name a thing rather than a feeling: not "she looked sad", but a character changing the subject.
 - **One beat, one change.** Each beat leaves something different from how it found it: a new fact, a changed relationship or a new problem. If two beats could swap without anyone noticing, one is redundant.
 - **Beats play alone, perhaps a day apart.** A thread must be understandable after a gap, so bring each one back every few levels and restate rules or objects in passing.
 - **Recurring words become memory.** Repeat a few anchors in the same words (a place, an object, a catchphrase), so the player can retell the story in them. Keep names stable.
 - **Humour comes from people and from failure.** Keep it dry, and mix it with real stakes. Comedy lands better next to danger than next to more comedy.
+
+## Speech only: no narration
+
+Our scenes have no narrator. Every line appears in a speech bubble under a character's portrait, over the live town. There are no captions, no stage directions and no voice-over. So every line must be something that person would say out loud, right now, to someone who is there.
+
+A **report** is narration put in a character's mouth: the character describes the scene or announces events to nobody, as a caption would. "The crew comes ashore." "Boot prints in the wet clay. One pair going up." "The bakery's up! Cinnamon, clove and hot sugar." It is unacceptable for five reasons:
+
+1. **Nobody talks like that.** People speak to someone, wanting something. A report has no listener and no intention, so the character turns into a camera and the scene stops being a scene.
+2. **It repeats the screen.** The player has just placed the bakery or cleared the board. Saying so tells them what they watched a second ago, and the line is wasted.
+3. **It erases the voices.** Reports sound the same whoever says them. Cover the name plate on "The farrier's done! Four new shoes!" and nobody can tell who spoke. A voice comes from what a person wants and how they push for it.
+4. **It turns a story into a ticker.** A hundred levels of announcements read like a news feed. Players skip a ticker, then miss the beats that matter.
+5. **It hides the drama.** A report tells us an event happened. Dialogue lets us watch two people react to it, disagree about it or act on it, which is the only drama a two-line scene can carry.
+
+**Every line passes four tests.**
+
+- **Listener:** who is it said to? Name them, or say "you", or answer what they just said.
+- **Intention:** what does the speaker want from that person? To ask, offer, tease, warn, thank, refuse, confess, decide or persuade.
+- **Voice:** with the name plate covered, could you tell who is speaking?
+- **New:** does it tell the player something the screen does not show?
+
+**Facts arrive inside wants.** A clue is something a person points out because it changes what they will do next. Background comes up because someone needs it, not because the writer does. A letter or note may be read aloud only when a character reads it to someone and reacts to it in the same beat.
+
+| Report (narration) | Speech |
+| --- | --- |
+| **Mara:** Boot prints in the wet clay. One pair going up the stair, one pair coming down. | **Mara:** Elena, your boots or someone else's? Size six, up the stair and back down. |
+| **Elena:** The builders found this behind a stall beam: a sealed food bag, dated last week. | **Elena:** Tomas, who on this island dates their food bags? This one's from last Tuesday. |
+| **Pip:** The farrier's done! Four new shoes and sleigh bells on the harness! Listen to him! | **Pip:** Noelle, shut your eyes and listen! That's the sleigh-horse, in his new bells! |
+| **Noelle:** The bakery's up! Cinnamon, clove and hot sugar, and the whole square smells like Gran's kitchen. | **Noelle:** Agnes, your oven's been cold since Gran left. Will you light it for me? |
+| **Elena:** Adrian had the radio talking a minute ago. Now it's in pieces on the paving. | **Elena:** Adrian, you had that radio working a minute ago. Why is it in pieces? |
+
+**Checks.** Before handing a script over, list every line with no listener and no intention. `python3 tools/story_lines.py <game>` finds candidates: lines with no "I", "we", "you", name or question. Rewrite each one or cut it. The cold reader is asked to flag any line that reads like a caption.
 
 ## Structure
 

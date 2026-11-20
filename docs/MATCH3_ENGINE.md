@@ -302,6 +302,51 @@ Engine methods `reset_board`, `board_update`, `board_input` and `select_tool`
 own changes to interaction state. `notice`, `tone` and `vfx_wave` are presentation
 outputs. Games own story, city and screen navigation.
 
+## User events and citizens
+
+`engine/lua/match3/user_events.lua` (`require("match3.user_events")`) is Cradle of Rome's
+If/Then user-event system for the square campaigns. A game keeps its data in `lua/user_events.lua`
+(`{events=, trophies=}`) and one wiring file, `lua/user_events_runtime.lua`, required last in `main.lua`:
+
+```lua
+local R = require("state")
+return require("match3.user_events").install(R, {
+    data = require("user_events"), rules = require("rules"),
+    island = require("island"), economy = require("economy"),
+    target = "plaque",   -- what a feat's "clear" counts: plaques, panes ...
+})
+```
+
+Each event is checked only while it is available and not done; when its `If` is met it runs its `Then`s
+and is done for good. Done and available flags and a few counters are saved with the campaign
+(`R.serialize_campaign`); lasting effects are never stored but derived from the done events
+(`U.win_income()`, `U.tool_charges()`, `U.upgrades(key)`, `U.trophies()`), so retuning the data
+applies to old saves. The file's header lists every condition and effect.
+
+**Citizens.** `M.citizen_events(rows)` builds the sixteen citizens from compact rows
+(`{id="man_03", building=, who=, name=, job=, If=, perk=}`): placing the building (`city_<building>`)
+arms the citizen, and the feat brings them. The perks are two effects:
+
+- `THEN_PLAYER_ADD_RESOURCE_PER_LEVEL id amount` adds income to every won level's reward from then
+  on. The game's `reward_breakdown` adds `rules.perk_income()` (set by the runtime) to its `income`,
+  as Christmas Market's carousel already does.
+- `THEN_GAME_CHARGE_TOOL id amount` makes the pieces of that bonus's tool slot (Hammer and Bomb share
+  one) charge `amount` points more per match: a bonus piece is worth 3 (`bonuses.slots`), so one
+  citizen makes it 4 of the slot's 90. Citizens of one slot stack. The runtime wraps `rules.game_start`
+  and `rules.game_apply` so the board's `g.yield_amounts` reaches the engine's clearing code
+  while the economy's own piece tables stay untouched.
+
+**Arrival.** A citizen's scene is a journey beat `{key="citizen-man_03", phase="citizen", event="man_03"}`
+compiled by each game's `tools/prepare_story.py` from the `## Citizens` section of `docs/story.md`
+(headings `**Citizen man_NN · <name> · <building>**`). `match3.game`'s journey keeps these in
+`journey.citizens`, apart from the level beats, and `R.story_tick` plays the first unseen one whose
+event is done (`R.citizen_done`) on a return to town, once no level beat is due; it is saved with the
+other beats and never blocks progress. Without a scene the runtime shows a toast. `R.citizen_card(kind)`
+feeds the building card (and `R.building_words` the tap line) with the citizen's name and, as
+`resource_indicator` entries under a FEAT or EVERY WIN caption, the feat or the perk; a game's
+`screens.lua` provides `R.currency_icon(slot)`. A speaker without a portrait (`narrative.lua`, no
+`portrait_path`) is shown with a name plate. `story.setup` takes up to 64 cast members.
+
 ## Reproduction and verification
 
 ```sh

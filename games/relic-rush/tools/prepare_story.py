@@ -5,10 +5,22 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-source = (ROOT / 'docs/story.md').read_text().split('## Crew requests')[0]
+text = (ROOT / 'docs/story.md').read_text()
+# The citizens' arrival scenes live in their own section; the level beats never see it.
+section = re.search(r'^## Citizens\n.*?(?=^## |\Z)', text, re.S | re.M)
+citizen_source = section[0] if section else ''
+source = text.replace(citizen_source, '').split('## Crew requests')[0]
 beats, beat, choice = [], None, None
 speakers = {'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler', 'Ines': 'ines',
-            'Ancient keeper': 'keeper'}
+            'Ancient keeper': 'keeper',
+            'Lupe': 'lupe', 'Bastian': 'bastian', 'Joaquín': 'joaquin', 'Dita': 'dita', 'Marisol': 'marisol',
+            'Basile': 'basile', 'Hana': 'hana', 'Ferro': 'ferro', 'Nilo': 'nilo', 'Zaza': 'zaza', 'Ruth': 'ruth',
+            'Ulla': 'ulla', 'Pike': 'pike', 'Amani': 'amani', 'Sato': 'sato', 'Ixchel': 'ixchel'}
+# Rome 2's citizen events (games/relic-rush/lua/user_events.lua) and the speaker each one must have.
+citizen_speakers = {'man_03': 'Lupe', 'man_04': 'Bastian', 'man_02': 'Joaquín', 'man_01': 'Dita', 'man_05': 'Marisol',
+                    'man_06': 'Basile', 'man_07': 'Hana', 'man_08': 'Ferro', 'man_09': 'Nilo', 'man_10': 'Zaza',
+                    'man_11': 'Ruth', 'man_12': 'Ulla', 'man_13': 'Pike', 'man_14': 'Amani', 'man_15': 'Sato',
+                    'man_16': 'Ixchel'}
 for line in source.splitlines():
     heading = re.match(r'\*\*(Before level|Level|After restoration) (\d+)', line)
     if heading:
@@ -34,6 +46,25 @@ for line in source.splitlines():
         assert spoken, 'Relic Rush dialogue requires a named cast member: ' + line
     if spoken and beat:
         (choice['lines'] if choice else beat['lines']).append((speakers[spoken[1]], spoken[3], spoken[2]))
+citizens, citizen = [], None
+for line in citizen_source.splitlines():
+    heading = re.match(r'\*\*Citizen (man_\d\d) · ([^·*]+) · ([^*]+)\*\*\s*$', line)
+    if line.startswith('**Citizen'):
+        assert heading, 'write each citizen heading as **Citizen man_NN · <name> · <building>**: ' + line
+        assert heading[1] in citizen_speakers, 'unknown citizen event ' + heading[1]
+        citizen = {'key': 'citizen-' + heading[1], 'event': heading[1], 'building': heading[3].strip(), 'lines': []}
+        citizens.append(citizen)
+    spoken = re.match(r'- \*\*(' + '|'.join(speakers) + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
+    if citizen and line.startswith('- **') and ':**' in line:
+        assert spoken, 'Relic Rush dialogue requires a named cast member: ' + line
+    if spoken and citizen:
+        citizen['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
+assert len({c['event'] for c in citizens}) == len(citizens), 'a citizen has two scenes'
+for c in citizens:
+    assert c['lines'] and len(c['lines']) <= 48, c['key'] + ' needs spoken lines'
+    assert speakers[citizen_speakers[c['event']]] in {who for who, _, _ in c['lines']}, \
+        c['key'] + ' must have its citizen (' + citizen_speakers[c['event']] + ') speak'
+    assert all(len(text) <= 100 for _, text, _ in c['lines']), c['key'] + ' has a line over 100 characters'
 # One beat after every expedition's first clear and one scene per story restoration.
 keys = [b['key'] for b in beats]
 assert len(set(keys)) == len(keys), 'a level has two beats of one phase'
@@ -61,6 +92,10 @@ for b in beats:
         lines.append('    }},')
     else:
         lines.append('    }},')
+for c in citizens:
+    lines.append('    {key=%s, phase="citizen", event=%s, building=%s, lines={' % (quote(c['key']), quote(c['event']), quote(c['building'])))
+    lines.extend(emit_lines(c['lines'], '        '))
+    lines.append('    }},')
 lines.append('}')
 content = '\n'.join(lines) + '\n'
 path = ROOT / 'lua/story_content.lua'
@@ -72,4 +107,4 @@ if args.check:
 else:
     path.write_text(content)
 count = sum(len(b['lines']) + sum(len(c['lines']) for c in b['choices']) for b in beats)
-print(f'Relic Rush: {len(beats)} story beats, {count} dialogue lines')
+print(f'Relic Rush: {len(beats)} story beats, {count} dialogue lines, {len(citizens)} citizen scenes')

@@ -27,6 +27,7 @@ do
             end
             if t[1]=="THEN_CITY_UPGRADE_BUILDING" and not U.kinds[t.id] then ok=false;print("unknown building",e.id,t.id) end
             if t[1]=="THEN_GAME_CHANGE_CHIP_WEIGHT" and not keys[t.id] then ok=false;print("unknown piece",e.id,t.id) end
+            if t[1]=="THEN_GAME_CHARGE_TOOL" and not economy.bonuses[t.id] then ok=false;print("unknown tool",e.id,t.id) end
             if (t[1]=="THEN_PLAYER_ADD_RESOURCE" or t[1]=="THEN_PLAYER_ADD_RESOURCE_PER_LEVEL") and not pieces[t.id] then ok=false;print("unknown resource",e.id) end
             if t[1]=="THEN_PLAYER_ADD_TROPHY" and not U.trophy_names[t.id] then ok=false;print("unnamed trophy",e.id,t.id) end
         end
@@ -64,27 +65,27 @@ do
     check(not st.done.hint_01_2,'a retired hint no longer shows')
 end
 
--- A citizen arrives once their building stands, upgrades the matched timber.
+-- A citizen arrives once their building stands (tests/lua/citizens.lua covers all sixteen).
 do
     local st=U.state()
     U.emit("island")
-    check(not st.available.man_01,'the carpenter waits for the workshop')
-    R.island:add(vec2(0,0),U.kinds.workshop,0)
+    check(not st.available.man_03,'Lupe waits for the well')
+    R.island:add(vec2(0,0),U.kinds.well,0)
     U.emit("island")
-    check(st.done.city_workshop and st.available.man_01,'placing the workshop opens the carpenter')
+    check(st.done.city_well and st.available.man_03,'placing the well opens Lupe')
     local g=R.make_board(11,7)
+    g.earnings[economy.PROVISIONS]=149
     U.emit("wave",{g=g,runs={4},longest=4})
-    check(not st.done.man_01,'a line of four is not the carpenter feat')
-    U.emit("wave",{g=g,runs={5},longest=5})
-    U.apply_weights(g)
-    check(st.done.man_01 and U.upgrades("workshop")==1,'a line of five brings the carpenter and upgrades the workshop')
-    check(g.yield_amounts[4]==6,'the carpenter increases the yield of timber')
+    check(not st.done.man_03,'149 Food is not the feat')
+    g.earnings[economy.PROVISIONS]=150
+    U.emit("wave",{g=g,runs={4},longest=4})
+    check(st.done.man_03 and U.upgrades("well")==1,'150 Food in one level brings Lupe and upgrades the well')
     g.won,g.moves=true,0
     local reward=rules.reward_breakdown(g,R.prog)
-    check(reward.total[economy.SUPPLIES]==0,'a citizen adds no Supplies when no block was matched')
+    check(reward.total[economy.PROVISIONS]==160 and reward.total[economy.SUPPLIES]==0,'Lupe adds ten Food to a win and no Supplies')
     local found=false
-    for _,t in ipairs(U.trophies()) do if t.id=="TROPHY_01" then found=t.name=="Carpenter" end end
-    check(found,'the carpenter is a named trophy')
+    for _,t in ipairs(U.trophies()) do if t.id=="TROPHY_03" then found=t.name:find("Lupe",1,true)~=nil end end
+    check(found,'Lupe is a named trophy')
 end
 
 -- A chip weight changes what a piece pays while clearing, without replacing the economy's tables.
@@ -95,7 +96,7 @@ do
     check(g.yield_amounts==nil,'no citizen, no weights')
     st.done.man_02=true
     U.apply_weights(g)
-    check(g.yield_amounts==nil,'the trapper preserves the thirty-piece Hammer charge')
+    check(g.yield_amounts==nil,'an income citizen leaves the thirty-piece Hammer charge alone')
     local board=R.make_board(1,7)
     local kind,piece=next(board.resource_yields)
     board.yield_amounts={[kind]=piece.amount+1}
@@ -118,10 +119,10 @@ end
 do
     check(save.write("user-events-test",U.serialize),'write user events')
     R.prog={level=0,seed=1,wallet=purse(),story_seen={},bonus_charge={}}
-    check(not U.state().done.man_01,'a fresh profile starts with no citizens')
+    check(not U.state().done.man_03,'a fresh profile starts with no citizens')
     check(save.read("user-events-test",U.serialize),'read user events')
     local st=U.state()
-    check(st.done.man_01 and st.done.hint_01_close and not st.available.hint_01_2 and U.chip_weights()["timber"]==6,
+    check(st.done.man_03 and st.done.hint_01_close and not st.available.hint_01_2 and U.win_income()[economy.PROVISIONS]==10,
         'done and switched-off events come back with their income')
 end
 

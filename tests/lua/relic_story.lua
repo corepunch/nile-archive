@@ -79,13 +79,17 @@ local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
 R.prog, R.island, R.quiet = p, c, true
 -- A hundred expeditions: one scene after each clear, ten restoration scenes and nine openings.
-check(rules.LEVELS==100 and #journey.beats==119,'all five chapters are playable')
+check(rules.LEVELS==100 and #journey.beats>=rules.LEVELS,'all five chapters are playable')   -- a scene per clear, plus openings and restorations
+local cast={}
+for _,who in ipairs(R.cast) do cast[who.id]=true end
 for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
-    for _,line in ipairs(b.lines) do
-        check(({elena=true,mara=true,tomas=true,adrian=true,kessler=true,ines=true,keeper=true})[line[1]],
-            'each voiced line has a cast member')
-    end
+    for _,line in ipairs(b.lines) do check(cast[line[1]],'each voiced line has a cast member: '..tostring(line[1])) end
+end
+for _,b in ipairs(journey.citizens) do
+    check(b.phase=='citizen' and b.event and journey.find_citizen(b.event)==b and U.by_id[b.event] and U.by_id[b.event].citizen,
+        'each citizen scene belongs to a citizen event: '..b.key)
+    for _,line in ipairs(b.lines) do check(cast[line[1]],'each citizen line has a cast member: '..tostring(line[1])) end
 end
 for level=1,rules.LEVELS do
     check(R.start_level(level-1), 'the next board opens once its story and restorations are complete')

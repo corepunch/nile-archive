@@ -37,7 +37,7 @@ function M.reward_breakdown(g, wonders, progress)
     local kind = M.wonder_at(g.level + 1)
     local w = kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    local income = g.win_income or purse()
+    local income = (g.win_income or purse()) + (M.perk_income and M.perk_income() or purse())   -- stalls' and citizens' income
     local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
     if first and w and app.arg("debug-walkthrough") then
         local available = (progress and progress.wallet or purse()) + reward

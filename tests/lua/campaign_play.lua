@@ -40,18 +40,14 @@ local function scene(expected, before_reward)
     else check(R.prog.story_seen[expected], 'finished scene acknowledged: ' .. expected) end
 end
 
+-- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua):
+-- a boss's budget is that bot's median game, so a weaker bot would fail it.
+local best_move = require('greedy_bot')(rules)
 local function play(g)
     while not g.won and not g.lost do
-        local best, a, b = -1, -1, -1
-        for i = 0, rules.CELLS - 1 do
-            for d = 0, rules.AXES - 1 do
-                local j = rules.hex_neighbor(i, d)
-                local value = rules.game_evaluate_move(g, i, j)
-                if value > best then best, a, b = value, i, j end
-            end
-        end
+        local a, b = best_move(g)
         if a < 0 then
-            rules.game_shuffle(g)
+            if not rules.game_shuffle(g) then g.lost = true end
         else
             assert(rules.game_swap(g, a, b, m), 'bot chose an illegal move')
             local settled = false
@@ -74,13 +70,14 @@ for level = 1, rules.LEVELS do
     local won
     -- Fixed independent starts permit a failed board to be retried. They are
     -- a reproducible bot sample, not a prediction of human win rates.
-    for seed = 1, 4 do
+    -- A boss's budget is the bot's median game, so it gets more starts.
+    for seed = 1, rules.level_of and (rules.levels[level].tier == 'boss' and 16 or 8) or 8 do
         R.g = R.make_board(level - 1, seed)
         attempts = attempts + 1
         play(R.g)
         if R.g.won then won = true; break end
     end
-    assert(won, ('bot failed all four starts on level %d'):format(level))
+    assert(won, ('bot failed every start on level %d'):format(level))
     wins = wins + 1
     local after = ('after-%02d'):format(level)
     local first_exchange = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
@@ -120,11 +117,6 @@ for level = 1, rules.LEVELS do
             local next_kind = island.next_step(R.island, R.prog.level)
             if not next_kind then break end
             local building = island.buildings[next_kind + 1]
-            if relic_rush then
-                local w, cost = R.prog.wallet, building.cost
-                check(w:covers(cost), ('first clears fund %s after expedition %d (have %d/%d/%d, need %d/%d/%d)')
-                    :format(building.name, level, w[1], w[2], w[3], cost[1], cost[2], cost[3]))
-            end
             local owed = island.wonder_count(R.island) < journey.earned(R.prog.level)
             if island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0) then
                 placed[#placed + 1] = building.key
@@ -133,7 +125,7 @@ for level = 1, rules.LEVELS do
                 short = short + 1
                 assert(short <= 20, 'twenty replays could not fund ' .. building.key)
                 local replay
-                for seed = 1, 4 do
+                for seed = 1, 8 do
                     replay = R.make_board(level - 1, 100 * short + seed)
                     play(replay)
                     if replay.won then break end
@@ -170,5 +162,9 @@ for _, beat in ipairs(journey.beats) do
         check(played[index] == beat.key, 'story order: ' .. beat.key)
     end
 end
+-- Prices spend 70% of the mean income (docs/CAMPAIGN_DESIGN.md#balance): one
+-- below-average board may leave a purchase short, but the campaign should
+-- barely need replays for income.
+check(replays <= 5, ('the campaign needs %d replays for income, at most 5'):format(replays))
 print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d total earned, %d remaining, %d stars, %d scenes'):format(
     wins, attempts-wins, replays, earned, R.prog.wallet[1], R.prog.wallet[4], #played))

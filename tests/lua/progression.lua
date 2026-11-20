@@ -20,7 +20,7 @@ replay.won = true
 check(rules.progress_reward(p, replay, island.wonders), "replay can bank resources")
 check(p.wallet[1] == 80 and p.wallet[4] == 1 and p.level == 1, "replays pay actual matches")
 check(island.island_place_next(c, p.wallet, p.level, 0), "funded arch can be built")
-check(p.wallet[1] == 10, "confirmed placement debits Gold once")
+check(p.wallet[1] == 80 - island.buildings[island.kinds.arch + 1].cost[1], "confirmed placement debits Gold once")
 
 local wine = rules.game_start(1, 18, island.wonder_count(c))
 check(#wine.spawn_kinds == 5 and wine.resource_yields[8].amount == 3, "confirmed arch adds mulled wine")
