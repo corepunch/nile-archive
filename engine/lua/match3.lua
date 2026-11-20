@@ -678,6 +678,17 @@ function E.new(config)
     local LEVELS, COLORS, MATCH_MIN = M.LEVELS, M.COLORS, M.MATCH_MIN
     local shapes = require("match3.shapes")
     local lines = flags & E.LINE_MATCHES ~= 0 and shapes.lines(M, MATCH_MIN)
+    -- Line membership is immutable; swap previews inspect at most four lines.
+    local cell_lines = {}
+    if lines then
+        for order, line in ipairs(lines) do
+            for position, cell in ipairs(line) do
+                cell_lines[cell] = cell_lines[cell] or {}
+                local member = cell_lines[cell]
+                member[#member + 1] = {order=order, position=position}
+            end
+        end
+    end
     function M.level_of(g) return M.levels[g.level + 1] end
     function M.is_goal_kind(g, kind)
         if g.goal_kind ~= nil then return kind == g.goal_kind end
@@ -987,8 +998,11 @@ function E.new(config)
     M.game_clear_unfed = clear_unfed
 
     local damp_refills   -- defined with shape_at below
-    function M.game_collapse(g)
+    function M.game_collapse(g, no_animation)
         local from, steps, spawned = {}, {}, 0
+        local spare_tiles, spare_from, spare_used
+        if no_animation then spare_tiles, spare_from, spare_used = {}, {}, {} end
+        local passes = 0
         for i = 0, CELLS - 1 do from[i] = i end
         local fed = fed_cells(g)
         local function movable(i) return cell_active(g, i) and not locked(g, i) end
@@ -999,10 +1013,12 @@ function E.new(config)
             return not movable(down) or g.tiles[down].kind ~= -1
         end
         while true do
-            local step, used, empty, progress = {tiles = {}, from = {}}, {}, 0, false
-            local next_from = {}
+            local step = no_animation and {tiles=spare_tiles} or {tiles={}, from={}}
+            local used, empty, progress = no_animation and spare_used or {}, 0, false
+            local next_from = no_animation and spare_from or {}
             for i = 0, CELLS - 1 do
-                step.tiles[i], step.from[i], next_from[i] = g.tiles[i], i, from[i]
+                step.tiles[i], next_from[i] = g.tiles[i], from[i]
+                if no_animation then used[i] = nil else step.from[i] = i end
             end
             for _, i in ipairs(fall_order) do
                 if movable(i) and g.tiles[i].kind == -1 then
@@ -1019,12 +1035,14 @@ function E.new(config)
                         elseif side_donor(right) and not used[right] then source = right end
                     end
                     if source then
-                        step.tiles[i], step.from[i], next_from[i] = g.tiles[source], source, from[source]
+                        step.tiles[i], next_from[i] = g.tiles[source], from[source]
+                        if not no_animation then step.from[i] = source end
                         step.tiles[source], next_from[source], used[source] = tile(-1), source, true
                         progress = true
                     elseif inlet then
                         spawned = spawned + 1
-                        step.tiles[i], step.from[i], next_from[i] = tile(spawn_kind(g)), -1, -spawned
+                        step.tiles[i], next_from[i] = tile(spawn_kind(g)), -spawned
+                        if not no_animation then step.from[i] = -1 end
                         progress = true
                     end
                 end
@@ -1037,16 +1055,21 @@ function E.new(config)
                 for _, i in ipairs(fall_order) do
                     if movable(i) and fed[i] and g.tiles[i].kind == -1 then
                         spawned, filled = spawned + 1, true
-                        step.tiles[i], step.from[i], next_from[i] = tile(spawn_kind(g)), -1, -spawned
+                        step.tiles[i], next_from[i] = tile(spawn_kind(g)), -spawned
+                        if not no_animation then step.from[i] = -1 end
                     end
                 end
                 if not filled then break end
             end
-            steps[#steps + 1] = step
+            if no_animation then
+                spare_tiles, spare_from = g.tiles, from
+            else steps[#steps + 1] = step end
             g.tiles, from = step.tiles, next_from
-            assert(#steps <= CELLS * CELLS, "gravity failed to settle")
+            passes = passes + 1
+            assert(passes <= CELLS * CELLS, "gravity failed to settle")
         end
         damp_refills(g, from)
+        if no_animation then return from end
         return from, steps
     end
 
@@ -1144,6 +1167,90 @@ function E.new(config)
         return matched
     end
     local game_swap_matches = M.game_swap_matches
+
+    -- First-wave preview on a settled board. Return legal, target/blocker
+    -- layers removed, score gained, and fill the caller's match. No copy,
+    -- resource banking, RNG, refill or lasting mutation of the live game.
+    function M.game_probe_swap(g, a, b, m)
+        if m.hits > 0 then reset_match(m) end
+        if g.won or g.lost or not game_can_swap(g, a, b) then return false end
+        if not lines then
+            -- Connected-group boards keep the general simulation path.
+            local trial = game_copy(g)
+            if not game_swap(trial, a, b, m) then return false end
+            game_apply(trial, m)
+            local progress = g.obstacles - trial.obstacles
+            for i = 0, CELLS - 1 do progress = progress + g.oil[i] - trial.oil[i] end
+            return true, progress, trial.score - g.score
+        end
+        if g.tiles[a].kind == g.tiles[b].kind then return false end
+        local runs = m.probe_runs
+        if not runs then
+            runs = {}
+            for i = 1, axes * 2 do runs[i] = {} end
+            m.probe_runs = runs
+        end
+        local count = 0
+        swap_tiles(g, a, b)
+        for side = 1, 2 do
+            local cell = side == 1 and a or b
+            local kind = match_kind(g, cell)
+            for _, member in ipairs(cell_lines[cell] or {}) do
+                local line = lines[member.order]
+                local first, last = member.position, member.position
+                while first > 1 and match_kind(g, line[first - 1]) == kind do first = first - 1 end
+                while last < #line and match_kind(g, line[last + 1]) == kind do last = last + 1 end
+                if last - first + 1 >= MATCH_MIN then
+                    count = count + 1
+                    local run = runs[count]
+                    run.order, run.first, run.last = member.order, first, last
+                end
+            end
+        end
+        swap_tiles(g, a, b)
+        if count == 0 then return false end
+        -- Retain the full matcher's insertion order (including two runs on
+        -- one line), so numeric tie-breaking is unchanged in reference bots.
+        for i = 2, count do
+            local run, j = runs[i], i
+            while j > 1 and (runs[j - 1].order > run.order
+                or runs[j - 1].order == run.order and runs[j - 1].first > run.first) do
+                runs[j] = runs[j - 1]
+                j = j - 1
+            end
+            runs[j] = run
+        end
+        m.match_lengths = g.resource_multipliers and {}
+        for i = 1, count do
+            local run = runs[i]
+            local line, length = lines[run.order], run.last - run.first + 1
+            for pos = run.first, run.last do
+                local cell = line[pos]
+                if not m.mask[cell] then m.hits = m.hits + 1 end
+                m.mask[cell], m.ordinary[cell] = true, true
+                if m.match_lengths then m.match_lengths[cell] = math.max(m.match_lengths[cell] or 0, length) end
+            end
+        end
+        local progress, score = 0, 0
+        local stones = m.probe_stones or {}
+        m.probe_stones = stones
+        for cell in pairs(m.mask) do
+            if g.ice[cell] > 0 or g.chain[cell] > 0 then
+                progress, score = progress + 1, score + 20
+            else
+                score = score + 50
+                if g.oil[cell] > 0 then progress, score = progress + 1, score + 30 end
+            end
+            for d = 0, 5 do
+                local near_cell = neighbors[cell][d]
+                if near_cell >= 0 and g.stone_hp[near_cell] > 0 then stones[near_cell] = true end
+            end
+        end
+        for cell in pairs(stones) do
+            progress, stones[cell] = progress + g.stone_hp[cell], nil
+        end
+        return true, progress, score
+    end
 
     function M.game_hint(g)
         if g.won or g.lost then return false end
@@ -2026,7 +2133,7 @@ function E.square_campaign(campaign)
                     repeat
                         rules.game_apply(trial, wave)
                         if trial.oil_left == 0 then return true end
-                        rules.game_collapse(trial)
+                        rules.game_collapse(trial, true)
                         rules.game_matches(trial, wave)
                     until wave.hits == 0
                 end

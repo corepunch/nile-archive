@@ -166,6 +166,24 @@ its original source ID (negative for a new gem). Each animation step contains
 `tiles` and immediate `from` maps: every move is a single neighboring edge;
 negative sources enter from above that inlet.
 
+Rules-only simulations may use `game_collapse(g, true)`. It runs the same
+simultaneous gravity, seeded spawns and refill damping, returns the same
+`from` map, and omits `steps`. It reuses intermediate tile/source buffers;
+callers must not retain animation snapshots from this path. Live play keeps
+the default animation-producing call.
+
+`game_probe_swap(g, a, b, match)` previews the first wave on a **settled**
+board and returns `legal, progress, score`. It fills `match.mask`, `hits`,
+`ordinary` and any resource match lengths. Progress counts target layers and
+blocker damage; score is the real first-wave score delta. The line matcher
+checks only lines through the swapped cells, in the full matcher's order,
+and restores the live tile references before returning. It neither refills
+nor reads future RNG, banks resources or spends a move. Connected-group
+boards fall back to a copied simulation. The balancing bot caches immutable
+geometry and rejects locked, empty, inactive and same-kind endpoints before
+previewing candidates. Differential tests compare previews and simulation
+settlement with real swaps across both campaigns and all blocker types.
+
 `refill_damping=N` in `match3.new` damps long cascades. From wave N of a
 move's cascade (`g.combo`), every piece the refill spawns takes a kind that
 completes no match where such a kind exists. Pieces already on the board still

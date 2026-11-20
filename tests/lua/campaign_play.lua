@@ -41,8 +41,9 @@ local function scene(expected, before_reward)
 end
 
 -- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua):
--- bosses leave less slack than other tiers.
-local best_move = require('greedy_bot')(rules)
+-- every tier uses the same 25% allowance over its median clear.
+local profile = testing.bot_profile and require('bot_profile')(rules)
+local best_move = require('greedy_bot')(profile and profile.rules or rules)
 local function play(g)
     while not g.won and not g.lost do
         local a, b = best_move(g)
@@ -53,7 +54,7 @@ local function play(g)
             local settled = false
             for _ = 1, 200 do
                 rules.game_apply(g, m)
-                rules.game_collapse(g)
+                rules.game_collapse(g, true)
                 rules.game_matches(g, m, -1)
                 if m.hits == 0 then rules.game_check_end(g); settled = true; break end
             end
@@ -64,7 +65,7 @@ end
 
 for level = 1, rules.LEVELS do
     R.on_island, R.overlay = false, R.OV_NONE
-    R.g = rules.game_start(level - 1, 1)
+    R.g = R.make_board(level - 1, 1)
     local next_beat = journey.next(R.prog, owns_wonder, level - 1)
     if next_beat and next_beat.phase == 'before' then scene(next_beat.key) end
     local won
@@ -72,7 +73,7 @@ for level = 1, rules.LEVELS do
     -- a reproducible bot sample, not a prediction of human win rates.
     -- A boss is allowed more starts before the whole playthrough fails.
     for seed = 1, rules.level_of and (rules.levels[level].tier == 'boss' and 16 or 8) or 8 do
-        R.g = R.make_board(level - 1, seed)
+        if seed > 1 then R.g = R.make_board(level - 1, seed) end
         attempts = attempts + 1
         play(R.g)
         if R.g.won then won = true; break end
@@ -174,3 +175,5 @@ end
 check(replays == 0, ('the reference playthrough needs %d replays for income'):format(replays))
 print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d of %d purchases, %d total earned, %d remaining, %d stars, %d scenes'):format(
     wins, attempts-wins, replays, island.campaign_count(R.island), due, earned, R.prog.wallet[1], R.prog.wallet[4], #played))
+
+if profile then profile.report() end

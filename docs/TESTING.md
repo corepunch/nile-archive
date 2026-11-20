@@ -210,7 +210,43 @@ plays all 100 boards without a window using a deterministic greedy player.
 It tries up to eight fixed starts per board and up to sixteen per boss. The
 test banks real wins, checks every wallet slot and story scene, and confirms
 all twenty purchases on schedule with zero replays for income. It prints
-per-campaign totals to `build/test/<game>.log`. The separate `smoke campaign`
+per-campaign totals to `build/test/<game>.log`.
+
+`make test-bot` runs both full rule campaigns in one process, including real
+wins, retries, resource banking, story and all twenty scheduled purchases.
+It enables `BOT_PROFILE=1`; each game's log also lists rule-call counts and
+elapsed seconds for the bot's work. `testing.monotonic()` supplies an actual
+monotonic timer independent of the injected gameplay clock. Profiling uses a
+local rules proxy and never changes the real rules table. Omit the environment
+variable for ordinary campaign checks.
+
+Measured on the development Mac, 2026-11-20, with identical campaign outcomes
+and unchanged 40-start fitted budgets/prices:
+
+| Check | Before (s) | Optimized (s) |
+| --- | ---: | ---: |
+| Relic Rush full rule campaign (native test timer, profiling enabled) | 3.87 | 1.69 |
+| Christmas Market full rule campaign (native test timer, profiling enabled) | 4.77 | 2.00 |
+| Both full rule campaigns in one process (wall time) | 9.73 | 3.79 |
+| Christmas Market complete 40-start balance pipeline, including income/prices and rule tests (wall time) | 71.48 | 32.99 |
+| Relic Rush complete 40-start balance pipeline, including income/prices and rule tests (wall time) | 73.08 | 33.68 |
+
+Compilation is separate: the test timing/profiling hooks rebuilt in 5.72 s;
+the final full build check was up to date (0.07 s). The campaign includes
+100 wins plus 43 failed starts for Relic Rush and 54 for Christmas Market,
+all scenes and twenty purchases per game, with zero replays for income.
+The optimized candidate evaluator makes zero game copies; the baseline made
+39,468 and 51,016 respectively. These are local measurements, not CI deadlines.
+
+Verification also compared every candidate at all 200 campaign openings and
+normal versus simulation cascades, including resources, tools and refill
+origins (0.55 s for the selected differential suites). All 92 engine/game
+tests in `make test` passed; the aggregate took 7.10 s but failed the two
+asset preflights for the separately modified Christmas Market `pieces.png`
+(runtime inventory and atlas provenance). Lint passed in 1.62 s with zero
+warnings or errors. That artwork edit was left outside the optimization.
+
+The separate `smoke campaign`
 drives the real interface through the finale, buildings and region controls.
 It supplies each board's goal and purchase proceeds to exercise the UI flow.
 On macOS a hidden OpenGL

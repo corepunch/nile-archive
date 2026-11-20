@@ -35,7 +35,7 @@ local function play(level, seed, restored, cleared)
         else
             assert(rules.game_swap(g, a, b, m), 'bot chose an illegal move')
             for _ = 1, 500 do
-                rules.game_apply(g, m); rules.game_collapse(g); rules.game_matches(g, m, -1)
+                rules.game_apply(g, m); rules.game_collapse(g, true); rules.game_matches(g, m, -1)
                 if m.hits == 0 then break end
             end
             rules.game_check_end(g)
