@@ -114,32 +114,31 @@
       ]
     },
     "market-5": {
-      "name": "reindeer",
+      "name": "farrier's hammer",
       "source_crop": [
-        103,
-        10,
-        645,
-        708
+        266,
+        264,
+        495,
+        503
       ],
       "fitted_size": [
-        82,
-        106
+        105,
+        110
       ],
       "offset": [
-        21,
-        8
+        14,
+        11
       ],
       "alpha_center": [
-        64.1332,
-        63.7718
+        63.9058,
+        63.6628
       ],
       "registered_box": [
         128,
         128,
         128,
         128
-      ],
-      "source": "art/market-goods/purchase-pieces.png"
+      ]
     },
     "market-6": {
       "name": "toy blocks",

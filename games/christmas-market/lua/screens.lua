@@ -103,8 +103,8 @@ local guide_entries = {
      icon={front="market-3"}},
     {id="banking", title="Bank your matches", description="Each matched piece pays its own value. Clear the board to bank what you earned.",
      icon={front="market-4"}},
-    {id="hammer", title="Reindeer", description="Build the Reindeer stable. Match 30 reindeer to charge one kick. Tap a cell to hit it.", icon={tool=economy.bonuses.hammer.icon}},
-    {id="boosters", title="Firework Bomb", description="The Firework stall replaces the reindeer and keeps its charge. Tap a cell to hit a 3×3 square.",
+    {id="hammer", title="Farrier's hammer", description="Build the Reindeer stable. Match 30 hammers to charge one blow. Tap a cell to hit it.", icon={tool=economy.bonuses.hammer.icon}},
+    {id="boosters", title="Firework Bomb", description="The Firework stall replaces the hammer and keeps its charge. Tap a cell to hit a 3×3 square.",
      icon={tool="booster-firework"}},
     {id="bakery", title="Winter treats", description="The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board.", icon={front="market-7"}},
 }

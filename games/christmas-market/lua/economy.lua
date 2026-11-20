@@ -15,7 +15,7 @@ local E = {
         {name="Silver snowflake coin", slot=1, amount=3},
         {name="Sun coin", slot=1, amount=5},
         {name="Bundled pine", slot=3, amount=5},
-        {name="Reindeer"},
+        {name="Farrier's hammer"},
         {name="Toy blocks", slot=1, amount=6},
         {name="Gingerbread man", slot=2, amount=4},
         {name="Mulled wine", slot=2, amount=3},
@@ -40,7 +40,7 @@ local E = {
 
 local B
 E.bonus_slots, B = bonuses.slots{
-    hammer={icon="booster-reindeer", frame="market-5", name="Reindeer", effect="Kick through one cell."},
+    hammer={icon="booster-hammer", frame="market-5", name="Farrier's hammer"},
     bomb={icon="booster-firework", frame="booster-firework-icon", name="Firework Bomb"},
     shield={icon="booster-shield", frame="booster-shield-icon", name="Frost shield"},
     plus={icon="booster-plus", frame="booster-plus-icon", name="Wish cross"},
