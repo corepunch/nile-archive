@@ -49,6 +49,18 @@ end
 -- card shows what it adds as icons (screens.lua).
 require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
 
+local starter = M.kinds.rosa_stall
+for i, row in ipairs(M.catalogue_order) do
+    if row == starter + 1 then
+        table.remove(M.catalogue_order, i)
+        break
+    end
+end
+local can_buy = M.can_buy
+function M.can_buy(c, wallet, level, kind)
+    return kind ~= starter and can_buy(c, wallet, level, kind)
+end
+
 function M.migrate_wallet(progress, c)
     local reserved = M.reserved_cost(c, progress.level)
     for slot in ipairs(economy.currencies) do
@@ -56,17 +68,20 @@ function M.migrate_wallet(progress, c)
     end
 end
 
--- The Gingerbread house is already standing when the market opens.
+-- Rosa's old stall is already standing when Noelle returns to Bellmere.
 function M.new_game(c, now)
-    local house = M.kinds.gingerbread_house
-    local ok, spot = c:find_spot(house, vec2(760, 2070))
-    if ok then c:add(spot, house, now) end
+    local ok, spot = c:find_spot(starter, vec2(760, 2070))
+    if ok then c:add(spot, starter, now) end
 end
 
-function M.restore_saved(c,level)
+function M.restore_saved(c, level)
     -- Purchased decorations do not count toward campaign restoration progress.
     -- Rehome saved buildings whose footprints no longer fit without charging again.
     local items,seen=c.items,{}
+    -- Before the first wish, a lone Gingerbread house was the old free starter.
+    if level == 0 and #items == 1 and items[1].type == M.kinds.gingerbread_house then
+        items[1].type = starter
+    end
     local needs_relocation=false
     c.count=0
     for _,b in ipairs(items) do

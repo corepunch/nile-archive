@@ -6,7 +6,7 @@
  "ppt": 100,
  "samples": 64,
  "foundations": {
-  "categories": ["wonder", "cottage"],
+  "categories": ["wonder", "cottage", "starter"],
   "keys": ["firs", "bench"]
  },
  "shadow": {

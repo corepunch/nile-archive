@@ -5,9 +5,9 @@ installs and launches on the connected iPhone (or iPad when no iPhone is
 available). Set `DEVICE="name or UDID"` to choose one. See the
 [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
-An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. The market has 40 buildings and decorations. Smoke rises from nine working chimneys in town. See the [building catalogue](docs/building-catalogue.md).
+An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. The market has 41 buildings and decorations. Smoke rises from nine working chimneys in town. See the [building catalogue](docs/building-catalogue.md).
 
-![The 40 market buildings and decorations](docs/screenshots/buildings.jpg)
+![The 41 market buildings and decorations](docs/screenshots/buildings.jpg)
 
 The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.
 
@@ -67,10 +67,12 @@ The bakery and cocoa kiosk upgrade the red Treats piece. Each matched piece pays
 banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).
 
-Confirmed placement spends Tokens, Treats and Materials from that wallet.
-Welcome Square starts with a free, movable Gingerbread house. The Welcome arch
-is the first campaign purchase. [Opening market](docs/screenshots/opening-market.jpg)
+When Noelle arrives, Rosa’s old stall is already standing in Welcome Square.
+It’s the last stall her gran ran before retiring, and the market Noelle has
+come to reopen starts there. The stall can be moved for free. [Opening market](docs/screenshots/opening-market.jpg)
 
+Confirmed placement spends Tokens, Treats and Materials from that wallet.
+The Welcome arch is the first campaign purchase.
 The lower-left Build button opens the next stall and shows its price or shortfall. A circling trail signals when you can choose a location. Play another wish to earn the missing resources. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
 There are no lives: a failed wish can be retried at once.

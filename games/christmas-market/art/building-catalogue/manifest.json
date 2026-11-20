@@ -1201,6 +1201,34 @@
    "runtime": "data/city/buildings/glassblower.png",
    "shadow": "data/city/building-shadows/glassblower.png",
    "source": "art/building-catalogue/christmas_market_buildings.blend#glassblower"
+  },
+  {
+   "id": 40,
+   "key": "rosa_stall",
+   "name": "Gran’s old stall",
+   "category": "starter",
+   "size": [
+    2,
+    2
+   ],
+   "pivot": [
+    138.99,
+    240.686
+   ],
+   "base_width": 273.205,
+   "cost": [
+    0
+   ],
+   "stars": 0,
+   "about": "Rosa ran the last stall in the market. Noelle has come to get the market going again.",
+   "road": true,
+   "image": [
+    278,
+    331
+   ],
+   "runtime": "data/city/buildings/rosa_stall.png",
+   "shadow": "data/city/building-shadows/rosa_stall.png",
+   "source": "art/building-catalogue/christmas_market_buildings.blend#rosa_stall"
   }
  ]
 }

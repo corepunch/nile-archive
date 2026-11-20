@@ -5,10 +5,22 @@ local journey = require('journey')
 local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
 island.island_setup(c)
-assert(#island.catalogue == 40 and island.WONDERS == 10 and rules.LEVELS == 100)
+assert(#island.catalogue == 41 and island.WONDERS == 10 and rules.LEVELS == 100)
 island.new_game(c, 0)
-check(c.count == 1 and island.owned(c, island.kinds.gingerbread_house) == 1, 'Welcome Square starts with the Gingerbread house')
-check(island.campaign_count(c) == 0 and island.wonder_count(c) == 0, 'the house grants no campaign progress')
+local starter, gingerbread = island.kinds.rosa_stall, island.kinds.gingerbread_house
+check(c.count == 1 and island.owned(c, starter) == 1, "Welcome Square starts with Gran's stall")
+check(island.campaign_count(c) == 0 and island.wonder_count(c) == 0, 'the stall grants no campaign progress')
+check(not island.can_buy(c, purse(10000, 10000, 10000), 100, starter), 'the starter cannot be bought')
+
+local old = city.new()
+island.island_setup(old)
+local pos = c.items[1].pos
+old:add(pos, gingerbread, 0)
+island.restore_saved(old, 1)
+check(island.owned(old, gingerbread) == 1, 'a progressed save keeps its Gingerbread house')
+island.restore_saved(old, 0)
+check(old.count == 1 and island.owned(old, starter) == 1 and old.items[1].pos:dist(pos) < .01,
+      'an old opening save upgrades its starter in place')
 -- Pip announces each region on the level the script gives it (docs/story.md#small-lines).
 local opens = {[15]=1, [30]=2, [50]=3, [70]=4, [85]=5}
 for level=0,rules.LEVELS-1 do

@@ -1,6 +1,6 @@
 # Building catalogue
 
-Christmas Market has **40 objects**, all modelled and rendered in Blender as
+Christmas Market has **41 objects**, all modelled in Blender as
 [docs/BUILDING_ART.md](../../../docs/BUILDING_ART.md) describes:
 
 - **20 market stalls on the campaign ladder**, one every five levels: the 10 story stalls and
@@ -13,6 +13,7 @@ Christmas Market has **40 objects**, all modelled and rendered in Blender as
   See the [ladder](market-pieces.md#construction-sequence).
 - **The Firework stall, Station kiosk and Glassblower's stall** are the three new ladder stalls, see
   [the second market row](#second-market-row).
+- **Gran’s old stall** is already standing in Welcome Square at the start.
 - **15 decorations**: Lantern firs and Snowman bench, plus 13 more.
 - **4 snowy trees.**
 - **6 cottages.**
@@ -25,7 +26,7 @@ paint-over on the current Blender renders, matching the direction sheet's timber
 snow, garlands, ribbons and warm amber lighting. This addresses the building paint
 portion of [#34](https://github.com/corepunch/nile-archive/issues/34).
 
-![All 40 objects](screenshots/buildings.jpg)
+![All 41 objects](screenshots/buildings.jpg)
 
 The build shop scrolls through the selected category. Its rows show each object's
 sprite, footprint, ownership and price, with a disabled action for unavailable
@@ -38,9 +39,10 @@ earned stalls when checking decoration purchases. Older saves retain their
 wallet and buildings and can afford any previously earned stall.
 [First 20 wishes and price sources](resource-prototype.md)
 
-Welcome Square starts with one free Gingerbread house using the registered
-2 × 2 shop sprite and its existing chimney effect. It moves like a purchased
-house and is separate from the campaign ladder. [Opening market](screenshots/opening-market.jpg)
+Gran’s old stall is the shuttered timber booth Rosa ran before retiring.
+It is present when Noelle arrives to reopen the market for Advent. Players
+can tap it for its description or hold it to move it, and the Welcome arch
+is still the first campaign purchase. [Opening market](screenshots/opening-market.jpg)
 
 ## Source and pipeline
 
@@ -112,7 +114,7 @@ To inspect or tweak the scene in a running Blender, send `build_scene.py` throug
 the MCP socket bridge:
 `python3 games/emergency/source/tools/blender_mcp.py games/christmas-market/art/building-catalogue/build_scene.py`.
 It builds the collections there and does not overwrite the open file.
-A full render of all 40 objects takes about two minutes on four CPU cores.
+A full render of the catalogue takes about two minutes on four CPU cores.
 
 ## Runtime inventory
 
@@ -158,6 +160,20 @@ A full render of all 40 objects takes about two minutes on four CPU cores.
 | 37 / `firework_stall` | Firework stall | wonder | 2 x 2 | 775 / 275 / 310 | 0 | [Painted footprints](review/second-market-row/README.md) |
 | 38 / `station_kiosk` | Station kiosk | wonder | 2 x 2 | 1175 / 740 / 910 | 0 | [Painted footprints](review/second-market-row/README.md) |
 | 39 / `glassblower` | Glassblower's stall | wonder | 2 x 2 | 1630 / 1020 / 1055 | 0 | [Painted footprints](review/second-market-row/README.md) |
+| 40 / `rosa_stall` | Gran’s old stall | starter | 2 x 2 | Starting building | 0 | [Opening footprint](screenshots/starter-stall-footprint.jpg) |
+
+### Gran’s old stall
+
+The model is the `rosa_stall` collection in the Blender master. The ImageGen
+paint-over adds visible pine grain, worn red shutters, green trim and snow
+to the registered geometry. The sprite has one normal state. Placement and
+pickup use the engine’s existing lift and footprint effects. See the [render guide](../art/building-catalogue/painted-v1/rosa-stall-input.png), [prompt](../art/building-catalogue/painted-v1/rosa-stall-prompt.txt) and [accepted painting](../art/building-catalogue/painted-v1/rosa-stall-output.png).
+
+```sh
+make buildings GAME=christmas-market BLENDER=1 REBUILD=1 KEYS=rosa_stall
+python3 tools/import_painted_buildings.py christmas-market rosa-stall
+build/test/christmas-market "shot opening-market" "shot phone-opening-market" "shot starter-stall-footprint"
+```
 
 ## Second market row
 

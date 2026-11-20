@@ -40,4 +40,5 @@ return {
     firework_stall={sprite_path="city/buildings/firework_stall.png", size=size2(2,2), pivot=vec2(138.603,210.371), base_width=273.205, shadow_path="city/building-shadows/firework_stall.png", shadow_pivot=vec2(140.63,106.965), shadow_base_width=232.224},
     station_kiosk={sprite_path="city/buildings/station_kiosk.png", size=size2(2,2), pivot=vec2(138.603,184.887), base_width=273.205, shadow_path="city/building-shadows/station_kiosk.png", shadow_pivot=vec2(137.309,91.304), shadow_base_width=232.224},
     glassblower={sprite_path="city/buildings/glassblower.png", size=size2(2,2), pivot=vec2(138.603,199.951), base_width=273.205, shadow_path="city/building-shadows/glassblower.png", shadow_pivot=vec2(135.528,95.028), shadow_base_width=232.224},
+    rosa_stall={sprite_path="city/buildings/rosa_stall.png", size=size2(2,2), pivot=vec2(138.99,240.686), base_width=273.205, shadow_path="city/building-shadows/rosa_stall.png", shadow_pivot=vec2(136.001,114.183), shadow_base_width=232.224},
 }

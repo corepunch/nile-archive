@@ -981,6 +981,31 @@
    ],
    "shadow_base_width": 232.224,
    "painted_foundation": true
+  },
+  "rosa_stall": {
+   "title": "Gran\u2019s old stall",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/rosa_stall.png",
+   "image": [
+    278,
+    331
+   ],
+   "pivot": [
+    138.99,
+    240.686
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/rosa_stall.png",
+   "shadow_pivot": [
+    136.001,
+    114.183
+   ],
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
   }
  },
  "generator": "tools/buildings.py",
@@ -1031,12 +1056,13 @@
   "santa_workshop",
   "firework_stall",
   "station_kiosk",
-  "glassblower"
+  "glassblower",
+  "rosa_stall"
  ],
  "paintover": {
   "version": "painted-v1",
   "importer": "tools/import_painted_buildings.py",
   "sources": "art/building-catalogue/painted-v1"
  },
- "renderer": "Scener"
+ "renderer": "Blender"
 }

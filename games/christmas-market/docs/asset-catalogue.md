@@ -101,7 +101,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 
 | Asset | Source | Draft runtime | Meaning and supported states |
 | --- | --- | --- | --- |
-| 40 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration and paint-overs) | `data/city/buildings/<key>.png` | Twenty campaign stalls alongside shop decorations, trees and cottages. Placed and placement-preview use the same painted sprite, with engine lift/footprint feedback. [Building catalogue](building-catalogue.md) · [Second market row](building-catalogue.md#second-market-row) |
+| 41 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration and paint-overs) | `data/city/buildings/<key>.png` | Gran’s old stall opens the market, followed by twenty campaign stalls alongside shop decorations, trees and cottages. Placed and placement-preview use the same painted sprite, with engine lift/footprint feedback. [Building catalogue](building-catalogue.md) · [Gran’s old stall](building-catalogue.md#grans-old-stall) |
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
 | Six festive puzzle kinds | `art/festive-pieces/source.png` | `data/board/pieces.png` | Gold bell, candy cane, holly, blue mitten, plum bauble and gingerbread. The original `art/icons.png` crops under `art/registered/tile-sets/festive/` are legacy exports. |
@@ -680,7 +680,7 @@ All registered buildings and decorations use the painted-v1 sources, normal spri
 and unchanged engine placement/lift/validity states documented in the
 [building catalogue](building-catalogue.md) and
 [review gallery](review/painted-buildings/current-camera/README.md).
-The 18 slab-based sprites register their painted foundations to the 3D
+Slab-based sprites register their painted foundations to the 3D
 ground-contact edges. See the [adjacent foundation captures](review/foundations/README.md).
 
 ## Placement alignment guides

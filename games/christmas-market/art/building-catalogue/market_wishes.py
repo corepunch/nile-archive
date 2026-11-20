@@ -1246,6 +1246,35 @@ def bench(k):
     k.ball("glaze", .36, -.69, G + .1, .04, XRED, 8)
     k.ball("leaf", .25, -.58, G + .04, .08, FIR, 10)
 
+def rosa_stall(k):
+    """Rosa's shuttered timber booth, with its service counter folded in."""
+    x0, x1, y0, y1 = -.73, .73, -.38, .66
+    eave, rise = G + 1.52, .73
+    green, red = C("#285F51"), C("#903E34")
+    shell(k, x0, x1, y0, y1, yb=.05, zw=eave, post=green, side=WOOD, plinth=False)
+    gable_wall(k, x0, x1, y0, y1, eave, rise, col=CREAM, beams=green, king=False)
+    snow_gable(k, x0, x1, y0, y1, eave, rise, over=.11, fascia=green)
+
+    # Worn timber siding, paired red shutters, a latch and a folded counter.
+    for i in range(7):
+        k.box("wood", x1 + .02, .14, G + .1 + .18 * i, .065, .87, .171, J(WOOD, .10))
+    k.box("wood", 0, y0, G, 1.33, .12, 1.27, WOOD_D)
+    for i in range(8):
+        x = (i - 3.5) * .152 + (-.016 if i < 4 else .016)
+        k.box("wood", x, y0 - .075, G + .44, .143, .08, .83, J(red, .08))
+    for x in (-.31, .31):
+        for z in (G + .54, G + 1.12):
+            k.box("matte", x, y0 - .126, z, .52, .034, .055, IRON)
+    k.box("gold", 0, y0 - .14, G + .83, .16, .07, .059, GOLD)
+    k.box("wood", 0, y0 - .13, G + .16, 1.39, .145, .245, J(WOOD, .06))
+
+    # Plain evergreen without lights, and the empty crate tucked by the front.
+    garland(k, swag((-.63, y0 - .13, eave - .12), (.63, y0 - .13, eave - .12), .11),
+            .058, bulbs=False, berries=False)
+    bow(k, 0, y0 - .19, eave - .225, .095, red)
+    snow_crate(k, .57, -.68, G, .31)
+
+
 # ------------------------------------------------------------------ the list
 #
 # The game indexes these by order.
@@ -1266,7 +1295,7 @@ ITEMS = [dict(zip(("key", "title", "w", "h"), row)) for row in (
 )]
 
 
-KEYS = {it["key"] for it in ITEMS}
+KEYS = {it["key"] for it in ITEMS} | {"rosa_stall"}
 
 
 def model(it, i):

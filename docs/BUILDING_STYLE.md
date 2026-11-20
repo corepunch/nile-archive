@@ -1,8 +1,8 @@
 # Painted building style, references and prompts
 
 Relic Rush, Nile Archive and Christmas Market use detailed hand-painted surfaces
-over registered Blender geometry. The current `painted-v1` pass covers **237
-normal sprites**: 96 Relic Rush objects, 101 Nile Archive objects and 40 Christmas
+over registered Blender geometry. The current `painted-v1` pass covers **238
+normal sprites**: 96 Relic Rush objects, 101 Nile Archive objects and 41 Christmas
 Market objects, including decorations. The raw renders establish perspective,
 silhouette, scale and foundations; the paint pass supplies the finished materials
 and detail. Returning to smooth, unpainted renders loses the accepted finish.

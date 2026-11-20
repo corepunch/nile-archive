@@ -979,5 +979,30 @@
       290
     ],
     "foundation": "projected ground-contact edges"
+  },
+  "rosa_stall": {
+    "atlas": "art/building-catalogue/painted-v1/rosa-stall-output.png",
+    "cell": [
+      0,
+      0,
+      1254,
+      1254
+    ],
+    "crop": [
+      181,
+      95,
+      1072,
+      1162
+    ],
+    "scale": 0.30870621,
+    "pivot": [
+      138.99,
+      240.686
+    ],
+    "image": [
+      278,
+      331
+    ],
+    "foundation": "projected ground-contact edges"
   }
 }

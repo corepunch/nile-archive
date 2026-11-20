@@ -8,7 +8,7 @@
   "runtime_imports": "art/building-catalogue/painted-v1/imports.json",
   "reimport_command": "python3 tools/import_painted_buildings.py christmas-market",
   "generation_is_deterministic": false,
-  "accepted_object_count": 40,
+  "accepted_object_count": 41,
   "generations": [
     {
       "category": "building",
@@ -181,6 +181,29 @@
         "firework_stall",
         "station_kiosk",
         "glassblower"
+      ]
+    },
+    {
+      "category": "rosa-stall",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/rosa-stall-prompt.txt",
+      "inputs": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/rosa-stall-input.png",
+          "sha256": "65cafe68e89216cb234d59452db9dbaef0cf98204531c7d4233a19d50c8c3206"
+        },
+        {
+          "role": "style_reference",
+          "path": "data/city/buildings/cocoa.png",
+          "sha256": "b4992254090790f1d2c857b2343556fba7522a1884e4db939ab754fb916da21e"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/rosa-stall-output.png",
+      "output_sha256": "8c3ee69c39f1f9a3d6bcae86e7cc31d83617d6eed62598b1c022d40ec6d4e018",
+      "layout": "art/building-catalogue/painted-v1/rosa-stall-layout.json",
+      "accepted_keys": [
+        "rosa_stall"
       ]
     }
   ]

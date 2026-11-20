@@ -94,8 +94,8 @@ function R.smoke()
     elseif smoke_stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
-        assert(R.island.count == 2 and island.owned(R.island, island.kinds.gingerbread_house) == 1
-            and island.owned(R.island, island.kinds.arch) == 1, "the first stall must stand beside the starter house")
+        assert(R.island.count == 2 and island.owned(R.island, island.kinds.rosa_stall) == 1
+            and island.owned(R.island, island.kinds.arch) == 1, "the Welcome arch must stand beside Gran's stall")
         smoke_city_move = city.move_test(R.island, {
             look = function(at) R.island_focus(at-vec2(0,80),math.max(.65,R.island.cam.zoom)) end,
             wallet = function() return R.prog.wallet[rules.GOLD] end,

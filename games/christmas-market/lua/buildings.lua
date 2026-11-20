@@ -41,6 +41,7 @@ local items = {
     {key="firework_stall",name="Firework stall",category="wonder",cleared=0,about="Indigo crackers for the New Year sky, sold in threes.",cost=purse(775,275,310),needs=purse()},
     {key="station_kiosk",name="Station kiosk",category="wonder",cleared=0,about="The kiosk clock keeps the trains honest. Pretzels while you wait.",cost=purse(1175,740,910),needs=purse()},
     {key="glassblower",name="Glassblower's stall",category="wonder",cleared=0,about="Every bauble is blown by hand, one breath at a time.",cost=purse(1630,1020,1055),needs=purse()},
+    {key="rosa_stall",road=true,name="Gran’s old stall",category="starter",cleared=0,about="Rosa ran the last stall in the market. Noelle has come to get the market going again.",cost=purse(0),needs=purse()},
 }
 for _, b in ipairs(items) do
     for field, value in pairs(sprites[b.key]) do b[field] = value end
