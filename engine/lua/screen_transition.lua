@@ -65,7 +65,7 @@ function Transition:frame(inp, dt, paint)
     gfx.bleed(true)
     style.draw(d, leaving, u)
     gfx.bleed(false)
-    d.t = d.t + dt
+    d.t = d.t + dt * 2
     if d.t >= style.out + style.inn then self.animation = nil end
 end
 

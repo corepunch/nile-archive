@@ -442,8 +442,9 @@ sweep the individual cell rims fade out while the assembled rim, its painted
 joins and the board's shadow fade in. The game uses the existing artwork and
 draws transient glows and sparks procedurally.
 
-The clock waits for dialogue, pauses under modals and while on the island, and
-returns to IDLE before matching resumes. A release skips the entrance without
+The entrance starts as the screen transition reveals the board. The clock
+waits for dialogue, pauses under modals and while on the island, and returns
+to IDLE before matching resumes. A release skips the entrance without
 selecting a piece or spending a move. Reduced motion fades the assembled rim,
 shadow, floor and pieces together over a quarter second. Resetting a board
 clears its entrance.

@@ -219,7 +219,7 @@ with idle input. Reduced motion skips the effect. The shared styles live in
 `engine/lua/screen_transition/styles.lua` and accept the game's `transitions.theme`.
 
 Christmas Market and Relic Rush use `wipe`. A feathered diagonal edge sweeps
-left to right over 1.4 seconds, pushing the town off to the right into the
+left to right over 0.7 seconds, pushing the town off to the right into the
 board and drawing it in from the left on the way back. The town is masked
 because the board uses its own mask for the story mosaic. Capture both
 directions with `--city 3 --dive --dive-back 120 --reel`. Use
