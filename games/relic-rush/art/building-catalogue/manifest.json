@@ -26,7 +26,7 @@
         159.719
       ],
       "base_width": 273.205,
-      "gold": 1180,
+      "gold": 1075,
       "stars": 0,
       "runtime": "data/city/buildings/camp.png",
       "image": [
@@ -36,9 +36,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        1180,
-        445,
-        600
+        1075,
+        410,
+        540
       ],
       "about": "Unlocks Bomb. Hit a 3\u00d73 square around a cell.",
       "road": false,
@@ -66,7 +66,7 @@
         191.175
       ],
       "base_width": 273.205,
-      "gold": 70,
+      "gold": 60,
       "stars": 0,
       "runtime": "data/city/buildings/well.png",
       "image": [
@@ -76,7 +76,7 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        70,
+        60,
         0,
         0
       ],
@@ -106,7 +106,7 @@
         225.83
       ],
       "base_width": 359.808,
-      "gold": 1255,
+      "gold": 1170,
       "stars": 0,
       "runtime": "data/city/buildings/workshop.png",
       "image": [
@@ -116,8 +116,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        1255,
-        470,
+        1170,
+        440,
         0
       ],
       "about": "Timber bundles earn 5 Supplies each.",
@@ -146,7 +146,7 @@
         211.408
       ],
       "base_width": 359.808,
-      "gold": 1220,
+      "gold": 1165,
       "stars": 30,
       "runtime": "data/city/buildings/market.png",
       "image": [
@@ -156,9 +156,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Farmers Market",
       "cost": [
-        1220,
-        465,
-        765
+        1165,
+        445,
+        735
       ],
       "about": "Ration jars earn 4 Food each.",
       "road": false,
@@ -237,8 +237,8 @@
       "reference": "Estate",
       "cost": [
         695,
-        1465,
-        970
+        1460,
+        965
       ],
       "about": "Unlocks Hourglass. Add five moves.",
       "road": false,
@@ -346,7 +346,7 @@
         291.86
       ],
       "base_width": 409.808,
-      "gold": 1825,
+      "gold": 1820,
       "stars": 0,
       "runtime": "data/city/buildings/fountain.png",
       "image": [
@@ -356,8 +356,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fountain",
       "cost": [
-        1825,
-        2230,
+        1820,
+        2235,
         1285
       ],
       "about": "Emeralds earn 11 Coins each.",
@@ -386,7 +386,7 @@
         339.44
       ],
       "base_width": 546.41,
-      "gold": 2150,
+      "gold": 2155,
       "stars": 0,
       "runtime": "data/city/buildings/temple.png",
       "image": [
@@ -396,9 +396,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story finale, as a landmark",
       "cost": [
-        2150,
+        2155,
         2640,
-        1555
+        1560
       ],
       "about": "Unlocks Star. Clear all pieces of a chosen kind.",
       "road": false,
@@ -426,7 +426,7 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 645,
+      "gold": 710,
       "stars": 0,
       "runtime": "data/city/buildings/log_cabin.png",
       "image": [
@@ -436,8 +436,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        645,
-        235,
+        710,
+        255,
         0
       ],
       "about": "Unlocks Hammer. Hit one cell.",
@@ -666,7 +666,7 @@
         260.814
       ],
       "base_width": 409.808,
-      "gold": 705,
+      "gold": 695,
       "stars": 0,
       "runtime": "data/city/buildings/trading_post.png",
       "image": [
@@ -676,9 +676,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Central Station",
       "cost": [
-        705,
+        695,
         720,
-        620
+        615
       ],
       "about": "Dressed stones earn 7 Supplies each.",
       "road": false,
@@ -706,7 +706,7 @@
         232.79
       ],
       "base_width": 409.808,
-      "gold": 715,
+      "gold": 710,
       "stars": 0,
       "runtime": "data/city/buildings/water_mill.png",
       "image": [
@@ -716,8 +716,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Windmill",
       "cost": [
-        715,
-        965,
+        710,
+        960,
         935
       ],
       "about": "Grain bundles earn 5 Food each.",
@@ -757,7 +757,7 @@
       "reference": "Clock Tower",
       "cost": [
         710,
-        1080,
+        1085,
         990
       ],
       "about": "Unlocks Shield. Hit the row through a chosen cell.",
@@ -798,7 +798,7 @@
       "cost": [
         775,
         1345,
-        790
+        795
       ],
       "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
       "road": false,
@@ -918,7 +918,7 @@
       "cost": [
         970,
         1650,
-        955
+        950
       ],
       "about": "Scarabs earn 8 Coins each.",
       "road": false,

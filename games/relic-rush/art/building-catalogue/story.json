@@ -1,11 +1,11 @@
 {
   "camp": {
     "about": "Unlocks Bomb. Hit a 3×3 square around a cell.",
-    "cost": [1180, 445, 600]
+    "cost": [1075, 410, 540]
   },
   "well": {
     "about": "Water buckets earn 3 Food each.",
-    "cost": [70, 0, 0]
+    "cost": [60, 0, 0]
   },
   "quay_steps": {
     "about": "",
@@ -28,11 +28,11 @@
   },
   "workshop": {
     "about": "Timber bundles earn 5 Supplies each.",
-    "cost": [1255, 470, 0]
+    "cost": [1170, 440, 0]
   },
   "market": {
     "about": "Ration jars earn 4 Food each.",
-    "cost": [1220, 465, 765]
+    "cost": [1165, 445, 735]
   },
   "gateway": {
     "about": "Shrimp earn 6 Food each.",
@@ -40,7 +40,7 @@
   },
   "lodge": {
     "about": "Unlocks Hourglass. Add five moves.",
-    "cost": [695, 1465, 970]
+    "cost": [695, 1460, 965]
   },
   "archive": {
     "about": "Rings earn 7 Coins each.",
@@ -52,15 +52,15 @@
   },
   "fountain": {
     "about": "Emeralds earn 11 Coins each.",
-    "cost": [1825, 2230, 1285]
+    "cost": [1820, 2235, 1285]
   },
   "temple": {
     "about": "Unlocks Star. Clear all pieces of a chosen kind.",
-    "cost": [2150, 2640, 1555]
+    "cost": [2155, 2640, 1560]
   },
   "log_cabin": {
     "about": "Unlocks Hammer. Hit one cell.",
-    "cost": [645, 235, 0]
+    "cost": [710, 255, 0]
   },
   "apothecary": {
     "cost": [220, 15, 0]
@@ -80,19 +80,19 @@
   },
   "trading_post": {
     "about": "Dressed stones earn 7 Supplies each.",
-    "cost": [705, 720, 620]
+    "cost": [695, 720, 615]
   },
   "water_mill": {
     "about": "Grain bundles earn 5 Food each.",
-    "cost": [715, 965, 935]
+    "cost": [710, 960, 935]
   },
   "clock_tower": {
     "about": "Unlocks Shield. Hit the row through a chosen cell.",
-    "cost": [710, 1080, 990]
+    "cost": [710, 1085, 990]
   },
   "lighthouse": {
     "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
-    "cost": [775, 1345, 790]
+    "cost": [775, 1345, 795]
   },
   "treehouse": {
     "cost": [400, 0, 27]
@@ -103,7 +103,7 @@
   },
   "beached_ship": {
     "about": "Scarabs earn 8 Coins each.",
-    "cost": [970, 1650, 955]
+    "cost": [970, 1650, 950]
   },
   "amphitheater": {
     "about": "Helmets earn 6 Coins each.",

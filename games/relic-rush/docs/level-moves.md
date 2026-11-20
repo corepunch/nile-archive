@@ -8,6 +8,26 @@ it orders and spaces the boards and is not a human win rate.
 
 | # | Board | Tier | Moves | Median | Fastest | Within budget |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
+| 1 | The Landing | tutorial | 15 | 6 | 4 | 37/40 |
+| 2 | Jade Steps | tutorial | 23 | 9 | 4 | 40/40 |
+| 3 | The Ceiba Court | tutorial | 25 | 10 | 5 | 36/40 |
+| 4 | Gate of Reeds | tutorial | 45 | 18 | 11 | 39/40 |
+| 5 | Trapper’s Terrace | hard | 53 | 44 | 9 | 20/40 |
+| 6 | Rain Channel | easy | 24 | 12 | 7 | 34/40 |
+| 7 | The Timber Path | normal | 20 | 14 | 6 | 26/40 |
+| 8 | Sun Court | normal | 30 | 21 | 9 | 27/40 |
+| 9 | River Carvings | hard | 35 | 29 | 14 | 26/40 |
+| 10 | Tide Chamber | boss | 36 | 36 | 17 | 21/40 |
+| 11 | Fallen Colonnade | easy | 28 | 14 | 8 | 35/40 |
+| 12 | Choked Gateway | easy | 36 | 18 | 9 | 35/40 |
+| 13 | The Spire Keep | normal | 27 | 19 | 10 | 33/40 |
+| 14 | Hall of Pillars | normal | 27 | 19 | 10 | 23/40 |
+| 15 | Broken Aqueduct | hard | 28 | 23 | 11 | 22/40 |
+| 16 | The Overlook | easy | 42 | 21 | 9 | 25/40 |
+| 17 | Moss Bridge | normal | 49 | 35 | 9 | 23/40 |
+| 18 | Twin Wells | normal | 31 | 22 | 14 | 31/40 |
+| 19 | Inner Sun Court | hard | 30 | 25 | 14 | 29/40 |
+| 20 | Heart of the Temple | boss | 26 | 26 | 13 | 20/40 |
 | 21 | Sun Disc | easy | 22 | 11 | 7 | 37/40 |
 | 22 | Pilgrim Stair | easy | 32 | 16 | 6 | 28/40 |
 | 23 | Arch Gate | normal | 42 | 30 | 10 | 25/40 |
