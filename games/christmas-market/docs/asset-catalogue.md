@@ -740,6 +740,8 @@ gem) with
 `./build/christmas-market --headless --mute --fresh --size 480x900 --level 30 --special-states --frames 60 --shot out.png`.
 Reviewed in game at [480 × 900](screenshots/review/line-gems/states-480.jpg)
 and [390 × 844](screenshots/review/line-gems/states-390.jpg).
+[Cross, rainbow and rainbow with a line gem](screenshots/review/line-gems/combos.jpg),
+each two frames of `--special-fire cross`, `rainbow` and `recolor` (before the sweep was clipped to the board's edge).
 
 `data/board/match-specials.png` also keeps the three hex striped axes, T bomb
 and paper plane in its six 128 px slots for the rules this campaign leaves
