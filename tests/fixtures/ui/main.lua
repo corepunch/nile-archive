@@ -1,17 +1,19 @@
 -- A single resource rendered with two independent skins, and stacked modals.
-local template={root={kind='column',panel=true,children={
-    {kind='label',id='title',height=46,role='title'},
-    {kind='label',id='description',height=68,wrap=true},
-    {kind='toggle',id='sound',height=54,on_text='SOUND ON',off_text='SOUND OFF'},
-    {kind='checkbox',id='hints',text='Show hints',height=40},
-    {kind='checkbox',id='locked',text='Cloud saves',height=40,enabled=false,value=true},
-    {kind='progress',id='progress',height=24},
-    {kind='spacer',grow=1},
-    {kind='row',gap=12,height=54,children={
-        {kind='button',id='reset',text='RESET',grow=1,enabled=false},
-        {kind='button',id='apply',text='APPLY',grow=1,accent=true},
-    }},
-}},bindings={{id='title',field='title',readonly=true},{id='description',field='description',readonly=true},
+local N = ui.node
+
+local template={root=N.column {panel=true,
+    N.label {id='title',height=46,role='title'},
+    N.label {id='description',height=68,wrap=true},
+    N.toggle {id='sound',height=54,on_text='SOUND ON',off_text='SOUND OFF'},
+    N.checkbox {id='hints',text='Show hints',height=40},
+    N.checkbox {id='locked',text='Cloud saves',height=40,enabled=false,value=true},
+    N.progress {id='progress',height=24},
+    N.spacer {grow=1},
+    N.row {gap=12,height=54,
+        N.button {id='reset',text='RESET',grow=1,enabled=false},
+        N.button {id='apply',text='APPLY',grow=1,accent=true},
+    },
+},bindings={{id='title',field='title',readonly=true},{id='description',field='description',readonly=true},
     {id='sound',field='sound',type='boolean'},{id='hints',field='hints',type='boolean'},
     {id='progress',field='progress',type='number',readonly=true}}}
 local models={

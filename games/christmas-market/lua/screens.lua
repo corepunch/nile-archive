@@ -9,20 +9,22 @@ local economy = require("economy")
 local island = require("island")
 local picture = R.picture
 
-function R.wallet_icons() return {R.life_art, R.board_art["market-3"], R.hud_art.complete} end
-function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
-
 local function currency_icon(slot)
     return R.board_art["market-" .. economy.currencies[slot].kind]
 end
+
+R.currency_icon = currency_icon   -- the citizens' perks on the building card
+
+function R.wallet_icons() return {R.life_art, currency_icon(economy.GOLD), R.hud_art.complete} end
+function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
 
 function R.currency_capsules(balance)
     local out = {}
     local earned = not R.on_island and R.g and not R.g.lost and not R.g.reward_claimed and R.g.earnings
     for slot, currency in ipairs(economy.currencies) do
         out[slot] = {id=currency.name:lower(), icon=currency_icon(slot), value=tostring(balance[slot] + (earned and earned[slot] or 0)), width=90,
-            note=earned and currency.name .. " from matches is banked on a win."
-                or currency.name .. " from matches pays for stalls and decorations."}
+            note=earned and currency.name .. " from matches are banked on a win."
+                or currency.name .. " from matches pay for stalls and decorations."}
     end
     return out
 end
@@ -37,36 +39,38 @@ function R.currency_prices(cost)
     return parts
 end
 
--- What a stall adds, as icons for its card: a new piece with what each match
--- of it banks or charges, a booster, moves, faster tool charge or takings.
--- The caption says when a recurring gift arrives.
+function R.funding_shortfall(cost)
+    local missing = purse()
+    for slot in ipairs(economy.currencies) do missing[slot] = math.max(0, cost[slot] - R.prog.wallet[slot]) end
+    return R.currency_prices(missing)
+end
+
+-- This card presents the same bonus ranks and shared slots as the board.
 function R.building_gets(kind)
-    local unlock
-    for _, step in ipairs(island.ladder) do if step.kind == kind then unlock = step.unlock end end
-    if not unlock then return {} end
-    local card = R.words.card
-    local function booster(tool) return R.board_art[economy.tool_slots[tool].icon] end
-    local function piece_icon(piece) return R.board_art["market-" .. piece] end
-    local function plus(n) return ("+%d"):format(n) end
-    if unlock.kind then
-        local piece = economy.pieces[unlock.kind]
-        return {{id="piece", icon=piece_icon(unlock.kind), amount=plus(piece.amount), unit=currency_icon(piece.slot)}}
-    elseif unlock.tool then
-        return {{id="tool", icon=piece_icon(unlock.piece), amount=plus(economy.pieces[unlock.piece].amount), unit=booster(unlock.tool)}}
-    elseif unlock.opening_tool then
-        return {{id="booster", icon=booster(unlock.opening_tool), amount=plus(1)}}, card.every_wish
-    elseif unlock.moves then
-        return {{id="moves", amount=plus(unlock.moves), label=card.moves}}, card.every_wish
-    elseif unlock.charge then
-        for _, earlier in ipairs(economy.unlocks) do
-            if earlier.tool then return {{id="charge", icon=piece_icon(earlier.piece), amount=("x%d"):format(unlock.charge)}} end
+    local gets = {}
+    for _, step in ipairs(island.ladder) do
+        if step.kind == kind then
+            local unlock = step.unlock
+            if unlock.kind then
+                local piece = economy.pieces[unlock.kind]
+                gets[#gets + 1] = {id="piece", icon=R.board_art["market-" .. unlock.kind],
+                    amount=piece.amount, unit=piece.slot and currency_icon(piece.slot)}
+            end
+            if unlock.bonus then
+                gets[#gets + 1] = {id=unlock.bonus.key, icon=R.board_art[unlock.bonus.icon]}
+            end
+            if unlock.income then
+                for slot in ipairs(economy.currencies) do
+                    if unlock.income[slot] > 0 then
+                        gets[#gets + 1] = {id="income-" .. slot, icon=currency_icon(slot),
+                            amount=("+%d"):format(unlock.income[slot])}
+                    end
+                end
+                return gets, R.words.card.every_win
+            end
         end
     end
-    local gets = {}
-    for slot in ipairs(economy.currencies) do
-        if unlock.income[slot] > 0 then gets[#gets + 1] = {id="income-" .. slot, icon=currency_icon(slot), amount=plus(unlock.income[slot])} end
-    end
-    return gets, card.every_win
+    return gets
 end
 
 R.register_result(function()
@@ -100,25 +104,22 @@ end)
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
 local guide_entries = {
-    {id="neighbors", title="Line up three or more", description="Match treats in a straight line along any of the three axes.",
+    {id="neighbors", title="Line up three or more", description="Match identical pieces in a straight line horizontally or vertically.",
      icon={front="market-3"}},
     {id="panes", title="Light the panes", description="Match on a pane or hit it with a tool to light it. Light them all to finish.",
-     icon={back="tile-tablet-single"}},
-    {id="blockers", title="Untangle tinsel", description="Match the tied treat or hit it with a tool. Then clear the treat to light the pane.",
-     icon={back="tile-tablet-single", piece="market-1", front="chain"}},
-    {id="supplies", title="Stock the market", description="Coins pay Gold. After you build stalls, their wood, food and other goods appear on the board. Holly and mittens earn score.",
+     icon={back="square-target"}},
+    {id="double-panes", title="Green panes", description="A green pane turns blue after its first hit. Match again to light it.",
+     icon={back="square-double"}},
+    {id="blockers", title="Untangle tinsel", description="Match the tied piece or hit it with a tool. Then clear the piece to light the pane.",
+     icon={back="square-target", piece="market-1", front="chain-square-1"}},
+    {id="supplies", title="Stock the market", description="Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials.",
      icon={front="market-3"}},
-    {id="long-lines", title="Long lines pay more", description="A line of four pays twice per piece. A line of five pays four times per piece.",
+    {id="banking", title="Bank your matches", description="Each matched piece pays its own value. Clear the board to bank what you earned.",
      icon={front="market-4"}},
-    {id="double-panes", title="Green double panes", description="A green pane turns blue after the first hit. Match again to light it.", icon={back="tile-tablet-double"}},
-    {id="hammer", title="Hammer", description="Build Theo's workshop and match toy hammers to charge a hit on one cell.", icon={tool="booster-hammer"}},
-    {id="wand", title="Lantern lightning", description="Build the candle shop and match lantern stars to charge a strike across 15 cells.", icon={tool="booster-lantern"}},
-    {id="boosters", title="One use per wish", description="The reindeer stable gives you a Shooting Star to clear a row and Santa's workshop a Firework Bomb to blast a cell and its neighbors. The sleigh and the Christmas tree add a second of each. Choose a booster and tap the board.",
+    {id="hammer", title="Farrier's hammer", description="Build the reindeer stable. Match 30 hammers to charge one hit. Use it before charging again.", icon={tool="booster-hammer"}},
+    {id="boosters", title="Firework Bomb", description="The gingerbread house upgrades the hammer and keeps its charge. Tap a cell to hit a 3×3 square.",
      icon={tool="booster-firework"}},
-    {id="treasures", title="Bells and baubles", description="The chapel, the igloo and the giant bauble change gold coins into golden bells, snowflake baubles and plum baubles: 6, 7 and 8 Gold each.",
-     icon={front="market-12"}},
-    {id="helpers", title="Market helpers", description="The gingerbread house adds 3 moves to every wish and the post office charges tools twice as fast. The skating rink and the presents pay on every win.",
-     icon={front="market-7"}},
+    {id="bakery", title="Winter treats", description="The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board.", icon={front="market-7"}},
 }
 local function guide_icon(box, icon)
     local at = box:center()
@@ -129,7 +130,7 @@ local function guide_icon(box, icon)
     if icon.tool then picture(R.board_art[icon.tool], layer, 255) end
 end
 local guide_form = match3.guide_form({
-    title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING TREATS",
+    title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING PIECES",
     done = "LET'S MAKE MAGIC",
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))

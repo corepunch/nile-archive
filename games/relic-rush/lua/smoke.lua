@@ -6,7 +6,6 @@
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
-local quests = require("quests")
 
 local stage, frames, wait, partner = -2, 0, 0, -1
 local smoke_sound   -- the sound setting before the smoke run toggles it
@@ -20,14 +19,17 @@ local function press_tile(key)
     return node
 end
 
--- --smoke --campaign: the thirty story expeditions, to the finale, through the real result, Claim,
+-- --smoke --campaign: all five square chapters (a hundred expeditions), through the real result, Claim,
 -- region, placement, dialogue and Play controls. Each board's goals are met
 -- before one real swap, so this checks the flow; the extended greedy-bot
 -- rules test checks that the boards themselves can be won.
 local played = {}
+local last_purchase = 0
+for n, step in ipairs(island.ladder) do
+    if step.after <= rules.LEVELS then last_purchase = n end
+end
 local function campaign()
-    local journey = require("journey")
-    if frames > 32000 then   -- 108-cell boards take longer to present than the old 61
+    if frames > 160000 then   -- a hundred boards of up to 108 cells
         error(("campaign smoke stalled at level %d (overlay %d, island %s, story %s)"):format(
             R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
@@ -45,21 +47,14 @@ local function campaign()
         return
     end
     local c = R.island
-    if R.overlay == R.OV_QUEST and R.quest_offer then
-        if R.dialog_settled() then app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)) end
-        return
-    end
-    if R.overlay == R.OV_FINALE then
-        local want = {}
-        for _, b in ipairs(journey.beats) do want[#want + 1] = b.key end
-        assert(table.concat(played, " ") == table.concat(want, " "),
-               "campaign smoke: beats played out of order: " .. table.concat(played, " "))
-        for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
-        assert(R.prog.story_choices["after-10"] == 1, "campaign smoke: Mara answered the signal")
-        assert(R.prog.level == journey.beats[#journey.beats].level and island.campaign_count(c) == #island.ladder and c.open == 63,
-               "campaign smoke: thirty clears restore all twenty buildings and open every region")
-        print(("campaign smoke passed: %d expeditions, %d story beats, %d restorations, every region in %d frames"):format(
-            R.prog.level, #played, island.campaign_count(c), frames))
+    if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
+        app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
+    elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == last_purchase
+        and (R.overlay == R.OV_NONE or R.overlay == R.OV_FINALE) and R.prog.story_seen["after-100"] then
+        -- The last clear scene closes on the finale card (the engine's, over the town).
+        assert(R.prog.story_choices["restore-16"] == 1, "campaign smoke: Mara answered the signal")
+        print(("campaign smoke passed: %d expeditions, %d story beats, %d restorations"):format(
+            R.prog.level, #played, island.campaign_count(c)))
         app.quit()
     elseif R.overlay == R.OV_STORY_CHOICE then
         local box = R.choice_form.boxes["1"]
@@ -76,8 +71,7 @@ local function campaign()
         local z = c:next_zone(R.prog.wallet)
         if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
         elseif island.next_step(c, R.prog.level) then
-            if island.next_quest(c, R.prog.level) then app.inject_click(R.town.rail_targets.build); wait = 10
-            else R.island_begin(island.next_step(c, R.prog.level), true) end
+            app.inject_click(R.town.buttons.build); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10
         end
@@ -127,10 +121,6 @@ function R.smoke()
     end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
-        return
-    end
-    if R.overlay == R.OV_QUEST and R.quest_offer then
-        if R.dialog_settled() then app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)) end
         return
     end
     -- The board's entrance takes no moves. A tap skips the first; the rest play out.
@@ -189,16 +179,15 @@ function R.smoke()
         local cost = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost
         for slot = 1, 3 do R.prog.wallet[slot] = math.max(R.prog.wallet[slot], cost[slot]) end
         app.inject_click(R.town.buttons.build); stage = 2
-    elseif stage == 2 then
-        assert(R.overlay == R.OV_SHOP, "smoke: Build opens the shop even when a restoration is pending")
-        local _, well = R.catalogue_tile("well")
-        assert(well and well.available, "smoke: the shop offers the funded Well")
-        assert(press_tile("well")); stage = 3
+    elseif stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
+        assert(R.inspect == island.kinds.well and R.wonder_form:get("action") == R.words.card.build,
+            "Build opens the funded Well")
+        app.inject_click(R.wonder_form.boxes.action:center()); stage = 3
     elseif stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 4   -- PLACE & BUILD
     elseif stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
         if R.island.count ~= 2 then error("smoke: the wonder was not built") end   -- beside the crew's tent
-        app.inject_click(R.town.buttons.build); shop.categories = 0; stage = 20
+        R.open_catalogue(); shop.categories = 0; stage = 20
     elseif stage == 20 and R.overlay == R.OV_SHOP then
         if shop.categories < 2 then
             app.inject_click(R.catalogue_form.boxes.category_next:center())
@@ -319,41 +308,14 @@ function R.smoke()
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
         assert((R.town.navigation:get("play") or "") == "", "smoke: Play still shows no level number")
-        -- The crew's requests stand down the left edge: the next building, then the well's two.
-        local rail = R.quest_rail()
-        assert(#rail == 3 and rail[1].id == "build" and rail[2].id == "chart" and rail[3].id == "supper"
-               and rail[2].progress == 0 and rail[2].portrait and not rail[2].ready and not rail[2].waiting,
-               "smoke: the well opens one request on each line")
-        local marker = R.town.rail_targets.chart
-        assert(marker and marker.x < 80 and marker.y > R.town.header_form.boxes.cap1:max().y,
-               "smoke: request markers stand at the left edge, under the wallet")
-        app.inject_click(marker); stage = 46
-    -- A short request's card plays on; a filled one hands in and plays its scene.
-    elseif stage == 46 and R.overlay == R.OV_QUEST and R.dialog_settled() then
-        assert(R.quest_card == "chart" and R.quest_form:get("action") == ("PLAY EXPEDITION %d"):format(R.prog.level + 1)
-               and R.quest_form.boxes.needs, "smoke: a short request shows what is missing and offers Play")
-        app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2)); stage = 47
-    elseif stage == 47 and R.overlay == R.OV_NONE then
-        R.quest_state().have.chart = quests.by_key.chart.need
-        app.inject_click(R.town.rail_targets.chart); stage = 48
-    elseif stage == 48 and R.overlay == R.OV_QUEST and R.dialog_settled() then
-        assert(R.quest_form:get("action") == R.words.quest.deliver and R.quest_form.boxes.needs
-               and R.quest_form:get("needs_caption") == R.words.quest.gathered,
-               "smoke: a filled request offers to hand it in")
-        shop.quest_gold = R.prog.wallet[rules.GOLD]
-        app.inject_click(R.quest_form.boxes.action:center() + vec2(0, R.drop / 2)); stage = 49
-    elseif stage == 49 and R.overlay == R.OV_QUEST_HANDOFF and R.dialog_settled() then
-        app.inject_click(R.quest_handoff_form.boxes.continue:center() + vec2(0, R.drop / 2))
-    elseif stage == 49 and R.overlay == R.OV_NONE then   -- its scene has been tapped through above
-        local rail = R.quest_rail()
-        assert(R.quest_state().done.chart and R.prog.story_seen["quest-chart"] and #rail == 2 and rail[2].id == "supper",
-               "smoke: handing a request in plays its scene and clears its marker")
-        assert(R.prog.wallet[rules.GOLD] == shop.quest_gold + quests.by_key.chart.coins,
-               "smoke: handing a request in pays its Coins")
-        app.inject_click(R.town.buttons.play); stage = 45
+        app.inject_click(R.town.buttons.build); stage = 44
+    elseif stage == 44 and R.overlay == R.OV_WONDER and R.dialog_settled() then
+        assert(R.inspect == island.kinds.log_cabin and R.wonder_form.boxes.price and R.wonder_form:get("action") == R.words.card.play,
+            "Build shows the next restoration, the shortfall and Play")
+        app.inject_click(R.wonder_form.boxes.action:center()); stage = 45
     elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and R.g.moves == shop.resume_moves, "returning from island must preserve the suspended attempt")
-        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> level 2 from Play -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> request card (short, then handed in with its scene) -> resume expedition")
+        print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> level 2 from Play -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> next restoration card -> resume expedition")
         app.quit()
     end
 end

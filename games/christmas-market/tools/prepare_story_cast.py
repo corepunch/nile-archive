@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Register the five ImageGen story busts on the existing dialogue canvas."""
+"""Register the ImageGen story busts on the existing dialogue canvas."""
 import argparse
 from pathlib import Path
 
@@ -14,6 +14,12 @@ CROPS = {
     'henrik': (1025, 0, 1523, 511),
     'pip': (6, 512, 488, 1022),
     'wren': (545, 512, 990, 1022),
+}
+NEW_CROPS = {
+    'alder': (62, 0, 600, 618),
+    'finch': (642, 0, 1227, 618),
+    'mary': (0, 624, 621, 1242),
+    'rosa': (644, 624, 1254, 1242),
 }
 
 
@@ -35,11 +41,15 @@ def export(key, atlas, crop, check):
 
 
 def prepare(check=False):
-    with Image.open(ROOT / 'art/story-cast.png') as atlas:
-        assert atlas.mode == 'RGBA' and atlas.size == (1536, 1024)
-        for key, crop in CROPS.items():
-            export(key, atlas, crop, check)
-    print(f'Christmas Market: {len(CROPS)} painted story busts')
+    for name, size, crops in (
+        ('story-cast.png', (1536, 1024), CROPS),
+        ('new-story-cast.png', (1254, 1254), NEW_CROPS),
+    ):
+        with Image.open(ROOT / 'art' / name) as atlas:
+            assert atlas.mode == 'RGBA' and atlas.size == size
+            for key, crop in crops.items():
+                export(key, atlas, crop, check)
+    print(f'Christmas Market: {len(CROPS) + len(NEW_CROPS)} painted supporting busts')
 
 
 if __name__ == '__main__':

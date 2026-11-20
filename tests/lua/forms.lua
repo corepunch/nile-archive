@@ -1,11 +1,13 @@
+local N = ui.node
+
 local template={
-    root={kind="column",padding=10,gap=5,children={
-        {kind="label",id="name",height=20},
-        {kind="row",id="row",height=40,gap=10,children={
-            {kind="button",id="accept",width=80},{kind="toggle",id="sound",grow=1},
-        }},
-        {kind="label",id="count",height=20},
-    }},
+    root=N.column {padding=10,gap=5,
+        N.label {id="name",height=20},
+        N.row {id="row",height=40,gap=10,
+            N.button {id="accept",width=80},N.toggle {id="sound",grow=1},
+        },
+        N.label {id="count",height=20},
+    },
     bindings={{id="name",field="name"},{id="sound",field="settings.sound",type="boolean"},
               {id="count",field="items.1",type="integer",min=0,max=10}},
 }
@@ -28,29 +30,30 @@ check(boxes.name.x==20 and boxes.name.y==30 and boxes.name.w==280,"container pad
 check(boxes.row.y==55 and boxes.row.h==40,"vertical gap")
 check(boxes.accept.w==80 and boxes.sound.x==110 and boxes.sound.w==190,"fixed and weighted row")
 check(form:layout(rect(0,0,200,160)).sound.w==90,"reflow in narrower parent")
-check(not pcall(ui.form,{kind="mystery"}),"unknown controls rejected")
-check(not pcall(ui.form,{kind="row",children={{kind="button",id="x"},{kind="button",id="x"}}}),"duplicate IDs rejected")
-check(not pcall(ui.form,{kind="button"}),"interactive control needs ID")
+check(not pcall(ui.form,N.mystery {}),"unknown controls rejected")
+check(not pcall(ui.form,N.row {N.button {id="x"},N.button {id="x"}}),"duplicate IDs rejected")
+check(not pcall(ui.form,N.button {}),"interactive control needs ID")
+check(not pcall(N.column, {children={}, N.label {}}),"inline and explicit child lists cannot be mixed")
 -- A card's padding and gap are the engine's; a pinned control leaves the flow.
-local spaced=ui.form{kind="column",panel=true,children={
-    {kind="label",id="first",height=20},
-    {kind="button",id="corner",width=44,height=44,pin={1,0},pin_offset={-8,8}},
-    {kind="label",id="second",height=20},
-}}
+local spaced=ui.form(N.column {panel=true,
+    N.label {id="first",height=20},
+    N.button {id="corner",width=44,height=44,pin={1,0},pin_offset={-8,8}},
+    N.label {id="second",height=20},
+})
 local _,spaced_height=spaced:measure(200)
 check(spaced_height==ui.FORM_PADDING*2+40+ui.FORM_GAP,"a pinned control takes no room and no gap")
 local spots=spaced:layout(rect(10,20,200,spaced_height))
 check(spots.first.x==10+ui.FORM_PADDING and spots.second.y==spots.first.y+20+ui.FORM_GAP,"card rows use the shared padding and gap")
 check(spots.corner.x==10+200-8-22 and spots.corner.y==20+8-22 and spots.corner.w==44,"a pin centres its control on a point of the form's box")
-check(not pcall(ui.form,{kind="column",panel=true,padding=12}) and not pcall(ui.form,{kind="column",panel=true,gap=4}),"a spaced cannot choose its own padding or gap")
-check(not pcall(ui.form,{kind="column",children={{kind="button",id="x",pin={1,0}}}}),"a pinned control needs a fixed size")
-check(not pcall(ui.form,{kind="overlay",children={{kind="button",id="x",width=44,height=44,pin={1,0}}}}),"only a column or row holds a pinned control")
-local readonly=ui.form{root={kind="column",children={{kind="label",id="x"}}},bindings={{id="x",field="name",readonly=true}}}
+check(not pcall(ui.form,N.column {panel=true,padding=12}) and not pcall(ui.form,N.column {panel=true,gap=4}),"a spaced cannot choose its own padding or gap")
+check(not pcall(ui.form,N.column {N.button {id="x",pin={1,0}}}),"a pinned control needs a fixed size")
+check(not pcall(ui.form,N.overlay {N.button {id="x",width=44,height=44,pin={1,0}}}),"only a column or row holds a pinned control")
+local readonly=ui.form{root=N.column {N.label {id="x"}},bindings={{id="x",field="name",readonly=true}}}
 check(readonly:push(model),"readonly push")
 readonly:set("x","changed");check(readonly:pull(model) and model.name=="Mara","readonly model field preserved")
 local stack=ui.modals()
 check(not stack:active(),"empty modal stack")
-check(not stack:open("row",ui.form{kind="row"}),"modal roots must be vertical columns")
+check(not stack:open("row",ui.form(N.row {})),"modal roots must be vertical columns")
 check(stack:open("one",form,model),"first modal")
 check(stack:open("two",readonly,model),"nested modal")
 check(not stack:close("one") and stack:active(),"only top modal can close")
@@ -130,18 +133,18 @@ check(not form:draw(rect(0,0,300,160),passive_skin,{interactive=false,dim_contro
     and painted_disabled==false,"transitions can block input while retaining the enabled artwork")
 -- Data source replacement, row ownership and stable-key keyboard focus.
 local builds=0
-local list=ui.form{kind="column",children={{kind="list",id="topics",gap=8,item=function(item)
+local list=ui.form(N.column {N.list {id="topics",gap=8,item=function(item)
     builds=builds+1
     if item.bad then error("invalid row payload") end
-    return {kind="row",gap=12,align="center",children={
-        {kind="custom",width=60,height=60,visible=item.icon~=false},
-        {kind="column",id="content",grow=1,gap=4,children={
-            {kind="label",id="title",text=item.title,height=20,text_align=item.icon==false and "center" or "start"},
-            {kind="label",id="description",text="Explanation",height=20,wrap=true},
-        }},
-        {kind="button",id="open",text="Open",width=40,height=40,action="choose"},
-    }}
-end}}}
+    return N.row {gap=12,align="center",
+        N.custom {width=60,height=60,visible=item.icon~=false},
+        N.column {id="content",grow=1,gap=4,
+            N.label {id="title",text=item.title,height=20,text_align=item.icon==false and "center" or "start"},
+            N.label {id="description",text="Explanation",height=20,wrap=true},
+        },
+        N.button {id="open",text="Open",width=40,height=40,action="choose"},
+    }
+end}})
 local data={{id="a",title="First"},{id="b",title="Second",icon=false}}
 check(list:set_items("topics",data),"populate data source")
 local function item_node(key,id)
@@ -179,17 +182,17 @@ check(list:set_items("topics",{data[2]}) and list.focus==nil and not list.nodes[
 data[2].title="Updated"
 check(list:set_items("topics",data) and item_node("b","title").text=="Updated","source refresh replaces row contents")
 check(list:set_items("topics",{}) and #list.nodes.topics.children==0,"empty source clears its stack")
-check(not pcall(ui.form,{kind="list",id="bad"}),"list requires a row builder")
-check(not pcall(ui.form,{kind="label",text_align="diagonal"}),"unknown text alignment rejected")
-local measured=ui.form{kind="list",id="rows",item=function(item)
-    return {kind="row",gap=12,children={{kind="custom",width=60,height=50},
-        {kind="label",grow=1,wrap=true,text=item.text,text_align="start"}}}
-end}
+check(not pcall(ui.form,N.list {id="bad"}),"list requires a row builder")
+check(not pcall(ui.form,N.label {text_align="diagonal"}),"unknown text alignment rejected")
+local measured=ui.form(N.list {id="rows",item=function(item)
+    return N.row {gap=12,N.custom {width=60,height=50},
+        N.label {grow=1,wrap=true,text=item.text,text_align="start"}}
+end})
 check(measured:set_items("rows",{{id="long",text="Every little row can wrap into several lines beside its icon"}}),"wrap source")
 local measured_font=font.load("games/relic-rush/data/common/fonts/LilitaOne-Regular.ttf")
 local font_style={style=function()return style{font=measured_font,size=20}end}
-local accent=ui.form{kind="button",id="confirm",text="Confirm",accent=true}
-local plain=ui.form{kind="button",id="cancel",text="Confirm"}
+local accent=ui.form(N.button {id="confirm",text="Confirm",accent=true})
+local plain=ui.form(N.button {id="cancel",text="Confirm"})
 local typed_skin={theme={button=style{font=measured_font,size=10},accent_text=style{font=measured_font,size=30}}}
 local accent_w=accent:measure(300,typed_skin)
 local plain_w=plain:measure(300,typed_skin)
@@ -201,16 +204,16 @@ measured.root.children[1].align="center"
 measured:layout(rect(0,0,180,narrow),font_style)
 local wrapped=measured.root.children[1].children[2].box
 check(wrapped.h==narrow and wrapped.y==0,"centered grow content uses its allocated width when arranging wrapped text")
-local leaf={kind="list",id="deep",item=function()return {kind="column",children={{kind="label",text="too deep"}}}end}
-for _=1,30 do leaf={kind="column",children={leaf}} end
+local leaf=N.list {id="deep",item=function()return N.column {N.label {text="too deep"}}end}
+for _=1,30 do leaf=N.column {leaf} end
 local deep=ui.form(leaf)
 check(not deep:set_items("deep",{{id="x"}}),"data rows obey the whole resource nesting limit")
 
 -- Clipped measured lists preserve natural row height and own their inertia.
 do
-    local f=ui.form{kind="list",id="rows",scroll=true,height=100,gap=4,item=function(e)
-        return {kind="button",id="choose",text=e.id,height=60}
-    end}
+    local f=ui.form(N.list {id="rows",scroll=true,height=100,gap=4,item=function(e)
+        return N.button {id="choose",text=e.id,height=60}
+    end})
     assert(f:set_items("rows",{{id="a"},{id="b"},{id="c"},{id="d"}}))
     local box=rect(0,0,240,100)
     local look={button=function()end,button_text=function()end,focus=function()end}
@@ -238,29 +241,29 @@ do
     assert(f:set_items("rows",{}))
     f:draw(box,look,{input={pos=vec2(100,30),wheel=-1}})
     check(f.nodes.rows.scroll_max==0, "an empty scrolling source handles input")
-    check(not pcall(ui.form,{kind="row",scroll=true}),'scrolling is a vertical measured list capability')
+    check(not pcall(ui.form,N.row {scroll=true}),'scrolling is a vertical measured list capability')
 end
 
 -- Element classes: every kind measures and arranges itself, so a border, a
 -- uniform grid, a prefab and a game's own panel all compose.
 do
-    local card=ui.form{kind="border",id="card",padding={4,6,8,10},children={{kind="custom",id="content",width=40,height=20}}}
+    local card=ui.form(N.border {id="card",padding={4,6,8,10},N.custom {id="content",width=40,height=20}})
     local w,h=card:measure(200)
     check(w==52 and h==36,"a border wants its child plus its padding")
     card:layout(rect(10,10,100,60))
     check(card.boxes.content.w==40 and card.boxes.content.h==20 and card.boxes.content.x==38 and card.boxes.content.y==28,
         "a sized child is centred inside the border's padding")
-    local edged=ui.form{kind="border",border_color=color.WHITE,border_width=3,padding=5,children={{kind="custom",id="content"}}}
+    local edged=ui.form(N.border {border_color=color.WHITE,border_width=3,padding=5,N.custom {id="content"}})
     edged:layout(rect(0,0,100,50))
     check(edged.boxes.content.x==8 and edged.boxes.content.w==84 and edged.boxes.content.h==34,"the border's width insets its child with the padding")
-    check(not pcall(ui.form,{kind="border",children={{kind="spacer"},{kind="spacer"}}}),"a border takes one child")
+    check(not pcall(ui.form,N.border {N.spacer {},N.spacer {}}),"a border takes one child")
     local painted
     card:draw(rect(10,10,100,60),{border=function(box,node) painted=box.w==100 and node.id=="card" end},{input={}})
     check(painted,"the skin paints a border in its whole box")
 
     local cells={}
-    for i=1,5 do cells[i]={kind="custom",id="c"..i,height=20} end
-    local grid=ui.form{kind="uniform_grid",columns=3,gap=10,children=cells}
+    for i=1,5 do cells[i]=N.custom {id="c"..i,height=20} end
+    local grid=ui.form(N.uniform_grid {columns=3,gap=10,children=cells})
     local _,grid_h=grid:measure(320)
     check(grid_h==50,"five cells in three columns measure as two rows and a gap")
     grid:layout(rect(0,0,320,90))
@@ -270,17 +273,17 @@ do
     grid.nodes.c2.visible=false;grid:invalidate_layout()
     grid:layout(rect(0,0,320,90))
     check(grid.boxes.c3.x==110 and grid.boxes.c4.x==220 and grid.boxes.c5.y==60,"a hidden child gives up its cell")
-    check(not pcall(ui.form,{kind="uniform_grid",columns=0}) and not pcall(ui.form,{kind="uniform_grid",rows=1.5}),"grid shape is whole and positive")
+    check(not pcall(ui.form,N.uniform_grid {columns=0}) and not pcall(ui.form,N.uniform_grid {rows=1.5}),"grid shape is whole and positive")
 
     ui.prefab("test_chip",function(p)
-        return {kind="border",padding=2,children={{kind="column",children={
-            {kind="custom",width=p.size,height=p.size},
-            {kind="button",id="pick",text=p.caption,height=30},
-        }}}}
+        return N.border {padding=2,N.column {
+            N.custom {width=p.size,height=p.size},
+            N.button {id="pick",text=p.caption,height=30},
+        }}
     end)
-    local row=ui.form{kind="uniform_grid",id="chips",rows=1,gap=6,item=function(record)
-        return {kind="test_chip",size=record.size,caption=record.id}
-    end}
+    local row=ui.form(N.uniform_grid {id="chips",rows=1,gap=6,item=function(record)
+        return N.test_chip {size=record.size,caption=record.id}
+    end})
     check(row:set_items("chips",{{id="a",size=10},{id="b",size=30}}),"a grid takes a data source of prefabs")
     row:layout(rect(0,0,206,80))
     local first,second
@@ -292,10 +295,10 @@ do
     row:layout(rect(0,0,216,80))
     local third=row.nodes.chips.children[3].box
     check(third.w==68 and third.x==148,"a third record makes a third equal column")
-    local placed=ui.form{kind="row",children={{kind="test_chip",id="chip",grow=1,size=8,caption="x"},{kind="spacer",width=50}}}
+    local placed=ui.form(N.row {N.test_chip {id="chip",grow=1,size=8,caption="x"},N.spacer {width=50}})
     placed:layout(rect(0,0,200,60))
     check(placed.boxes.chip.w==150 and placed.nodes.chip.kind=="border","an instance places its prefab: id and grow go to the root")
-    check(not pcall(ui.prefab,"label",function() return {kind="spacer"} end) and not pcall(ui.element,"test_chip",{})
+    check(not pcall(ui.prefab,"label",function() return N.spacer {} end) and not pcall(ui.element,"test_chip",{})
         and not pcall(ui.element,"label",{}),"prefabs and element kinds share one namespace; engine kinds stay the engine's")
 
     -- A game's own panel: children side by side, each as wide as the panel is tall.
@@ -305,8 +308,8 @@ do
             for i,child in ipairs(n.children) do owner:arrange_node(child,rect(inner.x+(i-1)*inner.h,inner.y,inner.h,inner.h),look) end
         end,
     })
-    local squares=ui.form{kind="column",align="start",children={
-        {kind="test_squares",id="panel",side=24,padding=3,children={{kind="custom",id="s1"},{kind="custom",id="s2"}}}}}
+    local squares=ui.form(N.column {align="start",
+        N.test_squares {id="panel",side=24,padding=3,N.custom {id="s1"},N.custom {id="s2"}}})
     w,h=squares:measure(300)
     check(w==54 and h==30,"measure adds the padding to a class's measure_override")
     squares:layout(rect(0,0,300,30))

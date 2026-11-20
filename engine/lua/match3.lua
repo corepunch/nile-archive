@@ -1,5 +1,7 @@
--- Reusable deterministic hex match-3 engine. Game configuration is data and
+-- Reusable deterministic match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
+local N = ui.node
+
 local buttons = require("match3.buttons")
 local E = {
     NO_TRICKLE=1, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, LINE_MATCHES=64, COLOR_TOOL=256,
@@ -38,17 +40,17 @@ end
 -- top right corner, where it takes no room from the title. A full-screen
 -- sheet has no room outside its corner, so `tucked` keeps the X inside it.
 function E.popup_header(title, subtitle, close_id, tucked)
-    return {kind="column",id="header",role="popup_header",padding={16,0,16,0},gap=2,children={
-        {kind="label",id="title",value=header_title(title),wrap=true,em=30,text_style="popup_title"},
-        {kind="label",id="subtitle",value=header_subtitle(subtitle),visible_field="subtitle",
+    return N.column {id="header",role="popup_header",padding={16,0,16,0},gap=2,
+        N.label {id="title",value=header_title(title),wrap=true,em=30,text_style="popup_title"},
+        N.label {id="subtitle",value=header_subtitle(subtitle),visible_field="subtitle",
             wrap=true,em=14,text_style="popup_subtitle"},
         -- The card's padding plus the font's leading sit above the caps; this
         -- gives the rule the same room below the text, centring the title.
-        {kind="spacer",height=8},
-        {kind="spacer",panel=true,role="popup_rule",height=14},
-        close_id and {kind="button",id=close_id,role="popup_close",width=44,height=44,
+        N.spacer {height=8},
+        N.spacer {panel=true,role="popup_rule",height=14},
+        close_id and N.button {id=close_id,role="popup_close",width=44,height=44,
             pin={1,0},pin_offset=tucked and {-26,26} or {-8,8}} or nil,
-    }}
+    }
 end
 
 function E.set_popup_header(form, title, subtitle)
@@ -67,42 +69,42 @@ end
 -- of the figure.
 ui.prefab("resource_indicator", function(p)
     local narrow = p.width and p.width < 76
-    local figure = p.amount and {kind="label",text=tostring(p.amount),
+    local figure = p.amount and N.label {text=tostring(p.amount),
         em=p.compact and 16 or narrow and 21 or 25,text_style="gold"}
     local children = {}
     if p.icon then
-        children[1] = {kind="image",image=p.icon,height=p.compact and 24 or figure and 36 or 62}
+        children[1] = N.image {image=p.icon,height=p.compact and 24 or figure and 36 or 62}
         if figure and p.done then
             -- A gathered amount: the board goals' tick in place of the figure.
             local side = narrow and 24 or 30
-            figure = {kind="row",align="center",children={
-                {kind="spacer",grow=1},
-                {kind="spacer",panel=true,role="done_tick",width=side,height=side},
-                {kind="spacer",grow=1},
-            }}
+            figure = N.row {align="center",
+                N.spacer {grow=1},
+                N.spacer {panel=true,role="done_tick",width=side,height=side},
+                N.spacer {grow=1},
+            }
         elseif figure and p.unit then
             -- A single digit leaves room for a larger unit beside it.
             local side = narrow and 18 or 24
             if #figure.text == 1 then side = side + 10 end
-            figure = {kind="row",gap=narrow and 2 or 3,align="center",children={
-                {kind="spacer",grow=1},{kind="image",image=p.unit,width=side,height=side},figure,{kind="spacer",grow=1},
-            }}
+            figure = N.row {gap=narrow and 2 or 3,align="center",
+                N.spacer {grow=1},N.image {image=p.unit,width=side,height=side},figure,N.spacer {grow=1},
+            }
         end
     elseif figure then
         figure.em, figure.height = narrow and 28 or 34, 46
     end
     children[#children + 1] = figure
-    if p.label then children[#children + 1] = {kind="label",text=p.label,height=15,em=12,text_style="caption"} end
+    if p.label then children[#children + 1] = N.label {text=p.label,height=15,em=12,text_style="caption"} end
     -- A lone icon stays centred when its row stretches it to a neighbour's height.
-    if #children == 1 then children = {{kind="spacer",grow=1},children[1],{kind="spacer",grow=1}} end
-    return {kind="border",role="resource_indicator",padding=p.compact and {4,2,4,3} or {4,5,4,7},children={
-        {kind="column",gap=1,children=children},
-    }}
+    if #children == 1 then children = {N.spacer {grow=1},children[1],N.spacer {grow=1}} end
+    return N.border {role="resource_indicator",padding=p.compact and {4,2,4,3} or {4,5,4,7},
+        N.column {gap=1,children=children},
+    }
 end)
 
 -- A resource record ({icon, amount, unit, label}) as that element.
 function E.resource_indicator(entry, width, compact)
-    return {kind="resource_indicator",width=width,icon=entry.icon,amount=entry.amount,
+    return N.resource_indicator {width=width,icon=entry.icon,amount=entry.amount,
         unit=entry.unit,label=entry.label,done=entry.done,compact=compact}
 end
 
@@ -110,26 +112,28 @@ end
 -- row is the button (id 'pick') and paint_row draws its art, name, price and
 -- action. A record marked slim (already built) takes a short row.
 function E.catalogue_form(title, close, paint_row, corner)
-    return ui.form{kind='column',panel=true,children={
+    return ui.form(N.column {panel=true,
         E.popup_header(title, nil, corner and "close", true),
-        {kind='row',height=38,gap=8,children={
-            {kind='button',id='category_prev',text='<',width=42,em=22},
-            {kind='label',id='category',grow=1,em=21},
-            {kind='button',id='category_next',text='>',width=42,em=22},
-        }},
-        {kind='list',id='stock',scroll=true,grow=1,gap=6,item=function(record)
-            return {kind='overlay',height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,children={
-                {kind='custom',paint=function(box) paint_row(box, record) end},
-                {kind='button',id='pick',text='',flat=true,enabled=record.available},
-            }}
+        N.row {height=38,gap=8,
+            N.button {id='category_prev',text='<',width=42,em=22},
+            N.label {id='category',grow=1,em=21},
+            N.button {id='category_next',text='>',width=42,em=22},
+        },
+        N.list {id='stock',scroll=true,grow=1,gap=6,item=function(record)
+            return N.overlay {height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,
+                N.custom {paint=function(box) paint_row(box, record) end},
+                N.button {id='pick',text='',flat=true,enabled=record.available},
+            }
         end},
-        not corner and {kind='button',id='close',text=close,height=42,em=21} or nil,
-    }}
+        not corner and N.button {id='close',text=close,height=42,em=21} or nil,
+    })
 end
 
 -- A skin is one flat table of named images. Its definition lists typed
 -- atlases ({path=, frames=}, each a set drawn together in one style) under
--- sheets, and standalone images such as backgrounds under images; a plain
+-- sheets. Rectangular frames use {x,y,w,h}; a sheet with grid=<cell size>
+-- can name frames by their zero-based row-major index. Standalone images
+-- such as backgrounds go under images; a plain
 -- {path=, frames=} is a definition of one sheet. engine=true reads every path
 -- from the engine's resource directory. Every named image borrows its sheet's
 -- GPU texture.
@@ -149,8 +153,21 @@ function E.atlas(definition)
     local images, load = {}, definition.engine and texture.load_engine or texture.load
     for _, sheet in ipairs(definition.sheets or {definition}) do
         local atlas = load_sheet(sheet, definition.engine)
+        local side, columns = sheet.grid
+        if side then
+            local width = texture.size(atlas).w
+            assert(side > 0 and side % 1 == 0 and width % side == 0, "invalid match3 grid: " .. sheet.path)
+            columns = width // side
+        end
         for name, box in pairs(sheet.frames) do
-            local image = texture.region(atlas, rect(box[1], box[2], box[3], box[4]))
+            local area
+            if type(box) == "number" then
+                assert(columns and box >= 0 and box % 1 == 0, "invalid match3 frame index: " .. name)
+                area = rect(box % columns * side, box // columns * side, side, side)
+            else
+                area = rect(box[1], box[2], box[3], box[4])
+            end
+            local image = texture.region(atlas, area)
             assert(image.tex, "invalid match3 frame: " .. name)
             images[name] = image
         end
@@ -262,23 +279,23 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if entry.label then R.say_at(entry.label,goal_centers[entry.id],9,R.PAL_WHITE,45) end
     end
     local function goal_form()
-        return ui.form{kind="row",gap=6,align="center",children={
-            {kind="spacer",grow=1},
-            {kind="list",id="goals",direction="row",gap=GOAL_GAP,item=function(entry)
-                return {kind="custom",width=GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
+        return ui.form(N.row {gap=6,align="center",
+            N.spacer {grow=1},
+            N.list {id="goals",direction="row",gap=GOAL_GAP,item=function(entry)
+                return N.custom {width=GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
             end},
-            {kind="spacer",grow=1},
-        }}
+            N.spacer {grow=1},
+        })
     end
     local hud_form, hud_second = goal_form(), goal_form()
 
     -- The row vertically centres the column by its visible lettering.
-    local moves_form = ui.form{kind="row", align="center", children={
-        {kind="column", id="stack", grow=1, children={
-            {kind="label", id="caption", text="MOVES", text_style=PAL_CREAM, em=9},
-            {kind="label", id="count", text_style=PAL_GOLD},
-        }},
-    }}
+    local moves_form = ui.form(N.row {align="center",
+        N.column {id="stack", grow=1,
+            N.label {id="caption", text="MOVES", text_style=PAL_CREAM, em=9},
+            N.label {id="count", text_style=PAL_GOLD},
+        },
+    })
 
     -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
     -- remaining moves large inside. It warms to red over the last five moves.
@@ -466,12 +483,6 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
                         gfx.unclip()
                     end
                 end
-                if charges > 1 and not R.g.single_charge_tools then
-                    local at = vec2(drawn.x + drawn.w * .78, drawn.y + drawn.h * .22)
-                    gfx.circle(at, 10, rgba(116, 74, 33))
-                    gfx.circle(at, 8, rgba(46, 112, 70))
-                    R.say(tostring(charges), rect.centered(at, size2(20, 20)), 12, PAL_CREAM)
-                end
             else
                 gfx.shadow(drawn:offset(vec2(0, 4)), 20, 10, rgba(0, 0, 0, 90))
                 gfx.image(R.hud_art[icon .. "-" .. state], drawn:inflate(5), color.WHITE)
@@ -528,39 +539,39 @@ function E.bind_town_board_hud(R)
 end
 
 function E.guide_form(copy, guide_icon, corner)
-    return ui.form{kind="column",panel=true,children={
+    return ui.form(N.column {panel=true,
         E.popup_header(copy.title, copy.instructions, corner and "done"),
-        {kind="list",id="topics",scroll=true,height=520,gap=6,item=function(entry)
+        N.list {id="topics",scroll=true,height=520,gap=6,item=function(entry)
             local align=entry.icon and "start" or "center"
-            return {kind="row",gap=10,align="center",children={
-                {kind="custom",width=52,height=52,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
-                {kind="column",grow=1,gap=4,children={
-                    {kind="label",text=entry.title,wrap=true,text_align=align,em=22,text_style="gold"},
-                    {kind="label",text=entry.description,wrap=true,text_align=align,em=17,text_style="body"},
-                }},
-            }}
+            return N.row {gap=10,align="center",
+                N.custom {width=52,height=52,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
+                N.column {grow=1,gap=4,
+                    N.label {text=entry.title,wrap=true,text_align=align,em=22,text_style="gold"},
+                    N.label {text=entry.description,wrap=true,text_align=align,em=17,text_style="body"},
+                },
+            }
         end},
-        {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
-        not corner and {kind="button",id="done",text=copy.done,height=45,em=25} or nil,
-    }}
+        N.label {text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
+        not corner and N.button {id="done",text=copy.done,height=45,em=25} or nil,
+    })
 end
 
 function E.pause_form(guide_label, quit_label, leaderboard_label, corner)
     return ui.form{
-        root={kind="column",panel=true,children={
+        root=N.column {panel=true,
             E.popup_header("Settings", nil, corner and "close"),
-            {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
-                {kind="checkbox",id="sound",text="SOUND",height=50},
-                {kind="checkbox",id="motion",text="REDUCE MOTION",height=50},
-            }},
-            {kind="column",gap=12,children={
-                {kind="button",id="resume",text="RESUME",height=52},
-                {kind="button",id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
-                {kind="button",id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
-            }},
-            {kind="button",id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
-            {kind="button",id="guide",text=guide_label,height=32,role="link",em=20},
-        }},
+            N.column {panel=true,role="group",padding={18,8,18,10},gap=6,
+                N.checkbox {id="sound",text="SOUND",height=50},
+                N.checkbox {id="motion",text="REDUCE MOTION",height=50},
+            },
+            N.column {gap=12,
+                N.button {id="resume",text="RESUME",height=52},
+                N.button {id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
+                N.button {id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
+            },
+            N.button {id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
+            N.button {id="guide",text=guide_label,height=32,role="link",em=20},
+        },
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
     }
 end
@@ -571,10 +582,16 @@ function E.new(config)
     assert(math.type(flags) == "integer" and flags >= 0 and flags < 512, "invalid match3 flags")
     assert(not config.radius or math.type(config.radius) == "integer" and config.radius >= 1 and config.radius <= 16, "invalid hex radius")
     assert((config.columns == nil) == (config.rows == nil), "a rectangular board needs both columns and rows")
-    assert(not config.columns or math.type(config.columns) == "integer" and config.columns % 2 == 1
-        and config.columns <= 31 and math.type(config.rows) == "integer" and config.rows >= 2 and config.rows <= 31,
-        "a rectangular board has an odd number of columns")
-    local M = {flags=flags}
+    local square = config.square
+    assert(not square or config.columns, "a square-cell grid needs columns and rows")
+    assert(not config.columns or math.type(config.columns) == "integer" and config.columns >= 1
+        and config.columns <= 31 and (square or config.columns % 2 == 1)
+        and math.type(config.rows) == "integer" and config.rows >= 2 and config.rows <= 31,
+        "invalid rectangular grid")
+    local axes = square and 2 or 3
+    local M = {flags=flags, square=square, AXES=axes}
+    -- Keep the opposite direction at axis + 3. Diagonal gravity has separate
+    -- directions so square boards never accept a diagonal swap or match.
     -- Axial hex grid of flat-top cells; neighbours are numbered 0..5 and
     -- opposite directions differ by 3. The envelope is a hexagon of `radius`
     -- or a rectangle of `columns` x `rows`, whose odd columns sit half a cell
@@ -587,9 +604,11 @@ function E.new(config)
         local function add(q, r) qs[n], rs[n], index[key(q, r)] = q, r, n; n = n + 1 end
         if config.columns then
             M.COLUMNS, M.ROWS = config.columns, config.rows
-            local half = (config.columns - 1) // 2
-            for q = -half, half do
-                for row = 0, config.rows - 1 do add(q, row - q // 2 - config.rows // 2) end
+            local half = config.columns // 2
+            for q = -half, config.columns - half - 1 do
+                for row = 0, config.rows - 1 do
+                    add(q, row - config.rows // 2 - (square and 0 or q // 2))
+                end
             end
             M.HEX_RADIUS = math.max(half, config.rows // 2)
         else
@@ -605,12 +624,18 @@ function E.new(config)
     local radius = M.HEX_RADIUS
     -- direction d: 0 = (+1, 0), 1 = (0, +1), 2 = (-1, +1), 3..5 the opposites
     local dirs = {[0] = {1, 0}, {0, 1}, {-1, 1}, {-1, 0}, {0, -1}, {1, -1}}
+    if square then
+        dirs[2], dirs[5] = nil, nil
+        dirs[6], dirs[7] = {-1, -1}, {1, -1}
+    end
+    local upper_left, upper_right = square and 6 or 3, square and 7 or 5
     local neighbors = {}
     for i = 0, CELLS - 1 do
         neighbors[i] = {}
-        for d = 0, 5 do
-            neighbors[i][d] = index[key(qs[i] + dirs[d][1], rs[i] + dirs[d][2])] or -1
+        for d, delta in pairs(dirs) do
+            neighbors[i][d] = index[key(qs[i] + delta[1], rs[i] + delta[2])] or -1
         end
+        neighbors[i][2], neighbors[i][5] = neighbors[i][2] or -1, neighbors[i][5] or -1
     end
 
     function M.hex_index(q, r) return index[key(q, r)] or -1 end
@@ -626,13 +651,16 @@ function E.new(config)
     function M.hex_distance(a, b)
         if a < 0 or a >= CELLS or b < 0 or b >= CELLS then return 10000 end
         local q, r = qs[a] - qs[b], rs[a] - rs[b]
+        if square then return math.abs(q) + math.abs(r) end
         return (math.abs(q) + math.abs(r) + math.abs(q + r)) // 2
     end
-    -- The envelope's extent in cell units: q, and screen rows (r + q / 2).
+    local stagger = square and 0 or .5
+    local function screen_row(cell) return rs[cell] + qs[cell] * stagger end
+    -- The envelope's extent in cell units.
     do
         local min_q, max_q, min_y, max_y = math.huge, -math.huge, math.huge, -math.huge
         for i = 0, CELLS - 1 do
-            local y = rs[i] + qs[i] * .5
+            local y = screen_row(i)
             min_q, max_q, min_y, max_y = math.min(min_q, qs[i]), math.max(max_q, qs[i]), math.min(min_y, y), math.max(max_y, y)
         end
         M.envelope = {min_q=min_q, max_q=max_q, min_y=min_y, max_y=max_y}
@@ -710,7 +738,7 @@ function E.new(config)
         return n
     end
 
-    -- Flood fill of identical relics through shared hex edges.
+    -- Flood fill of identical relics through shared edges.
     local function collect_group(g, start, cells)
         if not cell_active(g, start) or g.tiles[start].kind < 0 then return 0 end
         local seen = {[start] = true}
@@ -746,7 +774,9 @@ function E.new(config)
 
     local function mark_area(g, m, cell, blast_radius)
         for i = 0, CELLS - 1 do
-            if cell_active(g, i) and hex_distance(cell, i) <= blast_radius then m.mask[i], m.direct[i] = true, true end
+            local distance = square and math.max(math.abs(qs[i] - qs[cell]), math.abs(rs[i] - rs[cell]))
+                or hex_distance(cell, i)
+            if cell_active(g, i) and distance <= blast_radius then m.mask[i], m.direct[i] = true, true end
         end
     end
 
@@ -870,18 +900,14 @@ function E.new(config)
                                         -- A quest piece: counted by its own key, apart from the wallet.
                                         g.items[resource.item] = (g.items[resource.item] or 0) + amount
                                     elseif resource.tool and m.ordinary[i] and g.tool_meter and g.tool_meter[resource.tool] then
+                                        if square then amount = resource.amount end
                                         local tool = resource.tool
                                         local meter = g.tool_meter[tool]
-                                        if g.single_charge_tools then amount = math.min(amount, g.tool_threshold - meter) end
+                                        amount = math.min(amount, g.tool_threshold - meter)
                                         m.bonus_charge_by_cell = m.bonus_charge_by_cell or {}
                                         m.bonus_charge_by_cell[i] = amount
                                         local charge = meter + amount
-                                        if g.single_charge_tools then
-                                            g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
-                                        else
-                                            g.tools[tool] = g.tools[tool] + charge // g.tool_threshold
-                                            g.tool_meter[tool] = charge % g.tool_threshold
-                                        end
+                                        g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
                                     end
                                 end
                             end
@@ -901,7 +927,7 @@ function E.new(config)
     end
     local game_apply = M.game_apply
 
-    -- Gravity follows the three downward hex edges, preferring straight down.
+    -- Gravity prefers straight down and trickles diagonally around obstructions.
     -- A gem can slide diagonally only when its own cell below is unavailable;
     -- every exposed column top creates new pieces directly from above. Interior
     -- cells still trickle around locks, or spawn when all parents are blocked.
@@ -910,7 +936,7 @@ function E.new(config)
     local fall_order = {}
     for i = 0, CELLS - 1 do fall_order[#fall_order + 1] = i end
     table.sort(fall_order, function(a, b)
-        local ay, by = 2 * hex_r(a) + hex_q(a), 2 * hex_r(b) + hex_q(b)
+        local ay, by = screen_row(a), screen_row(b)
         return ay == by and a < b or ay > by
     end)
 
@@ -941,7 +967,7 @@ function E.new(config)
                 local above = hex_neighbor(i, 4)
                 local yes = inlet_of(g, i) or fed[above]
                 if not yes and flags & E.NO_TRICKLE == 0 then
-                    local left, right = hex_neighbor(i, 3), hex_neighbor(i, 5)
+                    local left, right = hex_neighbor(i, upper_left), hex_neighbor(i, upper_right)
                     yes = fed[left] or fed[right]
                 end
                 fed[i] = yes or nil
@@ -983,7 +1009,7 @@ function E.new(config)
                     empty = empty + 1
                     -- Alternate equal left/right choices spatially, without using RNG.
                     local left, right = -1, -1
-                    if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, 3), hex_neighbor(i, 5) end
+                    if flags & E.NO_TRICKLE == 0 then left, right = hex_neighbor(i, upper_left), hex_neighbor(i, upper_right) end
                     if (hex_q(i) + hex_r(i)) % 2 == 0 then left, right = right, left end
                     local above, source = hex_neighbor(i, 4), nil
                     local inlet = inlet_of(g, i)
@@ -1058,7 +1084,7 @@ function E.new(config)
     local function shape_at(g, cell)
         local kind = match_kind(g, cell)
         if not kind then return false end
-        for axis = 0, 2 do
+        for axis = 0, axes - 1 do
             local length = 1
             for dir = axis, axis + 3, 3 do
                 local side = neighbors[cell][dir]
@@ -1122,7 +1148,7 @@ function E.new(config)
     function M.game_hint(g)
         if g.won or g.lost then return false end
         for i = 0, CELLS - 1 do
-            for d = 0, 2 do
+            for d = 0, axes - 1 do
                 local j = hex_neighbor(i, d)
                 if game_swap_matches(g, i, j) then return true, i, j end
             end
@@ -1251,13 +1277,21 @@ function E.new(config)
             g.match_only_resources = loadout.match_only_resources
             g.spawn_kinds = loadout.kinds
             g.resource_multipliers = loadout.multipliers
-            g.tool_threshold, g.tool_meter = loadout.tool_threshold, loadout.tool_meter
-            g.single_charge_tools = loadout.single_charge_tools
+            g.tool_threshold = loadout.tool_threshold
+            g.tool_meter = loadout.tool_meter and {}
             g.tool_slots = loadout.tool_slots
+            g.bonus, g.bonus_debut = loadout.bonus, loadout.bonus_debut
+            g.bonus_preview, g.loadout_seed = loadout.bonus_preview, loadout.loadout_seed
+            g.win_income = loadout.win_income
             g.tools = {}
             local count = g.tool_slots and #g.tool_slots or 3 + #(config.extra_tools or {})
             for i = 1, count do
-                g.tools[i] = g.single_charge_tools and (g.tool_meter[i] or 0) // g.tool_threshold or 0
+                local charge = loadout.tool_meter and loadout.tool_meter[i]
+                if charge then
+                    charge = num.clampi(charge, 0, g.tool_threshold)
+                    g.tool_meter[i] = charge
+                end
+                g.tools[i] = charge and charge // g.tool_threshold or 0
             end
         elseif l.omit_kind ~= nil then
             -- The palette contains stable colour slots. Board copies share it read-only.
@@ -1389,6 +1423,7 @@ function E.new(config)
         local count = g.tool_slots and #g.tool_slots or #default_tools + #extra_tools
         return flags & E.NO_TOOLS == 0 and tool >= 0 and tool < count
             and (g.tools[tool + 1] or 0) > 0 and not g.won and not g.lost
+            and (not g.tool_slots or g.tool_meter[tool + 1] == g.tool_threshold)
     end
     local INSTANT = {shuffle=true, lightning=true, moves=true, charge=true}
     function M.game_tool_effect(tool, g)
@@ -1436,14 +1471,12 @@ function E.new(config)
             if effect == "row_lightning" then
                 lightning(g, m, 20 - count_hits(m), preview and {rng=g.rng} or g)
             end
-        elseif effect == "sunburst" and config.sunburst_targets and g.tool_meter and g.tool_meter[3] then
-            m.mask = config.sunburst_targets(g, cell, CELLS)
         elseif effect == "color" or effect == "color_pierce" or flags & E.COLOR_TOOL ~= 0 then
             if not equal(g, cell, cell) then return false end
             local kind = g.tiles[cell].kind
             mark_color(g, m, kind)
             if effect == "color_pierce" then m.pierce_kind = kind end
-        else for z = 0, 2 do mark_line(g, m, cell, z) end end
+        else for z = 0, axes - 1 do mark_line(g, m, cell, z) end end
         return true
     end
 
@@ -1469,14 +1502,19 @@ function E.new(config)
                 g.earnings[piece.slot] = g.earnings[piece.slot] + tool_slot(g, tool).resource_amount
             else return false end
         elseif effect == "charge" then
-            if not g.tool_meter or not g.single_charge_tools then return false end
+            if not g.tool_meter then return false end
             local descriptor = tool_slot(g, tool)
             local amount = g.tool_threshold // (descriptor and descriptor.charge_divisor or 2)
             if not charge_others(g, tool, amount) then return false end
-        elseif effect == "lightning" then lightning(g, m, config.lightning_hits or 20, g)
+        elseif effect == "lightning" then
+            local descriptor = tool_slot(g, tool)
+            lightning(g, m, descriptor and descriptor.hits or config.lightning_hits or 20, g)
         elseif not target_tool(g, effect, cell, m) then return false end
-        g.tools[tool + 1] = g.tools[tool + 1] - 1
-        if g.single_charge_tools and g.tool_meter[tool + 1] then g.tool_meter[tool + 1] = 0 end
+        if g.tool_slots then
+            g.tools[tool + 1], g.tool_meter[tool + 1] = 0, 0
+        else
+            g.tools[tool + 1] = g.tools[tool + 1] - 1
+        end
         g.combo = 0
         count_hits(m)
         -- Effects that clear nothing skip the clearing animation.
@@ -1536,9 +1574,11 @@ function E.new(config)
     local REF_H, HUD_FROM_BOTTOM, BOARD_FROM_BOTTOM, TOOLS_FROM_BOTTOM, HUD_H = 1040, 772, 409, 100, 64
     local BONUS_GAP, BONUS_MARGIN = 4, 4   -- the round button art carries its own clear border
     local neutral_hud = app.arg("default-match3")
-    local HEX_R, HEX_DY = R.HEX_R, math.sqrt(3) * R.HEX_R
+    local HEX_R = R.HEX_R
+    local dx, dy = (square and 2 or 1.5) * HEX_R, (square and 2 or math.sqrt(3)) * HEX_R
+    R.cell_width, R.cell_height = square and dx or 2 * HEX_R, dy
     local env = M.envelope
-    local board_size = size2(((env.max_q - env.min_q) * 1.5 + 2) * HEX_R + 12, (env.max_y - env.min_y + 1) * HEX_DY + 12)
+    local board_size = size2((env.max_q - env.min_q) * dx + R.cell_width + 12, (env.max_y - env.min_y + 1) * dy + 12)
     local centred_game, centre_q, centre_row = nil, 0, 0
     local function layout()
         local w, design_h = R.SCREEN_W or 480, R.SCREEN_H or 900
@@ -1554,7 +1594,7 @@ function E.new(config)
                 for i = 0, CELLS - 1 do
                     if cell_active(g, i) then
                         local q = hex_q(i)
-                        local row = hex_r(i) + q * .5
+                        local row = screen_row(i)
                         min_q, max_q = math.min(min_q, q), math.max(max_q, q)
                         min_row, max_row = math.min(min_row, row), math.max(max_row, row)
                     end
@@ -1563,7 +1603,7 @@ function E.new(config)
             end
         end
         local board_center = vec2(w / 2, bonuses and h / 2 or h - BOARD_FROM_BOTTOM)
-        local shift = vec2(centre_q * 1.5 * HEX_R, bonuses and centre_row * HEX_DY or 0)
+        local shift = vec2(centre_q * dx, bonuses and centre_row * dy or 0)
         R.board_origin = board_center - shift
         R.BOARD_CLIP = rect.centered(board_center, board_size)
         local hud_y = h - HUD_FROM_BOTTOM
@@ -1596,7 +1636,7 @@ function E.new(config)
     end
     R.layout = layout
     layout()
-    local CELL_SIZE = R.piece_width or HEX_DY
+    local CELL_SIZE = R.piece_width or dy
     local PI = math.pi
     local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE = 0, 1, 2, 3, 4, 6
     local REJECT_LEG = .16
@@ -1604,7 +1644,7 @@ function E.new(config)
     local SHUFFLE_DURATION = SHUFFLE_FLIGHT + SHUFFLE_STAGGER * (SHUFFLE_GROUPS - 1)
     R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL, R.PH_SHUFFLE =
         PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE
-    function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * 1.5 * HEX_R, (hex_r(i) + hex_q(i) * .5) * HEX_DY) end
+    function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * dx, screen_row(i) * dy) end
     local cell_pos = R.cell_pos
 
     R.GROUND = {seam = color(69, 73, 80), face = color(82, 86, 93)}
@@ -1612,8 +1652,12 @@ function E.new(config)
     -- Screen point to the active cell under it, by rounding cube coordinates.
     function R.cell_at(p)
         local d = p - R.board_origin
-        local q = d.x * 2 / (3 * HEX_R)
-        local r = -d.x / (3 * HEX_R) + d.y / HEX_DY
+        local q, r = d.x / dx, d.y / dy
+        if square then
+            local cell = hex_index(math.floor(q + .5), math.floor(r + .5))
+            return cell_active(R.g, cell) and cell or -1
+        end
+        r = r - q * stagger
         local s = -q - r
         local iq, ir, is = math.floor(q + .5), math.floor(r + .5), math.floor(s + .5)
         local dq, dr, ds = math.abs(iq - q), math.abs(ir - r), math.abs(is - s)
@@ -1635,7 +1679,7 @@ function E.new(config)
         if used then
             R.tool = -1
             R.play("tool")
-            if R.g.single_charge_tools then R.toast_time = 0 end
+            if R.g.tool_slots then R.toast_time = 0 end
             if still then
                 R.hint_a, R.hint_b, R.idle_time = -1, -1, 0
                 if shuffle_from then animate_shuffle(shuffle_from) end
@@ -1657,8 +1701,6 @@ function E.new(config)
             R.tool = R.tool == k and -1 or k
             local descriptor = tool_slot(R.g, k)
             R.notice(R.tool < 0 and "Tool put away." or descriptor and descriptor.effect or R.tool_notes[k + 1])
-        elseif R.g.opening_tools and R.g.opening_tools[k + 1] then
-            R.notice("This booster has been used for this wish.")
         elseif R.g.tool_meter then
             R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Restore its building to unlock this tool.")
         else R.notice("No charges left. More tools next expedition.") end
@@ -1946,17 +1988,17 @@ function E.new(config)
         local f = elapsed_steps - completed
         if step then t = step.tiles[i] end
         if from ~= i then
-            local source = from >= 0 and cell_pos(from) or cell_pos(i) - vec2(0, HEX_DY)
+            local source = from >= 0 and cell_pos(from) or cell_pos(i) - vec2(0, dy)
             at = (source + vec2(sx, 0)):lerp(at, f)
             if from < 0 then
                 -- Clip only the inlet; sideways moves need the whole board.
-                local top = cell_pos(i).y - HEX_DY / 2
+                local top = cell_pos(i).y - dy / 2
                 clip = rect(at.x - CELL_SIZE / 2 - 1, top, CELL_SIZE + 2, R.BOARD_CLIP.h)
             end
         elseif not R.reduced_motion and landed and landed.from[i] ~= i
             and t == landed.tiles[i] and t.kind >= 0 then
             -- Rebound only while the piece rests in the cell it just reached.
-            at.y = at.y - HEX_DY * .07 * (4 * f * (1 - f))
+            at.y = at.y - dy * .07 * (4 * f * (1 - f))
             aspect = 1 + .08 * (1 - f)^3
         end
     end
@@ -1966,4 +2008,40 @@ function E.new(config)
 
     return M
 end
+-- The portrait campaigns share board dimensions, refill behavior and the
+-- guarantee that a small opening field survives its first exchange.
+function E.square_campaign(campaign)
+    local rules = E.new{flags=E.LINE_MATCHES | E.COLOR_TOOL, square=true, columns=9, rows=12,
+        colors=campaign.colors, match_min=3, refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
+        kind_flags={[0]=E.GOAL, [2]=E.WOOD, [4]=E.STONE}}
+    local start = rules.game_start
+    local function wins_in_one(g)
+        if g.oil_left > 16 then return false end
+        local wave = rules.new_match()
+        for a = 0, rules.CELLS - 1 do
+            for axis = 0, rules.AXES - 1 do
+                local b = rules.hex_neighbor(a, axis)
+                if rules.game_swap_matches(g, a, b) then
+                    local trial = rules.game_copy(g)
+                    rules.game_swap(trial, a, b, wave)
+                    repeat
+                        rules.game_apply(trial, wave)
+                        if trial.oil_left == 0 then return true end
+                        rules.game_collapse(trial)
+                        rules.game_matches(trial, wave)
+                    until wave.hits == 0
+                end
+            end
+        end
+        return false
+    end
+
+    function rules.start_campaign_board(level, seed, yields, loadout)
+        local g = start(level, seed, yields, loadout)
+        while wins_in_one(g) do g = start(level, g.rng, yields, loadout) end
+        return g
+    end
+    return rules
+end
+
 return E

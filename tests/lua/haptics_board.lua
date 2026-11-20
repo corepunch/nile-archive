@@ -1,5 +1,5 @@
 -- The real presentation adapter, run once in each portrait game's suite.
-local rules, R = require('rules'), require('board')
+local rules, R = require('rules'), require('screens')
 local H = require('support')
 local function setup()
     testing.reset()
@@ -159,8 +159,9 @@ setup()
 local diving = R.diving
 R.diving = function() return true end
 R.present_board()
-R.board_update(3)
-check(R.intro.t == 0 and testing.haptics() == 0, 'the entrance waits for the town transition')
+R.board_update(.1)
+near(R.intro.t, .1, 'the board entrance advances during the town wipe')
+check(testing.haptics() == 0, 'the entrance stays quiet until the pieces land')
 R.diving = diving
 setup()
 R.reduced_motion = true

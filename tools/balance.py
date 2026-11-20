@@ -6,15 +6,16 @@
     python3 tools/balance.py relic-rush --trim     # first trim boards that run long
     python3 tools/balance.py relic-rush --report   # prices and expected campaign only; writes nothing
 
-Steps, each from the level files in games/<game>/levels:
+Steps, each from the square boards in games/<game>/lua/campaign.lua:
 
-1. Build the test binary and compile the boards (tools/hex_levels.py --lua).
-2. With --trim, remove the plaques that make a board run long (tools/balance_plaques.py).
+1. Build the test binary.
+2. With --trim, remove the targets that make a board run long (tools/square_trim.py).
 3. Fit every move budget to the bot's median game (tools/tune_moves.py).
-4. Relic Rush: play every board with those budgets, fit the restoration prices to
-   the income (tests/lua/relic_balance.lua), write them to
-   art/building-catalogue/story.json, regenerate lua/buildings.lua and the
-   manifest, and update the purchase table in the game's README.
+4. Play every board with those budgets, fit the purchase prices to the income
+   (tests/lua/relic_balance.lua) and write them: Relic Rush to
+   art/building-catalogue/story.json (and the purchase table in its README),
+   Christmas Market to art/building-catalogue/catalogue.json; then regenerate
+   lua/buildings.lua and the manifest.
 5. Run the game's rule tests.
 
 The bots run the rules alone: no window, renderer or audio is opened. Boards
@@ -32,8 +33,11 @@ import sys
 import tempfile
 import time
 
+from square_boards import parse
+
 ROOT = Path(__file__).resolve().parents[1]
-PRICED = {'relic-rush': ('rules relic_balance', 'art/building-catalogue/story.json', 'tools/prepare_buildings.py')}
+PRICED = {'relic-rush': ('rules relic_balance', 'art/building-catalogue/story.json', 'tools/prepare_buildings.py'),
+          'christmas-market': ('rules relic_balance', 'art/building-catalogue/catalogue.json', 'tools/prepare_catalogue.py')}
 
 
 def step(title, command):
@@ -79,14 +83,21 @@ def tagged(log, tag):
 def fit_prices(game, seeds, write=True):
     test, source, generator = PRICED[game]
     started = time.time()
-    count = len(list((ROOT / f'games/{game}/levels').glob('level_*.txt')))
-    with concurrent.futures.ThreadPoolExecutor(os.cpu_count() or 4) as pool:
-        logs = pool.map(lambda n: rules_run(game, test, {'TUNE_LEVELS': f'{n}-{n}', 'BALANCE_RUNS': str(seeds)}),
-                        range(1, count + 1))
+    count = len(parse((ROOT / f'games/{game}/lua/campaign.lua').read_text()))
+    workers = os.cpu_count() or 4
+    chunk = (count + workers - 1) // workers
+    with concurrent.futures.ThreadPoolExecutor(workers) as pool:
+        logs = pool.map(lambda n: rules_run(game, test, {
+            'TUNE_LEVELS': f'{n}-{min(count, n + chunk - 1)}', 'BALANCE_RUNS': str(seeds)}),
+            range(1, count + 1, chunk))
         incomes = sorted((row for log in logs for row in tagged(log, 'INCOME_JSON')), key=lambda row: row['level'])
     assert len(incomes) == count
+    for start in range(0, count, 20):
+        rows = incomes[start:start + 20]
+        mean = [round(sum(row['income'][slot] for row in rows) / len(rows)) for slot in range(3)]
+        print(f'{game} levels {start + 1}–{start + len(rows)}: mean income {"/".join(map(str, mean))}', flush=True)
     module = 'return {\n' + ''.join(
-        f"    {{wins={row['wins']}, moves={row['moves']}, income={{{', '.join(map(str, row['income']))}}}}},\n"
+        f"    {{income={{{', '.join(map(str, row['income']))}}}, planning={{{', '.join(map(str, row['planning']))}}}}},\n"
         for row in incomes) + '}\n'
     log = rules_run(game, test, {'BALANCE_RUNS': str(seeds)}, {'balance_incomes.lua': module})
     prices = tagged(log, 'PRICE_JSON')
@@ -97,7 +108,10 @@ def fit_prices(game, seeds, write=True):
     path = ROOT / 'games' / game / source
     text, changed = path.read_text(), 0
     for price in prices:   # edit the cost in place: the file keeps its hand formatting
-        pattern = re.compile(r'("%s": \{.*?"cost": )\[[^\]]*\]' % re.escape(price['key']), re.S)
+        if source.endswith('catalogue.json'):   # a row: [key, name, category, w, h, [cost], ...]
+            pattern = re.compile(r'(\["%s", "[^"]*", "\w+", \d+, \d+, )\[[^\]]*\]' % re.escape(price['key']))
+        else:
+            pattern = re.compile(r'("%s": \{.*?"cost": )\[[^\]]*\]' % re.escape(price['key']), re.S)
         cost = '[' + ', '.join(map(str, price['cost'])) + ']'
         new, found = pattern.subn(lambda m: m.group(1) + cost, text, count=1)
         assert found, f"{source} has no cost for {price['key']}"
@@ -107,13 +121,56 @@ def fit_prices(game, seeds, write=True):
     summary = next((line for line in reversed(log.splitlines()) if 'expected campaign (fitted)' in line), '').strip()
     print(f'prices: {changed} of {len(prices)} changed; {summary}  ({time.time() - started:.0f} s)', flush=True)
     step('catalogue', [sys.executable, f'games/{game}/{generator}'])
-    # The README's purchase table quotes every price.
-    readme = ROOT / 'games' / game / 'README.md'
-    text = readme.read_text()
-    for item in json.loads((ROOT / 'games' / game / 'art/building-catalogue/manifest.json').read_text())['items']:
-        row = re.compile(r'(\| \d+ \| %s \| \d+ \| )[^|]*(\|)' % re.escape(item['name']))
-        text = row.sub(lambda m: m.group(1) + ' / '.join(map(str, item['cost'])) + ' ' + m.group(2), text)
-    readme.write_text(text)
+    write_price_tables(game)
+
+
+# Currency names in cost order, as the docs spell a price out in words.
+CURRENCIES = {'relic-rush': ('Coins', 'Food', 'Supplies'), 'christmas-market': ('Tokens', 'Treats', 'Materials')}
+PRICE_DOCS = {'relic-rush': ('README.md', 'docs/building-catalogue.md'),
+              'christmas-market': ('docs/market-pieces.md', 'docs/building-catalogue.md')}
+
+
+def write_price_tables(game):
+    """Copy every fitted price into the tables that quote it.
+
+    A row names its building by `key` in its first cell (the building
+    catalogues) or by name in its second (the purchase ladders, where a
+    Rome name may follow in brackets). Its price is a cell of "a / b / c" in
+    cost order, or of "N Coins + N Food" in any order."""
+    items = json.loads((ROOT / 'games' / game / 'art/building-catalogue/manifest.json').read_text())['items']
+    by_key = {item['key']: item['cost'] for item in items}
+    by_name = {item['name'].replace('’', "'"): item['cost'] for item in items}
+    names = CURRENCIES[game]
+    worded = re.compile(r'^\d+ (%s)( \+ \d+ (%s))*$' % ('|'.join(names), '|'.join(names)))
+    rows = 0
+    for doc in PRICE_DOCS[game]:
+        path = ROOT / 'games' / game / doc
+        lines = path.read_text().split('\n')
+        for n, line in enumerate(lines):
+            cells = line.split('|')
+            if len(cells) < 5 or not line.startswith('|'):
+                continue
+            key = re.search(r'`(\w+)`', cells[1])
+            name = re.sub(r'\*\*|\s*\([^)]*\)', '', cells[2]).strip().replace('’', "'")
+            cost = by_key.get(key.group(1)) if key else by_name.get(name)
+            if not cost:
+                continue
+            for i, cell in enumerate(cells):
+                text = cell.strip()
+                if re.fullmatch(r'\d+ / \d+ / \d+', text):
+                    cells[i] = ' %s ' % ' / '.join(map(str, cost))
+                elif worded.match(text):
+                    quoted = re.findall(r'\d+ (\w+)', text)
+                    assert set(quoted) == {names[s] for s in range(3) if cost[s]}, f'{doc}: {line}'
+                    cells[i] = ' %s ' % ' + '.join(f'{cost[names.index(c)]} {c}' for c in quoted)
+                else:
+                    continue
+                rows += 1
+                break
+            lines[n] = '|'.join(cells)
+        path.write_text('\n'.join(lines))
+    assert rows >= len([i for i in items if any(i['cost'])]), f'{game}: only {rows} price rows found in the docs'
+    print(f'docs: {rows} price rows', flush=True)
 
 
 def main():
@@ -129,8 +186,8 @@ def main():
     if args.report:
         return fit_prices(args.game, args.seeds, write=False)
     if args.trim:
-        step('trim', [sys.executable, 'tools/balance_plaques.py', args.game, '--trim', '--seeds', str(args.seeds)])
-    step('boards', [sys.executable, 'tools/hex_levels.py', args.game, '--lua'])
+        count = len(parse((ROOT / f'games/{args.game}/lua/campaign.lua').read_text()))
+        step('trim', [sys.executable, 'tools/square_trim.py', args.game, '--levels', f'1-{count}', '--seeds', str(args.seeds)])
     step('budgets', [sys.executable, 'tools/tune_moves.py', args.game, '--seeds', str(args.seeds)])
     if args.game in PRICED:
         fit_prices(args.game, args.seeds)

@@ -4,9 +4,10 @@ local elements_view = require("match3.elements_view")
 local buttons = require("match3.buttons")
 local A = {}
 A.board_frame = require("board_frame_atlas")
-A.story={cast={"elena","mara","tomas","adrian","keeper"},keeper_source="art/art-direction/ancient-keeper.png",source="art/art-direction/expedition-cast.png",
+A.story={cast={"elena","mara","tomas","adrian","keeper","marisol"},
+    keeper_source="art/art-direction/ancient-keeper.png",marisol_source="art/art-direction/marisol.png",source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
--- Both ice frames come from the shared painted overlay atlas.
+-- Legacy review layers. Live square blockers load with the square board skin.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
 A.quest_handoffs = {
@@ -21,7 +22,7 @@ A.floor_tiles = {"cell-normal", "tablet-single", "tablet-double", "light-wave", 
 A.elements = elements_view.assets
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "marker"}
 A.story_campaign_frames = {"pliers"}
-A.resource_pieces = {"coin", "berries", "stone", "water", "rations", "timber", "emerald"}
+A.resource_pieces = {"coin", "berries", "water", "rations", "timber", "emerald", "stone"}
 A.campaign_pieces = {
     "coin", "berries", "apple", "timber", "stone",
     "amphora", "water", "cut-blocks", "rations", "helmet",
@@ -29,8 +30,9 @@ A.campaign_pieces = {
     "cable", "chart", "marker", "tools", "pliers",
     "supplies", "gear", "note", "leaf", "flower",
     "silver-coin", "ring", "scarab", "harp", "sandal",
+    "pearl", "fish",
 }
-A.campaign_resources = {"apple", "helmet", "shrimp", "silver-coin", "ring", "scarab", "harp", "sandal"}
+A.campaign_resources = {"apple", "helmet", "shrimp", "silver-coin", "ring", "scarab", "harp", "sandal", "pearl", "fish"}
 -- Upgraded resources reuse pieces of the optional packs: their pieces-atlas frames.
 A.resource_upgrades = {
     ["cut-blocks"]="resources-4",
@@ -49,11 +51,6 @@ A.wallet_icons={coins="coin", supplies="wallet-supplies", food="wallet-food"}
 A.result_icons = {"discovery-star", "next-clue"}
 A.navigation={source="../../art/match3-buttons/manifest.json",roles={"navigation_build","navigation_play", "navigation_pause"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
-
-function A.use_campaign_pieces()
-    local pack = app.arg("tiles")
-    return not app.arg("default-match3") and not app.arg("rome-reference-art") and (not pack or pack == "relics")
-end
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
@@ -112,10 +109,7 @@ function A.load()
     -- The packed Hammer bounds are centered. Its heavier head pulls the
     -- opacity anchor upward, making the whole silhouette sit low on the face.
     buttons.centers[textures["bonus-hammer"]] = nil
-    -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    elements_view.load(textures, own)
     for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
-    elements_view.load_frame(textures, A.board_frame)
     for _, key in ipairs(A.result_icons) do textures[key] = piece(key) end
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
@@ -142,10 +136,6 @@ function A.load()
     end
     textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
-    for _, state in ipairs{"closed", "open"} do
-        textures["shutter-" .. state] = texture.load("story/scenes/shutter-" .. state .. ".png")
-    end
-    for _, handoff in pairs(A.quest_handoffs) do textures[handoff.path] = texture.load(handoff.path) end
     for _, name in ipairs(A.layers) do load(name) end
     return textures
 end
@@ -180,7 +170,7 @@ function A.draw_catalogue(R)
         end
     end
     R.say_at("EXPEDITION RESOURCES", vec2(240, 355), 13, R.PAL_CREAM, 0)
-    local campaign = A.use_campaign_pieces()
+    local campaign = R.campaign_art
     local prefix = campaign and "campaign-" or "resource-"
     for i, key in ipairs(A.resource_pieces) do
         local name = key == "emerald" and "apple" or key

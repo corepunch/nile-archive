@@ -1,10 +1,12 @@
 -- Direct shared-engine tests: no game modules, campaign or artwork involved.
+local N = ui.node
+
 local E=require('match3')
 local H=require('support')
 local t=H.suite('engine match3 factory and flags')
 t:case('popup header measures only visible text',function()
     t:check(not pcall(E.popup_header, "  "), "a popup requires a nonblank title")
-    local form = ui.form{kind="column",children={E.popup_header("Settings")}}
+    local form = ui.form(N.column {E.popup_header("Settings")})
     local function height()
         local _, h = form:measure(300)
         form:layout(rect(0,0,300,h))

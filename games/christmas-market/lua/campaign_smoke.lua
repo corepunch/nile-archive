@@ -1,18 +1,21 @@
--- campaign_smoke.lua — --smoke --campaign: the thirty story wishes, to the finale, through the
+-- campaign_smoke.lua — --smoke --campaign: the hundred square wishes, through the
 -- real result, Collect, region, stall card, placement, dialogue and Play
 -- controls. Each board's goals are met before one real swap, so this checks
 -- the flow; the extended greedy-bot rules test checks the boards themselves.
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
-local journey = require("journey")
 
 local frames, wait, partner = 0, 0, -1
 local played = {}
+local due = 0
+for _, step in ipairs(island.ladder) do
+    if step.after <= rules.LEVELS then due = due + 1 end
+end
 
 function R.campaign_smoke()
     frames = frames + 1
-    if frames > 32000 then   -- 108-cell boards take longer to present than the old 61
+    if frames > 48000 then   -- a hundred boards of up to 108 cells
         error(("campaign smoke stalled at level %d (overlay %d, market %s, story %s)"):format(
             R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
@@ -30,16 +33,13 @@ function R.campaign_smoke()
         return
     end
     local c = R.island
-    if R.overlay == R.OV_FINALE then
-        local want = {}
-        for _, b in ipairs(journey.beats) do want[#want + 1] = b.key end
-        assert(table.concat(played, " ") == table.concat(want, " "),
-               "campaign smoke: beats played out of order: " .. table.concat(played, " "))
-        for _, key in ipairs(want) do assert(R.prog.story_seen[key], "campaign smoke: unacknowledged beat " .. key) end
-        assert(R.prog.level == journey.beats[#journey.beats].level and island.campaign_count(c) == #island.ladder and c.open == 63,
-               "campaign smoke: thirty wishes build all twenty stalls and open every region")
-        print(("campaign smoke passed: %d winter wishes, %d story beats, %d stalls, every region in %d frames"):format(
-            R.prog.level, #played, island.campaign_count(c), frames))
+    if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
+        app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
+    elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == due
+        and R.prog.story_seen["after-100"] and (R.overlay == R.OV_NONE or R.overlay == R.OV_FINALE) then
+        -- The last beat ends the story with the finale card.
+        print(("campaign smoke passed: %d winter wishes, %d story beats, %d stalls"):format(
+            R.prog.level, #played, island.campaign_count(c)))
         app.quit()
     elseif R.overlay == R.OV_RESULT then
         local claim = R.result_form.boxes.claim
@@ -47,6 +47,8 @@ function R.campaign_smoke()
             app.inject_click(claim:center() + vec2(0, R.drop / 2))
             wait = 20
         end
+    elseif R.overlay == R.OV_WONDER then
+        if R.dialog_settled() then app.inject_click(R.wonder_form.boxes.action:center()); wait = 10 end
     elseif R.overlay == R.OV_ZONE then
         if R.dialog_settled() then app.inject_click(R.zone_form.boxes.open:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif c.placing >= 0 then
@@ -59,7 +61,7 @@ function R.campaign_smoke()
             app.inject_click(R.island.cam:to_screen(marker))
             wait = 10
         elseif island.next_step(c, R.prog.level) then
-            R.island_begin(island.next_step(c, R.prog.level), true); wait = 10   -- the next stall, as the shop's row starts it
+            app.inject_click(R.town.buttons.build); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10   -- Play the next wish
         end

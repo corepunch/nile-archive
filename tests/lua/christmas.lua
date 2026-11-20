@@ -5,9 +5,24 @@ local journey = require('journey')
 local p = {level=0, seed=1, wallet=purse()}
 local c = city.new()
 island.island_setup(c)
-assert(#island.catalogue == 37 and island.WONDERS == 10 and rules.LEVELS == 100)
+assert(#island.catalogue == 41 and island.WONDERS == 10 and rules.LEVELS == 100)
+island.new_game(c, 0)
+local starter, gingerbread = island.kinds.rosa_stall, island.kinds.gingerbread_house
+check(c.count == 1 and island.owned(c, starter) == 1, "Welcome Square starts with Gran's stall")
+check(island.campaign_count(c) == 0 and island.wonder_count(c) == 0, 'the stall grants no campaign progress')
+check(not island.can_buy(c, purse(10000, 10000, 10000), 100, starter), 'the starter cannot be bought')
+
+local old = city.new()
+island.island_setup(old)
+local pos = c.items[1].pos
+old:add(pos, gingerbread, 0)
+island.restore_saved(old, 1)
+check(island.owned(old, gingerbread) == 1, 'a progressed save keeps its Gingerbread house')
+island.restore_saved(old, 0)
+check(old.count == 1 and island.owned(old, starter) == 1 and old.items[1].pos:dist(pos) < .01,
+      'an old opening save upgrades its starter in place')
 -- Pip announces each region on the level the script gives it (docs/story.md#small-lines).
-local opens = {[6]=1, [9]=2, [15]=3, [21]=4, [27]=5}
+local opens = {[15]=1, [30]=2, [50]=3, [70]=4, [85]=5}
 for level=0,rules.LEVELS-1 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')
@@ -36,12 +51,13 @@ for level=0,rules.LEVELS-1 do
     assert(island.wonder_count(c)==journey.earned(p.level), 'Story stalls keep their schedule')
 end
 assert(c.open==63 and p.wallet[4]==rules.LEVELS and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
-       'Cleared wishes open every region and spare matched goods are banked')
+       'A hundred cleared wishes open all five new regions and spare matched goods are banked')
 local before = p.wallet[1]
 local replay = rules.game_start(0,50)
 replay.won, replay.moves, replay.earnings = true, 0, {12, 3, 4}
 assert(rules.progress_reward(p,replay,island.wonders))
 assert(p.wallet[1]==before+12 and p.wallet[4]==rules.LEVELS and p.level==rules.LEVELS, 'Replays do not count as cleared wishes')
+local stall_count = c.count
 for kind=10,11 do
     assert(island.can_buy(c,p.wallet,p.level,kind))
     local ok,spot = c:find_spot(kind,vec2(760,2010))
@@ -49,31 +65,32 @@ for kind=10,11 do
     before = p.wallet[1]
     c:begin_place(kind,spot)
     c:cancel()
-    assert(p.wallet[1]==before and c.count==#island.ladder+kind-10, 'Cancelled purchase must be free')
+    assert(p.wallet[1]==before and c.count==stall_count+kind-10, 'Cancelled purchase must be free')
     c:begin_place(kind,spot)
     assert(c:confirm(p.wallet,0).result==city.BUILT)
     assert(p.wallet[1]==before-island.catalogue[kind+1].cost[1])
 end
-assert(c.count==22 and island.wonder_count(c)==10 and island.campaign_count(c)==20, 'Decorations cannot advance the campaign')
+assert(c.count==stall_count+2 and island.wonder_count(c)==island.WONDERS and island.campaign_count(c)==#island.ladder,
+       'Decorations cannot advance the campaign')
 
 local first_wish = rules.game_start(0, 123478, {})
 check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,0,0,0",
       'locked boosters keep all four slots')
-local star_wish = rules.game_start(2, 123478, {reindeer_stable=true})
-check(star_wish.tools[4] == 1 and star_wish.tools[2] == 0 and next(star_wish.tool_meter) == nil,
-      'the stable grants one Shooting Star on its first eligible wish')
-local boosters = rules.game_start(19, 123478, {reindeer_stable=true, lumber=true, santa_workshop=true, candles=true})
-local center = rules.hex_center()
-check(boosters.tools[1] == 0 and boosters.tool_meter[1] == 0 and boosters.tool_meter[3] == 0
-      and boosters.tools[2] == 1 and boosters.tools[4] == 1, 'banked and per-wish boosters use separate stock')
-local wave = rules.new_match()
-local function use_once(slot)
-    local area = rules.game_tool_area(boosters, slot, center)
-    check(area and area[center] and rules.game_tool(boosters, slot, center, wave), 'the booster targets the board')
-    for cell in pairs(area) do check(wave.mask[cell], 'the effect follows its aiming preview') end
-    check(not rules.game_tool(boosters, slot, center, wave), 'the per-wish booster has been spent')
-end
-use_once(1)
-use_once(3)
-check(rules.game_start(2, 123478, {reindeer_stable=true}).tools[4] == 1,
-      'a fresh attempt starts with its own booster use')
+local B = require("economy").bonuses
+local hammer_wish = rules.game_start(6, 123478, {reindeer_stable=true})
+check(hammer_wish.tool_slots[1] == B.hammer and hammer_wish.tools[1] == 0,
+      'the stable unlocks an empty Hammer')
+local restored = {reindeer_stable=true, firework_stall=true, bonus_charge={180}}
+local bomb = rules.game_start(16, 123478, restored)
+local slot = B.bomb.tool
+local center, wave = rules.hex_center(), rules.new_match()
+check(bomb.tool_slots[slot] == B.bomb and bomb.bonus == B.bomb and bomb.tools[slot] == 1,
+      'the firework stall replaces the charging piece and clamps its inherited stock')
+local area = rules.game_tool_area(bomb, slot - 1, center)
+check(area and area[center] and rules.game_tool(bomb, slot - 1, center, wave), 'the bomb targets the board')
+for cell in pairs(area) do check(wave.mask[cell], 'the effect follows its aiming preview') end
+check(bomb.tool_meter[slot] == 0 and not rules.game_tool(bomb, slot - 1, center, wave),
+      'the bomb spends its only use')
+restored.bonus_charge = {37}
+local next_wish = rules.game_start(17, 123478, restored)
+check(next_wish.tool_meter[slot] == 37 and next_wish.tools[slot] == 0, 'a partial charge carries without a free use')

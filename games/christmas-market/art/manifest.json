@@ -21,7 +21,10 @@
     "art/story-pieces/prompt.txt",
     "art/lantern-panes/spruce-atlas-prompt.txt",
     "art/lantern-panes/concept-prompt.txt",
-    "art/lantern-panes/spruce-backdrop-prompt.txt"
+    "art/lantern-panes/spruce-backdrop-prompt.txt",
+    "art/new-story-cast-prompt.txt",
+    "art/building-catalogue/painted-v1/second-row-prompt.txt",
+    "art/building-catalogue/chimneys/prompt.txt"
   ],
   "states": [
     "normal",
@@ -32,12 +35,12 @@
   ],
   "runtime": {
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
-    "data/board/blockers.png": "7cdb71ae145aff3536efc78f1f09d3f47b3e7fef283c43b2e7cbef791fac68a9",
-    "data/board/cells.png": "fa56306b5707dd8ce4c62f2e1e39ba168e473e71d0709e560927f77968c788cf",
+    "data/board/blockers.png": "40168b602b9a3e02fc516f43e50feec377202ac3938ede3e2dde1ea855b3e9c6",
+    "data/board/cells.png": "97947f0b5e7b3669ca08b0147db8ed3551fb8cce6f04b50c671f379792b29e5f",
     "data/board/frame/stone.png": "3200983affac49e073586e4371ff4ef2a98072d5cc61433883bd3e191e52e39d",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
-    "data/board/pieces.png": "9013ad6380f8216727beffdc8e92c2fb5c715507ddb24c2aee8b4d3cb062bad3",
+    "data/board/pieces.png": "8e6b4d9094c4cb3ae20fba0940092c0741fbe389f87dce85c9022b0da6cc6dbb",
     "data/city/building-shadows/arch.png": "890bea00679a32c9b800f85008c0512fdd058ba39aafa09e86a2a1ca8cdc4ef7",
     "data/city/building-shadows/bakery.png": "3e123e1288c7470214bbebe378eee745632df7ec3886e7384d80a1e69cba54d4",
     "data/city/building-shadows/bench.png": "911064df215cb8df921259f0e0345e4cbf8a71e9c0652e5b49e4598bbaab215c",
@@ -46,13 +49,15 @@
     "data/city/building-shadows/candy_canes.png": "b26297d9aae09f527eff154d9edd078a64359d31c994a941cb0745803d70101a",
     "data/city/building-shadows/carousel.png": "742cd458c198b457fc638bafdba1f8f0b14ec24bed35cecb68d363bbb3a30b45",
     "data/city/building-shadows/chapel.png": "2dc34f0627a9eea163e0db560ffd46875af205b462c67e8c2b5b2d7410daeb93",
-    "data/city/building-shadows/cocoa.png": "37b9ef4b72ff931d7decce93620e40795559ac73abb5839515ce7ef90f847b05",
+    "data/city/building-shadows/cocoa.png": "06d140ea43dd963eec43467d93391fdbaf2e0f76913c2d00432a0594abe11510",
     "data/city/building-shadows/fir_decorated.png": "1148e162d008429cac2e9ef0d5342033e7d716c1710680597b17d8a8d239c07d",
     "data/city/building-shadows/fir_snowy.png": "91484579e9e26e21e7da910ebbbba815808e0179df1b0c95797f394873d3ea60",
+    "data/city/building-shadows/firework_stall.png": "472304db25531255cd97c22fb737d1d2269996265a29a8ca0a12187287a3544a",
     "data/city/building-shadows/firs.png": "1c5d75edcef59124b2069a13449853dee49b605799c32bc9486727872ec7890a",
     "data/city/building-shadows/giant_ornament.png": "ffdf0204c68933689bcee3e96424db59c750fd70a58a98817f537f3492170548",
     "data/city/building-shadows/gifts.png": "360898cbb01ebec47f8df3d6ac5269f9520ef06561ba49d0c5ce7698203e3df0",
     "data/city/building-shadows/gingerbread_house.png": "83511e81823dae235f134139671662bf14dbbe2ca92bc55ce8e1ef53879d8587",
+    "data/city/building-shadows/glassblower.png": "26ab4b9523694b75984409f69e6cdfa0fe5c9af21c0b1091e77ef52ff44861b1",
     "data/city/building-shadows/ice_star.png": "6b31e2b233b1f5c8b81559e0621d07288a3c4e530acb11feb2594594b4ba7e68",
     "data/city/building-shadows/igloo.png": "f2dee20aa5e66b59a97d334b279df55f47a53e356512e7af6068fede90f298f0",
     "data/city/building-shadows/lamp_post.png": "84e4e1cd16e0c3eb5bbdb5b49d6cc836b219939186efe163c7a08f4eee25bf00",
@@ -67,33 +72,37 @@
     "data/city/building-shadows/reindeer.png": "a0d513295146075701bda3e106ace48a20c3e173f7f16325732e54b26e1863ef",
     "data/city/building-shadows/reindeer_stable.png": "1bebfb716ca689e15f30ab1d60ee38c326ec1b404281bdf724f7090b410a9c65",
     "data/city/building-shadows/rink.png": "88d61a388ccd2cb74705cc85fd7248626e3cb24de5d9c341749293ca02253000",
+    "data/city/building-shadows/rosa_stall.png": "050a3121e45b147b26640be3a512c7018ccf768482f541ef94990a8c543c38ae",
     "data/city/building-shadows/santa_workshop.png": "2b4cbccc4a145b0650880b0472c9dcd01b3527f6f9613125a4278247fb65d492",
     "data/city/building-shadows/sleigh.png": "18bc250f3016a208f46f585adf8b8de1e929e5435069e991f4790d15a7c10a68",
     "data/city/building-shadows/snow_rocks.png": "ca940a52137c14ba62cb853022891b22fc3ee3d789fe3da9a2158681a68b23c5",
     "data/city/building-shadows/snowman.png": "b9df380eadb0c91ded35395235384314782634a36cf6fc65310bf77685d08053",
     "data/city/building-shadows/snowy_bench.png": "659df60cbfa7092f344e6226a814d4a518cdde42ca7cfc9f332a18ef84a56d57",
+    "data/city/building-shadows/station_kiosk.png": "5bbbc99488b2b651b5f41df12bc5ed557661f012c8d10a69ae7d13f24d8bd4e8",
     "data/city/building-shadows/toys.png": "f7a3d4083d0a24934eb385d14ce473cd7320acbe907a00086ad83ff4ed077def",
     "data/city/building-shadows/tree.png": "51ee1c853417726039378a94b33d16d3a0c8bd5d4bf5c84a0cb4fe2c2f51d8ba",
     "data/city/building-shadows/wreath_arch.png": "32b9abff26f7e0a92d8848fde1358e2ca45fbf3b4e1a143326795c847f18977f",
     "data/city/buildings/arch.png": "94fe3074f7e8780cdc10f3384c839319978d5eb47d3414700d84422b1c357946",
-    "data/city/buildings/bakery.png": "418d8b498ba5690de65c628db6db5a3b5eff91ab8a122bb3e42c09163f1c82a9",
+    "data/city/buildings/bakery.png": "c479c035fd81e3c4b87dc28cc236a7b63e9d9fcd8f2b98afa0d21665cb211837",
     "data/city/buildings/bench.png": "d01417b041738d65f71b37dadd94b0fcd462a16815bbceffbbf0aef9e094dd54",
     "data/city/buildings/birch.png": "2de93c66da89f6c980ed753aded7b46210f8bbca3e404b101d6368f137a9b292",
-    "data/city/buildings/candles.png": "9e7e5f9fb5ccaacc5c32a90872f3db915e4413b81ae9a8fabda8aed2786c1918",
+    "data/city/buildings/candles.png": "e3fa0892a472ff4f18feff1dadf40c3b6594d7a4f8d6d8f6d44cb93d4bf26b09",
     "data/city/buildings/candy_canes.png": "1a11fcbb23c82edaea11d2a741c88f9fbbbd4f264cc5a837ab9585ace5d70f23",
     "data/city/buildings/carousel.png": "43d69c3525f6dfcc48aa46a57d0aa5131d59fde79592de8e5f839ee6485836cd",
     "data/city/buildings/chapel.png": "1082c921d1dddc792bc9cda6bbcd5657b2faa7f218ff9bf0c745736a10f81dd4",
-    "data/city/buildings/cocoa.png": "ae4102f2007564dc2b7a4d26f1d5cd1cc2ccf48ccd50419c7c7aa51fc1b7699f",
+    "data/city/buildings/cocoa.png": "b4992254090790f1d2c857b2343556fba7522a1884e4db939ab754fb916da21e",
     "data/city/buildings/fir_decorated.png": "44d33b9a4f1c729484c781b83468382a42b003f51526be0801f8c901760d2e03",
     "data/city/buildings/fir_snowy.png": "490a3cfeb01e18a86e5d7b5e5bbde879246163aed971e3e90ea33c9b31822bac",
+    "data/city/buildings/firework_stall.png": "f1502beabb33537b6666dfd359daac72dfba02f584611c999adfd7e626b9fbc6",
     "data/city/buildings/firs.png": "f3175ad28d744d22e2a40482c7bd3ae912bd5c0120888984a912fccc69de2453",
     "data/city/buildings/giant_ornament.png": "5db6ecde6d9bf367a2424a37598fed48e2451abf647f997b2731de7039040c15",
     "data/city/buildings/gifts.png": "c3e63f4558efb02aff015c1d28986829c9272727a19434866e5751d47ba9f1dc",
-    "data/city/buildings/gingerbread_house.png": "7435941bee1de6921db664bc53149a44fa72e7c276aad3d8c8a23068654b242b",
+    "data/city/buildings/gingerbread_house.png": "3d22d833d16c754c52bdee657e8f46a9ee523f1236f35e2de8945a50ddda67b4",
+    "data/city/buildings/glassblower.png": "32ee1231e0932dccf038ea759c9aadc36c283c7f91b3f826154d8c61bcbc490d",
     "data/city/buildings/ice_star.png": "4f61ae100bd94647797ae8032b01066d237ba4f6d0b51e3d67075939e7f7f40c",
     "data/city/buildings/igloo.png": "dbbb9ed2eadd357f24b927b977ab110cb182feb95222fe7d749558a20c3d1c84",
     "data/city/buildings/lamp_post.png": "5df006a2c783346d1310aa765e84d8c47f96ba73899b47d81a26aa4b91808e79",
-    "data/city/buildings/log_cabin.png": "837807f3eb1ebbef2c84af7952e54a0e2f6bfb690851c41fc695ebd2efbd4d73",
+    "data/city/buildings/log_cabin.png": "ca5089c406b7d84becbefc2d08d32911ffb7fe16dccfe40468d62cf937854625",
     "data/city/buildings/lumber.png": "f8af8d95e6ee35bb5daab116054dc731ff4433ab1c6b42d200db25aeef1fe6b0",
     "data/city/buildings/mailbox.png": "6e28c28ba8a6d66b1a347abc7bf587eaab54b1b13326e2badb95ba6d08d8e6aa",
     "data/city/buildings/nutcracker.png": "28fa3384afb389f6eff5cb4bfab99f5521d56cd1d2767e35179eb901296c7dc3",
@@ -104,12 +113,14 @@
     "data/city/buildings/reindeer.png": "b0a3803c8193812bc24f74f3f2a420110a4acc54b78c98b79e51f529b150997c",
     "data/city/buildings/reindeer_stable.png": "0c37cf29e68a04abb32df87031f708328c5c841901fdf14c4bae2ddfc41f002f",
     "data/city/buildings/rink.png": "43b0cecdce5b8e86d580aee70462d9575d59255a11c0c9ad8f8c5332e4a9fc5c",
-    "data/city/buildings/santa_workshop.png": "b7d45ed38ca9e0b094180b0db7996e8d72b2228cefe9b22b9255f9471cf4a88f",
+    "data/city/buildings/rosa_stall.png": "9b80d7606921238f22fc4d6720ec95243941df0e2ac8b28297ec926fcda459bf",
+    "data/city/buildings/santa_workshop.png": "0347cbf3bef2ae48f76a369f54163bfdd2285de2c8a4983aaf2eabb866b7bf4b",
     "data/city/buildings/sleigh.png": "dd5c3dd4954c2b3d214d471109647d48cf96242003c8069a2d26420e9cabb55d",
     "data/city/buildings/snow_rocks.png": "dd2b14d8b5f769daea3671aa7988a7d17ec8425894eba4d7d959510f5d783d43",
     "data/city/buildings/snowman.png": "524c4a4e24cc69141126b512c3882348b99277a94b096fea4c0c625c18456242",
     "data/city/buildings/snowy_bench.png": "2dcdca7012f3f725fa9f489f826a47a87f2bb116e616f68d5e03cbc9682b4ccc",
-    "data/city/buildings/toys.png": "53866212bcb2ad0818bcbff38b542ad6d1bfc7de67897c8d2ef38b0d5fe757fb",
+    "data/city/buildings/station_kiosk.png": "d455d890315c5c13dae9df58a72a1b26992bed522cf57e659588e208757292ad",
+    "data/city/buildings/toys.png": "2c24415b9b27dce8ec05b49b540ad8d9aabfb66ab1834604fd64ccca424bd1ad",
     "data/city/buildings/tree.png": "acfd2d54ac76075b9236305b10def2b9018fe662c6852a56b0fffbebce1a30a6",
     "data/city/buildings/wreath_arch.png": "e4aec881d042dd221743ac1e553d9dbe0fb0db8c0302cb16d4f295037f78c093",
     "data/city/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
@@ -118,9 +129,13 @@
     "data/common/fonts/LilitaOne-Regular.ttf": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
     "data/common/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/story/characters/agnes.png": "85e9ac46ec23ae2b4b451208f4ec639ba6b1fa41aedf742f060c72a593eb5c09",
+    "data/story/characters/alder.png": "813e856e247fb84e8a2c2350b3fc5ef65125fa34934c29ccef63ca746c19cce5",
+    "data/story/characters/finch.png": "21380f451cdf457e9cfdc87247232136792be5fd8b1382b1143769284c5a91d4",
     "data/story/characters/henrik.png": "614fe67fcddde03fa8dce7e6f08b0b854fb1c5e535261b865ed4e85557a918a3",
+    "data/story/characters/mary.png": "13c1d26ec1dee103b79c31c95e544bcbdd973751270c0a220e478a76bfc61418",
     "data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
     "data/story/characters/pip.png": "f26c1d2514b93d56056e064c4c2d33726cb545835bf3be9d25f26e4ba9257206",
+    "data/story/characters/rosa.png": "f9258680b1c7d9bd0eb671bb6c3e60c063653d455a2650c9d7754b9f5e74b57b",
     "data/story/characters/theo.png": "cb2aa98d7cc32a164197d0cb86dd103af86ae46cd794e29913c304bd02d14796",
     "data/story/characters/wren.png": "4a1369fe8ac249af84ced5fa50bbe4c4eb1643c652aa0a1216163a6a6d218743",
     "data/story/floors/last-train.jpg": "6ab848dc7e192cfbd41f6988d082e7835a1b2158704d09f40385b239e9e00926",
@@ -154,15 +169,28 @@
     "prompt": "art/character-and-icon-prompts.json#story_cast",
     "runtime": [
       "data/story/characters/agnes.png",
+      "data/story/characters/alder.png",
+      "data/story/characters/finch.png",
       "data/story/characters/henrik.png",
+      "data/story/characters/mary.png",
       "data/story/characters/noelle.png",
       "data/story/characters/pip.png",
+      "data/story/characters/rosa.png",
       "data/story/characters/theo.png",
       "data/story/characters/wren.png"
     ],
     "states": "One right-facing authored bust per speaker. The shared dialogue renderer mirrors the right slot and handles active/listening presentation.",
     "reproduction": "python3 games/christmas-market/tools/prepare_story_cast.py",
-    "review": "docs/review/dialogue-bar/README.md"
+    "review": "docs/review/dialogue-bar/README.md",
+    "new_speakers": {
+      "source": "art/new-story-cast.png",
+      "prompt": "art/new-story-cast-prompt.txt",
+      "style_references": [
+        "art/story-cast.png",
+        "data/story/characters/noelle.png"
+      ],
+      "review": "docs/review/campaign-cast/README.md"
+    }
   },
   "navigation": {
     "manifest": "art/navigation/manifest.json",
@@ -238,28 +266,10 @@
         "chain",
         "chain-2",
         "chain-1-mirror"
-      ],
-      "booster_icons": [
-        "booster-star-icon",
-        "booster-firework-icon"
       ]
     },
     "accent_source": "art/board-theme/accent-revision.png",
     "accent_prompt": "art/board-theme/accent-prompt.txt",
-    "power_up_review": "docs/screenshots/review/power-up-paint/README.md",
-    "power_up_paint": {
-      "generator": "built-in ImageGen",
-      "source": "../../art/match3-power-up-paint/source.png",
-      "prompt": "../../art/match3-power-up-paint/prompt.txt",
-      "edit_target": "../../art/match3-power-up-paint/scener-strip.png",
-      "frames": [
-        "booster-star-icon",
-        "booster-firework-icon"
-      ],
-      "registration": "art/match3-atlas.json",
-      "reproduction": "python3 tools/match3_atlas.py",
-      "note": "The engine has no power-ups. Only the painted row rocket and bomb are registered, as the Shooting Star and Firework Bomb booster icons."
-    },
     "chain_paint": {
       "generator": "built-in ImageGen",
       "source": "../../art/match3-chain-paint/edge-anchors.png",
@@ -417,6 +427,14 @@
     "layout": "lua/board_frame_atlas.lua",
     "reference": "engine/art/board-frame/rim-attachment-guide.png"
   },
+  "square_frame": {
+    "source": "art/square-frame/variants.png",
+    "prompt": "art/square-frame/prompt.txt",
+    "styles": "art/square-frame/styles.json",
+    "runtime": "data/board/cells.png",
+    "registration": "art/match3-atlas.json",
+    "review": "docs/screenshots/review/square-frame/variants.jpg"
+  },
   "campaign_buttons": "../../art/match3-buttons/manifest.json",
   "bonus_buttons": {
     "painter": "../../engine/lua/match3/buttons.lua",
@@ -424,42 +442,196 @@
       "booster-hammer": "market-5",
       "booster-firework": "booster-firework-icon",
       "booster-lantern": "market-10",
-      "booster-star": "booster-star-icon"
+      "booster-star": "booster-star-icon",
+      "booster-shield": "booster-shield-icon",
+      "booster-plus": "booster-plus-icon",
+      "booster-hourglass": "booster-hourglass-icon",
+      "booster-mixer": "booster-mixer-icon"
     }
   },
   "market_goods": {
-    "source": "art/market-goods/source.png",
-    "prompt": "art/market-goods/prompt.txt",
+    "source": "art/market-goods/winter-stalls.png",
+    "prompt": "art/market-goods/winter-stalls-prompt.txt",
+    "source_overrides": {
+      "market-12": {
+        "source": "../relic-rush/art/registered/campaign-pieces.png",
+        "prompt": "../relic-rush/art/campaign-pieces/gray-masonry-prompt.txt",
+        "box": [
+          512,
+          0,
+          640,
+          128
+        ]
+      },
+      "market-17": {
+        "source": "art/market-goods/winter-stalls-premium.png",
+        "prompt": "art/market-goods/winter-stalls-premium-prompt.txt",
+        "box": [
+          30,
+          1390,
+          224,
+          1655
+        ]
+      },
+      "market-18": {
+        "source": "art/market-goods/winter-stalls-premium.png",
+        "prompt": "art/market-goods/winter-stalls-premium-prompt.txt",
+        "box": [
+          240,
+          1390,
+          460,
+          1655
+        ]
+      },
+      "market-19": {
+        "source": "art/market-goods/winter-stalls-premium.png",
+        "prompt": "art/market-goods/winter-stalls-premium-prompt.txt",
+        "box": [
+          461,
+          1405,
+          709,
+          1655
+        ]
+      },
+      "market-13": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          251,
+          728,
+          455,
+          935
+        ]
+      },
+      "booster-firework-icon": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          11,
+          944,
+          227,
+          1175
+        ]
+      },
+      "market-20": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          712,
+          1192,
+          934,
+          1405
+        ]
+      },
+      "market-21": {
+        "source": "art/market-goods/vase-and-winter-catch.png",
+        "prompt": "art/market-goods/vase-and-winter-catch-prompt.txt",
+        "box": [
+          702,
+          1441,
+          939,
+          1614
+        ]
+      },
+      "market-3": {
+        "source": "../relic-rush/art/registered/campaign-pieces.png",
+        "prompt": "../relic-rush/art/campaign-pieces/prompt.txt",
+        "box": [
+          0,
+          0,
+          128,
+          128
+        ]
+      }
+    },
+    "transforms": "art/market-goods/registration.json",
     "runtime": "art/registered/market-goods.png",
     "registration": "tools/prepare_market_goods.py",
-    "review": "docs/screenshots/review/cradle-market/atlas.jpg",
-    "piece_max_side": {
-      "toy hammer": 76
+    "review": "docs/screenshots/review/rome-coverage/bonus-states.jpg",
+    "aliases": {
+      "market-1": "festive-3"
     },
-    "frames": [
-      "holly",
-      "mitten",
-      "silver coin",
-      "gold coin",
-      "firewood",
-      "toy hammer",
-      "packing blocks",
-      "gingerbread",
-      "milk",
-      "winter apple",
-      "lantern star",
-      "cocoa",
-      "golden bell",
-      "snowflake bauble",
-      "plum bauble",
-      "candy cane"
-    ],
-    "reused": {
-      "golden bell": "art/festive-pieces/source.png, top left",
-      "snowflake bauble": "art/icons.png, cell 3 (the earlier festive bauble)",
-      "plum bauble": "art/festive-pieces/source.png, bottom centre",
-      "candy cane": "art/festive-pieces/source.png, top centre",
-      "note": "Kinds 12-15 reuse the game's earlier festive pieces for the stalls added by the twenty-stall ladder; no new painting."
+    "frames": {
+      "market-0": "snow-dusted fir",
+      "market-1": "knitted mitten",
+      "market-2": "silver snowflake coin",
+      "market-3": "sun coin",
+      "market-4": "bundled pine",
+      "market-5": "farrier's hammer",
+      "market-6": "toy blocks",
+      "market-7": "gingerbread man",
+      "market-8": "mulled wine",
+      "market-9": "wrapped gift",
+      "market-10": "candle lantern",
+      "market-11": "hot cocoa",
+      "market-12": "dressed stone",
+      "market-13": "ice pendant",
+      "market-14": "glass bauble",
+      "market-15": "candy cane",
+      "booster-firework-icon": "firework bomb",
+      "booster-star-icon": "faceted star",
+      "booster-shield-icon": "frost shield",
+      "booster-plus-icon": "wish cross",
+      "booster-hourglass-icon": "hourglass",
+      "booster-mixer-icon": "wind-up top",
+      "market-16": "pretzel",
+      "market-17": "ceramic snowman",
+      "market-18": "carved reindeer",
+      "market-19": "santa hat",
+      "market-20": "winter vase",
+      "market-21": "smoked trout"
     }
+  },
+  "square_blockers": {
+    "source": "../../art/match3-square/blockers.png",
+    "prompt": "../../art/match3-square/blockers-prompt.txt",
+    "runtime": "data/board/blockers.png",
+    "registration": "art/match3-atlas.json#square_blockers",
+    "states": {
+      "chain-square-1": "One hit remains. One diagonal silver chain with a beveled perimeter and cast shadow.",
+      "chain-square-2": "Two hits remain. Two crossed silver chains with the same perimeter and cast shadows.",
+      "ice-square-1": "One hit remains. Borderless translucent ice with a broken upper edge.",
+      "ice-square-2": "Two hits remain. A full borderless square of translucent faceted ice."
+    },
+    "review": "docs/square-match3.md#blockers-and-target-hints"
+  },
+  "square_board": {
+    "source": "../../art/match3-square/source.png",
+    "prompt": "../../art/match3-square/prompt.txt",
+    "runtime": "data/board/cells.png",
+    "registration": "art/match3-atlas.json#square_cells",
+    "states": {
+      "square-plain": "ordinary or cleared cell",
+      "square-target": "plaque or pane remaining",
+      "square-selected": "selected cell or tool target preview",
+      "square-trim": "exposed perimeter",
+      "square-grout": "cell seams and frame joins",
+      "square-double": "two target layers remaining",
+      "square-foliage": "foliage in the frame\u2019s 90-degree notch",
+      "square-joint": "bare fitting on an outer corner",
+      "square-medallion": "medallion on an outer corner"
+    },
+    "review": "docs/square-match3.md#captures",
+    "ornaments": "../../art/match3-square/ornaments.png",
+    "ornaments_prompt": "../../art/match3-square/ornaments-prompt.txt",
+    "lighting_prompt": "../../art/match3-square/lighting-prompt.txt"
+  },
+  "chimneys": {
+    "guide": "art/building-catalogue/chimneys/guide.png",
+    "source": "art/building-catalogue/chimneys/output.png",
+    "original_crops": "art/building-catalogue/chimneys/original-crops.png",
+    "prompt": "art/building-catalogue/chimneys/prompt.txt",
+    "layout": "art/building-catalogue/chimneys/layout.json",
+    "outlets": "lua/chimney_flues.lua",
+    "renderer": "lua/chimney_smoke.lua",
+    "particle_frames": [
+      "fx-smoke-0",
+      "fx-smoke-1",
+      "fx-smoke-2",
+      "fx-smoke-3"
+    ],
+    "states": "Open flue on the shared building sprite. Placed buildings emit rising, drifting puffs that fade. Reduce Motion hides the particles.",
+    "reproduction": "python3 games/christmas-market/tools/prepare_chimneys.py",
+    "review": "docs/review/chimneys/README.md"
   }
 }

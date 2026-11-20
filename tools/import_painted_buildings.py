@@ -63,6 +63,20 @@ def ground(im, footprint):
     return np.array([(xl + xr) / 2, (yl + yr) / 2]), xr - xl
 
 
+def align_to_render(painted, crop, entry, render):
+    """Keep the model's scale and ground centre, padding for new painted detail."""
+    left, right = np.array(entry['painted_sides'])
+    scale = render['base_width'] / (right[0] - left[0])
+    paint_pivot = ((left + right) / 2 - np.array(crop[:2])) * scale
+    offset = np.rint(np.array(render['pivot']) - paint_pivot).astype(int)
+    size = np.maximum(1, np.rint(np.array(painted.size) * scale).astype(int))
+    margin = np.maximum(0, -offset)
+    canvas = np.maximum(render['image'], offset + size) + margin
+    sprite = Image.new('RGBA', tuple(canvas))
+    sprite.paste(painted.resize(tuple(size), Image.Resampling.LANCZOS), tuple(offset + margin))
+    return sprite, np.array(render['pivot']) + margin, scale
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('game', choices=buildings.GAMES)
@@ -89,7 +103,7 @@ def main():
         cols, rows = layout['cols'], layout['rows']
         for i, entry in enumerate(layout['entries']):
             key = entry['key']
-            old = original['items'][key]
+            old = entry.get('render') or original['items'][key]
             cell = (round(i % cols * atlas.width / cols), round(i // cols * atlas.height / rows),
                     round((i % cols + 1) * atlas.width / cols), round((i // cols + 1) * atlas.height / rows))
             painted = atlas.crop(cell)
@@ -98,7 +112,9 @@ def main():
             base = guide.crop(entry['box'])
             display_scale = entry.get('display_scale', 1)
             pivot = np.array(old['pivot']) * display_scale
-            if category in ('wonder', 'restoration', 'cottage') or (category == 'building' and args.game != 'christmas-market'):
+            if 'painted_sides' in entry:
+                sprite, new_pivot, scale = align_to_render(painted, crop, entry, old)
+            elif category in ('wonder', 'restoration', 'cottage') or (category == 'building' and args.game != 'christmas-market'):
                 source_pivot, source_span = ground(base, old['size'])
                 painted_pivot, painted_span = ground(painted, old['size'])
                 scale = source_span / painted_span / display_scale
@@ -107,10 +123,12 @@ def main():
                 scale = max(base.size) / max(painted.size) / display_scale
                 new_pivot = np.array([painted.width / 2, painted.height]) * scale
                 new_pivot += (pivot - np.array([base.width / 2, base.height])) / display_scale
-            size = [max(1, round(v * scale)) for v in painted.size]
-            sprite = painted.resize(size, Image.Resampling.LANCZOS)
+            if 'painted_sides' not in entry:
+                size = [max(1, round(v * scale)) for v in painted.size]
+                sprite = painted.resize(size, Image.Resampling.LANCZOS)
             item = registry['items'][key]
-            if key in slabs:
+            fixed_foundation = key in slabs or 'painted_sides' in entry
+            if fixed_foundation:
                 try:
                     sprite, new_pivot = painted_foundations.register(sprite, new_pivot, item['size'], registry['ppt'])
                 except ValueError as error:
@@ -119,12 +137,12 @@ def main():
                 if error:
                     raise SystemExit(f'{args.game}: {key}: {error}')
                 item['painted_foundation'] = True
-            sprites[root / old['sprite']] = sprite
+            sprites[root / item['sprite']] = sprite
             item['image'] = list(sprite.size)
             item['pivot'] = buildings.rounded(new_pivot)
             imports[key] = dict(atlas=str(output.relative_to(root)), cell=cell, crop=crop,
                                 scale=round(scale, 8), pivot=item['pivot'], image=item['image'])
-            if key in slabs:
+            if fixed_foundation:
                 imports[key]['foundation'] = 'projected ground-contact edges'
     if not imports:
         raise SystemExit('No painted outputs to import')

@@ -12,14 +12,16 @@ The approach follows Orion's [declarative dialogs and DDX](https://github.com/co
 The [identity dialog](https://github.com/corepunch/orion-ui/blob/1cf7e7272ab68665615c7c8b307b612e0b62c26a/apps/gitclient/dialogs/dlg_identity.c) demonstrates push on opening, pull on acceptance, and game/application-owned actions. Here, Lua field paths replace C struct offsets; the renderer and input primitives remain native C.
 
 ```lua
+local N = ui.node
+
 local settings = {audio = {sound = true}}
 local form = ui.form{
-    root = {kind="column", panel=true, children={
-        {kind="label", text="Settings", height=44, role="title"},
-        {kind="toggle", id="sound", height=48,
+    root = N.column {panel=true,
+        N.label {text="Settings", height=44, role="title"},
+        N.toggle {id="sound", height=48,
          on_text="Sound on", off_text="Sound off"},
-        {kind="button", id="accept", text="Apply", height=48, accent=true},
-    }},
+        N.button {id="accept", text="Apply", height=48, accent=true},
+    },
     bindings = {{id="sound", field="audio.sound", type="boolean"}},
 }
 assert(form:push(settings))
@@ -31,6 +33,12 @@ if action and action.id == "accept" then
     if ok then close_settings() else show_validation(message) end
 end
 ```
+
+Use `local N = ui.node` and write `N.label {text="Settings"}` to construct a
+node. Named fields specify its properties and consecutive indexed fields
+specify its children in order. Pass a prebuilt list with `children = rows`.
+Each node uses one child-list syntax. The constructors also work with custom
+elements and prefabs, and `ui.form` still accepts ordinary node tables.
 
 `push(model)` validates and populates the controls. Editing changes the form's
 values; the model changes only on `pull(model, validator?)`. Pull first validates
@@ -142,12 +150,15 @@ and a child fills its cell or is centred in it, as in a border.
 With an `item` builder the cells come from `form:set_items`, like a list's rows.
 
 ```lua
-{kind="uniform_grid", columns=3, gap=9, children={
-    {kind="border", role="card", padding=8, children={{kind="label", text="One"}}},
-    {kind="border", background="#FFF2C9", border_color="rim", border_width=2, radius=12, padding=8,
-     children={{kind="label", text="Two"}}},
-    {kind="border", role="card", padding=8, children={{kind="label", text="Three"}}},
-}}
+local N = ui.node
+
+local grid = N.uniform_grid {columns=3, gap=9,
+    N.border {role="card", padding=8, N.label {text="One"}},
+    N.border {background="#FFF2C9", border_color="rim", border_width=2, radius=12, padding=8,
+        N.label {text="Two"},
+    },
+    N.border {role="card", padding=8, N.label {text="Three"}},
+}
 ```
 
 ![Borders in uniform grids: three columns, a wrapped grid, one data-backed row](screenshots/ui-layout.jpg)
@@ -162,18 +173,20 @@ written once and used like any other node. The instance keeps what places it:
 the prefab's own property. Prefab and element names share one namespace.
 
 ```lua
+local N = ui.node
+
 ui.prefab("resource_indicator", function(p)   -- engine/lua/match3.lua, abridged
-    return {kind="border", role="resource_indicator", padding={4,5,4,7}, children={
-        {kind="column", gap=1, children={
-            {kind="image", image=p.icon, height=36},
-            {kind="label", text=p.amount, em=25, text_style="gold"},
-        }},
-    }}
+    return N.border {role="resource_indicator", padding={4,5,4,7},
+        N.column {gap=1,
+            N.image {image=p.icon, height=36},
+            N.label {text=p.amount, em=25, text_style="gold"},
+        },
+    }
 end)
 
 -- The results dialog: one row of equal cells, one per banked currency.
-{kind="uniform_grid", id="resources", rows=1, gap=9, item=function(entry)
-    return {kind="resource_indicator", icon=entry.icon, amount=entry.amount}
+local bank = N.uniform_grid {id="resources", rows=1, gap=9, item=function(entry)
+    return N.resource_indicator {icon=entry.icon, amount=entry.amount}
 end}
 ```
 
@@ -185,17 +198,19 @@ its measured height grows with the text.
 ### Data-backed stacks
 
 ```lua
-local help = ui.form{kind="list", id="topics", gap=12, item=function(record)
-    return {kind="row", gap=14, align="center", children={
-        {kind="image", image=record.icon, width=64, height=64, visible=record.icon~=nil},
-        {kind="column", grow=1, gap=4, children={
-            {kind="label", text=record.title, wrap=true,
+local N = ui.node
+
+local help = ui.form(N.list {id="topics", gap=12, item=function(record)
+    return N.row {gap=14, align="center",
+        N.image {image=record.icon, width=64, height=64, visible=record.icon~=nil},
+        N.column {grow=1, gap=4,
+            N.label {text=record.title, wrap=true,
              text_align=record.icon and "start" or "center"},
-            {kind="label", text=record.description, wrap=true,
+            N.label {text=record.description, wrap=true,
              text_align=record.icon and "start" or "center"},
-        }},
-    }}
-end}
+        },
+    }
+end})
 assert(help:set_items("topics", records))
 ```
 
@@ -459,7 +474,7 @@ Results show the banked currencies as `resource_indicator` prefabs in a one-row 
 columns across the dialog, however many currencies the game has. Each is an icon above
 its figure, with no caption because the icon names the resource. The building
 card lists its price and what the building brings with the same element, side
-by side under PRICE and YOU GET captions; while a quest is being funded the price group lists what is missing under STILL NEEDED. An entry marked `done` draws the skin's `done_tick` panel (normally `Skin:paint_tick`, the tick a met board goal shows: the skin's `tick` image when registered, else two strokes) in place of its figure. Games may also opt into a results-card next-building block: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
+by side under PRICE and YOU GET captions; while the building is being funded the price group lists what is missing under STILL NEEDED. An entry marked `done` draws the skin's `done_tick` panel (normally `Skin:paint_tick`, the tick a met board goal shows: the skin's `tick` image when registered, else two strokes) in place of its figure. Games may also opt into a results-card next-building block: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
 shows its icon alone, and `label` adds one word under a larger figure only
 for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
@@ -675,7 +690,7 @@ Play and Wishes. Play is the largest control. Both surfaces use the same
 
 ## Town rail
 
-`engine/lua/town.lua` can stack round markers down the town's left edge, under
+`engine/lua/town/screen.lua` can stack round markers down the town's left edge, under
 the header: requests, tasks or anything else the player returns to. The
 `rail()` hook returns `{id, icon, value, ready, waiting}` records and
 `rail_tap(id)` receives a tap. Each marker is a pressable disc with the
@@ -697,19 +712,9 @@ record's icon, in its normal, hover, pressed, selected (ready) and disabled
 `rail.size`, `rail.gap` and `rail.caption`; `View:rail_layout(count)` returns
 the marker boxes for tests.
 
-A request card's game model supplies its playable expedition as a zero-based
-`level`. The card offers Play for the current expedition, Replay for a
-cleared one, and a return action while the request waits for a board slot.
-A ready request can supply a `handoff` title and image. Continue on the
-illustrated card calls the same delivery handler as a request without art.
-Call `R.open_quest(id, true)` for a giver’s introduction. The shared form
-accepts an optional portrait, offer subtitle, action label, needs caption and
-notice. The game can remember an opening through `R.quest_opened(id)`.
-A handoff can pair its painting with a detail icon and observation.
-
 ## Town building popups
 
-`engine/lua/town.lua` draws the label above a tapped building. The game's
+`engine/lua/town/screen.lua` draws the label above a tapped building. The game's
 `town_config.lua` can select skin text palettes with `bubble.title` and
 `bubble.text`. Set `bubble.em` to size the configured subtitle. The title
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex

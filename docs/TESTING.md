@@ -202,18 +202,18 @@ fitted prices and the expected campaign; it writes nothing. Override the
 sample size with `make test-balance BALANCE_RUNS=80`. `make balance
 GAME=relic-rush` runs the same fit and writes the budgets and prices.
 
-The two on-demand 30-board UI campaigns render a 240×450 window at the logical phone
+The two on-demand 100-board UI campaigns render a 240×450 window at the logical phone
 layout and advance the test clock by 0.1 seconds per frame.
 
 For Relic Rush and Christmas Market, `build/test/<game> --extended 'rules campaign_play'`
-plays the boards the story covers (the first 30 of 100) without a window using a deterministic greedy player and up
-to four fixed starting boards per level. It applies real wins to the game's
-reward and story coordinators, places the funded buildings and checks the scene
-order. Its per-campaign totals are printed to `build/test/<game>.log`. These
-independent retries do not simulate time, real player choices, purchases
-or UI input. The separate `smoke campaign` runs the real interface and checks
-all scenes and building/region controls, but satisfies board goals artificially;
-neither test alone is a complete human playthrough. On macOS a hidden OpenGL
+plays all 100 boards without a window using a deterministic greedy player.
+It tries up to eight fixed starts per board and up to sixteen per boss. The
+test banks real wins, checks every wallet slot and story scene, and confirms
+all twenty purchases on schedule with zero replays for income. It prints
+per-campaign totals to `build/test/<game>.log`. The separate `smoke campaign`
+drives the real interface through the finale, buildings and region controls.
+It supplies each board's goal and purchase proceeds to exercise the UI flow.
+On macOS a hidden OpenGL
 window still needs access to the logged-in graphical session; a restricted
 process may fail with `CGSNewWindow failed` before game code runs.
 

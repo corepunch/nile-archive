@@ -1654,6 +1654,12 @@ function city.ready(c, index, now) end
 ---@return rect
 function city.sprite_rect(c, b) end
 
+---Drawn screen rect, including placement bounce. Empty while the building is held or the index is out of range.
+---@param c city
+---@param index integer
+---@return rect
+function city.placed_sprite_rect(c, index) end
+
 ---World rect of the separately cropped ground shadow, registered to the same ground point.
 ---@param c city
 ---@param b building
@@ -1749,6 +1755,9 @@ function city.serialize(c, s) end
 ---@field values table
 ---@field boxes table<string,rect>
 local ui_form = {}
+---Construct a form node of the requested kind from properties and inline children.
+---@type table<string, fun(fields: table): table>
+ui.node = {}
 ---@return ui_form
 function ui.form(template) end
 ---@return boolean, string?

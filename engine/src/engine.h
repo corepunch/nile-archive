@@ -735,6 +735,7 @@ int city_add(city *c, vec2 world, int type, double now);                /* no ch
 int city_building_at(const city *c, vec2 world);
 bool city_ready(const city *c, int index, double now);
 rect city_sprite_rect(const city *c, building b);                       /* world rect of a building's sprite */
+rect city_placed_sprite_rect(const city *c, int index);                 /* drawn screen rect, including placement bounce */
 rect city_shadow_rect(const city *c, building b);                       /* separately cropped shadow at the same world scale */
 
 int city_zone_at(const city *c, vec2 world);

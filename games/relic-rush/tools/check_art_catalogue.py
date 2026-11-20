@@ -2,7 +2,7 @@
 import json
 import re
 import struct
-from PIL import Image
+from PIL import Image, ImageStat
 from pathlib import Path
 from prepare_bonus_gems import pack, png_matches
 
@@ -31,6 +31,52 @@ for scene in handoffs.values():
 atlas = json.loads((ROOT / "art/match3-atlas.json").read_text())
 registered = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "art/registered").rglob("*") if p.is_file())
 shipped = set(actual) | set(registered)
+square = manifest["square_board"]
+assert set(square["states"]) == {name for name in atlas["frames"] if name.startswith("square-")}
+for name, record in atlas["square_cells"]["frames"].items():
+    assert record["registered"] in shipped
+    assert square["runtime"] == f'data/board/{atlas["frames"][name]["atlas"]}.png'
+    if name.startswith("square-frame-"):
+        assert f"`{name}`" in doc
+        assert atlas["frames"][name]["box"][2:] == [128, 128], "Frame art must occupy a single empty cell"
+
+# Measure the painted light on the packed faces, away from the highlight on
+# the bevel. A nearly flat interior can look lit at atlas size and flat in play.
+luma_matrix = (0.2126, 0.7152, 0.0722, 0)
+with Image.open(ROOT / square["runtime"]) as sheet:
+    for name, contrast in [("square-plain", 65), ("square-target", 45), ("square-double", 25)]:
+        x, y, w, h = atlas["frames"][name]["box"]
+        tile = sheet.crop((x, y, x + w, y + h)).convert("RGB")
+        luma = tile.convert("L", luma_matrix)
+        upper, centre, lower = (ImageStat.Stat(luma.crop((a, a, b, b))).mean[0]
+                                for a, b in [(20, 41), (55, 73), (87, 108)])
+        if name == "square-double":
+            assert centre - max(upper, lower) >= contrast, "Olive plaque needs its broad diagonal highlight"
+        else:
+            assert upper > centre > lower and upper - lower >= contrast, f"{name} needs its upper-left lighting"
+
+    # The north-facing rail starts at the shared edge. Both the dark
+    # contact strip and the textured face are inside the frame tile.
+    x, y, w, h = atlas["frames"]["square-frame-1"]["box"]
+    edge = sheet.crop((x, y, x + w, y + h))
+    luma = edge.convert("RGB").convert("L", luma_matrix)
+    face = ImageStat.Stat(luma.crop((10, 9, 40, 14))).mean[0]
+    contact = ImageStat.Stat(luma.crop((10, 0, 40, 2))).mean[0]
+    assert face - contact >= 55, "The stone rim needs a deep board-facing contact shadow"
+    alpha = edge.getchannel("A")
+    assert alpha.getpixel((20, 0)) == 255 and alpha.getbbox()[3] < h // 2
+    solid = alpha.point(lambda value: 255 if value >= 128 else 0).getbbox()[3]
+    assert 0 < alpha.getpixel((20, solid + 4)) < alpha.getpixel((20, solid)) < 128, "The rim shadow fades onto the backdrop"
+
+    x, y, w, h = atlas["frames"]["square-frame-2"]["box"]
+    alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A")
+    assert alpha.getpixel((112, 15)) < 128 < alpha.getpixel((118, 9)), "Round the exposed stone corner"
+
+    x, y, w, h = atlas["frames"]["square-frame-5"]["box"]
+    alpha = sheet.crop((x, y, x + w, y + h)).getchannel("A").point(lambda value: 255 if value >= 128 else 0)
+    lip = alpha.crop((0, 0, 1, h)).getbbox()[3]
+    assert alpha.getpixel((w - lip - 1, lip)) == 0 < alpha.getpixel((w - lip, lip - 1)), "Keep the recessed corner square"
+
 resources = manifest["resource_pieces"]
 declaration = re.search(r"A\.resource_pieces = \{([^}]+)\}", art).group(1)
 pieces = [*resources["slots"], *resources["from_campaign"]]
@@ -41,6 +87,8 @@ for name in pieces:
     assert path in shipped and f"`{name}`" in doc
 wallet = manifest["wallet_icons"]
 assert all((ROOT / wallet[key]).is_file() for key in ("source", "prompt", "review"))
+for edit in wallet.get("source_overrides", {}).values():
+    assert all((ROOT / edit[key]).is_file() for key in ("source", "prompt"))
 declaration = re.search(r"A\.wallet_icons\s*=\s*\{([^}]+)\}", art).group(1)
 assert {name: f"art/registered/resource-pieces/{key}.png" for name, key in re.findall(r'(\w+)="([^"]+)"', declaration)} == wallet["runtime"]
 for path in wallet["runtime"].values():
@@ -98,11 +146,12 @@ for building, _, tile, row in rows:
     else:
         wallet = {1: "GOLD", 2: "SUPPLIES", 3: "PROVISIONS"}[credit["type"]]
         assert f'slot=E.{wallet}, amount={credit["amount"]}' in row, building
-variants = re.findall(r'\{key="([^"]+)", name="[^"]+", action="[^"]+"(?:, art="([^"]+)")?', economy)
+bonus_rules = (ROOT.parents[1] / "engine/lua/match3/bonuses.lua").read_text()
+variants = re.findall(r'\{key="([^"]+)", name="[^"]+", action="[^"]+"(?:, art="([^"]+)")?', bonus_rules)
 variant_art = {key: art_key or key for key, art_key in variants}
 assert variant_art == {key: bonus["art"] for key, bonus in gems["bonuses"].items()}
 assert set(variant_art.values()) == set(gems["columns"])
-assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", legacy_slot="[^"]+", levels=\{', economy)
+assert gems["toolbar"]["slots"] == re.findall(r'\{key="([^"]+)", legacy_slot="[^"]+", levels=\{', bonus_rules)
 match3 = (ROOT.parent.parent / "engine/lua/match3.lua").read_text()
 assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
@@ -229,9 +278,16 @@ for name, item in finale["assets"].items():
 subprocess.run([sys.executable, str(ROOT / finale["registration"]), "--check"], check=True)
 
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
-assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian','keeper'}
-assert all(path in shipped for path in manifest['story']['cast'].values())
-assert all((ROOT / manifest['story']['keeper'][key]).is_file() for key in ('source', 'prompt', 'review'))
+cast = manifest['story']['cast']
+narrative = (ROOT / 'lua/narrative.lua').read_text()
+assert cast == {speaker: f'data/{path}' for speaker, path in re.findall(
+    r"\{id='([^']+)'[^\n]*?portrait_path='([^']+)'", narrative)}
+declaration = re.search(r'A\.story=\{cast=\{([^}]+)\}', art).group(1)
+assert set(re.findall(r'"([^"]+)"', declaration)) == set(cast)
+assert all(path in shipped for path in cast.values())
+for speaker in ('keeper', 'marisol'):
+    assert all((ROOT / manifest['story'][speaker][key]).is_file()
+               for key in ('source', 'prompt', 'review'))
 assert manifest['story']['states'] == ['speaking','listening','thought','shout']
 assert 'A.story=' in art and '31.5' in doc
 

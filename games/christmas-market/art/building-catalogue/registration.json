@@ -95,8 +95,8 @@
    "base_width": 409.808,
    "shadow": "data/city/building-shadows/cocoa.png",
    "shadow_pivot": [
-    178.288,
-    146.96
+    181.68,
+    148.602
    ],
    "shadow_base_width": 348.336,
    "painted_foundation": true
@@ -906,6 +906,106 @@
    ],
    "shadow_base_width": 348.336,
    "painted_foundation": true
+  },
+  "firework_stall": {
+   "title": "Firework stall",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/firework_stall.png",
+   "image": [
+    278,
+    301
+   ],
+   "pivot": [
+    138.603,
+    210.371
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/firework_stall.png",
+   "shadow_pivot": [
+    140.63,
+    106.965
+   ],
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
+  },
+  "station_kiosk": {
+   "title": "Station kiosk",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/station_kiosk.png",
+   "image": [
+    278,
+    275
+   ],
+   "pivot": [
+    138.603,
+    184.887
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/station_kiosk.png",
+   "shadow_pivot": [
+    137.309,
+    91.304
+   ],
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
+  },
+  "glassblower": {
+   "title": "Glassblower's stall",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/glassblower.png",
+   "image": [
+    278,
+    290
+   ],
+   "pivot": [
+    138.603,
+    199.951
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/glassblower.png",
+   "shadow_pivot": [
+    135.528,
+    95.028
+   ],
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
+  },
+  "rosa_stall": {
+   "title": "Gran\u2019s old stall",
+   "size": [
+    2,
+    2
+   ],
+   "scale": 1.0,
+   "sprite": "data/city/buildings/rosa_stall.png",
+   "image": [
+    278,
+    331
+   ],
+   "pivot": [
+    138.99,
+    240.686
+   ],
+   "base_width": 273.205,
+   "shadow": "data/city/building-shadows/rosa_stall.png",
+   "shadow_pivot": [
+    136.001,
+    114.183
+   ],
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
   }
  },
  "generator": "tools/buildings.py",
@@ -953,12 +1053,16 @@
   "post_office",
   "chapel",
   "reindeer_stable",
-  "santa_workshop"
+  "santa_workshop",
+  "firework_stall",
+  "station_kiosk",
+  "glassblower",
+  "rosa_stall"
  ],
  "paintover": {
   "version": "painted-v1",
   "importer": "tools/import_painted_buildings.py",
   "sources": "art/building-catalogue/painted-v1"
  },
- "renderer": "Scener"
+ "renderer": "Blender"
 }

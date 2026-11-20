@@ -1,5 +1,7 @@
 -- archive_island.lua — the island: an engine city with the player plate,
 -- the currencies, the goal card, the building tray and the placement sheet.
+local N = ui.node
+
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
@@ -135,35 +137,35 @@ end
 
 local function stars_text(n) return ("%d %s"):format(n, plural(n, "звезда", "звезды", "звёзд")) end
 
-local build_form = ui.form{kind = "column", panel = true, radius = 20, children = {
-    {kind = "row", height = 34, gap = 10, children = {
-        {kind = "label", id = "budget", role = "budget", grow = 1, text_align = "start"},
-        {kind = "button", id = "category_prev", text = "<", width = 44},
-        {kind = "label", id = "category", role = "category", width = 230},
-        {kind = "button", id = "category_next", text = ">", width = 44},
-        {kind = "button", id = "close", text = "Закрыть", width = 100},
-    }},
-    {kind = "list", id = "stock", scroll = true, height = 454, gap = 8, item = function(e)
-        return {kind = "row", panel = true, role = "parchment", radius = 12, padding = 8, gap = 14, align = "center", children = {
-            {kind = "image", image = e.sprite, width = 108, height = 68},
-            {kind = "column", grow = 1, gap = 3, children = {
-                {kind = "label", text = e.name, wrap = true, text_align = "start"},
-                {kind = "label", text = ("%s · %d монет"):format(e.detail, e.coins), wrap = true, text_align = "start"},
-            }},
-            {kind = "button", id = "buy", text = e.action, enabled = e.available, width = 260, height = 44},
-        }}
+local build_form = ui.form(N.column {panel = true, radius = 20,
+    N.row {height = 34, gap = 10,
+        N.label {id = "budget", role = "budget", grow = 1, text_align = "start"},
+        N.button {id = "category_prev", text = "<", width = 44},
+        N.label {id = "category", role = "category", width = 230},
+        N.button {id = "category_next", text = ">", width = 44},
+        N.button {id = "close", text = "Закрыть", width = 100},
+    },
+    N.list {id = "stock", scroll = true, height = 454, gap = 8, item = function(e)
+        return N.row {panel = true, role = "parchment", radius = 12, padding = 8, gap = 14, align = "center",
+            N.image {image = e.sprite, width = 108, height = 68},
+            N.column {grow = 1, gap = 3,
+                N.label {text = e.name, wrap = true, text_align = "start"},
+                N.label {text = ("%s · %d монет"):format(e.detail, e.coins), wrap = true, text_align = "start"},
+            },
+            N.button {id = "buy", text = e.action, enabled = e.available, width = 260, height = 44},
+        }
     end},
-}}
+})
 local build_skin = K.skin
 
-local project_confirm = ui.form{kind = "column", panel = true, radius = 20, children = {
-    {kind = "label", id = "title", role = "category", wrap = true},
-    {kind = "label", id = "detail", role = "budget", wrap = true},
-    {kind = "row", gap = 12, height = 56, children = {
-        {kind = "button", id = "cancel", text = "Отмена", grow = 1},
-        {kind = "button", id = "confirm", text = "Выполнить", grow = 1, accent = true},
-    }},
-}}
+local project_confirm = ui.form(N.column {panel = true, radius = 20,
+    N.label {id = "title", role = "category", wrap = true},
+    N.label {id = "detail", role = "budget", wrap = true},
+    N.row {gap = 12, height = 56,
+        N.button {id = "cancel", text = "Отмена", grow = 1},
+        N.button {id = "confirm", text = "Выполнить", grow = 1, accent = true},
+    },
+})
 
 -- Opens the tray on a category, with an optional starting group for captures.
 local settled_preview = app.arg("shot") and not app.arg("reel")
@@ -309,7 +311,7 @@ end
 
 -------------------------------------------------------------------- frame
 
--- The island on the engine's shared town screen (engine/lua/town.lua), laid out
+-- The island on the engine's shared town screen (engine/lua/town/screen.lua), laid out
 -- by lua/town_config.lua like Relic Rush and Christmas Market. The archive adds its
 -- player plate, the cast button and the goal card between Build and Play.
 local function shore(z)
@@ -333,7 +335,7 @@ local function placement_words(kind)
 end
 
 function M.town_setup()
-    local town = require("town")
+    local town = require("town.screen")
     M.town = town.new(G.island, require("town_config"), {
         skin = K.skin,
         wallet = function() return G.wallet end,
@@ -400,10 +402,9 @@ function M.town_setup()
     G.spots.build, G.spots.chapters = M.town.buttons.build, M.town.buttons.play
 end
 
-function M.frame(_, world)
-    local dt = app.dt()
-    if G.tray then M.tray.motion:step(dt, input.get(), G.reduced_motion) end
-    M.town:frame(world, dt, G.modal == MODAL_NONE and not story.active())
+function M:frame(world, dt, active)
+    if G.tray then M.tray.motion:step(dt, active and input.get() or world, G.reduced_motion) end
+    M.town:frame(world, dt, active)
     G.spots.build, G.spots.chapters = M.town.buttons.build, M.town.buttons.play
 end
 

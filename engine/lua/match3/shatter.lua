@@ -4,8 +4,8 @@
 -- own random stream and fixed pools (`require("match3.shatter").bind(R, rules)`,
 -- called by match3.game after match3.vfx).
 --
--- Fracture patterns are made once, at bind, in a unit flat-top hex. A break
--- picks one and one of the hex's twelve symmetries, so every break differs and
+-- Fracture patterns are made once, at bind, in the shape of a cell. A break
+-- picks one and one of the cell’s symmetries, so every break differs and
 -- every shard is exactly the pixels of the layer that broke. Nothing is baked:
 -- new tile art, packs and games shatter with no extra assets.
 local S = {}
@@ -24,6 +24,7 @@ S.SMOKE_ALPHA = .85                            -- peak opacity, just after the b
 S.SHARD_CAP, S.PUFF_CAP = 220, 96
 
 -- The unit hex: vertices at +-x like the board's cells, clockwise on screen.
+local SQUARE = {{-1, -1}, {1, -1}, {1, 1}, {-1, 1}}
 local HEX = {}
 for k = 0, 5 do HEX[k + 1] = {math.cos(k * PI / 3), math.sin(k * PI / 3)} end
 
@@ -63,12 +64,13 @@ end
 
 -- One fracture: Voronoi cells of well-spread sites, clipped to the hex.
 -- Returns shards {area, cx, cy, pts = {{x, y}, ...}} covering the whole hex.
-function S.fracture(rand, sites, gap)
+function S.fracture(rand, sites, gap, square)
+    local half_height = square and 1 or SQ3 / 2
     local seeds = {}
     for _ = 1, 400 do
         if #seeds >= sites then break end
-        local x, y = rand() * 2 - 1, (rand() * 2 - 1) * SQ3 / 2
-        if inside_hex(x, y) then
+        local x, y = rand() * 2 - 1, (rand() * 2 - 1) * half_height
+        if square or inside_hex(x, y) then
             local ok = true
             for _, s in ipairs(seeds) do
                 if (s[1] - x) ^ 2 + (s[2] - y) ^ 2 < gap * gap then ok = false; break end
@@ -78,7 +80,7 @@ function S.fracture(rand, sites, gap)
     end
     local shards = {}
     for i, s in ipairs(seeds) do
-        local poly = HEX
+        local poly = square and SQUARE or HEX
         for j, o in ipairs(seeds) do
             if i ~= j and #poly >= 3 then
                 poly = clip(poly, (s[1] + o[1]) / 2, (s[2] + o[2]) / 2, o[1] - s[1], o[2] - s[2])
@@ -108,7 +110,7 @@ function S.bind(R, rules)
     local function range(r) return r[1] + (r[2] - r[1]) * rand() end
 
     local patterns = {}
-    for k = 1, S.PATTERNS do patterns[k] = S.fracture(rand, S.SITES, S.SITE_GAP) end
+    for k = 1, S.PATTERNS do patterns[k] = S.fracture(rand, S.SITES, S.SITE_GAP, rules.square) end
     R.shatter_patterns = patterns   -- for tests
 
     local shards, puffs = {}, {}
@@ -129,7 +131,8 @@ function S.bind(R, rules)
     function R.vfx_shatter(at, radius, art, dust, src)
         if R.reduced_motion or not art then return end
         local pattern = patterns[1 + math.floor(rand() * #patterns)]
-        local turn, flip = math.floor(rand() * 6) * PI / 3, rand() < .5 and -1 or 1
+        local sides = rules.square and 4 or 6
+        local turn, flip = math.floor(rand() * sides) * TAU / sides, rand() < .5 and -1 or 1
         local cs, sn = math.cos(turn), math.sin(turn)
         local ox, oy, w, h, vy = 0, 0, art.w, art.h, .5
         if src then ox, oy, w, h, vy = src.x, src.y, src.w, src.h, 1 / SQ3 end

@@ -1,7 +1,7 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
--- engine's defaults (engine/lua/town.lua): tables merge field by field, lists
+-- engine's defaults (engine/lua/town/screen.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
-local town = require("town")
+local town = require("town.screen")
 
 return {
     background = "#2E7F7A",

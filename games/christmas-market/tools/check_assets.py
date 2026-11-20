@@ -58,15 +58,37 @@ def main():
     assert 'require("board_frame_atlas")' in art
     subprocess.run([sys.executable, str(ROOT.parents[1]/frame['generator']),
                     '--game', ROOT.name, '--check', str(ROOT/frame['stone'])], check=True)
+    square = manifest['square_frame']
+    square_cells = atlas['square_cells']
+    styles = json.loads((ROOT/square['styles']).read_text())
+    assert square['runtime'] in inventory and (ROOT/square['review']).is_file()
+    assert len(styles['styles']) == 8 and styles['active'] in styles['styles']
+    assert square['source'] == square_cells['frame_source'] and square['prompt'] == square_cells['frame_prompt']
+    for name, sprite in square_cells['frames'].items():
+        if name.startswith('square-frame-'):
+            assert sprite['rail']['style'] == styles['active']
+            assert png(ROOT/sprite['registered']) == ((128, 128), 6), name
+            assert atlas['frames'][name]['atlas'] == 'cells'
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_story_pieces.py'), '--check'], check=True)
     goods = manifest['market_goods']
-    assert (ROOT/goods['prompt']).is_file() and (ROOT/goods['review']).is_file()
-    assert png(ROOT/goods['runtime']) == ((512, 512), 6) and len(set(goods['frames'])) == 16
+    for name in ('source', 'prompt', 'transforms', 'review'):
+        assert (ROOT/goods[name]).is_file(), name
+    for edit in goods.get('source_overrides', {}).values():
+        assert (ROOT/edit['source']).is_file() and (ROOT/edit['prompt']).is_file(), edit
+    assert png(ROOT/goods['runtime']) == ((512, 896), 6)
+    icons = manifest['bonus_buttons']['icons']
+    assert set(goods['frames']) == {f'market-{kind}' for kind in range(22)} | set(icons.values())
+    aliases = goods['aliases']
+    assert aliases.keys() <= goods['frames'].keys()
+    for name, target in aliases.items():
+        assert name not in atlas['frames'] and atlas['aliases'][name] == target, name
+    for name in (aliases.get(key, key) for key in goods['frames']):
+        frame = atlas['frames'][name]
+        assert frame['atlas'] == 'pieces' and frame['box'][2:] == [128, 128]
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)
     assert (ROOT/manifest['campaign_buttons']).is_file()
-    buttons = manifest['bonus_buttons']
     economy = (ROOT/'lua/economy.lua').read_text()
-    for key, frame in buttons['icons'].items():
+    for key, frame in icons.items():
         assert f'icon="{key}", frame="{frame}"' in economy and frame in atlas['frames'], key
         assert all(f'{key}-{state}' not in atlas['frames'] for state in STATES)
     nav = json.loads((ROOT/'art/navigation/manifest.json').read_text())
@@ -79,6 +101,11 @@ def main():
         assert all(x > 0 and x % 1 == 0 for x in entry['size'])
         assert entry['base_width'] > 0 and len(entry['pivot']) == 2
     assert {p.name for p in (ROOT/'data/city/buildings').iterdir()} == {e['key'] + '.png' for e in buildings}
+    chimneys = manifest['chimneys']
+    for key in ('guide', 'source', 'original_crops', 'prompt', 'layout', 'outlets', 'renderer', 'review'):
+        assert (ROOT/chimneys[key]).is_file(), key
+    assert all(frame in atlas['frames'] for frame in chimneys['particle_frames'])
+    subprocess.run([sys.executable, str(ROOT/'tools/prepare_chimneys.py'), '--check'], check=True)
     for i in range(6):
         assert png(ROOT/'art/registered/tile-sets/festive'/f'{i}.png') == ((128,128),6)
     cast = manifest['story_cast']

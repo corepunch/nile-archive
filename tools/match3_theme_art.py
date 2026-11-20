@@ -9,12 +9,6 @@ from PIL import Image, ImageChops, ImageFilter
 
 
 ART = Path(__file__).resolve().parents[1] / 'art'
-POWER_UP_PAINT = ART / 'match3-power-up-paint'
-# The engine has no power-ups. Christmas Market's painted bomb and row rocket
-# survive as the Firework Bomb and Shooting Star booster icons. The paint sheet
-# has one row per game and five columns in the retired render order.
-PAINT_COLUMNS = ('ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism')
-BOOSTER_ICONS = {'booster-star-icon': 'ray-row', 'booster-firework-icon': 'bomb'}
 CHAIN_PAINT = ART / 'match3-chain-paint'
 PAINTED_CHAINS = ('chain', 'chain-1-mirror', 'chain-2')
 # Square viewports within each bay, measured at the outside edges of the mounting plates.
@@ -35,10 +29,8 @@ def silhouette(image):
     return image.getchannel('A').point(lambda alpha: 255 if alpha >= 128 else 0)
 
 
-# Target silhouette areas in px, measured once from the original chip, rocket
-# and bomb sprites this art replaced, then scaled: chips by .86, rockets by
-# .80 * .80 and the bomb by .80. Painted objects are fitted to these areas.
-REFERENCE_AREAS = {'chip': 6273, 'rocket': 2960, 'bomb': 5180}
+# Target silhouette area in px, measured from the original chip and scaled.
+REFERENCE_AREAS = {'chip': 6273}
 
 
 def object_offset(sprite, mask):
@@ -71,7 +63,7 @@ def object_offset(sprite, mask):
     return best[1:] if best else None
 
 
-def fit_object(sprite, mask, max_side, target_area):
+def fit_object(sprite, mask, max_side, target_area, *, anchor=None):
     if target_area:
         scale = sqrt(target_area / silhouette(sprite).histogram()[255])
         max_side = min(max_side, round(max(sprite.size) * scale))
@@ -85,7 +77,13 @@ def fit_object(sprite, mask, max_side, target_area):
                 frame.paste(fitted, offset)
                 return frame, list(fitted.size), list(offset)
             continue
-        offset = ((SIZE - fitted.width) // 2, (SIZE - fitted.height) // 2)
+        if anchor:
+            cx, cy = anchor(fitted)
+            offset = (round(SIZE / 2 - cx), round(SIZE / 2 - cy))
+            if not (0 <= offset[0] <= SIZE - fitted.width and 0 <= offset[1] <= SIZE - fitted.height):
+                continue
+        else:
+            offset = ((SIZE - fitted.width) // 2, (SIZE - fitted.height) // 2)
         frame.paste(fitted, offset)
         spill = ImageChops.subtract(frame.getchannel('A'), mask).point(lambda alpha: 255 if alpha >= 128 else 0)
         if not spill.getbbox():
@@ -148,15 +146,12 @@ def inputs(root):
     festive = [root / FESTIVE_ATLAS / name for name in (
         'source.png', 'prompt.txt', 'layout.png')] if root.name == 'christmas-market' else []
     paint = [BLOCKER_PAINT / name for name in ('source.png', 'prompt.txt', 'reference.png')]
-    if root.name == 'christmas-market':
-        paint += [POWER_UP_PAINT / name for name in ('source.png', 'prompt.txt', 'scener-strip.png')]
     return painted(root) + sun_coin + festive + paint + chain_inputs()
 
 
 def registered(root, mask):
     path, prompt, *_ = painted(root)
     pack = 'relics' if root.name == 'relic-rush' else 'festive'
-    areas = REFERENCE_AREAS
     hex_silhouette = mask.point(lambda alpha: 255 if alpha >= 128 else 0)
     inset = hex_silhouette.filter(ImageFilter.MinFilter(5))
     with ExitStack() as stack:
@@ -164,17 +159,13 @@ def registered(root, mask):
         festive = stack.enter_context(Image.open(root / FESTIVE_ATLAS / 'source.png')) if pack == 'festive' else None
         if festive:
             assert festive.mode == 'RGBA' and festive.size == (1536, 1024), festive.filename
-        power_ups, blockers = [stack.enter_context(Image.open(folder / 'source.png'))
-                 for folder in (POWER_UP_PAINT, BLOCKER_PAINT)]
-        for sheet in (power_ups, blockers):
-            assert sheet.mode == 'RGBA', sheet.filename
+        blockers = stack.enter_context(Image.open(BLOCKER_PAINT / 'source.png'))
+        assert blockers.mode == 'RGBA', blockers.filename
         assert source.mode == 'RGBA' and source.size == (1254, 1254), source.filename
         frames, records = registered_chains(root.name, root)
-        slots = list(SLOTS) + (list(BOOSTER_ICONS) if root.name == 'christmas-market' else [])
-        for i, slot in enumerate(slots):
+        for i, slot in enumerate(SLOTS):
             name = f'{pack}-{i}' if i < 6 else slot
             row, col = divmod(i, 5)
-            is_power_up_paint = name in BOOSTER_ICONS
             is_blocker_paint = name == 'stone-1'
             is_festive_piece = festive is not None and i < 6
             if is_festive_piece:
@@ -187,13 +178,6 @@ def registered(root, mask):
                 assert sheet.mode == 'RGBA', sheet.filename
                 sprite_prompt = folder / 'prompt.txt'
                 crop = (0, 0, *sheet.size)
-            elif is_power_up_paint:
-                sheet, sprite_prompt = power_ups, POWER_UP_PAINT / 'prompt.txt'
-                row = 1
-                col = PAINT_COLUMNS.index(BOOSTER_ICONS[name])
-                w, h = sheet.size
-                cols = len(PAINT_COLUMNS)
-                crop = (col * w // cols, row * h // 2, (col + 1) * w // cols, (row + 1) * h // 2)
             elif is_blocker_paint:
                 sheet, sprite_prompt = blockers, BLOCKER_PAINT / 'prompt.txt'
                 col = int(root.name == 'christmas-market')
@@ -205,9 +189,7 @@ def registered(root, mask):
                 )
                 sheet, sprite_prompt = source, prompt
             sprite = sheet.crop(crop)
-            painted_as = BOOSTER_ICONS.get(name, name)
-            family = 'chip' if i < 6 else 'rocket' if painted_as.startswith('ray-') else painted_as
-            target = areas.get(family)
+            target = REFERENCE_AREAS['chip'] if i < 6 else None
             if is_blocker_paint:
                 frame, fitted_size, offset = register_stone(sprite, mask)
                 fit = 'full flat-top hex with the canonical face mask'
@@ -233,10 +215,6 @@ def registered(root, mask):
             if is_festive_piece:
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['reference'] = os.path.relpath(sprite_prompt.with_name('layout.png'), root)
-            if is_power_up_paint:
-                records[name]['generator'] = 'built-in ImageGen'
-                records[name]['edit_target'] = os.path.relpath(POWER_UP_PAINT / 'scener-strip.png', root)
-                records[name]['painted_as'] = BOOSTER_ICONS[name]
             if is_blocker_paint:
                 records[name]['generator'] = 'built-in ImageGen'
                 records[name]['reference'] = os.path.relpath(BLOCKER_PAINT / 'reference.png', root)

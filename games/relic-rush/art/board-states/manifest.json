@@ -5,15 +5,23 @@
     "atlas": "data/board/pieces.png",
     "glyph": "action-close",
     "body": "engine/lua/match3/buttons.lua",
-    "states": ["normal", "selected", "pressed", "hover", "disabled"]
+    "states": [
+      "normal",
+      "selected",
+      "pressed",
+      "hover",
+      "disabled"
+    ]
   },
   "popup_title": {
     "source": "skin paint, no artwork",
     "skin": "lua/skin.lua: text.popup_title, text.popup_subtitle, controls.panel.variants.popup_rule",
     "layout": "engine/lua/match3.lua: popup_header",
-    "states": ["normal"]
+    "states": [
+      "normal"
+    ]
   },
-  "matching_rules": "Campaign matches clear straight lines of three or more among six kinds and never create special pieces (Cradle of Rome rules). The sixth kind shows quartz, or the piece of an open crew request. Chains take a hit before a plaque can clear. One unlocked bonus chip family can charge on a board, and each unlocked socket stores up to one use.",
+  "matching_rules": "The square campaign matches horizontal and vertical runs of three or more among five kinds. Chains absorb their hit before the plaque clears. One bonus family at a time occupies a piece slot, and each socket holds one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/reference/cradle-of-rome/export_art.py --board-only",
@@ -357,6 +365,7 @@
     "data/story/characters/elena.png",
     "data/story/characters/keeper.png",
     "data/story/characters/mara.png",
+    "data/story/characters/marisol.png",
     "data/story/characters/tomas.png",
     "data/story/finale/safe-landing.jpg",
     "data/story/finale/signal-plate.png",
@@ -717,7 +726,8 @@
       "mara": "data/story/characters/mara.png",
       "tomas": "data/story/characters/tomas.png",
       "adrian": "data/story/characters/adrian.png",
-      "keeper": "data/story/characters/keeper.png"
+      "keeper": "data/story/characters/keeper.png",
+      "marisol": "data/story/characters/marisol.png"
     },
     "states": [
       "speaking",
@@ -729,6 +739,13 @@
     "script": "docs/story.md",
     "compile": "python3 games/relic-rush/tools/prepare_story.py",
     "review": "docs/review/story/README.md",
+    "marisol": {
+      "source": "art/art-direction/marisol.png",
+      "prompt": "art/art-direction/marisol-prompt.txt",
+      "style_reference": "data/story/characters/tomas.png",
+      "import": "python3 games/relic-rush/tools/prepare_assets.py --portraits-only",
+      "review": "docs/review/campaign-cast/README.md"
+    },
     "keeper": {
       "source": "art/art-direction/ancient-keeper.png",
       "prompt": "art/art-direction/ancient-keeper-prompt.txt",
@@ -806,18 +823,40 @@
       "closed": {
         "source": "art/story-pictures/hand-shutter.png",
         "prompt": "art/story-pictures/hand-shutter.prompt.txt",
-        "crop": [0, 3, 768, 1024],
-        "paint_size": [300, 300],
-        "size": [300, 300],
+        "crop": [
+          0,
+          3,
+          768,
+          1024
+        ],
+        "paint_size": [
+          300,
+          300
+        ],
+        "size": [
+          300,
+          300
+        ],
         "runtime": "data/story/scenes/shutter-closed.png",
         "state": "investigation marker and object beside Tomas before raising the ring"
       },
       "open": {
         "source": "art/story-pictures/hand-shutter.png",
         "prompt": "art/story-pictures/hand-shutter.prompt.txt",
-        "crop": [768, 9, 1513, 1013],
-        "paint_size": [300, 300],
-        "size": [300, 300],
+        "crop": [
+          768,
+          9,
+          1513,
+          1013
+        ],
+        "paint_size": [
+          300,
+          300
+        ],
+        "size": [
+          300,
+          300
+        ],
         "runtime": "data/story/scenes/shutter-open.png",
         "state": "raised shutter beside the observation from Mara's skiff"
       }
@@ -843,7 +882,10 @@
         "source": "art/story-pictures/harbor-chart.png",
         "prompt": "art/story-pictures/harbor-chart.prompt.txt",
         "runtime": "data/story/scenes/harbor-chart.jpg",
-        "size": [768, 768],
+        "size": [
+          768,
+          768
+        ],
         "state": "static full-frame painting on the ready chart request's hand-in card",
         "review": "docs/screenshots/review/crew-requests/chart-handoff.jpg"
       },
@@ -851,7 +893,10 @@
         "source": "art/story-pictures/broken-cable.png",
         "prompt": "art/story-pictures/broken-cable.prompt.txt",
         "runtime": "data/story/scenes/broken-cable.jpg",
-        "size": [768, 768],
+        "size": [
+          768,
+          768
+        ],
         "state": "static full-frame painting on the ready relay cable request's hand-in card",
         "review": "docs/screenshots/review/crew-requests/cable-handoff-phone.jpg"
       },
@@ -859,7 +904,10 @@
         "source": "art/story-pictures/reef-warning.png",
         "prompt": "art/story-pictures/reef-warning.prompt.txt",
         "runtime": "data/story/scenes/reef-warning.jpg",
-        "size": [768, 768],
+        "size": [
+          768,
+          768
+        ],
         "state": "Mara's view from the reef bearing when the player lifts the shutter",
         "review": "docs/screenshots/review/crew-requests/quest-reef-phone.jpg"
       }
@@ -946,9 +994,7 @@
             "runtime": "art/registered/story-pieces/tools.png"
           },
           "note": {
-            "boards": [
-              13
-            ],
+            "boards": [],
             "kind": 0,
             "crop": [
               970,
@@ -1230,6 +1276,24 @@
       "yield": {
         "supplies": 5
       }
+    },
+    "fish": {
+      "building": "lodge",
+      "first_level": 17,
+      "kind": 3,
+      "yield": {
+        "provisions": 7
+      },
+      "runtime": "art/registered/campaign-pieces.png"
+    },
+    "pearl": {
+      "building": "map_room",
+      "first_level": 19,
+      "kind": 0,
+      "yield": {
+        "gold": 7
+      },
+      "runtime": "art/registered/campaign-pieces.png"
     }
   },
   "resource_pieces": {
@@ -1246,7 +1310,6 @@
     "slots": {
       "coin": 1,
       "berries": 2,
-      "stone": 5,
       "water": 6,
       "rations": 9
     },
@@ -1257,6 +1320,10 @@
         114
       ],
       "emerald": [
+        128,
+        114
+      ],
+      "stone": [
         128,
         114
       ]
@@ -1291,7 +1358,13 @@
     },
     "states": "Static currency readouts. The shared capsule handles pressed feedback.",
     "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
-    "review": "docs/screenshots/review/three-resource-wallet/README.md"
+    "review": "docs/screenshots/review/three-resource-wallet/README.md",
+    "source_overrides": {
+      "wallet-supplies": {
+        "source": "art/resource-pieces/wallet-gray-supplies.png",
+        "prompt": "art/resource-pieces/wallet-gray-supplies-prompt.txt"
+      }
+    }
   },
   "campaign_pieces": {
     "source": "art/campaign-pieces/source.png",
@@ -1402,6 +1475,47 @@
         "generator": "Built-in ImageGen, all nine motifs in one transparent atlas",
         "reference": "../../reference/cradle-of-rome-2/visuals/board-pieces.png",
         "review": "docs/screenshots/review/rome-treasures/README.md"
+      },
+      {
+        "source": "art/campaign-pieces/gray-masonry.png",
+        "prompt": "art/campaign-pieces/gray-masonry-prompt.txt",
+        "boxes": {
+          "stone": [
+            1003,
+            0,
+            1254,
+            268
+          ],
+          "cut-blocks": [
+            501,
+            268,
+            752,
+            510
+          ]
+        },
+        "generator": "built-in ImageGen, full-atlas edit of both masonry pieces",
+        "review": "docs/screenshots/review/gray-masonry/board.jpg"
+      },
+      {
+        "source": "art/campaign-pieces/pearl-and-fish.png",
+        "prompt": "art/campaign-pieces/pearl-and-fish-prompt.txt",
+        "boxes": {
+          "pearl": [
+            18,
+            1240,
+            209,
+            1434
+          ],
+          "fish": [
+            214,
+            1245,
+            427,
+            1435
+          ]
+        },
+        "square_inset": 9,
+        "generator": "Built-in ImageGen, full atlas edit with two new pieces in the last row",
+        "review": "docs/screenshots/review/rome-coverage/pearl.jpg"
       }
     ],
     "cell_size": 128,
@@ -1460,6 +1574,10 @@
         "scarab",
         "harp",
         "sandal"
+      ],
+      [
+        "pearl",
+        "fish"
       ]
     ],
     "states": "One authored sprite per match kind. Selection, hints, chains, press and motion use the existing board overlays and transforms.",
@@ -1654,5 +1772,56 @@
     "reproduction": "python3 games/relic-rush/tools/board_assets.py; python3 tests/fixtures/relic-tools/capture.py --before-ref 3120b70",
     "retired": "Square pickaxe, dynamite and sunburst buttons from before the bonus toolbar; every board now has bonus slots, so they are no longer registered or packed. The authored sheet stays as provenance."
   },
-  "archived_navigation": "art/navigation/manifest.json"
+  "archived_navigation": "art/navigation/manifest.json",
+  "square_blockers": {
+    "source": "../../art/match3-square/blockers.png",
+    "prompt": "../../art/match3-square/blockers-prompt.txt",
+    "runtime": "data/board/blockers.png",
+    "registration": "art/match3-atlas.json#square_blockers",
+    "states": {
+      "chain-square-1": "One hit remains. One diagonal silver chain with a beveled perimeter and cast shadow.",
+      "chain-square-2": "Two hits remain. Two crossed silver chains with the same perimeter and cast shadows.",
+      "ice-square-1": "One hit remains. Borderless translucent ice with a broken upper edge.",
+      "ice-square-2": "Two hits remain. A full borderless square of translucent faceted ice."
+    },
+    "review": "docs/square-match3.md#blockers-and-target-hints"
+  },
+  "square_board": {
+    "source": "art/papyrus-board/contact.png",
+    "layout": "art/papyrus-board/contact-layout.png",
+    "prompt": "art/papyrus-board/contact-prompt.txt",
+    "runtime": "data/board/cells.png",
+    "registration": "art/match3-atlas.json#square_cells",
+    "states": {
+      "square-plain": "ordinary or cleared cell on matte papyrus",
+      "square-target": "deep blue plaque with one target layer remaining",
+      "square-selected": "selected cell or tool target preview",
+      "square-grout": "backing inside playable cell seams",
+      "square-double": "two target layers remaining",
+      "square-frame-1": "North rail",
+      "square-frame-2": "Northeast rounded cap",
+      "square-frame-5": "North and east rails with a square inside corner",
+      "square-frame-5-leaf": "North and east rails with a square inside corner and leaves in the northeast corner",
+      "square-frame-9": "North rail and southeast cap",
+      "square-frame-10": "Northeast and southeast caps",
+      "square-frame-17": "North and south rails",
+      "square-frame-18": "South rail and northeast cap",
+      "square-frame-21": "North, east and south rails",
+      "square-frame-21-leaf": "North, east and south rails and leaves in the northeast corner",
+      "square-frame-34": "Northeast and southwest caps",
+      "square-frame-37": "North and east rails with a southwest cap",
+      "square-frame-37-leaf": "North and east rails with a southwest cap and leaves in the northeast corner",
+      "square-frame-41": "North rail with southeast and southwest caps",
+      "square-frame-42": "Northeast, southeast and southwest caps",
+      "square-frame-85": "Four rails around an enclosed empty cell",
+      "square-frame-85-leaf": "Four rails around an enclosed empty cell and leaves in the northeast corner",
+      "square-frame-170": "Four rounded caps"
+    },
+    "review": "docs/square-match3.md#captures",
+    "frame_recipe": "../../tools/square_board_frame.py",
+    "frame_texture": "art/papyrus-board/stone-cracks.png",
+    "frame_texture_prompt": "art/papyrus-board/stone-cracks-prompt.txt",
+    "frame_texture_blend": "multiply",
+    "selection_and_grout": "../../art/match3-square/source.png"
+  }
 }

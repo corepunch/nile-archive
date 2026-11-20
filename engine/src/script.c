@@ -141,17 +141,22 @@ void script_open(const char *dir)
         {"lua/ui_skin.lua", NULL},
         {"lua/city_smoke.lua", NULL},
         {"lua/match3/buttons.lua", "match3.buttons"},
+        {"lua/match3/bonuses.lua", "match3.bonuses"},
         {"lua/match3.lua", "match3"},
         {"lua/match3/shapes.lua", "match3.shapes"},
         {"lua/match3/elements_view.lua", "match3.elements_view"},
+        {"lua/match3/screen.lua", "match3.screen"},
         {"lua/match3/frames.lua", "match3.frames"},
         {"lua/board_intro.lua", NULL},
-        {"lua/town.lua", "town"},
+        {"lua/town/screen.lua", "town.screen"},
+        {"lua/hidden_object/screen.lua", "hidden_object.screen"},
+        {"lua/screen_transition/styles.lua", "screen_transition.styles"},
+        {"lua/screen_transition.lua", "screen_transition"},
         {"lua/leaderboard.lua", "leaderboard"},
         {"lua/match3/vfx.lua", "match3.vfx"},
         {"lua/match3/shatter.lua", "match3.shatter"},
         {"lua/match3/debug.lua", "match3.debug"},
-        {"lua/match3/dive.lua", "match3.dive"},
+        {"lua/match3/user_events.lua", "match3.user_events"},
         {"lua/match3/game.lua", "match3.game"},
     };
     for (size_t i = 0; i < sizeof files / sizeof files[0]; i++) {
@@ -324,7 +329,7 @@ int lgamecenter_entries(lua_State *S)
 
 /* story.setup(cast, style): the engine keeps the cast, so it lives here and
  * the Lua table stays referenced for its strings. */
-#define CAST_MAX 16
+#define CAST_MAX 64
 static character cast[CAST_MAX];
 
 int lstory_setup(lua_State *S)

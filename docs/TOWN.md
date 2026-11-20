@@ -1,12 +1,12 @@
 # Shared town screen
 
 Relic Rush, Christmas Market and Nile Archive draw their town (island, market,
-estate) with one engine module, `require("town")` (`engine/lua/town.lua`). The
+estate) with one engine module, `require("town.screen")` (`engine/lua/town/screen.lua`). The
 layout, behaviour and controls are the same in every game. Each game supplies
-only a JSON file, a skin and hooks.
+a `town_config.lua` table, a skin and campaign hooks.
 
 ```lua
-local town = require("town")
+local town = require("town.screen")
 R.town = town.new(R.island, require("town_config"), hooks)
 R.town:frame(inp, dt, R.overlay == R.OV_NONE)   -- once per frame
 ```
@@ -37,7 +37,7 @@ R.town:frame(inp, dt, R.overlay == R.OV_NONE)   -- once per frame
 ## lua/town_config.lua
 
 The file returns one table. Every field is optional; the engine defaults are in
-`engine/lua/town.lua`, and `town.none` clears a default.
+`engine/lua/town/screen.lua`, and `town.none` clears a default.
 
 | Key | Meaning |
 |---|---|

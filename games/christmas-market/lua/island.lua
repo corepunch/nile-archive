@@ -25,7 +25,11 @@ M.buildings, M.wonders = M.catalogue, {}
 -- (big pieces on a foundation slab). The "building" category here is props
 -- (benches, lamps, snowmen, presents), so it is decoration unless marked.
 local HOUSES = {wonder = true, cottage = true}
-for _, d in ipairs(M.buildings) do d.decoration = not (HOUSES[d.category] or d.road) end
+M.kinds = {}
+for i, d in ipairs(M.buildings) do
+    d.decoration = not (HOUSES[d.category] or d.road)
+    M.kinds[d.key] = i - 1
+end
 for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
 
 function M.wonder_count(c)
@@ -45,6 +49,18 @@ end
 -- card shows what it adds as icons (screens.lua).
 require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
 
+local starter = M.kinds.rosa_stall
+for i, row in ipairs(M.catalogue_order) do
+    if row == starter + 1 then
+        table.remove(M.catalogue_order, i)
+        break
+    end
+end
+local can_buy = M.can_buy
+function M.can_buy(c, wallet, level, kind)
+    return kind ~= starter and can_buy(c, wallet, level, kind)
+end
+
 function M.migrate_wallet(progress, c)
     local reserved = M.reserved_cost(c, progress.level)
     for slot in ipairs(economy.currencies) do
@@ -52,10 +68,20 @@ function M.migrate_wallet(progress, c)
     end
 end
 
-function M.restore_saved(c,level)
+-- Rosa's old stall is already standing when Noelle returns to Bellmere.
+function M.new_game(c, now)
+    local ok, spot = c:find_spot(starter, vec2(760, 2070))
+    if ok then c:add(spot, starter, now) end
+end
+
+function M.restore_saved(c, level)
     -- Purchased decorations do not count toward campaign restoration progress.
     -- Rehome saved buildings whose footprints no longer fit without charging again.
     local items,seen=c.items,{}
+    -- Before the first wish, a lone Gingerbread house was the old free starter.
+    if level == 0 and #items == 1 and items[1].type == M.kinds.gingerbread_house then
+        items[1].type = starter
+    end
     local needs_relocation=false
     c.count=0
     for _,b in ipairs(items) do
@@ -74,7 +100,7 @@ function M.restore_saved(c,level)
 end
 
 local zone_names = {"Welcome Square", "Lantern Lane", "Gingerbread Green", "Carolers Court", "Starlight Terrace", "Evergreen Hill"}
-local zone_cleared = {0, 6, 9, 15, 21, 27}   -- boards cleared before each region opens
+local zone_cleared = {0, 15, 30, 50, 70, 85}   -- boards cleared before each region opens
 local zone_centers = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}

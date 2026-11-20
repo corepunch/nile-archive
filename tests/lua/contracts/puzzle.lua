@@ -11,6 +11,7 @@ return function(R, options)
     local function coord(i)return R.hex_q(i),R.hex_r(i)end
     local function distance(a,b)
         local aq,ar=coord(a);local bq,br=coord(b)
+        if R.square then return math.abs(aq-bq)+math.abs(ar-br) end
         return math.max(math.abs(aq-bq),math.abs(ar-br),math.abs(aq+ar-bq-br))
     end
     local function same_axis(a,b,axis)
@@ -61,7 +62,7 @@ return function(R, options)
             if R.flags & engine.LINE_MATCHES ~= 0 then
                 -- Independent oracle: sort same-axis cells by coordinates,
                 -- then find consecutive equal-colour spans, stopping at holes.
-                for axis=0,2 do
+                for axis=0,R.AXES-1 do
                     local lanes={}
                     for i=0,N-1 do
                         local q,r=coord(i)
@@ -136,9 +137,11 @@ return function(R, options)
                     for i=0,N-1 do
                         local target
                         if tool==0 then target=i==cell
-                        elseif tool==1 then target=distance(i,cell)<=1
+                        elseif tool==1 then
+                            local iq,ir=coord(i); local cq,cr=coord(cell)
+                            target=R.square and math.max(math.abs(iq-cq),math.abs(ir-cr))<=1 or distance(i,cell)<=1
                         elseif color_tool then target=i%R.COLORS==cell%R.COLORS
-                        else target=same_axis(i,cell,0) or same_axis(i,cell,1) or same_axis(i,cell,2) end
+                        else target=same_axis(i,cell,0) or same_axis(i,cell,1) or not R.square and same_axis(i,cell,2) end
                         local hit=g.active[i] and target
                         t:check((not not m.mask[i])==(not not hit),'tool exact cell mask '..i)
                         if hit then count=count+1 end

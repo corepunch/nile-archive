@@ -1,5 +1,32 @@
 # Relic Rush artwork and state catalogue
 
+## Square board
+
+The campaign uses matte papyrus for ordinary cells, deep blue for single-layer plaques, and olive green for double plaques. The square frame has fourteen stone layouts and four leafy variants in `data/board/cells.png`. Each draws in one empty 128 px cell and rotates to suit its neighbours. The number encodes neighbour directions clockwise from north. A rounded cap connects the two rails around a diagonally adjacent tile.
+
+| Runtime frame | Stone and foliage within the cell |
+| --- | --- |
+| `square-frame-1` | North rail. |
+| `square-frame-2` | Northeast rounded cap. |
+| `square-frame-5` | North and east rails with a square inside corner. |
+| `square-frame-5-leaf` | North and east rails with a square inside corner and leaves in the northeast corner. |
+| `square-frame-9` | North rail and southeast cap. |
+| `square-frame-10` | Northeast and southeast caps. |
+| `square-frame-17` | North and south rails. |
+| `square-frame-18` | South rail and northeast cap. |
+| `square-frame-21` | North, east and south rails. |
+| `square-frame-21-leaf` | North, east and south rails and leaves in the northeast corner. |
+| `square-frame-34` | Northeast and southwest caps. |
+| `square-frame-37` | North and east rails with a southwest cap. |
+| `square-frame-37-leaf` | North and east rails with a southwest cap and leaves in the northeast corner. |
+| `square-frame-41` | North rail with southeast and southwest caps. |
+| `square-frame-42` | Northeast, southeast and southwest caps. |
+| `square-frame-85` | Four rails around an enclosed empty cell. |
+| `square-frame-85-leaf` | Four rails around an enclosed empty cell and leaves in the northeast corner. |
+| `square-frame-170` | Four rounded caps. |
+
+Built-in ImageGen painted the [floor faces](../art/papyrus-board/contact.png) and the [cracked sandstone material](../art/papyrus-board/stone-cracks.png). The [square frame generator](../../../tools/square_board_frame.py) bakes the material in Multiply mode, followed by the stone joints and, as in Cradle of Rome, a soft shadow the board casts across the inner half of the rim, over a flat face with only a slight rounding at its outer edge, and the existing [painted leaves](../../../engine/art/board-frame/decorations-source.png). The [square campaign guide](square-match3.md) links the prompts, registration and reviewed captures. Rebuild with `python3 tools/match3_atlas.py`.
+
 ## Popup close button
 
 The shared round-button renderer draws the red enamel face, brass rim and shadow at the size of the popup control. All five interaction states share the [ivory X glyph](../art/popup-close/source.png), packed as `action-close` in `data/board/pieces.png`. [Registration and prompt](../art/popup-close/README.md).
@@ -12,7 +39,7 @@ Every popup writes its title on the parchment in flat ink (`popup_title`), with 
 
 ## Themed board art
 
-The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pale limestone. Dark blue plaques mark the cells required to win. The older Relics, Jewels and Resources sheets serve the previews and imported-board diagnostics.
+The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pale papyrus. Turquoise and olive plaques mark the cells required to win. The older Relics, Jewels and Resources sheets serve the previews and imported-board diagnostics.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
@@ -26,7 +53,7 @@ The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet
 
 The engine has no special pieces, so the atlas carries no rocket, bomb, plane or rainbow-ball frames. Their earlier reviews ([painted power-ups](screenshots/review/power-up-paint/README.md), [Scener models](screenshots/review/scener-power-ups/README.md)) are historical.
 
-One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
+The [edge-mounted hex chains](../../../art/match3-chain-paint/README.md) are retained as legacy previews. [Earlier in-game comparisons](screenshots/review/chain-anchors/README.md).
 
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
@@ -52,6 +79,12 @@ nine motifs together in built-in ImageGen. The [prompt](../art/campaign-pieces/r
 uses the extracted Cradle of Rome 2 pieces for motif reference and the
 existing campaign artwork for style. The three-log bundle replaces the old
 single log in matches.
+The [pearl and fish revision](../art/campaign-pieces/pearl-and-fish.png)
+adds the original Rome motifs from one full atlas edit. The
+[prompt](../art/campaign-pieces/pearl-and-fish-prompt.txt) and manifest
+record the two crops. The new pieces use opacity-weighted centers and
+square-cell registration. [Fish in play](screenshots/review/rome-coverage/fish.jpg) ·
+[Pearl in play](screenshots/review/rome-coverage/pearl.jpg).
 [Side-by-side sheet](../../../docs/cradle-of-rome-reference/gem-correspondence.html) ·
 [In-game review](screenshots/review/rome-treasures/README.md)
 
@@ -63,6 +96,7 @@ single log in matches.
 | 4 | Relay cable, tide chart, trail arrow, tool roll, relay pliers |
 | 5 | Supply satchel, shutter gear, folded note, leaf, flower |
 | 6 | Silver coin, ring, scarab, harp, sandal |
+| 7 | Pearl, red mullet |
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to crop the
 measured row bands, columns and revision boxes, trim the transparent exterior and
@@ -73,8 +107,7 @@ in matches, refills, resource flights and the guide. The existing selection,
 hint and chain overlays supply their respective states. The game's shop and
 wallet use their own currency artwork. The level 8 first-clear card also uses the
 pliers from this atlas.
-The sprites are free-standing objects. At the board's actual draw size the
-30 pieces fit the canonical face in strict object mode.
+The sprites are free-standing objects with clearance for the square board.
 [Fruit and score review](screenshots/review/fruit-and-score/README.md).
 [Relay pliers review](screenshots/review/relay-pliers/README.md).
 [Board fit at 480 × 900](screenshots/review/piece-fit/board-480x900.jpg) ·
@@ -96,12 +129,18 @@ authored sprite with existing motion and separate indicators. Specials use
 their own authored art. The original scenario sheet is still the source of
 the other story pieces below, alongside the trail arrow from the outlined atlas.
 
-The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `helmet`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). That table records their earnings and purchase order. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
+The gray masonry revision uses neutral granite for `stone` and ash-gray
+limestone for `cut-blocks`. Both were painted in one [ImageGen atlas](../art/campaign-pieces/gray-masonry.png)
+from the [masonry prompt](../art/campaign-pieces/gray-masonry-prompt.txt).
+The regular campaign and resource pack share the revised stone cutout.
+The pieces retain their soft-edged alpha and proportional fit on the same
+128 px canvas. [Native board review](screenshots/review/gray-masonry/board.jpg).
+
+The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `fish`, `helmet`, `pearl`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). Red mullet pays 7 Food from expedition 47. Pearls pay 7 Coins from expedition 57 and give way to rings on expedition 62. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
-Leaves and flowers use the same board match and scoring behavior as other
-pieces. Their authored slots carry no wallet yield. The amphora asset serves
-legacy art previews.
+Leaves, flowers and amphoras use the normal board match and scoring rules.
+These opening pieces carry no wallet yield.
 Cut blocks use `art/registered/tile-sets/resources/4.png` (Resources atlas, row 3,
 column 5), registered with `python3 games/relic-rush/tools/prepare_assets.py`.
 The alternate packs still supply separate grain and quartz sprites at their
@@ -135,16 +174,28 @@ See the [finale and sand review](screenshots/review/signal-finale/README.md).
 The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived with its
 [historical review](review/story-mosaic/README.md).
 
+## Marisol and off-screen speakers
+
+Marisol, the Jungle market trader, has a right-facing painted bust in `data/story/characters/marisol.png` for her dialogue and upgrade scenes. Built-in ImageGen used Tomas's bust as the style reference. The [source](../art/art-direction/marisol.png) is resized proportionally by `python3 games/relic-rush/tools/prepare_assets.py --portraits-only`, preserving the authored alpha. The shared renderer mirrors the right slot and stages listening and speaking with the same art. [Exact prompt](../art/art-direction/marisol-prompt.txt) · [Phone review](review/campaign-cast/README.md) · [Issue #110](https://github.com/corepunch/nile-archive/issues/110)
+
+Kessler and Ines speak by radio and lamp and keep a name plate by design.
+
 ## Ancient keeper portrait
 
-The Sawmill supplies timber for Tomas’s cable reel. When the Village takes up the night watch, the crew reads the keeper’s words from the watch book. The
+The Carpenter’s workshop supplies timber for Tomas’s cable reel. When the Expedition camp takes up the night watch, the crew reads the keeper’s words from the watch book. The
 static portrait has transparent edges and uses the standard story speaker slot.
 The [ImageGen original](../art/art-direction/ancient-keeper.png) and [prompt](../art/art-direction/ancient-keeper-prompt.txt)
 are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-only`
 to register `data/story/characters/keeper.png`. See the native review at
 [480 × 900](review/chapter-one/keeper-480.jpg) and [390 × 844](review/chapter-one/keeper-390.jpg).
 
-## Crew request pieces
+## Build progress
+
+Across the bottom of the existing lower-left `action-build` house, the town draws the request markers' procedural jade gauge (`buttons.gauge`, the same gauge as `buttons.medallion`), filled by the share of the next campaign purchase's price the wallet holds (the mean over the currencies it asks for). There is no STILL NEEDED readout in the town; the Build card lists the amounts. A fully funded purchase still waiting for a clear shows its expedition requirement. Once the purchase opens, the readout clears and the existing blue `fx-tablet-glow` and `fx-tablet-spark` trail circles the enamel rim. Reduce Motion hides the trail. The same house opens the card in each state. [Review and capture commands](square-match3.md#build-progress-captures).
+
+## Archived crew request pieces
+
+The following records describe the former hex campaign's optional requests and their review captures. The active square campaign uses the Build house for construction progress. Its board pieces credit score, resources or bonus charges.
 
 The crew's request pieces reuse five paintings from the campaign atlas. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
 
@@ -177,9 +228,9 @@ and the results card.
 
 Run `python3 games/relic-rush/tools/prepare_finale_art.py` to reproduce the square 768 px paintings and the two centered 300 px shutter crops. The source regions and destinations are recorded in the [manifest](../art/board-states/manifest.json). Capture with `build/test/relic-rush "shot quest-handoff-" "shot quest-offer" "shot quest-reef"`.
 
-## Story pieces
+## Archived story pieces
 
-Board 13 still uses the folded note. Selection, hints and refills use the standard board overlays. The earlier Chapter 1 atlas slots are retained for asset review. The assignments below record where the art debuted.
+The active square campaign reveals the note in the first-clear scene on board 13. The old hex campaign placed a folded note on that board. The assignments below record where the art debuted, and selection, hints and refills used the standard board overlays.
 
 | Slot | Boards | Story sprite |
 | --- | --- | --- |
@@ -189,7 +240,7 @@ Board 13 still uses the folded note. Selection, hints and refills use the standa
 | Blue | 2, 9 | Lamp lens, supply pack |
 | Purple | 3 | Coiled relay cable |
 
-Board 1 uses the ordinary `timber` piece. The campaign atlas includes all nine
+The campaign atlas includes all nine
 story sprites. Alternate packs share its `pliers` frame. The other alternate
 sprites come from the [expedition atlas](../art/resource-pieces/scenario-atlas.png)
 and the [outlined source sheet](../art/resource-pieces/outlined-atlas.png).
@@ -336,7 +387,7 @@ the game does not recolour one gem into other kinds.
 | 2 / LEAF | Jade leaf | Green square gem | Timber | Ordinary matching kind; reused Wood purse icon |
 | 3 / SCARAB | Turquoise scarab | Blue teardrop | Water | Ordinary matching kind |
 | 4 / CRYSTAL | Purple crystal cluster | Purple diamond | Stone | Ordinary matching kind; reused Stone purse icon |
-| 5 / AMPHORA | Amber amphora | Orange star | Wheat | Ordinary matching kind; the campaign shows quartz or a crew request's piece here |
+| 5 / AMPHORA | Amber amphora | Orange star | Wheat | Ordinary matching kind |
 
 Source: `art/tile-sets/source.png`, six columns × three packs. Runtime:
 `art/registered/tile-sets/{relics,jewels,resources}/{0..5}.png`. Import:
@@ -365,8 +416,8 @@ in `clear-indicators-prompt.txt`. The manifest records measured crop boxes,
 spatial axis registration and runtime paths. The importer preserves authored
 RGBA and clips filled ice to the actual tile; it does not synthesize states.
 Selection and hints use soft filled glows, with no hard border.
-`lua/art.lua` names these textures; `lua/board.lua` uses the same artwork for
-live pieces, collection flights, clearing animations and the guide.
+`lua/art.lua` names these textures. The board renderer, collection flights,
+clearing animations and the guide share the same artwork.
 
 | Rule state | Authored name | Creation / behaviour |
 | --- | --- | --- |
@@ -402,9 +453,23 @@ See [match rules](match4-rules.md) for special-combination resolution.
 | `hint` | Soft filled gold glow and sparkles under both idle-hint pieces; no outline |
 | `guide` | Jade book medallion for the explorer guide; not drawn on the board since the [match-3 HUD](review/match3-hud/README.md) (the guide opens from Pause), kept for the art catalogue screen |
 
-The campaign uses the same silver chain art on each board. One hit breaks
-the chain and keeps the piece in place. A later hit clears the piece and its
-blue plaque. Ice textures are recorded here for shared engine diagnostics.
+The square campaign uses the following frames from the shared
+[square blocker atlas](../../../art/match3-square/README.md#blockers).
+A hit removes one layer and leaves the piece in place. A later hit can clear
+the piece and its blue plaque. Ice is available in board diagnostics. The
+Explorer's Guide uses the single-chain overlay on its square plaque example.
+
+| Runtime frame in `data/board/blockers.png` | Square state |
+| --- | --- |
+| `chain-square-1` | One hit left, single silver chain, beveled edge and cast shadow |
+| `chain-square-2` | Two hits left, crossed silver chains, beveled edge and cast shadows |
+| `ice-square-1` | One hit left, borderless faceted frost with the upper part broken away |
+| `ice-square-2` | Two hits left, full borderless frost with diagonal facets |
+
+With one to three plaques left, the idle pulse sweeps clockwise along each
+square edge using `fx-tablet-glow` and `fx-tablet-spark`. A two-layer plaque
+glows green and a one-layer plaque glows blue. Reduce Motion hides the pulse.
+[Board, guide and particle captures](square-match3.md#blockers-and-target-hints).
 
 ### Story materials
 
@@ -937,6 +1002,10 @@ The `pause-normal`, `pause-hover`, `pause-pressed`, `pause-selected` and `pause-
 
 Built-in ImageGen painted the timber-and-stone bundle and bread-and-fruit
 basket in one [transparent atlas](../art/resource-pieces/wallet-supplies-food.png).
+The [gray supplies revision](../art/resource-pieces/wallet-gray-supplies.png)
+puts gray masonry in front of the timber, so the counter remains distinct
+from Coins at wallet size. The [edit prompt](../art/resource-pieces/wallet-gray-supplies-prompt.txt)
+records the two-icon pass. [Board and wallet review](screenshots/review/gray-masonry/board.jpg).
 The [prompt](../art/resource-pieces/wallet-supplies-food.prompt.txt) and [asset manifest](../art/board-states/manifest.json)
 record the source and registration. Run `python3 games/relic-rush/tools/prepare_resource_pieces.py`
 to crop the left and right cells, fit each to 120 px and center it on a 128 px

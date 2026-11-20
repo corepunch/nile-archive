@@ -185,7 +185,7 @@ return ui.skin{
         -- Form text: the build tray's cards and buttons (native button paint).
         label = {text = "card_title", em = 17},
         button = {text = "button", em = 17, variants = {
-            -- The town's shared bottom badges and placement buttons (engine/lua/town.lua),
+            -- The town's shared bottom badges and placement buttons (engine/lua/town/screen.lua),
             -- gold-rimmed teal like the archive's round buttons.
             navigation_build = badge(function(box) require("archive_kit").icon_house(box:center() + vec2(0, 4), box.h * .26) end),
             navigation_play = badge(function(box) require("archive_kit").icon_glass(box:center(), box.h * .24) end),

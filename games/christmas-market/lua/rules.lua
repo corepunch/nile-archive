@@ -2,10 +2,7 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
-local M = match3.new{flags=match3.LINE_MATCHES, columns=9, rows=12, colors=#economy.pieces + 1, match_min=3,
-    levels=campaign.levels, level_shapes=campaign.shapes,
-    sunburst_targets=economy.lightning_targets,
-    kind_flags={[0]=match3.GOAL, [2]=match3.WOOD, [4]=match3.STONE}}
+local M = match3.square_campaign(campaign)
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5
 local LEVELS = M.LEVELS
 -- The stalls in force, by building key. `built` is the game's own map, a
@@ -13,7 +10,7 @@ local LEVELS = M.LEVELS
 -- every stall due by this wish.
 local function restored_from(built, level)
     if type(built) == "table" then return built end
-    local restored, stories = {}, 0
+    local restored, stories = {preview=true}, 0
     for _, step in ipairs(require("island").ladder) do
         if built then
             if stories >= built then break end
@@ -24,13 +21,10 @@ local function restored_from(built, level)
     return restored
 end
 
-local start = M.game_start
 function M.game_start(level, seed, built)
-    local yields, loadout = economy.loadout(restored_from(built, level), level + 1, seed or 1)
-    local g = start(level, seed, yields, loadout)
-    g.win_income, g.opening_tools = loadout.win_income, loadout.opening_tools
-    for slot, uses in pairs(g.opening_tools) do g.tools[slot] = uses end
-    return g
+    level = math.max(0, math.min(level, LEVELS - 1))
+    local yields, loadout = economy.board_loadout(level + 1, restored_from(built, level), seed)
+    return M.start_campaign_board(level, seed, yields, loadout)
 end
 M.wonder_levels=campaign.wonder_levels
 M.wonder_at=require("journey").wonder_at
@@ -43,8 +37,7 @@ function M.reward_breakdown(g, wonders, progress)
     local kind = M.wonder_at(g.level + 1)
     local w = kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
-    -- The rink's and presents' takings pay on every win, as Rome's citizens do.
-    local income = g.win_income or purse()
+    local income = (g.win_income or purse()) + (M.perk_income and M.perk_income() or purse())   -- stalls' and citizens' income
     local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
     if first and w and app.arg("debug-walkthrough") then
         local available = (progress and progress.wallet or purse()) + reward

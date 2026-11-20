@@ -517,8 +517,7 @@ def gable(k, x0, x1, y0, y1, z, h, roof, wall, ridge="x", over=.12, rake=CREAM, 
 
 def chimney(k, x, y, z0, z1, s=.24):
     k.box("stone", x, y, z0, s, s, z1 - z0, stone())
-    k.box("stone", x, y, z1, s + .07, s + .07, .07, STONE_L)
-    k.snow_cap(x, y, z1 + .07, s + .05, s + .05, .07, False)
+    market_wishes.flue_cap(k, x, y, z1, s + .07, STONE_L, SNOW)
 
 
 def trims(k, x0, x1, y0, y1, z0, z1, col=CREAM, t=.07):
@@ -1581,6 +1580,203 @@ def bench(k):
 
 def nutcracker_figure(k):
     nutcracker(k)
+
+
+# ---- the second market row: firework stall, station kiosk, glassblower (2 x 2 each)
+
+INDIGO, MIDNIGHT = C("#3A3C9E"), C("#1C2162")
+AMBER, AMBER_L = C("#E48A1E"), C("#F8C45A")
+PRETZEL = C("#B8702A")
+REDBRICK = C("#A8503A")
+
+
+def striped_awning(k, x0, x1, y, z, drop, out, cols, n=6):
+    """Striped cloth sloping out from a -Y wall at height z: it drops by `drop` over `out`."""
+    for i in range(n):
+        xa, xb = x0 + (x1 - x0) * i / n, x0 + (x1 - x0) * (i + 1) / n
+        k.slab("cloth", (xa, y - out, z - drop), (xb, y - out, z - drop), (xb, y, z), (xa, y, z), .035, cols[i % len(cols)])
+        k.ball("cloth", (xa + xb) / 2, y - out - .005, z - drop - .015, (xb - xa) * .5, cols[i % len(cols)], 8, sy=.35, sz=.55)
+
+
+def cracker_bundle(k, x, y, z, h=.2, col=INDIGO):
+    """Three paper crackers tied with a gold string, standing on a crate."""
+    for dx, dy, hh in ((-.035, 0, h), (.035, 0, h * .9), (0, -.04, h * .95)):
+        k.tube("cloth", (x + dx, y + dy, z), (x + dx, y + dy, z + hh), .032, .032, col, 8)
+        k.ball("cloth", x + dx, y + dy, z + hh, .032, col, 6, sz=.5)
+        k.tube("cloth", (x + dx, y + dy, z + hh), (x + dx, y + dy, z + hh + .05), .006, .006, GOLD, 4)
+    k.tube("gold", (x, y - .01, z + h * .5), (x, y - .01, z + h * .5 + .025), .058, .058, GOLD, 8)
+
+
+def rocket(k, x, y, z, h=.34, lean=0., col=INDIGO):
+    """A paper rocket on a stick, leaning by `lean` along X."""
+    top = (x + lean * h, y, z + h)
+    k.tube("wood", (x - lean * .12, y, z - .1), (x + lean * h * .5, y, z + h * .5), .008, .008, WOOD_L, 4)
+    k.tube("cloth", (x, y, z), top, .03, .03, col, 8)
+    k.tube("gold", (top[0], top[1], top[2] - .04), (top[0], top[1], top[2]), .033, .033, GOLD, 8)
+    k.lathe("cloth", top[0], top[1], top[2], [(.03, 0), (.001, .08)], GOLD, 8)
+
+
+def crate(k, x, y, z, sx, sy, h, col=TIMBER, rz=0.):
+    k.box("wood", x, y, z, sx, sy, h, col, rz)
+    k.box("wood", x, y, z + h - .02, sx + .03, sy + .03, .03, TIMBER_D, rz)
+
+
+def firework_stall(k):
+    x0, x1, y0, y1 = -.8, .8, -.7, .7
+    zc, zt = G + .4, G + 1.18
+    for x, y in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
+        post_box(k, x, y, G, zt, .13, TIMBER_D)
+    k.box("paint", 0, y1 - .04, G, x1 - x0, .08, zt - G, PLASTER)                       # the pale back wall shows the crackers
+    k.box("paint", x1 - .04, 0, G, .08, y1 - y0, zt - G, MIDNIGHT)                      # the +X wall
+    for i in range(3):                                                                    # painted gold sparks on the back wall
+        k.star("gold", -.4 + i * .4, y1 - .09, G + .86 + (i % 2) * .08, .08, .02, GOLD_D, rz=0)
+    with k.at(right_face(y0, y1, x1)):
+        k.window(.7, G + .4, .46, .36, frame=CREAM, glow=GLOW_L)
+        k.star("gold", .7, -.09, G + .95, .09, .02, GOLD, rz=0)
+    # the counter and what it holds
+    k.box("paint", 0, y0 + .03, G, x1 - x0 - .1, .44, zc - G, INDIGO)
+    k.box("wood", 0, y0 + .04, zc, x1 - x0 + .04, .56, .05, TIMBER_L)
+    with k.at(left_face(x0, x1, y0)):
+        for s in (.3, .8, 1.3):                                                           # gold studs on the counter front
+            k.ball("gold", s, -.03, G + .2, .045, GOLD, 8)
+        k.box("paint", (x1 - x0) / 2, -.02, zc - .05, x1 - x0, .04, .05, GOLD_D)
+    yf = y0 - .08
+    for i, cx in enumerate((-.5, -.02)):                                                  # two crates at the front of the counter
+        crate(k, cx, yf, zc + .05, .38, .26, .14, TIMBER, .08 * (i * 2 - 1))
+    cracker_bundle(k, -.58, yf, zc + .19, .28)
+    cracker_bundle(k, -.4, yf + .02, zc + .19, .22, MIDNIGHT)
+    for lean, dx in ((-.25, -.12), (0, 0), (.25, .12)):
+        rocket(k, -.02 + dx, yf, zc + .19, .42, lean)
+    cracker_bundle(k, .5, y0 + .12, zc + .05, .26)
+    for i in range(3):                                                                    # a shelf of bundles at the back
+        cracker_bundle(k, -.5 + i * .3, y1 - .22, G + .62, .22, [INDIGO, MIDNIGHT, INDIGO][i])
+    k.box("wood", -.2, y1 - .2, G + .6, .95, .22, .03, TIMBER_D)
+    crate(k, -.56, -.05, G, .4, .3, .26, TIMBER_D, .15)                                   # stock stacked at the back left
+    cracker_bundle(k, -.56, -.05, G + .26, .26)
+    # a short striped awning over the counter, a sign board on the gable and a lantern
+    striped_awning(k, .28, x1 - .06, y0 - .02, zt - .06, .2, .3, [INDIGO, CREAM], 4)
+    gable(k, x0, x1, y0, y1, zt, .62, lambda: J(MIDNIGHT, .04), MIDNIGHT, ridge="y", over=.12, rake=CREAM, lights=True)
+    k.box("wood", 0, y0 - .02, zt + .06, .56, .05, .24, WOOD)                             # the sign board on the gable
+    k.star("gold", 0, y0 - .06, zt + .18, .1, .02, GOLD, rz=0)
+    lantern(k, x1 - .02, y0 - .04, zc + .05, .09, .6)
+    side_garland(k, x1 + .14, y0, y1, zt - .04)
+    bow_fir(k, .86, .84, .62, .2)
+    bow_fir(k, -.88, .84, .55, .18)
+    slab_snow(k, 2, 2)
+
+
+def station_kiosk(k):
+    x0, x1, y0, y1 = -.6, .6, -.45, .6
+    z1 = G + .74
+    k.box("paint", 0, (y0 + y1) / 2, G, x1 - x0, y1 - y0, z1 - G, GREEN)
+    k.box("stone", 0, (y0 + y1) / 2, G, x1 - x0 + .05, y1 - y0 + .05, .14, STONE_D)
+    trims(k, x0, x1, y0, y1, G + .14, z1, CREAM, .08)
+    gable(k, x0, x1, y0, y1, z1, .8, RED_D, GREEN, ridge="y", over=.12, rake=CREAM, lights=True)
+    with k.at(left_face(x0, x1, y0)):
+        k.box("paint", .6, -.03, z1 - .06, 1.2, .06, .06, CREAM)
+        # the serving hatch with a pole of salted pretzels
+        k.box("glow", .38, -.02, G + .26, .5, .04, .34, GLOW_L)
+        for s in (.13, .63):
+            k.box("paint", s, -.05, G + .22, .06, .05, .42, CREAM)
+        k.box("paint", .38, -.05, G + .6, .56, .05, .06, CREAM)
+        k.box("wood", .38, -.12, G + .2, .66, .18, .05, TIMBER_L)                         # the shelf
+        k.box("snow", .38, -.12, G + .25, .62, .14, .03, SNOW)
+        k.tube("iron", (.08, -.12, G + .56), (.68, -.12, G + .56), .014, .014, IRON, 6)
+        for s in (.2, .34, .48, .62):
+            k.tube("iron", (s, -.12, G + .56), (s, -.12, G + .5), .005, .005, IRON, 4)
+            k.torus("candy", Matrix.Translation((s, -.12, G + .44)), .07, .024, PRETZEL, 16, 6)
+            for a in (.5, 2.2, 4.1):
+                k.ball("snow", s + .055 * math.cos(a), -.145, G + .44 + .055 * math.sin(a), .008, SNOW, 4)
+            k.tube("candy", (s - .05, -.13, G + .385), (s + .05, -.13, G + .385), .02, .02, PRETZEL, 8)
+        striped_awning(k, .04, .72, -.02, G + .8, .14, .2, [RED, CREAM], 6)
+        # a poster window on the right
+        k.window(.93, G + .3, .22, .34, frame=CREAM, glow=GLOW_L, cross=False)
+        # the gable clock
+        cx, cz, r = .6, z1 + .3, .21
+        k.lathe("candy", cx, -.07, cz, [(r + .035, -.012), (r + .035, .012)], GOLD, 24, m=Matrix.Rotation(math.pi / 2, 4, "X"))
+        k.lathe("candy", cx, -.085, cz, [(r, -.012), (r, .012)], CREAM, 24, m=Matrix.Rotation(math.pi / 2, 4, "X"))
+        for i in range(12):
+            a = i * math.pi / 6
+            k.box("paint", cx + (r - .03) * math.sin(a), -.1, cz + (r - .03) * math.cos(a), .016, .012, .03 if i % 3 else .045, IRON)
+        k.beam("paint", (cx, -.105, cz), (cx + .04, -.105, cz + .13), .022, .012, IRON)     # hour hand
+        k.beam("paint", (cx, -.115, cz), (cx - .11, -.115, cz + .06), .016, .012, IRON)     # minute hand
+        k.ball("gold", cx, -.125, cz, .018, GOLD, 6)
+    with k.at(right_face(y0, y1, x1)):
+        k.door(.7, G + .12, .3, .5, col=WOOD_D, frame=CREAM)
+        k.window(.22, G + .3, .2, .3, frame=CREAM, glow=GLOW_L)
+    side_garland(k, x1 + .14, y0, y1, z1 - .04)
+    chimney(k, -.3, .25, z1 + .3, z1 + .9, .2)
+    # a bit of platform: a low edge with a safety line along the front, and a bench
+    k.box("stone", 0, -.8, G, 1.9, .36, .06, STONE_L)
+    k.box("paint", 0, -.97, G + .06, 1.9, .05, .005, GOLD)
+    k.box("snow", 0, -.78, G + .05, 1.86, .32, .03, SNOW)
+    for bx in (.46, .86):
+        k.box("wood", bx, -.77, G + .08, .06, .1, .16, IRON)
+    k.box("wood", .66, -.77, G + .22, .62, .14, .04, TIMBER)
+    k.box("wood", .66, -.7, G + .26, .62, .04, .16, TIMBER)
+    k.snow_cap(.66, -.77, G + .26, .64, .16, .04, False)
+    lamp(k, -.82, -.82, G + .06, .85, wreath=True)
+    k.box("cloth", -.45, -.74, G + .06, .3, .2, .16, C("#8A5A3A"), .3)                  # a suitcase
+    k.box("paint", -.45, -.74, G + .22, .12, .03, .02, GOLD, .3)
+    k.fir(.85, .82, G, .7, .2, tiers=3)
+    slab_snow(k, 2, 2)
+
+
+def glassblower(k):
+    x0, x1, y0, y1 = -.85, .35, -.6, .6
+    z1 = G + .9
+    k.box("paint", (x0 + x1) / 2, (y0 + y1) / 2, G, x1 - x0, y1 - y0, z1 - G, TIMBER_D)
+    trims(k, x0, x1, y0, y1, G, z1, CREAM, .09)
+    with k.at(left_face(x0, x1, y0)):
+        L = x1 - x0
+        k.box("glow", .6, -.02, G + .3, .9, .04, .46, AMBER_L)                            # the lit shop window
+        for row in range(2):                                                              # shelves of amber baubles
+            z = G + .3 + row * .23
+            k.box("wood", .6, -.1, z, .96, .14, .03, WOOD_D)
+            for j in range(6):
+                k.ball("glossy", .22 + j * .14, -.1, z + .085, .055, [AMBER, AMBER_L, AMBER, GOLD][(j + row) % 4], 10)
+        for s in (.1, 1.1):
+            k.box("paint", s, -.05, G + .26, .07, .06, .54, CREAM)
+        k.box("paint", .6, -.05, G + .78, 1.04, .06, .07, CREAM)
+        k.box("wood", .6, -.12, G + .1, 1.05, .22, .2, WOOD)                              # the counter
+        k.box("wood", .6, -.12, G + .3, 1.1, .26, .03, TIMBER_L)
+        k.box("snow", .6, -.12, G + .33, 1.06, .22, .03, SNOW)
+        for j in range(4):
+            k.ball("glossy", .34 + j * .22, -.15, G + .43, .075, [AMBER, GOLD, AMBER_L, AMBER][j], 10)
+            k.ball("gold", .34 + j * .22, -.15, G + .52, .02, GOLD, 6)
+    with k.at(right_face(y0, y1, x1)):
+        k.window(.18, G + .3, .2, .3, frame=CREAM, glow=GLOW_L, cross=False)
+    gable(k, x0, x1, y0, y1, z1, .5, lambda: J(GREEN_D, .04), TIMBER_D, ridge="x", over=.12, rake=CREAM)
+    eave_garland(k, x0 - .05, x1 + .05, y0 - .14, z1 - .04, bows=(0, 2))
+    for i in range(7):                                                                    # baubles hung under the eave
+        sx = x0 + .12 + i * (x1 - x0 - .24) / 6
+        dz = .12 + .07 * (i % 3)
+        k.tube("iron", (sx, y0 - .1, z1 - .08), (sx, y0 - .1, z1 - .08 - dz), .005, .005, IRON, 4)
+        k.ball("glossy", sx, y0 - .1, z1 - .08 - dz - .05, .05, [AMBER, AMBER_L, GOLD, AMBER][i % 4], 10)
+        k.ball("gold", sx, y0 - .1, z1 - .08 - dz, .014, GOLD, 6)
+    # the furnace: a brick body with a glowing mouth and a tall chimney
+    fx, fy = .68, .02
+    k.box("stone", fx, fy, G, .5, .56, .55, J(REDBRICK, .03))
+    for row in range(5):
+        for j in range(2):
+            k.box("stone", fx - .251, fy - .15 + j * .3 + (row % 2) * .07, G + .05 + row * .1, .01, .26, .08, J(REDBRICK, .08))
+    k.box("stone", fx, fy, G + .55, .56, .62, .07, STONE_L)
+    k.box("stone", fx, fy, G + .62, .3, .3, 1.0, J(REDBRICK, .03))
+    market_wishes.flue_cap(k, fx, fy, G + 1.62, .38, STONE_L, SNOW)
+    k.box("glow", fx, fy - .285, G + .12, .26, .02, .22, GLOW)                            # the glowing mouth
+    k.lathe("glow", fx, fy - .285, G + .34, [(.13, 0), (.001, .09)], GLOW, 12, sy=.12)
+    k.box("iron", fx, fy - .295, G + .1, .32, .02, .02, IRON)
+    k.box("glow", fx - .26, fy - .14, G + .32, .02, .1, .1, GLOW)
+    k.light((fx - .3, fy - .35, G + .25), 1.2, (1, .5, .2))
+    k.tube("iron", (fx - .06, fy - .34, G + .27), (.12, -.78, G + .62), .012, .012, IRON, 6)   # a blowpipe leaning out
+    k.ball("glow", fx - .06, fy - .34, G + .27, .02, GLOW, 6)
+    k.ball("glossy", .12, -.78, G + .62, .035, AMBER_L, 8)
+    crate(k, -.62, -.84, G, .4, .3, .2, TIMBER, .1)                                       # a crate of baubles
+    for j in range(3):
+        k.ball("glossy", -.7 + j * .1, -.84, G + .26, .05, [AMBER, GOLD, AMBER_L][j], 10)
+    lantern(k, x0 + .02, y0 - .08, G + .1, .09, .5)
+    bow_fir(k, -.88, .82, .6, .2)
+    slab_snow(k, 2, 2)
 
 
 BUILDERS = {"tree": tree, "bench": bench, "bakery": bakery, "carousel": carousel}

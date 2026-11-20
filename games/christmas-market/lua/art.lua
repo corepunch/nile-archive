@@ -64,9 +64,7 @@ function A.load()
     local function load(name) textures[name] = skin[name] end
     local own = own_board()
     local function piece(name) return assert(own[name], "missing atlas frame: " .. name) end
-    for _, slot in ipairs(economy.tool_slots) do textures[slot.icon] = piece(slot.frame) end
-    -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    elements_view.load(textures, own)
+    for _, bonus in pairs(economy.bonuses) do textures[bonus.icon] = piece(bonus.frame) end
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
         if name then textures[name] = texture.load("story/floors/" .. name .. ".jpg") end
@@ -79,7 +77,6 @@ function A.load()
     for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
         textures["tile-" .. key] = piece("tile-" .. key)
     end
-    elements_view.load_frame(textures, A.board_frame)
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
     return textures
@@ -88,28 +85,48 @@ end
 -- Rendered by the game, so review covers the same textures as the live board.
 function A.draw_catalogue(R)
     gfx.rect(rect(18, 100, 444, 770), color(12, 47, 41, 250))
+    if app.arg("art-states") == "bonuses" then
+        R.say_at("BONUS ARTWORK", vec2(240, 125), 26, R.PAL_GOLD, 420)
+        for col, state in ipairs(A.states) do
+            R.say_at(state, vec2(158 + (col - 1) * 64, 175), 11, R.PAL_GOLD, 62)
+        end
+        for tool, slot in ipairs(economy.bonus_slots) do
+            for rank, bonus in ipairs(slot.levels) do
+                local y = 190 + ((tool - 1) * 2 + rank - 1) * 79
+                R.say_at(bonus.name, vec2(79, y + 30), 11, R.PAL_CREAM, 109)
+                for col, state in ipairs(A.states) do
+                    buttons.paint(rect(128 + (col - 1) * 64, y, 60, 60), R.board_art[bonus.icon], state)
+                end
+            end
+        end
+        return
+    end
     R.say_at("ARTWORK CATALOGUE", vec2(240, 125), 26, R.PAL_GOLD, 420)
     local pieces = economy.pieces
     for k = 0, #pieces do
-        local x, y = 39 + k % 6 * 68, 145 + k // 6 * 60
-        gfx.image(R.board_art["market-" .. k], rect(x, y, 46, 46), color.WHITE)
-        R.say_at(pieces[k].name, vec2(x + 23, y + 50), 10, R.PAL_CREAM, 68)
+        local x, y = 38 + k % 5 * 89, 146 + k // 5 * 49
+        gfx.image(R.board_art["market-" .. k], rect(x, y, 43, 43), color.WHITE)
+        R.say_at(pieces[k].name, vec2(x + 21.5, y + 43), 10, R.PAL_CREAM, 88)
     end
-    for i, name in ipairs{"cell-normal", "tablet-single", "tablet-double"} do
+    for i, cell in ipairs{{"square-plain", "Plain cell"}, {"square-target", "Teal pane"}, {"square-double", "Green pane"}} do
         local x = 104 + (i - 1) * 112
-        gfx.image(R.board_art["tile-" .. name], rect(x, 327, 48, 48), color.WHITE)
-        R.say_at(name, vec2(x + 24, 380), 11, R.PAL_CREAM, 88)
+        gfx.image(R.board_art[cell[1]], rect(x, 395, 48, 48), color.WHITE)
+        R.say_at(cell[2], vec2(x + 24, 448), 11, R.PAL_CREAM, 88)
     end
-    local names = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
-    for i, name in ipairs(names) do
-        local x, y = 39 + (i - 1) % 6 * 68, 385
-        gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
-        R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
+    local overlays = {{"chain-square-1", "Chain"}, {"chain-square-2", "Two chains"},
+        {"ice-square-1", "Cracked ice"}, {"ice-square-2", "Ice"}, {"square-selected", "Selection"}}
+    for i, layer in ipairs(overlays) do
+        local x, y = 56 + (i - 1) * 80, 473
+        local tile = rect(x, y, 48, 48)
+        gfx.image(R.board_art["square-target"], tile, color.WHITE)
+        gfx.image(R.board_art[layer[1]], tile, color.WHITE)
+        R.say_at(layer[2], vec2(x + 24, y + 60), 11, R.PAL_CREAM, 76)
     end
     for col, state in ipairs(A.states) do
         R.say_at(state, vec2(62 + (col - 1) * 88, 571), 12, R.PAL_GOLD, 86)
     end
-    for row, booster in ipairs(economy.tool_slots) do
+    for row, slot in ipairs(economy.bonus_slots) do
+        local booster = slot.levels[1]
         for col, state in ipairs(A.states) do
             buttons.paint(rect(30 + (col - 1) * 88, 584 + (row - 1) * 67, 66, 66), R.board_art[booster.icon], state)
         end

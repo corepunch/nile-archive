@@ -1,0 +1,745 @@
+{
+  "source": "art/market-goods/winter-stalls.png",
+  "cell": "square",
+  "cell_inset": 9,
+  "frames": {
+    "market-0": {
+      "name": "snow-dusted fir",
+      "source_crop": [
+        14,
+        11,
+        252,
+        250
+      ],
+      "fitted_size": [
+        96,
+        96
+      ],
+      "offset": [
+        15,
+        7
+      ],
+      "alpha_center": [
+        63.8336,
+        63.9057
+      ],
+      "registered_box": [
+        0,
+        0,
+        128,
+        128
+      ]
+    },
+    "market-2": {
+      "name": "silver snowflake coin",
+      "source_crop": [
+        525,
+        22,
+        751,
+        247
+      ],
+      "fitted_size": [
+        114,
+        113
+      ],
+      "offset": [
+        7,
+        8
+      ],
+      "alpha_center": [
+        63.9248,
+        64.334
+      ],
+      "registered_box": [
+        256,
+        0,
+        128,
+        128
+      ]
+    },
+    "market-3": {
+      "name": "sun coin",
+      "source_crop": [
+        9,
+        7,
+        120,
+        122
+      ],
+      "fitted_size": [
+        111,
+        115
+      ],
+      "offset": [
+        9,
+        7
+      ],
+      "alpha_center": [
+        64.2375,
+        64.366
+      ],
+      "registered_box": [
+        384,
+        0,
+        128,
+        128
+      ],
+      "source": "../relic-rush/art/registered/campaign-pieces.png"
+    },
+    "market-4": {
+      "name": "bundled pine",
+      "source_crop": [
+        12,
+        283,
+        250,
+        498
+      ],
+      "fitted_size": [
+        110,
+        99
+      ],
+      "offset": [
+        7,
+        12
+      ],
+      "alpha_center": [
+        63.8851,
+        64.1056
+      ],
+      "registered_box": [
+        0,
+        128,
+        128,
+        128
+      ]
+    },
+    "market-5": {
+      "name": "farrier's hammer",
+      "source_crop": [
+        266,
+        264,
+        495,
+        503
+      ],
+      "fitted_size": [
+        105,
+        110
+      ],
+      "offset": [
+        14,
+        11
+      ],
+      "alpha_center": [
+        63.9058,
+        63.6628
+      ],
+      "registered_box": [
+        128,
+        128,
+        128,
+        128
+      ]
+    },
+    "market-6": {
+      "name": "toy blocks",
+      "source_crop": [
+        522,
+        286,
+        751,
+        497
+      ],
+      "fitted_size": [
+        112,
+        103
+      ],
+      "offset": [
+        7,
+        7
+      ],
+      "alpha_center": [
+        63.7545,
+        63.8595
+      ],
+      "registered_box": [
+        256,
+        128,
+        128,
+        128
+      ]
+    },
+    "market-7": {
+      "name": "gingerbread man",
+      "source_crop": [
+        786,
+        263,
+        1002,
+        501
+      ],
+      "fitted_size": [
+        98,
+        108
+      ],
+      "offset": [
+        15,
+        7
+      ],
+      "alpha_center": [
+        63.8226,
+        64.2711
+      ],
+      "registered_box": [
+        384,
+        128,
+        128,
+        128
+      ]
+    },
+    "market-8": {
+      "name": "mulled wine",
+      "source_crop": [
+        12,
+        532,
+        254,
+        760
+      ],
+      "fitted_size": [
+        104,
+        98
+      ],
+      "offset": [
+        16,
+        15
+      ],
+      "alpha_center": [
+        63.5392,
+        63.9436
+      ],
+      "registered_box": [
+        0,
+        256,
+        128,
+        128
+      ]
+    },
+    "market-9": {
+      "name": "wrapped gift",
+      "source_crop": [
+        272,
+        528,
+        495,
+        759
+      ],
+      "fitted_size": [
+        108,
+        112
+      ],
+      "offset": [
+        10,
+        7
+      ],
+      "alpha_center": [
+        64.0989,
+        63.6843
+      ],
+      "registered_box": [
+        128,
+        256,
+        128,
+        128
+      ]
+    },
+    "market-10": {
+      "name": "candle lantern",
+      "source_crop": [
+        544,
+        516,
+        726,
+        768
+      ],
+      "fitted_size": [
+        72,
+        100
+      ],
+      "offset": [
+        28,
+        7
+      ],
+      "alpha_center": [
+        63.9234,
+        64.454
+      ],
+      "registered_box": [
+        256,
+        256,
+        128,
+        128
+      ]
+    },
+    "market-11": {
+      "name": "hot cocoa",
+      "source_crop": [
+        775,
+        527,
+        1014,
+        761
+      ],
+      "fitted_size": [
+        104,
+        102
+      ],
+      "offset": [
+        17,
+        8
+      ],
+      "alpha_center": [
+        64.3834,
+        63.6153
+      ],
+      "registered_box": [
+        384,
+        256,
+        128,
+        128
+      ]
+    },
+    "market-12": {
+      "name": "dressed stone",
+      "source_crop": [
+        519,
+        11,
+        633,
+        117
+      ],
+      "fitted_size": [
+        112,
+        104
+      ],
+      "offset": [
+        8,
+        5
+      ],
+      "alpha_center": [
+        63.8153,
+        63.5467
+      ],
+      "registered_box": [
+        0,
+        384,
+        128,
+        128
+      ],
+      "source": "../relic-rush/art/registered/campaign-pieces.png"
+    },
+    "market-13": {
+      "name": "ice pendant",
+      "source_crop": [
+        255,
+        732,
+        451,
+        931
+      ],
+      "fitted_size": [
+        108,
+        110
+      ],
+      "offset": [
+        10,
+        7
+      ],
+      "alpha_center": [
+        63.9395,
+        64.1987
+      ],
+      "registered_box": [
+        128,
+        384,
+        128,
+        128
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
+    },
+    "market-14": {
+      "name": "glass bauble",
+      "source_crop": [
+        538,
+        771,
+        735,
+        1024
+      ],
+      "fitted_size": [
+        76,
+        98
+      ],
+      "offset": [
+        26,
+        7
+      ],
+      "alpha_center": [
+        64.1744,
+        64.1366
+      ],
+      "registered_box": [
+        256,
+        384,
+        128,
+        128
+      ]
+    },
+    "market-15": {
+      "name": "candy cane",
+      "source_crop": [
+        816,
+        781,
+        974,
+        1021
+      ],
+      "fitted_size": [
+        66,
+        100
+      ],
+      "offset": [
+        30,
+        21
+      ],
+      "alpha_center": [
+        64.1022,
+        64.1212
+      ],
+      "registered_box": [
+        384,
+        384,
+        128,
+        128
+      ]
+    },
+    "booster-firework-icon": {
+      "name": "firework bomb",
+      "source_crop": [
+        15,
+        948,
+        223,
+        1171
+      ],
+      "fitted_size": [
+        97,
+        104
+      ],
+      "offset": [
+        11,
+        7
+      ],
+      "alpha_center": [
+        63.6196,
+        63.7256
+      ],
+      "registered_box": [
+        0,
+        512,
+        128,
+        128
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
+    },
+    "booster-star-icon": {
+      "name": "faceted star",
+      "source_crop": [
+        273,
+        1034,
+        496,
+        1253
+      ],
+      "fitted_size": [
+        104,
+        102
+      ],
+      "offset": [
+        12,
+        7
+      ],
+      "alpha_center": [
+        64.0474,
+        63.5084
+      ],
+      "registered_box": [
+        128,
+        512,
+        128,
+        128
+      ]
+    },
+    "booster-shield-icon": {
+      "name": "frost shield",
+      "source_crop": [
+        531,
+        1029,
+        743,
+        1271
+      ],
+      "fitted_size": [
+        95,
+        108
+      ],
+      "offset": [
+        17,
+        13
+      ],
+      "alpha_center": [
+        64.2992,
+        64.2559
+      ],
+      "registered_box": [
+        256,
+        512,
+        128,
+        128
+      ]
+    },
+    "booster-plus-icon": {
+      "name": "wish cross",
+      "source_crop": [
+        788,
+        1049,
+        998,
+        1256
+      ],
+      "fitted_size": [
+        114,
+        112
+      ],
+      "offset": [
+        7,
+        8
+      ],
+      "alpha_center": [
+        63.8291,
+        64.0393
+      ],
+      "registered_box": [
+        384,
+        512,
+        128,
+        128
+      ]
+    },
+    "booster-hourglass-icon": {
+      "name": "hourglass",
+      "source_crop": [
+        15,
+        1283,
+        243,
+        1526
+      ],
+      "fitted_size": [
+        105,
+        112
+      ],
+      "offset": [
+        12,
+        7
+      ],
+      "alpha_center": [
+        64.1722,
+        63.8412
+      ],
+      "registered_box": [
+        0,
+        640,
+        128,
+        128
+      ]
+    },
+    "booster-mixer-icon": {
+      "name": "wind-up top",
+      "source_crop": [
+        274,
+        1288,
+        489,
+        1521
+      ],
+      "fitted_size": [
+        100,
+        108
+      ],
+      "offset": [
+        14,
+        7
+      ],
+      "alpha_center": [
+        64.0824,
+        63.5142
+      ],
+      "registered_box": [
+        128,
+        640,
+        128,
+        128
+      ]
+    },
+    "market-16": {
+      "name": "pretzel",
+      "source_crop": [
+        519,
+        1314,
+        757,
+        1515
+      ],
+      "fitted_size": [
+        114,
+        96
+      ],
+      "offset": [
+        7,
+        17
+      ],
+      "alpha_center": [
+        63.841,
+        63.5907
+      ],
+      "registered_box": [
+        256,
+        640,
+        128,
+        128
+      ]
+    },
+    "market-17": {
+      "name": "ceramic snowman",
+      "source_crop": [
+        38,
+        1395,
+        213,
+        1648
+      ],
+      "fitted_size": [
+        72,
+        104
+      ],
+      "offset": [
+        29,
+        7
+      ],
+      "alpha_center": [
+        64.4543,
+        64.2467
+      ],
+      "registered_box": [
+        384,
+        640,
+        128,
+        128
+      ],
+      "source": "art/market-goods/winter-stalls-premium.png"
+    },
+    "market-18": {
+      "name": "carved reindeer",
+      "source_crop": [
+        251,
+        1396,
+        456,
+        1643
+      ],
+      "fitted_size": [
+        90,
+        108
+      ],
+      "offset": [
+        20,
+        7
+      ],
+      "alpha_center": [
+        64.1104,
+        63.9784
+      ],
+      "registered_box": [
+        0,
+        768,
+        128,
+        128
+      ],
+      "source": "art/market-goods/winter-stalls-premium.png"
+    },
+    "market-19": {
+      "name": "santa hat",
+      "source_crop": [
+        464,
+        1419,
+        699,
+        1632
+      ],
+      "fitted_size": [
+        112,
+        102
+      ],
+      "offset": [
+        7,
+        9
+      ],
+      "alpha_center": [
+        64.2662,
+        64.0162
+      ],
+      "registered_box": [
+        128,
+        768,
+        128,
+        128
+      ],
+      "source": "art/market-goods/winter-stalls-premium.png"
+    },
+    "market-20": {
+      "name": "winter vase",
+      "source_crop": [
+        716,
+        1196,
+        930,
+        1401
+      ],
+      "fitted_size": [
+        114,
+        109
+      ],
+      "offset": [
+        7,
+        9
+      ],
+      "alpha_center": [
+        63.6775,
+        63.6472
+      ],
+      "registered_box": [
+        256,
+        768,
+        128,
+        128
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
+    },
+    "market-21": {
+      "name": "smoked trout",
+      "source_crop": [
+        706,
+        1445,
+        935,
+        1610
+      ],
+      "fitted_size": [
+        104,
+        75
+      ],
+      "offset": [
+        7,
+        22
+      ],
+      "alpha_center": [
+        63.7378,
+        63.7196
+      ],
+      "registered_box": [
+        384,
+        768,
+        128,
+        128
+      ],
+      "source": "art/market-goods/vase-and-winter-catch.png"
+    }
+  }
+}

@@ -8,6 +8,10 @@ R.cast={
     {id='henrik',name='Henrik Strand',role='Toymaker',portrait_path='story/characters/henrik.png',color=color(96,70,52),right=true,mouth=vec2(.53,.52)},
     {id='pip',name='Pip Larkin',role='Post runner',portrait_path='story/characters/pip.png',color=color(46,86,128),right=true,mouth=vec2(.65,.50)},
     {id='wren',name='Mr Wren',role='The man with the broom',portrait_path='story/characters/wren.png',color=color(92,92,104),right=true,mouth=vec2(.53,.46)},
+    {id='mary',name='Mary Larkin',role="Pip's mum",portrait_path='story/characters/mary.png',color=color(144,66,84),right=true,mouth=vec2(.63,.55)},
+    {id='rosa',name='Rosa',role="Noelle's gran",portrait_path='story/characters/rosa.png',color=color(120,48,60),right=true,mouth=vec2(.56,.54)},
+    {id='alder',name='Mrs Alder',role="Hot cocoa kiosk",portrait_path='story/characters/alder.png',color=color(128,66,48),right=true,mouth=vec2(.62,.50)},
+    {id='finch',name='Mr Finch',role="Fisherman, Lakeside smokehouse",portrait_path='story/characters/finch.png',color=color(52,92,104),right=true,mouth=vec2(.63,.51)},
 }
 
 return R

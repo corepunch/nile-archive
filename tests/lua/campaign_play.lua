@@ -17,8 +17,9 @@ R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, replays = 0, 0, 0, 0
-local played = {}
-local user_events = testing.game == 'relic-rush' and require('user_events_runtime')
+local played, purchase_level = {}, {}
+local relic_rush = testing.game == 'relic-rush'
+local user_events = relic_rush and require('user_events_runtime')
 local function owns_wonder(index)
     return island.owned(R.island, island.wonder_kinds and island.wonder_kinds[index + 1] or index) > 0
 end
@@ -39,18 +40,14 @@ local function scene(expected, before_reward)
     else check(R.prog.story_seen[expected], 'finished scene acknowledged: ' .. expected) end
 end
 
+-- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua):
+-- bosses leave less slack than other tiers.
+local best_move = require('greedy_bot')(rules)
 local function play(g)
     while not g.won and not g.lost do
-        local best, a, b = -1, -1, -1
-        for i = 0, rules.CELLS - 1 do
-            for d = 0, 2 do
-                local j = rules.hex_neighbor(i, d)
-                local value = rules.game_evaluate_move(g, i, j)
-                if value > best then best, a, b = value, i, j end
-            end
-        end
+        local a, b = best_move(g)
         if a < 0 then
-            rules.game_shuffle(g)
+            if not rules.game_shuffle(g) then g.lost = true end
         else
             assert(rules.game_swap(g, a, b, m), 'bot chose an illegal move')
             local settled = false
@@ -65,10 +62,7 @@ local function play(g)
     end
 end
 
--- The story and the building ladder end at the finale's board; the boards
--- after it are covered by the move tuner and the balance runner.
-local STORY_LEVELS = journey.beats[#journey.beats].level
-for level = 1, STORY_LEVELS do
+for level = 1, rules.LEVELS do
     R.on_island, R.overlay = false, R.OV_NONE
     R.g = rules.game_start(level - 1, 1)
     local next_beat = journey.next(R.prog, owns_wonder, level - 1)
@@ -76,13 +70,14 @@ for level = 1, STORY_LEVELS do
     local won
     -- Fixed independent starts permit a failed board to be retried. They are
     -- a reproducible bot sample, not a prediction of human win rates.
-    for seed = 1, 4 do
+    -- A boss is allowed more starts before the whole playthrough fails.
+    for seed = 1, rules.level_of and (rules.levels[level].tier == 'boss' and 16 or 8) or 8 do
         R.g = R.make_board(level - 1, seed)
         attempts = attempts + 1
         play(R.g)
         if R.g.won then won = true; break end
     end
-    assert(won, ('bot failed all four starts on level %d'):format(level))
+    assert(won, ('bot failed every start on level %d'):format(level))
     wins = wins + 1
     local after = ('after-%02d'):format(level)
     local first_exchange = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
@@ -97,13 +92,17 @@ for level = 1, STORY_LEVELS do
         end
         scene(after, true)
     end
-    local reward = rules.reward_breakdown(R.g, R.prog)
-    local before = R.prog.wallet[1]
+    local reward = rules.level_reward(R.g, R.wonders, R.prog)
+    local expected_wallet = R.prog.wallet + reward
     R.claim_reward()
-    check(R.prog.level == level and R.prog.wallet[1] == before + reward.total[1], 'win pays once and advances')
-    earned = earned + reward.total[1]
+    if R.overlay == R.OV_COMPLETE then R.overlay = R.OV_NONE end
+    check(R.prog.level == level, 'first win advances one level')
+    for slot = 1, 4 do
+        check(R.prog.wallet[slot] == expected_wallet[slot], 'win pays once in wallet slot ' .. slot)
+    end
+    earned = earned + reward[1]
     if rules.FOOD then
-        local income, wallet = reward.total, R.prog.wallet
+        local income, wallet = reward, R.prog.wallet
         print(("wish %02d · earned %d/%d/%d · stock %d/%d/%d · %d moves left"):format(
             level, income[1], income[3], income[2], wallet[1], wallet[3], wallet[2], R.g.moves))
     end
@@ -120,15 +119,17 @@ for level = 1, STORY_LEVELS do
         while true do
             local next_kind = island.next_step(R.island, R.prog.level)
             if not next_kind then break end
+            local building = island.buildings[next_kind + 1]
             local owed = island.wonder_count(R.island) < journey.earned(R.prog.level)
             if island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0) then
-                placed[#placed + 1] = island.buildings[next_kind + 1].key
+                placed[#placed + 1] = building.key
+                purchase_level[next_kind] = level
             elseif not owed then break
             else
                 short = short + 1
-                assert(short <= 20, 'twenty replays could not fund ' .. island.buildings[next_kind + 1].key)
+                assert(short <= 20, 'twenty replays could not fund ' .. building.key)
                 local replay
-                for seed = 1, 4 do
+                for seed = 1, 8 do
                     replay = R.make_board(level - 1, 100 * short + seed)
                     play(replay)
                     if replay.won then break end
@@ -142,7 +143,7 @@ for level = 1, STORY_LEVELS do
         replays = replays + short
         local wallet = R.prog.wallet
         print(("expedition %02d · earned %d/%d/%d · stock %d/%d/%d · replays %d · placed %s"):format(
-            level, reward.total[1], reward.total[3], reward.total[2], wallet[1], wallet[3], wallet[2], short,
+            level, reward[1], reward[3], reward[2], wallet[1], wallet[3], wallet[2], short,
             #placed > 0 and table.concat(placed, ", ") or "-"))
     elseif kind then
         assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
@@ -154,9 +155,22 @@ for level = 1, STORY_LEVELS do
         pending = journey.next(R.prog, owns_wonder, nil)
     end
 end
-check(#played == #journey.beats, 'every story beat played')
-for i, beat in ipairs(journey.beats) do check(played[i] == beat.key, 'story order: ' .. beat.key) end
-check(island.wonder_count(R.island) == island.WONDERS, 'all story buildings placed')
-if island.ladder then check(island.campaign_count(R.island) == #island.ladder, 'every ladder restoration placed') end
-print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d total earned, %d remaining, %d stars, %d scenes'):format(
-    wins, attempts-wins, replays, earned, R.prog.wallet[1], R.prog.wallet[4], #played))
+local due = 0
+for _, step in ipairs(island.ladder) do
+    if step.after <= rules.LEVELS then
+        due = due + 1
+        check(purchase_level[step.kind] == step.after, ('placed %s after clear %d'):format(step.unlock.building, step.after))
+    end
+end
+check(island.wonder_count(R.island) == journey.earned(rules.LEVELS), 'all earned story buildings placed')
+check(island.campaign_count(R.island) == due, 'every earned purchase placed')
+local index = 0
+for _, beat in ipairs(journey.beats) do
+    if beat.level <= rules.LEVELS then
+        index = index + 1
+        check(played[index] == beat.key, 'story order: ' .. beat.key)
+    end
+end
+check(replays == 0, ('the reference playthrough needs %d replays for income'):format(replays))
+print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d of %d purchases, %d total earned, %d remaining, %d stars, %d scenes'):format(
+    wins, attempts-wins, replays, island.campaign_count(R.island), due, earned, R.prog.wallet[1], R.prog.wallet[4], #played))

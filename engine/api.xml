@@ -605,6 +605,7 @@
     <function name="building_at" c="city_building_at"><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
     <function name="ready" c="city_ready" doc="Whether building index has income to collect."><arg name="c" type="city"/><arg name="index" type="int"/><arg name="now" type="double"/><returns type="bool"/></function>
     <function name="sprite_rect" c="city_sprite_rect" doc="World rect of a building's sprite."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
+    <function name="placed_sprite_rect" c="city_placed_sprite_rect" doc="Drawn screen rect, including placement bounce. Empty while the building is held or the index is out of range."><arg name="c" type="city"/><arg name="index" type="int"/><returns type="rect"/></function>
     <function name="shadow_rect" c="city_shadow_rect" doc="World rect of the separately cropped ground shadow, registered to the same ground point."><arg name="c" type="city"/><arg name="b" type="building"/><returns type="rect"/></function>
     <function name="zone_at" c="city_zone_at" lua="zone_of" doc="The zone containing a world point, or -1."><arg name="c" type="city"/><arg name="world" type="vec2"/><returns type="int"/></function>
     <function name="zone_open" c="city_zone_open"><arg name="c" type="city"/><arg name="zone" type="int"/><returns type="bool"/></function>

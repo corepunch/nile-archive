@@ -710,13 +710,16 @@ def main():
     api = Api(ET.parse(args.source).getroot())
     validate(api)
     outputs = {'c': gen_c(api), 'h': gen_h(api), 'md': gen_md(api), 'dlua': gen_dlua(api)}
-    outputs['md'] += '\n## Shared Lua forms\n\nThe embedded UI framework extends ui with ui.form(template), ui.modals(skin), ui.element(kind, class) and ui.prefab(kind, build). See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).\n'
+    outputs['md'] += '\n## Shared Lua forms\n\nUse `ui.node` to construct nodes, for example `ui.node.label {text="Settings"}`. The framework provides `ui.form(template)`, `ui.modals(skin)`, `ui.element(kind, class)` and `ui.prefab(kind, build)`. See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).\n'
     outputs['md'] += '\n## Motion: ease and tween\n\nThe embedded motion module (engine/lua/tween.lua) defines the easing catalogue `ease` and the tween, timeline, stagger, punch and shake API `tween`. See [Motion](MOTION.md).\n'
     outputs['dlua'] += '''
 ---@class ui_form
 ---@field values table
 ---@field boxes table<string,rect>
 local ui_form = {}
+---Construct a form node of the requested kind from properties and inline children.
+---@type table<string, fun(fields: table): table>
+ui.node = {}
 ---@return ui_form
 function ui.form(template) end
 ---@return boolean, string?

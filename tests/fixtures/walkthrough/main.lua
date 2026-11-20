@@ -31,13 +31,7 @@ function R.smoke()
             R.quiet = false
             if story.active() then story.next() end
             if not R.prog.story_seen['restore-01'] then return end
-            if R.overlay == R.OV_QUEST then
-                if R.dialog_settled() then
-                    assert(R.quest_card == "chart" and R.quest_offer)
-                    app.inject_click(R.quest_form.boxes.close:center() + vec2(0, R.drop / 2))
-                end
-                return
-            end
+
         end
         app.inject_click(vec2(394, 136)); stage = 4
     elseif stage == 4 and not R.on_island then
@@ -47,7 +41,8 @@ function R.smoke()
             assert(R.g.resource_yields[water.kind] == water and next(R.g.tool_meter) == nil,
                 'the well adds water buckets to the second board')
         else
-            assert(R.g.resource_yields[4] == economy.pieces[4], 'the arch adds firewood to the second board')
+            local wine = economy.unlock_of('arch').kind
+            assert(R.g.resource_yields[wine] == economy.pieces[wine], 'the arch adds mulled wine to the second board')
         end
         print('walkthrough pointer smoke passed: skip, reward, confirmed building and next board reward')
         app.quit()

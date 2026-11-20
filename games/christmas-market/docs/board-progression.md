@@ -27,7 +27,7 @@ tier in [level-moves.md](level-moves.md).
 
 On first clears of 24, 25 and 28 the completed board gives way to a
 [painting and scene](asset-catalogue.md#story-floors) before Collect.
-The [resource prototype](resource-prototype.md) records the Roman layouts, prices and measured payouts for the first twenty wishes.
+The [resource prototype](resource-prototype.md) records the earlier Roman layouts and measured payouts for the first twenty wishes. The current twenty prices are in the [construction sequence](market-pieces.md#construction-sequence).
 
 The bot test plays each wish from up to four fixed starts without tools.
 It checks that the objectives are reachable through actual swaps and cascades.

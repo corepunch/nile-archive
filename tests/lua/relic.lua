@@ -1,4 +1,4 @@
--- Relic Rush rules: hex grid, straight-line match-3 detection, blockers, gravity,
+-- Relic Rush rules: square grid, straight-line match-3 detection, blockers, gravity,
 -- tools, the campaign's boards and economy, and the island on the engine
 -- city. Ported from the original tests/test_relic.c.
 local rules = require("rules")
@@ -66,7 +66,7 @@ local function test_grid()
                 check(hex_distance(i, j) == 1 and hex_neighbor(j, (d + 3) % 6) == i, "neighbour symmetry")
             end
         end
-        if hex_distance(i, c) < 4 then check(n == 6, "inner cells have six neighbours") end
+        if hex_distance(i, c) < 4 then check(n == 4, "inner cells have four neighbours") end
     end
 end
 
@@ -83,7 +83,7 @@ local function test_matching()
             check(g.obstacles == obstacles and g.initial_obstacles == obstacles, "obstacle count includes every blocker layer")
         end
     end
-    for axis = 0, 2 do
+    for axis = 0, rules.AXES - 1 do
         local start = hex_neighbor(hex_neighbor(c, axis + 3), axis + 3)
         local g = blank()
         line(g, hex_neighbor(start, axis), axis, 2, 2)
@@ -113,12 +113,12 @@ local function test_matching()
     check(m.hits == 7, "crossing lines clear their union")
     rules.game_apply(g, m)
     check(g.tiles[c].kind < 0, "crossing lines make no bomb")
-    for d = 0, 5 do
+    for _, d in ipairs{0, 1, 3, 4} do
         g = blank()
-        local a, b = hex_neighbor(c, d), hex_neighbor(c, (d + 1) % 6)
+        local a, b = hex_neighbor(c, d), hex_neighbor(c, d % 3 == 0 and 1 or 0)
         g.tiles[c].kind, g.tiles[a].kind, g.tiles[b].kind = 0, 0, 0
         rules.game_matches(g, m, c)
-        check(m.hits == 0, "compact triangle is not a line")
+        check(m.hits == 0, "right angle is not a line")
         local e = hex_neighbor(a, d)
         g.tiles[e].kind = 0
         g.tiles[hex_neighbor(e, d)].kind = 0
@@ -130,9 +130,9 @@ local function test_matching()
     rules.game_matches(g, m, c)
     check(m.hits == 0 and not rules.game_hint(g), "a four-cell diamond is not a match")
     g = blank()
-    for d = 0, 5 do g.tiles[hex_neighbor(c,d)].kind = 2 end
+    for _, d in ipairs{0, 1, 3, 4} do g.tiles[hex_neighbor(c,d)].kind = 2 end
     rules.game_matches(g, m, c)
-    check(m.hits == 0, "six-cell ring is not a match")
+    check(m.hits == 0, "four-cell ring is not a match")
     -- A swap that only creates a compact cluster must roll back completely.
     g = blank()
     local a, b = hex_index(1,0), hex_index(1,1)
@@ -149,7 +149,7 @@ for _, deal in ipairs{{1, 584653585}, {2, 203663903}} do
     local g = rules.game_start(deal[1] - 1, deal[2])
     check(rules.game_hint(g), "the replacement opening has a move")
     for a = 0, CELLS - 1 do
-        for axis = 0, 2 do
+        for axis = 0, rules.AXES - 1 do
             local b = hex_neighbor(a, axis)
             if rules.game_swap_matches(g, a, b) then
                 local trial, wave = rules.game_copy(g), rules.new_match()
@@ -249,17 +249,17 @@ local function test_moves_and_blockers()
 
     g = pattern()   -- a match never damages ice on neighbouring cells
     g.tiles[c].kind = rules.RELIC_FLAME
-    for d = 0, 5 do g.ice[hex_neighbor(c, d)] = 2 end
+    for _, d in ipairs{0, 1, 3, 4} do g.ice[hex_neighbor(c, d)] = 2 end
     g.obstacles = 12
     m = rules.new_match()
     m.mask[c] = true
     rules.game_apply(g, m)
-    for d = 0, 5 do check(g.ice[hex_neighbor(c, d)] == 2, "a match leaves adjacent ice intact") end
+    for _, d in ipairs{0, 1, 3, 4} do check(g.ice[hex_neighbor(c, d)] == 2, "a match leaves adjacent ice intact") end
     check(g.obstacles == 12, "ordinary color preserves adjacent obstacles")
 
     g = pattern()
     g.tools[2] = 1
-    check(rules.game_tool(g, 1, c, m) and m.hits == 7, "dynamite hits seven")
+    check(rules.game_tool(g, 1, c, m) and m.hits == 9, "bomb hits a 3×3 square")
     g = pattern()
     g.tools[3] = 1
     local target_kind = g.tiles[c].kind
@@ -302,7 +302,6 @@ local function test_island()
         check(c.count == due and island.campaign_count(c) == due, "every opened ladder restoration fits, in order")
         check(island.wonder_count(c) == require("journey").earned(p.level), "story restorations keep their schedule")
     end
-    check(c.count == #island.ladder, "each purchase places one campaign building")
     check(p.wallet[rules.CLEARED] == LEVELS, "every first clear counts once")
 
     -- shoreline, collisions, failed builds change nothing, moving is free
@@ -386,7 +385,7 @@ local function test_final_level_settles()
             if g.won or g.lost then break end
             local best, ba, bb = -1, -1, -1
             for i = 0, CELLS - 1 do
-                for d = 0, 2 do
+                for d = 0, rules.AXES - 1 do
                     local j = hex_neighbor(i, d)
                     local v = rules.game_evaluate_move(g, i, j)
                     if v > best then best, ba, bb = v, i, j end

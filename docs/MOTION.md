@@ -212,21 +212,18 @@ The match board's entrance (`engine/lua/board_intro.lua`) is a small simulation
 rather than a set of lerps: gravity falls, damped springs and a sweep computed
 per cell from one clock, with callbacks at the landing times, and its tests
 drive that clock (`intro:update(dt)`, `intro.t`). As tweens it would be one
-custom-eased tween per cell per effect, so it keeps its clock. The town <-> board
-dive in `engine/lua/match3/game.lua` also keeps a small clock of its own: game state
-switches at once, the screen being left is covered, then the other screen is
-uncovered while the board's entrance plays. It takes no input (`R.diving()`),
-and reduced motion skips it. The styles live in `engine/lua/match3/dive.lua`:
-`flash` (the engine's default: the town zooms into its newest building and
-blurs into a warm flash), `hex`, `drift`, `iris`, `bands` and `wipe`. game_config.lua's `dive`
-block picks one (`style`) and dresses it in the game's theme: a `motif` (`snow`,
-`leaves`) and its colours. Christmas Market and Relic Rush use `wipe`, a cinematic
-cut: both screens show at once and a diagonal edge sweeps left to right over 1.4
-seconds, pushing the town off to the right on the way into the board and drawing
-it in from the left on the way back. The town is the masked screen
-(`gfx.sdf_mask` with a diagonal ramp field), because the board masks its own story
-mosaic and the renderer holds one mask at a time. Capture with `--city 3 --dive --dive-back 120 --reel` (the
-`*-town-dive` reels, there and back); `--dive-style NAME` films another style.
+custom-eased tween per cell per effect, so it keeps its clock.
+`engine/lua/screen_transition.lua` owns the screen change clock. The game state
+switches at once and the transition paints the outgoing and incoming views
+with idle input. Reduced motion skips the effect. The shared styles live in
+`engine/lua/screen_transition/styles.lua` and accept the game's `transitions.theme`.
+
+Christmas Market and Relic Rush use `wipe`. A feathered diagonal edge sweeps
+left to right over 0.7 seconds, pushing the town off to the right into the
+board and drawing it in from the left on the way back. The town is masked
+because the board uses its own mask for the story mosaic. Capture both
+directions with `--city 3 --dive --dive-back 120 --reel`. Use
+`--transition-style NAME` to film another style.
 The particle
 pools in `engine/lua/match3/vfx.lua` and the continuous hint pulse are likewise not tweens.
 

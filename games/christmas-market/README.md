@@ -5,11 +5,11 @@ installs and launches on the connected iPhone (or iPad when no iPhone is
 available). Set `DEVICE="name or UDID"` to choose one. See the
 [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
-An in-progress Christmas market game based on Relic Rush's hex straight-line match-3 and free-placement city systems. Its 37 buildings and decorations are modelled and rendered in Blender after the building direction sheet. See the [building catalogue](docs/building-catalogue.md).
+An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. The market has 41 buildings and decorations. Smoke rises from nine working chimneys in town. See the [building catalogue](docs/building-catalogue.md).
 
-![The 37 Blender-rendered buildings and decorations](docs/screenshots/buildings.jpg)
+![The 41 market buildings and decorations](docs/screenshots/buildings.jpg)
 
-The [reference sheet](art/building-reference-sheet.png) covers ten campaign buildings: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, an igloo, a chapel, a log cabin, Santa's workshop and more.
+The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.
 
 Direction: snow-covered timber and cream plaster, evergreen garlands, red ribbons, warm amber windows and lights, cool blue snow, readable isometric silhouettes. The Blender models resolve perspective and footprints exactly. The renders can still guide an ImageGen repaint ([#34](https://github.com/corepunch/nile-archive/issues/34)).
 
@@ -25,34 +25,11 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-The game has 100 winter wishes, authored boards of 9 x 12 hexes (text files in `levels/`, validated by `tools/hex_levels.py`). Each one asks you to light every marked pane, and the story and twenty buildings run across the first thirty; wishes 31 to 100 are playable without story yet.
-Collecting a first-clear reward opens the next wish, even with an unbuilt stall or unread market dialogue.
-Blue panes clear in one hit. Green panes first turn blue. A tinsel tie
-absorbs a hit before the piece and its pane can clear. The lamps lead from the market
-arch to Agnes's bakery and along the station walk for Pip's mum. See the
-[board progression](docs/board-progression.md) and [story](docs/story.md).
-With three or fewer panes left, blue or green sparks trace their edges after the same idle delay as the move suggestion.
-A treat moved toward a tinsel tie, ice or a carved stone slides toward it and
-back, with the same haptic as a rejected swap and zero moves spent.
-When the board runs out of legal swaps, movable treats fly to their new cells
-in a free shuffle. Reduce Motion settles them immediately.
-
-Mrs Alder sets aside a cup of cocoa for the next person who comes in cold.
-The guests who share it return with lamps when the wind takes the lights out.
-Goods from the market appear on the board as Noelle opens the stalls.
-
-On the first clears of A Ribbon for Home, Word from the Station and The Last Train,
-the lit board gives way to a full-board painting and the next scene.
-[Story paintings and board captures](docs/asset-catalogue.md#story-floors).
+The 100 winter wishes use square boards up to 9 × 12. Swap two neighboring treats to match three in a row or column. Every blue pane must light. Single and crossed chains mark treats that need one or two hits before the pane can clear. The last few panes get a trail around their square edges during idle play. The five Advents run levels 1–20, 21–40, 41–60, 61–80 and 81–100, and each board has a tier (levels 1–4 teach, then easy, easy, normal, normal, hard, easy, normal, normal, hard, boss per ten). `python3 tools/square_boards.py christmas-market` validates them, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. The [square campaign guide](docs/square-match3.md) lists the levels and artwork.
 
 ## Shared match engine and atlas
 
-Swap adjacent treats or tap two neighbors to match three or more along a hex
-axis. Match toy hammers from Theo’s workshop to charge a hit on one cell.
-Match stars after opening the candle shop to charge a lightning strike
-across 15 cells. The [engine match-3 module](../../docs/MATCH3_ENGINE.md)
-owns swaps, blockers, trickling gravity, cascades, hints, tools and timing.
-The game supplies the boards, artwork and straight-match rules.
+Each board spawns five piece kinds. After building the Reindeer stable, match 30 farrier's hammers to charge a hit on a chosen cell. The Firework stall replaces the Hammer with Firework Bomb in the same slot and carries over its charge. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing for both square campaigns.
 
 The puzzle and town use the same wallet and blue Settings gear. Each green resource
 capsule has the brass rim and drop shadow of the round buttons. The remaining moves
@@ -84,23 +61,25 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 
 ## Market economy
 
-Silver coins pay 3 Gold and gold coins pay 5. Holly and mittens earn score.
-The arch adds firewood for Supplies. Later stalls add more materials,
-Food and chargeable tools. Longer lines multiply the yield (a longer line just clears; there are no special pieces). Each win
+Silver snowflake coins pay 3 Tokens and gold Sun coins pay 5. Snowy firs, knitted mittens and candy canes earn score on the opening board.
+The Welcome arch serves mulled wine for Treats. The Lumber workshop introduces brown pine bundles tied with blue ribbon for Materials.
+The bakery and cocoa kiosk upgrade the red Treats piece. Each matched piece pays its own value. Each win
 banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).
 
-Confirmed placement spends Gold, Supplies and Food from that wallet.
-If a stall is beyond the current balance, play the next wish to
-earn more. The [first 20 wishes](docs/resource-prototype.md) compare both
-Cradle of Rome editions and record prices, unlocks and a measured payout
-for every board in the prototype.
+When Noelle arrives, Rosa’s old stall is already standing in Welcome Square.
+It’s the last stall her gran ran before retiring, and the market Noelle has
+come to reopen starts there. The stall can be moved for free. [Opening market](docs/screenshots/opening-market.jpg)
+
+Confirmed placement spends Tokens, Treats and Materials from that wallet.
+The Welcome arch is the first campaign purchase.
+The lower-left Build button opens the next stall and shows its price or shortfall. A circling trail signals when you can choose a location. Play another wish to earn the missing resources. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
 There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
 flakes still.
 
-`make run-christmas-market` launches the native draft. `--showcase` previews the ten buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has 100 puzzles, the first thirty in three story episodes, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
+`make run-christmas-market` launches the native draft. `--showcase` previews the campaign buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has 100 square puzzles, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or
 use the mouse wheel. Both are full-screen sheets under the wallet row. The shop
@@ -117,8 +96,9 @@ The game is the same as Relic Rush with other data and art
 ([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)): every word of the
 shared screens is in [`lua/game_config.lua`](lua/game_config.lua), and the flow, dialogs,
 shop, effects and debug entry points are the engine's
-(`engine/lua/match3/game.lua`). `lua/board.lua` and `lua/screens.lua` paint only
-the market's own art: cells, treats, the results card and guide icons.
+(`engine/lua/match3/game.lua`). The engine draws the board from the market's
+skin atlas and `board` settings. `lua/screens.lua` provides the results card
+and guide icons.
 
 The interface look (text palettes, panels, the red buttons and their states, focus) is data in [`lua/skin.lua`](lua/skin.lua), compiled by the engine's `ui.skin`; see [skin files](../../docs/UI_ENGINE.md#skins).
 
@@ -127,7 +107,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 ## Story
 
-The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 scenes, 198 lines, one per winter wish, from the opening on 4 December to "To be continued" at level 30. Story stalls are built at levels 1, 4, 7, 9, 13, 16, 19, 23, 26 and 29. Ten more stalls sit between them on a Cradle of Rome ladder of twenty: each stall adds one piece or one bonus (see [the ladder](docs/resource-prototype.md#the-twenty-stall-ladder)). On six wishes, the results card shows a story object after the first clear. The goods on those boards follow the regular pool. Most levels without a stall play their scene when you return to the market. Levels 24, 25 and 28 play theirs after the board painting and before Collect. Scenes play once per save, on the first clear, and a scene is only marked seen once it finishes or is skipped. Regions open at levels 6, 9, 15, 21 and 27, each announced by Pip, and tapping a building can show a line that changes as the story moves on. Saves from the ten-level game keep every stall and open episode two with a short recap.
+The 100 playable wishes run through five Advents. Ten stalls carry the story (Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree) and ten more fill the ladder between them: one purchase every five levels. The [script](docs/story.md) runs five Advents of twenty wishes to Christmas Eve: Noelle arrives to help for Advent, lights the market's lane, and by the last Advent a late passenger and a light to come home to bring everyone together. There is no villain.
 
 `lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/lua/match3/game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All six speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
 
@@ -137,7 +117,15 @@ The three-episode script in [docs/story.md](docs/story.md) plays in full: 36 sce
 | --- | --- | --- |
 | ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/spruce-palette/letter.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
 
-Run `make CFLAGS="-O2 -g -Werror"`, `make test`, and `./build/christmas-market --headless --fresh --mute --smoke` (under Xvfb on Linux). The smoke test uses the shared `city.move_test` for building gestures and covers real clicks through a puzzle win, funded construction, pan/hold/move/cancel/confirm, decoration purchase/cancellation, replay, pause and the next level. A separate Lua campaign test verifies all twenty ladder stalls fit the land open by their levels, in order, each region opens on the level Pip announces it, and both decoration purchases preserve campaign progress. Its extended run (`make test-extended`) requires the greedy bot to win every one of the thirty story levels at least once without tools. `rules christmas_story` follows every first clear through the story scheduler, interruption, save/read, replays and old-save migration. `--smoke --campaign` plays the thirty story levels through the real result, Collect, region, stall card, placement, dialogue and Play controls. Each board’s panes and the scheduled building’s test wallet are prepared before one real swap. The separate extended campaign run earns its own wallet through actual play. All 36 scenes must play once, in script order, and the run must end on the end screen with twenty stalls and every region open. It takes about 35 seconds and runs in `make test-full` (CI), or alone with `build/test/christmas-market "smoke campaign"`.
+Build with `make CFLAGS="-O2 -g -Werror" christmas-market build/test/christmas-market`.
+Run `build/test/christmas-market --extended "rules campaign_play" "rules christmas" "smoke game" "smoke campaign"`
+under Xvfb on Linux. The extended campaign earns its wallet from real
+matches and checks the 100 wishes and twenty purchases. The standard
+smoke uses real input for a win, construction, building pickup and movement,
+decoration shopping, replay and the next level. The campaign smoke prepares
+each board and the wallet for one real winning move, then drives Collect,
+region opening, construction, dialogue and Play through the end screen.
+`rules christmas_story` covers the story scheduler and saved progress.
 
 ## Leaderboard
 
@@ -157,12 +145,12 @@ in [Game Center](../../docs/GAMECENTER.md) and capture the dialog with `--gamece
 
 Run `make test-christmas-market` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.
 
-Board artwork fills its registered hex slots. In dialogue, portraits face each other and slide into place at the edges of the screen. The same engine layout used by Relic Rush centers the text vertically in the full-width bar. [Dialogue bar captures](docs/review/dialogue-bar/README.md)
+Board artwork fills its registered square slots. In dialogue, portraits face each other and slide into place at the edges of the screen. The same engine layout used by Relic Rush centers the text vertically in the full-width bar. The name tag sits just above the bar, and Skip sits the same distance below it. [Dialogue bar captures](docs/review/dialogue-bar/README.md)
 
-The board enters after dialogue with a cell ripple, falling treats, blocker landings and a final light sweep. Tap to skip; reduced motion uses a short fade. See [the engine timeline](../../docs/ENGINE.md#board-entrance).
+The 0.7-second wipe from town reveals the board as it assembles. If dialogue is playing, the entrance waits for it to end. Cells ripple in, treats fall, blockers land and a light sweeps across the board. Tap to skip the entrance. Reduced motion uses a short fade. See [the engine timeline](../../docs/ENGINE.md#board-entrance).
 During refills, each treat gives a small bounce when it comes to rest in its slot. Reduce Motion suppresses the bounce.
 
-Popups use measured vertical forms. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Results display Gold, Food and Supplies in three equal columns, with each icon above a plain number. Above Collect, the card shows the amounts the next stall still needs, its picture once the wallet covers it, or a first clear's story find. In reels the result sections still settle on one timeline, which the first tap skips. See [docs/MOTION.md](../../docs/MOTION.md) and the [dialog motion review](docs/review/dialog-motion/README.md).
+Popups use measured vertical forms. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Results display Tokens, Treats and Materials in three equal columns, with each icon above a plain number. Above Collect, the card shows the amounts the next stall still needs, its picture once the wallet covers it, or a first clear's story find. In reels the result sections still settle on one timeline, which the first tap skips. See [docs/MOTION.md](../../docs/MOTION.md) and the [dialog motion review](docs/review/dialog-motion/README.md).
 
 ![The result dialog arriving](docs/screenshots/reward-entrance-reel.gif)
 
@@ -186,10 +174,10 @@ Tap **Skip level** at the top right of the board, read any scene, then claim the
 On the island, **Advance** places an earned story building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
-Theo’s workshop introduces Hammer pieces and the Candlelight shop introduces
+The Reindeer stable introduces Hammer pieces and the Candlelight shop introduces
 Lightning pieces. Match them to charge their tools. Stored uses and partial
 charge carry between wishes.
 
 ### Board
 
-The shared hex board follows Cradle of Rome: chains, ice, carved stones and blue tablets, drawn with the recreated Cradle of Rome hex tiles. Matches only clear; power comes from the tools. The field uses the market's slate-blue hex palette.
+Honey maple, teal panes and brass trim with snowy fir sprigs frame the winter wishes.

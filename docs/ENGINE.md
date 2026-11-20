@@ -256,38 +256,34 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
     edge near the speaker, leaning toward their mouth: it says who speaks
     without reaching across to them, and never crosses a face;
   - narration (no speaker) is a centred caption with no tail, and a named
-    speaker without a portrait (Emergency's dispatcher) gets a name tag on it.
-  - the name badge is centred on the **visible outline's top edge** for all
-    three shapes. Cloud puffs, shout spikes and rims count as existing padding;
-    text spacing reserves only the remainder inside the core rectangle.
+    speaker without a portrait (Emergency's dispatcher) gets a name tag above it.
+  - the name badge sits six units above the **visible outline**, on the
+    speaker's side. The optional skip pill with a fast-forward mark sits six
+    units below the outline on the opposite side. Cloud puffs, shout spikes
+    and rims count as existing padding for the text.
     `speech_bubble_bounds(box,kind)` / `story.bubble_bounds` measures that outline
-    without its tail or shadow. Portrait staging uses the same edge, leaving
-    the badge half outside instead of engulfed by a cloud or burst.
+    without its tail or shadow.
   On phones (framed busts) the line sits in a **dialogue box**, the way the
   story screens of portrait match-3 games and visual novels do it: the box
   is sized to the phrase but never narrower than the medallion, which stands
-  just above its end with the name plate on the box's edge. The renderer centres
-  the complete portrait-and-box unit horizontally and vertically within the
-  safe screen, using the frame and visible bubble outline (including puffs or
-  spikes). A listener participates in the same measured unit. There is no tail:
+  just above the name plate. The renderer centres the portraits, box and skip
+  pill horizontally and vertically within the safe screen, using the frame and
+  visible bubble outline (including puffs or spikes). A listener participates in
+  the same measured unit. There is no tail:
   next to a framed portrait a tail only competes with the frame, and tails are kept for words placed in the
   world (`speech_bubble`) and for the standing figures of the iPad staging.
   The listener stands on the same baseline across the screen, dimmed and smaller.
   A new speaker's bubble springs out of its tail (`ease_out_back`), then the
   text types itself out at 40 characters a second without ever re-wrapping
   (`text_box_reveal`), with a beat after sentences and a shorter one after
-  commas and dashes. A tap finishes the line, the next tap moves on; Space
-  works too. The optional skip pill (with a fast-forward mark) sits in the
-  bottom corner away from a standing speaker. For framed phone dialogue it
-  travels with the centred unit, across from the medallion above the box, or
-  above the whole unit when a listener occupies that end.
+  commas and dashes. A tap finishes the line, the next tap moves on. Space
+  works too.
   With `centered` (Relic Rush and Christmas Market phones, standing cut-outs),
   the bubble instead spans the safe screen with a 16-unit margin and its text
   wraps to that full measure. The bubble and the figure standing on it are
   centred vertically as one unit; the speaker stands on the bubble's end on
   their side at the full `portrait_height`, and the listener stands at the
-  other end at the same size, dimmed. The skip pill sits under the bubble,
-  away from the speaker.
+  other end at the same size, dimmed.
 - Bubble kinds: **speech** (rounded body, curved tapered tail), **thought** (a
   cloud of puffs with detached, shrinking puffs as the tail) and **shout**
   (spikes evenly spaced along a rounded box, so long and short lines burst
@@ -303,10 +299,37 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   a point (below when there is no room), kept on screen, tail on the point —
   for words over the world, like Relic Rush's restored wonders.
 
-## Town screen
+## Screens and transitions
 
-The city games share one town screen, `require("town")`, configured by each
-game's `lua/town_config.lua`. See [Shared town screen](TOWN.md).
+Reusable full screens live in `engine/lua/<type>/screen.lua`.
+
+| Module | What the game supplies |
+| --- | --- |
+| `match3.screen` | Level rules, board settings and art. See [Portrait games](PORTRAIT_GAMES.md). |
+| `town.screen` | A city, `town_config.lua`, a skin and campaign actions. See [Shared town screen](TOWN.md). |
+| `hidden_object.screen` | Scene art, item names and hit ellipses, scoring settings, HUD skin and callbacks for completion and pause. |
+
+The app chooses the base screen from the game state and calls
+`screen:frame(input, dt, active)` once per frame. It passes idle input and
+disables UI hit testing while a modal, dialogue or transition has focus.
+Screens can still paint and settle their presentation. A future full-screen
+main menu fits the same convention as `menu.screen`.
+
+The shared `screen_transition` module handles the effect between screen IDs.
+The `transitions` table in `game_config.lua` sets a default effect, optional
+directional overrides and an optional palette in `theme`.
+
+```lua
+transitions = {
+    style = "wipe",
+    routes = {menu = {town = "bands"}, town = {hidden_object = "iris"}},
+}
+```
+
+Use `wipe`, `flash`, `hex`, `drift`, `iris`, `bands` or `none`. Wipe
+composites two screens with idle input, and cover effects draw one at a time.
+Reduced motion switches screens immediately. `--transition-style NAME` previews
+another effect without editing a config. See [Motion](MOTION.md#what-stays-on-its-own-clock).
 
 ## Portrait match-3 game
 
@@ -415,8 +438,9 @@ sweep the individual cell rims fade out while the assembled rim, its painted
 joins and the board's shadow fade in. The game uses the existing artwork and
 draws transient glows and sparks procedurally.
 
-The clock waits for dialogue, pauses under modals and while on the island, and
-returns to IDLE before matching resumes. A release skips the entrance without
+The entrance starts as the screen transition reveals the board. The clock
+waits for dialogue, pauses under modals and while on the island, and returns
+to IDLE before matching resumes. A release skips the entrance without
 selecting a piece or spending a move. Reduced motion fades the assembled rim,
 shadow, floor and pieces together over a quarter second. Resetting a board
 clears its entrance.

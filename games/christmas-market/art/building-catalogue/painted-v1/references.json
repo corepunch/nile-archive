@@ -8,7 +8,7 @@
   "runtime_imports": "art/building-catalogue/painted-v1/imports.json",
   "reimport_command": "python3 tools/import_painted_buildings.py christmas-market",
   "generation_is_deterministic": false,
-  "accepted_object_count": 37,
+  "accepted_object_count": 41,
   "generations": [
     {
       "category": "building",
@@ -156,6 +156,55 @@
         "pine_grove"
       ],
       "render_baseline": "ef26de3"
+    },
+    {
+      "category": "second-row",
+      "status": "accepted",
+      "render_baseline": "d0d13703cacfe19e2a4d08f93cd914cfd397eebf",
+      "prompt": "art/building-catalogue/painted-v1/second-row-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/second-row-input.png",
+          "sha256": "d27114cbe76c48923f5b2bf6f721d8db5d80d53843bb0e0cee8a969c39aec250"
+        },
+        {
+          "role": "style_reference",
+          "path": "data/city/buildings/cocoa.png",
+          "sha256": "ae4102f2007564dc2b7a4d26f1d5cd1cc2ccf48ccd50419c7c7aa51fc1b7699f"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/second-row-output.png",
+      "output_sha256": "8d90ae3d665d0f54063cb90b8862c3b1131db14647318b7d54404f65183aa783",
+      "layout": "art/building-catalogue/painted-v1/second-row-layout.json",
+      "accepted_keys": [
+        "firework_stall",
+        "station_kiosk",
+        "glassblower"
+      ]
+    },
+    {
+      "category": "rosa-stall",
+      "status": "accepted",
+      "prompt": "art/building-catalogue/painted-v1/rosa-stall-prompt.txt",
+      "inputs": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/rosa-stall-input.png",
+          "sha256": "65cafe68e89216cb234d59452db9dbaef0cf98204531c7d4233a19d50c8c3206"
+        },
+        {
+          "role": "style_reference",
+          "path": "data/city/buildings/cocoa.png",
+          "sha256": "b4992254090790f1d2c857b2343556fba7522a1884e4db939ab754fb916da21e"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/rosa-stall-output.png",
+      "output_sha256": "8c3ee69c39f1f9a3d6bcae86e7cc31d83617d6eed62598b1c022d40ec6d4e018",
+      "layout": "art/building-catalogue/painted-v1/rosa-stall-layout.json",
+      "accepted_keys": [
+        "rosa_stall"
+      ]
     }
   ]
 }

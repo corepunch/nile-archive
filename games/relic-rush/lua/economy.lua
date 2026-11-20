@@ -1,7 +1,8 @@
+local bonuses = require("match3.bonuses")
+
 -- Three wallet slots. Score-only pieces have no wallet yield.
--- Every piece has a Cradle of Rome 2 counterpart with the same wallet and
--- yield (docs/cradle-of-rome-reference/gem-correspondence.html).
-local quests = require("quests")
+-- The sequel sets the construction order. Fish, Pearl and Amphora cover
+-- the original game's additional regular motifs.
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
@@ -10,101 +11,53 @@ local E = {
         {key="food", name="Food"},
         {key="supplies", name="Supplies"},
     },
-    -- The opening pool: the five pieces of Cradle of Rome's first level (two
-    -- coins that pay Coins and a leaf, a flower and an amphora that only
-    -- score) and a sixth score piece, quartz. Food and Supplies pieces come
-    -- from restorations; each takes the slot of the piece below it
-    -- (E.unlocks, `kind`).
     pieces={
         [0]={key="coin", name="Sun coin", slot=1, amount=5},
         {key="silver-coin", name="Silver coins", slot=1, amount=3},
         {key="leaf", name="Leaf"},
         {key="flower", name="Flower"},
         {key="amphora", name="Amphora"},
-        {key="quartz", name="Quartz"},
     },
     WELL_KIND=1, WORKSHOP_KIND=2,
-    -- Boards spawn six kinds and match lines of three. The leaf's slot carries
-    -- the bonus gem or a story item; the silver slot takes the bonus when a
-    -- story item holds the leaf's.
-    SPECIAL_KIND=2, SPECIAL_FALLBACK=1,
-    -- The score slots a crew request's piece may take, first choice first
-    -- (lua/quests.lua). A slot is free until a restoration's piece holds it.
-    QUEST_KINDS={5, 4, 3},
-    CAMPAIGN_VERSION=8,
+    -- The bonus piece takes the leaf's slot.
+    SPECIAL_KIND=2,
+    CAMPAIGN_VERSION=9,
 }
 -- Presentation order is independent of the persisted purse slots.
 E.currency_order = {E.GOLD, E.SUPPLIES, E.PROVISIONS}
 
-E.BONUS_THRESHOLD = 36
-E.bonus_slots = {
-    {key="impact", legacy_slot="blast", levels={
-        {key="hammer", name="Hammer", action="hit", effect="Hit one cell."},
-        {key="bomb", name="Bomb", action="blast", effect="Hit a cell and its six neighbors."},
-    }},
-    {key="shield", legacy_slot="sweep", levels={
-        {key="shield", name="Shield", action="row", effect="Hit the row through a chosen cell."},
-        {key="plus", name="Plus", action="replenish", resource_amount=100, effect="Choose a resource piece for 100 resources or another bonus to add a quarter charge."},
-    }},
-    {key="hourglass", legacy_slot="recharge", levels={
-        {key="hourglass", name="Hourglass", action="moves", effect="Add five moves."},
-        {key="mixer", name="Mixer", action="shuffle", effect="Shuffle the pieces."},
-    }},
-    {key="lightning", legacy_slot="star", levels={
-        {key="lightning", name="Lightning", action="lightning", effect="Strike up to fifteen random cells."},
-        {key="star", name="Star", action="color", effect="Clear all pieces of a chosen kind."},
-    }},
-}
-local B = {}
-for tool, slot in ipairs(E.bonus_slots) do
-    for rank, bonus in ipairs(slot.levels) do
-        bonus.tool, bonus.rank, bonus.amount = tool, rank, 6
-        bonus.icon = "bonus-" .. bonus.key
-        B[bonus.key] = bonus
-    end
-end
+E.BONUS_THRESHOLD = bonuses.THRESHOLD
+local B
+E.bonus_slots, B = bonuses.slots()
 E.bonuses = B
-
--- The next-building card states each need as narration: who needs the
--- building and why. Characters speak in the scenes, which play once. Costs
--- and board unlocks come from the building catalogue and ladder.
-E.quests = {
-    well={title="Draw fresh water", request="Restore the well to bring water buckets onto the board."},
-    log_cabin={title="Build the Hunter's Hut", request="The hunter brings a hammer. Match hammer pieces to charge it."},
-    workshop={title="Open the Sawmill", request="I can make a cable reel from the mill's offcuts."},
-    camp={title="Build the Village", request="The village unlocks bombs. Match them to charge a blast."},
-}
 
 -- The twenty purchases in the Windows sequel's epochs.xml. Stable catalogue keys
 -- retain the island's original artwork and old saves. The eight bonus IDs use
--- their first-game identities. first_level sets the small board's pacing.
+-- their first-game identities. One purchase opens every five expeditions,
+-- four to each of the five epochs; first_level is the first board it supplies.
 E.unlocks = {
     {building="well", rome="city_well", tile=5, first_level=2, backdrop=1, key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3},
-    {building="log_cabin", rome="city_hunter", tile=600, first_level=5, bonus=B.hammer},
-    {building="workshop", rome="city_sawmill", tile=6, first_level=8, backdrop=1, key="timber", name="Timber bundles", kind=4, slot=E.SUPPLIES, amount=5},
-    {building="camp", rome="city_village", tile=601, first_level=11, backdrop=1, bonus=B.bomb},
-    {building="market", rome="city_farm", tile=7, first_level=12, key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4},
-    {building="trading_post", rome="city_mine", tile=8, first_level=13, key="stone", name="Dressed stones", kind=4, slot=E.SUPPLIES, amount=7},
-    {building="water_mill", rome="city_mill", tile=9, first_level=13, key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5},
-    {building="clock_tower", rome="city_thermae", tile=602, first_level=14, bonus=B.shield},
-    {building="gateway", rome="city_port", tile=10, first_level=14, backdrop=2, key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6},
-    {building="lodge", rome="city_oktavia", tile=603, first_level=17, backdrop=1, bonus=B.hourglass},
-    {building="amphitheater", rome="city_coliseum", tile=11, first_level=18, key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6},
-    {building="map_room", rome="city_vestalki", tile=604, first_level=19, bonus=B.lightning},
-    {building="archive", rome="city_aqueduct", tile=12, first_level=20, backdrop=2, key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7},
-    {building="lighthouse", rome="city_lighthouse", tile=605, first_level=21, bonus=B.plus},
-    {building="beached_ship", rome="city_neron", tile=13, first_level=22, key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8},
-    {building="observatory", rome="city_mausoleum", tile=606, first_level=24, backdrop=2, bonus=B.mixer},
-    {building="aviary", rome="city_pantheon", tile=14, first_level=25, key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9},
-    {building="museum", rome="city_theatre", tile=15, first_level=26, key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10},
-    {building="temple", rome="city_forum", tile=607, first_level=27, backdrop=2, bonus=B.star},
-    {building="fountain", rome="city_center", tile=16, first_level=30, backdrop=1, key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11},
+    {building="log_cabin", rome="city_hunter", tile=600, first_level=7, bonus=B.hammer},
+    {building="workshop", rome="city_sawmill", tile=6, first_level=12, backdrop=1, key="timber", name="Timber bundles", kind=4, slot=E.SUPPLIES, amount=5},
+    {building="camp", rome="city_village", tile=601, first_level=17, backdrop=1, bonus=B.bomb},
+    {building="market", rome="city_farm", tile=7, first_level=22, key="rations", name="Ration jars", kind=1, slot=E.PROVISIONS, amount=4},
+    {building="trading_post", rome="city_mine", tile=8, first_level=27, key="stone", name="Dressed stones", kind=4, slot=E.SUPPLIES, amount=7},
+    {building="water_mill", rome="city_mill", tile=9, first_level=32, key="grain", name="Grain bundles", kind=1, slot=E.PROVISIONS, amount=5},
+    {building="clock_tower", rome="city_thermae", tile=602, first_level=37, bonus=B.shield},
+    {building="gateway", rome="city_port", tile=10, first_level=42, backdrop=2, key="shrimp", name="Shrimp", kind=3, slot=E.PROVISIONS, amount=6},
+    {building="lodge", rome="city_oktavia", tile=603, first_level=47, backdrop=1, bonus=B.hourglass, key="fish", name="Red mullet", kind=3, slot=E.PROVISIONS, amount=7},
+    {building="amphitheater", rome="city_coliseum", tile=11, first_level=52, key="helmet", name="Helmets", kind=0, slot=E.GOLD, amount=6},
+    {building="map_room", rome="city_vestalki", tile=604, first_level=57, bonus=B.lightning, key="pearl", name="Pearls", kind=0, slot=E.GOLD, amount=7},
+    {building="archive", rome="city_aqueduct", tile=12, first_level=62, backdrop=2, key="ring", name="Rings", kind=0, slot=E.GOLD, amount=7},
+    {building="lighthouse", rome="city_lighthouse", tile=605, first_level=67, bonus=B.plus},
+    {building="beached_ship", rome="city_neron", tile=13, first_level=72, key="scarab", name="Scarabs", kind=0, slot=E.GOLD, amount=8},
+    {building="observatory", rome="city_mausoleum", tile=606, first_level=77, backdrop=2, bonus=B.mixer},
+    {building="aviary", rome="city_pantheon", tile=14, first_level=82, key="sandal", name="Sandals", kind=0, slot=E.GOLD, amount=9},
+    {building="museum", rome="city_theatre", tile=15, first_level=87, key="harp", name="Harps", kind=0, slot=E.GOLD, amount=10},
+    {building="temple", rome="city_forum", tile=607, first_level=92, backdrop=2, bonus=B.star},
+    {building="fountain", rome="city_center", tile=16, first_level=97, backdrop=1, key="emerald", name="Emeralds", kind=0, slot=E.GOLD, amount=11},
 }
--- A restoration is placed after the clear before its first board.
-for _, unlock in ipairs(E.unlocks) do
-    unlock.after = unlock.after or unlock.first_level - 1
-    if unlock.bonus then unlock.bonus.first_level = unlock.first_level end
-end
+bonuses.index_unlocks(E.unlocks)
 
 function E.unlock_of(building)
     for _, unlock in ipairs(E.unlocks) do
@@ -128,62 +81,20 @@ function E.bonus_lesson(bonus)
         local first = E.bonus_slots[bonus.tool].levels[1]
         return ("%s replaces %s and keeps its charge."):format(bonus.name, first.name)
     end
-    return "Match " .. bonus.name .. " gems to charge the bonus."
+    return ("Match %d %s pieces for one charge."):format(E.BONUS_THRESHOLD // bonus.amount, bonus.name)
 end
 
-function E.active_bonus_slots(number, restored)
-    local slots, meter = {}, {}
-    for tool, slot in ipairs(E.bonus_slots) do slots[tool] = slot.levels[1] end
-    for _, unlock in ipairs(E.unlocks) do
-        local bonus = unlock.bonus
-        if bonus and restored and restored[unlock.building] and (not restored.preview or number >= unlock.first_level) then
-            local tool = bonus.tool
-            slots[tool] = bonus
-            meter[tool] = restored.bonus_charge and restored.bonus_charge[tool] or 0
-        end
-    end
-    return slots, meter
-end
-
-function E.board_loadout(level, number, restored, seed)
-    local yields, available = {}, {}
-    local slots, meter = E.active_bonus_slots(number, restored)
-    local debut
-    -- A slot is open unless the board omits it or a story item holds it.
-    local function open(kind)
-        return kind ~= level.omit_kind and not (level.story_piece and level.goal_kind == kind)
-    end
+function E.board_loadout(number, restored, seed)
+    local yields = {}
     for kind, piece in pairs(E.pieces) do
-        if piece.amount and open(kind) then yields[kind] = piece end
+        if piece.amount then yields[kind] = piece end
     end
     for _, unlock in ipairs(E.unlocks) do
-        if number >= unlock.first_level and restored and restored[unlock.building] and unlock.kind and open(unlock.kind) then
+        if number >= unlock.first_level and restored and restored[unlock.building] and unlock.kind then
             yields[unlock.kind] = unlock
         end
     end
-    for tool, slot in ipairs(E.bonus_slots) do
-        if meter[tool] and number >= slot.levels[1].first_level then
-            local bonus = slots[tool]
-            available[#available + 1] = bonus
-            if number == bonus.first_level then debut = bonus end
-        end
-    end
-    local bonus = debut or (#available > 0 and available[(seed or 1) % #available + 1])
-    -- Use the special slot, or the red slot when a story item holds it.
-    -- Give a newly unlocked resource (such as board 10's rations) its debut.
-    local kind = level.goal_kind == E.SPECIAL_KIND and E.SPECIAL_FALLBACK or E.SPECIAL_KIND
-    if not debut and yields[kind] and yields[kind].first_level == number then bonus = nil end
-    if bonus then yields[kind] = bonus end
-    -- The crew's open requests put their pieces in the free score slots.
-    local requests = restored and (restored.preview and quests.scheduled(number) or restored.quests) or {}
-    local request = 1
-    for _, slot in ipairs(E.QUEST_KINDS) do
-        if requests[request] and open(slot) and not yields[slot] then
-            yields[slot], request = requests[request].yield, request + 1
-        end
-    end
-    return yields, {match_only_resources=true, tool_threshold=E.BONUS_THRESHOLD, tool_meter=meter,
-        tool_slots=slots, single_charge_tools=true}, bonus, debut
+    return yields, bonuses.loadout(number, restored, seed, E.bonus_slots, E.unlocks, yields, E.SPECIAL_KIND)
 end
 
 -- Like Cradle of Rome, the board shows the latest restoration in force on this

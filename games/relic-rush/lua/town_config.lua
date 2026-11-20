@@ -1,5 +1,5 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
--- engine's defaults (engine/lua/town.lua): tables merge field by field, lists
+-- engine's defaults (engine/lua/town/screen.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
 local tool_size = require("match3").TOOL_SIZE
 return {
@@ -26,9 +26,6 @@ return {
         pause = true,
         middle = {kind = "button"},
     },
-    -- Request and building markers as large as the Options button, with no
-    -- readout under them: their gauges and the ready trail say it all.
-    rail = {size = tool_size, gap = 4, caption = 0},
     bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "bubble_face", edge = "bubble_edge"},
     texts = {
         placing = "Drag the building to choose a spot, or scroll the land.",

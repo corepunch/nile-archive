@@ -57,7 +57,8 @@ def main():
             register_paint(story['paint'], art)
             entries[-1]['paint'] = story['paint']
         lua.append('    {key=%s, %sname=%s, category=%s, cleared=%d, about=%s, cost=purse(%d,%d,%d), needs=purse(0,0,0,%d)%s},' % (
-            json.dumps(key), 'road=true, ' if road else '', json.dumps(name), json.dumps(category), stars // 3, json.dumps(about), *cost, stars // 3,
+            json.dumps(key), 'road=true, ' if road else '', json.dumps(name), json.dumps(category), stars // 3,
+            json.dumps(about, ensure_ascii=False), *cost, stars // 3,
             ', fixed_site=vec2(%d,%d)' % tuple(site) if site else ''))
     lua += ['}', 'for _, b in ipairs(items) do', '    for field, value in pairs(sprites[b.key]) do b[field] = value end', 'end', 'return items']
     (ROOT / 'lua/buildings.lua').write_text('\n'.join(lua) + '\n')

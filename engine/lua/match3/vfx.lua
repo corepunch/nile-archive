@@ -103,9 +103,9 @@ function V.bind(R, rules)
         end
     end
 
-    function R.vfx_quest_rim(center, radius, time)
+    function R.vfx_ready_rim(center, radius, time)
         -- Only the bright head and fading wake trace the brass rim. The face
-        -- and count stay clear, even with two hand-ins beside each other.
+        -- stays clear under the spinning particles.
         local angle = 2 * PI * (time / HINT_LAP - .25)
         for n = 14, 0, -1 do
             local behind = n / TRAIL_PARTICLES
@@ -115,18 +115,24 @@ function V.bind(R, rules)
     end
 
     function R.vfx_tablet_hint(center, radius, vertices, time, double)
+        local sides = #vertices
         local bright = num.saturate(time / .42) * num.saturate((HINT_DURATION - time) / .55)
-        local phase = 5.5 + 6 * time / HINT_LAP
+        local phase = sides - .5 + sides * time / HINT_LAP
         local ink = double and green_hint or blue_hint
-        gfx.ngon_grad(center, radius + 1, 6, 0, color.alpha(ink.face, .54 * bright), color.alpha(ink.shadow, .52 * bright))
+        local top, bottom = color.alpha(ink.face, .54 * bright), color.alpha(ink.shadow, .52 * bright)
+        if sides == 4 then
+            gfx.rect_grad(rect.centered(center, size2.splat(2 * (radius + 1))), top, bottom)
+        else
+            gfx.ngon_grad(center, radius + 1, sides, 0, top, bottom)
+        end
 
         -- The soft blue trail lingers across the bevel. The brighter leading
         -- particles follow it clockwise, with a hot spot one edge long.
         for n = TRAIL_PARTICLES - 1, 0, -1 do
             local behind = n / TRAIL_PARTICLES
-            local distance = phase - 6 * behind
+            local distance = phase - sides * behind
             local edge = math.floor(distance)
-            local at = center + vertices[edge % 6]:lerp(vertices[(edge + 1) % 6], distance - edge):scale(radius)
+            local at = center + vertices[edge % sides + 1]:lerp(vertices[(edge + 1) % sides + 1], distance - edge):scale(radius)
             rim_particle(at, radius, time, n, behind, ink, bright)
         end
     end
@@ -134,11 +140,10 @@ function V.bind(R, rules)
     ------------------------------------------------------------------ particles
 
 
-    -- Rules bank charge immediately. The meter and stored-use badge update on arrival.
+    -- Rules bank charge immediately. The meter updates on arrival.
     function R.bonus_display_charge(tool)
         local g = R.g
         local points = g.tool_meter[tool]
-        if not g.single_charge_tools then points = points + g.tools[tool] * g.tool_threshold end
         return math.max(0, points - (not R.reduced_motion and bonus_in_flight[tool] or 0))
     end
 

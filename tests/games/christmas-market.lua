@@ -13,6 +13,7 @@ rules("building_economy")
 default_frames = 3
 rules("christmas")
 rules("christmas_story")
+rules("upgrades")
 rules("christmas_leaderboard")
 smoke()
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer", "quick")
@@ -24,12 +25,20 @@ shot("debug-phone-board", "390x844", "--debug-walkthrough --level 4 --frames 180
 shot("debug-phone-town", "390x844", "--debug-walkthrough --city 2 --frames 180 --safe-area 0,47,0,34")
 shot("market", "480x900", "--showcase")
 shot("phone-market", "390x844", "--showcase --safe-area 0,47,0,34")
+shot("opening-market", "480x900", "")
+shot("phone-opening-market", "390x844", "--safe-area 0,47,0,34")
+shot("starter-stall-footprint", "480x900", "--footprints")
 shot("lantern-opening", "480x900", "--level 1")
+shot("lantern-opening-phone", "390x844", "--level 1 --safe-area 0,47,0,34")
 shot("main-character-board", "480x900", "--level 4")
-local booster_review = "--lua tests/fixtures/christmas-boosters;games/christmas-market/lua;. --level 20 "
+local bonus_fixture = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. "
+local booster_review = bonus_fixture .. "--level 10 "
 shot("booster-toolbar", "480x900", booster_review .. "--frames 10")
 shot("booster-toolbar-phone", "390x844", booster_review .. "--frames 10 --safe-area 0,47,0,34")
-shot("booster-spent", "390x844", booster_review .. "--spend-booster --frames 16 --safe-area 0,47,0,34")
+shot("hammer-toolbar-phone", "390x844", bonus_fixture .. "--level 4 --frames 10 --safe-area 0,47,0,34")
+shot("booster-spent", "390x844", booster_review .. "--spend-bonus --frames 25 --safe-area 0,47,0,34")
+shot("chapel-reward", "480x900", "--catalogue-card 34 --frames 35")
+shot("stable-reward", "480x900", "--catalogue-card 35 --frames 35")
 local booster_flight = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. --fly-bonus "
 local booster_safe = " --safe-area 0,47,0,34"
 reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 5" .. booster_safe)
@@ -53,7 +62,7 @@ reel("story-floor-train-win", 12, 12, "480x900", "--level 28 --reveal 1 --reel")
 shot("element-states", "480x900", "--element-states")
 reel("christmas-market-welcome-panes", 25, 15, "480x900", "--level 9 --floor-reel oil --reel")
 frame("christmas-market-tablet-hints", "480x900",
-    "--lua tests/fixtures/tablet-hints;games/christmas-market/lua;. --level 10 --frames 55")
+    "--lua tests/fixtures/tablet-hints;games/christmas-market/lua;. --level 10 --hint-three --frames 55")
 reel("christmas-market-sawdust-panes", 25, 15, "480x900", "--level 4 --floor-reel oil --reel")
 shot("designed-lanes", "480x900", "--level 4")
 shot("find-letter-480", "480x900", "--level 19")
@@ -103,11 +112,19 @@ local footprints = "--lua tests/fixtures/christmas-footprints;games/christmas-ma
 shot("adjacent-foundations", "480x900", footprints)
 shot("phone-adjacent-foundations", "390x844", footprints .. " --safe-area 0,47,0,34")
 shot("art-states", "480x900", "--art-states")
+shot("bonus-art-states", "480x900", "--art-states bonuses")
 shot("hud-states", "480x900", "--hud-states")
 shot("pieces-board", "480x900", "--art-board")
 shot("building-card", "480x900", "--card 2")
 reel("christmas-market-board-intro", 18, 6, "480x900", "--level 4 --present --reel")
 for page = 1, 10 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
+shot("second-row-footprints", "480x900", "--building-review 10 --footprints")
+shot("second-row-footprints-phone", "390x844", "--building-review 10 --footprints --safe-area 0,47,0,34")
+for _, page in ipairs{1, 2, 8, 9, 10} do
+    shot("chimney-page-" .. page, "480x900", "--building-review " .. page .. " --frames 120")
+end
+shot("chimney-phone", "390x844", "--building-review 10 --frames 120 --safe-area 0,47,0,34")
+reel("chimney-smoke", 12, 12, "480x900", "--building-review 10 --reel")
 
 -- Shared-engine atlas and refill captures: all runs share this test process.
 for _, size in ipairs{"480x900", "390x844"} do
@@ -142,14 +159,21 @@ for _, size in ipairs{"480x900", "390x844"} do
     shot(prefix .. "opening", size, "--story-beat before-01 --frames 240" .. safe)
     shot(prefix .. "agnes", size, "--story-beat before-01 --story-line 2 --frames 240" .. safe)
     shot(prefix .. "theo", size, "--story-beat after-01 --frames 240" .. safe)
-    shot(prefix .. "wren", size, "--story-beat before-01 --story-line 6 --frames 240" .. safe)
+    shot(prefix .. "wren", size, "--story-beat before-01 --story-line 3 --frames 240" .. safe)
     shot(prefix .. "henrik", size, "--story-beat after-13 --frames 240" .. safe)
     shot(prefix .. "shout", size, "--story-beat after-03 --frames 240" .. safe)
-    shot(prefix .. "finale", size, "--story-beat after-30 --story-line 15 --frames 240" .. safe)
+    shot(prefix .. "finale", size, "--story-beat after-30 --story-line 3 --frames 240" .. safe)
     shot(prefix .. "end", size, "--dialog finale" .. safe)
 end
 shot("story-level-20", "480x900", "--level 20")
-shot("story-borrowed-lamps", "480x900", "--story-beat after-27 --story-line 9 --frames 240")
+local new_cast = {alder = "before-40 --story-line 2", finch = "after-47 --story-line 3",
+                  mary = "after-94 --story-line 2", rosa = "after-95 --story-line 2"}
+for _, speaker in ipairs{"alder", "finch", "mary", "rosa"} do
+    local args = "--story-beat " .. new_cast[speaker] .. " --frames 240"
+    shot("new-cast-" .. speaker, "480x900", args)
+    shot("new-cast-" .. speaker .. "-phone", "390x844", args .. " --safe-area 0,47,0,34")
+end
+shot("story-borrowed-lamps", "480x900", "--story-beat after-27 --story-line 3 --frames 240")
 shot("story-staying", "390x844", "--story-beat after-29 --story-line 2 --frames 240 --safe-area 0,47,0,34")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
 shot("dialogue-bar-480", "480x900", "--story-beat before-01 --talk-through 270 --frames 535")
@@ -167,4 +191,8 @@ if getenv("SPRITE_SCENARIO") == "1" then
     for level = 1, 30 do frame(("scenario-christmas-market-board-%02d"):format(level), "480x900", "--level " .. level .. " --frames 3") end
     for epoch = 1, 5 do frame("scenario-christmas-market-town-epoch-" .. epoch, "480x900", "--epoch " .. epoch .. " --frames 3") end
 end
+rules("relic_balance")
 rules("tune_moves")
+
+shot("square-winter-wreath", "390x844", "--level 2 --frames 6 --safe-area 0,47,0,34")
+shot("square-christmas-star", "480x900", "--level 10 --frames 6")

@@ -4,7 +4,7 @@
 Every registered sprite is packed into one atlas per kind of art, so a reskin
 redraws one family at a time in one style: pieces, blockers, cells, boosters,
 hud and fx (see docs/ASSET_LAYOUT.md). Backgrounds are separate files, never
-packed. Match-3 ice uses a canonical mask and baked opacity. Control sprites
+packed. Match-3 ice uses geometry-specific registration and baked opacity. Control sprites
 are packed with their authored colors and alpha. --check never writes runtime
 assets.
 """
@@ -22,6 +22,7 @@ from match3_elements_art import NAMES as ELEMENT_NAMES
 import match3_buttons
 import match3_theme_art
 import pack_particles
+import square_board_frame
 
 ROOT = Path(__file__).resolve().parents[1]
 ICE_DIR = ROOT / 'art/match3-ice'
@@ -36,6 +37,16 @@ ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'open-hex.png', 'concept
                                          'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt',
                                          'filled-pane-prompt.txt')]
 ICE_INPUTS += [HEX_MASK, ROOT / 'engine/art/hex-tile/hex-mask-preview.png']
+SQUARE_DIR = ROOT / 'art/match3-square'
+SQUARE_BLOCKER_CROPS = {
+    'chain-square-1': (48, 36, 592, 580),
+    'chain-square-2': (662, 36, 1210, 584),
+    'ice-square-1': (53, 662, 596, 1199),
+    'ice-square-2': (658, 665, 1202, 1199),
+}
+SQUARE_BLOCKER_INPUTS = [SQUARE_DIR / name for name in (
+    'blockers.png', 'blockers-prompt.txt', 'blockers-edit-target.png', 'blockers-ice-reference.png')]
+SQUARE_ICE_OPACITY = {'luma': [170, 235], 'opacity': [.55, .95]}
 SIGNBOARD_DIR = ROOT / 'art/match3-signboards'
 SIGNBOARD_CROPS = {
     # Centre each crop on the painted face so live counters share its axis.
@@ -70,7 +81,7 @@ def group_of(name):
         return 'fx'
     if name.startswith(('chain', 'ice-', 'stone-', 'crate-')):
         return 'blockers'
-    if name.startswith('tile-') or name in ('selected', 'hint', 'guide', 'cell-mask', 'board-frame'):
+    if name.startswith(('tile-', 'square-')) or name in ('selected', 'hint', 'guide', 'cell-mask', 'board-frame'):
         return 'cells'
     if name in HUD_NAMES or name.startswith(('pause-', 'board-pause-', 'shop-')):
         return 'hud'
@@ -129,8 +140,19 @@ def lua_frames(frames, indent):
     return ''.join(f'{indent}["{name}"]={{' + ','.join(map(str, box)) + '},\n' for name, box in frames.items())
 
 
-def lua_sheet(path, frames, indent='    '):
-    return f'{indent}{{path="{path}", frames={{\n' + lua_frames(frames, indent + '    ') + f'{indent}}}}}'
+def lua_sheet(path, frames, indent='    ', grid_width=None):
+    grid = ''
+    if grid_width is None:
+        entries = lua_frames(frames, indent + '    ')
+    else:
+        grid = f' grid={CELL},'
+        columns = grid_width // CELL
+        indices = {}
+        for name, (x, y, w, h) in frames.items():
+            assert w == h == CELL and x % CELL == y % CELL == 0, name
+            indices[name] = (y // CELL) * columns + x // CELL
+        entries = ''.join(f'{indent}    ["{name}"]={slot},\n' for name, slot in indices.items())
+    return f'{indent}{{path="{path}",{grid} frames={{\n' + entries + f'{indent}}}}}'
 
 
 def lua_strings(table, indent='    '):
@@ -213,6 +235,33 @@ def registered_ice():
                              'crop': list(box), 'canvas': list(mask.size), 'opacity_ramp': ramp,
                              'mask': str(HEX_MASK.relative_to(ROOT))}
     return sprites, records
+
+
+def registered_square_blockers(root):
+    source, prompt, edit_target, ice_reference = SQUARE_BLOCKER_INPUTS
+    with Image.open(source) as sheet:
+        assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254)
+        sprites = {name: sheet.crop(box).resize((CELL, CELL), Image.Resampling.LANCZOS)
+                   for name, box in SQUARE_BLOCKER_CROPS.items()}
+    low, high = SQUARE_ICE_OPACITY['luma']
+    clear, bright = SQUARE_ICE_OPACITY['opacity']
+    curve = [round(255 * (clear + (bright - clear) * min(1, max(0, (value - low) / (high - low)))))
+             for value in range(256)]
+    for name, sprite in sprites.items():
+        if name.startswith('ice-'):
+            opacity = sprite.convert('L').point(curve)
+            sprite.putalpha(ImageChops.multiply(sprite.getchannel('A'), opacity))
+    return sprites, {
+        'source': relpath(source, root),
+        'prompt': relpath(prompt, root),
+        'edit_target': relpath(edit_target, root),
+        'ice_reference': relpath(ice_reference, root),
+        'crops': SQUARE_BLOCKER_CROPS,
+        'canvas': [CELL, CELL],
+        'transform': 'Crop and resize with Lanczos, then multiply ice alpha by the luminance ramp',
+        'ice_opacity_ramp': SQUARE_ICE_OPACITY,
+        'review': 'docs/square-match3.md#blockers-and-target-hints',
+    }
 
 
 def build_default(check):
@@ -300,7 +349,7 @@ def build_default(check):
         path = f'data/board/{group}.png'
         write_asset(ROOT / 'engine' / path, png(sheet))
         outputs.append(ROOT / 'engine' / path)
-        sheets.append(lua_sheet(path, sheet_frames, '        '))
+        sheets.append(lua_sheet(path, sheet_frames, '        ', sheet.width if group == 'pieces' else None))
     write_asset(outputs[1], '-- Generated by python3 tools/match3_atlas.py; do not edit.\n'
                 '-- The engine\'s default skin: one atlas per kind of art, read from the\n'
                 '-- engine\'s resource directory, and a separate background.\n'
@@ -357,12 +406,85 @@ def folder_sprites(folder, prefix):
     return {prefix + path.stem: path for path in sorted(folder.glob('*.png'))}
 
 
+PAPYRUS_FLOORS = {
+    'square-plain': (40, 38, 379, 379),
+    'square-target': (457, 39, 797, 379),
+    'square-double': (875, 39, 1215, 379),
+}
+
+
+def square_frame_sprites(game, root):
+    rail = None
+    if game == 'christmas-market':
+        sprites, leaf_spec, rail, inputs = square_board_frame.generate_christmas(root / 'art/square-frame')
+    else:
+        sprites, leaf_spec, inputs = square_board_frame.generate(root / 'art/papyrus-board/stone-cracks.png')
+    recipe = relpath(square_board_frame.__file__, root)
+    registration = {}
+    for name, sprite in sprites.items():
+        registered = root / 'art/registered/square-cells' / f'{name}.png'
+        write_asset(registered, png(sprite))
+        registration[name] = {
+            'generator': recipe, 'size': list(sprite.size),
+            'pivot': [sprite.width // 2, sprite.height // 2],
+            'registered': relpath(registered, root),
+        }
+        inputs.append(registered)
+        if rail:
+            registration[name]['rail'] = rail
+        if name.endswith('-leaf'):
+            registration[name]['foliage'] = leaf_spec
+    return sprites, inputs, registration
+
+
+def square_cells(game, root):
+    source = SQUARE_DIR / 'source.png'
+    papyrus = root / 'art/papyrus-board/contact.png'
+    materials = {
+        'square-plain': (0, 0, 256, 256),
+        'square-target': (256, 0, 512, 256),
+        'square-selected': (512, 0, 768, 256),
+        'square-double': (768, 0, 1024, 256),
+        'square-grout': (1312, 32, 1504, 224),
+    }
+    sprites, registration = {}, {}
+    inputs = [source, SQUARE_DIR / 'prompt.txt', SQUARE_DIR / 'lighting-prompt.txt']
+    if game == 'relic-rush':
+        sheets = [(papyrus, PAPYRUS_FLOORS, 0),
+                  (source, {name: materials[name] for name in ('square-selected', 'square-grout')}, 0)]
+        inputs += [papyrus, papyrus.with_name('contact-layout.png'), papyrus.with_name('contact-prompt.txt')]
+    else:
+        sheets = [(source, materials, 512)]
+    for path, crops, row in sheets:
+        with Image.open(path) as sheet:
+            for name, (x0, y0, x1, y1) in crops.items():
+                box = (x0, y0 + row, x1, y1 + row)
+                size = (128, 128)
+                sprite = sheet.crop(box).convert('RGBA').resize(size, Image.Resampling.LANCZOS)
+                # Isolate the painted rim so the active target remains visible through it.
+                if name == 'square-selected':
+                    sprite.paste((0, 0, 0, 0), (11, 11, 117, 117))
+                registered = root / 'art/registered/square-cells' / f'{name}.png'
+                write_asset(registered, png(sprite))
+                sprites[name] = sprite
+                registration[name] = {'source': relpath(path, root), 'crop': list(box), 'size': list(size),
+                                      'registered': relpath(registered, root)}
+                if name == 'square-selected':
+                    registration[name]['transparent_center'] = [11, 11, 117, 117]
+                inputs.append(registered)
+    frame_sprites, frame_inputs, frame_registration = square_frame_sprites(game, root)
+    sprites.update(frame_sprites)
+    registration.update(frame_registration)
+    inputs.extend(frame_inputs)
+    return sprites, inputs, registration
+
+
 def game_sprites(game, root):
     """The game's other registered sprite sets, under the keys its art.lua uses."""
     registered = root / 'art/registered'
     files = folder_sprites(registered / 'board-tiles', 'tile-')
     files |= folder_sprites(registered / 'story-pieces', 'story-')
-    sprites, inputs = {}, []
+    sprites, inputs, aliases = {}, [], {}
     if game == 'relic-rush':
         manifest = json.loads((root / 'art/board-states/manifest.json').read_text())
         files |= folder_sprites(registered / 'resource-pieces', 'resource-')
@@ -375,13 +497,16 @@ def game_sprites(game, root):
         inputs += [registered / name for name in ('campaign-pieces.png', 'result-icons.png', 'bonus-gems.png')]
     else:
         manifest = json.loads((root / 'art/manifest.json').read_text())
-        bonus_frames = manifest['bonus_buttons']['icons'].values()
-        goods = manifest['market_goods']['frames']
-        sprites |= grid_sprites(registered / 'market-goods.png', [f'market-{i}' for i in range(len(goods))], 4)
+        buttons = manifest['bonus_buttons']
+        bonus_frames = list(buttons['icons'].values())
+        goods = manifest['market_goods']
+        aliases = goods['aliases']
+        names = [None if name in aliases else name for name in goods['frames']]
+        sprites |= grid_sprites(registered / 'market-goods.png', names, 4)
         inputs.append(registered / 'market-goods.png')
     for name, path in files.items():
         sprites[name] = Image.open(path).convert('RGBA')
-    return sprites, inputs + list(files.values()), bonus_frames
+    return sprites, inputs + list(files.values()), bonus_frames, aliases
 
 
 def build_game(game, check):
@@ -440,11 +565,16 @@ def build_game(game, check):
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
     loaded["glow"] = glow
-    extra, extra_inputs, bonus_frames = game_sprites(game, root)
+    extra, extra_inputs, bonus_frames, piece_aliases = game_sprites(game, root)
     assert not set(extra) & set(loaded), set(extra) & set(loaded)
     loaded.update(extra)
+    aliases.update(piece_aliases)
+    squares, square_inputs, square_registration = square_cells(game, root)
+    loaded.update(squares)
+    square_blockers, square_blocker_registration = registered_square_blockers(root)
+    loaded.update(square_blockers)
     button_centers = {}
-    for name in sorted(set(bonus_frames)):
+    for name in sorted(bonus_frames):
         image = loaded[name]
         x, y = match3_buttons.alpha_center(image)
         button_centers[name] = (f'{x / image.width:.7f}', f'{y / image.height:.7f}')
@@ -458,7 +588,8 @@ def build_game(game, check):
     header = '-- Generated by python3 tools/match3_atlas.py; do not edit.\n'
     tables = {
         'lua/match3_atlases.lua': header + '-- One atlas per kind of art, each drawn together in one style.\nreturn {\n' +
-            ''.join(f'    {group}=' + lua_sheet(f'board/{group}.png', frames).lstrip() + ',\n' for group, (_, frames) in packed.items()) + '}\n',
+            ''.join(f'    {group}=' + lua_sheet(f'board/{group}.png', frames, grid_width=sheet.width if group == 'pieces' else None).lstrip()
+                    + ',\n' for group, (sheet, frames) in packed.items()) + '}\n',
         'lua/match3_skin.lua': header + 'local atlases = require("match3_atlases")\nreturn {\n    sheets={' +
             ', '.join(f'atlases.{group}' for group in BOARD_GROUPS if group in packed) + '},\n' +
             '    button_centers={\n' + lua_frames(button_centers, '        ') + '    },\n' +
@@ -470,6 +601,23 @@ def build_game(game, check):
     for name, text in tables.items():
         write_asset(root / name, text)
         outputs.append(root / name)
+    if game == 'relic-rush':
+        square_sources = {'source': 'art/papyrus-board/contact.png',
+                          'layout': 'art/papyrus-board/contact-layout.png',
+                          'prompt': 'art/papyrus-board/contact-prompt.txt',
+                          'frame_recipe': '../../tools/square_board_frame.py',
+                          'frame_texture': 'art/papyrus-board/stone-cracks.png',
+                          'frame_texture_prompt': 'art/papyrus-board/stone-cracks-prompt.txt',
+                          'frame_texture_blend': 'multiply',
+                          'selection_and_grout': '../../art/match3-square/source.png'}
+    else:
+        square_sources = {'source': '../../art/match3-square/source.png',
+                          'prompt': '../../art/match3-square/prompt.txt',
+                          'lighting_prompt': '../../art/match3-square/lighting-prompt.txt',
+                          'frame_recipe': '../../tools/square_board_frame.py',
+                          'frame_styles': 'art/square-frame/styles.json',
+                          'frame_source': 'art/square-frame/variants.png',
+                          'frame_prompt': 'art/square-frame/prompt.txt'}
     manifest = {'atlases': {group: {'runtime': f'data/board/{group}.png', 'size': list(sheet.size)}
                             for group, (sheet, _) in packed.items()},
                 'board': BOARD_GROUPS, 'hud': hud_groups,
@@ -484,12 +632,17 @@ def build_game(game, check):
                               'crop': list(signboard_crop), 'size': list(signboard.size),
                               'state': 'static backplate', 'frame': 'signboard'},
                 'board_theme': theme_registration,
+                'square_cells': {**square_sources,
+                                 'frames': square_registration,
+                                 'review': 'docs/square-match3.md'},
+                'square_blockers': square_blocker_registration,
                 'procedural_glow': 'Original 64px white cubic radial alpha; transient light, packed alongside sprites',
                 'transform': 'RGBA canvases packed without resizing, recoloring or alpha changes; 2px transparent gutters',
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
-    inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs + [Path(match3_buttons.__file__)]
+    inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs + [Path(match3_buttons.__file__)] + square_inputs
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
     inputs += ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
+    inputs += SQUARE_BLOCKER_INPUTS
     inputs += [root / 'data' / path for path in (images | hud_images).values()]
     if game == 'relic-rush':
         inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]

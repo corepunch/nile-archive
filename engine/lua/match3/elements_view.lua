@@ -178,7 +178,7 @@ local NORTH_RIM = rect(3 * FRAME_SLOT, 3 * FRAME_SLOT, FRAME_SLOT, FRAME_SLOT)
 local frame_vertices, frame_sources = {}, {}
 for k = 0, 5 do
     local angle = math.rad(60 * k)
-    frame_vertices[k] = vec2(math.cos(angle), math.sin(angle))
+    frame_vertices[k + 1] = vec2(math.cos(angle), math.sin(angle))
 end
 for row = 0, 2 do
     frame_sources[row] = {}
@@ -336,8 +336,8 @@ local function frame_layout(R, rules)
             end
             for k = 0, 5 do
                 if open[k] then
-                    local a = centre + frame_vertices[k]:scale(r)
-                    local b = centre + frame_vertices[(k + 1) % 6]:scale(r)
+                    local a = centre + frame_vertices[k + 1]:scale(r)
+                    local b = centre + frame_vertices[(k + 1) % 6 + 1]:scale(r)
                     local edge = {a = a, b = b, at = (a + b):scale(.5), source = frame_sources[0][k],
                                   direction = k, empty = open[k]}
                     edges[#edges + 1] = edge
@@ -454,13 +454,21 @@ function E.cradle_ground(R)
     for key, value in pairs(E.CRADLE_GROUND) do R.GROUND[key] = value end
 end
 
--- The art a cell's breakable floor layer is painted with, as E.ground paints
--- it, for effects that break it (match3.shatter): ice, else the top tablet
--- layer. Tablets use the Cradle of Rome tablet tiles.
+local square_ice = {"ice-square-1", "ice-square-2"}
+local square_chain = {"chain-square-1", "chain-square-2"}
+local function blocker_art(R, states, hits)
+    return R.board_art[states[math.min(hits, #states)]]
+end
+
+-- Art for the layer removed by a shatter effect.
 function E.layer_art(R, floor, oil, ice)
     local tiles = R.GROUND.tiles or {}
-    if ice > 0 then return tiles.ice and R.board_art[tiles.ice] end
-    if oil > 1 and tiles.double then return R.board_art[tiles.double] end
+    if ice > 0 then
+        if R.board_art[square_ice[1]] then return blocker_art(R, square_ice, ice) end
+        return tiles.ice and R.board_art[tiles.ice]
+    end
+    local double = floor and floor.double or tiles.double
+    if oil > 1 and double then return R.board_art[double] end
     if oil > 0 then return R.board_art[floor and floor.covered or TABLET] end
 end
 
@@ -473,6 +481,7 @@ local function draw_floor_cell(R, i, at, material, alpha)
     gfx.image_rot(R.board_art[material or TABLET], rect.centered(at, size2.splat(2 * radius)), turn, tint)
 end
 
+local square_vertices = {vec2(1, -1), vec2(1, 1), vec2(-1, 1), vec2(-1, -1)}
 local function draw_tablet_hints(R, rules, sx, floor)
     local g = R.g
     if not (floor and floor.tablet_hint and g.oil_left > 0 and g.oil_left <= 3)
@@ -480,10 +489,11 @@ local function draw_tablet_hints(R, rules, sx, floor)
     local time = R.tablet_hint_time(R.idle_hint_age())
     if not time then return end
     local radius = R.HEX_R - (R.GROUND.seam_width or FLOOR_INSET) - 1
+    local vertices = rules.square and square_vertices or frame_vertices
     for i = 0, rules.CELLS - 1 do
         local layers = g.oil[i] or 0
         if layers > 0 and rules.game_cell_active(g, i) then
-            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, frame_vertices, time, layers > 1)
+            R.vfx_tablet_hint(R.cell_pos(i) + vec2(sx, 0), radius, vertices, time, layers > 1)
         end
     end
 end
@@ -510,11 +520,111 @@ function E.cell_highlights(R, rules, sx, alpha)
     draw(R.selected or -1, tiles.selected, 1)
 end
 
+local square_cells = {"square-plain", "square-target", "square-double", "square-selected", "square-grout"}
+
+-- Neighbour bits are ordered clockwise from north, with one diagonal
+-- between each pair of sides. Match the masks baked by square_board_frame.py.
+local square_frame_neighbours = {{0,-1}, {1,-1}, {1,0}, {1,1}, {0,1}, {-1,1}, {-1,0}, {-1,-1}}
+
+local function square_frame_art(skin)
+    local frames = {}
+    for mask = 1, 255 do
+        local shape = mask
+        for k = 0, 6, 2 do
+            if shape & ((1 << k) | (1 << ((k + 2) % 8))) ~= 0 then
+                shape = shape & ~(2 << k)   -- the side already covers this corner
+            end
+        end
+        local best, turn = shape, 0
+        for k = 1, 3 do
+            shape = ((shape << 2) | (shape >> 6)) & 255
+            if shape < best then best, turn = shape, 4 - k end
+        end
+        local key = "square-frame-" .. best
+        frames[mask] = {stone=assert(skin[key], key), leaf=skin[key .. "-leaf"], turn=turn}
+    end
+    return frames
+end
+
+function E.load_square(art, skin)
+    for _, key in ipairs(square_cells) do art[key] = assert(skin[key], key) end
+    for _, states in ipairs{square_ice, square_chain} do
+        for _, key in ipairs(states) do art[key] = assert(skin[key], key) end
+    end
+    art.square_frame = square_frame_art(skin)
+end
+
+local function draw_square_frame(R, rules, sx, tint)
+    if tint.a <= 0 then return end
+    local step, frames = 2 * R.HEX_R, R.board_art.square_frame
+    local size = size2.splat(step)
+    local origin = R.board_origin + vec2(sx, 0)
+    local function occupied(q, row)
+        return rules.game_cell_active(R.g, rules.hex_index(q, row))
+    end
+    local q0, row0 = rules.hex_q(0), rules.hex_r(0)
+    local leafy = {[0]=false, true, false, true}
+    -- Include the empty ring just outside the configured grid. Each
+    -- occupied floor cell keeps its entire rectangle clear of frame art.
+    for q = q0 - 1, q0 + rules.COLUMNS do
+        for row = row0 - 1, row0 + rules.ROWS do
+            if not occupied(q, row) then
+                local mask = 0
+                for i, offset in ipairs(square_frame_neighbours) do
+                    if occupied(q + offset[1], row + offset[2]) then mask = mask | (1 << (i - 1)) end
+                end
+                local tile = frames[mask]
+                if tile then
+                    local sprite, turn = tile.stone, tile.turn
+                    -- The planted NE corner also needs a diagonal floor cell.
+                    if tile.leaf and mask & (2 << (2 * turn)) ~= 0 then
+                        if leafy[turn] then sprite = tile.leaf end
+                        leafy[turn] = not leafy[turn]
+                    end
+                    local box = rect.centered(origin + vec2(step * q, step * row), size)
+                    gfx.image_rot(sprite, box, turn * math.pi / 2, tint)
+                end
+            end
+        end
+    end
+end
+
+local function draw_square_ground(R, rules, sx, floor, alpha, frame_alpha)
+    local active, game = rules.game_cell_active, R.g
+    local r, art = R.HEX_R, R.board_art
+    local tint = color(255, 255, 255, 255 * frame_alpha)
+    each_ground_cell(R, rules, sx, function(_, at, scale, turn)
+        local box = rect.centered(at, size2.splat(2 * r * scale))
+        gfx.image_rot(art["square-grout"], box, turn, tint)
+    end)
+    each_ground_cell(R, rules, sx, function(i, at, scale, turn)
+        local box = rect.centered(at, size2.splat(2 * (r - R.GROUND.seam_width) * scale))
+        local layers = game.oil[i]
+        local key = layers > 1 and floor.double or layers > 0 and floor.covered or floor.normal
+        gfx.image_rot(art[key], box, turn, color(255, 255, 255, 255 * alpha))
+    end)
+    draw_square_frame(R, rules, sx, tint)
+    local function outline(i, opacity)
+        draw_floor_cell(R, i, R.cell_pos(i) + vec2(sx, 0), "square-selected", alpha * opacity)
+    end
+    local aim = R.aim_cell or -1
+    if aim >= 0 then
+        for i in pairs(rules.game_tool_area(game, R.tool, aim) or {}) do outline(i, .82) end
+    end
+    local selected = R.selected or -1
+    if active(game, selected) then outline(selected, 1) end
+end
+
 -- Paint the full board surface before pieces and blockers.
 function E.ground(R, rules, sx, floor)
     local g, intro = R.g, R.intro
     local alpha = intro and intro:fade() or 1
     local frame_alpha = intro and intro:frame_fade() or 1
+    if rules.square then
+        draw_square_ground(R, rules, sx, floor, alpha, frame_alpha)
+        draw_tablet_hints(R, rules, sx, floor)
+        return
+    end
     local frame = draw_ground_backing(R, rules, sx, alpha, frame_alpha, floor and floor.normal)
     -- A reveal can show during play or wait for the first clear.
     local level = rules.level_of(g)
@@ -566,6 +676,27 @@ function E.ground(R, rules, sx, floor)
     end
 end
 
+-- Ice and chains sit above the piece and stay centred on the square cell.
+function E.square_blockers(R, rules, sx)
+    local g, intro = R.g, R.intro
+    local cover = E.reveal_cover(R, rules)
+    if cover <= 0 then return end
+    local side = 2 * (R.HEX_R - R.GROUND.seam_width)
+    for i = 0, rules.CELLS - 1 do
+        local ice, chain = g.ice[i], g.chain[i]
+        if (ice > 0 or chain > 0) and rules.game_cell_active(g, i) then
+            local visible, scale, alpha = true, 1, 1
+            if intro then visible, scale, alpha = intro:blocker(i); alpha = alpha * intro:fade() end
+            if visible then
+                local dst = rect.centered(R.cell_pos(i) + vec2(sx, 0), size2.splat(side * scale))
+                local tint = color(255, 255, 255, 255 * alpha * cover)
+                if ice > 0 then gfx.image(blocker_art(R, square_ice, ice), dst, tint) end
+                if chain > 0 then gfx.image(blocker_art(R, square_chain, chain), dst, tint) end
+            end
+        end
+    end
+end
+
 -- Fixed blockers cover the piece area.
 function E.blockers(R, rules, sx)
     local g = R.g
@@ -599,9 +730,10 @@ end
 -- A soft drop shadow under a board piece, so it stays legible on bright floor
 -- art: the piece's silhouette inked dark blue (a single full-width stripe),
 -- dropped and spread over a ring of faint taps. size is the piece's drawn
--- width in logical pixels.
-local SHADOW_TAPS = 8
-local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .035, .025, 11
+-- width in logical pixels. Square-board pieces nearly fill their cells, so the
+-- shadow drops 7% of the piece to clear its rim and read on the floor.
+local SHADOW_TAPS = 12
+local SHADOW_DROP, SHADOW_SPREAD, SHADOW_TAP_ALPHA = .07, .06, 14
 local SHADOW_INK = color(22, 38, 92, 255)
 function E.piece_shadow(tex, dst, alpha, size)
     local drop, spread = size * SHADOW_DROP, size * SHADOW_SPREAD
@@ -612,10 +744,6 @@ function E.piece_shadow(tex, dst, alpha, size)
         local a = k / SHADOW_TAPS * 2 * math.pi
         gfx.image_striped(tex, base:offset(vec2(math.cos(a) * spread, math.sin(a) * spread)), 0, 1, 1, SHADOW_INK, tint)
     end
-end
-
-function E.chain(R,g,i)
-    return R.board_art[g.chain[i]>1 and "chain-2" or "chain"]
 end
 
 return E

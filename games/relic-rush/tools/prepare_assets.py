@@ -111,6 +111,11 @@ def prepare_portraits():
         if name == 'adrian':
             im = im.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
         im.save(DATA / 'story/characters' / f'{name}.png', optimize=True)
+    marisol = Image.open(ART / 'art-direction' / 'marisol.png').convert('RGBA')
+    marisol.thumbnail((264, 324), Image.Resampling.LANCZOS)
+    marisol.save(DATA / 'story/characters' / 'marisol.png', optimize=True)
+
+
 def prepare_keeper():
     keeper = Image.open(ART / 'art-direction' / 'ancient-keeper.png').convert('RGBA')
     keeper.thumbnail((264, 324), Image.Resampling.LANCZOS)

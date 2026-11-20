@@ -1,5 +1,7 @@
 # Epoch one outline · A Light Below
 
+> This page records the 100-level campaign's predecessor: a ten-expedition first epoch with crew requests, which were removed from the game in commit f98aedd2. The current campaign is in [the script](story.md) and [square-match3.md](square-match3.md).
+
 The first epoch is Chapter 1 of the [script](story.md#chapter-1-a-light-below): expeditions 1–10, four restorations, five crew requests and the field test that follows the cable. It ends when the Village's watch gets an answer from across the gap and the player chooses who replies. This page puts the pieces in play order. The sources it summarizes stay authoritative: [script](story.md), [requests](../lua/quests.lua), [buildings and prices](../lua/buildings.lua), [unlock ladder](../lua/economy.lua), [move budgets](level-moves.md) and the [playtest plan](epoch-one-quests.md).
 
 ## Premise

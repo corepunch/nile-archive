@@ -1,5 +1,7 @@
 # Relic Rush board progression
 
+> This page records the archived hex campaign. The active 100-board square campaign is described in [square-match3.md](square-match3.md); building names below are the current ones, with the Rome name in brackets.
+
 Every expedition asks the player to clear its plaques. Blue plaques take one
 hit and green plaques take two. Chains hold their pieces until a match or tool
 hit breaks the chain. A later hit clears the plaque beneath it. Ice and carved
@@ -101,11 +103,11 @@ Each expedition has six kinds. The starting pieces are two coins, a leaf, a flow
 
 Four sockets hold one charge each. A new tool takes over its socket and replaces the old collectible on the board, including when returning to a parked expedition. Matching six ordinary bonus pieces fills one charge. The painted piece appears from the bottom as the charge arrives. After using the tool its recessed silhouette is visible again. Each board can feature one active bonus family.
 
-- Hunter's Hut — Unlocks Hammer. Hit one cell.
-- Village — Unlocks Bomb. Hit a cell and its six neighbors.
-- Thermae — Unlocks Shield. Hit the row through a chosen cell.
-- Curia Octavia — Unlocks Hourglass. Add five moves.
-- House of the Vestals — Unlocks Lightning. Strike up to fifteen random cells.
+- Trapper's cabin (Hunter's Hut) — Unlocks Hammer. Hit one cell.
+- Expedition camp (Village) — Unlocks Bomb. Hit a cell and its six neighbors.
+- Tide clock tower (Thermae) — Unlocks Shield. Hit the row through a chosen cell.
+- Harbour lodge (Curia Octavia) — Unlocks Hourglass. Add five moves.
+- Cartographer's house (House of the Vestals) — Unlocks Lightning. Strike up to fifteen random cells.
 - Lighthouse — Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.
-- Mausoleum of Augustus — Unlocks Mixer. Shuffle the pieces.
-- Forum — Unlocks Star. Clear all pieces of a chosen kind.
+- Star observatory (Mausoleum of Augustus) — Unlocks Mixer. Shuffle the pieces.
+- Temple of the Sun (Forum) — Unlocks Star. Clear all pieces of a chosen kind.

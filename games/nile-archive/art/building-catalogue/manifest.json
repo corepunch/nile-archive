@@ -645,8 +645,8 @@
     3
    ],
    "pivot": [
-    265.062,
-    246.918
+    250.741,
+    224.314
    ],
    "base_width": 496.41,
    "scale": 1.0,
@@ -654,8 +654,8 @@
    "stars": 8,
    "note": "Relic slot 24 · workshop with statues in progress",
    "image": [
-    516,
-    411
+    501,
+    375
    ],
    "runtime": "data/city/buildings/sculptor_yard.png",
    "shadow": "data/city/building-shadows/sculptor_yard.png",
@@ -671,8 +671,8 @@
     4
    ],
    "pivot": [
-    291.26,
-    332.745
+    275.741,
+    359.44
    ],
    "base_width": 546.41,
    "scale": 1.0,
@@ -680,8 +680,8 @@
    "stars": 9,
    "note": "Relic slot 25 · terraced garden with pool and kiosk",
    "image": [
-    554,
-    520
+    551,
+    538
    ],
    "runtime": "data/city/buildings/pharaoh_garden.png",
    "shadow": "data/city/building-shadows/pharaoh_garden.png",

@@ -66,6 +66,7 @@ are the guides.
 | `board_tiles.py` | Bakes the shared board tiles into hex sprites for every game | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
 | `board_frame.py` | Bakes the hex border atlas and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |
+| `square_board_frame.py` | Bakes painted oak and textured sandstone into square perimeter modules and compares the eight winter materials | imported by `match3_atlas.py` or `python3 tools/square_board_frame.py --review build/square-frames.jpg` |
 | `board_frame_decor.py` | Registers separately painted board decorations | imported by `board_frame.py` |
 | `hex_tile_art.py` | Checks sprites against the engine's flat-top tile face | `python3 tools/hex_tile_art.py <art.png> --mode fill --strict` |
 | `artkit.py` | Shared Pillow and NumPy helpers for the art scripts | imported |
@@ -76,13 +77,16 @@ are the guides.
 
 | Script | What it does | Run |
 | --- | --- | --- |
-| `balance.py` | One run that sets every fitted value: compiles the boards, fits the move budgets, fits Relic Rush's restoration prices to the bot's income and writes them to the catalogue, lua and README, then runs the rule tests. The bots run the rules alone, one process per processor | `make balance GAME=relic-rush`; `BALANCE_ARGS=--trim` trims long boards first |
+| `balance.py` | One run that sets every fitted value: compiles the boards, fits the move budgets, fits both games' twenty purchase prices to the bot's measured income (Relic Rush writes `art/building-catalogue/story.json`, Christmas Market `catalogue.json`) and writes them to lua and the docs, then runs the rule tests. The bots run the rules alone, one process per processor | `make balance GAME=relic-rush`; `BALANCE_ARGS=--trim` trims long boards first |
 | `hex_levels.py` | Validates the hex level files, prints a board, writes `lua/boards.lua` and the overview sheets | `python3 tools/hex_levels.py relic-rush --lua`; `make levels-preview` |
-| `tune_moves.py` | Fits each board's move budget to its tier with the reference bot; writes `lua/level_moves.lua` and `docs/level-moves.md` | `python3 tools/tune_moves.py relic-rush` |
+| `square_boards.py` | Validates the 100 square boards per game (envelope, legend, connectivity, every target can receive pieces, at least six target layers); lists asymmetric boards as notes | `python3 tools/square_boards.py christmas-market`; add `--show N` to print a board |
+| `square_trim.py` | Uses the reference bot to remove the last targets cleared until each board's median fits its tier (easy 30, normal 45, hard 60, boss 70) | `python3 tools/square_trim.py relic-rush --levels 21-30 --report` |
+| `story_lines.py` | Lists story lines that may be narration rather than speech: no I/we/you, no name, no question or imperative ([why](../docs/STORY_WRITING.md#speech-only-no-narration)) | `python3 tools/story_lines.py christmas-market` |
+| `tune_moves.py` | Fits each board's `moves` in the square campaign's `lua/campaign.lua` to the bot's median times the tier margin and writes `docs/level-moves.md` and `.json` (`lua/level_moves.lua` is the archived hex path) | `python3 tools/tune_moves.py relic-rush` |
 | `balance_plaques.py` | Lists the plaques the bot clears last on each board and, with `--trim`, removes them until the bot's median game is at most twice the level's Homescapes move budget (`--high`); `--keep-blockers` trims plain plaques before chained and frozen ones | `python3 tools/balance_plaques.py relic-rush --levels 31-40`; add `--trim` to rewrite the level files |
 | `tests/lua/tune_moves.lua` | The bot side of `tune_moves.py` and `balance_plaques.py`; reports the move each plaque was cleared on | run by `tune_moves.py` |
 | `tests/lua/greedy_bot.lua` | The reference bot shared by the tuner and the balance runner | required |
-| `tests/lua/relic_balance.lua` | Plays every Relic Rush board, reports income and fits restoration prices; `balance.py` runs it one board per process and writes the prices | `make test-balance` (report only, same forty-game sample) |
+| `tests/lua/relic_balance.lua` | Plays every board of both games, reports income and fits purchase prices; `balance.py` runs it one board per process and writes the prices | `make test-balance` (report only, same forty-game sample) |
 
 ## Review captures and story
 
@@ -140,14 +144,15 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `fit_match3_edges.py` | Hex-edge remapping for the tinsel ring, used by `prepare_assets.py` |
 | `check_assets.py` | Checks shipped inventory, state coverage and icon exports (`make test-assets`) |
 | `prepare_catalogue.py` | Builds the catalogue around the rendered sprites (`--check` in `make test-assets`) |
-| `prepare_market_goods.py` | Registers the market pieces in one 4x4 atlas |
+| `prepare_market_goods.py` | Centres the market pieces and boosters against square cells and packs one atlas. Run with `--check` to verify. |
 | `prepare_character.py` | Resizes the character cutout and the app-icon master |
 | `prepare_hud.py` | Exports the navigation cells |
 | `prepare_story.py` | Compiles the reviewed story's lines; `--check` detects drift |
-| `prepare_story_cast.py` | Registers the five story busts (`--check` in `make test-assets`) |
+| `prepare_story_cast.py` | Registers the nine supporting story busts (`--check` in `make test-assets`) |
 | `prepare_story_pieces.py` | Fits the six story objects on the chip canvas |
 | **nile-archive** | |
 | `prepare_catalogue.py` | Builds the catalogue around the rendered sprites (after `tools/buildings.py`) |
+| `prepare_chimneys.py` | Imports the chimney paint-over and registers the smoke openings (`--check` verifies both) |
 | `import_buildings.py` | Recreates the colour-key building atlas from the accepted cutouts |
 | `make_icons.py` | Draws the coin and influence icons |
 | **emergency** | |

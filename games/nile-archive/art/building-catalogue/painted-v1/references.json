@@ -65,10 +65,8 @@
         "felucca_dock",
         "granary",
         "mud_house",
-        "pharaoh_garden",
         "pottery",
         "scribe_school",
-        "sculptor_yard",
         "villa",
         "watchtower",
         "weaver",
@@ -396,6 +394,49 @@
         "twin_palms"
       ],
       "render_baseline": "ef26de3"
+    },
+    {
+      "category": "z-footprint-fix",
+      "status": "accepted",
+      "render_baseline": "aefd5442716fb81a6fb093afd717b56dfaef9581",
+      "prompt": "art/building-catalogue/painted-v1/z-footprint-fix-prompt.txt",
+      "ordered_images": [
+        {
+          "role": "edit_target",
+          "path": "art/building-catalogue/painted-v1/z-footprint-fix-input.png",
+          "sha256": "49e534cdf864f31ce24dad77aedb5b2573d256ab32ba60452dc12f92c995ea23"
+        },
+        {
+          "role": "style_reference",
+          "path": "art/building-catalogue/painted-v1/z-footprint-fix-first.png",
+          "sha256": "63e1dc7bc2ba42690c85f4091596797f55451809d6499fdfcfe89ccc9ad470de"
+        }
+      ],
+      "output": "art/building-catalogue/painted-v1/z-footprint-fix-output.png",
+      "output_sha256": "f372453f69826a9f84d183d4cec1145623501d23aae575d70474b554caac85aa",
+      "layout": "art/building-catalogue/painted-v1/z-footprint-fix-layout.json",
+      "accepted_keys": [
+        "sculptor_yard",
+        "pharaoh_garden"
+      ],
+      "prior_version": {
+        "status": "rejected: semi-transparent halo",
+        "prompt": "art/building-catalogue/painted-v1/z-footprint-fix-first-prompt.txt",
+        "ordered_images": [
+          {
+            "role": "edit_target",
+            "path": "art/building-catalogue/painted-v1/z-footprint-fix-input.png",
+            "sha256": "49e534cdf864f31ce24dad77aedb5b2573d256ab32ba60452dc12f92c995ea23"
+          },
+          {
+            "role": "style_reference",
+            "path": "art/building-0.png",
+            "sha256": "85ad9bf577a0f9e8aeb8bdd8b333caf7ed0e11d6e8b71036c19a4d169a0c3068"
+          }
+        ],
+        "output": "art/building-catalogue/painted-v1/z-footprint-fix-first.png",
+        "output_sha256": "63e1dc7bc2ba42690c85f4091596797f55451809d6499fdfcfe89ccc9ad470de"
+      }
     }
   ]
 }

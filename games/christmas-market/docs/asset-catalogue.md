@@ -1,14 +1,31 @@
 # Christmas art direction catalogue
 
+## Square board
+
+The current campaign uses honey maple, frosted teal panes and olive-green
+double panes. Aged oak forms a narrow rail with rounded outside caps and
+bare or leafy inside joins. Built-in ImageGen painted eight original rail
+profiles and a holly sprig together in one [transparent sheet](../art/square-frame/variants.png)
+from the [recorded prompt](../art/square-frame/prompt.txt).
+The [style file](../art/square-frame/styles.json) selects the first profile.
+The registrar trims the painted ends, scales the selected profile to
+128 × 17 px, blends its ends across six pixels for continuous straight runs,
+then wraps the cross-section around the same perimeter masks as Relic Rush.
+The sprig is cropped and scaled proportionally and baked into eligible
+inside-corner modules. The [atlas registration](../art/match3-atlas.json)
+records the exact source crops and offsets. All perimeter modules pack into
+`data/board/cells.png`. The [review and reproduction commands](square-match3.md#modular-perimeter)
+cover all eight profiles and native views of the selected frame.
+
 ## Themed board art
 
-The live campaign uses [the Market goods atlas](#market-goods-and-tools).
-The earlier festive set remains available to the inherited preview surfaces.
+The live campaign uses [the Market goods atlas](#market-goods-and-tools) and
+shares the original light-blue mitten with the earlier festive previews.
 
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `festive-0` through `festive-5` | Bell, candy cane, holly, knitted mitten, bauble and gingerbread, in atlas order. |
-| `booster-star-icon`, `booster-firework-icon` | The Shooting Star and Firework Bomb booster icons: the painted cranberry-red row rocket with vanilla-ivory tips, and the evergreen bomb with a warm-gold belt, rope fuse and lit tip. Never drawn on the board: the engine has no special pieces. |
+| `booster-star-icon`, `booster-firework-icon` | A turquoise star for a kind clear and three bundled indigo crackers for a 3×3 burst. Both use the matching piece on the toolbar. |
 | `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
 | `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
@@ -28,9 +45,22 @@ The [earlier base sheet](../art/board-theme/source.png) and
 festive palette. The base sheet remains the source for certain reference elements.
 [Earlier in-game art review](screenshots/review/board-palette/README.md).
 
-Built-in ImageGen painted the rocket axes, bomb and rainbow gem together for both games. Only this game's row rocket and bomb are still registered, as the two booster icons above. The [painted sheet](../../../art/match3-power-up-paint/source.png), its [prompt](../../../art/match3-power-up-paint/prompt.txt) and [edit target](../../../art/match3-power-up-paint/scener-strip.png) are their provenance. The [atlas manifest](../art/match3-atlas.json) records each icon's crop, fitted size and position inside the canonical inset hex, and the toolbar draws those same frames on its enamel faces. Rebuild with `python3 tools/match3_atlas.py`. The [painted power-up](screenshots/review/power-up-paint/README.md) and [Scener model](screenshots/review/scener-power-ups/README.md) reviews are historical.
+The [retired power-up paintings](screenshots/review/power-up-paint/README.md)
+and [Scener models](screenshots/review/scener-power-ups/README.md) document
+earlier artwork.
 
-One ImageGen atlas contains all six [edge-mounted chain sprites](../../../art/match3-chain-paint/README.md). The board uses the hex well face to place the bolts, and the guide uses a miniature of that face. [In-game comparisons](screenshots/review/chain-anchors/README.md).
+The [edge-mounted hex chains](../../../art/match3-chain-paint/README.md) are retained as legacy previews. [Earlier in-game comparisons](screenshots/review/chain-anchors/README.md).
+
+| Runtime frame in `data/board/blockers.png` | Square state |
+| --- | --- |
+| `chain-square-1` | One hit left, single silver chain, beveled edge and cast shadow. The Market Keeper's Guide uses this frame. |
+| `chain-square-2` | Two hits left, crossed silver chains, beveled edge and cast shadows |
+| `ice-square-1` | One hit left, borderless faceted frost with the upper part broken away |
+| `ice-square-2` | Two hits left, full borderless frost with diagonal facets |
+
+Ice is available in board diagnostics. Both games use the same [painted square
+blocker sheet and registration](../../../art/match3-square/README.md#blockers).
+[Board, guide and particle captures](square-match3.md#blockers-and-target-hints).
 
 
 The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
@@ -71,7 +101,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 
 | Asset | Source | Draft runtime | Meaning and supported states |
 | --- | --- | --- | --- |
-| 37 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration) | `data/city/buildings/<key>.png` | Ten sequential construction milestones, 15 decorations, 4 trees and 6 cottages, one Blender render each; placed and placement-preview use the same sprite, with engine lift/footprint feedback. See the [building catalogue](building-catalogue.md) |
+| 41 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration and paint-overs) | `data/city/buildings/<key>.png` | Gran’s old stall opens the market, followed by twenty campaign stalls alongside shop decorations, trees and cottages. Placed and placement-preview use the same painted sprite, with engine lift/footprint feedback. [Building catalogue](building-catalogue.md) · [Gran’s old stall](building-catalogue.md#grans-old-stall) |
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
 | Six festive puzzle kinds | `art/festive-pieces/source.png` | `data/board/pieces.png` | Gold bell, candy cane, holly, blue mitten, plum bauble and gingerbread. The original `art/icons.png` crops under `art/registered/tile-sets/festive/` are legacy exports. |
@@ -85,7 +115,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Market streets, second look | `tools/roads.py christmas-market --style sandstone` (palette in `art/roads-sandstone.json`, copied from Relic Rush's first sandstone streets) | `data/city/roads-sandstone.png` | The same pieces as warm sandstone setts with pale kerbs and no snow shoulder. An option under review, not the default: start the game with `--roads sandstone` to see it. Capture: `screenshots/market-sandstone.jpg` |
 | Puzzle backdrop | Built-in ImageGen, `art/lantern-panes/spruce-backdrop.png` | `data/board/backs/background.jpg`, loaded on its own | One static dusk market painting for all puzzles |
 | Main character | User-supplied `art/noelle-reference.jpg`; ImageGen transparent cutout `art/noelle.png` | `data/story/characters/noelle.png` | Noelle's static dialogue and board portrait; original direction retained as `art/noelle-direction-v1.png` |
-| Story cast | Built-in ImageGen, `art/story-cast.png` | `data/story/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
+| Story cast | Built-in ImageGen, `art/story-cast.png` and `art/new-story-cast.png` | `data/story/characters/{theo,agnes,henrik,pip,wren,alder,finch,mary,rosa}.png` | Nine painted supporting dialogue busts on Noelle’s 320×480 canvas. [Story cast](#story-cast) |
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
 | Snowfall and feedback | Lua renderer | Procedural | Two world-anchored layers of village snowfall, mission banner, kudos, collection particles, beams, lift and placement feedback |
@@ -99,82 +129,101 @@ The font and its license are inherited unmodified from Relic Rush in `data/commo
 
 ## Campaign board header
 
-The centered, display-only row contains Moves, Gold, Food and Supplies.
+The centered, display-only row contains Moves, Tokens, Treats and Materials.
 Pending earnings appear in the counters and matched resources fly to their
 icons. The board is centered vertically, with four boosters and Pause in
-one bottom row. The town centers its readouts for Lives, Gold, Food,
-Supplies and Christmas Stars above a row of Build, Play, Wishes and Pause.
+one bottom row. The town shows the resource wallet above the Build, Play,
+Wishes and Pause controls.
 Play is the largest control.
-[480 × 900 board](screenshots/booster-toolbar.jpg) · [390 × 844 board](screenshots/booster-toolbar-phone.jpg)
+[480 × 900 board](screenshots/review/winter-boosters/toolbar-480.jpg) · [390 × 844 board](screenshots/review/winter-boosters/toolbar-390.jpg)
 
 ## Campaign booster buttons
 
-The four circular boosters share the [runtime enamel painter](../../../art/match3-buttons/README.md)
-with Build, Play, Wishes and Pause. The [manifest](../art/manifest.json) maps
-Hammer and Lantern to market goods 5 and 10, and the other two to the bomb
-and rocket frames. The inset and the colored piece share the frame's center of opacity on the button face. Cards and the guide show those same pieces. The [state
-review](screenshots/art-states.jpg) covers all four boosters.
-
-Matched toy hammers and lantern stars use the engine's resource flight arc,
-trail and landing flash. They follow the same timing as currency and land in
-their respective booster buttons. The meter or stored-use badge updates on
-arrival. Reduce Motion shows the earned charge immediately.
-
-The [flight review](screenshots/booster-flights.gif) shows a
-currency and a booster match in the same move for each charging piece.
-[Desktop toolbar](screenshots/booster-toolbar.jpg) · [Phone toolbar](screenshots/booster-toolbar-phone.jpg) · [Five interaction states](screenshots/art-states.jpg)
+The four slots use the [shared enamel painter](../../../art/match3-buttons/README.md).
+The [asset manifest](../art/manifest.json) assigns a painted frame to each rank.
+The full-color artwork and the disabled inset both use its center of opacity.
+The engine fills the meter up to one use. [Eight icons in all five button states](screenshots/review/winter-stalls/bonus-states.jpg).
 
 ## Market goods and tools
 
-The first twelve pieces were authored together in one transparent ImageGen
-[master](../art/market-goods/source.png) from the [recorded prompt](../art/market-goods/prompt.txt).
-The registrar crops the 4×3 bays (and the reused fourth row below), trims transparent borders, fits each
-object to the inner flat-top mask at up to 112 px, centers the result in
-a 128 px slot and preserves authored alpha. On the board all pieces share
-the idle sprite, selection and hint overlays, and the standard swap and
-clear poses. The existing hammer and star controls use the already authored
-normal, selected, pressed, hover and disabled art.
+Built-in ImageGen painted the [4×6 winter stalls atlas](../art/market-goods/winter-stalls.png)
+in one pass from the [full atlas prompt](../art/market-goods/winter-stalls-prompt.txt).
+The [expanded 4×7 atlas](../art/market-goods/winter-stalls-premium.png) repeats
+the full set and paints the three late collectibles together in its final row.
+Its [prompt](../art/market-goods/winter-stalls-premium-prompt.txt) references the
+first atlas, the Rome II comparison strip and the Relic Rush bonus pieces.
+The first atlas's wider gutters make it the source for the main set. Dressed
+stone reuses the exact painted Relic Rush piece at column five, row one of
+[its campaign atlas](../../relic-rush/art/registered/campaign-pieces.png).
+The [vase and winter catch atlas](../art/market-goods/vase-and-winter-catch.png)
+supplies the three-cracker Firework, broad ice pendant, cobalt vase and smoked trout.
+Its [ImageGen prompt](../art/market-goods/vase-and-winter-catch-prompt.txt)
+records the complete atlas edit. Only those four crops enter the registered sheet.
+`market-1` points to the original light-blue `festive-3` frame from row two,
+column one of the [festive atlas](../art/festive-pieces/source.png). The campaign,
+guide and festive previews share that single registered sprite. The corresponding
+bay in the market goods sheet is reserved to keep the other source positions.
+[Review the mitten and mulled wine in play](market-pieces.md#in-game-review).
+The gold Sun coin uses the first cell of the [Relic Rush campaign atlas](../../relic-rush/art/registered/campaign-pieces.png).
+The board, wallet, prices and results all use this shared artwork.
+[Compare the coin on the opening board and price card](market-pieces.md#shared-sun-coin-review).
+The [registration record](../art/market-goods/registration.json) saves each
+source crop, proportional fit, offset and alpha-weighted center in its 128 px
+slot. The crop takes the object's solid bounds with four pixels of edge
+padding. The fit preserves source alpha inside the square cell's 9 px inset.
+The market goods crops in this record center within half a pixel on both axes.
 
-| Slot | Piece | Role |
-| ---: | --- | --- |
-| 0 | Holly | Score |
-| 1 | Red mitten | Score |
-| 2 | Silver coin | 3 Gold |
-| 3 | Gold coin | 5 Gold |
-| 4 | Firewood | 5 Supplies |
-| 5 | Toy hammer | 3 Hammer charge |
-| 6 | Packing blocks | 7 Supplies |
-| 7 | Gingerbread | 5 Food |
-| 8 | Milk | 3 Food |
-| 9 | Winter apple | 6 Food |
-| 10 | Lantern star | 3 Lightning charge |
-| 11 | Cocoa | 4 Food |
-| 12 | Golden bell | 6 Gold, from the snowy chapel |
-| 13 | Snowflake bauble | 7 Gold, from the igloo |
-| 14 | Plum bauble | 8 Gold, from the giant bauble |
-| 15 | Candy cane | 7 Food, from the log cabin |
+| Atlas slot | Piece | Dominant color | Role |
+| ---: | --- | --- | --- |
+| 0 | Snow-dusted fir | Evergreen | Score at the opening. |
+| 1 | Knitted mitten | Light blue with cream knitwork | Opening score piece until the stable. Shares the `festive-3` frame. |
+| 2 | Silver snowflake coin | Silver | +3 Tokens. |
+| 3 | Sun coin | Gold | +5 Tokens and the Tokens wallet icon. Shared artwork with Relic Rush. |
+| 4 | Bundled pine | Chestnut brown | +5 Materials from the lumber workshop and the Materials wallet icon. |
+| 5 | Farrier's hammer | Dark steel and oiled wood | +3 Hammer charge from the stable. |
+| 6 | Toy blocks | Honey wood | +6 Tokens from the later Toymaker's workshop. |
+| 7 | Gingerbread man | Baked brown with ivory icing | +4 Treats from the bakery. |
+| 8 | Mulled wine | Cranberry | +3 Treats from the Welcome arch. |
+| 9 | Wrapped gift | Ruby red and cream | +7 Tokens from the later wrapping pavilion. |
+| 10 | Candle lantern | Black iron and amber | +3 Lightning charge from the later Candlelight shop. |
+| 11 | Hot cocoa | Ivory and chocolate | +5 Treats from the cocoa kiosk and the Treats wallet icon. |
+| 12 | Dressed stone | Slate gray | +7 Materials from the chapel. |
+| 13 | Ice pendant | Sapphire blue | A broad faceted gem, +8 Tokens from the later Igloo. |
+| 14 | Glass bauble | Amber gold | +9 Tokens from the later Giant bauble. |
+| 15 | Candy cane | Red and ivory | Score until the Welcome arch. |
+| 16 | Firework Bomb | Midnight indigo | Three crackers in a brass band. Replaces the hammer and hits a 3×3 square. |
+| 17 | Faceted star | Turquoise | Replaces the lantern and clears the chosen kind. |
+| 18 | Frost shield | Fir green and pewter | Hits the chosen row. |
+| 19 | Wish cross | Copper orange | Replaces the shield and replenishes a resource or part of another charge. |
+| 20 | Hourglass | Dark brass and teal | Adds five moves. |
+| 21 | Wind-up top | Royal blue and brass | Replaces the hourglass and shuffles the pieces. |
+| 22 | Pretzel | Baked amber | +6 Treats from the later Log cabin. |
+| 23 | Ceramic snowman | Ivory and plum | +10 Tokens from the later Winter skating rink. |
+| 24 | Carved reindeer | Walnut | +11 Tokens from the later Pile of presents. |
+| 25 | Santa hat | Crimson and ivory | +12 Tokens from the later Christmas tree. |
+| 26 | Winter vase | Cobalt glaze | Score only, from the stable until the Lumber workshop. |
+| 27 | Smoked trout | Russet | +7 Treats from the later sleigh. |
 
-Slots 12–15 form the atlas's fourth row. They reuse earlier painted festive
-pieces rather than new paintings: the golden handbell, candy cane and plum
-bauble from [the festive pieces](../art/festive-pieces/source.png) and the
-snowflake bauble from cell 3 of [the icon sheet](../art/icons.png).
-`tools/prepare_market_goods.py` registers them with the same mask and fit.
-The Shooting Star and Firework Bomb that later stalls grant are toolbar
-boosters with their own button art; no stall places a piece on the board.
+`python3 games/christmas-market/tools/prepare_market_goods.py` registers the
+source crops. `python3 tools/match3_atlas.py` packs `art/registered/market-goods.png`
+into `data/board/pieces.png` as
+`market-0` through `market-21` and six named `booster-*-icon` frames, with
+`market-1` sharing the packed `festive-3` frame. Each base
+sprite is used for idle, swap and clear, with the game's selection and hint
+overlays and authored tinsel and ice. The eight charging pieces each sit on
+the shared enamel face in normal, selected, pressed, hover and disabled states.
+The wallet, prices and results share the three currency icons.
+[Native board, construction and artwork captures](market-pieces.md#in-game-review).
 
-The runtime atlas is `art/registered/market-goods.png`. The Gold coin, firewood and
-cocoa sprites identify their wallets and appear on prices and result
-cards. The wallet uses the [round button painter](../../../engine/lua/match3/buttons.lua)
-for its brass rim and shadow. The skin supplies the translucent green fill and the
-bezel lowers on press. The [390×844 header comparison](screenshots/review/wallet-rim-390.png)
-shows `shot phone-board` before (top) and after (bottom).
-On the board, each spendable total includes goods earned on
-the current attempt. The [review](screenshots/review/cradle-market/README.md)
-shows the full atlas, the board at both phone sizes and the double panes.
+Live pieces draw their 128 px canvas at 106% of the cell step. The square
+registration retains the corners for diagonal tools and keeps silhouettes
+inside a cell at the maximum selection scale. The
+[size review](square-match3.md#piece-size) shows the live result.
 
 ```sh
 python3 games/christmas-market/tools/prepare_market_goods.py
-python3 tools/hex_tile_art.py games/christmas-market/art/registered/market-goods.png --atlas 4x3 --mode object --strict --overlay-dir /tmp/market-hex-review
+python3 tools/match3_atlas.py
+python3 games/christmas-market/tools/prepare_market_goods.py --check
 ```
 
 ## Story pieces
@@ -440,7 +489,7 @@ listed below. The shards are a procedural cut-out with no new states, and Reduce
 
 ## Ice
 
-`ice-2` is a continuous translucent cyan pane with high-contrast facets across
+The legacy `ice-2` frame is a continuous translucent cyan pane with high-contrast facets across
 the hex face and takes two hits. `ice-1` is translucent ice with a broken
 upper edge and takes one hit. Both states follow the canonical hex mask.
 Both states were drawn together in the shared ImageGen atlas and are packed
@@ -457,7 +506,7 @@ retired rims.
 
 ## Story cast
 
-All six speaking characters have painted busts. One built-in ImageGen pass produced the [supporting cast sheet](../art/story-cast.png), using Noelle's existing cutout as the style reference. The exact prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). These five exports replace the cards tracked in [issue #76](https://github.com/corepunch/nile-archive/issues/76).
+The original [supporting cast sheet](../art/story-cast.png) used Noelle as its reference. Its prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). The [second ImageGen sheet](../art/new-story-cast.png) adds Mrs Alder, Mr Finch, Mary Larkin and Rosa, using the first sheet and Noelle's cutout for style. [Exact prompt](../art/new-story-cast-prompt.txt) · [Phone review](review/campaign-cast/README.md) · [Issue #110](https://github.com/corepunch/nile-archive/issues/110)
 
 | Character | Runtime | Story cue |
 | --- | --- | --- |
@@ -466,6 +515,10 @@ All six speaking characters have painted busts. One built-in ImageGen pass produ
 | Henrik Strand | `data/story/characters/henrik.png` | Toymaker with white whiskers, leather apron and pencil |
 | Pip Larkin | `data/story/characters/pip.png` | Post runner with his satchel and gap-toothed grin |
 | Mr Wren | `data/story/characters/wren.png` | Grey-coated sweeper with his broom and tilted head |
+| Mrs Alder | `data/story/characters/alder.png` | Plum coat, spectacles and a cocoa cup |
+| Mr Finch | `data/story/characters/finch.png` | Fisherman with a slate-blue coat and knitted watch cap |
+| Mary Larkin | `data/story/characters/mary.png` | Coastal steamer cook with brown curls and a two-tone knitted scarf |
+| Rosa | `data/story/characters/rosa.png` | Noelle's grandmother in a berry bonnet and travelling cape |
 
 Run `python3 games/christmas-market/tools/prepare_story_cast.py` from the root to reproduce the cutouts. The script crops and proportionally resizes the right-facing source art, then bottom-aligns each cutout on a transparent 320×480 canvas. The shared dialogue renderer mirrors the right slot so conversation partners face each other. [Dialogue bar captures](review/dialogue-bar/README.md)
 
@@ -535,7 +588,7 @@ motion omits the bounce. Capture with
 `build/test/all --suite=christmas-market 'reel christmas-market-top-edge-refill'`.
 
 At one to three remaining panes, `engine/lua/match3/vfx.lua` layers a soft floor
-wash with a clockwise sweep of Cradle of Rome 2's `Star_02_16.png` and
+wash with a clockwise sweep along all four edges. It uses Cradle of Rome 2's `Star_02_16.png` and
 `Star_16.png`, packed unchanged as `fx-tablet-glow` and `fx-tablet-spark` in
 `data/board/fx.png`. Green uses the same pulse until its first hit turns the pane
 blue. The first pulse starts with the move suggestion and repeats every nine
@@ -588,7 +641,9 @@ bomb's leading ring stay procedural.
 | `glint` | `star_07` | Four-point twinkle on impacts, the bomb centre, beam tips and births |
 | `twinkle` | `star_06` | Spark particles and shard heads |
 | `streak` | `trace_06` | Shard particles, aligned to their velocity |
-| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Smoke of a breaking layer, alpha-blended; Kenney CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets) in `engine/art/match3/kenney-smoke/` |
+| `smoke-0`, `smoke-1`, `smoke-2`, `smoke-3` | `whitePuff00`, `04`, `08`, `12` | Alpha-blended smoke for breaking layers and working chimneys. Kenney CC0 [Smoke particle assets](https://opengameart.org/content/smoke-particle-assets) in `engine/art/match3/kenney-smoke/` |
+
+Town smoke reuses these four atlas frames. `lua/chimney_smoke.lua` rises, expands and fades them from the openings registered in `lua/chimney_flues.lua`. The effect follows the city camera and the placement bounce. Reduce Motion hides the plume. [Chimney source and registration](building-catalogue.md#open-chimneys-and-live-smoke) · [In-game captures and reel](review/chimneys/README.md)
 
 Review: [kenney-particles](review/kenney-particles/README.md) (bomb and shooting-star frames
 before and after; those special pieces and their `--fx` modes have since been removed, only
@@ -625,7 +680,7 @@ All registered buildings and decorations use the painted-v1 sources, normal spri
 and unchanged engine placement/lift/validity states documented in the
 [building catalogue](building-catalogue.md) and
 [review gallery](review/painted-buildings/current-camera/README.md).
-The 18 slab-based sprites register their painted foundations to the 3D
+Slab-based sprites register their painted foundations to the 3D
 ground-contact edges. See the [adjacent foundation captures](review/foundations/README.md).
 
 ## Placement alignment guides
@@ -647,14 +702,9 @@ unlock:
 | Unlock | Caption | Icon | Figure |
 |---|---|---|---|
 | New piece | YOU GET | the piece, `market-<kind>` | `+N` beside the currency it banks |
-| Tool piece | YOU GET | the piece | `+N` beside the booster it charges |
-| Booster per wish | EVERY WISH | the booster's standalone piece | `+1` |
-| More moves | EVERY WISH | none: the word MOVES under a larger figure | `+3` |
-| Faster charge | YOU GET | the first tool piece | `x2` |
+| Bonus rank | YOU GET | the piece that charges the slot | |
 | Takings | EVERY WIN | the currency | `+N` |
 
-The Moves row is a temporary fallback until the HUD atlas has a Moves icon:
-[#105](https://github.com/corepunch/nile-archive/issues/105). Reproduce a card
-with `./build/christmas-market --headless --mute --fresh --size 390x844 --card 2 --shot out.png`
+Reproduce a card with `./build/christmas-market --headless --mute --fresh --size 390x844 --card 2 --shot out.png`
 (`--catalogue-card <kind>` for a built stall). Reviewed in game at 390×844 for
 every row and at 480×900 for a piece.

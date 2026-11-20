@@ -2,17 +2,18 @@
 --
 -- Every entry is one <UserEvent>: when its If is met it runs each Then, once
 -- per profile, and is done. Ids, condition and effect names follow the XML;
--- user_events_runtime.lua implements them and lists every type it knows.
+-- engine/lua/match3/user_events.lua implements them and lists every type it knows.
 -- Rome kept the city half of this flow in other files (city_view.xml's
 -- <Upgrade enable_user_events=...>); here the city_* entries below do that,
--- so the whole tutorial-and-citizen flow reads from this one table.
+-- so the whole tutorial-and-upgrade flow reads from this one table.
 --
 --   id         a unique name; it is also the save key, so never rename one
 --   available  false: waits until a THEN_USER_EVENT_AVAILABLE turns it on
 --              (Rome's available_by_default="0")
 --   from_level, to_level   expeditions (1-based) it counts on, inclusive
 --   test       true: --user-events-test fires it at once (Rome's F5 cheat)
---   citizen    the person a building gains (for trophies and the docs)
+--   upgrade    {title, keeper, building}: what a building gains (the phrase, the cast id
+--              of the character who runs it and the buildings.lua key; see below)
 --   If         {type, attributes...}
 --   Then       a list of {type, attributes...}
 --
@@ -25,11 +26,10 @@
 -- are progress.lua's opening notices, which already name the building that
 -- unlocked the piece. A timer hint becomes a moves hint: Relic Rush counts
 -- moves, not seconds. Rome's duplicate trophy ids (TROPHY_19 three times,
--- TROPHY_25 twice) are given one trophy per citizen.
+-- TROPHY_25 twice) are given one trophy per upgrade.
 --
--- The citizens' amounts are a first pass, scaled to Relic Rush's purses
--- (a ladder building costs a few hundred of each resource): tune them with
--- the economy plan in docs/resource-expedition.md.
+-- The upgrades' feats and perks are docs/CAMPAIGN_DESIGN.md#upgrades, scaled
+-- to Relic Rush's boards.
 local economy = require("economy")
 
 local events = {
@@ -59,7 +59,7 @@ local events = {
     {id="hint_02_1", available=false,
         If={"IF_GAME_PUZZLE_TILE_APPEAR"},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", delay=7,
-            text="Match on the blue plaques to clear them. Clear every plaque to finish the expedition."}}},
+            text="Match on the turquoise plaques to clear them. Clear every plaque to finish the expedition."}}},
     {id="hint_02_2",
         If={"IF_GAME_DOUBLE_PUZZLE_TILE_APPEAR"},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="A double plaque needs two matches on it."}}},
@@ -83,147 +83,49 @@ local events = {
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_CITY",
             text="Restorations cost Coins, Supplies and Food. Winning an expedition opens the next one."}}},
 
-    ---------------------------------------------------------------- the city
-    -- Placing a building lets its citizen arrive (Rome: city_view.xml).
-    {id="city_well", citizen="Tomas Reed", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="well"},
-        Then={{"THEN_CITY_UPGRADE_BUILDING", id="well"}}},
-    {id="city_workshop", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="workshop"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_01", available=true}}},
-    {id="city_log_cabin", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="log_cabin"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_02", available=true}}},
-    {id="city_archive", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="archive"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_03", available=true}}},
-    {id="city_market", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="market"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_04", available=true}}},
-    {id="city_lodge", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="lodge"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_05", available=true}}},
-    {id="city_water_mill", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="water_mill"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_06", available=true}}},
-    {id="city_observatory", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="observatory"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_07", available=true}}},
-    {id="city_map_room", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="map_room"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_08", available=true}}},
-    {id="city_fountain", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="fountain"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_09", available=true}}},
-    {id="city_amphitheater", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="amphitheater"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_010", available=true}}},
-    {id="city_trading_post", If={"IF_PLAYER_BUILT_CONSTRUCTION", id="trading_post"},
-        Then={{"THEN_USER_EVENT_AVAILABLE", id="man_011", available=true}}},
-
-    ---------------------------------------------------------------- citizens
-    -- A citizen comes for a feat of play and stays: they upgrade their
-    -- building and improve the pieces matched on later expeditions.
-
-    -- Rome: carpenter, Saw-Mill, first match of five.
-    {id="man_01", available=false, test=true, citizen="The carpenter",
-        If={"IF_PLAYER_MAKE_MATCH", length=5},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Line of five! The carpenter joins the Sawmill: timber earns 6 Supplies each."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_01"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="workshop"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="timber", amount=6},
-        }},
-    -- Rome: smith, Forge, 10,000 points within levels 0–10.
-    {id="man_02", available=false, citizen="The trapper", to_level=12,
-        If={"IF_PLAYER_GET_RESOURCE", id="coins", amount=250},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="250 Coins banked early! The trapper brings a hammer: Hammer gems charge faster."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_02"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="log_cabin"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hammer", amount=9},
-        }},
-    -- Rome: miner, Quarry, 2,000 materials in a level.
-    {id="man_03", available=false, citizen="The stonecutter",
-        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=120},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="120 Supplies in one go! The stonecutter joins the Aqueduct crew: dressed stone earns 8 Supplies each."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_03"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="archive"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="stone", amount=8},
-        }},
-    -- Rome: miller, Mill, 15 matches in rapid succession.
-    {id="man_04", available=false, citizen="The trader",
-        If={"IF_PLAYER_MAKE_MATCH_IN_TIME", min_length=3, amount=15, time=90},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="15 lines in 90 seconds! The trader opens a stall: ration jars earn 5 Food each."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_04"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="market"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="rations", amount=5},
-        }},
-    -- Rome: peasant, Field, 3,000 food in a level.
-    {id="man_05", available=false, citizen="The forager",
-        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=80},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="80 Food in one go! The forager supplies Curia Octavia: grain bundles earn 6 Food each."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_05"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="lodge"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="grain", amount=6},
-        }},
-    -- Rome: wine maker, Tavern, a combo of two.
-    {id="man_06", available=false, citizen="The miller",
-        If={"IF_PLAYER_MAKE_COMBO", length=2},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="A cascade! The miller turns the wheel: water buckets earn 4 Food each."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_06"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="water_mill"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="water", amount=4},
-        }},
-    -- Rome: priest, Pantheon, a level in under three minutes.
-    {id="man_07", available=false, citizen="The astronomer",
-        If={"IF_PLAYER_COMPLETE_LEVELS_IN_TIME", amount=1, time=120},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Done in two minutes! The astronomer joins the watch. Mixer gems charge faster."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_07"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="observatory"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="mixer", amount=9},
-        }},
-    -- Rome: scholar, Tabularium, a combo of three.
-    {id="man_08", available=false, citizen="The cartographer",
-        If={"IF_PLAYER_MAKE_COMBO", length=4},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Four waves from one move! The cartographer joins: Lightning gems charge faster."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_08"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="map_room"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=9},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="star", amount=9},
-        }},
-    -- Rome: fisherman, Port, three matches of five in a level.
-    {id="man_09", available=false, citizen="The fisher",
-        If={"IF_PLAYER_MAKE_MATCH_IN_LEVEL", min_length=5, amount=2},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="Two lines of five! The fisher works the fountain pool: shrimp earn 7 Food each."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_09"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="fountain"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shrimp", amount=7},
-        }},
-    -- Rome: gladiator, Colosseum, a chain reaction of 15 blows. Relic Rush's
-    -- refill damps long cascades, so two follow-up waves is the feat.
-    {id="man_010", available=false, citizen="The performer",
-        If={"IF_PLAYER_MAKE_AUTOMATCH_CHAIN", amount=2},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="A chain reaction! The performer fills the Coliseum: Shield gems charge faster."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_10"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="amphitheater"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shield", amount=9},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=9},
-        }},
-    -- Rome: orator, Forum, 3,000 gold in a level: every bonus piece pays more.
-    {id="man_011", available=false, citizen="The trader's clerk",
-        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=150},
-        Then={
-            {"THEN_SHOW_HINT", id="HINT_INFO", text="150 Coins in one go! The clerk keeps the books: every bonus gem charges faster."},
-            {"THEN_PLAYER_ADD_TROPHY", id="TROPHY_11"},
-            {"THEN_CITY_UPGRADE_BUILDING", id="trading_post"},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hammer", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="bomb", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="hourglass", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="mixer", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="plus", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="shield", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="star", amount=8},
-            {"THEN_GAME_CHANGE_CHIP_WEIGHT", id="lightning", amount=8},
-        }},
 }
+
+-- The sixteen upgrades (docs/CAMPAIGN_DESIGN.md#upgrades), one per Cradle of
+-- Rome 2 building that has one: man_01 to man_16 are Rome's ids. Placing the
+-- building arms the upgrade (city_<building>); the feat brings it.
+local function income(id, amount) return {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id=id, amount=amount} end
+local function tool(id) return {"THEN_GAME_CHARGE_TOOL", id=id, amount=1} end
+
+local upgrades = {
+    {id="man_03", building="well", title="a second rope and pulley", keeper="tomas",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=150}, perk=income("food", 10)},
+    {id="man_04", building="log_cabin", title="his father's tools sharpened", keeper="tomas",
+        If={"IF_PLAYER_MAKE_MATCH", length=5}, perk=tool("hammer")},
+    {id="man_02", building="workshop", title="a second saw bench", keeper="mara",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=300}, perk=income("supplies", 60)},
+    {id="man_01", building="camp", title="a proper powder store", keeper="adrian",
+        If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=10}, perk=tool("bomb")},
+    {id="man_05", building="market", title="the hill farms send their carts", keeper="marisol",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=325}, perk=income("food", 55)},
+    {id="man_06", building="trading_post", title="a cart road to the quarry", keeper="adrian",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=300}, perk=income("supplies", 60)},
+    {id="man_07", building="water_mill", title="a second millstone", keeper="elena",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=430}, perk=income("food", 85)},
+    {id="man_08", building="clock_tower", title="a warning chime", keeper="tomas",
+        If={"IF_PLAYER_MAKE_MATCH_IN_LEVEL", amount=5, min_length=5}, perk=tool("shield")},
+    {id="man_09", building="gateway", title="a fish market every morning", keeper="marisol",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=700}, perk=income("food", 140)},
+    {id="man_10", building="amphitheater", title="market-day shows", keeper="adrian",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=330}, perk=income("coins", 65)},
+    {id="man_11", building="map_room", title="storm charts on the wall", keeper="elena",
+        If={"IF_PLAYER_MAKE_MATCH_SERIES", amount=2, min_length=5}, perk=tool("lightning")},
+    {id="man_12", building="lighthouse", title="a polished lens", keeper="mara",
+        If={"IF_PLAYER_MAKE_MATCH_IN_TIME", amount=15, min_length=3, time=20}, perk=tool("plus")},
+    {id="man_13", building="beached_ship", title="a ferry to the hill villages", keeper="mara",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=575}, perk=income("coins", 115)},
+    {id="man_14", building="observatory", title="the telescope realigned", keeper="elena",
+        If={"IF_PLAYER_COMPLETE_LEVELS_WITHOUT_LIFE_LOSS", amount=3}, perk=tool("mixer")},
+    {id="man_15", building="museum", title="a reading room open to all", keeper="adrian",
+        If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=775}, perk=income("coins", 155)},
+    {id="man_16", building="temple", title="the keepers' watch roster", keeper="tomas",
+        If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=15}, perk=tool("star")},
+}
+for _, event in ipairs(require("match3.user_events").upgrade_events(upgrades)) do table.insert(events, event) end
 
 -- hint_11_<bonus>: Rome's IF_GAME_BONUS_READY hints, one per bonus.
 for _, slot in ipairs(economy.bonus_slots) do
@@ -234,11 +136,11 @@ for _, slot in ipairs(economy.bonus_slots) do
     end
 end
 
--- Rome kept trophy names in locale.xml.
-local trophies = {
-    TROPHY_01="Carpenter", TROPHY_02="Trapper", TROPHY_03="Stonecutter", TROPHY_04="Trader",
-    TROPHY_05="Forager", TROPHY_06="Miller", TROPHY_07="Astronomer", TROPHY_08="Cartographer",
-    TROPHY_09="Fisher", TROPHY_10="Performer", TROPHY_11="Clerk",
-}
+-- Rome kept trophy names in locale.xml: one trophy per upgrade, TROPHY_NN for man_NN.
+local trophies = {}
+local island = require("island")
+for _, row in ipairs(upgrades) do
+    trophies["TROPHY_" .. row.id:sub(5)] = island.buildings[island.kinds[row.building] + 1].name .. ": " .. row.title
+end
 
 return {events=events, trophies=trophies}

@@ -576,52 +576,54 @@
     ]
   },
   "sculptor_yard": {
-    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-footprint-fix-output.png",
     "cell": [
-      627,
-      940,
-      940,
-      1254
+      0,
+      0,
+      793,
+      992
     ],
     "crop": [
-      0,
-      12,
-      310,
-      259
+      37,
+      334,
+      745,
+      850
     ],
-    "scale": 1.66551724,
+    "scale": 0.70613087,
     "pivot": [
-      265.062,
-      246.918
+      250.741,
+      224.314
     ],
     "image": [
-      516,
-      411
-    ]
+      501,
+      375
+    ],
+    "foundation": "projected ground-contact edges"
   },
   "pharaoh_garden": {
-    "atlas": "art/building-catalogue/painted-v1/building-output.png",
+    "atlas": "art/building-catalogue/painted-v1/z-footprint-fix-output.png",
     "cell": [
-      940,
-      940,
-      1254,
-      1254
+      793,
+      0,
+      1586,
+      992
     ],
     "crop": [
-      0,
-      0,
-      312,
-      293
+      36,
+      161,
+      757,
+      852
     ],
-    "scale": 1.77441077,
+    "scale": 0.76314246,
     "pivot": [
-      291.26,
-      332.745
+      275.741,
+      359.44
     ],
     "image": [
-      554,
-      520
-    ]
+      551,
+      538
+    ],
+    "foundation": "projected ground-contact edges"
   },
   "shrub": {
     "atlas": "art/building-catalogue/painted-v1/bush-output.png",

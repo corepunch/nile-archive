@@ -1,19 +1,20 @@
 -- Move budgets for the authored boards, run by tools/tune_moves.py. Each board
 -- in TUNE_LEVELS is played TUNE_SEEDS times (BALANCE_RUNS, default 40) by the
--- greedy bot with no move limit. The budget is the bot's median game times the
--- tier's margin (tutorial 2.5, easy 2, normal 1.4, hard 1.2, boss 1). The
--- median is stable where the bot's slowest games are not: a budget read from
--- that tail gave one easy board 12 moves and the next 48. Prints one
+-- greedy bot with a 250-move ceiling and the earned buildings in place.
+-- The median with a tier margin sets the budget, with extra room for boards
+-- where too many sampled games exceed it. Prints one
 -- MOVES_JSON line per board, and one CELLS_JSON line per game with the move
 -- each plaque was cleared on.
 if not testing.tune_levels then return end
 
 local rules = require('rules')
+local island = require('island')
 local first, last = testing.tune_levels:match('^(%d+)%-(%d+)$')
 first, last = tonumber(first), tonumber(last)
 local SEEDS = testing.balance_runs or 40
 local CAP = 250   -- a board the bot cannot clear in 250 moves needs redesign, not a budget
 local MARGIN = {tutorial=2.5, easy=2, normal=1.4, hard=1.2, boss=1}
+local COVERAGE = {tutorial=.9, easy=.8, normal=.75, hard=.7, boss=.65}
 local m = rules.new_match()
 local best_move = require('greedy_bot')(rules)
 
@@ -22,9 +23,9 @@ local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 
 -- Base moves the bot needed to clear the board, or nil. `cleared` receives
 -- the move on which each plaque went: the plaques that go last, or never,
 -- are the ones that make a board long (tools/balance_plaques.py).
-local function play(level, seed, cleared)
-    rules.levels[level].moves = CAP
-    local g = rules.game_start(level - 1, seed)
+local function play(level, seed, restored, cleared)
+    local g = rules.game_start(level - 1, seed, restored)
+    local start = g.moves
     local shuffles = 0
     local pending = {}
     for i = 0, rules.CELLS - 1 do if g.active[i] and g.oil[i] > 0 then pending[i] = true end end
@@ -41,26 +42,35 @@ local function play(level, seed, cleared)
             end
             rules.game_check_end(g)
             for i in pairs(pending) do
-                if g.oil[i] == 0 then pending[i] = nil; cleared[#cleared + 1] = ('[%d,%d]'):format(i, CAP - g.moves) end
+                if g.oil[i] == 0 then pending[i] = nil; cleared[#cleared + 1] = ('[%d,%d]'):format(i, start - g.moves) end
             end
         end
     end
-    return g.won and math.max(1, CAP - g.moves) or nil   -- loadout extra moves come on top
+    return g.won and math.max(1, start - g.moves) or nil
 end
 
 for level = first, last do
     local spec = rules.levels[level]
     local tier = spec.tier or 'normal'
+    local restored = {}
+    for _, step in ipairs(island.ladder) do
+        if step.after < level then restored[step.unlock.building] = true end
+    end
+    local original_moves = spec.moves
+    spec.moves = CAP
     local used = {}
     for n = 1, SEEDS do
         local cleared = {}
-        used[n] = play(level, seed_of(1000 * level + n), cleared) or math.huge
+        used[n] = play(level, seed_of(1000 * level + n), restored, cleared) or math.huge
         print(('CELLS_JSON {"level":%d,"seed":%d,"cleared":[%s]}'):format(level, n, table.concat(cleared, ',')))
     end
+    spec.moves = original_moves
     table.sort(used)
     local median = used[(SEEDS + 1) // 2]
-    check(median < math.huge, ('the bot clears board %d within %d moves in half its games'):format(level, CAP))
-    local need = median < math.huge and math.min(CAP, math.ceil(median * MARGIN[tier])) or CAP
+    local coverage = used[math.ceil(SEEDS * COVERAGE[tier])]
+    check(coverage < math.huge, ('the bot clears board %d within %d moves in %.0f%% of games'):format(
+        level, CAP, COVERAGE[tier] * 100))
+    local need = math.min(CAP, math.max(math.ceil(median * MARGIN[tier]), coverage))
     local wins, within = 0, 0
     for _, v in ipairs(used) do
         if v < math.huge then wins = wins + 1 end

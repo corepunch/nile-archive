@@ -2597,6 +2597,17 @@ World rect of a building's sprite.
 
 **Returns:** `rect`
 
+### `city.placed_sprite_rect(c, index)  ·  c:placed_sprite_rect(index)`
+
+Drawn screen rect, including placement bounce. Empty while the building is held or the index is out of range.
+
+| Argument | Type | |
+|---|---|---|
+| `c` | `city` |  |
+| `index` | `integer` |  |
+
+**Returns:** `rect`
+
 ### `city.shadow_rect(c, b)  ·  c:shadow_rect(b)`
 
 World rect of the separately cropped ground shadow, registered to the same ground point.
@@ -2917,7 +2928,7 @@ What a city update or confirm did.
 
 ## Shared Lua forms
 
-The embedded UI framework extends ui with ui.form(template), ui.modals(skin), ui.element(kind, class) and ui.prefab(kind, build). See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).
+Use `ui.node` to construct nodes, for example `ui.node.label {text="Settings"}`. The framework provides `ui.form(template)`, `ui.modals(skin)`, `ui.element(kind, class)` and `ui.prefab(kind, build)`. See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).
 
 ## Motion: ease and tween
 

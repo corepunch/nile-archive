@@ -72,6 +72,12 @@ between bases.
 A building with no `size` falls back to a circle of `city.spacing` and a
 sprite drawn `height` tall, standing on its bottom centre.
 
+For an effect attached to a painted detail on a placed building, read
+`c:placed_sprite_rect(index)` for its drawn screen rectangle. Measure the
+effect's origin in the sprite's own pixels, then scale it to this rectangle.
+The rectangle follows the camera and the placement bounce. It is empty while
+the building is held in a move preview.
+
 ## How the grid uses it
 
 - **Snapping.** `c:snap(p, type)` puts the footprint on whole tiles: a side

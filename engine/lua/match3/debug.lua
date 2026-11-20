@@ -2,7 +2,7 @@
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
 -- --level, --city, --epoch, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
--- --catalogue, --dialog, --present, --mission, --goals-met,
+-- --catalogue, --build-review, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces.
 -- --floor-reel oil plays three swaps that clear tablets on the chosen campaign level.
@@ -166,7 +166,7 @@ function D.bind(R, W)
             g.ice[open[#open]], g.obstacles = 1, g.obstacles + 1
             local tool = g.tool_slots and 1 or 2
             g.tools[tool] = math.max(g.tools[tool], 1)
-            if g.single_charge_tools then g.tool_meter[tool] = g.tool_threshold end
+            if g.tool_slots then g.tool_meter[tool] = g.tool_threshold end
             R.selected, R.tool = open[1], tool - 1
             R.cell_state_review = {hover = open[#open // 2], aim = open[#open - 3]}
         end
@@ -176,6 +176,16 @@ function D.bind(R, W)
         end
         a = app.arg("city")
         if a then island_with(num.clampi(tonumber(a), 0, WONDERS)); R.on_island = true; R.toast_time = 0 end
+        a = app.arg("build-review")
+        if a then
+            island_with(0)
+            R.prog.level = island.ladder[1].after
+            R.prog.wallet = a == "short" and purse(15, 0, 0, R.prog.level) or wallet(340, R.prog.level)
+            R.on_island, R.toast_time = true, 0
+            if a == "short" then
+                R.inspect, R.inspect_item, R.overlay = island.ladder[1].kind, -1, R.OV_WONDER
+            end
+        end
         a = app.arg("epoch")   -- --epoch N: the town once N epochs of four ladder purchases are bought
         if a then island_with(0, num.clampi(4 * tonumber(a), 0, #island.ladder)); R.on_island = true; R.toast_time = 0 end
         if app.arg("showcase") then
@@ -375,10 +385,16 @@ function D.bind(R, W)
                 local cell = rules.hex_index(3 - hits, 1)
                 R.g.active[cell], R.g.stone_hp[cell], R.g.ice[cell] = true, 0, 0
                 R.g.chain[cell], R.g.tiles[cell] = hits, rules.tile(hits)
+                if rules.square then
+                    local frozen = rules.hex_index(hits - 2, 1)
+                    R.g.active[frozen], R.g.stone_hp[frozen], R.g.chain[frozen] = true, 0, 0
+                    R.g.ice[frozen], R.g.tiles[frozen] = hits, rules.tile(hits)
+                end
             end
             R.selected, R.hint_a, R.hint_b = rules.hex_index(-2, 1), rules.hex_index(1, 1), rules.hex_index(2, 1)
-            R.g.tools[1], R.g.tools[2], R.g.tools[3] = 2, 2, 0
-            R.tool, R.toast_time, R.on_island = 1, 0, false
+            R.g.tools[1], R.g.tools[2] = 1, 1
+            R.g.tool_meter[1], R.g.tool_meter[2] = R.g.tool_threshold, R.g.tool_threshold
+            R.tool, R.toast_time, R.on_island = 0, 0, false
             R.art_review = true
         end
         if app.arg("present") then R.present_board() end
@@ -415,7 +431,7 @@ function D.bind(R, W)
         local beat_key = app.arg("story-beat")   -- --story-beat KEY [--story-line N]: preview a scene from its Nth line
         if beat_key then
             local beat = assert(journey.find(beat_key), "unknown story beat")
-            island_with(journey.earned(beat.level))
+            island_with(journey.earned(beat.level or 0))   -- a upgrade scene has no level
             R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
             while story.active() do story.next() end
             local lines = {}

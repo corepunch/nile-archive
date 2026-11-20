@@ -1,5 +1,7 @@
 # A light below · first-epoch playtest
 
+> This page records the 100-level campaign's predecessor: a ten-expedition first epoch with crew requests, which were removed from the game in commit f98aedd2. The current campaign is in [the script](story.md) and [square-match3.md](square-match3.md).
+
 [Epoch one outline](epoch-one-outline.md): the whole epoch in play order.
 
 **Question for this build.** After the player finds the cable, will they choose to test the lamp? Ask them what prompted that choice and what they learned from the skiff. The first ten expeditions, four purchases and two returning characters give us enough room to try the whole loop.

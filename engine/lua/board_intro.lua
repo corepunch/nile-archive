@@ -18,8 +18,8 @@
 -- the same for a whole column so its pieces come down as a train and never overlap.
 board_intro = {}
 
-local CELLS_AT, RING_GAP, SWEEP = .1, .05, .03
-local RELICS_AT, COLUMN_GAP, ROW_GAP, GRAVITY = .22, .03, .02, 5600
+local CELLS_AT, RING_GAP, SWEEP = .05, .05, .03
+local RELICS_AT, COLUMN_GAP, ROW_GAP, GRAVITY = .16, .03, .02, 5600
 local BOUNCE_1, BOUNCE_2, BOUNCE_HEIGHT = .17, .1, 13
 local SLAM_TIME, SLAM_GAP = .14, .022
 local SHEEN_TIME = .36
@@ -195,7 +195,7 @@ function board_intro.bind(R, rules)
     function R.present_board()
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
         local g, cells, center = R.g, {}, rules.hex_center()
-        local dy = math.sqrt(3) * R.HEX_R
+        local dy = R.cell_height
         for i = 0, rules.CELLS - 1 do
             if rules.game_cell_active(g, i) then
                 local q, lo, hi = rules.hex_q(i), rules.hex_r(i), rules.hex_r(i)
@@ -223,9 +223,7 @@ function board_intro.bind(R, rules)
     end
     function R.board_update(dt)
         if R.phase ~= R.PH_PRESENT then return update(dt) end
-        -- Hold the entrance until the town-to-board transition has uncovered the board.
-        if R.art_review or R.overlay ~= R.OV_NONE or R.on_island or story.active()
-           or (R.diving and R.diving()) then return end
+        if R.art_review or R.overlay ~= R.OV_NONE or R.on_island or story.active() then return end
         R.shake = math.max(0,R.shake-dt)
         local landed, slammed = 0, 0
         for _, c in ipairs(R.intro.list) do

@@ -6,9 +6,9 @@
 -- delivery, the journey's bookkeeping and the debug entry points.
 --
 -- A game is data: words in lua/game_config.lua (merged over DEFAULTS below), its
--- campaign and story, its skin and art tables. Its own Lua paints only what is
--- art: the board's cells and pieces (board.lua), the results card and guide
--- rows (screens.lua), the cast (narrative.lua).
+-- campaign and story, its skin and art tables. The board is painted by
+-- match3.screen. The games still supply the results card and guide rows
+-- (screens.lua) and the cast (narrative.lua).
 --
 --   -- screens.lua, first:   local R = require("match3.game").bind(require("state"))
 --   -- main.lua, last:       return require("match3.game").app(R)
@@ -18,12 +18,13 @@
 --   R.clear_scene(), R.draw_clear_scene(scene, inp)   optional presentation before the first-clear beat
 --   R.wallet_icons()        three icons: unused, gold, unused (the gold capsule's is the second)
 --   R.town_middle_icon(at)  the round middle button's icon in the town
---   R.quest_rail(), R.quest_model(id), R.quest_deliver(id)   optional requests: the round
---                           markers down the town's left edge and their card (below)
+--   R.draw_town_world(view)  optional effects above the town and below its HUD
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
 -- See docs/PORTRAIT_GAMES.md.
+local N = ui.node
+
 local G = {}
 local BOARD_OUT = .30
 
@@ -63,9 +64,6 @@ G.DEFAULTS = {
     card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
             gets = "YOU GET", price = "PRICE", missing = "STILL NEEDED", play = "PLAY",
             moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
-    quest = {header = "Request", later = "LATER", deliver = "HAND IT OVER", play = "PLAY", ready = "EVERYTHING IS HERE.",
-             waiting = "ITS PIECE JOINS THE BOARD WHEN A PLACE IS FREE.", replay = "REPLAY EXPEDITION %d", gathered = "ALL GATHERED",
-             replay_paused = "Your board is saved. Open a crew request to resume.", continue = "CONTINUE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
@@ -104,13 +102,12 @@ end
 -- call each other without import cycles. A game's lua/state.lua returns it.
 function G.state()
     return require("match3").view{
-        -- A 9 x 12 board between the HUD and the bonus tray on a 480 x 900
-        -- screen; the cell art is painted at a 26.5 px radius.
-        HEX_R = 30,
+        -- A 9 x 12 board between the HUD and the bonus tray on a 480 x 900 screen.
+        HEX_R = 24,
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_QUEST = 12, OV_QUEST_HANDOFF = 13,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -293,6 +290,25 @@ end
 function G.journey(content)
     local M = content
     M.about = M.about or {}
+    -- Upgrade arrival scenes ({phase="upgrade", event="man_03", no level}) are
+    -- kept apart from the level beats: they play on the next return to town
+    -- once their user event is done, and never hold the story back.
+    local scenes, upgrades = {}, {}
+    for _, beat in ipairs(M.beats) do
+        if beat.phase == "upgrade" then upgrades[#upgrades + 1] = beat else scenes[#scenes + 1] = beat end
+    end
+    M.beats, M.upgrades = scenes, upgrades
+
+    function M.find_upgrade(event)
+        for _, beat in ipairs(M.upgrades) do if beat.event == event then return beat end end
+    end
+
+    -- The first unseen upgrade scene whose event `done(event)` says has happened.
+    function M.next_upgrade(p, done)
+        for _, beat in ipairs(M.upgrades) do
+            if not (p.story_seen or {})[beat.key] and done(beat.event) then return beat end
+        end
+    end
 
     function M.earned(level)
         local n = 0
@@ -306,6 +322,7 @@ function G.journey(content)
 
     function M.find(key)
         for _, beat in ipairs(M.beats) do if beat.key == key then return beat end end
+        for _, beat in ipairs(M.upgrades) do if beat.key == key then return beat end end
     end
 
     -- Legacy clears remain clears; already-owned buildings stay. A recap
@@ -329,6 +346,9 @@ function G.journey(content)
                 local choice = s:int("narrative.choice." .. b.key, p.story_choices[b.key] or 0)
                 p.story_choices[b.key] = b.choices[choice] and choice or nil
             end
+        end
+        for _, b in ipairs(M.upgrades) do
+            p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
         end
         p.story_recap = s:int("narrative.recap", p.story_recap and 1 or 0) == 1
     end
@@ -601,41 +621,41 @@ function G.bind(R, over)
     end
 
     function R.register_result(model)
-        local form = ui.form{kind="column",panel=true,children={
+        local form = ui.form(N.column {panel=true,
             match3.popup_header("Results"),
-            {kind="column",gap=1,paint_group={.24,.32,9},children={
-                {kind="label",text="SCORE",em=13,text_style="caption"},
-                {kind="label",id="score",em=44,text_style="gold"},
-            }},
-            {kind="column",gap=7,paint_group={.62,.28,10},children={
-                {kind="label",text="RESOURCES TO BANK",em=13,text_style="caption"},
+            N.column {gap=1,paint_group={.24,.32,9},
+                N.label {text="SCORE",em=13,text_style="caption"},
+                N.label {id="score",em=44,text_style="gold"},
+            },
+            N.column {gap=7,paint_group={.62,.28,10},
+                N.label {text="RESOURCES TO BANK",em=13,text_style="caption"},
                 -- One row of equal cells, however many currencies the game banks.
-                {kind="uniform_grid",id="resources",rows=1,gap=9,item=function(entry)
+                N.uniform_grid {id="resources",rows=1,gap=9,item=function(entry)
                     return match3.resource_indicator(entry)
                 end},
-            }},
+            },
             -- The next purchase, in at most two parts: what it still needs after
             -- this win, as resource amounts, and one captioned picture row.
-            {kind="column",id="next_step",visible_field="show_next",panel=true,role="group",
-                padding={9,8,10,9},gap=6,paint_group={.9,.26,8},children={
-                    {kind="label",id="next_needs_caption",em=13,text_style="caption",visible_field="show_next_needs"},
-                    {kind="row",visible_field="show_next_needs",children={
-                        {kind="spacer",grow=1},
-                        {kind="list",id="next_needs",direction="row",gap=9,item=function(entry)
+            N.column {id="next_step",visible_field="show_next",panel=true,role="group",
+                padding={9,8,10,9},gap=6,paint_group={.9,.26,8},
+                    N.label {id="next_needs_caption",em=13,text_style="caption",visible_field="show_next_needs"},
+                    N.row {visible_field="show_next_needs",
+                        N.spacer {grow=1},
+                        N.list {id="next_needs",direction="row",gap=9,item=function(entry)
                             return match3.resource_indicator(entry, 104)
                         end},
-                        {kind="spacer",grow=1},
-                    }},
-                    {kind="row",gap=10,align="center",visible_field="show_next_title",children={
-                        {kind="image",id="next_icon",width=58,height=58,visible_field="show_next_icon"},
-                        {kind="column",grow=1,gap=2,children={
-                            {kind="label",id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
-                            {kind="label",id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
-                        }},
-                    }},
-                }},
-            {kind="button",id="claim",height=54,paint_group={1.02,.22,8}},
-        }}
+                        N.spacer {grow=1},
+                    },
+                    N.row {gap=10,align="center",visible_field="show_next_title",
+                        N.image {id="next_icon",width=58,height=58,visible_field="show_next_icon"},
+                        N.column {grow=1,gap=2,
+                            N.label {id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
+                            N.label {id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
+                        },
+                    },
+                },
+            N.button {id="claim",height=54,paint_group={1.02,.22,8}},
+        })
         R.result_form = form
         popup(R.OV_RESULT, form, {width=408, dismiss=false, prepare=function(d)
             local count = R.dialog_part(.43, .65).f
@@ -675,15 +695,15 @@ function G.bind(R, over)
     local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 20, 372
     local amount_width = 96
     local function amounts(id, caption, visible, width)
-        return {kind="column", gap=5, visible_field=visible, children={
-            {kind="label", id=id .. "_caption", text=caption, em=13, text_style="caption"},
-            {kind="list",id=id,direction="row",gap=AMOUNT_GAP,grow=1,item=function(entry)
+        return N.column {gap=5, visible_field=visible,
+            N.label {id=id .. "_caption", text=caption, em=13, text_style="caption"},
+            N.list {id=id,direction="row",gap=AMOUNT_GAP,grow=1,item=function(entry)
                 return match3.resource_indicator(entry, width or amount_width)
             end},
-        }}
+        }
     end
     local function group_gap(visible)
-        return {kind="spacer",width=GROUP_GAP,visible_field=visible}
+        return N.spacer {width=GROUP_GAP,visible_field=visible}
     end
 
     -- The building card: a story building or a shop item, to build or move.
@@ -692,30 +712,35 @@ function G.bind(R, over)
     -- W.card.gets);
     -- without it the card falls back to the building's unlock text.
     local wonder_form = ui.form{
-        root = {kind="column", panel=true, children={
+        root = N.column {panel=true,
             match3.popup_header("Building details", nil, W.corner_close and "close"),
-            {kind="image", id="sprite", height=205},
-            {kind="label", id="about", wrap=true, em=19, text_style="body"},
-            {kind="label", id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
-            {kind="row", visible_field="show_amounts", children={
-                {kind="spacer",grow=1},
+            N.image {id="sprite", height=205},
+            N.label {id="about", wrap=true, em=19, text_style="body"},
+            N.label {id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
+            N.row {visible_field="show_upgrade",
+                N.spacer {grow=1},
+                amounts("upgrade", "", "show_upgrade", 96),
+                N.spacer {grow=1},
+            },
+            N.row {visible_field="show_amounts",
+                N.spacer {grow=1},
                 amounts("price", W.card.price, "show_price"),
                 group_gap("show_both"),
                 amounts("gets", W.card.gets, "show_gets"),
-                {kind="spacer",grow=1},
-            }},
-            {kind="label",id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
-            {kind="button",id="action",height=56},
-            {kind="button",id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
-            not W.corner_close and {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
-        }},
+                N.spacer {grow=1},
+            },
+            N.label {id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
+            N.button {id="action",height=56},
+            N.button {id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
+            not W.corner_close and N.button {id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
+        },
         bindings={
             {id="sprite",field="sprite",type="texture",readonly=true},
             {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
         },
     }
     R.wonder_form = wonder_form
-    local wonder_action, quest_funding
+    local wonder_action, funding_play
     popup(R.OV_WONDER, wonder_form, {width=420, prepare=function()
         local i = R.inspect >= 0 and R.inspect or next_build()
         if not i or i < 0 or i >= #R.buildings then return false end
@@ -724,15 +749,17 @@ function G.bind(R, over)
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local fixed = w.fixed_site and (w.fixed_site.x ~= 0 or w.fixed_site.y ~= 0)
         local movable = built and not fixed
-        local quest, step
-        if not built and island.next_quest then quest, step = island.next_quest(R.island, R.prog.level) end
-        if step and (step.kind ~= i or not quest and R.prog.level < step.after) then quest, step = nil, nil end
-        local needs_funding = step ~= nil and not can_build
-        quest_funding = needs_funding and R.prog.level < rules.LEVELS
-        local subtitle = quest and W.card.quest_subtitle:format(w.name, island.ladder_position[i])
-        match3.set_popup_header(wonder_form, quest and quest.title or w.name, subtitle)
-        local ok, message = wonder_form:push{sprite=w.sprite, about=quest and quest.request or journey.building_about(i, R.prog.level, w.about),
-            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or quest_funding and W.card.play or W.card.back}
+        local _, position = island.next_step(R.island, R.prog.level)
+        local step = not built and island.ladder[position]
+        if step and (step.kind ~= i or step.after > rules.LEVELS) then step = nil end
+        local needs_funding = step and not can_build
+        funding_play = needs_funding and (R.prog.level < rules.LEVELS or step.after <= R.prog.level)
+        match3.set_popup_header(wonder_form, w.name)
+        local upgrade = R.upgrade_card and R.upgrade_card(i)
+        local about = journey.building_about(i, R.prog.level, w.about)
+        if upgrade then about = about .. "\n" .. upgrade.about end
+        local ok, message = wonder_form:push{sprite=w.sprite, about=about,
+            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or funding_play and (R.prog.level < rules.LEVELS and W.card.play or "EARN RESOURCES") or W.card.back}
         assert(ok, message)
         local show_price = step ~= nil or not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
@@ -742,12 +769,17 @@ function G.bind(R, over)
         local gets, gets_caption = {}, nil
         if R.building_gets then gets, gets_caption = R.building_gets(i) end
         local price = show_price and price_parts(w.cost) or {}
-        -- While the quest is being funded the card lists what is still
+        -- While the building is being funded the card lists what is still
         -- missing, as amounts, in place of the full price.
         local missing = needs_funding and R.funding_shortfall and R.funding_shortfall(w.cost) or {}
         if #missing > 0 then price = missing end
         wonder_form:set("price_caption", #missing > 0 and W.card.missing or W.card.price)
         local count, groups = #gets + #price, (#gets > 0 and 1 or 0) + (#price > 0 and 1 or 0)
+        -- An upgrade's feat or perk: its own captioned row under the amounts.
+        local upgrade_entries = upgrade and upgrade.entries or {}
+        wonder_form.values.show_upgrade = #upgrade_entries > 0
+        wonder_form:set("upgrade_caption", upgrade and upgrade.caption or "")
+        assert(wonder_form:set_items("upgrade", upgrade_entries))
         amount_width = math.min(96, math.floor((CARD_INNER - GROUP_GAP * (groups - 1) - AMOUNT_GAP * (count - groups)) / math.max(1, count)))
         wonder_form.values.show_gets, wonder_form.values.show_amounts = #gets > 0, count > 0
         wonder_form.values.show_both = groups == 2
@@ -768,130 +800,12 @@ function G.bind(R, over)
     end, handle=function(event)
         local action = wonder_action
         if event.id == "action" and action then R.island_begin(action.kind, true, action.item)
-        elseif event.id == "action" and quest_funding then R.overlay = R.OV_NONE; R.play_next()
+        elseif event.id == "action" and funding_play then
+            R.overlay = R.OV_NONE
+            if R.prog.level < rules.LEVELS then R.play_next()
+            else R.play_level(rules.LEVELS - 1) end
         elseif event.id == "shop" then R.open_catalogue("all")
         else R.overlay = R.OV_NONE end
-    end})
-
-    -- A request's card. Requests are the game's: R.quest_rail() lists the open
-    -- ones for the town's left edge ({id, icon, value, ready, waiting}; the id
-    -- "build" stands for the next building and opens its card), and
-    -- R.quest_model(id) describes one: {title, speaker, portrait, icon, about, needs
-    -- (collected/required resource indicators), gets (the reward's resource
-    -- indicators, optional), ready, waiting, level (playable zero-based
-    -- destination), handoff ({title, image}, optional)}. The giver's portrait
-    -- sits in a round brass medallion; what is still needed and what the
-    -- request gives stand side by side, as on the building card; once ready
-    -- the piece stays, checked off under W.quest.gathered. A request with
-    -- neither shows its icon.
-    local quest_form = ui.form{
-        root = {kind="column", panel=true, children={
-            match3.popup_header(W.quest.header, nil, W.corner_close and "close"),
-            {kind="row",align="center",gap=16,children={
-                {kind="custom",id="portrait",width=112,height=112,visible_field="show_portrait",paint=function(box, image)
-                    -- Custom paint gets layout coordinates: follow the popup's scale, slide and fade.
-                    require("match3.buttons").medallion(pr(box), image, {alpha=P.alpha})
-                end},
-                {kind="label",id="about",grow=1,wrap=true,text_align="start",em=19,text_style="body"},
-            }},
-            {kind="row",visible_field="show_amounts",children={
-                {kind="spacer",grow=1},
-                amounts("needs", W.card.missing, "show_needs", 96),
-                group_gap("show_both"),
-                amounts("gets", W.card.gets, "show_gets", 96),
-                {kind="spacer",grow=1},
-            }},
-            {kind="row",visible_field="show_icon",children={
-                {kind="spacer",grow=1},
-                {kind="image",id="icon",width=72,height=72},
-                {kind="spacer",grow=1},
-            }},
-            {kind="label",id="notice",wrap=true,em=16,text_style="body",visible_field="show_notice"},
-            {kind="button",id="action",height=56,visible_field="show_action"},
-            not W.corner_close and {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
-        }},
-        bindings={
-            {id="icon",field="icon",type="texture",readonly=true},
-            {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
-        },
-    }
-    R.quest_form = quest_form
-    local quest_model
-    function R.open_quest(id, offer)
-        if not R.quest_model or not R.quest_model(id) then return false end
-        R.quest_card, R.overlay = id, R.OV_QUEST
-        R.quest_offer = offer == true
-        if R.quest_opened then R.quest_opened(id) end
-        return true
-    end
-    popup(R.OV_QUEST, quest_form, {width=420, prepare=function()
-        local quest = R.quest_card and R.quest_model(R.quest_card)
-        if not quest then return false end
-        quest_model = quest
-        match3.set_popup_header(quest_form, quest.speaker or quest.title)
-        local action = W.card.back
-        if quest.ready then action = W.quest.deliver
-        elseif quest.level then
-            action = quest.level == R.prog.level and W.quest.play or W.quest.replay:format(quest.level + 1)
-        end
-        assert(quest_form:push{icon=quest.icon, about=quest.about, action=quest.action or action})
-        quest_form.values.show_portrait = quest.portrait ~= nil
-        quest_form.values.portrait = quest.portrait
-        quest_form.values.show_action = quest.ready or quest.level ~= nil or not W.corner_close
-        if not W.corner_close then quest_form:set("close", R.quest_offer and W.quest.later or W.card.close) end
-        -- A filled request keeps its piece, checked off, under ALL GATHERED.
-        local needs = quest.needs or {}
-        quest_form:set("needs_caption", quest.ready and W.quest.gathered or W.card.missing)
-        local gets = quest.gets or {}
-        quest_form.values.show_needs, quest_form.values.show_gets = #needs > 0, #gets > 0
-        quest_form.values.show_both = #needs > 0 and #gets > 0
-        quest_form.values.show_amounts = #needs > 0 or #gets > 0
-        quest_form.values.show_icon = not quest_form.values.show_amounts and quest.icon ~= nil
-        assert(quest_form:set_items("needs", needs))
-        assert(quest_form:set_items("gets", gets))
-        local notice = quest.notice or (quest.waiting and W.quest.waiting)
-        quest_form.values.show_notice = notice and true or false
-        quest_form:set("notice", notice or "")
-    end, handle=function(event)
-        local id = R.quest_card
-        R.overlay = R.OV_NONE
-        if event.id ~= "action" then return end
-        if quest_model.ready then
-            if quest_model.handoff then R.open_quest_handoff(id) else R.quest_deliver(id) end
-        elseif quest_model.level then R.play_level(quest_model.level) end
-    end})
-
-    -- The painting is part of the hand-in. Continue records the delivery and
-    -- lets the game queue the existing dialogue.
-    local handoff_form = ui.form{
-        root={kind="column",panel=true,children={
-            match3.popup_header(W.quest.header),
-            {kind="image",id="painting",height=372},
-            {kind="row",height=52,gap=8,visible_field="evidence",children={
-                {kind="image",id="detail",width=56},
-                {kind="label",id="observation",grow=1,wrap=true,em=17,text_style="body"},
-            }},
-            {kind="button",id="continue",height=56,text=W.quest.continue},
-        }},
-        bindings={{id="painting",field="image",type="texture",readonly=true}},
-    }
-    R.quest_handoff_form = handoff_form
-    function R.open_quest_handoff(id)
-        local quest = R.quest_model(id)
-        if not quest or not quest.ready or not quest.handoff then return false end
-        R.quest_card, R.overlay = id, R.OV_QUEST_HANDOFF
-        match3.set_popup_header(handoff_form, quest.handoff.title)
-        assert(handoff_form:push(quest.handoff))
-        handoff_form.values.evidence = quest.handoff.detail ~= nil
-        if quest.handoff.detail then
-            handoff_form:set("detail", quest.handoff.detail):set("observation", quest.handoff.observation)
-        end
-        return true
-    end
-    popup(R.OV_QUEST_HANDOFF, handoff_form, {width=420,dismiss=false,handle=function(event)
-        if event.id ~= "continue" then return end
-        R.overlay = R.OV_NONE
-        R.quest_deliver(R.quest_card)
     end})
 
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard, W.corner_close)
@@ -913,18 +827,19 @@ function G.bind(R, over)
         elseif action == "leaderboard" then R.open_leaderboard()
         elseif action == "quit" then   -- the unfinished board waits in town
             R.on_island, R.overlay = true, R.OV_NONE
-            local replay = R.quest_model and R.prog.level >= rules.LEVELS and R.g.level < R.prog.level
-            R.notice(replay and W.quest.replay_paused or W.notices.quit:format(R.g.level + 1))
+            local replay = R.prog.level >= rules.LEVELS
+            R.notice(replay and "Your board is saved. Open Build to continue earning resources."
+                or W.notices.quit:format(R.g.level + 1))
         end
     end, live=function(event)
         return event.kind == "change" or event.id == "leaderboard"
     end})
 
-    local confirm_form = ui.form{kind="column",panel=true,children={
+    local confirm_form = ui.form(N.column {panel=true,
         match3.popup_header(W.confirm.title, W.confirm.body, W.corner_close and "close"),
-        {kind="button",id="confirm",text=W.confirm.restart,height=50},
-        {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
-    }}
+        N.button {id="confirm",text=W.confirm.restart,height=50},
+        N.button {id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
+    })
     R.confirm_form = confirm_form
     popup(R.OV_CONFIRM, confirm_form, {width=396, handle=function(event)
         if event.id == "confirm" then R.start_level(R.g.level); R.overlay = R.OV_NONE
@@ -932,24 +847,24 @@ function G.bind(R, over)
     end})
 
     local failed = W.failed
-    R.failed_form = ui.form{kind="column",panel=true,children={
+    R.failed_form = ui.form(N.column {panel=true,
         match3.popup_header(failed.title, failed.subtitle),
-        {kind="label",text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
-        {kind="button",id="retry",text=failed.retry,height=50},
-        {kind="button",id="town",text=failed.town,height=42,role="secondary"},
-    }}
+        N.label {text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
+        N.button {id="retry",text=failed.retry,height=50},
+        N.button {id="town",text=failed.town,height=42,role="secondary"},
+    })
     popup(R.OV_FAILED, R.failed_form, {width=404, dismiss=false, handle=function(event)
         if event.id == "retry" then R.start_level(R.g.level) else R.on_island, R.overlay = true, R.OV_NONE end
     end})
 
     local region = W.zone
-    local zone_form = ui.form{kind="column",panel=true,children={
+    local zone_form = ui.form(N.column {panel=true,
         match3.popup_header("Region", nil, W.corner_close and "close"),
-        {kind="label",id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
-        {kind="label",text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
-        {kind="button",id="open",height=47},
-        not W.corner_close and {kind="button",id="close",text=region.close,height=32,role="link",em=16} or nil,
-    }}
+        N.label {id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
+        N.label {text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
+        N.button {id="open",height=47},
+        not W.corner_close and N.button {id="close",text=region.close,height=32,role="link",em=16} or nil,
+    })
     R.zone_form = zone_form   -- the campaign smoke runs press its Open button
     popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
         local z = R.zone_card
@@ -972,10 +887,12 @@ function G.bind(R, over)
     for overlay, words in pairs{[R.OV_FINALE] = W.finale, [R.OV_COMPLETE] = W.complete} do
         local card = {match3.popup_header(words.title)}
         for _, line in ipairs(words.lines) do
-            card[#card+1] = {kind="label",text=line[1]:format(rules.LEVELS),wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
+            card[#card+1] = N.label {text=line[1]:format(rules.LEVELS),wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
         end
-        card[#card+1] = {kind="button",id="back",text=words.button,height=50}
-        popup(overlay, ui.form{kind="column",panel=true,children=card},
+        card[#card+1] = N.button {id="back",text=words.button,height=50}
+        local form = ui.form(N.column {panel=true,children=card})
+        if overlay == R.OV_COMPLETE then R.complete_form = form end
+        popup(overlay, form,
             {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
     end
 
@@ -1169,7 +1086,7 @@ function G.bind(R, over)
 
     ------------------------------------------------------------- town
 
-    local town = require("town")
+    local town = require("town.screen")
     function R.island_focus(world, zoom) R.town:focus(world, zoom) end
     function R.island_begin(kind, focus, item)
         if not R.town:begin(kind, focus, item) then return false end
@@ -1187,7 +1104,9 @@ function G.bind(R, over)
     function R.building_words(item)
         local kind = R.island.items[item + 1].type
         local definition = R.buildings[kind + 1]
+        local upgrade = R.upgrade_card and R.upgrade_card(kind)
         return definition.name .. "\n" .. journey.building_about(kind, R.prog.level, definition.about)
+            .. (upgrade and upgrade.short and "\n" .. upgrade.short or "")
     end
 
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
@@ -1209,30 +1128,18 @@ function G.bind(R, over)
             capsules = R.header_capsules,
             pause = function() R.overlay = R.OV_PAUSE end,
             middle_icon = function(at) R.town_middle_icon(at) end,
-            build = function() R.open_catalogue(owes_building() and "wonder" or "building") end,
-            rail = function() return R.quest_rail and R.quest_rail() or {} end,
-            rail_tap = function(id)
-                if id ~= "build" then R.open_quest(id)
-                elseif island.next_quest then
-                    local _, step = island.next_quest(R.island, R.prog.level)
-                    if step then R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER end
-                end
+            build = function()
+                local _, position = island.next_step(R.island, R.prog.level)
+                local step = island.ladder[position]
+                if step and step.after <= LEVELS then
+                    R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER
+                else R.open_catalogue("all") end
             end,
-            -- A request with a giver is that character's medallion; anything
-            -- else is the toolbar's round face with its icon. Either shows the
-            -- entry's progress as a gauge along its bottom, and a ready one (a filled
-            -- request, an affordable building) is circled by the trail.
-            rail_paint = function(box, entry, st, ready_time)
-                local buttons = require("match3.buttons")
-                local state = entry.waiting and "disabled" or st.held and "pressed" or entry.ready and "selected"
-                    or st.hot and "hover" or "normal"
-                if entry.portrait then
-                    -- The same 90% of the box the enamel buttons' circles take.
-                    buttons.medallion(rect.centered(box:center(), size2(box.w * .9, box.h * .9)), entry.portrait, {state=state ~= "selected" and state or "normal",
-                        progress=entry.progress or (entry.ready and 1 or 0)})
-                else buttons.paint(box, entry.icon, state, nil, nil, entry.progress) end
-                if ready_time then
-                    R.vfx_quest_rim(box:center(), box.w * .46, ready_time)
+            build_rim = function(center, radius)
+                local kind = island.next_step(R.island, R.prog.level)
+                if kind and not R.reduced_motion and R.overlay == R.OV_NONE
+                    and island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) then
+                    R.vfx_ready_rim(center, radius, R.now)
                 end
             end,
             play = R.play_next,
@@ -1251,13 +1158,10 @@ function G.bind(R, over)
             end,
             bubble_text = function() return R.speech_style(15) end,
             reduced_motion = function() return R.reduced_motion end,
+            draw_world = R.draw_town_world,
             overlay = R.vfx_particles,
         })
         R.placement_form = R.town.placement_form
-    end
-
-    function R.island_screen(inp, dt)
-        R.town:frame(inp, dt, R.overlay == R.OV_NONE)
     end
 
     ------------------------------------------------------------ story
@@ -1281,9 +1185,9 @@ function G.bind(R, over)
     function R.open_story_choice(beat, preview)
         local children = {match3.popup_header(beat.prompt)}
         for index, option in ipairs(beat.choices) do
-            children[#children + 1] = {kind="button", id=tostring(index), text=option.label, height=54}
+            children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54}
         end
-        R.choice_form = ui.form{root={kind="column", panel=true, children=children}}
+        R.choice_form = ui.form{root=N.column {panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end
         assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=false}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
@@ -1352,6 +1256,7 @@ function G.bind(R, over)
         end
         local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
         local b = R.next_story(before)
+        if not b and R.on_island and R.upgrade_done then b = journey.next_upgrade(R.prog, R.upgrade_done) end
         if b and (R.on_island or b.phase == "before") then
             local reply = R.prog.story_choices and R.prog.story_choices[b.key]
             if reply then choice_reply(b, reply)
@@ -1368,12 +1273,14 @@ function G.bind(R, over)
         R.prog.wallet = s:ints("wallet", R.prog.wallet)
         -- The fourth slot counts boards cleared. Saves from the star economy
         -- held three stars a board there, so it is always rebuilt from the level.
-        if save.is_reading(s) then R.prog.wallet[rules.CLEARED] = R.prog.level end
+        if save.is_reading(s) then
+            R.prog.level = num.clampi(R.prog.level, 0, LEVELS)
+            R.prog.wallet[rules.CLEARED] = R.prog.level
+        end
         R.island:serialize(s)
         story.serialize(s)
         journey.serialize(s, R.prog)
         if save.is_reading(s) then
-            R.prog.level = num.clampi(R.prog.level, 0, LEVELS)
             journey.migrate(R.prog, version)
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
@@ -1480,10 +1387,54 @@ function G.bind(R, over)
     require("match3.debug").bind(R, W)
     require("match3.vfx").bind(R, rules)
     require("match3.shatter").bind(R, rules)
+    require("match3.screen").bind(R, rules, W, require("art"), require("economy").pieces)
     return R
 end
 
 ---------------------------------------------------------------------- app
+
+-- Construction supplies the slot descriptors. Charge, persistence and
+-- refreshing a parked board follow the same rules in every square campaign.
+function G.bind_campaign_bonuses(R, island, loadout_for, backdrop_for)
+    function R.board_context(preview)
+        local restored = {preview=preview, bonus_charge=not preview and R.prog and R.prog.bonus_charge}
+        for _, step in ipairs(island.ladder) do
+            local key = step.unlock.building
+            if preview then restored[key] = not app.arg("before-" .. key)
+            else restored[key] = island.owned(R.island, step.kind) > 0 end
+        end
+        return restored
+    end
+
+    function R.update_bonus_charges()
+        local g = R.g
+        if g.bonus_preview or not g.tool_slots then return end
+        local saved = R.prog.bonus_charge or {}
+        local changed = false
+        for tool, charge in pairs(g.tool_meter) do
+            if (saved[tool] or 0) ~= charge then saved[tool], changed = charge, true end
+        end
+        if changed then
+            R.prog.bonus_charge = saved
+            R.save_progress()
+        end
+    end
+
+    function R.refresh_board_bonuses()
+        local g = R.g
+        if not g.tool_slots or g.bonus_preview then return end
+        local number, restored = g.level + 1, R.board_context()
+        local yields, loadout = loadout_for(number, restored, g.loadout_seed)
+        for tool, charge in pairs(loadout.tool_meter) do
+            if g.tool_meter[tool] == nil then
+                g.tool_meter[tool], g.tools[tool] = charge, charge // g.tool_threshold
+            end
+        end
+        g.resource_yields, g.tool_slots = yields, loadout.tool_slots
+        g.bonus, g.bonus_debut = loadout.bonus, loadout.bonus_debut
+        if backdrop_for then g.backdrop = backdrop_for(g, number, restored) end
+    end
+end
 
 -- Keep a completed board's unclaimed earnings across a restart.
 -- Each game owns its wallet migration and calls the returned serializer.
@@ -1544,26 +1495,15 @@ function G.app(R)
     local journey = require("journey")
     local LEVELS = rules.LEVELS
     local elements = require("match3.elements_view")
+    local board_screen = require("match3.screen")
+    require("match3").bind_town_board_hud(R)
     local still = app.arg("shot") and not app.arg("reel")
     local board_exit
 
-    local function draw_board(world, dt, fade, banners)
-        if fade < 1 then
-            R.board_screen(world, dt)
-            R.vfx_draw()
-            R.vfx_particles()
-            if banners then R.draw_board_banners(dt) end
-        end
-        if fade > 0 then R.draw_board_background(fade) end
-    end
+    local transition = require("screen_transition").new(W.transitions, app.arg("transition-style") or app.arg("dive-style"))
+    function R.diving() return transition:active() end
 
-    -- Town <-> board: the screen being left is covered (the town's camera dives
-    -- into its newest building), then the other screen is uncovered while the
-    -- board's pieces start to fall. engine/lua/match3/dive.lua holds the styles.
-    -- Game state switches at once; only drawing and input wait for the dive.
-    local dive_styles = require("match3.dive")
-    local dive, shown_island
-    local function dive_focus()   -- the screen point the town zooms about
+    local function town_focus()
         local c, screen = R.island, app.screen()
         if c.count > 0 then
             local at = c.cam:rect_to_screen(c:sprite_rect(c.items[c.count])):center()
@@ -1571,54 +1511,32 @@ function G.app(R)
         end
         return screen:center()
     end
-    function R.diving() return dive ~= nil end
-    local function dive_watch()
-        if shown_island ~= nil and shown_island ~= R.on_island and not R.reduced_motion
-           and (not R.quiet or app.arg("dive")) then
-            local label = R.on_island and nil or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
-            dive = {t = 0, from_island = shown_island, town = dive_focus(), board = R.BOARD_CLIP:center(),
-                    board_gone = not shown_island and board_exit == BOARD_OUT,
-                    style = dive_styles.get(app.arg("dive-style") or (W.dive and W.dive.style)),
-                    theme = dive_styles.theme(W.dive), label = label, say = R.say}
-        end
-        shown_island = R.on_island
+
+    local function describe_transition(from)
+        return {
+            -- The board's story mosaic uses the renderer's mask.
+            masked = "town",
+            focuses = {town = town_focus(), match3 = R.BOARD_CLIP:center()},
+            board_gone = from == "match3" and board_exit == BOARD_OUT,
+            label = ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name),
+            say = R.say,
+        }
     end
-    local function dive_screen(world, dt)
-        local s = dive.style
-        local fade = dive.board_gone and 1 or 0
-        if s.wipe then   -- both screens at once, the town masked to its side of the edge
-            local u = num.saturate(dive.t / s.inn)
-            draw_board(world, dt, fade)
-            dive.focus = dive.town
-            s.mask(dive, u)
-            R.island_screen(world, dt)
-            gfx.sdf_unmask()
-            gfx.bleed(true)
-            s.draw(dive, false, u)
-            gfx.bleed(false)
-            dive.t = dive.t + dt
-            if dive.t >= s.inn then dive = nil end
+
+    local function paint_transition(id, inp, dt, effect, zoom, pan)
+        if id == "match3" then
+            R.board_screen:transition(inp, dt, effect.board_gone and 1 or 0)
             return
         end
-        local leaving = dive.t < s.out
-        local u = leaving and dive.t / s.out or num.saturate((dive.t - s.out) / s.inn)
-        local island_view = leaving == dive.from_island
-        dive.focus = island_view and dive.town or dive.board
-        if island_view then
-            local cam = R.island.cam
-            local zoom, pan = s.look(dive, leaving, u)
-            local view = zoom ~= 1 and cam:zoom_at(zoom, dive.focus) or cam
-            R.island.cam = pan and view:pan(pan) or view
-            R.island_screen(world, dt)
-            R.island.cam = cam
-        else
-            draw_board(world, dt, fade)
+        if not zoom then
+            R.town:frame(inp, dt, false)
+            return
         end
-        gfx.bleed(true)
-        s.draw(dive, leaving, u)
-        gfx.bleed(false)
-        dive.t = dive.t + dt
-        if dive.t >= s.out + s.inn then dive = nil end
+        local cam = R.island.cam
+        local view = zoom ~= 1 and cam:zoom_at(zoom, effect.focus) or cam
+        R.island.cam = pan and view:pan(pan) or view
+        R.town:frame(inp, dt, false)
+        R.island.cam = cam
     end
 
     local function frame(dt)
@@ -1633,15 +1551,16 @@ function G.app(R)
         local talking = story.active()
         local board = R.leaderboard_active()
         R.layout()
-        dive_watch()
+        transition:watch(R.on_island and "town" or "match3",
+            not R.reduced_motion and (not R.quiet or app.arg("dive")), describe_transition)
         tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
         if app.arg("smoke") then (app.arg("campaign") and R.campaign_smoke or R.smoke)() end
         R.debug_frame()
         R.now = R.now + dt
         if not talking then R.toast_time = R.toast_time - dt end
-        if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
+        if inp.back and not talking and not transition:active() and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
-        if not (dive and dive.t < dive.style.out) then R.board_update(dt) end   -- the board waits behind the dive
+        if not transition:covering() then R.board_update(dt) end
         R.vfx_update(dt)
 
         local drawn_overlay = R.overlay
@@ -1658,15 +1577,17 @@ function G.app(R)
             end
         else board_exit = nil end
 
-        local interactive = R.overlay == R.OV_NONE and not talking and not board and not dive
+        local switching = transition:active()
+        local interactive = R.overlay == R.OV_NONE and not talking and not board and not switching
         local world = interactive and input.world() or input{pos = inp.pos, pinch = 1}
         ui.set_enabled(interactive)
-        if dive then dive_screen(world, dt)
-        elseif R.on_island then R.island_screen(world, dt)
+        if switching then
+            transition:frame(inp, dt, paint_transition)
         else
-            draw_board(world, dt, ease.in_out_cubic((board_exit or 0) / BOARD_OUT), true)
+            local screen = R.on_island and R.town or R.board_screen
+            screen:frame(world, dt, interactive, ease.in_out_cubic((board_exit or 0) / BOARD_OUT))
         end
-        if app.arg("debug-walkthrough") and not talking and not board and not dive
+        if app.arg("debug-walkthrough") and not talking and not board and not transition:active()
             and R.overlay == R.OV_NONE then
             local label = R.on_island and "Advance" or "Skip level"
             local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
@@ -1681,7 +1602,7 @@ function G.app(R)
         ui.set_enabled(true)
         local scene = clear_due and not revealing and R.clear_scene and R.clear_scene()
         if scene then R.draw_clear_scene(scene, inp) end
-        if not story_wait and not dive and drawn_overlay == R.overlay
+        if not story_wait and not transition:active() and drawn_overlay == R.overlay
             and (not outcome or board_exit == BOARD_OUT) then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
@@ -1718,7 +1639,7 @@ function G.app(R)
         local tiles = W.packs[1]
         for _, pack in ipairs(W.packs) do if app.arg("tiles") == pack then tiles = pack end end
         for i, t in ipairs(pack_kinds(tiles)) do R.relics[i] = t end
-        R.board_art = art.load()
+        board_screen.load(R, art, W.board)
         R.hud_art = art.load_hud()
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
         -- The painted green tick marks every met amount: board goals and cards.

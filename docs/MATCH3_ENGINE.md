@@ -3,7 +3,7 @@
 The engine follows Cradle of Rome: matches only clear, and the board elements are chains, ice, carved stones and tablets. See [Match-3 elements](MATCH3_ELEMENTS.md).
 
 `require("match3")` is built into the engine on native, iOS and WebAssembly.
-`engine/lua/match3.lua` owns the hex grid, matching, swaps, blockers,
+`engine/lua/match3.lua` owns the board grid, matching, swaps, blockers,
 collection, seeded refill, free reshuffle, hints, tools, objectives and move
 budget. It also owns board selection, tap/swipe input, phase transitions,
 cascade timing and piece animation poses. Games provide graphics, level data
@@ -52,7 +52,7 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `NO_TOOLS` | Disable tool use and preserve charges |
 | `NO_HINTS` | Suppress idle hint search/highlighting |
 | `NO_RESHUFFLE` | Do not automatically reshuffle a dead board at settlement |
-| `LINE_MATCHES` | Default: straight runs along three hex axes. Hints and refill use the same shape rule. |
+| `LINE_MATCHES` | Default: straight runs along the grid axes. Hints and refill use the same shape rule. |
 | `COLOR_TOOL` | Sunburst hits all pieces of the tapped kind. A chain absorbs a hit on its piece. |
 
 | Kind flag | Meaning |
@@ -61,23 +61,16 @@ flags are a separate integer bitmask and may be combined for one kind.
 | `WOOD` | Count the piece toward the second resource total |
 | `STONE` | Count it toward the third resource total |
 
-Both games use a `columns` x `rows` rectangle of flat-top hexes (9 x 12, odd
-columns half a cell lower) with arbitrary missing cells. The hexagon mode
-(`radius`, 1 to 16) still exists and the engine tests use it. The default is
-`match_min=3` with `LINE_MATCHES`; explicit `flags=0` retains legacy
-connected-group matching. A match is a straight line of one kind along any of the three hex axes.
-Relic Rush requires four pieces and Christmas Market requires three. Matches only clear. As in Cradle of
-Rome, no line length or shape creates a special piece; a player's extra power
-comes from the game's tools and boosters. Overlapping runs form one group and
-count each cell once. Longer runs can still pay more through
-`resource_multipliers`.
+Relic Rush and Christmas Market use `square=true`, `columns=9` and `rows=12`.
+Each tile has four swap neighbors and two match axes. Refills may also slide
+diagonally around obstructions. A square blast hits the active cells in a
+3 × 3 area. Without `square=true`, rectangular fields use flat-top hexes, as
+does the hexagonal `radius` mode. The default is `match_min=3` with
+`LINE_MATCHES`. Overlapping runs clear each cell once.
 
-Level descriptors are content. Each game's boards are text files in
-`games/<game>/levels`, validated by `tools/hex_levels.py` (see
-[Level design](LEVEL_DESIGN.md)), which generates `lua/boards.lua`; move
-budgets come from `tools/tune_moves.py`. A descriptor holds the name, lesson,
-moves, tablets (`oil`), chains and ice. Optional `mask`
-is a string of `CELLS` zero/one entries in axial column order; optional
+Each square campaign authors its maps in `lua/campaign.lua` using
+`match3.shapes.square_levels`. A descriptor holds the name, lesson, move
+budget, targets (`oil` and `oil_double`) and chains. Its mask is a string of `CELLS` zero/one entries in axial column order; optional
 `terrain` is a rank per cell for initial blockers. `ice_layers=2` permits
 strong ice, and `double_chains=N` makes the first N of `chains` take two hits. Each entry in `stones` reserves a cell for one carved hex stone.
 An adjacent match or a direct hit clears that stone. Optional `goals` lists
@@ -104,11 +97,13 @@ changes. `match3.TOOL_SIZE` (86 points) is the toolbar's button width. The
 slots and Pause share one row with 4-point gaps and margins, and narrower
 screens shrink all five evenly. At 480 points a button's glyph draws about a
 fifth larger than a board piece; keep it at least piece-sized everywhere.
-Relic Rush uses `single_charge_tools` to cap a slot at one use.
-Christmas Market keeps a count and a remainder. Both games persist the
-inventory through `update_bonus_charges` as waves resolve. Tool hits still
-earn the base wallet yield. A game can supply `sunburst_targets` for the
-legacy earned tool so the preview and hit share the same cell mask.
+The square campaigns use `match3.square_campaign` for their common rules
+and `match3.bonuses` for four fixed slots and their ranks. An ordinary
+match adds three points for each bonus piece. A full meter holds one
+use at 90 points and stops filling. Spending empties the slot. An upgrade
+inherits the same meter and replaces its earlier piece and icon. The shared
+campaign binder persists those meters and refreshes a parked board after
+construction. Resources pay their per-piece value from matches.
 
 Targeted slot actions include `hit`, `blast`, `row`, `row_lightning`,
 `color` and `color_pierce`. The row-lightning preview runs the same
@@ -138,7 +133,7 @@ order supplies three island hooks, which the ladder installs. `next_build(city, 
 building to place next. `ladder_blocked(city, level, kind)` returns
 `"built"`, `"later"` with the clear it waits for, `"earlier"`, false when the
 building can be placed, or nil for shop items. `catalogue_order` lists catalogue
-rows in shop order. Relic Rush's twenty-step ladder uses all three; without
+rows in shop order. Relic Rush's and Christmas Market's twenty-step ladders use all three; without
 them the engine keeps the story-only rules.
 
 A swap into a chain, ice or a carved stone sends the movable gem halfway toward
@@ -150,7 +145,7 @@ a hole or an empty cell is ignored: no sound, haptic or notice.
 
 ## Diagonal refill
 
-A gravity step moves each gem at most one downward hex edge. A gem falls
+A gravity step moves each gem one cell straight down or diagonally down. A gem falls
 straight down whenever its cell below is empty and movable. Only when that
 cell is occupied, locked or missing may the gem slide diagonally. Each empty
 destination takes the gem directly above before considering eligible side
@@ -194,6 +189,11 @@ A skin definition lists typed atlases under `sheets`, each
 `{path="board/pieces.png", frames={name={x,y,w,h}, ...}}`, standalone
 `images` such as backgrounds, and `aliases`; a plain `{path=, frames=}` is a
 one-sheet definition, and `engine=true` reads paths with `texture.load_engine`.
+A sheet can also specify `grid=128` and use slot numbers such as
+`frames={["kind-0"]=27}`. Slots start at zero and run left to right, then
+top to bottom. The engine derives the column count from the PNG's width.
+The generated pieces sheets use this format. Rectangular frames are still
+available for effects and other unevenly sized art.
 `match3.atlas(definition)` flattens all of it into one table of named images,
 loading each sheet once. `match3.skin(override)` loads the board: pieces,
 blockers, cells, effects and boosters, with the backgrounds. `match3.hud(override)`
@@ -218,8 +218,17 @@ Relic Rush and Christmas Market each ship `data/board/pieces.png`,
 backgrounds as separate JPEGs in `data/board/backs/`. Goal displays can reuse
 the board's chip and objective frames. The generated `lua/match3_atlases.lua`
 gives each atlas's frames; `lua/match3_skin.lua` and `lua/match3_hud.lua` pick
-the atlases, images and aliases for the board and its HUD.
-The shared floor renderer in `match3.elements_view` draws an edge-to-edge
+the atlases, images and aliases for the board and its HUD. `match3.screen`
+owns the board screen for both campaigns. The `board` table in `game_config.lua`
+sets the piece art mapping and presentation. A skin supplies art under the
+same keys for floor, perimeter and blocker states.
+
+The square perimeter occupies empty cells on the same grid as the playable
+cells, including holes and a ring one cell beyond the level grid. The eight
+neighbours determine the `square-frame-*` sprite and its quarter turn. Each
+skin supplies those sprites in `cells.png`.
+
+The hex floor renderer in `match3.elements_view` draws an edge-to-edge
 backing and insets each face by `R.GROUND.seam_width` (0.18 design units by
 default) at its radius. The seam shows the backing colour through that inset.
 `elements.cradle_ground(R)` applies the shared Cradle of Rome preset
@@ -270,8 +279,7 @@ continued inactivity. Reduce Motion hides it. See the
 `--level N --cell-states` shows them all at once. Selection and hints animate piece scale.
 When a hit removes a floor layer (ice, a double tablet's green face or a
 tablet), `engine/lua/match3/shatter.lua` breaks that cell's own artwork apart.
-At bind it makes eight Voronoi fractures of the unit hex; each break picks one
-and one of the hex's twelve symmetries. The pieces are cut from the layer's
+At bind it makes eight Voronoi fractures of the cell shape. A break picks a pattern and rotates or mirrors it within the cell. The pieces are cut from the layer's
 texture with `gfx.image_poly`. Cracks glow for 0.07 s, then the shards burst outwards,
 spin and tumble (a darker side face shows their thickness), fall under gravity
 and fade over about 0.55 s above a puff of earth-coloured dust (`S.DUST`). No
@@ -307,6 +315,53 @@ come from `match3`. Games provide the skin, guide content and screen actions.
 Engine methods `reset_board`, `board_update`, `board_input` and `select_tool`
 own changes to interaction state. `notice`, `tone` and `vfx_wave` are presentation
 outputs. Games own story, city and screen navigation.
+
+## User events and upgrades
+
+`engine/lua/match3/user_events.lua` (`require("match3.user_events")`) is Cradle of Rome's
+If/Then user-event system for the square campaigns. A game keeps its data in `lua/user_events.lua`
+(`{events=, trophies=}`) and one wiring file, `lua/user_events_runtime.lua`, required last in `main.lua`:
+
+```lua
+local R = require("state")
+return require("match3.user_events").install(R, {
+    data = require("user_events"), rules = require("rules"),
+    island = require("island"), economy = require("economy"),
+    target = "plaque",   -- what a feat's "clear" counts: plaques, panes ...
+})
+```
+
+Each event is checked only while it is available and not done; when its `If` is met it runs its `Then`s
+and is done for good. Done and available flags and a few counters are saved with the campaign
+(`R.serialize_campaign`); lasting effects are never stored but derived from the done events
+(`U.win_income()`, `U.tool_charges()`, `U.upgrades(key)`, `U.trophies()`), so retuning the data
+applies to old saves. The file's header lists every condition and effect.
+
+**Upgrades.** `M.upgrade_events(rows)` builds the sixteen building upgrades (Rome's citizens, kept by the
+cast we know; [design](CAMPAIGN_DESIGN.md#upgrades-romes-citizens-kept-by-the-cast-we-know)) from compact rows
+(`{id="man_03", building=, title="a second oven", keeper="agnes", If=, perk=}`): placing the building
+(`city_<building>`) arms the upgrade, and the feat earns it. The perks are two effects:
+
+- `THEN_PLAYER_ADD_RESOURCE_PER_LEVEL id amount` adds income to every won level's reward from then
+  on. The game's `reward_breakdown` adds `rules.perk_income()` (set by the runtime) to its `income`,
+  as Christmas Market's carousel already does.
+- `THEN_GAME_CHARGE_TOOL id amount` makes the pieces of that bonus's tool slot (Hammer and Bomb share
+  one) charge `amount` points more per match: a bonus piece is worth 3 (`bonuses.slots`), so one
+  upgrade makes it 4 of the slot's 90. Upgrades of one slot stack. The runtime wraps `rules.game_start`
+  and `rules.game_apply` so the board's `g.yield_amounts` reaches the engine's clearing code
+  while the economy's own piece tables stay untouched.
+
+**Scene.** An upgrade's scene is a journey beat `{key="upgrade-man_03", phase="upgrade", event="man_03"}`
+compiled by each game's `tools/prepare_story.py` from the `## Upgrades` section of `docs/story.md`
+(headings `**Upgrade man_NN · <title> · <Building name>**`; the keeper must speak). `match3.game`'s journey keeps
+these in `journey.upgrades`, apart from the level beats, and `R.story_tick` plays the first unseen one whose
+event is done (`R.upgrade_done`) on a return to town, once no level beat is due; it is saved with the
+other beats and never blocks progress. Without a scene the runtime shows a toast ("Gingerbread bakery: a second oven").
+`R.upgrade_card(kind)` feeds the building card (and `R.building_words` the tap line): "Upgraded: <title>" with the
+perk, or the feat while armed, as `resource_indicator` entries under a FEAT, EVERY WIN or TOOL caption; a game's
+`screens.lua` provides `R.currency_icon(slot)`. No new speakers are added for upgrades: the keeper is an existing
+cast member. A speaker without a portrait (`narrative.lua`, no `portrait_path`) is shown with a name plate.
+`story.setup` takes up to 64 cast members.
 
 ## Reproduction and verification
 

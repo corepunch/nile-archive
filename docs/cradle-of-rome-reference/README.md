@@ -10,7 +10,7 @@ restoration, with a board that gives the changed piece a reason to matter.
 | Start here | What it covers |
 | --- | --- |
 | [Complete game-design reference](GAME_DESIGN.md) | Core loop, economy, all 20 Rome I buildings, all eight tool-building links, citizen tasks, version caveats and Christmas Market/Relic Rush implications. |
-| [Gem correspondence sheet](gem-correspondence.html) | Side-by-side tile art, original names, Relic Rush counterparts and gaps for both editions. Open in a browser. |
+| [Gem correspondence sheet](gem-correspondence.html) | Side-by-side pieces and bonuses for both Rome editions, Relic Rush and Christmas Market, including proposed market colors and building rewards. Open in a browser. |
 | [Board design](BOARD_DESIGN.md) | All 115 numbered layouts, feature counts and worked examples of plaque placement, locks and supply. |
 | [Adventure comparison sheets](#adventure-comparison-sheets) | 100 board diagrams per game, aligned by level number. |
 | [Resources and city](ECONOMY_AND_CITY.md) | Piece yields, the finish bonus, all 20 purchases across five epochs, and examples of citizen rewards. |
