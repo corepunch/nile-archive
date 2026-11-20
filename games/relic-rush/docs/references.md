@@ -29,7 +29,7 @@ Paths on our island are painted scenery. There is no road-connectivity requireme
 
 Relic Rush uses Cradle of Rome’s straight matches, fixed target cells, blockers
 (chains, ice, carved stones) and bonus tools charged by matching bonus gems.
-There are no special pieces. Pickaxe became the Hammer (Dynamite upgrades it to
+Line gems and rainbow gems are this game's own addition to Rome's rules. Pickaxe became the Hammer (Dynamite upgrades it to
 hit the neighboring hexes), and Sunburst became the Star that hits one kind across the
 board. See the [original game page](https://store.steampowered.com/app/38170/)
 and the [published walkthrough of the original game](https://www.gamehouse.com/blog/2016/04/cradle-of-rome-walkthrough/).

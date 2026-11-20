@@ -152,8 +152,8 @@ Four boosters share one toolbar. Hammer and Lantern Lightning bank uses and
 partial charges between wishes. Shooting Star clears the chosen row and
 Firework Bomb hits the chosen cell and its neighbors. Their stalls grant
 one use at the start of each eligible wish, and the sleigh and the
-Christmas tree add a second Shooting Star and Firework Bomb. Matches never
-make special pieces (a longer line just clears): as in Cradle of Rome, power comes only from tools. The
+Christmas tree add a second Shooting Star and Firework Bomb. Longer lines
+leave line gems and rainbow gems ([rules](square-match3.md#line-gems-and-rainbow-gems)); other power comes, as in Cradle of Rome, from tools. The
 gingerbread house adds moves and the post office doubles charge speed.
 The rink and presents earn income on every win, including replays.
 

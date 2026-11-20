@@ -222,26 +222,26 @@ The ladder has twenty purchases, one available after every fifth board (after le
 
 | After level | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
-| 1 | Spring well (Well) | Water buckets | 30 / 0 / 0 |
+| 1 | Spring well (Well) | Water buckets | 35 / 0 / 0 |
 | 6 | Trapper's cabin (Hunter's Hut) | Hammer | 425 / 150 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 850 / 310 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 890 / 340 / 360 |
-| 21 | Jungle market (Farm) | Ration jars | 895 / 340 / 495 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 655 / 575 / 505 |
-| 31 | Water mill (Mill) | Grain bundles | 605 / 735 / 700 |
-| 36 | Tide clock tower (Thermae) | Shield | 545 / 790 / 715 |
-| 41 | Harbour plaza (Port) | Shrimp | 535 / 800 / 725 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass | 510 / 995 / 685 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 485 / 1040 / 675 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning | 520 / 1035 / 655 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 550 / 1025 / 645 |
-| 66 | Lighthouse | Plus | 595 / 1000 / 630 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 695 / 1180 / 730 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 795 / 1155 / 720 |
-| 81 | Great aviary (Pantheon) | Sandals | 1165 / 1685 / 1060 |
-| 86 | Relic museum (Theatre) | Harps | 1265 / 1640 / 1015 |
-| 91 | Temple of the Sun (Forum) | Star | 1450 / 1715 / 1060 |
-| 96 | Jade fountain (Fountain) | Emeralds | 1470 / 1705 / 1060 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 945 / 355 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 965 / 365 / 400 |
+| 21 | Jungle market (Farm) | Ration jars | 895 / 335 / 500 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 660 / 565 / 510 |
+| 31 | Water mill (Mill) | Grain bundles | 575 / 710 / 680 |
+| 36 | Tide clock tower (Thermae) | Shield | 525 / 750 / 695 |
+| 41 | Harbour plaza (Port) | Shrimp | 560 / 845 / 770 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass | 520 / 1010 / 725 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 505 / 1060 / 700 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning | 545 / 1045 / 685 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 565 / 1065 / 685 |
+| 66 | Lighthouse | Plus | 610 / 1055 / 660 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 740 / 1175 / 755 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 785 / 1155 / 735 |
+| 81 | Great aviary (Pantheon) | Sandals | 1060 / 1520 / 965 |
+| 86 | Relic museum (Theatre) | Harps | 1150 / 1480 / 920 |
+| 91 | Temple of the Sun (Forum) | Star | 1425 / 1685 / 1030 |
+| 96 | Jade fountain (Fountain) | Emeralds | 1450 / 1655 / 1040 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
@@ -269,7 +269,7 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
 
 ## Play
 
-- Swap adjacent pieces to make a straight line of three or more identical pieces along rows or columns. A longer line or a crossing just clears: there are no special pieces. As in Cradle of Rome, power comes only from the bonus tools, charged by matching bonus gems.
+- Swap adjacent pieces to make a straight line of three or more identical pieces along rows or columns. Four in a line leave a line gem of that color, which sweeps its row or column when matched, and five leave a rainbow gem that clears one kind. Crossing lines make no bomb. The bonus tools, charged by matching bonus gems, follow Cradle of Rome.
 - Match or land a tool hit on a chained piece to break the chain. A later hit clears a blue tablet on that cell. Ice and carved stones are other blockers; they gate the fall below them.
 - Cascades increase score multipliers. Gathered resources animate toward their wallet slots. The result screen shows the matched resource totals and, as icon amounts, what the next restoration still needs.
 - Restore buildings to unlock four bonus families. A later restoration

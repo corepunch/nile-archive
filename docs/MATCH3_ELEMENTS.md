@@ -3,7 +3,7 @@
 The engine follows Cradle of Rome. A board has chains, ice, carved stones and
 tablets (blue plaques). Power comes from tools. A game may also let longer lines
 leave special pieces ([optional match specials](MATCH3_ENGINE.md#optional-match-specials)):
-Christmas Market's four-in-a-line gems and five-in-a-line rainbow gems. Relic Rush enables none.
+both campaigns make a line gem from four in a line and a rainbow gem from five.
 
 Relic Rush and Christmas Market share rules, but author their own shapes,
 terrain priorities, element placements and teaching order. The playable

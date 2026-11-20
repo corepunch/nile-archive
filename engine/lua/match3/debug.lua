@@ -418,6 +418,10 @@ function D.bind(R, W)
             -- --level N --special-states: a row and a column line gem of every
             -- kind on the board, and a rainbow gem.
             local g, kinds = R.g, R.g.spawn_kinds
+            if not kinds then
+                kinds = {}
+                for kind = 0, rules.COLORS - 1 do kinds[#kinds + 1] = kind end
+            end
             local function put(q, r, kind, special, axis)
                 local cell = rules.hex_index(q, r)
                 g.active[cell], g.stone_hp[cell], g.chain[cell], g.ice[cell] = true, 0, 0, 0

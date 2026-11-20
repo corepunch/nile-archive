@@ -414,8 +414,8 @@ See the [default skin review](review/match3/README.md) and each game's
 An engine caller can pass `special_rules = {"striped", "color_bomb", "plane", "t_bomb"}`
 to `match3.new` with straight match-3 rules, on hex or square cells. Each name
 is independent. An omitted or empty list enables none. A square campaign sets
-`special_rules` in its `lua/campaign.lua`: Christmas Market enables `striped`
-and `color_bomb`, Relic Rush none.
+`special_rules` in its `lua/campaign.lua`: Relic Rush and Christmas Market
+both enable `striped` and `color_bomb`.
 
 | Rule | Shape | Matches as its color | On activation |
 | --- | --- | --- | --- |

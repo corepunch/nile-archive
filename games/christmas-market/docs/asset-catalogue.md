@@ -733,7 +733,8 @@ restores the striped treats the board used until the 12 November
 Homescapes-style pass. A new gem swells in over 0.24 s where its line was
 made. Firing draws the shared axis sweep, and the rainbow gem an impact ring
 and colored burst, from the engine's activation events; Reduce Motion skips
-those overlays.
+those overlays. The Market keeper's guide shows a banded coin and the rainbow
+ball ([guide](screenshots/review/line-gems/guide-480.jpg)).
 
 Reproduce the state sheet (both axes of the board's five kinds and a rainbow
 gem) with

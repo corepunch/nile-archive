@@ -21,7 +21,7 @@
       "normal"
     ]
   },
-  "matching_rules": "The square campaign matches horizontal and vertical runs of three or more among five kinds. Chains absorb their hit before the plaque clears. One bonus family at a time occupies a piece slot, and each socket holds one use.",
+  "matching_rules": "The square campaign matches horizontal and vertical runs of three or more among five kinds. Four in a line leave a line gem of that color and five a rainbow gem. Chains absorb their hit before the plaque clears. One bonus family at a time occupies a piece slot, and each socket holds one use.",
   "rome_reference_art": {
     "source": "Cradle of Rome 2 GameTop Windows, textures/scenes/game/balls/gmf_balls_2.png",
     "export": "tools/reference/cradle-of-rome/export_art.py --board-only",
@@ -643,7 +643,7 @@
     "prompt": "art/board-states/clear-indicators-prompt.txt",
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
     "review": "docs/review/striped-specials/README.md",
-    "specials": "Deleted: the engine has no special pieces, and their frames and runtime files are gone.",
+    "specials": "Line gems draw their own piece under engine bands; the rainbow gem is slot 4 of data/board/match-specials.png. The older rocket, bomb and prism frames stay deleted.",
     "ice": "archived filled frost sheets; live ice uses the translucent hex overlays in ../../art/match3-ice/source.png",
     "interaction": "soft filled mint selection glow and gold hint glow; no outline"
   },
@@ -657,7 +657,8 @@
     "review": "docs/review/painted-buildings/current-camera/README.md"
   },
   "striped_specials": {
-    "status": "retired with all special pieces; the engine has none"
+    "status": "live again as line gems: the piece's own frame under four cream bands from gfx.image_striped (repeats 4, width 0.44, ink 255/250/224), along the row or column it clears",
+    "review": "docs/screenshots/review/line-gems/states-480.jpg"
   },
   "settings_and_wallet": {
     "source": "art/expedition-hud/settings-lives.png",

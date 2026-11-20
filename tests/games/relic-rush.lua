@@ -31,6 +31,13 @@ shot("story-handoff", "480x900", "--city 4 --look 925,2110 --story-beat after-10
 shot("story-handoff-phone", "390x844", "--city 4 --look 925,2110 --story-beat after-10 --story-line 2 --frames 240 --safe-area 0,47,0,34")
 shot("story-choice", "480x900", "--story-choice after-10")
 shot("story-choice-phone", "390x844", "--story-choice after-10 --safe-area 0,47,0,34")
+-- Line gems and the rainbow gem: both axes of every kind, then one real swap each.
+local gems = "--level 30 --special-states "
+shot("line-gem-states", "480x900", gems .. "--frames 60")
+shot("line-gem-states-phone", "390x844", gems .. "--frames 60 --safe-area 0,47,0,34")
+for _, fire in ipairs{"born", "sweep", "cross", "rainbow", "recolor"} do
+    reel("line-gem-" .. fire, 12, 4, "480x900", gems .. "--special-fire " .. fire .. " --reel")
+end
 shot("goal-board", "480x900", "--level 2 --frames 180")
 shot("goal-board-phone", "390x844", "--level 2 --frames 180 --safe-area 0,47,0,34")
 local bonus_review = "--lua tests/fixtures/bonus-toolbar;games/relic-rush/lua;. --level 28 "

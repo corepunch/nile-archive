@@ -51,7 +51,7 @@ Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and t
 
 The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet uses the `resource-coin` sprite. Built-in ImageGen authored the preview idol's [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
 
-The engine has no special pieces, so the atlas carries no rocket, bomb, plane or rainbow-ball frames. Their earlier reviews ([painted power-ups](screenshots/review/power-up-paint/README.md), [Scener models](screenshots/review/scener-power-ups/README.md)) are historical.
+The board atlas carries no rocket, bomb, plane or rainbow-ball frames: line gems band the piece's own frame and the rainbow gem lives in `data/board/match-specials.png` (see [Line gems and rainbow gems](#line-gems-and-rainbow-gems)). The earlier reviews ([painted power-ups](screenshots/review/power-up-paint/README.md), [Scener models](screenshots/review/scener-power-ups/README.md)) are historical.
 
 The [edge-mounted hex chains](../../../art/match3-chain-paint/README.md) are retained as legacy previews. [Earlier in-game comparisons](screenshots/review/chain-anchors/README.md).
 
@@ -397,9 +397,10 @@ and resizing; it does not create new colours or states.
 
 ## Special pieces
 
-Live expeditions make no special pieces: matches of any length or shape only
-clear, and power comes from the charged bonus tools (Cradle of Rome rules).
-The engine has no rockets, bombs, planes or rainbow balls.
+Live expeditions make two: a line gem from four in a line and a rainbow gem
+from five (see [Line gems and rainbow gems](#line-gems-and-rainbow-gems)).
+Crossings make no bomb and there are no rockets or planes; other power comes
+from the charged bonus tools (Cradle of Rome rules).
 
 Source for every new sprite below: `art/board-states/source.png`, generated together
 in one built-in ImageGen call. The exact prompt is
@@ -1122,15 +1123,38 @@ uses the same icon scale, capsule, and count for all eight. Add
 `--moves-variants` to the command above and crop the top 141 logical pixels for
 the comparison sheet.
 
-### Optional match specials
+### Line gems and rainbow gems
 
-`data/board/match-specials.png` contains the three striped axes, T bomb,
-color bomb and paper plane in six 128 px slots. The five painted power-ups
-come from `art/match3-power-up-paint/source.png` at the repository root
-(prompt kept beside it). The paper plane is cropped from Christmas Market's
-painted `art/board-theme/source.png`, with neighboring fragments removed.
-Regenerate both atlases with `python3 tools/pack_match_specials.py`.
-The shared effects layer draws an axis sweep, impact ring, colored burst and
-plane flight from the engine's activation events. Reduced motion skips these
-overlays and applies the ordinary clear presentation. Campaigns leave all
-four rules disabled.
+The campaign enables the engine's `striped` and `color_bomb` rules
+(`special_rules` in `lua/campaign.lua`; see [Line gems and rainbow gems](square-match3.md#line-gems-and-rainbow-gems)).
+
+| Piece | Rule meaning | Visual states | Source and runtime path |
+| --- | --- | --- | --- |
+| Line gem, row | Four in a row. Matches as its kind and sweeps its row when cleared | Any board piece under four horizontal cream bands | The piece's own board frame, banded at draw time by `gfx.image_striped` (repeats 4, width 0.44, ink 255/250/224), masked to the painted alpha |
+| Line gem, column | Four in a column. Sweeps its column | The same piece under vertical bands | As above, turned a quarter |
+| Rainbow gem | Five or more in a line. Matches nothing; a swap clears the partner's kind | One painted ball | Slot 4 of `data/board/match-specials.png` |
+
+The bands are the engine's catalogued procedural state for a colored special:
+they follow the piece through selection, swap, fall and squash, and need no
+per-kind artwork, so every current and future piece kind has both axes. This
+restores the striped relics the board used until the 12 November
+Homescapes-style pass ([earlier review](../../../docs/review/striped-specials/README.md)).
+A new gem swells in over 0.24 s where its line was made. Firing draws the
+shared axis sweep, and the rainbow gem an impact ring and colored burst, from
+the engine's activation events; Reduce Motion skips those overlays. The
+Explorer's guide shows a banded coin and the rainbow ball.
+
+Reproduce the state sheet (both axes of the board's five kinds and a rainbow
+gem) with
+`./build/relic-rush --headless --mute --fresh --size 480x900 --level 30 --special-states --frames 60 --shot out.png`.
+Reviewed in game at [480 × 900](screenshots/review/line-gems/states-480.jpg)
+and [390 × 844](screenshots/review/line-gems/states-390.jpg), and in the
+[guide](screenshots/review/line-gems/guide-480.jpg).
+
+`data/board/match-specials.png` also keeps the three hex striped axes, T bomb
+and paper plane in its six 128 px slots for the rules this campaign leaves
+off. The five painted power-ups come from
+`art/match3-power-up-paint/source.png` at the repository root (prompt kept
+beside it). The paper plane is cropped from Christmas Market's painted
+`art/board-theme/source.png`, with neighboring fragments removed. Regenerate
+both games' atlases with `python3 tools/pack_match_specials.py`.

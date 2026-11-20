@@ -63,6 +63,11 @@ function V.bind(R, rules, config, art, base_pieces)
     local colored_specials = require("match3.specials").colored
     local stripes = pieces.stripes or {repeats=4, width=.44, ink=color(255, 250, 224)}
     local axis_angle = rules.square and math.pi / 2 or math.pi / 3
+    -- Also the guide's picture of a line gem.
+    function R.draw_banded(tex, area, axis, alpha)
+        local angle = (rules.square and 0 or math.pi / 6) + axis * axis_angle
+        gfx.image_striped(tex, area, angle, stripes.repeats, stripes.width, stripes.ink, color(255, 255, 255, alpha))
+    end
     function R.draw_relic(tile, at, scale, alpha, aspect)
         local banded = colored_specials[tile.special]
         if tile.special and not banded then return R.draw_match_special(tile, at, scale, alpha) end
@@ -72,9 +77,7 @@ function V.bind(R, rules, config, art, base_pieces)
         tex = R.board_piece_crops and R.board_piece_crops[tex] or tex
         local area = rect.centered(at, size2(side * aspect, side / aspect))
         elements.piece_shadow(tex, area, alpha, side)
-        if banded then
-            local angle = (rules.square and 0 or math.pi / 6) + tile.axis * axis_angle
-            gfx.image_striped(tex, area, angle, stripes.repeats, stripes.width, stripes.ink, color(255, 255, 255, alpha))
+        if banded then R.draw_banded(tex, area, tile.axis, alpha)
         else gfx.image(tex, area, color(255, 255, 255, alpha)) end
     end
 

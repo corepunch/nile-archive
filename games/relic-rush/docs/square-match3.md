@@ -7,6 +7,30 @@ identical pieces. A board spawns five kinds. Bonus pieces replace a kind
 once its building is confirmed. Each matched Hammer piece gives 3 charge
 points and the meter fills at 90. Long matches count each Hammer once.
 
+## Line gems and rainbow gems
+
+Four in a row or column leave a **line gem** where the swap landed (or at the
+line's first cell in a cascade). It is still its piece: the same relic under
+four cream bands that run the way it clears. Match it with two of its kind and
+it sweeps its whole row or column. Five or more in a line leave a **rainbow
+gem**, which matches nothing. Swap it with a neighbor to clear every piece of
+that kind, or tap it to clear the kind it was made from.
+
+| Swap | Result |
+| --- | --- |
+| Line gem with line gem | A row and a column through the moved gem |
+| Rainbow gem with line gem | Every piece of the gem's kind becomes a line gem and fires |
+| Rainbow gem with rainbow gem | The whole board is hit |
+
+Swept pieces pay their Coins, Food and Supplies like matched ones; a tool
+still clears without paying, and only matched bonus pieces charge a slot. A
+gem under a chain waits until the chain breaks. The first line gem and the
+first rainbow gem each show a one-line hint, and the Explorer's guide lists
+both. This is the one place the board leaves Cradle of Rome, whose matches
+only clear. The rules are the engine's `striped` and `color_bomb`
+([optional match specials](../../../docs/MATCH3_ENGINE.md#optional-match-specials)),
+switched on in [`lua/campaign.lua`](../lua/campaign.lua).
+
 Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
 all the targets within the move budget and collect the matched Coins, Food and Supplies.

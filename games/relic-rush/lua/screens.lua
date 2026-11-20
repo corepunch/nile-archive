@@ -138,6 +138,10 @@ local guide_entries = {
      icon={floor="square-double"}},
     {id="chains", title="Chains", description="Match the chained piece or hit it with a tool. If the cell has a plaque, clear it with another hit.",
      icon={floor="square-target", piece=chip_prefix .. "coin", front="chain-square-1"}},
+    {id="line-gem", title="Four in a line: line gem", description="It keeps its color. Match it again to sweep its whole row or column.",
+     icon={banded=chip_prefix .. "coin"}},
+    {id="rainbow-gem", title="Five in a line: rainbow gem", description="Swap it with a neighbor to clear every piece of that kind.",
+     icon={special="color_bomb"}},
     {id="earnings", title="Stock the expedition", description="Match resource pieces and win to bank Coins, Supplies and Food.",
      icon={front="resource-wallet-supplies"}},
     {id="score", title="Leaves, flowers and amphoras", description="These pieces earn score only. See your score at the end of the expedition.",
@@ -165,6 +169,8 @@ local function guide_icon(box, icon)
     if icon.floor then picture(R.board_art[icon.floor], layer, 255) end
     if icon.piece then picture(R.board_art[icon.piece], layer:inflate(-4), 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
+    if icon.banded then R.draw_banded(R.board_art[icon.banded], layer, 0, 255) end
+    if icon.special then R.draw_match_special({special=icon.special}, box:center(), 48 / (R.HEX_R * 2), 255) end
 end
 function R.building_reward(kind)
     local step = island.ladder[island.ladder_position[kind]]

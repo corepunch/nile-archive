@@ -95,6 +95,10 @@ local guide_entries = {
      icon={back="square-double"}},
     {id="blockers", title="Untangle tinsel", description="Match the tied piece or hit it with a tool. Then clear the piece to light the pane.",
      icon={back="square-target", piece="market-1", front="chain-square-1"}},
+    {id="line-gem", title="Four in a line: line gem", description="It keeps its color. Match it again to sweep its whole row or column.",
+     icon={banded="market-3"}},
+    {id="rainbow-gem", title="Five in a line: rainbow gem", description="Swap it with a neighbor to clear every piece of that kind.",
+     icon={special="color_bomb"}},
     {id="supplies", title="Stock the market", description="Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials.",
      icon={front="market-3"}},
     {id="banking", title="Bank your matches", description="Each matched piece pays its own value. Clear the board to bank what you earned.",
@@ -111,6 +115,8 @@ local function guide_icon(box, icon)
     if icon.piece then picture(R.board_art[icon.piece], layer, 255) end
     if icon.front then picture(R.board_art[icon.front], layer, 255) end
     if icon.tool then picture(R.board_art[icon.tool], layer, 255) end
+    if icon.banded then R.draw_banded(R.board_art[icon.banded], layer, 0, 255) end
+    if icon.special then R.draw_match_special({special=icon.special}, at, 48 / (R.HEX_R * 2), 255) end
 end
 local guide_form = match3.guide_form({
     title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING PIECES",

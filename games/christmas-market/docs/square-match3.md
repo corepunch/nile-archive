@@ -27,7 +27,8 @@ piece of that kind, or tap it to clear the kind it was made from.
 Swept pieces pay their Tokens, Treats and Materials like matched ones; a tool
 still clears without paying, and only matched bonus pieces charge a slot. A
 gem under a chain waits until the chain breaks. The first line gem and the
-first rainbow gem each show a one-line hint. The rules are the engine's
+first rainbow gem each show a one-line hint, and the Market keeper's guide
+lists both. The rules are the engine's
 `striped` and `color_bomb` ([optional match specials](../../../docs/MATCH3_ENGINE.md#optional-match-specials)),
 switched on in [`lua/campaign.lua`](../lua/campaign.lua).
 

@@ -127,6 +127,14 @@ local upgrades = {
 }
 for _, event in ipairs(require("match3.user_events").upgrade_events(upgrades)) do table.insert(events, event) end
 
+-- The first line gem and the first rainbow gem each explain themselves once.
+table.insert(events, {id="hint_line_gem",
+    If={"IF_PLAYER_MAKE_MATCH", length=4, max_length=4},
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_LINE_GEM", text="Four in a line leave a striped gem. Match it to sweep its line."}}})
+table.insert(events, {id="hint_rainbow_gem",
+    If={"IF_PLAYER_MAKE_MATCH", length=5},
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_RAINBOW_GEM", text="Five in a line leave a rainbow gem. Swap it to clear one kind."}}})
+
 -- hint_11_<bonus>: Rome's IF_GAME_BONUS_READY hints, one per bonus.
 for _, slot in ipairs(economy.bonus_slots) do
     for _, bonus in ipairs(slot.levels) do
