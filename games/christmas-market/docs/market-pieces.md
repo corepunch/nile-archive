@@ -23,18 +23,18 @@ Twenty purchases, one available after every fifth level (1, 6, 11 … 96), four 
 | After level | Stall | Reward | Price (Tokens / Treats / Materials) |
 | ---: | --- | --- | ---: |
 | 1 | **Welcome arch** | Mulled wine +3 Treats | 70 / 0 / 0 |
-| 6 | Reindeer stable | Farrier's hammer; winter vase (score) | 605 / 220 / 0 |
-| 11 | **Lumber workshop** | Bundled pine +5 Materials | 1245 / 455 / 0 |
-| 16 | Firework stall | Firework Bomb | 930 / 345 / 430 |
-| 21 | **Gingerbread bakery** | Gingerbread man +4 Treats | 1070 / 0 / 640 |
+| 6 | Reindeer stable | Farrier's hammer; winter vase (score) | 685 / 245 / 0 |
+| 11 | **Lumber workshop** | Bundled pine +5 Materials | 1115 / 410 / 0 |
+| 16 | Firework stall | Firework Bomb | 905 / 340 / 430 |
+| 21 | **Gingerbread bakery** | Gingerbread man +4 Treats | 1065 / 0 / 640 |
 | 26 | Snowy chapel | Dressed stone +7 Materials | 1010 / 0 / 630 |
-| 31 | **Hot cocoa kiosk** | Hot cocoa +5 Treats | 1355 / 1395 / 1165 |
+| 31 | **Hot cocoa kiosk** | Hot cocoa +5 Treats | 1355 / 1390 / 1165 |
 | 36 | Ice house (was Igloo) | Frost shield; ice pendant +6 Tokens | 1155 / 835 / 1000 |
-| 41 | Lakeside smokehouse (was Log cabin) | Smoked trout +6 Treats | 1665 / 930 / 1265 |
+| 41 | Lakeside smokehouse (was Log cabin) | Smoked trout +6 Treats | 1660 / 930 / 1265 |
 | 46 | Station kiosk | Hourglass; pretzel +7 Treats | 1275 / 840 / 1040 |
 | 51 | **Toymaker's workshop** | Toy blocks +7 Tokens | 1455 / 1110 / 1170 |
-| 56 | **Gift wrapping pavilion** | Wrapped gift +8 Tokens | 1540 / 1080 / 1090 |
-| 61 | **Candlelight shop** | Candle lantern (Lightning) | 1965 / 1235 / 1255 |
+| 56 | **Gift wrapping pavilion** | Wrapped gift +8 Tokens | 1545 / 1080 / 1090 |
+| 61 | **Candlelight shop** | Candle lantern (Lightning) | 1960 / 1235 / 1255 |
 | 66 | North Pole post office | Wish cross (Plus) | 2315 / 1485 / 1455 |
 | 71 | Glassblower's stall | Glass bauble +9 Tokens | 1920 / 1190 / 1210 |
 | 76 | **Reindeer carousel** | Wind-up top (Mixer); +30 Treats per win | 1990 / 1190 / 1185 |

@@ -61,7 +61,7 @@ Noelle and the five supporting speakers have painted busts. Bramble the goat doe
 
 | Character | Who | Voice | Arc |
 | --- | --- | --- | --- |
-| **Noelle** | Rosa's granddaughter, here "for three weeks". | Warm, quick, jokes when she's touched | Visitor → the heart of the place → stays |
+| **Noelle** | Rosa's granddaughter, here "until Christmas". | Warm, quick, jokes when she's touched | Visitor → the heart of the place → stays |
 | **Theo Marsh** | Tree seller, thirties. *Plaid coat, resin on his gloves, needles in his hair* | Dry and contrary, then funny, then suddenly sincere | Sparring partner → Someone |
 | **Agnes Holt** | Baker, sixties. *Flour on her apron, arms crossed* | Pretend-gruff, shows love with food. "There's buns." | Forty-year sulk → goes skating |
 | **Henrik Strand** | Toymaker, seventies. *White whiskers, leather apron, pencil behind the ear* | Tidy, dry, corrects your carpentry | Forty-year sulk → crosses the square |
@@ -74,20 +74,20 @@ Noelle and the five supporting speakers have painted busts. Bramble the goat doe
 
 | Planted | Paid off |
 | --- | --- |
-| The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who sends her to read it again. It's hers: the key (91) |
-| The ticket for the 26th (opening) | Noelle gives up the ticket when she decides to stay (91), then invites Theo round (100) |
+| The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who tells her to open it. It's hers: Gran's front-door key (92) |
+| The ticket for the 26th (10 onward) | The ticket goes in the fir with a lamp when she decides to stay (91); she tells Theo she's staying (100) |
 | The rule of the Kind Word box: never ask who (5) | Theo and Noelle break it together (100) |
 | Resin on his letters (2), sticky notes (6 onward) | How Noelle finally knows (100) |
 | "Your arch is in my way" (1) | Theo under the fir (100) |
 | "Tell that man / that woman" (3 onward) | Henrik tells her himself (65) |
-| The post box behind the shop (5) | The lost letter (61) |
+| The old green postbox's loose lining (57) | The lost letter (61) |
 | Pip "doesn't mind" (18) | He minds (56). She comes (94) |
 | Wrapped present for his mum (56) | He gives it to her on the platform (94) |
 | Everyone Noelle helped (1–88) | They all turn up with their lamps (89) |
 | The cup for the next person (31) | The Fenwick choir finds a place to practice (33), sing at the second candle (40), bring paint (74) and turn up in the dark (89) |
-| Noelle imagines January in Bellmere (76) | She tells Wren she is staying before she opens the parcel (91) and invites Theo round (100) |
+| Noelle imagines January in Bellmere (76) | She tells Wren she is staying before she opens the parcel (91) and tells Theo (100) |
 | The silver bell on the arch "rings for the last one off the train" (14) | It rings for Pip's mum (94) |
-| Rosa leaves a light for one more (opening) | The arch (1), both doors (20), the station walk (27–28) and Noelle’s own window (30) |
+| Rosa leaves a light for one more (1) | Gran's lamp in Noelle's own window (95), and the end screen |
 
 **Who knows what.** Pip delivers the notes, works out who Someone is by level 45 and nearly bursts. Mr Wren knows everything or seems to. Theo learns from Noelle's signature at level 60. Noelle makes the connection at level 100. The player can guess by level 25. Only Agnes and Henrik know what the quarrel looked like from their own side, and only levels 61–65 join the two.
 
@@ -617,7 +617,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 **Level 79 · Frozen Fountain**
 
 - **Pip:** The fountain's frozen solid and a note got through! I did not read it!
-- **Noelle:** "Meet me by the big fir on Christmas Eve. Someone." Those are Henrik's words, exactly.
+- **Noelle:** "Meet me by the big fir on Christmas Eve. Someone." Those are Agnes's words, exactly.
 - **Noelle (thought):** Someone's been listening at the bakery. Someone has a nerve. I'll be there.
 
 **Before level 80**
@@ -843,3 +843,4 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 - 2026-11-16: The board now uses the shared Cradle of Rome tiles: parchment cells and teal-blue panes to light, which return to parchment when cleared. The lesson and guide say “blue panes” again. Dialogue is unchanged.
 
 - 2026-11-16: Connected the first twenty wishes to the Rome I purchase ladder. Existing dialogue follows first clears and confirmed placements. Story finds appear on results while the board maintains its regular resource pool.
+- 2026-11-20: Level 79 credits the note to Agnes, who wrote it. The cast table says Noelle is here until Christmas. The plant-and-payoff sheet now points at the levels where the 100-level script plants and pays off the parcel, ticket, postbox and Gran's light.

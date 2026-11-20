@@ -426,7 +426,7 @@ return {
     }},
     {key="after-79", phase="after", level=79, lines={
         {"pip", "The fountain's frozen solid and a note got through! I did not read it!"},
-        {"noelle", "\"Meet me by the big fir on Christmas Eve. Someone.\" Those are Henrik's words, exactly."},
+        {"noelle", "\"Meet me by the big fir on Christmas Eve. Someone.\" Those are Agnes's words, exactly."},
         {"noelle", "Someone's been listening at the bakery. Someone has a nerve. I'll be there.", story.THOUGHT},
     }},
     {key="before-80", phase="before", level=80, lines={

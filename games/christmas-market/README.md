@@ -29,7 +29,7 @@ The 100 winter wishes use square boards up to 9 × 12. Swap two neighboring trea
 
 ## Shared match engine and atlas
 
-Each board spawns five piece kinds. After building the Reindeer stable, match 30 farrier's hammers to charge a hit on a chosen cell. The Gingerbread house replaces the Hammer with Firework Bomb in the same slot and carries over its charge. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing for both square campaigns.
+Each board spawns five piece kinds. After building the Reindeer stable, match 30 farrier's hammers to charge a hit on a chosen cell. The Firework stall replaces the Hammer with Firework Bomb in the same slot and carries over its charge. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing for both square campaigns.
 
 The puzzle and town use the same wallet and blue Settings gear. Each green resource
 capsule has the brass rim and drop shadow of the round buttons. The remaining moves
@@ -62,7 +62,7 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 ## Market economy
 
 Silver snowflake coins pay 3 Tokens and gold Sun coins pay 5. Snowy firs, knitted mittens and candy canes earn score on the opening board.
-The Welcome arch serves spiced cider for Treats. The Lumber workshop introduces brown pine bundles tied with blue ribbon for Materials.
+The Welcome arch serves mulled wine for Treats. The Lumber workshop introduces brown pine bundles tied with blue ribbon for Materials.
 The bakery and cocoa kiosk upgrade the red Treats piece. Each matched piece pays its own value. Each win
 banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).
@@ -168,7 +168,7 @@ Tap **Skip level** at the top right of the board, read any scene, then claim the
 On the island, **Advance** places an earned story building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
-Theo’s workshop introduces Hammer pieces and the Candlelight shop introduces
+The Reindeer stable introduces Hammer pieces and the Candlelight shop introduces
 Lightning pieces. Match them to charge their tools. Stored uses and partial
 charge carry between wishes.
 
