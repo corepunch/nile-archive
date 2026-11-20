@@ -42,17 +42,6 @@ return require("match3.game").app(R)                       -- last line of main.
 
 plus the art hooks `R.wallet_icons()`, `R.town_middle_icon(at)` and `R.cast`.
 
-A game with requests of its own (Relic Rush's crew requests) supplies three
-optional hooks. `R.quest_rail()` lists them for the town's left edge, as
-`{id, icon, value, ready, waiting}` records; the id `"build"` stands for the
-next building and opens its card. `R.quest_model(id)` describes one for the
-shared request card (`R.OV_QUEST`): `{title, subtitle, icon, about, needs,
-ready, waiting}`, with `needs` as resource records still missing.
-`R.quest_deliver(id)` hands a ready one in. A board piece whose yield carries
-`item = key` is counted in `g.items[key]` when matched, apart from the wallet,
-and `R.item_keys` lists the keys a finished, unclaimed board saves.
-[The town's rail](UI_ENGINE.md#town-rail)
-
 Games with several currencies supply `R.currency_capsules(balance)` and
 `R.currency_prices(cost)`. A capsule's `id` is the name `capsules.show` in
 `game_config.lua` uses to place it in the wallet row. Relic Rush and Christmas Market supply price entries

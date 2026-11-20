@@ -459,7 +459,7 @@ Results show the banked currencies as `resource_indicator` prefabs in a one-row 
 columns across the dialog, however many currencies the game has. Each is an icon above
 its figure, with no caption because the icon names the resource. The building
 card lists its price and what the building brings with the same element, side
-by side under PRICE and YOU GET captions; while a quest is being funded the price group lists what is missing under STILL NEEDED. An entry marked `done` draws the skin's `done_tick` panel (normally `Skin:paint_tick`, the tick a met board goal shows: the skin's `tick` image when registered, else two strokes) in place of its figure. Games may also opt into a results-card next-building block: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
+by side under PRICE and YOU GET captions; while the building is being funded the price group lists what is missing under STILL NEEDED. An entry marked `done` draws the skin's `done_tick` panel (normally `Skin:paint_tick`, the tick a met board goal shows: the skin's `tick` image when registered, else two strokes) in place of its figure. Games may also opt into a results-card next-building block: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
 shows its icon alone, and `label` adds one word under a larger figure only
 for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
@@ -696,16 +696,6 @@ record's icon, in its normal, hover, pressed, selected (ready) and disabled
 (waiting) states. `town_config.lua` places the rail with `rail.x`, `rail.top`,
 `rail.size`, `rail.gap` and `rail.caption`; `View:rail_layout(count)` returns
 the marker boxes for tests.
-
-A request card's game model supplies its playable expedition as a zero-based
-`level`. The card offers Play for the current expedition, Replay for a
-cleared one, and a return action while the request waits for a board slot.
-A ready request can supply a `handoff` title and image. Continue on the
-illustrated card calls the same delivery handler as a request without art.
-Call `R.open_quest(id, true)` for a giver’s introduction. The shared form
-accepts an optional portrait, offer subtitle, action label, needs caption and
-notice. The game can remember an opening through `R.quest_opened(id)`.
-A handoff can pair its painting with a detail icon and observation.
 
 ## Town building popups
 

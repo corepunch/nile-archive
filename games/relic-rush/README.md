@@ -132,7 +132,7 @@ With Reduce Motion on, the charge appears immediately.
 Empty buttons show the tool recessed into sandstone, with a soft shadow along the upper-left edge.
 See the [bonus artwork and state review](docs/asset-catalogue.md#campaign-bonus-pieces-and-sockets).
 
-See [matching rules, board shape, implementation notes and reference sources](docs/match4-rules.md).
+See [matching rules, board shape and implementation notes](docs/square-match3.md). The [hex rules](docs/match4-rules.md) record the previous campaign.
 
 ## New art direction
 

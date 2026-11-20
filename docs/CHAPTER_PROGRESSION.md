@@ -8,7 +8,6 @@ Keep the rhythm of Cradle of Rome. The player matches pieces, banks resources an
 
 - **Tell one story in four required purchases.** Give the epoch a question or wish. The first purchase sets it up, the middle two move it forward, and confirming the fourth pays it off. Twenty required purchases give each game five story epochs. Optional buildings, decorations and citizen arrivals do not fill a slot. [Relic Rush ladder](../games/relic-rush/lua/economy.lua) · [Christmas Market ladder](../games/christmas-market/lua/economy.lua)
 - **Let citizens add scenes between purchases.** Use the building and play conditions that already bring someone to town. Their arrival gives the writer an occasion for an exchange with another character. The player can finish the epoch whether or not an optional resident has arrived.
-- **Requests run beside the purchases.** Relic Rush's crew asks for smaller things between two purchases. A request has a piece of its own on the boards and a scene when it is handed in, and it never holds a purchase. Two can be open at once, beside the next building. The broken cable opens a hands-on shutter investigation. The Village still opens the long-flash reply choice. [Crew requests](../games/relic-rush/docs/story.md#crew-requests)
 - **The next level funds the next purchase.** Design prices around forward play and reserve the resources needed for required purchases before offering optional spending. In Relic Rush Chapter 1, Claim banks only the resources actually matched. A first clear can make a purchase available. The story moves when the player confirms a build or repair, or a citizen arrives. Use this rule when revising later Relic Rush chapters, which still have first-clear scenes. [Relic Rush campaign milestones](../games/relic-rush/docs/story.md#campaign-milestones)
 
 `python3 tools/scenario_overview.py --epoch 1 --capture` renders an epoch of both games as they are now: its four purchases, prices, board changes, levels, scenes and town. [Scenario overview](STORY_WRITING.md#scenario-overview)
@@ -24,7 +23,7 @@ For the shipped Well, Hunter’s Hut, Sawmill and Village order and the cable in
 | Sawmill | Timber earns Supplies | Tomas makes a reel from the offcuts and points Mara toward the loose cable. |
 | Village | Bomb replaces Hammer | The village takes up the night watch. The keeper’s orders give Mara a reason to signal again. The reply changes from two flashes to three. |
 
-The cable hand-in opens a separate experiment with a spare shutter. [Story and choices](../games/relic-rush/docs/story.md#chapter-1-a-light-below)
+[Story and choices](../games/relic-rush/docs/story.md#chapter-1-a-light-below)
 
 ## Citizens are characters
 
