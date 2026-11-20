@@ -70,6 +70,7 @@ static void frame(float dt)
         cast[0].right=(sample_index-18)%(listening ? 6 : 12)>=(listening ? 3 : 6);
         cast[1].right=!cast[0].right;
         test_style.framed=true;test_style.portrait_height=.27f;
+        test_style.skip=sample_index==TOTAL_CASES-1 ? "SKIP" : NULL;
         story_setup(cast,2,&test_style);
     }
     if (listening) {
@@ -78,6 +79,7 @@ static void frame(float dt)
         story_frame(10);story_next();
         draw_rect(app_bleed(),rgba(10,20,70,255));
     } else story_line_add((story_line){"ann",line,kind});
+    if (sample_index==TOTAL_CASES-1) story_say("other","Skip must clear this line too.");
     story_frame(10); /* settled bubble, complete text */
     int w=(int)roundf(window.width*axGetScaling()),h=(int)roundf(window.height*axGetScaling());
     unsigned char *pixels=malloc((size_t)w*h*4);
@@ -85,11 +87,21 @@ static void frame(float dt)
     if (!pixels) { app_quit();return; }
     if (framed) {
         int x0=w,y0=h,x1=-1,y1=-1;
-        for (int y=0;y<h;y++) for (int x=0;x<w;x++) {
-            unsigned char *p=pixels+((size_t)y*w+x)*4;
-            if (p[0]>70 && p[1]<65 && p[2]<65) {
-                x0=imin(x0,x);y0=imin(y0,y);x1=imax(x1,x);y1=imax(y1,y);
+        int band_left=w,band_right=-1,band_top=h,previous_bottom=-1;
+        for (int y=0;y<h;y++) {
+            int row_left=w,row_right=-1;
+            for (int x=0;x<w;x++) {
+                unsigned char *p=pixels+((size_t)y*w+x)*4;
+                if (p[0]>70 && p[1]<65 && p[2]<65) {
+                    row_left=imin(row_left,x);row_right=imax(row_right,x);
+                }
             }
+            if (row_right<0) continue;
+            if (y>y1+1) {
+                band_left=w;band_right=-1;band_top=y;previous_bottom=y1;
+            }
+            band_left=imin(band_left,row_left);band_right=imax(band_right,row_right);
+            x0=imin(x0,row_left);y0=imin(y0,y);x1=imax(x1,row_right);y1=y;
         }
         float scale=w/app_bleed().size.w;
         vec2 expected=vec2_scale(vec2_sub(rect_center(app_screen()),app_bleed().pos),scale);
@@ -115,20 +127,10 @@ static void frame(float dt)
             free(idle);
         }
         if (sample_index==TOTAL_CASES-1) {
-            /* Find the real rendered Skip pill above a two-portrait unit,
-             * then activate it through the platform's input queue. */
-            test_style.skip="SKIP";story_setup(cast,2,&test_style);
-            draw_rect(app_bleed(),rgba(10,20,70,255));story_frame(0);
-            CHECK(render_read_pixels(pixels,w,h));
-            int sx0=w,sy0=h,sx1=-1,sy1=-1;
-            for (int y=0;y<y0-4*scale;y++) for (int x=0;x<w;x++) {
-                unsigned char *p=pixels+((size_t)y*w+x)*4;
-                if (p[0]>100 && p[1]<65 && p[2]<65) {
-                    sx0=imin(sx0,x);sy0=imin(sy0,y);sx1=imax(sx1,x);sy1=imax(sy1,y);
-                }
-            }
-            CHECK(sx1>sx0 && sy1>sy0);
-            app_inject_click(vec2_add(app_bleed().pos,v2((sx0+sx1+1)*.5f/scale,(sy0+sy1+1)*.5f/scale)));
+            /* The bottom band is Skip. Check its gap and click its painted centre. */
+            CHECK(band_right>band_left && y1>band_top && previous_bottom>=0);
+            CHECK(fabsf(band_top-previous_bottom-1-6*scale)<=2*scale+1);
+            app_inject_click(vec2_add(app_bleed().pos,v2((band_left+band_right+1)*.5f/scale,(band_top+y1+1)*.5f/scale)));
             free(pixels);testing_skip=true;sample_index=TOTAL_CASES;return;
         }
     } else {
@@ -140,18 +142,17 @@ static void frame(float dt)
             }
         }
         CHECK(right>left && bottom>top);
-        float scale=w/app_bleed().size.w, center=(top+bottom+1)*.5f;
+        float scale=w/app_bleed().size.w;
         int outline=h,ink=h;
         for (int y=h/2;y<h;y++) for (int x=0;x<w;x++) {
             unsigned char *p=pixels+((size_t)y*w+x)*4;
-            if ((x<left-4*scale || x>right+4*scale) && p[0]>150 && p[1]<65 && p[2]<60) outline=imin(outline,y);
+            if ((y>bottom+3*scale || x<left-4*scale || x>right+4*scale) && p[0]>150 && p[1]<65 && p[2]<60)
+                outline=imin(outline,y);
             if (p[0]>=18 && p[0]<=22 && p[1]>=18 && p[1]<=22 && p[2]>=18 && p[2]<=22) ink=imin(ink,y);
         }
-        /* A peak hidden behind the badge may be up to six logical pixels above
-         * the next visible spike. Rounded/cloud outlines agree to a pixel. */
-        CHECK(fabsf(center-outline)<=(kind==BUBBLE_SHOUT ? 6 : 2)*scale+1);
-        CHECK(ink>center+12*scale && ink<center+34*scale);
-        if (test_failures()) fprintf(stderr,"  badge %.2f, outline %d, ink %d, scale %.2f\n",center,outline,ink,scale);
+        /* Measure from the badge fill, so include its two-unit rim. */
+        CHECK(fabsf(outline-bottom-1-8*scale)<=2*scale+1);
+        CHECKF(ink>outline && ink<outline+35*scale, "case %d: ink %d, outline %d, scale %.2f",sample_index,ink,outline,scale);
     }
     free(pixels);story_next();story_frame(0);
     int previous_screen=screen_for(sample_index);

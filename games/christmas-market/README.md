@@ -143,7 +143,7 @@ in [Game Center](../../docs/GAMECENTER.md) and capture the dialog with `--gamece
 
 Run `make test-christmas-market` from the repository root for this game's tests in one command. The Lua suites use deterministic state injections and need no window or artwork. See [the testing guide](../../docs/TESTING.md) for coverage, test-only `ENGINE_TEST` hooks, extended samples and renderer smoke checks.
 
-Board artwork fills its registered square slots. In dialogue, portraits face each other and slide into place at the edges of the screen. The same engine layout used by Relic Rush centers the text vertically in the full-width bar. [Dialogue bar captures](docs/review/dialogue-bar/README.md)
+Board artwork fills its registered square slots. In dialogue, portraits face each other and slide into place at the edges of the screen. The same engine layout used by Relic Rush centers the text vertically in the full-width bar. The name tag sits just above the bar, and Skip sits the same distance below it. [Dialogue bar captures](docs/review/dialogue-bar/README.md)
 
 The 0.7-second wipe from town reveals the board as it assembles. If dialogue is playing, the entrance waits for it to end. Cells ripple in, treats fall, blockers land and a light sweeps across the board. Tap to skip the entrance. Reduced motion uses a short fade. See [the engine timeline](../../docs/ENGINE.md#board-entrance).
 During refills, each treat gives a small bounce when it comes to rest in its slot. Reduce Motion suppresses the bounce.

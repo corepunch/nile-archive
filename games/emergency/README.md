@@ -49,9 +49,10 @@ shared haptics. Worker travel and queued jobs stay silent. See the
 | City Centre | 16 | 3 | 11 | 2 |
 
 Campaign unlocks, completion marks, best times, sound preferences and seen
-briefings use the engine save visitor. Briefing name badges sit half outside the
-visible bubble outline; text padding accounts for the rim and decorative shape. Active missions restart from their
-initial state when the app is reopened; there is no mid-mission save.
+briefings use the engine save visitor. The dispatch name badge sits just above
+the briefing bubble, and Start Rescue sits the same distance below it.
+Active missions restart from their initial state when the app is reopened;
+there is no mid-mission save.
 
 The macOS and iPad schemes are `emergency-macos` and `emergency-ipad` in
 `emergency.xcodeproj`. `make web` includes Emergency with the other games.
@@ -65,7 +66,7 @@ Developer scene options:
 ./build/emergency --fresh --level 3 --preview repaired --shot repaired.png
 ./build/emergency --fresh --level 5 --preview complete --shot results.png
 ./build/emergency --fresh --level 1 --pause --shot pause.png
-./build/emergency --fresh --level 1 --dialog --frames 180 --shot briefing.png
+./build/emergency --fresh --level 1 --dialog --frames 240 --shot briefing.png
 ```
 
 Preview stages play ordinary paid jobs through the simulation. The smoke test

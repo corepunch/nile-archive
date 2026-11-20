@@ -156,6 +156,8 @@ The [script](docs/story.md) runs 100 expeditions in five chapters of twenty. Eve
 
 A first clear advances the expedition counter. Every won expedition banks its matched resources. Construction, currency and story progress persist across saves.
 
+The speaker’s name tag and the Skip button sit equally far from the dialogue bar, with the name above and Skip below.
+
 `lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/lua/match3/game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 3`. Restoration dialogue uses named speakers over the live island. The earlier request scenes and paintings remain in the story archive.
 
 | Elena | Mara | Tomas | Adrian | Word bubble |
