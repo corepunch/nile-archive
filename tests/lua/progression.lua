@@ -57,19 +57,17 @@ check(#wood.spawn_kinds == 5 and wood.resource_yields[4].slot == 3
 line(wood, 4, 4, wave)
 check(wood.earnings[3] == 20 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
       "four pieces credit four times the base resource")
-local hammer = rules.game_start(6, 42, {reindeer_stable=true})
-local has_vase = false
-for _, kind in ipairs(hammer.spawn_kinds) do if kind == 20 then has_vase = true end end
-check(has_vase and #hammer.spawn_kinds == 5 and not hammer.resource_yields[20],
-      "the stable adds a score-only vase in the mitten's slot")
-for _ = 1, 7 do line(hammer, economy.SPECIAL_KIND, 4, wave) end
-check(hammer.tools[1] == 0 and hammer.tool_meter[1] == 84, "28 matched hammers leave the tool uncharged")
-line(hammer, economy.SPECIAL_KIND, 3, wave)
-line(hammer, economy.SPECIAL_KIND, 3, wave)
-check(hammer.tools[1] == 1 and hammer.tool_meter[1] == hammer.tool_threshold and hammer.earnings[1] == 0,
-      "extra matched hammers cannot bank a second hit")
-check(rules.game_tool(hammer, 0, column_top(hammer), wave) and hammer.tools[1] == 0,
-      "the charged hammer can be spent")
+local stable = rules.game_start(6, 42, {reindeer_stable=true})
+check(stable.bonus.name == "Reindeer" and stable.spawn_kinds[2] == 1 and #stable.spawn_kinds == 5,
+      "the stable adds a reindeer in the tool slot and keeps the mitten")
+for _ = 1, 7 do line(stable, economy.SPECIAL_KIND, 4, wave) end
+check(stable.tools[1] == 0 and stable.tool_meter[1] == 84, "28 matched reindeer leave the tool uncharged")
+line(stable, economy.SPECIAL_KIND, 3, wave)
+line(stable, economy.SPECIAL_KIND, 3, wave)
+check(stable.tools[1] == 1 and stable.tool_meter[1] == stable.tool_threshold and stable.earnings[1] == 0,
+      "extra matched reindeer cannot bank a second kick")
+check(rules.game_tool(stable, 0, column_top(stable), wave) and stable.tools[1] == 0,
+      "the charged reindeer can be spent")
 
 local bakery, cocoa = rules.game_start(21, 42), rules.game_start(31, 42)
 check(#bakery.spawn_kinds == 5 and bakery.resource_yields[7].amount == 4 and not bakery.resource_yields[8],
@@ -84,17 +82,18 @@ check(rules.game_start(25, 42, quarried).resource_yields[4].amount == 5,
       "replays of earlier wishes retain the timber")
 check(not rules.game_start(26, 42, {lumber=true}).resource_yields[12], "dressed stone requires construction")
 local later = economy.board_loadout(55, {chapel=true, toys=true, log_cabin=true}, 42)
-check(later[6].slot == 1 and later[6].amount == 7 and later[12].slot == 3 and later[21].amount == 6,
+check(later[6].slot == 1 and later[6].amount == 6 and later[12].slot == 3 and later[21].amount == 6,
       "toys earn tokens and the lakeside smokehouse's trout earns treats alongside dressed stone")
 local gifts = {glassblower=true, rink=true, santa_workshop=true, sleigh=true, tree=true}
-local snowman, reindeer, cap = economy.board_loadout(82, gifts), economy.board_loadout(87, gifts), economy.board_loadout(97, gifts)
-check(snowman[17].amount == 10 and not snowman[14] and reindeer[18].amount == 11 and not reindeer[17]
-      and cap[19].amount == 12 and not cap[18], "premium goods upgrade the same coin slot one at a time")
-local _, carousel = economy.board_loadout(77, {carousel=true})
-check(carousel.win_income[2] == 30, "the carousel still pays its Treats per win")
-local winter_catch = economy.board_loadout(47, {log_cabin=true, station_kiosk=true})
-check(winter_catch[16].slot == 2 and winter_catch[16].amount == 7 and not winter_catch[21],
-      "the station kiosk's pretzels upgrade the smokehouse's trout in the late Treats slot")
+local skates, reindeer, cap = economy.board_loadout(82, gifts), economy.board_loadout(87, gifts), economy.board_loadout(97, gifts)
+check(skates[17].amount == 9 and not skates[14] and reindeer[18].amount == 10 and not reindeer[17]
+      and cap[19].amount == 11 and not cap[18], "premium goods upgrade the same coin slot one at a time")
+local carousel = rules.game_start(76, 42, {carousel=true})
+check(carousel.bonus == economy.bonuses.mixer and rules.reward_breakdown(carousel, {}).total[2] == 0,
+      "the carousel adds the Mixer piece with no passive purchase income")
+local winter_catch, station = economy.board_loadout(47, {log_cabin=true, station_kiosk=true})
+check(station.bonus == economy.bonuses.hourglass and winter_catch[21].amount == 6 and not winter_catch[16],
+      "the station adds the clock while the trout remains the Treats piece")
 
 local lightning = rules.game_start(9, 7, {candles=true, bonus_charge={[4]=90}})
 check(rules.game_tool_area(lightning, 3, rules.hex_center()) == nil,

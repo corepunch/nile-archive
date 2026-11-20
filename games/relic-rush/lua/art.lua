@@ -32,7 +32,7 @@ A.campaign_pieces = {
     "silver-coin", "ring", "scarab", "harp", "sandal",
     "pearl", "fish",
 }
-A.campaign_resources = {"apple", "helmet", "shrimp", "silver-coin", "ring", "scarab", "harp", "sandal", "pearl", "fish"}
+A.campaign_resources = {"apple", "helmet", "shrimp", "silver-coin", "ring", "scarab", "harp", "sandal"}
 -- Upgraded resources reuse pieces of the optional packs: their pieces-atlas frames.
 A.resource_upgrades = {
     ["cut-blocks"]="resources-4",

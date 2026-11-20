@@ -27,11 +27,7 @@ local function opening_unlock(g)
     for _, unlock in ipairs(economy.unlocks) do
         local building = island.buildings[island.kinds[unlock.building] + 1].name
         if g.bonus_debut and unlock.bonus == g.bonus_debut then
-            local text = economy.bonus_lesson(g.bonus_debut)
-            if unlock.kind and g.resource_yields[unlock.kind] == unlock then
-                text = text .. " " .. economy.unlock_text(unlock)
-            end
-            return text, building
+            return economy.bonus_lesson(g.bonus_debut), building
         elseif unlock.kind and (g.level + 1 == unlock.after + 1 or level.featured_resource == unlock.key) then
             if g.resource_yields and g.resource_yields[unlock.kind] == unlock then
                 local amount = g.yield_amounts and g.yield_amounts[unlock.kind]

@@ -1201,7 +1201,7 @@
     },
     "rations": {
       "building": "market",
-      "first_level": 12,
+      "first_level": 22,
       "kind": 1,
       "yield": {
         "provisions": 4
@@ -1210,7 +1210,7 @@
     },
     "helmet": {
       "building": "amphitheater",
-      "first_level": 18,
+      "first_level": 52,
       "kind": 0,
       "yield": {
         "gold": 6
@@ -1219,7 +1219,7 @@
     },
     "grain": {
       "building": "water_mill",
-      "first_level": 13,
+      "first_level": 32,
       "kind": 1,
       "yield": {
         "provisions": 5
@@ -1244,7 +1244,7 @@
     },
     "shrimp": {
       "building": "gateway",
-      "first_level": 14,
+      "first_level": 42,
       "kind": 3,
       "yield": {
         "provisions": 6
@@ -1253,7 +1253,7 @@
     },
     "emerald": {
       "building": "fountain",
-      "first_level": 30,
+      "first_level": 97,
       "kind": 0,
       "yield": {
         "gold": 11
@@ -1263,7 +1263,7 @@
     "stone": {
       "runtime": "art/registered/resource-pieces/stone.png",
       "building": "trading_post",
-      "first_level": 13,
+      "first_level": 27,
       "kind": 4,
       "yield": {
         "supplies": 7
@@ -1272,29 +1272,11 @@
     "timber": {
       "runtime": "art/registered/resource-pieces/timber.png",
       "building": "workshop",
-      "first_level": 8,
+      "first_level": 12,
       "kind": 4,
       "yield": {
         "supplies": 5
       }
-    },
-    "fish": {
-      "building": "lodge",
-      "first_level": 17,
-      "kind": 3,
-      "yield": {
-        "provisions": 7
-      },
-      "runtime": "art/registered/campaign-pieces.png"
-    },
-    "pearl": {
-      "building": "map_room",
-      "first_level": 19,
-      "kind": 0,
-      "yield": {
-        "gold": 7
-      },
-      "runtime": "art/registered/campaign-pieces.png"
     }
   },
   "resource_pieces": {
@@ -1607,7 +1589,7 @@
       "runtime": "art/registered/campaign-pieces.png"
     },
     "ring": {
-      "first_level": 20,
+      "first_level": 62,
       "kind": 0,
       "yield": {
         "gold": 7
@@ -1616,7 +1598,7 @@
       "building": "archive"
     },
     "scarab": {
-      "first_level": 22,
+      "first_level": 72,
       "kind": 0,
       "yield": {
         "gold": 8
@@ -1625,7 +1607,7 @@
       "building": "beached_ship"
     },
     "sandal": {
-      "first_level": 25,
+      "first_level": 82,
       "kind": 0,
       "yield": {
         "gold": 9
@@ -1634,7 +1616,7 @@
       "building": "aviary"
     },
     "harp": {
-      "first_level": 26,
+      "first_level": 87,
       "kind": 0,
       "yield": {
         "gold": 10

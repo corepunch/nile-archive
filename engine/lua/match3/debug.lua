@@ -267,6 +267,15 @@ function D.bind(R, W)
             R.on_island = true
             R.toast_time = 0
         end
+        a = app.arg("purchase-card")
+        if a then
+            local position = assert(tonumber(a), "--purchase-card takes a purchase number")
+            local step = assert(island.ladder[position], "unknown campaign purchase")
+            island_with(0, position - 1)
+            R.prog.level, R.prog.wallet = step.after, wallet(142, step.after)
+            R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER
+            R.on_island, R.toast_time = true, 0
+        end
         a = app.arg("fx")
         if a then   -- `--fx shatter`: a blast across double and single tablets on level five
             assert(a == "shatter", "--fx takes shatter")

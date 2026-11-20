@@ -11,6 +11,8 @@ from analyze import legacy_xml, pieces, prices
 def read_economy(root):
     game = root / "settings/scenes/game"
     shop = root / "settings/scenes/shop/epochs.xml"
+    locale = legacy_xml(root / "settings/locale.xml").find("Locale[@language='en']")
+    strings = {node.attrib["alias"]: node.text for node in locale.iter("String")}
     tiles = pieces(game)
     for tile in legacy_xml(game / "field_balls.xml").findall("Ball"):
         number = int(tile.attrib["type"])
@@ -21,9 +23,16 @@ def read_economy(root):
         buildings = []
         for building in epoch.findall("Construction"):
             unlock = int(building.find("Ball").attrib["type"])
-            assert unlock in tiles, building.attrib["id"]
+            key = building.attrib["id"]
+            short = key.removeprefix("city_")
+            name = strings.get(f"ct_tt_{key}") or strings[f"ct_tt_{short}"]
+            message = strings.get(f"ct_{key}_you_got") or strings[f"ct_{short}_you_got"]
+            reward = message.removeprefix("You have ").removeprefix("a ").removeprefix("an ").removesuffix(".")
+            assert unlock in tiles, key
             buildings.append({
-                "id": building.attrib["id"],
+                "id": key,
+                "name": name.title().replace(" Of ", " of ").replace(" The ", " the ").replace("'S", "'s"),
+                "reward": reward[0].upper() + reward[1:],
                 "price": prices(building, "Price"),
                 "plan_access": prices(building, "PlanAccess"),
                 "unlocks_tile": unlock,

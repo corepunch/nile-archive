@@ -79,8 +79,8 @@ nine motifs together in built-in ImageGen. The [prompt](../art/campaign-pieces/r
 uses the extracted Cradle of Rome 2 pieces for motif reference and the
 existing campaign artwork for style. The three-log bundle replaces the old
 single log in matches.
-The [pearl and fish revision](../art/campaign-pieces/pearl-and-fish.png)
-adds the original Rome motifs from one full atlas edit. The
+The archived [pearl and fish revision](../art/campaign-pieces/pearl-and-fish.png)
+painted two additional motifs from one full atlas edit. The
 [prompt](../art/campaign-pieces/pearl-and-fish-prompt.txt) and manifest
 record the two crops. The new pieces use opacity-weighted centers and
 square-cell registration. [Fish in play](screenshots/review/rome-coverage/fish.jpg) ·
@@ -136,7 +136,7 @@ The regular campaign and resource pack share the revised stone cutout.
 The pieces retain their soft-edged alpha and proportional fit on the same
 128 px canvas. [Native board review](screenshots/review/gray-masonry/board.jpg).
 
-The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `fish`, `helmet`, `pearl`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). Red mullet pays 7 Food from expedition 47. Pearls pay 7 Coins from expedition 57 and give way to rings on expedition 62. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
+The opening `coin` and `silver-coin` pay 5 and 3 Coins. The campaign introduces `water`, `timber`, `rations`, `stone`, `grain`, `shrimp`, `helmet`, `ring`, `scarab`, `sandal`, `harp` and `emerald` through the [twenty building purchases](../README.md#buildings). Rings replace helmets on expedition 62. The alternate packs retain `berries`, `cut-blocks` and `quartz`.
 
 Run `python3 games/relic-rush/tools/prepare_resource_pieces.py` to reproduce.
 Leaves, flowers and amphoras use the normal board match and scoring rules.

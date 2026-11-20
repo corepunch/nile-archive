@@ -48,6 +48,13 @@ function R.serialize_campaign(s)
         -- what the save owns: stalls already passed stay optional.
         island.set_waived(R.island, {})
         island.waive_passed(R.island, R.prog.level)
+    elseif reading and version < 8 then
+        -- Candlelight and Gift wrapping traded gates. Ownership is keyed by
+        -- the unchanged city types, but waivers are stored by ladder position.
+        local waivers = island.waived(R.island)
+        local candles = island.ladder_position[island.kinds.candles]
+        local gifts = island.ladder_position[island.kinds.gifts]
+        waivers[candles], waivers[gifts] = waivers[gifts], waivers[candles]
     end
     if reading and version < 2 then island.migrate_wallet(R.prog, R.island) end
     local legacy

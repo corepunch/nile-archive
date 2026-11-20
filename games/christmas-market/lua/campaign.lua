@@ -1,13 +1,13 @@
 -- Original square-cell winter wishes. See match3.shapes.square_levels for the map legend.
 local boards = {
-    {name="Lantern Lane", tier="tutorial", moves=18,
+    {name="Lantern Lane", tier="tutorial", moves=9,
         ".......",
         ".**.**.",
         ".*****.",
         "..***..",
         "..***..",
         "......."},
-    {name="Winter Wreath", tier="tutorial", moves=25,
+    {name="Winter Wreath", tier="tutorial", moves=13,
         "--...--",
         "-.***.-",
         ".**.**.",
@@ -15,7 +15,7 @@ local boards = {
         "-.***.-",
         "--***--",
         "--...--"},
-    {name="Window Lights", tier="tutorial", moves=48,
+    {name="Window Lights", tier="tutorial", moves=15,
         ".........",
         ".**.*.**.",
         ".**.*.**.",
@@ -23,7 +23,7 @@ local boards = {
         ".**.*.**.",
         ".**.*.**.",
         "........."},
-    {name="Ribbon Street", tier="tutorial", moves=54, lesson="Match through a tied treat to untangle it. Then light its pane.",
+    {name="Ribbon Street", tier="tutorial", moves=14, lesson="Match through a tied treat to untangle it. Then light its pane.",
         ".....----",
         ".....----",
         ".*c*.....",
@@ -32,7 +32,7 @@ local boards = {
         ".....*c*.",
         "----.....",
         "----....."},
-    {name="Workshop Crossing", tier="hard", moves=34,
+    {name="Workshop Crossing", tier="hard", moves=25,
         "---...---",
         "---***---",
         "...***...",
@@ -42,7 +42,7 @@ local boards = {
         "...***...",
         "---***---",
         "---...---"},
-    {name="Snowflake Lane", tier="easy", moves=44,
+    {name="Snowflake Lane", tier="easy", moves=24,
         "..-----..",
         ".*.---.*.",
         ".***.***.",
@@ -52,7 +52,7 @@ local boards = {
         ".***.***.",
         ".*.---.*.",
         "..-----.."},
-    {name="Gingerbread Gables", tier="normal", moves=21,
+    {name="Gingerbread Gables", tier="normal", moves=19,
         "---...---",
         "--.***.--",
         "-.*****.-",
@@ -62,7 +62,7 @@ local boards = {
         ".**...**.",
         ".**...**.",
         "........."},
-    {name="Toy Shop Windows", tier="normal", moves=31,
+    {name="Toy Shop Windows", tier="normal", moves=27,
         ".........",
         ".***.***.",
         ".*c*.*c*.",
@@ -73,7 +73,7 @@ local boards = {
         ".*c*.*c*.",
         ".***.***.",
         "........."},
-    {name="Cocoa for Two", tier="hard", moves=41, lesson="Double knots take two matches. Then light the pane.",
+    {name="Cocoa for Two", tier="hard", moves=59, lesson="Double knots take two matches. Then light the pane.",
         "....-....",
         ".**.-.**.",
         ".**...**.",
@@ -85,7 +85,7 @@ local boards = {
         ".*C*.*C*.",
         ".***.***.",
         "........."},
-    {name="Christmas Star", tier="boss", moves=26,
+    {name="Christmas Star", tier="boss", moves=28,
         "---...---",
         "--.***.--",
         "--.***.--",
@@ -99,7 +99,7 @@ local boards = {
         "--.***.--",
         "--.....--"},
     -- 11
-    {name="Snowball Alley", tier="easy", moves=14,
+    {name="Snowball Alley", tier="easy", moves=9,
         ".......",
         ".......",
         ".**.**.",
@@ -109,7 +109,7 @@ local boards = {
         "......."},
 
     -- 12
-    {name="Chestnut Corner", tier="easy", moves=56,
+    {name="Chestnut Corner", tier="easy", moves=24,
         "-.....-",
         "**...**",
         "*.....*",
@@ -120,7 +120,7 @@ local boards = {
         "-.....-"},
 
     -- 13
-    {name="Sleigh Ride", tier="normal", moves=26,
+    {name="Sleigh Ride", tier="normal", moves=23,
         ".*.....*.",
         ".***.***.",
         ".*c.*.c*.",
@@ -139,7 +139,7 @@ local boards = {
         "........."},
 
     -- 15
-    {name="Sugar House", tier="hard", moves=21,
+    {name="Sugar House", tier="hard", moves=22,
         "----.----",
         "---.*.---",
         "--*****--",
@@ -151,7 +151,7 @@ local boards = {
         "........."},
 
     -- 16
-    {name="Mitten Line", tier="easy", moves=31,
+    {name="Mitten Line", tier="easy", moves=17,
         "-.....-",
         "-.*.*.-",
         "-.***.-",
@@ -174,7 +174,7 @@ local boards = {
         "........."},
 
     -- 18
-    {name="Skating Rink", tier="normal", moves=23,
+    {name="Skating Rink", tier="normal", moves=20,
         "--.....--",
         "--.***.--",
         "-.*.*.*.-",
@@ -184,7 +184,7 @@ local boards = {
         "--.***.--"},
 
     -- 19
-    {name="Snowman", tier="hard", moves=31,
+    {name="Snowman", tier="hard", moves=30,
         "--.*.--",
         "-.***.-",
         "-.***.-",
@@ -197,7 +197,7 @@ local boards = {
         "-.***.-"},
 
     -- 20
-    {name="Midnight Star", tier="boss", moves=55,
+    {name="Midnight Star", tier="boss", moves=52,
         "----.----",
         "---.+.---",
         "--.+++.--",
@@ -208,7 +208,7 @@ local boards = {
         "........."},
 
     -- 21
-    {name="Holly Ring", tier="easy", moves=22,
+    {name="Holly Ring", tier="easy", moves=14,
         "-.....-",
         "-.***.-",
         ".*...*.",
@@ -219,7 +219,7 @@ local boards = {
         "-.....-"},
 
     -- 22
-    {name="Stocking Pair", tier="easy", moves=50,
+    {name="Stocking Pair", tier="easy", moves=33,
         ".......",
         ".......",
         "..*-*..",
@@ -229,7 +229,7 @@ local boards = {
         "......."},
 
     -- 23
-    {name="Chapel Window", tier="normal", moves=44,
+    {name="Chapel Window", tier="normal", moves=28,
         "--...--",
         "-.***.-",
         ".*.*.*.",
@@ -240,7 +240,7 @@ local boards = {
         ".*.*.*."},
 
     -- 24
-    {name="Lantern Pair", tier="normal", moves=20,
+    {name="Lantern Pair", tier="normal", moves=18,
         ".........",
         ".***-***.",
         ".+.+-+.+.",
@@ -249,7 +249,7 @@ local boards = {
         "........."},
 
     -- 25
-    {name="Cracker Bonbon", tier="hard", moves=68,
+    {name="Cracker Bonbon", tier="hard", moves=49,
         "-.......-",
         "-.*****.-",
         ".**c*c**.",
@@ -259,7 +259,7 @@ local boards = {
         "-.......-"},
 
     -- 26
-    {name="Little Angel", tier="easy", moves=28,
+    {name="Little Angel", tier="easy", moves=17,
         "----*----",
         "---...---",
         ".**.*.**.",
@@ -270,7 +270,7 @@ local boards = {
         "-.......-"},
 
     -- 27
-    {name="Ornament", tier="normal", moves=28,
+    {name="Ornament", tier="normal", moves=22,
         "----.----",
         "---.*.---",
         "-.*****.-",
@@ -281,7 +281,7 @@ local boards = {
         "--.***.--"},
 
     -- 28
-    {name="Stall Row", tier="normal", moves=62,
+    {name="Stall Row", tier="normal", moves=49,
         ".........",
         "**-*+*-**",
         "**-*.*-**",
@@ -290,7 +290,7 @@ local boards = {
         "..*...*.."},
 
     -- 29
-    {name="Gift Box", tier="hard", moves=60,
+    {name="Gift Box", tier="hard", moves=58,
         "--.*.*.--",
         "....*....",
         "C...+...C",
@@ -301,7 +301,7 @@ local boards = {
         "....*...."},
 
     -- 30
-    {name="Great Fir", tier="boss", moves=51,
+    {name="Great Fir", tier="boss", moves=42,
         "----+----",
         "---.+.---",
         "---+++---",
@@ -314,7 +314,7 @@ local boards = {
         "-.......-"},
 
     -- 31
-    {name="Nutcracker", tier="easy", moves=59,
+    {name="Nutcracker", tier="easy", moves=22,
         "--.*.--",
         "-.***.-",
         "-.....-",
@@ -327,7 +327,7 @@ local boards = {
         "-.*.*.-"},
 
     -- 32
-    {name="Honey Cake", tier="easy", moves=24,
+    {name="Honey Cake", tier="easy", moves=15,
         ".......",
         "-.*.*.-",
         ".*****.",
@@ -337,7 +337,7 @@ local boards = {
         "......."},
 
     -- 33
-    {name="Carousel Day", tier="normal", moves=24,
+    {name="Carousel Day", tier="normal", moves=18,
         "---.*.---",
         "-.*****.-",
         ".*.*+*.*.",
@@ -347,7 +347,7 @@ local boards = {
         "..-.-.-.."},
 
     -- 34
-    {name="Frozen Pond", tier="normal", moves=87,
+    {name="Frozen Pond", tier="normal", moves=59,
         "-*******-",
         "*...*...*",
         "*...*...*",
@@ -356,7 +356,7 @@ local boards = {
         "-*******-"},
 
     -- 35
-    {name="Frost Flower", tier="hard", moves=26,
+    {name="Frost Flower", tier="hard", moves=28,
         ".........",
         ".*..*..*.",
         "..*.*.*..",
@@ -368,7 +368,7 @@ local boards = {
         "........."},
 
     -- 36
-    {name="Gingerbread Man", tier="easy", moves=43,
+    {name="Gingerbread Man", tier="easy", moves=30,
         "-.....-",
         "-.***.-",
         "-.***.-",
@@ -380,7 +380,7 @@ local boards = {
         "......."},
 
     -- 37
-    {name="Peppermint Swirl", tier="normal", moves=28,
+    {name="Peppermint Swirl", tier="normal", moves=27,
         ".*.....*.",
         ".**...**.",
         "..**.**..",
@@ -390,7 +390,7 @@ local boards = {
         ".*.....*."},
 
     -- 38
-    {name="Hearth Glow", tier="normal", moves=51,
+    {name="Hearth Glow", tier="normal", moves=30,
         ".........",
         ".*c***c*.",
         ".**---**.",
@@ -400,7 +400,7 @@ local boards = {
         "........."},
 
     -- 39
-    {name="Twelfth Crown", tier="hard", moves=80,
+    {name="Twelfth Crown", tier="hard", moves=62,
         "*-*-*-*-*",
         "*.*.*.*.*",
         "*********",
@@ -409,7 +409,7 @@ local boards = {
         ".***.***."},
 
     -- 40
-    {name="Rose Window", tier="boss", moves=87,
+    {name="Rose Window", tier="boss", moves=77,
         "---...---",
         "----+----",
         "---+.+---",
@@ -422,7 +422,7 @@ local boards = {
         "----+----",
         "---...---"},
     -- 41
-    {name="Pine Whisper", tier="easy", moves=39,
+    {name="Pine Whisper", tier="easy", moves=24,
         "---...---",
         "--..*..--",
         "--.*.*.--",
@@ -434,7 +434,7 @@ local boards = {
         "---.*.---"},
 
     -- 42
-    {name="Bell Tower Bells", tier="easy", moves=40,
+    {name="Bell Tower Bells", tier="easy", moves=24,
         "---...---",
         "--..*..--",
         "-.*...*.-",
@@ -447,7 +447,7 @@ local boards = {
         "---.*.---"},
 
     -- 43
-    {name="Skate Pond", tier="normal", moves=24,
+    {name="Skate Pond", tier="normal", moves=22,
         "---...---",
         "--.***.--",
         "-.*...*.-",
@@ -459,7 +459,7 @@ local boards = {
         "---...---"},
 
     -- 44
-    {name="Ribbon and Bow", tier="normal", moves=54,
+    {name="Ribbon and Bow", tier="normal", moves=32,
         "-.**.**.-",
         "....*....",
         ".*.....*.",
@@ -471,7 +471,7 @@ local boards = {
         "....*...."},
 
     -- 45
-    {name="Frost on the Pane", tier="hard", moves=32,
+    {name="Frost on the Pane", tier="hard", moves=28,
         "---...---",
         "--.***.--",
         "-.*...*.-",
@@ -485,7 +485,7 @@ local boards = {
         "--.....--"},
 
     -- 46
-    {name="Gingerbread Row", tier="easy", moves=24,
+    {name="Gingerbread Row", tier="easy", moves=15,
         "---...---",
         "--.***.--",
         "-.*.*.*.-",
@@ -497,7 +497,7 @@ local boards = {
         "........."},
 
     -- 47
-    {name="Hearth Stockings", tier="normal", moves=55,
+    {name="Hearth Stockings", tier="normal", moves=35,
         ".........",
         ".**-.-**.",
         ".**-.-**.",
@@ -509,7 +509,7 @@ local boards = {
         "---...---"},
 
     -- 48
-    {name="Wreath Door", tier="normal", moves=61,
+    {name="Wreath Door", tier="normal", moves=45,
         "-.......-",
         "--.***.--",
         "-.**-**.-",
@@ -521,7 +521,7 @@ local boards = {
         "-.......-"},
 
     -- 49
-    {name="Spice Rack Glow", tier="hard", moves=67,
+    {name="Spice Rack Glow", tier="hard", moves=65,
         "***.*.***",
         ".........",
         "c**...**c",
@@ -534,7 +534,7 @@ local boards = {
         "........."},
 
     -- 50
-    {name="Midnight Mass", tier="boss", moves=28,
+    {name="Midnight Mass", tier="boss", moves=27,
         "---...---",
         "--.+++.--",
         "-.+...+.-",
@@ -546,7 +546,7 @@ local boards = {
         "---...---"},
 
     -- 51
-    {name="Angel Wings", tier="easy", moves=32,
+    {name="Angel Wings", tier="easy", moves=20,
         "---.*.---",
         "--.***.--",
         ".**.*.**.",
@@ -558,7 +558,7 @@ local boards = {
         "---...---"},
 
     -- 52
-    {name="Nutcracker Parade", tier="easy", moves=24,
+    {name="Nutcracker Parade", tier="easy", moves=15,
         "---...---",
         "--.***.--",
         "--.***.--",
@@ -571,7 +571,7 @@ local boards = {
         "--.....--"},
 
     -- 53
-    {name="Cinnamon Carousel", tier="normal", moves=31,
+    {name="Cinnamon Carousel", tier="normal", moves=28,
         "---...---",
         "--.***.--",
         "-.*****.-",
@@ -584,7 +584,7 @@ local boards = {
         "........."},
 
     -- 54
-    {name="Hot Cider Kettle", tier="normal", moves=61,
+    {name="Hot Cider Kettle", tier="normal", moves=47,
         "---...---",
         "---.*.---",
         "--.....--",
@@ -597,7 +597,7 @@ local boards = {
         "---...---"},
 
     -- 55
-    {name="Lantern Walk", tier="hard", moves=45,
+    {name="Lantern Walk", tier="hard", moves=54,
         "---...---",
         "---.*.---",
         "--.....--",
@@ -611,7 +611,7 @@ local boards = {
         "---...---"},
 
     -- 56
-    {name="Snowman Square", tier="easy", moves=20,
+    {name="Snowman Square", tier="easy", moves=14,
         "---...---",
         "--.***.--",
         "--.*.*.--",
@@ -638,7 +638,7 @@ local boards = {
         "-.......-"},
 
     -- 58
-    {name="Carol Steps", tier="normal", moves=50,
+    {name="Carol Steps", tier="normal", moves=28,
         "---.*.---",
         "--.***.--",
         "--.....--",
@@ -650,7 +650,7 @@ local boards = {
         "........."},
 
     -- 59
-    {name="Cracker Pop", tier="hard", moves=60,
+    {name="Cracker Pop", tier="hard", moves=64,
         "*.*...*.*",
         ".........",
         "*.ccccc.*",
@@ -662,7 +662,7 @@ local boards = {
         "........."},
 
     -- 60
-    {name="Holly Berry Lane", tier="boss", moves=26,
+    {name="Holly Berry Lane", tier="boss", moves=28,
         "---...---",
         "--.+++.--",
         "-.+++++.-",
@@ -674,7 +674,7 @@ local boards = {
         "---...---"},
 
     -- 61
-    {name="Silver Bells Stall", tier="easy", moves=72,
+    {name="Silver Bells Stall", tier="easy", moves=22,
         "-.......-",
         ".*.*.*.*.",
         ".........",
@@ -686,7 +686,7 @@ local boards = {
         "---...---"},
 
     -- 62
-    {name="Mistletoe Arch", tier="easy", moves=48,
+    {name="Mistletoe Arch", tier="easy", moves=20,
         "---...---",
         "--.***.--",
         "-.*...*.-",
@@ -699,7 +699,7 @@ local boards = {
         "---...---"},
 
     -- 63
-    {name="Clock Tower Chimes", tier="normal", moves=67,
+    {name="Clock Tower Chimes", tier="normal", moves=42,
         "--...--",
         "--.*.--",
         "-.....-",
@@ -714,7 +714,7 @@ local boards = {
         "......."},
 
     -- 64
-    {name="Marzipan Pantry", tier="normal", moves=28,
+    {name="Marzipan Pantry", tier="normal", moves=25,
         ".........",
         ".*******.",
         ".*.....*.",
@@ -727,7 +727,7 @@ local boards = {
         "---...---"},
 
     -- 65
-    {name="Toy Train Depot", tier="hard", moves=49,
+    {name="Toy Train Depot", tier="hard", moves=45,
         "---...---",
         "---.*.---",
         "-.*****.-",
@@ -740,7 +740,7 @@ local boards = {
         ".**...**."},
 
     -- 66
-    {name="Tinsel Terrace", tier="normal", moves=63,
+    {name="Tinsel Terrace", tier="normal", moves=40,
         ".........",
         "*.......*",
         ".*.....*.",
@@ -753,7 +753,7 @@ local boards = {
         "---...---"},
 
     -- 67
-    {name="Pudding Hearth", tier="easy", moves=37,
+    {name="Pudding Hearth", tier="easy", moves=18,
         "---.*.---",
         "--.***.--",
         "-.......-",
@@ -765,7 +765,7 @@ local boards = {
         "--.....--"},
 
     -- 68
-    {name="Starlit Sleigh", tier="normal", moves=89,
+    {name="Starlit Sleigh", tier="normal", moves=48,
         "*...*...*",
         ".........",
         "..*...*..",
@@ -778,7 +778,7 @@ local boards = {
         "........."},
 
     -- 69
-    {name="Drum Roll Ball", tier="hard", moves=39,
+    {name="Drum Roll Ball", tier="hard", moves=40,
         "---...---",
         "--.***.--",
         "-.*****.-",
@@ -791,7 +791,7 @@ local boards = {
         "--.....--"},
 
     -- 70
-    {name="Yule Crown Rink", tier="boss", moves=43,
+    {name="Yule Crown Rink", tier="boss", moves=33,
         "---...---",
         "+...+...+",
         "++..+..++",
@@ -802,7 +802,7 @@ local boards = {
         "--.....--",
         "---...---"},
     -- 71
-    {name="Candle Glow", tier="easy", moves=20,
+    {name="Candle Glow", tier="easy", moves=14,
         "---*---",
         "--.*.--",
         "-.***.-",
@@ -814,7 +814,7 @@ local boards = {
         "......."},
 
     -- 72
-    {name="Sleigh Bells Ring", tier="easy", moves=67,
+    {name="Sleigh Bells Ring", tier="easy", moves=32,
         "----.----",
         "--.....--",
         "-.*****.-",
@@ -826,7 +826,7 @@ local boards = {
         "----*----"},
 
     -- 73
-    {name="Frost Crystal", tier="normal", moves=44,
+    {name="Frost Crystal", tier="normal", moves=37,
         "....*....",
         ".*.....*.",
         "..*.*.*..",
@@ -838,7 +838,7 @@ local boards = {
         "....*...."},
 
     -- 74
-    {name="Ginger Cottage", tier="normal", moves=58,
+    {name="Ginger Cottage", tier="normal", moves=45,
         "-*--.--*-",
         "-.-.*.-.-",
         "-.*****.-",
@@ -850,7 +850,7 @@ local boards = {
         "........."},
 
     -- 75
-    {name="Mantel Stockings", tier="hard", moves=38,
+    {name="Mantel Stockings", tier="hard", moves=32,
         "*.*.*.*.*",
         ".........",
         ".**.-.**.",
@@ -863,7 +863,7 @@ local boards = {
         "........."},
 
     -- 76
-    {name="Ribboned Gift", tier="easy", moves=32,
+    {name="Ribboned Gift", tier="easy", moves=20,
         "-*.*.*-",
         "*..*..*",
         "...*...",
@@ -873,7 +873,7 @@ local boards = {
         "......."},
 
     -- 77
-    {name="Carousel Canopy", tier="normal", moves=47,
+    {name="Carousel Canopy", tier="normal", moves=32,
         "----*----",
         "---***---",
         "--*****--",
@@ -885,7 +885,7 @@ local boards = {
         "-.......-"},
 
     -- 78
-    {name="Skaters Pond", tier="normal", moves=22,
+    {name="Skaters Pond", tier="normal", moves=18,
         ".........",
         "-.*****.-",
         ".**...**.",
@@ -896,7 +896,7 @@ local boards = {
         "........."},
 
     -- 79
-    {name="Frozen Fountain", tier="hard", moves=43,
+    {name="Frozen Fountain", tier="hard", moves=33,
         "----*----",
         "---.*.---",
         "--.C*C.--",
@@ -908,7 +908,7 @@ local boards = {
         "-.......-"},
 
     -- 80
-    {name="Midnight Bells", tier="boss", moves=35,
+    {name="Midnight Bells", tier="boss", moves=32,
         "..+...+..",
         ".+.+.+.+.",
         ".+.+.+.+.",
@@ -920,7 +920,7 @@ local boards = {
         "-...-...-"},
 
     -- 81
-    {name="Snowman Parade", tier="easy", moves=62,
+    {name="Snowman Parade", tier="easy", moves=28,
         "--.*.--",
         "-.***.-",
         "-.....-",
@@ -932,7 +932,7 @@ local boards = {
         "-.....-"},
 
     -- 82
-    {name="Herald Angel", tier="easy", moves=36,
+    {name="Herald Angel", tier="easy", moves=22,
         "----*----",
         "---...---",
         "***...***",
@@ -943,7 +943,7 @@ local boards = {
         "---...---"},
 
     -- 83
-    {name="Nutcracker Watch", tier="normal", moves=43,
+    {name="Nutcracker Watch", tier="normal", moves=35,
         "---*---",
         "--.*.--",
         "-*****-",
@@ -957,7 +957,7 @@ local boards = {
         "-.-.-.-"},
 
     -- 84
-    {name="Glass Bauble", tier="normal", moves=37,
+    {name="Glass Bauble", tier="normal", moves=32,
         "---...---",
         "---***---",
         "-.*****.-",
@@ -969,7 +969,7 @@ local boards = {
         "--.....--"},
 
     -- 85
-    {name="Paper Lantern Walk", tier="hard", moves=85,
+    {name="Paper Lantern Walk", tier="hard", moves=68,
         "-.--.--.-",
         "**.***.**",
         "*C.C*C.C*",
@@ -980,7 +980,7 @@ local boards = {
         "........."},
 
     -- 86
-    {name="Wreath on the Door", tier="easy", moves=38,
+    {name="Wreath on the Door", tier="easy", moves=20,
         "-..***..-",
         ".**.-.**.",
         ".*.---.*.",
@@ -992,7 +992,7 @@ local boards = {
         "........."},
 
     -- 87
-    {name="Stained Glass Glow", tier="normal", moves=34,
+    {name="Stained Glass Glow", tier="normal", moves=24,
         "----*----",
         "---.*.---",
         "--.***.--",
@@ -1006,7 +1006,7 @@ local boards = {
         "........."},
 
     -- 88
-    {name="Striped Awnings", tier="normal", moves=45,
+    {name="Striped Awnings", tier="normal", moves=33,
         "*.*.*.*.*",
         ".........",
         "*.*.*.*.*",
@@ -1017,7 +1017,7 @@ local boards = {
         "........."},
 
     -- 89
-    {name="Last Train Home", tier="hard", moves=84,
+    {name="Last Train Home", tier="hard", moves=53,
         "---***---",
         "---...---",
         "-.*****.-",
@@ -1028,7 +1028,7 @@ local boards = {
         "*********"},
 
     -- 90
-    {name="Choir Loft", tier="boss", moves=42,
+    {name="Choir Loft", tier="boss", moves=40,
         "--.+.+.--",
         "-.+.+.+.-",
         ".........",
@@ -1041,7 +1041,7 @@ local boards = {
         "-...-...-"},
 
     -- 91
-    {name="Sleigh at Dusk", tier="easy", moves=56,
+    {name="Sleigh at Dusk", tier="easy", moves=25,
         ".-------.",
         "**.....**",
         ".*.*.*.*.",
@@ -1052,7 +1052,7 @@ local boards = {
         "........."},
 
     -- 92
-    {name="Pine Boughs", tier="easy", moves=24,
+    {name="Pine Boughs", tier="easy", moves=14,
         "----*----",
         "---***---",
         "--.***.--",
@@ -1065,7 +1065,7 @@ local boards = {
         "--.....--"},
 
     -- 93
-    {name="Spiced Star", tier="normal", moves=89,
+    {name="Spiced Star", tier="normal", moves=43,
         "----.----",
         "---.*.---",
         "-.*.*.*.-",
@@ -1077,7 +1077,7 @@ local boards = {
         "----.----"},
 
     -- 94
-    {name="Fireside Tales", tier="normal", moves=59,
+    {name="Fireside Tales", tier="normal", moves=44,
         "*...*...*",
         "....-....",
         ".**C.C**.",
@@ -1089,7 +1089,7 @@ local boards = {
         "........."},
 
     -- 95
-    {name="Gate of Lights", tier="hard", moves=69,
+    {name="Gate of Lights", tier="hard", moves=68,
         "--.....--",
         "-.C*.*C.-",
         "*.*---*.*",
@@ -1101,7 +1101,7 @@ local boards = {
         "..*...*.."},
 
     -- 96
-    {name="Snow Globe", tier="easy", moves=38,
+    {name="Snow Globe", tier="easy", moves=20,
         "--.***.--",
         "-.*...*.-",
         ".*.....*.",
@@ -1114,7 +1114,7 @@ local boards = {
         "-...-...-"},
 
     -- 97
-    {name="Shepherds Star", tier="normal", moves=81,
+    {name="Shepherds Star", tier="normal", moves=25,
         "---.*.---",
         "--.***.--",
         "--.*C*.--",
@@ -1128,7 +1128,7 @@ local boards = {
         "....-...."},
 
     -- 98
-    {name="Toy Soldier March", tier="normal", moves=41,
+    {name="Toy Soldier March", tier="normal", moves=48,
         "---*---",
         "--***--",
         "-.***.-",
@@ -1141,7 +1141,7 @@ local boards = {
         "-..-..-"},
 
     -- 99
-    {name="Twelve Chimes", tier="hard", moves=64,
+    {name="Twelve Chimes", tier="hard", moves=65,
         "--**C**--",
         "-*..*..*-",
         "*...*...*",
@@ -1153,7 +1153,7 @@ local boards = {
         "--.*.*.--"},
 
     -- 100
-    {name="Christmas Eve", tier="boss", moves=50,
+    {name="Christmas Eve", tier="boss", moves=43,
         "---.+.---",
         "---+.+---",
         "--.+++.--",

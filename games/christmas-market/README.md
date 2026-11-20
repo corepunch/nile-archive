@@ -25,11 +25,11 @@ Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
 and previews stay silent. See the [shared haptics contract](../../docs/HAPTICS.md).
 
-The 100 winter wishes use square boards up to 9 × 12. Swap two neighboring treats to match three in a row or column. Every blue pane must light. Single and crossed chains mark treats that need one or two hits before the pane can clear. The last few panes get a trail around their square edges during idle play. The five Advents run levels 1–20, 21–40, 41–60, 61–80 and 81–100, and each board has a tier (levels 1–4 teach, then easy, easy, normal, normal, hard, easy, normal, normal, hard, boss per ten). `python3 tools/square_boards.py christmas-market` validates them, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. The [square campaign guide](docs/square-match3.md) lists the levels and artwork.
+The 100 winter wishes use square boards up to 9 × 12. Swap two neighboring treats to match three in a row or column. Every blue pane must light. Single and crossed chains mark treats that need one or two hits before the pane can clear. The last few panes get a trail around their square edges during idle play. The five Advents run levels 1–20, 21–40, 41–60, 61–80 and 81–100, and each board has a tier (levels 1–4 teach, then easy, easy, normal, normal, hard, easy, normal, normal, hard, boss per ten). `python3 tools/square_boards.py christmas-market` validates them, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. Every tier uses the median clear × 1.25, rounded up; slow bot samples do not add moves. The [square campaign guide](docs/square-match3.md) lists the levels and artwork.
 
 ## Shared match engine and atlas
 
-Each board spawns five piece kinds. After building the Reindeer stable, match 30 farrier's hammers to charge a hit on a chosen cell. The Firework stall replaces the Hammer with Firework Bomb in the same slot and carries over its charge. The [engine match-3 module](../../docs/MATCH3_ENGINE.md) owns swaps, blockers, gravity, cascades, hints, tools and timing for both square campaigns.
+Each board spawns five piece kinds. Building the Reindeer stable adds the reindeer. Match 30 to charge a kick on a chosen cell. The Firework stall upgrades that slot to Firework Bomb and carries over its charge. Each campaign purchase adds one piece or tool. [Compare all 20 rewards with Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 
 The puzzle and town use the same wallet and blue Settings gear. Each green resource
 capsule has the brass rim and drop shadow of the round buttons. The remaining moves
@@ -174,8 +174,8 @@ Tap **Skip level** at the top right of the board, read any scene, then claim the
 On the island, **Advance** places an earned story building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
-The Reindeer stable introduces Hammer pieces and the Candlelight shop introduces
-Lightning pieces. Match them to charge their tools. Stored uses and partial
+The Reindeer stable introduces the reindeer and the Candlelight shop introduces
+the lantern. Match them to charge their tools. Stored uses and partial
 charge carry between wishes.
 
 ### Board

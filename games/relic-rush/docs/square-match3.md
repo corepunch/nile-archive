@@ -20,10 +20,10 @@ Reduce Motion hides the trail.
 Only gold and silver coins pay into the wallet on the first expedition.
 The Spring well introduces water buckets from expedition 2. The
 Carpenter’s workshop adds timber. The Trapper’s cabin
-introduces the Hammer. Later purchases replace existing
-pieces, including stone for timber and shrimp for water. The Harbour lodge
-introduces red mullet and the Cartographer’s house introduces
-pearls. The Keeper’s archive replaces pearls with rings.
+introduces the Hammer. Each purchase adds one item, including stone for timber
+and shrimp for water. The Harbour lodge unlocks the Hourglass and the
+Cartographer’s house unlocks Lightning. The Keeper’s archive replaces helmets
+with rings.
 Amphoras are playable score pieces from the opening. See the
 [twenty prices and unlocks](../README.md#buildings).
 
@@ -101,10 +101,8 @@ BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules re
 
 ## Captures
 
-| Expedition | Before | After |
-| --- | --- | --- |
-| 17 · 480 × 900 | [Shrimp](screenshots/review/rome-coverage/fish-before.jpg) | [Red mullet](screenshots/review/rome-coverage/fish.jpg) |
-| 19 · 390 × 844 | [Helmet and shrimp](screenshots/review/rome-coverage/pearl-before.jpg) | [Pearl and red mullet](screenshots/review/rome-coverage/pearl.jpg) |
+- [Harbour lodge before and after, 480 × 900](screenshots/review/building-rewards/lodge-480.jpg)
+- [Harbour lodge before and after, 390 × 844](screenshots/review/building-rewards/lodge-390.jpg)
 
 - [Jade Steps, 480 × 900](screenshots/square-jade-steps.jpg)
 - [Tide Chamber, 390 × 844](screenshots/square-tide-chamber.jpg)

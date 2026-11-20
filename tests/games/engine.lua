@@ -3,6 +3,7 @@ rules("injections")
 rules("modules", "tests/fixtures/modules/first;;tests/fixtures/modules/second;")
 rules("match3")
 rules("match3_specials")
+rules("match3_probe")
 rules("city_transactions")
 if match3_root then rules("engine_match3", match3_root) end
 rules("api")

@@ -30,7 +30,10 @@ for i, d in ipairs(M.buildings) do
     d.decoration = not (HOUSES[d.category] or d.road)
     M.kinds[d.key] = i - 1
 end
-for i=1,WONDERS do M.wonders[i]=M.buildings[i] end
+-- The story schedule can move a stall without changing its saved city ID.
+M.wonder_kinds = {M.kinds.arch, M.kinds.lumber, M.kinds.bakery, M.kinds.cocoa,
+    M.kinds.toys, M.kinds.candles, M.kinds.gifts, M.kinds.carousel, M.kinds.rink, M.kinds.tree}
+for i, kind in ipairs(M.wonder_kinds) do M.wonders[i] = M.buildings[kind + 1] end
 
 function M.wonder_count(c)
     local n=0

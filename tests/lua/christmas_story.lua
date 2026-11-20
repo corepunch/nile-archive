@@ -4,7 +4,7 @@ local island=require('island')
 local R=require('state')
 require('main')
 local function empty_queue() while story.active() do story.next() end end
-local function owned(c) return function(kind) return island.owned(c,kind)>0 end end
+local function owned(c) return function(index) return island.owned(c,island.wonder_kinds[index+1])>0 end end
 local cast={}
 for _,who in ipairs(R.cast) do cast[who.id]=true end
 
@@ -89,12 +89,14 @@ for level=1,rules.LEVELS do
             local bakery = island.buildings[island.kinds.bakery + 1].cost
             save.write("old-market-prices", function(s) s:ints("wallet", purse(100)) end)
             save.read("old-market-prices", wallet)
-            check(R.prog.wallet[1] == bakery[1] and R.prog.wallet[2] == 0 and R.prog.wallet[3] == bakery[3], "the revised bakery has enough Gold and Supplies")
+            check(R.prog.wallet[1] == bakery[1] and R.prog.wallet[2] == bakery[2] and R.prog.wallet[3] == bakery[3],
+                "the migrated wallet covers each of the bakery's currencies")
             check(island.can_buy(c, R.prog.wallet, 21, 2), "the bakery can be built before continuing")
             check(not island.can_buy(c, R.prog.wallet, 21, 15), "the reserved grant cannot buy a lamp post")
             save.write("new-market-prices", wallet)
             save.read("new-market-prices", wallet)
-            check(R.prog.wallet[1] == bakery[1] and R.prog.wallet[2] == 0 and R.prog.wallet[3] == bakery[3], "saving the migrated wallet prevents a second top-up")
+            check(R.prog.wallet[1] == bakery[1] and R.prog.wallet[2] == bakery[2] and R.prog.wallet[3] == bakery[3],
+                "saving the migrated wallet prevents a second top-up")
         end
         check(not journey.next(p,owned(c),nil),'stall story waits for confirmed construction')
     end
@@ -162,6 +164,15 @@ check(island.waived(fresh)[stable] and not island.waived(fresh)[chapel] and not 
 R.prog.level = 31
 save.read("pre-chapel-permits", R.serialize_campaign)
 check(island.waived(fresh)[chapel], "existing players who passed the chapel gate can build it at their leisure")
+
+save.write("previous-candle-order", function(s)
+    s:int("market_resources", 7)
+    s:int("ladder_waived", 1 << 11) -- Gift wrapping used to be purchase 12.
+end)
+save.read("previous-candle-order", R.serialize_campaign)
+local waivers = island.waived(fresh)
+check(waivers[island.ladder_position[island.kinds.gifts]] and not waivers[island.ladder_position[island.kinds.candles]],
+      "the old waiver stays with the Gift wrapping pavilion after it changes gates")
 R.island = c
 
 -- Real queue completion, interruption and save/read use the runtime coordinator.

@@ -285,6 +285,8 @@
       "buildings": [
         {
           "id": "city_well",
+          "name": "Well",
+          "reward": "Water bucket",
           "price": [
             500,
             0,
@@ -299,6 +301,8 @@
         },
         {
           "id": "city_hunter",
+          "name": "Hunter's Hut",
+          "reward": "Hammer",
           "price": [
             1000,
             0,
@@ -313,6 +317,8 @@
         },
         {
           "id": "city_sawmill",
+          "name": "Sawmill",
+          "reward": "Lumber",
           "price": [
             3000,
             0,
@@ -327,6 +333,8 @@
         },
         {
           "id": "city_village",
+          "name": "Village",
+          "reward": "Bomb",
           "price": [
             2000,
             3000,
@@ -346,6 +354,8 @@
       "buildings": [
         {
           "id": "city_farm",
+          "name": "Farm",
+          "reward": "Meat",
           "price": [
             3000,
             2000,
@@ -360,6 +370,8 @@
         },
         {
           "id": "city_mine",
+          "name": "Quarry",
+          "reward": "Stone",
           "price": [
             5000,
             4000,
@@ -374,6 +386,8 @@
         },
         {
           "id": "city_mill",
+          "name": "Mill",
+          "reward": "Bread",
           "price": [
             6000,
             7000,
@@ -388,6 +402,8 @@
         },
         {
           "id": "city_thermae",
+          "name": "Thermae",
+          "reward": "Fireball",
           "price": [
             10000,
             12000,
@@ -407,6 +423,8 @@
       "buildings": [
         {
           "id": "city_port",
+          "name": "Port",
+          "reward": "Shrimp",
           "price": [
             12000,
             14000,
@@ -421,6 +439,8 @@
         },
         {
           "id": "city_oktavia",
+          "name": "Curia Octavia",
+          "reward": "Hourglass",
           "price": [
             15000,
             17000,
@@ -435,6 +455,8 @@
         },
         {
           "id": "city_coliseum",
+          "name": "Coliseum",
+          "reward": "Helmet",
           "price": [
             17000,
             19000,
@@ -449,6 +471,8 @@
         },
         {
           "id": "city_vestalki",
+          "name": "House of the Vestals",
+          "reward": "Lightning",
           "price": [
             20000,
             22000,
@@ -468,6 +492,8 @@
       "buildings": [
         {
           "id": "city_aqueduct",
+          "name": "Aqueduct",
+          "reward": "Ring",
           "price": [
             20000,
             23000,
@@ -482,6 +508,8 @@
         },
         {
           "id": "city_lighthouse",
+          "name": "Lighthouse",
+          "reward": "Super bomb",
           "price": [
             25000,
             26000,
@@ -496,6 +524,8 @@
         },
         {
           "id": "city_neron",
+          "name": "Nero's Golden House",
+          "reward": "Scarab",
           "price": [
             28000,
             29000,
@@ -510,6 +540,8 @@
         },
         {
           "id": "city_mausoleum",
+          "name": "Mausoleum of Augustus",
+          "reward": "Mixer",
           "price": [
             34000,
             32000,
@@ -529,6 +561,8 @@
       "buildings": [
         {
           "id": "city_pantheon",
+          "name": "Pantheon",
+          "reward": "Sandal",
           "price": [
             36000,
             37000,
@@ -543,6 +577,8 @@
         },
         {
           "id": "city_theatre",
+          "name": "Theatre",
+          "reward": "Harp",
           "price": [
             40000,
             42000,
@@ -557,6 +593,8 @@
         },
         {
           "id": "city_forum",
+          "name": "Forum",
+          "reward": "Star",
           "price": [
             47000,
             45000,
@@ -571,6 +609,8 @@
         },
         {
           "id": "city_center",
+          "name": "Fountain",
+          "reward": "Emerald",
           "price": [
             50000,
             50000,

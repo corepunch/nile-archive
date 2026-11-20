@@ -57,7 +57,7 @@ return {
     {key="after-11", phase="after", level=11, lines={
         {"noelle", "Twenty logs for the workshop, Theo, for one loaf and my sincere thanks. Final offer."},
         {"theo", "Twenty logs for a mulled wine every morning, with the cloves. That's mine."},
-        {"noelle", "Deal! Now fetch the farrier, Theo. The sleigh-horse in the stable has been waiting for shoes."},
+        {"noelle", "Deal! Fetch Pip for me, Theo. The reindeer settles down when he hears Pip's voice."},
     }},
     {key="after-12", phase="after", level=12, lines={
         {"noelle", "Hot chestnuts, Theo? Are they for sale? A stranger's note told me to stop for lunch, so I did."},
@@ -65,9 +65,9 @@ return {
         {"noelle", "Don't ask who, Theo. That's the rule of the box. Honestly, you'd think you'd never heard of it."},
     }},
     {key="after-13", phase="after", level=13, lines={
-        {"pip", "Noelle, shut your eyes and listen! That's the sleigh-horse, in his new bells!"},
+        {"pip", "Noelle, shut your eyes and listen! Hear our reindeer's bells?"},
         {"noelle", "Jingle, jingle! Pip, every child in the lane has run out in one boot!"},
-        {"theo", "Pip, find your other boot. And that horse thinks the bells are about him. He's not wrong."},
+        {"theo", "Pip, find your other boot. Our reindeer thinks the bells are about him. He's not wrong."},
     }},
     {key="after-14", phase="after", level=14, lines={
         {"noelle", "Pip, a note! \"The carollers never agree on a key, but they wait for the slowest singer. Someone.\""},
@@ -250,7 +250,7 @@ return {
         {"pip", "I'M FINE! THE RULE IS THE RULE! I'M GOING TO SHOUT INTO A SACK!", story.SHOUT},
     }},
     {key="after-46", phase="after", level=46, lines={
-        {"pip", "Noelle, can I help Theo at his station kiosk? Pretzels! And I can watch the trains."},
+        {"pip", "Noelle, can I wind Theo's station clock? I can watch the trains from there."},
         {"noelle", "Watching for your mum? You said you didn't mind."},
         {"pip", "I don't! I just check. Sometimes. Every train. Have a gingerbread man."},
     }},
@@ -300,7 +300,7 @@ return {
         {"alder", "Three names, and I'm not saying. Never ask is for you, dear. I'm only guessing."},
     }},
     {key="after-56", phase="after", level=56, lines={
-        {"pip", "Noelle, hold the string! The red scarf's for my mum. The blue one was my first try. Three arms."},
+        {"pip", "Noelle, hold the lantern! The red scarf's for my mum. The blue one was my first try. Three arms."},
         {"noelle", "Pip, would you like Gran's parcel? \"For whoever needs it most.\" I think it might be you."},
         {"pip", "Keep it. I said I don't mind about Mum. I mind. A bit. Quite a lot, actually."},
     }},
@@ -332,7 +332,7 @@ return {
     {key="before-61", phase="before", level=61, lines={
         {"noelle", "Three candles lit, and Theo said good morning like he meant it. What's got into him?", story.THOUGHT},
         {"pip", "NOTHING'S GOT INTO HIM! I've got letters to run!", story.SHOUT},
-        {"agnes", "Candles on the new shop's shelves by dark, love. The old postbox behind it wants its lining seen to."},
+        {"agnes", "When you bring the wrapping paper, have a look at the old green postbox for me, love."},
     }},
     {key="after-61", phase="after", level=61, lines={
         {"alder", "Hold my lantern, Noelle. Envelope behind that lining: H. Strand. Smells of Agnes's kitchen."},
@@ -557,9 +557,9 @@ return {
         {"theo", "Wine through a wall. Fine, but who ladles it? Not me. My gloves are sticky."},
         {"noelle", "Nobody ladles. Just stand under it and tell everyone it was your idea. Cinnamon first?"},
     }},
-    {key="upgrade-man_04", phase="upgrade", event="man_04", title="new shoes and bells for the sleigh-horse", building="Reindeer stable", lines={
-        {"pip", "Mr Wren, hold his bridle! New shoes, and the bells are mine. I polished every one!"},
-        {"wren", "Let him hear them first. A horse likes to know whose tune he's wearing."},
+    {key="upgrade-man_04", phase="upgrade", event="man_04", title="a new harness and bells for the reindeer", building="Reindeer stable", lines={
+        {"pip", "Mr Wren, hold his harness! The bells are mine. I polished every one!"},
+        {"wren", "Let him hear them first. He likes to know whose tune he's wearing."},
         {"pip", "He keeps lifting his feet like a cat in snow. Does that mean he likes them?"},
     }},
     {key="upgrade-man_02", phase="upgrade", event="man_02", title="a drying shed for the pine", building="Lumber workshop", lines={

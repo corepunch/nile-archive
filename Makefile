@@ -206,6 +206,11 @@ test-ci: build/test/all $(TEST_AUX_BINS)
 balance:
 	python3 tools/balance.py $(GAME) $(BALANCE_ARGS)
 
+# Complete both real campaigns, including rewards, story and all purchases.
+.PHONY: test-bot
+test-bot: build/test/all
+	BOT_PROFILE=1 ./build/test/all --suite=relic-rush --suite=christmas-market --extended "rules campaign_play"
+
 .PHONY: test-balance
 test-balance: export BALANCE_RUNS ?= 40
 test-balance:

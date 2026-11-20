@@ -1,8 +1,7 @@
 -- Move budgets for the authored boards, run by tools/tune_moves.py. Each board
 -- in TUNE_LEVELS is played TUNE_SEEDS times (BALANCE_RUNS, default 40) by the
 -- greedy bot with a 250-move ceiling and the earned buildings in place.
--- The median with a tier margin sets the budget, with extra room for boards
--- where too many sampled games exceed it. Prints one
+-- The median times 1.25 sets the budget; slow runs never inflate it. Prints one
 -- MOVES_JSON line per board, and one CELLS_JSON line per game with the move
 -- each plaque was cleared on.
 if not testing.tune_levels then return end
@@ -13,8 +12,7 @@ local first, last = testing.tune_levels:match('^(%d+)%-(%d+)$')
 first, last = tonumber(first), tonumber(last)
 local SEEDS = testing.balance_runs or 40
 local CAP = 250   -- a board the bot cannot clear in 250 moves needs redesign, not a budget
-local MARGIN = {tutorial=2.5, easy=2, normal=1.4, hard=1.2, boss=1}
-local COVERAGE = {tutorial=.9, easy=.8, normal=.75, hard=.7, boss=.65}
+local budget = require('move_budget')
 local m = rules.new_match()
 local best_move = require('greedy_bot')(rules)
 
@@ -37,7 +35,7 @@ local function play(level, seed, restored, cleared)
         else
             assert(rules.game_swap(g, a, b, m), 'bot chose an illegal move')
             for _ = 1, 500 do
-                rules.game_apply(g, m); rules.game_collapse(g); rules.game_matches(g, m, -1)
+                rules.game_apply(g, m); rules.game_collapse(g, true); rules.game_matches(g, m, -1)
                 if m.hits == 0 then break end
             end
             rules.game_check_end(g)
@@ -66,11 +64,7 @@ for level = first, last do
     end
     spec.moves = original_moves
     table.sort(used)
-    local median = used[(SEEDS + 1) // 2]
-    local coverage = used[math.ceil(SEEDS * COVERAGE[tier])]
-    check(coverage < math.huge, ('the bot clears board %d within %d moves in %.0f%% of games'):format(
-        level, CAP, COVERAGE[tier] * 100))
-    local need = math.min(CAP, math.max(math.ceil(median * MARGIN[tier]), coverage))
+    local need, median = budget.fit(used)
     local wins, within = 0, 0
     for _, v in ipairs(used) do
         if v < math.huge then wins = wins + 1 end

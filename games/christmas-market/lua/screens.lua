@@ -45,32 +45,15 @@ function R.funding_shortfall(cost)
     return R.currency_prices(missing)
 end
 
--- This card presents the same bonus ranks and shared slots as the board.
-function R.building_gets(kind)
-    local gets = {}
-    for _, step in ipairs(island.ladder) do
-        if step.kind == kind then
-            local unlock = step.unlock
-            if unlock.kind then
-                local piece = economy.pieces[unlock.kind]
-                gets[#gets + 1] = {id="piece", icon=R.board_art["market-" .. unlock.kind],
-                    amount=piece.amount, unit=piece.slot and currency_icon(piece.slot)}
-            end
-            if unlock.bonus then
-                gets[#gets + 1] = {id=unlock.bonus.key, icon=R.board_art[unlock.bonus.icon]}
-            end
-            if unlock.income then
-                for slot in ipairs(economy.currencies) do
-                    if unlock.income[slot] > 0 then
-                        gets[#gets + 1] = {id="income-" .. slot, icon=currency_icon(slot),
-                            amount=("+%d"):format(unlock.income[slot])}
-                    end
-                end
-                return gets, R.words.card.every_win
-            end
-        end
-    end
-    return gets
+function R.building_reward(kind)
+    local step = island.ladder[island.ladder_position[kind]]
+    if not step then return end
+    local unlock = step.unlock
+    local bonus = unlock.bonus
+    if bonus then return {id=bonus.key, icon=R.board_art[bonus.icon]} end
+    local frame = "market-" .. unlock.kind
+    local piece = economy.pieces[unlock.kind]
+    return {id=frame, icon=R.board_art[frame], amount=piece.amount, unit=currency_icon(piece.slot)}
 end
 
 R.register_result(function()
@@ -116,8 +99,8 @@ local guide_entries = {
      icon={front="market-3"}},
     {id="banking", title="Bank your matches", description="Each matched piece pays its own value. Clear the board to bank what you earned.",
      icon={front="market-4"}},
-    {id="hammer", title="Farrier's hammer", description="Build the reindeer stable. Match 30 hammers to charge one hit. Use it before charging again.", icon={tool="booster-hammer"}},
-    {id="boosters", title="Firework Bomb", description="The gingerbread house upgrades the hammer and keeps its charge. Tap a cell to hit a 3×3 square.",
+    {id="hammer", title="Reindeer", description="Build the Reindeer stable. Match 30 reindeer to charge one kick. Tap a cell to hit it.", icon={tool=economy.bonuses.hammer.icon}},
+    {id="boosters", title="Firework Bomb", description="The Firework stall replaces the reindeer and keeps its charge. Tap a cell to hit a 3×3 square.",
      icon={tool="booster-firework"}},
     {id="bakery", title="Winter treats", description="The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board.", icon={front="market-7"}},
 }

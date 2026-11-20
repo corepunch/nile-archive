@@ -39,6 +39,14 @@ shot("hammer-toolbar-phone", "390x844", bonus_fixture .. "--level 4 --frames 10 
 shot("booster-spent", "390x844", booster_review .. "--spend-bonus --frames 25 --safe-area 0,47,0,34")
 shot("chapel-reward", "480x900", "--catalogue-card 34 --frames 35")
 shot("stable-reward", "480x900", "--catalogue-card 35 --frames 35")
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    shot("purchase-stable-" .. size, size, "--purchase-card 2 --frames 35" .. safe)
+    shot("purchase-stable-board-" .. size, size, "--level 7 --frames 100" .. safe)
+end
+shot("purchase-tool-states", "480x900", "--level 7 --art-states bonuses")
+shot("purchase-clock-board", "480x900", "--level 47 --frames 100")
+shot("purchase-skates-board", "480x900", "--level 82 --frames 100")
 local booster_flight = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. --fly-bonus "
 local booster_safe = " --safe-area 0,47,0,34"
 reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 5" .. booster_safe)
@@ -192,7 +200,12 @@ if getenv("SPRITE_SCENARIO") == "1" then
     for epoch = 1, 5 do frame("scenario-christmas-market-town-epoch-" .. epoch, "480x900", "--epoch " .. epoch .. " --frames 3") end
 end
 rules("relic_balance")
+rules("balance_bot")
 rules("tune_moves")
 
 shot("square-winter-wreath", "390x844", "--level 2 --frames 6 --safe-area 0,47,0,34")
 shot("square-christmas-star", "480x900", "--level 10 --frames 6")
+
+-- Level 3 move-budget review at both supported portrait sizes.
+shot("balance-window-lights", "480x900", "--level 3 --frames 6")
+shot("balance-window-lights-phone", "390x844", "--level 3 --frames 6 --safe-area 0,47,0,34")

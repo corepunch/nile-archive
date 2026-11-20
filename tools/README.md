@@ -83,10 +83,12 @@ are the guides.
 | `square_boards.py` | Validates the 100 square boards per game (envelope, legend, connectivity, every target can receive pieces, at least six target layers); lists asymmetric boards as notes | `python3 tools/square_boards.py christmas-market`; add `--show N` to print a board |
 | `square_trim.py` | Uses the reference bot to remove the last targets cleared until each board's median fits its tier (easy 30, normal 45, hard 60, boss 70) | `python3 tools/square_trim.py relic-rush --levels 21-30 --report` |
 | `story_lines.py` | Lists story lines that may be narration rather than speech: no I/we/you, no name, no question or imperative ([why](../docs/STORY_WRITING.md#speech-only-no-narration)) | `python3 tools/story_lines.py christmas-market` |
-| `tune_moves.py` | Fits each board's `moves` in the square campaign's `lua/campaign.lua` to the bot's median times the tier margin and writes `docs/level-moves.md` and `.json` (`lua/level_moves.lua` is the archived hex path) | `python3 tools/tune_moves.py relic-rush` |
+| `tune_moves.py` | Fits each board's `moves` in the square campaign's `lua/campaign.lua` to the bot's median times 1.25, rounded up, with no percentile override and writes `docs/level-moves.md` and `.json` (`lua/level_moves.lua` is the archived hex path) | `python3 tools/tune_moves.py relic-rush` |
 | `balance_plaques.py` | Lists the plaques the bot clears last on each board and, with `--trim`, removes them until the bot's median game is at most twice the level's Homescapes move budget (`--high`); `--keep-blockers` trims plain plaques before chained and frozen ones | `python3 tools/balance_plaques.py relic-rush --levels 31-40`; add `--trim` to rewrite the level files |
 | `tests/lua/tune_moves.lua` | The bot side of `tune_moves.py` and `balance_plaques.py`; reports the move each plaque was cleared on | run by `tune_moves.py` |
-| `tests/lua/greedy_bot.lua` | The reference bot shared by the tuner and the balance runner | required |
+| `tests/lua/greedy_bot.lua` | The reference bot shared by the tuner and the balance runner; uses read-only first-wave previews and cached geometry, prioritizing target progress without RNG lookahead | required |
+| `tests/lua/bot_profile.lua` | Local rule-call timings for the full campaign bot; independent of the injected gameplay clock | `make test-bot`; timings in `build/test/<game>.log` |
+| `tests/lua/move_budget.lua` | Shared median × 1.25 policy, exercised by `balance_bot` regression tests | required by `tune_moves.lua` |
 | `tests/lua/relic_balance.lua` | Plays every board of both games, reports income and fits purchase prices; `balance.py` runs it one board per process and writes the prices | `make test-balance` (report only, same forty-game sample) |
 
 ## Review captures and story
@@ -97,6 +99,7 @@ are the guides.
 | `capture_resource_icons.py` | Captures resource and hex review cases | `python3 tools/capture_resource_icons.py` |
 | `capture_trickling.py` | Captures vertical and diagonal refill reviews | `python3 tools/capture_trickling.py` |
 | `capture_economy_review.py` | Captures economy before/after comparisons with the native renderer | `python3 tools/capture_economy_review.py --before-ref <sha>` |
+| `building_rewards.py` | Exports both live campaign ladders and the Windows Cradle of Rome 2 building rewards as comparable HTML tables | `python3 tools/building_rewards.py` (requires Lua 5.4 or newer) |
 | `scenario_overview.py` | One HTML page of every game's cast, boards and story beats; with `--epoch N`, one epoch of the match-3 games: its four purchases, levels, scenes and town | `python3 tools/scenario_overview.py --capture`, `python3 tools/scenario_overview.py --epoch 1 --capture` |
 | `scenario_dump.lua` | Prints a game's scenario data (cast, levels, purchase ladder, story beats) as JSON for `scenario_overview.py` | run by `scenario_overview.py` |
 

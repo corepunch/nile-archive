@@ -35,7 +35,7 @@ The campaign's shape:
 
 - **Purchases open every five levels** (`after` in `economy.unlocks`). The first is affordable after level 1, so the player builds within a minute.
 - **Story buildings hold the next level.** The level after a story building waits until it stands, and so does every earlier purchase. Other purchases never block, so a player may run ahead of them. The scenes may speak of a non-story building as standing only from the next story building's scene on.
-- **Each building pays off on the board.** A purchase gives the piece or tool its artwork shows: the bakery gingerbread, the candle shop the lantern. A piece replaces a line of the palette; a tool takes its permanent slot (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star).
+- **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a reindeer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
 - **Regions open** after 15, 30, 50, 70 and 85 levels cleared, each with a line from a main character.
 
@@ -47,14 +47,14 @@ Balance is measured, never guessed. The greedy bot (`tests/lua/greedy_bot.lua`) 
 | --- | --- | --- |
 | Board validity | Fits 9 × 12; pieces can fall onto every target; at least 6 target layers and 45 cells | `python3 tools/square_boards.py <game>` |
 | Board length | Median clear at most 30 moves on tutorial and easy boards, 45 on normal, 60 on hard and 70 on bosses | `python3 tools/square_trim.py <game> --levels A-B --seeds 40` |
-| Move budget | Start at median × tier margin and allow for slower starts. Trim late targets when the fitted budget exceeds 55/80/90/100/105 moves by tier. | `python3 tools/tune_moves.py <game>` |
+| Move budget | Median clear × 1.25, rounded up, for every tier. Slow runs never inflate it. Trim late targets when a board runs long. | `python3 tools/tune_moves.py <game>` |
 | Prices | Budget from the average of the mean and lower-quartile winning income. Each purchase uses 65% of the projected wallet in its currencies, with 50% for the first purchase. | `python3 tools/balance.py <game>` |
 
-The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays without spending tools. The median margins for tutorial, easy, normal, hard and boss boards are 2.5, 2, 1.4, 1.2 and 1. If a board has a wide spread of clear times, the fitter allows enough moves for at least 90%, 80%, 75%, 70% or 65% of the sample respectively. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
+The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays without spending tools. Every tier uses the same 1.25 ratio over the median clear, rounded up: a 12-move median gets 15 moves. There is no percentile override. Slow bot runs remain visible in the within-budget count and call for investigation rather than extra moves. The bot prioritizes target layers and blocker damage over ordinary match score, with nearby refill opportunities breaking ties; it never previews random refills. Tiers describe the authored challenge, not extra budget multipliers. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 
-- **Keep Rome's currency mix.** A purchase uses the currencies its Rome counterpart uses (Rome's Farm costs no Food, so neither does the bakery). Only the amounts are fitted.
+- **Keep Rome's currency mix.** Each purchase uses the currency mix of its counterpart in the GameTop Windows `epochs.xml`. Only the price amounts are fitted.
 - **Fit to the bot's income without optional upgrades.** Players who earn upgrades build sooner and have more resources for decorations.
 - **Fund each purchase at its unlock.** The income forecast and the fixed-seed `campaign_play` test both require all twenty purchases on their scheduled levels with zero replays for income. Failed board attempts can be retried.
 - **Keep total prices nondecreasing.** The fitter caps any early price spike at the next purchase's total while retaining every currency it uses.
@@ -64,11 +64,11 @@ The move fit uses 40 starts per board with the pieces and tools earned by that l
 
 | Levels | Relic Rush | Christmas Market |
 | --- | --- | --- |
-| 1–20 | 231 · 85 · 73 | 196 · 72 · 58 |
-| 21–40 | 150 · 215 · 192 | 270 · 145 · 215 |
-| 41–60 | 158 · 324 · 195 | 319 · 218 · 227 |
-| 61–80 | 213 · 340 · 199 | 415 · 259 · 256 |
-| 81–100 | 425 · 511 · 302 | 503 · 283 · 253 |
+| 1–20 | 200 · 75 · 63 | 184 · 66 · 53 |
+| 21–40 | 125 · 178 · 157 | 223 · 125 · 188 |
+| 41–60 | 134 · 262 · 166 | 249 · 171 · 204 |
+| 61–80 | 205 · 303 · 192 | 324 · 188 · 221 |
+| 81–100 | 367 · 406 · 257 | 407 · 190 · 221 |
 
 ## Upgrades: Rome's citizens, kept by the cast we know
 
@@ -86,7 +86,7 @@ We keep the feats, the upgrades and the perks, and give each upgrade to **the ch
 | # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas Market upgrade (keeper) |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Well (`man_03`) | 150 Food / Treats in one level | +10 every win | Spring well: a second rope and pulley (Tomas) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
-| 2 | Hunter's hut (`man_04`) | A match of five | Hammer charges faster | Trapper's cabin: his father's tools sharpened (Tomas) | Reindeer stable: new shoes and bells for the sleigh-horse (Pip) |
+| 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Tomas) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
 | 3 | Sawmill (`man_02`) | 300 Supplies / 230 Materials in one level | +60 / +45 every win | Carpenter's workshop: a second saw bench (Mara) | Lumber workshop: a drying shed for the pine (Theo) |
 | 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a proper powder store (Adrian) | Firework stall: a rocket rack, ready in threes (Pip) |
 | 5 | Farm (`man_05`) | 325 Food / 240 Treats in one level | +55 / +40 every win | Jungle market: the hill farms send their carts (Marisol) | Gingerbread bakery: a second oven (Agnes) |

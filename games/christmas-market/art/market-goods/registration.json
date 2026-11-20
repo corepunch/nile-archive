@@ -16,19 +16,20 @@
         96
       ],
       "offset": [
-        15,
-        7
+        16,
+        15
       ],
       "alpha_center": [
-        63.8336,
-        63.9057
+        64.8336,
+        71.9057
       ],
       "registered_box": [
         0,
         0,
         128,
         128
-      ]
+      ],
+      "anchor": "silhouette"
     },
     "market-2": {
       "name": "silver snowflake coin",
@@ -113,31 +114,32 @@
       ]
     },
     "market-5": {
-      "name": "farrier's hammer",
+      "name": "reindeer",
       "source_crop": [
-        266,
-        264,
-        495,
-        503
+        103,
+        10,
+        645,
+        708
       ],
       "fitted_size": [
-        105,
-        110
+        82,
+        106
       ],
       "offset": [
-        14,
-        11
+        21,
+        8
       ],
       "alpha_center": [
-        63.9058,
-        63.6628
+        64.1332,
+        63.7718
       ],
       "registered_box": [
         128,
         128,
         128,
         128
-      ]
+      ],
+      "source": "art/market-goods/purchase-pieces.png"
     },
     "market-6": {
       "name": "toy blocks",
@@ -521,31 +523,32 @@
       ]
     },
     "booster-hourglass-icon": {
-      "name": "hourglass",
+      "name": "station clock",
       "source_crop": [
-        15,
-        1283,
-        243,
-        1526
+        828,
+        30,
+        1322,
+        681
       ],
       "fitted_size": [
-        105,
-        112
+        76,
+        100
       ],
       "offset": [
-        12,
-        7
+        26,
+        8
       ],
       "alpha_center": [
-        64.1722,
-        63.8412
+        64.1852,
+        63.7043
       ],
       "registered_box": [
         0,
         640,
         128,
         128
-      ]
+      ],
+      "source": "art/market-goods/purchase-pieces.png"
     },
     "booster-mixer-icon": {
       "name": "wind-up top",
@@ -602,24 +605,24 @@
       ]
     },
     "market-17": {
-      "name": "ceramic snowman",
+      "name": "ice skates",
       "source_crop": [
-        38,
-        1395,
-        213,
-        1648
+        1488,
+        46,
+        2091,
+        700
       ],
       "fitted_size": [
-        72,
-        104
+        100,
+        108
       ],
       "offset": [
-        29,
-        7
+        11,
+        8
       ],
       "alpha_center": [
-        64.4543,
-        64.2467
+        64.2048,
+        64.3141
       ],
       "registered_box": [
         384,
@@ -627,7 +630,7 @@
         128,
         128
       ],
-      "source": "art/market-goods/winter-stalls-premium.png"
+      "source": "art/market-goods/purchase-pieces.png"
     },
     "market-18": {
       "name": "carved reindeer",

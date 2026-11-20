@@ -34,7 +34,7 @@ local function play(g)
             assert(rules.game_swap(g, a, b, m), 'bot chose an illegal move')
             repeat
                 rules.game_apply(g, m)
-                rules.game_collapse(g)
+                rules.game_collapse(g, true)
                 rules.game_matches(g, m)
             until m.hits == 0
             rules.game_check_end(g)

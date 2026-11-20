@@ -180,7 +180,7 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 6. See how the crew uses what you built, then set out again. The 100 boards open twenty restorations, one after every fifth board.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
-The Spring well costs 70 Coins. Its water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The Build card shows the price or the amounts still needed.
+The Spring well's water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The Build card shows the price or the amounts still needed alongside its one reward.
 
 ### Tutorials and upgrades (`lua/user_events.lua`)
 
@@ -212,34 +212,36 @@ The building upgrade is recorded but has no art yet.
 
 ## Campaign
 
-The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels: A Light Below (1–20), Tracks on the Terrace (21–40), The Keeper’s Return (41–60), The Claim (61–80) and Keep the Light (81–100). Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
+The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels: A Light Below (1–20), Tracks on the Terrace (21–40), The Keeper’s Return (41–60), The Claim (61–80) and Keep the Light (81–100). Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. Every tier uses the median clear × 1.25, rounded up; slow bot samples do not add moves. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
 
 ## Buildings
+
+[Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 
 The ladder has twenty purchases, one available after every fifth board (after levels 1, 6, 11 … 96), four per epoch. It follows the purchase order of the Windows edition of Cradle of Rome 2, with names that match the artwork (the Rome name is in brackets). The Spring well, Expedition camp, Jungle market, Tide clock tower, Harbour plaza, Harbour lodge, Keeper's archive, Lighthouse, Temple of the Sun and Jade fountain are story restorations with a placement scene and hold the next level; the others must be bought before the next story restoration. The [campaign balance check](docs/square-match3.md#construction-balance) fits the prices to the resources the bot earns by clearing boards in order, so the expected campaign needs no replays.
 
 | After level | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
-| 1 | Spring well (Well) | Water buckets | 35 / 0 / 0 |
-| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 465 / 165 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 940 / 340 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 980 / 365 / 390 |
-| 21 | Jungle market (Farm) | Ration jars | 1040 / 390 / 565 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 750 / 675 / 575 |
-| 31 | Water mill (Mill) | Grain bundles | 690 / 835 / 785 |
-| 36 | Tide clock tower (Thermae) | Shield | 615 / 890 / 815 |
-| 41 | Harbour plaza (Port) | Shrimp | 595 / 915 / 815 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 570 / 1155 / 770 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 550 / 1225 / 745 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 575 / 1215 / 740 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 655 / 1195 / 690 |
-| 66 | Lighthouse | Plus | 675 / 1200 / 670 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 750 / 1325 / 750 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 805 / 1280 / 750 |
-| 81 | Great aviary (Pantheon) | Sandals | 1215 / 1830 / 1100 |
-| 86 | Relic museum (Theatre) | Harps | 1385 / 1900 / 1145 |
-| 91 | Temple of the Sun (Forum) | Star | 1635 / 2085 / 1185 |
-| 96 | Jade fountain (Fountain) | Emeralds | 1655 / 2045 / 1215 |
+| 1 | Spring well (Well) | Water buckets | 30 / 0 / 0 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 425 / 150 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 850 / 310 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 890 / 340 / 360 |
+| 21 | Jungle market (Farm) | Ration jars | 895 / 340 / 495 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 655 / 575 / 505 |
+| 31 | Water mill (Mill) | Grain bundles | 605 / 735 / 700 |
+| 36 | Tide clock tower (Thermae) | Shield | 545 / 790 / 715 |
+| 41 | Harbour plaza (Port) | Shrimp | 535 / 800 / 725 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass | 510 / 995 / 685 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 485 / 1040 / 675 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning | 520 / 1035 / 655 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 550 / 1025 / 645 |
+| 66 | Lighthouse | Plus | 595 / 1000 / 630 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 695 / 1180 / 730 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 795 / 1155 / 720 |
+| 81 | Great aviary (Pantheon) | Sandals | 1165 / 1685 / 1060 |
+| 86 | Relic museum (Theatre) | Harps | 1265 / 1640 / 1015 |
+| 91 | Temple of the Sun (Forum) | Star | 1450 / 1715 / 1060 |
+| 96 | Jade fountain (Fountain) | Emeralds | 1470 / 1705 / 1060 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and

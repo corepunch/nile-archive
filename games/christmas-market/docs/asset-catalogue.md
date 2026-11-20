@@ -158,7 +158,13 @@ stone reuses the exact painted Relic Rush piece at column five, row one of
 The [vase and winter catch atlas](../art/market-goods/vase-and-winter-catch.png)
 supplies the three-cracker Firework, broad ice pendant, cobalt vase and smoked trout.
 Its [ImageGen prompt](../art/market-goods/vase-and-winter-catch-prompt.txt)
-records the complete atlas edit. Only those four crops enter the registered sheet.
+records the complete atlas edit. The pendant and vase remain archived atlas pieces.
+The reindeer, station clock and ice skates were painted together in the built-in
+ImageGen [purchase piece strip](../art/market-goods/purchase-pieces.png). The
+[prompt](../art/market-goods/purchase-pieces-prompt.txt) and the [registration record](../art/market-goods/registration.json)
+record the original alpha and the three fitted crops. The reindeer charges the
+stable's single-cell kick, the station clock adds five moves, and ice skates
+earn Tokens. [Live boards, the stall card and all tool button states](screenshots/review/building-rewards/README.md).
 `market-1` points to the original light-blue `festive-3` frame from row two,
 column one of the [festive atlas](../art/festive-pieces/source.png). The campaign,
 guide and festive previews share that single registered sprite. The corresponding
@@ -171,16 +177,19 @@ The [registration record](../art/market-goods/registration.json) saves each
 source crop, proportional fit, offset and alpha-weighted center in its 128 px
 slot. The crop takes the object's solid bounds with four pixels of edge
 padding. The fit preserves source alpha inside the square cell's 9 px inset.
-The market goods crops in this record center within half a pixel on both axes.
+Opacity-centered crops align within half a pixel on both axes. The snowy fir
+(`market-0`) centers on the visible silhouette, keeping opposite margins equal
+to within one pixel. The registration translates the already fitted fir and
+preserves its size and painted alpha.
 
 | Atlas slot | Piece | Dominant color | Role |
 | ---: | --- | --- | --- |
 | 0 | Snow-dusted fir | Evergreen | Score at the opening. |
-| 1 | Knitted mitten | Light blue with cream knitwork | Opening score piece until the stable. Shares the `festive-3` frame. |
+| 1 | Knitted mitten | Light blue with cream knitwork | Opening score piece until the Lumber workshop. Shares the `festive-3` frame. |
 | 2 | Silver snowflake coin | Silver | +3 Tokens. |
 | 3 | Sun coin | Gold | +5 Tokens and the Tokens wallet icon. Shared artwork with Relic Rush. |
 | 4 | Bundled pine | Chestnut brown | +5 Materials from the lumber workshop and the Materials wallet icon. |
-| 5 | Farrier's hammer | Dark steel and oiled wood | +3 Hammer charge from the stable. |
+| 5 | Reindeer | Chestnut and red leather | +3 charge on the stable's single-cell kick. `market-5` on the board and `booster-reindeer` on the card and toolbar. |
 | 6 | Toy blocks | Honey wood | +6 Tokens from the later Toymaker's workshop. |
 | 7 | Gingerbread man | Baked brown with ivory icing | +4 Treats from the bakery. |
 | 8 | Mulled wine | Cranberry | +3 Treats from the Welcome arch. |
@@ -188,21 +197,21 @@ The market goods crops in this record center within half a pixel on both axes.
 | 10 | Candle lantern | Black iron and amber | +3 Lightning charge from the later Candlelight shop. |
 | 11 | Hot cocoa | Ivory and chocolate | +5 Treats from the cocoa kiosk and the Treats wallet icon. |
 | 12 | Dressed stone | Slate gray | +7 Materials from the chapel. |
-| 13 | Ice pendant | Sapphire blue | A broad faceted gem, +8 Tokens from the later Igloo. |
-| 14 | Glass bauble | Amber gold | +9 Tokens from the later Giant bauble. |
+| 13 | Ice pendant | Sapphire blue | Archived. |
+| 14 | Glass bauble | Amber gold | +8 Tokens from the Glassblower's stall. |
 | 15 | Candy cane | Red and ivory | Score until the Welcome arch. |
-| 16 | Firework Bomb | Midnight indigo | Three crackers in a brass band. Replaces the hammer and hits a 3×3 square. |
+| 16 | Firework Bomb | Midnight indigo | Three crackers in a brass band. Replaces the reindeer and hits a 3×3 square. |
 | 17 | Faceted star | Turquoise | Replaces the lantern and clears the chosen kind. |
 | 18 | Frost shield | Fir green and pewter | Hits the chosen row. |
 | 19 | Wish cross | Copper orange | Replaces the shield and replenishes a resource or part of another charge. |
-| 20 | Hourglass | Dark brass and teal | Adds five moves. |
-| 21 | Wind-up top | Royal blue and brass | Replaces the hourglass and shuffles the pieces. |
-| 22 | Pretzel | Baked amber | +6 Treats from the later Log cabin. |
-| 23 | Ceramic snowman | Ivory and plum | +10 Tokens from the later Winter skating rink. |
-| 24 | Carved reindeer | Walnut | +11 Tokens from the later Pile of presents. |
-| 25 | Santa hat | Crimson and ivory | +12 Tokens from the later Christmas tree. |
-| 26 | Winter vase | Cobalt glaze | Score only, from the stable until the Lumber workshop. |
-| 27 | Smoked trout | Russet | +7 Treats from the later sleigh. |
+| 20 | Station clock | Brass, ivory and navy | Adds five moves. `booster-hourglass-icon` on the board and `booster-clock` on the card and toolbar. |
+| 21 | Wind-up top | Royal blue and brass | Replaces the station clock and shuffles the pieces. |
+| 22 | Pretzel | Baked amber | Archived. |
+| 23 | Ice skates | Burgundy leather and silver | +9 Tokens from the rink. `market-17` on the board and card. |
+| 24 | Carved reindeer | Walnut | +10 Tokens from Woodcarvers' hall. |
+| 25 | Santa hat | Crimson and ivory | +11 Tokens from Santa's sleigh. |
+| 26 | Winter vase | Cobalt glaze | Archived. |
+| 27 | Smoked trout | Russet | +6 Treats from the Lakeside smokehouse. |
 
 `python3 games/christmas-market/tools/prepare_market_goods.py` registers the
 source crops. `python3 tools/match3_atlas.py` packs `art/registered/market-goods.png`
@@ -694,20 +703,17 @@ building being moved is free. Confirm or Cancel hides the guides. Debug
 
 ## Stall card: what a stall adds
 
-The stall card lists its price and what the stall adds side by side as the
-engine's icon-and-figure amounts (the `resource_indicator` prefab). It reuses existing
-art and adds none. `R.building_gets` in `lua/screens.lua` maps each ladder
-unlock:
+The stall card lists its price and one item side by side as icon-and-figure
+amounts. `R.building_reward` in `lua/screens.lua` uses the painted board piece
+or charging piece from the same ladder that drives the board.
 
 | Unlock | Caption | Icon | Figure |
 |---|---|---|---|
 | New piece | YOU GET | the piece, `market-<kind>` | `+N` beside the currency it banks |
 | Bonus rank | YOU GET | the piece that charges the slot | |
-| Takings | EVERY WIN | the currency | `+N` |
 
-Reproduce a card with `./build/christmas-market --headless --mute --fresh --size 390x844 --card 2 --shot out.png`
-(`--catalogue-card <kind>` for a built stall). Reviewed in game at 390×844 for
-every row and at 480×900 for a piece.
+Reproduce the reviewed states with `build/test/all --suite=christmas-market 'shot purchase-'`.
+The stable card and board were checked at 480×900 and 390×844.
 
 ### Optional match specials
 

@@ -16,7 +16,7 @@ local function tool(id) return {"THEN_GAME_CHARGE_TOOL", id=id, amount=1} end
 local upgrades = {
     {id="man_03", building="arch", title="a mulled-wine hatch in the arch", keeper="noelle",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=150}, perk=income("food", 10)},
-    {id="man_04", building="reindeer_stable", title="new shoes and bells for the sleigh-horse", keeper="pip",
+    {id="man_04", building="reindeer_stable", title="a new harness and bells for the reindeer", keeper="pip",
         If={"IF_PLAYER_MAKE_MATCH", length=5}, perk=tool("hammer")},
     {id="man_02", building="lumber", title="a drying shed for the pine", keeper="theo",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=230}, perk=income("supplies", 45)},
