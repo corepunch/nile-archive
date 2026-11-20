@@ -26,7 +26,7 @@
    ],
    "base_width": 409.808,
    "cost": [
-    40,
+    35,
     0,
     0
    ],
@@ -56,7 +56,7 @@
    ],
    "base_width": 409.808,
    "cost": [
-    880,
+    860,
     315,
     0
    ],
@@ -86,9 +86,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    875,
-    330,
-    495
+    835,
+    305,
+    450
    ],
    "stars": 0,
    "about": "Fresh gingerbread figures with piped icing.",
@@ -116,9 +116,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1095,
-    535,
-    870
+    955,
+    470,
+    760
    ],
    "stars": 0,
    "about": "Mrs Alder has paid for the next cup.",
@@ -146,9 +146,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1145,
-    815,
-    1000
+    1050,
+    740,
+    900
    ],
    "stars": 0,
    "about": "Henrik sells wooden blocks from his toy bench.",
@@ -176,9 +176,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1340,
-    905,
-    1050
+    1195,
+    790,
+    940
    ],
    "stars": 0,
    "about": "Paper, string and a spare tag for Pip’s scarf.",
@@ -206,9 +206,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1200,
-    805,
-    960
+    1110,
+    740,
+    870
    ],
    "stars": 0,
    "about": "Take a lantern if you have a long walk home.",
@@ -236,9 +236,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1490,
-    825,
-    1000
+    1320,
+    750,
+    880
    ],
    "stars": 0,
    "about": "Pip hands out wind-up tops while riders wait for a turn.",
@@ -266,9 +266,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1535,
-    830,
-    955
+    1360,
+    755,
+    840
    ],
    "stars": 0,
    "about": "Lace up a pair of ice skates at the rink kiosk.",
@@ -296,9 +296,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1755,
-    820,
-    1005
+    1645,
+    765,
+    895
    ],
    "stars": 0,
    "about": "On Christmas Eve the whole town lights the star on the big fir.",
@@ -771,9 +771,9 @@
    ],
    "base_width": 223.205,
    "cost": [
-    1760,
-    835,
-    990
+    1640,
+    775,
+    900
    ],
    "stars": 0,
    "about": "A Santa hat waits on the seat for every child.",
@@ -801,9 +801,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1045,
-    600,
-    895
+    940,
+    525,
+    790
    ],
    "stars": 0,
    "about": "Theo carves frost shields from the lake ice.",
@@ -947,9 +947,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1085,
-    645,
-    945
+    975,
+    585,
+    850
    ],
    "stars": 0,
    "about": "Lake trout come out of the smoke racks, golden and warm.",
@@ -1007,9 +1007,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1395,
-    870,
-    1040
+    1255,
+    775,
+    905
    ],
    "stars": 0,
    "about": "Every letter finds its way north.",
@@ -1037,9 +1037,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    960,
-    420,
-    560
+    790,
+    360,
+    490
    ],
    "stars": 0,
    "about": "The chapel masons cut stone for the market’s foundations.",
@@ -1067,8 +1067,8 @@
    ],
    "base_width": 359.808,
    "cost": [
-    465,
-    170,
+    395,
+    135,
     0
    ],
    "stars": 0,
@@ -1097,9 +1097,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1580,
-    795,
-    955
+    1405,
+    735,
+    820
    ],
    "stars": 0,
    "about": "Carvers whittle reindeer by lamplight until the last toy is wrapped.",
@@ -1127,9 +1127,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    775,
-    275,
-    310
+    735,
+    265,
+    280
    ],
    "stars": 0,
    "about": "Indigo crackers for the New Year sky, sold in threes.",
@@ -1157,9 +1157,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1055,
-    715,
-    910
+    945,
+    650,
+    825
    ],
    "stars": 0,
    "about": "Borrow the station clock when you need a little more time.",
@@ -1187,9 +1187,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1430,
-    855,
-    1025
+    1275,
+    770,
+    895
    ],
    "stars": 0,
    "about": "Every bauble is blown by hand, one breath at a time.",

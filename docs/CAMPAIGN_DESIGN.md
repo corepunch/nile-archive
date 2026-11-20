@@ -47,10 +47,10 @@ Balance is measured, never guessed. The greedy bot (`tests/lua/greedy_bot.lua`) 
 | --- | --- | --- |
 | Board validity | Fits 9 × 12; pieces can fall onto every target; at least 6 target layers and 45 cells | `python3 tools/square_boards.py <game>` |
 | Board length | Median clear at most 30 moves on tutorial and easy boards, 45 on normal, 60 on hard and 70 on bosses | `python3 tools/square_trim.py <game> --levels A-B --seeds 40` |
-| Move budget | Start at median × tier margin and allow for slower starts. Trim late targets when the fitted budget exceeds 55/80/90/100/105 moves by tier. | `python3 tools/tune_moves.py <game>` |
+| Move budget | Median clear × 1.25, rounded up, for every tier. Slow runs never inflate it. Trim late targets when a board runs long. | `python3 tools/tune_moves.py <game>` |
 | Prices | Budget from the average of the mean and lower-quartile winning income. Each purchase uses 65% of the projected wallet in its currencies, with 50% for the first purchase. | `python3 tools/balance.py <game>` |
 
-The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays without spending tools. The median margins for tutorial, easy, normal, hard and boss boards are 2.5, 2, 1.4, 1.2 and 1. If a board has a wide spread of clear times, the fitter allows enough moves for at least 90%, 80%, 75%, 70% or 65% of the sample respectively. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
+The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays without spending tools. Every tier uses the same 1.25 ratio over the median clear, rounded up: a 12-move median gets 15 moves. There is no percentile override. Slow bot runs remain visible in the within-budget count and call for investigation rather than extra moves. The bot prioritizes target layers and blocker damage over ordinary match score, with nearby refill opportunities breaking ties; it never previews random refills. Tiers describe the authored challenge, not extra budget multipliers. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 
@@ -64,11 +64,11 @@ The move fit uses 40 starts per board with the pieces and tools earned by that l
 
 | Levels | Relic Rush | Christmas Market |
 | --- | --- | --- |
-| 1–20 | 231 · 85 · 73 | 196 · 72 · 58 |
-| 21–40 | 150 · 215 · 192 | 262 · 145 · 215 |
-| 41–60 | 151 · 303 · 195 | 278 · 194 · 227 |
-| 61–80 | 211 · 312 · 199 | 377 · 217 · 256 |
-| 81–100 | 425 · 469 · 302 | 466 · 217 · 253 |
+| 1–20 | 200 · 75 · 63 | 184 · 66 · 53 |
+| 21–40 | 125 · 178 · 157 | 223 · 125 · 188 |
+| 41–60 | 134 · 262 · 166 | 249 · 171 · 204 |
+| 61–80 | 205 · 303 · 192 | 324 · 188 · 221 |
+| 81–100 | 367 · 406 · 257 | 407 · 190 · 221 |
 
 ## Upgrades: Rome's citizens, kept by the cast we know
 
