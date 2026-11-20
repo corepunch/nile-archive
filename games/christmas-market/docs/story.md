@@ -92,6 +92,25 @@ Bramble the goat does not speak.
 | Noelle imagines January in Bellmere (76) | She tells Wren she is staying before she opens the parcel (91) and tells Theo (100) |
 | The silver bell on the arch "rings for the last one off the train" (14) | It rings for Pip's mum (94) |
 | Rosa leaves a light for one more (1) | Gran's lamp in Noelle's own window (95), and the end screen |
+| Pip wants a reindeer, and indigo rockets for New Year (6, 16) | Bells on the reindeer (13); Agnes keeps the rockets for New Year (25) |
+| Rosa would like a sleigh ride (96) | Mary sends Pip to the seat Rosa saved (98); the sleigh stands behind the pair at the end (100) |
+
+**Why each stall gets built.** The ten stalls that hold no story scene are each wanted by someone in the scene that plays when they open, so the player builds for a person. A scene never says the stall stands (the ladder lets a player wait, see the knock-on check); the echo is placed after the next story stall, from which every earlier stall must stand (`campaign_ladder`, `engine/lua/match3/game.lua`: `ladder_blocked` returns "earlier" until every unwaived earlier step is owned). Where no story stall follows (the sleigh), the echo reads true either way.
+
+| Stall | Wish | Who wants it, and why | Later echo |
+| --- | --- | --- | --- |
+| Reindeer stable | 6 | Pip: a reindeer needs a stable | 11, 13 (his bells) |
+| Firework stall | 16 | Pip: indigo rockets, in threes, for New Year | 25 |
+| Snowy chapel | 26 | Agnes: the angel's wing mended and the chapel roofed by Sunday | 33, 37, 50 |
+| Ice house | 36 | Agnes: Theo's ice house to keep her butter cold | 43, 78 |
+| Lakeside smokehouse | 41 | Mr Finch: a tight smokehouse for his trout | 53, 54 |
+| Station kiosk | 46 | Pip: a clock he can wind, to see every train | 85 (Agnes) |
+| North Pole post office | 66 | Pip, out of a job: Noelle hands him the post office | 77 |
+| Glassblower's stall | 71 | Agnes: a glass dome for the gingerbread | 84 |
+| Woodcarvers' hall | 86 | Henrik: a hall for his apprentices | 98 |
+| Santa's sleigh | 96 | Rosa: a ride (the sleigh has turned up unasked; the player gives it its place) | 98, and the end panel |
+
+The four stalls with no upgrade scene echo too: Station kiosk (85), Gift wrapping pavilion (98, Henrik asks Pip to wrap the reindeer), Winter skating rink (82, Pip sings while Agnes skates) and the sleigh (98).
 
 **Who knows what.** Pip delivers the notes, works out who Someone is by level 45 and nearly bursts. Mr Wren knows everything or seems to. Theo learns from Noelle's signature at level 60. Noelle makes the connection at level 100. The player can guess by level 25. Only Agnes and Henrik know what the quarrel looked like from their own side, and only levels 61–65 join the two.
 
@@ -141,7 +160,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 **Level 6 · Snowflake Lane**
 
 - **Noelle:** Pip, I asked how to get help! "Start by sitting down with someone. Stopped for lunch yet? Someone."
-- **Pip:** Eat a bun, Noelle. Buns solve most things.
+- **Pip:** Eat a bun, Noelle. Buns solve most things. A reindeer solves the rest, and he'd only need a stable.
 - **Agnes:** Sit, love. There's buns. And if the corner's sticky, that's my icing, so don't look at me.
 
 **Level 7 · Gingerbread Gables**
@@ -201,7 +220,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 **Level 16 · Mitten Line**
 
 - **Noelle:** Pip, there's a mitten with three thumbs on the line. Who's it for?
-- **Pip:** Nobody! Practice! Theo's building a firework stall. Indigo rockets, in threes!
+- **Pip:** Nobody! Practice! Can we have a firework stall, Noelle? Indigo rockets, in threes, for New Year!
 - **Agnes:** Rockets go off outdoors, Pip. In a field, with a bucket of snow.
 
 **Level 17 · Candy Cross**
@@ -276,7 +295,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 - **Noelle:** Henrik, will you mend the crib's angel? Her wing's split. Bramble's been the donkey meanwhile.
 - **Henrik:** That angel is mine. I carved her years ago. The wing has split along the grain. Leave her with me.
-- **Agnes:** Noelle, I want her wing by the second Sunday. And nobody's thanking anybody.
+- **Agnes:** Noelle, I want her wing mended and the chapel roofed by Sunday. Nobody's thanking anybody.
 
 **Level 27 · Ornament**
 
@@ -335,8 +354,8 @@ Order: result → market → place the stall → scene → next goal. A first cl
 **Level 36 · Gingerbread Man**
 
 - **Pip:** Mrs Holt, Mr Strand says your gingerbread men have no knees! He measured one with his ruler!
-- **Agnes:** They aren't for walking, Pip. They're for eating. Pass the icing.
-- **Noelle:** Agnes, Bramble agrees. She's eaten three knee-less men and she's back for a fourth.
+- **Agnes:** They aren't for walking, Pip. They're for eating. Noelle, will Theo's ice house keep my butter cold?
+- **Noelle:** Till June, Agnes. And Bramble's eaten three knee-less men. She's back for a fourth.
 
 **Level 37 · Peppermint Swirl**
 
@@ -378,8 +397,8 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 41 · Pine Whisper**
 
-- **Theo:** Planks, Mr Finch? Dry ones, from the shed. And smell that, Noelle. Fir boughs for every door.
-- **Mr Finch:** No knots. And a bench by the chapel door. I stand outside every service, holding Bramble.
+- **Theo:** Planks for the smokehouse, Mr Finch? Dry ones. And smell that, Noelle. Fir boughs for every door.
+- **Mr Finch:** No knots, Theo. My trout want a tight smokehouse. I stand outside every service, holding Bramble.
 - **Noelle:** Every service, Mr Finch? Can't Bramble wait by herself? She's only a goat.
 
 **Level 42 · Bell Tower Bells**
@@ -408,7 +427,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 46 · Gingerbread Row**
 
-- **Pip:** Noelle, can I wind Theo's station clock? I can watch the trains from there.
+- **Pip:** Noelle, could the station have a kiosk with a clock I can wind? Then I'd see every train come in.
 - **Noelle:** Watching for your mum? You said you didn't mind.
 - **Pip:** I don't! I just check. Sometimes. Every train. Have a gingerbread man.
 
@@ -544,7 +563,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 - **Agnes:** Sit, Henrik. Eat. The jar's full, and the whole shop's heard about the fir and the forty years.
 - **Pip:** You told everyone? Mrs Alder cried into the dough! And nobody needs a messenger now. I'm unemployed!
-- **Noelle:** Pip, every child will want to write to Santa. Theo's fetching planks for a post office.
+- **Noelle:** Then run a post office, Pip! Every child will write to Santa, and you know every lane.
 
 **Level 67 · Pudding Hearth**
 
@@ -572,8 +591,8 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 71 · Candle Glow**
 
-- **Pip:** Agnes! A glassblower's written from beyond the lake! She wants a furnace, and a corner to work in!
-- **Agnes:** Tell her yes, Pip, and that there's a bun. Noelle, why are you staring at your ticket?
+- **Pip:** Agnes! A glassblower's written from beyond the lake! She wants a furnace and a corner. Say yes?
+- **Agnes:** Yes, if she blows me a dome for the gingerbread. Noelle, why are you staring at your ticket?
 - **Noelle:** It's gone soft at the corners, Agnes. I hadn't looked at it in days.
 
 **Level 72 · Sleigh Bells Ring**
@@ -602,7 +621,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 76 · Ribboned Gift · builds Reindeer carousel**
 
-- **Noelle:** Henrik, it's turning! Twelve horses round a reindeer. I'm not crying, it's the cold.
+- **Noelle:** Henrik, twelve horses and a reindeer! I'm not crying, it's the cold. Who rides first?
 - **Henrik:** Agnes, first ride. You're on the third horse. It leans to the left, and so do I.
 - **Noelle:** Agnes, I'd like to see these horses in January. Snow on their backs, nobody hurrying.
 
@@ -652,7 +671,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 82 · Herald Angel**
 
-- **Pip:** Noelle, that's nine times today I've sung Hark! The herald angels. Also, a note for you!
+- **Pip:** Noelle, I've sung Hark! The herald angels nine times while Mrs Holt skated. Also, a note for you!
 - **Noelle:** "Wear something warm. The fir is draughty. Someone." Someone worries about my toes, Pip!
 - **Agnes:** Thick mittens, love. That fir has a full diary. Mine was only forty years overdue.
 
@@ -672,13 +691,13 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 - **Pip (shout):** A TELEGRAM! "ON LAST TRAIN CHRISTMAS EVE. SAVE ME A PRETZEL. MUM." SHE'S COMING, NOELLE!
 - **Noelle:** Then the station path gets a lantern on every post, and a bun at the end. Agnes?
-- **Agnes:** I'll have the bun in her hand before the steam's off the engine. Dough goes on now.
+- **Agnes:** Pip, keep that kiosk clock right. I'll have the bun in her hand before the steam's off the engine.
 
 **Level 86 · Wreath on the Door**
 
 - **Agnes:** Noelle, it's the shortest day and dark by four. Take a box of jam jars. Every sill gets a candle.
 - **Noelle:** Agnes, nobody leaves without cocoa, and I'll light every window myself.
-- **Henrik:** Longest night, best for carving. My old apprentices wrote back, Noelle. A reindeer for every child.
+- **Henrik:** My old apprentices would come back for a proper hall, Noelle. A carved reindeer for every child.
 
 **Level 87 · Stained Glass Glow**
 
@@ -736,8 +755,8 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 96 · Snow Globe**
 
-- **Pip (shout):** Mr Wren! A red sleigh in the square, no tracks, and YOUR BROOM'S LEANING ON IT! Explain!
-- **Rosa:** Mr Wren, that sleigh wasn't here when I got off the train. Did you bring it?
+- **Pip (shout):** Mr Wren! A red sleigh with no tracks, and YOUR BROOM'S LEANING ON IT! Explain!
+- **Rosa:** Mr Wren, that sleigh wasn't here when I got off the train. Did you bring it? I'd like a ride.
 - **Mr Wren:** I only brought the broom, Rosa. Sleighs turn up where there's a good reason. Mind the runners.
 
 **Level 97 · Shepherds Star**
@@ -748,8 +767,8 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 98 · Toy Soldier March**
 
-- **Henrik:** Pip, fourteen apprentices marched in a reindeer for every child. I never taught them that.
-- **Mary:** Pip, yours has your nose exactly. Keep it away from the goat.
+- **Henrik:** Pip, fourteen apprentices carved a reindeer for every child. Will you wrap them at the pavilion?
+- **Mary:** Pip, yours has your nose exactly. Now find Rosa. She's saving you a seat in that sleigh.
 - **Henrik:** Last one's for you, Agnes. Now I'm off to wait under the fir. Early, for once.
 
 **Level 99 · Twelve Chimes**
@@ -793,23 +812,23 @@ Optional scenes, one per building, played on the next return to town after its f
 
 **Upgrade man_04 · a new harness and bells for the reindeer · Reindeer stable**
 - **Pip:** Mr Wren, hold his harness! The bells are mine. I polished every one!
-- **Mr Wren:** Let him hear them first. He likes to know whose tune he's wearing.
+- **Mr Wren:** Let him hear them first, Pip. He likes to know whose tune he's wearing.
 - **Pip:** He keeps lifting his feet like a cat in snow. Does that mean he likes them?
 
 **Upgrade man_02 · a drying shed for the pine · Lumber workshop**
 - **Theo:** Noelle, don't touch the pine. It's drying. I built a shed. A whole shed, for planks.
 - **Noelle:** You, fussing over planks? Theo Marsh, that's sweet. Why a shed?
-- **Theo:** Wet wood spits sparks and splits stalls. And yes, it's a bit sweet. Tell nobody.
+- **Theo:** Wet wood spits sparks and splits stalls, Noelle. And yes, it's a bit sweet. Tell nobody.
 
 **Upgrade man_01 · a rocket rack, ready in threes · Firework stall**
-- **Pip:** Mrs Holt, the rockets stand in a rack now! In threes! Nothing rolls!
+- **Pip:** Mrs Holt, you should see the rockets! They stand in a rack now, in threes. Nothing rolls!
 - **Agnes:** Rolls? Pip Larkin, what rolled? And where did it roll to?
 - **Pip:** Nowhere! Bramble only sniffed one. Sniffed! Have a bun. No, you have the buns, sorry!
 
 **Upgrade man_05 · a second oven · Gingerbread bakery**
 - **Agnes:** Don't gloat. Yes, there's a second oven. One batch bakes while the next one rises.
 - **Noelle:** Gloat? You've been grinning at it for an hour. Has it got a name yet?
-- **Agnes:** It's an oven. The tall one's for gingerbread. The little one's for the hungry. Sit.
+- **Agnes:** It's an oven, love. The tall one's for gingerbread. The little one's for the hungry. Sit.
 
 **Upgrade man_06 · the masons' yard behind the chapel · Snowy chapel**
 - **Mr Wren:** Pip, run and tell the masons the chapel step is wanted. Stone keeps its own hours.
@@ -822,7 +841,7 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Mrs Alder:** She can queue. Hold the cup and stand still while I hum you the carol it goes with.
 
 **Upgrade man_08 · a second ice saw on the lake · Ice house**
-- **Theo:** Finch, that's the second ice saw. Twice the blocks, and nobody wet.
+- **Theo:** Mr Finch, that's the second ice saw. Twice the blocks, and nobody wet. Keep your goat off it?
 - **Mr Finch:** Bramble walked out on the ice this morning. It held. Your sawing's fine.
 - **Theo:** You let your goat test my ice? She could have gone through!
 - **Mr Finch:** She doesn't. She's very particular. Same as you.
@@ -863,7 +882,7 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Noelle:** Mr Strand, there's somebody at every bench! Who are they all?
 - **Henrik:** My old apprentices. I taught them to hold a gouge. Now they correct my joints. Insufferable.
 - **Noelle:** Are you pleased? You can tell me.
-- **Henrik:** Their joints are tidy. Yes, pleased. Mind the shavings.
+- **Henrik:** Their joints are tidy, Noelle. Yes, pleased. Mind the shavings.
 
 **Upgrade man_16 · a star for the top · Christmas tree**
 - **Theo:** Strand, I need steady hands. The star's heavy and the top branch is thin.
@@ -915,6 +934,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-20: Building ties. The ten stalls that held no scene (6, 16, 26, 36, 41, 46, 66, 71, 86, 96) are each wanted by a named person in their opening scene, with later echoes (see "Why each stall gets built"). Station kiosk, pavilion, rink and sleigh gain echoes at 85, 98, 82 and 98. Level 96 no longer says where the sleigh stands. Level 76 asks who rides first. Six upgrade lines now address someone (story_lines.py: 0 candidates). No plant or payoff moved. One cold read: Pip's rockets are for New Year, not his mum (it undercut his "I don't mind" at 18), Mr Finch asks for the smokehouse himself, Henrik's apprentices "would come" (no unseen letter), and Mary sends Pip to Rosa's sleigh seat.
 
 - 2026-11-20: Candlelight opens before Gift wrapping. Pip still shows his mum's scarf at wish 56, and the old postbox gives up Agnes's letter at wish 61.
 

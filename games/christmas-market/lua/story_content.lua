@@ -31,7 +31,7 @@ return {
     }},
     {key="after-06", phase="after", level=6, lines={
         {"noelle", "Pip, I asked how to get help! \"Start by sitting down with someone. Stopped for lunch yet? Someone.\""},
-        {"pip", "Eat a bun, Noelle. Buns solve most things."},
+        {"pip", "Eat a bun, Noelle. Buns solve most things. A reindeer solves the rest, and he'd only need a stable."},
         {"agnes", "Sit, love. There's buns. And if the corner's sticky, that's my icing, so don't look at me."},
     }},
     {key="after-07", phase="after", level=7, lines={
@@ -81,7 +81,7 @@ return {
     }},
     {key="after-16", phase="after", level=16, lines={
         {"noelle", "Pip, there's a mitten with three thumbs on the line. Who's it for?"},
-        {"pip", "Nobody! Practice! Theo's building a firework stall. Indigo rockets, in threes!"},
+        {"pip", "Nobody! Practice! Can we have a firework stall, Noelle? Indigo rockets, in threes, for New Year!"},
         {"agnes", "Rockets go off outdoors, Pip. In a field, with a bucket of snow."},
     }},
     {key="after-17", phase="after", level=17, lines={
@@ -142,7 +142,7 @@ return {
     {key="after-26", phase="after", level=26, lines={
         {"noelle", "Henrik, will you mend the crib's angel? Her wing's split. Bramble's been the donkey meanwhile."},
         {"henrik", "That angel is mine. I carved her years ago. The wing has split along the grain. Leave her with me."},
-        {"agnes", "Noelle, I want her wing by the second Sunday. And nobody's thanking anybody."},
+        {"agnes", "Noelle, I want her wing mended and the chapel roofed by Sunday. Nobody's thanking anybody."},
     }},
     {key="after-27", phase="after", level=27, lines={
         {"pip", "Noelle! St Nicholas came! There's an orange and a chocolate coin in my shoe!"},
@@ -191,8 +191,8 @@ return {
     }},
     {key="after-36", phase="after", level=36, lines={
         {"pip", "Mrs Holt, Mr Strand says your gingerbread men have no knees! He measured one with his ruler!"},
-        {"agnes", "They aren't for walking, Pip. They're for eating. Pass the icing."},
-        {"noelle", "Agnes, Bramble agrees. She's eaten three knee-less men and she's back for a fourth."},
+        {"agnes", "They aren't for walking, Pip. They're for eating. Noelle, will Theo's ice house keep my butter cold?"},
+        {"noelle", "Till June, Agnes. And Bramble's eaten three knee-less men. She's back for a fourth."},
     }},
     {key="after-37", phase="after", level=37, lines={
         {"noelle", "Listen, Theo! The Fenwick choir's in the chapel, up to the second verse of \"The Holly and the Ivy.\""},
@@ -225,8 +225,8 @@ return {
         {"noelle", "Agnes, Gran's parcel is still in my mittens, and I still don't know who needs it most. Any ideas?"},
     }},
     {key="after-41", phase="after", level=41, lines={
-        {"theo", "Planks, Mr Finch? Dry ones, from the shed. And smell that, Noelle. Fir boughs for every door."},
-        {"finch", "No knots. And a bench by the chapel door. I stand outside every service, holding Bramble."},
+        {"theo", "Planks for the smokehouse, Mr Finch? Dry ones. And smell that, Noelle. Fir boughs for every door."},
+        {"finch", "No knots, Theo. My trout want a tight smokehouse. I stand outside every service, holding Bramble."},
         {"noelle", "Every service, Mr Finch? Can't Bramble wait by herself? She's only a goat."},
     }},
     {key="after-42", phase="after", level=42, lines={
@@ -250,7 +250,7 @@ return {
         {"pip", "I'M FINE! THE RULE IS THE RULE! I'M GOING TO SHOUT INTO A SACK!", story.SHOUT},
     }},
     {key="after-46", phase="after", level=46, lines={
-        {"pip", "Noelle, can I wind Theo's station clock? I can watch the trains from there."},
+        {"pip", "Noelle, could the station have a kiosk with a clock I can wind? Then I'd see every train come in."},
         {"noelle", "Watching for your mum? You said you didn't mind."},
         {"pip", "I don't! I just check. Sometimes. Every train. Have a gingerbread man."},
     }},
@@ -362,7 +362,7 @@ return {
     {key="after-66", phase="after", level=66, lines={
         {"agnes", "Sit, Henrik. Eat. The jar's full, and the whole shop's heard about the fir and the forty years."},
         {"pip", "You told everyone? Mrs Alder cried into the dough! And nobody needs a messenger now. I'm unemployed!"},
-        {"noelle", "Pip, every child will want to write to Santa. Theo's fetching planks for a post office."},
+        {"noelle", "Then run a post office, Pip! Every child will write to Santa, and you know every lane."},
     }},
     {key="after-67", phase="after", level=67, lines={
         {"agnes", "Stir once, east to west, and wish. Rosa sent her recipe from the coast: \"less brandy.\""},
@@ -385,8 +385,8 @@ return {
         {"henrik", "That's the first one I carved. How did you know, Wren? I was very cross that week."},
     }},
     {key="after-71", phase="after", level=71, lines={
-        {"pip", "Agnes! A glassblower's written from beyond the lake! She wants a furnace, and a corner to work in!"},
-        {"agnes", "Tell her yes, Pip, and that there's a bun. Noelle, why are you staring at your ticket?"},
+        {"pip", "Agnes! A glassblower's written from beyond the lake! She wants a furnace and a corner. Say yes?"},
+        {"agnes", "Yes, if she blows me a dome for the gingerbread. Noelle, why are you staring at your ticket?"},
         {"noelle", "It's gone soft at the corners, Agnes. I hadn't looked at it in days."},
     }},
     {key="after-72", phase="after", level=72, lines={
@@ -410,7 +410,7 @@ return {
         {"henrik", "The H leans. I shall never correct it."},
     }},
     {key="after-76", phase="after", level=76, lines={
-        {"noelle", "Henrik, it's turning! Twelve horses round a reindeer. I'm not crying, it's the cold."},
+        {"noelle", "Henrik, twelve horses and a reindeer! I'm not crying, it's the cold. Who rides first?"},
         {"henrik", "Agnes, first ride. You're on the third horse. It leans to the left, and so do I."},
         {"noelle", "Agnes, I'd like to see these horses in January. Snow on their backs, nobody hurrying."},
     }},
@@ -450,7 +450,7 @@ return {
         {"henrik", "I'm forty years late, Agnes. I'm allowed one foot."},
     }},
     {key="after-82", phase="after", level=82, lines={
-        {"pip", "Noelle, that's nine times today I've sung Hark! The herald angels. Also, a note for you!"},
+        {"pip", "Noelle, I've sung Hark! The herald angels nine times while Mrs Holt skated. Also, a note for you!"},
         {"noelle", "\"Wear something warm. The fir is draughty. Someone.\" Someone worries about my toes, Pip!"},
         {"agnes", "Thick mittens, love. That fir has a full diary. Mine was only forty years overdue."},
     }},
@@ -467,12 +467,12 @@ return {
     {key="after-85", phase="after", level=85, lines={
         {"pip", "A TELEGRAM! \"ON LAST TRAIN CHRISTMAS EVE. SAVE ME A PRETZEL. MUM.\" SHE'S COMING, NOELLE!", story.SHOUT},
         {"noelle", "Then the station path gets a lantern on every post, and a bun at the end. Agnes?"},
-        {"agnes", "I'll have the bun in her hand before the steam's off the engine. Dough goes on now."},
+        {"agnes", "Pip, keep that kiosk clock right. I'll have the bun in her hand before the steam's off the engine."},
     }},
     {key="after-86", phase="after", level=86, lines={
         {"agnes", "Noelle, it's the shortest day and dark by four. Take a box of jam jars. Every sill gets a candle."},
         {"noelle", "Agnes, nobody leaves without cocoa, and I'll light every window myself."},
-        {"henrik", "Longest night, best for carving. My old apprentices wrote back, Noelle. A reindeer for every child."},
+        {"henrik", "My old apprentices would come back for a proper hall, Noelle. A carved reindeer for every child."},
     }},
     {key="after-87", phase="after", level=87, lines={
         {"noelle", "Agnes, the glass turned my ticket red and gold. The twenty-sixth looks very small tonight."},
@@ -520,8 +520,8 @@ return {
         {"alder", "Rosa, this cup's been paid for since the kiosk opened. For whoever's next. You're next."},
     }},
     {key="after-96", phase="after", level=96, lines={
-        {"pip", "Mr Wren! A red sleigh in the square, no tracks, and YOUR BROOM'S LEANING ON IT! Explain!", story.SHOUT},
-        {"rosa", "Mr Wren, that sleigh wasn't here when I got off the train. Did you bring it?"},
+        {"pip", "Mr Wren! A red sleigh with no tracks, and YOUR BROOM'S LEANING ON IT! Explain!", story.SHOUT},
+        {"rosa", "Mr Wren, that sleigh wasn't here when I got off the train. Did you bring it? I'd like a ride."},
         {"wren", "I only brought the broom, Rosa. Sleighs turn up where there's a good reason. Mind the runners."},
     }},
     {key="after-97", phase="after", level=97, lines={
@@ -530,8 +530,8 @@ return {
         {"finch", "Front pew, Noelle. First time in forty winters. Rosa's got the goat."},
     }},
     {key="after-98", phase="after", level=98, lines={
-        {"henrik", "Pip, fourteen apprentices marched in a reindeer for every child. I never taught them that."},
-        {"mary", "Pip, yours has your nose exactly. Keep it away from the goat."},
+        {"henrik", "Pip, fourteen apprentices carved a reindeer for every child. Will you wrap them at the pavilion?"},
+        {"mary", "Pip, yours has your nose exactly. Now find Rosa. She's saving you a seat in that sleigh."},
         {"henrik", "Last one's for you, Agnes. Now I'm off to wait under the fir. Early, for once."},
     }},
     {key="after-99", phase="after", level=99, lines={
@@ -559,23 +559,23 @@ return {
     }},
     {key="upgrade-man_04", phase="upgrade", event="man_04", title="a new harness and bells for the reindeer", building="Reindeer stable", lines={
         {"pip", "Mr Wren, hold his harness! The bells are mine. I polished every one!"},
-        {"wren", "Let him hear them first. He likes to know whose tune he's wearing."},
+        {"wren", "Let him hear them first, Pip. He likes to know whose tune he's wearing."},
         {"pip", "He keeps lifting his feet like a cat in snow. Does that mean he likes them?"},
     }},
     {key="upgrade-man_02", phase="upgrade", event="man_02", title="a drying shed for the pine", building="Lumber workshop", lines={
         {"theo", "Noelle, don't touch the pine. It's drying. I built a shed. A whole shed, for planks."},
         {"noelle", "You, fussing over planks? Theo Marsh, that's sweet. Why a shed?"},
-        {"theo", "Wet wood spits sparks and splits stalls. And yes, it's a bit sweet. Tell nobody."},
+        {"theo", "Wet wood spits sparks and splits stalls, Noelle. And yes, it's a bit sweet. Tell nobody."},
     }},
     {key="upgrade-man_01", phase="upgrade", event="man_01", title="a rocket rack, ready in threes", building="Firework stall", lines={
-        {"pip", "Mrs Holt, the rockets stand in a rack now! In threes! Nothing rolls!"},
+        {"pip", "Mrs Holt, you should see the rockets! They stand in a rack now, in threes. Nothing rolls!"},
         {"agnes", "Rolls? Pip Larkin, what rolled? And where did it roll to?"},
         {"pip", "Nowhere! Bramble only sniffed one. Sniffed! Have a bun. No, you have the buns, sorry!"},
     }},
     {key="upgrade-man_05", phase="upgrade", event="man_05", title="a second oven", building="Gingerbread bakery", lines={
         {"agnes", "Don't gloat. Yes, there's a second oven. One batch bakes while the next one rises."},
         {"noelle", "Gloat? You've been grinning at it for an hour. Has it got a name yet?"},
-        {"agnes", "It's an oven. The tall one's for gingerbread. The little one's for the hungry. Sit."},
+        {"agnes", "It's an oven, love. The tall one's for gingerbread. The little one's for the hungry. Sit."},
     }},
     {key="upgrade-man_06", phase="upgrade", event="man_06", title="the masons' yard behind the chapel", building="Snowy chapel", lines={
         {"wren", "Pip, run and tell the masons the chapel step is wanted. Stone keeps its own hours."},
@@ -588,7 +588,7 @@ return {
         {"alder", "She can queue. Hold the cup and stand still while I hum you the carol it goes with."},
     }},
     {key="upgrade-man_08", phase="upgrade", event="man_08", title="a second ice saw on the lake", building="Ice house", lines={
-        {"theo", "Finch, that's the second ice saw. Twice the blocks, and nobody wet."},
+        {"theo", "Mr Finch, that's the second ice saw. Twice the blocks, and nobody wet. Keep your goat off it?"},
         {"finch", "Bramble walked out on the ice this morning. It held. Your sawing's fine."},
         {"theo", "You let your goat test my ice? She could have gone through!"},
         {"finch", "She doesn't. She's very particular. Same as you."},
@@ -629,7 +629,7 @@ return {
         {"noelle", "Mr Strand, there's somebody at every bench! Who are they all?"},
         {"henrik", "My old apprentices. I taught them to hold a gouge. Now they correct my joints. Insufferable."},
         {"noelle", "Are you pleased? You can tell me."},
-        {"henrik", "Their joints are tidy. Yes, pleased. Mind the shavings."},
+        {"henrik", "Their joints are tidy, Noelle. Yes, pleased. Mind the shavings."},
     }},
     {key="upgrade-man_16", phase="upgrade", event="man_16", title="a star for the top", building="Christmas tree", lines={
         {"theo", "Strand, I need steady hands. The star's heavy and the top branch is thin."},
