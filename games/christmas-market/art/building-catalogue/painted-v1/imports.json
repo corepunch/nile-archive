@@ -904,5 +904,80 @@
       239,
       265
     ]
+  },
+  "firework_stall": {
+    "atlas": "art/building-catalogue/painted-v1/second-row-output.png",
+    "cell": [
+      0,
+      0,
+      647,
+      809
+    ],
+    "crop": [
+      31,
+      112,
+      607,
+      732
+    ],
+    "scale": 0.4784676,
+    "pivot": [
+      138.603,
+      210.371
+    ],
+    "image": [
+      278,
+      301
+    ],
+    "foundation": "projected ground-contact edges"
+  },
+  "station_kiosk": {
+    "atlas": "art/building-catalogue/painted-v1/second-row-output.png",
+    "cell": [
+      647,
+      0,
+      1295,
+      809
+    ],
+    "crop": [
+      36,
+      163,
+      612,
+      731
+    ],
+    "scale": 0.47763112,
+    "pivot": [
+      138.603,
+      184.887
+    ],
+    "image": [
+      278,
+      275
+    ],
+    "foundation": "projected ground-contact edges"
+  },
+  "glassblower": {
+    "atlas": "art/building-catalogue/painted-v1/second-row-output.png",
+    "cell": [
+      1295,
+      0,
+      1942,
+      809
+    ],
+    "crop": [
+      40,
+      128,
+      618,
+      731
+    ],
+    "scale": 0.4759669,
+    "pivot": [
+      138.603,
+      199.951
+    ],
+    "image": [
+      278,
+      290
+    ],
+    "foundation": "projected ground-contact edges"
   }
 }

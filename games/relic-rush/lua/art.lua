@@ -4,7 +4,8 @@ local elements_view = require("match3.elements_view")
 local buttons = require("match3.buttons")
 local A = {}
 A.board_frame = require("board_frame_atlas")
-A.story={cast={"elena","mara","tomas","adrian","keeper"},keeper_source="art/art-direction/ancient-keeper.png",source="art/art-direction/expedition-cast.png",
+A.story={cast={"elena","mara","tomas","adrian","keeper","marisol"},
+    keeper_source="art/art-direction/ancient-keeper.png",marisol_source="art/art-direction/marisol.png",source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 -- Legacy review layers. Live square blockers load with the square board skin.
 A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}

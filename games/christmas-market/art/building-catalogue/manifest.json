@@ -1136,7 +1136,7 @@
    "road": false,
    "image": [
     278,
-    300
+    301
    ],
    "runtime": "data/city/buildings/firework_stall.png",
    "shadow": "data/city/building-shadows/firework_stall.png",
@@ -1183,7 +1183,7 @@
    ],
    "pivot": [
     138.603,
-    177.951
+    199.951
    ],
    "base_width": 273.205,
    "cost": [
@@ -1196,7 +1196,7 @@
    "road": false,
    "image": [
     278,
-    268
+    290
    ],
    "runtime": "data/city/buildings/glassblower.png",
    "shadow": "data/city/building-shadows/glassblower.png",

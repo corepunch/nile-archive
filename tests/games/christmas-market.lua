@@ -115,6 +115,8 @@ shot("pieces-board", "480x900", "--art-board")
 shot("building-card", "480x900", "--card 2")
 reel("christmas-market-board-intro", 18, 6, "480x900", "--level 4 --present --reel")
 for page = 1, 10 do shot("building-review-" .. page, "480x900", "--building-review " .. page .. " --footprints") end
+shot("second-row-footprints", "480x900", "--building-review 10 --footprints")
+shot("second-row-footprints-phone", "390x844", "--building-review 10 --footprints --safe-area 0,47,0,34")
 
 -- Shared-engine atlas and refill captures: all runs share this test process.
 for _, size in ipairs{"480x900", "390x844"} do
@@ -156,6 +158,13 @@ for _, size in ipairs{"480x900", "390x844"} do
     shot(prefix .. "end", size, "--dialog finale" .. safe)
 end
 shot("story-level-20", "480x900", "--level 20")
+local new_cast = {alder = "before-40 --story-line 2", finch = "after-47 --story-line 3",
+                  mary = "after-94 --story-line 2", rosa = "after-95 --story-line 2"}
+for _, speaker in ipairs{"alder", "finch", "mary", "rosa"} do
+    local args = "--story-beat " .. new_cast[speaker] .. " --frames 240"
+    shot("new-cast-" .. speaker, "480x900", args)
+    shot("new-cast-" .. speaker .. "-phone", "390x844", args .. " --safe-area 0,47,0,34")
+end
 shot("story-borrowed-lamps", "480x900", "--story-beat after-27 --story-line 3 --frames 240")
 shot("story-staying", "390x844", "--story-beat after-29 --story-line 2 --frames 240 --safe-area 0,47,0,34")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")

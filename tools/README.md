@@ -148,7 +148,7 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `prepare_character.py` | Resizes the character cutout and the app-icon master |
 | `prepare_hud.py` | Exports the navigation cells |
 | `prepare_story.py` | Compiles the reviewed story's lines; `--check` detects drift |
-| `prepare_story_cast.py` | Registers the five story busts (`--check` in `make test-assets`) |
+| `prepare_story_cast.py` | Registers the nine supporting story busts (`--check` in `make test-assets`) |
 | `prepare_story_pieces.py` | Fits the six story objects on the chip canvas |
 | **nile-archive** | |
 | `prepare_catalogue.py` | Builds the catalogue around the rendered sprites (after `tools/buildings.py`) |

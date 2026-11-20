@@ -278,9 +278,16 @@ for name, item in finale["assets"].items():
 subprocess.run([sys.executable, str(ROOT / finale["registration"]), "--check"], check=True)
 
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
-assert set(manifest['story']['cast']) == {'elena','mara','tomas','adrian','keeper'}
-assert all(path in shipped for path in manifest['story']['cast'].values())
-assert all((ROOT / manifest['story']['keeper'][key]).is_file() for key in ('source', 'prompt', 'review'))
+cast = manifest['story']['cast']
+narrative = (ROOT / 'lua/narrative.lua').read_text()
+assert cast == {speaker: f'data/{path}' for speaker, path in re.findall(
+    r"\{id='([^']+)'[^\n]*?portrait_path='([^']+)'", narrative)}
+declaration = re.search(r'A\.story=\{cast=\{([^}]+)\}', art).group(1)
+assert set(re.findall(r'"([^"]+)"', declaration)) == set(cast)
+assert all(path in shipped for path in cast.values())
+for speaker in ('keeper', 'marisol'):
+    assert all((ROOT / manifest['story'][speaker][key]).is_file()
+               for key in ('source', 'prompt', 'review'))
 assert manifest['story']['states'] == ['speaking','listening','thought','shout']
 assert 'A.story=' in art and '31.5' in doc
 

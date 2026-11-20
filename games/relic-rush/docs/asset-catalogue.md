@@ -174,9 +174,11 @@ See the [finale and sand review](screenshots/review/signal-finale/README.md).
 The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived with its
 [historical review](review/story-mosaic/README.md).
 
-## Speakers without a bust
+## Marisol and off-screen speakers
 
-Kessler and Ines speak by radio and lamp and keep a name plate by design. Marisol speaks with a name plate only until their busts are painted ([issue #110](https://github.com/corepunch/nile-archive/issues/110)): no portrait, a named plate in the speaker's own colour from `lua/narrative.lua`. Review capture: `--story-beat upgrade-man_05 --frames 240` at 390×844.
+Marisol, the Jungle market trader, has a right-facing painted bust in `data/story/characters/marisol.png` for her dialogue and upgrade scenes. Built-in ImageGen used Tomas's bust as the style reference. The [source](../art/art-direction/marisol.png) is resized proportionally by `python3 games/relic-rush/tools/prepare_assets.py --portraits-only`, preserving the authored alpha. The shared renderer mirrors the right slot and stages listening and speaking with the same art. [Exact prompt](../art/art-direction/marisol-prompt.txt) · [Phone review](review/campaign-cast/README.md) · [Issue #110](https://github.com/corepunch/nile-archive/issues/110)
+
+Kessler and Ines speak by radio and lamp and keep a name plate by design.
 
 ## Ancient keeper portrait
 

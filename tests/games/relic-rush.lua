@@ -264,6 +264,8 @@ shot("story-opening", "480x900", "--city 1 --story-beat restore-01 --frames 240"
 shot("phone-story-opening", "390x844", "--city 1 --story-beat restore-01 --frames 240 --safe-area 0,47,0,34")
 shot("story-longest", "480x900", "--story-beat before-11 --frames 240")
 shot("phone-story-longest", "390x844", "--story-beat before-11 --frames 240 --safe-area 0,47,0,34")
+shot("new-cast-marisol", "480x900", "--story-beat after-56 --story-line 1 --frames 240")
+shot("new-cast-marisol-phone", "390x844", "--story-beat after-56 --story-line 1 --frames 240 --safe-area 0,47,0,34")
 shot("story-shout", "480x900", "--story-beat after-28 --frames 240")
 shot("phone-story-shout", "390x844", "--story-beat after-28 --frames 240 --safe-area 0,47,0,34")
 shot("story-finale", "480x900", "--story-beat after-30 --story-line 3 --frames 240")

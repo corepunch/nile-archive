@@ -10,8 +10,7 @@ R.cast={
     {id='kessler',name='Kessler',role='Meridian Society',color=color(60,62,70)},
     {id='ines',name='Ines Reed',role='Keeper of the tide warning',color=color(51,93,84)},
     {id='keeper',name='Ancient keeper',role='Keeper of the first harbor',portrait_path='story/characters/keeper.png',color=color(94,72,46),mouth=vec2(.54,.51)},
-    -- Marisol also speaks in the main story; no bust yet, so the engine shows a name plate.
-    {id='marisol',name='Auntie Marisol',role="Trader, Jungle market",color=color(150,52,98)},
+    {id='marisol',name='Auntie Marisol',role="Trader, Jungle market",portrait_path='story/characters/marisol.png',color=color(150,52,98),right=true,mouth=vec2(.61,.44)},
 }
 
 return R

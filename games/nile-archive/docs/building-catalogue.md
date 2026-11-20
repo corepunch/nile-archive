@@ -259,4 +259,8 @@ prompts, ordered input images, hashes and accepted versions.
 
 The enlarged objects `acacia`, `cypress`, `date_palm`, `doum_palm`, `fig`, `olive`, `palm_grove`, `pomegranate`, `sycamore`, `tamarisk`, `twin_palms` use the `z-enlarged` painted atlas, based on the registered Blender renders at `ef26de3`. Normal world state only; interaction feedback remains an engine effect. Sources, exact ImageGen prompt, layout, import transforms and reproduction command are recorded in [painted-v1](../art/building-catalogue/painted-v1/README.md); [in-game footprint review](review/painted-buildings/enlarged/README.md).
 
-Known artwork defect: [`sculptor_yard` and `pharaoh_garden`](https://github.com/corepunch/nile-archive/issues/91) have painted foundations that do not match the camera grid, and the garden's left palm is clipped. Replace both paint-overs using complete registered renders, then verify both base edges, every corner and both palms in game at the supported sizes.
+## Sculptor's Yard and Pharaoh's Garden
+
+The corrected paint-over uses the complete registered Blender renders at `aefd544`. The importer aligns both painted foundations to the camera's ground polygon, and the Garden has clearance above both date palms. Each building has one painted world sprite for normal placement, the shop and the placement preview. [Footprint captures at both iPad sizes](review/footprint-repaint/README.md) · [Issue #91](https://github.com/corepunch/nile-archive/issues/91)
+
+Reimport both sprites with `python3 tools/import_painted_buildings.py nile-archive z-footprint-fix`. The reference index records both generations. The accepted pass removes the first pass's halo. [Geometry guide](../art/building-catalogue/painted-v1/z-footprint-fix-input.png) · [Painted source](../art/building-catalogue/painted-v1/z-footprint-fix-output.png) · [Exact prompt](../art/building-catalogue/painted-v1/z-footprint-fix-prompt.txt)

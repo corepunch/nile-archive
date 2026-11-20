@@ -12,7 +12,7 @@ Christmas Market has **40 objects**, all modelled and rendered in Blender as
   the Woodcarvers' hall.
   See the [ladder](market-pieces.md#construction-sequence).
 - **The Firework stall, Station kiosk and Glassblower's stall** are the three new ladder stalls, see
-  [the second market row](#second-market-row-geometry-renders-awaiting-paint-over).
+  [the second market row](#second-market-row).
 - **15 decorations**: Lantern firs and Snowman bench, plus 13 more.
 - **4 snowy trees.**
 - **6 cottages.**
@@ -25,7 +25,7 @@ paint-over on the current Blender renders, matching the direction sheet's timber
 snow, garlands, ribbons and warm amber lighting. This addresses the building paint
 portion of [#34](https://github.com/corepunch/nile-archive/issues/34).
 
-![All 37 objects](screenshots/buildings.jpg)
+![All 40 objects](screenshots/buildings.jpg)
 
 The build shop scrolls through the selected category. Its rows show each object's
 sprite, footprint, ownership and price, with a disabled action for unavailable
@@ -151,32 +151,17 @@ A full render of all 40 objects takes about two minutes on four CPU cores.
 | 34 / `chapel` | Snowy chapel | wonder | 2 x 2 | 1020 / 0 / 620 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 35 / `reindeer_stable` | Reindeer stable | wonder | 3 x 2 | 605 / 215 / 0 | 0 | [Page 9](review/painted-buildings/current-camera/after-building-review-9.jpg) |
 | 36 / `santa_workshop` | Woodcarvers' hall | wonder | 3 x 3 | 2045 / 1290 / 1095 | 0 | [Page 10](review/painted-buildings/current-camera/after-building-review-10.jpg) |
-| 37 / `firework_stall` | Firework stall | wonder | 2 x 2 | 910 / 340 / 375 | 0 | [Footprints](review/second-market-row/footprints.jpg), geometry render only |
-| 38 / `station_kiosk` | Station kiosk | wonder | 2 x 2 | 1420 / 925 / 1145 | 0 | [Footprints](review/second-market-row/footprints.jpg), geometry render only |
-| 39 / `glassblower` | Glassblower's stall | wonder | 2 x 2 | 1965 / 1225 / 1240 | 0 | [Footprints](review/second-market-row/footprints.jpg), geometry render only |
+| 37 / `firework_stall` | Firework stall | wonder | 2 x 2 | 910 / 340 / 375 | 0 | [Painted footprints](review/second-market-row/README.md) |
+| 38 / `station_kiosk` | Station kiosk | wonder | 2 x 2 | 1420 / 925 / 1145 | 0 | [Painted footprints](review/second-market-row/README.md) |
+| 39 / `glassblower` | Glassblower's stall | wonder | 2 x 2 | 1965 / 1225 / 1240 | 0 | [Painted footprints](review/second-market-row/README.md) |
 
-## Second market row: geometry renders, awaiting paint-over
+## Second market row
 
-Tracked in [issue #109](https://github.com/corepunch/nile-archive/issues/109): each needs a hand-painted pass that keeps its geometry, camera and registration.
+The Firework stall, Station kiosk and Glassblower's stall appear at wishes 16, 46 and 71. Each sits on a 2 × 2 brick-and-snow slab with its main façade towards -Y. Their ImageGen paint-overs use the registered Scener geometry strip and the painted cocoa kiosk as the style reference. Snow caps, timber grain, garland bulbs and amber light carry over to all three. [Construction sequence](market-pieces.md#construction-sequence) · [Issue #109](https://github.com/corepunch/nile-archive/issues/109)
 
-`firework_stall`, `station_kiosk` and `glassblower` (rows 37 to 39) are registered Blender/Scener
-renders of the shared city camera with no painted-v1 pass yet, so they currently look
-simpler and flatter than the 37 painted sprites beside them. Each is a 2 x 2 `wonder` on the
-brick-and-snow market slab, main facade towards -Y. They are on the campaign ladder after levels 16, 46 and 71 at the fitted prices in the
-[construction sequence](market-pieces.md#construction-sequence).
-Review captures: [renders](review/second-market-row/renders.jpg) and
-[footprints](review/second-market-row/footprints.jpg) (`--building-review 10 --footprints`, 480x900).
+Each sprite retains the original ground registration and shadow. The Glassblower's sprite has 22 extra pixels above its registered pivot for the painted chimney smoke. The same painted sprite draws in town, on cards and in the placement preview. [Footprint captures at both phone sizes](review/second-market-row/README.md)
 
-Reproduce: `make buildings GAME=christmas-market KEYS="firework_stall station_kiosk glassblower"`
-(Scener; needs an orion-ui checkout via `ORION_UI=...`), then
-`python3 games/christmas-market/tools/check_assets.py --update`.
-
-Paint-over brief for all three: keep the render's geometry, lighting, camera and registration,
-and add the same hand-painted surface as the existing Christmas stalls (see
-[BUILDING_STYLE.md](../../../docs/BUILDING_STYLE.md) and the painted cocoa kiosk, candlelight
-shop and log cabin as style references): thick soft snow caps and drip edges, garlands with
-warm bulbs and red bows, carved timber grain, glowing amber windows. Use the render as the edit
-target and run the importer for the three keys.
+Reimport the saved painted sprites with `python3 tools/import_painted_buildings.py christmas-market second-row`, then run `python3 games/christmas-market/tools/check_assets.py --update`. The layout records the source cells and foundation measurements. [Geometry guide](../art/building-catalogue/painted-v1/second-row-input.png) · [Painted source](../art/building-catalogue/painted-v1/second-row-output.png) · [Exact prompt](../art/building-catalogue/painted-v1/second-row-prompt.txt)
 
 | Key | Paint | Materials and colours |
 | --- | --- | --- |

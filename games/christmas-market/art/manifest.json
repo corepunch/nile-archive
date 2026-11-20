@@ -21,7 +21,9 @@
     "art/story-pieces/prompt.txt",
     "art/lantern-panes/spruce-atlas-prompt.txt",
     "art/lantern-panes/concept-prompt.txt",
-    "art/lantern-panes/spruce-backdrop-prompt.txt"
+    "art/lantern-panes/spruce-backdrop-prompt.txt",
+    "art/new-story-cast-prompt.txt",
+    "art/building-catalogue/painted-v1/second-row-prompt.txt"
   ],
   "states": [
     "normal",
@@ -89,12 +91,12 @@
     "data/city/buildings/cocoa.png": "ae4102f2007564dc2b7a4d26f1d5cd1cc2ccf48ccd50419c7c7aa51fc1b7699f",
     "data/city/buildings/fir_decorated.png": "44d33b9a4f1c729484c781b83468382a42b003f51526be0801f8c901760d2e03",
     "data/city/buildings/fir_snowy.png": "490a3cfeb01e18a86e5d7b5e5bbde879246163aed971e3e90ea33c9b31822bac",
-    "data/city/buildings/firework_stall.png": "458531b6bf89264516d749f6e43b4fafc25f5041db1afe151fb418994d65bcd4",
+    "data/city/buildings/firework_stall.png": "f1502beabb33537b6666dfd359daac72dfba02f584611c999adfd7e626b9fbc6",
     "data/city/buildings/firs.png": "f3175ad28d744d22e2a40482c7bd3ae912bd5c0120888984a912fccc69de2453",
     "data/city/buildings/giant_ornament.png": "5db6ecde6d9bf367a2424a37598fed48e2451abf647f997b2731de7039040c15",
     "data/city/buildings/gifts.png": "c3e63f4558efb02aff015c1d28986829c9272727a19434866e5751d47ba9f1dc",
     "data/city/buildings/gingerbread_house.png": "7435941bee1de6921db664bc53149a44fa72e7c276aad3d8c8a23068654b242b",
-    "data/city/buildings/glassblower.png": "3a055b7c6827af2f4848dd536214444ceb7fa3c3561e88abd229b1bd62de60b1",
+    "data/city/buildings/glassblower.png": "0aaa50aed9f280f44349cdee7ddcb38c8db714229c5eeebca4429b70e0fc5a07",
     "data/city/buildings/ice_star.png": "4f61ae100bd94647797ae8032b01066d237ba4f6d0b51e3d67075939e7f7f40c",
     "data/city/buildings/igloo.png": "dbbb9ed2eadd357f24b927b977ab110cb182feb95222fe7d749558a20c3d1c84",
     "data/city/buildings/lamp_post.png": "5df006a2c783346d1310aa765e84d8c47f96ba73899b47d81a26aa4b91808e79",
@@ -114,7 +116,7 @@
     "data/city/buildings/snow_rocks.png": "dd2b14d8b5f769daea3671aa7988a7d17ec8425894eba4d7d959510f5d783d43",
     "data/city/buildings/snowman.png": "524c4a4e24cc69141126b512c3882348b99277a94b096fea4c0c625c18456242",
     "data/city/buildings/snowy_bench.png": "2dcdca7012f3f725fa9f489f826a47a87f2bb116e616f68d5e03cbc9682b4ccc",
-    "data/city/buildings/station_kiosk.png": "72ed963a05e64800ade58f45e368ee032c6fc5c65cdf6771d4e1b34e4ff9df82",
+    "data/city/buildings/station_kiosk.png": "f35a7a1fbe6c63bb202a504948b69836177234f23740d4eac9758e0e45d424b2",
     "data/city/buildings/toys.png": "53866212bcb2ad0818bcbff38b542ad6d1bfc7de67897c8d2ef38b0d5fe757fb",
     "data/city/buildings/tree.png": "acfd2d54ac76075b9236305b10def2b9018fe662c6852a56b0fffbebce1a30a6",
     "data/city/buildings/wreath_arch.png": "e4aec881d042dd221743ac1e553d9dbe0fb0db8c0302cb16d4f295037f78c093",
@@ -124,9 +126,13 @@
     "data/common/fonts/LilitaOne-Regular.ttf": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
     "data/common/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/story/characters/agnes.png": "85e9ac46ec23ae2b4b451208f4ec639ba6b1fa41aedf742f060c72a593eb5c09",
+    "data/story/characters/alder.png": "813e856e247fb84e8a2c2350b3fc5ef65125fa34934c29ccef63ca746c19cce5",
+    "data/story/characters/finch.png": "21380f451cdf457e9cfdc87247232136792be5fd8b1382b1143769284c5a91d4",
     "data/story/characters/henrik.png": "614fe67fcddde03fa8dce7e6f08b0b854fb1c5e535261b865ed4e85557a918a3",
+    "data/story/characters/mary.png": "13c1d26ec1dee103b79c31c95e544bcbdd973751270c0a220e478a76bfc61418",
     "data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
     "data/story/characters/pip.png": "f26c1d2514b93d56056e064c4c2d33726cb545835bf3be9d25f26e4ba9257206",
+    "data/story/characters/rosa.png": "f9258680b1c7d9bd0eb671bb6c3e60c063653d455a2650c9d7754b9f5e74b57b",
     "data/story/characters/theo.png": "cb2aa98d7cc32a164197d0cb86dd103af86ae46cd794e29913c304bd02d14796",
     "data/story/characters/wren.png": "4a1369fe8ac249af84ced5fa50bbe4c4eb1643c652aa0a1216163a6a6d218743",
     "data/story/floors/last-train.jpg": "6ab848dc7e192cfbd41f6988d082e7835a1b2158704d09f40385b239e9e00926",
@@ -160,15 +166,28 @@
     "prompt": "art/character-and-icon-prompts.json#story_cast",
     "runtime": [
       "data/story/characters/agnes.png",
+      "data/story/characters/alder.png",
+      "data/story/characters/finch.png",
       "data/story/characters/henrik.png",
+      "data/story/characters/mary.png",
       "data/story/characters/noelle.png",
       "data/story/characters/pip.png",
+      "data/story/characters/rosa.png",
       "data/story/characters/theo.png",
       "data/story/characters/wren.png"
     ],
     "states": "One right-facing authored bust per speaker. The shared dialogue renderer mirrors the right slot and handles active/listening presentation.",
     "reproduction": "python3 games/christmas-market/tools/prepare_story_cast.py",
-    "review": "docs/review/dialogue-bar/README.md"
+    "review": "docs/review/dialogue-bar/README.md",
+    "new_speakers": {
+      "source": "art/new-story-cast.png",
+      "prompt": "art/new-story-cast-prompt.txt",
+      "style_references": [
+        "art/story-cast.png",
+        "data/story/characters/noelle.png"
+      ],
+      "review": "docs/review/campaign-cast/README.md"
+    }
   },
   "navigation": {
     "manifest": "art/navigation/manifest.json",

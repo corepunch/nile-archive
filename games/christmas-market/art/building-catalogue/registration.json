@@ -917,7 +917,7 @@
    "sprite": "data/city/buildings/firework_stall.png",
    "image": [
     278,
-    300
+    301
    ],
    "pivot": [
     138.603,
@@ -929,7 +929,8 @@
     140.63,
     106.965
    ],
-   "shadow_base_width": 232.224
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
   },
   "station_kiosk": {
    "title": "Station kiosk",
@@ -953,7 +954,8 @@
     137.309,
     91.304
    ],
-   "shadow_base_width": 232.224
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
   },
   "glassblower": {
    "title": "Glassblower's stall",
@@ -965,11 +967,11 @@
    "sprite": "data/city/buildings/glassblower.png",
    "image": [
     278,
-    268
+    290
    ],
    "pivot": [
     138.603,
-    177.951
+    199.951
    ],
    "base_width": 273.205,
    "shadow": "data/city/building-shadows/glassblower.png",
@@ -977,7 +979,8 @@
     136.317,
     94.558
    ],
-   "shadow_base_width": 232.224
+   "shadow_base_width": 232.224,
+   "painted_foundation": true
   }
  },
  "generator": "tools/buildings.py",

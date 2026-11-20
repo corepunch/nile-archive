@@ -1,6 +1,6 @@
 # Story: five Advents to Christmas Eve
 
-**Status: the hundred-wish campaign.** Five Advents of twenty wishes, four stalls each, end on Christmas Eve. Every wish has a scene on its first clear; the ten story stalls have theirs when they are placed. Noelle and the five supporting speakers have painted busts. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
+**Status: the hundred-wish campaign.** Five Advents of twenty wishes, four stalls each, end on Christmas Eve. Every wish has a scene on its first clear; the ten story stalls have theirs when they are placed. Noelle and the nine supporting speakers have painted busts. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
 
 **Fantasy of play:** I came to help until Christmas. Each light I put up and each stall I build gives somebody a place to come in from the cold.
 
@@ -57,7 +57,7 @@ One stall opens every five wishes, four to each Advent. Story stalls (bold) hold
 
 ## Cast
 
-Noelle and the five supporting speakers have painted busts. Bramble the goat does not speak.
+Bramble the goat does not speak.
 
 | Character | Who | Voice | Arc |
 | --- | --- | --- | --- |
@@ -909,7 +909,7 @@ Optional scenes, one per building, played on the next return to town after its f
 
 - **Stall order:** one stall every five wishes (`economy.unlocks`); story stalls at 1, 11, 21, 31, 51, 56, 61, 76, 81 and 91 (`campaign.wonder_levels`). `journey.earned` gates building, the reserve and the next wish. Every win banks matched Tokens, Treats and Materials.
 - **Regions** open after 15, 30, 50, 70 and 85 wishes cleared, each with Pip's line.
-- **Busts:** Noelle, Theo, Agnes, Henrik, Pip and Mr Wren use the portraits in the [asset catalogue](asset-catalogue.md#story-cast).
+- **Busts:** All ten speakers use the portraits in the [asset catalogue](asset-catalogue.md#story-cast).
 - **`R.finale`** is the last scene (wish 100). Its end leads to the "To be continued" screen.
 - **Saves:** stable `narrative.v1.<phase>-<level>` keys are written only when a scene finishes or is skipped. Journey version 4 marks the scenes before an older save's level as seen and shows a recap. Campaign version 7 resets the stall waivers from what the save owns.
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.

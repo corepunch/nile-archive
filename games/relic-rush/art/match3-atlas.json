@@ -2341,7 +2341,7 @@
       "games/relic-rush/data/board/backs/background.jpg": "cc8a50ab0c8b840ba18abe1c1f316d8573d044ef4bb1fd7c8166c42b92bfd122",
       "games/relic-rush/data/board/backs/scene-1.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
       "games/relic-rush/data/board/backs/scene-2.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
-      "games/relic-rush/tools/prepare_assets.py": "34f0b6e59c10e6fcf0088ccb2ab0606a5c16c0ff92358c69c7565f2b7bb751a8",
+      "games/relic-rush/tools/prepare_assets.py": "e2ee620833685fd35a90711ec42fd148edc6925695fb7b9a9d2d0fb5680a5705",
       "tools/board_frame_decor.py": "80b0c5ac9248e2c73659f1d6977899d2494bf0b9ab9208afc4e5db6da84aed73",
       "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "834bee1140ca1af0cf8b61d3fa98f4f7c22a220b27d4ec99edcc87584342a221",

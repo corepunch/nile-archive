@@ -101,7 +101,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 
 | Asset | Source | Draft runtime | Meaning and supported states |
 | --- | --- | --- | --- |
-| 40 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration) | `data/city/buildings/<key>.png` | Ten sequential construction milestones, three more stalls (`firework_stall`, `station_kiosk`, `glassblower`: geometry render, awaiting paint-over, brief and repro command in the [building catalogue](building-catalogue.md#second-market-row-geometry-renders-awaiting-paint-over)), 15 decorations, 4 trees and 6 cottages, one Blender render each; placed and placement-preview use the same sprite, with engine lift/footprint feedback. See the [building catalogue](building-catalogue.md) |
+| 40 buildings and decorations | `art/building-catalogue/` (Blender scene, catalogue, registration and paint-overs) | `data/city/buildings/<key>.png` | Twenty campaign stalls alongside shop decorations, trees and cottages. Placed and placement-preview use the same painted sprite, with engine lift/footprint feedback. [Building catalogue](building-catalogue.md) · [Second market row](building-catalogue.md#second-market-row) |
 | Original building atlas | `art/buildings.png` | Retired | The first directional paintings of the twelve designs; no longer extracted |
 | Labeled building sheet | `art/building-reference-sheet.png` | Reference only | All twelve designs, numbered and captioned: the Blender models follow it |
 | Six festive puzzle kinds | `art/festive-pieces/source.png` | `data/board/pieces.png` | Gold bell, candy cane, holly, blue mitten, plum bauble and gingerbread. The original `art/icons.png` crops under `art/registered/tile-sets/festive/` are legacy exports. |
@@ -115,7 +115,7 @@ Status: the buildings are Blender renders with projected registration (see the [
 | Market streets, second look | `tools/roads.py christmas-market --style sandstone` (palette in `art/roads-sandstone.json`, copied from Relic Rush's first sandstone streets) | `data/city/roads-sandstone.png` | The same pieces as warm sandstone setts with pale kerbs and no snow shoulder. An option under review, not the default: start the game with `--roads sandstone` to see it. Capture: `screenshots/market-sandstone.jpg` |
 | Puzzle backdrop | Built-in ImageGen, `art/lantern-panes/spruce-backdrop.png` | `data/board/backs/background.jpg`, loaded on its own | One static dusk market painting for all puzzles |
 | Main character | User-supplied `art/noelle-reference.jpg`; ImageGen transparent cutout `art/noelle.png` | `data/story/characters/noelle.png` | Noelle's static dialogue and board portrait; original direction retained as `art/noelle-direction-v1.png` |
-| Story cast | Built-in ImageGen, `art/story-cast.png` | `data/story/characters/{theo,agnes,henrik,pip,wren}.png` | Five painted dialogue busts on Noelle’s 320×480 canvas. See [Story cast](#story-cast) |
+| Story cast | Built-in ImageGen, `art/story-cast.png` and `art/new-story-cast.png` | `data/story/characters/{theo,agnes,henrik,pip,wren,alder,finch,mary,rosa}.png` | Nine painted supporting dialogue busts on Noelle’s 320×480 canvas. [Story cast](#story-cast) |
 | Portrait app icon | `art/app-icon-source.png` | `Assets.xcassets/AppIcon.appiconset/` | One authored portrait composition, spatially resized for all iOS/macOS slots; opaque RGB square, no baked corner mask, no interaction states |
 | Interface controls | `lua/skin.lua` (engine `ui.skin`) | Engine geometry | Four outlined Lilita text palettes, the parchment panel, the festive red button (normal, pressed sinks 2 units, disabled drains the colour; flat text variant), toggle and focus ring. Hover and selected match normal because touch has no hover; no bitmap or derived state. Captures are pixel-identical to the paint code this replaced |
 | Snowfall and feedback | Lua renderer | Procedural | Two world-anchored layers of village snowfall, mission banner, kudos, collection particles, beams, lift and placement feedback |
@@ -503,7 +503,7 @@ retired rims.
 
 ## Story cast
 
-The six leads have painted busts. Mrs Alder, Mr Finch, Mary Larkin and Rosa speak with a name plate only until their busts are painted ([issue #110](https://github.com/corepunch/nile-archive/issues/110)): no portrait, a named plate in the speaker's own colour from `lua/narrative.lua`. Review capture: `--story-beat upgrade-man_07 --frames 240` at 480×900. One built-in ImageGen pass produced the [supporting cast sheet](../art/story-cast.png), using Noelle's existing cutout as the style reference. The exact prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). These five exports replace the cards tracked in [issue #76](https://github.com/corepunch/nile-archive/issues/76).
+The original [supporting cast sheet](../art/story-cast.png) used Noelle as its reference. Its prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). The [second ImageGen sheet](../art/new-story-cast.png) adds Mrs Alder, Mr Finch, Mary Larkin and Rosa, using the first sheet and Noelle's cutout for style. [Exact prompt](../art/new-story-cast-prompt.txt) · [Phone review](review/campaign-cast/README.md) · [Issue #110](https://github.com/corepunch/nile-archive/issues/110)
 
 | Character | Runtime | Story cue |
 | --- | --- | --- |
@@ -512,6 +512,10 @@ The six leads have painted busts. Mrs Alder, Mr Finch, Mary Larkin and Rosa spea
 | Henrik Strand | `data/story/characters/henrik.png` | Toymaker with white whiskers, leather apron and pencil |
 | Pip Larkin | `data/story/characters/pip.png` | Post runner with his satchel and gap-toothed grin |
 | Mr Wren | `data/story/characters/wren.png` | Grey-coated sweeper with his broom and tilted head |
+| Mrs Alder | `data/story/characters/alder.png` | Plum coat, spectacles and a cocoa cup |
+| Mr Finch | `data/story/characters/finch.png` | Fisherman with a slate-blue coat and knitted watch cap |
+| Mary Larkin | `data/story/characters/mary.png` | Coastal steamer cook with brown curls and a two-tone knitted scarf |
+| Rosa | `data/story/characters/rosa.png` | Noelle's grandmother in a berry bonnet and travelling cape |
 
 Run `python3 games/christmas-market/tools/prepare_story_cast.py` from the root to reproduce the cutouts. The script crops and proportionally resizes the right-facing source art, then bottom-aligns each cutout on a transparent 320×480 canvas. The shared dialogue renderer mirrors the right slot so conversation partners face each other. [Dialogue bar captures](review/dialogue-bar/README.md)
 
