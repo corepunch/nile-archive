@@ -39,9 +39,13 @@ def main():
     max_side = SLOT - 2 * CELL_INSET + 2 * EDGE_PADDING
     atlas = Image.new('RGBA', (COLUMNS * SLOT, ROWS * SLOT))
     sprites = goods['frames']
+    aliases = goods['aliases']
     assert len(sprites) <= COLUMNS * ROWS and edits.keys() <= sprites.keys()
+    assert aliases.keys() <= sprites.keys() and not (aliases.keys() & edits.keys())
     frames = {}
     for slot, (key, name) in enumerate(sprites.items()):
+        if key in aliases:
+            continue  # Keep the source grid positions of the subsequent goods.
         edit = edits.get(key)
         if edit:
             sheet, bay = edited_sheets[edit['source']], edit['box']

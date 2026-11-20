@@ -78,7 +78,11 @@ def main():
     assert png(ROOT/goods['runtime']) == ((512, 896), 6)
     icons = manifest['bonus_buttons']['icons']
     assert set(goods['frames']) == {f'market-{kind}' for kind in range(22)} | set(icons.values())
-    for name in goods['frames']:
+    aliases = goods['aliases']
+    assert aliases.keys() <= goods['frames'].keys()
+    for name, target in aliases.items():
+        assert name not in atlas['frames'] and atlas['aliases'][name] == target, name
+    for name in (aliases.get(key, key) for key in goods['frames']):
         frame = atlas['frames'][name]
         assert frame['atlas'] == 'pieces' and frame['box'][2:] == [128, 128]
     subprocess.run([sys.executable, str(ROOT/goods['registration']), '--check'], check=True)

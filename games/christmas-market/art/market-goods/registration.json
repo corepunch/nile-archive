@@ -30,33 +30,6 @@
         128
       ]
     },
-    "market-1": {
-      "name": "knitted mitten",
-      "source_crop": [
-        298,
-        18,
-        494,
-        246
-      ],
-      "fitted_size": [
-        95,
-        110
-      ],
-      "offset": [
-        22,
-        7
-      ],
-      "alpha_center": [
-        64.2185,
-        64.1501
-      ],
-      "registered_box": [
-        128,
-        0,
-        128,
-        128
-      ]
-    },
     "market-2": {
       "name": "silver snowflake coin",
       "source_crop": [

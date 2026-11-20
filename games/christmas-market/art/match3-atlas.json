@@ -58,6 +58,7 @@
     "kind-5": "festive-5",
     "scene-1": "background",
     "scene-2": "background",
+    "market-1": "festive-3",
     "score": "complete"
   },
   "frames": {
@@ -214,19 +215,10 @@
         128
       ]
     },
-    "market-1": {
-      "atlas": "pieces",
-      "box": [
-        128,
-        256,
-        128,
-        128
-      ]
-    },
     "market-10": {
       "atlas": "pieces",
       "box": [
-        256,
+        128,
         256,
         128,
         128
@@ -235,7 +227,7 @@
     "market-11": {
       "atlas": "pieces",
       "box": [
-        384,
+        256,
         256,
         128,
         128
@@ -244,7 +236,7 @@
     "market-12": {
       "atlas": "pieces",
       "box": [
-        512,
+        384,
         256,
         128,
         128
@@ -253,7 +245,7 @@
     "market-13": {
       "atlas": "pieces",
       "box": [
-        640,
+        512,
         256,
         128,
         128
@@ -262,7 +254,7 @@
     "market-14": {
       "atlas": "pieces",
       "box": [
-        768,
+        640,
         256,
         128,
         128
@@ -271,7 +263,7 @@
     "market-15": {
       "atlas": "pieces",
       "box": [
-        896,
+        768,
         256,
         128,
         128
@@ -280,8 +272,8 @@
     "market-16": {
       "atlas": "pieces",
       "box": [
-        0,
-        384,
+        896,
+        256,
         128,
         128
       ]
@@ -289,7 +281,7 @@
     "market-17": {
       "atlas": "pieces",
       "box": [
-        128,
+        0,
         384,
         128,
         128
@@ -298,7 +290,7 @@
     "market-18": {
       "atlas": "pieces",
       "box": [
-        256,
+        128,
         384,
         128,
         128
@@ -307,7 +299,7 @@
     "market-19": {
       "atlas": "pieces",
       "box": [
-        384,
+        256,
         384,
         128,
         128
@@ -316,7 +308,7 @@
     "market-2": {
       "atlas": "pieces",
       "box": [
-        512,
+        384,
         384,
         128,
         128
@@ -325,7 +317,7 @@
     "market-20": {
       "atlas": "pieces",
       "box": [
-        640,
+        512,
         384,
         128,
         128
@@ -334,7 +326,7 @@
     "market-21": {
       "atlas": "pieces",
       "box": [
-        768,
+        640,
         384,
         128,
         128
@@ -343,7 +335,7 @@
     "market-3": {
       "atlas": "pieces",
       "box": [
-        896,
+        768,
         384,
         128,
         128
@@ -352,8 +344,8 @@
     "market-4": {
       "atlas": "pieces",
       "box": [
-        0,
-        512,
+        896,
+        384,
         128,
         128
       ]
@@ -361,7 +353,7 @@
     "market-5": {
       "atlas": "pieces",
       "box": [
-        128,
+        0,
         512,
         128,
         128
@@ -370,7 +362,7 @@
     "market-6": {
       "atlas": "pieces",
       "box": [
-        256,
+        128,
         512,
         128,
         128
@@ -379,7 +371,7 @@
     "market-7": {
       "atlas": "pieces",
       "box": [
-        384,
+        256,
         512,
         128,
         128
@@ -388,7 +380,7 @@
     "market-8": {
       "atlas": "pieces",
       "box": [
-        512,
+        384,
         512,
         128,
         128
@@ -397,7 +389,7 @@
     "market-9": {
       "atlas": "pieces",
       "box": [
-        640,
+        512,
         512,
         128,
         128
@@ -406,7 +398,7 @@
     "story-cocoa": {
       "atlas": "pieces",
       "box": [
-        768,
+        640,
         512,
         128,
         128
@@ -415,7 +407,7 @@
     "story-lantern": {
       "atlas": "pieces",
       "box": [
-        896,
+        768,
         512,
         128,
         128
@@ -424,8 +416,8 @@
     "story-letter": {
       "atlas": "pieces",
       "box": [
-        0,
-        640,
+        896,
+        512,
         128,
         128
       ]
@@ -433,7 +425,7 @@
     "story-ribbon": {
       "atlas": "pieces",
       "box": [
-        128,
+        0,
         640,
         128,
         128
@@ -442,7 +434,7 @@
     "story-scarf": {
       "atlas": "pieces",
       "box": [
-        256,
+        128,
         640,
         128,
         128
@@ -451,7 +443,7 @@
     "story-telegram": {
       "atlas": "pieces",
       "box": [
-        384,
+        256,
         640,
         128,
         128
@@ -2065,7 +2057,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "835c105c3a3529ba64d3ef2d06a6cd614b0c606aadd4e2fbeded12022c17901a",
+    "recipe": "f5d2026109a5edfc240452d73632917c847a66901e8019cb79a3ec9ec37d90c3",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -2131,7 +2123,7 @@
       "games/christmas-market/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
       "games/christmas-market/art/registered/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
       "games/christmas-market/art/registered/expedition-hud/shop-locked.png": "7a32fd5b60944495f9265da4a9de72a1a71906bab437aa226bda15afa3ca2223",
-      "games/christmas-market/art/registered/market-goods.png": "b6b662104d7c62358a424755ee07d1e4b767d6a4adb011a0c38865d622fe4f10",
+      "games/christmas-market/art/registered/market-goods.png": "bee2091dfba339a5b0fdb86eba58d7e8a804ad37ffac909652f92ba3decef849",
       "games/christmas-market/art/registered/square-cells/square-double.png": "1a2c38828aed85d93f6a799de9bb576b7d2c07990b09da580be80e638f273149",
       "games/christmas-market/art/registered/square-cells/square-frame-1.png": "2cfc113d1a21e3a311eef493f0d6175728f3f73737df03cfa5bfd313f40be9f0",
       "games/christmas-market/art/registered/square-cells/square-frame-10.png": "c162ea2ebed2360b64ad4f1ed63021e08b719b0ad4df9e44905c9e1c24ddcf63",
@@ -2176,10 +2168,10 @@
       "games/christmas-market/data/board/cells.png": "97947f0b5e7b3669ca08b0147db8ed3551fb8cce6f04b50c671f379792b29e5f",
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
-      "games/christmas-market/data/board/pieces.png": "062ebec66fdce9ce3d05b6475c5ae2c2282a35263b757837cf1096fa602a529f",
-      "games/christmas-market/lua/match3_atlases.lua": "608815b97bb266961e5bbe6c4ce5885166d1d6ace2d605f9114c9b71cb391a71",
+      "games/christmas-market/data/board/pieces.png": "8e6b4d9094c4cb3ae20fba0940092c0741fbe389f87dce85c9022b0da6cc6dbb",
+      "games/christmas-market/lua/match3_atlases.lua": "2a4f237623c31bfe6b7f14e17dbaf549ffd20befe14611163369a3b9735e8d00",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
-      "games/christmas-market/lua/match3_skin.lua": "465a905ad527454b4aeb03b40312b93636ae57ad384e41725e76db27db046a13"
+      "games/christmas-market/lua/match3_skin.lua": "2ffcbf3bcdb3351d4dbb86ff82e7857c8f96eac86dc1422773989ca9ad9c0c77"
     }
   }
 }

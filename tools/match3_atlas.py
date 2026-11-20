@@ -484,7 +484,7 @@ def game_sprites(game, root):
     registered = root / 'art/registered'
     files = folder_sprites(registered / 'board-tiles', 'tile-')
     files |= folder_sprites(registered / 'story-pieces', 'story-')
-    sprites, inputs = {}, []
+    sprites, inputs, aliases = {}, [], {}
     if game == 'relic-rush':
         manifest = json.loads((root / 'art/board-states/manifest.json').read_text())
         files |= folder_sprites(registered / 'resource-pieces', 'resource-')
@@ -500,11 +500,13 @@ def game_sprites(game, root):
         buttons = manifest['bonus_buttons']
         bonus_frames = list(buttons['icons'].values())
         goods = manifest['market_goods']
-        sprites |= grid_sprites(registered / 'market-goods.png', list(goods['frames']), 4)
+        aliases = goods['aliases']
+        names = [None if name in aliases else name for name in goods['frames']]
+        sprites |= grid_sprites(registered / 'market-goods.png', names, 4)
         inputs.append(registered / 'market-goods.png')
     for name, path in files.items():
         sprites[name] = Image.open(path).convert('RGBA')
-    return sprites, inputs + list(files.values()), bonus_frames
+    return sprites, inputs + list(files.values()), bonus_frames, aliases
 
 
 def build_game(game, check):
@@ -563,9 +565,10 @@ def build_game(game, check):
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
     loaded["glow"] = glow
-    extra, extra_inputs, bonus_frames = game_sprites(game, root)
+    extra, extra_inputs, bonus_frames, piece_aliases = game_sprites(game, root)
     assert not set(extra) & set(loaded), set(extra) & set(loaded)
     loaded.update(extra)
+    aliases.update(piece_aliases)
     squares, square_inputs, square_registration = square_cells(game, root)
     loaded.update(squares)
     square_blockers, square_blocker_registration = registered_square_blockers(root)

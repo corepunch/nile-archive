@@ -6,7 +6,7 @@ Market. Bellmere uses three wallet slots in save order: **Tokens**, **Treats**
 and **Materials**. Sun coins, cocoa and bundled pine identify those
 totals on the board, in town, and in prices and results.
 
-The opening has a green snowy fir, a blue knitted mitten, a silver snowflake
+The opening has a green snowy fir, a light-blue knitted mitten, a silver snowflake
 coin, a gold Sun coin and a red-and-ivory candy cane. The first four echo the
 green leaf, blue flower, silver coin and gold coin in the GameTop Windows
 release of Cradle of Rome 2. Its first purchase adds a water bucket worth 3
@@ -52,10 +52,10 @@ gate can buy it from the shop.
 
 ## In-game review
 
-| After the Welcome arch | Board |
-| --- | --- |
-| 480 × 900 | [Blue mitten and mulled wine](screenshots/review/blue-mitten/board-480.jpg) |
-| 390 × 844 | [Blue mitten and mulled wine](screenshots/review/blue-mitten/board-390.jpg) |
+| Size | Board after the Welcome arch | Guide |
+| --- | --- | --- |
+| 480 × 900 | [Light-blue mitten and mulled wine](screenshots/review/blue-mitten/board-480.jpg) | [Untangle tinsel](screenshots/review/blue-mitten/guide-480.jpg) |
+| 390 × 844 | [Light-blue mitten and mulled wine](screenshots/review/blue-mitten/board-390.jpg) | [Untangle tinsel](screenshots/review/blue-mitten/guide-390.jpg) |
 
 | Board | Before | After |
 | --- | --- | --- |

@@ -22,6 +22,7 @@ return {
         ["kind-3"]="festive-3",
         ["kind-4"]="festive-4",
         ["kind-5"]="festive-5",
+        ["market-1"]="festive-3",
         ["scene-1"]="background",
         ["scene-2"]="background",
     },
