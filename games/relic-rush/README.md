@@ -349,7 +349,7 @@ board, every dialog, the shop, the town hooks, story delivery,
 effects and the debug entry points are the engine's (`engine/lua/match3/game.lua`,
 `engine/lua/match3/vfx.lua`, `engine/lua/match3/debug.lua`); this folder is data and art.
 
-- `lua/game_config.lua`: every word of the shared screens (notices, Pause, Restart, failed, region, finale, building card, shop), the piece packs and the dialogue scale.
+- `lua/game_config.lua`: shared screen copy, board appearance and piece mappings, the piece packs and the dialogue scale.
 - `lua/town_config.lua`: the town screen's layout and notices.
 - `lua/state.lua`: the shared state table (`R`) from the engine.
 - `lua/art.lua`: named authored states, control-state selection and the in-game catalogue.
@@ -358,7 +358,7 @@ effects and the debug entry points are the engine's (`engine/lua/match3/game.lua
 - `lua/journey.lua`: the restoration schedule, recap and changing tap lines.
 - `lua/narrative.lua`: the cast.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten story restorations as engine building definitions.
-- `lua/board.lua`: how cells, resource pieces and chains are painted.
+- `engine/lua/match3/board_view.lua`: the board screen shared with Christmas Market.
 - `lua/screens.lua`: the results card, the guide's rows and icons, and the wallet and compass icons.
 - `lua/skin.lua`: the look as data (`ui.skin`).
 - `lua/main.lua`: loads the modules and returns the engine's app descriptor.

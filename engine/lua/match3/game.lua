@@ -6,9 +6,9 @@
 -- delivery, the journey's bookkeeping and the debug entry points.
 --
 -- A game is data: words in lua/game_config.lua (merged over DEFAULTS below), its
--- campaign and story, its skin and art tables. Its own Lua paints only what is
--- art: the board's cells and pieces (board.lua), the results card and guide
--- rows (screens.lua), the cast (narrative.lua).
+-- campaign and story, its skin and art tables. The board is painted by
+-- match3.board_view. The games still supply the results card and guide rows
+-- (screens.lua) and the cast (narrative.lua).
 --
 --   -- screens.lua, first:   local R = require("match3.game").bind(require("state"))
 --   -- main.lua, last:       return require("match3.game").app(R)
@@ -100,9 +100,8 @@ end
 -- call each other without import cycles. A game's lua/state.lua returns it.
 function G.state()
     return require("match3").view{
-        -- A 9 x 12 board between the HUD and the bonus tray on a 480 x 900
-        -- screen; the cell art is painted at a 26.5 px radius.
-        HEX_R = 30,
+        -- A 9 x 12 board between the HUD and the bonus tray on a 480 x 900 screen.
+        HEX_R = 24,
         intro = nil,
 
         -- overlays and board phases
@@ -1390,6 +1389,7 @@ function G.bind(R, over)
     require("match3.debug").bind(R, W)
     require("match3.vfx").bind(R, rules)
     require("match3.shatter").bind(R, rules)
+    require("match3.board_view").bind(R, rules, W, require("art"), require("economy").pieces)
     return R
 end
 
@@ -1497,12 +1497,14 @@ function G.app(R)
     local journey = require("journey")
     local LEVELS = rules.LEVELS
     local elements = require("match3.elements_view")
+    local board_view = require("match3.board_view")
+    require("match3").bind_town_board_hud(R)
     local still = app.arg("shot") and not app.arg("reel")
     local board_exit
 
     local function draw_board(world, dt, fade, banners)
         if fade < 1 then
-            R.board_screen(world, dt)
+            R.board_screen(world)
             R.vfx_draw()
             R.vfx_particles()
             if banners then R.draw_board_banners(dt) end
@@ -1671,7 +1673,7 @@ function G.app(R)
         local tiles = W.packs[1]
         for _, pack in ipairs(W.packs) do if app.arg("tiles") == pack then tiles = pack end end
         for i, t in ipairs(pack_kinds(tiles)) do R.relics[i] = t end
-        R.board_art = art.load()
+        board_view.load(R, art, W.board)
         R.hud_art = art.load_hud()
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
         -- The painted green tick marks every met amount: board goals and cards.

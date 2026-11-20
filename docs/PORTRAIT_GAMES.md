@@ -1,20 +1,21 @@
 # Relic Rush and Christmas Market: one game, two skins
 
 Relic Rush and Christmas Market share the portrait puzzle and city engine.
-Both match three in a line; Relic Rush has six piece kinds. Both
-should differ only in data: Lua settings, levels, campaign and story content, skin and art
-tables, and PNGs. Behaviour belongs to the engine:
+Both match three in a line and spawn five kinds on each board. Board
+presentation comes from Lua settings, level data and the skin's PNGs.
 
 | Engine module | Owns |
 |---|---|
 | `engine/lua/match3.lua` (`match3`) | Rules, the board layout, HUD, tools, swaps, waves, the guide and pause forms |
+| `engine/lua/match3/board_view.lua` (`match3.board_view`) | Draws the board screen, resolves piece art, and binds the shared board input and entrance |
+| `engine/lua/match3/elements_view.lua` (`match3.elements_view`) | Draws the floor, perimeter, cell highlights, blockers and piece shadows |
 | `engine/lua/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
 | `engine/lua/town.lua` (`town`) | The town screen (`lua/town_config.lua`) |
 | `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
 | `engine/lua/match3/vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
 | `engine/lua/match3/debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--epoch`, `--dialog`, ...) |
 
-Each game's `lua/` keeps only:
+Each game's `lua/` supplies:
 
 - **Content:** `campaign.lua`, `story_content.lua`, `buildings.lua`,
   `building_sprites.lua`, `match3_skin.lua`, `match3_hud.lua` (generated or
@@ -23,7 +24,7 @@ Each game's `lua/` keeps only:
   centres, lawn), `rules.lua` (piece names, economy slots and rewards, the `CLEARED` slot),
   `state.lua` (one line: the engine's state table).
 - **Skin:** `skin.lua` (the ui.skin), `art.lua` (art contract and review
-  sheets), `board.lua` (how cells, pieces and blockers are painted) and the
+  sheets) and the
   parts of `screens.lua` that are art: the results card, guide rows and icons,
   wallet capsule icons.
 - **Tests:** `smoke.lua` and Christmas Market's `campaign_smoke.lua`, keyed
@@ -115,16 +116,16 @@ Kept per game, as data or painting code:
 
 - `skin.lua`: jade vs festive red buttons, authored navigation images vs drawn
   badges, wallet pill opacity and em, moves colours.
-- `board.lua`: Relic Rush draws ice as a floor tile with full ice over the
-  piece; Christmas Market draws snow and tinsel edge art below the
-  treats (blockers before pieces), rotated selection/hint frames, per-kind
-  piece lift (`art.piece_lift`) and drifting snow instead of sun motes.
+- `game_config.lua` and the skin atlases supply the piece mappings, piece
+  size, background and motes. Both boards use the same cell coordinates,
+  blocker layering and perimeter masks. The cells atlas supplies sandstone
+  and leaves in Relic Rush, and aged oak and holly in Christmas Market.
 - `screens.lua`: the results card (Relic Rush's breakdown vs Christmas
   Market's chips), guide rows and icons, wallet icons.
 - Speech style: Relic Rush's dialogue is 1.5× (`speech.scale` in game_config.lua)
   with a 22.5 name plate; Christmas Market uses 1× and 15.
 - `art.lua`: review sheets, packs (`relics`/`jewels`/`resources` vs
-  `festive`), the hud catalogue, `piece_lift`, `snow_source`.
+  `festive`) and the HUD catalogue.
 - `island.lua`: Relic Rush's lawn is a polygon and its fog has clouds;
   Christmas Market's is a rectangle with paths and blue fog.
 - The town's middle button icon.
@@ -146,8 +147,6 @@ Kept per game, as data or painting code:
 
 Follow-ups, tracked here until done:
 
-- `board.lua` still has two painting paths; a data-driven cell/blocker style
-  (edge art, badge, layering) would make it one.
 - The results card and guide icons are two hand-painted layouts.
 - The smoke tests are separate scripts keyed to each game's content
   (`lua/smoke.lua` in both; Christmas Market's moved out of `main.lua`).

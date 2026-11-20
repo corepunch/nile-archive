@@ -104,7 +104,7 @@ for _, blocker in ipairs({"ice", "chain"}) do
 end
 -- A gem can land while another is still falling. Only the landing gem rebounds.
 do
-    local R = require("board")
+    local R = require("screens")
     local g = board({{0, 0}, {0, -1, 2}, {1, -1, 3}, {-3, 1}, {-3, 0}, {-3, -1, 4}})
     local lower, middle = index(-3, 1), index(-3, 0)
     local _, steps = rules.game_collapse(g)

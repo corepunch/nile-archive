@@ -91,8 +91,9 @@ The game is the same as Relic Rush with other data and art
 ([docs/PORTRAIT_GAMES.md](../../docs/PORTRAIT_GAMES.md)): every word of the
 shared screens is in [`lua/game_config.lua`](lua/game_config.lua), and the flow, dialogs,
 shop, effects and debug entry points are the engine's
-(`engine/lua/match3/game.lua`). `lua/board.lua` and `lua/screens.lua` paint only
-the market's own art: cells, treats, the results card and guide icons.
+(`engine/lua/match3/game.lua`). The engine draws the board from the market's
+skin atlas and `board` settings. `lua/screens.lua` provides the results card
+and guide icons.
 
 The interface look (text palettes, panels, the red buttons and their states, focus) is data in [`lua/skin.lua`](lua/skin.lua), compiled by the engine's `ui.skin`; see [skin files](../../docs/UI_ENGINE.md#skins).
 

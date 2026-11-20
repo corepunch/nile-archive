@@ -189,6 +189,11 @@ A skin definition lists typed atlases under `sheets`, each
 `{path="board/pieces.png", frames={name={x,y,w,h}, ...}}`, standalone
 `images` such as backgrounds, and `aliases`; a plain `{path=, frames=}` is a
 one-sheet definition, and `engine=true` reads paths with `texture.load_engine`.
+A sheet can also specify `grid=128` and use slot numbers such as
+`frames={["kind-0"]=27}`. Slots start at zero and run left to right, then
+top to bottom. The engine derives the column count from the PNG's width.
+The generated pieces sheets use this format. Rectangular frames are still
+available for effects and other unevenly sized art.
 `match3.atlas(definition)` flattens all of it into one table of named images,
 loading each sheet once. `match3.skin(override)` loads the board: pieces,
 blockers, cells, effects and boosters, with the backgrounds. `match3.hud(override)`
@@ -213,8 +218,17 @@ Relic Rush and Christmas Market each ship `data/board/pieces.png`,
 backgrounds as separate JPEGs in `data/board/backs/`. Goal displays can reuse
 the board's chip and objective frames. The generated `lua/match3_atlases.lua`
 gives each atlas's frames; `lua/match3_skin.lua` and `lua/match3_hud.lua` pick
-the atlases, images and aliases for the board and its HUD.
-The shared floor renderer in `match3.elements_view` draws an edge-to-edge
+the atlases, images and aliases for the board and its HUD. `match3.board_view`
+owns the board screen for both campaigns. The `board` table in `game_config.lua`
+sets the piece art mapping and presentation. A skin supplies art under the
+same keys for floor, perimeter and blocker states.
+
+The square perimeter occupies empty cells on the same grid as the playable
+cells, including holes and a ring one cell beyond the level grid. The eight
+neighbours determine the `square-frame-*` sprite and its quarter turn. Each
+skin supplies those sprites in `cells.png`.
+
+The hex floor renderer in `match3.elements_view` draws an edge-to-edge
 backing and insets each face by `R.GROUND.seam_width` (0.18 design units by
 default) at its radius. The seam shows the backing colour through that inset.
 `elements.cradle_ground(R)` applies the shared Cradle of Rome preset

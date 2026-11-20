@@ -65,8 +65,6 @@ function A.load()
     local own = own_board()
     local function piece(name) return assert(own[name], "missing atlas frame: " .. name) end
     for _, bonus in pairs(economy.bonuses) do textures[bonus.icon] = piece(bonus.frame) end
-    -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    elements_view.load(textures, own)
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
         if name then textures[name] = texture.load("story/floors/" .. name .. ".jpg") end
@@ -79,8 +77,6 @@ function A.load()
     for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
         textures["tile-" .. key] = piece("tile-" .. key)
     end
-    elements_view.load_frame(textures, A.board_frame)
-    elements_view.load_square(textures, own)
     for _, name in ipairs(A.layers) do load(name) end
     if not app.arg("default-match3") then load("chain-board") end
     return textures

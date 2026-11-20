@@ -416,8 +416,8 @@ in `clear-indicators-prompt.txt`. The manifest records measured crop boxes,
 spatial axis registration and runtime paths. The importer preserves authored
 RGBA and clips filled ice to the actual tile; it does not synthesize states.
 Selection and hints use soft filled glows, with no hard border.
-`lua/art.lua` names these textures; `lua/board.lua` uses the same artwork for
-live pieces, collection flights, clearing animations and the guide.
+`lua/art.lua` names these textures. The board renderer, collection flights,
+clearing animations and the guide share the same artwork.
 
 | Rule state | Authored name | Creation / behaviour |
 | --- | --- | --- |

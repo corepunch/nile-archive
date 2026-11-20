@@ -1,5 +1,5 @@
 -- The real presentation adapter, run once in each portrait game's suite.
-local rules, R = require('rules'), require('board')
+local rules, R = require('rules'), require('screens')
 local H = require('support')
 local function setup()
     testing.reset()

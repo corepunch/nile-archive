@@ -52,11 +52,6 @@ A.result_icons = {"discovery-star", "next-clue"}
 A.navigation={source="../../art/match3-buttons/manifest.json",roles={"navigation_build","navigation_play", "navigation_pause"},states=A.states}
 A.settings={states=A.states,source="art/expedition-hud/settings-lives.png",legacy_key="pause"}
 
-function A.use_campaign_pieces()
-    local pack = app.arg("tiles")
-    return not app.arg("default-match3") and not app.arg("rome-reference-art") and (not pack or pack == "relics")
-end
-
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
 local board_skin
@@ -114,19 +109,11 @@ function A.load()
     -- The packed Hammer bounds are centered. Its heavier head pulls the
     -- opacity anchor upward, making the whole silhouette sit low on the face.
     buttons.centers[textures["bonus-hammer"]] = nil
-    -- New mechanic art uses this game's authored atlas even with the neutral skin.
-    elements_view.load(textures, own)
     for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
-    elements_view.load_frame(textures, A.board_frame)
-    -- The square expedition perimeter uses whole tiles in the empty cells.
-    elements_view.load_square(textures, own)
     for _, key in ipairs(A.result_icons) do textures[key] = piece(key) end
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
     for _, key in ipairs(A.campaign_pieces) do textures["campaign-" .. key] = piece("campaign-" .. key) end
-    -- Trim the leaf's transparent gutter for its live board view.
-    local leaf = textures["campaign-leaf"]
-    textures["board-leaf"] = texture.region(leaf, texture.rect(leaf):inflate(-7))
     for _, key in ipairs(A.campaign_resources) do
         textures["resource-" .. key] = textures["campaign-" .. key]
     end
@@ -183,7 +170,7 @@ function A.draw_catalogue(R)
         end
     end
     R.say_at("EXPEDITION RESOURCES", vec2(240, 355), 13, R.PAL_CREAM, 0)
-    local campaign = A.use_campaign_pieces()
+    local campaign = R.campaign_art
     local prefix = campaign and "campaign-" or "resource-"
     for i, key in ipairs(A.resource_pieces) do
         local name = key == "emerald" and "apple" or key

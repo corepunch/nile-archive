@@ -23,6 +23,13 @@ return {
     region_speaker = "mara",
     board = {
         kudos = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"},
+        pieces = {
+            campaign_prefix = "campaign-",
+            story_prefix = "story-",
+            resource_prefix = "resource-",
+            crops = {["campaign-leaf"] = 7},   -- trim the transparent gutter for live pieces
+        },
+        background = {opacity=220, shade={5, 30, 29, 35}, motes={255, 228, 139, 70}},
     },
     notices = {
         reward_building = "Resources banked. Tap Build for the next restoration.",

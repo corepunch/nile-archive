@@ -1,7 +1,6 @@
 -- Exercise the real expedition update loop, including an idle dead board.
 local rules = require("rules")
-local R = require("board")
-require("screens")   -- the dialogs' motion helpers
+local R = require("screens")   -- binds the shared board and the dialogs' motion helpers
 local dead_board = require("fixtures/dead_board")
 
 
@@ -348,8 +347,10 @@ do
             local last, striped = nil, gfx.image_striped
             gfx.image = function(_, box) last = box end -- luacheck: ignore 122
             gfx.image_striped = function() end -- luacheck: ignore 122
-            local function draw(t, board) R.draw_relic(t, pos, scale, 255, aspect, board); boxes[#boxes + 1] = last end
-            for kind = 0, rules.COLORS - 1 do draw(rules.tile(kind), true) end
+            for kind = 0, rules.COLORS - 1 do
+                R.draw_relic(rules.tile(kind), pos, scale, 255, aspect)
+                boxes[#boxes + 1] = last
+            end
             gfx.image, gfx.image_striped, R.hex_piece_kind = image, striped, hex_kind -- luacheck: ignore 122
             R.board_art = board_art
             check(#boxes == rules.COLORS, "all five resting pieces are drawn")

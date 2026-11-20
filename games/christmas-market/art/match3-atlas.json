@@ -2065,7 +2065,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "4a4eb6772fcd2340294eb7d952e4a302810e17aa283224ed428ac13626248b32",
+    "recipe": "835c105c3a3529ba64d3ef2d06a6cd614b0c606aadd4e2fbeded12022c17901a",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -2177,7 +2177,7 @@
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
       "games/christmas-market/data/board/pieces.png": "a267a664395cc4a1a4a9eafb39542897428f280e823d59d875a2039c9aec09d5",
-      "games/christmas-market/lua/match3_atlases.lua": "3f3a6b1c6585e2b11da83a0a2e59148e4ca71095a31abb177d207cf64f51ab39",
+      "games/christmas-market/lua/match3_atlases.lua": "608815b97bb266961e5bbe6c4ce5885166d1d6ace2d605f9114c9b71cb391a71",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
       "games/christmas-market/lua/match3_skin.lua": "465a905ad527454b4aeb03b40312b93636ae57ad384e41725e76db27db046a13"
     }

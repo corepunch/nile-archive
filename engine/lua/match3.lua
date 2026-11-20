@@ -129,7 +129,9 @@ end
 
 -- A skin is one flat table of named images. Its definition lists typed
 -- atlases ({path=, frames=}, each a set drawn together in one style) under
--- sheets, and standalone images such as backgrounds under images; a plain
+-- sheets. Rectangular frames use {x,y,w,h}; a sheet with grid=<cell size>
+-- can name frames by their zero-based row-major index. Standalone images
+-- such as backgrounds go under images; a plain
 -- {path=, frames=} is a definition of one sheet. engine=true reads every path
 -- from the engine's resource directory. Every named image borrows its sheet's
 -- GPU texture.
@@ -149,8 +151,21 @@ function E.atlas(definition)
     local images, load = {}, definition.engine and texture.load_engine or texture.load
     for _, sheet in ipairs(definition.sheets or {definition}) do
         local atlas = load_sheet(sheet, definition.engine)
+        local side, columns = sheet.grid
+        if side then
+            local width = texture.size(atlas).w
+            assert(side > 0 and side % 1 == 0 and width % side == 0, "invalid match3 grid: " .. sheet.path)
+            columns = width // side
+        end
         for name, box in pairs(sheet.frames) do
-            local image = texture.region(atlas, rect(box[1], box[2], box[3], box[4]))
+            local area
+            if type(box) == "number" then
+                assert(columns and box >= 0 and box % 1 == 0, "invalid match3 frame index: " .. name)
+                area = rect(box % columns * side, box // columns * side, side, side)
+            else
+                area = rect(box[1], box[2], box[3], box[4])
+            end
+            local image = texture.region(atlas, area)
             assert(image.tex, "invalid match3 frame: " .. name)
             images[name] = image
         end

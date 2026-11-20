@@ -2204,7 +2204,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "4a4eb6772fcd2340294eb7d952e4a302810e17aa283224ed428ac13626248b32",
+    "recipe": "835c105c3a3529ba64d3ef2d06a6cd614b0c606aadd4e2fbeded12022c17901a",
     "inputs": {
       "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
       "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
@@ -2357,7 +2357,7 @@
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
       "games/relic-rush/data/board/pieces.png": "eedb700f8d04a4a44a1ea5ef41c366c65a68c2f8a73c2a697edc72a79372f03b",
-      "games/relic-rush/lua/match3_atlases.lua": "33bf3a0d1a33d510ecfc7034ae8e048f2211b01fbdacd1b5ed0234c8f37e6913",
+      "games/relic-rush/lua/match3_atlases.lua": "9f9fb4cf95d328dee8c32c23cbf6c3a6d3eb73be3d9771913dbd7138f09f7f44",
       "games/relic-rush/lua/match3_hud.lua": "0525d0783e4ff80f06d488507903c04b685b3017445414f0b0779af9a848bf11",
       "games/relic-rush/lua/match3_skin.lua": "8f808605b0cc29149eefa9e51fda795e94d7c2554a65f145f3433e69a16ba05f"
     }

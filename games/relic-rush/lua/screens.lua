@@ -126,7 +126,7 @@ end)
 
 -- One data source and one row resource; the engine measures and stacks every
 -- row. Composite icon painting uses the same authored layers as the board.
-local chip_prefix = art.use_campaign_pieces() and "campaign-" or "resource-"
+local chip_prefix = R.campaign_art and "campaign-" or "resource-"
 local guide_entries = {
     {id="neighbors", title="Line up 3+ pieces", description="Match straight lines horizontally or vertically.",
      icon={front=chip_prefix .. "coin"}},
