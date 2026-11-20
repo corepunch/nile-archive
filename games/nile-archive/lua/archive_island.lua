@@ -309,7 +309,7 @@ end
 
 -------------------------------------------------------------------- frame
 
--- The island on the engine's shared town screen (engine/lua/town.lua), laid out
+-- The island on the engine's shared town screen (engine/lua/town/screen.lua), laid out
 -- by lua/town_config.lua like Relic Rush and Christmas Market. The archive adds its
 -- player plate, the cast button and the goal card between Build and Play.
 local function shore(z)
@@ -333,7 +333,7 @@ local function placement_words(kind)
 end
 
 function M.town_setup()
-    local town = require("town")
+    local town = require("town.screen")
     M.town = town.new(G.island, require("town_config"), {
         skin = K.skin,
         wallet = function() return G.wallet end,
@@ -400,10 +400,9 @@ function M.town_setup()
     G.spots.build, G.spots.chapters = M.town.buttons.build, M.town.buttons.play
 end
 
-function M.frame(_, world)
-    local dt = app.dt()
-    if G.tray then M.tray.motion:step(dt, input.get(), G.reduced_motion) end
-    M.town:frame(world, dt, G.modal == MODAL_NONE and not story.active())
+function M:frame(world, dt, active)
+    if G.tray then M.tray.motion:step(dt, active and input.get() or world, G.reduced_motion) end
+    M.town:frame(world, dt, active)
     G.spots.build, G.spots.chapters = M.town.buttons.build, M.town.buttons.play
 end
 

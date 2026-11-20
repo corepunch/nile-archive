@@ -218,7 +218,7 @@ Relic Rush and Christmas Market each ship `data/board/pieces.png`,
 backgrounds as separate JPEGs in `data/board/backs/`. Goal displays can reuse
 the board's chip and objective frames. The generated `lua/match3_atlases.lua`
 gives each atlas's frames; `lua/match3_skin.lua` and `lua/match3_hud.lua` pick
-the atlases, images and aliases for the board and its HUD. `match3.board_view`
+the atlases, images and aliases for the board and its HUD. `match3.screen`
 owns the board screen for both campaigns. The `board` table in `game_config.lua`
 sets the piece art mapping and presentation. A skin supplies art under the
 same keys for floor, perimeter and blocker states.

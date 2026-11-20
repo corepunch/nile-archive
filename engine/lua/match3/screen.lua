@@ -1,4 +1,4 @@
--- Paint the shared campaign board using the game's skin and board settings.
+-- The match-3 screen and its presentation bindings.
 local match3 = require("match3")
 local elements = require("match3.elements_view")
 local V = {}
@@ -120,7 +120,7 @@ function V.bind(R, rules, config, art, base_pieces)
         end
     end
 
-    function R.board_screen(inp)
+    local function draw_board(inp)
         R.draw_board_background(1)
         draw_motes()
         R.draw_board_hud()
@@ -140,6 +140,26 @@ function V.bind(R, rules, config, art, base_pieces)
         end
         if app.arg("hud-states") then art.draw_hud_catalogue(R) end
         R.board_input(inp)
+    end
+
+    local screen = {}
+    R.board_screen = screen
+    local function draw(inp, dt, fade, banners)
+        if fade < 1 then
+            draw_board(inp)
+            R.vfx_draw()
+            R.vfx_particles()
+            if banners then R.draw_board_banners(dt) end
+        end
+        if fade > 0 then R.draw_board_background(fade) end
+    end
+
+    function screen:frame(inp, dt, active, fade)
+        draw(active and inp or input{pos = inp.pos, pinch = 1}, dt, fade or 0, true)
+    end
+
+    function screen:transition(inp, dt, fade)
+        draw(inp, dt, fade, false)
     end
 end
 

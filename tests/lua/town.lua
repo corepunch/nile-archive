@@ -1,6 +1,6 @@
 -- The shared town screen's configuration: the merge of a game's
--- lua/town_config.lua over the engine defaults (engine/lua/town.lua).
-local town = require("town")
+-- lua/town_config.lua over the engine defaults (engine/lua/town/screen.lua).
+local town = require("town.screen")
 
 local cfg = town.config({header = {align = "right", role = town.none}, bottom = {middle = {kind = "custom"}}})
 check(cfg.header.align == "right" and cfg.header.role == nil, "a game overrides one field and town.none clears a default")

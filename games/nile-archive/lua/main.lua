@@ -9,7 +9,7 @@
 --   archive_progress  saving, the chapter goal and the player level
 --   archive_kit       the look: panels, buttons, icons, text styles
 --   archive_island    the island screen (an engine city)
---   archive_scene     the hidden-object rules and screen
+--   archive_scene     the shared search screen's chapter data and rewards
 --   archive_dialogs   the popups
 --   archive_smoke     the --smoke run
 local G = require("archive_state")
@@ -22,6 +22,9 @@ local scene = require("archive_scene")
 local dialogs = require("archive_dialogs")
 local smoke = require("archive_smoke")
 local beats = require("archive_story")
+local config = require("game_config")
+local transition = require("screen_transition").new(config.transitions, app.arg("transition-style"))
+local screens = {town = island, hidden_object = scene}
 local rgba = color
 local scenes, SCENES = content.scenes, content.SCENES
 local ITEMS, COINS, INFLUENCE, CHAPTERS, STARS = G.ITEMS, G.COINS, G.INFLUENCE, G.CHAPTERS, G.STARS
@@ -30,13 +33,24 @@ local MODAL_NONE, MODAL_WIN, MODAL_CAST, MODAL_CHAPTERS, MODAL_PAUSE =
 
 ------------------------------------------------------------------ frame
 
+local function paint_transition(id, idle, dt)
+    screens[id]:frame(idle, dt, false)
+end
+
+local function current_screen()
+    return G.scene and "hidden_object" or "town"
+end
+
 local function frame(dt)
     local inp = input.get()
-    local world = input.world()
     local talking = story.active()
     local board = dialogs.boards:active()   -- a leaderboard has the input, and the back key
-    if G.modal ~= MODAL_NONE or talking or board then world = input{pos = inp.pos, pinch = 1} end
-    if inp.back and not talking and not board then
+    local screen = current_screen()
+    transition:watch(screen, not G.reduced_motion)
+    local switching = transition:active()
+    local interactive = not talking and not board and not switching
+    local world = interactive and G.modal == MODAL_NONE and input.world() or input{pos = inp.pos, pinch = 1}
+    if inp.back and interactive then
         if G.modal == MODAL_NONE and G.island.placing >= 0 then G.island:cancel()
         elseif G.modal ~= MODAL_NONE then
             if G.dialog.ready then
@@ -50,19 +64,20 @@ local function frame(dt)
     tween.instant(G.reduced_motion)   -- reduced motion: every tween settles on its next frame
     fx.update(dt)
 
-    local screen = app.screen()
-    ui.set_enabled(G.modal == MODAL_NONE and not talking and not board)
-    if G.scene then scene.frame(screen, world, dt) else island.frame(screen, world) end
+    local active = interactive and G.modal == MODAL_NONE
+    ui.set_enabled(active)
+    if switching then transition:frame(inp, dt, paint_transition)
+    else screens[screen]:frame(world, dt, active) end
     ui.set_enabled(true)
 
-    if G.modal ~= MODAL_NONE and not story.active() then   -- the reward waits for dialogue, even on the last tap
+    if G.modal ~= MODAL_NONE and not story.active() and not switching then   -- rewards wait for dialogue
         local d = G.dialog
         if board then d.ready = false end
         if d:step(dt, inp, G.reduced_motion) then
             if d.tl and d.tl.paused then d.tl:resume() end
-            local interactive = not board and d.interactive
-            ui.set_enabled(interactive)
-            d:paint(function() dialogs.draw(G.modal, interactive) end)
+            local dialog_active = not board and d.interactive
+            ui.set_enabled(dialog_active)
+            d:paint(function() dialogs.draw(G.modal, dialog_active) end)
             ui.set_enabled(true)
         end
     end
@@ -72,7 +87,8 @@ local function frame(dt)
         G.save_intro = false
         progress.save()
     end
-    if G.smoke then smoke.step() end
+    -- A dialog's exit callback can switch screens after the base layer was drawn.
+    if G.smoke then smoke.step(switching or screen ~= current_screen()) end
 end
 
 ------------------------------------------------------------------- setup

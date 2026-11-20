@@ -31,7 +31,7 @@ local G = {
     scene = nil,                  -- 1-based search or cache, nil = island
     found = {},                   -- found[i] = time the item was found
     hint = nil, hint_ready = 0,
-    slots = {}, pills = {},       -- the item bar: item per slot, and each pill's motion (archive_scene.lua)
+    slots = {}, pills = {},       -- the item bar: item per slot, and each pill's motion
     marks = {},                   -- marks[i]: the ring growing on a found item
     score = 0, combo = 0, combo_left = 0, clock = 0, result = nil,
     misses = 0, hints = 0,

@@ -7,11 +7,12 @@ presentation comes from Lua settings, level data and the skin's PNGs.
 | Engine module | Owns |
 |---|---|
 | `engine/lua/match3.lua` (`match3`) | Rules, the board layout, HUD, tools, swaps, waves, the guide and pause forms |
-| `engine/lua/match3/board_view.lua` (`match3.board_view`) | Draws the board screen, resolves piece art, and binds the shared board input and entrance |
+| `engine/lua/match3/screen.lua` (`match3.screen`) | Draws the board screen, resolves piece art, and binds the shared board input and entrance |
 | `engine/lua/match3/elements_view.lua` (`match3.elements_view`) | Draws the floor, perimeter, cell highlights, blockers and piece shadows |
 | `engine/lua/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
-| `engine/lua/town.lua` (`town`) | The town screen (`lua/town_config.lua`) |
-| `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: the shared state table, progress and saving, level flow, the frame, the town <-> board dive, paint helpers, dialogs (pause, restart, failed, region, building card, finale), the shop, the town hooks, story delivery and the journey's bookkeeping (`lua/game_config.lua`) |
+| `engine/lua/town/screen.lua` (`town`) | The town screen (`lua/town_config.lua`) |
+| `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: shared state, progress and saving, selection of the current screen, dialogs, the shop, town hooks and story delivery |
+| `engine/lua/screen_transition.lua` (`screen_transition`) | Screen changes, configured by `transitions` in each game's `lua/game_config.lua` |
 | `engine/lua/match3/vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
 | `engine/lua/match3/debug.lua` (`match3.debug`) | The screenshot and review entry points (`--level`, `--city`, `--epoch`, `--dialog`, ...) |
 

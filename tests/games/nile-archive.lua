@@ -8,6 +8,7 @@ rules("haptics_archive")
 smoke("--quick --size 600x450", "first-find", "quick")
 smoke()
 smoke("--size 1368x1026", "chapter-ipad")
+smoke("--size 600x450 --transition-style wipe", "chapter-wipe")
 
 shot("island", "1200x900", "--screen island")
 shot("scene0", "1200x900", "--screen scene0 --found")

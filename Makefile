@@ -64,7 +64,7 @@ ENGINE_DEPS := $(UNITY) $(wildcard engine/src/*.[ch] engine/src/platform/*.c eng
 PLATFORM_DEPS := $(shell find $(PLATFORM_DIR) -type f \( -name '*.c' -o -name '*.m' -o -name '*.h' \) 2>/dev/null)
 game_lua    = $(wildcard games/$(1)/lua/*.lua)
 # the engine's own Lua, shared by every game (the web build serves it from /engine)
-ENGINE_LUA  := $(wildcard engine/lua/*.lua engine/lua/match3/*.lua)
+ENGINE_LUA  := $(wildcard engine/lua/*.lua engine/lua/*/*.lua)
 
 .PHONY: all test gen gen-check lint xcode xcode-check shots smoke buildings levels-preview level-sheets reference-levels-preview web clean run-nile run-relic $(GAMES:%=run-%) $(GAMES)
 all: $(GAMES)

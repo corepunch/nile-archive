@@ -358,7 +358,7 @@ effects and the debug entry points are the engine's (`engine/lua/match3/game.lua
 - `lua/journey.lua`: the restoration schedule, recap and changing tap lines.
 - `lua/narrative.lua`: the cast.
 - `lua/island.lua`: shoreline, the hidden hex region map, region adjacency and the ten story restorations as engine building definitions.
-- `engine/lua/match3/board_view.lua`: the board screen shared with Christmas Market.
+- `engine/lua/match3/screen.lua`: the board screen shared with Christmas Market.
 - `lua/screens.lua`: the results card, the guide's rows and icons, and the wallet and compass icons.
 - `lua/skin.lua`: the look as data (`ui.skin`).
 - `lua/main.lua`: loads the modules and returns the engine's app descriptor.

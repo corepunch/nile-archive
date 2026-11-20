@@ -50,6 +50,7 @@ for i, item in ipairs({5, 4, 1, 8}) do
 end
 M.scenes[M.CACHE] = cache
 for chapter = 2, 3 do M.scenes[M.CACHES[chapter]] = later.caches[chapter] end
+for _, id in ipairs(M.CACHES) do M.scenes[id].ordered = true end
 
 function M.cache_chapter(index)
     for chapter, cache_id in ipairs(M.CACHES) do

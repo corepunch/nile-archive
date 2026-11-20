@@ -20,6 +20,7 @@ G.open_modal(G.MODAL_WIN, true)
 check(G.dialog.entry == 1 and G.dialog.stars[3].s == 1, "stills open a popup settled")
 
 -- the item bar
+G.scene = 1
 G.found, G.slots, G.pills, G.marks = {}, {}, {}, {}
 scene.refill_slots(0, 0)
 check(G.slots[1] == 1 and G.slots[3] == 3 and G.pills[1].arrive == 0, "a refilled pill starts its arrival at once")

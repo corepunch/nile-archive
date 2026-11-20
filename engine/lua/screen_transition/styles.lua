@@ -1,12 +1,7 @@
--- match3/dive.lua — the town <-> board transition styles
--- (`require("match3.dive")`, used by match3.game). game_config.lua's "dive" block
--- picks the style and dresses it in the game's theme; `--dive-style NAME`
--- overrides the style for review. A style covers the screen being left in
--- `out` seconds and uncovers the next one in `inn`. `look(d, leaving, u)` gives
--- the town camera's zoom and pan while the town shows; `draw(d, leaving, u)`
--- paints the cover. d.focus is the point of the screen showing now (the newest
--- building, or the board's centre), d.theme the game's dress, d.label an
--- optional caption and d.say the game's text call.
+-- Screen transition effects. A style covers the leaving screen in `out`
+-- seconds and reveals the entering screen in `inn`. `look` supplies optional
+-- camera zoom and pan around d.focus. `draw` paints over the screen, using
+-- d.theme and, for bands, an optional d.label and text painter d.say.
 local D = {}
 
 local CLEAR, WHITE = color(0, 0, 0, 0), color(255, 255, 255)
@@ -364,41 +359,36 @@ styles.bands = {
         end
         band_dress(d, o, s, n, far, a, b)
         local k = leaving and ease.out_back(window(u, .55, 1), 1.8) or 1 - ease.in_back(window(u, 0, .45), 1.8)
-        if d.label and k > .02 then badge(d, o, k) end
+        if d.label and d.say and k > .02 then badge(d, o, k) end
     end,
 }
 
--- A cinematic wipe: both screens show at once, the town on one side of a
--- diagonal edge that sweeps left to right. Into the board the town is pushed
--- off to the right; back to town it is drawn in from the left. The town is the
--- masked one either way, since the board masks its own story mosaic and the
--- renderer holds one mask at a time. match3.game draws both screens for a
--- `wipe` style and calls mask() before the town and draw() last.
+-- The diagonal edge sweeps left to right, revealing the entering screen.
+-- An app can choose which screen is masked if one uses a mask of its own.
 local WIPE_TILT = -.32   -- the edge's normal, radians from +x: it leans like "/"
 local WIPE_RANGE = 64    -- the field's encoded half-span; the feather must stay inside it
 local WIPE_FEATHER = 12
 local WIPE_TEXELS = 256
 local wipe_fields = {}
--- A plane d = dot(p - centre, n) across a square, signed so the town's side is
--- negative (inside the mask). The square is centred on the edge and moves with it.
-local function wipe_field(town_right)
-    local key = town_right and "right" or "left"
-    if wipe_fields[key] then return wipe_fields[key] end
-    local n, size, sign = vec2.polar(WIPE_TILT, 1), WIPE_TEXELS, town_right and -1 or 1
+-- The plane is signed so the masked screen is on the negative side.
+local function wipe_field(mask_leaving, side)
+    local field = wipe_fields[mask_leaving]
+    if field and field.side == side then return field.texture end
+    if field then texture.free(field.texture) end
+    local n, size, sign = vec2.polar(WIPE_TILT, 1), WIPE_TEXELS, mask_leaving and -1 or 1
+    local range = 2 * WIPE_RANGE / (side / size)
     local px = {}
     for y = 0, size - 1 do
         for x = 0, size - 1 do
             local d = sign * ((x + .5 - size / 2) * n.x + (y + .5 - size / 2) * n.y)
-            local v = math.floor(num.saturate(.5 + d / (2 * WIPE_RANGE / D.wipe_texel())) * 255 + .5)
+            local v = math.floor(num.saturate(.5 + d / range) * 255 + .5)
             px[#px + 1] = string.char(v, v, v, 255)
         end
     end
-    wipe_fields[key] = texture.from_pixels(table.concat(px), size, size)
-    return wipe_fields[key]
+    local tex = texture.from_pixels(table.concat(px), size, size)
+    wipe_fields[mask_leaving] = {side = side, texture = tex}
+    return tex
 end
--- One texel's size in logical units: the square spans four times the display.
-local function wipe_side() local full = app.bleed(); return 4 * math.max(full.w, full.h) end
-function D.wipe_texel() return wipe_side() / WIPE_TEXELS end
 local function wipe_edge(u)   -- where the edge crosses the display's middle row
     local full = app.bleed()
     local lean = math.abs(math.tan(WIPE_TILT)) * full.h / 2 + WIPE_FEATHER + 8
@@ -406,16 +396,16 @@ local function wipe_edge(u)   -- where the edge crosses the display's middle row
 end
 styles.wipe = {
     wipe = true, out = 0, inn = 1.4,
-    look = function() return 1 end,
     mask = function(d, u)
-        local side = wipe_side()
-        gfx.sdf_mask(wipe_field(d.from_island), rect.centered(wipe_edge(u), size2(side, side)), WIPE_RANGE, 0, 0, 0, WIPE_FEATHER)
+        local full = app.bleed()
+        local side = 4 * math.max(full.w, full.h)
+        gfx.sdf_mask(wipe_field(d.mask_leaving, side), rect.centered(wipe_edge(u), size2(side, side)), WIPE_RANGE, 0, 0, 0, WIPE_FEATHER)
     end,
-    -- A soft shade on the board's side of the edge gives the cut some depth.
+    -- A soft shade on the unmasked side gives the cut some depth.
     draw = function(d, _, u)
         local full, n = app.bleed(), vec2.polar(WIPE_TILT, 1)
         local along, o = vec2(-n.y, n.x), wipe_edge(u)
-        local toward = d.from_island and -1 or 1   -- from the edge into the board
+        local toward = d.mask_leaving and -1 or 1
         local a, b = o + along:scale(full.h), o - along:scale(full.h)
         local off = n:scale(toward * 26)
         local shade, clear = color(0, 0, 0, 55), color(0, 0, 0, 0)

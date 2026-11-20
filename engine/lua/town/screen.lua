@@ -1,16 +1,16 @@
--- town.lua — the town screen every city game shares (Relic Rush, Christmas
+-- The town screen shared by Relic Rush, Christmas
 -- Market, Nile Archive): the map under the safe screen, weather, region
 -- markers, a word bubble when a building is tapped, Cancel/Confirm beside a
 -- lifted building, the wallet capsules and menu along the top, and the Build,
 -- middle and Play controls along the bottom.
 --
--- Layout and wording come from a JSON file in the game's data root, merged
+-- Layout and wording come from the game's town_config.lua, merged
 -- over the defaults below, so every game lays the town out the same way.
 -- Behaviour the table cannot express arrives as hooks; the look is the game's
 -- ui.skin (roles navigation_build, navigation_play, placement_cancel,
 -- placement_confirm and the resource role named in header.role).
 --
---   local town = require("town")
+--   local town = require("town.screen")
 --   local view = town.new(c, require("town_config"), hooks)
 --   view:frame(inp, dt, active)   -- once per frame; active = no dialog or story
 --
@@ -94,7 +94,7 @@ local function rgba(s)
 end
 T.color = rgba
 
--- The game's town config: its JSON over the engine defaults.
+-- The game's town config over the engine defaults.
 -- A speech bubble whose first line is a title: larger and bold (the same fill
 -- as an outline, since the skins carry one weight per font), then the subtitle.
 -- The town config can choose the skin's text and color palettes.

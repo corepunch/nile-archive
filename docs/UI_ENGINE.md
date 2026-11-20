@@ -675,7 +675,7 @@ Play and Wishes. Play is the largest control. Both surfaces use the same
 
 ## Town rail
 
-`engine/lua/town.lua` can stack round markers down the town's left edge, under
+`engine/lua/town/screen.lua` can stack round markers down the town's left edge, under
 the header: requests, tasks or anything else the player returns to. The
 `rail()` hook returns `{id, icon, value, ready, waiting}` records and
 `rail_tap(id)` receives a tap. Each marker is a pressable disc with the
@@ -699,7 +699,7 @@ the marker boxes for tests.
 
 ## Town building popups
 
-`engine/lua/town.lua` draws the label above a tapped building. The game's
+`engine/lua/town/screen.lua` draws the label above a tapped building. The game's
 `town_config.lua` can select skin text palettes with `bubble.title` and
 `bubble.text`. Set `bubble.em` to size the configured subtitle. The title
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex

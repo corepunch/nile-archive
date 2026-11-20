@@ -303,10 +303,37 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   a point (below when there is no room), kept on screen, tail on the point —
   for words over the world, like Relic Rush's restored wonders.
 
-## Town screen
+## Screens and transitions
 
-The city games share one town screen, `require("town")`, configured by each
-game's `lua/town_config.lua`. See [Shared town screen](TOWN.md).
+Reusable full screens live in `engine/lua/<type>/screen.lua`.
+
+| Module | What the game supplies |
+| --- | --- |
+| `match3.screen` | Level rules, board settings and art. See [Portrait games](PORTRAIT_GAMES.md). |
+| `town.screen` | A city, `town_config.lua`, a skin and campaign actions. See [Shared town screen](TOWN.md). |
+| `hidden_object.screen` | Scene art, item names and hit ellipses, scoring settings, HUD skin and callbacks for completion and pause. |
+
+The app chooses the base screen from the game state and calls
+`screen:frame(input, dt, active)` once per frame. It passes idle input and
+disables UI hit testing while a modal, dialogue or transition has focus.
+Screens can still paint and settle their presentation. A future full-screen
+main menu fits the same convention as `menu.screen`.
+
+The shared `screen_transition` module handles the effect between screen IDs.
+The `transitions` table in `game_config.lua` sets a default effect, optional
+directional overrides and an optional palette in `theme`.
+
+```lua
+transitions = {
+    style = "wipe",
+    routes = {menu = {town = "bands"}, town = {hidden_object = "iris"}},
+}
+```
+
+Use `wipe`, `flash`, `hex`, `drift`, `iris`, `bands` or `none`. Wipe
+composites two screens with idle input, and cover effects draw one at a time.
+Reduced motion switches screens immediately. `--transition-style NAME` previews
+another effect without editing a config. See [Motion](MOTION.md#what-stays-on-its-own-clock).
 
 ## Portrait match-3 game
 

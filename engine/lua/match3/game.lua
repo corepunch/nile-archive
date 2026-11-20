@@ -7,7 +7,7 @@
 --
 -- A game is data: words in lua/game_config.lua (merged over DEFAULTS below), its
 -- campaign and story, its skin and art tables. The board is painted by
--- match3.board_view. The games still supply the results card and guide rows
+-- match3.screen. The games still supply the results card and guide rows
 -- (screens.lua) and the cast (narrative.lua).
 --
 --   -- screens.lua, first:   local R = require("match3.game").bind(require("state"))
@@ -1084,7 +1084,7 @@ function G.bind(R, over)
 
     ------------------------------------------------------------- town
 
-    local town = require("town")
+    local town = require("town.screen")
     function R.island_focus(world, zoom) R.town:focus(world, zoom) end
     function R.island_begin(kind, focus, item)
         if not R.town:begin(kind, focus, item) then return false end
@@ -1160,10 +1160,6 @@ function G.bind(R, over)
             overlay = R.vfx_particles,
         })
         R.placement_form = R.town.placement_form
-    end
-
-    function R.island_screen(inp, dt)
-        R.town:frame(inp, dt, R.overlay == R.OV_NONE)
     end
 
     ------------------------------------------------------------ story
@@ -1389,7 +1385,7 @@ function G.bind(R, over)
     require("match3.debug").bind(R, W)
     require("match3.vfx").bind(R, rules)
     require("match3.shatter").bind(R, rules)
-    require("match3.board_view").bind(R, rules, W, require("art"), require("economy").pieces)
+    require("match3.screen").bind(R, rules, W, require("art"), require("economy").pieces)
     return R
 end
 
@@ -1497,28 +1493,15 @@ function G.app(R)
     local journey = require("journey")
     local LEVELS = rules.LEVELS
     local elements = require("match3.elements_view")
-    local board_view = require("match3.board_view")
+    local board_screen = require("match3.screen")
     require("match3").bind_town_board_hud(R)
     local still = app.arg("shot") and not app.arg("reel")
     local board_exit
 
-    local function draw_board(world, dt, fade, banners)
-        if fade < 1 then
-            R.board_screen(world)
-            R.vfx_draw()
-            R.vfx_particles()
-            if banners then R.draw_board_banners(dt) end
-        end
-        if fade > 0 then R.draw_board_background(fade) end
-    end
+    local transition = require("screen_transition").new(W.transitions, app.arg("transition-style") or app.arg("dive-style"))
+    function R.diving() return transition:active() end
 
-    -- Town <-> board: the screen being left is covered (the town's camera dives
-    -- into its newest building), then the other screen is uncovered while the
-    -- board's pieces start to fall. engine/lua/match3/dive.lua holds the styles.
-    -- Game state switches at once; only drawing and input wait for the dive.
-    local dive_styles = require("match3.dive")
-    local dive, shown_island
-    local function dive_focus()   -- the screen point the town zooms about
+    local function town_focus()
         local c, screen = R.island, app.screen()
         if c.count > 0 then
             local at = c.cam:rect_to_screen(c:sprite_rect(c.items[c.count])):center()
@@ -1526,54 +1509,32 @@ function G.app(R)
         end
         return screen:center()
     end
-    function R.diving() return dive ~= nil end
-    local function dive_watch()
-        if shown_island ~= nil and shown_island ~= R.on_island and not R.reduced_motion
-           and (not R.quiet or app.arg("dive")) then
-            local label = R.on_island and nil or ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name)
-            dive = {t = 0, from_island = shown_island, town = dive_focus(), board = R.BOARD_CLIP:center(),
-                    board_gone = not shown_island and board_exit == BOARD_OUT,
-                    style = dive_styles.get(app.arg("dive-style") or (W.dive and W.dive.style)),
-                    theme = dive_styles.theme(W.dive), label = label, say = R.say}
-        end
-        shown_island = R.on_island
+
+    local function describe_transition(from)
+        return {
+            -- The board's story mosaic uses the renderer's mask.
+            masked = "town",
+            focuses = {town = town_focus(), match3 = R.BOARD_CLIP:center()},
+            board_gone = from == "match3" and board_exit == BOARD_OUT,
+            label = ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name),
+            say = R.say,
+        }
     end
-    local function dive_screen(world, dt)
-        local s = dive.style
-        local fade = dive.board_gone and 1 or 0
-        if s.wipe then   -- both screens at once, the town masked to its side of the edge
-            local u = num.saturate(dive.t / s.inn)
-            draw_board(world, dt, fade)
-            dive.focus = dive.town
-            s.mask(dive, u)
-            R.island_screen(world, dt)
-            gfx.sdf_unmask()
-            gfx.bleed(true)
-            s.draw(dive, false, u)
-            gfx.bleed(false)
-            dive.t = dive.t + dt
-            if dive.t >= s.inn then dive = nil end
+
+    local function paint_transition(id, inp, dt, effect, zoom, pan)
+        if id == "match3" then
+            R.board_screen:transition(inp, dt, effect.board_gone and 1 or 0)
             return
         end
-        local leaving = dive.t < s.out
-        local u = leaving and dive.t / s.out or num.saturate((dive.t - s.out) / s.inn)
-        local island_view = leaving == dive.from_island
-        dive.focus = island_view and dive.town or dive.board
-        if island_view then
-            local cam = R.island.cam
-            local zoom, pan = s.look(dive, leaving, u)
-            local view = zoom ~= 1 and cam:zoom_at(zoom, dive.focus) or cam
-            R.island.cam = pan and view:pan(pan) or view
-            R.island_screen(world, dt)
-            R.island.cam = cam
-        else
-            draw_board(world, dt, fade)
+        if not zoom then
+            R.town:frame(inp, dt, false)
+            return
         end
-        gfx.bleed(true)
-        s.draw(dive, leaving, u)
-        gfx.bleed(false)
-        dive.t = dive.t + dt
-        if dive.t >= s.out + s.inn then dive = nil end
+        local cam = R.island.cam
+        local view = zoom ~= 1 and cam:zoom_at(zoom, effect.focus) or cam
+        R.island.cam = pan and view:pan(pan) or view
+        R.town:frame(inp, dt, false)
+        R.island.cam = cam
     end
 
     local function frame(dt)
@@ -1588,15 +1549,16 @@ function G.app(R)
         local talking = story.active()
         local board = R.leaderboard_active()
         R.layout()
-        dive_watch()
+        transition:watch(R.on_island and "town" or "match3",
+            not R.reduced_motion and (not R.quiet or app.arg("dive")), describe_transition)
         tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
         if app.arg("smoke") then (app.arg("campaign") and R.campaign_smoke or R.smoke)() end
         R.debug_frame()
         R.now = R.now + dt
         if not talking then R.toast_time = R.toast_time - dt end
-        if inp.back and not talking and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
+        if inp.back and not talking and not transition:active() and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
-        if not (dive and dive.t < dive.style.out) then R.board_update(dt) end   -- the board waits behind the dive
+        if not transition:covering() then R.board_update(dt) end
         R.vfx_update(dt)
 
         local drawn_overlay = R.overlay
@@ -1613,15 +1575,17 @@ function G.app(R)
             end
         else board_exit = nil end
 
-        local interactive = R.overlay == R.OV_NONE and not talking and not board and not dive
+        local switching = transition:active()
+        local interactive = R.overlay == R.OV_NONE and not talking and not board and not switching
         local world = interactive and input.world() or input{pos = inp.pos, pinch = 1}
         ui.set_enabled(interactive)
-        if dive then dive_screen(world, dt)
-        elseif R.on_island then R.island_screen(world, dt)
+        if switching then
+            transition:frame(inp, dt, paint_transition)
         else
-            draw_board(world, dt, ease.in_out_cubic((board_exit or 0) / BOARD_OUT), true)
+            local screen = R.on_island and R.town or R.board_screen
+            screen:frame(world, dt, interactive, ease.in_out_cubic((board_exit or 0) / BOARD_OUT))
         end
-        if app.arg("debug-walkthrough") and not talking and not board and not dive
+        if app.arg("debug-walkthrough") and not talking and not board and not transition:active()
             and R.overlay == R.OV_NONE then
             local label = R.on_island and "Advance" or "Skip level"
             local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
@@ -1636,7 +1600,7 @@ function G.app(R)
         ui.set_enabled(true)
         local scene = clear_due and not revealing and R.clear_scene and R.clear_scene()
         if scene then R.draw_clear_scene(scene, inp) end
-        if not story_wait and not dive and drawn_overlay == R.overlay
+        if not story_wait and not transition:active() and drawn_overlay == R.overlay
             and (not outcome or board_exit == BOARD_OUT) then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
         story.frame(dt)
@@ -1673,7 +1637,7 @@ function G.app(R)
         local tiles = W.packs[1]
         for _, pack in ipairs(W.packs) do if app.arg("tiles") == pack then tiles = pack end end
         for i, t in ipairs(pack_kinds(tiles)) do R.relics[i] = t end
-        board_view.load(R, art, W.board)
+        board_screen.load(R, art, W.board)
         R.hud_art = art.load_hud()
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
         -- The painted green tick marks every met amount: board goals and cards.
