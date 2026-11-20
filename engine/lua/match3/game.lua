@@ -23,6 +23,8 @@
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
 -- See docs/PORTRAIT_GAMES.md.
+local N = ui.node
+
 local G = {}
 local BOARD_OUT = .30
 
@@ -619,41 +621,41 @@ function G.bind(R, over)
     end
 
     function R.register_result(model)
-        local form = ui.form{kind="column",panel=true,children={
+        local form = ui.form(N.column {panel=true,
             match3.popup_header("Results"),
-            {kind="column",gap=1,paint_group={.24,.32,9},children={
-                {kind="label",text="SCORE",em=13,text_style="caption"},
-                {kind="label",id="score",em=44,text_style="gold"},
-            }},
-            {kind="column",gap=7,paint_group={.62,.28,10},children={
-                {kind="label",text="RESOURCES TO BANK",em=13,text_style="caption"},
+            N.column {gap=1,paint_group={.24,.32,9},
+                N.label {text="SCORE",em=13,text_style="caption"},
+                N.label {id="score",em=44,text_style="gold"},
+            },
+            N.column {gap=7,paint_group={.62,.28,10},
+                N.label {text="RESOURCES TO BANK",em=13,text_style="caption"},
                 -- One row of equal cells, however many currencies the game banks.
-                {kind="uniform_grid",id="resources",rows=1,gap=9,item=function(entry)
+                N.uniform_grid {id="resources",rows=1,gap=9,item=function(entry)
                     return match3.resource_indicator(entry)
                 end},
-            }},
+            },
             -- The next purchase, in at most two parts: what it still needs after
             -- this win, as resource amounts, and one captioned picture row.
-            {kind="column",id="next_step",visible_field="show_next",panel=true,role="group",
-                padding={9,8,10,9},gap=6,paint_group={.9,.26,8},children={
-                    {kind="label",id="next_needs_caption",em=13,text_style="caption",visible_field="show_next_needs"},
-                    {kind="row",visible_field="show_next_needs",children={
-                        {kind="spacer",grow=1},
-                        {kind="list",id="next_needs",direction="row",gap=9,item=function(entry)
+            N.column {id="next_step",visible_field="show_next",panel=true,role="group",
+                padding={9,8,10,9},gap=6,paint_group={.9,.26,8},
+                    N.label {id="next_needs_caption",em=13,text_style="caption",visible_field="show_next_needs"},
+                    N.row {visible_field="show_next_needs",
+                        N.spacer {grow=1},
+                        N.list {id="next_needs",direction="row",gap=9,item=function(entry)
                             return match3.resource_indicator(entry, 104)
                         end},
-                        {kind="spacer",grow=1},
-                    }},
-                    {kind="row",gap=10,align="center",visible_field="show_next_title",children={
-                        {kind="image",id="next_icon",width=58,height=58,visible_field="show_next_icon"},
-                        {kind="column",grow=1,gap=2,children={
-                            {kind="label",id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
-                            {kind="label",id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
-                        }},
-                    }},
-                }},
-            {kind="button",id="claim",height=54,paint_group={1.02,.22,8}},
-        }}
+                        N.spacer {grow=1},
+                    },
+                    N.row {gap=10,align="center",visible_field="show_next_title",
+                        N.image {id="next_icon",width=58,height=58,visible_field="show_next_icon"},
+                        N.column {grow=1,gap=2,
+                            N.label {id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
+                            N.label {id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
+                        },
+                    },
+                },
+            N.button {id="claim",height=54,paint_group={1.02,.22,8}},
+        })
         R.result_form = form
         popup(R.OV_RESULT, form, {width=408, dismiss=false, prepare=function(d)
             local count = R.dialog_part(.43, .65).f
@@ -693,15 +695,15 @@ function G.bind(R, over)
     local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 20, 372
     local amount_width = 96
     local function amounts(id, caption, visible, width)
-        return {kind="column", gap=5, visible_field=visible, children={
-            {kind="label", id=id .. "_caption", text=caption, em=13, text_style="caption"},
-            {kind="list",id=id,direction="row",gap=AMOUNT_GAP,grow=1,item=function(entry)
+        return N.column {gap=5, visible_field=visible,
+            N.label {id=id .. "_caption", text=caption, em=13, text_style="caption"},
+            N.list {id=id,direction="row",gap=AMOUNT_GAP,grow=1,item=function(entry)
                 return match3.resource_indicator(entry, width or amount_width)
             end},
-        }}
+        }
     end
     local function group_gap(visible)
-        return {kind="spacer",width=GROUP_GAP,visible_field=visible}
+        return N.spacer {width=GROUP_GAP,visible_field=visible}
     end
 
     -- The building card: a story building or a shop item, to build or move.
@@ -710,28 +712,28 @@ function G.bind(R, over)
     -- W.card.gets);
     -- without it the card falls back to the building's unlock text.
     local wonder_form = ui.form{
-        root = {kind="column", panel=true, children={
+        root = N.column {panel=true,
             match3.popup_header("Building details", nil, W.corner_close and "close"),
-            {kind="image", id="sprite", height=205},
-            {kind="label", id="about", wrap=true, em=19, text_style="body"},
-            {kind="label", id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
-            {kind="row", visible_field="show_upgrade", children={
-                {kind="spacer",grow=1},
+            N.image {id="sprite", height=205},
+            N.label {id="about", wrap=true, em=19, text_style="body"},
+            N.label {id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
+            N.row {visible_field="show_upgrade",
+                N.spacer {grow=1},
                 amounts("upgrade", "", "show_upgrade", 96),
-                {kind="spacer",grow=1},
-            }},
-            {kind="row", visible_field="show_amounts", children={
-                {kind="spacer",grow=1},
+                N.spacer {grow=1},
+            },
+            N.row {visible_field="show_amounts",
+                N.spacer {grow=1},
                 amounts("price", W.card.price, "show_price"),
                 group_gap("show_both"),
                 amounts("gets", W.card.gets, "show_gets"),
-                {kind="spacer",grow=1},
-            }},
-            {kind="label",id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
-            {kind="button",id="action",height=56},
-            {kind="button",id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
-            not W.corner_close and {kind="button",id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
-        }},
+                N.spacer {grow=1},
+            },
+            N.label {id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
+            N.button {id="action",height=56},
+            N.button {id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
+            not W.corner_close and N.button {id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
+        },
         bindings={
             {id="sprite",field="sprite",type="texture",readonly=true},
             {id="about",field="about",readonly=true},{id="action",field="action",readonly=true},
@@ -833,11 +835,11 @@ function G.bind(R, over)
         return event.kind == "change" or event.id == "leaderboard"
     end})
 
-    local confirm_form = ui.form{kind="column",panel=true,children={
+    local confirm_form = ui.form(N.column {panel=true,
         match3.popup_header(W.confirm.title, W.confirm.body, W.corner_close and "close"),
-        {kind="button",id="confirm",text=W.confirm.restart,height=50},
-        {kind="button",id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
-    }}
+        N.button {id="confirm",text=W.confirm.restart,height=50},
+        N.button {id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
+    })
     R.confirm_form = confirm_form
     popup(R.OV_CONFIRM, confirm_form, {width=396, handle=function(event)
         if event.id == "confirm" then R.start_level(R.g.level); R.overlay = R.OV_NONE
@@ -845,24 +847,24 @@ function G.bind(R, over)
     end})
 
     local failed = W.failed
-    R.failed_form = ui.form{kind="column",panel=true,children={
+    R.failed_form = ui.form(N.column {panel=true,
         match3.popup_header(failed.title, failed.subtitle),
-        {kind="label",text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
-        {kind="button",id="retry",text=failed.retry,height=50},
-        {kind="button",id="town",text=failed.town,height=42,role="secondary"},
-    }}
+        N.label {text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
+        N.button {id="retry",text=failed.retry,height=50},
+        N.button {id="town",text=failed.town,height=42,role="secondary"},
+    })
     popup(R.OV_FAILED, R.failed_form, {width=404, dismiss=false, handle=function(event)
         if event.id == "retry" then R.start_level(R.g.level) else R.on_island, R.overlay = true, R.OV_NONE end
     end})
 
     local region = W.zone
-    local zone_form = ui.form{kind="column",panel=true,children={
+    local zone_form = ui.form(N.column {panel=true,
         match3.popup_header("Region", nil, W.corner_close and "close"),
-        {kind="label",id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
-        {kind="label",text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
-        {kind="button",id="open",height=47},
-        not W.corner_close and {kind="button",id="close",text=region.close,height=32,role="link",em=16} or nil,
-    }}
+        N.label {id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
+        N.label {text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
+        N.button {id="open",height=47},
+        not W.corner_close and N.button {id="close",text=region.close,height=32,role="link",em=16} or nil,
+    })
     R.zone_form = zone_form   -- the campaign smoke runs press its Open button
     popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
         local z = R.zone_card
@@ -885,10 +887,10 @@ function G.bind(R, over)
     for overlay, words in pairs{[R.OV_FINALE] = W.finale, [R.OV_COMPLETE] = W.complete} do
         local card = {match3.popup_header(words.title)}
         for _, line in ipairs(words.lines) do
-            card[#card+1] = {kind="label",text=line[1]:format(rules.LEVELS),wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
+            card[#card+1] = N.label {text=line[1]:format(rules.LEVELS),wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
         end
-        card[#card+1] = {kind="button",id="back",text=words.button,height=50}
-        local form = ui.form{kind="column",panel=true,children=card}
+        card[#card+1] = N.button {id="back",text=words.button,height=50}
+        local form = ui.form(N.column {panel=true,children=card})
         if overlay == R.OV_COMPLETE then R.complete_form = form end
         popup(overlay, form,
             {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
@@ -1183,9 +1185,9 @@ function G.bind(R, over)
     function R.open_story_choice(beat, preview)
         local children = {match3.popup_header(beat.prompt)}
         for index, option in ipairs(beat.choices) do
-            children[#children + 1] = {kind="button", id=tostring(index), text=option.label, height=54}
+            children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54}
         end
-        R.choice_form = ui.form{root={kind="column", panel=true, children=children}}
+        R.choice_form = ui.form{root=N.column {panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end
         assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=false}))
         R.story_choice_beat, R.story_choice_preview = beat, preview

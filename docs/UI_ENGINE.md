@@ -12,14 +12,16 @@ The approach follows Orion's [declarative dialogs and DDX](https://github.com/co
 The [identity dialog](https://github.com/corepunch/orion-ui/blob/1cf7e7272ab68665615c7c8b307b612e0b62c26a/apps/gitclient/dialogs/dlg_identity.c) demonstrates push on opening, pull on acceptance, and game/application-owned actions. Here, Lua field paths replace C struct offsets; the renderer and input primitives remain native C.
 
 ```lua
+local N = ui.node
+
 local settings = {audio = {sound = true}}
 local form = ui.form{
-    root = {kind="column", panel=true, children={
-        {kind="label", text="Settings", height=44, role="title"},
-        {kind="toggle", id="sound", height=48,
+    root = N.column {panel=true,
+        N.label {text="Settings", height=44, role="title"},
+        N.toggle {id="sound", height=48,
          on_text="Sound on", off_text="Sound off"},
-        {kind="button", id="accept", text="Apply", height=48, accent=true},
-    }},
+        N.button {id="accept", text="Apply", height=48, accent=true},
+    },
     bindings = {{id="sound", field="audio.sound", type="boolean"}},
 }
 assert(form:push(settings))
@@ -31,6 +33,12 @@ if action and action.id == "accept" then
     if ok then close_settings() else show_validation(message) end
 end
 ```
+
+Use `local N = ui.node` and write `N.label {text="Settings"}` to construct a
+node. Named fields specify its properties and consecutive indexed fields
+specify its children in order. Pass a prebuilt list with `children = rows`.
+Each node uses one child-list syntax. The constructors also work with custom
+elements and prefabs, and `ui.form` still accepts ordinary node tables.
 
 `push(model)` validates and populates the controls. Editing changes the form's
 values; the model changes only on `pull(model, validator?)`. Pull first validates
@@ -142,12 +150,15 @@ and a child fills its cell or is centred in it, as in a border.
 With an `item` builder the cells come from `form:set_items`, like a list's rows.
 
 ```lua
-{kind="uniform_grid", columns=3, gap=9, children={
-    {kind="border", role="card", padding=8, children={{kind="label", text="One"}}},
-    {kind="border", background="#FFF2C9", border_color="rim", border_width=2, radius=12, padding=8,
-     children={{kind="label", text="Two"}}},
-    {kind="border", role="card", padding=8, children={{kind="label", text="Three"}}},
-}}
+local N = ui.node
+
+local grid = N.uniform_grid {columns=3, gap=9,
+    N.border {role="card", padding=8, N.label {text="One"}},
+    N.border {background="#FFF2C9", border_color="rim", border_width=2, radius=12, padding=8,
+        N.label {text="Two"},
+    },
+    N.border {role="card", padding=8, N.label {text="Three"}},
+}
 ```
 
 ![Borders in uniform grids: three columns, a wrapped grid, one data-backed row](screenshots/ui-layout.jpg)
@@ -162,18 +173,20 @@ written once and used like any other node. The instance keeps what places it:
 the prefab's own property. Prefab and element names share one namespace.
 
 ```lua
+local N = ui.node
+
 ui.prefab("resource_indicator", function(p)   -- engine/lua/match3.lua, abridged
-    return {kind="border", role="resource_indicator", padding={4,5,4,7}, children={
-        {kind="column", gap=1, children={
-            {kind="image", image=p.icon, height=36},
-            {kind="label", text=p.amount, em=25, text_style="gold"},
-        }},
-    }}
+    return N.border {role="resource_indicator", padding={4,5,4,7},
+        N.column {gap=1,
+            N.image {image=p.icon, height=36},
+            N.label {text=p.amount, em=25, text_style="gold"},
+        },
+    }
 end)
 
 -- The results dialog: one row of equal cells, one per banked currency.
-{kind="uniform_grid", id="resources", rows=1, gap=9, item=function(entry)
-    return {kind="resource_indicator", icon=entry.icon, amount=entry.amount}
+local bank = N.uniform_grid {id="resources", rows=1, gap=9, item=function(entry)
+    return N.resource_indicator {icon=entry.icon, amount=entry.amount}
 end}
 ```
 
@@ -185,17 +198,19 @@ its measured height grows with the text.
 ### Data-backed stacks
 
 ```lua
-local help = ui.form{kind="list", id="topics", gap=12, item=function(record)
-    return {kind="row", gap=14, align="center", children={
-        {kind="image", image=record.icon, width=64, height=64, visible=record.icon~=nil},
-        {kind="column", grow=1, gap=4, children={
-            {kind="label", text=record.title, wrap=true,
+local N = ui.node
+
+local help = ui.form(N.list {id="topics", gap=12, item=function(record)
+    return N.row {gap=14, align="center",
+        N.image {image=record.icon, width=64, height=64, visible=record.icon~=nil},
+        N.column {grow=1, gap=4,
+            N.label {text=record.title, wrap=true,
              text_align=record.icon and "start" or "center"},
-            {kind="label", text=record.description, wrap=true,
+            N.label {text=record.description, wrap=true,
              text_align=record.icon and "start" or "center"},
-        }},
-    }}
-end}
+        },
+    }
+end})
 assert(help:set_items("topics", records))
 ```
 

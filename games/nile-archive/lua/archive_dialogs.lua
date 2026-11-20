@@ -1,5 +1,7 @@
 -- archive_dialogs.lua — the popups over the island and the scene: chapter
 -- won, the chapter browser, pause and the cast gallery.
+local N = ui.node
+
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
@@ -92,7 +94,7 @@ local function pause_dialog()
     r:cut_top(10)
     -- The setting: no pops, pulses, sparkles or floating text; saved with progress.
     local row = r:cut_top(56)
-    local w = K.skin:checkbox_size({kind = "checkbox"}, MOTION)
+    local w = K.skin:checkbox_size(N.checkbox {}, MOTION)
     local box = rect.centered(row:center(), size2(w, 48))
     G.spots.motion = box:center()
     local reduced = K.skin:draw_checkbox(box, MOTION, G.reduced_motion)
@@ -104,22 +106,22 @@ local function pause_dialog()
     if K.button(buttons:col(2, 1, 20), "Продолжить", "green") then G.close_modal() end
 end
 
-local browser = ui.form{kind = "column", gap = 8, children = {
-    {kind = "list", id = "searches", scroll = true, height = 510, gap = 7, item = function(e)
-        return {kind = "row", panel = true, role = "archive_entry", radius = 12, padding = 8, gap = 14, align = "center", children = {
-            {kind = "image", image = e.image, width = 84, height = 56},
-            {kind = "column", grow = 1, gap = 2, children = {
-                {kind = "label", text = e.title, text_align = "start", wrap = true, em = 21},
-                {kind = "label", text = e.note, role = "archive_note", text_align = "start", wrap = true},
-            }},
-            {kind = "button", id = "play", text = e.action, enabled = e.available, accent = e.available, width = 240, height = 44},
-        }}
+local browser = ui.form(N.column {gap = 8,
+    N.list {id = "searches", scroll = true, height = 510, gap = 7, item = function(e)
+        return N.row {panel = true, role = "archive_entry", radius = 12, padding = 8, gap = 14, align = "center",
+            N.image {image = e.image, width = 84, height = 56},
+            N.column {grow = 1, gap = 2,
+                N.label {text = e.title, text_align = "start", wrap = true, em = 21},
+                N.label {text = e.note, role = "archive_note", text_align = "start", wrap = true},
+            },
+            N.button {id = "play", text = e.action, enabled = e.available, accent = e.available, width = 240, height = 44},
+        }
     end},
-    {kind = "row", gap = 12, height = 44, children = {
-        {kind = "button", id = "journal", text = "Журнал улик", grow = 1},
-        {kind = "button", id = "leaderboard", text = "Таблица лидеров", grow = 1},
-    }},
-}}
+    N.row {gap = 12, height = 44,
+        N.button {id = "journal", text = "Журнал улик", grow = 1},
+        N.button {id = "leaderboard", text = "Таблица лидеров", grow = 1},
+    },
+})
 
 local function refresh_chapters()
     local records = {}
@@ -173,17 +175,17 @@ local function chapters_dialog(interactive)
     elseif event.source == "searches" then G.close_modal(function() scene.start(event.key) end) end
 end
 
-local journal = ui.form{kind = "column", gap = 8, children = {
-    {kind = "label", id = "summary", text_align = "center", role = "budget", height = 24},
-    {kind = "list", id = "notes", scroll = true, height = 510, gap = 4, item = function(e)
-        return {kind = "column", panel = true, role = "archive_entry", radius = 10,
-            padding = {left = 14, top = 7, right = 14, bottom = 7}, gap = 1, children = {
-            {kind = "label", text = e.title, text_align = "start"},
-            {kind = "label", text = e.note, role = "archive_note", text_align = "start", wrap = true},
-        }}
+local journal = ui.form(N.column {gap = 8,
+    N.label {id = "summary", text_align = "center", role = "budget", height = 24},
+    N.list {id = "notes", scroll = true, height = 510, gap = 4, item = function(e)
+        return N.column {panel = true, role = "archive_entry", radius = 10,
+            padding = {left = 14, top = 7, right = 14, bottom = 7}, gap = 1,
+            N.label {text = e.title, text_align = "start"},
+            N.label {text = e.note, role = "archive_note", text_align = "start", wrap = true},
+        }
     end},
-    {kind = "button", id = "back", text = "К поискам", height = 42},
-}}
+    N.button {id = "back", text = "К поискам", height = 42},
+})
 
 local function journal_dialog(interactive)
     local notes = progress.journal()
@@ -199,15 +201,15 @@ local function journal_dialog(interactive)
     if event and event.id == "back" then G.close_modal(function() G.open_modal(MODAL_CHAPTERS) end) end
 end
 
-local cache_result = ui.form{kind = "column", gap = 16, children = {
-    {kind = "column", panel = true, role = "parchment", radius = 12, padding = 16, gap = 4, children = {
-        {kind = "label", id = "chapter", text = "Глава 1 завершена", em = 24},
-        {kind = "label", id = "note", text = beats.c1t2.note, role = "archive_note", wrap = true, em = 19},
-    }},
-    {kind = "label", id = "next", text = "Дальше · Книга разливов", role = "budget", height = 30, em = 22},
-    {kind = "label", id = "reward", text = ("Награда за тайник · %d монет"):format(economy.CACHE_COINS), role = "budget", height = 26},
-    {kind = "button", id = "home", text = "На остров", accent = true, height = 48},
-}}
+local cache_result = ui.form(N.column {gap = 16,
+    N.column {panel = true, role = "parchment", radius = 12, padding = 16, gap = 4,
+        N.label {id = "chapter", text = "Глава 1 завершена", em = 24},
+        N.label {id = "note", text = beats.c1t2.note, role = "archive_note", wrap = true, em = 19},
+    },
+    N.label {id = "next", text = "Дальше · Книга разливов", role = "budget", height = 30, em = 22},
+    N.label {id = "reward", text = ("Награда за тайник · %d монет"):format(economy.CACHE_COINS), role = "budget", height = 26},
+    N.button {id = "home", text = "На остров", accent = true, height = 48},
+})
 
 local function cache_dialog(interactive)
     local chapter = content.cache_chapter(G.scene) or 1

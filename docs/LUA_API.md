@@ -2928,7 +2928,7 @@ What a city update or confirm did.
 
 ## Shared Lua forms
 
-The embedded UI framework extends ui with ui.form(template), ui.modals(skin), ui.element(kind, class) and ui.prefab(kind, build). See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).
+Use `ui.node` to construct nodes, for example `ui.node.label {text="Settings"}`. The framework provides `ui.form(template)`, `ui.modals(skin)`, `ui.element(kind, class)` and `ui.prefab(kind, build)`. See [UI engine resources, bindings, skins and modal layers](UI_ENGINE.md).
 
 ## Motion: ease and tween
 

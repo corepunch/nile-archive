@@ -29,6 +29,8 @@
 -- Skin roles used if the skin defines them: title, leaderboard_row,
 -- leaderboard_me (the player's own row) and leaderboard_note (the status line).
 -- Without Game Center it shows the player's own best, so it works everywhere.
+local N = ui.node
+
 local L = {}
 L.__index = L
 
@@ -64,34 +66,34 @@ function L.new(options)
     local texts = self.texts
     local visible_rows = options.rows or 8
     local me_suffix = " " .. texts.you
-    self.form = ui.form{root = {kind = "column", panel = true, children = {
+    self.form = ui.form{root = N.column {panel = true,
         options.header and options.header(texts.title, nil, options.corner_close and "close") or
-            {kind = "label", id = "title", text = texts.title, role = "title", height = 44},
+            N.label {id = "title", text = texts.title, role = "title", height = 44},
         -- the chosen tab is an accent button, the other a flat caption, whatever the skin does for "selected"
-        {kind = "row", gap = 10, height = 46, children = {
-            {kind = "button", id = "global_on", text = texts.everyone, grow = 1, accent = true, visible_field = "show_global_on"},
-            {kind = "button", id = "global", text = texts.everyone, grow = 1, flat = true, visible_field = "show_global_off"},
-            {kind = "button", id = "friends_on", text = texts.friends, grow = 1, accent = true, visible_field = "show_friends_on"},
-            {kind = "button", id = "friends", text = texts.friends, grow = 1, flat = true, visible_field = "show_friends_off"},
-        }},
-        {kind = "label", id = "status", text = "", wrap = true, role = "leaderboard_note", min_height = 26, visible_field = "show_status"},
-        {kind = "list", id = "rows", scroll = true, gap = 4, height = visible_rows * 44, item = function(record)
+        N.row {gap = 10, height = 46,
+            N.button {id = "global_on", text = texts.everyone, grow = 1, accent = true, visible_field = "show_global_on"},
+            N.button {id = "global", text = texts.everyone, grow = 1, flat = true, visible_field = "show_global_off"},
+            N.button {id = "friends_on", text = texts.friends, grow = 1, accent = true, visible_field = "show_friends_on"},
+            N.button {id = "friends", text = texts.friends, grow = 1, flat = true, visible_field = "show_friends_off"},
+        },
+        N.label {id = "status", text = "", wrap = true, role = "leaderboard_note", min_height = 26, visible_field = "show_status"},
+        N.list {id = "rows", scroll = true, gap = 4, height = visible_rows * 44, item = function(record)
             local role = record.me and "leaderboard_me" or "leaderboard_row"
             -- the outlined text spills past its box, and the list clips at its edge: keep a margin on both sides
-            return {kind = "row", height = 40, gap = 8, align = "center", children = {
-                {kind = "spacer", width = 4},
-                {kind = "label", text = tostring(record.rank), width = 26, text_align = "start", role = role},
-                {kind = "custom", width = 36, height = 36, paint = function(box) self:portrait(box, record) end},
-                {kind = "label", text = record.name .. (record.me and me_suffix or ""), grow = 1, text_align = "start", role = role},
-                {kind = "label", text = self.format(record.score), width = 110, text_align = "end", role = role},
-                {kind = "spacer", width = 10},
-            }}
+            return N.row {height = 40, gap = 8, align = "center",
+                N.spacer {width = 4},
+                N.label {text = tostring(record.rank), width = 26, text_align = "start", role = role},
+                N.custom {width = 36, height = 36, paint = function(box) self:portrait(box, record) end},
+                N.label {text = record.name .. (record.me and me_suffix or ""), grow = 1, text_align = "start", role = role},
+                N.label {text = self.format(record.score), width = 110, text_align = "end", role = role},
+                N.spacer {width = 10},
+            }
         end},
-        {kind = "row", gap = 10, height = 50, visible_field = options.corner_close and "show_native", children = {
-            {kind = "button", id = "native", text = texts.native, grow = 1, visible_field = "show_native"},
-            not options.corner_close and {kind = "button", id = "close", text = texts.close, grow = 1, accent = true} or nil,
-        }},
-    }}}
+        N.row {gap = 10, height = 50, visible_field = options.corner_close and "show_native",
+            N.button {id = "native", text = texts.native, grow = 1, visible_field = "show_native"},
+            not options.corner_close and N.button {id = "close", text = texts.close, grow = 1, accent = true} or nil,
+        },
+    }}
     return self
 end
 

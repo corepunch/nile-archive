@@ -1,6 +1,8 @@
 -- ui.skin: declarative skin files compiled into the form paint contract.
 
 -- Layers with a paint callback record where and how they were drawn.
+local N = ui.node
+
 local drawn={}
 local function rec(name) return function(box) drawn[#drawn+1]={name=name,box=box} end end
 local function find(name) for _,d in ipairs(drawn) do if d.name==name then return d end end end
@@ -47,10 +49,10 @@ check(math.abs(s.size-40)<.01,"extended style keeps its own em, times the font s
 check(s.fill.r==255 and s.fill.g==0 and s.outline.a==255,"extended style overrides fill, inherits outline")
 s=skin:text("body",20)
 check(math.abs(s.outline_width-2)<.01 and math.abs(s.shadow_offset.y-4)<.01,"outline and shadow scale with em")
-check(math.abs(skin.style({kind="label",role="headline"}).size-60)<.01,"roles pick a style and size")
-check(math.abs(skin.style({kind="label",wrap=true}).size-18)<.01,"wrapped labels use wrap_text/wrap_em")
-check(math.abs(skin.style({kind="button",em=8}).size-16)<.01,"a node's em overrides the control's")
-check(math.abs(skin.style({kind="toggle"}).size-24)<.01,"toggle extends button")
+check(math.abs(skin.style(N.label {role="headline"}).size-60)<.01,"roles pick a style and size")
+check(math.abs(skin.style(N.label {wrap=true}).size-18)<.01,"wrapped labels use wrap_text/wrap_em")
+check(math.abs(skin.style(N.button {em=8}).size-16)<.01,"a node's em overrides the control's")
+check(math.abs(skin.style(N.toggle {}).size-24)<.01,"toggle extends button")
 
 -- States merge over normal in order: selected, hover, pressed, disabled.
 local box=rect(10,20,100,40)
@@ -67,13 +69,13 @@ paint({selected=true,hot=true})
 check(names()=="shadow,body-hover,gloss-on","selected and hover combine")
 paint({disabled=true,hot=true,held=true})
 check(names()=="shadow,body-off,gloss" and find("body-off").box.y==20,"disabled wins; no hover or press while disabled")
-paint({},{kind="button",flat=true})
+paint({},N.button {flat=true})
 check(names()=="","flat variant draws nothing")
-paint({},{kind="button",accent=true})
+paint({},N.button {accent=true})
 check(names()=="shadow,body-accent,gloss","accent variant patches the normal look")
-paint({hot=true},{kind="button",role="danger"})
+paint({hot=true},N.button {role="danger"})
 check(names()=="shadow,body-hover,gloss","a variant keeps the control's other states")
-paint({},{kind="toggle"})
+paint({},N.toggle {})
 check(names()=="shadow,body,gloss","toggle inherits button looks")
 
 -- The paint transform scales and offsets every layer (animated dialogs).
@@ -81,7 +83,7 @@ skin.transform=function() return 2,vec2(5,0),.5 end
 drawn={};skin:paint("panel",rect(10,10,20,20))
 check(find("panel").box.x==10 and find("panel").box.w==20,"paint callbacks receive logical boxes")
 check(math.abs(skin:text("body").size-40)<.01 and math.abs(skin:text("body").fade-.5)<.01,"text follows the transform scale and opacity")
-check(math.abs(skin.style({kind="label"}).size-28)<.01,"measurement ignores the transform")
+check(math.abs(skin.style(N.label {}).size-28)<.01,"measurement ignores the transform")
 skin.transform=nil
 
 -- Bound form images share the skin transform, fitting before painting while
@@ -89,7 +91,7 @@ skin.transform=nil
 local image_draw, images=gfx.image,{}
 gfx.image=function(im,bounds,tint) images[#images+1]={image=im,box=bounds,tint=tint} end -- luacheck: ignore 122
 local im={tex=true,w=80,h=40}
-local image_form=ui.form{kind="image",id="art",image=im}
+local image_form=ui.form(N.image {id="art",image=im})
 skin.transform=function() return .5,vec2(5,7),.25 end
 image_form:draw(rect(10,20,100,100),skin,{input={}})
 image_form.root.cover=true
@@ -111,11 +113,11 @@ check(images[3].box.h==100 and images[3].tint.a==255,"settled skin restores full
 check(images[4].box.h==100 and images[4].tint.a==255,"native image fallback stays available")
 
 -- Checkbox: an engine control, bound like a toggle, painted by the skin.
-local form=ui.form{root={kind="column",gap=4,children={
-    {kind="checkbox",id="hints",text="Hints",height=30},
-    {kind="checkbox",id="locked",text="Locked",height=30,enabled=false,value=true},
-    {kind="button",id="ok",text="OK",height=30},
-}},bindings={{id="hints",field="hints",type="boolean"}}}
+local form=ui.form{root=N.column {gap=4,
+    N.checkbox {id="hints",text="Hints",height=30},
+    N.checkbox {id="locked",text="Locked",height=30,enabled=false,value=true},
+    N.button {id="ok",text="OK",height=30},
+},bindings={{id="hints",field="hints",type="boolean"}}}
 local model={hints=false}
 check(form:push(model) and form:get("hints")==false and form:get("locked")==true,"checkbox binds a boolean; value seeds an unbound one")
 local w,h=form:measure(200,skin)
@@ -136,10 +138,10 @@ check(form.focus=="ok" and count("focus")>0,"Tab moves and paints keyboard focus
 drawn={}
 form:draw(rect(0,0,200,120),skin,{input={pressed=true}})
 check(form.focus=="ok" and count("focus")==0,"pointer use removes the ring while retaining the focused control")
-check(not pcall(ui.form,{kind="checkbox"}),"checkbox needs an ID")
+check(not pcall(ui.form,N.checkbox {}),"checkbox needs an ID")
 
 -- The native look stays available without a skin.
-local plain=ui.form{root={kind="checkbox",id="c",text="Plain",height=30}}
+local plain=ui.form{root=N.checkbox {id="c",text="Plain",height=30}}
 check(pcall(plain.draw,plain,rect(0,0,200,30),{},{input={}}),"checkbox draws with the native theme")
 
 -- Immediate mode: the same skin paints hand-placed widgets.
@@ -166,7 +168,7 @@ local native=ui.skin{fonts={f={font=base_font}},text={t={font="f",em=10,shadow="
 drawn={};native:paint("button",box,{hot=true,held=true})
 check(names()=="body-hot,pin" and find("body-hot").box.x==12 and find("body-hot").box.w==96,"pressed inset shrinks non-fixed layers and hides one")
 check(find("pin").box.x==10,"fixed layers ignore the look's inset")
-drawn={};native:paint("button",box,{hot=true},{kind="button",accent=true})
+drawn={};native:paint("button",box,{hot=true},N.button {accent=true})
 check(names()=="shadow-gold,body-gold,pin","an accent hover patch keeps the accent normal patch")
 check(math.abs(native:text("t",20).shadow_offset.y-2)<.01,"scale_lengths=false pins shadow lengths")
 check(math.abs(native:text("faded").fade-.45)<.01,"text styles can fade")
@@ -213,14 +215,14 @@ check(#art:audit({button={"pressed"}})==0,"audit takes the game's required state
 local cards=ui.skin{fonts={f={font=base_font}},text={body={font="f"}},colors={rim="#102030"},controls={
     border={variants={card={normal={layers={{paint=rec("card")}}}}}},
 }}
-drawn={};cards.border(box,{kind="border",role="card"})
+drawn={};cards.border(box,N.border {role="card"})
 check(find("card") and find("card").box.w==100,"a border's role picks its look")
-drawn={};cards.border(box,{kind="border"})
+drawn={};cards.border(box,N.border {})
 check(#drawn==0,"a border without a role or colours paints nothing")
 local fill_draw,line_draw,shapes=gfx.round_rect,gfx.round_rect_line,{}
 gfx.round_rect=function(bounds,radius,c) shapes.fill={box=bounds,radius=radius,color=c} end -- luacheck: ignore 122
 gfx.round_rect_line=function(bounds,radius,width,c) shapes.line={box=bounds,radius=radius,width=width,color=c} end -- luacheck: ignore 122
-drawn={};cards.border(box,{kind="border",role="card",background="#FFFFFF",border_color="rim",border_width=4,radius=12})
+drawn={};cards.border(box,N.border {role="card",background="#FFFFFF",border_color="rim",border_width=4,radius=12})
 gfx.round_rect,gfx.round_rect_line=fill_draw,line_draw -- luacheck: ignore 122
 check(#drawn==0 and shapes.fill.radius==12 and shapes.fill.box.w==100 and shapes.fill.color.r==255,"a border's own background replaces the role's look")
 check(shapes.line.width==4 and shapes.line.color.b==48 and shapes.line.box.x==12 and shapes.line.box.w==96 and shapes.line.radius==10,

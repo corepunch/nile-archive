@@ -20,6 +20,25 @@ Form.__index, Stack.__index = Form, Stack
 -- builder returns, so a repeated part is written once and used as one node.
 local classes, prefabs, builtin = {}, {}, {}
 local function fail(message) error('ui.form: ' .. message, 3) end
+
+-- Constructors produce ordinary templates, including for game-defined kinds.
+ui.node = setmetatable({}, {
+    __index = function(constructors, kind)
+        local function node(fields)
+            local count = #fields
+            if count > 0 then
+                if fields.children ~= nil then fail('use inline children or a children field') end
+                fields.children = table.move(fields, 1, count, 1, {})
+                for i = 1, count do fields[i] = nil end
+            end
+            fields.kind = kind
+            return fields
+        end
+        rawset(constructors, kind, node)
+        return node
+    end,
+})
+
 local function padding(p)
     if type(p) == 'number' then return p,p,p,p end
     p = p or {}; return p.left or p[1] or 0, p.top or p[2] or 0, p.right or p[3] or 0, p.bottom or p[4] or 0

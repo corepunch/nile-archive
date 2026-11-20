@@ -1,5 +1,7 @@
 -- Reusable deterministic match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
+local N = ui.node
+
 local buttons = require("match3.buttons")
 local E = {
     NO_TRICKLE=1, NO_TOOLS=4, NO_HINTS=8, NO_RESHUFFLE=16, LINE_MATCHES=64, COLOR_TOOL=256,
@@ -38,17 +40,17 @@ end
 -- top right corner, where it takes no room from the title. A full-screen
 -- sheet has no room outside its corner, so `tucked` keeps the X inside it.
 function E.popup_header(title, subtitle, close_id, tucked)
-    return {kind="column",id="header",role="popup_header",padding={16,0,16,0},gap=2,children={
-        {kind="label",id="title",value=header_title(title),wrap=true,em=30,text_style="popup_title"},
-        {kind="label",id="subtitle",value=header_subtitle(subtitle),visible_field="subtitle",
+    return N.column {id="header",role="popup_header",padding={16,0,16,0},gap=2,
+        N.label {id="title",value=header_title(title),wrap=true,em=30,text_style="popup_title"},
+        N.label {id="subtitle",value=header_subtitle(subtitle),visible_field="subtitle",
             wrap=true,em=14,text_style="popup_subtitle"},
         -- The card's padding plus the font's leading sit above the caps; this
         -- gives the rule the same room below the text, centring the title.
-        {kind="spacer",height=8},
-        {kind="spacer",panel=true,role="popup_rule",height=14},
-        close_id and {kind="button",id=close_id,role="popup_close",width=44,height=44,
+        N.spacer {height=8},
+        N.spacer {panel=true,role="popup_rule",height=14},
+        close_id and N.button {id=close_id,role="popup_close",width=44,height=44,
             pin={1,0},pin_offset=tucked and {-26,26} or {-8,8}} or nil,
-    }}
+    }
 end
 
 function E.set_popup_header(form, title, subtitle)
@@ -67,42 +69,42 @@ end
 -- of the figure.
 ui.prefab("resource_indicator", function(p)
     local narrow = p.width and p.width < 76
-    local figure = p.amount and {kind="label",text=tostring(p.amount),
+    local figure = p.amount and N.label {text=tostring(p.amount),
         em=p.compact and 16 or narrow and 21 or 25,text_style="gold"}
     local children = {}
     if p.icon then
-        children[1] = {kind="image",image=p.icon,height=p.compact and 24 or figure and 36 or 62}
+        children[1] = N.image {image=p.icon,height=p.compact and 24 or figure and 36 or 62}
         if figure and p.done then
             -- A gathered amount: the board goals' tick in place of the figure.
             local side = narrow and 24 or 30
-            figure = {kind="row",align="center",children={
-                {kind="spacer",grow=1},
-                {kind="spacer",panel=true,role="done_tick",width=side,height=side},
-                {kind="spacer",grow=1},
-            }}
+            figure = N.row {align="center",
+                N.spacer {grow=1},
+                N.spacer {panel=true,role="done_tick",width=side,height=side},
+                N.spacer {grow=1},
+            }
         elseif figure and p.unit then
             -- A single digit leaves room for a larger unit beside it.
             local side = narrow and 18 or 24
             if #figure.text == 1 then side = side + 10 end
-            figure = {kind="row",gap=narrow and 2 or 3,align="center",children={
-                {kind="spacer",grow=1},{kind="image",image=p.unit,width=side,height=side},figure,{kind="spacer",grow=1},
-            }}
+            figure = N.row {gap=narrow and 2 or 3,align="center",
+                N.spacer {grow=1},N.image {image=p.unit,width=side,height=side},figure,N.spacer {grow=1},
+            }
         end
     elseif figure then
         figure.em, figure.height = narrow and 28 or 34, 46
     end
     children[#children + 1] = figure
-    if p.label then children[#children + 1] = {kind="label",text=p.label,height=15,em=12,text_style="caption"} end
+    if p.label then children[#children + 1] = N.label {text=p.label,height=15,em=12,text_style="caption"} end
     -- A lone icon stays centred when its row stretches it to a neighbour's height.
-    if #children == 1 then children = {{kind="spacer",grow=1},children[1],{kind="spacer",grow=1}} end
-    return {kind="border",role="resource_indicator",padding=p.compact and {4,2,4,3} or {4,5,4,7},children={
-        {kind="column",gap=1,children=children},
-    }}
+    if #children == 1 then children = {N.spacer {grow=1},children[1],N.spacer {grow=1}} end
+    return N.border {role="resource_indicator",padding=p.compact and {4,2,4,3} or {4,5,4,7},
+        N.column {gap=1,children=children},
+    }
 end)
 
 -- A resource record ({icon, amount, unit, label}) as that element.
 function E.resource_indicator(entry, width, compact)
-    return {kind="resource_indicator",width=width,icon=entry.icon,amount=entry.amount,
+    return N.resource_indicator {width=width,icon=entry.icon,amount=entry.amount,
         unit=entry.unit,label=entry.label,done=entry.done,compact=compact}
 end
 
@@ -110,21 +112,21 @@ end
 -- row is the button (id 'pick') and paint_row draws its art, name, price and
 -- action. A record marked slim (already built) takes a short row.
 function E.catalogue_form(title, close, paint_row, corner)
-    return ui.form{kind='column',panel=true,children={
+    return ui.form(N.column {panel=true,
         E.popup_header(title, nil, corner and "close", true),
-        {kind='row',height=38,gap=8,children={
-            {kind='button',id='category_prev',text='<',width=42,em=22},
-            {kind='label',id='category',grow=1,em=21},
-            {kind='button',id='category_next',text='>',width=42,em=22},
-        }},
-        {kind='list',id='stock',scroll=true,grow=1,gap=6,item=function(record)
-            return {kind='overlay',height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,children={
-                {kind='custom',paint=function(box) paint_row(box, record) end},
-                {kind='button',id='pick',text='',flat=true,enabled=record.available},
-            }}
+        N.row {height=38,gap=8,
+            N.button {id='category_prev',text='<',width=42,em=22},
+            N.label {id='category',grow=1,em=21},
+            N.button {id='category_next',text='>',width=42,em=22},
+        },
+        N.list {id='stock',scroll=true,grow=1,gap=6,item=function(record)
+            return N.overlay {height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,
+                N.custom {paint=function(box) paint_row(box, record) end},
+                N.button {id='pick',text='',flat=true,enabled=record.available},
+            }
         end},
-        not corner and {kind='button',id='close',text=close,height=42,em=21} or nil,
-    }}
+        not corner and N.button {id='close',text=close,height=42,em=21} or nil,
+    })
 end
 
 -- A skin is one flat table of named images. Its definition lists typed
@@ -277,23 +279,23 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if entry.label then R.say_at(entry.label,goal_centers[entry.id],9,R.PAL_WHITE,45) end
     end
     local function goal_form()
-        return ui.form{kind="row",gap=6,align="center",children={
-            {kind="spacer",grow=1},
-            {kind="list",id="goals",direction="row",gap=GOAL_GAP,item=function(entry)
-                return {kind="custom",width=GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
+        return ui.form(N.row {gap=6,align="center",
+            N.spacer {grow=1},
+            N.list {id="goals",direction="row",gap=GOAL_GAP,item=function(entry)
+                return N.custom {width=GOAL_W,height=30,paint=function(box) goal_panel(box,entry) end}
             end},
-            {kind="spacer",grow=1},
-        }}
+            N.spacer {grow=1},
+        })
     end
     local hud_form, hud_second = goal_form(), goal_form()
 
     -- The row vertically centres the column by its visible lettering.
-    local moves_form = ui.form{kind="row", align="center", children={
-        {kind="column", id="stack", grow=1, children={
-            {kind="label", id="caption", text="MOVES", text_style=PAL_CREAM, em=9},
-            {kind="label", id="count", text_style=PAL_GOLD},
-        }},
-    }}
+    local moves_form = ui.form(N.row {align="center",
+        N.column {id="stack", grow=1,
+            N.label {id="caption", text="MOVES", text_style=PAL_CREAM, em=9},
+            N.label {id="count", text_style=PAL_GOLD},
+        },
+    })
 
     -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
     -- remaining moves large inside. It warms to red over the last five moves.
@@ -537,39 +539,39 @@ function E.bind_town_board_hud(R)
 end
 
 function E.guide_form(copy, guide_icon, corner)
-    return ui.form{kind="column",panel=true,children={
+    return ui.form(N.column {panel=true,
         E.popup_header(copy.title, copy.instructions, corner and "done"),
-        {kind="list",id="topics",scroll=true,height=520,gap=6,item=function(entry)
+        N.list {id="topics",scroll=true,height=520,gap=6,item=function(entry)
             local align=entry.icon and "start" or "center"
-            return {kind="row",gap=10,align="center",children={
-                {kind="custom",width=52,height=52,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
-                {kind="column",grow=1,gap=4,children={
-                    {kind="label",text=entry.title,wrap=true,text_align=align,em=22,text_style="gold"},
-                    {kind="label",text=entry.description,wrap=true,text_align=align,em=17,text_style="body"},
-                }},
-            }}
+            return N.row {gap=10,align="center",
+                N.custom {width=52,height=52,visible=entry.icon~=nil,paint=function(r) guide_icon(r,entry.icon) end},
+                N.column {grow=1,gap=4,
+                    N.label {text=entry.title,wrap=true,text_align=align,em=22,text_style="gold"},
+                    N.label {text=entry.description,wrap=true,text_align=align,em=17,text_style="body"},
+                },
+            }
         end},
-        {kind="label",text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
-        not corner and {kind="button",id="done",text=copy.done,height=45,em=25} or nil,
-    }}
+        N.label {text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
+        not corner and N.button {id="done",text=copy.done,height=45,em=25} or nil,
+    })
 end
 
 function E.pause_form(guide_label, quit_label, leaderboard_label, corner)
     return ui.form{
-        root={kind="column",panel=true,children={
+        root=N.column {panel=true,
             E.popup_header("Settings", nil, corner and "close"),
-            {kind="column",panel=true,role="group",padding={18,8,18,10},gap=6,children={
-                {kind="checkbox",id="sound",text="SOUND",height=50},
-                {kind="checkbox",id="motion",text="REDUCE MOTION",height=50},
-            }},
-            {kind="column",gap=12,children={
-                {kind="button",id="resume",text="RESUME",height=52},
-                {kind="button",id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
-                {kind="button",id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
-            }},
-            {kind="button",id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
-            {kind="button",id="guide",text=guide_label,height=32,role="link",em=20},
-        }},
+            N.column {panel=true,role="group",padding={18,8,18,10},gap=6,
+                N.checkbox {id="sound",text="SOUND",height=50},
+                N.checkbox {id="motion",text="REDUCE MOTION",height=50},
+            },
+            N.column {gap=12,
+                N.button {id="resume",text="RESUME",height=52},
+                N.button {id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
+                N.button {id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
+            },
+            N.button {id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
+            N.button {id="guide",text=guide_label,height=32,role="link",em=20},
+        },
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
     }
 end

@@ -1755,6 +1755,9 @@ function city.serialize(c, s) end
 ---@field values table
 ---@field boxes table<string,rect>
 local ui_form = {}
+---Construct a form node of the requested kind from properties and inline children.
+---@type table<string, fun(fields: table): table>
+ui.node = {}
 ---@return ui_form
 function ui.form(template) end
 ---@return boolean, string?

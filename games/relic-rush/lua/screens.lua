@@ -2,6 +2,8 @@
 -- guide's rows and icons, and the wallet and town icons. The dialogs, their
 -- motion, the paint helpers and every other popup are the engine's
 -- (engine/lua/match3/game.lua); words are lua/game_config.lua.
+local N = ui.node
+
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
 local buttons = require("match3.buttons")
@@ -69,11 +71,11 @@ end
 -- bottom of the Build button, filled by the share of the price the wallet
 -- holds (the mean over the currencies it asks for), as on the markers. A full gauge is not drawn; the ready rim says it instead. A
 -- funded purchase still waiting on a level keeps that level as a caption.
-local level_gate = ui.form{kind="column",children={
-    {kind="column",panel=true,role="group",padding={6,4,6,5},children={
-        {kind="label",id="caption",em=13,text_style="caption"},
-    }},
-}}
+local level_gate = ui.form(N.column {
+    N.column {panel=true,role="group",padding={6,4,6,5},
+        N.label {id="caption",em=13,text_style="caption"},
+    },
+})
 
 local function draw_build_progress(screen)
     if R.island.placing >= 0 then return end

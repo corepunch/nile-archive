@@ -43,6 +43,8 @@
 --   overlay()               drawing between the map and the HUD (particles)
 --   extras(screen)          game-only HUD (Nile Archive's player plate, ...)
 --   hide_bottom()           true while a game panel (Nile Archive's build tray) replaces the bottom row
+local N = ui.node
+
 local T = {}
 T.none = {}   -- in a game's town_config.lua, clears a default
 
@@ -138,33 +140,33 @@ function T.new(c, config, hooks)
     local cfg = T.config(config)
     local v = setmetatable({city = c, cfg = cfg, hooks = hooks, buttons = {}, time = 0}, View)
     local b, p = cfg.bottom, cfg.placement
-    v.navigation = ui.form{kind = "row", gap = 16, children = {
-        {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.height},
-        {kind = "spacer", grow = 1},
-        {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
-    }}
+    v.navigation = ui.form(N.row {gap = 16,
+        N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.height},
+        N.spacer {grow = 1},
+        N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
+    })
     if b.layout == "play-primary" and b.pause then
-        v.navigation = ui.form{kind = "row", align = "center", gap = 8, children = {
-            {kind = "spacer", grow = 1},
-            {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
-            {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
-            {kind = "button", id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height},
-            {kind = "spacer", grow = 1},
-        }}
+        v.navigation = ui.form(N.row {align = "center", gap = 8,
+            N.spacer {grow = 1},
+            N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
+            N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
+            N.button {id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height},
+            N.spacer {grow = 1},
+        })
     elseif b.layout == "play-primary" then
-        v.navigation = ui.form{kind = "row", align = "center", gap = 8, children = {
-            {kind = "button", id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
-            {kind = "spacer", grow = 1},
-            {kind = "button", id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
-            {kind = "spacer", grow = 1},
-            {kind = "spacer", width = b.build},   -- balances Build, so Play stays centred
-        }}
+        v.navigation = ui.form(N.row {align = "center", gap = 8,
+            N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
+            N.spacer {grow = 1},
+            N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
+            N.spacer {grow = 1},
+            N.spacer {width = b.build},   -- balances Build, so Play stays centred
+        })
     end
-    v.placement_form = ui.form{kind = "row", children = {
-        {kind = "button", id = "cancel", text = "", width = p.button, height = p.button, role = "placement_cancel"},
-        {kind = "spacer", grow = 1},
-        {kind = "button", id = "confirm", text = "", width = p.button, height = p.button, role = "placement_confirm", enabled_field = "valid"},
-    }}
+    v.placement_form = ui.form(N.row {
+        N.button {id = "cancel", text = "", width = p.button, height = p.button, role = "placement_cancel"},
+        N.spacer {grow = 1},
+        N.button {id = "confirm", text = "", width = p.button, height = p.button, role = "placement_confirm", enabled_field = "valid"},
+    })
     if cfg.markers.visible then c.draw_over = function(city_) v:draw_markers(city_) end end
     v:layout()
     return v
@@ -357,20 +359,20 @@ function View:header_layout(caps, cfg)
     key = table.concat(key, ",")
     if self.header_cfg ~= cfg or self.header_key ~= key then
         local children = {}
-        if right then children[1] = {kind = "spacer", grow = 1} end
+        if right then children[1] = N.spacer {grow = 1} end
         if leading_width then
-            children[#children + 1] = {kind = "custom", id = "leading", width = leading_width, height = cfg.height}
+            children[#children + 1] = N.custom {id = "leading", width = leading_width, height = cfg.height}
         end
         for k, cap in ipairs(caps) do
-            children[#children + 1] = {kind = "custom", id = "cap" .. k,
+            children[#children + 1] = N.custom {id = "cap" .. k,
                 width = oh + (cap.width or cfg.width) * scale, height = cfg.height}
         end
         if menu then
-            if not right then children[#children + 1] = {kind = "spacer", grow = 1} end
-            children[#children + 1] = {kind = "custom", id = "menu", width = menu.size, height = menu.size}
+            if not right then children[#children + 1] = N.spacer {grow = 1} end
+            children[#children + 1] = N.custom {id = "menu", width = menu.size, height = menu.size}
         end
         -- Left-aligned pills let the next icon overhang into the gap.
-        self.header_form = ui.form{kind = "row", align = "center", gap = gap, children = children}
+        self.header_form = ui.form(N.row {align = "center", gap = gap, children = children})
         self.header_cfg, self.header_key = cfg, key
     end
     local boxes = self.header_form:layout(band, self.hooks.skin)
