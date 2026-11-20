@@ -114,13 +114,56 @@ def fit_prices(game, seeds, write=True):
     summary = next((line for line in reversed(log.splitlines()) if 'expected campaign (fitted)' in line), '').strip()
     print(f'prices: {changed} of {len(prices)} changed; {summary}  ({time.time() - started:.0f} s)', flush=True)
     step('catalogue', [sys.executable, f'games/{game}/{generator}'])
-    # The README's purchase table quotes every price.
-    readme = ROOT / 'games' / game / 'README.md'
-    text = readme.read_text()
-    for item in json.loads((ROOT / 'games' / game / 'art/building-catalogue/manifest.json').read_text())['items']:
-        row = re.compile(r'(\| \d+ \| %s \| \d+ \| )[^|]*(\|)' % re.escape(item['name']))
-        text = row.sub(lambda m: m.group(1) + ' / '.join(map(str, item['cost'])) + ' ' + m.group(2), text)
-    readme.write_text(text)
+    write_price_tables(game)
+
+
+# Currency names in cost order, as the docs spell a price out in words.
+CURRENCIES = {'relic-rush': ('Coins', 'Food', 'Supplies'), 'christmas-market': ('Tokens', 'Treats', 'Materials')}
+PRICE_DOCS = {'relic-rush': ('README.md', 'docs/building-catalogue.md'),
+              'christmas-market': ('docs/market-pieces.md', 'docs/building-catalogue.md')}
+
+
+def write_price_tables(game):
+    """Copy every fitted price into the tables that quote it.
+
+    A row names its building by `key` in its first cell (the building
+    catalogues) or by name in its second (the purchase ladders, where a
+    Rome name may follow in brackets). Its price is a cell of "a / b / c" in
+    cost order, or of "N Coins + N Food" in any order."""
+    items = json.loads((ROOT / 'games' / game / 'art/building-catalogue/manifest.json').read_text())['items']
+    by_key = {item['key']: item['cost'] for item in items}
+    by_name = {item['name'].replace('’', "'"): item['cost'] for item in items}
+    names = CURRENCIES[game]
+    worded = re.compile(r'^\d+ (%s)( \+ \d+ (%s))*$' % ('|'.join(names), '|'.join(names)))
+    rows = 0
+    for doc in PRICE_DOCS[game]:
+        path = ROOT / 'games' / game / doc
+        lines = path.read_text().split('\n')
+        for n, line in enumerate(lines):
+            cells = line.split('|')
+            if len(cells) < 5 or not line.startswith('|'):
+                continue
+            key = re.search(r'`(\w+)`', cells[1])
+            name = re.sub(r'\*\*|\s*\([^)]*\)', '', cells[2]).strip().replace('’', "'")
+            cost = by_key.get(key.group(1)) if key else by_name.get(name)
+            if not cost:
+                continue
+            for i, cell in enumerate(cells):
+                text = cell.strip()
+                if re.fullmatch(r'\d+ / \d+ / \d+', text):
+                    cells[i] = ' %s ' % ' / '.join(map(str, cost))
+                elif worded.match(text):
+                    quoted = re.findall(r'\d+ (\w+)', text)
+                    assert set(quoted) == {names[s] for s in range(3) if cost[s]}, f'{doc}: {line}'
+                    cells[i] = ' %s ' % ' + '.join(f'{cost[names.index(c)]} {c}' for c in quoted)
+                else:
+                    continue
+                rows += 1
+                break
+            lines[n] = '|'.join(cells)
+        path.write_text('\n'.join(lines))
+    assert rows >= len([i for i in items if any(i['cost'])]), f'{game}: only {rows} price rows found in the docs'
+    print(f'docs: {rows} price rows', flush=True)
 
 
 def main():

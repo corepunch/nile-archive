@@ -115,29 +115,29 @@ sprite file is always `data/city/buildings/<key>.png`.
 
 | ID / key | Name | Category | Tiles | Price | Stars | Reviewed city capture |
 | --- | --- | --- | --- | --- | ---: | --- |
-| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 1180 Coins + 600 Supplies + 445 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 1 / `well` | Spring well | wonder | 2 x 2 | 70 Coins | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 2 / `workshop` | Carpenter's workshop | wonder | 3 x 2 | 1255 Coins + 470 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
-| 3 / `market` | Jungle market | building | 3 x 2 | 1220 Coins + 765 Supplies + 465 Food | 10 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 0 / `camp` | Expedition camp | wonder | 2 x 2 | 1075 Coins + 540 Supplies + 410 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 1 / `well` | Spring well | wonder | 2 x 2 | 60 Coins | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 2 / `workshop` | Carpenter's workshop | wonder | 3 x 2 | 1170 Coins + 440 Food | 0 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
+| 3 / `market` | Jungle market | building | 3 x 2 | 1165 Coins + 735 Supplies + 445 Food | 10 | [Page 1](review/painted-buildings/current-camera/after-building-review-1.jpg) |
 | 4 / `gateway` | Harbour plaza | wonder | 3 x 2 | 620 Coins + 890 Supplies + 995 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 5 / `lodge` | Harbour lodge | wonder | 3 x 3 | 695 Coins + 970 Supplies + 1465 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
+| 5 / `lodge` | Harbour lodge | wonder | 3 x 3 | 695 Coins + 965 Supplies + 1460 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 6 / `archive` | Keeper's archive | wonder | 3 x 3 | 970 Coins + 965 Supplies + 1650 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
 | 7 / `observatory` | Star observatory | wonder | 2 x 2 | 1050 Coins + 945 Supplies + 1585 Food | 0 | [Page 2](review/painted-buildings/current-camera/after-building-review-2.jpg) |
-| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 1825 Coins + 1285 Supplies + 2230 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 9 / `temple` | Temple of the Sun | wonder | 4 x 4 | 2150 Coins + 1555 Supplies + 2640 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
-| 10 / `log_cabin` | Trapper's cabin | wonder | 2 x 2 | 645 Coins + 235 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 8 / `fountain` | Jade fountain | wonder | 3 x 3 | 1820 Coins + 1285 Supplies + 2235 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 9 / `temple` | Temple of the Sun | wonder | 4 x 4 | 2155 Coins + 1560 Supplies + 2640 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
+| 10 / `log_cabin` | Trapper's cabin | wonder | 2 x 2 | 710 Coins + 255 Food | 0 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 11 / `apothecary` | Herbalist's hut | building | 2 x 2 | 220 Coins + 15 Food | 6 | [Page 3](review/painted-buildings/current-camera/after-building-review-3.jpg) |
 | 12 / `mess_hall` | Mess hall | building | 3 x 2 | 240 Coins + 16 Supplies | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
 | 13 / `stilt_house` | Stilt house | building | 3 x 2 | 260 Coins + 17 Supplies | 9 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
 | 14 / `map_room` | Cartographer's house | wonder | 3 x 2 | 695 Coins + 855 Supplies + 1475 Food | 0 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
 | 15 / `greenhouse` | Glass greenhouse | building | 3 x 2 | 300 Coins + 20 Food | 12 | [Page 4](review/painted-buildings/current-camera/after-building-review-4.jpg) |
-| 16 / `trading_post` | Stone trading post | wonder | 3 x 3 | 705 Coins + 620 Supplies + 720 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 17 / `water_mill` | Water mill | wonder | 3 x 3 | 715 Coins + 935 Supplies + 965 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 18 / `clock_tower` | Tide clock tower | wonder | 2 x 2 | 710 Coins + 990 Supplies + 1080 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
-| 19 / `lighthouse` | Lighthouse | wonder | 2 x 2 | 775 Coins + 790 Supplies + 1345 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 16 / `trading_post` | Stone trading post | wonder | 3 x 3 | 695 Coins + 615 Supplies + 720 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 17 / `water_mill` | Water mill | wonder | 3 x 3 | 710 Coins + 935 Supplies + 960 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 18 / `clock_tower` | Tide clock tower | wonder | 2 x 2 | 710 Coins + 990 Supplies + 1085 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
+| 19 / `lighthouse` | Lighthouse | wonder | 2 x 2 | 775 Coins + 795 Supplies + 1345 Food | 0 | [Page 5](review/painted-buildings/current-camera/after-building-review-5.jpg) |
 | 20 / `treehouse` | Canopy treehouse | building | 3 x 3 | 400 Coins + 27 Supplies | 21 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
 | 21 / `aviary` | Great aviary | wonder | 3 x 3 | 1645 Coins + 1420 Supplies + 2430 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
-| 22 / `beached_ship` | Beached schooner | wonder | 4 x 2 | 970 Coins + 955 Supplies + 1650 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
+| 22 / `beached_ship` | Beached schooner | wonder | 4 x 2 | 970 Coins + 950 Supplies + 1650 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
 | 23 / `amphitheater` | Stone amphitheatre | wonder | 4 x 3 | 805 Coins + 1145 Supplies + 1900 Food | 0 | [Page 6](review/painted-buildings/current-camera/after-building-review-6.jpg) |
 | 24 / `museum` | Relic museum | wonder | 4 x 3 | 1780 Coins + 1420 Supplies + 2400 Food | 0 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |
 | 25 / `hanging_gardens` | Hanging gardens | building | 4 x 4 | 550 Coins + 37 Food | 30 | [Page 7](review/painted-buildings/current-camera/after-building-review-7.jpg) |

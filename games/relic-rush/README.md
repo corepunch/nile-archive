@@ -212,26 +212,26 @@ The ladder has twenty purchases, one available after every fifth board (after le
 
 | After level | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
-| 1 | Spring well (Well) | Water buckets | 70 / 0 / 0 |
-| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 645 / 235 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 1255 / 470 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 1180 / 445 / 600 |
-| 21 | Jungle market (Farm) | Ration jars | 1220 / 465 / 765 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 705 / 720 / 620 |
-| 31 | Water mill (Mill) | Grain bundles | 715 / 965 / 935 |
-| 36 | Tide clock tower (Thermae) | Shield | 710 / 1080 / 990 |
+| 1 | Spring well (Well) | Water buckets | 60 / 0 / 0 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 710 / 255 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 1170 / 440 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 1075 / 410 / 540 |
+| 21 | Jungle market (Farm) | Ration jars | 1165 / 445 / 735 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 695 / 720 / 615 |
+| 31 | Water mill (Mill) | Grain bundles | 710 / 960 / 935 |
+| 36 | Tide clock tower (Thermae) | Shield | 710 / 1085 / 990 |
 | 41 | Harbour plaza (Port) | Shrimp | 620 / 995 / 890 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 695 / 1465 / 970 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass; red mullet | 695 / 1460 / 965 |
 | 51 | Stone amphitheatre (Coliseum) | Helmets | 805 / 1900 / 1145 |
 | 56 | Cartographer's house (House of the Vestals) | Lightning; pearls | 695 / 1475 / 855 |
 | 61 | Keeper's archive (Aqueduct) | Rings | 970 / 1650 / 965 |
-| 66 | Lighthouse | Plus | 775 / 1345 / 790 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 970 / 1650 / 955 |
+| 66 | Lighthouse | Plus | 775 / 1345 / 795 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 970 / 1650 / 950 |
 | 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1050 / 1585 / 945 |
 | 81 | Great aviary (Pantheon) | Sandals | 1645 / 2430 / 1420 |
 | 86 | Relic museum (Theatre) | Harps | 1780 / 2400 / 1420 |
-| 91 | Temple of the Sun (Forum) | Star | 2150 / 2640 / 1555 |
-| 96 | Jade fountain (Fountain) | Emeralds | 1825 / 2230 / 1285 |
+| 91 | Temple of the Sun (Forum) | Star | 2155 / 2640 / 1560 |
+| 96 | Jade fountain (Fountain) | Emeralds | 1820 / 2235 / 1285 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
