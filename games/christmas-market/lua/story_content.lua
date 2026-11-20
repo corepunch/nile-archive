@@ -552,84 +552,89 @@ return {
         {"noelle", "\"Stay for the cocoa,\" you wrote. Gran's lamp is in my window and I've her key. I'm staying."},
         {"pip", "SOMEONE SAID YES! EVERYBODY LOOK! I NEVER READ A SINGLE NOTE!", story.SHOUT},
     }},
-    {key="citizen-man_03", phase="citizen", event="man_03", building="Welcome arch", lines={
-        {"clem", "Miss, I saw that arch glow from the hill road. Who dares light my side of the valley?"},
-        {"noelle", "Guilty! Are you here to tell me off, or to hold the ladder?"},
-        {"clem", "Neither. Give me the arch and it will be lit before anyone thinks to flip a switch."},
+    {key="upgrade-man_03", phase="upgrade", event="man_03", title="a mulled-wine hatch in the arch", building="Welcome arch", lines={
+        {"noelle", "Theo, come and see! A hatch in the arch, so the mulled wine comes out through the wall!"},
+        {"theo", "Wine through a wall. Fine, but who ladles it? Not me. My gloves are sticky."},
+        {"noelle", "Nobody ladles. Just stand under it and tell everyone it was your idea. Cinnamon first?"},
     }},
-    {key="citizen-man_04", phase="citizen", event="man_04", building="Reindeer stable", lines={
-        {"ned", "Is that your sleigh-horse? He's walking on worn-out shoes, and nobody's said a word!"},
-        {"theo", "He's walked like that all week. I thought it was a mood."},
-        {"ned", "Hold his head. Four new shoes and bells on the harness, and he'll be ready sooner than you think."},
+    {key="upgrade-man_04", phase="upgrade", event="man_04", title="new shoes and bells for the sleigh-horse", building="Reindeer stable", lines={
+        {"pip", "Mr Wren, hold his bridle! New shoes, and the bells are mine. I polished every one!"},
+        {"wren", "Let him hear them first. A horse likes to know whose tune he's wearing."},
+        {"pip", "He keeps lifting his feet like a cat in snow. Does that mean he likes them?"},
     }},
-    {key="citizen-man_02", phase="citizen", event="man_02", building="Lumber workshop", lines={
-        {"ivar", "Your saws woke me three valleys off. Where do you keep your logs, little one?"},
-        {"theo", "You woke me too. Are you the one who stacks wood like it owes you money?"},
-        {"ivar", "Every dawn, a fresh load at the door. Bring tea, and I'll bring beams."},
+    {key="upgrade-man_02", phase="upgrade", event="man_02", title="a drying shed for the pine", building="Lumber workshop", lines={
+        {"theo", "Noelle, don't touch the pine. It's drying. I built a shed. A whole shed, for planks."},
+        {"noelle", "You, fussing over planks? Theo Marsh, that's sweet. Why a shed?"},
+        {"theo", "Wet wood spits sparks and splits stalls. And yes, it's a bit sweet. Tell nobody."},
     }},
-    {key="citizen-man_01", phase="citizen", event="man_01", building="Firework stall", lines={
-        {"dot", "Whose stall is this? I'll swap you a cellar of sparklers for a corner and a bucket of sand."},
-        {"pip", "Can I hold the match? I won't drop it. Much."},
-        {"dot", "You can hold the sand. Stand back, and the first rocket will be up before you blink."},
+    {key="upgrade-man_01", phase="upgrade", event="man_01", title="a rocket rack, ready in threes", building="Firework stall", lines={
+        {"pip", "Mrs Holt, the rockets stand in a rack now! In threes! Nothing rolls!"},
+        {"agnes", "Rolls? Pip Larkin, what rolled? And where did it roll to?"},
+        {"pip", "Nowhere! Bramble only sniffed one. Sniffed! Have a bun. No, you have the buns, sorry!"},
     }},
-    {key="citizen-man_05", phase="citizen", event="man_05", building="Gingerbread bakery", lines={
-        {"hettie", "Agnes Holt, your gingerbread smells grand and looks like a fallen roof. Shall I fix it?"},
-        {"agnes", "You'll ice my roofs over my dead body. There's buns on the left."},
-        {"hettie", "Then I'll pipe on the buns. Plenty of them, every day, and you'll thank me by Epiphany."},
+    {key="upgrade-man_05", phase="upgrade", event="man_05", title="a second oven", building="Gingerbread bakery", lines={
+        {"agnes", "Don't gloat. Yes, there's a second oven. One batch bakes while the next one rises."},
+        {"noelle", "Gloat? You've been grinning at it for an hour. Has it got a name yet?"},
+        {"agnes", "It's an oven. The tall one's for gingerbread. The little one's for the hungry. Sit."},
     }},
-    {key="citizen-man_06", phase="citizen", event="man_06", building="Snowy chapel", lines={
-        {"mags", "Hold that lamp steady, young woman. This chapel step has wobbled since I was a girl."},
-        {"noelle", "Wobbled? I've been calling it the chapel's little dance."},
-        {"mags", "Dance on a mended step, then. I'll set it, and the cold lanes will be as firm as rock by morning."},
+    {key="upgrade-man_06", phase="upgrade", event="man_06", title="the masons' yard behind the chapel", building="Snowy chapel", lines={
+        {"wren", "Pip, run and tell the masons the chapel step is wanted. Stone keeps its own hours."},
+        {"pip", "A whole yard of masons? Where did they come from? Did you ask them, Mr Wren?"},
+        {"wren", "I only mentioned the step. Mind the chisels, they're cold and they bite."},
     }},
-    {key="citizen-man_07", phase="citizen", event="man_07", building="Hot cocoa kiosk", lines={
-        {"alder", "Noelle, I paid for a cup here when the kiosk opened. Now give me that ladle."},
-        {"noelle", "Mrs Alder, my cocoa has lumps. Is that your professional opinion?"},
-        {"alder", "My grandmother's cocoa, with a pinch of pepper. Every dusk there'll be a pot waiting."},
+    {key="upgrade-man_07", phase="upgrade", event="man_07", title="Mrs Alder's ladle and second pot", building="Hot cocoa kiosk", lines={
+        {"alder", "Theo Marsh, taste this! Second pot, my own ladle. Nutmeg, and a little orange."},
+        {"theo", "Not bad. Don't tell Agnes, or she'll want a pot of her own."},
+        {"alder", "She can queue. Hold the cup and stand still while I hum you the carol it goes with."},
     }},
-    {key="citizen-man_08", phase="citizen", event="man_08", building="Ice house", lines={
-        {"olaf", "Nobody's asked me for ice since the lake froze last year. Is it still a trade?"},
-        {"wren", "Quite a good one. The reindeer have been drinking out of puddles."},
-        {"olaf", "Then it's blocks for the sleigh. I'll have them cut before the next snow is down."},
+    {key="upgrade-man_08", phase="upgrade", event="man_08", title="a second ice saw on the lake", building="Ice house", lines={
+        {"theo", "Finch, that's the second ice saw. Twice the blocks, and nobody wet."},
+        {"finch", "Bramble walked out on the ice this morning. It held. Your sawing's fine."},
+        {"theo", "You let your goat test my ice? She could have gone through!"},
+        {"finch", "She doesn't. She's very particular. Same as you."},
     }},
-    {key="citizen-man_09", phase="citizen", event="man_09", building="Lakeside smokehouse", lines={
-        {"finch", "Noelle, my goat has eaten half your tinsel. Let me pay it off in trout."},
-        {"noelle", "Bramble ate it? She looks so innocent. Pip, hold her, quick!"},
-        {"finch", "Smoked trout, every morning, until she stops eating the decorations. Possibly Easter."},
+    {key="upgrade-man_09", phase="upgrade", event="man_09", title="a second smoking rack", building="Lakeside smokehouse", lines={
+        {"alder", "Mr Finch, two racks! Will there be trout for the whole lane at Christmas?"},
+        {"finch", "One rack for the trout. One for Bramble's share. She won't touch fish. I keep asking."},
+        {"alder", "Then give her share to my grandchildren. They'll eat anything tied with a ribbon."},
     }},
-    {key="citizen-man_10", phase="citizen", event="man_10", building="Toymaker's workshop", lines={
-        {"lotte", "Is this where the wooden soldiers are made? Hide me, I've run off from my aunt's sewing room!"},
-        {"henrik", "Hide in my workshop and wash your brush before you touch the red. We have standards."},
-        {"lotte", "I paint eyes on dolls faster than anyone. You'll have a shelf of soldiers by morning."},
+    {key="upgrade-man_10", phase="upgrade", event="man_10", title="a second bench and a shop bell", building="Toymaker's workshop", lines={
+        {"henrik", "Pip, don't slam it. It's a shop bell, not a drum. One ring per customer."},
+        {"pip", "But it's so loud! Mr Strand, why do you need two benches? Is somebody coming to help?"},
+        {"henrik", "A bench stays free in case someone wants to learn. The bell tells me they've come."},
     }},
-    {key="citizen-man_11", phase="citizen", event="man_11", building="Candlelight shop", lines={
-        {"lucia", "You've a wax shop! Mr Wren, do you know how many candles my crown takes?"},
-        {"wren", "Seven, if you're careful, and none if you're sensible."},
-        {"lucia", "Then I'll dip a fresh taper for every window, and they'll be lit before dark."},
+    {key="upgrade-man_11", phase="upgrade", event="man_11", title="Mr Wren trims every wick", building="Candlelight shop", lines={
+        {"wren", "Mind your sleeve, Noelle. A wick wants trimming to a sparrow's eyelash."},
+        {"noelle", "Mr Wren, you've done every wick in the shop. When do you ever sleep?"},
+        {"wren", "Wicks don't mind. Take one home for your window. Light likes to be seen."},
     }},
-    {key="citizen-man_12", phase="citizen", event="man_12", building="North Pole post office", lines={
-        {"penny", "Young man, your market's letters are piling up. Have you any idea who is sorting them?"},
-        {"pip", "Me! I run them in my satchel! Are you here to take my job?"},
-        {"penny", "To lend you a pigeonhole. The letters will be delivered sooner, and you'll keep your satchel."},
+    {key="upgrade-man_12", phase="upgrade", event="man_12", title="a second sorting rack", building="North Pole post office", lines={
+        {"pip", "Theo, I have my own rack now! Letters sorted by lane. The Kind Word box goes first!"},
+        {"theo", "Do you read them? Look me in the eye, Pip."},
+        {"pip", "I only read the envelopes! Mostly! Please don't tell Mr Wren I said mostly!"},
     }},
-    {key="citizen-man_13", phase="citizen", event="man_13", building="Glassblower's stall", lines={
-        {"gianna", "Signora Noelle, the lights here are the brightest, but nobody has hung a glass bauble!"},
-        {"noelle", "We tried paper ones. They fell in the cocoa."},
-        {"gianna", "Mine will not. One a day, blown by my own breath, and each one throws a rainbow on the snow."},
+    {key="upgrade-man_13", phase="upgrade", event="man_13", title="a second furnace", building="Glassblower's stall", lines={
+        {"theo", "Agnes, say it. Anything glass, any size. The second furnace is hungry."},
+        {"agnes", "A dome for the gingerbread. Pip's thumbs go through everything on that counter."},
+        {"theo", "Tall, so the gingerbread men can stand up straight. I'll have it before your next batch."},
+        {"agnes", "No bubbles, mind. I mean it, Theo."},
     }},
-    {key="citizen-man_14", phase="citizen", event="man_14", building="Reindeer carousel", lines={
-        {"sid", "Madam, that carousel wheezes like my organ. Shall we fix both?"},
-        {"agnes", "Play \"Good King Wenceslas\" first. Henrik hates it, and it makes me smile."},
-        {"sid", "Wound up properly, it'll play carols faster than the snow can fall."},
+    {key="upgrade-man_14", phase="upgrade", event="man_14", title="a band organ", building="Reindeer carousel", lines={
+        {"pip", "Mrs Alder, the organ plays three tunes! I picked them all. Which one's your favourite?"},
+        {"alder", "The one I can hum along to. Play it again, love, I'll find the key."},
+        {"pip", "You never find the key! Not once!"},
+        {"alder", "Cheek. That's why I need the organ to carry me."},
     }},
-    {key="citizen-man_15", phase="citizen", event="man_15", building="Woodcarvers' hall", lines={
-        {"rolf", "I've carved reindeer on my doorstep for thirty winters. Is this hall truly for us?"},
-        {"henrik", "For us, yes. Come here, Rolf. That angel's left wing is wrong, and I'll show you."},
-        {"rolf", "Show me, and I'll carve you a new one for every day of Advent."},
+    {key="upgrade-man_15", phase="upgrade", event="man_15", title="Henrik's old apprentices come back", building="Woodcarvers' hall", lines={
+        {"noelle", "Mr Strand, there's somebody at every bench! Who are they all?"},
+        {"henrik", "My old apprentices. I taught them to hold a gouge. Now they correct my joints. Insufferable."},
+        {"noelle", "Are you pleased? You can tell me."},
+        {"henrik", "Their joints are tidy. Yes, pleased. Mind the shavings."},
     }},
-    {key="citizen-man_16", phase="citizen", event="man_16", building="Christmas tree", lines={
-        {"bellamy", "That is the finest tree I've seen. Noelle, may the choir stand beneath it?"},
-        {"noelle", "Do you take people who sing flat? Asking for a friend. Me."},
-        {"bellamy", "Under that tree even you will sing sharp. We'll have the harmony ready before the bells."},
+    {key="upgrade-man_16", phase="upgrade", event="man_16", title="a star for the top", building="Christmas tree", lines={
+        {"theo", "Strand, I need steady hands. The star's heavy and the top branch is thin."},
+        {"henrik", "Then you've trimmed it wrong. Give it here. A peg, not a nail. Always a peg."},
+        {"theo", "You're lecturing a man who sells forty trees. Hold the ladder?"},
+        {"henrik", "I'll hold it. You'll wobble. Try to do it gently, for the tree's sake."},
     }},
 }

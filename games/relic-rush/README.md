@@ -180,13 +180,13 @@ On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the j
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
 The Spring well costs 70 Coins. Its water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The Build card shows the price or the amounts still needed.
 
-### Tutorials and citizens (`lua/user_events.lua`)
+### Tutorials and upgrades (`lua/user_events.lua`)
 
 [`lua/user_events.lua`](lua/user_events.lua) ports Cradle of Rome's
 `settings/user_events.xml`. It uses the same event ids, `If` conditions,
 `Then` effects and `available` chaining. The runtime is the engine's
 ([`match3/user_events.lua`](../../engine/lua/match3/user_events.lua), shared with
-Christmas Market; see [the match-3 engine](../../docs/MATCH3_ENGINE.md#user-events-and-citizens));
+Christmas Market; see [the match-3 engine](../../docs/MATCH3_ENGINE.md#user-events-and-upgrades));
 [`lua/user_events_runtime.lua`](lua/user_events_runtime.lua) only wires it to this
 game. Each event fires once per profile, and the save keeps which events are done.
 
@@ -194,16 +194,15 @@ game. Each event fires once per profile, and the save keeps which events are don
   5th suggestion until the first line of three. Toasts introduce tablets,
   double tablets, chains, double chains, ice, the low-moves warning, each
   charged bonus and the catalogue.
-- **Citizens.** Sixteen, with Rome 2's ids `man_01` to `man_16`, one per
-  building ([the table](../../docs/CAMPAIGN_DESIGN.md#citizens)): Lupe at the Spring well,
-  Old Bastian at the Trapper's cabin, Joaquín, Dita, Auntie Marisol, Basile, Hana, Ferro, Nilo,
-  Zaza, Ruth, Captain Ulla, Pike, Dr Amani, Mr Sato and Ixchel. Placing the building arms its
-  feat (a resource earned in one level, a long match or a run of moves); meeting it brings the
-  citizen, who upgrades the building, awards a trophy and gives a lasting perk: more Coins, Food
-  or Supplies in every won expedition, or a tool whose pieces charge one point more per match.
-  The building's card names the citizen and shows the feat while it is armed, then the perk. The
-  arrival scene is the citizen's section in `docs/story.md` and plays on the next return to town
-  (a toast if the section is missing).
+- **Upgrades.** Sixteen, with Rome 2's ids `man_01` to `man_16` (Rome's citizens, kept by the
+  cast we know; [the table](../../docs/CAMPAIGN_DESIGN.md#upgrades-romes-citizens-kept-by-the-cast-we-know)):
+  a second rope and pulley at the Spring well (Tomas), a second saw bench at the Carpenter's workshop
+  (Mara), a polished lens at the Lighthouse (Mara) and so on. Placing the building arms its feat (a resource
+  earned in one level, a long match or a run of moves); meeting it upgrades the building, awards a trophy and gives
+  a lasting perk: more Coins, Food or Supplies in every won expedition, or a tool whose pieces charge one point
+  more per match. The building's card shows the feat while it is armed, then "Upgraded: ..." with the perk. The scene,
+  spoken by the keeper, is the upgrade's entry in `docs/story.md` under `## Upgrades` and plays on the next return to
+  town (a toast if it is missing).
 - **Test flag.** `--user-events-test` fires the `test=true` events at once,
   like Rome's F5 cheat.
 

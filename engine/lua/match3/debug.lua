@@ -431,7 +431,7 @@ function D.bind(R, W)
         local beat_key = app.arg("story-beat")   -- --story-beat KEY [--story-line N]: preview a scene from its Nth line
         if beat_key then
             local beat = assert(journey.find(beat_key), "unknown story beat")
-            island_with(journey.earned(beat.level or 0))   -- a citizen scene has no level
+            island_with(journey.earned(beat.level or 0))   -- a upgrade scene has no level
             R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
             while story.active() do story.next() end
             local lines = {}

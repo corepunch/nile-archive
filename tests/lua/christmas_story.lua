@@ -44,10 +44,10 @@ for _,b in ipairs(journey.beats) do
 end
 check(lines>0,'the reviewed script ships')
 local U=require('user_events_runtime')
-for _,b in ipairs(journey.citizens) do
-    check(b.phase=='citizen' and b.event and journey.find_citizen(b.event)==b and U.by_id[b.event] and U.by_id[b.event].citizen,
-        'each citizen scene belongs to a citizen event: '..b.key)
-    for _,line in ipairs(b.lines) do check(cast[line[1]],'each citizen line has a cast member: '..tostring(line[1])) end
+for _,b in ipairs(journey.upgrades) do
+    check(b.phase=='upgrade' and b.event and journey.find_upgrade(b.event)==b and U.by_id[b.event] and U.by_id[b.event].upgrade,
+        'each upgrade scene belongs to an upgrade event: '..b.key)
+    for _,line in ipairs(b.lines) do check(cast[line[1]],'each upgrade line has a cast member: '..tostring(line[1])) end
 end
 local finds = 0
 for level=1,rules.LEVELS do

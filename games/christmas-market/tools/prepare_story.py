@@ -7,22 +7,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LEVELS = 100
 text = (ROOT / 'docs/story.md').read_text()
-# The citizens' arrival scenes live in their own section; the level beats never see it.
-section = re.search(r'^## Citizens\n.*?(?=^## |\Z)', text, re.S | re.M)
-citizen_source = section[0] if section else ''
-source = text.replace(citizen_source, '').split('## Small lines')[0]
+# The upgrades' scenes live in their own section; the level beats never see it.
+section = re.search(r'^## Upgrades\n.*?(?=^## |\Z)', text, re.S | re.M)
+upgrade_source = section[0] if section else ''
+source = text.replace(upgrade_source, '')
+source = re.sub(r'^## Citizens\n.*?(?=^## |\Z)', '', source, flags=re.S | re.M).split('## Small lines')[0]   # also drop the superseded Citizens section
 beats, beat = [], None
 speakers = {'Noelle': 'noelle', 'Theo': 'theo', 'Agnes': 'agnes', 'Henrik': 'henrik', 'Pip': 'pip', 'Mr Wren': 'wren',
-            'Mary': 'mary', 'Rosa': 'rosa',
-            'Clem': 'clem', 'Ned': 'ned', 'Ivar': 'ivar', 'Dot': 'dot', 'Hettie': 'hettie', 'Mags': 'mags',
-            'Mrs Alder': 'alder', 'Olaf': 'olaf', 'Mr Finch': 'finch', 'Lotte': 'lotte', 'Lucia': 'lucia',
-            'Mr Penny': 'penny', 'Gianna': 'gianna', 'Sid': 'sid', 'Rolf': 'rolf', 'Mr Bellamy': 'bellamy'}
+            'Mary': 'mary', 'Rosa': 'rosa', 'Mrs Alder': 'alder', 'Mr Finch': 'finch'}
 SPEAKER = '|'.join(speakers)
-# Rome 2's citizen events (games/christmas-market/lua/user_events.lua) and the speaker each one must have.
-citizen_speakers = {'man_03': 'Clem', 'man_04': 'Ned', 'man_02': 'Ivar', 'man_01': 'Dot', 'man_05': 'Hettie',
-                    'man_06': 'Mags', 'man_07': 'Mrs Alder', 'man_08': 'Olaf', 'man_09': 'Mr Finch', 'man_10': 'Lotte',
-                    'man_11': 'Lucia', 'man_12': 'Mr Penny', 'man_13': 'Gianna', 'man_14': 'Sid', 'man_15': 'Rolf',
-                    'man_16': 'Mr Bellamy'}
+# Rome 2's upgrade events (games/christmas-market/lua/user_events.lua) and the keeper who must speak in each.
+keeper_speakers = {'man_03': 'Noelle', 'man_04': 'Pip', 'man_02': 'Theo', 'man_01': 'Pip', 'man_05': 'Agnes', 'man_06': 'Mr Wren', 'man_07': 'Mrs Alder', 'man_08': 'Theo', 'man_09': 'Mr Finch', 'man_10': 'Henrik', 'man_11': 'Mr Wren', 'man_12': 'Pip', 'man_13': 'Theo', 'man_14': 'Pip', 'man_15': 'Henrik', 'man_16': 'Theo'}
 for line in source.splitlines():
     heading = re.match(r'\*\*(Before level|Level) (\d+)', line)
     if heading:
@@ -34,24 +29,24 @@ for line in source.splitlines():
         assert spoken, 'Christmas Market dialogue requires a named cast member: ' + line
     if spoken and beat:
         beat['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
-citizens, citizen = [], None
-for line in citizen_source.splitlines():
-    heading = re.match(r'\*\*Citizen (man_\d\d) · ([^·*]+) · ([^*]+)\*\*\s*$', line)
-    if line.startswith('**Citizen'):
-        assert heading, 'write each citizen heading as **Citizen man_NN · <name> · <building>**: ' + line
-        assert heading[1] in citizen_speakers, 'unknown citizen event ' + heading[1]
-        citizen = {'key': 'citizen-' + heading[1], 'event': heading[1], 'building': heading[3].strip(), 'lines': []}
-        citizens.append(citizen)
+upgrades, upgrade = [], None
+for line in upgrade_source.splitlines():
+    heading = re.match(r'\*\*Upgrade (man_\d\d) · ([^·*]+) · ([^*]+)\*\*\s*$', line)
+    if line.startswith('**Upgrade'):
+        assert heading, 'write each upgrade heading as **Upgrade man_NN · <title> · <Building name>**: ' + line
+        assert heading[1] in keeper_speakers, 'unknown upgrade event ' + heading[1]
+        upgrade = {'key': 'upgrade-' + heading[1], 'event': heading[1], 'title': heading[2].strip(), 'building': heading[3].strip(), 'lines': []}
+        upgrades.append(upgrade)
     spoken = re.match(r'- \*\*(' + SPEAKER + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
-    if citizen and line.startswith('- **') and ':**' in line:
+    if upgrade and line.startswith('- **') and ':**' in line:
         assert spoken, 'Christmas Market dialogue requires a named cast member: ' + line
-    if spoken and citizen:
-        citizen['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
-assert len({c['event'] for c in citizens}) == len(citizens), 'a citizen has two scenes'
-for c in citizens:
+    if spoken and upgrade:
+        upgrade['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
+assert len({c['event'] for c in upgrades}) == len(upgrades), 'an upgrade has two scenes'
+for c in upgrades:
     assert c['lines'] and len(c['lines']) <= 48, c['key'] + ' needs spoken lines'
-    assert speakers[citizen_speakers[c['event']]] in {who for who, _, _ in c['lines']}, \
-        c['key'] + ' must have its citizen (' + citizen_speakers[c['event']] + ') speak'
+    assert speakers[keeper_speakers[c['event']]] in {who for who, _, _ in c['lines']}, \
+        c['key'] + ' must have its keeper (' + keeper_speakers[c['event']] + ') speak'
     assert all(len(text) <= 100 for _, text, _ in c['lines']), c['key'] + ' has a line over 100 characters'
 # One beat after every wish's first clear; before-beats open Advents and turns.
 assert {b['level'] for b in beats if b['phase'] == 'after'} == set(range(1, LEVELS + 1))
@@ -66,8 +61,8 @@ for b in beats:
     for who, text, kind in b['lines']:
         lines.append('        {%s, %s%s},' % (quote(who), quote(text), ', story.' + kind.upper() if kind else ''))
     lines.append('    }},')
-for c in citizens:
-    lines.append('    {key=%s, phase="citizen", event=%s, building=%s, lines={' % (quote(c['key']), quote(c['event']), quote(c['building'])))
+for c in upgrades:
+    lines.append('    {key=%s, phase="upgrade", event=%s, title=%s, building=%s, lines={' % (quote(c['key']), quote(c['event']), quote(c['title']), quote(c['building'])))
     for who, text, kind in c['lines']:
         lines.append('        {%s, %s%s},' % (quote(who), quote(text), ', story.' + kind.upper() if kind else ''))
     lines.append('    }},')
@@ -81,4 +76,4 @@ if args.check:
     assert path.read_text() == content, 'Story changed: run python3 games/christmas-market/tools/prepare_story.py'
 else:
     path.write_text(content)
-print(f'Christmas Market: {BEATS} story beats, {LINES} reviewed dialogue lines, {len(citizens)} citizen scenes')
+print(f'Christmas Market: {BEATS} story beats, {LINES} reviewed dialogue lines, {len(upgrades)} upgrade scenes')

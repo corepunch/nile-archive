@@ -28,7 +28,7 @@ The reply to Mara’s lamp poses the question **Who is signalling back?** The fi
 | Tomas | Guarded keeper → guides the search → shares the relay and its upkeep | Courteous and spare. He hands over the key to Ines’s cabinet. |
 | Adrian | Charming sponsor with a secret claim → exposed → surrenders it to protect the quay | Deflects with wit; his signed claim is both danger and a choice. |
 | Kessler | Distant claim holder's agent → presses for the records → loses the claim | Polite radio voice; no new portrait. |
-| Marisol | Islander elder who runs the Jungle market (from 21) → tests Adrian, keeps a customer's secret → sees the quay jobs and records stay on the island | Shrewd, dry, protective of her cousins on the quay; trades in exact coin and better questions. |
+| Marisol | Islander elder who runs the Jungle market (planted at 14 and 19, speaks from 21) → tests Adrian, keeps a customer's secret → sees the quay jobs and records stay on the island | Shrewd, dry, protective of her cousins on the quay; trades in exact coin and better questions. |
 | Ines | Absent signal sender → identified by note → answers from the safe landing | Acts through the relay and signed notes, then returns Tomas's trust with the chart. |
 
 ## Campaign milestones
@@ -172,7 +172,7 @@ An expedition scene has two or three lines: the crew's delight at what they fini
 
 - **Elena:** Tomas, every pillar is a tide table, and every great storm is cut into the stone.
 - **Adrian:** Elena, you're sure it's a table and not decoration? It's rather handsome.
-- **Elena:** Decoration doesn't flood, Adrian. I'm sketching all of it.
+- **Elena:** Decoration doesn't flood, Adrian. The hill villages' market woman says families keep flood stories.
 
 **Level 15 · Broken Aqueduct**
 
@@ -222,7 +222,7 @@ Choice prompt: Who should answer the signal?
 **Level 19 · Inner Sun Court**
 
 - **Elena:** Tomas, reflection is long dead. What's left is someone alive, with a lamp, who knows the old code.
-- **Tomas:** Or someone taught by those who did, Elena.
+- **Tomas:** Ask the market woman up in the hill villages, Elena. She knows everyone's business.
 - **Mara:** Then we'll be good company. Highest step tomorrow, at dusk. Coming, both of you?
 
 **Before level 20**
@@ -840,103 +840,105 @@ Choice prompt: Who should answer the signal?
 - **Ines:** Mara, I changed its tune till a lamp I could trust answered. And this one did.
 - **Ines:** Elena, your well scrap is a corner of my chart of other lights. They need keepers too.
 
-## Citizens
+## Upgrades
 
-**Citizen man_03 · Lupe the water-carrier · Spring well**
+Optional scenes: the keeper of a standing building and one other main character, at any time after it stands. Perks are felt, never named.
 
-- **Lupe:** Elena, my jars are dry and the hill spring is a two-hour climb. Is this the well that sings?
-- **Elena:** It sang at us. Who are you, and why come down for water?
-- **Lupe:** Lupe. I carry for three villages. Fill my jars here, and I'll bring your crew a jar a day.
+**Upgrade man_03 · a second rope and pulley · Spring well**
 
-**Citizen man_04 · Old Bastian the trapper · Trapper's cabin**
+- **Tomas:** Elena, hold the bucket. I hung a second rope, so one arm draws while the other rests.
+- **Elena:** Tomas, that's a pulley off a boat block. Does it squeak?
+- **Tomas:** It hums. My father would call that cheating. I call it morning.
 
-- **Bastian:** Girl, you've hung your washing on my old snare post. Forty years I've set traps in the hills.
-- **Mara:** Sorry! Is the post yours? I'll move it, if you'll teach me what a trail says.
-- **Bastian:** Bet you can't keep quiet for a mile. Win, and I'll show you how to bring a rock wall down.
+**Upgrade man_04 · his father's tools sharpened · Trapper's cabin**
 
-**Citizen man_02 · Joaquín the carpenter · Carpenter's workshop**
+- **Mara:** Tomas, why is your father's whole tool rack on the bench? Are we doing surgery?
+- **Tomas:** Sharpening, Mara. I found the whetstone behind the stove. Years of dull, all gone.
+- **Mara:** Can I borrow the little hatchet for the ridge path? I'll ask it nicely.
 
-- **Joaquín:** Your bench is crooked, your saw is blunt and the roof leaks. Who built this, Tomas?
-- **Tomas:** The old keepers. I only oil it. You'd be Joaquín from the upper village?
-- **Joaquín:** I am. Give me the key and a week, and I'll turn you out boards while you sleep.
+**Upgrade man_02 · a second saw bench · Carpenter's workshop**
 
-**Citizen man_01 · Dita the blaster · Expedition camp**
+- **Mara:** Tomas, don't look at it. I built a second saw bench and it only wobbles a little.
+- **Tomas:** A little, Mara? The whole workshop leans toward it. Who taught you to level?
+- **Mara:** A lamp, a bucket of water and stubbornness. Now two of us can saw without arguing.
 
-- **Dita:** Mara, that stair behind your camp has sat on its fallen stones for years. May I blow it open?
-- **Mara:** Blow it? Who sent you, and do you mean a small bang or a loud one?
-- **Dita:** Nobody sent me. Small, if you hold your ears. I'll bring powder for a second job, too.
+**Upgrade man_01 · a proper powder store · Expedition camp**
 
-**Citizen man_05 · Auntie Marisol the trader · Jungle market**
+- **Adrian:** Mara, I moved the powder out of the tent. Don't make that face; the tent's grateful.
+- **Mara:** Out to where, Adrian? Please say not near the well.
+- **Adrian:** A stone cellar with a real lock. I'm told it's what responsible people do.
 
-- **Marisol:** Fishermen on the left, fruit on the right. And nobody sells in the shade without asking me.
-- **Elena:** Marisol, the hill villages are arriving with baskets. Where do I put the yams?
-- **Marisol:** Next to the mangoes. If they fight, give them the same ruler and call it fair.
+**Upgrade man_05 · the hill farms send their carts · Jungle market**
 
-**Citizen man_06 · Basile the stonecutter · Stone trading post**
+- **Marisol:** Elena, the hill farms are sending carts at last. Count your baskets, then count them again.
+- **Elena:** Marisol, who talked them down the mountain road? They never trusted the harbour.
+- **Marisol:** I did. I told each one their neighbour was coming. Nobody wants to be last at a market.
 
-- **Basile:** Adrian, you stand like a man who has never lifted a block. Is this your quarry?
-- **Adrian:** Guilty. I only point at things, with great enthusiasm. What would you cut first?
-- **Basile:** The terrace steps. Point at the next ten and I'll send them down squared and straight.
+**Upgrade man_06 · a cart road to the quarry · Stone trading post**
 
-**Citizen man_07 · Hana the miller · Water mill**
+- **Adrian:** Tomas, I've laid a cart road to the quarry. Me, a map and one very small shovel.
+- **Tomas:** And half of Marisol's cousins, I'd guess. Whose blisters are those, Adrian?
+- **Adrian:** The shovel was mine. The road is theirs. Please don't tell them about the blisters.
 
-- **Hana:** Mara, your wheel turns, but it grinds nothing. Who taught you to leave a mill empty?
-- **Mara:** Nobody! We've sacks of rice and tubers in the shed. Will you take them?
-- **Hana:** Both, and I'll keep a share for flat bread. You'll want to wait at the door, I warn you.
+**Upgrade man_07 · a second millstone · Water mill**
 
-**Citizen man_08 · Ferro the clockmender · Tide clock tower**
+- **Elena:** Mara, I bolted a second millstone beside the first. Please don't tell me it's lopsided.
+- **Mara:** It's lopsided, but it grinds. Who taught the scholar to dress stone?
+- **Elena:** A diagram, a chisel and two thumbnails. Flour by breakfast now, Mara, not by lunch.
 
-- **Ferro:** Elena, your tower keeps tide time but sulks at noon. Mind if I take a look inside?
-- **Elena:** Please! I've stared at its gears for an hour and they all look guilty.
-- **Ferro:** They are. Hold the ladder, and the tower will chime a warning before the tide turns.
+**Upgrade man_08 · a warning chime · Tide clock tower**
 
-**Citizen man_09 · Nilo the fisher · Harbour plaza**
+- **Tomas:** Elena, listen. I fitted a bell to the clock, to ring before the tide turns.
+- **Elena:** It's a pleasant note, Tomas. Do the fishermen know to listen for it?
+- **Tomas:** They will. A bell that rings before you need it is the only useful kind.
 
-- **Nilo:** Tomas, my nets are full in my head and empty in my boat. May I fish off this quay?
-- **Tomas:** The reef side has rested for years. Who sent you down from the hill landing?
-- **Nilo:** The tide did. Keep a corner of the plaza clear, and your pots will never be bare.
+**Upgrade man_09 · a fish market every morning · Harbour plaza**
 
-**Citizen man_10 · Zaza the drummer · Stone amphitheatre**
+- **Marisol:** Tomas, the boats land at dawn now, and my cousins sell on your plaza stones. Fair?
+- **Tomas:** Fair, Marisol. Mind the north corner; the cobbles lift when the tide is high.
+- **Marisol:** Then the cheapest fish goes there, Tomas. Anyone who slips should at least save a coin.
 
-- **Zaza:** Adrian, say something from that top row. Hear how the stones throw it back? Beautiful.
-- **Adrian:** Dreadful, I said "good evening" and got "evening" twice. Can you fill it?
-- **Zaza:** With a crowd, if I drum loud enough. And a crowd drops coins in a cup.
+**Upgrade man_10 · market-day shows · Stone amphitheatre**
 
-**Citizen man_11 · Ruth the cartographer · Cartographer's house**
+- **Adrian:** Marisol, market days, a show on the stage. Jugglers, drummers and, heaven help me, a poet.
+- **Marisol:** Who pays the poet, Adrian? Not my cousins.
+- **Adrian:** I do. It's the only way I'll hear someone else talk for an hour.
 
-- **Ruth:** Elena, you've pinned my map upside down. Is this what you call a survey?
-- **Elena:** It's upside down? Then will you set it right and read the old lines for us?
-- **Ruth:** Ink and an hour. I'll mark where the storm will strike before it comes.
+**Upgrade man_11 · storm charts on the wall · Cartographer's house**
 
-**Citizen man_12 · Captain Ulla · Lighthouse**
+- **Elena:** Tomas, come and see. Every storm the island ever kept, pinned in order on my wall.
+- **Tomas:** That's a great many storms, Elena. Which one do you fear?
+- **Elena:** The one that isn't pinned yet. Now I'll know its shape in time to warn the quay.
 
-- **Ulla:** Mara, forty years on deck and I never once saw this lamp lit. Who keeps it?
-- **Mara:** Nobody, Captain. Will you teach me to read a coast at night?
-- **Ulla:** Hand me the lens cloth. I'll show you which dark patches are rocks, before you hit them.
+**Upgrade man_12 · a polished lens · Lighthouse**
 
-**Citizen man_13 · Pike the shipwright · Beached schooner**
+- **Mara:** Tomas, cover your eyes. I polished the lens with a sleeve, spit and patience.
+- **Tomas:** That is how this harbour was built, Mara. Is it ready?
+- **Mara:** Ask a boat past the reef. It'll wave. You'll want to wave back.
 
-- **Pike:** Tomas, your schooner has a fine keel and shocking manners. May I mend her?
-- **Tomas:** Can she float again? She hasn't been wet in years.
-- **Pike:** For a bargain. I'll patch her and sell planks, and we'll split what the traders pay.
+**Upgrade man_13 · a ferry to the hill villages · Beached schooner**
 
-**Citizen man_14 · Dr Amani the astronomer · Star observatory**
+- **Mara:** Marisol, the schooner floats! She'll take your cousins and their baskets round to the hills.
+- **Marisol:** Will she, now? Pilot, who's steering, and who's paying the passage?
+- **Mara:** Me, and pay what you like. Mangoes will do. I'll try not to hit anything.
 
-- **Amani:** Elena, forgive the dust. Does anyone here read these old star charts?
-- **Elena:** Nobody. Why, can you? I'd give a week of tea for that.
-- **Amani:** Tea is fine. I'll copy one chart a night, and you'll pick the clear sky for each crossing.
+**Upgrade man_14 · the telescope realigned · Star observatory**
 
-**Citizen man_15 · Mr Sato the curator · Relic museum**
+- **Elena:** Adrian, put your eye there and tell me what you see. Don't touch the brass.
+- **Adrian:** A great many stars, all pretending to be tidy. Did you move the telescope?
+- **Elena:** A finger's width, with a spirit level. Now it finds a star when I ask it to.
 
-- **Sato:** Elena, please don't touch the glass. Where did these pots come from?
-- **Elena:** Three crates of loose pottery, all from the dig. Can you put them in order?
-- **Sato:** Gladly. Put them on a shelf, and visitors will drop a coin for each case.
+**Upgrade man_15 · a reading room open to all · Relic museum**
 
-**Citizen man_16 · Ixchel the storyteller · Temple of the Sun**
+- **Adrian:** Elena, I moved the cases to make room for chairs and a lamp. Sit. Read something.
+- **Elena:** Adrian, you hate giving up a good display case. Why chairs?
+- **Adrian:** Anyone who loves these shelves should get to read them. I'd like that to be the rule.
 
-- **Ixchel:** Mara, sit on the step, it's still warm. Who told you stones don't talk?
-- **Mara:** Nobody, I just never listened. Tell me one, I'll pay in biscuits.
-- **Ixchel:** Come at dusk. The stories I tell will point you at the stars.
+**Upgrade man_16 · the keepers' watch roster · Temple of the Sun**
+
+- **Tomas:** Mara, I wrote a watch roster on the temple wall. Whose name goes first?
+- **Mara:** Yours, Tomas. You're the keeper. I'll take the dusk watch, and I'll stay awake.
+- **Tomas:** Nobody stays awake. That's why there's a roster. Write your name in pencil.
 
 ## Crew requests
 
@@ -952,7 +954,7 @@ The scenes play over the live island with the speaking character’s portrait. T
 
 ## Changelog
 
-- 2026-11-20: Speech-only pass. Every line is now said by someone to someone (docs/STORY_WRITING.md#speech-only-no-narration); reports were rewritten or cut (126 suspect lines to 4). New speaker Marisol, the islander elder at the Jungle market, with her own want (the quay jobs and the islanders' records stay on the island), paid off when Adrian writes it for her at 98. Sixteen optional citizen scenes, one per Rome 2 citizen. Two cold reads; fixes include one name per place (the far station, the vault), fewer Adrian and Kessler tells, and paid-off string, parrot, sand circles and chart.
+- 2026-11-20: Speech-only pass. Every line is now said by someone to someone (docs/STORY_WRITING.md#speech-only-no-narration); reports were rewritten or cut (126 suspect lines to 4). New speaker Marisol, the islander elder at the Jungle market, with her own want (the quay jobs and the islanders' records stay on the island), paid off when Adrian writes it for her at 98. Sixteen optional upgrade scenes, one per Rome 2 citizen, given to each building's keeper from the cast we know. Two cold reads; fixes include one name per place (the far station, the vault), fewer Adrian and Kessler tells, and paid-off string, parrot, sand circles and chart.
 
 - 2026-11-19: Extended to one hundred expeditions in five chapters. Restorations are renamed after their artwork (Spring well, Trapper's cabin, Carpenter's workshop, Expedition camp, Jungle market, Stone trading post, Water mill, Tide clock tower, Harbour plaza, Harbour lodge, Stone amphitheatre, Cartographer's house, Keeper's archive, Lighthouse, Beached schooner, Star observatory, Great aviary, Relic museum, Temple of the Sun, Jade fountain). The reply choice moves to the camp at 16; Ines is named as Tomas's sister at the harbour register (41).
 

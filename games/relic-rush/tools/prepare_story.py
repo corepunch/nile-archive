@@ -6,21 +6,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 text = (ROOT / 'docs/story.md').read_text()
-# The citizens' arrival scenes live in their own section; the level beats never see it.
-section = re.search(r'^## Citizens\n.*?(?=^## |\Z)', text, re.S | re.M)
-citizen_source = section[0] if section else ''
-source = text.replace(citizen_source, '').split('## Crew requests')[0]
+# The upgrades' scenes live in their own section; the level beats never see it.
+section = re.search(r'^## Upgrades\n.*?(?=^## |\Z)', text, re.S | re.M)
+upgrade_source = section[0] if section else ''
+source = text.replace(upgrade_source, '')
+source = re.sub(r'^## Citizens\n.*?(?=^## |\Z)', '', source, flags=re.S | re.M).split('## Crew requests')[0]   # also drop the superseded Citizens section
 beats, beat, choice = [], None, None
 speakers = {'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler', 'Ines': 'ines',
-            'Ancient keeper': 'keeper',
-            'Lupe': 'lupe', 'Bastian': 'bastian', 'Joaquín': 'joaquin', 'Dita': 'dita', 'Marisol': 'marisol',
-            'Basile': 'basile', 'Hana': 'hana', 'Ferro': 'ferro', 'Nilo': 'nilo', 'Zaza': 'zaza', 'Ruth': 'ruth',
-            'Ulla': 'ulla', 'Pike': 'pike', 'Amani': 'amani', 'Sato': 'sato', 'Ixchel': 'ixchel'}
-# Rome 2's citizen events (games/relic-rush/lua/user_events.lua) and the speaker each one must have.
-citizen_speakers = {'man_03': 'Lupe', 'man_04': 'Bastian', 'man_02': 'Joaquín', 'man_01': 'Dita', 'man_05': 'Marisol',
-                    'man_06': 'Basile', 'man_07': 'Hana', 'man_08': 'Ferro', 'man_09': 'Nilo', 'man_10': 'Zaza',
-                    'man_11': 'Ruth', 'man_12': 'Ulla', 'man_13': 'Pike', 'man_14': 'Amani', 'man_15': 'Sato',
-                    'man_16': 'Ixchel'}
+            'Ancient keeper': 'keeper', 'Marisol': 'marisol'}
+# Rome 2's upgrade events (games/relic-rush/lua/user_events.lua) and the keeper who must speak in each.
+keeper_speakers = {'man_03': 'Tomas', 'man_04': 'Tomas', 'man_02': 'Mara', 'man_01': 'Adrian', 'man_05': 'Marisol', 'man_06': 'Adrian', 'man_07': 'Elena', 'man_08': 'Tomas', 'man_09': 'Marisol', 'man_10': 'Adrian', 'man_11': 'Elena', 'man_12': 'Mara', 'man_13': 'Mara', 'man_14': 'Elena', 'man_15': 'Adrian', 'man_16': 'Tomas'}
 for line in source.splitlines():
     heading = re.match(r'\*\*(Before level|Level|After restoration) (\d+)', line)
     if heading:
@@ -46,24 +41,24 @@ for line in source.splitlines():
         assert spoken, 'Relic Rush dialogue requires a named cast member: ' + line
     if spoken and beat:
         (choice['lines'] if choice else beat['lines']).append((speakers[spoken[1]], spoken[3], spoken[2]))
-citizens, citizen = [], None
-for line in citizen_source.splitlines():
-    heading = re.match(r'\*\*Citizen (man_\d\d) · ([^·*]+) · ([^*]+)\*\*\s*$', line)
-    if line.startswith('**Citizen'):
-        assert heading, 'write each citizen heading as **Citizen man_NN · <name> · <building>**: ' + line
-        assert heading[1] in citizen_speakers, 'unknown citizen event ' + heading[1]
-        citizen = {'key': 'citizen-' + heading[1], 'event': heading[1], 'building': heading[3].strip(), 'lines': []}
-        citizens.append(citizen)
+upgrades, upgrade = [], None
+for line in upgrade_source.splitlines():
+    heading = re.match(r'\*\*Upgrade (man_\d\d) · ([^·*]+) · ([^*]+)\*\*\s*$', line)
+    if line.startswith('**Upgrade'):
+        assert heading, 'write each upgrade heading as **Upgrade man_NN · <title> · <Building name>**: ' + line
+        assert heading[1] in keeper_speakers, 'unknown upgrade event ' + heading[1]
+        upgrade = {'key': 'upgrade-' + heading[1], 'event': heading[1], 'title': heading[2].strip(), 'building': heading[3].strip(), 'lines': []}
+        upgrades.append(upgrade)
     spoken = re.match(r'- \*\*(' + '|'.join(speakers) + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
-    if citizen and line.startswith('- **') and ':**' in line:
+    if upgrade and line.startswith('- **') and ':**' in line:
         assert spoken, 'Relic Rush dialogue requires a named cast member: ' + line
-    if spoken and citizen:
-        citizen['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
-assert len({c['event'] for c in citizens}) == len(citizens), 'a citizen has two scenes'
-for c in citizens:
+    if spoken and upgrade:
+        upgrade['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
+assert len({c['event'] for c in upgrades}) == len(upgrades), 'an upgrade has two scenes'
+for c in upgrades:
     assert c['lines'] and len(c['lines']) <= 48, c['key'] + ' needs spoken lines'
-    assert speakers[citizen_speakers[c['event']]] in {who for who, _, _ in c['lines']}, \
-        c['key'] + ' must have its citizen (' + citizen_speakers[c['event']] + ') speak'
+    assert speakers[keeper_speakers[c['event']]] in {who for who, _, _ in c['lines']}, \
+        c['key'] + ' must have its keeper (' + keeper_speakers[c['event']] + ') speak'
     assert all(len(text) <= 100 for _, text, _ in c['lines']), c['key'] + ' has a line over 100 characters'
 # One beat after every expedition's first clear and one scene per story restoration.
 keys = [b['key'] for b in beats]
@@ -92,8 +87,8 @@ for b in beats:
         lines.append('    }},')
     else:
         lines.append('    }},')
-for c in citizens:
-    lines.append('    {key=%s, phase="citizen", event=%s, building=%s, lines={' % (quote(c['key']), quote(c['event']), quote(c['building'])))
+for c in upgrades:
+    lines.append('    {key=%s, phase="upgrade", event=%s, title=%s, building=%s, lines={' % (quote(c['key']), quote(c['event']), quote(c['title']), quote(c['building'])))
     lines.extend(emit_lines(c['lines'], '        '))
     lines.append('    }},')
 lines.append('}')
@@ -107,4 +102,4 @@ if args.check:
 else:
     path.write_text(content)
 count = sum(len(b['lines']) + sum(len(c['lines']) for c in b['choices']) for b in beats)
-print(f'Relic Rush: {len(beats)} story beats, {count} dialogue lines, {len(citizens)} citizen scenes')
+print(f'Relic Rush: {len(beats)} story beats, {count} dialogue lines, {len(upgrades)} upgrade scenes')

@@ -86,10 +86,10 @@ for _,b in ipairs(journey.beats) do
     check(#b.lines<=48,'each beat fits the engine queue')
     for _,line in ipairs(b.lines) do check(cast[line[1]],'each voiced line has a cast member: '..tostring(line[1])) end
 end
-for _,b in ipairs(journey.citizens) do
-    check(b.phase=='citizen' and b.event and journey.find_citizen(b.event)==b and U.by_id[b.event] and U.by_id[b.event].citizen,
-        'each citizen scene belongs to a citizen event: '..b.key)
-    for _,line in ipairs(b.lines) do check(cast[line[1]],'each citizen line has a cast member: '..tostring(line[1])) end
+for _,b in ipairs(journey.upgrades) do
+    check(b.phase=='upgrade' and b.event and journey.find_upgrade(b.event)==b and U.by_id[b.event] and U.by_id[b.event].upgrade,
+        'each upgrade scene belongs to an upgrade event: '..b.key)
+    for _,line in ipairs(b.lines) do check(cast[line[1]],'each upgrade line has a cast member: '..tostring(line[1])) end
 end
 for level=1,rules.LEVELS do
     check(R.start_level(level-1), 'the next board opens once its story and restorations are complete')
@@ -166,7 +166,7 @@ for level=1,rules.LEVELS do
         end
         local placed=journey.next(p,owned(c),nil)
         check(placed and placed.key==('restore-%02d'):format(level),
-            'confirmed construction or citizen arrival releases its scene')
+            'confirmed construction or upgrade releases its scene')
         local built = island.buildings[island.wonder_kinds[kind] + 1]
         check(placed.building == built.name, 'the reviewed scene must match the purchase: ' .. built.name)
         if level==1 then

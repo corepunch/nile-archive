@@ -51,6 +51,7 @@ Genre films are a good source of technique. Take the mechanism, not the plot: st
 
 ## Characters
 
+- **Few people, known well.** Give a new line to someone the player already knows before inventing a speaker. Plant a person in others' lines before they speak, and keep to at most one new speaker per epoch ([cast economy](CAMPAIGN_DESIGN.md#cast-economy)).
 - **Behaviour, not just dialogue.** Memorable characters change the state of the game: they leave, steal, hide, arrive, give, refuse. Each main character must do at least one thing that changes the plot, and go through at least three visible states over the game (for example suspicious, exposed, trusted).
 - **Each voice has a job.** A reader should be able to name the speaker with the name plate covered.
 - **Objects with two roles.** Every important object has at least two of: practical use, clue, joke, worldbuilding, risk, reward, memory marker. A chisel that is a clue and a tool, or a joke about peaches that becomes evidence, will be remembered. A generic key will not.

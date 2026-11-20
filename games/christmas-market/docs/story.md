@@ -782,87 +782,94 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 > *The Road to Fernhollow*
 > **[ BACK TO MY MARKET ]**
 
-## Citizens
+## Upgrades
 
-**Citizen man_03 · Clem the lamplighter · Welcome arch**
-- **Clem:** Miss, I saw that arch glow from the hill road. Who dares light my side of the valley?
-- **Noelle:** Guilty! Are you here to tell me off, or to hold the ladder?
-- **Clem:** Neither. Give me the arch and it will be lit before anyone thinks to flip a switch.
+Optional scenes, one per building, played on the next return to town after its feat is met. The keeper speaks. Nobody new arrives, nothing refers to a level, and nobody says what the upgrade pays.
 
-**Citizen man_04 · Ned the farrier · Reindeer stable**
-- **Ned:** Is that your sleigh-horse? He's walking on worn-out shoes, and nobody's said a word!
-- **Theo:** He's walked like that all week. I thought it was a mood.
-- **Ned:** Hold his head. Four new shoes and bells on the harness, and he'll be ready sooner than you think.
+**Upgrade man_03 · a mulled-wine hatch in the arch · Welcome arch**
+- **Noelle:** Theo, come and see! A hatch in the arch, so the mulled wine comes out through the wall!
+- **Theo:** Wine through a wall. Fine, but who ladles it? Not me. My gloves are sticky.
+- **Noelle:** Nobody ladles. Just stand under it and tell everyone it was your idea. Cinnamon first?
 
-**Citizen man_02 · Big Ivar the woodcutter · Lumber workshop**
-- **Ivar:** Your saws woke me three valleys off. Where do you keep your logs, little one?
-- **Theo:** You woke me too. Are you the one who stacks wood like it owes you money?
-- **Ivar:** Every dawn, a fresh load at the door. Bring tea, and I'll bring beams.
+**Upgrade man_04 · new shoes and bells for the sleigh-horse · Reindeer stable**
+- **Pip:** Mr Wren, hold his bridle! New shoes, and the bells are mine. I polished every one!
+- **Mr Wren:** Let him hear them first. A horse likes to know whose tune he's wearing.
+- **Pip:** He keeps lifting his feet like a cat in snow. Does that mean he likes them?
 
-**Citizen man_01 · Dot the firework maker · Firework stall**
-- **Dot:** Whose stall is this? I'll swap you a cellar of sparklers for a corner and a bucket of sand.
-- **Pip:** Can I hold the match? I won't drop it. Much.
-- **Dot:** You can hold the sand. Stand back, and the first rocket will be up before you blink.
+**Upgrade man_02 · a drying shed for the pine · Lumber workshop**
+- **Theo:** Noelle, don't touch the pine. It's drying. I built a shed. A whole shed, for planks.
+- **Noelle:** You, fussing over planks? Theo Marsh, that's sweet. Why a shed?
+- **Theo:** Wet wood spits sparks and splits stalls. And yes, it's a bit sweet. Tell nobody.
 
-**Citizen man_05 · Hettie the icer · Gingerbread bakery**
-- **Hettie:** Agnes Holt, your gingerbread smells grand and looks like a fallen roof. Shall I fix it?
-- **Agnes:** You'll ice my roofs over my dead body. There's buns on the left.
-- **Hettie:** Then I'll pipe on the buns. Plenty of them, every day, and you'll thank me by Epiphany.
+**Upgrade man_01 · a rocket rack, ready in threes · Firework stall**
+- **Pip:** Mrs Holt, the rockets stand in a rack now! In threes! Nothing rolls!
+- **Agnes:** Rolls? Pip Larkin, what rolled? And where did it roll to?
+- **Pip:** Nowhere! Bramble only sniffed one. Sniffed! Have a bun. No, you have the buns, sorry!
 
-**Citizen man_06 · Old Mags the stonemason · Snowy chapel**
-- **Mags:** Hold that lamp steady, young woman. This chapel step has wobbled since I was a girl.
-- **Noelle:** Wobbled? I've been calling it the chapel's little dance.
-- **Mags:** Dance on a mended step, then. I'll set it, and the cold lanes will be as firm as rock by morning.
+**Upgrade man_05 · a second oven · Gingerbread bakery**
+- **Agnes:** Don't gloat. Yes, there's a second oven. One batch bakes while the next one rises.
+- **Noelle:** Gloat? You've been grinning at it for an hour. Has it got a name yet?
+- **Agnes:** It's an oven. The tall one's for gingerbread. The little one's for the hungry. Sit.
 
-**Citizen man_07 · Mrs Alder · Hot cocoa kiosk**
-- **Mrs Alder:** Noelle, I paid for a cup here when the kiosk opened. Now give me that ladle.
-- **Noelle:** Mrs Alder, my cocoa has lumps. Is that your professional opinion?
-- **Mrs Alder:** My grandmother's cocoa, with a pinch of pepper. Every dusk there'll be a pot waiting.
+**Upgrade man_06 · the masons' yard behind the chapel · Snowy chapel**
+- **Mr Wren:** Pip, run and tell the masons the chapel step is wanted. Stone keeps its own hours.
+- **Pip:** A whole yard of masons? Where did they come from? Did you ask them, Mr Wren?
+- **Mr Wren:** I only mentioned the step. Mind the chisels, they're cold and they bite.
 
-**Citizen man_08 · Olaf the ice cutter · Ice house**
-- **Olaf:** Nobody's asked me for ice since the lake froze last year. Is it still a trade?
-- **Mr Wren:** Quite a good one. The reindeer have been drinking out of puddles.
-- **Olaf:** Then it's blocks for the sleigh. I'll have them cut before the next snow is down.
+**Upgrade man_07 · Mrs Alder's ladle and second pot · Hot cocoa kiosk**
+- **Mrs Alder:** Theo Marsh, taste this! Second pot, my own ladle. Nutmeg, and a little orange.
+- **Theo:** Not bad. Don't tell Agnes, or she'll want a pot of her own.
+- **Mrs Alder:** She can queue. Hold the cup and stand still while I hum you the carol it goes with.
 
-**Citizen man_09 · Mr Finch the fisherman · Lakeside smokehouse**
-- **Mr Finch:** Noelle, my goat has eaten half your tinsel. Let me pay it off in trout.
-- **Noelle:** Bramble ate it? She looks so innocent. Pip, hold her, quick!
-- **Mr Finch:** Smoked trout, every morning, until she stops eating the decorations. Possibly Easter.
+**Upgrade man_08 · a second ice saw on the lake · Ice house**
+- **Theo:** Finch, that's the second ice saw. Twice the blocks, and nobody wet.
+- **Mr Finch:** Bramble walked out on the ice this morning. It held. Your sawing's fine.
+- **Theo:** You let your goat test my ice? She could have gone through!
+- **Mr Finch:** She doesn't. She's very particular. Same as you.
 
-**Citizen man_10 · Lotte the toymaker's apprentice · Toymaker's workshop**
-- **Lotte:** Is this where the wooden soldiers are made? Hide me, I've run off from my aunt's sewing room!
-- **Henrik:** Hide in my workshop and wash your brush before you touch the red. We have standards.
-- **Lotte:** I paint eyes on dolls faster than anyone. You'll have a shelf of soldiers by morning.
+**Upgrade man_09 · a second smoking rack · Lakeside smokehouse**
+- **Mrs Alder:** Mr Finch, two racks! Will there be trout for the whole lane at Christmas?
+- **Mr Finch:** One rack for the trout. One for Bramble's share. She won't touch fish. I keep asking.
+- **Mrs Alder:** Then give her share to my grandchildren. They'll eat anything tied with a ribbon.
 
-**Citizen man_11 · Lucia the candle girl · Candlelight shop**
-- **Lucia:** You've a wax shop! Mr Wren, do you know how many candles my crown takes?
-- **Mr Wren:** Seven, if you're careful, and none if you're sensible.
-- **Lucia:** Then I'll dip a fresh taper for every window, and they'll be lit before dark.
+**Upgrade man_10 · a second bench and a shop bell · Toymaker's workshop**
+- **Henrik:** Pip, don't slam it. It's a shop bell, not a drum. One ring per customer.
+- **Pip:** But it's so loud! Mr Strand, why do you need two benches? Is somebody coming to help?
+- **Henrik:** A bench stays free in case someone wants to learn. The bell tells me they've come.
 
-**Citizen man_12 · Mr Penny the postmaster · North Pole post office**
-- **Mr Penny:** Young man, your market's letters are piling up. Have you any idea who is sorting them?
-- **Pip:** Me! I run them in my satchel! Are you here to take my job?
-- **Mr Penny:** To lend you a pigeonhole. The letters will be delivered sooner, and you'll keep your satchel.
+**Upgrade man_11 · Mr Wren trims every wick · Candlelight shop**
+- **Mr Wren:** Mind your sleeve, Noelle. A wick wants trimming to a sparrow's eyelash.
+- **Noelle:** Mr Wren, you've done every wick in the shop. When do you ever sleep?
+- **Mr Wren:** Wicks don't mind. Take one home for your window. Light likes to be seen.
 
-**Citizen man_13 · Gianna the glassblower · Glassblower's stall**
-- **Gianna:** Signora Noelle, the lights here are the brightest, but nobody has hung a glass bauble!
-- **Noelle:** We tried paper ones. They fell in the cocoa.
-- **Gianna:** Mine will not. One a day, blown by my own breath, and each one throws a rainbow on the snow.
+**Upgrade man_12 · a second sorting rack · North Pole post office**
+- **Pip:** Theo, I have my own rack now! Letters sorted by lane. The Kind Word box goes first!
+- **Theo:** Do you read them? Look me in the eye, Pip.
+- **Pip:** I only read the envelopes! Mostly! Please don't tell Mr Wren I said mostly!
 
-**Citizen man_14 · Sid the organ-grinder · Reindeer carousel**
-- **Sid:** Madam, that carousel wheezes like my organ. Shall we fix both?
-- **Agnes:** Play "Good King Wenceslas" first. Henrik hates it, and it makes me smile.
-- **Sid:** Wound up properly, it'll play carols faster than the snow can fall.
+**Upgrade man_13 · a second furnace · Glassblower's stall**
+- **Theo:** Agnes, say it. Anything glass, any size. The second furnace is hungry.
+- **Agnes:** A dome for the gingerbread. Pip's thumbs go through everything on that counter.
+- **Theo:** Tall, so the gingerbread men can stand up straight. I'll have it before your next batch.
+- **Agnes:** No bubbles, mind. I mean it, Theo.
 
-**Citizen man_15 · Rolf the woodcarver · Woodcarvers' hall**
-- **Rolf:** I've carved reindeer on my doorstep for thirty winters. Is this hall truly for us?
-- **Henrik:** For us, yes. Come here, Rolf. That angel's left wing is wrong, and I'll show you.
-- **Rolf:** Show me, and I'll carve you a new one for every day of Advent.
+**Upgrade man_14 · a band organ · Reindeer carousel**
+- **Pip:** Mrs Alder, the organ plays three tunes! I picked them all. Which one's your favourite?
+- **Mrs Alder:** The one I can hum along to. Play it again, love, I'll find the key.
+- **Pip:** You never find the key! Not once!
+- **Mrs Alder:** Cheek. That's why I need the organ to carry me.
 
-**Citizen man_16 · Mr Bellamy the Fenwick choirmaster · Christmas tree**
-- **Mr Bellamy:** That is the finest tree I've seen. Noelle, may the choir stand beneath it?
-- **Noelle:** Do you take people who sing flat? Asking for a friend. Me.
-- **Mr Bellamy:** Under that tree even you will sing sharp. We'll have the harmony ready before the bells.
+**Upgrade man_15 · Henrik's old apprentices come back · Woodcarvers' hall**
+- **Noelle:** Mr Strand, there's somebody at every bench! Who are they all?
+- **Henrik:** My old apprentices. I taught them to hold a gouge. Now they correct my joints. Insufferable.
+- **Noelle:** Are you pleased? You can tell me.
+- **Henrik:** Their joints are tidy. Yes, pleased. Mind the shavings.
+
+**Upgrade man_16 · a star for the top · Christmas tree**
+- **Theo:** Strand, I need steady hands. The star's heavy and the top branch is thin.
+- **Henrik:** Then you've trimmed it wrong. Give it here. A peg, not a nail. Always a peg.
+- **Theo:** You're lecturing a man who sells forty trees. Hold the ladder?
+- **Henrik:** I'll hold it. You'll wobble. Try to do it gently, for the tree's sake.
 
 ## Small lines
 
@@ -909,7 +916,7 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 ## Changelog
 
-- 2026-11-20: Speech-only pass. Every line is now said by someone to someone (docs/STORY_WRITING.md#speech-only-no-narration); reports of what the screen shows were rewritten or cut (89 suspect lines to 5). New speakers: Mrs Alder (from 31), Mr Finch (from 41), Mary Larkin and Rosa (from 94), each with a small want that pays off. Sixteen optional citizen scenes, one per Rome 2 citizen. Two cold reads; fixes include Theo learning Noelle's name without announcing it, Rosa alive and away from the start, and fewer repeated gags.
+- 2026-11-20: Speech-only pass. Every line is now said by someone to someone (docs/STORY_WRITING.md#speech-only-no-narration); reports of what the screen shows were rewritten or cut (89 suspect lines to 5). New speakers: Mrs Alder (from 31), Mr Finch (from 41), Mary Larkin and Rosa (from 94), each with a small want that pays off. Sixteen optional upgrade scenes, one per Rome 2 citizen feat, each voiced by the building's keeper instead of a new character. Two cold reads; fixes include Theo learning Noelle's name without announcing it, Rosa alive and away from the start, and fewer repeated gags.
 
 - 2026-11-19: Extended to one hundred wishes in five Advents ending on Christmas Eve, one beat per wish. Advent Sundays close the first four (candles at the arch), with St Nicholas, St Lucia and the shortest day along the way. New stalls: Firework stall, Station kiosk, Glassblower's stall; the Igloo became the Ice house, the Log cabin the Lakeside smokehouse and Santa's workshop the Woodcarvers' hall, each selling what its piece shows. Noelle stays "until Christmas" instead of three weeks.
 

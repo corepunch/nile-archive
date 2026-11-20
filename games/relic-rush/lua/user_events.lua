@@ -5,15 +5,15 @@
 -- engine/lua/match3/user_events.lua implements them and lists every type it knows.
 -- Rome kept the city half of this flow in other files (city_view.xml's
 -- <Upgrade enable_user_events=...>); here the city_* entries below do that,
--- so the whole tutorial-and-citizen flow reads from this one table.
+-- so the whole tutorial-and-upgrade flow reads from this one table.
 --
 --   id         a unique name; it is also the save key, so never rename one
 --   available  false: waits until a THEN_USER_EVENT_AVAILABLE turns it on
 --              (Rome's available_by_default="0")
 --   from_level, to_level   expeditions (1-based) it counts on, inclusive
 --   test       true: --user-events-test fires it at once (Rome's F5 cheat)
---   citizen    {who, name, job, building}: the person a building gains (cast id,
---              display name, trade and the buildings.lua key; see the citizens below)
+--   upgrade    {title, keeper, building}: what a building gains (the phrase, the cast id
+--              of the character who runs it and the buildings.lua key; see below)
 --   If         {type, attributes...}
 --   Then       a list of {type, attributes...}
 --
@@ -26,9 +26,9 @@
 -- are progress.lua's opening notices, which already name the building that
 -- unlocked the piece. A timer hint becomes a moves hint: Relic Rush counts
 -- moves, not seconds. Rome's duplicate trophy ids (TROPHY_19 three times,
--- TROPHY_25 twice) are given one trophy per citizen.
+-- TROPHY_25 twice) are given one trophy per upgrade.
 --
--- The citizens' feats and perks are docs/CAMPAIGN_DESIGN.md#citizens, scaled
+-- The upgrades' feats and perks are docs/CAMPAIGN_DESIGN.md#upgrades, scaled
 -- to Relic Rush's boards.
 local economy = require("economy")
 
@@ -85,47 +85,47 @@ local events = {
 
 }
 
--- The sixteen citizens (docs/CAMPAIGN_DESIGN.md#citizens), one per Cradle of
+-- The sixteen upgrades (docs/CAMPAIGN_DESIGN.md#upgrades), one per Cradle of
 -- Rome 2 building that has one: man_01 to man_16 are Rome's ids. Placing the
--- building arms the citizen (city_<building>); the feat brings them.
+-- building arms the upgrade (city_<building>); the feat brings it.
 local function income(id, amount) return {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id=id, amount=amount} end
 local function tool(id) return {"THEN_GAME_CHARGE_TOOL", id=id, amount=1} end
 
-local citizens = {
-    {id="man_03", building="well", who="lupe", name="Lupe", job="the water-carrier",
+local upgrades = {
+    {id="man_03", building="well", title="a second rope and pulley", keeper="tomas",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=150}, perk=income("food", 10)},
-    {id="man_04", building="log_cabin", who="bastian", name="Old Bastian", job="the trapper",
+    {id="man_04", building="log_cabin", title="his father's tools sharpened", keeper="tomas",
         If={"IF_PLAYER_MAKE_MATCH", length=5}, perk=tool("hammer")},
-    {id="man_02", building="workshop", who="joaquin", name="Joaquín", job="the carpenter",
+    {id="man_02", building="workshop", title="a second saw bench", keeper="mara",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=300}, perk=income("supplies", 60)},
-    {id="man_01", building="camp", who="dita", name="Dita", job="the blaster",
+    {id="man_01", building="camp", title="a proper powder store", keeper="adrian",
         If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=10}, perk=tool("bomb")},
-    {id="man_05", building="market", who="marisol", name="Auntie Marisol", job="the trader",
+    {id="man_05", building="market", title="the hill farms send their carts", keeper="marisol",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=325}, perk=income("food", 55)},
-    {id="man_06", building="trading_post", who="basile", name="Basile", job="the stonecutter",
+    {id="man_06", building="trading_post", title="a cart road to the quarry", keeper="adrian",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=300}, perk=income("supplies", 60)},
-    {id="man_07", building="water_mill", who="hana", name="Hana", job="the miller",
+    {id="man_07", building="water_mill", title="a second millstone", keeper="elena",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=430}, perk=income("food", 85)},
-    {id="man_08", building="clock_tower", who="ferro", name="Ferro", job="the clockmender",
+    {id="man_08", building="clock_tower", title="a warning chime", keeper="tomas",
         If={"IF_PLAYER_MAKE_MATCH_IN_LEVEL", amount=5, min_length=5}, perk=tool("shield")},
-    {id="man_09", building="gateway", who="nilo", name="Nilo", job="the fisher",
+    {id="man_09", building="gateway", title="a fish market every morning", keeper="marisol",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=700}, perk=income("food", 140)},
-    {id="man_10", building="amphitheater", who="zaza", name="Zaza", job="the drummer",
+    {id="man_10", building="amphitheater", title="market-day shows", keeper="adrian",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=330}, perk=income("coins", 65)},
-    {id="man_11", building="map_room", who="ruth", name="Ruth", job="the cartographer",
+    {id="man_11", building="map_room", title="storm charts on the wall", keeper="elena",
         If={"IF_PLAYER_MAKE_MATCH_SERIES", amount=2, min_length=5}, perk=tool("lightning")},
-    {id="man_12", building="lighthouse", who="ulla", name="Captain Ulla",
+    {id="man_12", building="lighthouse", title="a polished lens", keeper="mara",
         If={"IF_PLAYER_MAKE_MATCH_IN_TIME", amount=15, min_length=3, time=20}, perk=tool("plus")},
-    {id="man_13", building="beached_ship", who="pike", name="Pike", job="the shipwright",
+    {id="man_13", building="beached_ship", title="a ferry to the hill villages", keeper="mara",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=575}, perk=income("coins", 115)},
-    {id="man_14", building="observatory", who="amani", name="Dr Amani", job="the astronomer",
+    {id="man_14", building="observatory", title="the telescope realigned", keeper="elena",
         If={"IF_PLAYER_COMPLETE_LEVELS_WITHOUT_LIFE_LOSS", amount=3}, perk=tool("mixer")},
-    {id="man_15", building="museum", who="sato", name="Mr Sato", job="the curator",
+    {id="man_15", building="museum", title="a reading room open to all", keeper="adrian",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=775}, perk=income("coins", 155)},
-    {id="man_16", building="temple", who="ixchel", name="Ixchel", job="the storyteller",
+    {id="man_16", building="temple", title="the keepers' watch roster", keeper="tomas",
         If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=15}, perk=tool("star")},
 }
-for _, event in ipairs(require("match3.user_events").citizen_events(citizens)) do table.insert(events, event) end
+for _, event in ipairs(require("match3.user_events").upgrade_events(upgrades)) do table.insert(events, event) end
 
 -- hint_11_<bonus>: Rome's IF_GAME_BONUS_READY hints, one per bonus.
 for _, slot in ipairs(economy.bonus_slots) do
@@ -136,10 +136,11 @@ for _, slot in ipairs(economy.bonus_slots) do
     end
 end
 
--- Rome kept trophy names in locale.xml: one trophy per citizen, TROPHY_NN for man_NN.
+-- Rome kept trophy names in locale.xml: one trophy per upgrade, TROPHY_NN for man_NN.
 local trophies = {}
-for _, row in ipairs(citizens) do
-    trophies["TROPHY_" .. row.id:sub(5)] = row.job and row.name .. " " .. row.job or row.name
+local island = require("island")
+for _, row in ipairs(upgrades) do
+    trophies["TROPHY_" .. row.id:sub(5)] = island.buildings[island.kinds[row.building] + 1].name .. ": " .. row.title
 end
 
 return {events=events, trophies=trophies}

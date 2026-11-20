@@ -17,14 +17,15 @@
 -- derived from the done events, never stored, so retuning the data applies to
 -- old saves too.
 --
--- Citizens are events with a `citizen` table ({who, name, job, building}).
+-- Upgrades are events with an `upgrade` table ({title, keeper, building}): the
+-- phrase, the cast id of the character who runs the building and its key.
 -- Placing the building arms the event (city_<building> -> THEN_USER_EVENT_AVAILABLE);
--- meeting its feat brings the citizen: the building upgrades, a trophy is
+-- meeting its feat upgrades the building, a trophy is
 -- awarded and the perk applies for good. The arrival scene is the journey's
--- citizen beat for that event ({phase="citizen", event=id}, played on the
+-- upgrade beat for that event ({phase="upgrade", event=id}, played on the
 -- next return to town); without one a toast announces it. The building's card
--- (R.citizen_card) names the citizen and perk, or the feat while it is armed.
--- `M.citizen_events(rows)` builds those events from compact rows.
+-- (R.upgrade_card) names the upgrade and its perk, or the feat while it is armed.
+-- `M.upgrade_events(rows)` builds those events from compact rows.
 --
 -- Conditions (If). Board ones count on the current expedition only.
 --   IF_PLAYER_MAKE_MATCH length                 a straight line of at least length
@@ -47,7 +48,7 @@
 --   IF_PLAYER_COMPLETE_LEVELS_WITHOUT_BONUS_USE amount  wins in a row without tapping a bonus
 --   IF_PLAYER_GET_READY_BONUSES amount          charged bonuses at once
 --   IF_PLAYER_BUILT_CONSTRUCTION id             a building is placed on the island
---   IF_PLAYER_UPGRADE_CONSTRUCTION amount       citizens arrived (buildings upgraded)
+--   IF_PLAYER_UPGRADE_CONSTRUCTION amount       upgrades earned (buildings upgraded)
 --   IF_PLAYER_SESSION_TIME amount               minutes since launch
 --   IF_GAME_SHOW_MOVE_HINT amount               the board's amount-th move suggestion
 --   IF_GAME_PUZZLE_TILE_APPEAR, IF_GAME_DOUBLE_PUZZLE_TILE_APPEAR   a board opens with (double) plaques
@@ -180,7 +181,7 @@ function M.install(R, cfg)
     end
     rules.perk_income = U.win_income   -- reward_breakdown adds it to every win
 
-    -- The board's yields with the citizens' weights in force, by kind.
+    -- The board's yields with the upgrades' weights in force, by kind.
     function U.apply_weights(g)
         if not g.resource_yields then return end
         local weights, extra, amounts = U.chip_weights(), U.tool_charges(), nil
@@ -228,14 +229,14 @@ function M.install(R, cfg)
     }
     U.THEN.THEN_SHOW_HINT = U.THEN.THEN_SHOW_TUTORIAL
 
-    -- A citizen arrives: their scene is the journey's citizen beat, played on the
-    -- next return to town. Without one a toast says who came where.
+    -- An upgrade is earned: its scene is the journey's upgrade beat, played on the
+    -- next return to town. Without one a toast names the building and the upgrade.
     local function arrive(e)
-        local c = e.citizen
+        local c = e.upgrade
         local journey = require("journey")
-        if journey.find_citizen and journey.find_citizen(e.id) then return end
+        if journey.find_upgrade and journey.find_upgrade(e.id) then return end
         local building = island.buildings[U.kinds[c.building] + 1]
-        show(("%s has come to the %s."):format(U.title(c), building.name))
+        show(("%s: %s"):format(building.name, c.title))
     end
 
     local function fire(e)
@@ -245,11 +246,8 @@ function M.install(R, cfg)
             local effect = assert(U.THEN[t[1]], "unknown user event effect " .. tostring(t[1]))
             effect(t, e)
         end
-        if e.citizen then arrive(e) end
+        if e.upgrade then arrive(e) end
     end
-
-    -- "Lupe the water-carrier", as the card and toast name them.
-    function U.title(c) return c.job and (c.name .. " " .. c.job) or c.name end
 
     -- A failed board ends every run of wins in a row.
     function U.lost()
@@ -422,7 +420,7 @@ function M.install(R, cfg)
     end
     U.runs_of = runs_of
 
-    -- Board starts use the citizens' weights for pieces the player matches.
+    -- Board starts use the upgrades' weights for pieces the player matches.
     local game_start = rules.game_start
     function rules.game_start(...)
         local g = game_start(...)
@@ -524,11 +522,11 @@ function M.install(R, cfg)
 
     R.user_events = U
 
-    ------------------------------------------------------------------ citizens
+    ------------------------------------------------------------------ upgrades
 
-    function U.citizen_of(kind)
+    function U.upgrade_of(kind)
         for _, e in ipairs(U.events) do
-            if e.citizen and U.kinds[e.citizen.building] == kind then return e end
+            if e.upgrade and U.kinds[e.upgrade.building] == kind then return e end
         end
     end
 
@@ -575,25 +573,25 @@ function M.install(R, cfg)
     end
     U.perk_of = perk_of
 
-    -- What a building's card says about its citizen: nil without one (or before
+    -- What a building's card says about its upgrade: nil without one (or before
     -- the building stands). {about, caption, entries, short}: the sentence, the
     -- caption over the indicators, the indicators, and the one-line tap text.
     function U.card(kind)
-        local e = U.citizen_of(kind)
+        local e = U.upgrade_of(kind)
         if not e then return end
-        local st, title = U.state(), U.title(e.citizen)
+        local st, title = U.state(), e.upgrade.title
         if st.done[e.id] then
             local text, caption, entries = perk_of(e)
-            local short = ("%s lives here."):format(title)
+            local short = ("Upgraded: %s."):format(title)
             return {about=text ~= "" and short .. " " .. text or short, caption=caption, entries=entries, short=short}
         elseif st.available[e.id] then
             local feat, entries = feat_of(e)
-            return {about=("%s will come when you %s."):format(title, feat), caption="FEAT", entries=entries or {}}
+            return {about=("Upgrade: %s, when you %s."):format(title, feat), caption="FEAT", entries=entries or {}}
         end
     end
 
-    R.citizen_card = U.card
-    R.citizen_done = function(id) return U.state().done[id] == true end
+    R.upgrade_card = U.card
+    R.upgrade_done = function(id) return U.state().done[id] == true end
 
     -- A building placed or bought mid-board changes what its pieces pay.
     local refresh_board_bonuses = R.refresh_board_bonuses
@@ -609,11 +607,11 @@ end
 
 ------------------------------------------------------------------ data helper
 
--- Citizen events from compact rows, in Rome's two-step flow: placing the
--- building arms the citizen (city_<building>), meeting the feat brings them.
---   {id="man_03", building="well", who="lupe", name="Lupe", job="the water-carrier",
+-- Upgrade events from compact rows, in Rome's two-step flow: placing the
+-- building arms the upgrade (city_<building>), meeting the feat earns it.
+--   {id="man_03", building="well", title="a second rope and pulley", keeper="tomas",
 --    If={...feat...}, perk={"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id="food", amount=10}}
-function M.citizen_events(rows)
+function M.upgrade_events(rows)
     local events = {}
     for _, row in ipairs(rows) do
         events[#events + 1] = {id="city_" .. row.building,
@@ -622,7 +620,7 @@ function M.citizen_events(rows)
     end
     for _, row in ipairs(rows) do
         events[#events + 1] = {id=row.id, available=false,
-            citizen={who=row.who, name=row.name, job=row.job, building=row.building},
+            upgrade={title=row.title, keeper=row.keeper, building=row.building},
             If=row.If,
             Then={{"THEN_PLAYER_ADD_TROPHY", id="TROPHY_" .. row.id:sub(5)},
                 {"THEN_CITY_UPGRADE_BUILDING", id=row.building}, row.perk}}

@@ -73,7 +73,7 @@ return {
     {key="after-14", phase="after", level=14, lines={
         {"elena", "Tomas, every pillar is a tide table, and every great storm is cut into the stone."},
         {"adrian", "Elena, you're sure it's a table and not decoration? It's rather handsome."},
-        {"elena", "Decoration doesn't flood, Adrian. I'm sketching all of it."},
+        {"elena", "Decoration doesn't flood, Adrian. The hill villages' market woman says families keep flood stories."},
     }},
     {key="after-15", phase="after", level=15, lines={
         {"mara", "Elena, the aqueduct's broken in three places. So is the cable. The same three!"},
@@ -114,7 +114,7 @@ return {
     }},
     {key="after-19", phase="after", level=19, lines={
         {"elena", "Tomas, reflection is long dead. What's left is someone alive, with a lamp, who knows the old code."},
-        {"tomas", "Or someone taught by those who did, Elena."},
+        {"tomas", "Ask the market woman up in the hill villages, Elena. She knows everyone's business."},
         {"mara", "Then we'll be good company. Highest step tomorrow, at dusk. Coming, both of you?"},
     }},
     {key="before-20", phase="before", level=20, lines={
@@ -626,84 +626,84 @@ return {
         {"ines", "Mara, I changed its tune till a lamp I could trust answered. And this one did."},
         {"ines", "Elena, your well scrap is a corner of my chart of other lights. They need keepers too."},
     }},
-    {key="citizen-man_03", phase="citizen", event="man_03", building="Spring well", lines={
-        {"lupe", "Elena, my jars are dry and the hill spring is a two-hour climb. Is this the well that sings?"},
-        {"elena", "It sang at us. Who are you, and why come down for water?"},
-        {"lupe", "Lupe. I carry for three villages. Fill my jars here, and I'll bring your crew a jar a day."},
+    {key="upgrade-man_03", phase="upgrade", event="man_03", title="a second rope and pulley", building="Spring well", lines={
+        {"tomas", "Elena, hold the bucket. I hung a second rope, so one arm draws while the other rests."},
+        {"elena", "Tomas, that's a pulley off a boat block. Does it squeak?"},
+        {"tomas", "It hums. My father would call that cheating. I call it morning."},
     }},
-    {key="citizen-man_04", phase="citizen", event="man_04", building="Trapper's cabin", lines={
-        {"bastian", "Girl, you've hung your washing on my old snare post. Forty years I've set traps in the hills."},
-        {"mara", "Sorry! Is the post yours? I'll move it, if you'll teach me what a trail says."},
-        {"bastian", "Bet you can't keep quiet for a mile. Win, and I'll show you how to bring a rock wall down."},
+    {key="upgrade-man_04", phase="upgrade", event="man_04", title="his father's tools sharpened", building="Trapper's cabin", lines={
+        {"mara", "Tomas, why is your father's whole tool rack on the bench? Are we doing surgery?"},
+        {"tomas", "Sharpening, Mara. I found the whetstone behind the stove. Years of dull, all gone."},
+        {"mara", "Can I borrow the little hatchet for the ridge path? I'll ask it nicely."},
     }},
-    {key="citizen-man_02", phase="citizen", event="man_02", building="Carpenter's workshop", lines={
-        {"joaquin", "Your bench is crooked, your saw is blunt and the roof leaks. Who built this, Tomas?"},
-        {"tomas", "The old keepers. I only oil it. You'd be Joaquín from the upper village?"},
-        {"joaquin", "I am. Give me the key and a week, and I'll turn you out boards while you sleep."},
+    {key="upgrade-man_02", phase="upgrade", event="man_02", title="a second saw bench", building="Carpenter's workshop", lines={
+        {"mara", "Tomas, don't look at it. I built a second saw bench and it only wobbles a little."},
+        {"tomas", "A little, Mara? The whole workshop leans toward it. Who taught you to level?"},
+        {"mara", "A lamp, a bucket of water and stubbornness. Now two of us can saw without arguing."},
     }},
-    {key="citizen-man_01", phase="citizen", event="man_01", building="Expedition camp", lines={
-        {"dita", "Mara, that stair behind your camp has sat on its fallen stones for years. May I blow it open?"},
-        {"mara", "Blow it? Who sent you, and do you mean a small bang or a loud one?"},
-        {"dita", "Nobody sent me. Small, if you hold your ears. I'll bring powder for a second job, too."},
+    {key="upgrade-man_01", phase="upgrade", event="man_01", title="a proper powder store", building="Expedition camp", lines={
+        {"adrian", "Mara, I moved the powder out of the tent. Don't make that face; the tent's grateful."},
+        {"mara", "Out to where, Adrian? Please say not near the well."},
+        {"adrian", "A stone cellar with a real lock. I'm told it's what responsible people do."},
     }},
-    {key="citizen-man_05", phase="citizen", event="man_05", building="Jungle market", lines={
-        {"marisol", "Fishermen on the left, fruit on the right. And nobody sells in the shade without asking me."},
-        {"elena", "Marisol, the hill villages are arriving with baskets. Where do I put the yams?"},
-        {"marisol", "Next to the mangoes. If they fight, give them the same ruler and call it fair."},
+    {key="upgrade-man_05", phase="upgrade", event="man_05", title="the hill farms send their carts", building="Jungle market", lines={
+        {"marisol", "Elena, the hill farms are sending carts at last. Count your baskets, then count them again."},
+        {"elena", "Marisol, who talked them down the mountain road? They never trusted the harbour."},
+        {"marisol", "I did. I told each one their neighbour was coming. Nobody wants to be last at a market."},
     }},
-    {key="citizen-man_06", phase="citizen", event="man_06", building="Stone trading post", lines={
-        {"basile", "Adrian, you stand like a man who has never lifted a block. Is this your quarry?"},
-        {"adrian", "Guilty. I only point at things, with great enthusiasm. What would you cut first?"},
-        {"basile", "The terrace steps. Point at the next ten and I'll send them down squared and straight."},
+    {key="upgrade-man_06", phase="upgrade", event="man_06", title="a cart road to the quarry", building="Stone trading post", lines={
+        {"adrian", "Tomas, I've laid a cart road to the quarry. Me, a map and one very small shovel."},
+        {"tomas", "And half of Marisol's cousins, I'd guess. Whose blisters are those, Adrian?"},
+        {"adrian", "The shovel was mine. The road is theirs. Please don't tell them about the blisters."},
     }},
-    {key="citizen-man_07", phase="citizen", event="man_07", building="Water mill", lines={
-        {"hana", "Mara, your wheel turns, but it grinds nothing. Who taught you to leave a mill empty?"},
-        {"mara", "Nobody! We've sacks of rice and tubers in the shed. Will you take them?"},
-        {"hana", "Both, and I'll keep a share for flat bread. You'll want to wait at the door, I warn you."},
+    {key="upgrade-man_07", phase="upgrade", event="man_07", title="a second millstone", building="Water mill", lines={
+        {"elena", "Mara, I bolted a second millstone beside the first. Please don't tell me it's lopsided."},
+        {"mara", "It's lopsided, but it grinds. Who taught the scholar to dress stone?"},
+        {"elena", "A diagram, a chisel and two thumbnails. Flour by breakfast now, Mara, not by lunch."},
     }},
-    {key="citizen-man_08", phase="citizen", event="man_08", building="Tide clock tower", lines={
-        {"ferro", "Elena, your tower keeps tide time but sulks at noon. Mind if I take a look inside?"},
-        {"elena", "Please! I've stared at its gears for an hour and they all look guilty."},
-        {"ferro", "They are. Hold the ladder, and the tower will chime a warning before the tide turns."},
+    {key="upgrade-man_08", phase="upgrade", event="man_08", title="a warning chime", building="Tide clock tower", lines={
+        {"tomas", "Elena, listen. I fitted a bell to the clock, to ring before the tide turns."},
+        {"elena", "It's a pleasant note, Tomas. Do the fishermen know to listen for it?"},
+        {"tomas", "They will. A bell that rings before you need it is the only useful kind."},
     }},
-    {key="citizen-man_09", phase="citizen", event="man_09", building="Harbour plaza", lines={
-        {"nilo", "Tomas, my nets are full in my head and empty in my boat. May I fish off this quay?"},
-        {"tomas", "The reef side has rested for years. Who sent you down from the hill landing?"},
-        {"nilo", "The tide did. Keep a corner of the plaza clear, and your pots will never be bare."},
+    {key="upgrade-man_09", phase="upgrade", event="man_09", title="a fish market every morning", building="Harbour plaza", lines={
+        {"marisol", "Tomas, the boats land at dawn now, and my cousins sell on your plaza stones. Fair?"},
+        {"tomas", "Fair, Marisol. Mind the north corner; the cobbles lift when the tide is high."},
+        {"marisol", "Then the cheapest fish goes there, Tomas. Anyone who slips should at least save a coin."},
     }},
-    {key="citizen-man_10", phase="citizen", event="man_10", building="Stone amphitheatre", lines={
-        {"zaza", "Adrian, say something from that top row. Hear how the stones throw it back? Beautiful."},
-        {"adrian", "Dreadful, I said \"good evening\" and got \"evening\" twice. Can you fill it?"},
-        {"zaza", "With a crowd, if I drum loud enough. And a crowd drops coins in a cup."},
+    {key="upgrade-man_10", phase="upgrade", event="man_10", title="market-day shows", building="Stone amphitheatre", lines={
+        {"adrian", "Marisol, market days, a show on the stage. Jugglers, drummers and, heaven help me, a poet."},
+        {"marisol", "Who pays the poet, Adrian? Not my cousins."},
+        {"adrian", "I do. It's the only way I'll hear someone else talk for an hour."},
     }},
-    {key="citizen-man_11", phase="citizen", event="man_11", building="Cartographer's house", lines={
-        {"ruth", "Elena, you've pinned my map upside down. Is this what you call a survey?"},
-        {"elena", "It's upside down? Then will you set it right and read the old lines for us?"},
-        {"ruth", "Ink and an hour. I'll mark where the storm will strike before it comes."},
+    {key="upgrade-man_11", phase="upgrade", event="man_11", title="storm charts on the wall", building="Cartographer's house", lines={
+        {"elena", "Tomas, come and see. Every storm the island ever kept, pinned in order on my wall."},
+        {"tomas", "That's a great many storms, Elena. Which one do you fear?"},
+        {"elena", "The one that isn't pinned yet. Now I'll know its shape in time to warn the quay."},
     }},
-    {key="citizen-man_12", phase="citizen", event="man_12", building="Lighthouse", lines={
-        {"ulla", "Mara, forty years on deck and I never once saw this lamp lit. Who keeps it?"},
-        {"mara", "Nobody, Captain. Will you teach me to read a coast at night?"},
-        {"ulla", "Hand me the lens cloth. I'll show you which dark patches are rocks, before you hit them."},
+    {key="upgrade-man_12", phase="upgrade", event="man_12", title="a polished lens", building="Lighthouse", lines={
+        {"mara", "Tomas, cover your eyes. I polished the lens with a sleeve, spit and patience."},
+        {"tomas", "That is how this harbour was built, Mara. Is it ready?"},
+        {"mara", "Ask a boat past the reef. It'll wave. You'll want to wave back."},
     }},
-    {key="citizen-man_13", phase="citizen", event="man_13", building="Beached schooner", lines={
-        {"pike", "Tomas, your schooner has a fine keel and shocking manners. May I mend her?"},
-        {"tomas", "Can she float again? She hasn't been wet in years."},
-        {"pike", "For a bargain. I'll patch her and sell planks, and we'll split what the traders pay."},
+    {key="upgrade-man_13", phase="upgrade", event="man_13", title="a ferry to the hill villages", building="Beached schooner", lines={
+        {"mara", "Marisol, the schooner floats! She'll take your cousins and their baskets round to the hills."},
+        {"marisol", "Will she, now? Pilot, who's steering, and who's paying the passage?"},
+        {"mara", "Me, and pay what you like. Mangoes will do. I'll try not to hit anything."},
     }},
-    {key="citizen-man_14", phase="citizen", event="man_14", building="Star observatory", lines={
-        {"amani", "Elena, forgive the dust. Does anyone here read these old star charts?"},
-        {"elena", "Nobody. Why, can you? I'd give a week of tea for that."},
-        {"amani", "Tea is fine. I'll copy one chart a night, and you'll pick the clear sky for each crossing."},
+    {key="upgrade-man_14", phase="upgrade", event="man_14", title="the telescope realigned", building="Star observatory", lines={
+        {"elena", "Adrian, put your eye there and tell me what you see. Don't touch the brass."},
+        {"adrian", "A great many stars, all pretending to be tidy. Did you move the telescope?"},
+        {"elena", "A finger's width, with a spirit level. Now it finds a star when I ask it to."},
     }},
-    {key="citizen-man_15", phase="citizen", event="man_15", building="Relic museum", lines={
-        {"sato", "Elena, please don't touch the glass. Where did these pots come from?"},
-        {"elena", "Three crates of loose pottery, all from the dig. Can you put them in order?"},
-        {"sato", "Gladly. Put them on a shelf, and visitors will drop a coin for each case."},
+    {key="upgrade-man_15", phase="upgrade", event="man_15", title="a reading room open to all", building="Relic museum", lines={
+        {"adrian", "Elena, I moved the cases to make room for chairs and a lamp. Sit. Read something."},
+        {"elena", "Adrian, you hate giving up a good display case. Why chairs?"},
+        {"adrian", "Anyone who loves these shelves should get to read them. I'd like that to be the rule."},
     }},
-    {key="citizen-man_16", phase="citizen", event="man_16", building="Temple of the Sun", lines={
-        {"ixchel", "Mara, sit on the step, it's still warm. Who told you stones don't talk?"},
-        {"mara", "Nobody, I just never listened. Tell me one, I'll pay in biscuits."},
-        {"ixchel", "Come at dusk. The stories I tell will point you at the stars."},
+    {key="upgrade-man_16", phase="upgrade", event="man_16", title="the keepers' watch roster", building="Temple of the Sun", lines={
+        {"tomas", "Mara, I wrote a watch roster on the temple wall. Whose name goes first?"},
+        {"mara", "Yours, Tomas. You're the keeper. I'll take the dusk watch, and I'll stay awake."},
+        {"tomas", "Nobody stays awake. That's why there's a roster. Write your name in pencil."},
     }},
 }

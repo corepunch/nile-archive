@@ -1,4 +1,4 @@
--- Relic Rush's user_events.lua: Cradle of Rome's If/Then events, tutorials and citizens.
+-- Relic Rush's user_events.lua: Cradle of Rome's If/Then events, tutorials and upgrades.
 local rules=require("rules")
 local economy=require("economy")
 local island=require("island")
@@ -65,27 +65,27 @@ do
     check(not st.done.hint_01_2,'a retired hint no longer shows')
 end
 
--- A citizen arrives once their building stands (tests/lua/citizens.lua covers all sixteen).
+-- An upgrade is armed once its building stands (tests/lua/upgrades.lua covers all sixteen).
 do
     local st=U.state()
     U.emit("island")
-    check(not st.available.man_03,'Lupe waits for the well')
+    check(not st.available.man_03,'the well upgrade waits for the well')
     R.island:add(vec2(0,0),U.kinds.well,0)
     U.emit("island")
-    check(st.done.city_well and st.available.man_03,'placing the well opens Lupe')
+    check(st.done.city_well and st.available.man_03,'placing the well arms its upgrade')
     local g=R.make_board(11,7)
     g.earnings[economy.PROVISIONS]=149
     U.emit("wave",{g=g,runs={4},longest=4})
     check(not st.done.man_03,'149 Food is not the feat')
     g.earnings[economy.PROVISIONS]=150
     U.emit("wave",{g=g,runs={4},longest=4})
-    check(st.done.man_03 and U.upgrades("well")==1,'150 Food in one level brings Lupe and upgrades the well')
+    check(st.done.man_03 and U.upgrades("well")==1,'150 Food in one level upgrades the well')
     g.won,g.moves=true,0
     local reward=rules.reward_breakdown(g,R.prog)
-    check(reward.total[economy.PROVISIONS]==160 and reward.total[economy.SUPPLIES]==0,'Lupe adds ten Food to a win and no Supplies')
+    check(reward.total[economy.PROVISIONS]==160 and reward.total[economy.SUPPLIES]==0,'the well upgrade adds ten Food to a win and no Supplies')
     local found=false
-    for _,t in ipairs(U.trophies()) do if t.id=="TROPHY_03" then found=t.name:find("Lupe",1,true)~=nil end end
-    check(found,'Lupe is a named trophy')
+    for _,t in ipairs(U.trophies()) do if t.id=="TROPHY_03" then found=t.name:find("a second rope",1,true)~=nil end end
+    check(found,'the well upgrade is a named trophy')
 end
 
 -- A chip weight changes what a piece pays while clearing, without replacing the economy's tables.
@@ -93,10 +93,10 @@ do
     local st=U.state()
     local g={resource_yields={[2]=economy.bonuses.hammer,[0]=economy.pieces[0]}}
     U.apply_weights(g)
-    check(g.yield_amounts==nil,'no citizen, no weights')
+    check(g.yield_amounts==nil,'no upgrade, no weights')
     st.done.man_02=true
     U.apply_weights(g)
-    check(g.yield_amounts==nil,'an income citizen leaves the thirty-piece Hammer charge alone')
+    check(g.yield_amounts==nil,'an income upgrade leaves the thirty-piece Hammer charge alone')
     local board=R.make_board(1,7)
     local kind,piece=next(board.resource_yields)
     board.yield_amounts={[kind]=piece.amount+1}
@@ -119,7 +119,7 @@ end
 do
     check(save.write("user-events-test",U.serialize),'write user events')
     R.prog={level=0,seed=1,wallet=purse(),story_seen={},bonus_charge={}}
-    check(not U.state().done.man_03,'a fresh profile starts with no citizens')
+    check(not U.state().done.man_03,'a fresh profile starts with no upgrades')
     check(save.read("user-events-test",U.serialize),'read user events')
     local st=U.state()
     check(st.done.man_03 and st.done.hint_01_close and not st.available.hint_01_2 and U.win_income()[economy.PROVISIONS]==10,

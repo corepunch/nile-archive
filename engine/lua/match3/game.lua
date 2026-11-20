@@ -288,22 +288,22 @@ end
 function G.journey(content)
     local M = content
     M.about = M.about or {}
-    -- Citizen arrival scenes ({phase="citizen", event="man_03", no level}) are
+    -- Upgrade arrival scenes ({phase="upgrade", event="man_03", no level}) are
     -- kept apart from the level beats: they play on the next return to town
     -- once their user event is done, and never hold the story back.
-    local scenes, citizens = {}, {}
+    local scenes, upgrades = {}, {}
     for _, beat in ipairs(M.beats) do
-        if beat.phase == "citizen" then citizens[#citizens + 1] = beat else scenes[#scenes + 1] = beat end
+        if beat.phase == "upgrade" then upgrades[#upgrades + 1] = beat else scenes[#scenes + 1] = beat end
     end
-    M.beats, M.citizens = scenes, citizens
+    M.beats, M.upgrades = scenes, upgrades
 
-    function M.find_citizen(event)
-        for _, beat in ipairs(M.citizens) do if beat.event == event then return beat end end
+    function M.find_upgrade(event)
+        for _, beat in ipairs(M.upgrades) do if beat.event == event then return beat end end
     end
 
-    -- The first unseen citizen scene whose event `done(event)` says has happened.
-    function M.next_citizen(p, done)
-        for _, beat in ipairs(M.citizens) do
+    -- The first unseen upgrade scene whose event `done(event)` says has happened.
+    function M.next_upgrade(p, done)
+        for _, beat in ipairs(M.upgrades) do
             if not (p.story_seen or {})[beat.key] and done(beat.event) then return beat end
         end
     end
@@ -320,7 +320,7 @@ function G.journey(content)
 
     function M.find(key)
         for _, beat in ipairs(M.beats) do if beat.key == key then return beat end end
-        for _, beat in ipairs(M.citizens) do if beat.key == key then return beat end end
+        for _, beat in ipairs(M.upgrades) do if beat.key == key then return beat end end
     end
 
     -- Legacy clears remain clears; already-owned buildings stay. A recap
@@ -345,7 +345,7 @@ function G.journey(content)
                 p.story_choices[b.key] = b.choices[choice] and choice or nil
             end
         end
-        for _, b in ipairs(M.citizens) do
+        for _, b in ipairs(M.upgrades) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
         end
         p.story_recap = s:int("narrative.recap", p.story_recap and 1 or 0) == 1
@@ -715,9 +715,9 @@ function G.bind(R, over)
             {kind="image", id="sprite", height=205},
             {kind="label", id="about", wrap=true, em=19, text_style="body"},
             {kind="label", id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
-            {kind="row", visible_field="show_citizen", children={
+            {kind="row", visible_field="show_upgrade", children={
                 {kind="spacer",grow=1},
-                amounts("citizen", "", "show_citizen", 96),
+                amounts("upgrade", "", "show_upgrade", 96),
                 {kind="spacer",grow=1},
             }},
             {kind="row", visible_field="show_amounts", children={
@@ -753,9 +753,9 @@ function G.bind(R, over)
         local needs_funding = step and not can_build
         funding_play = needs_funding and (R.prog.level < rules.LEVELS or step.after <= R.prog.level)
         match3.set_popup_header(wonder_form, w.name)
-        local citizen = R.citizen_card and R.citizen_card(i)
+        local upgrade = R.upgrade_card and R.upgrade_card(i)
         local about = journey.building_about(i, R.prog.level, w.about)
-        if citizen then about = about .. "\n" .. citizen.about end
+        if upgrade then about = about .. "\n" .. upgrade.about end
         local ok, message = wonder_form:push{sprite=w.sprite, about=about,
             action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or funding_play and (R.prog.level < rules.LEVELS and W.card.play or "EARN RESOURCES") or W.card.back}
         assert(ok, message)
@@ -773,11 +773,11 @@ function G.bind(R, over)
         if #missing > 0 then price = missing end
         wonder_form:set("price_caption", #missing > 0 and W.card.missing or W.card.price)
         local count, groups = #gets + #price, (#gets > 0 and 1 or 0) + (#price > 0 and 1 or 0)
-        -- A citizen's feat or perk: its own captioned row under the amounts.
-        local citizen_entries = citizen and citizen.entries or {}
-        wonder_form.values.show_citizen = #citizen_entries > 0
-        wonder_form:set("citizen_caption", citizen and citizen.caption or "")
-        assert(wonder_form:set_items("citizen", citizen_entries))
+        -- An upgrade's feat or perk: its own captioned row under the amounts.
+        local upgrade_entries = upgrade and upgrade.entries or {}
+        wonder_form.values.show_upgrade = #upgrade_entries > 0
+        wonder_form:set("upgrade_caption", upgrade and upgrade.caption or "")
+        assert(wonder_form:set_items("upgrade", upgrade_entries))
         amount_width = math.min(96, math.floor((CARD_INNER - GROUP_GAP * (groups - 1) - AMOUNT_GAP * (count - groups)) / math.max(1, count)))
         wonder_form.values.show_gets, wonder_form.values.show_amounts = #gets > 0, count > 0
         wonder_form.values.show_both = groups == 2
@@ -1102,9 +1102,9 @@ function G.bind(R, over)
     function R.building_words(item)
         local kind = R.island.items[item + 1].type
         local definition = R.buildings[kind + 1]
-        local citizen = R.citizen_card and R.citizen_card(kind)
+        local upgrade = R.upgrade_card and R.upgrade_card(kind)
         return definition.name .. "\n" .. journey.building_about(kind, R.prog.level, definition.about)
-            .. (citizen and citizen.short and "\n" .. citizen.short or "")
+            .. (upgrade and upgrade.short and "\n" .. upgrade.short or "")
     end
 
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
@@ -1257,7 +1257,7 @@ function G.bind(R, over)
         end
         local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
         local b = R.next_story(before)
-        if not b and R.on_island and R.citizen_done then b = journey.next_citizen(R.prog, R.citizen_done) end
+        if not b and R.on_island and R.upgrade_done then b = journey.next_upgrade(R.prog, R.upgrade_done) end
         if b and (R.on_island or b.phase == "before") then
             local reply = R.prog.story_choices and R.prog.story_choices[b.key]
             if reply then choice_reply(b, reply)

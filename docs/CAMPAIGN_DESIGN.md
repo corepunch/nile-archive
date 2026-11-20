@@ -1,6 +1,6 @@
-# Designing a match-3 campaign: flow, balance and citizens
+# Designing a match-3 campaign: flow, balance, upgrades and cast
 
-How Relic Rush and Christmas Market are put together, on Cradle of Rome 2 as the backbone. Read it before changing a campaign's levels, purchases, prices, citizens or story schedule. The story's own rules are in [STORY_WRITING.md](STORY_WRITING.md); board layout is in [LEVEL_DESIGN.md](LEVEL_DESIGN.md).
+How Relic Rush and Christmas Market are put together, on Cradle of Rome 2 as the backbone. Read it before changing a campaign's levels, purchases, prices, upgrades, cast or story schedule. The story's own rules are in [STORY_WRITING.md](STORY_WRITING.md); board layout is in [LEVEL_DESIGN.md](LEVEL_DESIGN.md).
 
 ## The backbone: Cradle of Rome 2
 
@@ -10,7 +10,7 @@ Cradle of Rome 2 (GameTop Windows edition, data in `reference/cradle-of-rome-2/r
 | --- | --- | --- |
 | **The board** | Clear every marble tablet before the time runs out. Matched coins, food and materials go to the wallet. | Clear every plaque or pane within a move budget. Matched pieces pay Coins/Tokens, Food/Treats and Supplies/Materials. |
 | **The purchase** | Twenty buildings in five epochs of four. Each pays off on the board: a richer piece or one of eight tools. | The same twenty rewards in the same order, one purchase every five levels, four per epoch (Relic Rush) or Advent (Christmas Market). |
-| **The citizen** | Sixteen buildings each arm one optional feat. Meeting it brings a citizen, upgrades the building and adds income every level or makes its tool come more often. | Sixteen named citizens, one per building, on the same feats (see [Citizens](#citizens)). |
+| **The citizen** | Sixteen buildings each arm one optional feat. Meeting it brings a citizen, upgrades the building and adds income every level or makes its tool come more often. | The same sixteen feats upgrade the building through the character who runs it (see [Upgrades](#upgrades-romes-citizens-kept-by-the-cast-we-know)). |
 
 What we add on top is the story: one short scene after every level, and a scene when each story building is placed. What we take away is the timer: our boards count moves.
 
@@ -21,7 +21,7 @@ The player's minute-to-minute loop:
 1. **Play a level.** The board shows the current pieces and, from its building on, one tool piece. Thirty matched tool pieces charge the tool's slot once.
 2. **Collect.** The results card banks the matched resources. A first clear also plays that level's scene.
 3. **Build.** In town, the Build button shows the next purchase with its price or shortfall. A particle trail circles the button when it is affordable. The player places the building and confirms; a story building plays its scene.
-4. **See the change.** The next board shows the new piece or tool. A citizen may arrive when the player meets a feat.
+4. **See the change.** The next board shows the new piece or tool. Meeting a building's feat upgrades it, with a short scene from its keeper.
 
 The campaign's shape:
 
@@ -53,10 +53,10 @@ Balance is measured, never guessed. The greedy bot (`tests/lua/greedy_bot.lua`) 
 **Rules for prices.**
 
 - **Keep Rome's currency mix.** A purchase uses the currencies its Rome counterpart uses (Rome's Farm costs no Food, so neither does the bakery). Only the amounts are fitted.
-- **Fit to the bot's income without citizens.** A citizen is a reward for skill. Prices assume none has arrived, so a player who earns citizens builds sooner and has spare resources for decorations, as in Rome.
+- **Fit to the bot's income without upgrades.** An upgrade is a reward for skill. Prices assume none, so a player who earns upgrades builds sooner and has spare resources for decorations, as in Rome.
 - **No replay should be needed.** `balance.py` walks the expected campaign; any replay it reports is a bug in the boards or prices, not a design choice. The extended `campaign_play` test plays the whole campaign with the bot on fixed seeds and allows at most five replays for income, since one below-average board can leave a purchase short.
 - **Prices rise.** A later purchase never costs less in total than the one before it. Income grows with each richer piece, so a price that drops tells the player nothing about progress.
-- **Refit after any change** to boards, piece yields, unlock order or citizen perks, and commit the regenerated catalogue.
+- **Refit after any change** to boards, piece yields, unlock order or upgrade perks, and commit the regenerated catalogue.
 
 **What one board pays.** Measured with the current boards (bot, mean per won board, Coins/Tokens · Food/Treats · Supplies/Materials):
 
@@ -68,38 +68,50 @@ Balance is measured, never guessed. The greedy bot (`tests/lua/greedy_bot.lua`) 
 | 61–70 | 181 · 307 · 177 | 446 · 281 · 281 |
 | 81–90 | 388 · 501 · 289 | 438 · 257 · 217 |
 
-## Citizens
+## Upgrades: Rome's citizens, kept by the cast we know
 
-Rome 2's sixteen citizens (`settings/user_events.xml`, events `man_01` to `man_16`) are optional skill feats tied to buildings. When the building stands, its feat is armed. Meeting it once brings the citizen for good: a figure at the building, a trophy, and one lasting perk. The perk is one of two kinds: **income every level** in one currency, or **a tool that comes more often** (its piece's weight on the board). Collecting all sixteen is an award of its own.
+Rome 2's sixteen citizens (`settings/user_events.xml`, events `man_01` to `man_16`) are optional skill feats tied to buildings. When the building stands, its feat is armed. Meeting it once upgrades the building for good and gives one lasting perk: **income every level** in one currency, or **a tool that comes more often**. In Rome the citizen is an anonymous figure that appears at the building and never speaks.
 
-We keep the system and give every citizen a name, a job and a two- or three-line arrival scene.
+We keep the feats, the upgrades and the perks, and give each upgrade to **the character who already runs that building**. Agnes gets a second oven; Tomas mends his father's traps. No new person arrives: the player sees someone they know get better at what they do.
 
-- **A citizen is a new character.** Each has a name and a trade that matches the building, and speaks in the arrival scene with one main character. The scene is speech like any other: the name comes up because someone greets or asks, never as a badge ("Dita. I clear rock for a living."), and the perk is felt in the world ("the tower will chime before the tide turns"), never named as a game rule ("your Shield will be ready sooner"). Give each scene its own shape: a complaint, a bargain, a challenge, a joke. Citizens may come back later in the scenes of their own building's tap line, never in a required story scene, because a player may not have them.
-- **Perks are scaled to our income.** The feat "earn X in one level" asks for about twice the mean board income in that currency in the ten levels after the building. Income per level is Rome's ratio of perk to threshold, capped at 20% of the threshold and rounded to fives. A tool citizen makes its tool's piece charge one point more per match.
-- **Rome feats we cannot measure get the nearest equivalent.** Rome's "collect three lives" becomes three wins in a row without a failed level; feats that use seconds keep Rome's time.
-- **The perk is shown.** The building's card names the citizen and shows the feat or the perk as resource indicators; the arrival scene plays on the next return to town (a toast if the script has none), and the income is part of every win's total. Two citizens on one tool slot add up: a Hammer and a Bomb citizen make that slot's pieces worth 5.
-- **Shared runtime.** Both games run Rome's If/Then events on `engine/lua/match3/user_events.lua`; each game supplies its data in `lua/user_events.lua` and its scenes in `docs/story.md` under `## Citizens` ([engine notes](MATCH3_ENGINE.md)).
+- **The upgrade is the keeper's scene.** Its two to four lines are the keeper and one other main character, about what has improved and what it means to them. The perk is felt in the world ("I'll have a tray out before the first train"), never named as a rule ("your Treats income rises").
+- **Optional and timeless.** An upgrade plays on the next return to town after its feat, at any point after its building stands, so it never refers to story events by level and never depends on them. The required story never depends on an upgrade.
+- **Perks are scaled to our income.** The feat "earn X in one level" asks for about twice the mean board income in that currency in the ten levels after the building. Income per level is Rome's ratio of perk to threshold, capped at 20% of the threshold and rounded to fives. A tool upgrade makes its tool's piece charge one point more per match; two on one slot add up.
+- **Rome feats we cannot measure get the nearest equivalent.** "Collect three lives" becomes three wins in a row without a failed level; feats in seconds keep Rome's time.
+- **The perk is shown.** The building's card shows the feat while it is armed and the upgrade with its perk once met, as resource indicators; the income is part of every win's total.
+- **Shared runtime.** Both games run Rome's If/Then events on `engine/lua/match3/user_events.lua`; each game supplies its data in `lua/user_events.lua` and its scenes in `docs/story.md` under `## Upgrades` ([engine notes](MATCH3_ENGINE.md)).
 
-| # | Rome 2 | Feat | Perk | Relic Rush citizen | Christmas Market citizen |
+| # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas Market upgrade (keeper) |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Well (`man_03`) | 150 Food in one level | +10 Food every win | Lupe the water-carrier, Spring well | Clem the lamplighter, Welcome arch |
-| 2 | Hunter's hut (`man_04`) | A match of five | Hammer charges faster | Old Bastian the trapper, Trapper's cabin | Ned the farrier, Reindeer stable |
-| 3 | Sawmill (`man_02`) | 300 Supplies in one level | +60 Supplies every win | Joaquín the carpenter, Carpenter's workshop | Big Ivar the woodcutter, Lumber workshop |
-| 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Dita the blaster, Expedition camp | Dot the firework maker, Firework stall |
-| 5 | Farm (`man_05`) | 325 Food (RR) / 240 Treats (CM) in one level | +55 / +40 every win | Auntie Marisol the trader, Jungle market | Hettie the icer, Gingerbread bakery |
-| 6 | Mine (`man_06`) | 300 Supplies / 360 Materials in one level | +60 / +70 every win | Basile the stonecutter, Stone trading post | Old Mags the stonemason, Snowy chapel |
-| 7 | Mill (`man_07`) | 430 Food / 325 Treats in one level | +85 / +65 every win | Hana the miller, Water mill | Mrs Alder, Hot cocoa kiosk |
-| 8 | Thermae (`man_08`) | Five matches of five in one level | Shield charges faster | Ferro the clockmender, Tide clock tower | Olaf the ice cutter, Ice house |
-| 9 | Port (`man_09`) | 700 Food / 375 Treats in one level | +140 / +75 every win | Nilo the fisher, Harbour plaza | Mr Finch the fisherman, Lakeside smokehouse |
-| 10 | Coliseum (`man_10`) | 330 Coins / 700 Tokens in one level | +65 / +140 every win | Zaza the drummer, Stone amphitheatre | Lotte the toymaker's apprentice, Toymaker's workshop |
-| 11 | House of the Vestals (`man_11`) | Two matches of five in a row | Lightning charges faster | Ruth the cartographer, Cartographer's house | Lucia the candle girl, Candlelight shop |
-| 12 | Lighthouse (`man_12`) | 15 matches within 20 seconds | Plus charges faster | Captain Ulla, Lighthouse | Mr Penny the postmaster, North Pole post office |
-| 13 | Nero's Golden House (`man_13`) | 575 Coins / 760 Tokens in one level | +115 / +150 every win | Pike the shipwright, Beached schooner | Gianna the glassblower, Glassblower's stall |
-| 14 | Mausoleum (`man_14`) | Three wins in a row without a failed level | Mixer charges faster | Dr Amani the astronomer, Star observatory | Sid the organ-grinder, Reindeer carousel |
-| 15 | Theatre (`man_15`) | 775 Coins / 875 Tokens in one level | +155 / +175 every win | Mr Sato the curator, Relic museum | Rolf the woodcarver, Woodcarvers' hall |
-| 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Ixchel the storyteller, Temple of the Sun | Mr Bellamy the Fenwick choirmaster, Christmas tree |
+| 1 | Well (`man_03`) | 150 Food / Treats in one level | +10 every win | Spring well: a second rope and pulley (Tomas) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
+| 2 | Hunter's hut (`man_04`) | A match of five | Hammer charges faster | Trapper's cabin: his father's tools sharpened (Tomas) | Reindeer stable: new shoes and bells for the sleigh-horse (Pip) |
+| 3 | Sawmill (`man_02`) | 300 Supplies / 230 Materials in one level | +60 / +45 every win | Carpenter's workshop: a second saw bench (Mara) | Lumber workshop: a drying shed for the pine (Theo) |
+| 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a proper powder store (Adrian) | Firework stall: a rocket rack, ready in threes (Pip) |
+| 5 | Farm (`man_05`) | 325 Food / 240 Treats in one level | +55 / +40 every win | Jungle market: the hill farms send their carts (Marisol) | Gingerbread bakery: a second oven (Agnes) |
+| 6 | Mine (`man_06`) | 300 Supplies / 360 Materials in one level | +60 / +70 every win | Stone trading post: a cart road to the quarry (Adrian) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
+| 7 | Mill (`man_07`) | 430 Food / 325 Treats in one level | +85 / +65 every win | Water mill: a second millstone (Elena) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
+| 8 | Thermae (`man_08`) | Five matches of five in one level | Shield charges faster | Tide clock tower: a warning chime (Tomas) | Ice house: a second ice saw on the lake (Theo) |
+| 9 | Port (`man_09`) | 700 Food / 375 Treats in one level | +140 / +75 every win | Harbour plaza: a fish market every morning (Marisol) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
+| 10 | Coliseum (`man_10`) | 330 Coins / 700 Tokens in one level | +65 / +140 every win | Stone amphitheatre: market-day shows (Adrian) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
+| 11 | House of the Vestals (`man_11`) | Two matches of five in a row | Lightning charges faster | Cartographer's house: storm charts on the wall (Elena) | Candlelight shop: Mr Wren trims every wick (Mr Wren) |
+| 12 | Lighthouse (`man_12`) | 15 matches within 20 seconds | Plus charges faster | Lighthouse: a polished lens (Mara) | North Pole post office: a second sorting rack (Pip) |
+| 13 | Nero's Golden House (`man_13`) | 575 Coins / 760 Tokens in one level | +115 / +150 every win | Beached schooner: a ferry to the hill villages (Mara) | Glassblower's stall: a second furnace (Theo) |
+| 14 | Mausoleum (`man_14`) | Three wins in a row without a failed level | Mixer charges faster | Star observatory: the telescope realigned (Elena) | Reindeer carousel: a band organ (Pip) |
+| 15 | Theatre (`man_15`) | 775 Coins / 875 Tokens in one level | +155 / +175 every win | Relic museum: a reading room open to all (Adrian) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
+| 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Temple of the Sun: the keepers' watch roster (Tomas) | Christmas tree: a star for the top (Theo) |
 
-Rome gives no citizen to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas Market.
+Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas Market.
+
+## Cast economy
+
+Players remember a few people well, not many people faintly. Before adding a speaker, give the line to someone the player already knows.
+
+- **What the references do.** Tropicats starts with one quest-giver and adds about one per chapter of forty levels: five by level 170, six in 2,800 levels, and Elsie gives 249 of its 274 quests ([story reference](tropicats-reference/STORY.md)). Its upgrades restore a known character's place, such as Cubby's grill and Lily's hut. Rome 2's citizens are anonymous figures that never speak. Life games grow the same shopkeepers' shops instead of adding new shopkeepers, and screenwriters merge minor roles into existing characters so the audience tracks fewer people.
+- **At most one new speaker per epoch**, and none in the first. The exception is a long-awaited arrival the whole story has been building to, such as Pip's mum and Gran stepping off the last train.
+- **Talk about a person before they speak.** A new speaker is planted in others' lines first (Mrs Alder's candles and cup, Mr Finch's goat, Pip's mum, Gran), so their first line is a payoff, not an introduction.
+- **Every speaker has a want and comes back.** A character who speaks has a want of their own and appears in at least three beats. Anyone with less stays a name in someone else's mouth.
+- **Growth before addition.** A building's improvement, a new job or a return visit belongs to someone the player knows. Give the keeper the change, not a newcomer.
+- **Name only what recurs.** A one-off helper is "the farrier" or "Marisol's cousin", not a new name.
 
 ## Story cadence
 
@@ -108,5 +120,5 @@ The full rules are in [STORY_WRITING.md](STORY_WRITING.md). In short:
 - **One scene after every level's first clear**, two or three lines, and one when each story building is placed. Replays are silent.
 - **Speech only.** Every line is said by someone to someone, wanting something. No narration, no captions, no reports of what the screen shows. [Why](STORY_WRITING.md#speech-only-no-narration).
 - **Each epoch is a chapter** with one question. Its four purchases set it up, move it on and pay it off; its boss level turns it.
-- **Citizens add optional scenes** on arrival; the required story never depends on them.
-- **The cast grows.** Each epoch introduces or deepens at least one character with a want of their own, besides the leads. A new speaker without a painted bust is shown with a name plate until one is painted (track it in an issue).
+- **Upgrades add optional scenes** from the building's keeper; the required story never depends on them.
+- **The cast stays small and grows deeper.** See [Cast economy](#cast-economy): at most one new speaker per epoch, planted before they speak. A new speaker without a painted bust is shown with a name plate until one is painted (track it in an issue).
