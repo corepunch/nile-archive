@@ -73,8 +73,9 @@ build/test/christmas-market "shot booster-toolbar" "shot square-winter-wreath" "
 
 ### Piece size
 
-All pieces are sized to the square cell and centered by their opacity-weighted
-mass. The square corners leave room for the reindeer's antlers and the diagonal
+Pieces fit the square cell. Most use their opacity-weighted center. The snowy
+fir uses its visible bounds so the tip and trunk have equal breathing room.
+The square corners leave room for the reindeer's antlers and the diagonal
 cracker bundle. The same reindeer and station clock illustrations appear on the
 board and in all five toolbar states.
 

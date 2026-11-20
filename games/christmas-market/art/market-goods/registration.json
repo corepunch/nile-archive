@@ -16,19 +16,20 @@
         96
       ],
       "offset": [
-        15,
-        7
+        16,
+        15
       ],
       "alpha_center": [
-        63.8336,
-        63.9057
+        64.8336,
+        71.9057
       ],
       "registered_box": [
         0,
         0,
         128,
         128
-      ]
+      ],
+      "anchor": "silhouette"
     },
     "market-2": {
       "name": "silver snowflake coin",

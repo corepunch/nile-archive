@@ -177,7 +177,10 @@ The [registration record](../art/market-goods/registration.json) saves each
 source crop, proportional fit, offset and alpha-weighted center in its 128 px
 slot. The crop takes the object's solid bounds with four pixels of edge
 padding. The fit preserves source alpha inside the square cell's 9 px inset.
-The market goods crops in this record center within half a pixel on both axes.
+Opacity-centered crops align within half a pixel on both axes. The snowy fir
+(`market-0`) centers on the visible silhouette, keeping opposite margins equal
+to within one pixel. The registration translates the already fitted fir and
+preserves its size and painted alpha.
 
 | Atlas slot | Piece | Dominant color | Role |
 | ---: | --- | --- | --- |

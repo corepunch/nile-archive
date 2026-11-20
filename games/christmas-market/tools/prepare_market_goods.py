@@ -40,8 +40,10 @@ def main():
     atlas = Image.new('RGBA', (COLUMNS * SLOT, ROWS * SLOT))
     sprites = goods['frames']
     aliases = goods['aliases']
+    silhouette_centered = set(goods.get('silhouette_centered', []))
     assert len(sprites) <= COLUMNS * ROWS and edits.keys() <= sprites.keys()
     assert aliases.keys() <= sprites.keys() and not (aliases.keys() & edits.keys())
+    assert silhouette_centered <= sprites.keys() - aliases.keys()
     frames = {}
     for slot, (key, name) in enumerate(sprites.items()):
         if key in aliases:
@@ -64,14 +66,30 @@ def main():
         crop = (max(0, x0 - EDGE_PADDING), max(0, y0 - EDGE_PADDING),
                 min(sprite.width, x1 + EDGE_PADDING), min(sprite.height, y1 + EDGE_PADDING))
         frame, fitted, offset = fit_object(sprite.crop(crop), mask, max_side, None, anchor=alpha_center)
+        center_by_bounds = key in silhouette_centered
+        if center_by_bounds:
+            # Move the fitted art as-is so an optical alignment never changes its size.
+            x0, y0, x1, y1 = silhouette(frame).getbbox()
+            dx, dy = round((SLOT - x0 - x1) / 2), round((SLOT - y0 - y1) / 2)
+            left_edge, top_edge, right_edge, bottom_edge = frame.getchannel('A').getbbox()
+            assert 0 <= left_edge + dx < right_edge + dx <= SLOT
+            assert 0 <= top_edge + dy < bottom_edge + dy <= SLOT
+            centered = Image.new('RGBA', frame.size)
+            centered.paste(frame, (dx, dy))
+            frame, offset = centered, [offset[0] + dx, offset[1] + dy]
+            x0, y0, x1, y1 = silhouette(frame).getbbox()
+            assert abs(x0 - (SLOT - x1)) <= 1 and abs(y0 - (SLOT - y1)) <= 1, key
         center = [round(axis, 4) for axis in alpha_center(frame)]
-        assert all(abs(axis - SLOT / 2) <= .5 for axis in center), (key, center)
+        if not center_by_bounds:
+            assert all(abs(axis - SLOT / 2) <= .5 for axis in center), (key, center)
         atlas_row, atlas_col = divmod(slot, COLUMNS)
         x, y = atlas_col * SLOT, atlas_row * SLOT
         atlas.paste(frame, (x, y))
         source_crop = [left + crop[0], top + crop[1], left + crop[2], top + crop[3]]
         frames[key] = dict(name=name, source_crop=source_crop, fitted_size=fitted,
                            offset=offset, alpha_center=center, registered_box=[x, y, SLOT, SLOT])
+        if center_by_bounds:
+            frames[key]['anchor'] = 'silhouette'
         if key in edits:
             frames[key]['source'] = edits[key]['source']
     record = ROOT / goods['transforms']
