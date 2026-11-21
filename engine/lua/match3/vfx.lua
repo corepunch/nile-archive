@@ -64,6 +64,7 @@ function V.bind(R, rules)
         end
         return special_art[frame]
     end
+    R.match_special_texture = special_texture
     function R.draw_match_special(t, at, scale, alpha)
         gfx.image(special_texture(t), rect.centered(at, size2.splat(R.HEX_R * 2 * scale)),
             rgba(255, 255, 255, alpha))
@@ -91,6 +92,7 @@ function V.bind(R, rules)
     local function sprite(name, at, side, angle, c)
         gfx.image_rot(fx_art[name], rect.centered(at, size2.splat(side)), angle, c)
     end
+    R.vfx_sprite = sprite
     -- The sprites' rings sit at .57 (ring) and .70 (shock) of their half-size.
     local function ring_sprite(name, at, radius, c) sprite(name, at, radius * (name == "ring" and 3.5 or 2.86), 0, c) end
     local function spark(at, radius, angle, c) sprite("glint", at, radius * 2.6, angle, c) end

@@ -566,7 +566,7 @@
     "review": "docs/review/painted-buildings/current-camera/README.md"
   },
   "striped_specials": {
-    "status": "live again as line gems: the piece's own frame under four cream bands from gfx.image_striped (repeats 4, width 0.44, ink 255/250/224), along the row or column it clears",
+    "status": "live again as line gems: the piece's own frame under three outlined cream ribbons from gfx.image_striped (repeats 4, width 0.5, ink 255/250/224), along the row or column it clears, with a cream rim of light (elements.piece_glow) and a travelling fx-twinkle glint; the rainbow gem is drawn at piece size with a spectrum rim",
     "review": "docs/screenshots/review/line-gems/states-480.jpg"
   },
   "settings_and_wallet": {

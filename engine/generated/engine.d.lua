@@ -878,7 +878,7 @@ function gfx.image_poly(t, pts, uvs, tint) end
 ---@param floor_color color
 function gfx.image_inset(t, dst, offset, floor_color) end
 
----Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
+---Draw t with directional bands masked to its authored alpha, preserving surface shading. Angle is the stripe direction in radians; repeats counts periods across the unit image and width is the filled fraction (0..1). A width below 1 draws ribbons: a lit ink fill inside an outline of the image's own color, darkened, so they read on pale and dark art alike; a width of 1 inks the whole silhouette flat. Ink alpha controls stripe strength; tint applies to the whole image. Pattern follows dst, including squash, clips and atlas regions; no texture allocation or mutation.
 ---@param t texture
 ---@param dst rect
 ---@param angle number

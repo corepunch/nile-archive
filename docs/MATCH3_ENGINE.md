@@ -413,10 +413,14 @@ pieces both bank their resource (`match_banks`); only matched bonus pieces
 charge a tool. `game_probe_swap` keeps its fast path for ordinary three-piece
 matches on these boards and follows the full rules for awards and activations.
 
-Colored specials draw their own piece through `gfx.image_striped`: four cream
-bands along the axis they clear, masked to the painted alpha (`pieces.stripes`
-in the board art overrides `repeats`, `width` and `ink`). Colorless ones use
-the game's `board/match-specials.png`. A special swells in where its line was
+Colored specials draw their own piece through `gfx.image_striped`: cream
+ribbons along the axis they clear, each outlined in the piece's own color and
+masked to the painted alpha (`pieces.stripes` in the board art overrides
+`repeats`, `width` and `ink`). Colorless ones use the game's
+`board/match-specials.png`; the color bomb is drawn at the pieces' size with
+their shadow. On the board a colored special and the color bomb carry a rim
+of light (`elements.piece_glow`) and a glint (`R.draw_gem_glint`); Reduce
+Motion holds the rim still and hides the glint. A special swells in where its line was
 made. `--level N --special-states` shows both axes of every kind on a square
 board. Sources, creation and activation are declared together in
 `engine/lua/match3/specials.lua`.

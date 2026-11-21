@@ -261,4 +261,17 @@ function E.piece_shadow(tex, dst, alpha, size)
     end
 end
 
+-- A rim of light around a gem: the piece's silhouette inked in `ink` and
+-- spread over a ring of taps, drawn before the piece so only the rim shows.
+-- strength is 0..1; size is the piece's drawn width in logical pixels.
+local GLOW_TAPS, GLOW_SPREAD, GLOW_TAP_ALPHA = 12, .085, 74
+function E.piece_glow(tex, dst, alpha, size, ink, strength)
+    local spread = size * GLOW_SPREAD
+    local tint = color(255, 255, 255, GLOW_TAP_ALPHA * strength * alpha / 255)
+    for k = 1, GLOW_TAPS do
+        local a = k / GLOW_TAPS * 2 * math.pi
+        gfx.image_striped(tex, dst:offset(vec2(math.cos(a) * spread, math.sin(a) * spread)), 0, 1, 1, ink, tint)
+    end
+end
+
 return E

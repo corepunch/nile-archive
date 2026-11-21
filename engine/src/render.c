@@ -122,9 +122,17 @@ bool render_init(void)
         "base=vec4(vec3(.99-.065*y-.40*(1.-open)+.085*bevel+.036*grain),a);}"
         "else base=texture(image,texcoord);"
         "if(stripe_color.a>0.){float aa=max(fwidth(stripe_phase),.001);"
-        "float band=1.-smoothstep(stripe_width*.5-aa,stripe_width*.5+aa,abs(fract(stripe_phase+.5)-.5));"
-        "float shade=.65+.35*dot(base.rgb,vec3(.2126,.7152,.0722));"
-        "base.rgb=mix(base.rgb,stripe_color.rgb*shade,band*stripe_color.a);}"
+        "float across=abs(fract(stripe_phase+.5)-.5),half_band=stripe_width*.5;"
+        "float band=1.-smoothstep(half_band-aa,half_band+aa,across);"
+        "float luma=dot(base.rgb,vec3(.2126,.7152,.0722));"
+        /* A band narrower than its period is a ribbon: a lit fill inside an
+         * outline of the art's own color, darkened, so it reads on pale and
+         * dark artwork alike. A full-width band is a flat silhouette ink. */
+        "if(stripe_width<1.){float edge=half_band*.7;"
+        "float fill=1.-smoothstep(edge-aa,edge+aa,across);"
+        "vec3 ribbon=stripe_color.rgb*(.84+.16*luma)*(1.04-.14*across/half_band);"
+        "base.rgb=mix(base.rgb,mix(base.rgb*.3,ribbon,fill),band*stripe_color.a);}"
+        "else base.rgb=mix(base.rgb,stripe_color.rgb*(.65+.35*luma),band*stripe_color.a);}"
         /* Signed distance mask, as for SDF fonts: 0.5 is the edge, outside is
          * positive, range is the distance one half of the encoding spans. */
         "if(mask_params.x>0.){vec2 m=mask_uv.xy+(point-mask_rect.xy)/mask_rect.zw*mask_uv.zw;"

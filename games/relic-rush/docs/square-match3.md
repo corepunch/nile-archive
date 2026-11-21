@@ -11,7 +11,8 @@ points and the meter fills at 90. Long matches count each Hammer once.
 
 Four in a row or column leave a **line gem** where the swap landed (or at the
 line's first cell in a cascade). It is still its piece: the same relic under
-four cream bands that run the way it clears. Match it with two of its kind and
+cream ribbons that run the way it clears, with a rim of light and a glint
+that crosses it in that direction. Match it with two of its kind and
 it sweeps its whole row or column. Five or more in a line leave a **rainbow
 gem**, which matches nothing. Swap it with a neighbor to clear every piece of
 that kind, or tap it to clear the kind it was made from.

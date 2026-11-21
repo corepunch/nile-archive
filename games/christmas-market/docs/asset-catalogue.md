@@ -639,9 +639,9 @@ The campaign enables the engine's `striped` and `color_bomb` rules
 
 | Piece | Rule meaning | Visual states | Source and runtime path |
 | --- | --- | --- | --- |
-| Line gem, row | Four in a row. Matches as its kind and sweeps its row when cleared | Any board piece under four horizontal cream bands | The piece's own frame in `data/board/pieces.png`, banded at draw time by `gfx.image_striped` (repeats 4, width 0.44, ink 255/250/224), masked to the painted alpha |
+| Line gem, row | Four in a row. Matches as its kind and sweeps its row when cleared | Any board piece under three horizontal cream ribbons, each outlined in the piece's own color, with a cream rim of light around the silhouette | The piece's own frame in `data/board/pieces.png`, banded at draw time by `gfx.image_striped` (repeats 4, width 0.5, ink 255/250/224), masked to the painted alpha |
 | Line gem, column | Four in a column. Sweeps its column | The same piece under vertical bands | As above, turned a quarter |
-| Rainbow gem | Five or more in a line. Matches nothing; a swap clears the partner's kind | One painted ball | Slot 1 of `data/board/match-specials.png` |
+| Rainbow gem | Five or more in a line. Matches nothing; a swap clears the partner's kind | One painted ball at the pieces' size (its slot drawn 1.14 times larger), with the pieces' drop shadow and a rim of light that turns slowly through the spectrum | Slot 1 of `data/board/match-specials.png` |
 
 The bands are the engine's catalogued procedural state for a colored special:
 they follow the piece through selection, swap, fall and squash, and need no
@@ -652,6 +652,15 @@ made. Firing draws the shared axis sweep, and the rainbow gem an impact ring
 and colored burst, from the engine's activation events; Reduce Motion skips
 those overlays. The Market keeper's guide shows a banded coin and the rainbow
 ball ([guide](screenshots/review/line-gems/guide-480.jpg)).
+
+Both gems are lit so they stand out on a board covered in plaques. The rim
+is the silhouette inked and spread over twelve taps (`elements.piece_glow`),
+pulsing gently. A four-point glint (`fx-twinkle`) crosses a line gem along the
+row or column it will sweep every 2.8 s, and one winks on the rainbow gem's
+highlight. The ribbon outline keeps the bands legible on pale pieces (silver
+coins, stones, the bucket's water), where plain cream bands disappeared. Rim,
+glint and ribbons are catalogued procedural effects of the engine, shared by
+every kind. Reduce Motion holds the rim still and hides the glints.
 
 Reproduce the state sheet (both axes of the board's five kinds and a rainbow
 gem) with

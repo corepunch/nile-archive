@@ -58,27 +58,71 @@ function V.bind(R, rules, config, art, base_pieces)
     end
 
     local piece_size = R.cell_width * (pieces.scale or .95)
-    -- A colored special is its own piece under cream bands that run along the
-    -- axis it clears, masked to the piece's painted alpha.
+    -- A colored special is its own piece under cream ribbons that run along
+    -- the axis it clears, masked to the piece's painted alpha.
     local colored_specials = require("match3.specials").colored
-    local stripes = pieces.stripes or {repeats=4, width=.44, ink=color(255, 250, 224)}
+    local stripes = pieces.stripes or {repeats=4, width=.5, ink=color(255, 250, 224)}
     local axis_angle = rules.square and math.pi / 2 or math.pi / 3
     -- Also the guide's picture of a line gem.
     function R.draw_banded(tex, area, axis, alpha)
         local angle = (rules.square and 0 or math.pi / 6) + axis * axis_angle
         gfx.image_striped(tex, area, angle, stripes.repeats, stripes.width, stripes.ink, color(255, 255, 255, alpha))
     end
+    -- The painted specials carry a wider gutter than the pieces: this brings
+    -- the rainbow gem up to their size on the board.
+    local special_scale = {color_bomb = 1.14}
+    -- A gem is lit on the board. A rim of light follows its silhouette: warm
+    -- cream on a line gem, a slow turn through the spectrum on a rainbow gem.
+    -- Over the pieces a glint crosses a line gem the way it will sweep, and
+    -- one winks on the rainbow gem. Reduce Motion holds the rim and hides the glints.
+    local LINE_GLOW = color(255, 240, 176)
+    local GLINT_PERIOD, GLINT_TIME = 2.8, .75
+    local function spectrum(turn)
+        local function channel(shift) return 165 + 90 * math.sin((turn + shift) * 2 * math.pi) end
+        return color(channel(0), channel(1 / 3), channel(2 / 3))
+    end
+    local function gem_phase(at) return at.x * .021 + at.y * .013 end
+    local function gem_glow(tex, area, at, alpha, side, rainbow)
+        local phase, still = gem_phase(at), R.reduced_motion
+        local pulse = still and .5 or .5 + .5 * math.sin(R.now * 2.6 + phase)
+        elements.piece_glow(tex, area, alpha, side, rainbow and spectrum(still and 0 or R.now * .16 + phase) or LINE_GLOW,
+            .62 + .38 * pulse)
+    end
     function R.draw_relic(tile, at, scale, alpha, aspect)
         local banded = colored_specials[tile.special]
-        if tile.special and not banded then return R.draw_match_special(tile, at, scale, alpha) end
+        if tile.special and not banded then
+            local tex = R.match_special_texture(tile)
+            local side = R.HEX_R * 2 * scale * (special_scale[tile.special] or 1)
+            local area = rect.centered(at, size2(side * aspect, side / aspect))
+            elements.piece_shadow(tex, area, alpha, side)
+            if tile.special == "color_bomb" then gem_glow(tex, area, at, alpha, side, true) end
+            return gfx.image(tex, area, color(255, 255, 255, alpha))
+        end
         if tile.kind < 0 then return end
         local side = piece_size * scale
         local tex = R.board_piece_texture(tile.kind)
         tex = R.board_piece_crops and R.board_piece_crops[tex] or tex
         local area = rect.centered(at, size2(side * aspect, side / aspect))
         elements.piece_shadow(tex, area, alpha, side)
-        if banded then R.draw_banded(tex, area, tile.axis, alpha)
+        if banded then
+            gem_glow(tex, area, at, alpha, side)
+            R.draw_banded(tex, area, tile.axis, alpha)
         else gfx.image(tex, area, color(255, 255, 255, alpha)) end
+    end
+    function R.draw_gem_glint(tile, at, scale, alpha)
+        local banded = colored_specials[tile.special]
+        if R.reduced_motion or tile.special ~= "color_bomb" and not banded then return end
+        local t = (R.now + gem_phase(at) * 3) % GLINT_PERIOD / GLINT_TIME
+        if t >= 1 then return end
+        local side = piece_size * scale
+        local shine = color(255, 252, 232, alpha * math.sin(math.pi * t))
+        if banded then
+            local angle = (rules.square and 0 or math.pi / 6) + tile.axis * axis_angle
+            local reach = (t * 2 - 1) * side * .42
+            R.vfx_sprite("twinkle", vec2(at.x + math.cos(angle) * reach, at.y + math.sin(angle) * reach), side * .95, 0, shine)
+        else
+            R.vfx_sprite("twinkle", vec2(at.x - side * .17, at.y - side * .19), side * .8 * (.6 + .4 * math.sin(math.pi * t)), 0, shine)
+        end
     end
 
     local image_alpha = background.opacity or 255
@@ -118,6 +162,15 @@ function V.bind(R, rules, config, art, base_pieces)
                 local tile, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
                 if clip then gfx.clip(clip) end
                 R.draw_relic(tile, at, scale * elements.selection_scale(R, i), alpha * cover, aspect)
+                if clip then gfx.clip(R.BOARD_CLIP) end
+            end
+        end
+        -- Glints go over every piece, so one never slips under a neighbor.
+        for i = 0, rules.CELLS - 1 do
+            if rules.game_cell_active(R.g, i) and R.g.tiles[i].special then
+                local tile, at, scale, alpha, _, clip = R.piece_pose(i, sx)
+                if clip then gfx.clip(clip) end
+                R.draw_gem_glint(tile, at, scale, alpha * cover)
                 if clip then gfx.clip(R.BOARD_CLIP) end
             end
         end
