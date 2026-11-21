@@ -5,7 +5,7 @@
 | Christmas at Bellmere | [Five screenshots](../games/christmas-market/docs/screenshots/app-store/iphone/) | [Five screenshots](../games/christmas-market/docs/screenshots/app-store/ipad/) |
 | Relic Rush - Uncover Mysteries | [Five screenshots](../games/relic-rush/docs/screenshots/app-store/iphone/) | |
 
-Both galleries open on the built town, then show two line gems clearing a row and column. Bellmere also shows the market streets, the letter puzzle and a rainbow-and-line-gem combo. Relic Rush shows the jewel pack, the rainbow-and-line-gem combo and a tablet shattering.
+Both galleries open on a decorated town and show two line gems clearing a row and column. Bellmere features the Christmas tree square, the winter fair and the letter puzzle. Relic Rush features the coastal harbor, the temple gardens and the jewel pack. Both end with a rainbow gem lighting up the matching pieces before they break.
 
 ## Capture and export
 
@@ -16,24 +16,36 @@ make build/test/all
 APP_STORE_SHOTS=1 build/test/all --suite=christmas-market --suite=relic-rush 'shot app-store-'
 ```
 
-Convert the captures to RGB JPEGs. The numbered filenames set the gallery order.
+The layouts in [the town capture fixture](../tests/fixtures/app-store-town/) use each game's buildings, plants, props and normal placement rules. Convert the named captures to RGB JPEGs. The numbered filenames set the gallery order.
 
 ```sh
 python3 - <<'PY'
 from pathlib import Path
+import os
+import subprocess
+
 from PIL import Image
 
+jobs = subprocess.check_output(
+    ["build/test/all", "--suite=christmas-market", "--suite=relic-rush",
+     "--list", "shot app-store-"],
+    env={**os.environ, "APP_STORE_SHOTS": "1"}, text=True,
+)
 sizes = {"iphone": (1320, 2868), "ipad": (2064, 2752)}
-for game in ("christmas-market", "relic-rush"):
-    for path in sorted(Path("build/shots", game).glob("app-store-*-??-*.png")):
-        _, _, device, name = path.stem.split("-", 3)
-        destination = Path("games", game, "docs/screenshots/app-store", device)
-        destination.mkdir(parents=True, exist_ok=True)
-        with Image.open(path) as capture:
-            if capture.size != sizes[device]:
-                raise ValueError(f"{path} is {capture.size}, expected {sizes[device]}")
-            capture.convert("RGB").save(destination / f"{name}.jpg",
-                                        quality=95, subsampling=0, optimize=True)
+for line in jobs.splitlines():
+    if line.endswith(":"):
+        game = line[:-1]
+        continue
+    _, shot = line.split()
+    _, _, device, name = shot.split("-", 3)
+    path = Path("build/shots", game, f"{shot}.png")
+    destination = Path("games", game, "docs/screenshots/app-store", device)
+    destination.mkdir(parents=True, exist_ok=True)
+    with Image.open(path) as capture:
+        if capture.size != sizes[device]:
+            raise ValueError(f"{path} is {capture.size}, expected {sizes[device]}")
+        capture.convert("RGB").save(destination / f"{name}.jpg",
+                                    quality=95, subsampling=0, optimize=True)
 PY
 ```
 

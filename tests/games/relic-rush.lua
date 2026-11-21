@@ -310,11 +310,12 @@ shot("square-build-gate", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34
 
 -- Store captures use the 2× macOS backing scale. See docs/APP_STORE_SCREENSHOTS.md.
 if getenv("APP_STORE_SHOTS") == "1" then
+    local town = "--lua tests/fixtures/app-store-town;games/relic-rush/lua;. --frames 45 --town-scene "
     local size, safe = "660x1434", " --safe-area 0,93,0,51"
     local prefix = "app-store-iphone-"
-    shot(prefix .. "01-lost-valley", size, "--showcase --decorations 8 --look 875,1820 --frames 45" .. safe)
+    shot(prefix .. "01-valley-harbor", size, town .. "harbor" .. safe)
     shot(prefix .. "02-line-gem-combo", size, "--level 30 --special-states --special-fire cross --frames 35" .. safe)
     shot(prefix .. "03-jewel-puzzle", size, "--level 20 --tiles jewels --frames 45" .. safe)
-    shot(prefix .. "04-rainbow-combo", size, "--level 30 --special-states --special-fire recolor --frames 42" .. safe)
-    shot(prefix .. "05-tablet-shatter", size, "--fx shatter --frames 10" .. safe)
+    shot(prefix .. "04-temple-gardens", size, town .. "gardens" .. safe)
+    shot(prefix .. "05-rainbow-spark", size, "--level 11 --special-states --special-fire rainbow --frames 33" .. safe)
 end

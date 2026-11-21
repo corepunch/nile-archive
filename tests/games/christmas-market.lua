@@ -219,6 +219,7 @@ shot("balance-window-lights-phone", "390x844", "--level 3 --frames 6 --safe-area
 
 -- Store captures use the 2× macOS backing scale. See docs/APP_STORE_SCREENSHOTS.md.
 if getenv("APP_STORE_SHOTS") == "1" then
+    local town = "--lua tests/fixtures/app-store-town;games/christmas-market/lua;. --frames 45 --town-scene "
     for _, device in ipairs{
         {"iphone", "660x1434", "0,93,0,51"},
         {"ipad", "1032x1376", "0,24,0,20"},
@@ -226,10 +227,10 @@ if getenv("APP_STORE_SHOTS") == "1" then
         local name, size, insets = table.unpack(device)
         local prefix = "app-store-" .. name .. "-"
         local safe = " --safe-area " .. insets
-        shot(prefix .. "01-bellmere-market", size, "--showcase --decorations 8 --look 875,1820 --frames 45" .. safe)
+        shot(prefix .. "01-bellmere-square", size, town .. "square" .. safe)
         shot(prefix .. "02-line-gem-combo", size, "--level 30 --special-states --special-fire cross --frames 35" .. safe)
-        shot(prefix .. "03-market-streets", size, "--epoch 5 --look 1140,1580 --frames 45" .. safe)
+        shot(prefix .. "03-winter-fair", size, town .. "fair" .. safe)
         shot(prefix .. "04-hidden-letter", size, "--level 19 --reveal .45 --frames 95" .. safe)
-        shot(prefix .. "05-rainbow-combo", size, "--level 30 --special-states --special-fire recolor --frames 42" .. safe)
+        shot(prefix .. "05-rainbow-spark", size, "--level 10 --special-states --special-fire rainbow --frames 33" .. safe)
     end
 end
