@@ -34,7 +34,9 @@ return {
         {"pip", "Eat a bun, Noelle. Buns solve most things. A reindeer solves the rest, and he'd only need a stable."},
         {"agnes", "Sit, love. There's buns. And if the corner's sticky, that's my icing, so don't look at me."},
     }},
-    {key="after-07", phase="after", level=7, variant={building="reindeer_stable", index=2, line={"pip", "Agnes, I shut the stable latch! Mr Strand wants to know if your big oven's still cold!"}}, lines={
+    {key="after-07", phase="after", level=7, replies={
+        {index=2, building="reindeer_stable", line={"pip", "Agnes, I shut the stable latch! Mr Strand wants to know if your big oven's still cold!"}},
+    }, lines={
         {"noelle", "Agnes, gingerbread gables with piped icing! Did you really do them all on the kitchen stove?"},
         {"pip", "Agnes, Mr Strand asks if your big oven's still cold! Not that he cares! He didn't say that!"},
         {"agnes", "Tell that man it's none of his business. And leave a bun on the back of the tray. Just in case."},
@@ -89,7 +91,9 @@ return {
         {"agnes", "Burnt bread, love. Something like that. Pass me the peppermints."},
         {"noelle", "Nobody sulks forty years over bread, Agnes. And you keep leaving him a bun."},
     }},
-    {key="after-18", phase="after", level=18, variant={building="firework_stall", index=3, line={"agnes", "Pip, feel in my apron. That's the rocket key. I need you here at New Year, whatever the sea does."}}, lines={
+    {key="after-18", phase="after", level=18, replies={
+        {index=3, building="firework_stall", line={"agnes", "Pip, feel in my apron. That's the rocket key. I need you here at New Year, whatever the sea does."}},
+    }, lines={
         {"noelle", "Pip, skate all you like on the trough. Is your mum's steamer due before Christmas?"},
         {"pip", "It docks at Christmas, if the sea's kind. I don't mind if she can't come."},
         {"agnes", "Course you don't, pet. Have a bun."},
@@ -144,7 +148,9 @@ return {
         {"henrik", "That angel is mine. I carved her years ago. The wing has split along the grain. Leave her with me."},
         {"agnes", "Noelle, I want her wing mended and the chapel roofed by Sunday. Nobody's thanking anybody."},
     }},
-    {key="after-27", phase="after", level=27, variant={building="chapel", index=3, line={"wren", "Leave your shoe by the chapel door tonight, Noelle. Someone may know your size."}}, lines={
+    {key="after-27", phase="after", level=27, replies={
+        {index=3, building="chapel", line={"wren", "Leave your shoe by the chapel door tonight, Noelle. Someone may know your size."}},
+    }, lines={
         {"pip", "Noelle! St Nicholas came! There's an orange and a chocolate coin in my shoe!"},
         {"noelle", "Mine's stuffed with cloves, Pip, and Agnes swears she slept all night. Who's doing it?"},
         {"wren", "Leave your shoe out again tonight, Noelle. A shoe by the door is a question. Someone answers."},
@@ -199,7 +205,9 @@ return {
         {"theo", "They've sung it flat for thirty years. I'd leave it. Flat is a tradition."},
         {"alder", "Flat, Theo Marsh? My grandchildren say I'm the alto line now. We sing in the square. Be there."},
     }},
-    {key="after-38", phase="after", level=38, variant={building="igloo", index=2, line={"agnes", "Fetch the butter from Theo's shelf, Pip. I'll give the next batch knees. Don't tell him I smiled."}}, lines={
+    {key="after-38", phase="after", level=38, replies={
+        {index=2, building="igloo", line={"agnes", "Fetch the butter from Theo's shelf, Pip. I'll give the next batch knees. Don't tell him I smiled."}},
+    }, lines={
         {"pip", "Mrs Holt, will you take a gingerbread cutter with knees? Mr Strand says it's a correction!"},
         {"agnes", "The next batch has knees, Pip. And thank you, said quietly, so he can't be sure."},
         {"noelle", "Agnes, I've been using my ticket as a bookmark in Gran's recipe book. It looks happier there."},
@@ -229,7 +237,9 @@ return {
         {"finch", "No knots, Theo. My trout want a tight smokehouse. I stand outside every service, holding Bramble."},
         {"noelle", "Every service, Mr Finch? Can't Bramble wait by herself? She's only a goat."},
     }},
-    {key="after-42", phase="after", level=42, variant={building="log_cabin", index=2, line={"agnes", "By the stove, love. Mr Finch took the applewood, so there's room for Rosa's whole string."}}, lines={
+    {key="after-42", phase="after", level=42, replies={
+        {index=2, building="log_cabin", line={"agnes", "By the stove, love. Mr Finch took the applewood, so there's room for Rosa's whole string."}},
+    }, lines={
         {"noelle", "Agnes, where do these Christmas cards go? Is this one from 1983?"},
         {"agnes", "On the string by the stove, love. I've kept every one since Rosa started sending hers."},
         {"pip", "Agnes, there's one from Mr Strand, no stamp, under the door! Where do I pin it?"},
@@ -259,7 +269,9 @@ return {
         {"agnes", "Whoever comes in from the cold, love. Not a word. Eat your satsuma."},
         {"finch", "Mrs Holt, may I hang one for Bramble? Carrot in the toe. She can't be left, or I'd be in chapel."},
     }},
-    {key="after-48", phase="after", level=48, variant={building="station_kiosk", index=1, line={"pip", "Mrs Holt, I saw the candle girl from my kiosk. Have you a saffron bun for her walk?"}}, lines={
+    {key="after-48", phase="after", level=48, replies={
+        {index=1, building="station_kiosk", line={"pip", "Mrs Holt, I saw the candle girl from my kiosk. Have you a saffron bun for her walk?"}},
+    }, lines={
         {"pip", "Mrs Holt, may the choir girl in the candle crown have saffron buns? She's walking the whole lane!"},
         {"agnes", "Saffron buns for her, pet. And we've borrowed every candle in town, so nobody blow one out."},
         {"noelle", "Agnes, the wax is still warm on my sleeve. We'll need a proper candle shop before next year."},
@@ -364,7 +376,9 @@ return {
         {"pip", "You told everyone? Mrs Alder cried into the dough! And nobody needs a messenger now. I'm unemployed!"},
         {"noelle", "Then run a post office, Pip! Every child will write to Santa, and you know every lane."},
     }},
-    {key="after-67", phase="after", level=67, variant={building="post_office", index=2, line={"pip", "I'm the postmaster, Agnes. Can I put an express stamp on my wish for Mum's steamer?"}}, lines={
+    {key="after-67", phase="after", level=67, replies={
+        {index=2, building="post_office", line={"pip", "I'm the postmaster, Agnes. Can I put an express stamp on my wish for Mum's steamer?"}},
+    }, lines={
         {"agnes", "Stir once, east to west, and wish. Rosa sent her recipe from the coast: \"less brandy.\""},
         {"pip", "I wished for a fast steamer! That's all I'm saying!"},
         {"noelle", "Gran writes you a recipe and me a parcel, Agnes. What is she up to?"},
@@ -399,7 +413,9 @@ return {
         {"pip", "Why are you looking at me? It smells a bit of pine, which is nothing! Pine's everywhere!"},
         {"noelle", "It's December, Pip. Come on, before the sun gets the bakery window."},
     }},
-    {key="after-74", phase="after", level=74, variant={building="glassblower", index=3, line={"ada", "She'll wash, Mr Finch. Noelle, try my dome. I left room for snow on the gingerbread roof."}}, lines={
+    {key="after-74", phase="after", level=74, replies={
+        {index=3, building="glassblower", introduction="placed-glassblower", line={"ada", "She'll wash, Mr Finch. Noelle, try my dome. I left room for snow on the gingerbread roof."}},
+    }, lines={
         {"noelle", "Mr Finch, hold the ladder! The Fenwick choir brought paint, and why is Bramble blue?"},
         {"finch", "She helped. Chapel won't have a blue goat. Still no goat-minder, Noelle?"},
         {"agnes", "She'll wash. Look at that! Henrik's piped every window of my ginger cottage dead level. Show-off."},
@@ -459,7 +475,9 @@ return {
         {"agnes", "Rosa's biscuit tin, under a stack of old Christmas cards. A nutcracker sat on the lid."},
         {"noelle", "\"I wish everyone could stay.\" Agnes, she kept it all these years and never said. Did you know?"},
     }},
-    {key="after-84", phase="after", level=84, variant={building="glassblower", index=1, line={"ada", "Henrik, steady the ladder. Noelle, tie Gran's ribbon on my glass bell. I blew it for her."}}, lines={
+    {key="after-84", phase="after", level=84, replies={
+        {index=1, building="glassblower", introduction="placed-glassblower", line={"ada", "Henrik, steady the ladder. Noelle, tie Gran's ribbon on my glass bell. I blew it for her."}},
+    }, lines={
         {"noelle", "Henrik, there's an amber bauble in Gran's tin. Will you help me tie her ribbon on?"},
         {"henrik", "Hang it lower, Noelle. A child's eye is three feet off the ground, not six."},
         {"noelle", "Low it is. Red ribbon, amber glass, one wish. Hold the ladder, Henrik?"},
@@ -479,17 +497,24 @@ return {
         {"agnes", "You've held that ticket through three carols, love. Come and hold a mug instead."},
         {"noelle", "Agnes, what's Bellmere like in January? Snow on the horses, nobody hurrying? I think I'd like that."},
     }},
-    {key="after-88", phase="after", level=88, variant={building="santa_workshop", index=1, line={"noelle", "Theo, thank you for the lantern hooks. Even Pip made one for his bench at the hall."}}, lines={
+    {key="after-88", phase="after", level=88, replies={
+        {index=1, building="santa_workshop", line={"noelle", "Theo, thank you for the lantern hooks. Even Pip made one for his bench at the hall."}},
+    }, lines={
         {"noelle", "Theo, thank you for the good hooks, and for carrying the lanterns. Needles and all."},
         {"theo", "They'll hang till Twelfth Night, Noelle. Someone should be here in January to take them down."},
         {"noelle", "January, Theo? You said it as though it were nothing. It's the nicest thing anyone's said to me."},
     }},
-    {key="after-89", phase="after", level=89, variant={building="glassblower", index=2, line={"ada", "Noelle, the whole town brought lamps. Take mine for the bend. I blew a chimney for this wind."}}, lines={
+    {key="after-89", phase="after", level=89, replies={
+        {index=2, building="glassblower", introduction="placed-glassblower", line={"ada", "Noelle, the whole town brought lamps. Take mine for the bend. I blew a chimney for this wind."}},
+    }, lines={
         {"noelle", "Agnes, the wind's blown out every lamp on the station path! I can't even see the bend!"},
         {"agnes", "Turn round, love. The whole town's brought a lamp, and Fenwick lent one for the bend."},
         {"noelle", "Thank you, all of you! Now come on. Let's light it for the last train on Christmas Eve."},
     }},
-    {key="after-90", phase="after", level=90, variant={building="glassblower", index=3, line={"ada", "Noelle, lend me two teaspoons when you've poured. Those singers could use someone to keep time."}, memory={answer="visit-glassblower-after-84.personal", line={"ada", "Noelle, I brought my spoons. Give me that nod we talked about and I'll play for the choir."}}}, lines={
+    {key="after-90", phase="after", level=90, replies={
+        {index=3, building="glassblower", introduction="placed-glassblower", when="visit-glassblower-after-84.personal", line={"ada", "Noelle, I brought my spoons. Give me that nod we talked about and I'll play for the choir."}},
+        {index=3, building="glassblower", introduction="placed-glassblower", line={"ada", "Noelle, lend me two teaspoons when you've poured. Those singers could use someone to keep time."}},
+    }, lines={
         {"pip", "Agnes, the Fenwick choir's in the loft, and their socks are drying on your stove! Can they stay?"},
         {"agnes", "Their roof can wait. Tea first, carols second. Mrs Alder, sing quietly."},
         {"alder", "A cup for each of them, Noelle, and I'm paying for one more by the stove."},
@@ -529,7 +554,9 @@ return {
         {"agnes", "Solemn at the star, Pip. Wave once more and you're the ox."},
         {"finch", "Front pew, Noelle. First time in forty winters. Rosa's got the goat."},
     }},
-    {key="after-98", phase="after", level=98, variant={building="sleigh", index=2, line={"mary", "Pip, yours has your nose exactly. Come and sit by me in Rosa's sleigh."}}, lines={
+    {key="after-98", phase="after", level=98, replies={
+        {index=2, building="sleigh", line={"mary", "Pip, yours has your nose exactly. Come and sit by me in Rosa's sleigh."}},
+    }, lines={
         {"henrik", "Pip, fourteen apprentices carved a reindeer for every child. Will you wrap them at the pavilion?"},
         {"mary", "Pip, yours has your nose exactly. Go and show Rosa. She's been asking for you."},
         {"henrik", "Last one's for you, Agnes. Now I'm off to wait under the fir. Early, for once."},

@@ -159,6 +159,7 @@ void script_open(const char *dir)
         {"lua/match3/shatter.lua", "match3.shatter"},
         {"lua/match3/debug.lua", "match3.debug"},
         {"lua/match3/user_events.lua", "match3.user_events"},
+        {"lua/match3/journey.lua", "match3.journey"},
         {"lua/match3/game.lua", "match3.game"},
     };
     for (size_t i = 0; i < sizeof files / sizeof files[0]; i++) {

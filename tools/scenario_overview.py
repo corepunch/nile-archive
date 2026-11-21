@@ -90,7 +90,7 @@ class Page:
         self.portraits = {c['id']: picture(self.data_dir / c['portrait'], 160, 'PNG') if c.get('portrait') else None
                           for c in data['cast']}
         self.steps = {s['key']: s for s in data.get('ladder', [])}
-        self.residents = {b['resident'] for b in data['beats'] if b.get('resident')}
+        self.residents = {b['key']: b['resident'] for b in data['beats'] if b.get('resident')}
         self.questions = {c['key']: c['label'] for b in data['beats'] if b.get('visit_site') for c in b['choices']}
         self.frames = data.get('frames', {})   # atlas frames the dump named
         self.atlases, self.icons = {}, {}
@@ -142,15 +142,15 @@ class Page:
         if b.get('phase') == 'upgrade':
             label = 'When the building upgrade is earned'
         body = self.lines(b.get('lines', []))
-        if v := b.get('variant'):
-            name = self.steps[v['building']]['name']
-            speaker = v['lines'][0]['speaker']
-            condition = (f"After meeting {self.cast[speaker]['name']} at the {name}"
-                         if speaker in self.residents else f'If {name} stands')
-            body += f'<p class="pick">{esc(condition)}, line {v["index"]} becomes</p>{self.lines(v["lines"])}'
-            if memory := v.get('memory'):
-                question = self.questions[memory['answer']]
-                body += f'<p class="pick">If you asked “{esc(question)}”, the reply is</p>{self.lines(memory["lines"])}'
+        for reply in b.get('replies', []):
+            name = self.steps[reply['building']]['name']
+            condition = f"If {name} stands"
+            if introduction := reply.get('introduction'):
+                resident = self.cast[self.residents[introduction]]['name']
+                condition += f" and you have met {resident}"
+            if when := reply.get('when'):
+                condition += f" and you asked “{self.questions[when]}”" if when in self.questions else f" and you saw {when}"
+            body += f'<p class="pick">{esc(condition)}, line {reply["index"]} becomes</p>{self.lines(reply["lines"])}'
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
         if b.get('choices'):

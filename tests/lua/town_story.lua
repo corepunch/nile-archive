@@ -13,12 +13,14 @@ R.town_setup()
 
 local callbacks = {}
 for _, beat in ipairs(journey.beats) do
-    local v = beat.variant
-    if v then
+    for _, v in ipairs(beat.replies or {}) do
         local step = island.ladder[island.ladder_position[island.kinds[v.building]]]
         check(step and beat.level > step.after, "callback follows its purchase")
         check(journey.lines_for(beat, function() return false end) == beat.lines, "unbuilt callback uses the campaign line")
-        check(journey.lines_for(beat, function(key) return key == v.building end)[v.index] == v.line, "built callback uses the reply")
+        local seen = {}
+        if v.introduction then seen[v.introduction] = true end
+        if v.when then seen[v.when] = true end
+        check(journey.lines_for(beat, function(key) return key == v.building end, seen)[v.index] == v.line, "eligible callback uses its reply")
         callbacks[v.building] = true
     end
 end
@@ -37,7 +39,7 @@ check(R.story_lines(callback) == callback.lines, "waiting to build preserves the
 check(R.town:begin(kind, false), "preview the next purchase")
 check(not journey.next_placement(R.prog), "preview has no conversation")
 check(R.town:confirm(), "confirm the purchase")
-check(R.story_lines(callback)[callback.variant.index] == callback.variant.line, "confirmation changes the next clear's dialogue")
+check(R.story_lines(callback)[callback.replies[1].index] == callback.replies[1].line, "confirmation changes the next clear's dialogue")
 R.story_tick()
 check(R.story_current and R.story_current.key == key, "the town plays the confirmed building's exchange")
 story.next()
@@ -81,12 +83,13 @@ resident_save = {story_seen={}}
 save.read("welcomed-resident", function(s) journey.serialize(s, resident_save) end)
 check(not journey.next_arrival(resident_save, owns_site), "reloading preserves the welcome")
 for _, beat in ipairs(journey.beats) do
-    if beat.variant and beat.variant.line[1] == arrival.resident then
-        local index = beat.variant.index
-        check(journey.lines_for(beat, owns_site, {}) == beat.lines, "resident cannot speak before the introduction")
-        check(journey.lines_for(beat, owns_site, resident_save.story_seen)[index][1] == arrival.resident,
-            "the resident joins the later conversation after reload")
-        callback_count = callback_count + 1
+    for _, reply in ipairs(beat.replies or {}) do
+        if reply.introduction == arrival.key and not reply.when then
+            check(journey.lines_for(beat, owns_site, {}) == beat.lines, "resident cannot speak before the introduction")
+            check(journey.lines_for(beat, owns_site, resident_save.story_seen)[reply.index][1] == arrival.resident,
+                "the resident joins the later conversation after reload")
+            callback_count = callback_count + 1
+        end
     end
 end
 check(callback_count >= 2, "the resident returns in later level conversations")
@@ -119,12 +122,12 @@ check_stage("after-100")
 -- The pre-question save format can credit only the original story answer.
 local checkpoint = site == "aviary" and "after-85" or "after-84"
 local later = journey.find(site == "aviary" and "after-91" or "after-90")
-local v = later.variant
+local memory, ordinary = table.unpack(later.replies)
 visiting.story_seen = {[arrival.key]=true, [checkpoint]=true}
 local visit = journey.visit(visiting, site)
 local personal, original = table.unpack(visit.choices)
-check(v.memory.answer == personal.key, "the level recalls this specific question")
-check(journey.lines_for(later, owns_site, visiting.story_seen)[v.index] == v.line, "welcomed resident speaks even without a visit")
+check(memory.when == personal.key, "the level recalls this specific question")
+check(journey.lines_for(later, owns_site, visiting.story_seen)[ordinary.index] == ordinary.line, "welcomed resident speaks even without a visit")
 check(journey.lines_for(later, owns_site, {[personal.key]=true}) == later.lines, "an unmet resident never recalls an answer")
 
 save.write("heard-resident", function(s) s:int("narrative.visit." .. visit.key, 1) end)
@@ -134,7 +137,7 @@ check(reloaded.story_seen[original.key] and not reloaded.story_seen[personal.key
 check(journey.unheard_visit(reloaded, visit), "legacy player can discover the new personal question")
 
 reloaded.story_seen[arrival.key] = true
-check(journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.line, "the other question alone does not trigger the memory")
+check(journey.lines_for(later, owns_site, reloaded.story_seen)[ordinary.index] == ordinary.line, "the other question alone does not trigger the memory")
 
 -- Choosing alone never consumes an answer, even across a save and restart.
 R.prog, R.quiet = visiting, true
@@ -144,7 +147,7 @@ save.write("interrupted-answer", function(s) journey.serialize(s, visiting) end)
 reloaded = {}
 save.read("interrupted-answer", function(s) journey.serialize(s, reloaded) end)
 check(not reloaded.story_seen[personal.key] and not reloaded.story_choices[visit.key], "unfinished answer remains new")
-check(journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.line, "interrupted answer leaves the ordinary reply")
+check(journey.lines_for(later, owns_site, reloaded.story_seen)[ordinary.index] == ordinary.line, "interrupted answer leaves the ordinary reply")
 while story.active() do story.next() end
 R.story_tick()
 check(visiting.story_seen[personal.key] and not visiting.story_seen[original.key], "only the finished answer is heard")
@@ -153,7 +156,7 @@ reloaded = {}
 save.read("one-answer", function(s) journey.serialize(s, reloaded) end)
 check(reloaded.story_seen[personal.key] and journey.unheard_visit(reloaded, visit), "partial visit survives reload")
 R.prog = reloaded
-check(R.story_lines(later)[v.index] == v.memory.line, "the loaded campaign uses the remembered reply")
+check(R.story_lines(later)[ordinary.index] == memory.line, "the loaded campaign uses the remembered reply")
 check(journey.lines_for(later, function() return false end, R.prog.story_seen) == later.lines, "an absent building keeps the original scene")
 R.open_story_choice(visit)
 check(R.choose_story_option(2), "the second question remains available")
@@ -163,7 +166,20 @@ save.write("both-answers", function(s) journey.serialize(s, reloaded) end)
 reloaded = {}
 save.read("both-answers", function(s) journey.serialize(s, reloaded) end)
 check(journey.visit(reloaded, site) == visit and not journey.unheard_visit(reloaded, visit), "both answers stay heard on reload")
-check(journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.memory.line, "hearing both answers preserves the memory")
+check(journey.lines_for(later, owns_site, reloaded.story_seen)[ordinary.index] == memory.line, "hearing both answers preserves the memory")
 reloaded.story_seen[site == "aviary" and "restore-91" or "after-89"] = true
-check(journey.visit(reloaded, site) ~= visit and journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.memory.line,
+check(journey.visit(reloaded, site) ~= visit and journey.lines_for(later, owns_site, reloaded.story_seen)[ordinary.index] == memory.line,
     "changing the available questions keeps the earlier memory")
+
+-- A later scene can react on two lines; priority applies to each line independently.
+local scene = {lines={original.lines[1], original.lines[2]}, replies={
+    {index=1, building=site, when=personal.key, line=personal.lines[1]},
+    {index=1, building=site, when=checkpoint, line=personal.lines[2]},
+    {index=2, building=site, when=checkpoint, line=original.lines[1]},
+}}
+local resolved = journey.lines_for(scene, owns_site, {[checkpoint]=true, [personal.key]=true})
+check(resolved[1] == personal.lines[1] and resolved[2] == original.lines[1], "first eligible reply wins independently on each line")
+resolved = journey.lines_for(scene, owns_site, {[checkpoint]=true})
+check(resolved[1] == personal.lines[2], "a later eligible rule wins when an earlier rule is unavailable")
+check(journey.lines_for(scene, owns_site, {}) == scene.lines and scene.lines[1] == original.lines[1],
+    "resolving another player's history leaves the authored scene intact")

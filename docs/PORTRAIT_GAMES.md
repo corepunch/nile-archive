@@ -12,6 +12,7 @@ presentation comes from Lua settings, level data and the skin's PNGs.
 | `engine/lua/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
 | `engine/lua/town/screen.lua` (`town`) | The town screen (`lua/town_config.lua`) |
 | `engine/lua/menu/screen.lua` (`menu.screen`) | The illustrated title screen, safe-area layout and form controls |
+| `engine/lua/match3/journey.lua` (`match3.journey`) | Campaign scheduling, resident visits, story conditions and saved conversation history |
 | `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: shared state, progress and saving, selection of the current screen, dialogs, the shop, town hooks and story delivery |
 | `engine/lua/screen_transition.lua` (`screen_transition`) | Screen changes, configured by `transitions` in each game's `lua/game_config.lua` |
 | `engine/lua/match3/vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
@@ -70,7 +71,7 @@ A journey can show first-clear dialogue before Results with `clear_before_result
 and schedule a separate `restore` scene after placement. A beat with choices
 uses the shared form and modal stack. The selection is saved before the reply
 plays, and the scene is acknowledged after the reply finishes. Use
-`--story-choice after-10` to preview the Relic Rush prompt.
+`--story-choice restore-16` to preview the Relic Rush prompt.
 
 A game can play a short board-specific scene before dialogue and
 Results. `R.clear_scene()` returns the active scene and `R.draw_clear_scene(scene, inp)`
@@ -79,6 +80,39 @@ Relic Rush uses this for the light on board 3 and Ines's reply on board 30.
 
 Results keep the board HUD in the blurred background so the card title and
 actions have a clear foreground.
+
+### Resident visits and conditional dialogue
+
+Each game's authoring source is the **Town dialogue** section in its `docs/story.md`.
+Run its `tools/prepare_story.py` to compile the script into `lua/story_content.lua`.
+The following headers come from Lio's visit and later callback.
+
+| Header | What it controls |
+| --- | --- |
+| `**Placed aviary introduces Lio after-81**` | The invitation and the owned building unlock the introduction. Finishing the introduction unlocks visits. |
+| `**Visit aviary after-85**` | A tap offers the latest visit whose checkpoint the player has witnessed. The first visit uses `placed-aviary`. |
+| `**Ask personal \| Does he copy you too?**` | The following lines answer that question. Each visit has a personal and a story question. |
+| `**With aviary after-91 2**` | The following line replaces line 2 when the aviary stands. If a resident speaks, the compiler also requires their introduction. |
+| `**If asked after-85 personal**` | Within that replacement, use the following reply if the player heard this particular answer at this building. |
+| `**If seen after-85**` | Within a replacement, use the following reply if the player witnessed this earlier campaign scene. |
+
+Several lines in a scene can each have a `With` block. Within one block, write the ordinary
+building reply first, then the conditional replies in priority order. The first satisfied
+condition wins. If none match, the resident gives the ordinary reply. If the building or
+introduction is missing, the original campaign line plays. The compiler checks line numbers,
+speakers, duplicate conditions and references to earlier scenes and questions.
+
+The journey reads the town's ownership and the player's saved story history when a scene
+starts. Resolving lines never changes either. Finishing a visit answer or pressing Skip
+records its stable key. The roof bubble and future dialogue both consult that record.
+Question wording and display order can change independently of the key. Building, checkpoint
+and topic identifiers are part of the save format. The original one-answer visit key still
+credits the story question in older saves.
+
+Preview the ordinary reply with `--story-beat after-91 --story-built --story-line 2`.
+Add `--story-asked` for the first conditional reply at or after that line, or
+`--story-when visit-aviary-after-85.personal` for a particular saved condition.
+The scenario overview lists the alternatives in the same priority order.
 
 ## First launch and main menu
 

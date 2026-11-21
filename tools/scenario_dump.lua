@@ -42,7 +42,7 @@ local loaded = {state = {}}
 function require(name)
     if loaded[name] ~= nil then return loaded[name] end
     -- These engine modules build campaign data without opening a game.
-    local engine = name == "match3.game" or name == "match3.bonuses" or name == "match3.shapes" or name == "match3.user_events"
+    local engine = name == "match3.journey" or name == "match3.game" or name == "match3.bonuses" or name == "match3.shapes" or name == "match3.user_events"
     local file = engine and "engine/lua/" .. name:gsub("%.", "/") .. ".lua" or package.searchpath(name, package.path)
     local value = stub
     if file and (engine or not name:match("^match3")) then
@@ -246,11 +246,11 @@ else
         local waits = b.phase ~= "visit" and b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]
         if b.phase == "placed" then waits = b.building
         elseif b.phase == "upgrade" then waits = assert(upgrade_site[b.event]) end
-        local variant = b.variant and {building = b.variant.building, index = b.variant.index, lines = lines_of({b.variant.line})}
-        if variant and b.variant.memory then
-            variant.memory = {answer = b.variant.memory.answer, lines = lines_of({b.variant.memory.line})}
+        local replies = {}
+        for k, r in ipairs(b.replies or {}) do
+            replies[k] = {building = r.building, index = r.index, introduction = r.introduction, when = r.when, lines = lines_of({r.line})}
         end
-        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], variant = variant, resident = b.resident,
+        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], replies = b.replies and replies, resident = b.resident,
                         visit_site = b.phase == "visit" and b.building or nil, checkpoint = b.checkpoint, prompt = b.prompt, waits_for = waits or nil,
                         lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
     end
