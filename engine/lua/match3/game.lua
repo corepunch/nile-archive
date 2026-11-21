@@ -1593,6 +1593,7 @@ function G.app(R)
         else board_exit = nil end
 
         local switching = transition:active()
+        local backdrop_only = not R.on_island and R.intro and R.intro:showing_backdrop()
         local interactive = R.overlay == R.OV_NONE and not talking and not board and not switching
         local world = interactive and input.world() or input{pos = inp.pos, pinch = 1}
         ui.set_enabled(interactive)
@@ -1602,7 +1603,7 @@ function G.app(R)
             local screen = R.on_menu and menu or R.on_island and R.town or R.board_screen
             screen:frame(world, dt, interactive, ease.in_out_cubic((board_exit or 0) / BOARD_OUT))
         end
-        if app.arg("debug-walkthrough") and not R.on_menu and not talking and not board and not transition:active()
+        if app.arg("debug-walkthrough") and not backdrop_only and not R.on_menu and not talking and not board and not transition:active()
             and R.overlay == R.OV_NONE then
             local label = R.on_island and "Advance" or "Skip level"
             local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
@@ -1613,7 +1614,7 @@ function G.app(R)
                 if R.on_island then R.debug_advance_town() else R.debug_skip_level() end
             end
         end
-        if not R.on_menu then R.draw_toast() end
+        if not R.on_menu and not backdrop_only then R.draw_toast() end
         ui.set_enabled(true)
         local scene = clear_due and not revealing and R.clear_scene and R.clear_scene()
         if scene then R.draw_clear_scene(scene, inp) end
@@ -1623,7 +1624,7 @@ function G.app(R)
         story.frame(dt)
         -- Keep the HUD above ordinary dialogs. Level endings, the guide and
         -- leaderboard own the whole foreground.
-        local hud_above = not R.on_menu and not outcome and R.overlay ~= R.OV_GUIDE and not board
+        local hud_above = not R.on_menu and not backdrop_only and not outcome and R.overlay ~= R.OV_GUIDE and not board
         if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end

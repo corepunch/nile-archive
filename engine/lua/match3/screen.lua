@@ -88,7 +88,7 @@ function V.bind(R, rules, config, art, base_pieces)
         local scene = R.scenes[g.backdrop or rules.level_of(g).background or (g.level >= 5 and 2 or 1)]
         local tex = scene and scene.tex and scene or R.backdrop
         local full = app.bleed()
-        local box = R.backdrop_rect(texture.size(tex), full, background.min_height)
+        local box = R.backdrop_rect(texture.size(tex), full, background.min_height, background.align_y)
         -- Composite the same tinted background at partial opacity during the board exit.
         local shade_alpha = shade and opacity * shade.a / 255 or 0
         gfx.bleed(true)
@@ -158,6 +158,12 @@ function V.bind(R, rules, config, art, base_pieces)
     local screen = {}
     R.board_screen = screen
     local function draw(inp, dt, fade, banners)
+        if R.intro and R.intro:showing_backdrop() then
+            R.draw_board_background(1)
+            draw_motes()
+            R.board_input(inp)
+            return
+        end
         if fade < 1 then
             draw_board(inp)
             R.vfx_draw()

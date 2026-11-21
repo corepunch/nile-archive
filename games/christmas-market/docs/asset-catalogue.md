@@ -19,10 +19,11 @@ and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/m
 ## Construction backdrops
 
 The campaign's board shows the latest confirmed construction with a painting
-for that wish. Each painting has one static state. A close view of each
-building fills the portrait, with architecture and snow extending behind the
-pieces. The 9:20 portrait art keeps its full width on tall iPhones. On shorter
-screens the bottom-aligned cover crop trims the sky above the buildings.
+for that wish. On the first visit to a newly unlocked backdrop, the full
+portrait holds for 0.9 seconds before the board arrives. Both states use the
+same painting. Roofs, garlands and foreground props frame the cells. The
+9:20 portraits keep their full width on tall iPhones. Shorter screens crop
+vertically with the window biased upward to keep the rooflines in view.
 
 | Runtime file in `data/board/backs/` | First eligible wish | Construction | Source panel |
 | --- | ---: | --- | --- |
@@ -36,11 +37,15 @@ Built-in ImageGen painted the four scenes together in the
 [scene prompt](../art/construction-backdrops/wide-prompt.txt) and two Cradle of
 Rome 2 paintings as composition references. A single
 [vertical extension pass](../art/construction-backdrops/prompt.txt) produced the
-[1683 × 935 phone strip](../art/construction-backdrops/source.png).
-The [art manifest](../art/manifest.json) records the exact 420–421 × 935 crops. Each
+[initial phone strip](../art/construction-backdrops/source.png).
+The [framing pass](../art/construction-backdrops/framed-prompt.txt) used that strip
+and the [gameplay concept sheet](../art/construction-backdrops/framing-concept.png)
+to produce the [final 1683 × 935 strip](../art/construction-backdrops/framed-source.png).
+The [art manifest](../art/manifest.json) records the exact crops, with a one-pixel
+trim where panels meet. Each
 JPEG is loaded by name on first use and held for the rest of the session.
 The selection follows the building's existing unlock gate in `lua/economy.lua`.
-See the [in-game comparisons](screenshots/review/construction-backdrops/README.md).
+See the [in-game comparisons and reveal](screenshots/review/construction-backdrops/README.md).
 
 Re-encode the four crops from the repository root with Pillow.
 

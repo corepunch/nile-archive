@@ -4,6 +4,10 @@ The first wish shows the village square. The next three scenes appear on the
 first eligible wish after the matching building is confirmed. Later wishes
 retain the workshop scene until another backdrop is added.
 
+The first visit to the arch, stable or workshop painting gives the scene a
+brief full-screen moment before the cells and HUD arrive. Tapping skips it.
+The game remembers that the painting was shown. [Welcome Arch entrance reel](arch-reveal.gif)
+
 | Wish | 480 × 900 | 390 × 844 with phone safe area |
 | --- | --- | --- |
 | 1 · Opening square | ![Opening square](opening-480x900.jpg) | ![Opening square on a compact phone](opening-390x844.jpg) |
@@ -14,5 +18,6 @@ retain the workshop scene until another backdrop is added.
 ```sh
 make christmas-market build/test/christmas-market
 build/test/christmas-market 'rules christmas' 'smoke walkthrough-pointer' \
-  'shot lantern-opening' 'shot purchase-stable-board' 'shot construction-backdrop'
+  'shot lantern-opening' 'shot purchase-stable-board' 'shot construction-backdrop' \
+  'reel construction-backdrop-reveal'
 ```

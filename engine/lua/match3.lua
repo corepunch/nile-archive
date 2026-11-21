@@ -1774,11 +1774,11 @@ function E.new(config)
         R.board_toast = rect(38, toast_y, w - 76, 28)
     end
     -- Where a backdrop of this pixel size goes in the bleed rect `full`:
-    -- Covering the screen on the bottom edge, normally at least 1040 tall.
-    function R.backdrop_rect(size, full, min_height)
+    -- Covering the screen, normally bottom-aligned and at least 1040 tall.
+    function R.backdrop_rect(size, full, min_height, align_y)
         local s = math.max(math.max(min_height or REF_H, full.h) / size.h, full.w / size.w)
         local sw, sh = size.w * s, size.h * s
-        return rect(full.x + (full.w - sw) / 2, full.y + full.h - sh, sw, sh)
+        return rect(full.x + (full.w - sw) / 2, full.y + (full.h - sh) * (align_y or 1), sw, sh)
     end
     function R.board_tool_bounds(k)
         local w, side = R.SCREEN_W or 480, E.TOOL_SIZE

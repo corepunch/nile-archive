@@ -48,6 +48,8 @@ the Market Keeper's Guide alongside Sound and Reduce Motion.
 
 The board starts in Bellmere's village square. Confirming the Welcome Arch,
 Reindeer Stable or Lumber Workshop changes the backdrop on subsequent wishes.
+The first visit shows the full painting briefly before the board appears.
+Tap to skip the entrance. Reduce Motion goes straight to the board fade.
 Earlier replays show the setting of their own stage, and later wishes keep
 the latest available painting. [Backdrop captures](docs/screenshots/review/construction-backdrops/README.md)
 

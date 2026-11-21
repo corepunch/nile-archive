@@ -44,6 +44,8 @@ for _, size in ipairs{"480x900", "390x844"} do
     shot("construction-backdrop-workshop-" .. size, size, "--level 12" .. safe)
 end
 shot("main-character-board", "480x900", "--level 4")
+reel("construction-backdrop-reveal", 22, 6, "390x844",
+    "--level 2 --present --reveal-backdrop --reel --safe-area 0,47,0,34")
 local bonus_fixture = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. "
 local booster_review = bonus_fixture .. "--level 10 "
 shot("booster-toolbar", "480x900", booster_review .. "--frames 10")

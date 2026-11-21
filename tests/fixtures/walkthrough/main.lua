@@ -6,6 +6,10 @@ local desc = require('games/' .. game .. '/lua/main')
 local R, island, economy = require('state'), require('island'), require('economy')
 local init = desc.init
 local stage, wait, frames = 0, 0, 0
+local function finish()
+    print('walkthrough pointer smoke passed: skip, reward, confirmed building and next board reward')
+    app.quit()
+end
 function desc.init()
     init()
     R.quiet, R.on_island, R.overlay = true, false, R.OV_NONE
@@ -27,12 +31,9 @@ function R.smoke()
         app.inject_click(vec2(394, 136)); stage = 3
     elseif stage == 3 and island.wonder_count(R.island) == 1 then
         assert(R.island.placing < 0, 'town action must confirm placement')
-        if game == 'relic-rush' then
-            R.quiet = false
-            if story.active() then story.next() end
-            if not R.prog.story_seen['restore-01'] then return end
-
-        end
+        R.quiet = false
+        if story.active() then story.next(); return end
+        if R.story_current or R.next_story(nil) then return end
         app.inject_click(vec2(394, 136)); stage = 4
     elseif stage == 4 and not R.on_island then
         assert(R.g.level == 1, 'town action must start the next board')
@@ -40,13 +41,21 @@ function R.smoke()
             local water = economy.unlock_of("well")
             assert(R.g.resource_yields[water.kind] == water and next(R.g.tool_meter) == nil,
                 'the well adds water buckets to the second board')
+            finish()
         else
             local wine = economy.unlock_of('arch').kind
             assert(R.g.resource_yields[wine] == economy.pieces[wine], 'the arch adds mulled wine to the second board')
             assert(R.g.backdrop == "welcome-arch", "the confirmed arch changes the board's backdrop")
+            assert(R.intro and R.intro:showing_backdrop(), "the new painting opens before the board")
+            assert(not (R.prog.backdrops_seen or {})["welcome-arch"], "the hold is acknowledged after viewing")
+            app.inject_click(app.screen():center())
+            stage = 5
         end
-        print('walkthrough pointer smoke passed: skip, reward, confirmed building and next board reward')
-        app.quit()
+    elseif stage == 5 and not R.intro then
+        assert(R.prog.backdrops_seen["welcome-arch"], "tapping skips and acknowledges the scene")
+        R.start_level(1)
+        assert(R.intro and not R.intro:showing_backdrop(), "retrying skips the already seen painting")
+        finish()
     end
 end
 return desc

@@ -445,6 +445,12 @@ selecting a piece or spending a move. Reduced motion fades the assembled rim,
 shadow, floor and pieces together over a quarter second. Resetting a board
 clears its entrance.
 
+A campaign can use `board_backdrop_hold(game)` to return a duration and an
+acknowledgment callback. This holds the full backdrop on screen after the
+transition and before the entrance begins. The hold pauses with dialogue and
+modals. Letting it finish or tapping through acknowledges it. Reduced Motion
+starts the board fade immediately.
+
 Reproduce both phone sizes with `build/test/relic-rush board-intro` and
 `build/test/christmas-market board-intro`. The manifests own all frames, so each
 game starts once. Reviewed captures live in each game's `docs/review/entrance/`.

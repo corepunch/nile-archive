@@ -173,3 +173,19 @@ R.present_board()
 R.intro:skip()
 R.board_update(.01)
 check(testing.haptics()==0, 'skipping an entrance emits no delayed pulses')
+
+setup()
+local previous_hold, shown = R.board_backdrop_hold, 0
+R.board_backdrop_hold = function() return .9, function() shown = shown + 1 end end
+R.present_board()
+R.board_update(.5)
+check(R.intro:showing_backdrop() and shown == 0, 'the painting holds the board entrance')
+check(testing.haptics() == 0, 'the scenery hold does not land pieces')
+R.board_update(.41)
+check(not R.intro:showing_backdrop() and shown == 1, 'normal playback acknowledges the scenery once')
+R.intro:skip()
+check(shown == 1, 'a later tap cannot acknowledge a painting twice')
+R.reduced_motion = true
+R.present_board()
+check(not R.intro:showing_backdrop(), 'reduced motion goes straight to the board fade')
+R.board_backdrop_hold = previous_hold

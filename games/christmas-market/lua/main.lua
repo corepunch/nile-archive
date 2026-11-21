@@ -10,6 +10,7 @@ local island = require("island")
 local rules = require("rules")
 local economy = require("economy")
 local match3_game = require("match3.game")
+local art = require("art")
 require("screens")
 require("narrative")
 require("chimney_smoke")
@@ -20,11 +21,32 @@ local bonuses = require("match3.bonuses")
 match3_game.bind_campaign_bonuses(R, island, economy.board_loadout, function(_, number, restored)
     return economy.board_backdrop(number, restored)
 end)
-require("art").bind_board_backdrops(R.scenes)
+art.bind_board_backdrops(R.scenes)
+
+-- A new construction gets a full portrait before its first live board.
+function R.board_backdrop_hold(g)
+    local key = g.backdrop
+    if key == "bellmere-opening" or not art.board_backdrops[key] or app.arg("default-match3") then return end
+    if app.arg("reveal-backdrop") then return .9 end   -- explicit art review
+    if R.quiet or g.level ~= R.prog.level then return end
+    local seen = R.prog.backdrops_seen or {}
+    if seen[key] then return end
+    return .9, function()
+        seen[key] = true
+        R.prog.backdrops_seen = seen
+        R.save_progress()
+    end
+end
 
 local serialize_completed = match3_game.bind_completed_rewards(R, rules)
 function R.serialize_campaign(s)
     local reading = save.is_reading(s)
+    local seen = R.prog.backdrops_seen or {}
+    for _, unlock in ipairs(economy.unlocks) do
+        local key = unlock.backdrop
+        if key then seen[key] = s:int("board_backdrop." .. key, seen[key] and 1 or 0) ~= 0 or nil end
+    end
+    R.prog.backdrops_seen = seen
     local version = s:int("market_resources", reading and 0 or economy.CAMPAIGN_VERSION)
     -- Version 3 added the twenty-stall ladder. Stalls an older save had
     -- already passed stay optional rather than holding its next wish. Waive

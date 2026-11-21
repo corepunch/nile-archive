@@ -6,6 +6,8 @@
 --
 -- local intro = board_intro.new(cells, {
 --     reduced = false,                -- reduced motion: one short fade, no travel
+--     backdrop_hold = 0,              -- seconds of full-screen art before the entrance
+--     on_backdrop = function() end,   -- the hold finished or the player skipped it
 --     blocked = function(id) end,     -- does this cell have a blocker to slam on?
 --     on_ring = function(ring) end,   -- a ring of cells has started to open
 --     on_land = function(id) end,     -- a piece has hit its cell
@@ -38,7 +40,8 @@ intro.__index = intro
 
 function board_intro.new(cells, opts)
     opts = opts or {}
-    local self = setmetatable({t = 0, opts = opts, cell_of = {}, list = {}, rings = {}, reduced = opts.reduced}, intro)
+    local hold = not opts.reduced and opts.backdrop_hold or 0
+    local self = setmetatable({t = -hold, opts = opts, cell_of = {}, list = {}, rings = {}, reduced = opts.reduced}, intro)
     local lo, hi, settled = math.huge, -math.huge, 0
     for i, c in ipairs(cells) do
         local at = c.at
@@ -76,7 +79,12 @@ end
 -- Advance the clock and call back what has just happened.
 function intro:update(dt)
     if self.t >= self.ends then return end
+    local revealing = self:showing_backdrop()
     self.t = math.min(self.ends, self.t + dt)
+    if revealing then
+        if self:showing_backdrop() then return end
+        if self.opts.on_backdrop then self.opts.on_backdrop() end
+    end
     if self.reduced then return end
     local opts = self.opts
     for _, c in ipairs(self.list) do
@@ -100,10 +108,13 @@ function intro:update(dt)
 end
 
 function intro:done() return self.t >= self.ends end
+function intro:showing_backdrop() return self.t < 0 end
 
 -- Jump to the end, as a tap does. Nothing skipped calls back.
 function intro:skip()
+    local revealing = self:showing_backdrop()
     self.t = self.ends
+    if revealing and self.opts.on_backdrop then self.opts.on_backdrop() end
     self.sheened = true
     for _, c in ipairs(self.list) do c.landed, c.slammed = true, true end
 end
@@ -208,8 +219,12 @@ function board_intro.bind(R, rules)
                 if i == center then table.insert(cells,1,entry) else cells[#cells+1]=entry end
             end
         end
+        local hold, finish
+        if R.board_backdrop_hold and not R.reduced_motion then hold, finish = R.board_backdrop_hold(g) end
         R.intro = board_intro.new(cells, {
             reduced=R.reduced_motion,
+            backdrop_hold=hold,
+            on_backdrop=finish,
             blocked=function(i) return g.ice[i]>0 or g.chain[i]>0 end,
             on_ring=function(ring) R.tone(notes[num.clampi(ring,0,4)+1]) end,
             on_land=function(i) R.vfx_emit(R.cell_pos(i)+vec2(0,R.HEX_R*.55),g.tiles[i].kind,false,2) end,
@@ -224,6 +239,7 @@ function board_intro.bind(R, rules)
     function R.board_update(dt)
         if R.phase ~= R.PH_PRESENT then return update(dt) end
         if R.art_review or R.overlay ~= R.OV_NONE or R.on_island or story.active() then return end
+        if R.intro:showing_backdrop() and R.diving and R.diving() then return end
         R.shake = math.max(0,R.shake-dt)
         local landed, slammed = 0, 0
         for _, c in ipairs(R.intro.list) do
@@ -239,7 +255,7 @@ function board_intro.bind(R, rules)
     function R.board_input(inp)
         if R.phase ~= R.PH_PRESENT then return input_board(inp) end
         if R.overlay ~= R.OV_NONE or story.active() or inp.captured then R.intro.skip_press = false; return end
-        if inp.pressed and R.intro.t > 0 then R.intro.skip_press = true end
+        if inp.pressed and R.intro.t ~= 0 then R.intro.skip_press = true end
         if inp.released then
             if R.intro.skip_press then R.intro:skip() end
             R.intro.skip_press = false
