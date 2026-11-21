@@ -31,6 +31,7 @@
 --   play_label()            optional caption on Play
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
+--   unheard_visit(kind)     whether this building type has a new resident conversation
 --   tap_building(item)      true if the game handled a tap on this placed building
 --   about(item)             the bubble's words for a placed building (0-based item)
 --   zone(z)                 a closed region's marker or land was tapped
@@ -519,6 +520,36 @@ function View:placement()
     elseif event and event.id == "confirm" then self:confirm() end
 end
 
+-- Keep the tail attached to the roof through camera moves and placement bounce.
+function View:visit_marker_bounds(item)
+    local sprite = self.city:placed_sprite_rect(item)
+    local tip = sprite:point(vec2(.5, .05))
+    local box = rect.anchor(tip - vec2(0, 13), size2(44, 30), vec2(.5, 1))
+    local screen, header = app.screen(), self.cfg.header
+    if box.x < screen.x + 4 or box:max().x > screen:max().x - 4
+        or box.y < screen.y + header.y + (header.band_height or header.height) + 4
+        or tip.y >= self.bottom_row.y then return end
+    return box, tip
+end
+
+function View:visit_markers()
+    local h, bubble = self.hooks, self.cfg.bubble
+    for i, building in ipairs(self.city.items) do
+        if h.unheard_visit(building.type) then
+            local box, tip = self:visit_marker_bounds(i - 1)
+            if box then
+                story.bubble_shape(box, tip, h.skin:color(bubble.fill), h.skin:color(bubble.edge), story.SPEECH)
+                text.inside(h.skin:text(bubble.text or "body", 21), box, vec2(.5, .5), "•••")
+                if ui.hit(box:inflate(5), 0).clicked then
+                    self:dismiss_bubble()
+                    h.tap_building(i - 1)
+                    return
+                end
+            end
+        end
+    end
+end
+
 function View:frame(inp, dt, active)
     local c, h = self.city, self.hooks
     self.time = self.time + dt
@@ -551,6 +582,8 @@ function View:frame(inp, dt, active)
     if h.draw_world then h.draw_world(view) end
     gfx.bleed(false)
     if h.overlay then h.overlay() end
+
+    if active and h.unheard_visit and c.placing < 0 and not story.active() then self:visit_markers() end
 
     local b = self.bubble
     if b and b.left then

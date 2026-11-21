@@ -1178,3 +1178,7 @@ Regenerate the atlases with `python3 tools/pack_match_specials.py`.
 ## Building resident portrait
 
 The confirmed purchase introduces **Lio Valez at the Great Aviary**. The same authored bust appears in three later level conversations once the player has met the resident. The dialogue renderer handles speaker position and mirroring. The [source sheet](../../../art/match3-residents/source.png) and [ImageGen prompt](../../../art/match3-residents/prompt.txt) produce `data/story/characters/lio.png` with `python3 tools/resident_portraits.py`. The crop retains the authored alpha and fits the dialogue canvas at 320 × 480. [Arrival](screenshots/resident-arrival.jpg) · [Return](screenshots/resident-return.jpg)
+
+## Unheard resident visit
+
+The Great Aviary displays a three-dot speech bubble when Lio has new dialogue. The shared town screen anchors the existing `story.bubble_shape` to the live roof position and draws the dots with the town skin. This is a live UI element. It appears after the introduction and after a newly witnessed story checkpoint, and hides during dialogue, placement and overlays. Reading or skipping the current visit clears the bubble. Reproduce both phone captures with `build/test/all --suite=relic-rush "shot unheard-visit"`. [480 × 900](review/resident-markers/unheard-visit-480-after.jpg) · [390 × 844](review/resident-markers/unheard-visit-390-after.jpg)

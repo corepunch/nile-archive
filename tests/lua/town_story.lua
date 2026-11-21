@@ -112,3 +112,11 @@ save.write("resident-visit", function(s) journey.serialize(s, visiting) end)
 save.read("resident-visit", function(s) journey.serialize(s, visiting) end)
 visiting.story_seen[arrival.key] = true
 check_stage("after-100")
+
+-- Finishing a visit is independent of its story trigger and survives a restart.
+local last = journey.visit(visiting, site)
+visiting.story_seen[last.key] = true
+save.write("heard-resident", function(s) journey.serialize(s, visiting) end)
+local reloaded = {}
+save.read("heard-resident", function(s) journey.serialize(s, reloaded) end)
+check(journey.visit(reloaded, site) == last and reloaded.story_seen[last.key], "a heard visit stays available without a new marker after reload")

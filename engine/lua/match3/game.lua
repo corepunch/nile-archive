@@ -398,6 +398,9 @@ function G.journey(content)
                 p.story_choices[b.key] = b.choices[choice] and choice or nil
             end
         end
+        for _, b in ipairs(visits) do
+            p.story_seen[b.key] = s:int("narrative.visit." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
+        end
         for _, b in ipairs(M.upgrades) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
         end
@@ -1180,6 +1183,9 @@ function G.bind(R, over)
     end
 
     function R.town_setup()
+        local function visit_for_kind(kind)
+            return journey.visit(R.prog, island.buildings[kind + 1].key)
+        end
         R.town = town.new(R.island, require("town_config"), {
             skin = skin,
             wallet = function() return R.prog.wallet end,
@@ -1203,13 +1209,14 @@ function G.bind(R, over)
             end,
             play = R.play_next,
             about = R.building_words,
+            unheard_visit = function(kind)
+                local visit = visit_for_kind(kind)
+                return visit and not R.prog.story_seen[visit.key]
+            end,
             tap_building = function(item)
-                local kind = R.island.items[item + 1].type
-                local visit = journey.visit(R.prog, island.buildings[kind + 1].key)
+                local visit = visit_for_kind(R.island.items[item + 1].type)
                 if not visit then return false end
-                -- A visit is player-initiated and repeatable. Only the campaign
-                -- coordinator acknowledges scenes and advances the story.
-                for _, line in ipairs(visit.lines) do story.add(line) end
+                R.queue_story(visit)
                 return true
             end,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
@@ -1319,6 +1326,7 @@ function G.bind(R, over)
                 return
             end
             if b.choices then R.open_story_choice(b); return end
+            if b.phase == "visit" and R.prog.story_seen[b.key] then return end
             if b.key == "recap" then R.prog.story_recap = false
             else R.prog.story_seen[b.key] = true end
             R.save_progress()

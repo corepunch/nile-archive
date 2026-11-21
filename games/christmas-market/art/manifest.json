@@ -1,4 +1,14 @@
 {
+  "resident_visit_marker": {
+    "building": "glassblower",
+    "renderer": "engine/lua/town/screen.lua \u00b7 story.bubble_shape with town skin and three dots",
+    "visible": "Latest available resident visit is unheard",
+    "hidden": "No visit, heard visit, dialogue, modal or placement",
+    "review": [
+      "docs/review/resident-markers/unheard-visit-480-after.jpg",
+      "docs/review/resident-markers/unheard-visit-390-after.jpg"
+    ]
+  },
   "resident_portrait": {
     "source": "../../art/match3-residents/source.png",
     "prompt": "../../art/match3-residents/prompt.txt",

@@ -804,7 +804,7 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 ## Town dialogue
 
-Tap the resident’s building to hear the latest **Visit** whose checkpoint the player has seen. Visits are repeatable and optional. [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the resident’s building to hear the latest **Visit** whose checkpoint the player has seen. An unheard visit puts a speech bubble over the building. Finishing the exchange or choosing Skip acknowledges that visit in the save. Leaving mid-conversation keeps it unheard. Visits are repeatable and optional. [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
 

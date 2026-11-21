@@ -341,3 +341,7 @@ shot("resident-return", "390x844", "--story-beat after-85 --story-built --story-
 local visit = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --frames 260 --visit-stage "
 shot("resident-visit-first", "480x900", visit .. "placed-aviary")
 shot("resident-visit-later", "390x844", visit .. "after-100 --safe-area 0,47,0,34")
+
+local marker = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --visit-marker --frames 45"
+shot("unheard-visit-480", "480x900", marker)
+shot("unheard-visit-390", "390x844", marker .. " --safe-area 0,47,0,34")
