@@ -1067,12 +1067,12 @@
     "frame_prompt": "art/square-frame/prompt.txt",
     "frames": {
       "square-plain": {
-        "source": "../../art/match3-square/source.png",
+        "source": "art/square-cells/plain.png",
         "crop": [
           0,
-          512,
-          256,
-          768
+          0,
+          128,
+          128
         ],
         "size": [
           128,
@@ -1726,7 +1726,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "4cfcf82ca329b3e61d0725a0872af3736833dbd61b4beedda6b728b7fbf90b6f",
+    "recipe": "e2bd3bbf86ac3003cfa71d51f76755853cfd924acc37c624bf1dc390568c3e24",
     "inputs": {
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
@@ -1788,7 +1788,7 @@
       "games/christmas-market/art/registered/square-cells/square-frame-85.png": "9660bdb766f6f1d78c9e0d266582d73495d871a4aee6d188fc0935ea38d947ea",
       "games/christmas-market/art/registered/square-cells/square-frame-9.png": "a1528187e2d24ce47a58a042550744527bc504454a8bb6b986c2887b00b58ec0",
       "games/christmas-market/art/registered/square-cells/square-grout.png": "443abe77cdbd1f28afdf7db3d928c212520cec348e86c40d342c84ee0e086f1e",
-      "games/christmas-market/art/registered/square-cells/square-plain.png": "3ba890d23d639a2ba753274773ecb8ee8cbde70ed86be7ed6235b1e354a44938",
+      "games/christmas-market/art/registered/square-cells/square-plain.png": "ed713cfeaf62d1519168fb29b2ea60edf6b2a9991cf260123ec98898689b1519",
       "games/christmas-market/art/registered/square-cells/square-selected.png": "6b9c7f8fa400c1ac31d847e12373d14e67b46932fb30b8ab111a6b8be273e7ac",
       "games/christmas-market/art/registered/square-cells/square-target.png": "12b3224c5bf28bcc68bbcc78dd6a9dfb20b224cef8100cac70b86c818173ff6b",
       "games/christmas-market/art/registered/story-pieces/cocoa.png": "864159376cf89a1133dbfadada1ccf53dae86e86274f8b9eb13e9b6b403d3417",
@@ -1797,6 +1797,7 @@
       "games/christmas-market/art/registered/story-pieces/ribbon.png": "eeb31326273b44077d7505875ad9904adee339ff9d3438cd11ed7995933e585a",
       "games/christmas-market/art/registered/story-pieces/scarf.png": "d0f1287e1f8537db369d6a5e46218e2e1dac9cfb8d386eb51fa9b42804c6e9ac",
       "games/christmas-market/art/registered/story-pieces/telegram.png": "da4dcb762ad7bb9d46765606c49d59ff20ca49901defbc74906b85be5b291870",
+      "games/christmas-market/art/square-cells/plain.png": "ed713cfeaf62d1519168fb29b2ea60edf6b2a9991cf260123ec98898689b1519",
       "games/christmas-market/art/square-frame/prompt.txt": "61654f1a60c447e5776e90df66755fe5fee92ca4283df25ef1451b8b08dd40eb",
       "games/christmas-market/art/square-frame/styles.json": "029f01b1130d9cbc5588eebc1d00faacb371a2463fdc9e27a4919a57b8bff214",
       "games/christmas-market/art/square-frame/variants.png": "3df9d5d0d095006246bf3244c48cb652bc088f7170ecb8a598ae5ae0a797ee0b",
@@ -1809,7 +1810,7 @@
     },
     "outputs": {
       "games/christmas-market/data/board/blockers.png": "766e9ff1ab1e17dac093988dcbd56170c668262b52ea57ec861805b2e5e0e81a",
-      "games/christmas-market/data/board/cells.png": "0a519c7c5914928973540f14383de404004388a9d6cb9e36219c228e2bb79d44",
+      "games/christmas-market/data/board/cells.png": "fc971b7df590510a9d8c6129e842cf1ff4575828b15f1cf53e9b029477494f9e",
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
       "games/christmas-market/data/board/pieces.png": "f1cc6b84351b859ad970369a344fa6c07601cb816962c2c1a1b3275c6c69eaf3",
