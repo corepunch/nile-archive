@@ -15,6 +15,7 @@ The camp is abandoned, the old well is fouled, and the quay wall is failing. The
 3. Recently Ines returned by a different shore. She found the room flooded and, unable to reach camp, used its hand shutter to send the old warning. She changed its rhythm to attract attention. Tomas does not know she is back.
 4. Adrian financed the expedition using a promised exclusive claim on island discoveries. He has not told Elena; the claim puts the relay and islanders' work at risk. Kessler represents the claim holder, not a supernatural threat.
 5. The team repairs the route to the tide room and finds Ines's signed plan. Adrian gives up the claim, and the crew drains the foot of the wall and makes the quay safe. When Mara tests the warning lamp, Ines waits and answers with the same three flashes from the safe landing. Tomas gives her the key, and she brings a chart of the other stations.
+6. Nera draws Lio and his parrot together for his sister. His sister recognizes the ear the bird likes to nibble.
 
 ## Question and cast
 
@@ -62,6 +63,7 @@ One restoration opens every five expeditions. Story restorations (bold) play a s
 | Plant | Inference later / payoff |
 | --- | --- |
 | Ask Nera whether she draws for fun after 67 | Hearing about Mara’s sketch gives Lio an idea for getting his parrot to pose. |
+| Lio asks Nera to draw his bird for his sister | The drawing catches the parrot nibbling Lio’s ear. His sister recognizes him by that ear. |
 | Mara asks about the folded corner at the Cartographer’s House (56) | At Cormorant Rock (67), Nera trusts Mara to flatten it when their bearings agree. |
 | Mara asks which of Lio’s noises his parrot copies (aviary after 85) | At 91 Lio tells her what the bird has learned to get with his snore. |
 | Two flashes answer Mara’s lamp (Spring well) | The answer changes to three at the Expedition camp. Ines confirms her identity with the same delayed pattern at the safe landing (100). |
@@ -849,9 +851,11 @@ Choice prompt: Who should answer the signal?
 
 Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin. [First meeting](screenshots/resident-meeting.jpg) · [After asking Nera](screenshots/resident-meeting-memory.jpg)
 
+At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still. [Visit menu](screenshots/meeting-followup-menu.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
+
 Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 
-Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays while any available answer is new. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 At expedition 91 Lio remembers what Mara asked after expedition 85. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
 
@@ -1096,6 +1100,15 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 - **Lio:** Start with my grin, then. He'll climb right up to see who's getting drawn instead of him.
 
+**Ask at aviary | Did your sister like the portrait?**
+
+- **Mara:** What did your sister say when she saw Nera's drawing, Lio?
+- **Lio:** "That's the ear he bites." All that work on my smile, Mara, and she knew me by my ear.
+
+**Ask at map_room | How did you finish the portrait?**
+
+- **Mara:** How did you get Lio and his parrot to hold still for the portrait, Nera?
+- **Nera:** I let him nibble Lio's ear. Every time Lio laughed I had to start that ear again.
 
 ## Upgrades
 
@@ -1210,6 +1223,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Added both residents’ accounts of their meeting to their building visits. The drawing catches the parrot nibbling Lio’s ear. His sister recognizes him by that ear.
 
 - 2026-11-21: Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin.
 

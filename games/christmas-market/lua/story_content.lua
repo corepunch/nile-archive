@@ -809,5 +809,15 @@ return {
     }, replies={
         {index=3, building="station_kiosk", when="visit-station_kiosk-after-63.personal", line={"otis", "That's Dad's dent. Pip offered to mend it, but I beat Dad fair and square. It's staying."}},
         {index=4, building="station_kiosk", when="visit-station_kiosk-after-63.personal", line={"ada", "Then the dent stays. I'll bring the blue button after work. Will you teach me on that board?"}},
+    }, followups={
+        {key="meeting-station_kiosk-glassblower.glassblower", building="glassblower", when="meeting-station_kiosk-glassblower", topic="meeting", label="Who won your first game?", lines={
+            {"pip", "Did your blue button bring you luck against Mr Bell, Ada?"},
+            {"ada", "I won, Pip. Jumped his last two buttons. I could hear my blue one ring on the tin both times."},
+        }},
+        {key="meeting-station_kiosk-glassblower.station_kiosk", building="station_kiosk", when="meeting-station_kiosk-glassblower", topic="meeting", label="How did you fare against Ada?", lines={
+            {"pip", "Who won that first game on your tin lid, Mr Bell?"},
+            {"otis", "Miss Pike did. I taught her how to jump two men and left mine in a lovely straight line."},
+            {"pip", "Will you teach me that way too, Mr Bell?"},
+        }},
     }},
 }

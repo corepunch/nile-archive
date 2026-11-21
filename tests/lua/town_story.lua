@@ -248,6 +248,12 @@ R.story_current, R.prog = nil, {level=100}
 save.read("interrupted-meeting", function(s) journey.serialize(s, R.prog) end)
 R.story_tick()
 check(R.story_current == meeting, "an interrupted meeting is offered again")
+for _, home in ipairs(meeting.sites) do
+    local stage = journey.visit(R.prog, home)
+    check(#journey.visit_menu(R.prog, stage).choices == 2, "the meeting must finish before either follow-up appears")
+    for _, answer in ipairs(stage.choices) do R.prog.story_seen[answer.key] = true end
+    check(not journey.unheard_visit(R.prog, stage), "a pending meeting cannot light a fully heard roof")
+end
 local exchange = R.story_lines(meeting)
 for _, reply in ipairs(meeting.replies) do
     check(exchange[reply.index] == reply.line, "the exchange recalls the building answer across a reload")
@@ -260,3 +266,36 @@ local reunited = {}
 save.read("completed-meeting", function(s) journey.serialize(s, reunited) end)
 check(reunited.story_seen[meeting.key] and not journey.next_meeting(reunited, owns_both),
     "the residents meet only once, including after relaunch")
+
+R.prog = reunited
+local function ask_about_meeting(home)
+    local stage = journey.visit(R.prog, home)
+    R.open_story_choice(stage)
+    local options = R.story_choice_beat.choices
+    check(#options == 3 and options[1] == stage.choices[1] and options[2] == stage.choices[2],
+        "the meeting adds a question alongside the current visit")
+    check(R.choose_story_option(3) and R.story_current.key == meeting.key .. "." .. home,
+        "the third question plays this resident's own account")
+end
+for _, home in ipairs(meeting.sites) do
+    check(R.town.hooks.unheard_visit(island.kinds[home]), "finishing the meeting lights both roofs")
+end
+ask_about_meeting(site2)
+save.write("unfinished-followup", function(s) journey.serialize(s, R.prog) end)
+local interrupted = {}
+save.read("unfinished-followup", function(s) journey.serialize(s, interrupted) end)
+check(journey.unheard_visit(interrupted, journey.visit(interrupted, site2)), "an unfinished answer stays new on reload")
+while story.active() do story.next() end
+R.story_tick()
+save.write("one-side-heard", function(s) journey.serialize(s, R.prog) end)
+R.prog = {}
+save.read("one-side-heard", function(s) journey.serialize(s, R.prog) end)
+check(not R.town.hooks.unheard_visit(island.kinds[site2]) and R.town.hooks.unheard_visit(island.kinds[site]),
+    "hearing one side clears only that roof across a reload")
+R.prog.story_seen["after-100"] = true
+for _, home in ipairs({site, site2}) do
+    ask_about_meeting(home)
+    while story.active() do story.next() end
+    R.story_tick()
+    check(R.prog.story_seen[meeting.key .. "." .. home], "each account remains available at later milestones")
+end

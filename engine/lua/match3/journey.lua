@@ -11,7 +11,7 @@ local function new(content)
     -- once their user event is done, and never hold the story back.
     local scenes, upgrades, placements = {}, {}, {}
     local by_key, by_building, site_visits = {}, {}, {}
-    local visits, meetings = {}, {}
+    local answers, meetings, meeting_options = {}, {}, {}
     for _, beat in ipairs(M.beats) do
         assert(not by_key[beat.key], "duplicate story beat: " .. beat.key)
         by_key[beat.key] = beat
@@ -19,7 +19,7 @@ local function new(content)
             placements[#placements + 1] = beat
             by_building[beat.building] = beat
         elseif beat.phase == "visit" then
-            visits[#visits + 1] = beat
+            for _, answer in ipairs(beat.choices) do answers[#answers + 1] = answer end
             local site = beat.building
             site_visits[site] = site_visits[site] or {}
             table.insert(site_visits[site], beat)
@@ -28,6 +28,18 @@ local function new(content)
         else scenes[#scenes + 1] = beat end
     end
     M.beats, M.upgrades, M.placements = scenes, upgrades, placements
+
+    -- All visit stages at a home share the same meeting answer and heard key.
+    for _, meeting in ipairs(meetings) do
+        for _, answer in ipairs(meeting.followups or {}) do
+            answers[#answers + 1] = answer
+            for _, stage in ipairs(site_visits[answer.building]) do
+                local options = meeting_options[stage] or {table.unpack(stage.choices)}
+                options[#options + 1] = answer
+                meeting_options[stage] = options
+            end
+        end
+    end
 
     -- Absent until a fresh purchase, false while due, true once acknowledged.
     -- Old saves therefore never receive a backlog for the town they already own.
@@ -68,10 +80,23 @@ local function new(content)
         end
     end
 
+    local function available(p, answer)
+        return not answer.when or p.story_seen[answer.when]
+    end
+
+    function M.visit_menu(p, visit)
+        if not meeting_options[visit] then return visit end
+        local choices = {}
+        for _, answer in ipairs(meeting_options[visit]) do
+            if available(p, answer) then choices[#choices + 1] = answer end
+        end
+        return {key=visit.key, phase=visit.phase, prompt=visit.prompt, choices=choices}
+    end
+
     function M.unheard_visit(p, visit)
         if visit then
-            for _, answer in ipairs(visit.choices) do
-                if not p.story_seen[answer.key] then return true end
+            for _, answer in ipairs(meeting_options[visit] or visit.choices) do
+                if available(p, answer) and not p.story_seen[answer.key] then return true end
             end
         end
         return false
@@ -155,11 +180,9 @@ local function new(content)
         for _, b in ipairs(meetings) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
         end
-        for _, b in ipairs(visits) do
-            for _, answer in ipairs(b.choices) do
-                local key = answer.key
-                p.story_seen[key] = s:int("narrative.visit." .. key, p.story_seen[key] and 1 or 0) == 1
-            end
+        for _, answer in ipairs(answers) do
+            local key = answer.key
+            p.story_seen[key] = s:int("narrative.visit." .. key, p.story_seen[key] and 1 or 0) == 1
         end
         for _, b in ipairs(M.upgrades) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1

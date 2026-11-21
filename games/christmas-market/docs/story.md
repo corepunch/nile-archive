@@ -54,6 +54,7 @@ One stall opens every five wishes, four to each Advent. Story stalls (bold) hold
 2. **Noelle's gran, Rosa,** ran the market's last small stall until her knees gave out and she retired to the coast. This winter she sends Noelle to help get it going again for Advent. She gives her a red parcel tagged "For whoever needs it most." It holds the key to Rosa's house on the square and a note. Noelle decides to stay before she opens it.
 3. **Theo Marsh** runs the family tree lot, and his hands are always sticky with resin. He started the Kind Word box's new season himself, because the town seemed lonely.
 4. **Mr Wren** appears on the first day and leaves on the last. Nobody hired him. Things tend to go well near his broom. The script never explains him. He may simply be a kind old man. Writers should keep both readings possible, up to his last note.
+5. Ada makes a blue glass button for Otis’s tin-lid board. He teaches her the double jump and she uses it to beat him in their first game.
 
 ## Cast
 
@@ -81,6 +82,7 @@ Bramble the goat does not speak.
 | Planted | Paid off |
 | --- | --- |
 | Ask Otis why he keeps the dent after 63 | When Ada sizes a glass draughts button, Otis tells her why his battered board matters. |
+| Ada promises Otis a blue draughts button | Ada wins their first game with a double jump. Otis taught her the move and left his two men open. |
 | Pip learns to play draughts on Otis’s tin lid with coat buttons (kiosk after 46) | While Henrik reads the letter (63), Otis gives Pip the first move. |
 | Noelle asks what Ada plays (glassblower’s stall after 84) | When the choir comes in at 90, Ada brings her spoons and waits for Noelle’s cue. |
 | The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who tells her to open it. It's hers: Gran's front-door key (92) |
@@ -810,9 +812,11 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him. [First meeting](screenshots/resident-meeting.jpg) · [After asking Otis](screenshots/resident-meeting-memory.jpg)
 
+At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move. [Visit menu](screenshots/meeting-followup-menu.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
+
 Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
 
-Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays while any available answer is new. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 At wish 90 Ada remembers what Noelle asked after wish 84. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
 
@@ -1060,6 +1064,16 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 - **Ada:** Then the dent stays. I'll bring the blue button after work. Will you teach me on that board?
 
+**Ask at glassblower | Who won your first game?**
+
+- **Pip:** Did your blue button bring you luck against Mr Bell, Ada?
+- **Ada:** I won, Pip. Jumped his last two buttons. I could hear my blue one ring on the tin both times.
+
+**Ask at station_kiosk | How did you fare against Ada?**
+
+- **Pip:** Who won that first game on your tin lid, Mr Bell?
+- **Otis:** Miss Pike did. I taught her how to jump two men and left mine in a lovely straight line.
+- **Pip:** Will you teach me that way too, Mr Bell?
 
 ## Upgrades
 
@@ -1194,6 +1208,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Added both residents’ accounts of their meeting to their building visits. Ada wins their first game with a double jump. Otis taught her the move and left his two men open.
 
 - 2026-11-21: Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him.
 

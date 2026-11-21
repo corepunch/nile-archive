@@ -116,7 +116,8 @@ def compile_town(source, beats, speakers):
     for sites, body in meetings.items():
         assert all(site in residents for site in sites), f'Unknown resident site in {sites}'
         key = 'meeting-' + '-'.join(sites)
-        parts = re.split(r'^\*\*If asked ([a-z_]+) ([\w-]+) (personal|story) (\d+)\*\*$', body, flags=re.M)
+        followups = re.split(r'^\*\*Ask at ([a-z_]+) \| ([^\n]+\?)\*\*$', body, flags=re.M)
+        parts = re.split(r'^\*\*If asked ([a-z_]+) ([\w-]+) (personal|story) (\d+)\*\*$', followups[0], flags=re.M)
         lines = speech(parts[0], speakers)
         cast = {speakers[residents[site][0]] for site in sites}
         assert {line.speaker for line in lines} == cast, f'{key}: both residents must speak'
@@ -139,6 +140,18 @@ def compile_town(source, beats, speakers):
                 targets.add((index, answer))
                 output.append('        {index=%d, building=%s, when=%s, line=%s},' %
                               (index, quote(site), quote(answer), line.lua()))
+        if len(followups) > 1:
+            output.append('    }, followups={')
+            used = set()
+            for site, label, answer in zip(followups[1::3], followups[2::3], followups[3::3]):
+                assert site in sites and site in visits and site not in used, f'{key}: invalid follow-up site {site}'
+                used.add(site)
+                lines = speech(answer, speakers)
+                assert any(line.speaker == speakers[residents[site][0]] for line in lines), label
+                output.append('        {key=%s, building=%s, when=%s, topic="meeting", label=%s, lines={' %
+                              (quote(key + '.' + site), quote(site), quote(key), quote(label)))
+                output.extend('            ' + line.lua() + ',' for line in lines)
+                output.append('        }},')
         output.append('    }},')
 
     return compile_replies(callbacks, by_key, introductions, answers), output

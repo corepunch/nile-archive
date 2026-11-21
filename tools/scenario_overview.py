@@ -157,9 +157,12 @@ class Page:
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
         if b.get('choices'):
-            opts = ''.join(f'<div class="choice"><div class="pick">Choice: {esc(c["label"])}</div>{self.lines(c["lines"])}</div>'
-                           for c in b['choices'])
-            body += f'<div class="prompt">{esc(b.get("prompt") or "The player chooses")}</div><div class="choices">{opts}</div>'
+            opts = []
+            for c in b['choices']:
+                place = self.steps[c['building']]['name'] if c.get('building') else 'Choice'
+                opts.append(f'<div class="choice"><div class="pick">{esc(place)}: {esc(c["label"])}</div>{self.lines(c["lines"])}</div>')
+            prompt = 'Ask at either building after the meeting' if b.get('meeting_sites') else b.get('prompt') or 'The player chooses'
+            body += f'<div class="prompt">{esc(prompt)}</div><div class="choices">{"".join(opts)}</div>'
         return (f'<details class="beat" open><summary><span class="phase">{esc(label)}</span>'
                 f'<code>{esc(b["key"])}</code><span class="count">{len(b.get("lines", []))} lines</span></summary>{body}</details>')
 

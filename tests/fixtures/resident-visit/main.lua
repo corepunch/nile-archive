@@ -2,12 +2,14 @@
 local game = assert(app.arg("visit-game"))
 local desc = require("games/" .. game .. "/lua/main")
 local R, island = require("state"), require("island")
+local journey = require("journey")
 local site = app.arg("visit-site") or (game == "relic-rush" and "aviary" or "glassblower")
 local kind = island.kinds[site]
 local init, frame = desc.init, desc.frame
 local item, tick = nil, 0
 local stage = app.arg("visit-stage")
 local first = "placed-" .. site
+local meeting = app.arg("visit-meeting") and assert(journey.find(app.arg("visit-meeting")))
 
 local function select_question(id)
     assert(R.overlay == R.OV_STORY_CHOICE and not story.active(), "resident questions should be open")
@@ -15,7 +17,7 @@ local function select_question(id)
 end
 
 local function finish_answer(index)
-    local visit = require("journey").visit(R.prog, site)
+    local visit = journey.visit(R.prog, site)
     local answer = visit.choices[index]
     assert(story.active() and R.story_current.key == answer.key and R.story_current.lines == answer.lines,
         "the tapped question plays its own answer")
@@ -25,7 +27,17 @@ end
 
 function desc.init()
     init()
-    R.island_with(0, island.ladder_position[kind])
+    local position = island.ladder_position[kind]
+    if meeting then
+        for _, home in ipairs(meeting.sites) do
+            position = math.max(position, island.ladder_position[island.kinds[home]])
+            R.prog.story_seen["placed-" .. home] = true
+        end
+        R.prog.story_seen[stage] = true
+        for _, answer in ipairs(journey.visit(R.prog, site).choices) do R.prog.story_seen[answer.key] = true end
+        journey.acknowledge(R.prog, meeting)
+    end
+    R.island_with(0, position)
     for i = 1, R.island.count do
         if R.island.items[i].type == kind then item = i end
     end
@@ -51,6 +63,22 @@ end
 
 function desc.frame(dt)
     tick = tick + 1
+    if meeting then
+        if tick == 30 then
+            assert(R.town.hooks.unheard_visit(kind), "the meeting restores the marker")
+            tap()
+        elseif tick == 52 then
+            assert(R.choice_form.boxes["3"] and R.story_choice_beat.choices[3].topic == "meeting")
+            if not app.arg("visit-questions") then select_question("3") end
+        elseif tick == 80 and not app.arg("visit-questions") then
+            assert(story.active() and R.story_current.key == meeting.key .. "." .. site)
+            story.next() -- the resident's reply
+        elseif tick == 85 and not app.arg("visit-questions") then
+            app.inject_click(app.screen():center()) -- reveal the full line
+        end
+        frame(dt)
+        return
+    end
     if app.arg("visit-marker") then
         R.prog.story_seen["placed-" .. site] = true
         frame(dt)

@@ -240,7 +240,9 @@ else
     end
     for i, b in ipairs(require("story_content")) do
         local choices = {}
-        for k, c in ipairs(b.choices or {}) do choices[k] = {key = c.key, label = c.label, lines = lines_of(c.lines)} end
+        for k, c in ipairs(b.choices or b.followups or {}) do
+            choices[k] = {key = c.key, building = c.building, label = c.label, lines = lines_of(c.lines)}
+        end
         -- As journey.next schedules it: a scene after a wonder level waits for
         -- that level's story building, unless it plays on the clear itself.
         local waits = b.phase ~= "meeting" and b.phase ~= "visit" and b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]

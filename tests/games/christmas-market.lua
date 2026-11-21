@@ -274,6 +274,8 @@ local visit = "--lua tests/fixtures/resident-visit;games/christmas-market/lua;. 
 shot("resident-visit-first", "480x900", visit .. "placed-glassblower")
 shot("resident-visit-later", "390x844", visit .. "after-84 --safe-area 0,47,0,34")
 shot("resident-questions-480", "480x900", visit .. "placed-glassblower --visit-questions")
+shot("meeting-followup-menu", "480x900", visit .. "after-63 --visit-site station_kiosk --visit-meeting meeting-station_kiosk-glassblower --visit-questions")
+shot("meeting-followup-answer", "390x844", visit .. "after-74 --visit-meeting meeting-station_kiosk-glassblower --safe-area 0,47,0,34")
 shot("resident-questions-390", "390x844", visit .. "after-84 --visit-questions --safe-area 0,47,0,34")
 shot("otis-arrival", "480x900", "--story-beat placed-station_kiosk --frames 240")
 shot("otis-questions", "390x844", visit .. "placed-station_kiosk --visit-site station_kiosk --visit-questions --safe-area 0,47,0,34")

@@ -1088,10 +1088,12 @@ function G.bind(R, over)
 
     function R.open_story_choice(beat, preview)
         local visit = beat.phase == "visit"
+        if visit then beat = journey.visit_menu(R.prog, beat) end
         local children = {match3.popup_header(beat.prompt)}
         for index, option in ipairs(beat.choices) do
             if visit then
                 local topic = option.topic == "personal" and "PERSONAL" or "TOWN STORY"
+                if option.topic == "meeting" then topic = "THEIR MEETING" end
                 local status = R.prog.story_seen[option.key] and "Heard" or "New"
                 children[#children + 1] = N.label {text=topic .. " · " .. status, em=15, text_style="caption"}
             end

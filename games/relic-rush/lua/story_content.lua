@@ -877,5 +877,14 @@ return {
     }, replies={
         {index=2, building="map_room", when="visit-map_room-after-67.personal", line={"nera", "Mara sat still for half a grin, Lio. Your bird hasn't given me so much as a beak."}},
         {index=3, building="map_room", when="visit-map_room-after-67.personal", line={"lio", "Start with my grin, then. He'll climb right up to see who's getting drawn instead of him."}},
+    }, followups={
+        {key="meeting-map_room-aviary.aviary", building="aviary", when="meeting-map_room-aviary", topic="meeting", label="Did your sister like the portrait?", lines={
+            {"mara", "What did your sister say when she saw Nera's drawing, Lio?"},
+            {"lio", "\"That's the ear he bites.\" All that work on my smile, Mara, and she knew me by my ear."},
+        }},
+        {key="meeting-map_room-aviary.map_room", building="map_room", when="meeting-map_room-aviary", topic="meeting", label="How did you finish the portrait?", lines={
+            {"mara", "How did you get Lio and his parrot to hold still for the portrait, Nera?"},
+            {"nera", "I let him nibble Lio's ear. Every time Lio laughed I had to start that ear again."},
+        }},
     }},
 }

@@ -97,6 +97,7 @@ The following headers come from Lio and Nera's visits, callbacks and meeting.
 | `**If seen after-85**` | Within a replacement, use the following reply if the player witnessed this earlier campaign scene. |
 | `**Meeting map_room aviary**` | A one-time town conversation between the residents of these two buildings. Both must have finished their introductions. |
 | `**If asked map_room after-67 personal 2**` | Replace line 2 of the meeting if the player heard Nera's personal answer at this checkpoint. Either resident can deliver the changed line. |
+| `**Ask at aviary \| Did your sister like the portrait?**` | After the meeting, add this question to Lio's visits. Put the answer below it, and give the other resident their own `Ask at` block. |
 
 Several lines in a scene can each have a `With` block. Within one block, write the ordinary
 building reply first, then the conditional replies in priority order. The first satisfied
@@ -116,6 +117,10 @@ resident. Choose an earlier visit for a memory the player can discover before th
 resident arrives. The listed order of the two building keys identifies the meeting in saves.
 Older towns with both residents can see it on their next return. Finishing or skipping the
 scene records it. Leaving midway makes the whole exchange available again.
+
+Put the follow-up questions at the end of the meeting. Each building can have one per
+meeting. The answer stays on that resident's menu as the ordinary questions change.
+Each roof marks its own unheard answers, including follow-ups in existing towns.
 
 Preview the ordinary reply with `--story-beat after-91 --story-built --story-line 2`.
 Add `--story-asked` for the first conditional reply at or after that line, or
