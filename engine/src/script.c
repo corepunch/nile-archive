@@ -150,6 +150,7 @@ void script_open(const char *dir)
         {"lua/match3/frames.lua", "match3.frames"},
         {"lua/board_intro.lua", NULL},
         {"lua/town/screen.lua", "town.screen"},
+        {"lua/menu/screen.lua", "menu.screen"},
         {"lua/hidden_object/screen.lua", "hidden_object.screen"},
         {"lua/screen_transition/styles.lua", "screen_transition.styles"},
         {"lua/screen_transition.lua", "screen_transition"},

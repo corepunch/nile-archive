@@ -16,6 +16,10 @@ What we add on top is the story: one short scene after every level, and a scene 
 
 ## Game flow
 
+The first launch starts on level 1. After collecting the opening reward, the
+player visits the town with resources to spend. Later launches open the
+[main menu](PORTRAIT_GAMES.md#first-launch-and-main-menu).
+
 The player's minute-to-minute loop:
 
 1. **Play a level.** The board shows the current pieces and, from its building on, one tool piece. Thirty matched tool pieces charge the tool's slot once.

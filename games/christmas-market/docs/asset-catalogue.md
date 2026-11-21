@@ -1,5 +1,21 @@
 # Christmas art direction catalogue
 
+## Title screen
+
+The painting of Bellmere at blue hour leads into the campaign. Built-in
+ImageGen produced the [941 × 1672 source](../art/menu/source.png) from the
+[recorded prompt](../art/menu/prompt.txt). The game loads
+`data/menu/bellmere.jpg` as a centered full-bleed crop, with one static state.
+The title and subtitle are live Lilita One text. Continue, Visit Market and
+Settings use the skin's existing primary and link controls across normal,
+pressed, hover, keyboard focus and disabled states. Visit Market appears when
+the campaign has a clear and Continue leads to a playable board.
+
+Re-encode the source with
+`python3 -c "from PIL import Image; Image.open('art/menu/source.png').convert('RGB').save('data/menu/bellmere.jpg', quality=89, optimize=True)"`
+from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
+and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
+
 ## Square board
 
 The current campaign uses honey maple, frosted teal panes and olive-green

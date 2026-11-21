@@ -1,7 +1,18 @@
 {
   "status": "Painted current-camera buildings (art/building-catalogue/painted-v1)",
   "generator": "built-in image_gen",
+  "main_menu": {
+    "source": "art/menu/source.png",
+    "prompt": "art/menu/prompt.txt",
+    "runtime": "data/menu/bellmere.jpg",
+    "review": "docs/screenshots/main-menu.jpg",
+    "states": [
+      "static"
+    ],
+    "registration": "Center-cover the full bleed; title and controls are live text."
+  },
   "prompts": [
+    "art/menu/prompt.txt",
     "art/prompts.json",
     "art/character-and-icon-prompts.json",
     "art/reference-sheet-prompt.txt",
@@ -130,6 +141,7 @@
     "data/city/roads.png": "a9341c19a5e03f829a84601615ccd7f9d3c48f97f0e07372d10bbed435b41373",
     "data/common/fonts/LilitaOne-Regular.ttf": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
     "data/common/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
+    "data/menu/bellmere.jpg": "ace588527db495d75ac8e3bdc98230248957835b705e94e47a5f034e1c29dde0",
     "data/story/characters/agnes.png": "85e9ac46ec23ae2b4b451208f4ec639ba6b1fa41aedf742f060c72a593eb5c09",
     "data/story/characters/alder.png": "813e856e247fb84e8a2c2350b3fc5ef65125fa34934c29ccef63ca746c19cce5",
     "data/story/characters/finch.png": "21380f451cdf457e9cfdc87247232136792be5fd8b1382b1143769284c5a91d4",

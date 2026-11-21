@@ -11,6 +11,7 @@ presentation comes from Lua settings, level data and the skin's PNGs.
 | `engine/lua/match3/elements_view.lua` (`match3.elements_view`) | Draws the floor, perimeter, cell highlights, blockers and piece shadows |
 | `engine/lua/board_intro.lua` | The board's entrance, its haptics and the mission banner timing |
 | `engine/lua/town/screen.lua` (`town`) | The town screen (`lua/town_config.lua`) |
+| `engine/lua/menu/screen.lua` (`menu.screen`) | The illustrated title screen, safe-area layout and form controls |
 | `engine/lua/match3/game.lua` (`match3.game`) | The game around the board: shared state, progress and saving, selection of the current screen, dialogs, the shop, town hooks and story delivery |
 | `engine/lua/screen_transition.lua` (`screen_transition`) | Screen changes, configured by `transitions` in each game's `lua/game_config.lua` |
 | `engine/lua/match3/vfx.lua` (`match3.vfx`) | Effects: impacts, waves, halos, score pop-ups and particles |
@@ -79,6 +80,38 @@ Relic Rush uses this for the light on board 3 and Ines's reply on board 30.
 Results keep the board HUD in the blurred background so the card title and
 actions have a clear foreground.
 
+## First launch and main menu
+
+A fresh profile opens directly on level 1. Christmas Market plays Noelle's
+opening scene there before the board is playable. Collecting a first-clear
+reward takes the player to the island or market, where they can spend the
+resources on construction.
+
+Later launches and the Main Menu link in in-game Settings open the illustrated
+title screen. Continue returns to the parked board or town in the current
+session. After relaunch, Continue opens the campaign checkpoint and honors
+unclaimed results and pending town scenes. Christmas Market returns to the
+market after the first clear. Visit Island or Visit Market appears once the
+player has a clear and Continue would go to a playable board. Settings shares
+the guide, leaderboard and saved Sound and Reduce Motion preferences with
+in-game Settings.
+
+The GameTop Windows [Cradle of Rome 2 reference](cradle-of-rome-reference/README.md)
+puts a large adventure control in the center of the bottom menu and makes
+Options secondary (`settings/scenes/menu/menu.xml` and `menu_controls.xml`).
+Its adventure is configured to start at level 1 (`game_settings.xml`).
+[Homescapes' official tutorial](https://www.youtube.com/watch?v=GkYNAU6iE6c)
+teaches matches on the board, and the [GameTop description](https://www.gametop.com/download-free-games/cradle-of-rome-2/)
+ties construction to resources earned through play. The title screens use
+that action hierarchy with original portraits of the destinations. The first
+puzzle gives the player something to spend before introducing the town.
+
+Use `--main-menu` to preview either title screen and `--opening-town` to see
+the seeded town. The direct board and town preview options still open their
+requested screen.
+
+## Walkthrough
+
 Both games support `--debug-walkthrough`. Skip level opens the normal results.
 Advance confirms an earned restoration or opens the next board. The
 walkthrough uses its own save and does not report scores to Game Center.
@@ -140,8 +173,6 @@ Kept per game, as data or painting code:
   `match3_skin.lua`, `match3_hud.lua`, zone names and positions.
 - Shop categories, save version, kudos words, tool notes, the locked
   notice, title and id.
-- Christmas Market opens on the market (`start_on_town`) and plays the
-  opening scene there.
 - The results card's words stay in `screens.lua` with its painting.
 
 ## Not yet shared

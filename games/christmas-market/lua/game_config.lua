@@ -3,7 +3,7 @@
 -- field, lists replace.
 return {
     app = {title = "Christmas Market - Winter Wishes", id = "christmas-market", clear = "#09211F"},
-    start_on_town = true,
+    menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", town = "VISIT MARKET", continue_in_town = true},
     transitions = {
         style = "wipe",
         theme = {

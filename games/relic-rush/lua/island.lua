@@ -84,7 +84,7 @@ function M.migrate_wallet(progress, c)
     wallet[economy.GOLD] = math.max(wallet[economy.GOLD], reserved[economy.GOLD])
 end
 
--- A new game opens on the crew's tent, pitched the evening they landed. It is
+-- The crew's tent is in place when the player first visits the island. It is
 -- scenery: free, movable and outside the campaign ladder.
 function M.new_game(c, now)
     local tent = M.kinds.supply_tent

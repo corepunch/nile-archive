@@ -7,6 +7,14 @@ available). Set `DEVICE="name or UDID"` to choose one. See the
 
 An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. The market has 41 buildings and decorations. Smoke rises from nine working chimneys in town. See the [building catalogue](docs/building-catalogue.md).
 
+The first launch opens level 1, where Noelle's opening scene plays over the
+puzzle. Collect the first reward to visit the market. Later launches show
+the illustrated title screen with Continue and Settings. **Main Menu** in
+Settings takes you back to the title. See the
+[title screen](docs/screenshots/main-menu.jpg) and [opening board](docs/screenshots/first-launch.jpg).
+Both also have [compact title](docs/screenshots/main-menu-phone.jpg) and
+[compact board](docs/screenshots/first-launch-phone.jpg) captures.
+
 ![The 41 market buildings and decorations](docs/screenshots/buildings.jpg)
 
 The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.
@@ -79,7 +87,10 @@ There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
 flakes still.
 
-`make run-christmas-market` launches the native draft. `--showcase` previews the campaign buildings; `--level 4` previews a Christmas puzzle. It has an independent `christmas-market` save namespace. The draft opens on the snowy market and has 100 square puzzles, funded construction, player-chosen placement, land expansion, a resource shop and Noelle's dialogue. Native macOS and iOS project files are included.
+`make run-christmas-market` launches the native draft. `--showcase` previews the
+campaign buildings, `--level 4` previews a Christmas puzzle, and `--opening-town`
+shows Rosa's stall. The game has an independent `christmas-market` save namespace.
+Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or
 use the mouse wheel. Both are full-screen sheets under the wallet row. The shop

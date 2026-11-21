@@ -558,7 +558,7 @@ function E.guide_form(copy, guide_icon, corner)
     })
 end
 
-function E.pause_form(guide_label, quit_label, leaderboard_label, corner)
+function E.pause_form(guide_label, quit_label, leaderboard_label, corner, menu_label)
     return ui.form{
         root=N.column {panel=true,
             E.popup_header("Settings", nil, corner and "close"),
@@ -572,7 +572,10 @@ function E.pause_form(guide_label, quit_label, leaderboard_label, corner)
                 N.button {id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
             },
             N.button {id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
-            N.button {id="guide",text=guide_label,height=32,role="link",em=20},
+            N.row {gap=8,
+                N.button {id="guide",text=guide_label,height=32,grow=1,role="link",em=20},
+                menu_label and N.button {id="menu",text=menu_label,height=32,grow=1,role="link",em=20,visible_field="in_game"},
+            },
         },
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
     }

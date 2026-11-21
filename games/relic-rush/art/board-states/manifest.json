@@ -1,4 +1,12 @@
 {
+  "main_menu": {
+    "source": "art/menu/source.png",
+    "prompt": "art/menu/prompt.txt",
+    "runtime": "data/menu/valley.jpg",
+    "review": "docs/screenshots/main-menu.jpg",
+    "states": ["static"],
+    "registration": "Center-cover the full bleed; title and controls are live text."
+  },
   "popup_close": {
     "source": "art/popup-close/source.png",
     "registration": "art/popup-close/README.md",
@@ -286,6 +294,7 @@
     "data/city/roads.png",
     "data/common/fonts/LilitaOne-Regular.ttf",
     "data/common/fonts/lilitaone-OFL.txt",
+    "data/menu/valley.jpg",
     "data/story/characters/adrian.png",
     "data/story/characters/elena.png",
     "data/story/characters/keeper.png",

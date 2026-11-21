@@ -6,7 +6,16 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first square match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-Launch into the first of 100 expeditions. Swap adjacent pieces, match horizontally or vertically, and clear the turquoise plaques within the move budget. Claim the resources and tap Build to see the next restoration. Each board uses five piece kinds and fits inside a 9 × 12 square grid.
+The first launch goes straight to The Landing, the first of 100 expeditions.
+Swap adjacent pieces, match horizontally or vertically, and clear the turquoise
+plaques within the move budget. Claim the resources to visit the island, then
+tap Build to see the next restoration. Each board uses five piece kinds and
+fits inside a 9 × 12 square grid.
+
+Later launches open the illustrated title screen. Continue returns to the
+campaign, and Settings opens Sound, Reduce Motion, the guide and the leaderboard.
+Use **Main Menu** in Settings to return to the title. See the [title screen](docs/screenshots/main-menu.jpg)
+and [phone layout](docs/screenshots/main-menu-phone.jpg).
 
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the

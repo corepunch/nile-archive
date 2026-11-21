@@ -3,6 +3,7 @@
 local economy = require("economy")
 local buttons = require("match3.buttons")
 local A = {}
+A.menu_backdrop = "menu/bellmere.jpg"
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_pause"}, states=A.states}
 A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}

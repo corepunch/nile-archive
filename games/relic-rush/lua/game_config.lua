@@ -3,6 +3,7 @@
 -- field, lists replace.
 return {
     app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F"},
+    menu = {title = {"RELIC RUSH"}, subtitle = "THE LOST VALLEY", town = "VISIT ISLAND"},
     corner_close = true,
     packs = {"relics", "jewels", "resources"},
     transitions = {

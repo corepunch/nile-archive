@@ -12,6 +12,7 @@ data/
   common/          shared by every screen
     fonts/
     icons/         small standalone icons (Nile Archive)
+  menu/            standalone title-screen paintings
   city/            the island
     island.jpg     ground painting
     roads.png      road tiles (roads-<look>.png for a second look)

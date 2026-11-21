@@ -32,6 +32,8 @@ return ui.skin{
         base = {font = "lilita", em = 64, outline = "ink", outline_width = 4, shadow = "ink_shadow", shadow_offset = {0, 5}},
         gold = {extends = "base", fill = "#FFFFDB", fill2 = "#EFA939"},
         cream = {extends = "base", fill = "#FFF9E2", fill2 = "#F4DDA6"},
+        menu_title = {extends = "cream", outline = "#501D26", outline_width = 4, shadow = "#111D37DD", shadow_offset = {0, 7}},
+        menu_subtitle = {extends = "gold", tracking = 8, outline = "#501D26", shadow = "#111D37DD"},
         green = {extends = "base", fill = "#C7FFC9", fill2 = "#5BC682"},
         white = {extends = "base", fill = "#FFFFFF", fill2 = "#C4E8DC"},
         short = {extends = "base", fill = "#FFD9CC", fill2 = "#F0705A"},   -- a price the wallet cannot cover

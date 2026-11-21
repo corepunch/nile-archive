@@ -2,6 +2,7 @@
 -- Board pieces and wallet icons have separate presentation keys.
 local buttons = require("match3.buttons")
 local A = {}
+A.menu_backdrop = "menu/valley.jpg"
 A.story={cast={"elena","mara","tomas","adrian","keeper","marisol"},
     keeper_source="art/art-direction/ancient-keeper.png",marisol_source="art/art-direction/marisol.png",source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}

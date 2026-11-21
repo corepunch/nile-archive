@@ -1,13 +1,26 @@
 -- match3/debug.lua — the entry points tools/screenshots.py, the test manifests
 -- and reviewers use to open a portrait match-3 game's screen directly
 -- (`require("match3.debug").bind(R, words)`, called by match3.game):
--- --level, --city, --epoch, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
+-- --main-menu, --level, --city, --opening-town, --epoch, --showcase (--decorations N), --placing, --zone, --victory, --card, --fx shatter,
 -- --catalogue, --build-review, --dialog, --present, --mission, --goals-met,
 -- --kudos, --reveal, --story-beat, --talk-through, --scroll-review, --dive and the art reviews.
 -- --element-states reviews the authored surfaces.
 -- --floor-reel oil plays three swaps that clear tablets on the chosen campaign level.
 -- Nothing here runs in a normal game.
 local D = {}
+
+-- A direct preview takes precedence over a returning player's title screen.
+function D.direct_preview()
+    for _, key in ipairs{
+        "level", "city", "opening-town", "epoch", "showcase", "placing", "zone", "victory", "replay-victory",
+        "card", "purchase-card", "catalogue", "catalogue-page", "catalogue-item", "catalogue-card",
+        "build-review", "building-review", "dialog", "story-beat", "story-choice", "present", "mission", "kudos",
+        "reveal", "goals-met", "art-board", "art-states", "hud-states", "element-states", "special-states", "fx",
+    } do
+        if app.arg(key) then return true end
+    end
+    return false
+end
 
 function D.bind(R, W)
     local rules = require("rules")
@@ -184,6 +197,7 @@ function D.bind(R, W)
         end
         a = app.arg("city")
         if a then island_with(num.clampi(tonumber(a), 0, WONDERS)); R.on_island = true; R.toast_time = 0 end
+        if app.arg("opening-town") then R.on_island = true; R.toast_time = 0 end
         a = app.arg("build-review")
         if a then
             island_with(0)

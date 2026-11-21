@@ -1,5 +1,20 @@
 # Relic Rush artwork and state catalogue
 
+## Title screen
+
+The lost valley painting leads into the campaign. Built-in ImageGen produced
+the [941 × 1672 source](../art/menu/source.png) from the [recorded prompt](../art/menu/prompt.txt).
+The game loads `data/menu/valley.jpg` as a centered full-bleed crop, with one
+static state. The title and subtitle are live Lilita One text. Continue, Visit
+Island and Settings use the skin's existing primary and link controls across
+normal, pressed, hover, keyboard focus and disabled states. Visit Island
+appears when the campaign has a clear and Continue leads to a playable board.
+
+Re-encode the source with
+`python3 -c "from PIL import Image; Image.open('art/menu/source.png').convert('RGB').save('data/menu/valley.jpg', quality=89, optimize=True)"`
+from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
+and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
+
 ## Square board
 
 The campaign uses matte papyrus for ordinary cells, deep blue for single-layer plaques, and olive green for double plaques. The square frame has fourteen stone layouts and four leafy variants in `data/board/cells.png`. Each draws in one empty 128 px cell and rotates to suit its neighbours. The number encodes neighbour directions clockwise from north. A rounded cap connects the two rails around a diagonally adjacent tile.

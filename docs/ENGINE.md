@@ -306,14 +306,14 @@ Reusable full screens live in `engine/lua/<type>/screen.lua`.
 | Module | What the game supplies |
 | --- | --- |
 | `match3.screen` | Level rules, board settings and art. See [Portrait games](PORTRAIT_GAMES.md). |
+| `menu.screen` | Title copy, a full-bleed painting, a skin and campaign actions. |
 | `town.screen` | A city, `town_config.lua`, a skin and campaign actions. See [Shared town screen](TOWN.md). |
 | `hidden_object.screen` | Scene art, item names and hit ellipses, scoring settings, HUD skin and callbacks for completion and pause. |
 
 The app chooses the base screen from the game state and calls
 `screen:frame(input, dt, active)` once per frame. It passes idle input and
 disables UI hit testing while a modal, dialogue or transition has focus.
-Screens can still paint and settle their presentation. A future full-screen
-main menu fits the same convention as `menu.screen`.
+Screens can still paint and settle their presentation.
 
 The shared `screen_transition` module handles the effect between screen IDs.
 The `transitions` table in `game_config.lua` sets a default effect, optional

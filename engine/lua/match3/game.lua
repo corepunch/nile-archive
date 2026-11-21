@@ -32,7 +32,7 @@ local BOARD_OUT = .30
 
 G.DEFAULTS = {
     app = {title = "Match-3 town", id = "match3-game", clear = "#09211F"},
-    start_on_town = false,   -- a new launch opens on the town, not the board
+    menu = {play = "CONTINUE", settings = "SETTINGS", label = "MAIN MENU"},
     packs = {"kind"},        -- piece packs; the first is the default, --tiles picks another
     speech = {scale = 1, name = 15},
     region_speaker = "",
@@ -116,7 +116,7 @@ function G.state()
         island = nil,        -- the engine city
 
         -- screens
-        on_island = false,
+        on_island = false, on_menu = false,
         overlay = 0, modal_for = 0,
         dialog = nil,
         inspect = -1, inspect_item = -1, zone_card = -1,
@@ -804,20 +804,26 @@ function G.bind(R, over)
         else R.overlay = R.OV_NONE end
     end})
 
-    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard, W.corner_close)
+    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard, W.corner_close, W.menu.label)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         local level
-        if not R.on_island then level = ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name) end
+        if not R.on_island and not R.on_menu then level = ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name) end
         assert(pause_form:push(R))
-        pause_form.values.expedition = not R.on_island
+        pause_form.values.in_game = not R.on_menu
+        pause_form.values.expedition = not R.on_island and not R.on_menu
+        pause_form:set("resume", R.on_menu and "DONE" or "RESUME")
         match3.set_popup_header(pause_form, "Settings", level)
     end, handle=function(event)
         local action = event.id
         if event.kind == "change" then
             assert(pause_form:pull(R))
             sfx.enable(R.sound)
+            if not R.test_mode then save.write("settings", R.serialize_settings) end
         elseif action == "resume" or action == "close" then R.overlay = R.OV_NONE
+        elseif action == "menu" then
+            R.overlay = R.OV_NONE
+            R.open_menu()
         elseif action == "guide" then R.overlay = R.OV_GUIDE
         elseif action == "restart" then R.overlay = R.OV_CONFIRM
         elseif action == "leaderboard" then R.open_leaderboard()
@@ -1218,8 +1224,7 @@ function G.bind(R, over)
         end, before_level)
     end
 
-    -- Acknowledge a finished beat, then start the next one that is due. The
-    -- opening plays at once, even over the town a new game may start on.
+    -- Acknowledge a finished beat, then start the next one that is due.
     function R.story_tick()
         if R.story_current then
             if story.active() then return end
@@ -1283,6 +1288,11 @@ function G.bind(R, over)
         if R.serialize_campaign then R.serialize_campaign(s) end
     end
     R.serialize = serialize
+
+    function R.serialize_settings(s)
+        R.sound = s:int("sound", R.sound and 1 or 0) ~= 0
+        R.reduced_motion = s:int("reduce_motion", R.reduced_motion and 1 or 0) ~= 0
+    end
 
     local function progress_slot()
         return app.arg("debug-walkthrough") and "walkthrough" or "progress"
@@ -1492,9 +1502,23 @@ function G.app(R)
     local LEVELS = rules.LEVELS
     local elements = require("match3.elements_view")
     local board_screen = require("match3.screen")
+    local debug = require("match3.debug")
     require("match3").bind_town_board_hud(R)
     local still = app.arg("shot") and not app.arg("reel")
-    local board_exit
+    local board_exit, resume_overlay
+    function R.open_menu()
+        resume_overlay = R.overlay
+        R.on_menu, R.overlay = true, R.OV_NONE
+    end
+    local menu = require("menu.screen").new(W.menu, require("art").menu_backdrop, R.skin, {
+        can_visit = function() return not R.on_island and not R.g.won and R.prog.level > 0 end,
+        continue = function() R.on_menu, R.overlay = false, resume_overlay end,
+        town = function()
+            R.on_menu, R.on_island = false, true
+        end,
+        settings = function() R.overlay = R.OV_PAUSE end,
+    })
+    R.menu = menu
 
     local transition = require("screen_transition").new(W.transitions, app.arg("transition-style") or app.arg("dive-style"))
     function R.diving() return transition:active() end
@@ -1508,10 +1532,10 @@ function G.app(R)
         return screen:center()
     end
 
-    local function describe_transition(from)
+    local function describe_transition(from, to)
         return {
             -- The board's story mosaic uses the renderer's mask.
-            masked = "town",
+            masked = (from == "menu" or to == "menu") and to or "town",
             focuses = {town = town_focus(), match3 = R.BOARD_CLIP:center()},
             board_gone = from == "match3" and board_exit == BOARD_OUT,
             label = ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name),
@@ -1520,6 +1544,7 @@ function G.app(R)
     end
 
     local function paint_transition(id, inp, dt, effect, zoom, pan)
+        if id == "menu" then menu:frame(inp, dt, false); return end
         if id == "match3" then
             R.board_screen:transition(inp, dt, effect.board_gone and 1 or 0)
             return
@@ -1537,20 +1562,20 @@ function G.app(R)
 
     local function frame(dt)
         local inp = input.get()
-        R.story_tick()
+        R.layout()
+        transition:watch(R.on_menu and "menu" or R.on_island and "town" or "match3",
+            not R.reduced_motion and (not R.quiet or app.arg("dive")), describe_transition)
+        if not R.on_menu and not transition:active() then R.story_tick() end
         local talking = story.active()
         local board = R.leaderboard_active()
-        R.layout()
-        transition:watch(R.on_island and "town" or "match3",
-            not R.reduced_motion and (not R.quiet or app.arg("dive")), describe_transition)
         tween.instant(R.reduced_motion)   -- reduced motion: every tween settles on its next frame
         if app.arg("smoke") then (app.arg("campaign") and R.campaign_smoke or R.smoke)() end
         R.debug_frame()
         R.now = R.now + dt
         if not talking then R.toast_time = R.toast_time - dt end
-        if inp.back and not talking and not transition:active() and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
+        if inp.back and not R.on_menu and not talking and not transition:active() and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
-        if not transition:covering() then R.board_update(dt) end
+        if not R.on_menu and not transition:covering() then R.board_update(dt) end
         R.vfx_update(dt)
 
         local drawn_overlay = R.overlay
@@ -1574,10 +1599,10 @@ function G.app(R)
         if switching then
             transition:frame(inp, dt, paint_transition)
         else
-            local screen = R.on_island and R.town or R.board_screen
+            local screen = R.on_menu and menu or R.on_island and R.town or R.board_screen
             screen:frame(world, dt, interactive, ease.in_out_cubic((board_exit or 0) / BOARD_OUT))
         end
-        if app.arg("debug-walkthrough") and not talking and not board and not transition:active()
+        if app.arg("debug-walkthrough") and not R.on_menu and not talking and not board and not transition:active()
             and R.overlay == R.OV_NONE then
             local label = R.on_island and "Advance" or "Skip level"
             local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
@@ -1588,7 +1613,7 @@ function G.app(R)
                 if R.on_island then R.debug_advance_town() else R.debug_skip_level() end
             end
         end
-        R.draw_toast()
+        if not R.on_menu then R.draw_toast() end
         ui.set_enabled(true)
         local scene = clear_due and not revealing and R.clear_scene and R.clear_scene()
         if scene then R.draw_clear_scene(scene, inp) end
@@ -1598,7 +1623,7 @@ function G.app(R)
         story.frame(dt)
         -- Keep the HUD above ordinary dialogs. Level endings, the guide and
         -- leaderboard own the whole foreground.
-        local hud_above = not outcome and R.overlay ~= R.OV_GUIDE and not board
+        local hud_above = not R.on_menu and not outcome and R.overlay ~= R.OV_GUIDE and not board
         if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
             if R.on_island then R.town:header() else R.draw_board_hud() end
@@ -1647,14 +1672,21 @@ function G.app(R)
         R.wonders = {}
         for i = 1, island.WONDERS do R.wonders[i] = R.buildings[wonder_kind(island, i) + 1] end
 
-        R.sound = true
+        R.sound, R.reduced_motion = true, false
         R.inspect, R.zone_card = -1, -1
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
         R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
         R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
-        if not app.arg("smoke") then save.read(R.progress_slot(), R.serialize) end
-        -- A game may furnish the town a new player first sees (island.new_game).
+        local loaded
+        if not app.arg("smoke") then
+            loaded = save.read(R.progress_slot(), R.serialize)
+            save.read("settings", R.serialize_settings)
+            sfx.enable(R.sound)
+        end
+        -- Seed the town while the player starts on the board.
         if island.new_game and R.prog.level == 0 and R.island.count == 0 then island.new_game(R.island, app.clock()) end
+        local preview = debug.direct_preview() or app.arg("debug-walkthrough")
+        if not loaded and not preview and not app.arg("main-menu") then R.save_progress() end
         if not app.arg("smoke") and not app.arg("debug-walkthrough") then
             R.submit_leaderboard_progress()
         end
@@ -1667,9 +1699,13 @@ function G.app(R)
         end
         if R.prog.story_recap or R.next_story(nil) then R.on_island = true end
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end
-        if W.start_on_town and not app.arg("smoke") then R.on_island = true end
+        if W.menu.continue_in_town and R.prog.level > 0 then R.on_island = true end
         if R.resume_completed then R.resume_completed() end
         R.debug_screens()
+        if app.arg("main-menu") or loaded and not R.test_mode and not preview then
+            R.open_menu()
+            if app.arg("dialog") == "pause" then R.overlay = R.OV_PAUSE end
+        end
     end
 
     return {
