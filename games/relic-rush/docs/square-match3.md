@@ -128,6 +128,9 @@ BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules re
 
 ## Captures
 
+- [Hall of Pillars before and after the plaques covered it, 480 × 900](screenshots/review/covered-boards/level-14-480.jpg)
+- [The same at 390 × 844](screenshots/review/covered-boards/level-14-390.jpg)
+
 - [Harbour lodge before and after, 480 × 900](screenshots/review/building-rewards/lodge-480.jpg)
 - [Harbour lodge before and after, 390 × 844](screenshots/review/building-rewards/lodge-390.jpg)
 

@@ -124,6 +124,8 @@ five toolbar states.
 
 ## Captures
 
+- [Level 14 before and after the panes covered it, 480 × 900](screenshots/review/covered-boards/level-14-480.jpg)
+- [The same at 390 × 844](screenshots/review/covered-boards/level-14-390.jpg)
 - [Winter Wreath](screenshots/square-winter-wreath.jpg)
 - [Christmas Star](screenshots/square-christmas-star.jpg)
 
