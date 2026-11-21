@@ -243,11 +243,12 @@ else
         for k, c in ipairs(b.choices or {}) do choices[k] = {label = c.label, lines = lines_of(c.lines)} end
         -- As journey.next schedules it: a scene after a wonder level waits for
         -- that level's story building, unless it plays on the clear itself.
-        local waits = b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]
+        local waits = b.phase ~= "visit" and b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]
         if b.phase == "placed" then waits = b.building
         elseif b.phase == "upgrade" then waits = assert(upgrade_site[b.event]) end
         local variant = b.variant and {building = b.variant.building, index = b.variant.index, lines = lines_of({b.variant.line})}
-        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], variant = variant, resident = b.resident, prompt = b.prompt, waits_for = waits or nil,
+        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], variant = variant, resident = b.resident,
+                        visit_site = b.phase == "visit" and b.building or nil, checkpoint = b.checkpoint, prompt = b.prompt, waits_for = waits or nil,
                         lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
     end
 end

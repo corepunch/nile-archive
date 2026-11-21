@@ -31,6 +31,7 @@
 --   play_label()            optional caption on Play
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
+--   tap_building(item)      true if the game handled a tap on this placed building
 --   about(item)             the bubble's words for a placed building (0-based item)
 --   zone(z)                 a closed region's marker or land was tapped
 --   event(ev)               any other city event (BUILT, BLOCKED, ...)
@@ -537,7 +538,8 @@ function View:frame(inp, dt, active)
     if city_input.pressed then self:dismiss_bubble() end
     local ev = c:update(city_input, h.wallet(), app.clock(), dt)
     if active and ev.result ~= city.NONE then
-        if ev.result == city.PICKED then self:say(ev.building)
+        if ev.result == city.PICKED then
+            if not (h.tap_building and h.tap_building(ev.building)) then self:say(ev.building) end
         elseif ev.result == city.ZONE then if h.zone then h.zone(ev.zone) end
         elseif h.event then h.event(ev) end
     end

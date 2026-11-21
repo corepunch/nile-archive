@@ -90,3 +90,25 @@ for _, beat in ipairs(journey.beats) do
     end
 end
 check(callback_count >= 2, "the resident returns in later level conversations")
+
+-- Level progress can run ahead of the dialogue, and a building can arrive late.
+local milestones = site == "aviary" and {"after-85","restore-91","after-92","restore-96","after-100"}
+    or {"after-74","after-84","after-89","after-94","after-100"}
+local visiting = {level=100, story_seen={}}
+local function check_stage(checkpoint)
+    local visit = journey.visit(visiting, site)
+    check(visit and visit.checkpoint == checkpoint and #visit.lines >= 2, "tap follows the latest witnessed milestone")
+    check(visit == journey.visit(visiting, site) and not visiting.story_seen[visit.key], "visit is repeatable and never advances the campaign")
+end
+visiting.story_seen[arrival.key] = true
+check_stage(arrival.key)
+for _, milestone in ipairs(milestones) do
+    visiting.story_seen[milestone] = true
+    check_stage(milestone)
+end
+visiting.story_seen[arrival.key] = false
+check(not journey.visit(visiting, site), "even the finale cannot introduce a resident by tapping")
+save.write("resident-visit", function(s) journey.serialize(s, visiting) end)
+save.read("resident-visit", function(s) journey.serialize(s, visiting) end)
+visiting.story_seen[arrival.key] = true
+check_stage("after-100")

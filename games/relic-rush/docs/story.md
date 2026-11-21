@@ -843,6 +843,8 @@ Choice prompt: Who should answer the signal?
 
 ## Town dialogue
 
+Tap the resident’s building to hear the latest **Visit** whose checkpoint the player has seen. Visits are repeatable and optional. [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+
 Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
 
 
@@ -891,6 +893,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Marisol:** Lio! All the way down from the hills with that bird on your thumb? Come in. The aviary's yours.
 - **Lio:** Got a peg for my coat, Marisol? We've come to stay. Mind your language till he learns your voice.
 - **Mara:** He knows mine already, Lio. That's exactly what I said when I dropped the anchor on my foot.
+- **Lio:** Come by the aviary again, Mara. Perhaps you could teach him something I can say to my aunt.
 
 **Placed museum**
 
@@ -944,6 +947,38 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **With museum after-87 1**
 
 - **Mara:** Adrian, I left you at the museum with a clean sheet. One line since supper? What's it say?
+
+**Visit aviary placed-aviary**
+
+- **Lio:** Take this fig, Mara. Hold out your sleeve. If he steps onto it, he's picked his neighbour.
+- **Mara:** Both feet, Lio. Does that make us neighbours?
+- **Lio:** If he gives you the fig back, it makes you family. I wouldn't count on it.
+
+**Visit aviary after-85**
+
+- **Mara:** Lio, could your bird tell my voice from Kessler's if we said the same thing?
+- **Lio:** He does your laugh between words, Mara. I've never heard him need it for Kessler.
+
+**Visit aviary restore-91**
+
+- **Marisol:** Lio, if my aunt hears that bird call the flood, how does she know it's really time?
+- **Lio:** Tell her to wait for my whistle. Two fingers, loud and ugly. He won't put a claw in his beak.
+
+**Visit aviary after-92**
+
+- **Tomas:** Lio, why bring a dry scrap of slate to the flood watch?
+- **Lio:** To copy your chalk mark, Tomas. If the water takes yours, we can still show the next watch.
+
+**Visit aviary restore-96**
+
+- **Lio:** Tomas, will you put your initials beside mine on the slate? The chalk stayed dry.
+- **Tomas:** Give me the blunt end, Lio. Leave room underneath. There'll be another tide.
+
+**Visit aviary after-100**
+
+- **Lio:** Ines, would you teach me the answering flash? I'd like to take a night so you two can sleep.
+- **Ines:** Third flash comes late, Lio. Think of a bird deciding whether to part with a fig.
+- **Lio:** I've got time to make tea between flashes, then. Shall I put the kettle on?
 
 ## Upgrades
 
@@ -1058,6 +1093,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Six repeatable resident visits follow the introduction, later scenes and the finale. Each visit plays the latest exchange the player has reached.
 
 - 2026-11-21: Lio Valez moves in when the aviary opens. The introduction and three later appearances follow the player’s town.
 

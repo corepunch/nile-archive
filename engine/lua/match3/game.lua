@@ -294,10 +294,12 @@ function G.journey(content)
     -- kept apart from the level beats: they play on the next return to town
     -- once their user event is done, and never hold the story back.
     local scenes, upgrades, placements, arrivals = {}, {}, {}, {}
+    local visits = {}
     for _, beat in ipairs(M.beats) do
         if beat.phase == "placed" then
             placements[#placements + 1] = beat
             if beat.resident then arrivals[beat.resident] = beat end
+        elseif beat.phase == "visit" then visits[#visits + 1] = beat
         elseif beat.phase == "upgrade" then upgrades[#upgrades + 1] = beat
         else scenes[#scenes + 1] = beat end
     end
@@ -325,6 +327,14 @@ function G.journey(content)
         for _, beat in ipairs(placements) do
             if beat.resident and p.story_seen[beat.invitation] and not p.story_seen[beat.key]
                 and owns(beat.building) then return beat end
+        end
+    end
+
+    function M.visit(p, building)
+        if not p.story_seen["placed-" .. building] then return end
+        for i = #visits, 1, -1 do
+            local beat = visits[i]
+            if beat.building == building and p.story_seen[beat.checkpoint] then return beat end
         end
     end
 
@@ -363,6 +373,7 @@ function G.journey(content)
         for _, beat in ipairs(M.beats) do if beat.key == key then return beat end end
         for _, beat in ipairs(M.upgrades) do if beat.key == key then return beat end end
         for _, beat in ipairs(placements) do if beat.key == key then return beat end end
+        for _, beat in ipairs(visits) do if beat.key == key then return beat end end
     end
 
     -- Legacy clears remain clears; already-owned buildings stay. A recap
@@ -1192,6 +1203,15 @@ function G.bind(R, over)
             end,
             play = R.play_next,
             about = R.building_words,
+            tap_building = function(item)
+                local kind = R.island.items[item + 1].type
+                local visit = journey.visit(R.prog, island.buildings[kind + 1].key)
+                if not visit then return false end
+                -- A visit is player-initiated and repeatable. Only the campaign
+                -- coordinator acknowledges scenes and advances the story.
+                for _, line in ipairs(visit.lines) do story.add(line) end
+                return true
+            end,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
             suggest = function(kind) return island.island_suggestion(kind) end,

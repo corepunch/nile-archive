@@ -668,7 +668,7 @@ return {
     {key="placed-glassblower", phase="placed", building="glassblower", resident="ada", invitation="after-71", lines={
         {"ada", "Mrs Holt? Ada Pike, off the lake boat. Is this really my furnace? I've never had a key of my own."},
         {"agnes", "Yours, love. Now, about my gingerbread dome. How big a house can you fit under one breath?"},
-        {"ada", "Depends how big you bake, Mrs Holt. Keep talking while I get my coat off."},
+        {"ada", "Come by my stall with a biscuit the size of your roof, Mrs Holt. I'll see what one breath can do."},
     }},
     {key="placed-santa_workshop", phase="placed", building="santa_workshop", lines={
         {"henrik", "Pip, try the low bench. Used to be mine. Can your feet reach the rail?"},
@@ -677,5 +677,30 @@ return {
     {key="placed-sleigh", phase="placed", building="sleigh", lines={
         {"rosa", "Mary, tuck that rug round your knees. When did we last go for a ride together?"},
         {"mary", "When my boots still had buckles, Rosa. Budge over. There's room for Pip."},
+    }},
+    {key="visit-glassblower-placed-glassblower", phase="visit", building="glassblower", checkpoint="placed-glassblower", level=71, lines={
+        {"agnes", "Ada, shall I keep your furnace key on my hook overnight?"},
+        {"ada", "Under my pillow tonight, Mrs Holt. In the morning I want to reach for it and find it's mine."},
+    }},
+    {key="visit-glassblower-after-74", phase="visit", building="glassblower", checkpoint="after-74", level=74, lines={
+        {"agnes", "Ada, why did you give my gingerbread dome three little glass feet?"},
+        {"ada", "Put your nose down here, Mrs Holt. What's the use of a whole gingerbread house nobody can smell?"},
+    }},
+    {key="visit-glassblower-after-84", phase="visit", building="glassblower", checkpoint="after-84", level=84, lines={
+        {"ada", "Noelle, could you ring the bell for me? I only ever hear my glass from the bench."},
+        {"noelle", "You can hear it from Gran's step, Ada. Hang on, I'll run across and do it again."},
+    }},
+    {key="visit-glassblower-after-89", phase="visit", building="glassblower", checkpoint="after-89", level=89, lines={
+        {"pip", "Ada, if I cup my hands round the station lamp, will that help?"},
+        {"ada", "Put them in your pockets, Pip. I made the glass to do that job. You keep ten warm fingers."},
+    }},
+    {key="visit-glassblower-after-94", phase="visit", building="glassblower", checkpoint="after-94", level=94, lines={
+        {"mary", "Ada, Pip says you'd trade a whole pocketful of glass for a minute on the footplate. Is that true?"},
+        {"ada", "I'd settle for the view from your carriage, Mary. Could you see the lamp from the bend?"},
+        {"mary", "Small as a shirt button. I had my coat on before the brakes squeaked."},
+    }},
+    {key="visit-glassblower-after-100", phase="visit", building="glassblower", checkpoint="after-100", level=100, lines={
+        {"noelle", "Ada, I'm ordering a bell for my own front door. Will you still be here in January?"},
+        {"ada", "Knock in the morning, Noelle. The key lives on a hook now. I sleep better without it in my ear."},
     }},
 }

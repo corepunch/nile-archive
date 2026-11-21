@@ -804,6 +804,8 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 ## Town dialogue
 
+Tap the resident’s building to hear the latest **Visit** whose checkpoint the player has seen. Visits are repeatable and optional. [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+
 Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
 
 
@@ -846,7 +848,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 - **Ada:** Mrs Holt? Ada Pike, off the lake boat. Is this really my furnace? I've never had a key of my own.
 - **Agnes:** Yours, love. Now, about my gingerbread dome. How big a house can you fit under one breath?
-- **Ada:** Depends how big you bake, Mrs Holt. Keep talking while I get my coat off.
+- **Ada:** Come by my stall with a biscuit the size of your roof, Mrs Holt. I'll see what one breath can do.
 
 **Placed santa_workshop**
 
@@ -905,6 +907,37 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **With glassblower after-89 2**
 
 - **Ada:** Noelle, the whole town brought lamps. Take mine for the bend. I blew a chimney for this wind.
+
+**Visit glassblower placed-glassblower**
+
+- **Agnes:** Ada, shall I keep your furnace key on my hook overnight?
+- **Ada:** Under my pillow tonight, Mrs Holt. In the morning I want to reach for it and find it's mine.
+
+**Visit glassblower after-74**
+
+- **Agnes:** Ada, why did you give my gingerbread dome three little glass feet?
+- **Ada:** Put your nose down here, Mrs Holt. What's the use of a whole gingerbread house nobody can smell?
+
+**Visit glassblower after-84**
+
+- **Ada:** Noelle, could you ring the bell for me? I only ever hear my glass from the bench.
+- **Noelle:** You can hear it from Gran's step, Ada. Hang on, I'll run across and do it again.
+
+**Visit glassblower after-89**
+
+- **Pip:** Ada, if I cup my hands round the station lamp, will that help?
+- **Ada:** Put them in your pockets, Pip. I made the glass to do that job. You keep ten warm fingers.
+
+**Visit glassblower after-94**
+
+- **Mary:** Ada, Pip says you'd trade a whole pocketful of glass for a minute on the footplate. Is that true?
+- **Ada:** I'd settle for the view from your carriage, Mary. Could you see the lamp from the bend?
+- **Mary:** Small as a shirt button. I had my coat on before the brakes squeaked.
+
+**Visit glassblower after-100**
+
+- **Noelle:** Ada, I'm ordering a bell for my own front door. Will you still be here in January?
+- **Ada:** Knock in the morning, Noelle. The key lives on a hook now. I sleep better without it in my ear.
 
 ## Upgrades
 
@@ -1039,6 +1072,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Six repeatable resident visits follow the introduction, later scenes and the finale. Each visit plays the latest exchange the player has reached.
 
 - 2026-11-21: Ada Pike moves in when the glassblower opens. The introduction and three later appearances follow the player’s town.
 

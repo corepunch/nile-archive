@@ -511,7 +511,7 @@ function D.bind(R, W)
         local beat_key = app.arg("story-beat")   -- --story-beat KEY [--story-line N]: preview a scene from its Nth line
         if beat_key then
             local beat = assert(journey.find(beat_key), "unknown story beat")
-            local building = beat.phase == "placed" and beat.building or app.arg("story-built") and beat.variant and beat.variant.building
+            local building = (beat.phase == "placed" or beat.phase == "visit") and beat.building or app.arg("story-built") and beat.variant and beat.variant.building
             if building then island_with(0, island.ladder_position[island.kinds[building]])
             else island_with(journey.earned(beat.level or 0)) end
             R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0

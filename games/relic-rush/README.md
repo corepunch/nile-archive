@@ -171,7 +171,7 @@ A first clear advances the expedition counter. Every won expedition banks its ma
 
 The speaker’s name tag and the Skip button sit equally far from the dialogue bar, with the name above and Skip below.
 
-Lio Valez moves down from the hills when the Great Aviary opens. He returns on expeditions 85, 91 and 92.
+Lio Valez moves down from the hills when the Great Aviary opens. He returns on expeditions 85, 91 and 92. Tap the aviary to visit Lio after the introduction. There are six conversations, including one after the finale.
 
 All twenty campaign purchases now have a character response. The ten purchases between story gates trigger a conversation on confirmation. Later dialogue checks whether the building actually stands. Compare `--story-beat after-12 --story-line 1` with the same preview plus `--story-built`, or preview the purchase with `--story-beat placed-workshop`.
 
