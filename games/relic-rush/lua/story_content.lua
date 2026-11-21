@@ -558,8 +558,8 @@ return {
         {"tomas", "No, Elena. It's the old tide count, one flash for each hour the water rises."},
         {"mara", "So she's minding our tide from down there. Elena, you can retire the distress theory."},
     }},
-    {key="after-91", phase="after", level=91, variant={building="aviary", index=2, line={"lio", "Mine, Mara. I left him with Adrian for ten minutes. He used to whistle for figs."}}, lines={
-        {"mara", "Adrian, that parrot just said \"expensive, Mr Vale\". Whose parrot is this?"},
+    {key="after-91", phase="after", level=91, variant={building="aviary", index=2, line={"lio", "Mine, Mara. I left him with Adrian for ten minutes. He used to whistle for figs."}, memory={answer="visit-aviary-after-85.personal", line={"lio", "Mine, Mara. You asked if he copies me. This morning he snored in my face till I passed the figs."}}}, lines={
+        {"mara", "Adrian, whose parrot am I returning? He keeps saying \"expensive, Mr Vale\" and looking at you."},
         {"adrian", "I will not be taking questions about the parrot, Mara."},
         {"tomas", "Elena, the temple is the place for our quay notice. Every worker passes it."},
     }},

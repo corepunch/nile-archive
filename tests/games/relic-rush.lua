@@ -337,6 +337,8 @@ shot("town-story-callback", "390x844", "--story-beat after-12 --story-line 1 --s
 
 shot("resident-arrival", "480x900", "--story-beat placed-aviary --story-line 2 --frames 240")
 shot("resident-return", "390x844", "--story-beat after-85 --story-built --story-line 2 --frames 240 --safe-area 0,47,0,34")
+shot("resident-memory-unasked", "480x900", "--story-beat after-91 --story-line 2 --story-built --frames 240")
+shot("resident-memory-asked", "390x844", "--story-beat after-91 --story-line 2 --story-asked --frames 240 --safe-area 0,47,0,34")
 
 local visit = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --frames 260 --visit-stage "
 shot("resident-visit-first", "480x900", visit .. "placed-aviary")

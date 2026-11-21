@@ -353,7 +353,8 @@ function G.journey(content)
         local arrival = arrivals[variant.line[1]]
         if arrival and seen and not seen[arrival.key] then return beat.lines end
         local lines = {table.unpack(beat.lines)}
-        lines[variant.index] = variant.line
+        local memory = variant.memory
+        lines[variant.index] = memory and seen and seen[memory.answer] and memory.line or variant.line
         return lines
     end
 

@@ -60,6 +60,7 @@ One restoration opens every five expeditions. Story restorations (bold) play a s
 
 | Plant | Inference later / payoff |
 | --- | --- |
+| Mara asks which of Lio’s noises his parrot copies (aviary after 85) | At 91 Lio tells her what the bird has learned to get with his snore. |
 | Two flashes answer Mara’s lamp (Spring well) | The answer changes to three at the Expedition camp. Ines confirms her identity with the same delayed pattern at the safe landing (100). |
 | Tomas tells the crew the relay cable is severed (Trapper’s cabin) | Open: the cable hand-in that paid this off went with the crew requests. |
 | Tomas makes a reel from the first timber | Open: the cable request that used the reel went with the crew requests. |
@@ -762,7 +763,7 @@ Choice prompt: Who should answer the signal?
 
 **Level 91 · Parrot Steps**
 
-- **Mara:** Adrian, that parrot just said "expensive, Mr Vale". Whose parrot is this?
+- **Mara:** Adrian, whose parrot am I returning? He keeps saying "expensive, Mr Vale" and looking at you.
 - **Adrian:** I will not be taking questions about the parrot, Mara.
 - **Tomas:** Elena, the temple is the place for our quay notice. Every worker passes it.
 
@@ -844,6 +845,8 @@ Choice prompt: Who should answer the signal?
 ## Town dialogue
 
 Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+
+At expedition 91 Lio remembers what Mara asked after expedition 85. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
 
 Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
 
@@ -939,6 +942,10 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **With aviary after-91 2**
 
 - **Lio:** Mine, Mara. I left him with Adrian for ten minutes. He used to whistle for figs.
+
+**If asked after-85 personal**
+
+- **Lio:** Mine, Mara. You asked if he copies me. This morning he snored in my face till I passed the figs.
 
 **With aviary after-92 3**
 
@@ -1135,6 +1142,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: On expedition 91 Lio remembers Mara asking about his snore at the aviary.
 
 - 2026-11-21: Each of the six Lio visits now offers two questions. The original exchange is the story answer and retains its heard status in older saves.
 

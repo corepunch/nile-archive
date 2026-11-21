@@ -91,6 +91,7 @@ class Page:
                           for c in data['cast']}
         self.steps = {s['key']: s for s in data.get('ladder', [])}
         self.residents = {b['resident'] for b in data['beats'] if b.get('resident')}
+        self.questions = {c['key']: c['label'] for b in data['beats'] if b.get('visit_site') for c in b['choices']}
         self.frames = data.get('frames', {})   # atlas frames the dump named
         self.atlases, self.icons = {}, {}
 
@@ -147,6 +148,9 @@ class Page:
             condition = (f"After meeting {self.cast[speaker]['name']} at the {name}"
                          if speaker in self.residents else f'If {name} stands')
             body += f'<p class="pick">{esc(condition)}, line {v["index"]} becomes</p>{self.lines(v["lines"])}'
+            if memory := v.get('memory'):
+                question = self.questions[memory['answer']]
+                body += f'<p class="pick">If you asked “{esc(question)}”, the reply is</p>{self.lines(memory["lines"])}'
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
         if b.get('choices'):

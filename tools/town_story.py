@@ -16,18 +16,20 @@ def compile_town(source, beats, speakers):
         return lines
 
     by_key = {beat['key']: beat for beat in beats}
-    purchases, variants, residents = {}, {}, {}
+    purchases, callbacks, residents = {}, {}, {}
     visits = {}
     for block in re.split(r'^\*\*(?=Placed |With |Visit )', source, flags=re.M)[1:]:
         heading, body = block.split('**\n', 1)
         action, building, *target = heading.split()
         assert re.fullmatch(r'[a-z_]+', building), heading
         if action == 'With':
-            lines = speech(body)
+            parts = re.split(r'^\*\*If asked ([\w-]+) (personal|story)\*\*$', body, flags=re.M)
+            assert len(parts) in (1, 4), heading
+            lines = speech(parts[0])
             key, number = target
             index = int(number)
-            assert key not in variants and len(lines) == 1 and 1 <= index <= len(by_key[key]['lines']), heading
-            variants[key] = ', variant={building=%s, index=%d, line=%s}' % (quote(building), index, lines[0])
+            assert key not in callbacks and len(lines) == 1 and 1 <= index <= len(by_key[key]['lines']), heading
+            callbacks[key] = (building, index, lines[0], parts[1:])
         elif action == 'Visit':
             checkpoint, = target
             resident, invitation = residents[building]
@@ -66,6 +68,7 @@ def compile_town(source, beats, speakers):
                       (quote('placed-' + building), quote(building), fields))
         output.extend('        ' + line + ',' for line in lines)
         output.append('    }},')
+    answers = {}
     for site, stages in visits.items():
         for checkpoint, level, options in stages:
             key = 'visit-' + site + '-' + checkpoint
@@ -74,9 +77,22 @@ def compile_town(source, beats, speakers):
             for topic, label, lines in options:
                 # The story answer is the original visit. Keep its save key for returning players.
                 answer_key = key if topic == 'story' else key + '.' + topic
+                answers[site, checkpoint, topic] = (answer_key, level)
                 output.append('        {key=%s, topic=%s, label=%s, lines={' %
                               (quote(answer_key), quote(topic), quote(label)))
                 output.extend('            ' + line + ',' for line in lines)
                 output.append('        }},')
             output.append('    }},')
+    variants = {}
+    for key, (building, index, default_line, condition) in callbacks.items():
+        memory = ''
+        if condition:
+            checkpoint, topic, reply = condition
+            answer, level = answers[building, checkpoint, topic]
+            lines = speech(reply)
+            assert level < by_key[key]['level'] and len(lines) == 1, key
+            speaker = '{' + quote(speakers[residents[building][0]]) + ','
+            assert default_line.startswith(speaker) and lines[0].startswith(speaker), key
+            memory = ', memory={answer=%s, line=%s}' % (quote(answer), lines[0])
+        variants[key] = ', variant={building=%s, index=%d, line=%s%s}' % (quote(building), index, default_line, memory)
     return variants, output

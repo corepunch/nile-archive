@@ -489,7 +489,7 @@ return {
         {"agnes", "Turn round, love. The whole town's brought a lamp, and Fenwick lent one for the bend."},
         {"noelle", "Thank you, all of you! Now come on. Let's light it for the last train on Christmas Eve."},
     }},
-    {key="after-90", phase="after", level=90, lines={
+    {key="after-90", phase="after", level=90, variant={building="glassblower", index=3, line={"ada", "Noelle, lend me two teaspoons when you've poured. Those singers could use someone to keep time."}, memory={answer="visit-glassblower-after-84.personal", line={"ada", "Noelle, I brought my spoons. Give me that nod we talked about and I'll play for the choir."}}}, lines={
         {"pip", "Agnes, the Fenwick choir's in the loft, and their socks are drying on your stove! Can they stay?"},
         {"agnes", "Their roof can wait. Tea first, carols second. Mrs Alder, sing quietly."},
         {"alder", "A cup for each of them, Noelle, and I'm paying for one more by the stove."},

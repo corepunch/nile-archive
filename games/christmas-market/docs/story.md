@@ -79,6 +79,7 @@ Bramble the goat does not speak.
 
 | Planted | Paid off |
 | --- | --- |
+| Noelle asks what Ada plays (glassblower’s stall after 84) | When the choir comes in at 90, Ada brings her spoons and waits for Noelle’s cue. |
 | The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who tells her to open it. It's hers: Gran's front-door key (92) |
 | The ticket for the 26th (10 onward) | The ticket goes in the fir with a lamp when she decides to stay (91); she tells Theo she's staying (100) |
 | The rule of the Kind Word box: never ask who (5) | Theo and Noelle break it together (100) |
@@ -806,6 +807,8 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
+At wish 90 Ada remembers what Noelle asked after wish 84. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
+
 Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
 
 
@@ -907,6 +910,14 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **With glassblower after-89 2**
 
 - **Ada:** Noelle, the whole town brought lamps. Take mine for the bend. I blew a chimney for this wind.
+
+**With glassblower after-90 3**
+
+- **Ada:** Noelle, lend me two teaspoons when you've poured. Those singers could use someone to keep time.
+
+**If asked after-84 personal**
+
+- **Ada:** Noelle, I brought my spoons. Give me that nod we talked about and I'll play for the choir.
 
 **Visit glassblower placed-glassblower**
 
@@ -1114,6 +1125,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: At wish 90 Ada remembers the cue she and Noelle agreed on at the stall.
 
 - 2026-11-21: Each of the six Ada visits now offers two questions. The original exchange is the story answer and retains its heard status in older saves.
 

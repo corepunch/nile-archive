@@ -117,35 +117,53 @@ visiting.story_seen[arrival.key] = true
 check_stage("after-100")
 
 -- The pre-question save format can credit only the original story answer.
-local last = journey.visit(visiting, site)
-local personal, original = table.unpack(last.choices)
-save.write("heard-resident", function(s) s:int("narrative.visit." .. last.key, 1) end)
+local checkpoint = site == "aviary" and "after-85" or "after-84"
+local later = journey.find(site == "aviary" and "after-91" or "after-90")
+local v = later.variant
+visiting.story_seen = {[arrival.key]=true, [checkpoint]=true}
+local visit = journey.visit(visiting, site)
+local personal, original = table.unpack(visit.choices)
+check(v.memory.answer == personal.key, "the level recalls this specific question")
+check(journey.lines_for(later, owns_site, visiting.story_seen)[v.index] == v.line, "welcomed resident speaks even without a visit")
+check(journey.lines_for(later, owns_site, {[personal.key]=true}) == later.lines, "an unmet resident never recalls an answer")
+
+save.write("heard-resident", function(s) s:int("narrative.visit." .. visit.key, 1) end)
 local reloaded = {}
 save.read("heard-resident", function(s) journey.serialize(s, reloaded) end)
 check(reloaded.story_seen[original.key] and not reloaded.story_seen[personal.key], "legacy save recognises the original answer")
-check(journey.unheard_visit(reloaded, last), "legacy player can discover the new personal question")
+check(journey.unheard_visit(reloaded, visit), "legacy player can discover the new personal question")
+
+reloaded.story_seen[arrival.key] = true
+check(journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.line, "the other question alone does not trigger the memory")
 
 -- Choosing alone never consumes an answer, even across a save and restart.
 R.prog, R.quiet = visiting, true
-R.open_story_choice(last)
+R.open_story_choice(visit)
 check(R.choose_story_option(1) and story.active(), "selecting the personal question opens its answer")
 save.write("interrupted-answer", function(s) journey.serialize(s, visiting) end)
 reloaded = {}
 save.read("interrupted-answer", function(s) journey.serialize(s, reloaded) end)
-check(not reloaded.story_seen[personal.key] and not reloaded.story_choices[last.key], "unfinished answer remains new")
+check(not reloaded.story_seen[personal.key] and not reloaded.story_choices[visit.key], "unfinished answer remains new")
+check(journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.line, "interrupted answer leaves the ordinary reply")
 while story.active() do story.next() end
 R.story_tick()
 check(visiting.story_seen[personal.key] and not visiting.story_seen[original.key], "only the finished answer is heard")
 save.write("one-answer", function(s) journey.serialize(s, visiting) end)
 reloaded = {}
 save.read("one-answer", function(s) journey.serialize(s, reloaded) end)
-check(reloaded.story_seen[personal.key] and journey.unheard_visit(reloaded, last), "partial visit survives reload")
+check(reloaded.story_seen[personal.key] and journey.unheard_visit(reloaded, visit), "partial visit survives reload")
 R.prog = reloaded
-R.open_story_choice(last)
+check(R.story_lines(later)[v.index] == v.memory.line, "the loaded campaign uses the remembered reply")
+check(journey.lines_for(later, function() return false end, R.prog.story_seen) == later.lines, "an absent building keeps the original scene")
+R.open_story_choice(visit)
 check(R.choose_story_option(2), "the second question remains available")
 while story.active() do story.next() end
 R.story_tick()
 save.write("both-answers", function(s) journey.serialize(s, reloaded) end)
 reloaded = {}
 save.read("both-answers", function(s) journey.serialize(s, reloaded) end)
-check(journey.visit(reloaded, site) == last and not journey.unheard_visit(reloaded, last), "both answers stay heard on reload")
+check(journey.visit(reloaded, site) == visit and not journey.unheard_visit(reloaded, visit), "both answers stay heard on reload")
+check(journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.memory.line, "hearing both answers preserves the memory")
+reloaded.story_seen[site == "aviary" and "restore-91" or "after-89"] = true
+check(journey.visit(reloaded, site) ~= visit and journey.lines_for(later, owns_site, reloaded.story_seen)[v.index] == v.memory.line,
+    "changing the available questions keeps the earlier memory")

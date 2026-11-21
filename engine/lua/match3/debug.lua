@@ -511,7 +511,8 @@ function D.bind(R, W)
         local beat_key = app.arg("story-beat")   -- --story-beat KEY [--story-line N]: preview a scene from its Nth line
         if beat_key then
             local beat = assert(journey.find(beat_key), "unknown story beat")
-            local building = (beat.phase == "placed" or beat.phase == "visit") and beat.building or app.arg("story-built") and beat.variant and beat.variant.building
+            local recalled = app.arg("story-asked") and assert(beat.variant and beat.variant.memory, "scene needs a remembered answer")
+            local building = (beat.phase == "placed" or beat.phase == "visit") and beat.building or (app.arg("story-built") or recalled) and beat.variant and beat.variant.building
             if building then island_with(0, island.ladder_position[island.kinds[building]])
             else island_with(journey.earned(beat.level or 0)) end
             R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
@@ -520,7 +521,8 @@ function D.bind(R, W)
                 R.open_story_choice(beat, true)
             else
                 local lines = {}
-                local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end)
+                local seen = recalled and {["placed-" .. building]=true, [recalled.answer]=true} or nil
+                local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end, seen)
                 for i = tonumber(app.arg("story-line")) or 1, #spoken do lines[#lines + 1] = spoken[i] end
                 R.queue_story({key = beat.key, lines = lines}, true)
             end
