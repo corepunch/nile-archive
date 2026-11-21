@@ -801,4 +801,13 @@ return {
             {"ada", "Knock in the morning, Noelle. The key lives on a hook now. I sleep better without it in my ear."},
         }},
     }},
+    {key="meeting-station_kiosk-glassblower", phase="meeting", sites={"station_kiosk", "glassblower"}, level=71, lines={
+        {"otis", "Miss Pike, could you make me a blue draughts button? A brass one went down the platform drain."},
+        {"ada", "Lend me the lid of your lunch tin, Mr Bell. I want to see what size your squares are."},
+        {"otis", "Here you go. Mind the dent. That's the only square where a man can hide from a king."},
+        {"ada", "Then I'll take blue. You can teach me that move when I bring your button back."},
+    }, replies={
+        {index=3, building="station_kiosk", when="visit-station_kiosk-after-63.personal", line={"otis", "That's Dad's dent. Pip offered to mend it, but I beat Dad fair and square. It's staying."}},
+        {index=4, building="station_kiosk", when="visit-station_kiosk-after-63.personal", line={"ada", "Then the dent stays. I'll bring the blue button after work. Will you teach me on that board?"}},
+    }},
 }

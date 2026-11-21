@@ -27,7 +27,7 @@ def lines(game):
     speakers = '|'.join(re.escape(s) for s in sorted(set(re.findall(r'^- \*\*([^*:(]+?)(?: \(\w+\))?:\*\*', text, re.M))))
     level = None
     for row in text.splitlines():
-        heading = re.match(r'\*\*(?:Before level|Level|After restoration|Upgrade|Placed|With|Visit) (\w+)', row)
+        heading = re.match(r'\*\*(?:Before level|Level|After restoration|Upgrade|Placed|With|Visit|Meeting) (\w+)', row)
         if heading:
             level = heading[1]   # a level number, or an upgrade's event id
         m = re.match(r'- \*\*([^*:(]+?)(?: \((\w+)\))?:\*\* (.+)', row)

@@ -36,11 +36,17 @@ def single_line(body, speakers):
 def compile_town(source, beats, speakers):
     by_key = {beat['key']: beat for beat in beats}
     purchases, callbacks, residents, visits = {}, {}, {}, {}
-    for block in re.split(r'^\*\*(?=Placed |With |Visit )', source, flags=re.M)[1:]:
+    meetings = {}
+    for block in re.split(r'^\*\*(?=Placed |With |Visit |Meeting )', source, flags=re.M)[1:]:
         heading, body = block.split('**\n', 1)
         action, building, *target = heading.split()
         assert re.fullmatch(r'[a-z_]+', building), heading
-        if action == 'With':
+        if action == 'Meeting':
+            other, = target
+            assert other != building and re.fullmatch(r'[a-z_]+', other), heading
+            assert (building, other) not in meetings and (other, building) not in meetings, heading
+            meetings[building, other] = body
+        elif action == 'With':
             key, number = target
             index = int(number)
             assert key in by_key and 1 <= index <= len(by_key[key]['lines']), heading
@@ -106,6 +112,34 @@ def compile_town(source, beats, speakers):
                 output.extend('            ' + line.lua() + ',' for line in lines)
                 output.append('        }},')
             output.append('    }},')
+
+    for sites, body in meetings.items():
+        assert all(site in residents for site in sites), f'Unknown resident site in {sites}'
+        key = 'meeting-' + '-'.join(sites)
+        parts = re.split(r'^\*\*If asked ([a-z_]+) ([\w-]+) (personal|story) (\d+)\*\*$', body, flags=re.M)
+        lines = speech(parts[0], speakers)
+        cast = {speakers[residents[site][0]] for site in sites}
+        assert {line.speaker for line in lines} == cast, f'{key}: both residents must speak'
+        level = max(by_key[residents[site][1]]['level'] for site in sites)
+        output.append('    {key=%s, phase="meeting", sites={%s}, level=%d, lines={' %
+                      (quote(key), ', '.join(map(quote, sites)), level))
+        output.extend('        ' + line.lua() + ',' for line in lines)
+        if len(parts) > 1:
+            output.append('    }, replies={')
+            targets = set()
+            for start in range(1, len(parts), 5):
+                site, checkpoint, topic, number, body_line = parts[start:start + 5]
+                index = int(number)
+                question = (site, checkpoint, topic)
+                assert site in sites and question in answers, f'{key}: unknown question {question}'
+                answer, _ = answers[question]
+                line = single_line(body_line, speakers)
+                assert 1 <= index <= len(lines) and line.speaker == lines[index - 1].speaker, key
+                assert (index, answer) not in targets, f'{key}: duplicate conditional line'
+                targets.add((index, answer))
+                output.append('        {index=%d, building=%s, when=%s, line=%s},' %
+                              (index, quote(site), quote(answer), line.lua()))
+        output.append('    }},')
 
     return compile_replies(callbacks, by_key, introductions, answers), output
 

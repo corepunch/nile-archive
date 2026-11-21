@@ -220,3 +220,43 @@ check(R.story_lines(later2)[remembered2.index] == remembered2.line and R.prog.st
     "both residents keep their own memories across a reload")
 R.prog.story_seen[later2.key] = true
 check(journey.unheard_visit(R.prog, journey.visit(R.prog, site2)), "the callback opens fresh questions at the building")
+
+local meeting = journey.find("meeting-" .. site2 .. "-" .. site)
+for _, intro in ipairs({arrival, arrival2}) do
+    check(not journey.next_meeting({level=100, story_seen={[intro.key]=true}}, owns_both),
+        "clearing the campaign and welcoming one resident cannot start their meeting")
+    check(not journey.next_meeting(R.prog, function(building) return building == intro.building end),
+        "both residents need their homes")
+end
+R.prog.level = 100
+check(R.next_story(nil) == meeting and R.next_story(99) ~= meeting, "their meeting is due in town")
+local questions = journey.visit(R.prog, site2)
+for _, index in ipairs({2, 1}) do
+    check(R.story_lines(meeting) == meeting.lines, "only the particular conversation changes the meeting")
+    R.open_story_choice(questions)
+    check(R.choose_story_option(index), "ask the resident at their building")
+    while story.active() do story.next() end
+    R.story_tick()
+end
+R.quiet = false
+R.story_tick()
+check(R.story_current == meeting, "both welcomed residents meet in town")
+story.next()
+save.write("interrupted-meeting", function(s) journey.serialize(s, R.prog) end)
+while story.active() do story.next() end
+R.story_current, R.prog = nil, {level=100}
+save.read("interrupted-meeting", function(s) journey.serialize(s, R.prog) end)
+R.story_tick()
+check(R.story_current == meeting, "an interrupted meeting is offered again")
+local exchange = R.story_lines(meeting)
+for _, reply in ipairs(meeting.replies) do
+    check(exchange[reply.index] == reply.line, "the exchange recalls the building answer across a reload")
+end
+R.quiet = true
+while story.active() do story.next() end
+R.story_tick()
+save.write("completed-meeting", function(s) journey.serialize(s, R.prog) end)
+local reunited = {}
+save.read("completed-meeting", function(s) journey.serialize(s, reunited) end)
+check(reunited.story_seen[meeting.key] and not journey.next_meeting(reunited, owns_both),
+    "the residents meet only once, including after relaunch")

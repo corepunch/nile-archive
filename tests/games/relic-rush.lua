@@ -335,6 +335,8 @@ end
 shot("town-story-purchase", "480x900", "--story-beat placed-workshop --frames 240")
 shot("town-story-callback", "390x844", "--story-beat after-12 --story-line 1 --story-built --frames 240 --safe-area 0,47,0,34")
 
+shot("resident-meeting", "480x900", "--story-beat meeting-map_room-aviary --story-line 2 --frames 240")
+shot("resident-meeting-memory", "390x844", "--story-beat meeting-map_room-aviary --story-line 2 --story-asked --frames 240 --safe-area 0,47,0,34")
 shot("resident-arrival", "480x900", "--story-beat placed-aviary --story-line 2 --frames 240")
 shot("resident-return", "390x844", "--story-beat after-85 --story-built --story-line 2 --frames 240 --safe-area 0,47,0,34")
 shot("resident-memory-unasked", "480x900", "--story-beat after-91 --story-line 2 --story-built --frames 240")

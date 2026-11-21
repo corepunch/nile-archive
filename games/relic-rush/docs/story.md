@@ -61,6 +61,7 @@ One restoration opens every five expeditions. Story restorations (bold) play a s
 
 | Plant | Inference later / payoff |
 | --- | --- |
+| Ask Nera whether she draws for fun after 67 | Hearing about Mara’s sketch gives Lio an idea for getting his parrot to pose. |
 | Mara asks about the folded corner at the Cartographer’s House (56) | At Cormorant Rock (67), Nera trusts Mara to flatten it when their bearings agree. |
 | Mara asks which of Lio’s noises his parrot copies (aviary after 85) | At 91 Lio tells her what the bird has learned to get with his snore. |
 | Two flashes answer Mara’s lamp (Spring well) | The answer changes to three at the Expedition camp. Ines confirms her identity with the same delayed pattern at the safe landing (100). |
@@ -846,6 +847,8 @@ Choice prompt: Who should answer the signal?
 
 ## Town dialogue
 
+Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin. [First meeting](screenshots/resident-meeting.jpg) · [After asking Nera](screenshots/resident-meeting-memory.jpg)
+
 Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 
 Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
@@ -1078,6 +1081,22 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Ines:** Third flash comes late, Lio. Think of a bird deciding whether to part with a fig.
 - **Lio:** I've got time to make tea between flashes, then. Shall I put the kettle on?
 
+**Meeting map_room aviary**
+
+- **Lio:** Nera, could you draw my bird for my sister? She thinks he's still small enough for my pocket.
+- **Nera:** Hold your wrist still, Lio. If he turns his head again I'll have to draw a bird with two beaks.
+- **Lio:** Try drawing me first. He can't bear to see anybody else get all the attention.
+- **Nera:** That did it. Now stay where you are, Lio. I want your sister to have you both.
+
+**If asked map_room after-67 personal 2**
+
+- **Nera:** Mara sat still for half a grin, Lio. Your bird hasn't given me so much as a beak.
+
+**If asked map_room after-67 personal 3**
+
+- **Lio:** Start with my grin, then. He'll climb right up to see who's getting drawn instead of him.
+
+
 ## Upgrades
 
 Optional scenes: the keeper of a standing building and one other main character, at any time after it stands. Perks are felt, never named.
@@ -1191,6 +1210,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin.
 
 - 2026-11-21: Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 

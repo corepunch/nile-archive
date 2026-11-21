@@ -1139,6 +1139,8 @@ function G.bind(R, over)
         if before_level == nil then
             local arrival = journey.next_arrival(R.prog, owns_building)
             if arrival then return arrival end
+            local meeting = journey.next_meeting(R.prog, owns_building)
+            if meeting then return meeting end
         end
         return journey.next(R.prog, function(index)
             return island.owned(R.island, wonder_kind(island, index + 1)) > 0

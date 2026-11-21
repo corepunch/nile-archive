@@ -515,6 +515,9 @@ function D.bind(R, W)
             local building = (beat.phase == "placed" or beat.phase == "visit") and beat.building
             local position = building and island.ladder_position[island.kinds[building]]
             local seen = {}
+            for _, site in ipairs(beat.sites or {}) do
+                position = math.max(position or 0, island.ladder_position[island.kinds[site]])
+            end
             local wanted, asked = app.arg("story-when"), app.arg("story-asked")
             if app.arg("story-built") or asked or wanted then
                 local remembered
@@ -534,10 +537,10 @@ function D.bind(R, W)
             if beat.phase == "visit" then
                 R.open_story_choice(beat, true)
             else
-                local lines = {}
                 local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end, next(seen) and seen or nil)
-                for i = first, #spoken do lines[#lines + 1] = spoken[i] end
-                R.queue_story({key = beat.key, lines = lines}, true)
+                R.queue_story({key = beat.key, lines = spoken}, true)
+                -- Advance as a player would so the previous speaker stays in view.
+                for _ = 2, first do story.next() end
             end
         end
         local choice_key = app.arg("story-choice")

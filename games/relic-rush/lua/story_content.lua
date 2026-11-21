@@ -869,4 +869,13 @@ return {
             {"lio", "I've got time to make tea between flashes, then. Shall I put the kettle on?"},
         }},
     }},
+    {key="meeting-map_room-aviary", phase="meeting", sites={"map_room", "aviary"}, level=81, lines={
+        {"lio", "Nera, could you draw my bird for my sister? She thinks he's still small enough for my pocket."},
+        {"nera", "Hold your wrist still, Lio. If he turns his head again I'll have to draw a bird with two beaks."},
+        {"lio", "Try drawing me first. He can't bear to see anybody else get all the attention."},
+        {"nera", "That did it. Now stay where you are, Lio. I want your sister to have you both."},
+    }, replies={
+        {index=2, building="map_room", when="visit-map_room-after-67.personal", line={"nera", "Mara sat still for half a grin, Lio. Your bird hasn't given me so much as a beak."}},
+        {index=3, building="map_room", when="visit-map_room-after-67.personal", line={"lio", "Start with my grin, then. He'll climb right up to see who's getting drawn instead of him."}},
+    }},
 }

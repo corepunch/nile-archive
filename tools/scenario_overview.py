@@ -137,6 +137,9 @@ class Page:
         if not label:   # a scene after a story building's level waits until that building stands
             step = self.steps.get(b.get('waits_for'))
             label = f'After the {step["name"]} is placed' if step else PHASES.get(b['phase'], b['phase'])
+        if b.get('meeting_sites'):
+            names = [self.steps[site]['name'] for site in b['meeting_sites']]
+            label = f"Once the residents of the {names[0]} and the {names[1]} have both moved in"
         if b.get('visit_site'):
             label = f"Tap the {self.steps[b['visit_site']]['name']} after {b['checkpoint']}"
         if b.get('phase') == 'upgrade':

@@ -85,7 +85,7 @@ actions have a clear foreground.
 
 Each game's authoring source is the **Town dialogue** section in its `docs/story.md`.
 Run its `tools/prepare_story.py` to compile the script into `lua/story_content.lua`.
-The following headers come from Lio's visit and later callback.
+The following headers come from Lio and Nera's visits, callbacks and meeting.
 
 | Header | What it controls |
 | --- | --- |
@@ -95,6 +95,8 @@ The following headers come from Lio's visit and later callback.
 | `**With aviary after-91 2**` | The following line replaces line 2 when the aviary stands. If a resident speaks, the compiler also requires their introduction. |
 | `**If asked after-85 personal**` | Within that replacement, use the following reply if the player heard this particular answer at this building. |
 | `**If seen after-85**` | Within a replacement, use the following reply if the player witnessed this earlier campaign scene. |
+| `**Meeting map_room aviary**` | A one-time town conversation between the residents of these two buildings. Both must have finished their introductions. |
+| `**If asked map_room after-67 personal 2**` | Replace line 2 of the meeting if the player heard Nera's personal answer at this checkpoint. Either resident can deliver the changed line. |
 
 Several lines in a scene can each have a `With` block. Within one block, write the ordinary
 building reply first, then the conditional replies in priority order. The first satisfied
@@ -108,6 +110,12 @@ records its stable key. The roof bubble and future dialogue both consult that re
 Question wording and display order can change independently of the key. Building, checkpoint
 and topic identifiers are part of the save format. The original one-answer visit key still
 credits the story question in older saves.
+
+Write the meeting as a complete exchange that works when the player has visited neither
+resident. Choose an earlier visit for a memory the player can discover before the second
+resident arrives. The listed order of the two building keys identifies the meeting in saves.
+Older towns with both residents can see it on their next return. Finishing or skipping the
+scene records it. Leaving midway makes the whole exchange available again.
 
 Preview the ordinary reply with `--story-beat after-91 --story-built --story-line 2`.
 Add `--story-asked` for the first conditional reply at or after that line, or

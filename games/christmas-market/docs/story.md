@@ -80,6 +80,7 @@ Bramble the goat does not speak.
 
 | Planted | Paid off |
 | --- | --- |
+| Ask Otis why he keeps the dent after 63 | When Ada sizes a glass draughts button, Otis tells her why his battered board matters. |
 | Pip learns to play draughts on Otis’s tin lid with coat buttons (kiosk after 46) | While Henrik reads the letter (63), Otis gives Pip the first move. |
 | Noelle asks what Ada plays (glassblower’s stall after 84) | When the choir comes in at 90, Ada brings her spoons and waits for Noelle’s cue. |
 | The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who tells her to open it. It's hers: Gran's front-door key (92) |
@@ -807,6 +808,8 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 ## Town dialogue
 
+Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him. [First meeting](screenshots/resident-meeting.jpg) · [After asking Otis](screenshots/resident-meeting-memory.jpg)
+
 Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
 
 Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
@@ -1042,6 +1045,22 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Noelle:** Ada, I'm ordering a bell for my own front door. Will you still be here in January?
 - **Ada:** Knock in the morning, Noelle. The key lives on a hook now. I sleep better without it in my ear.
 
+**Meeting station_kiosk glassblower**
+
+- **Otis:** Miss Pike, could you make me a blue draughts button? A brass one went down the platform drain.
+- **Ada:** Lend me the lid of your lunch tin, Mr Bell. I want to see what size your squares are.
+- **Otis:** Here you go. Mind the dent. That's the only square where a man can hide from a king.
+- **Ada:** Then I'll take blue. You can teach me that move when I bring your button back.
+
+**If asked station_kiosk after-63 personal 3**
+
+- **Otis:** That's Dad's dent. Pip offered to mend it, but I beat Dad fair and square. It's staying.
+
+**If asked station_kiosk after-63 personal 4**
+
+- **Ada:** Then the dent stays. I'll bring the blue button after work. Will you teach me on that board?
+
+
 ## Upgrades
 
 Optional scenes, one per building, played on the next return to town after its feat is met. The keeper speaks. Nobody new arrives, nothing refers to a level, and nobody says what the upgrade pays.
@@ -1175,6 +1194,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him.
 
 - 2026-11-21: Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
 

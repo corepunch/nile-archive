@@ -263,6 +263,8 @@ end
 shot("town-story-purchase", "480x900", "--story-beat placed-reindeer_stable --frames 240")
 shot("town-story-callback", "390x844", "--story-beat after-98 --story-line 2 --story-built --frames 240 --safe-area 0,47,0,34")
 
+shot("resident-meeting", "480x900", "--story-beat meeting-station_kiosk-glassblower --story-line 3 --frames 240")
+shot("resident-meeting-memory", "390x844", "--story-beat meeting-station_kiosk-glassblower --story-line 3 --story-asked --frames 240 --safe-area 0,47,0,34")
 shot("resident-arrival", "480x900", "--story-beat placed-glassblower --story-line 1 --frames 240")
 shot("resident-return", "390x844", "--story-beat after-74 --story-built --story-line 3 --frames 240 --safe-area 0,47,0,34")
 shot("resident-memory-unasked", "480x900", "--story-beat after-90 --story-line 3 --story-built --frames 240")

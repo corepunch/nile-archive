@@ -11,7 +11,7 @@ local function new(content)
     -- once their user event is done, and never hold the story back.
     local scenes, upgrades, placements = {}, {}, {}
     local by_key, by_building, site_visits = {}, {}, {}
-    local visits = {}
+    local visits, meetings = {}, {}
     for _, beat in ipairs(M.beats) do
         assert(not by_key[beat.key], "duplicate story beat: " .. beat.key)
         by_key[beat.key] = beat
@@ -23,6 +23,7 @@ local function new(content)
             local site = beat.building
             site_visits[site] = site_visits[site] or {}
             table.insert(site_visits[site], beat)
+        elseif beat.phase == "meeting" then meetings[#meetings + 1] = beat
         elseif beat.phase == "upgrade" then upgrades[#upgrades + 1] = beat
         else scenes[#scenes + 1] = beat end
     end
@@ -47,6 +48,14 @@ local function new(content)
         for _, beat in ipairs(placements) do
             if beat.resident and p.story_seen[beat.invitation] and not p.story_seen[beat.key]
                 and owns(beat.building) then return beat end
+        end
+    end
+
+    function M.next_meeting(p, owns)
+        for _, beat in ipairs(meetings) do
+            local a, b = table.unpack(beat.sites)
+            if not p.story_seen[beat.key] and p.story_seen[by_building[a].key] and p.story_seen[by_building[b].key]
+                and owns(a) and owns(b) then return beat end
         end
     end
 
@@ -142,6 +151,9 @@ local function new(content)
                 local choice = s:int("narrative.choice." .. b.key, p.story_choices[b.key] or 0)
                 p.story_choices[b.key] = b.choices[choice] and choice or nil
             end
+        end
+        for _, b in ipairs(meetings) do
+            p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
         end
         for _, b in ipairs(visits) do
             for _, answer in ipairs(b.choices) do
