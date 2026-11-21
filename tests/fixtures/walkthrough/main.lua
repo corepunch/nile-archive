@@ -43,6 +43,7 @@ function R.smoke()
         else
             local wine = economy.unlock_of('arch').kind
             assert(R.g.resource_yields[wine] == economy.pieces[wine], 'the arch adds mulled wine to the second board')
+            assert(R.g.backdrop == "welcome-arch", "the confirmed arch changes the board's backdrop")
         end
         print('walkthrough pointer smoke passed: skip, reward, confirmed building and next board reward')
         app.quit()

@@ -76,6 +76,16 @@ assert(c.count==stall_count+2 and island.wonder_count(c)==island.WONDERS and isl
 local first_wish = rules.game_start(0, 123478, {})
 check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,0,0,0",
       'locked boosters keep all four slots')
+check(first_wish.backdrop == "bellmere-opening", "a fresh game opens in the quiet square")
+check(rules.game_start(1, 123478, {}).backdrop == "bellmere-opening", "clearing a wish without building keeps the square")
+local finished = {arch=true, reindeer_stable=true, lumber=true, firework_stall=true}
+for _, example in ipairs{{1, "bellmere-opening"}, {2, "welcome-arch"}, {7, "reindeer-stable"},
+                         {12, "lumber-workshop"}, {100, "lumber-workshop"}} do
+    local number, scene = table.unpack(example)
+    check(rules.game_start(number - 1, 123478, finished).backdrop == scene, "wish " .. number .. " shows its last illustrated purchase")
+end
+check(rules.game_start(11, 123478, {arch=true, reindeer_stable=true}).backdrop == "reindeer-stable",
+      "the stable remains until the workshop is confirmed")
 local B = require("economy").bonuses
 local hammer_wish = rules.game_start(6, 123478, {reindeer_stable=true})
 check(hammer_wish.tool_slots[1] == B.hammer and hammer_wish.tools[1] == 0,

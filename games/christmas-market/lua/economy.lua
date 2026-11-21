@@ -59,9 +59,9 @@ local BASE = {0, 1, 2, 3, 15}
 -- what its stall sells: material and treat pieces replace their palette line.
 -- Each purchase unlocks a single regular or charging piece in Rome's order.
 E.unlocks = {
-    {building="arch", after=1, line=5, kind=8},
-    {building="reindeer_stable", after=6, bonus=B.hammer},
-    {building="lumber", after=11, line=2, kind=4},
+    {building="arch", after=1, line=5, kind=8, backdrop="welcome-arch"},
+    {building="reindeer_stable", after=6, bonus=B.hammer, backdrop="reindeer-stable"},
+    {building="lumber", after=11, line=2, kind=4, backdrop="lumber-workshop"},
     {building="firework_stall", after=16, bonus=B.bomb},
     {building="bakery", after=21, line=5, kind=7},
     {building="chapel", after=26, line=2, kind=12},
@@ -86,6 +86,17 @@ function E.unlock_of(building)
     for _, unlock in ipairs(E.unlocks) do
         if unlock.building == building then return unlock end
     end
+end
+
+-- Use the latest confirmed construction with art for this wish's era.
+function E.board_backdrop(number, restored)
+    local backdrop = "bellmere-opening"
+    for _, unlock in ipairs(E.unlocks) do
+        if unlock.backdrop and number >= unlock.first_level and restored[unlock.building] then
+            backdrop = unlock.backdrop
+        end
+    end
+    return backdrop
 end
 
 -- Replays keep the regular goods that belonged to their board number.

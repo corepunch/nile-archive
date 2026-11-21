@@ -17,7 +17,10 @@ require("smoke")
 require("campaign_smoke")
 
 local bonuses = require("match3.bonuses")
-match3_game.bind_campaign_bonuses(R, island, economy.board_loadout)
+match3_game.bind_campaign_bonuses(R, island, economy.board_loadout, function(_, number, restored)
+    return economy.board_backdrop(number, restored)
+end)
+require("art").bind_board_backdrops(R.scenes)
 
 local serialize_completed = match3_game.bind_completed_rewards(R, rules)
 function R.serialize_campaign(s)

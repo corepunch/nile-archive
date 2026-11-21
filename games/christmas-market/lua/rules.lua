@@ -23,8 +23,11 @@ end
 
 function M.game_start(level, seed, built)
     level = math.max(0, math.min(level, LEVELS - 1))
-    local yields, loadout = economy.board_loadout(level + 1, restored_from(built, level), seed)
-    return M.start_campaign_board(level, seed, yields, loadout)
+    local number, restored = level + 1, restored_from(built, level)
+    local yields, loadout = economy.board_loadout(number, restored, seed)
+    local g = M.start_campaign_board(level, seed, yields, loadout)
+    g.backdrop = economy.board_backdrop(number, restored)
+    return g
 end
 M.wonder_levels=campaign.wonder_levels
 M.wonder_at=require("journey").wonder_at

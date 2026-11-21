@@ -16,6 +16,50 @@ Re-encode the source with
 from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
 and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
 
+## Construction backdrops
+
+The campaign's board shows the latest confirmed construction with a painting
+for that wish. Each painting has one static state. A close view of each
+building fills the portrait, with architecture and snow extending behind the
+pieces. The 9:20 portrait art keeps its full width on tall iPhones. On shorter
+screens the bottom-aligned cover crop trims the sky above the buildings.
+
+| Runtime file in `data/board/backs/` | First eligible wish | Construction | Source panel |
+| --- | ---: | --- | --- |
+| `bellmere-opening.jpg` | 1 | Opening square | First from left |
+| `welcome-arch.jpg` | 2 | Welcome Arch | Second |
+| `reindeer-stable.jpg` | 7 | Reindeer Stable | Third |
+| `lumber-workshop.jpg` | 12 | Lumber Workshop | Fourth |
+
+Built-in ImageGen painted the four scenes together in the
+[initial landscape strip](../art/construction-backdrops/wide-source.png), using the
+[scene prompt](../art/construction-backdrops/wide-prompt.txt) and two Cradle of
+Rome 2 paintings as composition references. A single
+[vertical extension pass](../art/construction-backdrops/prompt.txt) produced the
+[1683 × 935 phone strip](../art/construction-backdrops/source.png).
+The [art manifest](../art/manifest.json) records the exact 420–421 × 935 crops. Each
+JPEG is loaded by name on first use and held for the rest of the session.
+The selection follows the building's existing unlock gate in `lua/economy.lua`.
+See the [in-game comparisons](screenshots/review/construction-backdrops/README.md).
+
+Re-encode the four crops from the repository root with Pillow.
+
+```sh
+python3 - <<'PY'
+import json
+from pathlib import Path
+from PIL import Image
+
+game = Path("games/christmas-market")
+spec = json.loads((game / "art/manifest.json").read_text())["construction_backdrops"]
+with Image.open(game / spec["source"]) as sheet:
+    for frame in spec["frames"].values():
+        sheet.crop(frame["crop"]).convert("RGB").save(
+            game / frame["runtime"], quality=91, optimize=True
+        )
+PY
+```
+
 ## Square board
 
 The current campaign uses honey maple, frosted teal panes and olive-green

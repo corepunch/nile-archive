@@ -35,7 +35,9 @@
     "art/lantern-panes/spruce-backdrop-prompt.txt",
     "art/new-story-cast-prompt.txt",
     "art/building-catalogue/painted-v1/second-row-prompt.txt",
-    "art/building-catalogue/chimneys/prompt.txt"
+    "art/building-catalogue/chimneys/prompt.txt",
+    "art/construction-backdrops/prompt.txt",
+    "art/construction-backdrops/wide-prompt.txt"
   ],
   "states": [
     "normal",
@@ -48,6 +50,10 @@
     "data/.DS_Store": "f79010c5620ea513afb709871ee4814ce2b06e04e0162d7c5c6487ec098583bd",
     "data/board/.DS_Store": "3b4c18569b136bb88738ca0b877373d14902cbcd3444092382cc7f9fb2630221",
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
+    "data/board/backs/bellmere-opening.jpg": "c74b0d0cd6dba18b7641aab962f9b0ac3c66f4e20e680c70cc6510f88fdd4f96",
+    "data/board/backs/lumber-workshop.jpg": "a2a911d6a24cf19230e4d55b89211d2a3b323f811a2224f0d40bef9a009fe282",
+    "data/board/backs/reindeer-stable.jpg": "f810e2e4057318448942eb3b6c7d33bf07b1bea3700cca73deaf80e514e54799",
+    "data/board/backs/welcome-arch.jpg": "c601aee71eb24a437ecb299f692244398e409f0fa6b1c40613fe22d438a98792",
     "data/board/blockers.png": "766e9ff1ab1e17dac093988dcbd56170c668262b52ea57ec861805b2e5e0e81a",
     "data/board/cells.png": "0a519c7c5914928973540f14383de404004388a9d6cb9e36219c228e2bb79d44",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
@@ -574,5 +580,57 @@
     "states": "Open flue on the shared building sprite. Placed buildings emit rising, drifting puffs that fade. Reduce Motion hides the particles.",
     "reproduction": "python3 games/christmas-market/tools/prepare_chimneys.py",
     "review": "docs/review/chimneys/README.md"
+  },
+  "construction_backdrops": {
+    "source": "art/construction-backdrops/source.png",
+    "prompt": "art/construction-backdrops/prompt.txt",
+    "review": "docs/screenshots/review/construction-backdrops/README.md",
+    "states": [
+      "static"
+    ],
+    "frames": {
+      "bellmere-opening": {
+        "runtime": "data/board/backs/bellmere-opening.jpg",
+        "crop": [
+          0,
+          0,
+          421,
+          935
+        ]
+      },
+      "welcome-arch": {
+        "runtime": "data/board/backs/welcome-arch.jpg",
+        "crop": [
+          421,
+          0,
+          841,
+          935
+        ]
+      },
+      "reindeer-stable": {
+        "runtime": "data/board/backs/reindeer-stable.jpg",
+        "crop": [
+          841,
+          0,
+          1262,
+          935
+        ]
+      },
+      "lumber-workshop": {
+        "runtime": "data/board/backs/lumber-workshop.jpg",
+        "crop": [
+          1262,
+          0,
+          1683,
+          935
+        ]
+      }
+    },
+    "composition_references": [
+      "reference/cradle-of-rome-2/visuals/sprites/settings/scenes/game/game_graphics/gm_back_04.png",
+      "reference/cradle-of-rome-2/visuals/sprites/settings/scenes/game/game_graphics/gm_back_09.png"
+    ],
+    "edit_target": "art/construction-backdrops/wide-source.png",
+    "edit_target_prompt": "art/construction-backdrops/wide-prompt.txt"
   }
 }

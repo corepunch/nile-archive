@@ -46,10 +46,15 @@ hairline seams; cleared tablets return to parchment. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
+The board starts in Bellmere's village square. Confirming the Welcome Arch,
+Reindeer Stable or Lumber Workshop changes the backdrop on subsequent wishes.
+Earlier replays show the setting of their own stage, and later wishes keep
+the latest available painting. [Backdrop captures](docs/screenshots/review/construction-backdrops/README.md)
+
 The board's art is one atlas per kind in `data/board/`: `pieces.png` (the
 market goods and the earlier festive pieces), `blockers.png`, `cells.png`,
-`hud.png` and `fx.png`, with the backdrop in
-`data/board/backs/background.jpg`. Run `python3 tools/match3_atlas.py` to
+`hud.png` and `fx.png`. Backdrops are separate JPEGs in `data/board/backs/`.
+Run `python3 tools/match3_atlas.py` to
 rebuild the atlases from the registered sprites in `art/registered/`;
 [Asset layout](../../docs/ASSET_LAYOUT.md) describes the folders. The three lantern
 panes use the board tiles shared with Relic Rush, which `tools/board_tiles.py`

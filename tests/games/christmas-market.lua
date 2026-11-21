@@ -38,6 +38,11 @@ shot("phone-opening-market", "390x844", "--opening-town --safe-area 0,47,0,34")
 shot("starter-stall-footprint", "480x900", "--opening-town --footprints")
 shot("lantern-opening", "480x900", "--level 1")
 shot("lantern-opening-phone", "390x844", "--level 1 --safe-area 0,47,0,34")
+for _, size in ipairs{"480x900", "390x844"} do
+    local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
+    shot("construction-backdrop-arch-" .. size, size, "--level 2" .. safe)
+    shot("construction-backdrop-workshop-" .. size, size, "--level 12" .. safe)
+end
 shot("main-character-board", "480x900", "--level 4")
 local bonus_fixture = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. "
 local booster_review = bonus_fixture .. "--level 10 "

@@ -106,6 +106,11 @@ PNGs are under `visuals/sprites/settings/scenes/game/game_graphics/`. The 21 boa
 backgrounds are also available as the original JPEGs in
 `resources/textures/scenes/game/backs/`.
 
+The GameTop Windows `settings/scenes/shop/epochs.xml` assigns backdrop 0
+to the opening epoch and assigns backdrops 1–20 to its 20 constructions.
+The first three are the Well, Hunter's Hut and Sawmill, in purchase order.
+The individual level layouts describe the boards separately.
+
 ### Last puzzle tile glow
 
 `settings/scenes/game/game_settings.xml` names `LastPuzzlesGlow` in the Windows

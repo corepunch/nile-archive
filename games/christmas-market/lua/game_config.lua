@@ -27,7 +27,7 @@ return {
         kudos = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"},
         locked = "Match the tied piece to untangle the tinsel.",
         pieces = {kind_prefix="market-", scale=1.06},
-        background = {min_height=960, motes={245, 250, 255, 130}},
+        background = {min_height=900, motes={245, 250, 255, 130}},
         review_replaces_tools = true,
     },
     notices = {

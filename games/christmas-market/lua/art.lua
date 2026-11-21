@@ -4,6 +4,12 @@ local economy = require("economy")
 local buttons = require("match3.buttons")
 local A = {}
 A.menu_backdrop = "menu/bellmere.jpg"
+A.board_backdrops = {
+    ["bellmere-opening"] = "board/backs/bellmere-opening.jpg",
+    ["welcome-arch"] = "board/backs/welcome-arch.jpg",
+    ["reindeer-stable"] = "board/backs/reindeer-stable.jpg",
+    ["lumber-workshop"] = "board/backs/lumber-workshop.jpg",
+}
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_pause"}, states=A.states}
 A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
@@ -12,6 +18,19 @@ A.island_layers = {"land-fog"}
 
 -- The game's own atlases, even when the board borrows the engine's neutral skin.
 local function own_board() return require("match3").skin(require("match3_skin")) end
+
+function A.bind_board_backdrops(scenes)
+    if app.arg("default-match3") then return end
+    -- The shared board looks up the current scene by key. Load each as it is first visited.
+    setmetatable(scenes, {__index = function(cache, key)
+        local path = A.board_backdrops[key]
+        if not path then return end
+        local picture = texture.load(path)
+        assert(picture.tex, "missing board backdrop: " .. path)
+        cache[key] = picture
+        return picture
+    end})
+end
 
 -- Nil override uses the engine's neutral resource skin. A game skin supplies
 -- graphics only; behavior is the integer flags field in rules.lua.
