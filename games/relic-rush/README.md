@@ -1,7 +1,8 @@
 # Relic Rush · The Lost Valley
 
 From the repository root, `make -C games/relic-rush ios` builds, signs, installs
-and launches on the connected iPhone. Set `DEVICE="name or UDID"` to select one.
+and launches on a connected iPhone. The native iOS target is iPhone only.
+Set `DEVICE="name or UDID"` to select one.
 See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
 A portrait mobile-first square match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
@@ -145,7 +146,10 @@ See [matching rules, board shape and implementation notes](docs/square-match3.md
 
 ## New art direction
 
-The match-3 scenes now use two original runtime backgrounds: **Sunlit Lagoon** for levels 1–5 and **Moonlit Sun Temple** for levels 6–10; each later episode reuses those paintings, opening on the lagoon and moving into the temple. The study draws on Tropicats and Candy Crush for playable-screen readability, and June's Journey / Pearl's Peril for garden islands and adult adventure characters.
+The first match-3 board overlooks the expedition landing. Each of the 20 campaign
+restorations introduces a portrait painting of that site on eligible boards once
+the player confirms construction. Replays use the same expedition gates.
+See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 
 See the [reference study, original cast and asset gallery](docs/art-direction-v2.md) and [complete generation prompts](docs/art-direction-v2-prompts.json).
 
@@ -341,7 +345,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
 - `--smoke --campaign` plays the 100 expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap. Every story beat must play once, in script order, and be acknowledged, and the run must end on the finale with the ten story restorations placed and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
-- iPhone/iPad and Android device builds, touch feel, safe areas and performance still need device QA.
+- iPhone and Android device builds, touch feel, safe areas and performance still need device QA.
 
 ## Art and text pipeline
 

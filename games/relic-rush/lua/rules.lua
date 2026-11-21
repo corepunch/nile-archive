@@ -6,10 +6,9 @@ local M = match3.square_campaign(campaign)
 
 function M.game_start(level, seed, restored)
     local number = math.max(0, math.min(level, M.LEVELS-1)) + 1
-    local spec = M.levels[number]
     local yields, loadout = economy.board_loadout(number, restored, seed)
     local g = M.start_campaign_board(level, seed, yields, loadout)
-    g.backdrop = economy.board_backdrop(spec, number, restored)
+    g.backdrop = economy.board_backdrop(number, restored)
     return g
 end
 M.RELIC_IDOL, M.RELIC_FLAME, M.RELIC_LEAF, M.RELIC_SCARAB, M.RELIC_CRYSTAL, M.RELIC_AMPHORA = 0, 1, 2, 3, 4, 5

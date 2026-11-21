@@ -32,7 +32,7 @@ return {
             resource_prefix = "resource-",
             crops = {["campaign-leaf"] = 7},   -- trim the transparent gutter for live pieces
         },
-        background = {opacity=220, shade={5, 30, 29, 35}, motes={255, 228, 139, 70}},
+        background = {min_height=900, align_y=.35, motes={255, 228, 139, 70}},
     },
     notices = {
         reward_building = "Resources banked. Tap Build for the next restoration.",

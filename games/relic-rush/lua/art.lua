@@ -1,8 +1,26 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
 -- Board pieces and wallet icons have separate presentation keys.
 local buttons = require("match3.buttons")
+local economy = require("economy")
 local A = {}
 A.menu_backdrop = "menu/valley.jpg"
+A.board_backdrops = {[economy.opening_backdrop] = "board/backs/" .. economy.opening_backdrop .. ".jpg"}
+for _, unlock in ipairs(economy.unlocks) do
+    A.board_backdrops[unlock.building] = "board/backs/" .. unlock.building .. ".jpg"
+end
+
+function A.bind_board_backdrops(scenes)
+    if app.arg("default-match3") then return end
+    -- Load each painting only when its expedition is drawn.
+    setmetatable(scenes, {__index = function(cache, key)
+        local path = A.board_backdrops[key]
+        if not path then return end
+        local picture = texture.load(path)
+        assert(picture.tex, "missing board backdrop: " .. path)
+        cache[key] = picture
+        return picture
+    end})
+end
 A.story={cast={"elena","mara","tomas","adrian","keeper","marisol"},
     keeper_source="art/art-direction/ancient-keeper.png",marisol_source="art/art-direction/marisol.png",source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}

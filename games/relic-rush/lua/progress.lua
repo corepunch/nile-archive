@@ -18,8 +18,8 @@ end
 
 local game = require("match3.game")
 local bonuses = require("match3.bonuses")
-game.bind_campaign_bonuses(R, island, economy.board_loadout, function(g, number, restored)
-    return economy.board_backdrop(rules.level_of(g), number, restored)
+game.bind_campaign_bonuses(R, island, economy.board_loadout, function(_, number, restored)
+    return economy.board_backdrop(number, restored)
 end)
 
 local function opening_unlock(g)

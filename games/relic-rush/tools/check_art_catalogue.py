@@ -2,6 +2,7 @@
 import json
 import re
 import struct
+from hashlib import sha256
 from PIL import Image, ImageStat
 from pathlib import Path
 from prepare_bonus_gems import pack, png_matches
@@ -16,6 +17,18 @@ for field, key in [("states", "tool_states")]:
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
 actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
+economy = (ROOT / "lua/economy.lua").read_text()
+opening = re.search(r'E\.opening_backdrop = "([^"]+)"', economy)[1]
+purchases = re.findall(r'building="([^"]+)", rome=', economy)
+backdrops = manifest["construction_backdrops"]
+assert list(backdrops["frames"]) == [opening, *purchases], "Each construction needs its own backdrop"
+for key, frame in backdrops["frames"].items():
+    assert frame["runtime"] == f"data/board/backs/{key}.jpg"
+    assert all((ROOT / frame[field]).is_file() for field in ("source", "prompt"))
+    runtime = ROOT / frame["runtime"]
+    assert sha256(runtime.read_bytes()).hexdigest() == frame["sha256"], frame["runtime"]
+    with Image.open(runtime) as image:
+        assert image.format == "JPEG" and image.mode == "RGB" and list(image.size) == backdrops["size"], frame["runtime"]
 handoffs = manifest["crew_requests"]["handoffs"]
 declaration = re.search(r"A\.quest_handoffs = \{(.*?)\n\}", art, re.S).group(1)
 paths = dict(re.findall(r'(\w+)=\{title="[^"]+", path="([^"]+)"\}', declaration))

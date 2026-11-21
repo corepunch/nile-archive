@@ -87,9 +87,30 @@
     "disabled"
   ],
   "runtime_inventory": [
+    "data/board/backs/amphitheater.jpg",
+    "data/board/backs/archive.jpg",
+    "data/board/backs/aviary.jpg",
     "data/board/backs/background.jpg",
+    "data/board/backs/beached_ship.jpg",
+    "data/board/backs/camp.jpg",
+    "data/board/backs/clock_tower.jpg",
+    "data/board/backs/expedition_landing.jpg",
+    "data/board/backs/fountain.jpg",
+    "data/board/backs/gateway.jpg",
+    "data/board/backs/lighthouse.jpg",
+    "data/board/backs/lodge.jpg",
+    "data/board/backs/log_cabin.jpg",
+    "data/board/backs/map_room.jpg",
+    "data/board/backs/market.jpg",
+    "data/board/backs/museum.jpg",
+    "data/board/backs/observatory.jpg",
     "data/board/backs/scene-1.jpg",
     "data/board/backs/scene-2.jpg",
+    "data/board/backs/temple.jpg",
+    "data/board/backs/trading_post.jpg",
+    "data/board/backs/water_mill.jpg",
+    "data/board/backs/well.jpg",
+    "data/board/backs/workshop.jpg",
     "data/board/blockers.png",
     "data/board/cells.png",
     "data/board/fx.png",
@@ -1689,6 +1710,273 @@
         493
       ],
       "runtime": "art/registered/board-states/guide.png"
+    }
+  },
+  "construction_backdrops": {
+    "purpose": "One static portrait per confirmed campaign restoration, with the expedition landing before any eligible purchase.",
+    "encoding": {
+      "format": "JPEG",
+      "quality": 90,
+      "subsampling": 2,
+      "optimize": true
+    },
+    "size": [
+      504,
+      1024
+    ],
+    "frames": {
+      "expedition_landing": {
+        "source": "art/construction-backdrops/opening-well-cabin.jpg",
+        "prompt": "art/construction-backdrops/opening-well-cabin-prompt.txt",
+        "crop": [
+          4,
+          0,
+          508,
+          1024
+        ],
+        "runtime": "data/board/backs/expedition_landing.jpg",
+        "sha256": "e319ea9cbc5014206967e7c93da399d2035d75226ab1d3779d9450bedeeaf0a7"
+      },
+      "well": {
+        "source": "art/construction-backdrops/opening-well-cabin.jpg",
+        "prompt": "art/construction-backdrops/opening-well-cabin-prompt.txt",
+        "crop": [
+          516,
+          0,
+          1020,
+          1024
+        ],
+        "runtime": "data/board/backs/well.jpg",
+        "sha256": "290e1a9056b60fa73bc2a3515c11829862374bc5083a41b73d7db6415e76d7d0"
+      },
+      "log_cabin": {
+        "source": "art/construction-backdrops/opening-well-cabin.jpg",
+        "prompt": "art/construction-backdrops/opening-well-cabin-prompt.txt",
+        "crop": [
+          1028,
+          0,
+          1532,
+          1024
+        ],
+        "runtime": "data/board/backs/log_cabin.jpg",
+        "sha256": "d70c40168b413ae73ee0d61a1dd9d75a1732efee19b2046ea911a946f33f8eed"
+      },
+      "workshop": {
+        "source": "art/construction-backdrops/workshop-camp-market.jpg",
+        "prompt": "art/construction-backdrops/workshop-camp-market-prompt.txt",
+        "crop": [
+          4,
+          0,
+          508,
+          1024
+        ],
+        "runtime": "data/board/backs/workshop.jpg",
+        "sha256": "8ba67343e41da9c552d3ca56ebfd8a1ba4004faa34a5e973b74ca5f0d7cc460a"
+      },
+      "camp": {
+        "source": "art/construction-backdrops/workshop-camp-market.jpg",
+        "prompt": "art/construction-backdrops/workshop-camp-market-prompt.txt",
+        "crop": [
+          516,
+          0,
+          1020,
+          1024
+        ],
+        "runtime": "data/board/backs/camp.jpg",
+        "sha256": "2e91928cca6304cc492b73de1f12dd5f520071e83a0696191694fa657a5a3642"
+      },
+      "market": {
+        "source": "art/construction-backdrops/workshop-camp-market.jpg",
+        "prompt": "art/construction-backdrops/workshop-camp-market-prompt.txt",
+        "crop": [
+          1028,
+          0,
+          1532,
+          1024
+        ],
+        "runtime": "data/board/backs/market.jpg",
+        "sha256": "7c25cbde7984a3615a51dcf34032c2b628f9701913e842915e0fc7811b01edcb"
+      },
+      "trading_post": {
+        "source": "art/construction-backdrops/post-mill-clock.jpg",
+        "prompt": "art/construction-backdrops/post-mill-clock-prompt.txt",
+        "crop": [
+          4,
+          0,
+          508,
+          1024
+        ],
+        "runtime": "data/board/backs/trading_post.jpg",
+        "sha256": "4721c96981d569669c53a095e4bbed7a280a3a93895abfaf771a44826cb111c1"
+      },
+      "water_mill": {
+        "source": "art/construction-backdrops/post-mill-clock.jpg",
+        "prompt": "art/construction-backdrops/post-mill-clock-prompt.txt",
+        "crop": [
+          516,
+          0,
+          1020,
+          1024
+        ],
+        "runtime": "data/board/backs/water_mill.jpg",
+        "sha256": "ba55d72819146ac4b8f4a0e618587ac22c01bc41ce8fc3868c02dfea53e76062"
+      },
+      "clock_tower": {
+        "source": "art/construction-backdrops/post-mill-clock.jpg",
+        "prompt": "art/construction-backdrops/post-mill-clock-prompt.txt",
+        "crop": [
+          1028,
+          0,
+          1532,
+          1024
+        ],
+        "runtime": "data/board/backs/clock_tower.jpg",
+        "sha256": "54a4c57f113ecdade2327728ff4624595e250fc212d5b9894832ec17947ca07e"
+      },
+      "gateway": {
+        "source": "art/construction-backdrops/harbour-lodge-arena.jpg",
+        "prompt": "art/construction-backdrops/harbour-lodge-arena-prompt.txt",
+        "crop": [
+          4,
+          0,
+          508,
+          1024
+        ],
+        "runtime": "data/board/backs/gateway.jpg",
+        "sha256": "ce1afe90ba12c4dca6e6b65b67a41c306aba2a261b6230921ac540274c2081a1"
+      },
+      "lodge": {
+        "source": "art/construction-backdrops/harbour-lodge-arena.jpg",
+        "prompt": "art/construction-backdrops/harbour-lodge-arena-prompt.txt",
+        "crop": [
+          516,
+          0,
+          1020,
+          1024
+        ],
+        "runtime": "data/board/backs/lodge.jpg",
+        "sha256": "d92d131439045e604a12d4dbbb45b43f572766b08db6f7a8c4dd13d852b7dc77"
+      },
+      "amphitheater": {
+        "source": "art/construction-backdrops/harbour-lodge-arena.jpg",
+        "prompt": "art/construction-backdrops/harbour-lodge-arena-prompt.txt",
+        "crop": [
+          1028,
+          0,
+          1532,
+          1024
+        ],
+        "runtime": "data/board/backs/amphitheater.jpg",
+        "sha256": "c1830e6da39265e265879477fb7475ba7b16592bcad1a50db29931d706971766"
+      },
+      "map_room": {
+        "source": "art/construction-backdrops/cartographer-archive-lighthouse.jpg",
+        "prompt": "art/construction-backdrops/cartographer-archive-lighthouse-prompt.txt",
+        "crop": [
+          4,
+          0,
+          508,
+          1024
+        ],
+        "runtime": "data/board/backs/map_room.jpg",
+        "sha256": "e3cf1320c49a67b8e8a140ded01369d911bdfbf7f0bf7e72f688ef61a3e24637"
+      },
+      "archive": {
+        "source": "art/construction-backdrops/cartographer-archive-lighthouse.jpg",
+        "prompt": "art/construction-backdrops/cartographer-archive-lighthouse-prompt.txt",
+        "crop": [
+          516,
+          0,
+          1020,
+          1024
+        ],
+        "runtime": "data/board/backs/archive.jpg",
+        "sha256": "63ae8b063de9c1cd43559068a57dd1a4a674b638e1fc01a3f69fe3fde7c8fce7"
+      },
+      "lighthouse": {
+        "source": "art/construction-backdrops/cartographer-archive-lighthouse.jpg",
+        "prompt": "art/construction-backdrops/cartographer-archive-lighthouse-prompt.txt",
+        "crop": [
+          1028,
+          0,
+          1532,
+          1024
+        ],
+        "runtime": "data/board/backs/lighthouse.jpg",
+        "sha256": "41576ba9d035f0bdc7d86b8c0a234eac9f1379114f755cc5ebdd19ed677db9c4"
+      },
+      "beached_ship": {
+        "source": "art/construction-backdrops/ship-observatory-aviary.jpg",
+        "prompt": "art/construction-backdrops/ship-observatory-aviary-prompt.txt",
+        "crop": [
+          4,
+          0,
+          508,
+          1024
+        ],
+        "runtime": "data/board/backs/beached_ship.jpg",
+        "sha256": "b42307d0ad5fa6c03b9636269c0b649c784ddc233618146852e68e324668712b"
+      },
+      "observatory": {
+        "source": "art/construction-backdrops/ship-observatory-aviary.jpg",
+        "prompt": "art/construction-backdrops/ship-observatory-aviary-prompt.txt",
+        "crop": [
+          516,
+          0,
+          1020,
+          1024
+        ],
+        "runtime": "data/board/backs/observatory.jpg",
+        "sha256": "c57614f9a3f03267bcf4a4e4e352a51e3c5b678510684c016cb1dd7fe9355b41"
+      },
+      "aviary": {
+        "source": "art/construction-backdrops/ship-observatory-aviary.jpg",
+        "prompt": "art/construction-backdrops/ship-observatory-aviary-prompt.txt",
+        "crop": [
+          1028,
+          0,
+          1532,
+          1024
+        ],
+        "runtime": "data/board/backs/aviary.jpg",
+        "sha256": "342ae733ea633cd78f029ba3075e6dc53f94b0826e83a3fa1d08b168567cc4b8"
+      },
+      "museum": {
+        "source": "art/construction-backdrops/museum-temple-fountain.jpg",
+        "prompt": "art/construction-backdrops/museum-temple-fountain-prompt.txt",
+        "crop": [
+          4,
+          0,
+          508,
+          1024
+        ],
+        "runtime": "data/board/backs/museum.jpg",
+        "sha256": "6b092406deea6de88e1e593e59103ca473cc833ad58d2a66cc6cc663cdd0f466"
+      },
+      "temple": {
+        "source": "art/construction-backdrops/museum-temple-fountain.jpg",
+        "prompt": "art/construction-backdrops/museum-temple-fountain-prompt.txt",
+        "crop": [
+          516,
+          0,
+          1020,
+          1024
+        ],
+        "runtime": "data/board/backs/temple.jpg",
+        "sha256": "ff6e2c28394a0d2e57ff797af932e39281318c9be4ce4d7bb2300ce458ad501f"
+      },
+      "fountain": {
+        "source": "art/construction-backdrops/museum-temple-fountain.jpg",
+        "prompt": "art/construction-backdrops/museum-temple-fountain-prompt.txt",
+        "crop": [
+          1028,
+          0,
+          1532,
+          1024
+        ],
+        "runtime": "data/board/backs/fountain.jpg",
+        "sha256": "89fbd2ed179c15546ee075c6fd2a59a4c280da52e21f5ca7c61cead65e16c76d"
+      }
     }
   }
 }

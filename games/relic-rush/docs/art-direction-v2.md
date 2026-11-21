@@ -13,12 +13,15 @@ Reference images are research material, not bundled game assets.
 
 The visual observations above are our art-direction interpretation of the references. Characters, paintings and architecture created for Relic Rush are original; no reference game's artwork is imported into the runtime.
 
-## New assets and implementation status
+## Earlier assets
+
+The [construction backdrops](asset-catalogue.md#construction-backdrops) now
+provide the campaign's board scenery.
 
 | Asset | File | Status |
 | --- | --- | --- |
-| Sunlit Lagoon | `assets/scene-lagoon.png` | Board background after the camp, well, workshop, market, lodge or fountain; quiet center for the dynamic hex board |
-| Moonlit Sun Temple | `assets/scene-temple.png` | Board background after the courtyard, archive, observatory or temple; indigo/teal field with amber lights at the edges |
+| Sunlit Lagoon | `art/scene-lagoon.png` | Earlier lagoon backdrop with a quiet centre for the board |
+| Moonlit Sun Temple | `art/scene-temple.png` | Earlier temple backdrop with indigo shadows and amber lights |
 | Garden island | `assets/art-direction/island-gardens-concept.jpg` | Environment concept only; not a replacement terrain or placement map |
 | Expedition cast | `assets/art-direction/expedition-cast.png` | Transparent character concept lineup; busts cut from it are the dialogue portraits |
 

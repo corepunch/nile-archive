@@ -37,16 +37,18 @@ do
     local match=rules.new_match()
     check(next(locked.tool_meter) == nil, 'all bonus sockets require confirmed construction')
     check(not rules.game_tool(locked,1,rules.hex_center(),match),'locked dynamite cannot be used')
-    check(locked.backdrop==rules.level_of(locked).background,'with nothing restored the board keeps its own scene')
+    check(locked.backdrop==economy.opening_backdrop,'with nothing restored the board shows the landing')
     local c, well = R.island, island.kinds.well
     local fits, spot = c:find_spot(well,island.island_suggestion(well))
     check(fits,'well fits the first region')
     c:begin_place(well, spot)
     check(R.make_board(1,19).resource_yields[3]==nil,'a placement preview cannot unlock water')
+    check(R.make_board(1,19).backdrop==economy.opening_backdrop,'a placement preview leaves the backdrop alone')
     c:cancel()
     check(R.make_board(1,19).resource_yields[3]==nil,'cancelling keeps water locked')
     check(island.island_place_next(c,bank,1,0),'confirm the well')
     check(R.make_board(1,19).resource_yields[3]==economy.unlock_of("well"),'water follows construction')
+    check(R.make_board(1,19).backdrop=="well",'confirming the well unlocks its backdrop')
     check(not island.island_place_next(c,bank,5,0),'the cabin waits for clear six')
     check(island.island_place_next(c,bank,6,0),'confirm the cabin')
     local first = R.make_board(6,19)
@@ -70,6 +72,7 @@ do
     R.g=previous
     check(first.tool_slots[1]==economy.bonuses.bomb and first.bonus==economy.bonuses.bomb
         and first.tool_meter[1]==first.tool_threshold//2,'a parked board replaces Hammer and preserves its charge')
+    check(first.backdrop=="log_cabin",'refreshing a parked expedition respects its original backdrop gate')
     check(island.island_place_next(c,bank,21,0),'confirm the market')
     for level=0,rules.LEVELS-1 do
         local g=R.make_board(level,19)
@@ -80,7 +83,16 @@ do
         local spec=rules.level_of(g)
         if spec.story_piece then check(not g.resource_yields[spec.goal_kind],'story pieces keep their slot') end
     end
-    check(economy.board_backdrop(rules.levels[10],14,{gateway=true})==2,'port opens the temple backdrop')
+    local restored = {}
+    local previous_backdrop = economy.opening_backdrop
+    for _, unlock in ipairs(economy.unlocks) do
+        local level, building = unlock.first_level, unlock.building
+        check(economy.board_backdrop(level, restored)==previous_backdrop,'unbuilt ' .. building .. ' keeps the previous backdrop')
+        restored[building] = true
+        check(economy.board_backdrop(level-1, restored)==previous_backdrop,'earlier expeditions keep their backdrop')
+        check(economy.board_backdrop(level, restored)==building,'eligible expeditions show the ' .. building .. ' backdrop')
+        previous_backdrop = building
+    end
 end
 
 -- The landing opens with five pieces. Its leaf, flower,

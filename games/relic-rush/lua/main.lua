@@ -6,6 +6,7 @@
 -- the debug entry points are the engine's (engine/lua/match3/game.lua).
 -- See docs/PORTRAIT_GAMES.md.
 local R = require("state")
+require("art").bind_board_backdrops(R.scenes)
 require("screens")
 require("finale")
 require("narrative")

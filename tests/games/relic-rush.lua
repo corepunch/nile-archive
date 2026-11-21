@@ -46,6 +46,11 @@ for _, fire in ipairs{"born", "sweep", "cross", "rainbow", "recolor"} do
 end
 shot("goal-board", "480x900", "--level 2 --frames 180")
 shot("goal-board-phone", "390x844", "--level 2 --frames 180 --safe-area 0,47,0,34")
+shot("construction-backdrop-landing", "390x844", "--level 1 --safe-area 0,47,0,34")
+for level=2,97,5 do
+    shot("construction-backdrop-" .. level, "390x844", "--level " .. level .. " --safe-area 0,47,0,34")
+end
+shot("construction-backdrop-fountain-wide", "480x900", "--level 97")
 local bonus_review = "--lua tests/fixtures/bonus-toolbar;games/relic-rush/lua;. --level 28 "
 shot("bonus-toolbar", "480x900", bonus_review .. "--frames 10")
 shot("bonus-toolbar-phone", "390x844", bonus_review .. "--frames 10 --safe-area 0,47,0,34")

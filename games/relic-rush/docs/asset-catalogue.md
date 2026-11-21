@@ -15,6 +15,42 @@ Re-encode the source with
 from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
 and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
 
+## Construction backdrops
+
+The expedition landing is the opening scene. After the player confirms a
+restoration, eligible expeditions show the latest completed site. Replays
+use the original expedition gates. This covers all twenty purchases in
+`lua/economy.lua`. Quay Steps is a retired save ID and has no backdrop.
+
+Built-in ImageGen painted seven horizontal sheets of three independent
+portraits. Each scene is a single static 504 × 1024 RGB JPEG in
+`data/board/backs/`. Rooflines and landmarks sit above or beside the board.
+The [source sheets and prompts](../art/construction-backdrops/) and
+[registration manifest](../art/board-states/manifest.json) record the exact crop
+and path for each scene. The renderer loads each painting on first use and
+fills the phone screen edge to edge.
+
+Re-encode the runtime JPEGs from the repository root with Pillow:
+
+```sh
+python3 - <<'PY'
+import json
+from pathlib import Path
+from PIL import Image
+
+root = Path("games/relic-rush")
+backdrops = json.loads((root / "art/board-states/manifest.json").read_text())["construction_backdrops"]
+for frame in backdrops["frames"].values():
+    with Image.open(root / frame["source"]) as source:
+        source.crop(frame["crop"]).save(root / frame["runtime"], **backdrops["encoding"])
+PY
+```
+
+In-game captures cover the [opening and all twenty restorations](screenshots/review/construction-backdrops/campaign.jpg)
+at 390 × 844, with the [Spring Well before and after at both phone sizes](screenshots/review/construction-backdrops/well-before-after.jpg)
+and the [final restoration at 480 × 900](screenshots/review/construction-backdrops/fountain-wide.jpg).
+Capture the boards with `build/test/relic-rush 'shot goal-board' 'shot construction-backdrop'`.
+
 ## Square board
 
 The campaign uses matte papyrus for ordinary cells, deep blue for single-layer plaques, and olive green for double plaques. The square frame has fourteen stone layouts and four leafy variants in `data/board/cells.png`. Each draws in one empty 128 px cell and rotates to suit its neighbours. The number encodes neighbour directions clockwise from north. A rounded cap connects the two rails around a diagonally adjacent tile.
