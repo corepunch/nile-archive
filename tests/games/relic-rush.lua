@@ -307,3 +307,14 @@ shot("square-build-cost", "390x844", "--build-review short --frames 48 --safe-ar
 shot("square-build-progress", "480x900", "--city 3 --frames 48")
 shot("square-build-progress-phone", "390x844", "--city 3 --frames 48 --safe-area 0,47,0,34")
 shot("square-build-gate", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34")
+
+-- Store captures use the 2× macOS backing scale. See docs/APP_STORE_SCREENSHOTS.md.
+if getenv("APP_STORE_SHOTS") == "1" then
+    local size, safe = "660x1434", " --safe-area 0,93,0,51"
+    local prefix = "app-store-iphone-"
+    shot(prefix .. "01-lost-valley", size, "--showcase --decorations 8 --look 875,1820 --frames 45" .. safe)
+    shot(prefix .. "02-line-gem-combo", size, "--level 30 --special-states --special-fire cross --frames 35" .. safe)
+    shot(prefix .. "03-jewel-puzzle", size, "--level 20 --tiles jewels --frames 45" .. safe)
+    shot(prefix .. "04-rainbow-combo", size, "--level 30 --special-states --special-fire recolor --frames 42" .. safe)
+    shot(prefix .. "05-tablet-shatter", size, "--fx shatter --frames 10" .. safe)
+end
