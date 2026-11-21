@@ -8,7 +8,7 @@ def compile_town(source, beats, speakers):
         return json.dumps(value, ensure_ascii=False)
 
     by_key = {beat['key']: beat for beat in beats}
-    purchases, variants = {}, {}
+    purchases, variants, residents = {}, {}, {}
     for block in re.split(r'^\*\*(?=Placed |With )', source, flags=re.M)[1:]:
         heading, body = block.split('**\n', 1)
         action, building, *target = heading.split()
@@ -24,13 +24,17 @@ def compile_town(source, beats, speakers):
             assert key not in variants and len(lines) == 1 and 1 <= index <= len(by_key[key]['lines']), heading
             variants[key] = ', variant={building=%s, index=%d, line=%s}' % (quote(building), index, lines[0])
         else:
-            assert not target and building not in purchases and 0 < len(lines) <= 48, heading
+            if target:
+                verb, name, invitation = target
+                assert verb == 'introduces' and invitation in by_key and name in speakers, heading
+                residents[building] = ', resident=%s, invitation=%s' % (quote(speakers[name]), quote(invitation))
+            assert building not in purchases and 0 < len(lines) <= 48, heading
             purchases[building] = lines
 
     output = []
     for building, lines in purchases.items():
-        output.append('    {key=%s, phase="placed", building=%s, lines={' %
-                      (quote('placed-' + building), quote(building)))
+        output.append('    {key=%s, phase="placed", building=%s%s, lines={' %
+                      (quote('placed-' + building), quote(building), residents.get(building, '')))
         output.extend('        ' + line + ',' for line in lines)
         output.append('    }},')
     return variants, output

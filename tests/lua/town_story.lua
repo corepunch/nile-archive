@@ -50,3 +50,43 @@ check(R.story_current and R.story_current.key == key, "reload resumes the interr
 while story.active() do story.next() end
 R.story_tick()
 check(R.prog.story_seen[key] and not journey.next_placement(R.prog), "finishing clears the pending conversation")
+
+-- A returning player may already have seen the old conversation at the site.
+-- Let them meet the new resident before any queued level can give them a line.
+local site = testing.game == "relic-rush" and "aviary" or "glassblower"
+local arrival = journey.find("placed-" .. site)
+local callback_count = 0
+local function owns_site(building) return building == site end
+save.write("pre-resident-town", function(s)
+    s:int("narrative.v1." .. arrival.key, 2)
+    s:int("narrative.v1." .. arrival.invitation, 1)
+end)
+local resident_save = {story_seen={}}
+save.read("pre-resident-town", function(s) journey.serialize(s, resident_save) end)
+check(not journey.next_arrival(resident_save, function() return false end), "an invitation alone never brings a resident")
+check(journey.next_arrival(resident_save, owns_site) == arrival, "an existing owner receives the new introduction")
+resident_save.story_seen[arrival.invitation] = false
+check(not journey.next_arrival(resident_save, owns_site), "the introduction waits for the letter or invitation")
+resident_save.story_seen[arrival.invitation] = true
+R.island:add(vec2(0,0), island.kinds[site], 0)
+R.prog = resident_save
+R.prog.level = journey.find(arrival.invitation).level
+R.story_tick()
+check(R.story_current == arrival, "meeting the resident precedes the later campaign scenes")
+while story.active() do story.next() end
+R.story_tick()
+check(resident_save.story_seen[arrival.key], "finishing the introduction welcomes the resident")
+save.write("welcomed-resident", function(s) journey.serialize(s, resident_save) end)
+resident_save = {story_seen={}}
+save.read("welcomed-resident", function(s) journey.serialize(s, resident_save) end)
+check(not journey.next_arrival(resident_save, owns_site), "reloading preserves the welcome")
+for _, beat in ipairs(journey.beats) do
+    if beat.variant and beat.variant.line[1] == arrival.resident then
+        local index = beat.variant.index
+        check(journey.lines_for(beat, owns_site, {}) == beat.lines, "resident cannot speak before the introduction")
+        check(journey.lines_for(beat, owns_site, resident_save.story_seen)[index][1] == arrival.resident,
+            "the resident joins the later conversation after reload")
+        callback_count = callback_count + 1
+    end
+end
+check(callback_count >= 2, "the resident returns in later level conversations")

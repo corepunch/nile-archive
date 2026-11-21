@@ -509,8 +509,8 @@ return {
         {"mara", "Then I'll polish my lamp, Tomas. If she answers, I want a clean flash."},
     }},
     {key="after-81", phase="after", level=81, lines={
-        {"marisol", "Tomas, my neighbours are chalking house outlines on the old stones. May they move in?"},
-        {"tomas", "Not before the quay has a warning notice, Marisol. Everyone moving in must know the risk."},
+        {"marisol", "Tomas, Lio wants to bring his birds down from the hills. Can my neighbours work the wall yet?"},
+        {"tomas", "Only above the wall, Marisol. Nobody works at its foot till the flood notice is up."},
         {"elena", "Then the notice goes up first. And your neighbours' names go in my book, not Kessler's."},
     }},
     {key="after-82", phase="after", level=82, lines={
@@ -528,7 +528,7 @@ return {
         {"tomas", "The register and Ines's log, Elena. The rest waits for Marisol's key."},
         {"marisol", "Move nothing at night, Tomas. The island watches what disappears at night."},
     }},
-    {key="after-85", phase="after", level=85, variant={building="aviary", index=2, line={"marisol", "Mara, I asked that bird to call the tide. Instead he's taken up banking. Who's he heard?"}}, lines={
+    {key="after-85", phase="after", level=85, variant={building="aviary", index=2, line={"lio", "Mara, he sat on my wrist by the radio. His beak moved every time Kessler said it."}}, lines={
         {"mara", "Elena, that green parrot just said 'Mr Vale' in Kessler's voice! Who taught him?"},
         {"marisol", "He copies what he hears, Mara. Keep your secrets away from that bird."},
         {"tomas", "Then the radio lives indoors, Elena, with the door shut. Tell Adrian."},
@@ -558,7 +558,7 @@ return {
         {"tomas", "No, Elena. It's the old tide count, one flash for each hour the water rises."},
         {"mara", "So she's minding our tide from down there. Elena, you can retire the distress theory."},
     }},
-    {key="after-91", phase="after", level=91, lines={
+    {key="after-91", phase="after", level=91, variant={building="aviary", index=2, line={"lio", "Mine, Mara. I left him with Adrian for ten minutes. He used to whistle for figs."}}, lines={
         {"mara", "Adrian, that parrot just said \"expensive, Mr Vale\". Whose parrot is this?"},
         {"adrian", "I will not be taking questions about the parrot, Mara."},
         {"tomas", "Elena, the temple is the place for our quay notice. Every worker passes it."},
@@ -569,10 +569,10 @@ return {
         {"elena", "Tomas, look behind the altar! A bronze plate with a slot: the signal plate Ines's plan lists!"},
         {"mara", "It'll fit my lamp, or I'll make it. Give me a file and a day, Elena."},
     }},
-    {key="after-92", phase="after", level=92, lines={
+    {key="after-92", phase="after", level=92, variant={building="aviary", index=3, line={"lio", "Tomas, may I take the flood watch? I'll read your chalk myself. My bird calls high tide for a fig."}}, lines={
         {"tomas", "Elena, it's the lowest tide of the month. Come, I'm chalking a mark at the foot of the wall."},
         {"elena", "If the bypass works, Tomas, the chalk stays dry at the next flood. If not, it washes out."},
-        {"mara", "Tomas, you've got chalk on your ear. The aviary parrots are laying odds."},
+        {"mara", "Tomas, you've got chalk on your ear. Hold still or I'll have to guess how high the tide got."},
     }},
     {key="after-93", phase="after", level=93, lines={
         {"elena", "Tomas, the chart scrap from our first bucket shows Tern Rock Light, and a second lamp beyond."},
@@ -738,9 +738,10 @@ return {
         {"elena", "Mara, put one eye to the glass. Can you make out the name on your boat?"},
         {"mara", "I can see the bit of the M I missed. Lend me your smallest brush."},
     }},
-    {key="placed-aviary", phase="placed", building="aviary", lines={
-        {"marisol", "Elena, will you teach the parrots to call out the tide? My aunt can't read the clock."},
-        {"elena", "Marisol, your aunt should teach them. When I try, they just say my name back."},
+    {key="placed-aviary", phase="placed", building="aviary", resident="lio", invitation="after-81", lines={
+        {"marisol", "Lio! All the way down from the hills with that bird on your thumb? Come in. The aviary's yours."},
+        {"lio", "Got a peg for my coat, Marisol? We've come to stay. Mind your language till he learns your voice."},
+        {"mara", "He knows mine already, Lio. That's exactly what I said when I dropped the anchor on my foot."},
     }},
     {key="placed-museum", phase="placed", building="museum", lines={
         {"marisol", "Elena, my aunt lent you that netting needle. Where does it say whose it is?"},

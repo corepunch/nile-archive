@@ -293,9 +293,11 @@ function G.journey(content)
     -- Upgrade arrival scenes ({phase="upgrade", event="man_03", no level}) are
     -- kept apart from the level beats: they play on the next return to town
     -- once their user event is done, and never hold the story back.
-    local scenes, upgrades, placements = {}, {}, {}
+    local scenes, upgrades, placements, arrivals = {}, {}, {}, {}
     for _, beat in ipairs(M.beats) do
-        if beat.phase == "placed" then placements[#placements + 1] = beat
+        if beat.phase == "placed" then
+            placements[#placements + 1] = beat
+            if beat.resident then arrivals[beat.resident] = beat end
         elseif beat.phase == "upgrade" then upgrades[#upgrades + 1] = beat
         else scenes[#scenes + 1] = beat end
     end
@@ -313,13 +315,24 @@ function G.journey(content)
 
     function M.next_placement(p)
         for _, beat in ipairs(placements) do
-            if p.story_seen[beat.key] == false then return beat end
+            if not beat.resident and p.story_seen[beat.key] == false then return beat end
         end
     end
 
-    function M.lines_for(beat, owns)
+    -- Check ownership here too: a town saved before a resident was written
+    -- can welcome them even though its original purchase dialogue is finished.
+    function M.next_arrival(p, owns)
+        for _, beat in ipairs(placements) do
+            if beat.resident and p.story_seen[beat.invitation] and not p.story_seen[beat.key]
+                and owns(beat.building) then return beat end
+        end
+    end
+
+    function M.lines_for(beat, owns, seen)
         local variant = beat.variant
         if not variant or not owns(variant.building) then return beat.lines end
+        local arrival = arrivals[variant.line[1]]
+        if arrival and seen and not seen[arrival.key] then return beat.lines end
         local lines = {table.unpack(beat.lines)}
         lines[variant.index] = variant.line
         return lines
@@ -379,7 +392,8 @@ function G.journey(content)
         end
         for _, b in ipairs(placements) do
             local seen = p.story_seen[b.key]
-            local state = s:int("narrative.v1." .. b.key, seen == nil and 0 or seen and 2 or 1)
+            local checkpoint = b.resident and ("narrative.arrival." .. b.resident) or ("narrative.v1." .. b.key)
+            local state = s:int(checkpoint, seen == nil and 0 or seen and 2 or 1)
             if state == 0 then p.story_seen[b.key] = nil else p.story_seen[b.key] = state == 2 end
         end
         p.story_recap = s:int("narrative.recap", p.story_recap and 1 or 0) == 1
@@ -1207,10 +1221,12 @@ function G.bind(R, over)
     R.intro_lines = journey.beats[1].lines              -- the opening scene
     R.finale = journey.beats[#journey.beats].lines      -- its end opens the finale
 
+    local function owns_building(building)
+        return island.owned(R.island, island.kinds[building]) > 0
+    end
+
     function R.story_lines(beat)
-        return journey.lines_for(beat, function(building)
-            return island.owned(R.island, island.kinds[building]) > 0
-        end)
+        return journey.lines_for(beat, owns_building, R.prog.story_seen)
     end
 
     function R.queue_story(beat, preview, before_result)
@@ -1261,6 +1277,10 @@ function G.bind(R, over)
     end
 
     function R.next_story(before_level)
+        if before_level == nil then
+            local arrival = journey.next_arrival(R.prog, owns_building)
+            if arrival then return arrival end
+        end
         return journey.next(R.prog, function(index)
             return island.owned(R.island, wonder_kind(island, index + 1)) > 0
         end, before_level)

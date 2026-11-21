@@ -90,6 +90,7 @@ class Page:
         self.portraits = {c['id']: picture(self.data_dir / c['portrait'], 160, 'PNG') if c.get('portrait') else None
                           for c in data['cast']}
         self.steps = {s['key']: s for s in data.get('ladder', [])}
+        self.residents = {b['resident'] for b in data['beats'] if b.get('resident')}
         self.frames = data.get('frames', {})   # atlas frames the dump named
         self.atlases, self.icons = {}, {}
 
@@ -140,7 +141,10 @@ class Page:
         body = self.lines(b.get('lines', []))
         if v := b.get('variant'):
             name = self.steps[v['building']]['name']
-            body += f'<p class="pick">If {esc(name)} stands, line {v["index"]} becomes</p>{self.lines(v["lines"])}'
+            speaker = v['lines'][0]['speaker']
+            condition = (f"After meeting {self.cast[speaker]['name']} at the {name}"
+                         if speaker in self.residents else f'If {name} stands')
+            body += f'<p class="pick">{esc(condition)}, line {v["index"]} becomes</p>{self.lines(v["lines"])}'
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
         if b.get('choices'):

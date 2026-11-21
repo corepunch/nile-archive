@@ -29,6 +29,7 @@ The reply to Mara’s lamp poses the question **Who is signalling back?** The fi
 | Adrian | Charming sponsor with a secret claim → exposed → surrenders it to protect the quay | Deflects with wit; his signed claim is both danger and a choice. |
 | Kessler | Distant claim holder's agent → presses for the records → loses the claim | Polite radio voice; no new portrait. |
 | Marisol | Islander elder who runs the Jungle market (planted at 14 and 19, speaks from 21) → tests Adrian, keeps a customer's secret → sees the quay jobs and records stay on the island | Shrewd, dry, protective of her cousins on the quay; trades in exact coin and better questions. |
+| Lio Valez | Bird keeper from the hills → settles at the aviary → takes a tide watch | Knows whose voice his birds copy. Takes a reading himself before he trusts a call. |
 | Ines | Absent signal sender → identified by note → answers from the safe landing | Acts through the relay and signed notes, then returns Tomas's trust with the chart. |
 
 ## Campaign milestones
@@ -701,8 +702,8 @@ Choice prompt: Who should answer the signal?
 
 **Level 81 · Stairway of Kites**
 
-- **Marisol:** Tomas, my neighbours are chalking house outlines on the old stones. May they move in?
-- **Tomas:** Not before the quay has a warning notice, Marisol. Everyone moving in must know the risk.
+- **Marisol:** Tomas, Lio wants to bring his birds down from the hills. Can my neighbours work the wall yet?
+- **Tomas:** Only above the wall, Marisol. Nobody works at its foot till the flood notice is up.
 - **Elena:** Then the notice goes up first. And your neighbours' names go in my book, not Kessler's.
 
 **Level 82 · Mist Cenote**
@@ -776,7 +777,7 @@ Choice prompt: Who should answer the signal?
 
 - **Tomas:** Elena, it's the lowest tide of the month. Come, I'm chalking a mark at the foot of the wall.
 - **Elena:** If the bypass works, Tomas, the chalk stays dry at the next flood. If not, it washes out.
-- **Mara:** Tomas, you've got chalk on your ear. The aviary parrots are laying odds.
+- **Mara:** Tomas, you've got chalk on your ear. Hold still or I'll have to guess how high the tide got.
 
 **Level 93 · Tern Rock Light**
 
@@ -885,10 +886,11 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Elena:** Mara, put one eye to the glass. Can you make out the name on your boat?
 - **Mara:** I can see the bit of the M I missed. Lend me your smallest brush.
 
-**Placed aviary**
+**Placed aviary introduces Lio after-81**
 
-- **Marisol:** Elena, will you teach the parrots to call out the tide? My aunt can't read the clock.
-- **Elena:** Marisol, your aunt should teach them. When I try, they just say my name back.
+- **Marisol:** Lio! All the way down from the hills with that bird on your thumb? Come in. The aviary's yours.
+- **Lio:** Got a peg for my coat, Marisol? We've come to stay. Mind your language till he learns your voice.
+- **Mara:** He knows mine already, Lio. That's exactly what I said when I dropped the anchor on my foot.
 
 **Placed museum**
 
@@ -929,7 +931,15 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **With aviary after-85 2**
 
-- **Marisol:** Mara, I asked that bird to call the tide. Instead he's taken up banking. Who's he heard?
+- **Lio:** Mara, he sat on my wrist by the radio. His beak moved every time Kessler said it.
+
+**With aviary after-91 2**
+
+- **Lio:** Mine, Mara. I left him with Adrian for ten minutes. He used to whistle for figs.
+
+**With aviary after-92 3**
+
+- **Lio:** Tomas, may I take the flood watch? I'll read your chalk myself. My bird calls high tide for a fig.
 
 **With museum after-87 1**
 
@@ -1048,6 +1058,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Lio Valez moves in when the aviary opens. The introduction and three later appearances follow the player’s town.
 
 - 2026-11-21: Added ten confirmed-purchase conversations and ten later exchanges that read the town’s actual buildings. Existing cast members carry each thread. An interrupted purchase conversation resumes on the next visit.
 

@@ -385,7 +385,7 @@ return {
         {"henrik", "That's the first one I carved. How did you know, Wren? I was very cross that week."},
     }},
     {key="after-71", phase="after", level=71, lines={
-        {"pip", "Agnes! A glassblower's written from beyond the lake! She wants a furnace and a corner. Say yes?"},
+        {"pip", "Agnes, Ada Pike wrote from across the lake. She'll bring her blowing irons if we find a furnace!"},
         {"agnes", "Yes, if she blows me a dome for the gingerbread. Noelle, why are you staring at your ticket?"},
         {"noelle", "It's gone soft at the corners, Agnes. I hadn't looked at it in days."},
     }},
@@ -399,7 +399,7 @@ return {
         {"pip", "Why are you looking at me? It smells a bit of pine, which is nothing! Pine's everywhere!"},
         {"noelle", "It's December, Pip. Come on, before the sun gets the bakery window."},
     }},
-    {key="after-74", phase="after", level=74, variant={building="glassblower", index=3, line={"agnes", "She'll wash. Noelle, lift that glass dome. Henrik piped every window dead level. Show-off."}}, lines={
+    {key="after-74", phase="after", level=74, variant={building="glassblower", index=3, line={"ada", "She'll wash, Mr Finch. Noelle, try my dome. I left room for snow on the gingerbread roof."}}, lines={
         {"noelle", "Mr Finch, hold the ladder! The Fenwick choir brought paint, and why is Bramble blue?"},
         {"finch", "She helped. Chapel won't have a blue goat. Still no goat-minder, Noelle?"},
         {"agnes", "She'll wash. Look at that! Henrik's piped every window of my ginger cottage dead level. Show-off."},
@@ -459,8 +459,8 @@ return {
         {"agnes", "Rosa's biscuit tin, under a stack of old Christmas cards. A nutcracker sat on the lid."},
         {"noelle", "\"I wish everyone could stay.\" Agnes, she kept it all these years and never said. Did you know?"},
     }},
-    {key="after-84", phase="after", level=84, lines={
-        {"noelle", "Henrik, the first amber bauble, still warm from the furnace. Will you help me tie Gran's ribbon on?"},
+    {key="after-84", phase="after", level=84, variant={building="glassblower", index=1, line={"ada", "Henrik, steady the ladder. Noelle, tie Gran's ribbon on my glass bell. I blew it for her."}}, lines={
+        {"noelle", "Henrik, there's an amber bauble in Gran's tin. Will you help me tie her ribbon on?"},
         {"henrik", "Hang it lower, Noelle. A child's eye is three feet off the ground, not six."},
         {"noelle", "Low it is. Red ribbon, amber glass, one wish. Hold the ladder, Henrik?"},
     }},
@@ -484,7 +484,7 @@ return {
         {"theo", "They'll hang till Twelfth Night, Noelle. Someone should be here in January to take them down."},
         {"noelle", "January, Theo? You said it as though it were nothing. It's the nicest thing anyone's said to me."},
     }},
-    {key="after-89", phase="after", level=89, lines={
+    {key="after-89", phase="after", level=89, variant={building="glassblower", index=2, line={"ada", "Noelle, the whole town brought lamps. Take mine for the bend. I blew a chimney for this wind."}}, lines={
         {"noelle", "Agnes, the wind's blown out every lamp on the station path! I can't even see the bend!"},
         {"agnes", "Turn round, love. The whole town's brought a lamp, and Fenwick lent one for the bend."},
         {"noelle", "Thank you, all of you! Now come on. Let's light it for the last train on Christmas Eve."},
@@ -665,9 +665,10 @@ return {
         {"pip", "Noelle, could the first letter through my office be for me? I'll let you use the stamp."},
         {"noelle", "Give me an envelope, Postmaster. And turn round while I write the name."},
     }},
-    {key="placed-glassblower", phase="placed", building="glassblower", lines={
-        {"agnes", "Theo, how do I lift this glass dome without putting fingerprints on the gingerbread?"},
-        {"theo", "Lift by the knob, Mrs Holt. Those little prints in the icing were there when I came."},
+    {key="placed-glassblower", phase="placed", building="glassblower", resident="ada", invitation="after-71", lines={
+        {"ada", "Mrs Holt? Ada Pike, off the lake boat. Is this really my furnace? I've never had a key of my own."},
+        {"agnes", "Yours, love. Now, about my gingerbread dome. How big a house can you fit under one breath?"},
+        {"ada", "Depends how big you bake, Mrs Holt. Keep talking while I get my coat off."},
     }},
     {key="placed-santa_workshop", phase="placed", building="santa_workshop", lines={
         {"henrik", "Pip, try the low bench. Used to be mine. Can your feet reach the rail?"},

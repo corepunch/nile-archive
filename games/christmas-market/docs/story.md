@@ -1,6 +1,6 @@
 # Story: five Advents to Christmas Eve
 
-**Status: the hundred-wish campaign.** Five Advents of twenty wishes, four stalls each, end on Christmas Eve. Every wish has a scene on its first clear; the ten story stalls have theirs when they are placed. Noelle and the nine supporting speakers have painted busts. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
+**Status: the hundred-wish campaign.** Five Advents of twenty wishes, four stalls each, end on Christmas Eve. Every wish has a scene on its first clear; the ten story stalls have theirs when they are placed. Noelle and the ten supporting speakers have painted busts. It follows the [story guide](../../../docs/STORY_WRITING.md). The plot, cast and setting are original.
 
 **Fantasy of play:** I came to help until Christmas. Each light I put up and each stall I build gives somebody a place to come in from the cold.
 
@@ -70,6 +70,7 @@ Bramble the goat does not speak.
 | **Mrs Alder** | Widow with grandchildren in the lane, a cocoa regular (from 31). | Brisk, generous, nosy; sings flat with total confidence | Pays for a cup "for whoever's next" → the choir's alto → her money on the tree-seller |
 | **Mr Finch** | Lake fisherman, runs the smokehouse, Bramble's owner (from 41). | Slow, deadpan, devoted to his goat | Stands outside every service holding Bramble → finds a goat-minder → sits in the front pew for the first time in forty winters |
 | **Mary Larkin** | Pip's mum, cook on the coastal steamer (from 94). | Practical, teasing, glad | Arrives on the last train; wears the other end of the scarf |
+| **Ada Pike** | Glassblower from across the lake, looking for a furnace of her own. | Judges glass by ear and measures things in breaths. | Writes to Bellmere → opens her furnace → lends her glass to light the station bend. |
 | **Rosa** | Noelle's gran, who sent her (from 94). | Warm, mischievous | Surprises everyone on the last train; explains the parcel |
 
 ## Working sheets
@@ -591,7 +592,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 71 · Candle Glow**
 
-- **Pip:** Agnes! A glassblower's written from beyond the lake! She wants a furnace and a corner. Say yes?
+- **Pip:** Agnes, Ada Pike wrote from across the lake. She'll bring her blowing irons if we find a furnace!
 - **Agnes:** Yes, if she blows me a dome for the gingerbread. Noelle, why are you staring at your ticket?
 - **Noelle:** It's gone soft at the corners, Agnes. I hadn't looked at it in days.
 
@@ -683,7 +684,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 84 · Glass Bauble**
 
-- **Noelle:** Henrik, the first amber bauble, still warm from the furnace. Will you help me tie Gran's ribbon on?
+- **Noelle:** Henrik, there's an amber bauble in Gran's tin. Will you help me tie her ribbon on?
 - **Henrik:** Hang it lower, Noelle. A child's eye is three feet off the ground, not six.
 - **Noelle:** Low it is. Red ribbon, amber glass, one wish. Hold the ladder, Henrik?
 
@@ -841,10 +842,11 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Pip:** Noelle, could the first letter through my office be for me? I'll let you use the stamp.
 - **Noelle:** Give me an envelope, Postmaster. And turn round while I write the name.
 
-**Placed glassblower**
+**Placed glassblower introduces Ada after-71**
 
-- **Agnes:** Theo, how do I lift this glass dome without putting fingerprints on the gingerbread?
-- **Theo:** Lift by the knob, Mrs Holt. Those little prints in the icing were there when I came.
+- **Ada:** Mrs Holt? Ada Pike, off the lake boat. Is this really my furnace? I've never had a key of my own.
+- **Agnes:** Yours, love. Now, about my gingerbread dome. How big a house can you fit under one breath?
+- **Ada:** Depends how big you bake, Mrs Holt. Keep talking while I get my coat off.
 
 **Placed santa_workshop**
 
@@ -894,7 +896,15 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **With glassblower after-74 3**
 
-- **Agnes:** She'll wash. Noelle, lift that glass dome. Henrik piped every window dead level. Show-off.
+- **Ada:** She'll wash, Mr Finch. Noelle, try my dome. I left room for snow on the gingerbread roof.
+
+**With glassblower after-84 1**
+
+- **Ada:** Henrik, steady the ladder. Noelle, tie Gran's ribbon on my glass bell. I blew it for her.
+
+**With glassblower after-89 2**
+
+- **Ada:** Noelle, the whole town brought lamps. Take mine for the bend. I blew a chimney for this wind.
 
 ## Upgrades
 
@@ -1023,12 +1033,14 @@ Optional scenes, one per building, played on the next return to town after its f
 
 - **Stall order:** one stall every five wishes (`economy.unlocks`); story stalls at 1, 11, 21, 31, 51, 56, 61, 76, 81 and 91 (`campaign.wonder_levels`). `journey.earned` gates building, the reserve and the next wish. Every win banks matched Tokens, Treats and Materials.
 - **Regions** open after 15, 30, 50, 70 and 85 wishes cleared, each with Pip's line.
-- **Busts:** All ten speakers use the portraits in the [asset catalogue](asset-catalogue.md#story-cast).
+- **Busts:** All eleven speakers use the portraits in the [asset catalogue](asset-catalogue.md#story-cast).
 - **`R.finale`** is the last scene (wish 100). Its end leads to the "To be continued" screen.
 - **Saves:** stable `narrative.v1.<phase>-<level>` keys are written only when a scene finishes or is skipped. Journey version 4 marks the scenes before an older save's level as seen and shows a recap. Campaign version 7 resets the stall waivers from what the save owns.
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Ada Pike moves in when the glassblower opens. The introduction and three later appearances follow the player’s town.
 
 - 2026-11-21: Added ten confirmed-purchase conversations and ten later exchanges that read the town’s actual buildings. Existing cast members carry each thread. An interrupted purchase conversation resumes on the next visit.
 

@@ -49,7 +49,7 @@ function D.bind(R, W)
         end
         R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
         R.island.open = R.island.open | 1
-        local spend = purse(100000, 100000, 100000)
+        local spend = purse(100000, 100000, 100000, cleared)
         local placed = 0
         while (purchases and placed < purchases or not purchases and island.wonder_count(R.island) < n)
             and island.island_place_next(R.island, spend, cleared, 0) do placed = placed + 1 end
@@ -517,7 +517,7 @@ function D.bind(R, W)
             R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
             while story.active() do story.next() end
             local lines = {}
-            local spoken = R.story_lines(beat)
+            local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end)
             for i = tonumber(app.arg("story-line")) or 1, #spoken do lines[#lines + 1] = spoken[i] end
             R.queue_story({key = beat.key, lines = lines}, true)
         end

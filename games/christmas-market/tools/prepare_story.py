@@ -18,7 +18,7 @@ town_source = re.search(r'^## Town dialogue\n.*?(?=^## |\Z)', text, re.S | re.M)
 source = text.replace(upgrade_source, '').replace(town_source, '')
 source = re.sub(r'^## Citizens\n.*?(?=^## |\Z)', '', source, flags=re.S | re.M).split('## Small lines')[0]   # also drop the superseded Citizens section
 beats, beat = [], None
-speakers = {'Noelle': 'noelle', 'Theo': 'theo', 'Agnes': 'agnes', 'Henrik': 'henrik', 'Pip': 'pip', 'Mr Wren': 'wren',
+speakers = {'Ada': 'ada', 'Noelle': 'noelle', 'Theo': 'theo', 'Agnes': 'agnes', 'Henrik': 'henrik', 'Pip': 'pip', 'Mr Wren': 'wren',
             'Mary': 'mary', 'Rosa': 'rosa', 'Mrs Alder': 'alder', 'Mr Finch': 'finch'}
 SPEAKER = '|'.join(speakers)
 # Rome 2's upgrade events (games/christmas-market/lua/user_events.lua) and the keeper who must speak in each.

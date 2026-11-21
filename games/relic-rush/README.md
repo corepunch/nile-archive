@@ -171,6 +171,8 @@ A first clear advances the expedition counter. Every won expedition banks its ma
 
 The speaker’s name tag and the Skip button sit equally far from the dialogue bar, with the name above and Skip below.
 
+Lio Valez moves down from the hills when the Great Aviary opens. He returns on expeditions 85, 91 and 92.
+
 All twenty campaign purchases now have a character response. The ten purchases between story gates trigger a conversation on confirmation. Later dialogue checks whether the building actually stands. Compare `--story-beat after-12 --story-line 1` with the same preview plus `--story-built`, or preview the purchase with `--story-beat placed-workshop`.
 
 `lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/lua/match3/game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 3`. Restoration dialogue uses named speakers over the live island. The earlier request scenes and paintings remain in the story archive.

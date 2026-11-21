@@ -1174,3 +1174,7 @@ The paper plane comes from Christmas Market's `art/board-theme/source.png`.
 The original three striped-axis paintings stay in the master. Both campaigns
 stripe the existing piece along its square row or column.
 Regenerate the atlases with `python3 tools/pack_match_specials.py`.
+
+## Building resident portrait
+
+The confirmed purchase introduces **Lio Valez at the Great Aviary**. The same authored bust appears in three later level conversations once the player has met the resident. The dialogue renderer handles speaker position and mirroring. The [source sheet](../../../art/match3-residents/source.png) and [ImageGen prompt](../../../art/match3-residents/prompt.txt) produce `data/story/characters/lio.png` with `python3 tools/resident_portraits.py`. The crop retains the authored alpha and fits the dialogue canvas at 320 × 480. [Arrival](screenshots/resident-arrival.jpg) · [Return](screenshots/resident-return.jpg)

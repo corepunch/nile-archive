@@ -247,7 +247,7 @@ else
         if b.phase == "placed" then waits = b.building
         elseif b.phase == "upgrade" then waits = assert(upgrade_site[b.event]) end
         local variant = b.variant and {building = b.variant.building, index = b.variant.index, lines = lines_of({b.variant.line})}
-        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], variant = variant, prompt = b.prompt, waits_for = waits or nil,
+        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], variant = variant, resident = b.resident, prompt = b.prompt, waits_for = waits or nil,
                         lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
     end
 end

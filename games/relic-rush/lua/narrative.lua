@@ -11,6 +11,7 @@ R.cast={
     {id='ines',name='Ines Reed',role='Keeper of the tide warning',color=color(51,93,84)},
     {id='keeper',name='Ancient keeper',role='Keeper of the first harbor',portrait_path='story/characters/keeper.png',color=color(94,72,46),mouth=vec2(.54,.51)},
     {id='marisol',name='Auntie Marisol',role="Trader, Jungle market",portrait_path='story/characters/marisol.png',color=color(150,52,98),right=true,mouth=vec2(.61,.44)},
+    {id='lio',name='Lio Valez',role='Keeper of the Great Aviary',portrait_path='story/characters/lio.png',color=color(62,105,58),right=true,mouth=vec2(.66,.35)},
 }
 
 return R

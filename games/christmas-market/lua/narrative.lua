@@ -12,6 +12,7 @@ R.cast={
     {id='rosa',name='Rosa',role="Noelle's gran",portrait_path='story/characters/rosa.png',color=color(120,48,60),right=true,mouth=vec2(.56,.54)},
     {id='alder',name='Mrs Alder',role="Hot cocoa kiosk",portrait_path='story/characters/alder.png',color=color(128,66,48),right=true,mouth=vec2(.62,.50)},
     {id='finch',name='Mr Finch',role="Fisherman, Lakeside smokehouse",portrait_path='story/characters/finch.png',color=color(52,92,104),right=true,mouth=vec2(.63,.51)},
+    {id='ada',name='Ada Pike',role='Bellmere glassblower',portrait_path='story/characters/ada.png',color=color(48,104,98),right=true,mouth=vec2(.68,.35)},
 }
 
 return R

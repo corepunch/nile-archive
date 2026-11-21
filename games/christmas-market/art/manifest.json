@@ -1,4 +1,17 @@
 {
+  "resident_portrait": {
+    "source": "../../art/match3-residents/source.png",
+    "prompt": "../../art/match3-residents/prompt.txt",
+    "runtime": "data/story/characters/ada.png",
+    "reproduction": "python3 tools/resident_portraits.py",
+    "states": [
+      "dialogue bust"
+    ],
+    "review": [
+      "docs/screenshots/resident-arrival.jpg",
+      "docs/screenshots/resident-return.jpg"
+    ]
+  },
   "status": "Painted current-camera buildings (art/building-catalogue/painted-v1)",
   "generator": "built-in image_gen",
   "main_menu": {
@@ -171,6 +184,7 @@
     "data/common/fonts/LilitaOne-Regular.ttf": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
     "data/common/fonts/lilitaone-OFL.txt": "05771109f4cf568b2f27bf63a767c27b3cbc60679e3224c02e484789cc91edee",
     "data/menu/bellmere.jpg": "ace588527db495d75ac8e3bdc98230248957835b705e94e47a5f034e1c29dde0",
+    "data/story/characters/ada.png": "6220d8821654a5cb95dd1a698f9ff665e29b4d24b5fe8bc662be395d0f2a57ea",
     "data/story/characters/agnes.png": "85e9ac46ec23ae2b4b451208f4ec639ba6b1fa41aedf742f060c72a593eb5c09",
     "data/story/characters/alder.png": "813e856e247fb84e8a2c2350b3fc5ef65125fa34934c29ccef63ca746c19cce5",
     "data/story/characters/finch.png": "21380f451cdf457e9cfdc87247232136792be5fd8b1382b1143769284c5a91d4",
@@ -211,6 +225,7 @@
     "source": "art/story-cast.png",
     "prompt": "art/character-and-icon-prompts.json#story_cast",
     "runtime": [
+      "data/story/characters/ada.png",
       "data/story/characters/agnes.png",
       "data/story/characters/alder.png",
       "data/story/characters/finch.png",
