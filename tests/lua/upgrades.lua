@@ -151,7 +151,8 @@ for _,row in ipairs(spec) do
     -- the perk
     local perk=e.Then[3]
     if perk[1]=="THEN_PLAYER_ADD_RESOURCE_PER_LEVEL" then
-        local win=rules.game_start(0,3);win.won=true;win.moves=0;win.earnings={10,20,30}
+        R.prog.level=1 -- measure ordinary income after the opening building reward
+        local win=rules.game_start(R.prog.level,3);win.won=true;win.moves=0;win.earnings={10,20,30}
         local reward=breakdown(win)
         local add=U.win_income()
         for slot=1,3 do
@@ -183,9 +184,10 @@ end
 -- Income lands in the wallet with the win, on first clears and replays alike.
 do
     fresh()
+    R.prog.level=1
     local building=relic and "well" or "arch"
     place(building)
-    local g=R.make_board(0,7)
+    local g=R.make_board(R.prog.level,7)
     g.earnings={0,150,0}
     U.emit("wave",{g=g,runs={},longest=0})
     check(U.state().done.man_03,'the well upgrade came on 150 Food in one level')
@@ -197,7 +199,7 @@ do
     check(reward.total[1]==matched[1] and reward.total[3]==matched[3],'no other currency changes')
     local ok=relic and rules.progress_reward(R.prog,g) or rules.progress_reward(R.prog,g,island.wonders)
     check(ok and R.prog.wallet[2]==wallet[2]+matched[2]+10,'the wallet gains the income when the win is claimed')
-    local replay=rules.game_start(0,9);replay.won=true;replay.moves=0;replay.earnings={0,0,0}
+    local replay=rules.game_start(g.level,9);replay.won=true;replay.moves=0;replay.earnings={0,0,0}
     check(breakdown(replay).total[2]==10,'a replay win still pays the income')
 end
 
