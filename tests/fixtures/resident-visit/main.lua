@@ -99,6 +99,11 @@ function desc.frame(dt)
         frame(dt)
         return
     end
+    if stage == first and tick >= 108 then
+        assert(story.active() and R.story_current.key == journey.visit(R.prog, site).choices[2].key)
+        frame(dt)
+        return
+    end
     if tick == 30 then tap() end
     if tick == 35 then
         assert(not story.active() and R.town.bubble and R.town.bubble.item == item - 1, "unmet resident uses ordinary building bubble")
@@ -125,23 +130,28 @@ function desc.frame(dt)
         finish_answer(1)
     elseif tick == 160 then
         assert(not R.town.hooks.unheard_visit(kind), "hearing both answers clears the marker")
-        R.prog.story_seen[stage] = true
-        assert(R.town.hooks.unheard_visit(kind) == (stage ~= first), "a new checkpoint restores the marker")
         tap()
-    elseif tick == 180 then
+    elseif tick == 168 then
+        assert(R.overlay == R.OV_NONE and R.town.bubble and R.town.bubble.item == item - 1,
+            "a building with no questions shows its ordinary description")
+        R.prog.story_seen[stage] = true
+        assert(R.town.hooks.unheard_visit(kind), "a new checkpoint restores the marker")
+        tap()
+    elseif tick == 190 then
         select_question(app.arg("visit-questions") and "1" or "2")
-    elseif tick == 200 and app.arg("visit-questions") then
+    elseif tick == 210 and app.arg("visit-questions") then
         finish_answer(1)
-    elseif tick == 205 and app.arg("visit-questions") then
+    elseif tick == 215 and app.arg("visit-questions") then
         assert(R.town.hooks.unheard_visit(kind), "the later story answer is still new")
         tap()
-    elseif tick == 225 then
+    elseif tick == 235 then
         if app.arg("visit-questions") then
             assert(R.overlay == R.OV_STORY_CHOICE)
-            local boxes = R.choice_form.boxes
-            assert(boxes["2"]:center().y < boxes["1"]:center().y, "the new question belongs above the replay")
+            local options = R.story_choice_beat.choices
+            assert(#options == 1 and options[1] == journey.visit(R.prog, site).choices[2],
+                "the menu offers only the remaining story question")
         else
-            assert(story.active() and R.story_current.phase == "visit", "a heard answer can be replayed")
+            assert(story.active() and R.story_current.phase == "visit", "the next stage has a fresh answer")
         end
     end
     frame(dt)

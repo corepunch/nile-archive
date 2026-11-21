@@ -139,19 +139,26 @@ check(journey.unheard_visit(reloaded, visit), "legacy player can discover the ne
 reloaded.story_seen[arrival.key] = true
 check(journey.lines_for(later, owns_site, reloaded.story_seen)[ordinary.index] == ordinary.line, "the other question alone does not trigger the memory")
 
--- Choosing alone never consumes an answer, even across a save and restart.
+-- A question leaves the menu on selection; the reply resumes until it is heard.
 R.prog, R.quiet = visiting, true
 R.open_story_choice(visit)
 check(R.choose_story_option(1) and story.active(), "selecting the personal question opens its answer")
 save.write("interrupted-answer", function(s) journey.serialize(s, visiting) end)
 reloaded = {}
 save.read("interrupted-answer", function(s) journey.serialize(s, reloaded) end)
-check(not reloaded.story_seen[personal.key] and not reloaded.story_choices[visit.key], "unfinished answer remains new")
+check(not reloaded.story_seen[personal.key] and reloaded.pending_answer == personal
+    and journey.visit_menu(reloaded, visit).choices[1] == original, "an interrupted question stays off the menu")
 check(journey.lines_for(later, owns_site, reloaded.story_seen)[ordinary.index] == ordinary.line, "interrupted answer leaves the ordinary reply")
 while story.active() do story.next() end
+R.story_current, R.prog, R.quiet = nil, reloaded, false
 R.story_tick()
-check(visiting.story_seen[personal.key] and not visiting.story_seen[original.key], "only the finished answer is heard")
-save.write("one-answer", function(s) journey.serialize(s, visiting) end)
+check(story.active() and R.story_current.key == personal.key, "town resumes the pending answer without asking again")
+R.quiet = true
+while story.active() do story.next() end
+R.story_tick()
+check(not reloaded.pending_answer and reloaded.story_seen[personal.key] and not reloaded.story_seen[original.key],
+    "only the finished answer is heard")
+save.write("one-answer", function(s) journey.serialize(s, reloaded) end)
 reloaded = {}
 save.read("one-answer", function(s) journey.serialize(s, reloaded) end)
 check(reloaded.story_seen[personal.key] and journey.unheard_visit(reloaded, visit), "partial visit survives reload")
@@ -159,7 +166,8 @@ R.prog = reloaded
 check(R.story_lines(later)[ordinary.index] == memory.line, "the loaded campaign uses the remembered reply")
 check(journey.lines_for(later, function() return false end, R.prog.story_seen) == later.lines, "an absent building keeps the original scene")
 R.open_story_choice(visit)
-check(R.choose_story_option(2), "the second question remains available")
+check(#R.story_choice_beat.choices == 1 and R.story_choice_beat.choices[1] == original and R.choose_story_option(1),
+    "only the remaining question can be selected")
 while story.active() do story.next() end
 R.story_tick()
 save.write("both-answers", function(s) journey.serialize(s, reloaded) end)
@@ -250,7 +258,9 @@ R.story_tick()
 check(R.story_current == meeting, "an interrupted meeting is offered again")
 for _, home in ipairs(meeting.sites) do
     local stage = journey.visit(R.prog, home)
-    check(#journey.visit_menu(R.prog, stage).choices == 2, "the meeting must finish before either follow-up appears")
+    for _, option in ipairs(journey.visit_menu(R.prog, stage).choices) do
+        check(option.topic ~= "meeting", "the meeting must finish before either follow-up appears")
+    end
     for _, answer in ipairs(stage.choices) do R.prog.story_seen[answer.key] = true end
     check(not journey.unheard_visit(R.prog, stage), "a pending meeting cannot light a fully heard roof")
 end
@@ -294,29 +304,29 @@ for i, first_home in ipairs(meeting.sites) do
     R.prog = {level=100}
     save.read("completed-meeting", function(s) journey.serialize(s, R.prog) end)
     for _, home in ipairs(meeting.sites) do
-        check(#menu(home) == 3 and R.town.hooks.unheard_visit(island.kinds[home]),
+        check(#menu(home) == 1 and R.town.hooks.unheard_visit(island.kinds[home]),
             "both buildings offer their own story when the meeting ends")
     end
     ask_meeting_question(first_home, first_key)
     save.write("unfinished-followup", function(s) journey.serialize(s, R.prog) end)
     local interrupted = {}
     save.read("unfinished-followup", function(s) journey.serialize(s, interrupted) end)
-    check(#journey.visit_menu(interrupted, journey.visit(interrupted, other_home)).choices == 3,
+    check(#journey.visit_menu(interrupted, journey.visit(interrupted, other_home)).choices == 1,
         "selecting an account without finishing it never unlocks the other side")
     finish_answer()
     save.write("one-side-heard", function(s) journey.serialize(s, R.prog) end)
     R.prog = {level=100}
     save.read("one-side-heard", function(s) journey.serialize(s, R.prog) end)
-    check(#menu(first_home) == 3 and #menu(other_home) == 4 and not R.town.hooks.unheard_visit(island.kinds[first_home]),
+    check(#menu(first_home) == 0 and #menu(other_home) == 2 and not R.town.hooks.unheard_visit(island.kinds[first_home]),
         "only the other resident can respond to the account after reload")
     check(menu(other_home)[1].key == other_key .. ".reply", "the fresh lead appears first")
     ask_meeting_question(other_home, other_key .. ".reply")
-    check(#menu(first_home) == 3, "the return question waits for the full reply")
+    check(#menu(first_home) == 0, "the return question waits for the full reply")
     finish_answer()
     check(not R.prog.story_seen[other_key] and R.town.hooks.unheard_visit(island.kinds[other_home]),
         "the other resident's original account remains independently available")
-    check(menu(other_home)[1].key ~= other_key .. ".reply", "a heard reply returns to its usual place")
-    check(#menu(first_home) == 4 and R.town.hooks.unheard_visit(island.kinds[first_home]),
+    check(#menu(other_home) == 1 and menu(other_home)[1].key == other_key, "a heard reply disappears")
+    check(#menu(first_home) == 1 and R.town.hooks.unheard_visit(island.kinds[first_home]),
         "the new detail can travel back and relights the first roof")
     ask_meeting_question(first_home, first_key .. ".reply")
     finish_answer()
@@ -329,11 +339,11 @@ for i, first_home in ipairs(meeting.sites) do
     save.read("both-sides-heard", function(s) journey.serialize(s, R.prog) end)
     R.prog.story_seen["after-100"] = true
     for _, home in ipairs(meeting.sites) do
-        check(#menu(home) == 4 and R.prog.story_seen[meeting.key .. "." .. home .. ".reply"],
-            "heard replies stay available after a reload and later milestones")
+        check(R.prog.story_seen[meeting.key .. "." .. home .. ".reply"], "the second resident keeps the memory")
+        for _, option in ipairs(menu(home)) do
+            check(option.topic ~= "meeting", "heard meeting questions stay gone across milestones and relaunch")
+        end
     end
-    ask_meeting_question(other_home, other_key .. ".reply")
-    finish_answer()
 end
 
 -- A town saved with the previous release has the original keys and no reply keys.
@@ -347,6 +357,6 @@ end)
 R.prog = {level=100}
 save.read("legacy-both-accounts", function(s) journey.serialize(s, R.prog) end)
 for _, home in ipairs(meeting.sites) do
-    check(#menu(home) == 4 and not R.prog.story_seen[meeting.key .. "." .. home .. ".reply"],
+    check(#menu(home) == 3 and menu(home)[1].key == meeting.key .. "." .. home .. ".reply",
         "previously heard accounts unlock both new replies in an existing town")
 end

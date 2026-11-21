@@ -858,7 +858,7 @@ Bring Lio’s account of his sister to Nera, or ask Lio about the ear Nera kept 
 
 Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 
-Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays while any available answer is new. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Choosing a question removes it. Finishing or skipping its answer lets later conversations recall it. If you leave midway, the answer resumes when you return to town. Closing the menu before choosing keeps every question available. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 At expedition 91 Lio remembers what Mara asked after expedition 85. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
 

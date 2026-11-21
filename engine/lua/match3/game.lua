@@ -1032,8 +1032,7 @@ function G.bind(R, over)
             tap_building = function(item)
                 local visit = visit_for_kind(R.island.items[item + 1].type)
                 if not visit then return false end
-                R.open_story_choice(visit)
-                return true
+                return R.open_story_choice(visit)
             end,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
@@ -1089,17 +1088,12 @@ function G.bind(R, over)
     function R.open_story_choice(beat, preview)
         local visit = beat.phase == "visit"
         if visit then beat = journey.visit_menu(R.prog, beat) end
+        if #beat.choices == 0 then return false end
         local corner_close = visit and W.corner_close
         local children = {match3.popup_header(beat.prompt, nil, corner_close and "cancel")}
-        local heard = {}
         for index, option in ipairs(beat.choices) do
-            local group = visit and R.prog.story_seen[option.key] and heard or children
-            group[#group + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
+            children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
         end
-        if #heard > 0 and #heard < #beat.choices then
-            children[#children + 1] = N.label {text="Ask again", em=16, text_style="caption"}
-        end
-        for _, button in ipairs(heard) do children[#children + 1] = button end
         if visit and not corner_close then
             children[#children + 1] = N.button {id="cancel", text="Back", height=44, role="link", em=18}
         end
@@ -1108,6 +1102,7 @@ function G.bind(R, over)
         assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=visit}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
         R.overlay = R.OV_STORY_CHOICE
+        return true
     end
 
     function R.choose_story_option(index)
@@ -1116,9 +1111,13 @@ function G.bind(R, over)
         if choices:active() then choices:close(nil, nil, true) end
         R.story_choice_beat, R.story_choice_preview = nil, nil
         R.overlay = R.OV_NONE
-        if not preview and beat.phase ~= "visit" then
-            R.prog.story_choices = R.prog.story_choices or {}
-            R.prog.story_choices[beat.key] = index
+        if not preview then
+            if beat.phase == "visit" then
+                R.prog.pending_answer = beat.choices[index]
+            else
+                R.prog.story_choices = R.prog.story_choices or {}
+                R.prog.story_choices[beat.key] = index
+            end
             R.save_progress()
         end
         choice_reply(beat, index, preview)
@@ -1140,6 +1139,8 @@ function G.bind(R, over)
 
     function R.next_story(before_level)
         if before_level == nil then
+            local pending = R.prog.pending_answer
+            if pending then return {key=pending.key, phase="visit", lines=pending.lines} end
             local arrival = journey.next_arrival(R.prog, owns_building)
             if arrival then return arrival end
             local meeting = journey.next_meeting(R.prog, owns_building)

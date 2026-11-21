@@ -81,6 +81,7 @@ local function new(content)
     end
 
     local function available(p, answer)
+        if p.story_seen[answer.key] or p.pending_answer == answer then return false end
         if answer.when and not p.story_seen[answer.when] then return false end
         if not answer.heard_any then return true end
         for _, key in ipairs(answer.heard_any) do
@@ -90,12 +91,11 @@ local function new(content)
     end
 
     function M.visit_menu(p, visit)
-        if not meeting_options[visit] then return visit end
         local choices, other = {}, {}
-        for _, answer in ipairs(meeting_options[visit]) do
+        for _, answer in ipairs(meeting_options[visit] or visit.choices) do
             if available(p, answer) then
                 -- Put a fresh lead first when the player comes back to talk.
-                local group = answer.source and not p.story_seen[answer.key] and choices or other
+                local group = answer.source and choices or other
                 group[#group + 1] = answer
             end
         end
@@ -106,19 +106,19 @@ local function new(content)
     function M.unheard_visit(p, visit)
         if visit then
             for _, answer in ipairs(meeting_options[visit] or visit.choices) do
-                if available(p, answer) and not p.story_seen[answer.key] then return true end
+                if available(p, answer) then return true end
             end
         end
         return false
     end
 
     -- Story delivery calls this only after playback finishes (including Skip).
-    -- Replaying a visit neither advances the campaign nor requires another save.
     function M.acknowledge(p, beat)
         if beat.key == "recap" then
             p.story_recap = false
         else
             if beat.phase == "visit" and p.story_seen[beat.key] then return false end
+            if p.pending_answer and p.pending_answer.key == beat.key then p.pending_answer = nil end
             p.story_seen[beat.key] = true
         end
         return true
@@ -190,10 +190,15 @@ local function new(content)
         for _, b in ipairs(meetings) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
         end
+        -- Keep existing 0/1 saves. State 2 resumes the selected answer after relaunch.
+        local pending
         for _, answer in ipairs(answers) do
             local key = answer.key
-            p.story_seen[key] = s:int("narrative.visit." .. key, p.story_seen[key] and 1 or 0) == 1
+            local state = s:int("narrative.visit." .. key, p.story_seen[key] and 1 or p.pending_answer == answer and 2 or 0)
+            p.story_seen[key] = state == 1
+            if state == 2 then pending = answer end
         end
+        p.pending_answer = pending
         for _, b in ipairs(M.upgrades) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
         end

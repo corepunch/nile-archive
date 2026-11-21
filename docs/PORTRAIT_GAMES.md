@@ -124,9 +124,11 @@ opening question and a question based on what the other resident told the player
 Either answer from the other building can supply that detail, so write both versions
 to establish it. Read the conversation in both directions, including the trip back.
 Give each reply something fresh, and let the question label use only what the visitor
-already knows. New questions appear first, starting with any fresh leads. When replays share
-the menu with new questions, one “Ask again” caption introduces the replays. Each
-answer keeps its own heard key across later milestones. An existing save with both opening accounts heard unlocks both replies.
+already knows. Each question can be asked once. Selecting it removes it from the menu
+and saves the pending answer. On returning to town, an interrupted answer plays again
+without another selection. Finishing it or pressing Skip records the memory and unlocks
+any related questions. When all questions are gone, tapping the building shows its
+description. Existing saves keep their heard answers and can unlock new replies.
 
 Preview the ordinary reply with `--story-beat after-91 --story-built --story-line 2`.
 Add `--story-asked` for the first conditional reply at or after that line, or
