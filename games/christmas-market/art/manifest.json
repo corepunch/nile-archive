@@ -38,7 +38,12 @@
     "art/building-catalogue/chimneys/prompt.txt",
     "art/construction-backdrops/prompt.txt",
     "art/construction-backdrops/wide-prompt.txt",
-    "art/construction-backdrops/framed-prompt.txt"
+    "art/construction-backdrops/framed-prompt.txt",
+    "art/construction-backdrops/purchases-04-07-prompt.txt",
+    "art/construction-backdrops/purchases-08-11-prompt.txt",
+    "art/construction-backdrops/purchases-12-14-prompt.txt",
+    "art/construction-backdrops/purchases-15-17-prompt.txt",
+    "art/construction-backdrops/purchases-18-20-prompt.txt"
   ],
   "states": [
     "normal",
@@ -52,9 +57,26 @@
     "data/board/.DS_Store": "3b4c18569b136bb88738ca0b877373d14902cbcd3444092382cc7f9fb2630221",
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
     "data/board/backs/bellmere-opening.jpg": "6e33ae54709be976e18a9721664a61d482abb3d0aeb11ecdeee89843ed35adbb",
+    "data/board/backs/candlelight-shop.jpg": "9d7b8079398ea81aca80dd58c21c7b7e435b4edfb5205f9451aa7015ed2a2327",
+    "data/board/backs/christmas-tree.jpg": "427abf0af343b33d1f0c5e184993891b701a216f2e4b2880563e289053792078",
+    "data/board/backs/firework-stall.jpg": "f14196a854923c825fe4a02df66305c913ac9391bd609d45a9d08eac6b218360",
+    "data/board/backs/gift-wrapping-pavilion.jpg": "d8edb0b8550c1c3afdf07b1f5b8d373b000fc16291f9d00ddc274adf4344bf4a",
+    "data/board/backs/gingerbread-bakery.jpg": "49ffdb0c9257e6ea49e8750540c0cd779db284c5798b5ed26d24d6aa54c658ac",
+    "data/board/backs/glassblowers-stall.jpg": "21df2eb988f175603f34124c513751e468966e19b75e09c5358e116d7a3fd924",
+    "data/board/backs/hot-cocoa-kiosk.jpg": "76e0a3e7301612c746e1ffe41c9fec458d35e91f941e9d73350befdbd142c7e1",
+    "data/board/backs/ice-house.jpg": "878dfb2944ebaec68fc0dd77d4025629c723d0c248d8fa8b91357c84bbfda1ab",
+    "data/board/backs/lakeside-smokehouse.jpg": "5a005936680fe53f559af31a1d8b65c7650c246f9ba37169180e8f8358ae6b05",
     "data/board/backs/lumber-workshop.jpg": "9b36efddf10ae78f8b7eb8e1acdde5066c89f37f7f3c2fc2cab08b1e530772ea",
+    "data/board/backs/north-pole-post-office.jpg": "3da998b11c307783532a50db17a579d91aebc7a46f77f16dd028eb60cc19c7cb",
+    "data/board/backs/reindeer-carousel.jpg": "3226aca0ed4f851411124232322d6170b9f1c0aafb2306106ff4750d5754c2fa",
     "data/board/backs/reindeer-stable.jpg": "f997e4fb7098dc8d0e872ca693c2e3e3144dae382afaed28ee554662a422355f",
+    "data/board/backs/santas-sleigh.jpg": "ebccaaad17da40645ae5eeb3f31497fd108a1bdf1338978a3b6c557dfb5f56cc",
+    "data/board/backs/snowy-chapel.jpg": "7b5963e4a73909dc31ee79ad2d49c3a7c918b078165b353ba5f169d9e65f5405",
+    "data/board/backs/station-kiosk.jpg": "b4825a614b74b53d675aae796f5dbcc05c37be7df1cb3a4da3b1aabb16751d68",
+    "data/board/backs/toymakers-workshop.jpg": "b6bb1d399a9f9c522b18e56463e2d37567db41a545dd9345c3345e6e584f519c",
     "data/board/backs/welcome-arch.jpg": "7e753d7e830dd74e527107c63161dae6c8cd664f8f7b335df4b2b31dfeea6450",
+    "data/board/backs/winter-skating-rink.jpg": "5ea920aa37832709c8cd4e8f6cc7215c500f83db2197eb1dce16b814c17754b9",
+    "data/board/backs/woodcarvers-hall.jpg": "6e251fd2feaa69334e72e4ef70f2050b984534087143e88c3e76d675afffa366",
     "data/board/blockers.png": "766e9ff1ab1e17dac093988dcbd56170c668262b52ea57ec861805b2e5e0e81a",
     "data/board/cells.png": "0a519c7c5914928973540f14383de404004388a9d6cb9e36219c228e2bb79d44",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
@@ -626,6 +648,176 @@
           1683,
           935
         ]
+      },
+      "firework-stall": {
+        "runtime": "data/board/backs/firework-stall.jpg",
+        "crop": [
+          0,
+          0,
+          418,
+          935
+        ],
+        "batch": "04-07"
+      },
+      "gingerbread-bakery": {
+        "runtime": "data/board/backs/gingerbread-bakery.jpg",
+        "crop": [
+          423,
+          0,
+          840,
+          935
+        ],
+        "batch": "04-07"
+      },
+      "snowy-chapel": {
+        "runtime": "data/board/backs/snowy-chapel.jpg",
+        "crop": [
+          844,
+          0,
+          1262,
+          935
+        ],
+        "batch": "04-07"
+      },
+      "hot-cocoa-kiosk": {
+        "runtime": "data/board/backs/hot-cocoa-kiosk.jpg",
+        "crop": [
+          1265,
+          0,
+          1683,
+          935
+        ],
+        "batch": "04-07"
+      },
+      "ice-house": {
+        "runtime": "data/board/backs/ice-house.jpg",
+        "crop": [
+          0,
+          0,
+          419,
+          935
+        ],
+        "batch": "08-11"
+      },
+      "lakeside-smokehouse": {
+        "runtime": "data/board/backs/lakeside-smokehouse.jpg",
+        "crop": [
+          422,
+          0,
+          841,
+          935
+        ],
+        "batch": "08-11"
+      },
+      "station-kiosk": {
+        "runtime": "data/board/backs/station-kiosk.jpg",
+        "crop": [
+          843,
+          0,
+          1262,
+          935
+        ],
+        "batch": "08-11"
+      },
+      "toymakers-workshop": {
+        "runtime": "data/board/backs/toymakers-workshop.jpg",
+        "crop": [
+          1265,
+          0,
+          1683,
+          935
+        ],
+        "batch": "08-11"
+      },
+      "candlelight-shop": {
+        "runtime": "data/board/backs/candlelight-shop.jpg",
+        "crop": [
+          0,
+          0,
+          485,
+          1080
+        ],
+        "batch": "12-14"
+      },
+      "gift-wrapping-pavilion": {
+        "runtime": "data/board/backs/gift-wrapping-pavilion.jpg",
+        "crop": [
+          487,
+          0,
+          970,
+          1080
+        ],
+        "batch": "12-14"
+      },
+      "north-pole-post-office": {
+        "runtime": "data/board/backs/north-pole-post-office.jpg",
+        "crop": [
+          973,
+          0,
+          1457,
+          1080
+        ],
+        "batch": "12-14"
+      },
+      "glassblowers-stall": {
+        "runtime": "data/board/backs/glassblowers-stall.jpg",
+        "crop": [
+          0,
+          0,
+          484,
+          1080
+        ],
+        "batch": "15-17"
+      },
+      "reindeer-carousel": {
+        "runtime": "data/board/backs/reindeer-carousel.jpg",
+        "crop": [
+          486,
+          0,
+          970,
+          1080
+        ],
+        "batch": "15-17"
+      },
+      "winter-skating-rink": {
+        "runtime": "data/board/backs/winter-skating-rink.jpg",
+        "crop": [
+          973,
+          0,
+          1457,
+          1080
+        ],
+        "batch": "15-17"
+      },
+      "woodcarvers-hall": {
+        "runtime": "data/board/backs/woodcarvers-hall.jpg",
+        "crop": [
+          0,
+          0,
+          484,
+          1080
+        ],
+        "batch": "18-20"
+      },
+      "christmas-tree": {
+        "runtime": "data/board/backs/christmas-tree.jpg",
+        "crop": [
+          487,
+          0,
+          969,
+          1080
+        ],
+        "batch": "18-20"
+      },
+      "santas-sleigh": {
+        "runtime": "data/board/backs/santas-sleigh.jpg",
+        "crop": [
+          972,
+          0,
+          1457,
+          1080
+        ],
+        "batch": "18-20"
       }
     },
     "composition_references": [
@@ -637,6 +829,28 @@
     "portrait_source": "art/construction-backdrops/source.png",
     "portrait_prompt": "art/construction-backdrops/prompt.txt",
     "framing_reference": "art/construction-backdrops/framing-concept.png",
-    "entrance_review": "docs/screenshots/review/construction-backdrops/arch-reveal.gif"
+    "entrance_review": "docs/screenshots/review/construction-backdrops/arch-reveal.gif",
+    "batches": {
+      "04-07": {
+        "source": "art/construction-backdrops/purchases-04-07.jpg",
+        "prompt": "art/construction-backdrops/purchases-04-07-prompt.txt"
+      },
+      "08-11": {
+        "source": "art/construction-backdrops/purchases-08-11.jpg",
+        "prompt": "art/construction-backdrops/purchases-08-11-prompt.txt"
+      },
+      "12-14": {
+        "source": "art/construction-backdrops/purchases-12-14.jpg",
+        "prompt": "art/construction-backdrops/purchases-12-14-prompt.txt"
+      },
+      "15-17": {
+        "source": "art/construction-backdrops/purchases-15-17.jpg",
+        "prompt": "art/construction-backdrops/purchases-15-17-prompt.txt"
+      },
+      "18-20": {
+        "source": "art/construction-backdrops/purchases-18-20.jpg",
+        "prompt": "art/construction-backdrops/purchases-18-20-prompt.txt"
+      }
+    }
   }
 }

@@ -4,12 +4,10 @@ local economy = require("economy")
 local buttons = require("match3.buttons")
 local A = {}
 A.menu_backdrop = "menu/bellmere.jpg"
-A.board_backdrops = {
-    ["bellmere-opening"] = "board/backs/bellmere-opening.jpg",
-    ["welcome-arch"] = "board/backs/welcome-arch.jpg",
-    ["reindeer-stable"] = "board/backs/reindeer-stable.jpg",
-    ["lumber-workshop"] = "board/backs/lumber-workshop.jpg",
-}
+A.board_backdrops = {[economy.opening_backdrop] = "board/backs/" .. economy.opening_backdrop .. ".jpg"}
+for _, unlock in ipairs(economy.unlocks) do
+    A.board_backdrops[unlock.backdrop] = "board/backs/" .. unlock.backdrop .. ".jpg"
+end
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_pause"}, states=A.states}
 A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}

@@ -31,6 +31,23 @@ vertically with the window biased upward to keep the rooflines in view.
 | `welcome-arch.jpg` | 2 | Welcome Arch | Second |
 | `reindeer-stable.jpg` | 7 | Reindeer Stable | Third |
 | `lumber-workshop.jpg` | 12 | Lumber Workshop | Fourth |
+| `firework-stall.jpg` | 17 | Firework Stall | Purchases 4–7, panel 1 |
+| `gingerbread-bakery.jpg` | 22 | Gingerbread Bakery | Purchases 4–7, panel 2 |
+| `snowy-chapel.jpg` | 27 | Snowy Chapel | Purchases 4–7, panel 3 |
+| `hot-cocoa-kiosk.jpg` | 32 | Hot Cocoa Kiosk | Purchases 4–7, panel 4 |
+| `ice-house.jpg` | 37 | Ice House | Purchases 8–11, panel 1 |
+| `lakeside-smokehouse.jpg` | 42 | Lakeside Smokehouse | Purchases 8–11, panel 2 |
+| `station-kiosk.jpg` | 47 | Station Kiosk | Purchases 8–11, panel 3 |
+| `toymakers-workshop.jpg` | 52 | Toymaker’s Workshop | Purchases 8–11, panel 4 |
+| `candlelight-shop.jpg` | 57 | Candlelight Shop | Purchases 12–14, panel 1 |
+| `gift-wrapping-pavilion.jpg` | 62 | Gift Wrapping Pavilion | Purchases 12–14, panel 2 |
+| `north-pole-post-office.jpg` | 67 | North Pole Post Office | Purchases 12–14, panel 3 |
+| `glassblowers-stall.jpg` | 72 | Glassblower’s Stall | Purchases 15–17, panel 1 |
+| `reindeer-carousel.jpg` | 77 | Reindeer Carousel | Purchases 15–17, panel 2 |
+| `winter-skating-rink.jpg` | 82 | Winter Skating Rink | Purchases 15–17, panel 3 |
+| `woodcarvers-hall.jpg` | 87 | Woodcarvers’ Hall | Purchases 18–20, panel 1 |
+| `christmas-tree.jpg` | 92 | Christmas Tree | Purchases 18–20, panel 2 |
+| `santas-sleigh.jpg` | 97 | Santa’s Sleigh | Purchases 18–20, panel 3 |
 
 Built-in ImageGen painted the four scenes together in the
 [initial landscape strip](../art/construction-backdrops/wide-source.png), using the
@@ -41,13 +58,15 @@ Rome 2 paintings as composition references. A single
 The [framing pass](../art/construction-backdrops/framed-prompt.txt) used that strip
 and the [gameplay concept sheet](../art/construction-backdrops/framing-concept.png)
 to produce the [final 1683 × 935 strip](../art/construction-backdrops/framed-source.png).
-The [art manifest](../art/manifest.json) records the exact crops, with a one-pixel
-trim where panels meet. Each
-JPEG is loaded by name on first use and held for the rest of the session.
+ImageGen used that final strip as the style reference for five subsequent
+[JPEG strips and their prompts](../art/construction-backdrops/) of three or
+four paintings each. The [art manifest](../art/manifest.json) records the
+source and exact crops for every JPEG. The game loads each scene by name on
+first use and keeps it for the rest of the session.
 The selection follows the building's existing unlock gate in `lua/economy.lua`.
 See the [in-game comparisons and reveal](screenshots/review/construction-backdrops/README.md).
 
-Re-encode the four crops from the repository root with Pillow.
+Re-encode the crops from the repository root with Pillow.
 
 ```sh
 python3 - <<'PY'
@@ -57,8 +76,9 @@ from PIL import Image
 
 game = Path("games/christmas-market")
 spec = json.loads((game / "art/manifest.json").read_text())["construction_backdrops"]
-with Image.open(game / spec["source"]) as sheet:
-    for frame in spec["frames"].values():
+for frame in spec["frames"].values():
+    source = spec["batches"][frame["batch"]]["source"] if "batch" in frame else spec["source"]
+    with Image.open(game / source) as sheet:
         sheet.crop(frame["crop"]).convert("RGB").save(
             game / frame["runtime"], quality=91, optimize=True
         )

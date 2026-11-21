@@ -46,8 +46,9 @@ hairline seams; cleared tablets return to parchment. Pause opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
-The board starts in Bellmere's village square. Confirming the Welcome Arch,
-Reindeer Stable or Lumber Workshop changes the backdrop on subsequent wishes.
+The board starts in Bellmere's village square. Each of the twenty campaign
+buildings changes the backdrop on subsequent wishes after its placement is
+confirmed.
 The first visit shows the full painting briefly before the board appears.
 Tap to skip the entrance. Reduce Motion goes straight to the board fade.
 Earlier replays show the setting of their own stage, and later wishes keep

@@ -62,25 +62,26 @@ E.unlocks = {
     {building="arch", after=1, line=5, kind=8, backdrop="welcome-arch"},
     {building="reindeer_stable", after=6, bonus=B.hammer, backdrop="reindeer-stable"},
     {building="lumber", after=11, line=2, kind=4, backdrop="lumber-workshop"},
-    {building="firework_stall", after=16, bonus=B.bomb},
-    {building="bakery", after=21, line=5, kind=7},
-    {building="chapel", after=26, line=2, kind=12},
-    {building="cocoa", after=31, line=5, kind=11},
-    {building="igloo", after=36, bonus=B.shield},
-    {building="log_cabin", after=41, line=5, kind=21},
-    {building="station_kiosk", after=46, bonus=B.hourglass},
-    {building="toys", after=51, line=4, kind=6},
-    {building="candles", after=56, bonus=B.lightning},
-    {building="gifts", after=61, line=4, kind=9},
-    {building="post_office", after=66, bonus=B.plus},
-    {building="glassblower", after=71, line=4, kind=14},
-    {building="carousel", after=76, bonus=B.mixer},
-    {building="rink", after=81, line=4, kind=17},
-    {building="santa_workshop", after=86, line=4, kind=18},
-    {building="tree", after=91, bonus=B.star},
-    {building="sleigh", after=96, line=4, kind=19},
+    {building="firework_stall", after=16, bonus=B.bomb, backdrop="firework-stall"},
+    {building="bakery", after=21, line=5, kind=7, backdrop="gingerbread-bakery"},
+    {building="chapel", after=26, line=2, kind=12, backdrop="snowy-chapel"},
+    {building="cocoa", after=31, line=5, kind=11, backdrop="hot-cocoa-kiosk"},
+    {building="igloo", after=36, bonus=B.shield, backdrop="ice-house"},
+    {building="log_cabin", after=41, line=5, kind=21, backdrop="lakeside-smokehouse"},
+    {building="station_kiosk", after=46, bonus=B.hourglass, backdrop="station-kiosk"},
+    {building="toys", after=51, line=4, kind=6, backdrop="toymakers-workshop"},
+    {building="candles", after=56, bonus=B.lightning, backdrop="candlelight-shop"},
+    {building="gifts", after=61, line=4, kind=9, backdrop="gift-wrapping-pavilion"},
+    {building="post_office", after=66, bonus=B.plus, backdrop="north-pole-post-office"},
+    {building="glassblower", after=71, line=4, kind=14, backdrop="glassblowers-stall"},
+    {building="carousel", after=76, bonus=B.mixer, backdrop="reindeer-carousel"},
+    {building="rink", after=81, line=4, kind=17, backdrop="winter-skating-rink"},
+    {building="santa_workshop", after=86, line=4, kind=18, backdrop="woodcarvers-hall"},
+    {building="tree", after=91, bonus=B.star, backdrop="christmas-tree"},
+    {building="sleigh", after=96, line=4, kind=19, backdrop="santas-sleigh"},
 }
 bonuses.index_unlocks(E.unlocks)
+E.opening_backdrop = "bellmere-opening"
 
 function E.unlock_of(building)
     for _, unlock in ipairs(E.unlocks) do
@@ -88,11 +89,11 @@ function E.unlock_of(building)
     end
 end
 
--- Use the latest confirmed construction with art for this wish's era.
+-- Use the latest confirmed construction for this wish's era.
 function E.board_backdrop(number, restored)
-    local backdrop = "bellmere-opening"
+    local backdrop = E.opening_backdrop
     for _, unlock in ipairs(E.unlocks) do
-        if unlock.backdrop and number >= unlock.first_level and restored[unlock.building] then
+        if number >= unlock.first_level and restored[unlock.building] then
             backdrop = unlock.backdrop
         end
     end

@@ -26,7 +26,7 @@ art.bind_board_backdrops(R.scenes)
 -- A new construction gets a full portrait before its first live board.
 function R.board_backdrop_hold(g)
     local key = g.backdrop
-    if key == "bellmere-opening" or not art.board_backdrops[key] or app.arg("default-match3") then return end
+    if key == economy.opening_backdrop or not art.board_backdrops[key] or app.arg("default-match3") then return end
     if app.arg("reveal-backdrop") then return .9 end   -- explicit art review
     if R.quiet or g.level ~= R.prog.level then return end
     local seen = R.prog.backdrops_seen or {}
@@ -44,7 +44,7 @@ function R.serialize_campaign(s)
     local seen = R.prog.backdrops_seen or {}
     for _, unlock in ipairs(economy.unlocks) do
         local key = unlock.backdrop
-        if key then seen[key] = s:int("board_backdrop." .. key, seen[key] and 1 or 0) ~= 0 or nil end
+        seen[key] = s:int("board_backdrop." .. key, seen[key] and 1 or 0) ~= 0 or nil
     end
     R.prog.backdrops_seen = seen
     local version = s:int("market_resources", reading and 0 or economy.CAMPAIGN_VERSION)

@@ -43,6 +43,12 @@ for _, size in ipairs{"480x900", "390x844"} do
     shot("construction-backdrop-arch-" .. size, size, "--level 2" .. safe)
     shot("construction-backdrop-workshop-" .. size, size, "--level 12" .. safe)
 end
+for wish = 17, 97, 5 do
+    shot("construction-backdrop-wish-" .. wish, "390x844", "--level " .. wish .. " --safe-area 0,47,0,34")
+end
+for _, wish in ipairs{27, 47, 77, 97} do
+    shot("construction-backdrop-wide-" .. wish, "480x900", "--level " .. wish)
+end
 shot("main-character-board", "480x900", "--level 4")
 reel("construction-backdrop-reveal", 22, 6, "390x844",
     "--level 2 --present --reveal-backdrop --reel --safe-area 0,47,0,34")

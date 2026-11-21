@@ -78,15 +78,26 @@ check(#first_wish.tool_slots == 4 and table.concat(first_wish.tools, ",") == "0,
       'locked boosters keep all four slots')
 check(first_wish.backdrop == "bellmere-opening", "a fresh game opens in the quiet square")
 check(rules.game_start(1, 123478, {}).backdrop == "bellmere-opening", "clearing a wish without building keeps the square")
-local finished = {arch=true, reindeer_stable=true, lumber=true, firework_stall=true}
-for _, example in ipairs{{1, "bellmere-opening"}, {2, "welcome-arch"}, {7, "reindeer-stable"},
-                         {12, "lumber-workshop"}, {100, "lumber-workshop"}} do
-    local number, scene = table.unpack(example)
-    check(rules.game_start(number - 1, 123478, finished).backdrop == scene, "wish " .. number .. " shows its last illustrated purchase")
+local economy = require("economy")
+local finished, scene_keys = {}, {[economy.opening_backdrop]=true}
+for _, unlock in ipairs(economy.unlocks) do
+    check(unlock.backdrop and not scene_keys[unlock.backdrop], unlock.building .. " has a unique painting")
+    scene_keys[unlock.backdrop], finished[unlock.building] = true, true
 end
-check(rules.game_start(11, 123478, {arch=true, reindeer_stable=true}).backdrop == "reindeer-stable",
-      "the stable remains until the workshop is confirmed")
-local B = require("economy").bonuses
+local previous = economy.opening_backdrop
+for _, unlock in ipairs(economy.unlocks) do
+    check(rules.game_start(unlock.after - 1, 123478, finished).backdrop == previous,
+          unlock.building .. " does not appear on an earlier replay")
+    finished[unlock.building] = nil
+    check(rules.game_start(unlock.after, 123478, finished).backdrop == previous,
+          unlock.building .. " needs a confirmed purchase")
+    finished[unlock.building] = true
+    check(rules.game_start(unlock.after, 123478, finished).backdrop == unlock.backdrop,
+          unlock.building .. " appears on the next eligible wish")
+    previous = unlock.backdrop
+end
+check(rules.game_start(99, 123478, finished).backdrop == "santas-sleigh", "the finale keeps Santa's sleigh")
+local B = economy.bonuses
 local hammer_wish = rules.game_start(6, 123478, {reindeer_stable=true})
 check(hammer_wish.tool_slots[1] == B.hammer and hammer_wish.tools[1] == 0,
       'the stable unlocks an empty Hammer')
