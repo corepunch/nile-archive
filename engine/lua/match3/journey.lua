@@ -29,7 +29,7 @@ local function new(content)
     end
     M.beats, M.upgrades, M.placements = scenes, upgrades, placements
 
-    -- All visit stages at a home share the same meeting answer and heard key.
+    -- A meeting's questions keep their heard keys across all visit stages at a home.
     for _, meeting in ipairs(meetings) do
         for _, answer in ipairs(meeting.followups or {}) do
             answers[#answers + 1] = answer
@@ -81,15 +81,25 @@ local function new(content)
     end
 
     local function available(p, answer)
-        return not answer.when or p.story_seen[answer.when]
+        if answer.when and not p.story_seen[answer.when] then return false end
+        if not answer.heard_any then return true end
+        for _, key in ipairs(answer.heard_any) do
+            if p.story_seen[key] then return true end
+        end
+        return false
     end
 
     function M.visit_menu(p, visit)
         if not meeting_options[visit] then return visit end
-        local choices = {}
+        local choices, other = {}, {}
         for _, answer in ipairs(meeting_options[visit]) do
-            if available(p, answer) then choices[#choices + 1] = answer end
+            if available(p, answer) then
+                -- Put a fresh lead first when the player comes back to talk.
+                local group = answer.source and not p.story_seen[answer.key] and choices or other
+                group[#group + 1] = answer
+            end
         end
+        for _, answer in ipairs(other) do choices[#choices + 1] = answer end
         return {key=visit.key, phase=visit.phase, prompt=visit.prompt, choices=choices}
     end
 

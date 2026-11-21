@@ -10,6 +10,8 @@ local item, tick = nil, 0
 local stage = app.arg("visit-stage")
 local first = "placed-" .. site
 local meeting = app.arg("visit-meeting") and assert(journey.find(app.arg("visit-meeting")))
+local heard_at = app.arg("heard-at")
+local selected
 
 local function select_question(id)
     assert(R.overlay == R.OV_STORY_CHOICE and not story.active(), "resident questions should be open")
@@ -36,6 +38,7 @@ function desc.init()
         R.prog.story_seen[stage] = true
         for _, answer in ipairs(journey.visit(R.prog, site).choices) do R.prog.story_seen[answer.key] = true end
         journey.acknowledge(R.prog, meeting)
+        if heard_at then R.prog.story_seen[meeting.key .. "." .. heard_at] = true end
     end
     R.island_with(0, position)
     for i = 1, R.island.count do
@@ -68,10 +71,17 @@ function desc.frame(dt)
             assert(R.town.hooks.unheard_visit(kind), "the meeting restores the marker")
             tap()
         elseif tick == 52 then
-            assert(R.choice_form.boxes["3"] and R.story_choice_beat.choices[3].topic == "meeting")
-            if not app.arg("visit-questions") then select_question("3") end
+            local key = meeting.key .. "." .. site .. (heard_at and ".reply" or "")
+            for index, answer in ipairs(R.story_choice_beat.choices) do
+                if answer.key == key then
+                    selected = answer
+                    assert(R.choice_form.boxes[tostring(index)], "question must have a tap target")
+                    if not app.arg("visit-questions") then select_question(tostring(index)) end
+                end
+            end
+            assert(selected, "meeting question must be available")
         elseif tick == 80 and not app.arg("visit-questions") then
-            assert(story.active() and R.story_current.key == meeting.key .. "." .. site)
+            assert(story.active() and R.story_current.key == selected.key)
             story.next() -- the resident's reply
         elseif tick == 85 and not app.arg("visit-questions") then
             app.inject_click(app.screen():center()) -- reveal the full line

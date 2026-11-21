@@ -819,5 +819,15 @@ return {
             {"otis", "Miss Pike did. I taught her how to jump two men and left mine in a lovely straight line."},
             {"pip", "Will you teach me that way too, Mr Bell?"},
         }},
+        {key="meeting-station_kiosk-glassblower.glassblower.reply", building="glassblower", when="meeting-station_kiosk-glassblower", topic="meeting", source="Otis", heard_any={"meeting-station_kiosk-glassblower.station_kiosk", "meeting-station_kiosk-glassblower.station_kiosk.reply"}, label="Did Otis leave you that jump?", lines={
+            {"pip", "Mr Bell says he left his buttons in a line. Did he mean for you to win, Ada?"},
+            {"ada", "He asked for his turn back, Pip. My blue button had rung twice on the tin. Both men were mine."},
+            {"ada", "He's asked me to put felt on the bottom. Says a fellow ought to be able to lose in peace."},
+        }},
+        {key="meeting-station_kiosk-glassblower.station_kiosk.reply", building="station_kiosk", when="meeting-station_kiosk-glassblower", topic="meeting", source="Ada", heard_any={"meeting-station_kiosk-glassblower.glassblower", "meeting-station_kiosk-glassblower.glassblower.reply"}, label="Did you hear Ada's button ring?", lines={
+            {"pip", "Ada heard two pings when she won. What did they sound like from your end, Mr Bell?"},
+            {"otis", "School bell, Pip. I taught her the double jump, left two men in a row and got a lesson myself."},
+            {"otis", "Bring your buttons at dinner. Let's see if I've learned it."},
+        }},
     }},
 }

@@ -33,6 +33,31 @@ def single_line(body, speakers):
     return lines[0]
 
 
+def meeting_questions(blocks, sites, key, visits, residents, speakers):
+    """Link the two accounts after reading both, so either can be written first."""
+    questions = {}
+    for site, source, label, body in zip(blocks[1::4], blocks[2::4], blocks[3::4], blocks[4::4]):
+        assert site in sites and site in visits and (site, source) not in questions, f'{key}: invalid question at {site}'
+        assert not source or (source in sites and source != site), f'{key}: invalid source {source} at {site}'
+        lines = speech(body, speakers)
+        assert any(line.speaker == speakers[residents[site][0]] for line in lines), label
+        answer_key = key + '.' + site + ('.reply' if source else '')
+        questions[site, source] = (answer_key, label, lines)
+
+    output = []
+    for (site, source), (answer_key, label, lines) in questions.items():
+        fields = ''
+        if source:
+            assert (source, None) in questions and (site, None) in questions, f'{key}: both residents need a first account'
+            heard = [quote(answer[0]) for (home, _), answer in questions.items() if home == source]
+            fields = ', source=%s, heard_any={%s}' % (quote(residents[source][0]), ', '.join(heard))
+        output.append('        {key=%s, building=%s, when=%s, topic="meeting"%s, label=%s, lines={' %
+                      (quote(answer_key), quote(site), quote(key), fields, quote(label)))
+        output.extend('            ' + line.lua() + ',' for line in lines)
+        output.append('        }},')
+    return output
+
+
 def compile_town(source, beats, speakers):
     by_key = {beat['key']: beat for beat in beats}
     purchases, callbacks, residents, visits = {}, {}, {}, {}
@@ -116,7 +141,7 @@ def compile_town(source, beats, speakers):
     for sites, body in meetings.items():
         assert all(site in residents for site in sites), f'Unknown resident site in {sites}'
         key = 'meeting-' + '-'.join(sites)
-        followups = re.split(r'^\*\*Ask at ([a-z_]+) \| ([^\n]+\?)\*\*$', body, flags=re.M)
+        followups = re.split(r'^\*\*Ask at ([a-z_]+)(?: after ([a-z_]+))? \| ([^\n]+\?)\*\*$', body, flags=re.M)
         parts = re.split(r'^\*\*If asked ([a-z_]+) ([\w-]+) (personal|story) (\d+)\*\*$', followups[0], flags=re.M)
         lines = speech(parts[0], speakers)
         cast = {speakers[residents[site][0]] for site in sites}
@@ -142,16 +167,7 @@ def compile_town(source, beats, speakers):
                               (index, quote(site), quote(answer), line.lua()))
         if len(followups) > 1:
             output.append('    }, followups={')
-            used = set()
-            for site, label, answer in zip(followups[1::3], followups[2::3], followups[3::3]):
-                assert site in sites and site in visits and site not in used, f'{key}: invalid follow-up site {site}'
-                used.add(site)
-                lines = speech(answer, speakers)
-                assert any(line.speaker == speakers[residents[site][0]] for line in lines), label
-                output.append('        {key=%s, building=%s, when=%s, topic="meeting", label=%s, lines={' %
-                              (quote(key + '.' + site), quote(site), quote(key), quote(label)))
-                output.extend('            ' + line.lua() + ',' for line in lines)
-                output.append('        }},')
+            output.extend(meeting_questions(followups, sites, key, visits, residents, speakers))
         output.append('    }},')
 
     return compile_replies(callbacks, by_key, introductions, answers), output

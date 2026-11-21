@@ -64,6 +64,7 @@ One restoration opens every five expeditions. Story restorations (bold) play a s
 | --- | --- |
 | Ask Nera whether she draws for fun after 67 | Hearing about Mara’s sketch gives Lio an idea for getting his parrot to pose. |
 | Lio asks Nera to draw his bird for his sister | The drawing catches the parrot nibbling Lio’s ear. His sister recognizes him by that ear. |
+| Carry the story of the ear between the aviary and the Cartographer’s House | Nera kept the imperfect ear because it looked like Lio. His sister hangs the drawing by her mirror. |
 | Mara asks about the folded corner at the Cartographer’s House (56) | At Cormorant Rock (67), Nera trusts Mara to flatten it when their bearings agree. |
 | Mara asks which of Lio’s noises his parrot copies (aviary after 85) | At 91 Lio tells her what the bird has learned to get with his snore. |
 | Two flashes answer Mara’s lamp (Spring well) | The answer changes to three at the Expedition camp. Ines confirms her identity with the same delayed pattern at the safe landing (100). |
@@ -853,6 +854,8 @@ Once Lio and Nera have both moved in, he asks her to draw his parrot for his sis
 
 At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still. [Visit menu](screenshots/meeting-followup-menu.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
 
+Bring Lio’s account of his sister to Nera, or ask Lio about the ear Nera kept redrawing. Either exchange gives Mara something she can take back to the other resident. [Visit menu](screenshots/meeting-reply-menu.jpg) · [Resident’s reply](screenshots/meeting-reply-answer.jpg)
+
 Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 
 Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays while any available answer is new. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
@@ -1110,6 +1113,18 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Mara:** How did you get Lio and his parrot to hold still for the portrait, Nera?
 - **Nera:** I let him nibble Lio's ear. Every time Lio laughed I had to start that ear again.
 
+**Ask at map_room after aviary | What about Lio's ear?**
+
+- **Mara:** Lio says his sister knew him by the ear his parrot bites. Did you nearly rub it out, Nera?
+- **Nera:** Three times, Mara. He'd laugh and my pencil would slip. The tidy ear could've been anybody's.
+- **Nera:** I kept the crooked one for his sister. I'm glad she knew it.
+
+**Ask at aviary after map_room | Did you make Nera start over?**
+
+- **Mara:** Nera says she drew your ear over and over. Couldn't you keep still for one minute, Lio?
+- **Lio:** You try it with a beak in your ear, Mara. My sister took one look at that ear and knew me.
+- **Lio:** Come see it by her mirror, Mara. She says the bird can sit for his next one all by himself.
+
 ## Upgrades
 
 Optional scenes: the keeper of a standing building and one other main character, at any time after it stands. Perks are felt, never named.
@@ -1223,6 +1238,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Added a reply at each home for visitors who have heard the other resident’s account. Both visit orders let the player carry the reply back.
 
 - 2026-11-21: Added both residents’ accounts of their meeting to their building visits. The drawing catches the parrot nibbling Lio’s ear. His sister recognizes him by that ear.
 

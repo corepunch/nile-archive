@@ -241,7 +241,7 @@ else
     for i, b in ipairs(require("story_content")) do
         local choices = {}
         for k, c in ipairs(b.choices or b.followups or {}) do
-            choices[k] = {key = c.key, building = c.building, label = c.label, lines = lines_of(c.lines)}
+            choices[k] = {key = c.key, building = c.building, source = c.source, label = c.label, lines = lines_of(c.lines)}
         end
         -- As journey.next schedules it: a scene after a wonder level waits for
         -- that level's story building, unless it plays on the clear itself.

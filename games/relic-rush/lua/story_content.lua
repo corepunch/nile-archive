@@ -886,5 +886,15 @@ return {
             {"mara", "How did you get Lio and his parrot to hold still for the portrait, Nera?"},
             {"nera", "I let him nibble Lio's ear. Every time Lio laughed I had to start that ear again."},
         }},
+        {key="meeting-map_room-aviary.map_room.reply", building="map_room", when="meeting-map_room-aviary", topic="meeting", source="Lio", heard_any={"meeting-map_room-aviary.aviary", "meeting-map_room-aviary.aviary.reply"}, label="What about Lio's ear?", lines={
+            {"mara", "Lio says his sister knew him by the ear his parrot bites. Did you nearly rub it out, Nera?"},
+            {"nera", "Three times, Mara. He'd laugh and my pencil would slip. The tidy ear could've been anybody's."},
+            {"nera", "I kept the crooked one for his sister. I'm glad she knew it."},
+        }},
+        {key="meeting-map_room-aviary.aviary.reply", building="aviary", when="meeting-map_room-aviary", topic="meeting", source="Nera", heard_any={"meeting-map_room-aviary.map_room", "meeting-map_room-aviary.map_room.reply"}, label="Did you make Nera start over?", lines={
+            {"mara", "Nera says she drew your ear over and over. Couldn't you keep still for one minute, Lio?"},
+            {"lio", "You try it with a beak in your ear, Mara. My sister took one look at that ear and knew me."},
+            {"lio", "Come see it by her mirror, Mara. She says the bird can sit for his next one all by himself."},
+        }},
     }},
 }

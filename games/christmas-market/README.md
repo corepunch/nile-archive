@@ -136,6 +136,8 @@ Once Otis and Ada have both moved in, a lost draughts button gives them an excus
 
 At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move.
 
+Pip can ask Ada whether Otis left the double jump on purpose, or ask Otis what Ada’s two pings sounded like from his end of the board. Either answer gives Pip a reason to walk back.
+
 All twenty campaign purchases now have a character response. The ten purchases between story gates trigger a conversation on confirmation. Later dialogue checks whether the building actually stands. Compare `--story-beat after-98 --story-line 2` with the same preview plus `--story-built`, or preview the purchase with `--story-beat placed-sleigh`.
 
 `lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/lua/match3/game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All eleven speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).

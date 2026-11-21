@@ -83,6 +83,7 @@ Bramble the goat does not speak.
 | --- | --- |
 | Ask Otis why he keeps the dent after 63 | When Ada sizes a glass draughts button, Otis tells her why his battered board matters. |
 | Ada promises Otis a blue draughts button | Ada wins their first game with a double jump. Otis taught her the move and left his two men open. |
+| Tell Ada about Otis’s lesson, or take her two pings to the kiosk | Ada remembers Otis asking for his turn back. Otis invites Pip to test whether the teacher learned his lesson. |
 | Pip learns to play draughts on Otis’s tin lid with coat buttons (kiosk after 46) | While Henrik reads the letter (63), Otis gives Pip the first move. |
 | Noelle asks what Ada plays (glassblower’s stall after 84) | When the choir comes in at 90, Ada brings her spoons and waits for Noelle’s cue. |
 | The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who tells her to open it. It's hers: Gran's front-door key (92) |
@@ -814,6 +815,8 @@ Once Otis and Ada have both moved in, a lost draughts button gives them an excus
 
 At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move. [Visit menu](screenshots/meeting-followup-menu.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
 
+Pip can ask Ada whether Otis left the double jump on purpose, or ask Otis what Ada’s two pings sounded like from his end of the board. Either answer gives Pip a reason to walk back. [Visit menu](screenshots/meeting-reply-menu.jpg) · [Resident’s reply](screenshots/meeting-reply-answer.jpg)
+
 Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
 
 Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays while any available answer is new. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
@@ -1075,6 +1078,18 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Otis:** Miss Pike did. I taught her how to jump two men and left mine in a lovely straight line.
 - **Pip:** Will you teach me that way too, Mr Bell?
 
+**Ask at glassblower after station_kiosk | Did Otis leave you that jump?**
+
+- **Pip:** Mr Bell says he left his buttons in a line. Did he mean for you to win, Ada?
+- **Ada:** He asked for his turn back, Pip. My blue button had rung twice on the tin. Both men were mine.
+- **Ada:** He's asked me to put felt on the bottom. Says a fellow ought to be able to lose in peace.
+
+**Ask at station_kiosk after glassblower | Did you hear Ada's button ring?**
+
+- **Pip:** Ada heard two pings when she won. What did they sound like from your end, Mr Bell?
+- **Otis:** School bell, Pip. I taught her the double jump, left two men in a row and got a lesson myself.
+- **Otis:** Bring your buttons at dinner. Let's see if I've learned it.
+
 ## Upgrades
 
 Optional scenes, one per building, played on the next return to town after its feat is met. The keeper speaks. Nobody new arrives, nothing refers to a level, and nobody says what the upgrade pays.
@@ -1208,6 +1223,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Added a reply at each home for visitors who have heard the other resident’s account. Both visit orders let the player carry the reply back.
 
 - 2026-11-21: Added both residents’ accounts of their meeting to their building visits. Ada wins their first game with a double jump. Otis taught her the move and left his two men open.
 

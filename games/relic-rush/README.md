@@ -179,6 +179,8 @@ Once Lio and Nera have both moved in, he asks her to draw his parrot for his sis
 
 At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still.
 
+Bring Lio’s account of his sister to Nera, or ask Lio about the ear Nera kept redrawing. Either exchange gives Mara something she can take back to the other resident.
+
 All twenty campaign purchases now have a character response. The ten purchases between story gates trigger a conversation on confirmation. Later dialogue checks whether the building actually stands. Compare `--story-beat after-12 --story-line 1` with the same preview plus `--story-built`, or preview the purchase with `--story-beat placed-workshop`.
 
 `lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/lua/match3/game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 3`. Restoration dialogue uses named speakers over the live island. The earlier request scenes and paintings remain in the story archive.

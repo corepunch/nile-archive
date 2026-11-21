@@ -160,6 +160,8 @@ class Page:
             opts = []
             for c in b['choices']:
                 place = self.steps[c['building']]['name'] if c.get('building') else 'Choice'
+                if c.get('source'):
+                    place += f' after hearing {c["source"]}’s account'
                 opts.append(f'<div class="choice"><div class="pick">{esc(place)}: {esc(c["label"])}</div>{self.lines(c["lines"])}</div>')
             prompt = 'Ask at either building after the meeting' if b.get('meeting_sites') else b.get('prompt') or 'The player chooses'
             body += f'<div class="prompt">{esc(prompt)}</div><div class="choices">{"".join(opts)}</div>'
