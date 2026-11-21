@@ -17,27 +17,42 @@ R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, replays = 0, 0, 0, 0
-local played, purchase_level = {}, {}
+local scene_order, scene_level, purchase_level = {}, {}, {}
+local scenes = 0
 local relic_rush = testing.game == 'relic-rush'
 local user_events = relic_rush and require('user_events_runtime')
 local function owns_wonder(index)
     return island.owned(R.island, island.wonder_kinds and island.wonder_kinds[index + 1] or index) > 0
 end
 
-local function scene(expected, before_reward)
-    R.story_tick()
-    check(R.story_current and R.story_current.key == expected, 'expected story scene ' .. expected)
-    if not R.story_current then error('missing story scene ' .. expected) end
-    played[#played + 1] = R.story_current.key
+local function finish_scene(before_reward)
+    local beat = R.story_current
+    local key = beat.key
+    assert(not scene_order[key], 'story scene played twice: ' .. key)
+    scenes = scenes + 1
+    scene_order[key], scene_level[key] = scenes, R.prog.level
     while story.active() do story.next() end
     R.story_tick()
-    if R.overlay == R.OV_STORY_CHOICE then
+    if beat.choices then
+        assert(R.overlay == R.OV_STORY_CHOICE and R.story_choice_beat == beat, 'expected choices for ' .. key)
         assert(R.choose_story_option(2), 'could not choose the reply')
         while story.active() do story.next() end
         R.story_tick()
     end
-    if before_reward then check(R.g.story_clear == expected, 'reply waits for the reward transaction')
-    else check(R.prog.story_seen[expected], 'finished scene acknowledged: ' .. expected) end
+    if before_reward then check(R.g.story_clear == key, 'reply waits for the reward transaction')
+    else check(R.prog.story_seen[key], 'finished scene acknowledged: ' .. key) end
+end
+
+local function scene(expected, before_reward)
+    R.story_tick()
+    local actual = R.story_current and R.story_current.key or 'nothing'
+    assert(actual == expected, ('expected story scene %s, got %s'):format(expected, actual))
+    finish_scene(before_reward)
+end
+
+local function finish_town_story()
+    R.story_tick()
+    while R.story_current do finish_scene() end
 end
 
 -- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua).
@@ -111,6 +126,7 @@ for level = 1, rules.LEVELS do
     if kind then
         check(not journey.next(R.prog, owns_wonder, nil), 'story waits for construction')
     end
+    finish_town_story()
     for z = 1, 5 do R.island:unlock(z, R.prog.wallet) end
     if island.next_step then
         -- A ladder: place each open restoration when affordable. When the story
@@ -124,6 +140,9 @@ for level = 1, rules.LEVELS do
             if island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0) then
                 placed[#placed + 1] = building.key
                 purchase_level[next_kind] = level
+                -- The headless placement helper bypasses the town's confirmation callback.
+                journey.placed(R.prog, building.key)
+                finish_town_story()
             elseif not owed then break
             else
                 short = short + 1
@@ -149,11 +168,7 @@ for level = 1, rules.LEVELS do
         assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
     end
     if user_events then user_events.emit('island') end
-    local pending = journey.next(R.prog, owns_wonder, nil)
-    while pending do
-        scene(pending.key)
-        pending = journey.next(R.prog, owns_wonder, nil)
-    end
+    finish_town_story()
 end
 local due = 0
 for _, step in ipairs(island.ladder) do
@@ -164,15 +179,36 @@ for _, step in ipairs(island.ladder) do
 end
 check(island.wonder_count(R.island) == journey.earned(rules.LEVELS), 'all earned story buildings placed')
 check(island.campaign_count(R.island) == due, 'every earned purchase placed')
-local index = 0
+local previous = 0
 for _, beat in ipairs(journey.beats) do
     if beat.level <= rules.LEVELS then
-        index = index + 1
-        check(played[index] == beat.key, 'story order: ' .. beat.key)
+        local order = scene_order[beat.key]
+        check(order and order > previous, 'campaign story order: ' .. beat.key)
+        previous = order or previous
     end
 end
+
+local function played_before(first, second)
+    return scene_order[first] and scene_order[second] and scene_order[first] < scene_order[second]
+end
+
+for _, beat in ipairs(journey.placements) do
+    local level = purchase_level[island.kinds[beat.building]]
+    if beat.invitation then
+        level = math.max(level or 0, journey.find(beat.invitation).level)
+        check(played_before(beat.invitation, beat.key), 'resident arrives after their invitation: ' .. beat.key)
+    end
+    check(scene_level[beat.key] and scene_level[beat.key] == level, 'town scene plays at its first opportunity: ' .. beat.key)
+end
+
+local meeting = journey.find(relic_rush and 'meeting-map_room-aviary' or 'meeting-station_kiosk-glassblower')
+check(scene_level[meeting.key] == meeting.level, 'the residents meet as soon as both have arrived')
+for _, site in ipairs(meeting.sites) do
+    check(played_before('placed-' .. site, meeting.key), 'the meeting follows the introduction at ' .. site)
+end
+
 check(replays == 0, ('the reference playthrough needs %d replays for income'):format(replays))
 print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d of %d purchases, %d total earned, %d remaining, %d stars, %d scenes'):format(
-    wins, attempts-wins, replays, island.campaign_count(R.island), due, earned, R.prog.wallet[1], R.prog.wallet[4], #played))
+    wins, attempts-wins, replays, island.campaign_count(R.island), due, earned, R.prog.wallet[1], R.prog.wallet[4], scenes))
 
 if profile then profile.report() end

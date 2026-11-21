@@ -208,8 +208,10 @@ layout and advance the test clock by 0.1 seconds per frame.
 For Relic Rush and Christmas Market, `build/test/<game> --extended 'rules campaign_play'`
 plays all 100 boards without a window using a deterministic greedy player.
 It tries up to eight fixed starts per board and up to sixteen per boss. The
-test banks real wins, checks every wallet slot and story scene, and confirms
-all twenty purchases on schedule with zero replays for income. It prints
+test banks real wins, checks every wallet slot and the order of the required
+story scenes, and verifies that purchase dialogue, resident introductions and
+their meeting play when they become due. It confirms all twenty purchases on
+schedule with zero replays for income and prints
 per-campaign totals to `build/test/<game>.log`.
 
 `make test-bot` runs both full rule campaigns in one process, including real
