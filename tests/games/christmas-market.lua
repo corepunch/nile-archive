@@ -273,6 +273,11 @@ shot("resident-visit-first", "480x900", visit .. "placed-glassblower")
 shot("resident-visit-later", "390x844", visit .. "after-84 --safe-area 0,47,0,34")
 shot("resident-questions-480", "480x900", visit .. "placed-glassblower --visit-questions")
 shot("resident-questions-390", "390x844", visit .. "after-84 --visit-questions --safe-area 0,47,0,34")
+shot("otis-arrival", "480x900", "--story-beat placed-station_kiosk --frames 240")
+shot("otis-questions", "390x844", visit .. "placed-station_kiosk --visit-site station_kiosk --visit-questions --safe-area 0,47,0,34")
+shot("otis-revisit", "390x844", visit .. "after-94 --visit-site station_kiosk --visit-questions --safe-area 0,47,0,34")
+shot("otis-unasked", "480x900", "--story-beat after-63 --story-built --story-line 3 --frames 240")
+shot("otis-remembered", "390x844", "--story-beat after-63 --story-asked --story-line 3 --frames 240 --safe-area 0,47,0,34")
 
 local marker = "--lua tests/fixtures/resident-visit;games/christmas-market/lua;. --visit-game christmas-market --visit-marker --frames 45"
 shot("unheard-visit-480", "480x900", marker)

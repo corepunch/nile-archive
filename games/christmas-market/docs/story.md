@@ -70,6 +70,7 @@ Bramble the goat does not speak.
 | **Mrs Alder** | Widow with grandchildren in the lane, a cocoa regular (from 31). | Brisk, generous, nosy; sings flat with total confidence | Pays for a cup "for whoever's next" → the choir's alto → her money on the tree-seller |
 | **Mr Finch** | Lake fisherman, runs the smokehouse, Bramble's owner (from 41). | Slow, deadpan, devoted to his goat | Stands outside every service holding Bramble → finds a goat-minder → sits in the front pew for the first time in forty winters |
 | **Mary Larkin** | Pip's mum, cook on the coastal steamer (from 94). | Practical, teasing, glad | Arrives on the last train; wears the other end of the scarf |
+| **Otis Bell** | Clock keeper who comes to the station kiosk with his suitcase. | Patient, quick to share his stool. | Trusts Pip with the clock → helps him wait at Henrik’s door → leaves him the key for a morning. |
 | **Ada Pike** | Glassblower from across the lake, looking for a furnace of her own. | Judges glass by ear and measures things in breaths. | Writes to Bellmere → opens her furnace → lends her glass to light the station bend. |
 | **Rosa** | Noelle's gran, who sent her (from 94). | Warm, mischievous | Surprises everyone on the last train; explains the parcel |
 
@@ -79,6 +80,7 @@ Bramble the goat does not speak.
 
 | Planted | Paid off |
 | --- | --- |
+| Pip learns to play draughts on Otis’s tin lid with coat buttons (kiosk after 46) | While Henrik reads the letter (63), Otis gives Pip the first move. |
 | Noelle asks what Ada plays (glassblower’s stall after 84) | When the choir comes in at 90, Ada brings her spoons and waits for Noelle’s cue. |
 | The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who tells her to open it. It's hers: Gran's front-door key (92) |
 | The ticket for the 26th (10 onward) | The ticket goes in the fir with a lamp when she decides to stay (91); she tells Theo she's staying (100) |
@@ -429,7 +431,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 
 **Level 46 · Gingerbread Row**
 
-- **Pip:** Noelle, could the station have a kiosk with a clock I can wind? Then I'd see every train come in.
+- **Pip:** Noelle, Otis will bring a clock if we open the kiosk. Could I wind it? I'd see every train!
 - **Noelle:** Watching for your mum? You said you didn't mind.
 - **Pip:** I don't! I just check. Sometimes. Every train. Have a gingerbread man.
 
@@ -805,6 +807,8 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 ## Town dialogue
 
+Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
+
 Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 At wish 90 Ada remembers what Noelle asked after wish 84. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
@@ -837,10 +841,11 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Mr Finch:** Mrs Holt, have you any applewood for my first trout? Bramble's eaten all the bark off mine.
 - **Agnes:** A sack of dry chips, Mr Finch. Take the handcart. I'd like the sack back, if the goat allows.
 
-**Placed station_kiosk**
+**Placed station_kiosk introduces Otis after-46**
 
-- **Pip:** Mr Wren, may I wind the station clock? I'll be here for every train.
-- **Mr Wren:** One turn a day, Pip. Three won't bring the next train any sooner.
+- **Otis:** Otis Bell, with one station clock and one suitcase. Pip, which side of the counter is mine?
+- **Pip:** You can have the stool, Mr Bell. Can I have the key?
+- **Otis:** One turn a day, lad. Three won't bring a train any sooner. Come keep me company between trains.
 
 **Placed post_office**
 
@@ -918,6 +923,51 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **If asked after-84 personal**
 
 - **Ada:** Noelle, I brought my spoons. Give me that nod we talked about and I'll play for the choir.
+
+**Visit station_kiosk placed-station_kiosk**
+
+**Ask personal | How do you pass the time?**
+
+- **Pip:** What do you do when the train's late, Mr Bell? I've counted every nail in this bench.
+- **Otis:** Turn my lunch tin over, Pip. Dad scratched a board in the lid. Six coat buttons each. You pick.
+- **Pip:** I'll take the brass ones. Show me which way they go?
+
+**Ask story | Can I wind it alone?**
+
+- **Pip:** Will you listen while I wind it, Mr Bell? What if I give it one turn too many?
+- **Otis:** Rest your thumb against mine, Pip. Feel it push back? Now you know where to stop.
+
+**With station_kiosk after-63 3**
+
+- **Otis:** Leave the door shut, Pip. Come sit on the step with me. Mr Strand can tell us when he's ready.
+
+**If asked placed-station_kiosk personal**
+
+- **Otis:** Leave his door shut, Pip. Here's the tin lid. Your brass buttons go first while he reads.
+
+**Visit station_kiosk after-63**
+
+**Ask personal | Why keep that dent?**
+
+- **Pip:** Mr Bell, shall I knock that dent out of your lunch tin? Mr Strand lent me a little mallet.
+- **Otis:** Leave it, Pip. Dad sat on it the first time I beat him. Only trophy I ever won.
+
+**Ask story | How long should a letter take?**
+
+- **Pip:** How long would you need to read one little letter, Mr Bell?
+- **Otis:** Depends who wrote it, Pip. I've one from my dad I still take out on my tea break.
+
+**Visit station_kiosk after-94**
+
+**Ask personal | Can Mum play too?**
+
+- **Pip:** Mum plays draughts, Mr Bell. Could we have a game here while the kettle boils?
+- **Otis:** Here's my tin lid and a pocketful of buttons. I'll pour the tea and advise whoever's losing.
+
+**Ask story | Can Mum wind the clock?**
+
+- **Pip:** Mr Bell, could I show Mum how to wind the clock tomorrow?
+- **Otis:** I'll leave the key with you, Pip. Tell her I'm taking my first lie-in since you walked in here.
 
 **Visit glassblower placed-glassblower**
 
@@ -1125,6 +1175,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
 
 - 2026-11-21: At wish 90 Ada remembers the cue she and Noelle agreed on at the stall.
 

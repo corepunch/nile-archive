@@ -2,7 +2,7 @@
 local game = assert(app.arg("visit-game"))
 local desc = require("games/" .. game .. "/lua/main")
 local R, island = require("state"), require("island")
-local site = game == "relic-rush" and "aviary" or "glassblower"
+local site = app.arg("visit-site") or (game == "relic-rush" and "aviary" or "glassblower")
 local kind = island.kinds[site]
 local init, frame = desc.init, desc.frame
 local item, tick = nil, 0

@@ -21,7 +21,7 @@ function A.bind_board_backdrops(scenes)
         return picture
     end})
 end
-A.story={cast={"elena","mara","tomas","adrian","keeper","marisol","lio"},
+A.story={cast={"elena","mara","tomas","adrian","keeper","marisol","lio","nera"},
     keeper_source="art/art-direction/ancient-keeper.png",marisol_source="art/art-direction/marisol.png",source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}

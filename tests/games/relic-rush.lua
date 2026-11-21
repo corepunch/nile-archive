@@ -345,6 +345,11 @@ shot("resident-visit-first", "480x900", visit .. "placed-aviary")
 shot("resident-visit-later", "390x844", visit .. "after-100 --safe-area 0,47,0,34")
 shot("resident-questions-480", "480x900", visit .. "placed-aviary --visit-questions")
 shot("resident-questions-390", "390x844", visit .. "after-100 --visit-questions --safe-area 0,47,0,34")
+shot("nera-arrival", "480x900", "--story-beat placed-map_room --frames 240")
+shot("nera-questions", "390x844", visit .. "placed-map_room --visit-site map_room --visit-questions --safe-area 0,47,0,34")
+shot("nera-revisit", "390x844", visit .. "after-100 --visit-site map_room --visit-questions --safe-area 0,47,0,34")
+shot("nera-unasked", "480x900", "--story-beat after-67 --story-built --story-line 3 --frames 240")
+shot("nera-remembered", "390x844", "--story-beat after-67 --story-asked --story-line 3 --frames 240 --safe-area 0,47,0,34")
 
 local marker = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --visit-marker --frames 45"
 shot("unheard-visit-480", "480x900", marker)

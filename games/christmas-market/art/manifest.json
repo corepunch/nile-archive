@@ -1,6 +1,6 @@
 {
   "resident_visit_marker": {
-    "building": "glassblower",
+    "buildings": ["glassblower", "station_kiosk"],
     "renderer": "engine/lua/town/screen.lua \u00b7 story.bubble_shape with town skin and three dots",
     "visible": "At least one answer at the current visit is unheard",
     "hidden": "No visit, both answers heard, dialogue, modal or placement",
@@ -8,6 +8,22 @@
       "docs/review/resident-markers/unheard-visit-480-after.jpg",
       "docs/review/resident-markers/unheard-visit-390-after.jpg"
     ]
+  },
+  "otis_portrait": {
+    "source": "../../art/match3-residents/chart-and-clock.png",
+    "prompt": "../../art/match3-residents/chart-and-clock.prompt.txt",
+    "runtime": "data/story/characters/otis.png",
+    "reproduction": "python3 tools/resident_portraits.py",
+    "states": [
+      "dialogue bust"
+    ],
+    "review": [
+      "docs/screenshots/otis-arrival.jpg",
+      "docs/screenshots/otis-questions.jpg",
+      "docs/screenshots/otis-unasked.jpg",
+      "docs/screenshots/otis-remembered.jpg"
+    ],
+    "registration": "right half, authored alpha, bottom-centred on 320 x 480"
   },
   "resident_portrait": {
     "source": "../../art/match3-residents/source.png",
@@ -201,6 +217,7 @@
     "data/story/characters/henrik.png": "614fe67fcddde03fa8dce7e6f08b0b854fb1c5e535261b865ed4e85557a918a3",
     "data/story/characters/mary.png": "13c1d26ec1dee103b79c31c95e544bcbdd973751270c0a220e478a76bfc61418",
     "data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
+    "data/story/characters/otis.png": "dcb591315061e9a94d50393c24e150863bac6a41336b78f6c526a4d79c80c7c8",
     "data/story/characters/pip.png": "f26c1d2514b93d56056e064c4c2d33726cb545835bf3be9d25f26e4ba9257206",
     "data/story/characters/rosa.png": "f9258680b1c7d9bd0eb671bb6c3e60c063653d455a2650c9d7754b9f5e74b57b",
     "data/story/characters/theo.png": "cb2aa98d7cc32a164197d0cb86dd103af86ae46cd794e29913c304bd02d14796",
@@ -242,6 +259,7 @@
       "data/story/characters/henrik.png",
       "data/story/characters/mary.png",
       "data/story/characters/noelle.png",
+      "data/story/characters/otis.png",
       "data/story/characters/pip.png",
       "data/story/characters/rosa.png",
       "data/story/characters/theo.png",

@@ -353,8 +353,8 @@ return {
         {"tomas", "Ines never could abide a wet floor, Elena. That's her bucket."},
     }},
     {key="after-56", phase="after", level=56, lines={
-        {"marisol", "Elena, the pearl divers asked me to hand you their reef bearings. They trust water over charts."},
-        {"mara", "Tomas, the cartographer's house is being re-roofed. Its drawers are numbered, like her cabinet."},
+        {"marisol", "Elena, Nera Cruz sent the divers' reef bearings. Can we spare a dry table for her charts?"},
+        {"mara", "Tomas, the cartographer's house is being re-roofed. Its drawers are numbered, like Ines's cabinet."},
         {"tomas", "She learned her numbers in that house, Mara. Cabinet, drawer, shelf."},
     }},
     {key="after-57", phase="after", level=57, lines={
@@ -440,7 +440,10 @@ return {
         {"elena", "And her plan lists a signal plate for the lamp. Mara, the lantern cradle is empty."},
         {"mara", "Then the beam guides us and the cross is our door. I'll hunt the plate."},
     }},
-    {key="after-67", phase="after", level=67, lines={
+    {key="after-67", phase="after", level=67, replies={
+        {index=3, building="map_room", introduction="placed-map_room", when="visit-map_room-placed-map_room.personal", line={"nera", "Mara, you can flatten that corner now. Your bearing agrees with mine. The bird can keep the hat."}},
+        {index=3, building="map_room", introduction="placed-map_room", line={"nera", "Let him keep the hat, Mara. Sight past his rock once more and I'll put the channel in ink."}},
+    }, lines={
         {"elena", "Mara, take bearings from the rock. They lead round the broken wall, as she drew them."},
         {"mara", "Elena, the cormorants object. Loudly. One has taken my hat."},
         {"tomas", "That's a sign of good water, Mara. Leave him the hat."},
@@ -751,9 +754,10 @@ return {
         {"marisol", "Elena, may I save a bench for the net menders? They come in late."},
         {"elena", "Give them the front one, Marisol. I'm tired of hearing about the quay from men in dry boots."},
     }},
-    {key="placed-map_room", phase="placed", building="map_room", lines={
-        {"elena", "Mara, will you mark the reef where you felt it under the Marigold?"},
-        {"mara", "In ink, Elena. I remember that rock and it remembers me."},
+    {key="placed-map_room", phase="placed", building="map_room", resident="nera", invitation="after-56", lines={
+        {"nera", "Marisol, my charts can stay dry here. Could I stay too? I fold up smaller than that table."},
+        {"marisol", "Keep the room upstairs, Nera. Mara, show her where the reef took a bite out of your boat."},
+        {"mara", "Lend me your pencil, Nera. I remember that rock and it remembers me."},
     }},
     {key="placed-beached_ship", phase="placed", building="beached_ship", lines={
         {"mara", "Tomas, get in the skiff and stamp hard. I'd rather find a leak now than halfway across."},
@@ -772,6 +776,36 @@ return {
     {key="placed-museum", phase="placed", building="museum", lines={
         {"marisol", "Elena, my aunt lent you that netting needle. Where does it say whose it is?"},
         {"elena", "On the card, in her own hand if she'll come. I've left her my pen."},
+    }},
+    {key="visit-map_room-placed-map_room", phase="visit", building="map_room", checkpoint="placed-map_room", level=56, prompt="Ask Nera", choices={
+        {key="visit-map_room-placed-map_room.personal", topic="personal", label="Why fold the corner?", lines={
+            {"mara", "Why fold that corner, Nera? There isn't a mark on it."},
+            {"nera", "Dad left a corner up when he wanted my eyes on a bearing. If we agreed, I got to lay it flat."},
+        }},
+        {key="visit-map_room-placed-map_room", topic="story", label="Who drew the reef?", lines={
+            {"elena", "Who gets the credit for this reef, Nera? I have three names and one line."},
+            {"nera", "Leave all three, Elena. Two held the boat steady so the third could take a sight."},
+        }},
+    }},
+    {key="visit-map_room-after-67", phase="visit", building="map_room", checkpoint="after-67", level=67, prompt="Ask Nera", choices={
+        {key="visit-map_room-after-67.personal", topic="personal", label="Do you ever draw for fun?", lines={
+            {"mara", "Suppose I sat still, Nera. Could you draw me?"},
+            {"nera", "Keep still another breath, Mara. I've got your grin on the back of the chart. I need the ears."},
+        }},
+        {key="visit-map_room-after-67", topic="story", label="Who gets the first chart?", lines={
+            {"elena", "Shall I file the new channel chart, Nera?"},
+            {"nera", "May I make the divers a tracing first, Elena? They're the ones who have to get home on it."},
+        }},
+    }},
+    {key="visit-map_room-after-100", phase="visit", building="map_room", checkpoint="after-100", level=100, prompt="Ask Nera", choices={
+        {key="visit-map_room-after-100.personal", topic="personal", label="What will you draw next?", lines={
+            {"nera", "Sit for me, Mara? Just once I'd like to draw you with both feet on the same bit of ground."},
+            {"mara", "You'll have to work fast, Nera. I've seen where Ines wants to take us."},
+        }},
+        {key="visit-map_room-after-100", topic="story", label="Can we map the other lights?", lines={
+            {"elena", "Ines has a chart of the other lights. How much paper shall I order, Nera?"},
+            {"nera", "Double what you think. Every keeper gets a copy, and my best pencil goes with the first one."},
+        }},
     }},
     {key="visit-aviary-placed-aviary", phase="visit", building="aviary", checkpoint="placed-aviary", level=81, prompt="Ask Lio", choices={
         {key="visit-aviary-placed-aviary.personal", topic="personal", label="How did you two meet?", lines={

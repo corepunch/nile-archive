@@ -128,6 +128,8 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 The 100 playable wishes run through five Advents. Ten stalls carry the story (Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree) and ten more fill the ladder between them: one purchase every five levels. The [script](docs/story.md) runs five Advents of twenty wishes to Christmas Eve: Noelle arrives to help for Advent, lights the market's lane, and by the last Advent a late passenger and a light to come home to bring everyone together. There is no villain.
 
+Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
+
 Ada Pike arrives from across the lake when the Glassblower’s stall opens. She returns at wishes 74, 84, 89 and 90. Tap the stall to visit Ada after the introduction. Tap the roof bubble or the building to choose what to ask Ada. Each of six story milestones offers a personal question and a question about recent events, including a final pair after the finale. The bubble stays until you finish or skip both answers. You can return and ask either question again. At wish 90 Ada remembers the cue she and Noelle agreed on at the stall.
 
 All twenty campaign purchases now have a character response. The ten purchases between story gates trigger a conversation on confirmation. Later dialogue checks whether the building actually stands. Compare `--story-beat after-98 --story-line 2` with the same preview plus `--story-built`, or preview the purchase with `--story-beat placed-sleigh`.

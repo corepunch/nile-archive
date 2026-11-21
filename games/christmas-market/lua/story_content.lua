@@ -260,7 +260,7 @@ return {
         {"pip", "I'M FINE! THE RULE IS THE RULE! I'M GOING TO SHOUT INTO A SACK!", story.SHOUT},
     }},
     {key="after-46", phase="after", level=46, lines={
-        {"pip", "Noelle, could the station have a kiosk with a clock I can wind? Then I'd see every train come in."},
+        {"pip", "Noelle, Otis will bring a clock if we open the kiosk. Could I wind it? I'd see every train!"},
         {"noelle", "Watching for your mum? You said you didn't mind."},
         {"pip", "I don't! I just check. Sometimes. Every train. Have a gingerbread man."},
     }},
@@ -356,7 +356,10 @@ return {
         {"noelle", "You're standing nine feet from it, Theo. And I've a letter for Henrik. His door has a queue."},
         {"theo", "Spinning tops. Try him at lunch, when he eats alone. I'll hold the ladder and the queue."},
     }},
-    {key="after-63", phase="after", level=63, lines={
+    {key="after-63", phase="after", level=63, replies={
+        {index=3, building="station_kiosk", introduction="placed-station_kiosk", when="visit-station_kiosk-placed-station_kiosk.personal", line={"otis", "Leave his door shut, Pip. Here's the tin lid. Your brass buttons go first while he reads."}},
+        {index=3, building="station_kiosk", introduction="placed-station_kiosk", line={"otis", "Leave the door shut, Pip. Come sit on the step with me. Mr Strand can tell us when he's ready."}},
+    }, lines={
         {"noelle", "Mr Strand? This was stuck behind the postbox lining. It's very old. Please open it."},
         {"henrik", "That's Agnes Holt's writing. Every t crossed like a sword. I'll need my good spectacles."},
         {"pip", "Noelle, the clock's striking twelve and he's shut the door on us! What do we do?"},
@@ -684,9 +687,10 @@ return {
         {"finch", "Mrs Holt, have you any applewood for my first trout? Bramble's eaten all the bark off mine."},
         {"agnes", "A sack of dry chips, Mr Finch. Take the handcart. I'd like the sack back, if the goat allows."},
     }},
-    {key="placed-station_kiosk", phase="placed", building="station_kiosk", lines={
-        {"pip", "Mr Wren, may I wind the station clock? I'll be here for every train."},
-        {"wren", "One turn a day, Pip. Three won't bring the next train any sooner."},
+    {key="placed-station_kiosk", phase="placed", building="station_kiosk", resident="otis", invitation="after-46", lines={
+        {"otis", "Otis Bell, with one station clock and one suitcase. Pip, which side of the counter is mine?"},
+        {"pip", "You can have the stool, Mr Bell. Can I have the key?"},
+        {"otis", "One turn a day, lad. Three won't bring a train any sooner. Come keep me company between trains."},
     }},
     {key="placed-post_office", phase="placed", building="post_office", lines={
         {"pip", "Noelle, could the first letter through my office be for me? I'll let you use the stamp."},
@@ -704,6 +708,37 @@ return {
     {key="placed-sleigh", phase="placed", building="sleigh", lines={
         {"rosa", "Mary, tuck that rug round your knees. When did we last go for a ride together?"},
         {"mary", "When my boots still had buckles, Rosa. Budge over. There's room for Pip."},
+    }},
+    {key="visit-station_kiosk-placed-station_kiosk", phase="visit", building="station_kiosk", checkpoint="placed-station_kiosk", level=46, prompt="Ask Otis", choices={
+        {key="visit-station_kiosk-placed-station_kiosk.personal", topic="personal", label="How do you pass the time?", lines={
+            {"pip", "What do you do when the train's late, Mr Bell? I've counted every nail in this bench."},
+            {"otis", "Turn my lunch tin over, Pip. Dad scratched a board in the lid. Six coat buttons each. You pick."},
+            {"pip", "I'll take the brass ones. Show me which way they go?"},
+        }},
+        {key="visit-station_kiosk-placed-station_kiosk", topic="story", label="Can I wind it alone?", lines={
+            {"pip", "Will you listen while I wind it, Mr Bell? What if I give it one turn too many?"},
+            {"otis", "Rest your thumb against mine, Pip. Feel it push back? Now you know where to stop."},
+        }},
+    }},
+    {key="visit-station_kiosk-after-63", phase="visit", building="station_kiosk", checkpoint="after-63", level=63, prompt="Ask Otis", choices={
+        {key="visit-station_kiosk-after-63.personal", topic="personal", label="Why keep that dent?", lines={
+            {"pip", "Mr Bell, shall I knock that dent out of your lunch tin? Mr Strand lent me a little mallet."},
+            {"otis", "Leave it, Pip. Dad sat on it the first time I beat him. Only trophy I ever won."},
+        }},
+        {key="visit-station_kiosk-after-63", topic="story", label="How long should a letter take?", lines={
+            {"pip", "How long would you need to read one little letter, Mr Bell?"},
+            {"otis", "Depends who wrote it, Pip. I've one from my dad I still take out on my tea break."},
+        }},
+    }},
+    {key="visit-station_kiosk-after-94", phase="visit", building="station_kiosk", checkpoint="after-94", level=94, prompt="Ask Otis", choices={
+        {key="visit-station_kiosk-after-94.personal", topic="personal", label="Can Mum play too?", lines={
+            {"pip", "Mum plays draughts, Mr Bell. Could we have a game here while the kettle boils?"},
+            {"otis", "Here's my tin lid and a pocketful of buttons. I'll pour the tea and advise whoever's losing."},
+        }},
+        {key="visit-station_kiosk-after-94", topic="story", label="Can Mum wind the clock?", lines={
+            {"pip", "Mr Bell, could I show Mum how to wind the clock tomorrow?"},
+            {"otis", "I'll leave the key with you, Pip. Tell her I'm taking my first lie-in since you walked in here."},
+        }},
     }},
     {key="visit-glassblower-placed-glassblower", phase="visit", building="glassblower", checkpoint="placed-glassblower", level=71, prompt="Ask Ada", choices={
         {key="visit-glassblower-placed-glassblower.personal", topic="personal", label="What did you make first?", lines={

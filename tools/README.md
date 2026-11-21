@@ -82,7 +82,7 @@ are the guides.
 | `hex_levels.py` | Validates the hex level files, prints a board, writes `lua/boards.lua` and the overview sheets | `python3 tools/hex_levels.py relic-rush --lua`; `make levels-preview` |
 | `square_boards.py` | Validates the 100 square boards per game (envelope, legend, connectivity, every target can receive pieces, at least six target layers); lists asymmetric boards as notes | `python3 tools/square_boards.py christmas-market`; add `--show N` to print a board |
 | `square_trim.py` | Uses the reference bot to remove the last targets cleared until each board's median fits its tier (easy 30, normal 45, hard 60, boss 70) | `python3 tools/square_trim.py relic-rush --levels 21-30 --report` |
-| `resident_portraits.py` | Registers the two building residents from their original cast sheet | `python3 tools/resident_portraits.py --check` |
+| `resident_portraits.py` | Registers building residents from their original portrait sheets | `python3 tools/resident_portraits.py --check` |
 | `town_story.py` | Compiles purchases, resident questions and conditional campaign replies from the reviewed town script | Imported by both games’ `prepare_story.py` |
 | `story_lines.py` | Lists story lines that may be narration rather than speech: no I/we/you, no name, no question or imperative ([why](../docs/STORY_WRITING.md#speech-only-no-narration)) | `python3 tools/story_lines.py christmas-market` |
 | `tune_moves.py` | Fits each board's `moves` in the square campaign's `lua/campaign.lua` to the bot's median times 1.25, rounded up, with no percentile override and writes `docs/level-moves.md` and `.json` (`lua/level_moves.lua` is the archived hex path) | `python3 tools/tune_moves.py relic-rush` |

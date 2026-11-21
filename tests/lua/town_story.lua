@@ -183,3 +183,40 @@ resolved = journey.lines_for(scene, owns_site, {[checkpoint]=true})
 check(resolved[1] == personal.lines[2], "a later eligible rule wins when an earlier rule is unavailable")
 check(journey.lines_for(scene, owns_site, {}) == scene.lines and scene.lines[1] == original.lines[1],
     "resolving another player's history leaves the authored scene intact")
+
+-- Towns saved before the second resident existed may have both buildings.
+-- Each introduction, heard flag and callback belongs to its own site.
+local site2 = testing.game == "relic-rush" and "map_room" or "station_kiosk"
+local arrival2 = journey.find("placed-" .. site2)
+local later2 = journey.find(testing.game == "relic-rush" and "after-67" or "after-63")
+local function owns_both(building) return building == site or building == site2 end
+save.write("second-resident-old-town", function(s)
+    s:int("narrative.v1." .. arrival2.key, 2) -- original purchase dialogue, before this introduction
+    s:int("narrative.v1." .. arrival2.invitation, 1)
+    s:int("narrative.arrival." .. arrival.resident, 2)
+    s:int("narrative.visit." .. personal.key, 1)
+end)
+local both = {}
+save.read("second-resident-old-town", function(s) journey.serialize(s, both) end)
+check(not journey.visit(both, site2) and journey.next_arrival(both, owns_both) == arrival2,
+    "old building owner can meet the second resident without buying it again")
+check(journey.lines_for(later2, owns_both, both.story_seen) == later2.lines, "before the welcome the original cast speaks")
+journey.acknowledge(both, arrival2)
+local first2 = journey.visit(both, site2)
+local remembered2, ordinary2 = table.unpack(later2.replies)
+R.island:add(vec2(0,0), island.kinds[site2], 0)
+R.prog = both
+for _, index in ipairs({2, 1}) do
+    check(R.story_lines(later2)[ordinary2.index] == ordinary2.line, "the other resident or the other question cannot trigger the memory")
+    R.open_story_choice(first2)
+    check(R.choose_story_option(index) and story.active(), "play the second resident's selected answer")
+    while story.active() do story.next() end
+    R.story_tick()
+end
+save.write("second-resident-heard", function(s) journey.serialize(s, both) end)
+R.prog = {}
+save.read("second-resident-heard", function(s) journey.serialize(s, R.prog) end)
+check(R.story_lines(later2)[remembered2.index] == remembered2.line and R.prog.story_seen[personal.key],
+    "both residents keep their own memories across a reload")
+R.prog.story_seen[later2.key] = true
+check(journey.unheard_visit(R.prog, journey.visit(R.prog, site2)), "the callback opens fresh questions at the building")

@@ -17,7 +17,7 @@ town_source = re.search(r'^## Town dialogue\n.*?(?=^## |\Z)', text, re.S | re.M)
 source = text.replace(upgrade_source, '').replace(town_source, '')
 source = re.sub(r'^## Citizens\n.*?(?=^## |\Z)', '', source, flags=re.S | re.M).split('## Crew requests')[0]   # also drop the superseded Citizens section
 beats, beat, choice = [], None, None
-speakers = {'Lio': 'lio', 'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler', 'Ines': 'ines',
+speakers = {'Nera': 'nera', 'Lio': 'lio', 'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler', 'Ines': 'ines',
             'Ancient keeper': 'keeper', 'Marisol': 'marisol'}
 # Rome 2's upgrade events (games/relic-rush/lua/user_events.lua) and the keeper who must speak in each.
 keeper_speakers = {'man_03': 'Tomas', 'man_04': 'Tomas', 'man_02': 'Mara', 'man_01': 'Adrian', 'man_05': 'Marisol', 'man_06': 'Adrian', 'man_07': 'Elena', 'man_08': 'Tomas', 'man_09': 'Marisol', 'man_10': 'Adrian', 'man_11': 'Elena', 'man_12': 'Mara', 'man_13': 'Mara', 'man_14': 'Elena', 'man_15': 'Adrian', 'man_16': 'Tomas'}

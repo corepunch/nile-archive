@@ -29,6 +29,7 @@ The reply to Mara’s lamp poses the question **Who is signalling back?** The fi
 | Adrian | Charming sponsor with a secret claim → exposed → surrenders it to protect the quay | Deflects with wit; his signed claim is both danger and a choice. |
 | Kessler | Distant claim holder's agent → presses for the records → loses the claim | Polite radio voice; no new portrait. |
 | Marisol | Islander elder who runs the Jungle market (planted at 14 and 19, speaks from 21) → tests Adrian, keeps a customer's secret → sees the quay jobs and records stay on the island | Shrewd, dry, protective of her cousins on the quay; trades in exact coin and better questions. |
+| Nera Cruz | Cartographer from the diving boats → opens the chart room → puts the divers’ names and bearings on their chart | Leaves a corner folded until someone checks her sight. |
 | Lio Valez | Bird keeper from the hills → settles at the aviary → takes a tide watch | Knows whose voice his birds copy. Takes a reading himself before he trusts a call. |
 | Ines | Absent signal sender → identified by note → answers from the safe landing | Acts through the relay and signed notes, then returns Tomas's trust with the chart. |
 
@@ -60,6 +61,7 @@ One restoration opens every five expeditions. Story restorations (bold) play a s
 
 | Plant | Inference later / payoff |
 | --- | --- |
+| Mara asks about the folded corner at the Cartographer’s House (56) | At Cormorant Rock (67), Nera trusts Mara to flatten it when their bearings agree. |
 | Mara asks which of Lio’s noises his parrot copies (aviary after 85) | At 91 Lio tells her what the bird has learned to get with his snore. |
 | Two flashes answer Mara’s lamp (Spring well) | The answer changes to three at the Expedition camp. Ines confirms her identity with the same delayed pattern at the safe landing (100). |
 | Tomas tells the crew the relay cable is severed (Trapper’s cabin) | Open: the cable hand-in that paid this off went with the crew requests. |
@@ -502,8 +504,8 @@ Choice prompt: Who should answer the signal?
 
 **Level 56 · Wrack Line**
 
-- **Marisol:** Elena, the pearl divers asked me to hand you their reef bearings. They trust water over charts.
-- **Mara:** Tomas, the cartographer's house is being re-roofed. Its drawers are numbered, like her cabinet.
+- **Marisol:** Elena, Nera Cruz sent the divers' reef bearings. Can we spare a dry table for her charts?
+- **Mara:** Tomas, the cartographer's house is being re-roofed. Its drawers are numbered, like Ines's cabinet.
 - **Tomas:** She learned her numbers in that house, Mara. Cabinet, drawer, shelf.
 
 **Level 57 · Serpent Wall**
@@ -844,6 +846,8 @@ Choice prompt: Who should answer the signal?
 
 ## Town dialogue
 
+Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
+
 Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 At expedition 91 Lio remembers what Mara asked after expedition 85. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
@@ -876,10 +880,11 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Marisol:** Elena, may I save a bench for the net menders? They come in late.
 - **Elena:** Give them the front one, Marisol. I'm tired of hearing about the quay from men in dry boots.
 
-**Placed map_room**
+**Placed map_room introduces Nera after-56**
 
-- **Elena:** Mara, will you mark the reef where you felt it under the Marigold?
-- **Mara:** In ink, Elena. I remember that rock and it remembers me.
+- **Nera:** Marisol, my charts can stay dry here. Could I stay too? I fold up smaller than that table.
+- **Marisol:** Keep the room upstairs, Nera. Mara, show her where the reef took a bite out of your boat.
+- **Mara:** Lend me your pencil, Nera. I remember that rock and it remembers me.
 
 **Placed beached_ship**
 
@@ -954,6 +959,50 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **With museum after-87 1**
 
 - **Mara:** Adrian, I left you at the museum with a clean sheet. One line since supper? What's it say?
+
+**Visit map_room placed-map_room**
+
+**Ask personal | Why fold the corner?**
+
+- **Mara:** Why fold that corner, Nera? There isn't a mark on it.
+- **Nera:** Dad left a corner up when he wanted my eyes on a bearing. If we agreed, I got to lay it flat.
+
+**Ask story | Who drew the reef?**
+
+- **Elena:** Who gets the credit for this reef, Nera? I have three names and one line.
+- **Nera:** Leave all three, Elena. Two held the boat steady so the third could take a sight.
+
+**With map_room after-67 3**
+
+- **Nera:** Let him keep the hat, Mara. Sight past his rock once more and I'll put the channel in ink.
+
+**If asked placed-map_room personal**
+
+- **Nera:** Mara, you can flatten that corner now. Your bearing agrees with mine. The bird can keep the hat.
+
+**Visit map_room after-67**
+
+**Ask personal | Do you ever draw for fun?**
+
+- **Mara:** Suppose I sat still, Nera. Could you draw me?
+- **Nera:** Keep still another breath, Mara. I've got your grin on the back of the chart. I need the ears.
+
+**Ask story | Who gets the first chart?**
+
+- **Elena:** Shall I file the new channel chart, Nera?
+- **Nera:** May I make the divers a tracing first, Elena? They're the ones who have to get home on it.
+
+**Visit map_room after-100**
+
+**Ask personal | What will you draw next?**
+
+- **Nera:** Sit for me, Mara? Just once I'd like to draw you with both feet on the same bit of ground.
+- **Mara:** You'll have to work fast, Nera. I've seen where Ines wants to take us.
+
+**Ask story | Can we map the other lights?**
+
+- **Elena:** Ines has a chart of the other lights. How much paper shall I order, Nera?
+- **Nera:** Double what you think. Every keeper gets a copy, and my best pencil goes with the first one.
 
 **Visit aviary placed-aviary**
 
@@ -1142,6 +1191,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 
 - 2026-11-21: On expedition 91 Lio remembers Mara asking about his snore at the aviary.
 
