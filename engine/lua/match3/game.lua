@@ -1104,13 +1104,12 @@ function G.bind(R, over)
             choice_reply(beat, 1, preview)
             return true
         end
-        local corner_close = visit and W.corner_close and not continuing_visit
-        local children = {match3.popup_header(beat.prompt, nil, corner_close and "cancel")}
+        local children = {match3.popup_header(beat.prompt)}
         for index, option in ipairs(beat.choices) do
             children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
         end
-        if visit and not corner_close then
-            children[#children + 1] = N.button {id="cancel", text=continuing_visit and "Back to town" or "Back", height=44, role="link", em=18}
+        if visit then
+            children[#children + 1] = N.button {id="cancel", text="Back to town", height=44, role="link", em=18}
         end
         R.choice_form = ui.form{root=N.column {panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end

@@ -487,10 +487,11 @@
     <field name="right" type="bool" doc="Preferred side of the dialogue."/>
     <field name="mouth" type="vec2" doc="Where they speak from, 0..1 inside the source portrait (default .5, .25)."/>
   </struct>
-  <struct name="story_line" c="story_line" doc="`{who, text, kind}` (positional or named); who is a character id, nil for the narrator.">
+  <struct name="story_line" c="story_line" doc="`{who, text, kind, listener}` (positional or named); who is a character id, nil for the narrator.">
     <field name="who" type="string" pos="1"/>
     <field name="text" type="string" pos="2"/>
     <field name="kind" type="int" pos="3" doc="story.SPEECH (default), THOUGHT or SHOUT."/>
+    <field name="listener" type="string" pos="4" doc="Optional character addressed when a conversation changes participants."/>
   </struct>
   <struct name="story_style" c="story_style" doc="How dialogue looks.">
     <field name="backdrop_blur" type="float" doc="Optional logical-pixel blur behind the dialogue."/>

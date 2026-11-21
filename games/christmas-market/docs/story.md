@@ -83,7 +83,7 @@ Bramble the goat does not speak.
 | --- | --- |
 | Ask Otis why he keeps the dent after 63 | When Ada sizes a glass draughts button, Otis tells her why his battered board matters. |
 | Ada promises Otis a blue draughts button | Ada wins their first game with a double jump. Otis taught her the move and left his two men open. |
-| Tell Ada about Otis’s lesson, or take her two pings to the kiosk | Ada remembers Otis asking for his turn back. Otis invites Pip to test whether the teacher learned his lesson. |
+| Tell Ada about Otis’s lesson, or take her two pings to the kiosk | Ada remembers Otis asking for his turn back. Otis admits that his own lesson cost him the game. |
 | Hear either account, both accounts, or leave the pair to themselves | Ada and Otis lend Pip the tin while he waits for his mum’s train (85). |
 | Visit either home after the pair’s level scene | Pip offers two buttons as bait, catches Ada’s blue one in his mitten and wins. Otis keeps his advice to himself. |
 | Pip learns to play draughts on Otis’s tin lid with coat buttons (kiosk after 46) | While Henrik reads the letter (63), Otis gives Pip the first move. |
@@ -926,7 +926,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **With glassblower after-84 1**
 
-- **Ada:** Henrik, steady the ladder. Noelle, tie Gran's ribbon on my glass bell. I blew it for her.
+- **Ada:** Steady the ladder, Henrik. Noelle, hang my bell beside Gran's amber bauble. There's room for both.
 
 **With glassblower after-89 2**
 
@@ -955,7 +955,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **With station_kiosk after-63 3**
 
-- **Otis:** Leave the door shut, Pip. Come sit on the step with me. Mr Strand can tell us when he's ready.
+- **Otis:** Let's wait on the step, Pip. Give Mr Strand a little time with his letter.
 
 **If asked placed-station_kiosk personal**
 
@@ -968,10 +968,10 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Pip:** Mr Bell, shall I knock that dent out of your lunch tin? Mr Strand lent me a little mallet.
 - **Otis:** Leave it, Pip. Dad sat on it the first time I beat him. Only trophy I ever won.
 
-**Ask story | How long should a letter take?**
+**Ask story | Do you keep old letters?**
 
-- **Pip:** How long would you need to read one little letter, Mr Bell?
-- **Otis:** Depends who wrote it, Pip. I've one from my dad I still take out on my tea break.
+- **Pip:** Is there a letter you'd keep for forty years, Mr Bell?
+- **Otis:** Here's one from my dad, Pip. The fold's worn through. I still read it on my tea break.
 
 **Visit station_kiosk after-94**
 
@@ -1073,15 +1073,15 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 - **Ada:** Then the dent stays. I'll bring the blue button after work. Will you teach me on that board?
 
-**Ask at glassblower | Who won your first game?**
+**Ask at glassblower | What was it like playing Otis?**
 
-- **Pip:** Did your blue button bring you luck against Mr Bell, Ada?
+- **Pip:** What do you remember about that first game with Mr Bell, Ada?
 - **Ada:** I won, Pip. Jumped his last two buttons. I could hear my blue one ring on the tin both times.
 
 **Ask at station_kiosk | How did you fare against Ada?**
 
-- **Pip:** Who won that first game on your tin lid, Mr Bell?
-- **Otis:** Miss Pike did. I taught her how to jump two men and left mine in a lovely straight line.
+- **Pip:** Which move do you remember from your first game with Ada, Mr Bell?
+- **Otis:** Miss Pike jumped my last two men. I'd just taught her how, then left them in a lovely straight line.
 - **Pip:** Will you teach me that way too, Mr Bell?
 
 **Ask at glassblower after station_kiosk | Did Otis leave you that jump?**
@@ -1094,7 +1094,6 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 - **Pip:** Ada heard two pings when she won. What did they sound like from your end, Mr Bell?
 - **Otis:** School bell, Pip. I taught her the double jump, left two men in a row and got a lesson myself.
-- **Otis:** Bring your buttons at dinner. Let's see if I've learned it.
 
 **Recall after-85**
 
@@ -1110,8 +1109,8 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **Heard station_kiosk**
 
-- **Otis:** Shall we teach Pip that double jump, Miss Pike? I'll leave two men out for him like I did for you.
-- **Ada:** Oh, you play on Pip's side this time, Mr Bell. Let's see if you can keep those last two buttons.
+- **Otis:** Shall I show Pip where to put his last two buttons, Miss Pike? I remember what it cost me.
+- **Ada:** Keep your hands round your cup, Mr Bell. I want to see where Pip puts them.
 
 **Heard both**
 
@@ -1276,6 +1275,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Kept Gran’s bauble beside Ada’s bell, made Pip’s old-letter question work after the reunion, and let Pip choose his own moves in every version of the game.
 
 - 2026-11-21: After the pair lend Pip their tin lid, both homes offer one last question. Ada explains how Pip won the game. Otis tells Noelle what happened when he tried to coach. Hearing either answer changes the conversation at the other home.
 

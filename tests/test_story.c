@@ -256,6 +256,24 @@ static void inward_facing_pair(void)
     CHECK(!memcmp(&left,&now_left,sizeof left) && !memcmp(&right,&now_right,sizeof right));
     if (has_left && has_right) check_facing_pixels(now_left,now_right);
     story_next();story_frame(1);
+
+    /* A new pair can take over within the same level scene. */
+    character trio[] = {cast[0], cast[1], {.id="guest", .name="Guest", .portrait=directional}};
+    story_setup(trio,3,&test_style);
+    story_say("ann","My turn is over.");
+    story_line_add((story_line){.who="other", .text="Sit with me?", .listener="guest"});
+    story_say("guest","Pass the pencil.");
+    story_frame(1);
+    story_next();story_frame(1);
+    CHECK(!story_test_portrait(&trio[0],&now_left,&tint));
+    CHECK(story_test_portrait(&trio[1],&right,&tint) && tint.r==255);
+    CHECK(story_test_portrait(&trio[2],&left,&tint) && tint.r==120);
+    CHECK(rect_center(left).x<rect_center(right).x);
+    story_next();story_frame(1);
+    CHECK(story_test_portrait(&trio[2],&now_left,&tint) && tint.r==255);
+    CHECK(!memcmp(&left,&now_left,sizeof left));
+    story_next();story_frame(1);
+    story_setup(cast,2,&test_style);
     tex_free(directional);
 }
 

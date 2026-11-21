@@ -1003,10 +1003,11 @@ static int l_character_new(lua_State *L)
 
 void api_push_story_line(lua_State *L, story_line v)
 {
-    lua_createtable(L, 0, 3);
+    lua_createtable(L, 0, 4);
     lua_pushstring(L, v.who); lua_setfield(L, -2, "who");
     lua_pushstring(L, v.text); lua_setfield(L, -2, "text");
     lua_pushinteger(L, v.kind); lua_setfield(L, -2, "kind");
+    lua_pushstring(L, v.listener); lua_setfield(L, -2, "listener");
     luaL_setmetatable(L, "engine.story_line");
 }
 
@@ -1028,6 +1029,10 @@ story_line api_get_story_line(lua_State *L, int i)
     if (lua_isnil(L, -1)) { lua_pop(L, 1); lua_rawgeti(L, i, 3); }
     v.kind = (int)lua_tonumber(L, -1);
     lua_pop(L, 1);
+    lua_getfield(L, i, "listener");
+    if (lua_isnil(L, -1)) { lua_pop(L, 1); lua_rawgeti(L, i, 4); }
+    v.listener = lua_tostring(L, -1);
+    lua_pop(L, 1);
     return v;
 }
 
@@ -1037,6 +1042,7 @@ void api_store_story_line(lua_State *L, int i, story_line v)
     lua_pushstring(L, v.who); lua_setfield(L, i, "who");
     lua_pushstring(L, v.text); lua_setfield(L, i, "text");
     lua_pushinteger(L, v.kind); lua_setfield(L, i, "kind");
+    lua_pushstring(L, v.listener); lua_setfield(L, i, "listener");
 }
 
 story_line api_check_story_line(lua_State *L, int i)

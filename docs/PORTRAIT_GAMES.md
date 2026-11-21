@@ -83,7 +83,7 @@ actions have a clear foreground.
 
 ### Resident visits and conditional dialogue
 
-Each game's authoring source is the **Town dialogue** section in its `docs/story.md`.
+The [resident story plan](RESIDENT_STORIES.md) traces both arcs and the visit controls. Each game's authoring source is the **Town dialogue** section in its `docs/story.md`.
 Run its `tools/prepare_story.py` to compile the script into `lua/story_content.lua`.
 The following headers come from Lio and Nera's visits, callbacks and meeting.
 
@@ -97,12 +97,12 @@ The following headers come from Lio and Nera's visits, callbacks and meeting.
 | `**If seen after-85**` | Within a replacement, use the following reply if the player witnessed this earlier campaign scene. |
 | `**Meeting map_room aviary**` | A one-time town conversation between the residents of these two buildings. Both must have finished their introductions. |
 | `**If asked map_room after-67 personal 2**` | Replace line 2 of the meeting if the player heard Nera's personal answer at this checkpoint. Either resident can deliver the changed line. |
-| `**Ask at aviary \| Did your sister like the portrait?**` | After the meeting, add this question to Lio's visits. Put the answer below it, and give the other resident their own `Ask at` block. |
+| `**Ask at aviary \| Did your sister like Nera's sketch?**` | After the meeting, add this question to Lio's visits. Put the answer below it, and give the other resident their own `Ask at` block. |
 | `**Ask at map_room after aviary \| What about Lio's ear?**` | Once the player hears Lio's account of this meeting, Mara can bring it up with Nera. |
 | `**Recall after-92**` | At the end of a meeting's script, name a later level where the pair speak together again. The exchange follows that level's usual lines when their meeting has finished and both homes stand. |
 | `**Heard aviary**` | Within a recall, write four short exchanges. Use each building key for its resident’s side alone, plus `neither` and `both`. Hearing the resident's original account or their follow-up counts. |
 | `**Catch up in town**` | After the four histories, give the pair a short exchange that also works after the finale. It plays once if the level scene finished before the pair met or an older save lacks a record of the exchange. |
-| `**Ask at aviary \| What did your sister do with your drawing?**` | After the catch-up text, give each resident one closing question. Finishing the shared exchange at the level or in town unlocks both questions across all later visit stages. |
+| `**Ask at aviary \| Where did your sketch of Nera go?**` | After the catch-up text, give each resident one closing question. Finishing the shared exchange at the level or in town unlocks both questions across all later visit stages. |
 | `**If heard map_room**` | Inside a closing question, replace its exchange if the other resident has already answered theirs. Keep the same speaker sequence. Both the visitor’s question and the resident’s answer can acknowledge what was said. |
 
 Several lines in a scene can each have a `With` block. Within one block, write the ordinary

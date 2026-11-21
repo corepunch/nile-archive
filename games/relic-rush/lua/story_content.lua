@@ -582,7 +582,7 @@ return {
         {"mara", "So she's minding our tide from down there. Elena, you can retire the distress theory."},
     }},
     {key="after-91", phase="after", level=91, replies={
-        {index=2, building="aviary", introduction="placed-aviary", when="visit-aviary-after-85.personal", line={"lio", "Mine, Mara. You asked if he copies me. This morning he snored in my face till I passed the figs."}},
+        {index=2, building="aviary", introduction="placed-aviary", when="visit-aviary-after-85.personal", line={"lio", "Mine, Mara. I left him with Adrian. I'd take my snore back over “Mr Vale” any day."}},
         {index=2, building="aviary", introduction="placed-aviary", line={"lio", "Mine, Mara. I left him with Adrian for ten minutes. He used to whistle for figs."}},
     }, lines={
         {"mara", "Adrian, whose parrot am I returning? He keeps saying \"expensive, Mr Vale\" and looking at you."},
@@ -599,26 +599,26 @@ return {
         {index=3, building="aviary", introduction="placed-aviary", line={"lio", "Tomas, may I take the flood watch? I'll read your chalk myself. My bird calls high tide for a fig."}},
     }, recall={key="meeting-map_room-aviary.after-92", meeting="meeting-map_room-aviary", exchanges={
         ["neither"]={
-            {"lio", "You drew my bird and me for my sister, Nera. Sit with me on watch? I'll draw you for her."},
-            {"nera", "Here, take my blunt pencil. If you drop the sharp one in the tide, you're fetching it."},
+            {"lio", "You drew my bird and me for my sister, Nera. Sit with me on watch? I'll draw you for her.", listener="nera"},
+            {"nera", "Here, take my blunt pencil. If you drop it in the tide, you're fetching it."},
         },
         ["aviary"]={
-            {"lio", "My sister knew me by my ear, Nera. How's she going to know you when I draw you?"},
+            {"lio", "My sister knew me by my ear, Nera. How's she going to know you when I draw you?", listener="nera"},
             {"nera", "Put my pencil behind my ear. Draw me looking for it."},
         },
         ["map_room"]={
-            {"nera", "I had to start your ear over every time you laughed, Lio. How still do I have to sit for you?"},
+            {"nera", "I had to start your ear over every time you laughed, Lio. How still do I have to sit for you?", listener="lio"},
             {"lio", "You can laugh. It's your laugh I want my sister to see this time."},
         },
         ["both"]={
-            {"lio", "My turn to draw you for my sister, Nera. Which ear shall I get wrong?"},
+            {"lio", "My turn to draw you for my sister, Nera. Which ear shall I get wrong?", listener="nera"},
             {"nera", "Yours took all afternoon and she knew it at a glance. Give me the bird. Let's try my left."},
         },
     }, lines={
-        {"lio", "Nera, you drew me for my sister. I had a go at drawing you. May I send her mine too?"},
+        {"lio", "Nera, you drew me for my sister. I had a go at drawing you. May I send her mine too?", listener="nera"},
         {"nera", "Let me see it before you roll it up, Lio. I missed my chance while I was sitting for you."},
     }, followups={
-        {key="meeting-map_room-aviary.after-92.aviary", building="aviary", when="meeting-map_room-aviary.after-92", topic="recall", label="What did your sister do with your drawing?", lines={
+        {key="meeting-map_room-aviary.after-92.aviary", building="aviary", when="meeting-map_room-aviary.after-92", topic="recall", label="Where did your sketch of Nera go?", lines={
             {"mara", "Lio, where did your sister put the drawing you made of Nera?"},
             {"lio", "Beside the one Nera drew of me. She hung us facing each other so we'd have company."},
         }, replies={
@@ -913,7 +913,7 @@ return {
         {index=2, building="map_room", when="visit-map_room-after-67.personal", line={"nera", "Mara sat still for half a grin, Lio. Your bird hasn't given me so much as a beak."}},
         {index=3, building="map_room", when="visit-map_room-after-67.personal", line={"lio", "Start with my grin, then. He'll climb right up to see who's getting drawn instead of him."}},
     }, followups={
-        {key="meeting-map_room-aviary.aviary", building="aviary", when="meeting-map_room-aviary", topic="meeting", label="Did your sister like the portrait?", lines={
+        {key="meeting-map_room-aviary.aviary", building="aviary", when="meeting-map_room-aviary", topic="meeting", label="Did your sister like Nera's sketch?", lines={
             {"mara", "What did your sister say when she saw Nera's drawing, Lio?"},
             {"lio", "\"That's the ear he bites.\" All that work on my smile, Mara, and she knew me by my ear."},
         }},

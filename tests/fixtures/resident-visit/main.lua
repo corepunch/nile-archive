@@ -11,6 +11,7 @@ local stage = app.arg("visit-stage")
 local first = "placed-" .. site
 local meeting = app.arg("visit-meeting") and assert(journey.find(app.arg("visit-meeting")))
 local ending = app.arg("visit-ending") and assert(journey.find(stage).recall)
+local full_menu = app.arg("visit-full-menu")
 local heard_at = app.arg("heard-at")
 local selected
 
@@ -36,14 +37,26 @@ function desc.init()
             position = math.max(position, island.ladder_position[island.kinds[home]])
             R.prog.story_seen["placed-" .. home] = true
         end
+        if full_menu then
+            for _, beat in ipairs(journey.beats) do
+                if beat.level <= journey.find(stage).level then R.prog.story_seen[beat.key] = true end
+            end
+        end
         R.prog.story_seen[stage] = true
-        for _, answer in ipairs(journey.visit(R.prog, site).choices) do R.prog.story_seen[answer.key] = true end
+        if not full_menu then
+            for _, answer in ipairs(journey.visit(R.prog, site).choices) do R.prog.story_seen[answer.key] = true end
+        end
         journey.acknowledge(R.prog, meeting)
         if ending then
-            for _, answer in ipairs(meeting.followups) do R.prog.story_seen[answer.key] = true end
+            if not full_menu then
+                for _, answer in ipairs(meeting.followups) do R.prog.story_seen[answer.key] = true end
+            end
             journey.acknowledge(R.prog, ending)
         end
-        if heard_at then R.prog.story_seen[(ending or meeting).key .. "." .. heard_at] = true end
+        if heard_at then
+            local source = full_menu and meeting or ending or meeting
+            R.prog.story_seen[source.key .. "." .. heard_at] = true
+        end
     end
     R.island_with(0, position)
     for i = 1, R.island.count do
@@ -94,6 +107,29 @@ function desc.frame(dt)
         if tick == 30 then
             assert(R.town.hooks.unheard_visit(kind), "the meeting restores the marker")
             if ending then tap_marker() else tap() end
+        elseif full_menu then
+            if tick == 52 then
+                assert(R.story_choice_beat and #R.story_choice_beat.choices == 5, "all five distinct questions fit in one visit")
+                local screen, skin = app.screen(), require("skin")
+                local bottom = screen.y
+                for _, node in ipairs(R.choice_form.root.children) do
+                    if node.kind == "button" then
+                        local box = assert(R.choice_form.boxes[node.id])
+                        assert(box.x >= screen.x and box.x + box.w <= screen.x + screen.w
+                            and box.y >= bottom and box.y + box.h <= screen.y + screen.h,
+                            "visit options must fit separately inside the safe screen")
+                        assert(text.measure(skin:measure_style(node), node.text).w <= box.w - 16,
+                            "visit caption needs more room: " .. node.text)
+                        bottom = box.y + box.h
+                    end
+                end
+                select_question("cancel")
+            elseif tick == 80 then
+                assert(R.overlay == R.OV_NONE and R.town.hooks.unheard_visit(kind), "leaving preserves every question")
+                tap_marker()
+            elseif tick == 100 then
+                assert(R.story_choice_beat and #R.story_choice_beat.choices == 5, "reopening restores all five questions")
+            end
         elseif tick == 52 then
             local key = (ending or meeting).key .. "." .. site .. (heard_at and not ending and ".reply" or "")
             if heard_at and not ending then

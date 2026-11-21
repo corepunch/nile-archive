@@ -570,7 +570,7 @@ typedef struct {
 /* Speech bubbles come in the shapes comics use. */
 typedef enum { BUBBLE_SPEECH, BUBBLE_THOUGHT, BUBBLE_SHOUT } bubble_kind;
 
-typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* who: character id, NULL = narrator */
+typedef struct { const char *who, *text; bubble_kind kind; const char *listener; } story_line;   /* who: character id, NULL = narrator */
 
 typedef struct {
     text_style text, name;       /* bubble text and name tag */

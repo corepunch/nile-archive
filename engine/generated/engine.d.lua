@@ -117,10 +117,11 @@
 ---@field right boolean Preferred side of the dialogue.
 ---@field mouth vec2 Where they speak from, 0..1 inside the source portrait (default .5, .25).
 
----@class story_line `{who, text, kind}` (positional or named); who is a character id, nil for the narrator.
+---@class story_line `{who, text, kind, listener}` (positional or named); who is a character id, nil for the narrator.
 ---@field who string
 ---@field text string
 ---@field kind integer story.SPEECH (default), THOUGHT or SHOUT.
+---@field listener string Optional character addressed when a conversation changes participants.
 
 ---@class story_style How dialogue looks.
 ---@field backdrop_blur number Optional logical-pixel blur behind the dialogue.

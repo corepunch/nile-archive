@@ -358,7 +358,7 @@ return {
     }},
     {key="after-63", phase="after", level=63, replies={
         {index=3, building="station_kiosk", introduction="placed-station_kiosk", when="visit-station_kiosk-placed-station_kiosk.personal", line={"otis", "Leave his door shut, Pip. Here's the tin lid. Your brass buttons go first while he reads."}},
-        {index=3, building="station_kiosk", introduction="placed-station_kiosk", line={"otis", "Leave the door shut, Pip. Come sit on the step with me. Mr Strand can tell us when he's ready."}},
+        {index=3, building="station_kiosk", introduction="placed-station_kiosk", line={"otis", "Let's wait on the step, Pip. Give Mr Strand a little time with his letter."}},
     }, lines={
         {"noelle", "Mr Strand? This was stuck behind the postbox lining. It's very old. Please open it."},
         {"henrik", "That's Agnes Holt's writing. Every t crossed like a sword. I'll need my good spectacles."},
@@ -479,7 +479,7 @@ return {
         {"noelle", "\"I wish everyone could stay.\" Agnes, she kept it all these years and never said. Did you know?"},
     }},
     {key="after-84", phase="after", level=84, replies={
-        {index=1, building="glassblower", introduction="placed-glassblower", line={"ada", "Henrik, steady the ladder. Noelle, tie Gran's ribbon on my glass bell. I blew it for her."}},
+        {index=1, building="glassblower", introduction="placed-glassblower", line={"ada", "Steady the ladder, Henrik. Noelle, hang my bell beside Gran's amber bauble. There's room for both."}},
     }, lines={
         {"noelle", "Henrik, there's an amber bauble in Gran's tin. Will you help me tie her ribbon on?"},
         {"henrik", "Hang it lower, Noelle. A child's eye is three feet off the ground, not six."},
@@ -487,23 +487,23 @@ return {
     }},
     {key="after-85", phase="after", level=85, recall={key="meeting-station_kiosk-glassblower.after-85", meeting="meeting-station_kiosk-glassblower", exchanges={
         ["neither"]={
-            {"ada", "Pip needs a game while he waits for his mum. May we borrow your tin lid, Mr Bell?"},
+            {"ada", "Pip needs a game while he waits for his mum. May we borrow your tin lid, Mr Bell?", listener="otis"},
             {"otis", "If you'll play him, Miss Pike. You took the last two buttons off me in our first game."},
         },
         ["glassblower"]={
-            {"ada", "Pip wants to hear those two pings I got when I beat you. Will you lend him your lid, Mr Bell?"},
+            {"ada", "Pip wants to hear those two pings I got when I beat you. Will you lend him your lid, Mr Bell?", listener="otis"},
             {"otis", "Gladly. I'll sit by the kettle. That lid rings louder when you're losing."},
         },
         ["station_kiosk"]={
-            {"otis", "Shall we teach Pip that double jump, Miss Pike? I'll leave two men out for him like I did for you."},
-            {"ada", "Oh, you play on Pip's side this time, Mr Bell. Let's see if you can keep those last two buttons."},
+            {"otis", "Shall I show Pip where to put his last two buttons, Miss Pike? I remember what it cost me.", listener="ada"},
+            {"ada", "Keep your hands round your cup, Mr Bell. I want to see where Pip puts them."},
         },
         ["both"]={
-            {"ada", "Pip's lined up two buttons for me, Mr Bell. Have you been giving him lessons?"},
+            {"ada", "Pip's lined up two buttons for me, Mr Bell. Have you been giving him lessons?", listener="otis"},
             {"otis", "Give him a practice game, Miss Pike. He wants his mum to hear two pings when her train gets in."},
         },
     }, lines={
-        {"otis", "Miss Pike, may I have my tin lid back? You and Pip have finished your game and my pie's gone cold."},
+        {"otis", "Miss Pike, may I have my tin lid back? You and Pip have finished your game and my pie's gone cold.", listener="ada"},
         {"ada", "Here you are, Mr Bell. I've put the buttons in your pocket. Mind you don't bake them in tomorrow."},
     }, followups={
         {key="meeting-station_kiosk-glassblower.after-85.glassblower", building="glassblower", when="meeting-station_kiosk-glassblower.after-85", topic="recall", label="How did Pip do against you?", lines={
@@ -760,9 +760,9 @@ return {
             {"pip", "Mr Bell, shall I knock that dent out of your lunch tin? Mr Strand lent me a little mallet."},
             {"otis", "Leave it, Pip. Dad sat on it the first time I beat him. Only trophy I ever won."},
         }},
-        {key="visit-station_kiosk-after-63", topic="story", label="How long should a letter take?", lines={
-            {"pip", "How long would you need to read one little letter, Mr Bell?"},
-            {"otis", "Depends who wrote it, Pip. I've one from my dad I still take out on my tea break."},
+        {key="visit-station_kiosk-after-63", topic="story", label="Do you keep old letters?", lines={
+            {"pip", "Is there a letter you'd keep for forty years, Mr Bell?"},
+            {"otis", "Here's one from my dad, Pip. The fold's worn through. I still read it on my tea break."},
         }},
     }},
     {key="visit-station_kiosk-after-94", phase="visit", building="station_kiosk", checkpoint="after-94", level=94, prompt="Ask Otis", choices={
@@ -845,13 +845,13 @@ return {
         {index=3, building="station_kiosk", when="visit-station_kiosk-after-63.personal", line={"otis", "That's Dad's dent. Pip offered to mend it, but I beat Dad fair and square. It's staying."}},
         {index=4, building="station_kiosk", when="visit-station_kiosk-after-63.personal", line={"ada", "Then the dent stays. I'll bring the blue button after work. Will you teach me on that board?"}},
     }, followups={
-        {key="meeting-station_kiosk-glassblower.glassblower", building="glassblower", when="meeting-station_kiosk-glassblower", topic="meeting", label="Who won your first game?", lines={
-            {"pip", "Did your blue button bring you luck against Mr Bell, Ada?"},
+        {key="meeting-station_kiosk-glassblower.glassblower", building="glassblower", when="meeting-station_kiosk-glassblower", topic="meeting", label="What was it like playing Otis?", lines={
+            {"pip", "What do you remember about that first game with Mr Bell, Ada?"},
             {"ada", "I won, Pip. Jumped his last two buttons. I could hear my blue one ring on the tin both times."},
         }},
         {key="meeting-station_kiosk-glassblower.station_kiosk", building="station_kiosk", when="meeting-station_kiosk-glassblower", topic="meeting", label="How did you fare against Ada?", lines={
-            {"pip", "Who won that first game on your tin lid, Mr Bell?"},
-            {"otis", "Miss Pike did. I taught her how to jump two men and left mine in a lovely straight line."},
+            {"pip", "Which move do you remember from your first game with Ada, Mr Bell?"},
+            {"otis", "Miss Pike jumped my last two men. I'd just taught her how, then left them in a lovely straight line."},
             {"pip", "Will you teach me that way too, Mr Bell?"},
         }},
         {key="meeting-station_kiosk-glassblower.glassblower.reply", building="glassblower", when="meeting-station_kiosk-glassblower", topic="meeting", source="Otis", heard_any={"meeting-station_kiosk-glassblower.station_kiosk", "meeting-station_kiosk-glassblower.station_kiosk.reply"}, label="Did Otis leave you that jump?", lines={
@@ -862,7 +862,6 @@ return {
         {key="meeting-station_kiosk-glassblower.station_kiosk.reply", building="station_kiosk", when="meeting-station_kiosk-glassblower", topic="meeting", source="Ada", heard_any={"meeting-station_kiosk-glassblower.glassblower", "meeting-station_kiosk-glassblower.glassblower.reply"}, label="Did you hear Ada's button ring?", lines={
             {"pip", "Ada heard two pings when she won. What did they sound like from your end, Mr Bell?"},
             {"otis", "School bell, Pip. I taught her the double jump, left two men in a row and got a lesson myself."},
-            {"otis", "Bring your buttons at dinner. Let's see if I've learned it."},
         }},
     }},
 }

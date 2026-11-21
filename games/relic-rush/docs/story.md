@@ -966,7 +966,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **If asked after-85 personal**
 
-- **Lio:** Mine, Mara. You asked if he copies me. This morning he snored in my face till I passed the figs.
+- **Lio:** Mine, Mara. I left him with Adrian. I'd take my snore back over “Mr Vale” any day.
 
 **With aviary after-92 3**
 
@@ -1109,7 +1109,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 - **Lio:** Start with my grin, then. He'll climb right up to see who's getting drawn instead of him.
 
-**Ask at aviary | Did your sister like the portrait?**
+**Ask at aviary | Did your sister like Nera's sketch?**
 
 - **Mara:** What did your sister say when she saw Nera's drawing, Lio?
 - **Lio:** "That's the ear he bites." All that work on my smile, Mara, and she knew me by my ear.
@@ -1136,7 +1136,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **Heard neither**
 
 - **Lio:** You drew my bird and me for my sister, Nera. Sit with me on watch? I'll draw you for her.
-- **Nera:** Here, take my blunt pencil. If you drop the sharp one in the tide, you're fetching it.
+- **Nera:** Here, take my blunt pencil. If you drop it in the tide, you're fetching it.
 
 **Heard aviary**
 
@@ -1158,7 +1158,7 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Lio:** Nera, you drew me for my sister. I had a go at drawing you. May I send her mine too?
 - **Nera:** Let me see it before you roll it up, Lio. I missed my chance while I was sitting for you.
 
-**Ask at aviary | What did your sister do with your drawing?**
+**Ask at aviary | Where did your sketch of Nera go?**
 
 - **Mara:** Lio, where did your sister put the drawing you made of Nera?
 - **Lio:** Beside the one Nera drew of me. She hung us facing each other so we'd have company.
@@ -1291,6 +1291,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Clarified which drawing each question concerns and kept both residents in view from the start of their flood-watch exchange.
 
 - 2026-11-21: Both homes offer one last question after the flood watch. Lio tells Mara where his sister hung the drawings. Nera tells her where to look for the missing pencil. Hearing either answer changes the conversation at the other home.
 

@@ -232,7 +232,7 @@ Characters, dialogue and speech bubbles, shared by both games:
 ```c
 typedef struct { const char *id, *name, *role, *portrait_path; texture portrait;
                  color color; bool right; vec2 mouth; } character;
-typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* speech, thought, shout */
+typedef struct { const char *who, *text; bubble_kind kind; const char *listener; } story_line;   /* speech, thought, shout */
 ```
 
 - `story_setup(cast, n, &style)` registers the cast and how the dialogue looks:
@@ -248,6 +248,7 @@ typedef struct { const char *who, *text; bubble_kind kind; } story_line;   /* sp
   height** beside them and its tail ends just off their **mouth** (each
   character's `mouth` anchor, measured on the portrait); the previous speaker
   stays on the other side, dimmed and a little smaller, as the listener.
+  A line can name its listener when a different pair takes over. The addressed character appears opposite the speaker from the first line of their exchange.
   Comic lettering rules apply (Blambot, Comicraft, Clip Studio lettering guides):
   - the balloon **hugs its words**: lines are balanced and the bubble shrinks
     to the widest one, no wider than a comfortable measure, so there is never

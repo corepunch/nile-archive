@@ -13,8 +13,15 @@ class Line:
     speaker: str
     text: str
 
-    def lua(self):
-        return '{%s, %s}' % (quote(self.speaker), quote(self.text))
+    def lua(self, listener=None):
+        addressed = ', listener=' + quote(listener) if listener else ''
+        return '{%s, %s%s}' % (quote(self.speaker), quote(self.text), addressed)
+
+
+def paired_lines(lines, cast, indent):
+    """Show the new pair together on their first line, even in the middle of a level."""
+    listener, = cast - {lines[0].speaker}
+    return [indent + line.lua(listener if i == 0 else None) + ',' for i, line in enumerate(lines)]
 
 
 def speech(body, speakers):
@@ -95,7 +102,7 @@ def compile_recall(body, sites, meeting, cast, speakers, level_beat, residents):
         assert {line.speaker for line in lines} == cast, f'{meeting}: both residents must speak in {history}'
         assert len(level_beat['lines']) + len(lines) <= 48, f'{meeting}: {history} exceeds the dialogue queue'
         output.append('        [%s]={' % quote(history))
-        output.extend('            ' + line.lua() + ',' for line in lines)
+        output.extend(paired_lines(lines, cast, '            '))
         output.append('        },')
     if catchup:
         town, = catchup
@@ -103,7 +110,7 @@ def compile_recall(body, sites, meeting, cast, speakers, level_beat, residents):
         lines = speech(blocks[0], speakers)
         assert {line.speaker for line in lines} == cast, checkpoint
         output.append('    }, lines={')
-        output.extend('        ' + line.lua() + ',' for line in lines)
+        output.extend(paired_lines(lines, cast, '        '))
         output.append('    }, followups={')
         output.extend(recall_questions(blocks, sites, checkpoint, residents, speakers))
     output.append('    }}')

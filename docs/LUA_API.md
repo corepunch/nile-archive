@@ -2844,13 +2844,14 @@ Someone who speaks.
 
 ### story_line
 
-`{who, text, kind}` (positional or named); who is a character id, nil for the narrator.
+`{who, text, kind, listener}` (positional or named); who is a character id, nil for the narrator.
 
 | Field | Type | |
 |---|---|---|
 | `who` | `string` |  |
 | `text` | `string` |  |
 | `kind` | `integer` | story.SPEECH (default), THOUGHT or SHOUT. |
+| `listener` | `string` | Optional character addressed when a conversation changes participants. |
 
 ### story_style
 

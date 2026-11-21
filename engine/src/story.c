@@ -34,7 +34,7 @@ static struct {
     character *cast;
     int count;
     story_style style;
-    struct { const character *who; char text[512]; bubble_kind kind; } queue[QUEUE];
+    struct { const character *who, *listener; char text[512]; bubble_kind kind; } queue[QUEUE];
     int lines;
     float shown, enter, line_time, arrive, hold;
     const character *last, *listener;
@@ -80,6 +80,7 @@ void story_line_add(story_line line)
 {
     if (S.lines >= QUEUE || !line.text) return;
     S.queue[S.lines].who = story_character(line.who);
+    S.queue[S.lines].listener = story_character(line.listener);
     S.queue[S.lines].kind = line.kind;
     snprintf(S.queue[S.lines].text, sizeof S.queue[0].text, "%s", line.text);
     S.lines++;
@@ -540,6 +541,13 @@ void story_frame(float dt)
     ui_block(screen);
 
     bool has_face = who && who->portrait.tex;
+    const character *addressed = S.queue[0].listener;
+    if (addressed && addressed != S.listener && who && addressed != who) {
+        /* Keep the speaker on their side when they turn to someone new. */
+        bool speaker_right = who == S.last ? S.last_right : who == S.listener ? S.listener_right : who->right;
+        S.listener_right = addressed == S.last ? S.last_right : !speaker_right;
+        S.listener = addressed;
+    }
     const character *listener = S.listener;
     bool has_listener = who && listener && listener != who && listener->portrait.tex;
     bool face_to_face = S.style.inward && has_face && has_listener;

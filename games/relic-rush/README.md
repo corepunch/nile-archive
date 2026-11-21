@@ -177,7 +177,7 @@ The speaker’s name tag and the Skip button sit equally far from the dialogue b
 
 Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 
-Lio Valez moves down from the hills when the Great Aviary opens. He returns on expeditions 85, 91 and 92. Tap the aviary to visit Lio after the introduction. Tap the roof bubble or the building to choose what to ask Lio. Each of six story milestones offers a personal question and a question about recent events, including a final pair after the finale. If one question remains, tapping the building or its speech bubble asks it immediately. With two or more, you choose. After each answer, you can ask another available question or select **Back to town**. The visit ends when you’ve heard everything. Each question disappears when you ask it. Once you’ve asked everything, the roof bubble clears until a new question opens. On expedition 91 Lio remembers Mara asking about his snore at the aviary.
+Lio Valez moves down from the hills when the Great Aviary opens. He returns on expeditions 85, 91 and 92. Six milestones bring new personal and town questions, including a pair after the finale. A speech bubble marks unheard questions. Tap it or the building to start a lone question or choose among several. After an answer, ask another or choose **Back to town**. Hearing the last answer clears the bubble and ends the visit. On expedition 91 Lio remembers Mara asking about his snore at the aviary.
 
 Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin.
 

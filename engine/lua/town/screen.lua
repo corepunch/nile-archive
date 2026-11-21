@@ -540,7 +540,7 @@ function View:visit_markers()
             if box then
                 story.bubble_shape(box, tip, h.skin:color(bubble.fill), h.skin:color(bubble.edge), story.SPEECH)
                 text.inside(h.skin:text(bubble.text or "body", 21), box, vec2(.5, .5), "•••")
-                if ui.hit(box:inflate(5), 0).clicked then
+                if ui.hit(box:inflate(7), 0).clicked then
                     self:dismiss_bubble()
                     h.tap_building(i - 1)
                     return
