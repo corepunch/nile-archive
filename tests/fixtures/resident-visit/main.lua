@@ -71,7 +71,16 @@ end
 
 local function direct_answer(key)
     assert(R.overlay == R.OV_NONE and not R.story_choice_beat and story.active()
-        and R.story_current.key == key and R.prog.pending_answer.key == key, "the tap must start the sole answer directly")
+        and R.story_current.key == key and R.prog.pending_answer.key == key, "the selected answer must be playing")
+end
+
+local function remaining_question(index)
+    local beat = R.story_choice_beat
+    assert(R.overlay == R.OV_STORY_CHOICE and not story.active() and not R.prog.pending_answer,
+        "finishing an answer must wait for the player")
+    assert(beat and #beat.choices == 1 and beat.choices[1] == journey.visit(R.prog, site).choices[index],
+        "the same resident offers their remaining question")
+    assert(R.choice_form.boxes.cancel, "the player can leave the visit")
 end
 
 function desc.frame(dt)
@@ -115,6 +124,11 @@ function desc.frame(dt)
         frame(dt)
         return
     end
+    if app.arg("visit-continue") and tick >= 124 then
+        remaining_question(1)
+        frame(dt)
+        return
+    end
     if stage == first and tick >= 108 then
         assert(story.active() and R.story_current.key == journey.visit(R.prog, site).choices[2].key)
         frame(dt)
@@ -136,10 +150,10 @@ function desc.frame(dt)
         select_question("2")
     elseif tick == 108 then
         finish_answer(2)
-    elseif tick == 112 then
-        assert(R.town.hooks.unheard_visit(kind), "the other question keeps the bubble")
-        tap()
-    elseif tick == 134 then
+    elseif tick == 124 then
+        remaining_question(1)
+        select_question("1")
+    elseif tick == 147 then
         direct_answer(journey.visit(R.prog, site).choices[1].key)
     elseif tick == 155 then
         finish_answer(1)
@@ -156,10 +170,14 @@ function desc.frame(dt)
         select_question(app.arg("visit-questions") and "1" or "2")
     elseif tick == 210 and app.arg("visit-questions") then
         finish_answer(1)
-    elseif tick == 215 and app.arg("visit-questions") then
-        assert(R.town.hooks.unheard_visit(kind), "the later story answer is still new")
+    elseif tick == 225 and app.arg("visit-questions") then
+        remaining_question(2)
+        select_question("cancel")
+    elseif tick == 244 and app.arg("visit-questions") then
+        assert(R.overlay == R.OV_NONE and not story.active() and R.town.hooks.unheard_visit(kind),
+            "Back to town leaves the unasked question on the roof")
         tap_marker()
-    elseif tick == 235 then
+    elseif tick == 250 then
         if app.arg("visit-questions") then
             direct_answer(journey.visit(R.prog, site).choices[2].key)
             app.inject_click(app.screen():center()) -- reveal the question for the capture

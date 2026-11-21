@@ -12,6 +12,11 @@ local function new(content)
     local scenes, upgrades, placements = {}, {}, {}
     local by_key, by_building, site_visits = {}, {}, {}
     local answers, meetings, meeting_options = {}, {}, {}
+    local answer_sites = {}
+    local function register_answer(answer, site)
+        answers[#answers + 1] = answer
+        answer_sites[answer.key] = site
+    end
     for _, beat in ipairs(M.beats) do
         assert(not by_key[beat.key], "duplicate story beat: " .. beat.key)
         by_key[beat.key] = beat
@@ -19,8 +24,8 @@ local function new(content)
             placements[#placements + 1] = beat
             by_building[beat.building] = beat
         elseif beat.phase == "visit" then
-            for _, answer in ipairs(beat.choices) do answers[#answers + 1] = answer end
             local site = beat.building
+            for _, answer in ipairs(beat.choices) do register_answer(answer, site) end
             site_visits[site] = site_visits[site] or {}
             table.insert(site_visits[site], beat)
         elseif beat.phase == "meeting" then meetings[#meetings + 1] = beat
@@ -32,7 +37,7 @@ local function new(content)
     -- A meeting's questions keep their heard keys across all visit stages at a home.
     for _, meeting in ipairs(meetings) do
         for _, answer in ipairs(meeting.followups or {}) do
-            answers[#answers + 1] = answer
+            register_answer(answer, answer.building)
             for _, stage in ipairs(site_visits[answer.building]) do
                 local options = meeting_options[stage] or {table.unpack(stage.choices)}
                 options[#options + 1] = answer
@@ -78,6 +83,10 @@ local function new(content)
             local beat = stages[i]
             if p.story_seen[beat.checkpoint] then return beat end
         end
+    end
+
+    function M.visit_after_answer(p, key)
+        return M.visit(p, answer_sites[key])
     end
 
     local function available(p, answer)

@@ -344,6 +344,7 @@ shot("resident-memory-unasked", "480x900", "--story-beat after-91 --story-line 2
 shot("resident-memory-asked", "390x844", "--story-beat after-91 --story-line 2 --story-asked --frames 240 --safe-area 0,47,0,34")
 
 local visit = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --frames 260 --visit-stage "
+shot("resident-keep-talking", "480x900", visit .. "after-85 --visit-continue")
 shot("resident-visit-first", "480x900", visit .. "placed-aviary")
 shot("resident-visit-later", "390x844", visit .. "after-100 --safe-area 0,47,0,34")
 shot("resident-questions-480", "480x900", visit .. "placed-aviary --visit-questions")

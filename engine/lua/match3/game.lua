@@ -1089,21 +1089,22 @@ function G.bind(R, over)
         R.queue_story({key=answer.key or beat.key, phase=beat.phase, lines=answer.lines}, preview)
     end
 
-    function R.open_story_choice(beat, preview)
+    function R.open_story_choice(beat, preview, entry)
+        local continuing_visit = entry == "continue"
         local visit = beat.phase == "visit"
         if visit then beat = journey.visit_menu(R.prog, beat) end
         if #beat.choices == 0 then return false end
-        if visit and #beat.choices == 1 then
+        if visit and not continuing_visit and #beat.choices == 1 then
             choice_reply(beat, 1, preview)
             return true
         end
-        local corner_close = visit and W.corner_close
+        local corner_close = visit and W.corner_close and not continuing_visit
         local children = {match3.popup_header(beat.prompt, nil, corner_close and "cancel")}
         for index, option in ipairs(beat.choices) do
             children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
         end
         if visit and not corner_close then
-            children[#children + 1] = N.button {id="cancel", text="Back", height=44, role="link", em=18}
+            children[#children + 1] = N.button {id="cancel", text=continuing_visit and "Back to town" or "Back", height=44, role="link", em=18}
         end
         R.choice_form = ui.form{root=N.column {panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end
@@ -1170,6 +1171,10 @@ function G.bind(R, over)
             if b.choices then R.open_story_choice(b); return end
             if not journey.acknowledge(R.prog, b) then return end
             R.save_progress()
+            if b.phase == "visit" then
+                local visit = journey.visit_after_answer(R.prog, b.key)
+                if visit and R.open_story_choice(visit, false, "continue") then return end
+            end
             if b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
         if R.quiet or story.active() then return end

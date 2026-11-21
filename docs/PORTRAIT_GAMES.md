@@ -108,7 +108,9 @@ speakers, duplicate conditions and references to earlier scenes and questions.
 
 The journey reads the town's ownership and the player's saved story history when a scene
 starts. Resolving lines never changes either. Finishing a visit answer or pressing Skip
-records its stable key. The roof bubble and future dialogue both consult that record.
+records its stable key. The game then checks the current questions at that answer’s building,
+including after a saved answer resumes. If any remain, the player can pick one or return to town.
+The last answer ends the visit. The roof bubble and future dialogue both consult that record.
 Question wording and display order can change independently of the key. Building, checkpoint
 and topic identifiers are part of the save format. The original one-answer visit key still
 credits the story question in older saves.

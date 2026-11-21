@@ -165,11 +165,14 @@ check(reloaded.story_seen[personal.key] and journey.unheard_visit(reloaded, visi
 R.prog = reloaded
 check(R.story_lines(later)[ordinary.index] == memory.line, "the loaded campaign uses the remembered reply")
 check(journey.lines_for(later, function() return false end, R.prog.story_seen) == later.lines, "an absent building keeps the original scene")
-R.open_story_choice(visit)
+check(R.overlay == R.OV_STORY_CHOICE and #R.story_choice_beat.choices == 1
+    and R.story_choice_beat.choices[1] == original and not story.active(), "the resumed visit offers its remaining question")
+check(R.choose_story_option(1), "keep talking without reopening the building")
 check(not R.story_choice_beat and R.overlay == R.OV_NONE and R.story_current.key == original.key
-    and reloaded.pending_answer == original, "the last question starts directly and is saved as pending")
+    and reloaded.pending_answer == original, "continuing saves the selected question as pending")
 while story.active() do story.next() end
 R.story_tick()
+check(R.overlay == R.OV_NONE and not R.story_choice_beat and not story.active(), "the last answer ends the visit")
 save.write("both-answers", function(s) journey.serialize(s, reloaded) end)
 reloaded = {}
 save.read("both-answers", function(s) journey.serialize(s, reloaded) end)
@@ -214,10 +217,10 @@ local first2 = journey.visit(both, site2)
 local remembered2, ordinary2 = table.unpack(later2.replies)
 R.island:add(vec2(0,0), island.kinds[site2], 0)
 R.prog = both
+R.open_story_choice(first2)
 for _, index in ipairs({2, 1}) do
     check(R.story_lines(later2)[ordinary2.index] == ordinary2.line, "the other resident or the other question cannot trigger the memory")
-    R.open_story_choice(first2)
-    if index == 2 then check(R.choose_story_option(index), "choose from both questions") end
+    check(R.choose_story_option(index), "ask the next question during the same visit")
     check(story.active() and R.story_current.key == first2.choices[index].key, "play the second resident's answer")
     while story.active() do story.next() end
     R.story_tick()
@@ -240,10 +243,10 @@ end
 R.prog.level = 100
 check(R.next_story(nil) == meeting and R.next_story(99) ~= meeting, "their meeting is due in town")
 local questions = journey.visit(R.prog, site2)
+R.open_story_choice(questions)
 for _, index in ipairs({2, 1}) do
     check(R.story_lines(meeting) == meeting.lines, "only the particular conversation changes the meeting")
-    R.open_story_choice(questions)
-    if index == 2 then check(R.choose_story_option(index), "choose from both questions") end
+    check(R.choose_story_option(index), "ask the next question during the same visit")
     check(R.story_current.key == questions.choices[index].key, "ask the resident at their building")
     while story.active() do story.next() end
     R.story_tick()
@@ -335,9 +338,10 @@ for i, first_home in ipairs(meeting.sites) do
     check(#menu(other_home) == 1 and menu(other_home)[1].key == other_key, "a heard reply disappears")
     check(#menu(first_home) == 1 and R.town.hooks.unheard_visit(island.kinds[first_home]),
         "the new detail can travel back and relights the first roof")
-    ask_meeting_question(first_home, first_key .. ".reply")
+    check(R.story_choice_beat.choices[1].key == other_key and R.choose_story_option(1),
+        "the follow-up stays with the current resident when the other roof lights up")
     finish_answer()
-    ask_meeting_question(other_home, other_key)
+    ask_meeting_question(first_home, first_key .. ".reply")
     finish_answer()
     check(not R.town.hooks.unheard_visit(island.kinds[first_home]) and not R.town.hooks.unheard_visit(island.kinds[other_home]),
         "hearing all four exchanges clears both markers")
