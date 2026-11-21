@@ -58,8 +58,8 @@ line(wood, 4, 4, wave)
 check(wood.earnings[3] == 20 and wood.earnings[1] == 0 and wood.earnings[2] == 0,
       "four pieces credit four times the base resource")
 local stable = rules.game_start(6, 42, {reindeer_stable=true})
-check(stable.bonus.name == "Reindeer" and stable.spawn_kinds[2] == 1 and #stable.spawn_kinds == 5,
-      "the stable adds a reindeer in the tool slot and keeps the mitten")
+check(stable.bonus.name == "Farrier's hammer" and stable.spawn_kinds[2] == 1 and #stable.spawn_kinds == 5,
+      "the stable adds the hammer in the tool slot and keeps the mitten")
 for _ = 1, 7 do line(stable, economy.SPECIAL_KIND, 4, wave) end
 check(stable.tools[1] == 0 and stable.tool_meter[1] == 84, "28 matched reindeer leave the tool uncharged")
 line(stable, economy.SPECIAL_KIND, 3, wave)

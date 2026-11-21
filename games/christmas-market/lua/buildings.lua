@@ -36,7 +36,7 @@ local items = {
     {key="gingerbread_house",name="Gingerbread house",category="wonder",cleared=0,about="The roof sparkles with sugar-frosted fireworks.",cost=purse(150,40,80),needs=purse()},
     {key="post_office",name="North Pole post office",category="wonder",cleared=0,about="Every letter finds its way north.",cost=purse(1285,770,890),needs=purse()},
     {key="chapel",name="Snowy chapel",category="wonder",cleared=0,about="The chapel masons cut stone for the market’s foundations.",cost=purse(765,340,455),needs=purse()},
-    {key="reindeer_stable",name="Reindeer stable",category="wonder",cleared=0,about="A reindeer from the stable can kick through a stubborn tile.",cost=purse(470,170,0),needs=purse()},
+    {key="reindeer_stable",name="Reindeer stable",category="wonder",cleared=0,about="The stable's farrier lends a hammer that breaks one stubborn tile.",cost=purse(470,170,0),needs=purse()},
     {key="santa_workshop",name="Woodcarvers' hall",category="wonder",cleared=0,about="Carvers whittle reindeer by lamplight until the last toy is wrapped.",cost=purse(1405,715,850),needs=purse()},
     {key="firework_stall",name="Firework stall",category="wonder",cleared=0,about="Indigo crackers for the New Year sky, sold in threes.",cost=purse(770,280,280),needs=purse()},
     {key="station_kiosk",name="Station kiosk",category="wonder",cleared=0,about="Borrow the station clock when you need a little more time.",cost=purse(985,675,855),needs=purse()},

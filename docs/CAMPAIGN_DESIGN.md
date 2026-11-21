@@ -35,7 +35,7 @@ The campaign's shape:
 
 - **Purchases open every five levels** (`after` in `economy.unlocks`). The first is affordable after level 1, so the player builds within a minute.
 - **Story buildings hold the next level.** The level after a story building waits until it stands, and so does every earlier purchase. Other purchases never block, so a player may run ahead of them. The scenes may speak of a non-story building as standing only from the next story building's scene on.
-- **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a reindeer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
+- **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a farrier's hammer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
 - **Regions open** after 15, 30, 50, 70 and 85 levels cleared, each with a line from a main character.
 

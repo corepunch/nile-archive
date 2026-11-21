@@ -159,12 +159,14 @@ The [vase and winter catch atlas](../art/market-goods/vase-and-winter-catch.png)
 supplies the three-cracker Firework, broad ice pendant, cobalt vase and smoked trout.
 Its [ImageGen prompt](../art/market-goods/vase-and-winter-catch-prompt.txt)
 records the complete atlas edit. The pendant and vase remain archived atlas pieces.
-The reindeer, station clock and ice skates were painted together in the built-in
+The station clock and ice skates were painted in the built-in
 ImageGen [purchase piece strip](../art/market-goods/purchase-pieces.png). The
 [prompt](../art/market-goods/purchase-pieces-prompt.txt) and the [registration record](../art/market-goods/registration.json)
-record the original alpha and the three fitted crops. The reindeer charges the
-stable's single-cell kick, the station clock adds five moves, and ice skates
-earn Tokens. [Live boards, the stall card and all tool button states](screenshots/review/building-rewards/README.md).
+record the original alpha and the fitted crops. The station clock adds five
+moves and ice skates earn Tokens. The strip's first third is a reindeer head
+that stood in for the hammer for a few hours on 20 November; it is retired,
+and the stable's charge piece is the Farrier's hammer from the
+[winter stalls sheet](../art/market-goods/winter-stalls.png) again. [Live boards, the stall card and all tool button states](screenshots/review/building-rewards/README.md).
 `market-1` points to the original light-blue `festive-3` frame from row two,
 column one of the [festive atlas](../art/festive-pieces/source.png). The campaign,
 guide and festive previews share that single registered sprite. The corresponding
@@ -199,7 +201,7 @@ so the shield button itself does not move.
 | 2 | Silver snowflake coin | Silver | +3 Tokens. |
 | 3 | Sun coin | Gold | +5 Tokens and the Tokens wallet icon. Shared artwork with Relic Rush. |
 | 4 | Bundled pine | Chestnut brown | +5 Materials from the lumber workshop and the Materials wallet icon. |
-| 5 | Reindeer | Chestnut and red leather | +3 charge on the stable's single-cell kick. `market-5` on the board and `booster-reindeer` on the card and toolbar. |
+| 5 | Farrier's hammer | Forged steel and ash handle | +3 charge on the stable's single-cell blow. `market-5` on the board and `booster-hammer` on the card and toolbar. |
 | 6 | Toy blocks | Honey wood | +6 Tokens from the later Toymaker's workshop. |
 | 7 | Gingerbread man | Baked brown with ivory icing | +4 Treats from the bakery. |
 | 8 | Mulled wine | Cranberry | +3 Treats from the Welcome arch. |
@@ -210,7 +212,7 @@ so the shield button itself does not move.
 | 13 | Ice pendant | Sapphire blue | Archived. |
 | 14 | Glass bauble | Amber gold | +8 Tokens from the Glassblower's stall. |
 | 15 | Candy cane | Red and ivory | Score until the Welcome arch. |
-| 16 | Firework Bomb | Midnight indigo | Three crackers in a brass band. Replaces the reindeer and hits a 3×3 square. |
+| 16 | Firework Bomb | Midnight indigo | Three crackers in a brass band. Replaces the hammer and hits a 3×3 square. |
 | 17 | Faceted star | Turquoise | Replaces the lantern and clears the chosen kind. |
 | 18 | Frost shield | Fir green and pewter | Hits the chosen row. |
 | 19 | Wish cross | Copper orange | Replaces the shield and replenishes a resource or part of another charge. |

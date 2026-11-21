@@ -34,7 +34,7 @@
 ["gingerbread_house", "Gingerbread house", "wonder", 2, 2, [150, 40, 80], 0, "The roof sparkles with sugar-frosted fireworks."],
 ["post_office", "North Pole post office", "wonder", 2, 2, [1285, 770, 890], 0, "Every letter finds its way north."],
 ["chapel", "Snowy chapel", "wonder", 2, 2, [765, 340, 455], 0, "The chapel masons cut stone for the market’s foundations."],
-["reindeer_stable", "Reindeer stable", "wonder", 3, 2, [470, 170, 0], 0, "A reindeer from the stable can kick through a stubborn tile."],
+["reindeer_stable", "Reindeer stable", "wonder", 3, 2, [470, 170, 0], 0, "The stable's farrier lends a hammer that breaks one stubborn tile."],
 ["santa_workshop", "Woodcarvers' hall", "wonder", 3, 3, [1405, 715, 850], 0, "Carvers whittle reindeer by lamplight until the last toy is wrapped."],
 ["firework_stall", "Firework stall", "wonder", 2, 2, [770, 280, 280], 0, "Indigo crackers for the New Year sky, sold in threes."],
 ["station_kiosk", "Station kiosk", "wonder", 2, 2, [985, 675, 855], 0, "Borrow the station clock when you need a little more time."],

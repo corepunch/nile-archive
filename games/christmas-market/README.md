@@ -29,7 +29,7 @@ The 100 winter wishes use square boards up to 9 × 12. Swap two neighboring trea
 
 ## Shared match engine and atlas
 
-Each board spawns five piece kinds. Building the Reindeer stable adds the reindeer. Match 30 to charge a kick on a chosen cell. The Firework stall upgrades that slot to Firework Bomb and carries over its charge. Each campaign purchase adds one piece or tool. [Compare all 20 rewards with Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
+Each board spawns five piece kinds. Building the Reindeer stable adds the Farrier's hammer. Match 30 to charge a blow on a chosen cell. The Firework stall upgrades that slot to Firework Bomb and carries over its charge. Each campaign purchase adds one piece or tool. [Compare all 20 rewards with Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 
 The puzzle and town use the same wallet and blue Settings gear. Each green resource
 capsule has the brass rim and drop shadow of the round buttons. The remaining moves
@@ -174,7 +174,7 @@ Tap **Skip level** at the top right of the board, read any scene, then claim the
 On the island, **Advance** places an earned story building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
-The Reindeer stable introduces the reindeer and the Candlelight shop introduces
+The Reindeer stable introduces the Farrier's hammer and the Candlelight shop introduces
 the lantern. Match them to charge their tools. Stored uses and partial
 charge carry between wishes.
 

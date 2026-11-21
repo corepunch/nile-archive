@@ -13,8 +13,8 @@ release of Cradle of Rome 2. Its first purchase adds a water bucket worth 3
 Food. In Christmas Market, the Welcome arch replaces the candy cane with red
 mulled wine worth 3 Treats. The blue mitten distinguishes the score piece from
 the wine. The bakery's brown gingerbread man and the kiosk's ivory cocoa
-mug follow in the same Treats slot. The stable brings a reindeer that charges a
-single-cell kick. The lumber workshop brings natural pine, which replaces the mitten. The
+mug follow in the same Treats slot. The stable brings the Farrier's hammer, which charges a
+single-cell blow. The lumber workshop brings natural pine, which replaces the mitten. The
 chapel replaces it with the same slate-gray dressed stone used in Relic Rush.
 Its blocky profile and matte faces distinguish it from the bright round coin.
 The Firework bundles three indigo crackers and stands out beside the red mulled wine.
@@ -26,7 +26,7 @@ Twenty purchases open at levels 1, 6, 11 … 96, four per Advent. Each unlocks e
 | After level | Stall | Reward | Price (Tokens / Treats / Materials) |
 | ---: | --- | --- | ---: |
 | 1 | **Welcome arch** | Mulled wine +3 Treats | 35 / 0 / 0 |
-| 6 | Reindeer stable | Reindeer (single-cell kick) | 470 / 170 / 0 |
+| 6 | Reindeer stable | Farrier's hammer (single-cell blow) | 470 / 170 / 0 |
 | 11 | **Lumber workshop** | Bundled pine +5 Materials | 920 / 330 / 0 |
 | 16 | Firework stall | Firework Bomb | 770 / 280 / 280 |
 | 21 | **Gingerbread bakery** | Gingerbread man +4 Treats | 820 / 300 / 435 |
@@ -52,7 +52,7 @@ gate can buy it from the shop.
 
 ## In-game review
 
-[Reindeer stable, clock, skates and tool states](screenshots/review/building-rewards/README.md)
+[Reindeer stable's hammer, clock, skates and tool states](screenshots/review/building-rewards/README.md)
 
 ### Earlier palette studies
 
