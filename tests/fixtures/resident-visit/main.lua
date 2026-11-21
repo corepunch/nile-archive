@@ -138,6 +138,8 @@ function desc.frame(dt)
     elseif tick == 225 then
         if app.arg("visit-questions") then
             assert(R.overlay == R.OV_STORY_CHOICE)
+            local boxes = R.choice_form.boxes
+            assert(boxes["2"]:center().y < boxes["1"]:center().y, "the new question belongs above the replay")
         else
             assert(story.active() and R.story_current.phase == "visit", "a heard answer can be replayed")
         end

@@ -98,7 +98,7 @@ The following headers come from Lio and Nera's visits, callbacks and meeting.
 | `**Meeting map_room aviary**` | A one-time town conversation between the residents of these two buildings. Both must have finished their introductions. |
 | `**If asked map_room after-67 personal 2**` | Replace line 2 of the meeting if the player heard Nera's personal answer at this checkpoint. Either resident can deliver the changed line. |
 | `**Ask at aviary \| Did your sister like the portrait?**` | After the meeting, add this question to Lio's visits. Put the answer below it, and give the other resident their own `Ask at` block. |
-| `**Ask at map_room after aviary \| What about Lio's ear?**` | Once the player hears Lio's account of this meeting, Mara can bring it up with Nera. The visit menu names Lio as the source. |
+| `**Ask at map_room after aviary \| What about Lio's ear?**` | Once the player hears Lio's account of this meeting, Mara can bring it up with Nera. |
 
 Several lines in a scene can each have a `With` block. Within one block, write the ordinary
 building reply first, then the conditional replies in priority order. The first satisfied
@@ -124,9 +124,9 @@ opening question and a question based on what the other resident told the player
 Either answer from the other building can supply that detail, so write both versions
 to establish it. Read the conversation in both directions, including the trip back.
 Give each reply something fresh, and let the question label use only what the visitor
-already knows. A fresh lead appears first, with the source resident's name. Every
-answer has its own heard key and stays available across later
-milestones. An existing save with both opening accounts heard unlocks both replies.
+already knows. New questions appear first, starting with any fresh leads. When replays share
+the menu with new questions, one “Ask again” caption introduces the replays. Each
+answer keeps its own heard key across later milestones. An existing save with both opening accounts heard unlocks both replies.
 
 Preview the ordinary reply with `--story-beat after-91 --story-built --story-line 2`.
 Add `--story-asked` for the first conditional reply at or after that line, or

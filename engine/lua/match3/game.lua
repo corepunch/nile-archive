@@ -1086,22 +1086,22 @@ function G.bind(R, over)
         R.queue_story({key=answer.key or beat.key, phase=beat.phase, lines=answer.lines}, preview)
     end
 
-    local visit_topics = {personal="PERSONAL", story="TOWN STORY", meeting="THEIR MEETING"}
-
     function R.open_story_choice(beat, preview)
         local visit = beat.phase == "visit"
         if visit then beat = journey.visit_menu(R.prog, beat) end
-        local children = {match3.popup_header(beat.prompt)}
+        local corner_close = visit and W.corner_close
+        local children = {match3.popup_header(beat.prompt, nil, corner_close and "cancel")}
+        local heard = {}
         for index, option in ipairs(beat.choices) do
-            if visit then
-                local topic = option.source and "FROM " .. option.source:upper() or visit_topics[option.topic]
-                local status = R.prog.story_seen[option.key] and "Heard" or "New"
-                children[#children + 1] = N.label {text=topic .. " · " .. status, em=15, text_style="caption"}
-            end
-            children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
+            local group = visit and R.prog.story_seen[option.key] and heard or children
+            group[#group + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
         end
-        if visit then
-            children[#children + 1] = N.button {id="cancel", text="Back to town", height=36, role="link", em=18}
+        if #heard > 0 and #heard < #beat.choices then
+            children[#children + 1] = N.label {text="Ask again", em=16, text_style="caption"}
+        end
+        for _, button in ipairs(heard) do children[#children + 1] = button end
+        if visit and not corner_close then
+            children[#children + 1] = N.button {id="cancel", text="Back", height=44, role="link", em=18}
         end
         R.choice_form = ui.form{root=N.column {panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end

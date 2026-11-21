@@ -130,7 +130,7 @@ The 100 playable wishes run through five Advents. Ten stalls carry the story (We
 
 Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
 
-Ada Pike arrives from across the lake when the Glassblower’s stall opens. She returns at wishes 74, 84, 89 and 90. Tap the stall to visit Ada after the introduction. Tap the roof bubble or the building to choose what to ask Ada. Each of six story milestones offers a personal question and a question about recent events, including a final pair after the finale. The bubble stays while any available answer is new. You can return and ask either question again. At wish 90 Ada remembers the cue she and Noelle agreed on at the stall.
+Ada Pike arrives from across the lake when the Glassblower’s stall opens. She returns at wishes 74, 84, 89 and 90. Tap the stall to visit Ada after the introduction. Tap the roof bubble or the building to choose what to ask Ada. Each of six story milestones offers a personal question and a question about recent events, including a final pair after the finale. New questions come first, with previously heard answers under “Ask again” when both are available. The bubble stays while any available answer is new. You can return and ask either question again. At wish 90 Ada remembers the cue she and Noelle agreed on at the stall.
 
 Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him.
 
