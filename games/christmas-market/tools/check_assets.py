@@ -20,7 +20,8 @@ def png(path):
     return struct.unpack('>II', data[16:24]), data[25]
 
 def main():
-    inventory = {str(p.relative_to(ROOT)): digest(p) for p in sorted((ROOT/'data').rglob('*')) if p.is_file()}
+    inventory = {str(p.relative_to(ROOT)): digest(p) for p in sorted((ROOT/'data').rglob('*'))
+                 if p.is_file() and p.name != '.DS_Store'}
     manifest = json.loads(MANIFEST.read_text())
     if '--update' in sys.argv:
         manifest['runtime'] = inventory
@@ -91,7 +92,8 @@ def main():
         assert png(ROOT/entry['runtime']) == (tuple(entry['image']),6), entry['key']
         assert all(x > 0 and x % 1 == 0 for x in entry['size'])
         assert entry['base_width'] > 0 and len(entry['pivot']) == 2
-    assert {p.name for p in (ROOT/'data/city/buildings').iterdir()} == {e['key'] + '.png' for e in buildings}
+    building_files = {f"data/city/buildings/{entry['key']}.png" for entry in buildings}
+    assert {p for p in inventory if p.startswith('data/city/buildings/')} == building_files
     chimneys = manifest['chimneys']
     for key in ('guide', 'source', 'original_crops', 'prompt', 'layout', 'outlets', 'renderer', 'review'):
         assert (ROOT/chimneys[key]).is_file(), key

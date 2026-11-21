@@ -1,6 +1,9 @@
 {
   "resident_visit_marker": {
-    "buildings": ["glassblower", "station_kiosk"],
+    "buildings": [
+      "glassblower",
+      "station_kiosk"
+    ],
     "renderer": "engine/lua/town/screen.lua \u00b7 story.bubble_shape with town skin and three dots",
     "visible": "At least one answer at the current visit is unheard",
     "hidden": "No visit, both answers heard, dialogue, modal or placement",
@@ -92,8 +95,6 @@
     "disabled"
   ],
   "runtime": {
-    "data/.DS_Store": "f79010c5620ea513afb709871ee4814ce2b06e04e0162d7c5c6487ec098583bd",
-    "data/board/.DS_Store": "3b4c18569b136bb88738ca0b877373d14902cbcd3444092382cc7f9fb2630221",
     "data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
     "data/board/backs/bellmere-opening.jpg": "6e33ae54709be976e18a9721664a61d482abb3d0aeb11ecdeee89843ed35adbb",
     "data/board/backs/candlelight-shop.jpg": "9d7b8079398ea81aca80dd58c21c7b7e435b4edfb5205f9451aa7015ed2a2327",
@@ -117,7 +118,7 @@
     "data/board/backs/winter-skating-rink.jpg": "5ea920aa37832709c8cd4e8f6cc7215c500f83db2197eb1dce16b814c17754b9",
     "data/board/backs/woodcarvers-hall.jpg": "6e251fd2feaa69334e72e4ef70f2050b984534087143e88c3e76d675afffa366",
     "data/board/blockers.png": "766e9ff1ab1e17dac093988dcbd56170c668262b52ea57ec861805b2e5e0e81a",
-    "data/board/cells.png": "0a519c7c5914928973540f14383de404004388a9d6cb9e36219c228e2bb79d44",
+    "data/board/cells.png": "fc971b7df590510a9d8c6129e842cf1ff4575828b15f1cf53e9b029477494f9e",
     "data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
     "data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
     "data/board/match-specials.png": "511f412c0c6ee9d53cadbc7a91d451566003f75eb61407fd8b80b050e48306a0",

@@ -93,7 +93,9 @@ The [before and after captures](screenshots/review/board-shadow/comparison.jpg)
 show it at both phone sizes.
 
 The current campaign uses honey maple, frosted teal panes and olive-green
-double panes. Aged oak forms a narrow rail with rounded outside caps and
+double panes. The [plain maple tile](../art/square-frame/maple-floor.png)
+preserves the 128 × 128 paint edit from commit `b6e8c11e`. The packer places
+it at native size in the `square-plain` frame. Aged oak forms a narrow rail with rounded outside caps and
 bare or leafy inside joins. Built-in ImageGen painted eight original rail
 profiles and a holly sprig together in one [transparent sheet](../art/square-frame/variants.png)
 from the [recorded prompt](../art/square-frame/prompt.txt).
