@@ -2057,8 +2057,8 @@ function E.new(config)
     end
 
     local choose_swap
-    function R.start_autoplay(at)
-        if R.autoplay or R.art_review or R.g.won or R.g.lost or not R.BOARD_CLIP:contains(at) then return end
+    function R.start_autoplay()
+        if R.autoplay or R.art_review or R.g.won or R.g.lost then return end
         choose_swap = choose_swap or require("match3.bot")(rules)
         R.autoplay = 250
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1

@@ -257,7 +257,6 @@ static void frame(float dt)
         post_gesture(AX_GESTURE_END, 1);
     } else if (step == 2) {
         CHECK(in.captured && in.released && !in.down && !in.tap && in.multi_touch);
-        CHECK(!in.two_finger_tap); /* a pinch is not a tap */
         CHECK(!ui_hit(app_screen(),0).clicked);
         post(kEventPointerCancel, 0, 0);
     } else if (step == 3) {
@@ -273,18 +272,8 @@ static void frame(float dt)
         CHECK(in.released && in.tap && !in.captured);
         CHECK(!ui_hit(rc(20,10,30,30),0).clicked);
         app_inject_click(v2(30,20)); /* a fresh press on the visible control */
-    } else if (step == 7) {
-        CHECK(in.captured && ui_hit(rc(20,10,30,30),0).clicked);
-        app_test_two_finger_tap(v2(30, 20));
-    } else if (step == 8) {
-        CHECK(in.two_finger_tap && !in.tap && !in.released);
-        NEAR(in.pinch_center.x, 30);
-        NEAR(in.pinch_center.y, 20);
-        post_gesture(AX_GESTURE_BEGIN, 1);
-        post_gesture(AX_GESTURE_CANCEL, 1);
-        post_gesture(AX_GESTURE_END, 1);
     } else {
-        CHECK(!in.two_finger_tap);
+        CHECK(in.captured && ui_hit(rc(20,10,30,30),0).clicked);
         app_quit();
     }
     step++;
@@ -297,7 +286,7 @@ static void run(int argc)
     app_desc desc = {.design = {100, 100}, .fixed = true, .clear = {16, 32, 48, 255}, .init = init, .frame = frame, .quit = quit};
     step = 0;
     CHECK(app_run(desc, argc, args) == 0);
-    CHECK(step == 10);
+    CHECK(step == 8);
 }
 
 TEST(platform) { run(5); }

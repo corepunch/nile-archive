@@ -241,6 +241,7 @@ double app_time(void);          /* seconds since start (frame time) */
 float app_dt(void);             /* duration of the current frame, seconds */
 double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
+bool app_debug_autoplay(void);          /* local debug build may show the match-3 skip button */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
 void app_boot_args(int argc, char **argv); /* command-line configuration while Lua modules load */
 void app_boot_data(const char *dir);   /* the data root before app_run (script_boot, rule tests) */
@@ -266,10 +267,9 @@ typedef struct {
     bool captured;     /* the press started on UI; the world should ignore it */
     bool hover;        /* a real mouse is over the window (desktop) */
     bool multi_touch;  /* a second pointer joined this press; latched through release */
-    bool two_finger_tap; /* a short, stationary two-finger gesture ended this frame */
     float wheel;       /* wheel steps this frame */
     float pinch;       /* zoom factor from two fingers this frame (1 = none) */
-    vec2 pinch_center; /* centre of the pinch or two-finger tap */
+    vec2 pinch_center;
     int key;           /* AX key code pressed this frame, 0 if none */
     bool back;         /* Escape / Android back */
 } input;

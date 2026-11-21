@@ -8,7 +8,7 @@ local clear = "after-01"
 
 function R.smoke()
     frames = frames + 1
-    assert(frames < 360, "two-finger bot stalled at stage " .. stage)
+    assert(frames < 360, "debug skip stalled at stage " .. stage)
     if stage == 3 and R.on_island then
         assert(R.g.reward_claimed and R.prog.level == 1, "claim advances the campaign")
         for i = 1, 4 do
@@ -32,11 +32,11 @@ function R.smoke()
         story.next()
         return
     end
-    if stage == 0 then
+    if stage == 0 and R.debug_skip_button then
         assert(not R.on_island and R.g.score == 0, "test begins on the first live board")
         R.g.moves = 1
         started = app.time()
-        testing.two_finger_tap(R.BOARD_CLIP:center())
+        app.inject_click(R.debug_skip_button:center())
         stage = 1
     elseif stage == 1 and R.g.won then
         assert(R.overlay == R.OV_RESULT and R.prog.level == 0, "claiming must still be a separate action")
@@ -44,7 +44,7 @@ function R.smoke()
         assert(R.prog.completed and R.prog.completed.score == R.g.score, "the normal win stashes the reward")
         local seconds = app.time() - started
         assert(seconds < 1, "the opening board takes less than one second at 60 FPS")
-        print(("two-finger bot cleared in %.2f game seconds"):format(seconds))
+        print(("debug skip cleared in %.2f game seconds"):format(seconds))
         expected_wallet = R.prog.wallet + rules.level_reward(R.g, R.wonders, R.prog)
         stage = 2
     elseif stage == 2 and (not journey.clear_before_result or R.g.story_clear == clear)

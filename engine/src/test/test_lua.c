@@ -34,11 +34,6 @@ static int l_test_input(lua_State *S)
     app_test_input(api_get_input(S, 1));
     return 0;
 }
-static int l_test_two_finger_tap(lua_State *S)
-{
-    app_test_two_finger_tap(api_get_vec2(S, 1));
-    return 0;
-}
 static int l_test_reset(lua_State *S)
 {
     app_test_reset();
@@ -73,7 +68,6 @@ static void test_lua_open(lua_State *S)
     app_test_reset();
     static const luaL_Reg hooks[] = {
         {"advance", l_test_advance}, {"input", l_test_input}, {"reset", l_test_reset},
-        {"two_finger_tap", l_test_two_finger_tap},
         {"haptics", l_test_haptics}, {"monotonic", l_test_monotonic}, {NULL, NULL}
     };
     luaL_newlib(S, hooks);

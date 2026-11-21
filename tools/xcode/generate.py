@@ -264,8 +264,9 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         if team:
             settings['DEVELOPMENT_TEAM'] = team
         debug_settings = None
-        if ipad and game in ('relic-rush', 'christmas-market'):
-            debug_settings = {'GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*]':
+        if game in ('relic-rush', 'christmas-market'):
+            debug_sdk = 'iphonesimulator' if ipad else 'macosx'
+            debug_settings = {f'GCC_PREPROCESSOR_DEFINITIONS[sdk={debug_sdk}*]':
                               ['$(inherited)', 'MATCH3_DEBUG_AUTOPLAY=1']}
         configs = project.configurations(name, settings, debug_settings)
 

@@ -180,6 +180,7 @@
     <function name="dt" c="app_dt" doc="Duration of the current frame, seconds."><returns type="float"/></function>
     <function name="clock" c="app_clock" doc="Wall clock, seconds since the Unix epoch."><returns type="double"/></function>
     <function name="arg" c="app_arg" doc="Value after --name on the command line (or in the web page's query string): the value, &quot;&quot; for a bare flag, nil if absent."><arg name="name" type="string"/><returns type="string" optional="true"/></function>
+    <function name="debug_autoplay" c="app_debug_autoplay" doc="Whether this local debug build may show the match-3 skip button."><returns type="bool"/></function>
     <function name="path" c="app_path" doc="An asset path resolved against the data root."><arg name="rel" type="string"/><returns type="string"/></function>
     <function name="read_text" impl="lapp_read_text" doc="A text asset (such as a JSON config) relative to the data root, whole; nil if it is missing."><arg name="rel" type="string"/><returns type="string" optional="true"/></function>
     <function name="renderer_geometry" c="draw_mesh" lua="mesh" doc="Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.">
@@ -204,10 +205,9 @@
     <field name="captured" type="bool" doc="The press started on UI; the world should ignore it."/>
     <field name="hover" type="bool" doc="A real mouse is over the window."/>
     <field name="multi_touch" type="bool" doc="A second pointer joined this press; latched through release, cleared on the next press or cancellation."/>
-    <field name="two_finger_tap" type="bool" doc="A short, stationary two-finger gesture ended this frame (debug Simulator and tests only)."/>
     <field name="wheel" type="float" doc="Wheel steps this frame."/>
     <field name="pinch" type="float" doc="Zoom factor from two fingers this frame (1 = none)."/>
-    <field name="pinch_center" type="vec2" doc="Centre of the pinch or two-finger tap."/>
+    <field name="pinch_center" type="vec2"/>
     <field name="key" type="int" doc="AX key code pressed this frame, 0 if none."/>
     <field name="back" type="bool" doc="Escape or the Android back button."/>
   </struct>

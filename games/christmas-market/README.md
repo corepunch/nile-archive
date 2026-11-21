@@ -15,8 +15,9 @@ Settings takes you back to the title. See the
 Both also have [compact title](docs/screenshots/main-menu-phone.jpg) and
 [compact board](docs/screenshots/first-launch-phone.jpg) captures.
 
-In the Debug iOS Simulator build, tap the board with two fingers to have the
-bot finish the level. Claim the reward and follow the usual story prompts.
+In an Xcode Debug build for macOS or the iOS Simulator, tap **SKIP >>** at the
+top right of the board to have the bot finish the level. Claim the reward and
+follow the usual story prompts.
 
 ![The 41 market buildings and decorations](docs/screenshots/buildings.jpg)
 

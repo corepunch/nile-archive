@@ -9,9 +9,9 @@ permanent slot exactly once. Spending the tool empties the slot. The
 [shared ranks and charge rules](../../../docs/MATCH3_ENGINE.md) apply to both
 Christmas Market and Relic Rush.
 
-In the Debug iOS Simulator build, a two-finger tap over the board runs the
-reference bot through legal swaps at two moves per frame. It can keep playing
-after the move counter reaches zero. The normal win dialogue and reward follow.
+In an Xcode Debug build for macOS or the iOS Simulator, **SKIP >>** runs the
+reference bot through legal swaps at up to two moves per frame. It can keep
+playing after the move counter reaches zero. The normal reward and story follow.
 
 ## Line gems and rainbow gems
 

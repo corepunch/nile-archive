@@ -322,7 +322,7 @@ static int l_purse_new(lua_State *L)
 
 void api_push_input(lua_State *L, input v)
 {
-    lua_createtable(L, 0, 17);
+    lua_createtable(L, 0, 16);
     api_push_vec2(L, v.pos); lua_setfield(L, -2, "pos");
     api_push_vec2(L, v.press_pos); lua_setfield(L, -2, "press_pos");
     lua_pushboolean(L, v.down); lua_setfield(L, -2, "down");
@@ -334,7 +334,6 @@ void api_push_input(lua_State *L, input v)
     lua_pushboolean(L, v.captured); lua_setfield(L, -2, "captured");
     lua_pushboolean(L, v.hover); lua_setfield(L, -2, "hover");
     lua_pushboolean(L, v.multi_touch); lua_setfield(L, -2, "multi_touch");
-    lua_pushboolean(L, v.two_finger_tap); lua_setfield(L, -2, "two_finger_tap");
     lua_pushnumber(L, v.wheel); lua_setfield(L, -2, "wheel");
     lua_pushnumber(L, v.pinch); lua_setfield(L, -2, "pinch");
     api_push_vec2(L, v.pinch_center); lua_setfield(L, -2, "pinch_center");
@@ -382,9 +381,6 @@ input api_get_input(lua_State *L, int i)
     lua_getfield(L, i, "multi_touch");
     v.multi_touch = lua_toboolean(L, -1);
     lua_pop(L, 1);
-    lua_getfield(L, i, "two_finger_tap");
-    v.two_finger_tap = lua_toboolean(L, -1);
-    lua_pop(L, 1);
     lua_getfield(L, i, "wheel");
     v.wheel = (float)lua_tonumber(L, -1);
     lua_pop(L, 1);
@@ -417,7 +413,6 @@ void api_store_input(lua_State *L, int i, input v)
     lua_pushboolean(L, v.captured); lua_setfield(L, i, "captured");
     lua_pushboolean(L, v.hover); lua_setfield(L, i, "hover");
     lua_pushboolean(L, v.multi_touch); lua_setfield(L, i, "multi_touch");
-    lua_pushboolean(L, v.two_finger_tap); lua_setfield(L, i, "two_finger_tap");
     lua_pushnumber(L, v.wheel); lua_setfield(L, i, "wheel");
     lua_pushnumber(L, v.pinch); lua_setfield(L, i, "pinch");
     api_push_vec2(L, v.pinch_center); lua_setfield(L, i, "pinch_center");
@@ -2562,6 +2557,14 @@ static int l_app_arg(lua_State *L)
     return 1;
 }
 
+/* app.debug_autoplay() */
+static int l_app_debug_autoplay(lua_State *L)
+{
+    bool r = app_debug_autoplay();
+    lua_pushboolean(L, r);
+    return 1;
+}
+
 /* app.path(rel) */
 static int l_app_path(lua_State *L)
 {
@@ -4378,6 +4381,7 @@ static void open_app(lua_State *L)
         {"dt", l_app_dt},
         {"clock", l_app_clock},
         {"arg", l_app_arg},
+        {"debug_autoplay", l_app_debug_autoplay},
         {"path", l_app_path},
         {"read_text", lapp_read_text},
         {"mesh", l_app_renderer_geometry},
