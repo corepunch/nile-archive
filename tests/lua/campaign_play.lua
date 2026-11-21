@@ -40,8 +40,7 @@ local function scene(expected, before_reward)
     else check(R.prog.story_seen[expected], 'finished scene acknowledged: ' .. expected) end
 end
 
--- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua):
--- every tier uses the same 25% allowance over its median clear.
+-- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua).
 local profile = testing.bot_profile and require('bot_profile')(rules)
 local best_move = require('match3.bot')(profile and profile.rules or rules)
 local function play(g)

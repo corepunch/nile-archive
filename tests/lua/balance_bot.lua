@@ -1,8 +1,10 @@
 local budget = require('move_budget')
 -- Outliers must not restore the old percentile-based budget inflation.
 local samples = {48, 4, 12, 250, 8, 12, 80, 10, 120}
-local moves, median = budget.fit(samples)
-check(median == 12 and moves == 15, '12-move median gets exactly 25% headroom despite slow runs')
+local moves, median = budget.fit(samples, 'christmas-market')
+check(median == 12 and moves == 15, 'Christmas Market keeps 25% headroom despite slow runs')
+moves, median = budget.fit(samples, 'relic-rush')
+check(median == 12 and moves == 18, 'Relic Rush adds three moves to the fitted budget')
 check(samples[1] == 48, 'fitting preserves the recorded sample order')
 check(budget.fit({9, 9, 9}) == 12, 'fractional move allowance rounds up')
 check(not pcall(budget.fit, {math.huge, 12, math.huge}), 'unreliable bot sample requires investigation')

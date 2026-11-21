@@ -1,8 +1,8 @@
 -- Move budgets for the authored boards, run by tools/tune_moves.py. Each board
 -- in TUNE_LEVELS is played TUNE_SEEDS times (BALANCE_RUNS, default 40) by the
 -- greedy bot with a 250-move ceiling and the earned buildings in place.
--- The median times 1.25 sets the budget; slow runs never inflate it. Prints one
--- MOVES_JSON line per board, and one CELLS_JSON line per game with the move
+-- move_budget.lua applies each game's allowance to the median. Prints one
+-- MOVES_JSON line per board and one CELLS_JSON line per game with the move
 -- each plaque was cleared on.
 if not testing.tune_levels then return end
 
@@ -64,7 +64,7 @@ for level = first, last do
     end
     spec.moves = original_moves
     table.sort(used)
-    local need, median = budget.fit(used)
+    local need, median = budget.fit(used, testing.game)
     local wins, within = 0, 0
     for _, v in ipairs(used) do
         if v < math.huge then wins = wins + 1 end

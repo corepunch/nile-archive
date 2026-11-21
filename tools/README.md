@@ -85,12 +85,12 @@ are the guides.
 | `resident_portraits.py` | Registers building residents from their original portrait sheets | `python3 tools/resident_portraits.py --check` |
 | `town_story.py` | Compiles purchases, resident questions and conditional campaign replies from the reviewed town script | Imported by both games’ `prepare_story.py` |
 | `story_lines.py` | Lists story lines that may be narration rather than speech: no I/we/you, no name, no question or imperative ([why](../docs/STORY_WRITING.md#speech-only-no-narration)) | `python3 tools/story_lines.py christmas-market` |
-| `tune_moves.py` | Fits each board's `moves` in the square campaign's `lua/campaign.lua` to the bot's median times 1.25, rounded up, with no percentile override and writes `docs/level-moves.md` and `.json` (`lua/level_moves.lua` is the archived hex path) | `python3 tools/tune_moves.py relic-rush` |
+| `tune_moves.py` | Fits each board's `moves` in `lua/campaign.lua` from the bot's median clear and writes `docs/level-moves.md` and `.json` (`lua/level_moves.lua` is the archived hex path) | `python3 tools/tune_moves.py relic-rush` |
 | `balance_plaques.py` | Lists the plaques the bot clears last on each board and, with `--trim`, removes them until the bot's median game is at most twice the level's Homescapes move budget (`--high`); `--keep-blockers` trims plain plaques before chained and frozen ones | `python3 tools/balance_plaques.py relic-rush --levels 31-40`; add `--trim` to rewrite the level files |
 | `tests/lua/tune_moves.lua` | The bot side of `tune_moves.py` and `balance_plaques.py`; reports the move each plaque was cleared on | run by `tune_moves.py` |
 | `engine/lua/match3/bot.lua` | The reference bot for move and price fitting and Simulator fast clears. Prioritizes target progress, values gem creation and checks both directions for a line-gem cross using first-wave previews | required |
 | `tests/lua/bot_profile.lua` | Local rule-call timings for the full campaign bot; independent of the injected gameplay clock | `make test-bot`; timings in `build/test/<game>.log` |
-| `tests/lua/move_budget.lua` | Shared median × 1.25 policy, exercised by `balance_bot` regression tests | required by `tune_moves.lua` |
+| `tests/lua/move_budget.lua` | Rounds up median × 1.25 for each board and adds three moves in Relic Rush | required by `tune_moves.lua` |
 | `tests/lua/relic_balance.lua` | Plays every board of both games, reports income and fits purchase prices; `balance.py` runs it one board per process and writes the prices | `make test-balance` (report only, same forty-game sample) |
 
 ## Review captures and story

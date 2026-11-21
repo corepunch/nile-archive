@@ -325,13 +325,14 @@ The steps it runs can also be run one at a time:
 ```sh
 python3 tools/hex_levels.py relic-rush --lua           # lua/boards.lua
 make build/test/relic-rush
-python3 tools/tune_moves.py relic-rush                # lua/level_moves.lua, docs/level-moves.md
+python3 tools/tune_moves.py relic-rush                # lua/campaign.lua, docs/level-moves.md and .json
 python3 tools/tune_moves.py relic-rush --levels 41-50 # after changing a few boards
 ```
 
 The greedy bot (`tests/lua/tune_moves.lua`) attempts each board on 40
 hashed seeds with a 250-move calibration ceiling. The budget is its median game
-times 1.25, rounded up, for every tier. Slow samples never increase it. The median is used because the bot's
+times 1.25, rounded up, for every tier. Relic Rush adds three moves per board.
+Slow samples never increase the budget. The median is used because the bot's
 slowest games vary wildly from board to board: a budget read from that tail
 gave neighbouring boards two and three and a half times their typical game.
 The table's "Within budget" column is how many of the bot's games fit; it
