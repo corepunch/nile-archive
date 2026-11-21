@@ -1082,6 +1082,10 @@ function G.bind(R, over)
 
     local function choice_reply(beat, index, preview)
         local answer = beat.choices[index]
+        if beat.phase == "visit" and not preview then
+            R.prog.pending_answer = answer
+            R.save_progress()
+        end
         R.queue_story({key=answer.key or beat.key, phase=beat.phase, lines=answer.lines}, preview)
     end
 
@@ -1089,6 +1093,10 @@ function G.bind(R, over)
         local visit = beat.phase == "visit"
         if visit then beat = journey.visit_menu(R.prog, beat) end
         if #beat.choices == 0 then return false end
+        if visit and #beat.choices == 1 then
+            choice_reply(beat, 1, preview)
+            return true
+        end
         local corner_close = visit and W.corner_close
         local children = {match3.popup_header(beat.prompt, nil, corner_close and "cancel")}
         for index, option in ipairs(beat.choices) do
@@ -1111,13 +1119,9 @@ function G.bind(R, over)
         if choices:active() then choices:close(nil, nil, true) end
         R.story_choice_beat, R.story_choice_preview = nil, nil
         R.overlay = R.OV_NONE
-        if not preview then
-            if beat.phase == "visit" then
-                R.prog.pending_answer = beat.choices[index]
-            else
-                R.prog.story_choices = R.prog.story_choices or {}
-                R.prog.story_choices[beat.key] = index
-            end
+        if not preview and beat.phase ~= "visit" then
+            R.prog.story_choices = R.prog.story_choices or {}
+            R.prog.story_choices[beat.key] = index
             R.save_progress()
         end
         choice_reply(beat, index, preview)
@@ -1548,7 +1552,8 @@ function G.app(R)
         if not story_wait and not transition:active() and drawn_overlay == R.overlay
             and (not outcome or board_exit == BOARD_OUT) then R.overlays(dt) end
         if not talking then R.draw_leaderboard(dt) end   -- above every dialog, closing returns to it
-        story.frame(dt)
+        -- A tap opening dialogue (including a roof bubble) belongs to the town for this frame.
+        if talking or not story.active() then story.frame(dt) end
         -- Keep the HUD above ordinary dialogs. Level endings, the guide and
         -- leaderboard own the whole foreground.
         local hud_above = not R.on_menu and not backdrop_only and not outcome and R.overlay ~= R.OV_GUIDE and not board

@@ -124,7 +124,9 @@ opening question and a question based on what the other resident told the player
 Either answer from the other building can supply that detail, so write both versions
 to establish it. Read the conversation in both directions, including the trip back.
 Give each reply something fresh, and let the question label use only what the visitor
-already knows. Each question can be asked once. Selecting it removes it from the menu
+already knows. Tapping either the building or its roof bubble asks a lone remaining
+question immediately. Two or more available questions open the menu. Each question
+can be asked once. Asking it removes it from the menu
 and saves the pending answer. On returning to town, an interrupted answer plays again
 without another selection. Finishing it or pressing Skip records the memory and unlocks
 any related questions. When all questions are gone, tapping the building shows its

@@ -64,6 +64,16 @@ local function tap()
     error("resident needs an exposed tap target")
 end
 
+local function tap_marker()
+    local box = assert(R.town:visit_marker_bounds(item - 1), "marker must be on screen")
+    app.inject_click(box:center())
+end
+
+local function direct_answer(key)
+    assert(R.overlay == R.OV_NONE and not R.story_choice_beat and story.active()
+        and R.story_current.key == key and R.prog.pending_answer.key == key, "the tap must start the sole answer directly")
+end
+
 function desc.frame(dt)
     tick = tick + 1
     if meeting then
@@ -72,14 +82,20 @@ function desc.frame(dt)
             tap()
         elseif tick == 52 then
             local key = meeting.key .. "." .. site .. (heard_at and ".reply" or "")
-            for index, answer in ipairs(R.story_choice_beat.choices) do
-                if answer.key == key then
-                    selected = answer
-                    assert(R.choice_form.boxes[tostring(index)], "question must have a tap target")
-                    if not app.arg("visit-questions") then select_question(tostring(index)) end
+            if heard_at then
+                assert(R.overlay == R.OV_STORY_CHOICE and #R.story_choice_beat.choices == 2)
+                for index, answer in ipairs(R.story_choice_beat.choices) do
+                    if answer.key == key then
+                        selected = answer
+                        assert(R.choice_form.boxes[tostring(index)], "question must have a tap target")
+                        if not app.arg("visit-questions") then select_question(tostring(index)) end
+                    end
                 end
+                assert(selected, "meeting question must be available")
+            else
+                direct_answer(key)
+                selected = R.prog.pending_answer
             end
-            assert(selected, "meeting question must be available")
         elseif tick == 80 and not app.arg("visit-questions") then
             assert(story.active() and R.story_current.key == selected.key)
             story.next() -- the resident's reply
@@ -110,8 +126,7 @@ function desc.frame(dt)
         R.prog.story_seen["placed-" .. site] = true
         assert(R.town.hooks.unheard_visit(kind), "meeting the resident unlocks the first marker")
     elseif tick == 37 then
-        local box = assert(R.town:visit_marker_bounds(item - 1), "marker must be on screen")
-        app.inject_click(box:center())
+        tap_marker()
     elseif tick == 52 then
         select_question("cancel")
     elseif tick == 68 then
@@ -125,7 +140,7 @@ function desc.frame(dt)
         assert(R.town.hooks.unheard_visit(kind), "the other question keeps the bubble")
         tap()
     elseif tick == 134 then
-        select_question("1")
+        direct_answer(journey.visit(R.prog, site).choices[1].key)
     elseif tick == 155 then
         finish_answer(1)
     elseif tick == 160 then
@@ -143,13 +158,11 @@ function desc.frame(dt)
         finish_answer(1)
     elseif tick == 215 and app.arg("visit-questions") then
         assert(R.town.hooks.unheard_visit(kind), "the later story answer is still new")
-        tap()
+        tap_marker()
     elseif tick == 235 then
         if app.arg("visit-questions") then
-            assert(R.overlay == R.OV_STORY_CHOICE)
-            local options = R.story_choice_beat.choices
-            assert(#options == 1 and options[1] == journey.visit(R.prog, site).choices[2],
-                "the menu offers only the remaining story question")
+            direct_answer(journey.visit(R.prog, site).choices[2].key)
+            app.inject_click(app.screen():center()) -- reveal the question for the capture
         else
             assert(story.active() and R.story_current.phase == "visit", "the next stage has a fresh answer")
         end

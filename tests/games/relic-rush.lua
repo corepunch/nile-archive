@@ -346,7 +346,7 @@ local visit = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visi
 shot("resident-visit-first", "480x900", visit .. "placed-aviary")
 shot("resident-visit-later", "390x844", visit .. "after-100 --safe-area 0,47,0,34")
 shot("resident-questions-480", "480x900", visit .. "placed-aviary --visit-questions")
-shot("meeting-followup-menu", "390x844", visit .. "after-85 --visit-meeting meeting-map_room-aviary --visit-questions --safe-area 0,47,0,34")
+shot("meeting-followup-direct", "390x844", visit .. "after-85 --visit-meeting meeting-map_room-aviary --visit-questions --safe-area 0,47,0,34")
 shot("meeting-followup-answer", "480x900", visit .. "after-67 --visit-site map_room --visit-meeting meeting-map_room-aviary")
 shot("meeting-reply-menu", "390x844", visit .. "after-85 --visit-meeting meeting-map_room-aviary --heard-at map_room --visit-questions --safe-area 0,47,0,34")
 shot("meeting-reply-answer", "480x900", visit .. "after-67 --visit-site map_room --visit-meeting meeting-map_room-aviary --heard-at aviary")

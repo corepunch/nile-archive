@@ -166,8 +166,8 @@ R.prog = reloaded
 check(R.story_lines(later)[ordinary.index] == memory.line, "the loaded campaign uses the remembered reply")
 check(journey.lines_for(later, function() return false end, R.prog.story_seen) == later.lines, "an absent building keeps the original scene")
 R.open_story_choice(visit)
-check(#R.story_choice_beat.choices == 1 and R.story_choice_beat.choices[1] == original and R.choose_story_option(1),
-    "only the remaining question can be selected")
+check(not R.story_choice_beat and R.overlay == R.OV_NONE and R.story_current.key == original.key
+    and reloaded.pending_answer == original, "the last question starts directly and is saved as pending")
 while story.active() do story.next() end
 R.story_tick()
 save.write("both-answers", function(s) journey.serialize(s, reloaded) end)
@@ -217,7 +217,8 @@ R.prog = both
 for _, index in ipairs({2, 1}) do
     check(R.story_lines(later2)[ordinary2.index] == ordinary2.line, "the other resident or the other question cannot trigger the memory")
     R.open_story_choice(first2)
-    check(R.choose_story_option(index) and story.active(), "play the second resident's selected answer")
+    if index == 2 then check(R.choose_story_option(index), "choose from both questions") end
+    check(story.active() and R.story_current.key == first2.choices[index].key, "play the second resident's answer")
     while story.active() do story.next() end
     R.story_tick()
 end
@@ -242,7 +243,8 @@ local questions = journey.visit(R.prog, site2)
 for _, index in ipairs({2, 1}) do
     check(R.story_lines(meeting) == meeting.lines, "only the particular conversation changes the meeting")
     R.open_story_choice(questions)
-    check(R.choose_story_option(index), "ask the resident at their building")
+    if index == 2 then check(R.choose_story_option(index), "choose from both questions") end
+    check(R.story_current.key == questions.choices[index].key, "ask the resident at their building")
     while story.active() do story.next() end
     R.story_tick()
 end
@@ -283,6 +285,11 @@ end
 
 local function ask_meeting_question(home, answer_key)
     R.open_story_choice(journey.visit(R.prog, home))
+    if not R.story_choice_beat then
+        check(story.active() and R.story_current.key == answer_key and R.prog.pending_answer.key == answer_key,
+            "a sole meeting question starts immediately")
+        return
+    end
     for index, answer in ipairs(R.story_choice_beat.choices) do
         if answer.key == answer_key then
             check(R.choose_story_option(index) and R.story_current.lines == answer.lines,

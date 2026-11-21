@@ -852,13 +852,13 @@ Choice prompt: Who should answer the signal?
 
 Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin. [First meeting](screenshots/resident-meeting.jpg) · [After asking Nera](screenshots/resident-meeting-memory.jpg)
 
-At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still. [Visit menu](screenshots/meeting-followup-menu.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
+At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still. [Direct question](screenshots/meeting-followup-direct.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
 
 Bring Lio’s account of his sister to Nera, or ask Lio about the ear Nera kept redrawing. Either exchange gives Mara something she can take back to the other resident. [Visit menu](screenshots/meeting-reply-menu.jpg) · [Resident’s reply](screenshots/meeting-reply-answer.jpg)
 
 Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
 
-Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Choosing a question removes it. Finishing or skipping its answer lets later conversations recall it. If you leave midway, the answer resumes when you return to town. Closing the menu before choosing keeps every question available. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. When one question remains, tapping the building or bubble starts its exchange directly. Asking a question removes it. Finishing or skipping its answer lets later conversations recall it. If you leave midway, the answer resumes when you return to town. Closing the menu before choosing keeps every question available. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 At expedition 91 Lio remembers what Mara asked after expedition 85. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
 

@@ -813,13 +813,13 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him. [First meeting](screenshots/resident-meeting.jpg) · [After asking Otis](screenshots/resident-meeting-memory.jpg)
 
-At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move. [Visit menu](screenshots/meeting-followup-menu.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
+At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move. [Direct question](screenshots/meeting-followup-direct.jpg) · [Resident’s answer](screenshots/meeting-followup-answer.jpg)
 
 Pip can ask Ada whether Otis left the double jump on purpose, or ask Otis what Ada’s two pings sounded like from his end of the board. Either answer gives Pip a reason to walk back. [Visit menu](screenshots/meeting-reply-menu.jpg) · [Resident’s reply](screenshots/meeting-reply-answer.jpg)
 
 Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
 
-Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Choosing a question removes it. Finishing or skipping its answer lets later conversations recall it. If you leave midway, the answer resumes when you return to town. Closing the menu before choosing keeps every question available. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. When one question remains, tapping the building or bubble starts its exchange directly. Asking a question removes it. Finishing or skipping its answer lets later conversations recall it. If you leave midway, the answer resumes when you return to town. Closing the menu before choosing keeps every question available. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 At wish 90 Ada remembers what Noelle asked after wish 84. [Ordinary reply](screenshots/resident-memory-unasked.jpg) · [Remembered reply](screenshots/resident-memory-asked.jpg)
 
