@@ -121,6 +121,69 @@ function E.load_square(art, skin)
     art.square_frame = square_frame_art(skin)
 end
 
+local SHADOW_SAMPLES, SHADOW_RADIUS, SHADOW_MARGIN = 8, 3, 8
+
+-- A rolling box filter. Transposing the output lets the same pass blur
+-- along the other axis without jumping between rows to read the input.
+local function blur_shadow_rows(samples, width, height)
+    local blurred = {}
+    for y = 1, height do
+        local row, sum = (y - 1) * width, 0
+        for x = 1, SHADOW_RADIUS do sum = sum + samples[row + x] end
+        for x = 1, width do
+            if x + SHADOW_RADIUS <= width then sum = sum + samples[row + x + SHADOW_RADIUS] end
+            if x > SHADOW_RADIUS + 1 then sum = sum - samples[row + x - SHADOW_RADIUS - 1] end
+            blurred[(x - 1) * height + y] = sum
+        end
+    end
+    return blurred
+end
+
+local function square_shadow_mask(rules, game)
+    local width = rules.COLUMNS * SHADOW_SAMPLES + 2 * SHADOW_MARGIN
+    local height = rules.ROWS * SHADOW_SAMPLES + 2 * SHADOW_MARGIN
+    local samples = {}
+    for i = 1, width * height do samples[i] = 0 end
+    local q0, row0 = rules.hex_q(0), rules.hex_r(0)
+    for i = 0, rules.CELLS - 1 do
+        if rules.game_cell_active(game, i) then
+            local x = SHADOW_MARGIN + (rules.hex_q(i) - q0) * SHADOW_SAMPLES
+            local y = SHADOW_MARGIN + (rules.hex_r(i) - row0) * SHADOW_SAMPLES
+            -- Spread one sample under the outer frame. Rasterize the union
+            -- first so touching cells never darken each other's shadow.
+            for row = y, y + SHADOW_SAMPLES + 1 do
+                for col = x, x + SHADOW_SAMPLES + 1 do
+                    samples[(row - 1) * width + col] = 1
+                end
+            end
+        end
+    end
+    for _ = 1, 2 do
+        samples = blur_shadow_rows(blur_shadow_rows(samples, width, height), height, width)
+    end
+    local weight = (2 * SHADOW_RADIUS + 1) ^ 4
+    for i, sample in ipairs(samples) do
+        samples[i] = "\255\255\255" .. string.char(math.floor(sample * 255 / weight + .5))
+    end
+    return texture.from_pixels(table.concat(samples), width, height)
+end
+
+local function draw_square_shadow(R, rules, sx, frame_alpha)
+    if frame_alpha <= 0 then return end
+    local shadow = R.board_shadow
+    if not shadow or shadow.game ~= R.g then
+        if shadow then texture.free(shadow.texture) end
+        shadow = {game=R.g, texture=square_shadow_mask(rules, R.g)}
+        R.board_shadow = shadow
+    end
+    local unit = 2 * R.HEX_R / SHADOW_SAMPLES
+    local corner = R.cell_pos(0) - vec2(R.HEX_R, R.HEX_R)
+    local inset = SHADOW_MARGIN * unit
+    local box = rect(corner.x - inset + sx, corner.y - inset + 1.5 * unit,
+                     shadow.texture.w * unit, shadow.texture.h * unit)
+    gfx.image(shadow.texture, box, color(9, 15, 12, 190 * frame_alpha))
+end
+
 local function draw_square_frame(R, rules, sx, tint)
     if tint.a <= 0 then return end
     local step, frames = 2 * R.HEX_R, R.board_art.square_frame
@@ -187,6 +250,7 @@ function E.ground(R, rules, sx, floor)
     local intro = R.intro
     local alpha = intro and intro:fade() or 1
     local frame_alpha = intro and intro:frame_fade() or 1
+    draw_square_shadow(R, rules, sx, frame_alpha)
     draw_square_ground(R, rules, sx, floor, alpha, frame_alpha)
     draw_tablet_hints(R, rules, sx, floor)
 end

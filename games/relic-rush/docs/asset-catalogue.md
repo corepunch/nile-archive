@@ -53,6 +53,11 @@ Capture the boards with `build/test/relic-rush 'shot goal-board' 'shot construct
 
 ## Square board
 
+The board casts a soft shadow from the full layout of its active cells. The
+shadow follows the stepped frame and cutouts and fades in with the frame.
+The [before and after captures](screenshots/review/board-shadow/comparison.jpg)
+show it at both phone sizes.
+
 The campaign uses matte papyrus for ordinary cells, deep blue for single-layer plaques, and olive green for double plaques. The square frame has fourteen stone layouts and four leafy variants in `data/board/cells.png`. Each draws in one empty 128 px cell and rotates to suit its neighbours. The number encodes neighbour directions clockwise from north. A rounded cap connects the two rails around a diagonally adjacent tile.
 
 | Runtime frame | Stone and foliage within the cell |

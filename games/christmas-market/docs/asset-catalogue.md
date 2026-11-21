@@ -87,6 +87,11 @@ PY
 
 ## Square board
 
+The board casts a soft shadow from the full layout of its active cells. The
+shadow follows the stepped frame and cutouts and fades in with the frame.
+The [before and after captures](screenshots/review/board-shadow/comparison.jpg)
+show it at both phone sizes.
+
 The current campaign uses honey maple, frosted teal panes and olive-green
 double panes. Aged oak forms a narrow rail with rounded outside caps and
 bare or leafy inside joins. Built-in ImageGen painted eight original rail
