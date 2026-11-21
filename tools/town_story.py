@@ -58,19 +58,54 @@ def meeting_questions(blocks, sites, key, visits, residents, speakers):
     return output
 
 
-def compile_recall(body, sites, meeting, cast, speakers, level_lines):
+def recall_questions(blocks, sites, checkpoint, residents, speakers):
+    homes = blocks[1::3]
+    assert sorted(homes) == sorted(sites), f'{checkpoint}: write one final question at each home'
+    output = []
+    for site, label, body in zip(homes, blocks[2::3], blocks[3::3]):
+        parts = re.split(r'^\*\*If heard ([a-z_]+)\*\*$', body, flags=re.M)
+        lines = speech(parts[0], speakers)
+        assert any(line.speaker == speakers[residents[site][0]] for line in lines), label
+        output.append('        {key=%s, building=%s, when=%s, topic="recall", label=%s, lines={' %
+                      (quote(checkpoint + '.' + site), quote(site), quote(checkpoint), quote(label)))
+        output.extend('            ' + line.lua() + ',' for line in lines)
+        if len(parts) > 1:
+            other, reply = parts[1:]
+            alternate = speech(reply, speakers)
+            assert other in sites and other != site, label
+            assert [line.speaker for line in alternate] == [line.speaker for line in lines], label
+            output.append('        }, replies={')
+            for index, line in enumerate(alternate, 1):
+                output.append('            {index=%d, building=%s, when=%s, line=%s},' %
+                              (index, quote(other), quote(checkpoint + '.' + other), line.lua()))
+        output.append('        }},')
+    return output
+
+
+def compile_recall(body, sites, meeting, cast, speakers, level_beat, residents):
+    body, *catchup = re.split(r'^\*\*Catch up in town\*\*$', body, flags=re.M)
     parts = re.split(r'^\*\*Heard ([a-z_]+)\*\*$', body, flags=re.M)
     histories = parts[1::2]
     assert not parts[0].strip() and sorted(histories) == sorted([*sites, 'neither', 'both']), \
         f'{meeting}: write one exchange for each listening history'
-    output = [', recall={meeting=%s, exchanges={' % quote(meeting)]
+    checkpoint = meeting + '.' + level_beat['key']
+    output = [', recall={key=%s, meeting=%s, exchanges={' % (quote(checkpoint), quote(meeting))]
     for history, exchange in zip(histories, parts[2::2]):
         lines = speech(exchange, speakers)
         assert {line.speaker for line in lines} == cast, f'{meeting}: both residents must speak in {history}'
-        assert len(level_lines) + len(lines) <= 48, f'{meeting}: {history} exceeds the dialogue queue'
+        assert len(level_beat['lines']) + len(lines) <= 48, f'{meeting}: {history} exceeds the dialogue queue'
         output.append('        [%s]={' % quote(history))
         output.extend('            ' + line.lua() + ',' for line in lines)
         output.append('        },')
+    if catchup:
+        town, = catchup
+        blocks = re.split(r'^\*\*Ask at ([a-z_]+) \| ([^\n]+\?)\*\*$', town, flags=re.M)
+        lines = speech(blocks[0], speakers)
+        assert {line.speaker for line in lines} == cast, checkpoint
+        output.append('    }, lines={')
+        output.extend('        ' + line.lua() + ',' for line in lines)
+        output.append('    }, followups={')
+        output.extend(recall_questions(blocks, sites, checkpoint, residents, speakers))
     output.append('    }}')
     return '\n'.join(output)
 
@@ -174,7 +209,7 @@ def compile_town(source, beats, speakers):
             assert target not in recalls, f'{target}: two meetings share a recall'
             assert {site for site, source in zip(followups[1::4], followups[2::4]) if not source} == set(sites), \
                 f'{key}: both residents need a first account'
-            recalls[target] = compile_recall(exchange, sites, key, cast, speakers, by_key[target]['lines'])
+            recalls[target] = compile_recall(exchange, sites, key, cast, speakers, by_key[target], residents)
         output.append('    {key=%s, phase="meeting", sites={%s}, level=%d, lines={' %
                       (quote(key), ', '.join(map(quote, sites)), level))
         output.extend('        ' + line.lua() + ',' for line in lines)

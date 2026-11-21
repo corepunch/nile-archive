@@ -203,6 +203,8 @@ end
 
 local meeting = journey.find(relic_rush and 'meeting-map_room-aviary' or 'meeting-station_kiosk-glassblower')
 check(scene_level[meeting.key] == meeting.level, 'the residents meet as soon as both have arrived')
+local recall = journey.find(relic_rush and 'after-92' or 'after-85').recall
+check(R.prog.story_seen[recall.key] and not scene_order[recall.key], 'the first clear unlocks the ending without a town catch-up')
 for _, site in ipairs(meeting.sites) do
     check(played_before('placed-' .. site, meeting.key), 'the meeting follows the introduction at ' .. site)
 end

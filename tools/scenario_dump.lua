@@ -253,12 +253,22 @@ else
             replies[k] = {building = r.building, index = r.index, introduction = r.introduction, when = r.when, lines = lines_of({r.line})}
         end
         local recall
+        local endings
         if b.recall then
             recall = {}
             for history, lines in pairs(b.recall.exchanges) do recall[history] = lines_of(lines) end
+            if b.recall.followups then
+                endings = {}
+                for k, answer in ipairs(b.recall.followups) do
+                    local alternate = {table.unpack(answer.lines)}
+                    for _, reply in ipairs(answer.replies or {}) do alternate[reply.index] = reply.line end
+                    endings[k] = {building = answer.building, label = answer.label, lines = lines_of(answer.lines),
+                                  alternate = answer.replies and lines_of(alternate)}
+                end
+            end
         end
         out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], replies = b.replies and replies, resident = b.resident,
-                        recall = recall,
+                        recall = recall, catchup = b.recall and b.recall.lines and lines_of(b.recall.lines), endings = endings,
                         meeting_sites = b.sites, visit_site = b.phase == "visit" and b.building or nil, checkpoint = b.checkpoint, prompt = b.prompt, waits_for = waits or nil,
                         lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
     end

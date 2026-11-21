@@ -597,7 +597,7 @@ return {
     }},
     {key="after-92", phase="after", level=92, replies={
         {index=3, building="aviary", introduction="placed-aviary", line={"lio", "Tomas, may I take the flood watch? I'll read your chalk myself. My bird calls high tide for a fig."}},
-    }, recall={meeting="meeting-map_room-aviary", exchanges={
+    }, recall={key="meeting-map_room-aviary.after-92", meeting="meeting-map_room-aviary", exchanges={
         ["neither"]={
             {"lio", "You drew my bird and me for my sister, Nera. Sit with me on watch? I'll draw you for her."},
             {"nera", "Here, take my blunt pencil. If you drop the sharp one in the tide, you're fetching it."},
@@ -614,6 +614,24 @@ return {
             {"lio", "My turn to draw you for my sister, Nera. Which ear shall I get wrong?"},
             {"nera", "Yours took all afternoon and she knew it at a glance. Give me the bird. Let's try my left."},
         },
+    }, lines={
+        {"lio", "Nera, you drew me for my sister. I had a go at drawing you. May I send her mine too?"},
+        {"nera", "Let me see it before you roll it up, Lio. I missed my chance while I was sitting for you."},
+    }, followups={
+        {key="meeting-map_room-aviary.after-92.aviary", building="aviary", when="meeting-map_room-aviary.after-92", topic="recall", label="What did your sister do with your drawing?", lines={
+            {"mara", "Lio, where did your sister put the drawing you made of Nera?"},
+            {"lio", "Beside the one Nera drew of me. She hung us facing each other so we'd have company."},
+        }, replies={
+            {index=1, building="map_room", when="meeting-map_room-aviary.after-92.map_room", line={"mara", "Nera says you drew her hunting for her pencil. Did your sister spot it?"}},
+            {index=2, building="map_room", when="meeting-map_room-aviary.after-92.map_room", line={"lio", "She spotted the pencil too, Mara. She hung Nera facing me. Says I ought to tell her where it is."}},
+        }},
+        {key="meeting-map_room-aviary.after-92.map_room", building="map_room", when="meeting-map_room-aviary.after-92", topic="recall", label="Did Lio get your likeness?", lines={
+            {"mara", "Nera, would I know you in Lio's drawing?"},
+            {"nera", "My hand's in my pocket hunting for my pencil. There it is behind my ear. I let him keep that bit."},
+        }, replies={
+            {index=1, building="aviary", when="meeting-map_room-aviary.after-92.aviary", line={"mara", "Lio says the two of you face each other on his sister’s wall. What are you doing in yours?"}},
+            {index=2, building="aviary", when="meeting-map_room-aviary.after-92.aviary", line={"nera", "Feeling in my pocket for my pencil. It's behind my ear. You'd think he'd tell me."}},
+        }},
     }}, lines={
         {"tomas", "Elena, it's the lowest tide of the month. Come, I'm chalking a mark at the foot of the wall."},
         {"elena", "If the bypass works, Tomas, the chalk stays dry at the next flood. If not, it washes out."},

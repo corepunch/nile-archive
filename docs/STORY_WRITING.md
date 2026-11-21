@@ -118,6 +118,7 @@ Beat order: result → island → place the wonder → beat → next goal. Wonde
 - **The opening is playable at once.** One landmark, one object, one thing that is blocked, and a reward within the first minute. Open on something interesting, never on backstory or "welcome to".
 - **Environmental storytelling first.** Prefer a letter, a burn mark or a bricked-up door to a character explaining. Put history in artifacts, and let characters argue about what they mean.
 - **The world answers back.** Things change after a reveal. A building's tap bubble can change once the player knows what it means, which is cheap and rewards curiosity. Failure screens and small lines keep the voice too.
+- **Finish what the characters start.** If two residents promise to draw a portrait or play a game, put the outcome on the plant-and-payoff sheet. Decide where a curious player can learn it. When each resident has a side to tell, read both visit orders and end the thread once the player has heard both.
 - **The ending must:** pay off at least two things planted earlier, include a real decision or a real gift from a main character, and show what comes next.
 - **Walk straight into the sequel.** Zork I's last room is the first room of Zork II, and players remember one continuous journey although nothing carries over. Open each episode at the place and moment the last one stopped. The "To be continued" screen should feel like the next step in that place, not an advertisement.
 

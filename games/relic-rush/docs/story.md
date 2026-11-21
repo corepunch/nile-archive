@@ -15,7 +15,7 @@ The camp is abandoned, the old well is fouled, and the quay wall is failing. The
 3. Recently Ines returned by a different shore. She found the room flooded and, unable to reach camp, used its hand shutter to send the old warning. She changed its rhythm to attract attention. Tomas does not know she is back.
 4. Adrian financed the expedition using a promised exclusive claim on island discoveries. He has not told Elena; the claim puts the relay and islanders' work at risk. Kessler represents the claim holder, not a supernatural threat.
 5. The team repairs the route to the tide room and finds Ines's signed plan. Adrian gives up the claim, and the crew drains the foot of the wall and makes the quay safe. When Mara tests the warning lamp, Ines waits and answers with the same three flashes from the safe landing. Tomas gives her the key, and she brings a chart of the other stations.
-6. Nera draws Lio and his parrot together for his sister. His sister recognizes the ear the bird likes to nibble. On the flood watch, Lio offers to take the pencil and draw Nera for her.
+6. Nera draws Lio and his parrot together for his sister. His sister recognizes the ear the bird likes to nibble. On the flood watch, Lio offers to take the pencil and draw Nera for her. Lio’s sister hangs the portraits facing each other. Nera is searching her pocket for the pencil behind her ear.
 
 ## Question and cast
 
@@ -66,6 +66,7 @@ One restoration opens every five expeditions. Story restorations (bold) play a s
 | Lio asks Nera to draw his bird for his sister | The drawing catches the parrot nibbling Lio’s ear. His sister recognizes him by that ear. |
 | Carry the story of the ear between the aviary and the Cartographer’s House | Nera kept the imperfect ear because it looked like Lio. His sister hangs the drawing by her mirror. |
 | Hear either account, both accounts, or leave the pair to themselves | The flood watch gives Lio time to draw Nera for his sister (92). |
+| Visit either home after the pair’s level scene | Lio’s sister hangs the portraits facing each other. Nera is searching her pocket for the pencil behind her ear. |
 | Mara asks about the folded corner at the Cartographer’s House (56) | At Cormorant Rock (67), Nera trusts Mara to flatten it when their bearings agree. |
 | Mara asks which of Lio’s noises his parrot copies (aviary after 85) | At 91 Lio tells her what the bird has learned to get with his snore. |
 | Two flashes answer Mara’s lamp (Spring well) | The answer changes to three at the Expedition camp. Ines confirms her identity with the same delayed pattern at the safe landing (100). |
@@ -857,6 +858,8 @@ At the Great Aviary, ask Lio what his sister thought of the portrait. At the Car
 
 On the flood watch at 92, Lio offers to draw Nera for his sister. Their exchange remembers whose account of the portrait Mara heard. [Both sides heard](screenshots/meeting-recall.jpg) · [One side heard](screenshots/meeting-recall-phone.jpg)
 
+Both homes offer one last question after the flood watch. Lio tells Mara where his sister hung the drawings. Nera tells her where to look for the missing pencil. [First account](screenshots/resident-ending.jpg) · [Second account](screenshots/resident-ending-other.jpg)
+
 Bring Lio’s account of his sister to Nera, or ask Lio about the ear Nera kept redrawing. Either exchange gives Mara something she can take back to the other resident. [Visit menu](screenshots/meeting-reply-menu.jpg) · [Resident’s reply](screenshots/meeting-reply-answer.jpg)
 
 Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
@@ -1150,6 +1153,31 @@ Confirming one of these purchases starts its own conversation. A “With” head
 - **Lio:** My turn to draw you for my sister, Nera. Which ear shall I get wrong?
 - **Nera:** Yours took all afternoon and she knew it at a glance. Give me the bird. Let's try my left.
 
+**Catch up in town**
+
+- **Lio:** Nera, you drew me for my sister. I had a go at drawing you. May I send her mine too?
+- **Nera:** Let me see it before you roll it up, Lio. I missed my chance while I was sitting for you.
+
+**Ask at aviary | What did your sister do with your drawing?**
+
+- **Mara:** Lio, where did your sister put the drawing you made of Nera?
+- **Lio:** Beside the one Nera drew of me. She hung us facing each other so we'd have company.
+
+**If heard map_room**
+
+- **Mara:** Nera says you drew her hunting for her pencil. Did your sister spot it?
+- **Lio:** She spotted the pencil too, Mara. She hung Nera facing me. Says I ought to tell her where it is.
+
+**Ask at map_room | Did Lio get your likeness?**
+
+- **Mara:** Nera, would I know you in Lio's drawing?
+- **Nera:** My hand's in my pocket hunting for my pencil. There it is behind my ear. I let him keep that bit.
+
+**If heard aviary**
+
+- **Mara:** Lio says the two of you face each other on his sister’s wall. What are you doing in yours?
+- **Nera:** Feeling in my pocket for my pencil. It's behind my ear. You'd think he'd tell me.
+
 ## Upgrades
 
 Optional scenes: the keeper of a standing building and one other main character, at any time after it stands. Perks are felt, never named.
@@ -1263,6 +1291,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Both homes offer one last question after the flood watch. Lio tells Mara where his sister hung the drawings. Nera tells her where to look for the missing pencil. Hearing either answer changes the conversation at the other home.
 
 - 2026-11-21: On the flood watch at 92, Lio offers to draw Nera for his sister. Their exchange remembers whose account of the portrait Mara heard.
 

@@ -390,3 +390,62 @@ for _, home in ipairs(meeting.sites) do
     check(#menu(home) == 3 and menu(home)[1].key == meeting.key .. "." .. home .. ".reply",
         "previously heard accounts unlock both new replies in an existing town")
 end
+
+-- The optional exchange has its own receipt. A level clear alone cannot light either roof.
+local outcome = recall.recall
+local function settle_other_questions(home)
+    local stage = journey.visit(R.prog, home)
+    for _, answer in ipairs(stage.choices) do R.prog.story_seen[answer.key] = true end
+end
+for order, first_home in ipairs(meeting.sites) do
+    R.prog = {level=100}
+    save.read("both-sides-heard", function(s) journey.serialize(s, R.prog) end)
+    if order == 1 then
+        R.queue_story(recall, true)
+        finish_answer()
+        check(not R.prog.story_seen[outcome.key], "preview cannot unlock building questions")
+        R.queue_story(recall)
+    else
+        R.prog.story_seen[recall.key] = true -- existing save or a pair who moved in late
+        R.prog.story_seen[meeting.key] = false
+        check(not journey.next_recall(R.prog, owns_both), "a late pair must meet before the catch-up")
+        R.prog.story_seen[meeting.key] = true
+        check(R.next_story(nil) == outcome, "returning towns get the shared scene without replaying a level")
+        R.queue_story(outcome)
+    end
+    story.next()
+    check(story.active() and not R.prog.story_seen[outcome.key], "an unfinished shared scene earns no final questions")
+    finish_answer()
+    check(R.prog.story_seen[outcome.key] and not journey.next_recall(R.prog, owns_both), "the completed scene unlocks both homes once")
+    save.write("finished-recall", function(s) journey.serialize(s, R.prog) end)
+    R.prog = {level=100}
+    save.read("finished-recall", function(s) journey.serialize(s, R.prog) end)
+    local other_home = meeting.sites[3-order]
+    for _, home in ipairs(meeting.sites) do
+        settle_other_questions(home)
+        check(#menu(home) == 1 and menu(home)[1].key == outcome.key .. "." .. home
+            and R.town.hooks.unheard_visit(island.kinds[home]), "the saved exchange lights both roofs")
+    end
+    ask_meeting_question(first_home, outcome.key .. "." .. first_home)
+    check(R.story_lines(R.story_current) == R.story_current.lines, "first resident gives their own account")
+    finish_answer()
+    check(#menu(first_home) == 0 and #menu(other_home) == 1, "asking at one home leaves the other account available")
+    ask_meeting_question(other_home, outcome.key .. "." .. other_home)
+    local pending = R.prog.pending_answer
+    save.write("interrupted-ending", function(s) journey.serialize(s, R.prog) end)
+    while story.active() do story.next() end
+    R.story_current, R.prog = nil, {level=100}
+    save.read("interrupted-ending", function(s) journey.serialize(s, R.prog) end)
+    local resumed = R.next_story(nil)
+    check(resumed.key == pending.key and #menu(other_home) == 0, "returning to town resumes the selected last question")
+    R.queue_story(resumed)
+    local spoken = R.story_lines(resumed)
+    for _, reply in ipairs(pending.replies) do
+        check(spoken[reply.index] == reply.line, "both the question and answer remember the other visit after reload")
+    end
+    finish_answer()
+    R.prog.story_seen["after-100"] = true
+    for _, home in ipairs(meeting.sites) do
+        for _, answer in ipairs(menu(home)) do check(answer.topic ~= "recall", "the ending stays heard at a later stage") end
+    end
+end

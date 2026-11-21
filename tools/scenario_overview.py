@@ -161,6 +161,13 @@ class Page:
                 resident = self.cast[self.residents['placed-' + history]]['name']
                 heard = f'only {resident}’s side'
             body += f'<p class="pick">After the pair meets, if you heard {esc(heard)}</p>{self.lines(lines)}'
+        if b.get('catchup'):
+            body += '<p class="pick">Catch up in town</p>' + self.lines(b['catchup'])
+        for answer in b.get('endings', []):
+            name = self.steps[answer['building']]['name']
+            body += f'<p class="pick">{esc(name)} · {esc(answer["label"])}</p>{self.lines(answer["lines"])}'
+            if answer.get('alternate'):
+                body += '<p class="pick">After hearing the other resident</p>' + self.lines(answer['alternate'])
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
         if b.get('choices'):

@@ -1075,10 +1075,16 @@ function G.bind(R, over)
         R.story_current = beat
         R.story_preview = preview
         R.story_before_result = before_result
-        for _, line in ipairs(R.story_lines(beat)) do story.add(line) end
+        local lines, recall = R.story_lines(beat)
+        R.playing_recall = recall
+        for _, line in ipairs(lines) do story.add(line) end
     end
 
     choices = ui.modals(skin)
+
+    local function answer_beat(answer, phase, key)
+        return {key=answer.key or key, phase=phase, lines=answer.lines, replies=answer.replies}
+    end
 
     local function choice_reply(beat, index, preview)
         local answer = beat.choices[index]
@@ -1086,7 +1092,7 @@ function G.bind(R, over)
             R.prog.pending_answer = answer
             R.save_progress()
         end
-        R.queue_story({key=answer.key or beat.key, phase=beat.phase, lines=answer.lines}, preview)
+        R.queue_story(answer_beat(answer, beat.phase, beat.key), preview)
     end
 
     function R.open_story_choice(beat, preview, entry)
@@ -1145,11 +1151,13 @@ function G.bind(R, over)
     function R.next_story(before_level)
         if before_level == nil then
             local pending = R.prog.pending_answer
-            if pending then return {key=pending.key, phase="visit", lines=pending.lines} end
+            if pending then return answer_beat(pending, "visit") end
             local arrival = journey.next_arrival(R.prog, owns_building)
             if arrival then return arrival end
             local meeting = journey.next_meeting(R.prog, owns_building)
             if meeting then return meeting end
+            local recall = journey.next_recall(R.prog, owns_building)
+            if recall then return recall end
         end
         return journey.next(R.prog, function(index)
             return island.owned(R.island, wonder_kind(island, index + 1)) > 0
@@ -1160,14 +1168,16 @@ function G.bind(R, over)
     function R.story_tick()
         if R.story_current then
             if story.active() then return end
-            local b = R.story_current
-            R.story_current = nil
+            local b, recall = R.story_current, R.playing_recall
+            R.story_current, R.playing_recall = nil, nil
             if R.story_preview then R.story_preview = false; return end
             if R.story_before_result then
                 R.story_before_result = false
                 R.g.story_clear = b.key
+                R.g.story_recall = recall
                 return
             end
+            if recall then R.prog.story_seen[recall] = true end
             if b.choices then R.open_story_choice(b); return end
             if not journey.acknowledge(R.prog, b) then return end
             R.save_progress()
@@ -1274,6 +1284,7 @@ function G.bind(R, over)
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders, R.island)
         if not paid then return end
         if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
+        if first and R.g.story_recall then R.prog.story_seen[R.g.story_recall] = true end
         if not app.arg("debug-walkthrough") then R.submit_leaderboard_progress() end
         R.save_progress()
         R.on_island = true
@@ -1643,7 +1654,7 @@ function G.app(R)
         if not app.arg("smoke") and not app.arg("debug-walkthrough") then
             R.submit_leaderboard_progress()
         end
-        R.story_current, R.story_preview, R.story_before_result = nil, false, false
+        R.story_current, R.story_preview, R.story_before_result, R.playing_recall = nil, false, false, nil
         R.story_choice_beat, R.story_choice_preview = nil, nil
         R.layout()
         R.start_level()

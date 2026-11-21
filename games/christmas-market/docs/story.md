@@ -54,7 +54,7 @@ One stall opens every five wishes, four to each Advent. Story stalls (bold) hold
 2. **Noelle's gran, Rosa,** ran the market's last small stall until her knees gave out and she retired to the coast. This winter she sends Noelle to help get it going again for Advent. She gives her a red parcel tagged "For whoever needs it most." It holds the key to Rosa's house on the square and a note. Noelle decides to stay before she opens it.
 3. **Theo Marsh** runs the family tree lot, and his hands are always sticky with resin. He started the Kind Word box's new season himself, because the town seemed lonely.
 4. **Mr Wren** appears on the first day and leaves on the last. Nobody hired him. Things tend to go well near his broom. The script never explains him. He may simply be a kind old man. Writers should keep both readings possible, up to his last note.
-5. Ada makes a blue glass button for Otis’s tin-lid board. He teaches her the double jump and she uses it to beat him in their first game. When Pip hears his mum is coming, Ada and Otis find him a game to pass the wait.
+5. Ada makes a blue glass button for Otis’s tin-lid board. He teaches her the double jump and she uses it to beat him in their first game. When Pip hears his mum is coming, Ada and Otis find him a game to pass the wait. Pip offers two buttons as bait, catches Ada’s blue one in his mitten and wins. Otis keeps his advice to himself.
 
 ## Cast
 
@@ -85,6 +85,7 @@ Bramble the goat does not speak.
 | Ada promises Otis a blue draughts button | Ada wins their first game with a double jump. Otis taught her the move and left his two men open. |
 | Tell Ada about Otis’s lesson, or take her two pings to the kiosk | Ada remembers Otis asking for his turn back. Otis invites Pip to test whether the teacher learned his lesson. |
 | Hear either account, both accounts, or leave the pair to themselves | Ada and Otis lend Pip the tin while he waits for his mum’s train (85). |
+| Visit either home after the pair’s level scene | Pip offers two buttons as bait, catches Ada’s blue one in his mitten and wins. Otis keeps his advice to himself. |
 | Pip learns to play draughts on Otis’s tin lid with coat buttons (kiosk after 46) | While Henrik reads the letter (63), Otis gives Pip the first move. |
 | Noelle asks what Ada plays (glassblower’s stall after 84) | When the choir comes in at 90, Ada brings her spoons and waits for Noelle’s cue. |
 | The parcel, "For whoever needs it most" (opening) | Tried on Mrs Alder (31), Pip (56), Mr Wren (91), who tells her to open it. It's hers: Gran's front-door key (92) |
@@ -818,6 +819,8 @@ At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s S
 
 After Pip’s telegram at 85, Ada and Otis lend him their game while he waits for his mum. Their exchange remembers whose account of the first game Pip heard. [Both sides heard](screenshots/meeting-recall.jpg) · [One side heard](screenshots/meeting-recall-phone.jpg)
 
+After the pair lend Pip their tin lid, both homes offer one last question. Ada explains how Pip won the game. Otis tells Noelle what happened when he tried to coach. [First account](screenshots/resident-ending.jpg) · [Second account](screenshots/resident-ending-other.jpg)
+
 Pip can ask Ada whether Otis left the double jump on purpose, or ask Otis what Ada’s two pings sounded like from his end of the board. Either answer gives Pip a reason to walk back. [Visit menu](screenshots/meeting-reply-menu.jpg) · [Resident’s reply](screenshots/meeting-reply-answer.jpg)
 
 Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
@@ -1113,7 +1116,32 @@ Confirming one of these purchases starts its own conversation. A “With” head
 **Heard both**
 
 - **Ada:** Pip's lined up two buttons for me, Mr Bell. Have you been giving him lessons?
-- **Otis:** He wants his mum to hear your blue one ring twice. I've taught the boy how to lose to you.
+- **Otis:** Give him a practice game, Miss Pike. He wants his mum to hear two pings when her train gets in.
+
+**Catch up in town**
+
+- **Otis:** Miss Pike, may I have my tin lid back? You and Pip have finished your game and my pie's gone cold.
+- **Ada:** Here you are, Mr Bell. I've put the buttons in your pocket. Mind you don't bake them in tomorrow.
+
+**Ask at glassblower | How did Pip do against you?**
+
+- **Noelle:** Ada, who won when you played Pip on Mr Bell's lid?
+- **Ada:** Pip did. I jumped the two buttons he left me. He jumped my blue one straight into his mitten.
+
+**If heard station_kiosk**
+
+- **Noelle:** Mr Bell says Pip hushed him. Did you see the winning jump coming, Ada?
+- **Ada:** I saw two easy buttons, Noelle. Pip saw my blue one landing in his mitten. He won it fair.
+
+**Ask at station_kiosk | Did Pip need any coaching?**
+
+- **Noelle:** Did you have to whisper the moves to Pip, Mr Bell?
+- **Otis:** I took a breath. Pip put a finger to his lips and won all by himself. I drank my tea.
+
+**If heard glassblower**
+
+- **Noelle:** Ada says Pip caught her blue button in his mitten. Whose idea was that, Mr Bell?
+- **Otis:** Pip's. I opened my mouth and he put a finger to his lips. First match I've coached by drinking tea.
 
 ## Upgrades
 
@@ -1248,6 +1276,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: After the pair lend Pip their tin lid, both homes offer one last question. Ada explains how Pip won the game. Otis tells Noelle what happened when he tried to coach. Hearing either answer changes the conversation at the other home.
 
 - 2026-11-21: After Pip’s telegram at 85, Ada and Otis lend him their game while he waits for his mum. Their exchange remembers whose account of the first game Pip heard.
 

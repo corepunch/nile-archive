@@ -11,7 +11,7 @@ local function new(content)
     -- once their user event is done, and never hold the story back.
     local scenes, upgrades, placements = {}, {}, {}
     local by_key, by_building, site_visits = {}, {}, {}
-    local answers, meetings, meeting_options = {}, {}, {}
+    local answers, meetings, visit_options, recalls = {}, {}, {}, {}
     local answer_sites = {}
     local function register_answer(answer, site)
         answers[#answers + 1] = answer
@@ -20,6 +20,7 @@ local function new(content)
     for _, beat in ipairs(M.beats) do
         assert(not by_key[beat.key], "duplicate story beat: " .. beat.key)
         by_key[beat.key] = beat
+        if beat.recall then recalls[#recalls + 1] = beat end
         if beat.phase == "placed" then
             placements[#placements + 1] = beat
             by_building[beat.building] = beat
@@ -34,17 +35,19 @@ local function new(content)
     end
     M.beats, M.upgrades, M.placements = scenes, upgrades, placements
 
-    -- A meeting's questions keep their heard keys across all visit stages at a home.
-    for _, meeting in ipairs(meetings) do
-        for _, answer in ipairs(meeting.followups or {}) do
+    -- A shared scene's questions keep their heard keys across every visit stage at a home.
+    local function register_followups(scene)
+        for _, answer in ipairs(scene.followups or {}) do
             register_answer(answer, answer.building)
             for _, stage in ipairs(site_visits[answer.building]) do
-                local options = meeting_options[stage] or {table.unpack(stage.choices)}
+                local options = visit_options[stage] or {table.unpack(stage.choices)}
                 options[#options + 1] = answer
-                meeting_options[stage] = options
+                visit_options[stage] = options
             end
         end
     end
+    for _, meeting in ipairs(meetings) do register_followups(meeting) end
+    for _, beat in ipairs(recalls) do register_followups(beat.recall) end
 
     -- Absent until a fresh purchase, false while due, true once acknowledged.
     -- Old saves therefore never receive a backlog for the town they already own.
@@ -101,10 +104,10 @@ local function new(content)
 
     function M.visit_menu(p, visit)
         local choices, other = {}, {}
-        for _, answer in ipairs(meeting_options[visit] or visit.choices) do
+        for _, answer in ipairs(visit_options[visit] or visit.choices) do
             if available(p, answer) then
                 -- Put a fresh lead first when the player comes back to talk.
-                local group = answer.source and choices or other
+                local group = (answer.source or answer.topic == "recall") and choices or other
                 group[#group + 1] = answer
             end
         end
@@ -114,7 +117,7 @@ local function new(content)
 
     function M.unheard_visit(p, visit)
         if visit then
-            for _, answer in ipairs(meeting_options[visit] or visit.choices) do
+            for _, answer in ipairs(visit_options[visit] or visit.choices) do
                 if available(p, answer) then return true end
             end
         end
@@ -133,11 +136,23 @@ local function new(content)
         return true
     end
 
+    local function recall_ready(recall, owns, seen)
+        if not seen or seen[recall.key] or not seen[recall.meeting] then return false end
+        local sites = by_key[recall.meeting].sites
+        return owns(sites[1]) and owns(sites[2])
+    end
+
+    function M.next_recall(p, owns)
+        for _, beat in ipairs(recalls) do
+            local recall = beat.recall
+            if recall.lines and p.story_seen[beat.key] and recall_ready(recall, owns, p.story_seen) then return recall end
+        end
+    end
+
     local function recalled_exchange(recall, owns, seen)
-        if not seen or not seen[recall.meeting] then return end
+        if not recall_ready(recall, owns, seen) then return end
         local meeting = by_key[recall.meeting]
         local first, second = table.unpack(meeting.sites)
-        if not owns(first) or not owns(second) then return end
         local heard = {}
         for _, answer in ipairs(meeting.followups) do
             if seen[answer.key] then heard[answer.building] = true end
@@ -165,6 +180,7 @@ local function new(content)
         if exchange then
             if lines == beat.lines then lines = {table.unpack(beat.lines)} end
             for _, line in ipairs(exchange) do lines[#lines + 1] = line end
+            return lines, beat.recall.key
         end
         return lines
     end
@@ -211,6 +227,10 @@ local function new(content)
         p.story_choices = p.story_choices or {}
         for _, b in ipairs(M.beats) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
+            if b.recall then
+                local key = b.recall.key
+                p.story_seen[key] = s:int("narrative.recall." .. key, p.story_seen[key] and 1 or 0) == 1
+            end
             if b.choices then
                 local choice = s:int("narrative.choice." .. b.key, p.story_choices[b.key] or 0)
                 p.story_choices[b.key] = b.choices[choice] and choice or nil

@@ -485,7 +485,7 @@ return {
         {"henrik", "Hang it lower, Noelle. A child's eye is three feet off the ground, not six."},
         {"noelle", "Low it is. Red ribbon, amber glass, one wish. Hold the ladder, Henrik?"},
     }},
-    {key="after-85", phase="after", level=85, recall={meeting="meeting-station_kiosk-glassblower", exchanges={
+    {key="after-85", phase="after", level=85, recall={key="meeting-station_kiosk-glassblower.after-85", meeting="meeting-station_kiosk-glassblower", exchanges={
         ["neither"]={
             {"ada", "Pip needs a game while he waits for his mum. May we borrow your tin lid, Mr Bell?"},
             {"otis", "If you'll play him, Miss Pike. You took the last two buttons off me in our first game."},
@@ -500,8 +500,26 @@ return {
         },
         ["both"]={
             {"ada", "Pip's lined up two buttons for me, Mr Bell. Have you been giving him lessons?"},
-            {"otis", "He wants his mum to hear your blue one ring twice. I've taught the boy how to lose to you."},
+            {"otis", "Give him a practice game, Miss Pike. He wants his mum to hear two pings when her train gets in."},
         },
+    }, lines={
+        {"otis", "Miss Pike, may I have my tin lid back? You and Pip have finished your game and my pie's gone cold."},
+        {"ada", "Here you are, Mr Bell. I've put the buttons in your pocket. Mind you don't bake them in tomorrow."},
+    }, followups={
+        {key="meeting-station_kiosk-glassblower.after-85.glassblower", building="glassblower", when="meeting-station_kiosk-glassblower.after-85", topic="recall", label="How did Pip do against you?", lines={
+            {"noelle", "Ada, who won when you played Pip on Mr Bell's lid?"},
+            {"ada", "Pip did. I jumped the two buttons he left me. He jumped my blue one straight into his mitten."},
+        }, replies={
+            {index=1, building="station_kiosk", when="meeting-station_kiosk-glassblower.after-85.station_kiosk", line={"noelle", "Mr Bell says Pip hushed him. Did you see the winning jump coming, Ada?"}},
+            {index=2, building="station_kiosk", when="meeting-station_kiosk-glassblower.after-85.station_kiosk", line={"ada", "I saw two easy buttons, Noelle. Pip saw my blue one landing in his mitten. He won it fair."}},
+        }},
+        {key="meeting-station_kiosk-glassblower.after-85.station_kiosk", building="station_kiosk", when="meeting-station_kiosk-glassblower.after-85", topic="recall", label="Did Pip need any coaching?", lines={
+            {"noelle", "Did you have to whisper the moves to Pip, Mr Bell?"},
+            {"otis", "I took a breath. Pip put a finger to his lips and won all by himself. I drank my tea."},
+        }, replies={
+            {index=1, building="glassblower", when="meeting-station_kiosk-glassblower.after-85.glassblower", line={"noelle", "Ada says Pip caught her blue button in his mitten. Whose idea was that, Mr Bell?"}},
+            {index=2, building="glassblower", when="meeting-station_kiosk-glassblower.after-85.glassblower", line={"otis", "Pip's. I opened my mouth and he put a finger to his lips. First match I've coached by drinking tea."}},
+        }},
     }}, lines={
         {"pip", "A TELEGRAM! \"ON LAST TRAIN CHRISTMAS EVE. SAVE ME A PRETZEL. MUM.\" SHE'S COMING, NOELLE!", story.SHOUT},
         {"noelle", "Then the station path gets a lantern on every post, and a bun at the end. Agnes?"},

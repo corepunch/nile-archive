@@ -10,6 +10,7 @@ local item, tick = nil, 0
 local stage = app.arg("visit-stage")
 local first = "placed-" .. site
 local meeting = app.arg("visit-meeting") and assert(journey.find(app.arg("visit-meeting")))
+local ending = app.arg("visit-ending") and assert(journey.find(stage).recall)
 local heard_at = app.arg("heard-at")
 local selected
 
@@ -38,7 +39,11 @@ function desc.init()
         R.prog.story_seen[stage] = true
         for _, answer in ipairs(journey.visit(R.prog, site).choices) do R.prog.story_seen[answer.key] = true end
         journey.acknowledge(R.prog, meeting)
-        if heard_at then R.prog.story_seen[meeting.key .. "." .. heard_at] = true end
+        if ending then
+            for _, answer in ipairs(meeting.followups) do R.prog.story_seen[answer.key] = true end
+            journey.acknowledge(R.prog, ending)
+        end
+        if heard_at then R.prog.story_seen[(ending or meeting).key .. "." .. heard_at] = true end
     end
     R.island_with(0, position)
     for i = 1, R.island.count do
@@ -88,10 +93,10 @@ function desc.frame(dt)
     if meeting then
         if tick == 30 then
             assert(R.town.hooks.unheard_visit(kind), "the meeting restores the marker")
-            tap()
+            if ending then tap_marker() else tap() end
         elseif tick == 52 then
-            local key = meeting.key .. "." .. site .. (heard_at and ".reply" or "")
-            if heard_at then
+            local key = (ending or meeting).key .. "." .. site .. (heard_at and not ending and ".reply" or "")
+            if heard_at and not ending then
                 assert(R.overlay == R.OV_STORY_CHOICE and #R.story_choice_beat.choices == 2)
                 for index, answer in ipairs(R.story_choice_beat.choices) do
                     if answer.key == key then
