@@ -203,7 +203,7 @@ do
 end
 
 -- Settlement and the idle fallback share recovery and terminal precedence.
-for _, mode in ipairs({"fall", "won", "lost"}) do
+for _, mode in ipairs({"fall", "won", "lost", "stale count"}) do
     local g = dead_board()
     setup(g)
     local rng = g.rng
@@ -211,6 +211,8 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
     elseif mode == "won" then
         local l = rules.level_of(g)
         g.score, g.relics, g.obstacles, g.moves, g.oil_left = l.score, l.relics, 0, 0, 0
+        for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
+    elseif mode == "stale count" then g.moves, g.oil_left = 0, 0
     else g.moves = 0 end
     R.board_update(.02)
     if mode == "fall" then
@@ -219,6 +221,27 @@ for _, mode in ipairs({"fall", "won", "lost"}) do
         check(g.rng == rng and not R.toast, "terminal board is not shuffled: " .. mode)
         check(R.overlay == (mode == "won" and R.OV_RESULT or R.OV_FAILED), "terminal result precedes recovery: " .. mode)
     end
+end
+
+-- Swipe on the last move and let the normal clear/fall phases decide the result.
+for _, recorded in ipairs({1, 2}) do
+    local g = rules.game_start(0, 123)
+    local ok, a, b = rules.game_hint(g)
+    local wave = rules.new_match()
+    assert(ok and rules.game_swap(rules.game_copy(g), a, b, wave), "final-move fixture needs a legal match")
+    local target = next(wave.mask)
+    for i = 0, rules.CELLS - 1 do g.oil[i] = i == target and 1 or 0 end
+    g.moves, g.oil_left = 1, recorded   -- also exercise a stale count for the single visible plaque
+    setup(g)
+    R.layout()
+    R.board_input(input{pos=R.cell_pos(b), press_pos=R.cell_pos(a), released=true, pinch=1})
+    check(g.moves == 0 and R.overlay == R.OV_NONE, "last move finishes its animation before the result")
+    for _ = 1, 500 do
+        R.board_update(.05)
+        if R.overlay ~= R.OV_NONE then break end
+    end
+    check(g.oil[target] == 0 and g.oil_left == 0, "last swap clears the last plaque")
+    check(g.won and not g.lost and R.overlay == R.OV_RESULT, "clearing the final plaque with zero moves wins")
 end
 
 -- Real animation-phase updates, with virtual time and no renderer. A swap

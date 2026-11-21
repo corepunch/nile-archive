@@ -51,12 +51,12 @@ The [greedy bot](../engine/lua/match3/bot.lua) plays every board many times so t
 | --- | --- | --- |
 | Board validity | Fits 9 × 12; pieces can fall onto every target; at least 6 target layers and 45 cells | `python3 tools/square_boards.py <game>` |
 | Board length | Median clear at most 30 moves on tutorial and easy boards, 45 on normal, 60 on hard and 70 on bosses | `python3 tools/square_trim.py <game> --levels A-B --seeds 40` |
-| Move budget | Median clear × 1.25, rounded up, for every tier. Relic Rush adds three moves. Trim late targets when a board runs long. | `python3 tools/tune_moves.py <game>` |
+| Move budget | Median clear × 1.25, rounded up, for every tier. Relic Rush multiplies that result by 1.5 and rounds up again. Trim late targets when a board runs long. | `python3 tools/tune_moves.py <game>` |
 | Prices | Budget from the average of the mean and lower-quartile winning income. Each purchase uses 65% of the projected wallet in its currencies, with 50% for the first purchase. | `python3 tools/balance.py <game>` |
 
 The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays by swapping pieces and saves its tools. It prioritizes target layers and blocker damage, then weighs first-wave score, holes that can feed pieces onto remaining targets, and newly created gems. A line gem adds the value of two ordinary clears and a rainbow gem adds five. The bot tries both destinations for a line-gem cross and evaluates the visible first wave without random refills.
 
-A 12-move median gets 18 moves in Relic Rush and 15 in Christmas Market. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
+A 12-move median gets 23 moves in Relic Rush and 15 in Christmas Market. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 

@@ -1557,6 +1557,14 @@ function E.new(config)
 
     function M.game_check_end(g, ignore_move_limit)
         local l = M.levels[g.level + 1]
+        if g.moves <= 0 and g.oil then
+            -- When moves run out, decide from the settled floor rather than its running total.
+            local remaining = 0
+            for i = 0, CELLS - 1 do
+                if (g.oil[i] or 0) > 0 and cell_active(g, i) then remaining = remaining + 1 end
+            end
+            g.oil_left = remaining
+        end
         local done = {score = g.score >= l.score, idols = g.relics >= l.relics,
             locks = g.obstacles == 0, oil = g.oil_left == 0}
         -- A level's own goal list is all it needs; otherwise every counter must be done.

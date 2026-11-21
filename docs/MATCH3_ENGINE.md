@@ -121,6 +121,10 @@ The view uses it for the staggered flights in `PH_SHUFFLE`.
 
 A loadout's `extra_moves` adds moves to the level's budget.
 
+The final move resolves every cascade before the board can end. At zero moves
+the end check counts remaining plaques from the settled floor. Clearing all
+the level's goals on that move wins.
+
 `match3.game.campaign_ladder(island, unlocks, journey, slots)` gives a game a
 Cradle of Rome ladder: catalogue buildings bought in order, with optional
 piece and bonus unlocks. First clears unlock levels. Players can start and resume the current level with

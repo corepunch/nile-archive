@@ -109,8 +109,8 @@ below the table.
 **Rhythm.** Inside every ten levels after the first ten, use the tiers
 `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`. Levels
 1–4 are `tutorial`. A boss is a dense, combined board, and the board after
-it is a breather. The tier describes the board's challenge. Every tier receives the same
-1.25 ratio over the bot's median clear, rounded up; see
+it is a breather. The tier describes the board's challenge. Every tier starts
+from the same base fit. See
 [Move budgets](#move-budgets).
 
 **Shapes.** Make each board recognizable. Relic Rush uses ruins: temple fronts,
@@ -331,7 +331,8 @@ python3 tools/tune_moves.py relic-rush --levels 41-50 # after changing a few boa
 
 The greedy bot (`tests/lua/tune_moves.lua`) attempts each board on 40
 hashed seeds with a 250-move calibration ceiling. The budget is its median game
-times 1.25, rounded up, for every tier. Relic Rush adds three moves per board.
+times 1.25, rounded up, for every tier. Relic Rush multiplies the fitted budget
+by 1.5 and rounds up again.
 Slow samples never increase the budget. The median is used because the bot's
 slowest games vary wildly from board to board: a budget read from that tail
 gave neighbouring boards two and three and a half times their typical game.

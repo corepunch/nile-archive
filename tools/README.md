@@ -90,7 +90,7 @@ are the guides.
 | `tests/lua/tune_moves.lua` | The bot side of `tune_moves.py` and `balance_plaques.py`; reports the move each plaque was cleared on | run by `tune_moves.py` |
 | `engine/lua/match3/bot.lua` | The reference bot for move and price fitting and Simulator fast clears. Prioritizes target progress, values gem creation and checks both directions for a line-gem cross using first-wave previews | required |
 | `tests/lua/bot_profile.lua` | Local rule-call timings for the full campaign bot; independent of the injected gameplay clock | `make test-bot`; timings in `build/test/<game>.log` |
-| `tests/lua/move_budget.lua` | Rounds up median × 1.25 for each board and adds three moves in Relic Rush | required by `tune_moves.lua` |
+| `tests/lua/move_budget.lua` | Rounds up median × 1.25 for each board. Relic Rush multiplies that result by 1.5 and rounds up again | required by `tune_moves.lua` |
 | `tests/lua/relic_balance.lua` | Plays every board of both games, reports income and fits purchase prices; `balance.py` runs it one board per process and writes the prices | `make test-balance` (report only, same forty-game sample) |
 
 ## Review captures and story

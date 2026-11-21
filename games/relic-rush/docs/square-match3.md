@@ -73,8 +73,9 @@ then per ten levels easy, easy, normal, normal, hard, easy, normal, normal,
 hard, boss). `python3 tools/square_boards.py relic-rush` validates them,
 `tools/square_trim.py` trims long ones to the tier (easy 30, normal 45, hard
 60, boss 70 targets at the bot's median) and `tools/tune_moves.py` fits each
-board's `moves`. The [move budget](level-moves.md) is the bot's median clear
-times 1.25, rounded up, plus three moves.
+board's `moves`. The [move budget](level-moves.md) starts at the bot's median
+clear times 1.25, rounded up. Relic Rush multiplies that result by 1.5 and
+rounds up again.
 
 The existing first-clear and construction scenes tell Ines’s story.
 Plaques are still the goal and the five slots carry the regular resource,
@@ -143,7 +144,8 @@ BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules re
 Capture from the game using `build/test/all --suite=relic-rush "shot square-"`.
 
 The square Moves counter uses the board's rim colors and turns red for the
-last five moves.
+last five moves. Clearing the last plaque on the final move wins, including
+when a cascade clears it after the swap.
 
 ### Blockers and target hints
 
