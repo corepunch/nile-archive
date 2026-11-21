@@ -476,7 +476,7 @@ Choice prompt: Who should answer the signal?
 
 **Level 52 · Kelp Terrace**
 
-- **Marisol:** Elena, the islanders want somewhere to sit and argue. Is that amphitheatre for us?
+- **Marisol:** Elena, the islanders want somewhere to sit and argue. Would an amphitheatre be for us?
 - **Elena:** For everyone, Marisol. Bring the benches and the arguments.
 - **Tomas:** Marisol, I said Ines's name at the masons' fire tonight. Nothing fell.
 
@@ -840,6 +840,101 @@ Choice prompt: Who should answer the signal?
 - **Ines:** Mara, I changed its tune till a lamp I could trust answered. And this one did.
 - **Ines:** Elena, your well scrap is a corner of my chart of other lights. They need keepers too.
 
+## Town dialogue
+
+Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
+
+
+**Placed log_cabin**
+
+- **Tomas:** Mara, my father kept a dry pair of boots on that peg. What size do you take?
+- **Mara:** Any size you like, Tomas, if dry is part of the offer.
+
+**Placed workshop**
+
+- **Tomas:** Try the saw, Mara. Pull it towards you. Hear it sing?
+- **Mara:** You take the tune, Tomas. I'll take the straight plank.
+
+**Placed trading_post**
+
+- **Marisol:** Adrian, put my cousin's name on the receipt. She's the one who cut your stone.
+- **Adrian:** How does she spell it? I'd like her to check my copy.
+
+**Placed water_mill**
+
+- **Mara:** Elena, tear that loaf in half. I'll give you whichever half you can hear crackle.
+- **Elena:** I can hear both, Mara. You'll have to eat with me.
+
+**Placed amphitheater**
+
+- **Marisol:** Elena, may I save a bench for the net menders? They come in late.
+- **Elena:** Give them the front one, Marisol. I'm tired of hearing about the quay from men in dry boots.
+
+**Placed map_room**
+
+- **Elena:** Mara, will you mark the reef where you felt it under the Marigold?
+- **Mara:** In ink, Elena. I remember that rock and it remembers me.
+
+**Placed beached_ship**
+
+- **Mara:** Tomas, get in the skiff and stamp hard. I'd rather find a leak now than halfway across.
+- **Tomas:** My socks are dry, Mara. Put me down for the return trip.
+
+**Placed observatory**
+
+- **Elena:** Mara, put one eye to the glass. Can you make out the name on your boat?
+- **Mara:** I can see the bit of the M I missed. Lend me your smallest brush.
+
+**Placed aviary**
+
+- **Marisol:** Elena, will you teach the parrots to call out the tide? My aunt can't read the clock.
+- **Elena:** Marisol, your aunt should teach them. When I try, they just say my name back.
+
+**Placed museum**
+
+- **Marisol:** Elena, my aunt lent you that netting needle. Where does it say whose it is?
+- **Elena:** On the card, in her own hand if she'll come. I've left her my pen.
+
+**With workshop after-12 1**
+
+- **Tomas:** Mara, try the reel I cut on our saw. Go on, give it a spin.
+
+**With log_cabin after-07 1**
+
+- **Mara:** Tomas, your father's boots got me up the sawmill path. Is that old saw worth saving?
+
+**With amphitheater after-52 1**
+
+- **Marisol:** Elena, the net menders want to bring their children to the front bench. Room for small opinions?
+
+**With map_room after-58 3**
+
+- **Elena:** Mara, bring Marisol to the chart table. Her cousins could mark the Gull's run for us.
+
+**With beached_ship after-76 2**
+
+- **Mara:** I've had Tomas aboard dry-shod, Elena. Give the tar one more tide before we take her out.
+
+**With trading_post after-28 2**
+
+- **Marisol:** I'll name every mason on a receipt, Elena. My food customer pays exact coin. No name on that bag.
+
+**With water_mill after-33 3**
+
+- **Mara:** Adrian, they answer my lamp and leave my flour alone. Peculiar sort of treasure hunters.
+
+**With observatory after-77 2**
+
+- **Mara:** I can pick hers out from the dome, Tomas. You two did like a tidy mark.
+
+**With aviary after-85 2**
+
+- **Marisol:** Mara, I asked that bird to call the tide. Instead he's taken up banking. Who's he heard?
+
+**With museum after-87 1**
+
+- **Mara:** Adrian, I left you at the museum with a clean sheet. One line since supper? What's it say?
+
 ## Upgrades
 
 Optional scenes: the keeper of a standing building and one other main character, at any time after it stands. Perks are felt, never named.
@@ -953,6 +1048,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Added ten confirmed-purchase conversations and ten later exchanges that read the town’s actual buildings. Existing cast members carry each thread. An interrupted purchase conversation resumes on the next visit.
 
 - 2026-11-20: Speech-only pass. Every line is now said by someone to someone (docs/STORY_WRITING.md#speech-only-no-narration); reports were rewritten or cut (126 suspect lines to 4). New speaker Marisol, the islander elder at the Jungle market, with her own want (the quay jobs and the islanders' records stay on the island), paid off when Adrian writes it for her at 98. Sixteen optional upgrade scenes, one per Rome 2 citizen, given to each building's keeper from the cast we know. Two cold reads; fixes include one name per place (the far station, the vault), fewer Adrian and Kessler tells, and paid-off string, parrot, sand circles and chart.
 

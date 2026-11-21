@@ -35,7 +35,7 @@ return {
         {"elena", "\"Ines and I,\" you said before. Who is Ines?"},
         {"tomas", "She worked it with me. Another time, Elena. First, help me roof my father's cabin."},
     }},
-    {key="after-07", phase="after", level=7, lines={
+    {key="after-07", phase="after", level=7, variant={building="log_cabin", index=1, line={"mara", "Tomas, your father's boots got me up the sawmill path. Is that old saw worth saving?"}}, lines={
         {"mara", "Tomas, the sawmill path! The roof fell in, but the big saw's still in its frame, rusty and smug."},
         {"tomas", "Mend the workshop and it will cut again, Mara. Then I can build a reel for the cable."},
         {"elena", "Then the workshop comes first, Tomas. Timber is the road to everything else here."},
@@ -60,7 +60,7 @@ return {
         {"tomas", "First good timber in years, Mara. Carry it to the workshop; the saw wants oil and time."},
         {"adrian", "Wood! Tomas, at last, something on this island I can put on an invoice."},
     }},
-    {key="after-12", phase="after", level=12, lines={
+    {key="after-12", phase="after", level=12, variant={building="workshop", index=1, line={"tomas", "Mara, try the reel I cut on our saw. Go on, give it a spin."}}, lines={
         {"tomas", "Mara, hold this: my first reel, shaped by hand. A drop of lamp oil and it turns."},
         {"mara", "Tomas, it wobbles."},
         {"tomas", "It will wind cable. Loose coils lie round the mooring posts, Mara. Bring them in."},
@@ -173,7 +173,7 @@ return {
         {"elena", "A mechanism repeats itself, Mara. A person who wants noticing changes the tune."},
         {"tomas", "Then we answer politely, Mara. Whoever it is has waited a long while to be heard."},
     }},
-    {key="after-28", phase="after", level=28, lines={
+    {key="after-28", phase="after", level=28, variant={building="trading_post", index=2, line={"marisol", "I'll name every mason on a receipt, Elena. My food customer pays exact coin. No name on that bag."}}, lines={
         {"elena", "Marisol, these prints stop at the water. Who buys a week of food from you, and gives no name?"},
         {"marisol", "Now that's a question. One customer, exact coin, and I date every bag so it keeps. No more."},
         {"tomas", "Tides wipe prints, Elena. And nobody swims that gap. Not twice."},
@@ -198,7 +198,7 @@ return {
         {"mara", "Then who gets in to work a shutter, Tomas? High water floods that stair."},
         {"elena", "Someone who crosses at low water, Mara, and waits on the ledge as it rises. How, I can't yet say."},
     }},
-    {key="after-33", phase="after", level=33, lines={
+    {key="after-33", phase="after", level=33, variant={building="water_mill", index=3, line={"mara", "Adrian, they answer my lamp and leave my flour alone. Peculiar sort of treasure hunters."}}, lines={
         {"elena", "Adrian, theory: the Meridian Society wants treasure, and Kessler's men are scouting ahead of us."},
         {"adrian", "Kessler's men? Dull little man, Elena. He sends lawyers, never anyone who can climb a stair."},
         {"mara", "Scouts who answer my lamp, Adrian? Very polite, for treasure hunters."},
@@ -322,8 +322,8 @@ return {
         {"adrian", "Terrible line, Kessler! Wind off the sea. I'm losing you. Losing you entirely."},
         {"mara", "The sea is flat as a plate, Adrian."},
     }},
-    {key="after-52", phase="after", level=52, lines={
-        {"marisol", "Elena, the islanders want somewhere to sit and argue. Is that amphitheatre for us?"},
+    {key="after-52", phase="after", level=52, variant={building="amphitheater", index=1, line={"marisol", "Elena, the net menders want to bring their children to the front bench. Room for small opinions?"}}, lines={
+        {"marisol", "Elena, the islanders want somewhere to sit and argue. Would an amphitheatre be for us?"},
         {"elena", "For everyone, Marisol. Bring the benches and the arguments."},
         {"tomas", "Marisol, I said Ines's name at the masons' fire tonight. Nothing fell."},
     }},
@@ -352,7 +352,7 @@ return {
         {"adrian", "It crackled. I'm adjusting the squelch. It's rather like a very small clock."},
         {"elena", "That's the third time since the Mole Walk, Adrian. Who keeps ringing you?"},
     }},
-    {key="after-58", phase="after", level=58, lines={
+    {key="after-58", phase="after", level=58, variant={building="map_room", index=3, line={"elena", "Mara, bring Marisol to the chart table. Her cousins could mark the Gull's run for us."}}, lines={
         {"mara", "Tomas, the Gull's bell still hangs on her stump. Who did she carry?"},
         {"tomas", "Pearl divers, Mara, and my father on a good day. Marisol's cousins knew her."},
         {"elena", "Then they may know the reef bearings Ines used. Mara, ask Marisol tomorrow."},
@@ -473,12 +473,12 @@ return {
         {"tomas", "At low tide it's a path to the far station, Mara. Ines uses it. Her chalk is on the fifth step."},
         {"elena", "Smudged, not faded, Tomas. She was here this week."},
     }},
-    {key="after-76", phase="after", level=76, lines={
+    {key="after-76", phase="after", level=76, variant={building="beached_ship", index=2, line={"mara", "I've had Tomas aboard dry-shod, Elena. Give the tar one more tide before we take her out."}}, lines={
         {"elena", "Mara, the star dome will be the landmark for any boat at dusk. Will the skiff float?"},
         {"mara", "If the tar dries, Elena. It's slow and has opinions."},
         {"elena", "Then bearings first, tar second, Mara. In that order."},
     }},
-    {key="after-77", phase="after", level=77, lines={
+    {key="after-77", phase="after", level=77, variant={building="observatory", index=2, line={"mara", "I can pick hers out from the dome, Tomas. You two did like a tidy mark."}}, lines={
         {"tomas", "Mara, Ines marked a stone here for the tide. It sits right where the bypass begins."},
         {"mara", "You two did love your marks, Tomas."},
         {"tomas", "She'd have called it good order, Mara. I called it getting in her way."},
@@ -528,7 +528,7 @@ return {
         {"tomas", "The register and Ines's log, Elena. The rest waits for Marisol's key."},
         {"marisol", "Move nothing at night, Tomas. The island watches what disappears at night."},
     }},
-    {key="after-85", phase="after", level=85, lines={
+    {key="after-85", phase="after", level=85, variant={building="aviary", index=2, line={"marisol", "Mara, I asked that bird to call the tide. Instead he's taken up banking. Who's he heard?"}}, lines={
         {"mara", "Elena, that green parrot just said 'Mr Vale' in Kessler's voice! Who taught him?"},
         {"marisol", "He copies what he hears, Mara. Keep your secrets away from that bird."},
         {"tomas", "Then the radio lives indoors, Elena, with the door shut. Tell Adrian."},
@@ -538,7 +538,7 @@ return {
         {"tomas", "It is, Mara. Her handwriting, in stone."},
         {"elena", "Marisol, the museum opens to every islander. Our finds stay in it, not in a crate."},
     }},
-    {key="after-87", phase="after", level=87, lines={
+    {key="after-87", phase="after", level=87, variant={building="museum", index=1, line={"mara", "Adrian, I left you at the museum with a clean sheet. One line since supper? What's it say?"}}, lines={
         {"mara", "Adrian, you've been writing by lantern since supper. What is taking all night?"},
         {"adrian", "One sentence, Mara. It says 'surrender'."},
         {"tomas", "Keep it plain, Adrian. Ines never could stand a long letter."},
@@ -705,5 +705,45 @@ return {
         {"tomas", "Mara, I wrote a watch roster on the temple wall. Whose name goes first?"},
         {"mara", "Yours, Tomas. You're the keeper. I'll take the dusk watch, and I'll stay awake."},
         {"tomas", "Nobody stays awake. That's why there's a roster. Write your name in pencil."},
+    }},
+    {key="placed-log_cabin", phase="placed", building="log_cabin", lines={
+        {"tomas", "Mara, my father kept a dry pair of boots on that peg. What size do you take?"},
+        {"mara", "Any size you like, Tomas, if dry is part of the offer."},
+    }},
+    {key="placed-workshop", phase="placed", building="workshop", lines={
+        {"tomas", "Try the saw, Mara. Pull it towards you. Hear it sing?"},
+        {"mara", "You take the tune, Tomas. I'll take the straight plank."},
+    }},
+    {key="placed-trading_post", phase="placed", building="trading_post", lines={
+        {"marisol", "Adrian, put my cousin's name on the receipt. She's the one who cut your stone."},
+        {"adrian", "How does she spell it? I'd like her to check my copy."},
+    }},
+    {key="placed-water_mill", phase="placed", building="water_mill", lines={
+        {"mara", "Elena, tear that loaf in half. I'll give you whichever half you can hear crackle."},
+        {"elena", "I can hear both, Mara. You'll have to eat with me."},
+    }},
+    {key="placed-amphitheater", phase="placed", building="amphitheater", lines={
+        {"marisol", "Elena, may I save a bench for the net menders? They come in late."},
+        {"elena", "Give them the front one, Marisol. I'm tired of hearing about the quay from men in dry boots."},
+    }},
+    {key="placed-map_room", phase="placed", building="map_room", lines={
+        {"elena", "Mara, will you mark the reef where you felt it under the Marigold?"},
+        {"mara", "In ink, Elena. I remember that rock and it remembers me."},
+    }},
+    {key="placed-beached_ship", phase="placed", building="beached_ship", lines={
+        {"mara", "Tomas, get in the skiff and stamp hard. I'd rather find a leak now than halfway across."},
+        {"tomas", "My socks are dry, Mara. Put me down for the return trip."},
+    }},
+    {key="placed-observatory", phase="placed", building="observatory", lines={
+        {"elena", "Mara, put one eye to the glass. Can you make out the name on your boat?"},
+        {"mara", "I can see the bit of the M I missed. Lend me your smallest brush."},
+    }},
+    {key="placed-aviary", phase="placed", building="aviary", lines={
+        {"marisol", "Elena, will you teach the parrots to call out the tide? My aunt can't read the clock."},
+        {"elena", "Marisol, your aunt should teach them. When I try, they just say my name back."},
+    }},
+    {key="placed-museum", phase="placed", building="museum", lines={
+        {"marisol", "Elena, my aunt lent you that netting needle. Where does it say whose it is?"},
+        {"elena", "On the card, in her own hand if she'll come. I've left her my pen."},
     }},
 }

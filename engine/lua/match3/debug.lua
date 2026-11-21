@@ -511,11 +511,14 @@ function D.bind(R, W)
         local beat_key = app.arg("story-beat")   -- --story-beat KEY [--story-line N]: preview a scene from its Nth line
         if beat_key then
             local beat = assert(journey.find(beat_key), "unknown story beat")
-            island_with(journey.earned(beat.level or 0))   -- a upgrade scene has no level
+            local building = beat.phase == "placed" and beat.building or app.arg("story-built") and beat.variant and beat.variant.building
+            if building then island_with(0, island.ladder_position[island.kinds[building]])
+            else island_with(journey.earned(beat.level or 0)) end
             R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
             while story.active() do story.next() end
             local lines = {}
-            for i = tonumber(app.arg("story-line")) or 1, #beat.lines do lines[#lines + 1] = beat.lines[i] end
+            local spoken = R.story_lines(beat)
+            for i = tonumber(app.arg("story-line")) or 1, #spoken do lines[#lines + 1] = spoken[i] end
             R.queue_story({key = beat.key, lines = lines}, true)
         end
         local choice_key = app.arg("story-choice")

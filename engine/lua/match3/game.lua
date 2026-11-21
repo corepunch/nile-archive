@@ -293,11 +293,37 @@ function G.journey(content)
     -- Upgrade arrival scenes ({phase="upgrade", event="man_03", no level}) are
     -- kept apart from the level beats: they play on the next return to town
     -- once their user event is done, and never hold the story back.
-    local scenes, upgrades = {}, {}
+    local scenes, upgrades, placements = {}, {}, {}
     for _, beat in ipairs(M.beats) do
-        if beat.phase == "upgrade" then upgrades[#upgrades + 1] = beat else scenes[#scenes + 1] = beat end
+        if beat.phase == "placed" then placements[#placements + 1] = beat
+        elseif beat.phase == "upgrade" then upgrades[#upgrades + 1] = beat
+        else scenes[#scenes + 1] = beat end
     end
-    M.beats, M.upgrades = scenes, upgrades
+    M.beats, M.upgrades, M.placements = scenes, upgrades, placements
+
+    -- Absent until a fresh purchase, false while due, true once acknowledged.
+    -- Old saves therefore never receive a backlog for the town they already own.
+    function M.placed(p, building)
+        for _, beat in ipairs(placements) do
+            if beat.building == building and p.story_seen[beat.key] == nil then
+                p.story_seen[beat.key] = false
+            end
+        end
+    end
+
+    function M.next_placement(p)
+        for _, beat in ipairs(placements) do
+            if p.story_seen[beat.key] == false then return beat end
+        end
+    end
+
+    function M.lines_for(beat, owns)
+        local variant = beat.variant
+        if not variant or not owns(variant.building) then return beat.lines end
+        local lines = {table.unpack(beat.lines)}
+        lines[variant.index] = variant.line
+        return lines
+    end
 
     function M.find_upgrade(event)
         for _, beat in ipairs(M.upgrades) do if beat.event == event then return beat end end
@@ -323,6 +349,7 @@ function G.journey(content)
     function M.find(key)
         for _, beat in ipairs(M.beats) do if beat.key == key then return beat end end
         for _, beat in ipairs(M.upgrades) do if beat.key == key then return beat end end
+        for _, beat in ipairs(placements) do if beat.key == key then return beat end end
     end
 
     -- Legacy clears remain clears; already-owned buildings stay. A recap
@@ -349,6 +376,11 @@ function G.journey(content)
         end
         for _, b in ipairs(M.upgrades) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
+        end
+        for _, b in ipairs(placements) do
+            local seen = p.story_seen[b.key]
+            local state = s:int("narrative.v1." .. b.key, seen == nil and 0 or seen and 2 or 1)
+            if state == 0 then p.story_seen[b.key] = nil else p.story_seen[b.key] = state == 2 end
         end
         p.story_recap = s:int("narrative.recap", p.story_recap and 1 or 0) == 1
     end
@@ -1150,6 +1182,10 @@ function G.bind(R, over)
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
             suggest = function(kind) return island.island_suggestion(kind) end,
             placed = function(ev, fresh)
+                if fresh then
+                    local kind = R.island.items[ev.building + 1].type
+                    journey.placed(R.prog, island.buildings[kind + 1].key)
+                end
                 if fresh and island.purchase_confirmed then
                     local site = island.purchase_confirmed(R.island, R.island.items[ev.building + 1].type, app.clock())
                     if site then R.island_focus(site, R.island.cam.zoom) end
@@ -1171,11 +1207,17 @@ function G.bind(R, over)
     R.intro_lines = journey.beats[1].lines              -- the opening scene
     R.finale = journey.beats[#journey.beats].lines      -- its end opens the finale
 
+    function R.story_lines(beat)
+        return journey.lines_for(beat, function(building)
+            return island.owned(R.island, island.kinds[building]) > 0
+        end)
+    end
+
     function R.queue_story(beat, preview, before_result)
         R.story_current = beat
         R.story_preview = preview
         R.story_before_result = before_result
-        for _, line in ipairs(beat.lines) do story.add(line) end
+        for _, line in ipairs(R.story_lines(beat)) do story.add(line) end
     end
 
     choices = ui.modals(skin)
@@ -1257,6 +1299,7 @@ function G.bind(R, over)
         end
         local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
         local b = R.next_story(before)
+        if not b and R.on_island then b = journey.next_placement(R.prog) end
         if not b and R.on_island and R.upgrade_done then b = journey.next_upgrade(R.prog, R.upgrade_done) end
         if b and (R.on_island or b.phase == "before") then
             local reply = R.prog.story_choices and R.prog.story_choices[b.key]
@@ -1698,7 +1741,7 @@ function G.app(R)
         if R.prog.level >= LEVELS then
             R.g.won, R.on_island = true, true
         end
-        if R.prog.story_recap or R.next_story(nil) then R.on_island = true end
+        if R.prog.story_recap or R.next_story(nil) or journey.next_placement(R.prog) then R.on_island = true end
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end
         if W.menu.continue_in_town and R.prog.level > 0 then R.on_island = true end
         if R.resume_completed then R.resume_completed() end

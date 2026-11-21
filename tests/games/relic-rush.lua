@@ -1,4 +1,5 @@
 rules("debug_walkthrough")
+rules("town_story")
 -- Relic Rush: every test, in one start of build/test/relic-rush. See docs/TESTING.md.
 rules("relic_story")
 rules("match_matrix")
@@ -330,3 +331,6 @@ if getenv("APP_STORE_SHOTS") == "1" then
     shot(prefix .. "04-temple-gardens", size, town .. "gardens" .. safe)
     shot(prefix .. "05-rainbow-spark", size, "--level 11 --special-states --special-fire rainbow --frames 33" .. safe)
 end
+
+shot("town-story-purchase", "480x900", "--story-beat placed-workshop --frames 240")
+shot("town-story-callback", "390x844", "--story-beat after-12 --story-line 1 --story-built --frames 240 --safe-area 0,47,0,34")

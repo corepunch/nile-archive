@@ -107,8 +107,14 @@ class Page:
             frame = self.frames[name]
             if frame['path'] not in self.atlases:
                 self.atlases[frame['path']] = Image.open(self.data_dir / frame['path'])
-            x, y, w, h = frame['rect']
-            self.icons[name] = embed(self.atlases[frame['path']].crop((x, y, x + w, y + h)), 80, 'PNG')
+            atlas = self.atlases[frame['path']]
+            if frame.get('grid'):
+                w = h = frame['grid']
+                row, col = divmod(frame['frame'], atlas.width // w)
+                x, y = col * w, row * h
+            else:
+                x, y, w, h = frame['frame']
+            self.icons[name] = embed(atlas.crop((x, y, x + w, y + h)), 80, 'PNG')
         return f'<span class="ico ico-{self.game}-{name}" role="img" aria-label=""></span>'
 
     def lines(self, lines):
@@ -129,7 +135,12 @@ class Page:
         if not label:   # a scene after a story building's level waits until that building stands
             step = self.steps.get(b.get('waits_for'))
             label = f'After the {step["name"]} is placed' if step else PHASES.get(b['phase'], b['phase'])
+        if b.get('phase') == 'upgrade':
+            label = 'When the building upgrade is earned'
         body = self.lines(b.get('lines', []))
+        if v := b.get('variant'):
+            name = self.steps[v['building']]['name']
+            body += f'<p class="pick">If {esc(name)} stands, line {v["index"]} becomes</p>{self.lines(v["lines"])}'
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
         if b.get('choices'):
@@ -422,7 +433,7 @@ def main():
             capture(game)
         data = dump(game)
         config = ROOT / f'games/{game}/lua/game_config.lua'   # app = {title = "...", ...}
-        title = re.search(r'\bapp = \{title = "([^"]*)"', config.read_text()).group(1) if config.is_file() else 'Nile Archive'
+        title = re.search(r'\bapp = \{title = "([^"]*)"', config.read_text()).group(1) if game in MATCH3 else 'Nile Archive'
         if args.epoch:
             sections.append(epoch_section(data, title, args.epoch))
         else:

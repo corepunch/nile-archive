@@ -1,4 +1,5 @@
 rules("debug_walkthrough")
+rules("town_story")
 -- Christmas Market: every test, in one start of build/test/christmas-market. See docs/TESTING.md.
 rules("relic_board")
 rules("portrait_game")
@@ -258,3 +259,6 @@ if getenv("APP_STORE_SHOTS") == "1" then
         shot(prefix .. "05-rainbow-spark", size, "--level 10 --special-states --special-fire rainbow --frames 33" .. safe)
     end
 end
+
+shot("town-story-purchase", "480x900", "--story-beat placed-reindeer_stable --frames 240")
+shot("town-story-callback", "390x844", "--story-beat after-98 --story-line 2 --story-built --frames 240 --safe-area 0,47,0,34")

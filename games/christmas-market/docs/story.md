@@ -93,9 +93,9 @@ Bramble the goat does not speak.
 | The silver bell on the arch "rings for the last one off the train" (14) | It rings for Pip's mum (94) |
 | Rosa leaves a light for one more (1) | Gran's lamp in Noelle's own window (95), and the end screen |
 | Pip wants a reindeer, and indigo rockets for New Year (6, 16) | Bells on the reindeer (13); Agnes keeps the rockets for New Year (25) |
-| Rosa would like a sleigh ride (96) | Mary sends Pip to the seat Rosa saved (98); the sleigh stands behind the pair at the end (100) |
+| Rosa would like a sleigh ride (96) | Mary sends Pip to Rosa, or shares Rosa’s seat if the sleigh stands (98); the sleigh stands behind the pair at the end (100) |
 
-**Why each stall gets built.** The ten stalls that hold no story scene are each wanted by someone in the scene that plays when they open, so the player builds for a person. A scene never says the stall stands (the ladder lets a player wait, see the knock-on check); the echo is placed after the next story stall, from which every earlier stall must stand (`campaign_ladder`, `engine/lua/match3/game.lua`: `ladder_blocked` returns "earlier" until every unwaived earlier step is owned). Where no story stall follows (the sleigh), the echo reads true either way.
+**Why each stall gets built.** The ten stalls between story gates are each wanted by someone in the scene that plays when they open, so the player builds for a person. A scene never says the stall stands (the ladder lets a player wait, see the knock-on check); the echo is placed after the next story stall, from which every earlier stall must stand (`campaign_ladder`, `engine/lua/match3/game.lua`: `ladder_blocked` returns "earlier" until every unwaived earlier step is owned). Their placement exchanges and the two paths through each later callback are under Town dialogue.
 
 | Stall | Wish | Who wants it, and why | Later echo |
 | --- | --- | --- | --- |
@@ -768,7 +768,7 @@ Order: result → market → place the stall → scene → next goal. A first cl
 **Level 98 · Toy Soldier March**
 
 - **Henrik:** Pip, fourteen apprentices carved a reindeer for every child. Will you wrap them at the pavilion?
-- **Mary:** Pip, yours has your nose exactly. Now find Rosa. She's saving you a seat in that sleigh.
+- **Mary:** Pip, yours has your nose exactly. Go and show Rosa. She's been asking for you.
 - **Henrik:** Last one's for you, Agnes. Now I'm off to wait under the fir. Early, for once.
 
 **Level 99 · Twelve Chimes**
@@ -800,6 +800,101 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 > There's a light in Noelle's window. Fernhollow has asked for a few lights of its own.
 > *The Road to Fernhollow*
 > **[ BACK TO MY MARKET ]**
+
+## Town dialogue
+
+Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
+
+
+**Placed reindeer_stable**
+
+- **Pip:** Noelle, will you lift the latch? I've got his supper in both pockets.
+- **Noelle:** Back up a step, Pip. He'd like the carrots without the trousers.
+
+**Placed firework_stall**
+
+- **Pip:** Agnes, will you keep the key till New Year? I might want to try just one.
+- **Agnes:** In my apron, pet. You can have it when you come and fetch me to watch.
+
+**Placed chapel**
+
+- **Agnes:** Mr Wren, will you leave the door on the latch? I'd like to hear the choir from my oven.
+- **Mr Wren:** I'll put a wedge under it, Agnes. Hymns are apt to slam a door on the high notes.
+
+**Placed igloo**
+
+- **Agnes:** Theo, a whole shelf for my butter? What do I owe you?
+- **Theo:** Save me one corner of shortbread, Mrs Holt. The darker the better.
+
+**Placed log_cabin**
+
+- **Mr Finch:** Mrs Holt, have you any applewood for my first trout? Bramble's eaten all the bark off mine.
+- **Agnes:** A sack of dry chips, Mr Finch. Take the handcart. I'd like the sack back, if the goat allows.
+
+**Placed station_kiosk**
+
+- **Pip:** Mr Wren, may I wind the station clock? I'll be here for every train.
+- **Mr Wren:** One turn a day, Pip. Three won't bring the next train any sooner.
+
+**Placed post_office**
+
+- **Pip:** Noelle, could the first letter through my office be for me? I'll let you use the stamp.
+- **Noelle:** Give me an envelope, Postmaster. And turn round while I write the name.
+
+**Placed glassblower**
+
+- **Agnes:** Theo, how do I lift this glass dome without putting fingerprints on the gingerbread?
+- **Theo:** Lift by the knob, Mrs Holt. Those little prints in the icing were there when I came.
+
+**Placed santa_workshop**
+
+- **Henrik:** Pip, try the low bench. Used to be mine. Can your feet reach the rail?
+- **Pip:** Both of them, Mr Strand! Can I carve the ears? I know what a reindeer listens with.
+
+**Placed sleigh**
+
+- **Rosa:** Mary, tuck that rug round your knees. When did we last go for a ride together?
+- **Mary:** When my boots still had buckles, Rosa. Budge over. There's room for Pip.
+
+**With reindeer_stable after-07 2**
+
+- **Pip:** Agnes, I shut the stable latch! Mr Strand wants to know if your big oven's still cold!
+
+**With chapel after-27 3**
+
+- **Mr Wren:** Leave your shoe by the chapel door tonight, Noelle. Someone may know your size.
+
+**With station_kiosk after-48 1**
+
+- **Pip:** Mrs Holt, I saw the candle girl from my kiosk. Have you a saffron bun for her walk?
+
+**With santa_workshop after-88 1**
+
+- **Noelle:** Theo, thank you for the lantern hooks. Even Pip made one for his bench at the hall.
+
+**With sleigh after-98 2**
+
+- **Mary:** Pip, yours has your nose exactly. Come and sit by me in Rosa's sleigh.
+
+**With firework_stall after-18 3**
+
+- **Agnes:** Pip, feel in my apron. That's the rocket key. I need you here at New Year, whatever the sea does.
+
+**With igloo after-38 2**
+
+- **Agnes:** Fetch the butter from Theo's shelf, Pip. I'll give the next batch knees. Don't tell him I smiled.
+
+**With log_cabin after-42 2**
+
+- **Agnes:** By the stove, love. Mr Finch took the applewood, so there's room for Rosa's whole string.
+
+**With post_office after-67 2**
+
+- **Pip:** I'm the postmaster, Agnes. Can I put an express stamp on my wish for Mum's steamer?
+
+**With glassblower after-74 3**
+
+- **Agnes:** She'll wash. Noelle, lift that glass dome. Henrik piped every window dead level. Show-off.
 
 ## Upgrades
 
@@ -935,7 +1030,9 @@ Optional scenes, one per building, played on the next return to town after its f
 
 ## Changelog
 
-- 2026-11-20: Building ties. The ten stalls that held no scene (6, 16, 26, 36, 41, 46, 66, 71, 86, 96) are each wanted by a named person in their opening scene, with later echoes (see "Why each stall gets built"). Station kiosk, pavilion, rink and sleigh gain echoes at 85, 98, 82 and 98. Level 96 no longer says where the sleigh stands. Level 76 asks who rides first. Six upgrade lines now address someone (story_lines.py: 0 candidates). No plant or payoff moved. One cold read: Pip's rockets are for New Year, not his mum (it undercut his "I don't mind" at 18), Mr Finch asks for the smokehouse himself, Henrik's apprentices "would come" (no unseen letter), and Mary sends Pip to Rosa's sleigh seat.
+- 2026-11-21: Added ten confirmed-purchase conversations and ten later exchanges that read the town’s actual buildings. Existing cast members carry each thread. An interrupted purchase conversation resumes on the next visit.
+
+- 2026-11-20: Building ties. The ten stalls that held no scene (6, 16, 26, 36, 41, 46, 66, 71, 86, 96) are each wanted by a named person in their opening scene, with later echoes (see "Why each stall gets built"). Station kiosk, pavilion, rink and sleigh gain echoes at 85, 98, 82 and 98. Level 96 no longer says where the sleigh stands. Level 76 asks who rides first. Six upgrade lines now address someone (story_lines.py: 0 candidates). No plant or payoff moved. One cold read: Pip's rockets are for New Year, not his mum (it undercut his "I don't mind" at 18), Mr Finch asks for the smokehouse himself, Henrik's apprentices "would come" (no unseen letter), and Mary sends Pip to Rosa.
 
 - 2026-11-20: Candlelight opens before Gift wrapping. Pip still shows his mum's scarf at wish 56, and the old postbox gives up Agnes's letter at wish 61.
 

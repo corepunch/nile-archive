@@ -42,7 +42,7 @@ local loaded = {state = {}}
 function require(name)
     if loaded[name] ~= nil then return loaded[name] end
     -- These engine modules build campaign data without opening a game.
-    local engine = name == "match3.game" or name == "match3.bonuses" or name == "match3.shapes"
+    local engine = name == "match3.game" or name == "match3.bonuses" or name == "match3.shapes" or name == "match3.user_events"
     local file = engine and "engine/lua/" .. name:gsub("%.", "/") .. ".lua" or package.searchpath(name, package.path)
     local value = stub
     if file and (engine or not name:match("^match3")) then
@@ -140,7 +140,7 @@ else
             for _, atlas in pairs(atlases) do
                 local f = atlas.frames[name]
                 if f then
-                    out.frames[name] = {path = atlas.path, rect = f}
+                    out.frames[name] = {path = atlas.path, frame = f, grid = atlas.grid}
                     return name
                 end
             end
@@ -185,9 +185,11 @@ else
     -- The ladder in purchase order, as the engine builds it (match3.game
     -- campaign_ladder). Optional purchases fill no position.
     local story_key = {}   -- the story building each wonder level waits for
+    local purchase_level = {}
     out.ladder = {}
     for position, step in ipairs(island.ladder) do
         local b, unlock = island.buildings[step.kind + 1], step.unlock
+        purchase_level[b.key] = step.after
         if step.story then story_key[step.after] = b.key end
         out.ladder[position] = {position = position, key = b.key, kind = step.kind, name = b.name, about = b.about,
             sprite = b.sprite_path, price = price_of(b.cost), after = step.after, story = step.story,
@@ -232,13 +234,20 @@ else
                          reveal = reveal and {picture = reveal.picture, floor = reveal.floor}}
     end
     out.beats = {}
+    local upgrade_site = {}
+    for _, event in ipairs(require("user_events").events) do
+        if event.upgrade then upgrade_site[event.id] = event.upgrade.building end
+    end
     for i, b in ipairs(require("story_content")) do
         local choices = {}
         for k, c in ipairs(b.choices or {}) do choices[k] = {label = c.label, lines = lines_of(c.lines)} end
         -- As journey.next schedules it: a scene after a wonder level waits for
         -- that level's story building, unless it plays on the clear itself.
         local waits = b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]
-        out.beats[i] = {key = b.key, phase = b.phase, level = b.level, prompt = b.prompt, waits_for = waits or nil,
+        if b.phase == "placed" then waits = b.building
+        elseif b.phase == "upgrade" then waits = assert(upgrade_site[b.event]) end
+        local variant = b.variant and {building = b.variant.building, index = b.variant.index, lines = lines_of({b.variant.line})}
+        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], variant = variant, prompt = b.prompt, waits_for = waits or nil,
                         lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
     end
 end
