@@ -46,9 +46,11 @@ class DeviceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             deploy.select_device([self.phone, self.pad], GAMES['nile-archive'], 'phone-udid')
 
-    def test_universal_christmas_falls_back_to_ipad(self):
-        self.assertIs(deploy.select_device([self.pad], GAMES['christmas-market']), self.pad)
-        self.assertIs(deploy.select_device([self.pad, self.phone], GAMES['christmas-market'], 'pad-udid'), self.pad)
+    def test_christmas_requires_an_iphone(self):
+        with self.assertRaisesRegex(ValueError, 'physical iPhone'):
+            deploy.select_device([self.pad], GAMES['christmas-market'])
+        with self.assertRaisesRegex(ValueError, 'physical iPhone'):
+            deploy.select_device([self.pad, self.phone], GAMES['christmas-market'], 'pad-udid')
 
     def test_old_xcode_json_schema(self):
         phone = device(legacy=True)

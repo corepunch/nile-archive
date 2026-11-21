@@ -1,9 +1,12 @@
 # App Store screenshots
 
-| Listing | iPhone, 1320 × 2868 | iPad, 2064 × 2752 |
-| --- | --- | --- |
-| Christmas at Bellmere | [Five screenshots](../games/christmas-market/docs/screenshots/app-store/iphone/) | [Five screenshots](../games/christmas-market/docs/screenshots/app-store/ipad/) |
-| Relic Rush - Uncover Mysteries | [Five screenshots](../games/relic-rush/docs/screenshots/app-store/iphone/) | |
+| Listing | iPhone, 1320 × 2868 |
+| --- | --- |
+| Christmas at Bellmere | [Five screenshots](../games/christmas-market/docs/screenshots/app-store/iphone/) |
+| Relic Rush - Uncover Mysteries | [Five screenshots](../games/relic-rush/docs/screenshots/app-store/iphone/) |
+
+These match-3 games target iPhone. The [Bellmere iPad gallery](../games/christmas-market/docs/screenshots/app-store/ipad/)
+records the earlier universal build.
 
 Both galleries open on a decorated town and show two line gems clearing a row and column. Bellmere features the Christmas tree square, the winter fair and the letter puzzle. Relic Rush features the coastal harbor, the temple gardens and the jewel pack. Both end with a rainbow gem lighting up the matching pieces before they break.
 
@@ -13,7 +16,7 @@ From the repository root on a Mac with a 2× display, run the opt-in capture job
 
 ```sh
 make build/test/all
-APP_STORE_SHOTS=1 build/test/all --suite=christmas-market --suite=relic-rush 'shot app-store-'
+APP_STORE_SHOTS=1 build/test/all --suite=christmas-market --suite=relic-rush 'shot app-store-iphone-'
 ```
 
 The layouts in [the town capture fixture](../tests/fixtures/app-store-town/) use each game's buildings, plants, props and normal placement rules. Convert the named captures to RGB JPEGs. The numbered filenames set the gallery order.
@@ -28,10 +31,10 @@ from PIL import Image
 
 jobs = subprocess.check_output(
     ["build/test/all", "--suite=christmas-market", "--suite=relic-rush",
-     "--list", "shot app-store-"],
+     "--list", "shot app-store-iphone-"],
     env={**os.environ, "APP_STORE_SHOTS": "1"}, text=True,
 )
-sizes = {"iphone": (1320, 2868), "ipad": (2064, 2752)}
+size = (1320, 2868)
 for line in jobs.splitlines():
     if line.endswith(":"):
         game = line[:-1]
@@ -42,8 +45,8 @@ for line in jobs.splitlines():
     destination = Path("games", game, "docs/screenshots/app-store", device)
     destination.mkdir(parents=True, exist_ok=True)
     with Image.open(path) as capture:
-        if capture.size != sizes[device]:
-            raise ValueError(f"{path} is {capture.size}, expected {sizes[device]}")
+        if capture.size != size:
+            raise ValueError(f"{path} is {capture.size}, expected {size}")
         capture.convert("RGB").save(destination / f"{name}.jpg",
                                     quality=95, subsampling=0, optimize=True)
 PY

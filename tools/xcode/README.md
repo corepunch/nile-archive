@@ -21,7 +21,7 @@ installs and launches on an available physical device:
 ```sh
 make -C games/nile-archive ios       # iPad
 make -C games/relic-rush ios         # iPhone
-make -C games/christmas-market ios   # prefers iPhone; also supports iPad
+make -C games/christmas-market ios   # iPhone
 make -C games/emergency ios            # iPad
 
 # Equivalent repository-root targets:
@@ -37,8 +37,8 @@ make ios-emergency DEVICE=<UDID> TEAM=<development-team-id>
 
 `tools/xcode/deploy.py` queries `xcrun devicectl` using JSON, excluding
 unavailable devices and simulators. It chooses the only available device in
-the game's preferred family. Christmas Market falls back to iPad if no iPhone
-is available; `DEVICE` may select either supported family. Missing or ambiguous
+the game's target family. Christmas Market and Relic Rush target iPhone.
+Nile Archive and Emergency target iPad. Missing or ambiguous
 selection stops before building and lists the matching names. `DEVICE` accepts
 an exact device name, hardware UDID, CoreDevice identifier or ECID.
 

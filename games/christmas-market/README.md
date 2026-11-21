@@ -1,8 +1,8 @@
 # Christmas Market
 
 From the repository root, `make -C games/christmas-market ios` builds, signs,
-installs and launches on the connected iPhone (or iPad when no iPhone is
-available). Set `DEVICE="name or UDID"` to choose one. See the
+installs and launches on a connected iPhone. The native iOS target is iPhone
+only. Set `DEVICE="name or UDID"` to choose one. See the
 [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connected-iphone-or-ipad).
 
 An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. The market has 41 buildings and decorations. Smoke rises from nine working chimneys in town. See the [building catalogue](docs/building-catalogue.md).
