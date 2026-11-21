@@ -9,6 +9,7 @@ typedef struct {
     vec2 uv;
     vec2 stripe;         /* interpolated phase, constant width */
     color stripe_ink;
+    float atlas_bounds[4];   /* min and max texel centers, or zero for a full texture */
 } render_vertex;
 void app_step(void);
 void app_stop(void);

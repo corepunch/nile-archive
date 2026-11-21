@@ -95,14 +95,16 @@ static void texture_forget(struct render_texture *t)
 bool render_init(void)
 {
     GLuint vs = render_shader(GL_VERTEX_SHADER,
-        "in vec2 position; in vec4 color; in vec2 uv, stripe; in vec4 stripe_ink; uniform vec2 screen, origin; uniform float opacity;\n"
+        "in vec2 position; in vec4 color; in vec2 uv, stripe; in vec4 stripe_ink, atlas_bounds;"
+        "uniform vec2 screen, origin; uniform float opacity;\n"
         "out vec4 tint; out vec2 texcoord, point;\n"
-        "out float stripe_phase; flat out float stripe_width; flat out vec4 stripe_color;\n"
+        "out float stripe_phase; flat out float stripe_width; flat out vec4 stripe_color, sample_bounds;\n"
         "void main(){gl_Position=vec4((position+origin)/screen*vec2(2,-2)+vec2(-1,1),0,1);"
-        "tint=vec4(color.rgb,color.a*opacity);texcoord=uv;point=position;stripe_phase=stripe.x;stripe_width=stripe.y;stripe_color=stripe_ink;}\n");
+        "tint=vec4(color.rgb,color.a*opacity);texcoord=uv;point=position;"
+        "stripe_phase=stripe.x;stripe_width=stripe.y;stripe_color=stripe_ink;sample_bounds=atlas_bounds;}\n");
     GLuint fs = render_shader(GL_FRAGMENT_SHADER,
         "in vec4 tint; in vec2 texcoord, point; uniform sampler2D image; out vec4 pixel;\n"
-        "in float stripe_phase; flat in float stripe_width; flat in vec4 stripe_color;\n"
+        "in float stripe_phase; flat in float stripe_width; flat in vec4 stripe_color, sample_bounds;\n"
         "uniform vec4 mask_rect, mask_uv, mask_params; uniform sampler2D mask;\n"
         "uniform vec3 inset_offset; uniform vec4 inset_bounds;\n"
         "float silhouette(vec2 uv){"
@@ -120,7 +122,8 @@ bool render_init(void)
         "vec2 texel=floor(texcoord*vec2(textureSize(image,0)));"
         "float grain=fract(52.9829*fract(dot(texel,vec2(.06711056,.00583715))))-.5;"
         "base=vec4(vec3(.99-.065*y-.40*(1.-open)+.085*bevel+.036*grain),a);}"
-        "else base=texture(image,texcoord);"
+        "else{vec2 uv=sample_bounds.w>0.?clamp(texcoord,sample_bounds.xy,sample_bounds.zw):texcoord;"
+        "base=texture(image,uv);}"
         "if(stripe_color.a>0.){float aa=max(fwidth(stripe_phase),.001);"
         "float band=1.-smoothstep(stripe_width*.5-aa,stripe_width*.5+aa,abs(fract(stripe_phase+.5)-.5));"
         "float shade=.65+.35*dot(base.rgb,vec3(.2126,.7152,.0722));"
@@ -145,6 +148,7 @@ bool render_init(void)
     glBindAttribLocation(R.program, 2, "uv");
     glBindAttribLocation(R.program, 3, "stripe");
     glBindAttribLocation(R.program, 4, "stripe_ink");
+    glBindAttribLocation(R.program, 5, "atlas_bounds");
     glLinkProgram(R.program);
     glDeleteShader(vs); glDeleteShader(fs);
     GLint ok;
@@ -169,12 +173,13 @@ bool render_init(void)
     glGenBuffers(1, &R.vertices); glBindBuffer(GL_ARRAY_BUFFER, R.vertices);
     glGenBuffers(1, &R.indices);
     glEnableVertexAttribArray(0); glEnableVertexAttribArray(1); glEnableVertexAttribArray(2);
-    glEnableVertexAttribArray(3); glEnableVertexAttribArray(4);
+    glEnableVertexAttribArray(3); glEnableVertexAttribArray(4); glEnableVertexAttribArray(5);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(render_vertex), (void *)offsetof(render_vertex, position));
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(render_vertex), (void *)offsetof(render_vertex, color));
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(render_vertex), (void *)offsetof(render_vertex, uv));
     glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(render_vertex), (void *)offsetof(render_vertex, stripe));
     glVertexAttribPointer(4, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(render_vertex), (void *)offsetof(render_vertex, stripe_ink));
+    glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(render_vertex), (void *)offsetof(render_vertex, atlas_bounds));
     uint32_t white = UINT32_MAX;
     struct render_texture *t = render_texture_create(1, 1, &white);
     if (!t) { render_shutdown(); return false; }
@@ -318,10 +323,22 @@ void render_geometry(struct render_texture *t, const render_vertex *v, int n, co
 void render_textured_geometry(texture t, render_vertex *v, int n, const int *idx, int count)
 {
     if (!t.tex) return;
-    rect uv = t.uv.size.w > 0 ? t.uv : rc(0, 0, 1, 1);
+    bool region = t.uv.size.w > 0;
+    rect uv = region ? t.uv : rc(0, 0, 1, 1);
+    vec2 span = size2_vec(uv.size);
+    vec2 scale = vec2_div(span, size2_vec(t.size));
+    float bounds[4] = {0};
+    if (region) {
+        /* Linear filtering must stay inside the view, even where an edge is
+         * transparent. Clamp samples rather than shrinking the drawn UVs. */
+        vec2 half = vec2_scale(vec2_min(scale, span), .5f);
+        vec2 first = vec2_add(uv.pos, half), last = vec2_sub(rect_max(uv), half);
+        bounds[0] = first.x; bounds[1] = first.y;
+        bounds[2] = last.x; bounds[3] = last.y;
+    }
     for (int i = 0; i < n; i++) {
-        vec2 local = vec2_div(v[i].uv, size2_vec(t.size));
-        v[i].uv = rect_point(uv, local);
+        v[i].uv = vec2_add(uv.pos, vec2_mul(v[i].uv, scale));
+        memcpy(v[i].atlas_bounds, bounds, sizeof bounds);
     }
     render_submit(t.tex->id, t.additive || t.tex->additive, v, n, idx, count);
 }

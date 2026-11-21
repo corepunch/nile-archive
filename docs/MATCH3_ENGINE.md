@@ -227,6 +227,10 @@ Every sprite retains its own dimensions while sharing the atlas's GPU
 storage, so `gfx.image`, `gfx.image_part`, forms and particles draw the authored
 regions directly. Nested views compose. Invalid bounds return an empty
 texture. Keep the owner alive; freeing a view leaves the owner intact.
+Linear filtering stays inside the first and last texel centers of each view.
+This keeps neighboring artwork out of transparent frame margins, including
+on rotated rails, while adjacent draws still batch on the same atlas.
+[Before and after captures](review/frame-atlas-seams/README.md).
 `image.additive=true` affects just that view, permitting additive glows and
 alpha-blended pieces in one atlas. Font glyphs, engine shape primitives and
 transient beam/particle geometry remain normal renderer facilities.

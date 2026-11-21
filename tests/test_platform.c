@@ -96,6 +96,16 @@ static void draw_and_check(void)
                 : rgba(40, 80, 160, x < 6 ? 255 : x < 8 ? 128 : 0);
     texture atlas = tex_from_pixels(authored, 12, 4);
     texture masked = tex_region(atlas, rc(2, 0, 8, 4));
+    /* A transparent atlas margin must never pick up the adjacent opaque
+     * frame. Check tight edges both upright and with the board rail's turn. */
+    draw_rect(rc(0, 0, 100, 100), BLACK);
+    draw_image(masked, rc(10, 10, 40, 40), WHITE);
+    draw_image_rot(masked, rc(55, 10, 40, 40), ENGINE_PI / 2, WHITE);
+    CHECK(render_read_pixels(pixels, width, height));
+    CHECK(pixel(11, 25).r < 60 && pixel(11, 25).b > 140);
+    CHECK(pixel(49, 25).r == 0 && pixel(49, 25).b == 0);
+    CHECK(pixel(70, 49).r == 0 && pixel(70, 49).b == 0);
+
     draw_rect(rc(0, 0, 100, 100), BLACK);
     draw_image_striped(masked, rc(10, 10, 40, 20), ENGINE_PI / 2, 4, .44f, WHITE, WHITE);
     gfx_clip(rc(10, 40, 22, 20));
