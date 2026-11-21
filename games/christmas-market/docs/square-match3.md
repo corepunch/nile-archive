@@ -54,7 +54,7 @@ The [color map](market-pieces.md) pairs Cradle of Rome 2 pieces and purchase
 rewards with the Christmas Market artwork, yields and prices.
 
 The [100 ASCII layouts](../lua/campaign.lua) use a maximum field of nine
-columns by twelve rows. Each carries a `tier` (levels 1–4 tutorial, then per ten levels easy, easy, normal, normal, hard, easy, normal, normal, hard, boss), checked by `python3 tools/square_boards.py christmas-market`, trimmed by `tools/square_trim.py` and given its `moves` by `tools/tune_moves.py`. Dots are ordinary cells, asterisks single targets,
+columns by twelve rows. Each carries a `tier` (levels 1–4 tutorial, then per ten levels easy, easy, normal, normal, hard, easy, normal, normal, hard, boss), checked by `python3 tools/square_boards.py christmas-market`, covered with panes by `tools/square_trim.py --fill` (plain only where the bot reaches last, so the median clear fits 24 moves on easy boards, 28 on normal, 30 on hard and 32 on bosses) and given its `moves` by `tools/tune_moves.py`. Panes cover 95% of the cells on average, and no budget passes 40 moves. Dots are ordinary cells, asterisks single targets,
 plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes.
 

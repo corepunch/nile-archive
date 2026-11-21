@@ -46,13 +46,16 @@ Balance is measured, never guessed. The greedy bot (`tests/lua/greedy_bot.lua`) 
 | What | Target | Tool |
 | --- | --- | --- |
 | Board validity | Fits 9 × 12; pieces can fall onto every target; at least 6 target layers and 45 cells | `python3 tools/square_boards.py <game>` |
-| Board length | Median clear at most 30 moves on tutorial and easy boards, 45 on normal, 60 on hard and 70 on bosses | `python3 tools/square_trim.py <game> --levels A-B --seeds 40` |
+| Plaque coverage | Every cell a piece can fall onto is a plaque, as on Rome's boards. A cell stays plain only where the bot reaches it last and the board would otherwise run long. Both campaigns average 95% covered from level 5 on, and 55 boards are covered completely | `python3 tools/square_trim.py <game> --levels 3-100 --fill` |
+| Board length | Median clear at most 24 moves on easy boards, 28 on normal, 30 on hard and 32 on bosses, so no budget passes 40. Boards 3 to 11 climb to it two moves at a time (8 + 2 × level); boards 1 and 2 stay as authored | the same run; `--report` only measures |
 | Move budget | Median clear × 1.25, rounded up, for every tier. Slow runs never inflate it. Trim late targets when a board runs long. | `python3 tools/tune_moves.py <game>` |
 | Prices | Budget from the average of the mean and lower-quartile winning income. Each purchase uses 65% of the projected wallet in its currencies, with 50% for the first purchase. | `python3 tools/balance.py <game>` |
 
 The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays by swapping pieces and saves its tools. It prioritizes target layers and blocker damage, then weighs first-wave score, holes that can feed pieces onto remaining targets, and newly created gems. A line gem adds the value of two ordinary clears and a rainbow gem adds five. The bot tries both destinations for a line-gem cross and evaluates the visible first wave without random refills.
 
-Every tier uses the same allowance of 1.25 times the median clear, rounded up. A 12-move median gets 15 moves. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
+Line gems and rainbow gems are why the boards can be covered: a line gem sweeps a whole row or column of plaques, so a fully covered board takes the bot 20 to 34 moves where it took about 110 before the gems. When the rules change what a move clears, fill and trim again before fitting budgets and prices.
+
+Every tier uses the same allowance of 1.25 times the median clear, rounded up. A 24-move median gets 30 moves. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 
@@ -66,11 +69,11 @@ Every tier uses the same allowance of 1.25 times the median clear, rounded up. A
 
 | Levels | Relic Rush | Christmas Market |
 | --- | --- | --- |
-| 1–20 | 222 · 82 · 69 | 192 · 70 · 53 |
-| 21–40 | 121 · 174 · 156 | 211 · 120 · 175 |
-| 41–60 | 131 · 252 · 166 | 254 · 179 · 208 |
-| 61–80 | 193 · 284 · 183 | 334 · 190 · 222 |
-| 81–100 | 343 · 381 · 239 | 381 · 176 · 208 |
+| 1–20 | 360 · 135 · 121 | 311 · 114 · 91 |
+| 21–40 | 202 · 287 · 252 | 315 · 174 · 256 |
+| 41–60 | 214 · 419 · 269 | 431 · 298 · 358 |
+| 61–80 | 294 · 432 · 272 | 555 · 322 · 375 |
+| 81–100 | 511 · 564 · 361 | 580 · 269 · 315 |
 
 ## Upgrades: Rome's citizens, kept by the cast we know
 
@@ -87,21 +90,21 @@ We keep the feats, the upgrades and the perks, and give each upgrade to **the ch
 
 | # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas Market upgrade (keeper) |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Well (`man_03`) | 150 Food / Treats in one level | +10 every win | Spring well: a second rope and pulley (Tomas) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
+| 1 | Well (`man_03`) | 245 Food / 240 Treats in one level | +15 every win | Spring well: a second rope and pulley (Tomas) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
 | 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Tomas) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
-| 3 | Sawmill (`man_02`) | 300 Supplies / 230 Materials in one level | +60 / +45 every win | Carpenter's workshop: a second saw bench (Mara) | Lumber workshop: a drying shed for the pine (Theo) |
+| 3 | Sawmill (`man_02`) | 520 Supplies / 395 Materials in one level | +105 / +75 every win | Carpenter's workshop: a second saw bench (Mara) | Lumber workshop: a drying shed for the pine (Theo) |
 | 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a proper powder store (Adrian) | Firework stall: a rocket rack, ready in threes (Pip) |
-| 5 | Farm (`man_05`) | 325 Food / 240 Treats in one level | +55 / +40 every win | Jungle market: the hill farms send their carts (Marisol) | Gingerbread bakery: a second oven (Agnes) |
-| 6 | Mine (`man_06`) | 300 Supplies / 360 Materials in one level | +60 / +70 every win | Stone trading post: a cart road to the quarry (Adrian) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
-| 7 | Mill (`man_07`) | 430 Food / 325 Treats in one level | +85 / +65 every win | Water mill: a second millstone (Elena) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
+| 5 | Farm (`man_05`) | 560 Food / 315 Treats in one level | +95 / +50 every win | Jungle market: the hill farms send their carts (Marisol) | Gingerbread bakery: a second oven (Agnes) |
+| 6 | Mine (`man_06`) | 550 Supplies / 585 Materials in one level | +110 / +115 every win | Stone trading post: a cart road to the quarry (Adrian) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
+| 7 | Mill (`man_07`) | 625 Food / 400 Treats in one level | +125 / +80 every win | Water mill: a second millstone (Elena) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
 | 8 | Thermae (`man_08`) | Five matches of five in one level | Shield charges faster | Tide clock tower: a warning chime (Tomas) | Ice house: a second ice saw on the lake (Theo) |
-| 9 | Port (`man_09`) | 700 Food / 375 Treats in one level | +140 / +75 every win | Harbour plaza: a fish market every morning (Marisol) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
-| 10 | Coliseum (`man_10`) | 330 Coins / 700 Tokens in one level | +65 / +140 every win | Stone amphitheatre: market-day shows (Adrian) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
+| 9 | Port (`man_09`) | 850 Food / 575 Treats in one level | +170 / +115 every win | Harbour plaza: a fish market every morning (Marisol) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
+| 10 | Coliseum (`man_10`) | 460 Coins / 985 Tokens in one level | +90 / +195 every win | Stone amphitheatre: market-day shows (Adrian) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
 | 11 | House of the Vestals (`man_11`) | Two matches of five in a row | Lightning charges faster | Cartographer's house: storm charts on the wall (Elena) | Candlelight shop: Mr Wren trims every wick (Mr Wren) |
 | 12 | Lighthouse (`man_12`) | 15 matches within 20 seconds | Plus charges faster | Lighthouse: a polished lens (Mara) | North Pole post office: a second sorting rack (Pip) |
-| 13 | Nero's Golden House (`man_13`) | 575 Coins / 760 Tokens in one level | +115 / +150 every win | Beached schooner: a ferry to the hill villages (Mara) | Glassblower's stall: a second furnace (Theo) |
+| 13 | Nero's Golden House (`man_13`) | 690 Coins / 1070 Tokens in one level | +140 / +210 every win | Beached schooner: a ferry to the hill villages (Mara) | Glassblower's stall: a second furnace (Theo) |
 | 14 | Mausoleum (`man_14`) | Three wins in a row without a failed level | Mixer charges faster | Star observatory: the telescope realigned (Elena) | Reindeer carousel: a band organ (Pip) |
-| 15 | Theatre (`man_15`) | 775 Coins / 875 Tokens in one level | +155 / +175 every win | Relic museum: a reading room open to all (Adrian) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
+| 15 | Theatre (`man_15`) | 990 Coins / 1170 Tokens in one level | +200 / +235 every win | Relic museum: a reading room open to all (Adrian) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
 | 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Temple of the Sun: the keepers' watch roster (Tomas) | Christmas tree: a star for the top (Theo) |
 
 Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas Market.

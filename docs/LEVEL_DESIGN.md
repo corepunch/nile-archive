@@ -1,6 +1,6 @@
 # Designing match-3 levels
 
-The active square campaigns are authored in each game’s `lua/campaign.lua`. See the [Relic Rush guide](../games/relic-rush/docs/square-match3.md) and [Christmas Market guide](../games/christmas-market/docs/square-match3.md). Each campaign has 100 boards, and every board carries a `tier` (1-4 tutorial, then per ten levels `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`). Check and shape them with `python3 tools/square_boards.py <game>` (validates the layouts), `python3 tools/square_trim.py <game> --levels A-B` (trims the last-cleared targets until each board's median fits its tier) and `python3 tools/tune_moves.py <game>` (fits each board's `moves` in `campaign.lua`). The hex schedule and tools below describe the archived campaign.
+The active square campaigns are authored in each game’s `lua/campaign.lua`. See the [Relic Rush guide](../games/relic-rush/docs/square-match3.md) and [Christmas Market guide](../games/christmas-market/docs/square-match3.md). Each campaign has 100 boards, and every board carries a `tier` (1-4 tutorial, then per ten levels `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss`). Check and shape them with `python3 tools/square_boards.py <game>` (validates the layouts), `python3 tools/square_trim.py <game> --levels A-B --fill` (covers every cell pieces can reach with targets, then returns the last-cleared ones to plain cells until the board's median fits its tier: 24 moves easy, 28 normal, 30 hard, 32 boss) and `python3 tools/tune_moves.py <game>` (fits each board's `moves` in `campaign.lua`). The hex schedule and tools below describe the archived campaign.
 
 Relic Rush and Christmas Market each have 100 hex boards that follow Cradle of
 Rome's progression. This guide says what a board must be, how to write one and
@@ -122,8 +122,10 @@ notch. Give every board a one-sentence intent (`teaches:`).
 **Both campaigns** follow the Windows sequel's schedule: chains debut on
 level 4, ice and carved stones on level 12 and double chains on level 62.
 Every plaque on a tenth-level boss is a green double. The sequel covers
-80–100% of a board with plaques because it is timed; our boards count moves,
-so each keeps the share of plaques that fits its length (next section). See the
+80–100% of a board with plaques because it is timed. The square campaigns
+match it now that line gems sweep whole rows: 95% of cells on average, with
+plain floor only where the bot reaches last. The archived hex boards kept
+the share of plaques that fit their length (next section). See the
 [Relic Rush board progression](../games/relic-rush/docs/board-progression.md).
 
 ## How long a board is
@@ -318,6 +320,7 @@ minutes; the bots run the rules alone, without window, renderer or audio):
 ```sh
 make balance GAME=relic-rush
 make balance GAME=christmas-market BALANCE_ARGS=--trim   # trim boards that run long first
+make balance GAME=christmas-market BALANCE_ARGS=--fill   # cover every board with targets, then trim
 ```
 
 The steps it runs can also be run one at a time:

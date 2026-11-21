@@ -212,7 +212,7 @@ The building upgrade is recorded but has no art yet.
 
 ## Campaign
 
-The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels: A Light Below (1–20), Tracks on the Terrace (21–40), The Keeper’s Return (41–60), The Claim (61–80) and Keep the Light (81–100). Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` trims long ones and `tools/tune_moves.py` fits their move budgets. Every tier uses the median clear × 1.25, rounded up; slow bot samples do not add moves. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
+The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels: A Light Below (1–20), Tracks on the Terrace (21–40), The Keeper’s Return (41–60), The Claim (61–80) and Keep the Light (81–100). Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py --fill` covers them with plaques up to the tier's length and `tools/tune_moves.py` fits their move budgets. Every tier uses the median clear × 1.25, rounded up; slow bot samples do not add moves. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
 
 ## Buildings
 
@@ -223,25 +223,25 @@ The ladder has twenty purchases, one available after every fifth board (after le
 | After level | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
 | 1 | Spring well (Well) | Water buckets | 35 / 0 / 0 |
-| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 445 / 155 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 985 / 365 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 965 / 355 / 390 |
-| 21 | Jungle market (Farm) | Ration jars | 905 / 335 / 495 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 670 / 570 / 505 |
-| 31 | Water mill (Mill) | Grain bundles | 560 / 695 / 680 |
-| 36 | Tide clock tower (Thermae) | Shield | 510 / 745 / 690 |
-| 41 | Harbour plaza (Port) | Shrimp | 555 / 850 / 780 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass | 505 / 990 / 705 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 510 / 1025 / 670 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning | 545 / 1005 / 665 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 580 / 1060 / 685 |
-| 66 | Lighthouse | Plus | 625 / 1045 / 665 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 735 / 1180 / 750 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 790 / 1160 / 730 |
-| 81 | Great aviary (Pantheon) | Sandals | 1065 / 1500 / 955 |
-| 86 | Relic museum (Theatre) | Harps | 1135 / 1475 / 915 |
-| 91 | Temple of the Sun (Forum) | Star | 1415 / 1625 / 1010 |
-| 96 | Jade fountain (Fountain) | Emeralds | 1415 / 1620 / 1020 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 655 / 240 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 1515 / 565 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 1680 / 640 / 725 |
+| 21 | Jungle market (Farm) | Ration jars | 1580 / 595 / 880 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 1180 / 990 / 890 |
+| 31 | Water mill (Mill) | Grain bundles | 960 / 1175 / 1145 |
+| 36 | Tide clock tower (Thermae) | Shield | 880 / 1270 / 1140 |
+| 41 | Harbour plaza (Port) | Shrimp | 945 / 1455 / 1265 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass | 895 / 1710 / 1170 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 850 / 1785 / 1150 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning | 915 / 1760 / 1120 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 930 / 1775 / 1100 |
+| 66 | Lighthouse | Plus | 1020 / 1730 / 1060 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 1165 / 1845 / 1150 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1280 / 1855 / 1160 |
+| 81 | Great aviary (Pantheon) | Sandals | 1585 / 2250 / 1425 |
+| 86 | Relic museum (Theatre) | Harps | 1755 / 2215 / 1455 |
+| 91 | Temple of the Sun (Forum) | Star | 2045 / 2400 / 1525 |
+| 96 | Jade fountain (Fountain) | Emeralds | 2120 / 2375 / 1485 |
 
 A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and

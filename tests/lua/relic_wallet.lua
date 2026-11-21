@@ -32,7 +32,7 @@ end
 -- Confirmed restorations persist across eligible boards without taking story slots.
 do
     R.island=city.new();island.island_setup(R.island)
-    local bank=purse(5000,5000,5000,90)
+    local bank=purse(9000,9000,9000,90)
     local locked=R.make_board(1,19)
     local match=rules.new_match()
     check(next(locked.tool_meter) == nil, 'all bonus sockets require confirmed construction')

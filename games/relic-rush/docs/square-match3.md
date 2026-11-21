@@ -67,9 +67,11 @@ plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes. Each board has a `tier` (levels 1–4 tutorial,
 then per ten levels easy, easy, normal, normal, hard, easy, normal, normal,
 hard, boss). `python3 tools/square_boards.py relic-rush` validates them,
-`tools/square_trim.py` trims long ones to the tier (easy 30, normal 45, hard
-60, boss 70 targets at the bot's median) and `tools/tune_moves.py` fits each
-board's `moves`.
+`tools/square_trim.py --fill` covers each board with plaques and leaves plain
+only the cells the bot reaches last, so its median clear fits the tier (easy
+24 moves, normal 28, hard 30, boss 32), and `tools/tune_moves.py` fits each
+board's `moves`. Plaques cover 95% of the cells on average, and no budget
+passes 40 moves.
 
 The existing first-clear and construction scenes tell Ines’s story.
 Plaques are still the goal and the five slots carry the regular resource,
