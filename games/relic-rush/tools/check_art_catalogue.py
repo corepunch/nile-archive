@@ -156,23 +156,12 @@ match3 = (ROOT.parent.parent / "engine/lua/match3.lua").read_text()
 assert gems["toolbar"]["button_size"] == int(re.search(r'E.TOOL_SIZE = (\d+)', match3).group(1))
 kinds = re.findall(r"M\.RELIC_([A-Z]+)", re.search(r"M\.RELIC_IDOL[^\n]+", rules).group())
 assert kinds == manifest["kinds"], "Rule kinds need artwork and catalogue entries"
-expected = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
-assert expected == set(manifest["assets"]), "Missing or uncatalogued atlas state"
-for name, asset in manifest["assets"].items():
-    assert "`" + name + "`" in doc, f"Undocumented atlas state: {name}"
-    assert len(asset["box"]) == 4
-    if asset.get("atlas_frame"):
-        assert asset["atlas_frame"] in atlas[asset.get("atlas_section", "board_theme")]
-        assert asset["runtime"] == "data/board/" + atlas["frames"][asset["atlas_frame"]]["atlas"] + ".png"
-        continue
-    data = (ROOT / asset["runtime"]).read_bytes()
-    assert data[:8] == b"\x89PNG\r\n\x1a\n"
-    assert struct.unpack(">II", data[16:24]) == (128, 128)
-    assert data[25] == 6, f"Expected RGBA authored state: {name}"
-    if name in {"ice-1", "ice-2"}:
-        alpha = Image.open(ROOT / asset["runtime"]).getchannel("A")
-        assert all(alpha.getpixel((x, y)) > 128 for x in range(40, 89, 8)
-                   for y in range(40, 89, 8)), f"Ice must cover the whole face: {name}"
+blockers = manifest["square_blockers"]
+assert set(blockers["states"]) == {name for name, frame in atlas["frames"].items() if frame["atlas"] == "blockers"}
+for name in blockers["states"]:
+    assert f"`{name}`" in doc, name
+for key in ("source", "prompt", "review"):
+    assert (ROOT / blockers["stone"][key]).is_file(), key
 for name in [manifest["source"], manifest["prompt"]]:
     assert (ROOT / name).is_file()
 # The square tool buttons are retired: every board has bonus slots.
@@ -228,48 +217,23 @@ assert str(count) in doc and 'building-catalogue.md' in doc
 assert set(manifest['island_layers']) == {'cloud-fog', 'building-shadows', 'placement-guides'}
 for name in manifest['island_layers']:
     assert '"'+name+'"' in art and '`'+name+'`' in doc
-print(f"Relic Rush catalogue: {len(actual)} runtime files, {len(slots)} campaign pieces, 26 board states, 7 HUD icons, {count} buildings covered")
+board_states = len(square["states"]) + len(blockers["states"])
+print(f"Relic Rush catalogue: {len(actual)} runtime files, {len(slots)} campaign pieces, {board_states} board states, 7 HUD icons, {count} buildings covered")
 
-# Compare actual piece silhouettes with the renderer-authored cell. The sun
-# face remains upright: geometry is authored, not a runtime sprite rotation.
-mask = Image.open(ROOT / manifest['cell_mask']['runtime']).getchannel('A')
-def silhouette(alpha):
-    bounds = alpha.point(lambda value: 255 if value > 128 else 0).getbbox()
-    left, top, right, bottom = bounds
-    width, height = right - left, bottom - top
-    spans = []
-    for fraction in [.1, .25, .4, .5, .6, .75, .9]:
-        y = min(bottom - 1, top + round(height * fraction))
-        xs = [x for x in range(left, right) if alpha.getpixel((x, y)) > 128]
-        spans.append((max(xs) - min(xs) + 1) / width)
-    return width / height, spans
-board_ratio, board_spans = silhouette(mask)
-for pack in ['relics', 'jewels']:
-    image = Image.open(ROOT / f'art/registered/tile-sets/{pack}/0.png').convert('RGBA')
-    ratio, spans = silhouette(image.getchannel('A'))
-    assert abs(ratio / board_ratio - 1) < .08, f'{pack}: hex must match board aspect'
-    assert all(abs(a - b) < .14 for a, b in zip(spans, board_spans)), f'{pack}: six-sided flat-top contour must match board'
-    assert spans[3] - spans[2] > .04 and spans[3] - spans[4] > .04, f'{pack}: side vertices must be points, not octagon edges'
-print('Hex pieces: sun idol and yellow gemstone match the actual flat-top board mask')
+topaz = manifest["piece_replacements"]["yellow-topaz"]
+for key in ("source", "prompt", "edit_target", "review"):
+    assert (ROOT / topaz[key]).is_file(), key
+frame = atlas["frames"][topaz["frame"]]
+with Image.open(ROOT / topaz["runtime"]) as sheet:
+    x, y, w, h = frame["box"]
+    tile = sheet.crop((x, y, x + w, y + h))
+    assert tile.tobytes() == Image.open(ROOT / topaz["registered"]).tobytes()
+    for px in (20, 107):
+        for py in (20, 107):
+            assert tile.getpixel((px, py))[3] >= 128, "Topaz must keep its square silhouette"
 
-# Script, identities and presentation mapping must ship together.
 import subprocess
 import sys
-tiles = manifest["tiles"]
-spec = json.loads((ROOT.parents[1] / tiles["spec"]).read_text())
-declaration = re.search(r"A\.floor_tiles = \{([^}]+)\}", art).group(1)
-assert re.findall(r'"([^"]+)"', declaration) == tiles["frames"] == list(spec["tiles"])
-assert "games/relic-rush/art/registered/board-tiles" in spec["outputs"]
-for name in spec["tiles"]:
-    assert f"art/registered/board-tiles/{name}.png" in shipped and f"`tile-{name}`" in doc, name
-subprocess.run([sys.executable, str(ROOT.parents[1] / tiles["generator"]), "--check"], check=True)
-frame = manifest["board_frame"]
-for review in ("review", "decoration_review", "reference", "decorations"):
-    assert (ROOT.parents[1] / frame[review]).is_file()
-assert frame["stone"] in shipped and (ROOT / frame["layout"]).is_file()
-assert 'require("board_frame_atlas")' in art
-subprocess.run([sys.executable, str(ROOT.parents[1] / frame["generator"]),
-                "--game", ROOT.name, "--check", str(ROOT / frame["stone"])], check=True)
 finale = manifest["finale"]
 for name, item in finale["assets"].items():
     assert f'`{name}`' in doc and f'"{name}"' in art

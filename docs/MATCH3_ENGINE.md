@@ -198,9 +198,9 @@ schedule and omits the rebound.
 ## Graphics: one atlas per kind of art
 
 `match3.skin()` loads the engine's default skin from `engine/data/board/` in
-its resource directory: one atlas each for pieces, blockers, cells, boosters,
-HUD and effects, and a separate background. The pieces, controls, HUD, blockers and effect
-frames come from the engine's own authored art. The [registration manifest](../engine/art/match3/manifest.json)
+its resource directory. It supplies neutral pieces, controls, HUD, effects
+and a backdrop. Both portrait games use their own square floor, perimeter and
+blocker atlases, including in the neutral preview. The [registration manifest](../engine/art/match3/manifest.json)
 records source hashes and transforms; the retired original-art
 [prompt](../engine/art/match3/prompt.txt) remains historical provenance.
 
@@ -219,8 +219,7 @@ blockers, cells, effects and boosters, with the backgrounds. `match3.hud(overrid
 loads the HUD and boosters atlases: score, completion, the five states of Pause
 and the game's booster buttons. A board without booster slots falls back to the
 default skin's pickaxe, dynamite and sunburst buttons.
-The engine neutral preview uses its built-in skin for both. The loaders check
-frame bounds and required names. [Asset layout](ASSET_LAYOUT.md) lists which
+The loaders check frame bounds and required names. [Asset layout](ASSET_LAYOUT.md) lists which
 frames go in which atlas.
 
 `texture.region(atlas, rectangle)` returns a borrowed ordinary texture view.
@@ -247,51 +246,14 @@ cells, including holes and a ring one cell beyond the level grid. The eight
 neighbours determine the `square-frame-*` sprite and its quarter turn. Each
 skin supplies those sprites in `cells.png`.
 
-The hex floor renderer in `match3.elements_view` draws an edge-to-edge
-backing and insets each face by `R.GROUND.seam_width` (0.18 design units by
-default) at its radius. The seam shows the backing colour through that inset.
-`elements.cradle_ground(R)` applies the shared Cradle of Rome preset
-(`E.CRADLE_GROUND`) for the frame, soft drop shadow, dark brown grout
-(`seam`, `seam_width`) and cell-state tiles. Games supply the fallback face
-colour as the skin's `board_face`.
-`elements.load_frame` loads each game's stone atlas and generated join coordinates.
-The renderer checks each active cell's six neighbours and places atlas
-regions along the exposed edges, inward corners and outward corners,
-including the edges of holes. It keeps those placements relative to the board
-origin for shake and resize, and rebuilds them when the active mask changes.
-The atlas also provides the rim under each cell during the entrance.
-The soft shadow follows the settled outline. The renderer grows the union
-of the active hexes to the rim, shifts it down and draws one signed-distance
-mask. Equal distances from that shifted outline get the same opacity. The
-mask is cached with the frame layout and follows board shake and resize.
-The renderer can substitute decorated atlas regions at outward tips and
-the inner shoulders above an opening. The source join contains the stone,
-front-facing ornament and contact shadow. The decorated joins are drawn over
-the tile faces, with the playable pieces drawn above them. An open-top channel can use larger
-sprigs baked into its inward tips.
-An optional atlas slot adds snow to the highest horizontal north edges of the
-outer rim. Inner channel edges use bare stone.
-Imported and neutral boards use the default ground geometry.
-[Frame generator, paint guide and in-game review](review/board-frame-atlas/README.md).
-[Painted join atlas and in-game review](review/board-frame-decorations/front.md).
-[Board shadow before and after](review/board-frame-decorations/shadow.md).
-Floor tiles are ordinary hex sprites. `tools/board_tiles.py` bakes the eight
-shared Cradle of Rome slots from `engine/art/board-tiles/tiles.json` into each
-listed game's `data/board-tiles/`: a bevel lit from above, a top-to-bottom face
-gradient and a neutral stained-paper grain (`tools/board_grain.py`), cut by the
-canonical flat-top mask.
-`R.GROUND.tiles` maps cell states to those sprites' art keys. A game that
-sets it gets Cradle of Rome's states drawn as whole tiles over the floor and
-under the pieces: `selected`, `hover` (mouse only, from `inp.hover`), `bonus`
-(every cell `rules.game_tool_area(g, tool, cell)` returns for the armed tool
-at the hovered or pressed cell), `ice` (under iced pieces), `double` (a
-plaque with two layers) and `wave` (the light that sweeps across the board
-in its entrance, in place of the halo). A level's `oil_double` lists `oil`
-cells that take two hits; each still counts once toward the goal.
+The renderer in `match3.elements_view` insets each square face by
+`R.GROUND.seam_width` so the backing shows between cells. It uses the same
+geometry for selected cells, tool targets, chain and ice overlays, and stone.
+
 Floors can set `tablet_hint=true` to help players spot the last one to three
 tablets. The reminder shares the move suggestion's five-second idle delay
 and resets with it on board interaction. A blue wash lights the floor while
-the original particle sprites sweep clockwise along the six bevel edges. A
+the original particle sprites sweep clockwise along the four bevel edges. A
 double tablet uses green. The 3.6-second pulse repeats every nine seconds of
 continued inactivity. Reduce Motion hides it. See the
 [Cradle of Rome 2 glow reference](cradle-of-rome-reference/README.md#last-puzzle-tile-glow).
@@ -313,7 +275,7 @@ call `rules.bind_view(state)`. The game supplies `HEX_R` and an optional authore
 rendering uses `cell_pos` and `piece_pose`. Draw the floor with
 `elements.ground(state, rules, shake_x, floor)` before pieces and blockers.
 The floor table can supply authored texture keys for ordinary and covered
-cells. The shared renderer also draws the floor's entrance flash.
+cells. The board screen draws the entrance sheen over the cells.
 
 The board screen's layout belongs to the engine and is the same in every game.
 A game must not define or replace `state.layout`: `bind_view` and `board_input` assert this.

@@ -10,14 +10,14 @@
     "blockers": {
       "runtime": "data/board/blockers.png",
       "size": [
-        512,
+        256,
         512
       ]
     },
     "cells": {
       "runtime": "data/board/cells.png",
       "size": [
-        1024,
+        512,
         1024
       ]
     },
@@ -449,56 +449,11 @@
         128
       ]
     },
-    "chain": {
-      "atlas": "blockers",
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ]
-    },
-    "chain-1": {
-      "atlas": "blockers",
-      "box": [
-        128,
-        0,
-        128,
-        128
-      ]
-    },
-    "chain-1-mirror": {
-      "atlas": "blockers",
-      "box": [
-        256,
-        0,
-        128,
-        128
-      ]
-    },
-    "chain-2": {
-      "atlas": "blockers",
-      "box": [
-        384,
-        0,
-        128,
-        128
-      ]
-    },
-    "chain-board": {
-      "atlas": "blockers",
-      "box": [
-        0,
-        128,
-        128,
-        128
-      ]
-    },
     "chain-square-1": {
       "atlas": "blockers",
       "box": [
-        128,
-        128,
+        0,
+        0,
         128,
         128
       ]
@@ -506,26 +461,8 @@
     "chain-square-2": {
       "atlas": "blockers",
       "box": [
-        256,
         128,
-        128,
-        128
-      ]
-    },
-    "ice-1": {
-      "atlas": "blockers",
-      "box": [
-        384,
-        128,
-        128,
-        128
-      ]
-    },
-    "ice-2": {
-      "atlas": "blockers",
-      "box": [
         0,
-        256,
         128,
         128
       ]
@@ -533,8 +470,8 @@
     "ice-square-1": {
       "atlas": "blockers",
       "box": [
+        0,
         128,
-        256,
         128,
         128
       ]
@@ -542,8 +479,8 @@
     "ice-square-2": {
       "atlas": "blockers",
       "box": [
-        256,
-        256,
+        128,
+        128,
         128,
         128
       ]
@@ -551,44 +488,8 @@
     "stone-1": {
       "atlas": "blockers",
       "box": [
-        384,
+        0,
         256,
-        128,
-        128
-      ]
-    },
-    "cell-mask": {
-      "atlas": "cells",
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ]
-    },
-    "guide": {
-      "atlas": "cells",
-      "box": [
-        128,
-        0,
-        128,
-        128
-      ]
-    },
-    "hint": {
-      "atlas": "cells",
-      "box": [
-        256,
-        0,
-        128,
-        128
-      ]
-    },
-    "selected": {
-      "atlas": "cells",
-      "box": [
-        384,
-        0,
         128,
         128
       ]
@@ -596,7 +497,7 @@
     "square-double": {
       "atlas": "cells",
       "box": [
-        512,
+        0,
         0,
         128,
         128
@@ -605,7 +506,7 @@
     "square-frame-1": {
       "atlas": "cells",
       "box": [
-        640,
+        128,
         0,
         128,
         128
@@ -614,7 +515,7 @@
     "square-frame-10": {
       "atlas": "cells",
       "box": [
-        768,
+        256,
         0,
         128,
         128
@@ -623,7 +524,7 @@
     "square-frame-17": {
       "atlas": "cells",
       "box": [
-        896,
+        384,
         0,
         128,
         128
@@ -668,8 +569,8 @@
     "square-frame-21-leaf": {
       "atlas": "cells",
       "box": [
-        512,
-        128,
+        0,
+        256,
         128,
         128
       ]
@@ -677,8 +578,8 @@
     "square-frame-34": {
       "atlas": "cells",
       "box": [
-        640,
         128,
+        256,
         128,
         128
       ]
@@ -686,8 +587,8 @@
     "square-frame-37": {
       "atlas": "cells",
       "box": [
-        768,
-        128,
+        256,
+        256,
         128,
         128
       ]
@@ -695,8 +596,8 @@
     "square-frame-37-leaf": {
       "atlas": "cells",
       "box": [
-        896,
-        128,
+        384,
+        256,
         128,
         128
       ]
@@ -705,7 +606,7 @@
       "atlas": "cells",
       "box": [
         0,
-        256,
+        384,
         128,
         128
       ]
@@ -714,7 +615,7 @@
       "atlas": "cells",
       "box": [
         128,
-        256,
+        384,
         128,
         128
       ]
@@ -723,7 +624,7 @@
       "atlas": "cells",
       "box": [
         256,
-        256,
+        384,
         128,
         128
       ]
@@ -732,7 +633,7 @@
       "atlas": "cells",
       "box": [
         384,
-        256,
+        384,
         128,
         128
       ]
@@ -740,8 +641,8 @@
     "square-frame-85": {
       "atlas": "cells",
       "box": [
+        0,
         512,
-        256,
         128,
         128
       ]
@@ -749,8 +650,8 @@
     "square-frame-85-leaf": {
       "atlas": "cells",
       "box": [
-        640,
-        256,
+        128,
+        512,
         128,
         128
       ]
@@ -758,8 +659,8 @@
     "square-frame-9": {
       "atlas": "cells",
       "box": [
-        768,
         256,
+        512,
         128,
         128
       ]
@@ -767,8 +668,8 @@
     "square-grout": {
       "atlas": "cells",
       "box": [
-        896,
-        256,
+        384,
+        512,
         128,
         128
       ]
@@ -777,7 +678,7 @@
       "atlas": "cells",
       "box": [
         0,
-        384,
+        640,
         128,
         128
       ]
@@ -786,7 +687,7 @@
       "atlas": "cells",
       "box": [
         128,
-        384,
+        640,
         128,
         128
       ]
@@ -795,79 +696,7 @@
       "atlas": "cells",
       "box": [
         256,
-        384,
-        128,
-        128
-      ]
-    },
-    "tile-bonus-area": {
-      "atlas": "cells",
-      "box": [
-        384,
-        384,
-        128,
-        128
-      ]
-    },
-    "tile-cell-normal": {
-      "atlas": "cells",
-      "box": [
-        512,
-        384,
-        128,
-        128
-      ]
-    },
-    "tile-hover": {
-      "atlas": "cells",
-      "box": [
         640,
-        384,
-        128,
-        128
-      ]
-    },
-    "tile-ice": {
-      "atlas": "cells",
-      "box": [
-        768,
-        384,
-        128,
-        128
-      ]
-    },
-    "tile-light-wave": {
-      "atlas": "cells",
-      "box": [
-        896,
-        384,
-        128,
-        128
-      ]
-    },
-    "tile-selected": {
-      "atlas": "cells",
-      "box": [
-        0,
-        512,
-        128,
-        128
-      ]
-    },
-    "tile-tablet-double": {
-      "atlas": "cells",
-      "box": [
-        128,
-        512,
-        128,
-        128
-      ]
-    },
-    "tile-tablet-single": {
-      "atlas": "cells",
-      "box": [
-        256,
-        512,
         128,
         128
       ]
@@ -1045,11 +874,6 @@
     }
   },
   "sources": {
-    "cell-mask": "art/registered/board-states/cell-mask.png",
-    "chain-board": "art/registered/board-states/chain-board.png",
-    "guide": "art/registered/board-states/guide.png",
-    "hint": "art/registered/board-states/hint.png",
-    "selected": "art/registered/board-states/selected.png",
     "complete": "art/registered/expedition-hud/complete.png",
     "life": "art/registered/expedition-hud/life.png",
     "shop-built": "art/registered/expedition-hud/shop-built.png",
@@ -1088,103 +912,6 @@
     "frame": "signboard"
   },
   "board_theme": {
-    "chain": {
-      "source": "../../art/match3-chain-paint/edge-anchors.png",
-      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
-      "edit_target": "../../art/match3-chain-paint/source.png",
-      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
-      "generator": "built-in ImageGen",
-      "bay": [
-        0,
-        470,
-        557,
-        941
-      ],
-      "crop": [
-        38,
-        -58,
-        576,
-        480
-      ],
-      "fit": "edge-mounted on the canonical hex with authored alpha",
-      "fitted_size": [
-        128,
-        128
-      ]
-    },
-    "chain-1-mirror": {
-      "source": "../../art/match3-chain-paint/edge-anchors.png",
-      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
-      "edit_target": "../../art/match3-chain-paint/source.png",
-      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
-      "generator": "built-in ImageGen",
-      "bay": [
-        557,
-        470,
-        1114,
-        941
-      ],
-      "crop": [
-        2,
-        -60,
-        547,
-        485
-      ],
-      "fit": "edge-mounted on the canonical hex with authored alpha",
-      "fitted_size": [
-        128,
-        128
-      ]
-    },
-    "chain-2": {
-      "source": "../../art/match3-chain-paint/edge-anchors.png",
-      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
-      "edit_target": "../../art/match3-chain-paint/source.png",
-      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
-      "generator": "built-in ImageGen",
-      "bay": [
-        1114,
-        470,
-        1671,
-        941
-      ],
-      "crop": [
-        -6,
-        -50,
-        517,
-        473
-      ],
-      "fit": "edge-mounted on the canonical hex with authored alpha",
-      "fitted_size": [
-        128,
-        128
-      ]
-    },
-    "chain-1": {
-      "source": "../../art/match3-chain-paint/edge-anchors.png",
-      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
-      "edit_target": "../../art/match3-chain-paint/source.png",
-      "geometry": "../../engine/art/hex-tile/hex-mask-preview.png",
-      "generator": "built-in ImageGen",
-      "bay": [
-        0,
-        470,
-        557,
-        941
-      ],
-      "crop": [
-        38,
-        -58,
-        576,
-        480
-      ],
-      "fit": "edge-mounted on the canonical hex with authored alpha",
-      "fitted_size": [
-        128,
-        128
-      ],
-      "alias": "chain"
-    },
     "festive-0": {
       "source": "art/festive-pieces/source.png",
       "prompt": "art/festive-pieces/prompt.txt",
@@ -1195,7 +922,7 @@
         512
       ],
       "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
+      "fit": "authored alpha on a centered 128px canvas",
       "fitted_size": [
         92,
         99
@@ -1219,7 +946,7 @@
         512
       ],
       "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
+      "fit": "authored alpha on a centered 128px canvas",
       "fitted_size": [
         81,
         105
@@ -1243,7 +970,7 @@
         512
       ],
       "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
+      "fit": "authored alpha on a centered 128px canvas",
       "fitted_size": [
         93,
         86
@@ -1267,7 +994,7 @@
         1024
       ],
       "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
+      "fit": "authored alpha on a centered 128px canvas",
       "fitted_size": [
         94,
         107
@@ -1291,7 +1018,7 @@
         1024
       ],
       "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
+      "fit": "authored alpha on a centered 128px canvas",
       "fitted_size": [
         89,
         110
@@ -1315,7 +1042,7 @@
         1024
       ],
       "rotation": 0,
-      "fit": "centered inside canonical hex with authored alpha",
+      "fit": "authored alpha on a centered 128px canvas",
       "fitted_size": [
         94,
         105
@@ -1328,78 +1055,6 @@
       ],
       "target_area_px": 6273,
       "silhouette_area_px": 6203
-    },
-    "stone-1": {
-      "source": "../../art/match3-blockers/source.png",
-      "prompt": "../../art/match3-blockers/prompt.txt",
-      "crop": [
-        952,
-        0,
-        1905,
-        825
-      ],
-      "rotation": 0,
-      "fit": "full flat-top hex with the canonical face mask",
-      "fitted_size": [
-        132,
-        120
-      ],
-      "generator": "built-in ImageGen",
-      "reference": "../../art/match3-blockers/reference.png",
-      "offset": [
-        -2,
-        4
-      ]
-    },
-    "ice-1": {
-      "source": "art/match3-ice/source.png",
-      "prompt": "art/match3-ice/filled-pane-prompt.txt",
-      "crop": [
-        129,
-        66,
-        819,
-        756
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "opacity_ramp": {
-        "luma": [
-          140,
-          230
-        ],
-        "alpha": [
-          62,
-          224
-        ]
-      },
-      "mask": "engine/art/hex-tile/hex-mask-128.png"
-    },
-    "ice-2": {
-      "source": "art/match3-ice/source.png",
-      "prompt": "art/match3-ice/filled-pane-prompt.txt",
-      "crop": [
-        1060,
-        66,
-        1750,
-        756
-      ],
-      "canvas": [
-        128,
-        128
-      ],
-      "opacity_ramp": {
-        "luma": [
-          155,
-          199
-        ],
-        "alpha": [
-          78,
-          250
-        ]
-      },
-      "mask": "engine/art/hex-tile/hex-mask-128.png"
     }
   },
   "square_cells": {
@@ -2050,6 +1705,20 @@
         0.95
       ]
     },
+    "stone": {
+      "source": "../../art/match3-square/stones.png",
+      "prompt": "../../art/match3-square/stones-prompt.txt",
+      "reference": "../../art/match3-blockers/source.png",
+      "crop": [
+        1079,
+        90,
+        1726,
+        737
+      ],
+      "frame": "stone-1",
+      "state": "one hit",
+      "transform": "Square crop resized to 128px with Lanczos; authored alpha preserved"
+    },
     "review": "docs/square-match3.md#blockers-and-target-hints"
   },
   "procedural_glow": "Original 64px white cubic radial alpha; transient light, packed alongside sprites",
@@ -2057,23 +1726,10 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "f5d2026109a5edfc240452d73632917c847a66901e8019cb79a3ec9ec37d90c3",
+    "recipe": "4cfcf82ca329b3e61d0725a0872af3736833dbd61b4beedda6b728b7fbf90b6f",
     "inputs": {
-      "art/match3-blockers/prompt.txt": "b7f5143d4373f8541312e0952cd0b8a5d8302f75bba361ca5f9059019d87a01a",
-      "art/match3-blockers/reference.png": "35f486be75056245ca3782b1bae887fb77fdcbe322cdad3981203e81a2625c10",
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
-      "art/match3-chain-paint/edge-anchors-prompt.txt": "9c1720cdf3d88bd63593f699ec00f178f1e5fdc148dc2089381a5e3715f7bdb0",
-      "art/match3-chain-paint/edge-anchors.png": "854469390416003f96048239ef122fff5ec73092d79fb2e7c34bde56b73c55b6",
-      "art/match3-chain-paint/source.png": "3faaff3b40c96753e8a6b0f66c8f9d46b6b2bbb56788711c190ba3ba4661cfa2",
-      "art/match3-ice/clear-shell.png": "1e0aab9594d7500bd72dab66a0e5f5fd052fc0d8de13a1b64bf49e16a336378b",
-      "art/match3-ice/concept.png": "24ec0da136cff61ec8100b37e858878dd852948daf94aa4e512e1e55c876a507",
-      "art/match3-ice/filled-pane-prompt.txt": "57c51c844e2090d813ac27d64b9f6e82ea62a34726f054dcf221b6325ffa4eb1",
-      "art/match3-ice/hexagon-prompt.txt": "49cff139174b7e6fe18f2a064d416b8d33f121da113c7ce6eee6bdef9f127d62",
-      "art/match3-ice/open-hex.png": "9618e3334f95ae15329b2d15c9032e2e37b0aefff92635cea09626337666c074",
-      "art/match3-ice/prompt.txt": "5133c913a4d875466c64cd36bb93b344198f5cdbe92ec15d3bd85f51ebe1baae",
-      "art/match3-ice/source.png": "9440301138701ab44f3bcc011b0a7d0b81c7e3a14ce3babda205686edb25396f",
-      "art/match3-ice/transparency-prompt.txt": "4b7b548389430d6dd6b99806911a53ab5413d5073c41eacefcd8e39f99a75d0f",
       "art/match3-signboards/concept.jpg": "ed4c3cb83c720f6a3acf7006c4cbe0a42a353237f0f698465a3959784dcc3c13",
       "art/match3-signboards/prompt.txt": "24afea9b1796b31f61eb28b00c301276ed8ce6643e39876dcde7732cf3e23b27",
       "art/match3-signboards/source.png": "6756852d29a38aa1ddb51e20d3c24dcdeccc9eed146904f7d1b71ebfba5f80db",
@@ -2084,8 +1740,9 @@
       "art/match3-square/lighting-prompt.txt": "44648f991d91d3af80a399361aa7054486eab14e22779a9296c803b4809de78c",
       "art/match3-square/prompt.txt": "9f05ab473fdaf872c8a7c6c4523e9d3e5481e8ac43dc4bad4db73b2c47f00261",
       "art/match3-square/source.png": "0d0d99c3ddd4c37aba26bb6f0d6f40af86d10b91ce77ca68aa39fdf4cc03e354",
+      "art/match3-square/stones-prompt.txt": "39dd6caf6a740dd4bec543da3d99dd258a77bddde7247453c991fcd53caf2ec7",
+      "art/match3-square/stones.png": "37ee2659358fbc076a502248788338fe50887f8bb47f3bc8902b993f71a8fe30",
       "engine/art/hex-tile/hex-mask-128.png": "96d0a8ff214467609652bae4dbac2191a0961ef6852de1a70265ddb785f585a0",
-      "engine/art/hex-tile/hex-mask-preview.png": "43b59e7300f7f4377f03d65db8f33f0e6920ee94694e14e7c401af93fcdd344f",
       "engine/art/match3/kenney-smoke/whitePuff00.png": "6a94cdfef4752465348840e1c127493ce9cafbe65093541d348c64d3985d7b9b",
       "engine/art/match3/kenney-smoke/whitePuff04.png": "38a902c019ab4eccff027aab227bc41c522774df707a59d31709fb1de2ab368c",
       "engine/art/match3/kenney-smoke/whitePuff08.png": "dc234acc53f3f64a235603c910e54005eb34392024ff2439077afd620dd3cf65",
@@ -2106,19 +1763,6 @@
       "games/christmas-market/art/particles/kenney/star_07.png": "ae3e59099231a3daf031a56b5e0c841aad60ec2fb7549df79412da4c75bb3bcf",
       "games/christmas-market/art/particles/kenney/star_09.png": "e7536e5457e7b45f6c8e45201c0de4c9109fbc747a9666e99db11e975383c580",
       "games/christmas-market/art/particles/kenney/trace_06.png": "b65687a581ee9f8f653378da7c98b97647fc5186661f6be69e6b1eee130e1705",
-      "games/christmas-market/art/registered/board-states/cell-mask.png": "36c28b5f11713fd20156249dde1f5b6202fcd35f2d8fe4043bb8e79cc56befc8",
-      "games/christmas-market/art/registered/board-states/chain-board.png": "30bad97a1daba4af6514081389d579aaad1f1980cc8ce542af60691ec6e30440",
-      "games/christmas-market/art/registered/board-states/guide.png": "05f60d162d516c9e1f9f2ef71ba1c0c1db4febdc78e1b36f354013c25f3e0c5c",
-      "games/christmas-market/art/registered/board-states/hint.png": "96f06c48b50d785931e7df3b4fd3285dea52423fac9350f2acbfb5941358e835",
-      "games/christmas-market/art/registered/board-states/selected.png": "3fce0d388034f7d7b45a83e66a46f32bbb83ac5f73500a8b0a50f3f5d7e61fd5",
-      "games/christmas-market/art/registered/board-tiles/bonus-area.png": "194f01bfa22facb5044a800a63c8751052e4fa4be693210e18c1f263c53bf49b",
-      "games/christmas-market/art/registered/board-tiles/cell-normal.png": "9983ccc0692e63334ea60cd9915d7788bf4ec4571fd876521938e165a0a444fc",
-      "games/christmas-market/art/registered/board-tiles/hover.png": "68f41dd559da4cabb2ab4ba56b4c7075451e2abb0e07bad8c600e67374b64302",
-      "games/christmas-market/art/registered/board-tiles/ice.png": "949451147f952ec01539616e75547952e302d1626beafeeda13a3852f51c6d42",
-      "games/christmas-market/art/registered/board-tiles/light-wave.png": "a42f9e67b8febf97fdf06e562010af3cabdd8b8023ad7180830876d9f88ef15f",
-      "games/christmas-market/art/registered/board-tiles/selected.png": "08efb63475220f74ae01e10417dcb425ab0986ff43de2bd546638d14459fc888",
-      "games/christmas-market/art/registered/board-tiles/tablet-double.png": "68c2dd889622eb1b8d20dfe5948aea43b9c53395d708ff8a169510d2d00fc726",
-      "games/christmas-market/art/registered/board-tiles/tablet-single.png": "38fc75e9efc989d540ff2b32d712e05774111fad725d375fa8d4a52c979327fb",
       "games/christmas-market/art/registered/expedition-hud/complete.png": "5187914f965d5a88e879106862f7dbca79dd74b43b1286e7b40bd3bb052db8e4",
       "games/christmas-market/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
       "games/christmas-market/art/registered/expedition-hud/shop-built.png": "df494af8889d38024b69b96f054b34831416195847f88b716502c7d86211aee9",
@@ -2159,17 +1803,17 @@
       "games/christmas-market/data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
       "games/christmas-market/data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
       "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
-      "tools/match3_theme_art.py": "834bee1140ca1af0cf8b61d3fa98f4f7c22a220b27d4ec99edcc87584342a221",
+      "tools/match3_theme_art.py": "7919c0b1d38f68c41fc6aa9ca30e4a47d4ab9154b3b39d354ab4ad2a9aa10784",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368",
       "tools/square_board_frame.py": "41bb626ad3fb530ceb632e972f5872ba7c188e630f650c5f5f7d3df383983877"
     },
     "outputs": {
-      "games/christmas-market/data/board/blockers.png": "40168b602b9a3e02fc516f43e50feec377202ac3938ede3e2dde1ea855b3e9c6",
-      "games/christmas-market/data/board/cells.png": "97947f0b5e7b3669ca08b0147db8ed3551fb8cce6f04b50c671f379792b29e5f",
+      "games/christmas-market/data/board/blockers.png": "766e9ff1ab1e17dac093988dcbd56170c668262b52ea57ec861805b2e5e0e81a",
+      "games/christmas-market/data/board/cells.png": "0a519c7c5914928973540f14383de404004388a9d6cb9e36219c228e2bb79d44",
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
       "games/christmas-market/data/board/pieces.png": "f1cc6b84351b859ad970369a344fa6c07601cb816962c2c1a1b3275c6c69eaf3",
-      "games/christmas-market/lua/match3_atlases.lua": "2a4f237623c31bfe6b7f14e17dbaf549ffd20befe14611163369a3b9735e8d00",
+      "games/christmas-market/lua/match3_atlases.lua": "9de13174101cc3242a4ede236cbc8fe464f6f91b72be88a8937784924c2b8e26",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
       "games/christmas-market/lua/match3_skin.lua": "d6606a045c2c933a6f5b94b36d8572c6d8974ec976ecfd20916c4c8b3f8a2e6d"
     }

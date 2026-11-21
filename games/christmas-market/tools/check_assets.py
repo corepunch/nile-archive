@@ -44,22 +44,13 @@ def main():
     for entry in registration['icons']:
         assert png(ROOT/'art/registered'/entry['path']) == ((128,128),6), entry['path']
     subprocess.run([sys.executable, str(ROOT/'tools/prepare_hud.py'), '--check'], check=True)
-    tiles = manifest['tiles']
-    spec = json.loads((ROOT.parents[1]/tiles['spec']).read_text())
-    assert list(spec['tiles']) == tiles['frames'] and 'games/christmas-market/art/registered/board-tiles' in spec['outputs']
-    for name in spec['tiles']:
-        assert png(ROOT/'art/registered/board-tiles'/f'{name}.png') == ((128, 128), 6), name
-    subprocess.run([sys.executable, str(ROOT.parents[1]/tiles['generator']), '--check'], check=True)
-    frame = manifest['board_frame']
-    art = (ROOT/'lua/art.lua').read_text()
-    for review in ('review', 'decoration_review', 'reference', 'decorations'):
-        assert (ROOT.parents[1]/frame[review]).is_file()
-    assert frame['stone'] in inventory and (ROOT/frame['layout']).is_file()
-    assert 'require("board_frame_atlas")' in art
-    subprocess.run([sys.executable, str(ROOT.parents[1]/frame['generator']),
-                    '--game', ROOT.name, '--check', str(ROOT/frame['stone'])], check=True)
+    blockers = manifest['square_blockers']
+    assert set(blockers['states']) == {name for name, frame in atlas['frames'].items() if frame['atlas'] == 'blockers'}
+    for key in ('source', 'prompt', 'review'):
+        assert (ROOT/blockers['stone'][key]).is_file(), key
     square = manifest['square_frame']
     square_cells = atlas['square_cells']
+    assert set(square_cells['frames']) == {name for name, frame in atlas['frames'].items() if frame['atlas'] == 'cells'}
     styles = json.loads((ROOT/square['styles']).read_text())
     assert square['runtime'] in inventory and (ROOT/square['review']).is_file()
     assert len(styles['styles']) == 8 and styles['active'] in styles['styles']

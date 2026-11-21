@@ -1,13 +1,8 @@
 -- Named presentation contract; tools/check_assets.py checks its coverage.
 -- The market goods (in the pieces atlas) are shared by the board and the wallet.
-local elements_view = require("match3.elements_view")
 local economy = require("economy")
 local buttons = require("match3.buttons")
 local A = {}
-A.board_frame = require("board_frame_atlas")
-A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
--- Authored element states shared by live boards, goals and the guide.
-A.elements = elements_view.assets
 A.states = {"normal", "selected", "pressed", "hover", "disabled"}
 A.navigation = {source="../../art/match3-buttons/manifest.json", roles={"navigation_build", "navigation_play", "navigation_pause"}, states=A.states}
 A.festive = {"Bell", "Candy cane", "Holly", "Mitten", "Bauble", "Gingerbread"}
@@ -60,8 +55,7 @@ function A.draw_hud_catalogue(R)
 end
 
 function A.load()
-    local textures, skin = {}, A.skin()
-    local function load(name) textures[name] = skin[name] end
+    local textures = {}
     local own = own_board()
     local function piece(name) return assert(own[name], "missing atlas frame: " .. name) end
     for _, bonus in pairs(economy.bonuses) do textures[bonus.icon] = piece(bonus.frame) end
@@ -72,14 +66,7 @@ function A.load()
         if find then textures["story-" .. find.key] = piece("story-" .. find.key) end
     end
     for kind = 0, #economy.pieces do textures["market-" .. kind] = piece("market-" .. kind) end
-    -- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
-    -- engine/art/board-tiles/tiles.json and packed in the cells atlas.
-    for _, key in ipairs{"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"} do
-        textures["tile-" .. key] = piece("tile-" .. key)
-    end
-    for _, name in ipairs(A.layers) do load(name) end
-    if not app.arg("default-match3") then load("chain-board") end
-    return textures
+        return textures
 end
 
 -- Rendered by the game, so review covers the same textures as the live board.

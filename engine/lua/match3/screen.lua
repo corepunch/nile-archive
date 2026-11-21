@@ -179,8 +179,6 @@ end
 function V.load(R, art, config)
     R.board_art = art.load()
     local skin = match3.skin(require("match3_skin"))
-    elements.load(R.board_art, skin)
-    elements.load_frame(R.board_art, art.board_frame)
     elements.load_square(R.board_art, skin)
     R.board_piece_crops = {}
     for name, inset in pairs((config.pieces or {}).crops or {}) do

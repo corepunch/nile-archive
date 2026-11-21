@@ -58,81 +58,6 @@
     1374,
     1145
   ],
-  "assets": {
-    "chain": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/board/blockers.png",
-      "atlas_frame": "chain",
-      "fit": "hex-slot",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-chain-paint/edge-anchors.png",
-      "atlas_section": "board_theme"
-    },
-    "ice-2": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/board/blockers.png",
-      "atlas_frame": "ice-2",
-      "fit": "hex-slot",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-ice/source.png",
-      "atlas_section": "board_theme"
-    },
-    "ice-1": {
-      "box": [
-        0,
-        0,
-        128,
-        128
-      ],
-      "runtime": "data/board/blockers.png",
-      "atlas_frame": "ice-1",
-      "fit": "hex-slot",
-      "registration": "art/match3-atlas.json",
-      "source": "../../art/match3-ice/source.png",
-      "atlas_section": "board_theme"
-    },
-    "selected": {
-      "box": [
-        570,
-        680,
-        970,
-        1024
-      ],
-      "runtime": "art/registered/board-states/selected.png",
-      "fit": "free-icon",
-      "source": "art/board-states/clear-indicators.png"
-    },
-    "hint": {
-      "box": [
-        990,
-        680,
-        1400,
-        1024
-      ],
-      "runtime": "art/registered/board-states/hint.png",
-      "fit": "free-icon",
-      "source": "art/board-states/clear-indicators.png"
-    },
-    "guide": {
-      "box": [
-        1145,
-        261,
-        1374,
-        493
-      ],
-      "runtime": "art/registered/board-states/guide.png"
-    }
-  },
   "packs": [
     "relics",
     "jewels",
@@ -159,7 +84,6 @@
     "data/board/backs/scene-2.jpg",
     "data/board/blockers.png",
     "data/board/cells.png",
-    "data/board/frame/stone.png",
     "data/board/fx.png",
     "data/board/hud.png",
     "data/board/match-specials.png",
@@ -419,7 +343,6 @@
   "cell_mask": {
     "source": "art/board-states/cell-mask.png",
     "runtime": "art/registered/board-states/cell-mask.png",
-    "capture": "python3 games/relic-rush/tools/capture_cell_mask.py",
     "geometry": "gfx.ngon(center, radius, 6, 0): flat-top cell face",
     "use": "Asset registration reference. Live wells use gfx.ngon_grad with the same flat-top geometry."
   },
@@ -548,43 +471,29 @@
     "review": "docs/review/trickling/README.md"
   },
   "piece_replacements": {
-    "sun-idol": {
-      "source": "art/tile-sets/source-flat-hex.png",
-      "prompt": "art/tile-sets/flat-hex.prompt.txt",
+    "yellow-topaz": {
+      "source": "art/tile-sets/source-square-jewel.png",
+      "prompt": "art/tile-sets/square-jewel-prompt.txt",
+      "edit_target": "art/tile-sets/square-jewel-edit-target.png",
       "crop": [
-        10,
-        50,
-        316,
-        289
+        34,
+        207,
+        345,
+        518
       ],
-      "runtime": "art/registered/tile-sets/relics/0.png",
-      "orientation": "flat-top, six-sided; centre artwork stays upright",
-      "transform": "crop and fit to the renderer-authored cell mask aspect; 112px inner width",
+      "registered": "art/registered/tile-sets/jewels/0.png",
+      "runtime": "data/board/pieces.png",
+      "frame": "jewels-0",
+      "transform": "Trim authored alpha and fit within 112 px on the 128 px sprite canvas",
       "reproduction": "python3 tools/match3_atlas.py",
-      "review": "../../docs/review/resource-icons/README.md"
-    },
-    "yellow-hex": {
-      "source": "art/tile-sets/source-flat-hex.png",
-      "prompt": "art/tile-sets/flat-hex.prompt.txt",
-      "crop": [
-        12,
-        340,
-        315,
-        570
-      ],
-      "runtime": "art/registered/tile-sets/jewels/0.png",
-      "orientation": "flat-top, six-sided; centre artwork stays upright",
-      "transform": "crop and fit to the renderer-authored cell mask aspect; 112px inner width",
-      "reproduction": "python3 tools/match3_atlas.py",
-      "review": "../../docs/review/resource-icons/README.md"
+      "review": "docs/screenshots/review/square-blockers/jewels-480.jpg"
     }
   },
   "cell_registration": {
     "canvas": 128,
     "piece_interior": 112,
-    "hex": "full cell diameter",
     "other_pieces": "inscribed square",
-    "states": "full cell diameter",
+    "states": "full square cell",
     "review": "../../../docs/review/motion/README.md"
   },
   "dialogue_motion": {
@@ -643,9 +552,9 @@
     "prompt": "art/board-states/clear-indicators-prompt.txt",
     "generator": "image_gen 2026-11-01, transparent 3x3 atlas; full unmodified source retained",
     "review": "docs/review/striped-specials/README.md",
-    "specials": "Line gems draw their own piece under engine bands; the rainbow gem is slot 4 of data/board/match-specials.png. The older rocket, bomb and prism frames stay deleted.",
-    "ice": "archived filled frost sheets; live ice uses the translucent hex overlays in ../../art/match3-ice/source.png",
-    "interaction": "soft filled mint selection glow and gold hint glow; no outline"
+    "specials": "Line gems draw their own piece under engine bands; the rainbow gem is slot 1 of data/board/match-specials.png. The older rocket, bomb and prism frames stay deleted.",
+    "ice": "Archived filled frost sheets. Live ice uses the square blockers.",
+    "interaction": "Archived soft selection and hint glows. Live selection outlines the square cell and hints animate the piece."
   },
   "building_paintover": {
     "source": "art/building-catalogue/painted-v1",
@@ -793,24 +702,6 @@
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/screenshots/review/shatter/smoke-after.jpg",
     "frame_prefix": "fx-"
-  },
-  "additional_board_elements": {
-    "source": "../../engine/art/match3-elements/source.png",
-    "prompt": "../../engine/art/match3-elements/prompt.txt",
-    "registration": "../../engine/art/match3-elements/manifest.json",
-    "reproduction": "python3 tools/match3_elements_art.py && python3 tools/match3_atlas.py",
-    "runtime": {
-      "stone-1": "art/registered/board-states/stone-1.png",
-      "stone-2": "art/registered/board-states/stone-2.png",
-      "stone-3": "art/registered/board-states/stone-3.png"
-    },
-    "review": [
-      "../../docs/review/match3-elements/relic-rush-states.png",
-      "../../docs/review/match3-elements/relic-rush-state-narrow.png"
-    ],
-    "tile_mask": "../../engine/art/hex-tile/hex-mask-128.png",
-    "transform": "Full-bleed authored tile faces cropped and resized, then clipped to canonical engine mask. No recoloring or derived damage states.",
-    "retired": "Crate, tunnel, hidden-object, growth and delivery cells stay in the master but are not registered: the engine no longer has those mechanics."
   },
   "crew_requests": {
     "rule": "lua/quests.lua. A request's piece stands in a free score slot (kinds 5, 4, 3) while the request is open and short of pieces. It matches like any piece, counts toward the request and banks nothing in the wallet.",
@@ -1052,9 +943,6 @@
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/screenshots/review/board-palette/README.md",
     "states": {
-      "stone": [
-        "stone-1"
-      ],
       "chips": [
         "relics-0",
         "relics-1",
@@ -1062,11 +950,6 @@
         "relics-3",
         "relics-4",
         "relics-5"
-      ],
-      "chains": [
-        "chain",
-        "chain-2",
-        "chain-1-mirror"
       ]
     },
     "accent_source": "art/board-theme/accent-revision.png",
@@ -1087,47 +970,7 @@
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/sun-coin/README.md"
-    },
-    "chain_paint": {
-      "generator": "built-in ImageGen",
-      "source": "../../art/match3-chain-paint/edge-anchors.png",
-      "prompt": "../../art/match3-chain-paint/edge-anchors-prompt.txt",
-      "edit_target": "../../art/match3-chain-paint/source.png",
-      "states": {
-        "chain": "one hit remaining, silver",
-        "chain-1-mirror": "one hit remaining, gold, opposite orientation",
-        "chain-2": "two hits remaining, two silver strands"
-      },
-      "registration": "art/match3-atlas.json",
-      "reproduction": "python3 tools/match3_atlas.py",
-      "review": "docs/screenshots/review/chain-anchors/README.md"
-    },
-    "stone_paint": {
-      "generator": "built-in ImageGen",
-      "source": "../../art/match3-blockers/source.png",
-      "prompt": "../../art/match3-blockers/prompt.txt",
-      "reference": "../../art/match3-blockers/reference.png",
-      "frame": "stone-1",
-      "state": "one hit, same face on board and in guide and HUD",
-      "registration": "art/match3-atlas.json",
-      "reproduction": "python3 tools/match3_atlas.py",
-      "review": "docs/screenshots/review/board-floors/README.md"
     }
-  },
-  "tiles": {
-    "spec": "engine/art/board-tiles/tiles.json",
-    "generator": "tools/board_tiles.py",
-    "frames": [
-      "cell-normal",
-      "tablet-single",
-      "tablet-double",
-      "light-wave",
-      "hover",
-      "selected",
-      "ice",
-      "bonus-area"
-    ],
-    "previous_source": "art/board-refresh/flat-ground.png"
   },
   "finale": {
     "generator": "built-in ImageGen",
@@ -1569,15 +1412,6 @@
     "reproduction": "python3 games/relic-rush/tools/prepare_resource_pieces.py",
     "review": "docs/screenshots/review/rome-treasures/README.md"
   },
-  "board_frame": {
-    "generator": "tools/board_frame.py",
-    "stone": "data/board/frame/stone.png",
-    "review": "docs/review/board-frame-atlas/README.md",
-    "decorations": "engine/art/board-frame/decorations.json",
-    "decoration_review": "docs/review/board-frame-decorations/front.md",
-    "layout": "lua/board_frame_atlas.lua",
-    "reference": "engine/art/board-frame/rim-attachment-guide.png"
-  },
   "featured_pieces": {
     "silver-coin": {
       "first_level": 1,
@@ -1766,9 +1600,16 @@
       "chain-square-1": "One hit remains. One diagonal silver chain with a beveled perimeter and cast shadow.",
       "chain-square-2": "Two hits remain. Two crossed silver chains with the same perimeter and cast shadows.",
       "ice-square-1": "One hit remains. Borderless translucent ice with a broken upper edge.",
-      "ice-square-2": "Two hits remain. A full borderless square of translucent faceted ice."
+      "ice-square-2": "Two hits remain. A full borderless square of translucent faceted ice.",
+      "stone-1": "One adjacent match or direct tool hit clears the square carved stone."
     },
-    "review": "docs/square-match3.md#blockers-and-target-hints"
+    "review": "docs/square-match3.md#blockers-and-target-hints",
+    "stone": {
+      "source": "../../art/match3-square/stones.png",
+      "prompt": "../../art/match3-square/stones-prompt.txt",
+      "frame": "stone-1",
+      "review": "docs/screenshots/review/square-blockers/stones-480.jpg"
+    }
   },
   "square_board": {
     "source": "art/papyrus-board/contact.png",
@@ -1807,5 +1648,38 @@
     "frame_texture_prompt": "art/papyrus-board/stone-cracks-prompt.txt",
     "frame_texture_blend": "multiply",
     "selection_and_grout": "../../art/match3-square/source.png"
+  },
+  "archived_hex_overlays": {
+    "selected": {
+      "box": [
+        570,
+        680,
+        970,
+        1024
+      ],
+      "runtime": "art/registered/board-states/selected.png",
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png"
+    },
+    "hint": {
+      "box": [
+        990,
+        680,
+        1400,
+        1024
+      ],
+      "runtime": "art/registered/board-states/hint.png",
+      "fit": "free-icon",
+      "source": "art/board-states/clear-indicators.png"
+    },
+    "guide": {
+      "box": [
+        1145,
+        261,
+        1374,
+        493
+      ],
+      "runtime": "art/registered/board-states/guide.png"
+    }
   }
 }

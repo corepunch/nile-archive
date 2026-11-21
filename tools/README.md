@@ -64,9 +64,9 @@ are the guides.
 | `pack_particles.py` | Registers particle frames for the `fx` atlas | imported by `match3_atlas.py` |
 | `pack_match_specials.py` | Repack the authored optional match specials for both games | `python3 tools/pack_match_specials.py` |
 | `match3_buttons.py` | Centers each campaign action icon in its 128 px button cell using the silhouette's pixel opacity | `python3 tools/match3_buttons.py`, then `python3 tools/match3_atlas.py` to repack |
-| `board_tiles.py` | Bakes the shared board tiles into hex sprites for every game | `--render-check` in `make test-assets` |
+| `board_tiles.py` | Reproduces the archived hex floor artwork | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
-| `board_frame.py` | Bakes the hex border atlas and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |
+| `board_frame.py` | Reproduces the archived hex border and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |
 | `square_board_frame.py` | Bakes painted oak and textured sandstone into square perimeter modules and compares the eight winter materials | imported by `match3_atlas.py` or `python3 tools/square_board_frame.py --review build/square-frames.jpg` |
 | `board_frame_decor.py` | Registers separately painted board decorations | imported by `board_frame.py` |
 | `hex_tile_art.py` | Checks sprites against the engine's flat-top tile face | `python3 tools/hex_tile_art.py <art.png> --mode fill --strict` |
@@ -131,7 +131,7 @@ These read local extractions under `reference/` (git-ignored; each has a
 | --- | --- |
 | **relic-rush** | |
 | `prepare_assets.py` | Builds `data/` from the source paintings in `art/` |
-| `board_assets.py` | Registers authored board artwork (crop, rotate, resize); `--check` in `make test-assets` |
+| `board_assets.py` | Registers the archived hex overlays and cell mask (crop, rotate, resize); `--check` in `make test-assets` |
 | `check_art_catalogue.py` | Fails on uncatalogued runtime files, rule kinds or states (`make test-assets`) |
 | `prepare_buildings.py` | Builds the catalogue around the rendered building sprites (after `tools/buildings.py`) |
 | `prepare_bonus_gems.py` | Registers the standalone bonus pieces used by the board and toolbar |
@@ -142,7 +142,6 @@ These read local extractions under `reference/` (git-ignored; each has a
 | `prepare_story.py` | Compiles the reviewed story's lines; `--check` detects drift |
 | `prepare_story_pieces.py` | Registers Relic Rush story pieces for alternate art packs |
 | `capture_buildings.py` | Real-game before/after captures for building art and shadows |
-| `capture_cell_mask.py` | Captures the game's real hex geometry |
 | **christmas-market** | |
 | `prepare_assets.py` | Registers ImageGen artwork with crops, resizes and board masks |
 | `fit_match3_edges.py` | Hex-edge remapping for the tinsel ring, used by `prepare_assets.py` |

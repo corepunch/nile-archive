@@ -36,9 +36,9 @@ def main():
     w, h = theme.size
     plane = largest_island(theme.crop((round(w / 5), round(h * 2 / 5), round(w * 2 / 5), round(h * 3 / 5))))
     for row, game in enumerate(GAMES):
-        atlas = Image.new("RGBA", (768, 128))
+        atlas = Image.new("RGBA", (384, 128))
         w, h = paint.size
-        sprites = [paint.crop((i*w//5, row*h//2, (i+1)*w//5, (row+1)*h//2)) for i in range(5)]
+        sprites = [paint.crop((i*w//5, row*h//2, (i+1)*w//5, (row+1)*h//2)) for i in (3, 4)]
         for slot, sprite in enumerate([*sprites, plane]):
             crop = sprite.crop(sprite.getchannel("A").getbbox())
             crop.thumbnail((104, 104), Image.Resampling.LANCZOS)

@@ -189,7 +189,7 @@ end
 function E.skin(override)
     local skin = E.atlas(override)
     for _, name in ipairs({"kind-0", "kind-1", "kind-2", "kind-3", "kind-4", "kind-5",
-        "chain", "ice-1", "ice-2", "selected", "hint", "guide", "cell-mask", "background", "glow"}) do
+        "background", "glow"}) do
         assert(skin[name], "missing match3 frame: " .. name)
     end
     return skin
@@ -222,7 +222,6 @@ local function pause_button(bounds, icon)
 end
 
 local goal_icon_adjustments = {
-    chain = {scale = 1.12, x = 2},
     ["stone-1"] = {scale = .9},
 }
 
@@ -240,14 +239,14 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         if g.initial_obstacles>0 then
             local stone_only = (l.chains or 0)==0 and (l.ice or 0)==0 and l.stones and #l.stones>0
             local icon = (R.board_goal_icon and R.board_goal_icon(l, "locks"))
-                or (stone_only and "stone-1" or "chain")
+                or (stone_only and "stone-1" or "chain-square-1")
             entries[#entries+1]={id="locks",icon=icon,remaining=math.max(0,g.obstacles)}
         end
         if g.oil_left>0 or l.oil and #l.oil>0 then
             -- A buried find (reveal.object) is its own goal icon.
             local find = l.reveal and l.reveal.object and l.reveal.icon
             local floor = R.board_goal_icon and R.board_goal_icon(l, "oil")
-            entries[#entries+1]={id="oil",icon=find or floor or "tile-tablet-single",remaining=g.oil_left}
+            entries[#entries+1]={id="oil",icon=find or floor or "square-target",remaining=g.oil_left}
         end
         if l.goals then   -- a level that names its goals shows only those, in its order
             local by_id = {}
@@ -297,27 +296,30 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         },
     })
 
-    -- Hexagonal medallion, echoing the board cells: gold rim, jade face, the
-    -- remaining moves large inside. It warms to red over the last five moves.
+    -- A square gold rim echoes the board cells and warms to red at low moves.
     function R.draw_moves(c, arrive, radius)
         radius = radius or 40
         local scale = radius / 40
-        local r, a = radius * arrive, (arrive - 1) * PI / 3   -- flat-top, like the cells
+        local side = radius * math.sqrt(3) * arrive
+        local box = rect.centered(c, size2.splat(side))
+        local bevel = 6 * scale * arrive
         local moves = R.g.moves
         local urgent = moves <= 5 and not R.g.won
         if urgent and not R.reduced_motion then
             gfx.additive(true)
-            gfx.glow(c, r + 14 * scale, rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
+            gfx.glow(c, radius * arrive + 14 * scale,
+                rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
             gfx.additive(false)
         end
-        gfx.ngon(c + vec2(0, 5 * scale), r, 6, a, rgba(3, 20, 18, 150))
-        gfx.ngon(c, r, 6, a, rgba(116, 74, 33))
-        gfx.ngon(c, r - 2 * scale, 6, a, rgba(236, 196, 112))
-        gfx.ngon(c + vec2(0, 2 * scale), r - 5 * scale, 6, a, rgba(176, 120, 48))
+        gfx.round_rect(box:offset(vec2(0, 5 * scale * arrive)), bevel, rgba(3, 20, 18, 150))
+        gfx.round_rect(box, bevel, rgba(116, 74, 33))
+        gfx.round_rect(box:inflate(-2 * scale * arrive), bevel, rgba(236, 196, 112))
+        gfx.round_rect(box:inflate(-4 * scale * arrive):offset(vec2(0, scale * arrive)), bevel, rgba(176, 120, 48))
         local face = R.skin:color(urgent and "moves_low" or "moves_face")
         local glow = R.skin:color(urgent and "moves_low_glow" or "moves_glow")
-        gfx.ngon(c, r - 7 * scale, 6, a, face)
-        gfx.glow(c + vec2(0, -4 * scale), r - 12 * scale, glow, color.alpha(face, 0))
+        local inset = box:inflate(-6 * scale * arrive)
+        gfx.round_rect(inset, bevel, face)
+        gfx.glow(c + vec2(0, -4 * scale * arrive), inset.w * .43, glow, color.alpha(face, 0))
         if arrive < .8 then return end   -- the numbers come with the settled medallion
         local caption, count = moves_form.nodes.caption, moves_form.nodes.count
         count.em, count.text_style = 29 * arrive * scale, urgent and PAL_WHITE or PAL_GOLD
@@ -326,7 +328,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         count.height = text.ink(R.skin:measure_text(count.text_style, count.em), value).h
         moves_form.nodes.stack.gap = 6 * arrive * scale
         moves_form:set("count", value)
-        moves_form:draw(rect.centered(c, size2(r * 1.5, r * math.sqrt(3))), R.skin, {interactive=false})
+        moves_form:draw(rect.centered(c, size2(side, side)), R.skin, {interactive=false})
     end
 
     function R.goal_target(kind)

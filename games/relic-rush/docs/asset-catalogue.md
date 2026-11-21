@@ -44,19 +44,16 @@ The live expedition uses the [campaign piece atlas](#campaign-piece-atlas) on pa
 | Runtime frames | Rule and artwork |
 | --- | --- |
 | `relics-0` through `relics-5` | Round gold sun coin, red flame, jade leaf, blue scarab, violet crystal and orange amphora. Source and preview boards use these older frames. |
-| `stone-1` | One front-facing carved hex stone. An adjacent match or a direct tool hit clears it. The HUD and guide reuse the board sprite. |
-| `chain`, `chain-1-mirror`, `chain-2` | A silver strand bolts to two opposite hex edges. The mirrored one-hit strand uses the opposite diagonal and gold plating. Two crossed silver strands bolt to all four sloped edges for two hits. |
 
 Built-in ImageGen authored the [base sheet](../art/board-theme/source.png) and the [accent revision](../art/board-theme/accent-revision.png). The [base prompt](../art/board-theme/prompt.txt), [revision prompt](../art/board-theme/accent-prompt.txt) and [registration manifest](../art/match3-atlas.json) identify each source and transform. Rebuild the `data/board/` atlases with `python3 tools/match3_atlas.py`. See the [art guide](../../../docs/MATCH3_ART_GENERATION.md) and [in-game review](screenshots/review/board-palette/README.md).
 
-The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet uses the `resource-coin` sprite. Built-in ImageGen authored the preview idol's [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin inside the canonical flat-top hex while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
+The round sun coin at `relics-0` is the Relics preview idol (kind 0). The wallet uses the `resource-coin` sprite. Built-in ImageGen authored the preview idol's [transparent source](../art/board-theme/sun-coin/source.png) from the [chosen round-coin concept](../art/board-theme/sun-coin/concept.png) and [production prompt](../art/board-theme/sun-coin/prompt.txt). The atlas recipe trims the transparent margin, then scales and centres the coin on its 128 px sprite canvas while preserving its authored alpha. [In-game review at both phone sizes](screenshots/review/sun-coin/README.md).
 
 The board atlas carries no rocket, bomb, plane or rainbow-ball frames: line gems band the piece's own frame and the rainbow gem lives in `data/board/match-specials.png` (see [Line gems and rainbow gems](#line-gems-and-rainbow-gems)). The earlier reviews ([painted power-ups](screenshots/review/power-up-paint/README.md), [Scener models](screenshots/review/scener-power-ups/README.md)) are historical.
 
 The [edge-mounted hex chains](../../../art/match3-chain-paint/README.md) are retained as legacy previews. [Earlier in-game comparisons](screenshots/review/chain-anchors/README.md).
 
 
-The [front-facing carved hex stones](../../../art/match3-blockers/source.png) use their own ImageGen sheet. [Stone review](screenshots/review/board-floors/README.md).
 
 ## Campaign piece atlas
 
@@ -293,12 +290,8 @@ The complete filename inventory, crop rectangles, rule names and state matrix li
 
 ## Earlier cell and goal alignment
 
-The teal wells use the engine's flat-top hex geometry and a light-to-dark
-vertical gradient. The atlas cell mask remains the registration reference for
-authored art. Goal icons and counts share the jade signboard. Collection
-flights land at the icon centres. The chain objective uses a 12% larger icon
-shifted 2 logical units right. The carved-stone objective uses a 10% smaller
-icon. [Current board review](../../../docs/review/match3-signboards/README.md).
+The teal wells in this historical review used flat-top hex geometry and a light-to-dark
+vertical gradient. The current board uses square cells. Goal icons and counts share the jade signboard. Collection flights land at the icon centres. [Current board review](../../../docs/review/match3-signboards/README.md).
 
 Reproduce with `build/test/relic-rush "shot hex-first" "shot phone-board" "shot art-specials"`.
 
@@ -382,7 +375,7 @@ the game does not recolour one gem into other kinds.
 
 | ID / rule name | Relics (default) | Jewels | Resources | Rule meaning |
 | --- | --- | --- | --- | --- |
-| 0 / IDOL | Round gold sun coin | Yellow hex gem | Coins | Idol objective and score; reused Amulet icon |
+| 0 / IDOL | Round gold sun coin | Square yellow topaz | Coins | Idol objective and score; reused Amulet icon |
 | 1 / FLAME | Coral flame | Red heart | Terracotta amphora | Ordinary matching kind |
 | 2 / LEAF | Jade leaf | Green square gem | Timber | Ordinary matching kind; reused Wood purse icon |
 | 3 / SCARAB | Turquoise scarab | Blue teardrop | Water | Ordinary matching kind |
@@ -466,57 +459,24 @@ Explorer's Guide uses the single-chain overlay on its square plaque example.
 | `chain-square-2` | Two hits left, crossed silver chains, beveled edge and cast shadows |
 | `ice-square-1` | One hit left, borderless faceted frost with the upper part broken away |
 | `ice-square-2` | Two hits left, full borderless frost with diagonal facets |
+| `stone-1` | Carved square stone. One adjacent match or direct tool hit clears it. |
 
 With one to three plaques left, the idle pulse sweeps clockwise along each
 square edge using `fx-tablet-glow` and `fx-tablet-spark`. A two-layer plaque
 glows green and a one-layer plaque glows blue. Reduce Motion hides the pulse.
 [Board, guide and particle captures](square-match3.md#blockers-and-target-hints).
 
-### Story materials
+### Board materials
 
-| Frame | Meaning and use |
-| --- | --- |
-| `tile-cell-normal` | Slot 1, parchment lit from the upper left: ordinary and cleared cells. |
-| `tile-tablet-single` | Slot 2, deep blue: plaques required for a win. The Explorer’s Guide uses the same face. |
-| `tile-tablet-double` | Slot 3, green: a plaque listed in a level's `oil_double`, before its first hit. Boards author their double tablets as `P` in the level files ([LEVEL_DESIGN.md](../../../docs/LEVEL_DESIGN.md)). [Level 15 before/after](screenshots/review/level-tuning/after15.jpg). |
-| `tile-light-wave` | Slot 4, a diagonal streak of pale gold: the light that sweeps across the board as it arrives. |
-| `tile-hover` | Slot 5, white: the cell under a mouse pointer (not on touch). |
-| `tile-selected` | Slot 6, orange corner brackets on a clear tile: the selected cell. |
-| `tile-ice` | Slot 7, frosted teal with a white burst and hairline cracks: the floor under an iced piece, which keeps its `ice-1`/`ice-2` overlay. |
-| `tile-bonus-area` | Slot 8, blue-gray with a soft glow: every cell an armed tool will hit, at the hovered or pressed cell. |
+The active [square floors and perimeter](square-match3.md#levels-and-art)
+use `square-plain`, `square-target`, `square-double`, `square-grout` and
+the `square-frame-*` family. `square-selected` marks the selected cell and
+the cells an armed tool can hit. The piece scales up for selection and pulses
+for a hint. `--art-states dressing` samples the live states.
 
-The eight tiles follow the slots of Cradle of Rome's board sheet and are
-shared by Relic Rush and Christmas Market. `tools/board_tiles.py` bakes them
-from [`engine/art/board-tiles/tiles.json`](../../../engine/art/board-tiles/tiles.json)
-into each game's `art/registered/board-tiles/`. Colours and lighting are sampled from the
-first Cradle of Rome's tile sheet: faces lit from the upper left, a thin edge
-light on the parchment, wide cut bevels on the blue and green tablets (lit on
-the upper-left edges, dark on the lower-right) so they read as thick stones,
-and a bevel on the ice. The spec's options
-add a warm mottle (`grain`, `grain_tint`), a glow, hairline cracks, a diagonal
-light `streak`, and `brackets` for the open selected frame. The canonical
-128 px flat-top mask cuts the alpha, and every filled tile passes
-`tools/hex_tile_art.py --mode fill --strict`.
-Regenerate with `python3 tools/board_tiles.py`; `tools/check_art_catalogue.py`
-fails if a tile is stale. The `--art-states dressing` screen shows all eight, and
-`--level 6 --cell-states` shows them in use on a board.
-
-`frame-stone` (`data/board/frame/stone.png`) trims the active board silhouette
-with six straight runs, six outward joins and six inward joins. Its
-`frame-entrance` region follows the incoming cells. The starter bakes the
-previous frame's bands, seeded grain and cracks with
-`python3 tools/board_frame.py --output build/board-frame`.
-The stone atlas also contains outer joins with three-leaf jungle sprigs and
-an inner join with a bright front-facing leaf cluster. The broad leaves fan
-diagonally out from a hub seated on top of the stone. The generator bakes the
-[painted leaves](../../../engine/art/board-frame/rim-rosette-source.png)
-and contact shadows into their joins and
-exports `lua/board_frame_atlas.lua` with the registration.
-Run `python3 tools/board_frame.py --game relic-rush --output build/board-frame/relic-rush`.
-[Board close-ups, prompt and level 6 at both phone sizes](../../../docs/review/board-frame-decorations/front.md).
-
-The painted [limestone and cobalt atlas](../art/board-refresh/flat-ground.png)
-these replaced remains as a style reference. [In-game review](../../../docs/review/board-tiles/README.md).
+The [old floor tiles](../../../docs/review/board-tiles/README.md) and
+[decorated hex rim](../../../docs/review/board-frame-decorations/front.md)
+are archived artwork.
 
 The earlier [cover and terrain sources](../art/board-dressing/) and
 [historical review](screenshots/review/board-dressing/README.md) document the
@@ -843,7 +803,6 @@ runtime data inventory; their source and selection records are in `art/app-icon/
 From the repository root:
 
 ```sh
-python3 games/relic-rush/tools/capture_cell_mask.py  # when cell geometry changes
 python3 games/relic-rush/tools/board_assets.py
 python3 games/relic-rush/tools/board_assets.py --check
 python3 games/relic-rush/tools/check_art_catalogue.py
@@ -912,13 +871,14 @@ See [checked in-game captures and commands](review/trickling/README.md) and the
 prompt, all supported states and crop/rotation registration are catalogued in
 `engine/art/match3/manifest.json` at repository root.
 
-### Earlier flat-top piece artwork
+### Jewels pack topaz
 
-The earlier flat-top sun idol and the Jewels pack's yellow hex gem come from
-`art/tile-sets/source-flat-hex.png` and `flat-hex.prompt.txt`.
-`piece_replacements` in the state manifest records both historical crops and
-their fit to the cell. The current atlas uses the round sun coin in the Relics
-pack and the six-sided yellow gem in the Jewels pack.
+The Relics pack uses the round sun coin. The Jewels pack's square yellow
+topaz uses the first crop from the complete [ImageGen jewel strip](../art/tile-sets/source-square-jewel.png).
+The [prompt](../art/tile-sets/square-jewel-prompt.txt) records the edit. The
+topaz uses the same piece scaling for selection and hints as the other gems.
+`piece_replacements` in the state manifest records the crop, registration
+and runtime frame. [In-game Jewels pack](screenshots/review/square-blockers/jewels-480.jpg).
 
 The clay brick belongs to the independent engine default atlas and is not used
 by this game's overrides. Reproduce with `python3 tools/match3_atlas.py` and
@@ -1132,7 +1092,7 @@ The campaign enables the engine's `striped` and `color_bomb` rules
 | --- | --- | --- | --- |
 | Line gem, row | Four in a row. Matches as its kind and sweeps its row when cleared | Any board piece under four horizontal cream bands | The piece's own board frame, banded at draw time by `gfx.image_striped` (repeats 4, width 0.44, ink 255/250/224), masked to the painted alpha |
 | Line gem, column | Four in a column. Sweeps its column | The same piece under vertical bands | As above, turned a quarter |
-| Rainbow gem | Five or more in a line. Matches nothing; a swap clears the partner's kind | One painted ball | Slot 4 of `data/board/match-specials.png` |
+| Rainbow gem | Five or more in a line. Matches nothing; a swap clears the partner's kind | One painted ball | Slot 1 of `data/board/match-specials.png` |
 
 The bands are the engine's catalogued procedural state for a colored special:
 they follow the piece through selection, swap, fall and squash, and need no
@@ -1151,10 +1111,10 @@ Reviewed in game at [480 × 900](screenshots/review/line-gems/states-480.jpg)
 and [390 × 844](screenshots/review/line-gems/states-390.jpg), and in the
 [guide](screenshots/review/line-gems/guide-480.jpg).
 
-`data/board/match-specials.png` also keeps the three hex striped axes, T bomb
-and paper plane in its six 128 px slots for the rules this campaign leaves
-off. The five painted power-ups come from
-`art/match3-power-up-paint/source.png` at the repository root (prompt kept
-beside it). The paper plane is cropped from Christmas Market's painted
-`art/board-theme/source.png`, with neighboring fragments removed. Regenerate
-both games' atlases with `python3 tools/pack_match_specials.py`.
+`data/board/match-specials.png` holds the optional T bomb, rainbow gem and
+paper plane in three 128 px slots. The T bomb and rainbow gem come from the
+[painted power-up master](../../../art/match3-power-up-paint/source.png).
+The paper plane comes from Christmas Market's `art/board-theme/source.png`.
+The original three striped-axis paintings stay in the master. Both campaigns
+stripe the existing piece along its square row or column.
+Regenerate the atlases with `python3 tools/pack_match_specials.py`.

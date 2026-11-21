@@ -18,25 +18,13 @@ from os.path import relpath
 from pathlib import Path
 
 from PIL import Image, ImageChops
-from match3_elements_art import NAMES as ELEMENT_NAMES
 import match3_buttons
 import match3_theme_art
 import pack_particles
 import square_board_frame
 
 ROOT = Path(__file__).resolve().parents[1]
-ICE_DIR = ROOT / 'art/match3-ice'
-ICE_CROPS = {'ice-1': (129, 66, 819, 756), 'ice-2': (1060, 66, 1750, 756)}
-ICE_OPACITY_RAMPS = {
-    'ice-1': {'luma': [140, 230], 'alpha': [62, 224]},
-    # The two-hit pane's painted highlights are dimmer than the broken rim.
-    'ice-2': {'luma': [155, 199], 'alpha': [78, 250]},
-}
 HEX_MASK = ROOT / 'engine/art/hex-tile/hex-mask-128.png'
-ICE_INPUTS = [ICE_DIR / name for name in ('source.png', 'open-hex.png', 'concept.png', 'clear-shell.png',
-                                         'prompt.txt', 'transparency-prompt.txt', 'hexagon-prompt.txt',
-                                         'filled-pane-prompt.txt')]
-ICE_INPUTS += [HEX_MASK, ROOT / 'engine/art/hex-tile/hex-mask-preview.png']
 SQUARE_DIR = ROOT / 'art/match3-square'
 SQUARE_BLOCKER_CROPS = {
     'chain-square-1': (48, 36, 592, 580),
@@ -46,6 +34,13 @@ SQUARE_BLOCKER_CROPS = {
 }
 SQUARE_BLOCKER_INPUTS = [SQUARE_DIR / name for name in (
     'blockers.png', 'blockers-prompt.txt', 'blockers-edit-target.png', 'blockers-ice-reference.png')]
+SQUARE_STONE_SOURCE = SQUARE_DIR / 'stones.png'
+SQUARE_STONE_PROMPT = SQUARE_DIR / 'stones-prompt.txt'
+SQUARE_STONE_REFERENCE = ROOT / 'art/match3-blockers/source.png'
+SQUARE_STONE_CROPS = {
+    'relic-rush': (181, 90, 828, 737),
+    'christmas-market': (1079, 90, 1726, 737),
+}
 SQUARE_ICE_OPACITY = {'luma': [170, 235], 'opacity': [.55, .95]}
 SIGNBOARD_DIR = ROOT / 'art/match3-signboards'
 SIGNBOARD_CROPS = {
@@ -60,11 +55,11 @@ NAMES = ([f'kind-{i}' for i in range(8)] +
          [f'{tool}-{state}' for tool in ['pickaxe', 'dynamite', 'sunburst', 'pause'] for state in STATES] +
          ['hud-panel', 'tool-tray', 'board-frame', 'background'] +
          [f'spark-{i}' for i in range(8)] + [f'ice-puff-{i}' for i in range(4)] + [f'impact-{i}' for i in range(4)])
-# Cells of the authored source in grid order. The excavation tile ('sand') and
-# the power-ups served mechanics the engine no longer has; their cells stay,
-# unregistered.
-UNREGISTERED = {'sand', 'ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism'}
-HEX = {'chain', 'ice-2', 'ice-1', 'selected', 'hint', 'cell-mask', 'board-frame'}
+# Retired cells remain in the master sheet's grid but do not ship.
+UNREGISTERED = {
+    'sand', 'ray-row', 'ray-column', 'ray-diagonal', 'bomb', 'prism',
+    'chain', 'ice-2', 'ice-1', 'selected', 'hint', 'guide', 'cell-mask', 'board-frame', 'moves',
+}
 
 
 # One atlas per kind of art, in the order the generated tables list them.
@@ -81,7 +76,7 @@ def group_of(name):
         return 'fx'
     if name.startswith(('chain', 'ice-', 'stone-', 'crate-')):
         return 'blockers'
-    if name.startswith(('tile-', 'square-')) or name in ('selected', 'hint', 'guide', 'cell-mask', 'board-frame'):
+    if name.startswith('square-'):
         return 'cells'
     if name in HUD_NAMES or name.startswith(('pause-', 'board-pause-', 'shop-')):
         return 'hud'
@@ -206,38 +201,7 @@ def verify_provenance(manifest_path):
     return manifest
 
 
-def registered_ice():
-    sprites, records = {}, {}
-    with Image.open(HEX_MASK) as reference:
-        mask = reference.getchannel('A')
-    with Image.open(ICE_DIR / 'source.png') as sheet:
-        assert sheet.mode == 'RGBA' and sheet.size == (1886, 834)
-        for name, box in ICE_CROPS.items():
-            ramp = ICE_OPACITY_RAMPS[name]
-            dark, light = ramp['luma']
-            transparent, opaque = ramp['alpha']
-            opacity_curve = [round(transparent + (opaque - transparent) * min(1, max(0, (value - dark) / (light - dark))))
-                             for value in range(256)]
-            sprite = sheet.crop(box).resize(mask.size, Image.Resampling.LANCZOS)
-            paint = sprite.getchannel('A')
-            if name == 'ice-2':
-                # The painted pane must have material under the entire mask.
-                coverage = paint.point(lambda alpha: 255 if alpha >= 240 else 0)
-                assert ImageChops.subtract(mask, coverage).getbbox() is None, 'Incomplete full ice painting'
-                alpha = mask
-            else:
-                # Keep the painted fracture while fitting the lower three sides.
-                alpha = ImageChops.multiply(paint, mask)
-            opacity = sprite.convert('L').point(opacity_curve)
-            sprite.putalpha(ImageChops.multiply(alpha, opacity))
-            sprites[name] = sprite
-            records[name] = {'source': 'art/match3-ice/source.png', 'prompt': 'art/match3-ice/filled-pane-prompt.txt',
-                             'crop': list(box), 'canvas': list(mask.size), 'opacity_ramp': ramp,
-                             'mask': str(HEX_MASK.relative_to(ROOT))}
-    return sprites, records
-
-
-def registered_square_blockers(root):
+def registered_square_blockers(game, root):
     source, prompt, edit_target, ice_reference = SQUARE_BLOCKER_INPUTS
     with Image.open(source) as sheet:
         assert sheet.mode == 'RGBA' and sheet.size == (1254, 1254)
@@ -251,6 +215,15 @@ def registered_square_blockers(root):
         if name.startswith('ice-'):
             opacity = sprite.convert('L').point(curve)
             sprite.putalpha(ImageChops.multiply(sprite.getchannel('A'), opacity))
+    stone_crop = SQUARE_STONE_CROPS[game]
+    with Image.open(SQUARE_STONE_SOURCE) as sheet:
+        assert sheet.mode == 'RGBA' and sheet.size == (1905, 825)
+        stone = sheet.crop(stone_crop).resize((CELL, CELL), Image.Resampling.LANCZOS)
+    # The artwork fills the cell to its four lightly rounded corners.
+    for x in (8, CELL - 9):
+        for y in (8, CELL - 9):
+            assert stone.getpixel((x, y))[3] >= 240, f'{game}: stone must fill a square cell'
+    sprites['stone-1'] = stone
     return sprites, {
         'source': relpath(source, root),
         'prompt': relpath(prompt, root),
@@ -260,6 +233,15 @@ def registered_square_blockers(root):
         'canvas': [CELL, CELL],
         'transform': 'Crop and resize with Lanczos, then multiply ice alpha by the luminance ramp',
         'ice_opacity_ramp': SQUARE_ICE_OPACITY,
+        'stone': {
+            'source': relpath(SQUARE_STONE_SOURCE, root),
+            'prompt': relpath(SQUARE_STONE_PROMPT, root),
+            'reference': relpath(SQUARE_STONE_REFERENCE, root),
+            'crop': stone_crop,
+            'frame': 'stone-1',
+            'state': 'one hit',
+            'transform': 'Square crop resized to 128px with Lanczos; authored alpha preserved',
+        },
         'review': 'docs/square-match3.md#blockers-and-target-hints',
     }
 
@@ -283,49 +265,14 @@ def build_default(check):
         if name == 'kind-1':
             box = [156, 36, 315, 163]
             sprite = brick.crop(box)
-        angle = 30 if name in HEX else 0
-        if angle:
-            sprite = sprite.rotate(angle, Image.Resampling.BICUBIC, expand=True)
         sprite.thumbnail((124, 124), Image.Resampling.LANCZOS)
         x, y = col * 128, row * 128
         image.paste(sprite, (x + (128 - sprite.width) // 2, y + (128 - sprite.height) // 2))
         frames[name] = [x, y, 128, 128]
-        registration[name] = {'crop': box, 'rotation': angle, 'size': list(sprite.size), 'runtime': frames[name]}
+        registration[name] = {'crop': box, 'rotation': 0, 'size': list(sprite.size), 'runtime': frames[name]}
         if name == 'kind-1':
             registration[name]['source'] = 'engine/art/match3/source-brick.png'
             registration[name]['prompt'] = 'engine/art/match3/brick.prompt.txt'
-    element_sources = []
-    for i, name in enumerate(ELEMENT_NAMES):
-        path = ROOT / 'engine/art/registered/board-states' / f'{name}.png'
-        element_sources.append(path)
-        sprite = Image.open(path).convert('RGBA')
-        assert sprite.size == (128, 128)
-        row, col = divmod(i, 8)
-        x, y = col * 128, 1024 + row * 128
-        image.paste(sprite, (x, y))
-        frames[name] = [x, y, 128, 128]
-        registration[name] = {'source': str(path.relative_to(ROOT)), 'runtime': frames[name],
-                              'transform': 'RGBA canvas copied without change'}
-    originals, registration_h = registered_ice()
-    chains, chain_records = match3_theme_art.registered_chains('relic-rush', ROOT)
-    originals.update(chains)
-    registration_h.update(chain_records)
-    start = 11 * 8
-    end = start + sum(name not in frames for name in originals)
-    required_height = ((end + 7) // 8) * 128
-    if required_height > image.height:
-        expanded = Image.new('RGBA', (image.width, 1 << (required_height - 1).bit_length()))
-        expanded.paste(image, (0, 0))
-        image = expanded
-    for name, sprite in sorted(originals.items()):
-        if name in frames:
-            x,y,_,_ = frames[name]
-        else:
-            row,col = divmod(start,8);start += 1
-            x,y = col*128,row*128
-        image.paste(sprite,(x,y))
-        frames[name] = [x,y,128,128]
-        registration[name] = registration_h[name]
     frames["glow"] = frames["spark-0"]
     effects, effect_sources = pack_particles.registered(ROOT / 'games/relic-rush')
     effect_top = max(y + h for _, y, _, h in frames.values()) + 2
@@ -368,8 +315,7 @@ def build_default(check):
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/match3/README.md'}
     manifest['provenance'] = provenance(
         [ROOT / 'engine/art/match3' / name for name in ['source.png', 'source-brick.png', 'prompt.txt', 'brick.prompt.txt']]
-        + element_sources + ICE_INPUTS + match3_theme_art.chain_inputs()
-        + list(effect_sources.values()) + [Path(pack_particles.__file__), Path(match3_theme_art.__file__)],
+        + list(effect_sources.values()) + [Path(pack_particles.__file__)],
         outputs)
     write_asset(manifest_path, json.dumps(manifest, indent=2) + '\n')
 
@@ -482,8 +428,7 @@ def square_cells(game, root):
 def game_sprites(game, root):
     """The game's other registered sprite sets, under the keys its art.lua uses."""
     registered = root / 'art/registered'
-    files = folder_sprites(registered / 'board-tiles', 'tile-')
-    files |= folder_sprites(registered / 'story-pieces', 'story-')
+    files = folder_sprites(registered / 'story-pieces', 'story-')
     sprites, inputs, aliases = {}, [], {}
     if game == 'relic-rush':
         manifest = json.loads((root / 'art/board-states/manifest.json').read_text())
@@ -521,17 +466,14 @@ def build_game(game, check):
         spec.loader.exec_module(assets)
         # Keep Relic Rush's original flame, independently of the engine default.
         write_asset(registered / 'tile-sets/relics/1.png', png(assets.original_tile(0, 1)))
-        for (pack, kind), image in assets.hex_replacements().items():
-            write_asset(registered / f'tile-sets/{pack}/{kind}.png', png(image))
+        write_asset(registered / 'tile-sets/jewels/0.png', png(assets.square_jewel()))
     sources = {}
     packs = ['relics', 'jewels', 'resources'] if game == 'relic-rush' else ['festive']
     for pack in packs:
         for i in range(6):
             sources[f'{pack}-{i}'] = registered / f'tile-sets/{pack}/{i}.png'
-    for source in sorted((registered / 'board-states').glob('*.png')):
-        if source.stem in ('stone-2', 'stone-3'):
-            continue  # Archived campaign sprites from before one-hit stones.
-        sources[source.stem] = source
+    if game == 'relic-rush':
+        sources['action-close'] = registered / 'board-states/action-close.png'
     sources.update((source.stem, source) for source in sorted((registered / 'expedition-hud').glob('*.png'))
                    if not source.stem.startswith('pause-'))
     # Backgrounds stay separate JPEGs; the atlases hold sprites only.
@@ -555,9 +497,6 @@ def build_game(game, check):
     loaded.update(effects)
     with Image.open(HEX_MASK) as mask:
         theme, theme_registration = match3_theme_art.registered(root, mask.getchannel('A'))
-    ice, ice_records = registered_ice()
-    theme.update(ice)
-    theme_registration.update(ice_records)
     loaded.update(theme)
     for name in theme:
         sources.pop(name, None)
@@ -571,7 +510,7 @@ def build_game(game, check):
     aliases.update(piece_aliases)
     squares, square_inputs, square_registration = square_cells(game, root)
     loaded.update(squares)
-    square_blockers, square_blocker_registration = registered_square_blockers(root)
+    square_blockers, square_blocker_registration = registered_square_blockers(game, root)
     loaded.update(square_blockers)
     button_centers = {}
     for name in sorted(bonus_frames):
@@ -641,12 +580,14 @@ def build_game(game, check):
                 'reproduction': 'python3 tools/match3_atlas.py', 'review': 'docs/review/trickling/README.md'}
     inputs = list(sources.values()) + list(effect_sources.values()) + extra_inputs + [Path(match3_buttons.__file__)] + square_inputs
     inputs += [signboard_source, SIGNBOARD_DIR / 'prompt.txt', SIGNBOARD_DIR / 'concept.jpg']
-    inputs += ICE_INPUTS + match3_theme_art.inputs(root) + [Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
-    inputs += SQUARE_BLOCKER_INPUTS
+    inputs += match3_theme_art.inputs(root) + [HEX_MASK, Path(match3_theme_art.__file__), Path(pack_particles.__file__)]
+    inputs += SQUARE_BLOCKER_INPUTS + [SQUARE_STONE_SOURCE, SQUARE_STONE_PROMPT, SQUARE_STONE_REFERENCE]
     inputs += [root / 'data' / path for path in (images | hud_images).values()]
     if game == 'relic-rush':
-        inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png', 'art/tile-sets/source-flat-hex.png']]
-        outputs += [registered / 'tile-sets' / pack / f'{kind}.png' for pack, kind in [('relics', 0), ('relics', 1), ('jewels', 0)]]
+        inputs += [root / name for name in ['tools/prepare_assets.py', 'art/tile-sets/source.png',
+            'art/tile-sets/source-square-jewel.png', 'art/tile-sets/square-jewel-prompt.txt',
+            'art/tile-sets/square-jewel-edit-target.png']]
+        outputs += [registered / 'tile-sets/relics/1.png', registered / 'tile-sets/jewels/0.png']
     manifest['provenance'] = provenance(inputs, outputs)
     write_asset(root / 'art/match3-atlas.json', json.dumps(manifest, indent=2) + '\n')
     print(f'{game}: ' + ', '.join(f'{group} {len(frames)} in {sheet.width}x{sheet.height}' for group, (sheet, frames) in packed.items()))

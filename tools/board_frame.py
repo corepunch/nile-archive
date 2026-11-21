@@ -3,7 +3,7 @@
 
     python3 tools/board_frame.py --output build/board-frame
     python3 tools/board_frame.py --winter --output build/winter-frame
-    python3 tools/board_frame.py --check games/relic-rush/data/board/frame/stone.png
+    python3 tools/board_frame.py --game relic-rush --check build/board-frame/stone.png
 """
 import argparse
 import json
@@ -362,7 +362,7 @@ def main():
                 check(base, winter)
                 expected, lua = decorate_atlas(base, args.game, spec)
                 assert atlas.mode == "RGBA" and atlas.size == expected.size and atlas.tobytes() == expected.tobytes(), args.check
-                lua_path = Path(__file__).resolve().parents[1] / "games" / args.game / "lua/board_frame_atlas.lua"
+                lua_path = args.check.with_name("board_frame_atlas.lua")
                 assert lua_path.read_text() == lua, lua_path
                 print(f"{args.check}: base frame and painted join variants verified")
                 return

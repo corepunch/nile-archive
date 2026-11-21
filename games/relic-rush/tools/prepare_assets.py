@@ -66,7 +66,7 @@ def tile(im, size=128, inner=116):
     return out
 
 
-HEX_CROPS = {('relics', 0): (10, 50, 316, 289), ('jewels', 0): (12, 340, 315, 570)}
+SQUARE_JEWEL_CROP = (34, 207, 345, 518)
 
 
 def original_tile(row, col):
@@ -76,21 +76,10 @@ def original_tile(row, col):
     return tile(isolate_sprite(sheet.crop(bounds)), inner=112)
 
 
-def hex_replacements():
-    # Correct only the two hex silhouettes; all other 16 originals stay in use.
-    source = Image.open(ART / 'tile-sets/source-flat-hex.png').convert('RGBA')
-    mask = Image.open(REGISTERED / 'board-states/cell-mask.png').getchannel('A')
-    left, top, right, bottom = mask.point(lambda a: 255 if a > 128 else 0).getbbox()
-    height = round(112 * (bottom - top) / (right - left))
-    result = {}
-    for key, box in HEX_CROPS.items():
-        im = source.crop(box)
-        bounds = im.getchannel('A').point(lambda a: 255 if a > 70 else 0).getbbox()
-        im = im.crop(bounds).resize((112, height), Image.Resampling.LANCZOS)
-        out = Image.new('RGBA', (128, 128))
-        out.paste(im, ((128 - im.width) // 2, (128 - im.height) // 2))
-        result[key] = out
-    return result
+def square_jewel():
+    with Image.open(ART / 'tile-sets/source-square-jewel.png') as sheet:
+        assert sheet.mode == 'RGBA' and sheet.size == (2170, 725)
+        return tile(isolate_sprite(sheet.crop(SQUARE_JEWEL_CROP)), inner=112)
 
 
 def prepare_portraits():
@@ -139,8 +128,7 @@ def main():
                              round((col + 1) * sheet.width / 6), round((row + 1) * sheet.height / 3)))
             tile(isolate_sprite(im), inner=112).save(REGISTERED / 'tile-sets' / pack / f'{col}.png', optimize=True)
 
-    for (pack, kind), image in hex_replacements().items():
-        image.save(REGISTERED / 'tile-sets' / pack / f'{kind}.png', optimize=True)
+    square_jewel().save(REGISTERED / 'tile-sets/jewels/0.png', optimize=True)
 
     prepare_portraits()
     prepare_keeper()

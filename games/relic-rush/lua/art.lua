@@ -1,25 +1,16 @@
 -- Named presentation contract; tools/check_art_catalogue.py checks its coverage.
 -- Board pieces and wallet icons have separate presentation keys.
-local elements_view = require("match3.elements_view")
 local buttons = require("match3.buttons")
 local A = {}
-A.board_frame = require("board_frame_atlas")
 A.story={cast={"elena","mara","tomas","adrian","keeper","marisol"},
     keeper_source="art/art-direction/ancient-keeper.png",marisol_source="art/art-direction/marisol.png",source="art/art-direction/expedition-cast.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
--- Legacy review layers. Live square blockers load with the square board skin.
-A.layers = {"chain", "ice-2", "ice-1", "selected", "hint", "guide"}
 A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
 A.quest_handoffs = {
     chart={title="The Harbor Chart", path="story/scenes/harbor-chart.jpg"},
     cable={title="The Broken Cable", path="story/scenes/broken-cable.jpg"},
     shutter={title="The view from Mara’s skiff", path="story/scenes/reef-warning.jpg"},
 }
--- The shared Cradle of Rome tile set, baked by tools/board_tiles.py from
--- engine/art/board-tiles/tiles.json and loaded under "tile-" keys.
-A.floor_tiles = {"cell-normal", "tablet-single", "tablet-double", "light-wave", "hover", "selected", "ice", "bonus-area"}
--- Authored element states shared by live boards, goals and the guide.
-A.elements = elements_view.assets
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "marker"}
 A.story_campaign_frames = {"pliers"}
 A.resource_pieces = {"coin", "berries", "water", "rations", "timber", "emerald", "stone"}
@@ -100,8 +91,7 @@ function A.draw_hud_catalogue(R)
 end
 
 function A.load()
-    local textures, skin = {}, A.skin()
-    local function load(name) textures[name] = skin[name] end
+    local textures = {}
     local own = own_board()
     local function piece(name) return assert(own[name], "missing pieces frame: " .. name) end
     require("skin").images["action-close"] = piece("action-close")
@@ -109,7 +99,6 @@ function A.load()
     -- The packed Hammer bounds are centered. Its heavier head pulls the
     -- opacity anchor upward, making the whole silhouette sit low on the face.
     buttons.centers[textures["bonus-hammer"]] = nil
-    for _, key in ipairs(A.floor_tiles) do textures["tile-" .. key] = piece("tile-" .. key) end
     for _, key in ipairs(A.result_icons) do textures[key] = piece(key) end
     for _, key in ipairs(A.story_pieces) do textures["story-" .. key] = piece("story-" .. key) end
     for _, key in ipairs(A.resource_pieces) do textures["resource-" .. key] = piece("resource-" .. key) end
@@ -136,7 +125,6 @@ function A.load()
     end
     textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
     textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
-    for _, name in ipairs(A.layers) do load(name) end
     return textures
 end
 
@@ -176,11 +164,12 @@ function A.draw_catalogue(R)
         local name = key == "emerald" and "apple" or key
         gfx.image(R.board_art[prefix .. name], rect(38 + (i - 1) * 61, 364, 38, 38), color.WHITE)
     end
-    local names = {"chain", "tile-cell-normal", "tile-tablet-single", "selected", "hint", "guide"}
+    local names = {"chain-square-1", "square-plain", "square-target", "square-selected", "square-double", "stone-1"}
     for i, name in ipairs(names) do
         local x, y = 39 + (i - 1) % 6 * 68, 414
         gfx.image(R.board_art[name], rect(x, y, 48, 48), color.WHITE)
-        R.say_at(name, vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
+        R.say_at(({"Chain", "Plain", "Plaque", "Selected", "Double", "Stone"})[i],
+            vec2(x + 24, y + 60), 11, R.PAL_CREAM, 66)
     end
     for col, state in ipairs(A.states) do
         R.say_at(state, vec2(62 + (col - 1) * 88, 571), 12, R.PAL_GOLD, 86)
@@ -194,23 +183,25 @@ function A.draw_catalogue(R)
     R.say_at("Bonus pieces on enamel controls", vec2(240, 855), 13, R.PAL_CREAM, 420)
 end
 
--- Game-rendered samples at the same size as live board cells: the eight
--- shared tiles in Cradle of Rome's slot order, then a chained plaque.
-local TILE_LABELS = {"Normal", "Tablet", "Double", "Light wave", "Hover", "Selected", "Ice", "Bonus area"}
+-- Game-rendered samples at the same size as live board cells.
 function A.draw_dressing_catalogue(R)
     gfx.round_rect(rect(28, 300, 424, 300), 18, color(12, 47, 41, 250))
     R.say_at("BOARD TILES", vec2(240, 328), 25, R.PAL_GOLD, 420)
-    local side = 2 * (R.HEX_R - .65)
-    for i, key in ipairs(A.floor_tiles) do
-        local at = vec2(87 + (i - 1) % 4 * 102, 380 + (i - 1) // 4 * 92)
-        gfx.image(R.board_art["tile-" .. key], rect.centered(at, size2.splat(side)), color.WHITE)
-        R.say_at(TILE_LABELS[i], at + vec2(0, 42), 12, R.PAL_CREAM, 100)
+    local side = 2 * (R.HEX_R - R.GROUND.seam_width)
+    local samples = {
+        {"Plain", "square-plain"}, {"Plaque", "square-target"}, {"Double plaque", "square-double"},
+        {"Selected", "square-plain", "square-selected"}, {"Chain", "square-target", "chain-square-1"},
+        {"Two chains", "square-target", "chain-square-2"}, {"Cracked ice", "square-target", "ice-square-1"},
+        {"Ice", "square-target", "ice-square-2"}, {"Stone", "stone-1"},
+    }
+    for i, sample in ipairs(samples) do
+        local label, floor, overlay = table.unpack(sample)
+        local at = vec2(104 + (i - 1) % 3 * 136, 371 + (i - 1) // 3 * 85)
+        local area = rect.centered(at, size2.splat(side))
+        gfx.image(R.board_art[floor], area, color.WHITE)
+        if overlay then gfx.image(R.board_art[overlay], area, color.WHITE) end
+        R.say_at(label, at + vec2(0, 38), 12, R.PAL_CREAM, 115)
     end
-    local at = vec2(240, 552)
-    local area = rect.centered(at, size2.splat(side))
-    gfx.image(R.board_art["tile-tablet-single"], area, color.WHITE)
-    gfx.image(R.board_art["resource-coin"], area:inflate(-5), color.WHITE)
-    gfx.image(R.board_art.chain, area, color.WHITE)
 end
 
 return A

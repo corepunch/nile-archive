@@ -55,9 +55,9 @@ function V.bind(R, rules)
     end
 
     local special_art, special_fx = {}, {}
-    local special_frames = {color_bomb=4, t_bomb=3, plane=5}
+    local special_frames = {t_bomb=0, color_bomb=1, plane=2}
     local function special_texture(t)
-        local frame = special_frames[t.special] or t.axis
+        local frame = assert(special_frames[t.special], "missing match special artwork")
         if not special_art[frame] then
             special_art.sheet = special_art.sheet or texture.load("board/match-specials.png")
             special_art[frame] = texture.region(special_art.sheet, rect(frame * 128, 0, 128, 128))

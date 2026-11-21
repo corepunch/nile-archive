@@ -137,7 +137,18 @@ BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules re
 
 Capture from the game using `build/test/all --suite=relic-rush "shot square-"`.
 
+The square Moves counter uses the board's rim colors and turns red for the
+last five moves.
+
 ### Blockers and target hints
+
+The stone blocker fills a square cell and clears after one adjacent match
+or direct tool hit. The [painted strip](../../../art/match3-square/stones.png)
+and [prompt](../../../art/match3-square/stones-prompt.txt) record both themes.
+Repack with `python3 tools/match3_atlas.py`.
+[480 × 900](screenshots/review/square-blockers/stones-480.jpg) ·
+[390 × 844](screenshots/review/square-blockers/stones-390.jpg) ·
+[Square states catalogue](screenshots/review/square-blockers/square-catalogue-480.jpg).
 
 The [shared blocker sheet](../../../art/match3-square/README.md#blockers)
 supplies a single silver chain and a crossed pair. Two ice states use

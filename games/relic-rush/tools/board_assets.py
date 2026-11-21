@@ -1,4 +1,4 @@
-"""Register authored artwork (crop, rotate, resize); never synthesize states.
+"""Register the archived Relic Rush hex overlays and cell mask.
 
 python3 games/relic-rush/tools/board_assets.py [--check]
 """
@@ -22,14 +22,14 @@ def main():
         if atlas:
             sources[atlas["source"]] = Image.open(ROOT / atlas["source"]).convert("RGBA")
             assert list(sources[atlas["source"]].size) == atlas["source_size"]
-    for asset in manifest["assets"].values():
+    for asset in manifest["archived_hex_overlays"].values():
         path = asset.get("source")
         if path and path not in sources:
             sources[path] = Image.open(ROOT / path).convert("RGBA")
     mask = Image.open(ROOT / manifest["cell_mask"]["source"]).convert("L")
     assert list(source.size) == manifest["source_size"]
     verified = 0
-    for name, asset in manifest["assets"].items():
+    for name, asset in manifest["archived_hex_overlays"].items():
         if asset.get("atlas_frame"):
             # Registered into the shared atlas by tools/match3_atlas.py, which
             # checks it; writing it here would overwrite the packed atlas.

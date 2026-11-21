@@ -67,5 +67,11 @@ line on a borderless square.
 ice frames multiply the painted alpha by the same luminance ramp. Luminance
 values up to 170 use 55% of the painted alpha. Highlights reach 95% at 235.
 
+The [square stone strip](stones.png) supplies the one-hit sandstone sun and
+bronze-edged slate flower. ImageGen painted them together from the [exact
+prompt](stones-prompt.txt), using the prior stone strip for the motifs.
+The per-game `square_blockers.stone` record lists the crop and authored-alpha
+resize into the same atlas. An adjacent match or a direct tool hit clears it.
+
 - [Relic Rush review](../../games/relic-rush/docs/square-match3.md#blockers-and-target-hints)
 - [Christmas Market review](../../games/christmas-market/docs/square-match3.md#blockers-and-target-hints)

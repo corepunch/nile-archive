@@ -1536,12 +1536,6 @@ function G.app(R)
     end
 
     local function frame(dt)
-        if app.arg("cell-mask") then
-            -- Same flat-top polygon as a cell, captured at texture resolution.
-            gfx.rect(rect(0, 0, R.SCREEN_W, R.SCREEN_H), color(0, 0, 0))
-            gfx.ngon(vec2(R.SCREEN_W / 2, R.SCREEN_H / 2), 64, 6, 0, color.WHITE)
-            return
-        end
         local inp = input.get()
         R.story_tick()
         local talking = story.active()
@@ -1613,7 +1607,6 @@ function G.app(R)
     end
 
     local function init()
-        if app.arg("cell-mask") then return end
         R.font = R.skin:font("lilita")
         story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
                                       edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,

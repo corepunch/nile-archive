@@ -18,11 +18,10 @@ data/
     buildings/  building-shadows/   one sprite per Blender building key
   board/           the match-3 board
     backs/         background.jpg, scene-1.jpg, scene-2.jpg: separate files, never packed
-    frame/         the board's stone rim (lua/board_frame_atlas.lua)
     pieces.png     everything that sits in a cell: gem packs, campaign, resource,
                    story pieces, market goods, bonus pieces and action icons
     blockers.png   chains, ice and stone over a cell
-    cells.png      floor tiles and the selected, hint, guide and mask overlays
+    cells.png      square floor tiles, grout, selection and perimeter
     hud.png        settings, score, moves, shop marks, signboard, result icons
     fx.png         particles and glows
   story/
