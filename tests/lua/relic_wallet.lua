@@ -305,21 +305,26 @@ do
     check(g.earnings[1]==cash, 'tool-only clears do not earn match resources')
 end
 
--- Story progress earns building access. Players can replay to pay the price.
+-- The first clear funds the Spring well even when no Coins were matched.
 do
     local p={level=0,seed=1,wallet=purse()}
     local c=city.new();island.island_setup(c)
+    local cost=island.buildings[island.kinds.well+1].cost
     local g=rules.game_start(0,1);g.won=true;g.moves=0
-    check(rules.progress_reward(p,g,island.wonders) and p.level==1,'first clear unlocks the camp')
-    check(not p.wallet:covers(island.reserved_cost(c,p.level)) and not island.island_place_next(c,p.wallet,p.level,0),
-        'a clear without income cannot buy the camp')
+    local reward=rules.level_reward(g,island.wonders,p)
+    check(reward[1]==cost[1] and reward[2]==0 and reward[3]==0,'the first reward shows enough Coins for the well')
+    check(rules.progress_reward(p,g,island.wonders) and p.level==1 and p.wallet[1]==reward[1],
+        'claim banks the first-clear reward and unlocks the well')
     check(not rules.progress_reward(p,g,island.wonders),'the same win cannot pay twice')
-    local camp=island.wonders[1].cost
-    g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={camp[1]+8,camp[2]+2,camp[3]+4}
+    check(island.island_place_next(c,p.wallet,p.level,0) and island.owned(c,island.kinds.well)==1 and p.wallet[1]==0,
+        'the first payout alone buys the Spring well')
+    g=rules.game_start(0,999);g.won=true;g.moves=999;g.earnings={cost[1]+8,2,4}
+    check(rules.level_reward(g,island.wonders,{level=0})[1]==cost[1]+8,'a larger first win keeps all its Coins')
     check(rules.progress_reward(p,g,island.wonders),'replay resources bank')
-    check(p.wallet[1]==camp[1]+8 and p.wallet[2]==camp[2]+2 and p.wallet[3]==camp[3]+4 and p.wallet[4]==1 and p.level==1,
+    check(p.wallet[1]==cost[1]+8 and p.wallet[2]==2 and p.wallet[3]==4 and p.wallet[4]==1 and p.level==1,
         'replay pays the matched resources exactly')
-    check(island.island_place_next(c,p.wallet,p.level,0) and island.wonder_count(c)==1,'replay can fund the camp')
+    local next_win=rules.game_start(1,1);next_win.won=true;next_win.earnings={9,3,0}
+    check(rules.level_reward(next_win,island.wonders,p)[1]==9,'the next first clear uses its normal payout')
     check(not rules.progress_reward(p,{won=false},island.wonders),'failed attempt pays nothing')
     local future=rules.game_start(4,887);future.won=true
     check(not rules.progress_reward({level=0},future,island.wonders),'future expedition pays nothing')

@@ -2,6 +2,7 @@
 local match3 = require("match3")
 local campaign = require("campaign")
 local economy = require("economy")
+local spring_well = require("buildings")[economy.WELL_KIND + 1]
 local M = match3.square_campaign(campaign)
 
 function M.game_start(level, seed, restored)
@@ -25,6 +26,9 @@ function M.reward_breakdown(g, progress)
     local matched = purse(table.unpack(g.earnings or {}))
     local income = M.perk_income and M.perk_income() or purse()   -- the citizens' perks
     local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
+    if g.won and first and g.level == 0 then
+        reward[M.GOLD] = math.max(reward[M.GOLD], spring_well.cost[M.GOLD])
+    end
     return {first=first, income=income, total=reward}
 end
 

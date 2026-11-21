@@ -46,7 +46,8 @@ Reduce Motion hides the trail.
 ## Build
 
 Only gold and silver coins pay into the wallet on the first expedition.
-The Spring well introduces water buckets from expedition 2. The
+The Landing's first-clear payout covers the Spring well's Coin price. The
+well introduces water buckets from expedition 2. The
 Carpenter’s workshop adds timber. The Trapper’s cabin
 introduces the Hammer. Each purchase adds one item, including stone for timber
 and shrimp for water. The Harbour lodge unlocks the Hourglass and the

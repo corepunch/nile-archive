@@ -38,7 +38,7 @@ The cottage at the lower left opens the next restoration. The card shows the pri
 The top wallet shows Coins, Supplies and Food on both screens. Matches
 preview in the wallet during an expedition and bank after a successful clear.
 The completion dialog shows the expedition score.
-The Spring well costs Coins alone. Later restorations add Food and Supplies, and from the Expedition camp on every purchase uses all three. Boards cleared unlock shop stock and land. There are no lives: a failed
+The first clear of The Landing pays at least 35 Coins, enough to buy the Spring well before level 2. Later restorations add Food and Supplies, and from the Expedition camp on every purchase uses all three. Boards cleared unlock shop stock and land. There are no lives: a failed
 board can be retried at once.
 
 Tap a placed building for its name and subtitle above it. Only one stays open. The next press dismisses it. A stationary hold picks up a building through the shared mover, with Confirm/Cancel preserving saved state.
