@@ -23,8 +23,8 @@ local SHARE, OPENING_SHARE = .65, .5
 local CURRENCIES = #economy.currencies
 local m = rules.new_match()
 
--- The reference bot (tests/lua/greedy_bot.lua): best evaluated swap, no tools.
-local best_move = require('greedy_bot')(rules)
+-- The reference bot (engine/lua/match3/bot.lua): best evaluated swap, no tools.
+local best_move = require('match3.bot')(rules)
 local function play(g)
     while not g.won and not g.lost do
         local a, b = best_move(g)

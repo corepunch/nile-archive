@@ -43,7 +43,7 @@ end
 -- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua):
 -- every tier uses the same 25% allowance over its median clear.
 local profile = testing.bot_profile and require('bot_profile')(rules)
-local best_move = require('greedy_bot')(profile and profile.rules or rules)
+local best_move = require('match3.bot')(profile and profile.rules or rules)
 local function play(g)
     while not g.won and not g.lost do
         local a, b = best_move(g)

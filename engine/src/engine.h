@@ -266,9 +266,10 @@ typedef struct {
     bool captured;     /* the press started on UI; the world should ignore it */
     bool hover;        /* a real mouse is over the window (desktop) */
     bool multi_touch;  /* a second pointer joined this press; latched through release */
+    bool two_finger_tap; /* a short, stationary two-finger gesture ended this frame */
     float wheel;       /* wheel steps this frame */
     float pinch;       /* zoom factor from two fingers this frame (1 = none) */
-    vec2 pinch_center;
+    vec2 pinch_center; /* centre of the pinch or two-finger tap */
     int key;           /* AX key code pressed this frame, 0 if none */
     bool back;         /* Escape / Android back */
 } input;

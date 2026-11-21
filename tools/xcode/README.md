@@ -58,6 +58,10 @@ never edits the committed signing configuration or bundle identifier.
 runs only after a successful build, and launch only after a successful install.
 The app's actual built Info.plist supplies its bundle identifier.
 
+The two-finger match-3 shortcut is enabled only in Debug iOS Simulator builds
+of Relic Rush and Christmas Market and in the native test runner. Physical
+device builds and Release archives have the shortcut disabled.
+
 Device builds stay local because they use connected hardware and local signing
 keys. Xcode intermediates, copied app assets and SDK caches may exceed 500 MB;
 the shared build directory avoids separate SDK caches for each game.

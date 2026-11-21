@@ -14,7 +14,7 @@ local SEEDS = testing.balance_runs or 40
 local CAP = 250   -- a board the bot cannot clear in 250 moves needs redesign, not a budget
 local budget = require('move_budget')
 local m = rules.new_match()
-local best_move = require('greedy_bot')(rules)
+local best_move = require('match3.bot')(rules)
 
 local function seed_of(n) return (n * 2654435761 + 0x9E3779B9) & 0x7FFFFFFF | 1 end
 

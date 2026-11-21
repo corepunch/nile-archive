@@ -1022,9 +1022,10 @@ A snapshot of the pointer (mouse or first finger) with gestures. `input{pos = p,
 | `captured` | `boolean` | The press started on UI; the world should ignore it. |
 | `hover` | `boolean` | A real mouse is over the window. |
 | `multi_touch` | `boolean` | A second pointer joined this press; latched through release, cleared on the next press or cancellation. |
+| `two_finger_tap` | `boolean` | A short, stationary two-finger gesture ended this frame (debug Simulator and tests only). |
 | `wheel` | `number` | Wheel steps this frame. |
 | `pinch` | `number` | Zoom factor from two fingers this frame (1 = none). |
-| `pinch_center` | `vec2` |  |
+| `pinch_center` | `vec2` | Centre of the pinch or two-finger tap. |
 | `key` | `integer` | AX key code pressed this frame, 0 if none. |
 | `back` | `boolean` | Escape or the Android back button. |
 

@@ -1555,7 +1555,7 @@ function E.new(config)
         return g
     end
 
-    function M.game_check_end(g)
+    function M.game_check_end(g, ignore_move_limit)
         local l = M.levels[g.level + 1]
         local done = {score = g.score >= l.score, idols = g.relics >= l.relics,
             locks = g.obstacles == 0, oil = g.oil_left == 0}
@@ -1563,7 +1563,7 @@ function E.new(config)
         local cleared = true
         for _, id in ipairs(l.goals or {"score", "idols", "locks", "oil"}) do cleared = cleared and done[id] end
         g.won = cleared
-        g.lost = not g.won and g.moves <= 0
+        g.lost = not g.won and not ignore_move_limit and g.moves <= 0
         if flags & E.NO_RESHUFFLE == 0 and not g.won and not g.lost and not game_hint(g) then
             return game_shuffle(g)   -- discard stale selection/hints only after recovery
         end
@@ -1715,6 +1715,7 @@ function E.new(config)
         charge="Your other bonuses are already charged."}
     function R.reset_board(g)
         R.g, R.pending = g, M.new_match()
+        R.autoplay = nil
         R.phase, R.phase_time, R.idle_time, R.shake = 0, 0, 0, 0
         R.swap_a, R.swap_b, R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1, -1, -1
         R.hover_cell, R.aim_cell = -1, -1
@@ -1846,7 +1847,7 @@ function E.new(config)
     end
 
     function R.select_tool(k)
-        if R.phase ~= PH_IDLE then return end
+        if R.phase ~= PH_IDLE or R.autoplay then return end
         if R.tool >= 0 and R.tool ~= k and rules.game_tool_effect(R.tool, R.g) == "replenish" then
             use_tool(R.tool, nil, k + 1)
             return
@@ -1909,7 +1910,7 @@ function E.new(config)
         R.hover_cell = inp.hover and not inp.down and at or -1
         R.aim_cell = R.tool >= 0 and (inp.hover or inp.down) and at or -1
         if R.cell_state_review then R.hover_cell, R.aim_cell = R.cell_state_review.hover, R.cell_state_review.aim end
-        if not inp.released or R.overlay ~= R.OV_NONE then return end
+        if not inp.released or inp.multi_touch or R.overlay ~= R.OV_NONE then return end
         local d = inp.pos - inp.press_pos
         if R.phase == PH_IDLE and R.cell_at(inp.press_pos) >= 0 and (math.abs(d.x) > 16 or math.abs(d.y) > 16) then swipe(inp.press_pos, inp.pos)
         elseif R.phase == PH_IDLE and R.BOARD_CLIP:contains(inp.pos) then tap_cell(inp.pos) end
@@ -1966,13 +1967,14 @@ function E.new(config)
     end
     R.award_kudos = kudos
 
-    function R.finish_wave()
-        snapshot()
+    function R.finish_wave(fast)
+        if not fast then snapshot() end
         local old_score = R.g.score
         rules.game_apply(R.g, R.pending)
         if R.update_bonus_charges then R.update_bonus_charges() end
         R.phase = PH_CLEAR
         R.phase_time = 0
+        if fast then return end
         R.shake = R.reduced_motion and 0 or R.g.combo > 1 and .13 or .06
         R.vfx_wave(old_score)
         R.play("match", R.g.combo)
@@ -2028,26 +2030,58 @@ function E.new(config)
         end
     end
 
-    local function settle()
+    local function settle(fast)
         rules.game_matches(R.g, R.pending)
         if R.pending.hits > 0 then
-            R.finish_wave()
+            R.finish_wave(fast)
             return
         end
         R.phase = PH_IDLE
         if (R.kudos_level or 0) > 0 then kudos(R.kudos_level); R.kudos_level = 0 end   -- the move has resolved
-        local shuffled, from = rules.game_check_end(R.g)
+        local shuffled, from = rules.game_check_end(R.g, fast or R.autoplay ~= nil)
         if shuffled then
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
-            animate_shuffle(from)
-            R.notice("No moves. Board reshuffled.")
+            if not fast then
+                animate_shuffle(from)
+                R.notice("No moves. Board reshuffled.")
+            end
         end
         if R.g.won then
+            R.autoplay = nil
             R.overlay = R.OV_RESULT
             if R.stash_completed then R.stash_completed() end
             R.play("win"); haptic.play(haptic.SUCCESS)
         elseif R.g.lost then R.overlay = R.OV_FAILED; R.play("lose"); haptic.play(haptic.ERROR) end
         R.idle_time = 0
+        return shuffled
+    end
+
+    local choose_swap
+    function R.start_autoplay(at)
+        if R.autoplay or R.art_review or R.g.won or R.g.lost or not R.BOARD_CLIP:contains(at) then return end
+        choose_swap = choose_swap or require("match3.bot")(rules)
+        R.autoplay = 250
+        R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
+        R.mission_banner = nil
+        if R.intro then R.intro:skip() end
+    end
+
+    local function autoplay_move()
+        local g = R.g
+        rules.game_matches(g, R.pending)
+        if R.pending.hits == 0 then
+            local a, b = choose_swap(g)
+            if a < 0 then return settle(true) or g.won end
+            assert(rules.game_swap(g, a, b, R.pending), "bot chose an illegal swap")
+            -- Let the bot keep playing at zero, with no extra moves in the reward.
+            g.moves = math.max(0, g.moves)
+        end
+        R.finish_wave(true)
+        repeat
+            rules.game_collapse(g, true)
+            settle(true)
+        until R.phase == PH_IDLE
+        return true
     end
 
     function R.idle_hint_age()
@@ -2061,6 +2095,17 @@ function E.new(config)
         if R.art_review then return end
         R.shake = math.max(0, R.shake - dt)
         if R.overlay ~= R.OV_NONE or R.on_island then return end
+        if R.autoplay and R.phase == PH_IDLE then
+            R.autoplay = R.autoplay - 1
+            local played = autoplay_move()
+            if R.g.won then R.autoplay = nil
+            elseif not played or R.autoplay == 0 then
+                R.autoplay = nil
+                settle()
+                if not R.g.lost then R.notice("Auto-play stopped. You can continue playing.") end
+            end
+            return
+        end
         R.idle_time = R.idle_time + dt
         if R.phase == PH_IDLE and not R.g.won and not R.g.lost then   -- ready groups resolve before any input
             rules.game_matches(R.g, R.pending)

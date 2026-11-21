@@ -21,6 +21,7 @@ smoke("--lua tests/fixtures/portrait-menu;games/christmas-market/lua;.", "portra
 smoke("--lua tests/fixtures/portrait-menu;games/christmas-market/lua;. --returning --size 390x844 --safe-area 0,47,0,34", "portrait-menu-returning")
 smoke("--lua tests/fixtures/portrait-menu;games/christmas-market/lua;. --returning result", "portrait-menu-result")
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer", "quick")
+smoke("--lua tests/fixtures/board-autoplay;games/christmas-market/lua;. --size 240x450", "board-autoplay")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 
 shot("main-menu", "480x900", "--main-menu")

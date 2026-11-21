@@ -204,9 +204,10 @@
     <field name="captured" type="bool" doc="The press started on UI; the world should ignore it."/>
     <field name="hover" type="bool" doc="A real mouse is over the window."/>
     <field name="multi_touch" type="bool" doc="A second pointer joined this press; latched through release, cleared on the next press or cancellation."/>
+    <field name="two_finger_tap" type="bool" doc="A short, stationary two-finger gesture ended this frame (debug Simulator and tests only)."/>
     <field name="wheel" type="float" doc="Wheel steps this frame."/>
     <field name="pinch" type="float" doc="Zoom factor from two fingers this frame (1 = none)."/>
-    <field name="pinch_center" type="vec2"/>
+    <field name="pinch_center" type="vec2" doc="Centre of the pinch or two-finger tap."/>
     <field name="key" type="int" doc="AX key code pressed this frame, 0 if none."/>
     <field name="back" type="bool" doc="Escape or the Android back button."/>
   </struct>

@@ -450,12 +450,12 @@ function M.install(R, cfg)
     end
 
     local finish_wave = R.finish_wave
-    function R.finish_wave()
+    function R.finish_wave(fast)
         local g = R.g
         local b = board(g)
         local runs = runs_of(g, R.pending)
         local oil = g.oil_left
-        finish_wave()
+        finish_wave(fast)
         local longest = 0
         for _, n in ipairs(runs) do longest = math.max(longest, n) end
         b.waves, b.longest = g.combo, math.max(b.longest, longest)
@@ -479,6 +479,7 @@ function M.install(R, cfg)
     local board_update = R.board_update
     function R.board_update(dt)
         local g, phase, hint = R.g, R.phase, R.hint_a
+        local autoplay = R.autoplay
         board_update(dt)
         local st = U.state()
         if app.arg("user-events-test") and not st.tested then st.tested = true; U.fire_tests() end
@@ -508,7 +509,7 @@ function M.install(R, cfg)
             elseif n < was then b.bonus_used = true end
             b.tools[t] = n
         end
-        if phase ~= R.PH_IDLE and R.phase == R.PH_IDLE and b.waves > 0 then
+        if (phase ~= R.PH_IDLE or autoplay) and R.phase == R.PH_IDLE and b.waves > 0 then
             U.emit("move", {g=g, waves=b.waves, longest=b.longest, effective=b.effective})
             b.waves, b.longest, b.effective = 0, 0, false
         end

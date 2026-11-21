@@ -212,7 +212,7 @@ t:case("bot aims a line-gem cross at its target",function()
     local target=R.hex_index(0,-3)
     g.tiles[left],g.tiles[right],g.tiles[target]=R.tile(1,"striped",0),R.tile(1,"striped",1),R.tile(2)
     g.oil[target],g.oil_left=1,1
-    local a,b=require("greedy_bot")(R)(g)
+    local a,b=require("match3.bot")(R)(g)
     t:check(a==right and b==left,"bot reverses the swap to center the cross on the target column")
     t:check(R.game_swap(g,a,b,m) and m.mask[target],"the chosen cross actually hits the target")
 end)
@@ -231,7 +231,7 @@ t:case("bot values a new rainbow gem",function()
     local ordinary,_,ordinary_score=R.game_probe_swap(g,left,right,m)
     t:check(ordinary and ordinary_score>rainbow_score and m.special_awards==nil,
         "two ordinary triples score more immediately and clear the previous award from the preview")
-    local a,b=require("greedy_bot")(R)(g)
+    local a,b=require("match3.bot")(R)(g)
     t:check(R.game_swap(g,a,b,m) and m.special_awards and m.special_awards[gap]
         and m.special_awards[gap].name=="color_bomb","bot chooses to make the rainbow gem at equal goal progress")
 end)

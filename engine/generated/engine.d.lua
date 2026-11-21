@@ -36,9 +36,10 @@
 ---@field captured boolean The press started on UI; the world should ignore it.
 ---@field hover boolean A real mouse is over the window.
 ---@field multi_touch boolean A second pointer joined this press; latched through release, cleared on the next press or cancellation.
+---@field two_finger_tap boolean A short, stationary two-finger gesture ended this frame (debug Simulator and tests only).
 ---@field wheel number Wheel steps this frame.
 ---@field pinch number Zoom factor from two fingers this frame (1 = none).
----@field pinch_center vec2
+---@field pinch_center vec2 Centre of the pinch or two-finger tap.
 ---@field key integer AX key code pressed this frame, 0 if none.
 ---@field back boolean Escape or the Android back button.
 

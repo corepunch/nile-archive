@@ -50,6 +50,11 @@ static int web_args(char ***out)
 
 #define DRAG_THRESHOLD 10.0f
 
+/* Even a Debug device build cannot emit the match-3 shortcut. */
+#if defined(ENGINE_TEST) || (defined(MATCH3_DEBUG_AUTOPLAY) && defined(AX_PLATFORM_IOS) && TARGET_OS_SIMULATOR)
+#define DEBUG_TWO_FINGER_TAP
+#endif
+
 static struct {
     app_desc desc;
     int argc;
@@ -63,6 +68,14 @@ static struct {
     float dt;
     double last_counter;
     input in;
+#ifdef DEBUG_TWO_FINGER_TAP
+    struct {
+        vec2 origin;
+        double started;
+        float scale, rotation;
+        bool tap_candidate;
+    } gesture;
+#endif
     const char *shot_path;
     int shot_frames;
     int frame_index;
@@ -150,6 +163,7 @@ input input_world(void)
     input in = A.in;
     if (in.captured) {
         in.pressed = in.released = in.tap = in.dragging = false;
+        in.two_finger_tap = false;
         in.drag = v2(0, 0);
     }
     return in;
@@ -255,10 +269,59 @@ static void pointer_up(vec2 p)
     in->tap = !in->dragging && !in->multi_touch;
 }
 
+static void touch_gesture(ax_gesture_t gesture)
+{
+    input *in = &A.in;
+    vec2 center = window_to_logical(v2(gesture.x, gesture.y));
+    if (gesture.phase == AX_GESTURE_BEGIN) {
+#ifdef DEBUG_TWO_FINGER_TAP
+        A.gesture.origin = center;
+        A.gesture.started = A.time;
+        A.gesture.scale = 1;
+        A.gesture.rotation = 0;
+        A.gesture.tap_candidate = true;
+#endif
+        in->multi_touch = true;
+        in->dragging = in->tap = false;
+        in->drag = v2(0, 0);
+    } else if (gesture.phase == AX_GESTURE_UPDATE) {
+        if (gesture.scale > 0) {
+            in->pinch *= gesture.scale;
+            in->pinch_center = center;
+        }
+#ifdef DEBUG_TWO_FINGER_TAP
+        if (gesture.scale > 0) A.gesture.scale *= gesture.scale;
+        A.gesture.rotation += gesture.rotation;
+        if (vec2_dist(center, A.gesture.origin) > DRAG_THRESHOLD ||
+            fabsf(A.gesture.scale - 1) > .08f || fabsf(A.gesture.rotation) > .12f)
+            A.gesture.tap_candidate = false;
+    } else {
+        if (gesture.phase == AX_GESTURE_END && A.gesture.tap_candidate &&
+            A.time - A.gesture.started <= .25 && vec2_dist(center, A.gesture.origin) <= DRAG_THRESHOLD) {
+            in->two_finger_tap = true;
+            in->pinch_center = center;
+        }
+        A.gesture.tap_candidate = false;
+#endif
+    }
+}
+
+#ifdef ENGINE_TEST
+void app_test_two_finger_tap(vec2 p)
+{
+    vec2 at = vec2_add(A.view.pos, vec2_scale(p, A.view.size.w / A.logical.w));
+    struct AXmessage e = {.message = kEventGesture, .gesture = {.phase = AX_GESTURE_BEGIN, .x = at.x, .y = at.y}};
+    axPostMessageOwnedW(e);
+    e.gesture.phase = AX_GESTURE_END;
+    axPostMessageOwnedW(e);
+}
+#endif
+
 static void poll_events(void)
 {
     input *in = &A.in;
     in->pressed = in->released = in->tap = false;
+    in->two_finger_tap = false;
     in->drag = v2(0, 0);
     in->wheel = 0;
     in->pinch = 1;
@@ -277,17 +340,7 @@ static void poll_events(void)
         case kEventLeftButtonDragged:
         case kEventMouseMoved: pointer_move(p); in->hover = hover; break;
         case kEventScrollWheel: in->wheel += e.dy; break;
-        case kEventGesture:
-            if (e.gesture.phase == AX_GESTURE_BEGIN) {
-                in->multi_touch = true;
-                in->dragging = in->tap = false;
-                in->drag = v2(0, 0);
-            }
-            if (e.gesture.phase == AX_GESTURE_UPDATE && e.gesture.scale > 0) {
-                in->pinch *= e.gesture.scale;
-                in->pinch_center = window_to_logical(v2(e.gesture.x, e.gesture.y));
-            }
-            break;
+        case kEventGesture: touch_gesture(e.gesture); break;
         case kEventSetFocus:
             haptic_focus(true);
             gamecenter_focus(true);
@@ -298,6 +351,10 @@ static void poll_events(void)
             in->down = in->pressed = in->released = in->dragging = in->hover = in->tap = false;
             in->captured = false;
             in->multi_touch = false;
+            in->two_finger_tap = false;
+#ifdef DEBUG_TWO_FINGER_TAP
+            A.gesture.tap_candidate = false;
+#endif
             in->drag = v2(0, 0);
             break;
         case kEventKeyDown:

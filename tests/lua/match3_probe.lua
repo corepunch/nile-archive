@@ -96,7 +96,7 @@ do
     local legal, progress, score = rules.game_probe_swap(g, center, neighbor, probe)
     check(legal and progress == 1, 'preview accepts same-kind special activation')
     local before = rules.game_copy(g)
-    local a, b = require('greedy_bot')(rules)(g)
+    local a, b = require('match3.bot')(rules)(g)
     check(a >= 0 and rules.game_swap(g, a, b, actual), 'bot retains special swaps rejected by the ordinary same-kind filter')
     rules.game_apply(g, actual)
     rules.game_check_end(g)

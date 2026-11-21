@@ -24,6 +24,7 @@ smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;.", "portrait-men
 smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;. --returning --size 390x844 --safe-area 0,47,0,34", "portrait-menu-returning")
 smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;. --returning result", "portrait-menu-result")
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/relic-rush/lua;. --review-game relic-rush", "walkthrough-pointer", "quick")
+smoke("--lua tests/fixtures/board-autoplay;games/relic-rush/lua;. --size 240x450", "board-autoplay")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 

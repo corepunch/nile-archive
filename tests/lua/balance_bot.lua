@@ -36,7 +36,7 @@ check(rules.game_swap(incidental, at(4, 2), at(4, 3), wave), 'large incidental m
 rules.game_apply(incidental, wave)
 check(incidental.oil_left == 1 and incidental.cleared >= 10, 'large match leaves the objective untouched')
 local before = rules.game_copy(g)
-local best_move = require('greedy_bot')(rules)
+local best_move = require('match3.bot')(rules)
 local a, b = best_move(g)
 local alternate = rules.game_copy(g)
 alternate.rng = g.rng ~ 0x13579BDF

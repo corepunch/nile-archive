@@ -1506,7 +1506,16 @@ function G.app(R)
         if not talking then R.toast_time = R.toast_time - dt end
         if inp.back and not R.on_menu and not talking and not transition:active() and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
-        if not R.on_menu and not transition:covering() then R.board_update(dt) end
+        local switching = transition:active()
+        if R.on_island then R.autoplay = nil end
+        local board_active = not R.on_menu and not R.on_island and not talking and not board and not switching
+            and R.overlay == R.OV_NONE
+        if board_active and inp.two_finger_tap then R.start_autoplay(inp.pinch_center) end
+        if not R.on_menu and not transition:covering() and (not R.autoplay or board_active) then
+            R.board_update(dt)
+            -- Resolve up to two turns per frame so long boards still finish quickly.
+            if R.autoplay and R.phase == R.PH_IDLE then R.board_update(0) end
+        end
         R.vfx_update(dt)
 
         local drawn_overlay = R.overlay
@@ -1523,10 +1532,9 @@ function G.app(R)
             end
         else board_exit = nil end
 
-        local switching = transition:active()
         local backdrop_only = not R.on_island and R.intro and R.intro:showing_backdrop()
         local interactive = R.overlay == R.OV_NONE and not talking and not board and not switching
-        local world = interactive and input.world() or input{pos = inp.pos, pinch = 1}
+        local world = interactive and not R.autoplay and input.world() or input{pos = inp.pos, pinch = 1}
         ui.set_enabled(interactive)
         if switching then
             transition:frame(inp, dt, paint_transition)

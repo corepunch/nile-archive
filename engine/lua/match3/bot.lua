@@ -1,4 +1,4 @@
--- Reference player for tuning and income: visible matches, no tools or RNG
+-- Player for fast clears, tuning and income: visible matches, no tools or RNG
 -- lookahead. Break ties in goal progress with score, future clearing power
 -- and nearby holes below remaining targets that bring fresh pieces onto them.
 -- A new line or rainbow gem is worth two or five extra clears respectively.
