@@ -597,7 +597,24 @@ return {
     }},
     {key="after-92", phase="after", level=92, replies={
         {index=3, building="aviary", introduction="placed-aviary", line={"lio", "Tomas, may I take the flood watch? I'll read your chalk myself. My bird calls high tide for a fig."}},
-    }, lines={
+    }, recall={meeting="meeting-map_room-aviary", exchanges={
+        ["neither"]={
+            {"lio", "You drew my bird and me for my sister, Nera. Sit with me on watch? I'll draw you for her."},
+            {"nera", "Here, take my blunt pencil. If you drop the sharp one in the tide, you're fetching it."},
+        },
+        ["aviary"]={
+            {"lio", "My sister knew me by my ear, Nera. How's she going to know you when I draw you?"},
+            {"nera", "Put my pencil behind my ear. Draw me looking for it."},
+        },
+        ["map_room"]={
+            {"nera", "I had to start your ear over every time you laughed, Lio. How still do I have to sit for you?"},
+            {"lio", "You can laugh. It's your laugh I want my sister to see this time."},
+        },
+        ["both"]={
+            {"lio", "My turn to draw you for my sister, Nera. Which ear shall I get wrong?"},
+            {"nera", "Yours took all afternoon and she knew it at a glance. Give me the bird. Let's try my left."},
+        },
+    }}, lines={
         {"tomas", "Elena, it's the lowest tide of the month. Come, I'm chalking a mark at the foot of the wall."},
         {"elena", "If the bypass works, Tomas, the chalk stays dry at the next flood. If not, it washes out."},
         {"mara", "Tomas, you've got chalk on your ear. Hold still or I'll have to guess how high the tide got."},

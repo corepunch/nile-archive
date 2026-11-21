@@ -252,7 +252,13 @@ else
         for k, r in ipairs(b.replies or {}) do
             replies[k] = {building = r.building, index = r.index, introduction = r.introduction, when = r.when, lines = lines_of({r.line})}
         end
+        local recall
+        if b.recall then
+            recall = {}
+            for history, lines in pairs(b.recall.exchanges) do recall[history] = lines_of(lines) end
+        end
         out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], replies = b.replies and replies, resident = b.resident,
+                        recall = recall,
                         meeting_sites = b.sites, visit_site = b.phase == "visit" and b.building or nil, checkpoint = b.checkpoint, prompt = b.prompt, waits_for = waits or nil,
                         lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
     end

@@ -276,6 +276,8 @@ shot("resident-keep-talking", "390x844", visit .. "after-84 --visit-continue --s
 shot("resident-visit-first", "480x900", visit .. "placed-glassblower")
 shot("resident-visit-later", "390x844", visit .. "after-84 --safe-area 0,47,0,34")
 shot("resident-questions-480", "480x900", visit .. "placed-glassblower --visit-questions")
+shot("meeting-recall", "480x900", "--story-beat after-85 --story-sides both --story-line 5 --frames 240")
+shot("meeting-recall-phone", "390x844", "--story-beat after-85 --story-sides station_kiosk --story-line 5 --frames 240 --safe-area 0,47,0,34")
 shot("meeting-followup-direct", "480x900", visit .. "after-63 --visit-site station_kiosk --visit-meeting meeting-station_kiosk-glassblower --visit-questions")
 shot("meeting-followup-answer", "390x844", visit .. "after-74 --visit-meeting meeting-station_kiosk-glassblower --safe-area 0,47,0,34")
 shot("meeting-reply-menu", "480x900", visit .. "after-63 --visit-site station_kiosk --visit-meeting meeting-station_kiosk-glassblower --heard-at glassblower --visit-questions")

@@ -99,6 +99,8 @@ The following headers come from Lio and Nera's visits, callbacks and meeting.
 | `**If asked map_room after-67 personal 2**` | Replace line 2 of the meeting if the player heard Nera's personal answer at this checkpoint. Either resident can deliver the changed line. |
 | `**Ask at aviary \| Did your sister like the portrait?**` | After the meeting, add this question to Lio's visits. Put the answer below it, and give the other resident their own `Ask at` block. |
 | `**Ask at map_room after aviary \| What about Lio's ear?**` | Once the player hears Lio's account of this meeting, Mara can bring it up with Nera. |
+| `**Recall after-92**` | At the end of a meeting's script, name a later level where the pair speak together again. The exchange follows that level's usual lines when their meeting has finished and both homes stand. |
+| `**Heard aviary**` | Within a recall, write four short exchanges. Use each building key for its resident’s side alone, plus `neither` and `both`. Hearing the resident's original account or their follow-up counts. |
 
 Several lines in a scene can each have a `With` block. Within one block, write the ordinary
 building reply first, then the conditional replies in priority order. The first satisfied
@@ -138,6 +140,8 @@ Preview the ordinary reply with `--story-beat after-91 --story-built --story-lin
 Add `--story-asked` for the first conditional reply at or after that line, or
 `--story-when visit-aviary-after-85.personal` for a particular saved condition.
 The scenario overview lists the alternatives in the same priority order.
+Preview a meeting recall with `--story-beat after-92 --story-sides both --story-line 4`.
+Use either building key or `neither` in place of `both` to hear the other versions.
 
 ## First launch and main menu
 

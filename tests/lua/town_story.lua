@@ -308,6 +308,20 @@ local function finish_answer()
     R.story_tick()
 end
 
+local recall = journey.find(site == "aviary" and "after-92" or "after-85")
+local function check_recall(side)
+    local lines = R.story_lines(recall)
+    local ending = recall.recall.exchanges[side]
+    check(#lines == #recall.lines + #ending, "the level ends with one shared exchange")
+    for i, line in ipairs(ending) do
+        check(lines[#recall.lines + i] == line, "the level remembers the account heard at " .. side)
+    end
+    if site == "aviary" then
+        check(lines[3][1] == "lio", "the existing flood-watch reply still plays before the portrait")
+    end
+end
+check(#journey.lines_for(recall, owns_both, {}) == #recall.lines, "the level waits for the pair to meet")
+check(#journey.lines_for(recall, owns_site, reunited.story_seen) == #recall.lines, "both homes must stand")
 for i, first_home in ipairs(meeting.sites) do
     local other_home = meeting.sites[3-i]
     local first_key, other_key = meeting.key .. "." .. first_home, meeting.key .. "." .. other_home
@@ -317,7 +331,9 @@ for i, first_home in ipairs(meeting.sites) do
         check(#menu(home) == 1 and R.town.hooks.unheard_visit(island.kinds[home]),
             "both buildings offer their own story when the meeting ends")
     end
+    check_recall("neither")
     ask_meeting_question(first_home, first_key)
+    check_recall("neither") -- an unfinished account cannot change the level
     save.write("unfinished-followup", function(s) journey.serialize(s, R.prog) end)
     local interrupted = {}
     save.read("unfinished-followup", function(s) journey.serialize(s, interrupted) end)
@@ -329,10 +345,12 @@ for i, first_home in ipairs(meeting.sites) do
     save.read("one-side-heard", function(s) journey.serialize(s, R.prog) end)
     check(#menu(first_home) == 0 and #menu(other_home) == 2 and not R.town.hooks.unheard_visit(island.kinds[first_home]),
         "only the other resident can respond to the account after reload")
+    check_recall(first_home) -- after reloading the first account
     check(menu(other_home)[1].key == other_key .. ".reply", "the fresh lead appears first")
     ask_meeting_question(other_home, other_key .. ".reply")
     check(#menu(first_home) == 0, "the return question waits for the full reply")
     finish_answer()
+    check_recall("both") -- hearing the other resident’s reply counts as their side
     check(not R.prog.story_seen[other_key] and R.town.hooks.unheard_visit(island.kinds[other_home]),
         "the other resident's original account remains independently available")
     check(#menu(other_home) == 1 and menu(other_home)[1].key == other_key, "a heard reply disappears")
@@ -367,6 +385,7 @@ save.write("legacy-both-accounts", function(s)
 end)
 R.prog = {level=100}
 save.read("legacy-both-accounts", function(s) journey.serialize(s, R.prog) end)
+check_recall("both")
 for _, home in ipairs(meeting.sites) do
     check(#menu(home) == 3 and menu(home)[1].key == meeting.key .. "." .. home .. ".reply",
         "previously heard accounts unlock both new replies in an existing town")

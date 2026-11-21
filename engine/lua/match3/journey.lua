@@ -133,10 +133,25 @@ local function new(content)
         return true
     end
 
+    local function recalled_exchange(recall, owns, seen)
+        if not seen or not seen[recall.meeting] then return end
+        local meeting = by_key[recall.meeting]
+        local first, second = table.unpack(meeting.sites)
+        if not owns(first) or not owns(second) then return end
+        local heard = {}
+        for _, answer in ipairs(meeting.followups) do
+            if seen[answer.key] then heard[answer.building] = true end
+        end
+        if heard[first] and heard[second] then return recall.exchanges.both end
+        if heard[first] then return recall.exchanges[first] end
+        if heard[second] then return recall.exchanges[second] end
+        return recall.exchanges.neither
+    end
+
     function M.lines_for(beat, owns, seen)
-        if not beat.replies then return beat.lines end
+        if not beat.replies and not beat.recall then return beat.lines end
         local lines, selected = beat.lines, {}
-        for _, reply in ipairs(beat.replies) do
+        for _, reply in ipairs(beat.replies or {}) do
             -- Missing history is the ownership-only preview used by older callers.
             local met = not reply.introduction or not seen or seen[reply.introduction]
             local remembered = not reply.when or (seen and seen[reply.when])
@@ -145,6 +160,11 @@ local function new(content)
                 lines[reply.index] = reply.line
                 selected[reply.index] = true
             end
+        end
+        local exchange = beat.recall and recalled_exchange(beat.recall, owns, seen)
+        if exchange then
+            if lines == beat.lines then lines = {table.unpack(beat.lines)} end
+            for _, line in ipairs(exchange) do lines[#lines + 1] = line end
         end
         return lines
     end

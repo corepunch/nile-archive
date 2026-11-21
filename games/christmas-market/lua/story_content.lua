@@ -485,7 +485,24 @@ return {
         {"henrik", "Hang it lower, Noelle. A child's eye is three feet off the ground, not six."},
         {"noelle", "Low it is. Red ribbon, amber glass, one wish. Hold the ladder, Henrik?"},
     }},
-    {key="after-85", phase="after", level=85, lines={
+    {key="after-85", phase="after", level=85, recall={meeting="meeting-station_kiosk-glassblower", exchanges={
+        ["neither"]={
+            {"ada", "Pip needs a game while he waits for his mum. May we borrow your tin lid, Mr Bell?"},
+            {"otis", "If you'll play him, Miss Pike. You took the last two buttons off me in our first game."},
+        },
+        ["glassblower"]={
+            {"ada", "Pip wants to hear those two pings I got when I beat you. Will you lend him your lid, Mr Bell?"},
+            {"otis", "Gladly. I'll sit by the kettle. That lid rings louder when you're losing."},
+        },
+        ["station_kiosk"]={
+            {"otis", "Shall we teach Pip that double jump, Miss Pike? I'll leave two men out for him like I did for you."},
+            {"ada", "Oh, you play on Pip's side this time, Mr Bell. Let's see if you can keep those last two buttons."},
+        },
+        ["both"]={
+            {"ada", "Pip's lined up two buttons for me, Mr Bell. Have you been giving him lessons?"},
+            {"otis", "He wants his mum to hear your blue one ring twice. I've taught the boy how to lose to you."},
+        },
+    }}, lines={
         {"pip", "A TELEGRAM! \"ON LAST TRAIN CHRISTMAS EVE. SAVE ME A PRETZEL. MUM.\" SHE'S COMING, NOELLE!", story.SHOUT},
         {"noelle", "Then the station path gets a lantern on every post, and a bun at the end. Agnes?"},
         {"agnes", "Pip, keep that kiosk clock right. I'll have the bun in her hand before the steam's off the engine."},

@@ -519,7 +519,20 @@ function D.bind(R, W)
                 position = math.max(position or 0, island.ladder_position[island.kinds[site]])
             end
             local wanted, asked = app.arg("story-when"), app.arg("story-asked")
-            if app.arg("story-built") or asked or wanted then
+            local sides = app.arg("story-sides")
+            if sides then
+                local recall = assert(beat.recall, "scene has no meeting recall")
+                assert(recall.exchanges[sides], "unknown listening history")
+                local meeting = journey.find(recall.meeting)
+                seen[meeting.key] = true
+                for _, site in ipairs(meeting.sites) do
+                    position = math.max(position or 0, island.ladder_position[island.kinds[site]])
+                end
+                for _, answer in ipairs(meeting.followups) do
+                    if sides == "both" or sides == answer.building then seen[answer.key] = true end
+                end
+            end
+            if app.arg("story-built") or asked or wanted or sides then
                 local remembered
                 for _, reply in ipairs(beat.replies or {}) do
                     position = math.max(position or 0, island.ladder_position[island.kinds[reply.building]])

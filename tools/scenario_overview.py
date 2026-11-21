@@ -154,6 +154,13 @@ class Page:
             if when := reply.get('when'):
                 condition += f" and you asked “{self.questions[when]}”" if when in self.questions else f" and you saw {when}"
             body += f'<p class="pick">{esc(condition)}, line {reply["index"]} becomes</p>{self.lines(reply["lines"])}'
+        for history, lines in b.get('recall', {}).items():
+            if history in ('both', 'neither'):
+                heard = 'both sides' if history == 'both' else 'neither side'
+            else:
+                resident = self.cast[self.residents['placed-' + history]]['name']
+                heard = f'only {resident}’s side'
+            body += f'<p class="pick">After the pair meets, if you heard {esc(heard)}</p>{self.lines(lines)}'
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
         if b.get('choices'):

@@ -58,6 +58,23 @@ def meeting_questions(blocks, sites, key, visits, residents, speakers):
     return output
 
 
+def compile_recall(body, sites, meeting, cast, speakers, level_lines):
+    parts = re.split(r'^\*\*Heard ([a-z_]+)\*\*$', body, flags=re.M)
+    histories = parts[1::2]
+    assert not parts[0].strip() and sorted(histories) == sorted([*sites, 'neither', 'both']), \
+        f'{meeting}: write one exchange for each listening history'
+    output = [', recall={meeting=%s, exchanges={' % quote(meeting)]
+    for history, exchange in zip(histories, parts[2::2]):
+        lines = speech(exchange, speakers)
+        assert {line.speaker for line in lines} == cast, f'{meeting}: both residents must speak in {history}'
+        assert len(level_lines) + len(lines) <= 48, f'{meeting}: {history} exceeds the dialogue queue'
+        output.append('        [%s]={' % quote(history))
+        output.extend('            ' + line.lua() + ',' for line in lines)
+        output.append('        },')
+    output.append('    }}')
+    return '\n'.join(output)
+
+
 def compile_town(source, beats, speakers):
     by_key = {beat['key']: beat for beat in beats}
     purchases, callbacks, residents, visits = {}, {}, {}, {}
@@ -138,15 +155,26 @@ def compile_town(source, beats, speakers):
                 output.append('        }},')
             output.append('    }},')
 
+    recalls = {}
     for sites, body in meetings.items():
         assert all(site in residents for site in sites), f'Unknown resident site in {sites}'
         key = 'meeting-' + '-'.join(sites)
+        recall = re.split(r'^\*\*Recall ([\w-]+)\*\*$', body, flags=re.M)
+        body = recall[0]
         followups = re.split(r'^\*\*Ask at ([a-z_]+)(?: after ([a-z_]+))? \| ([^\n]+\?)\*\*$', body, flags=re.M)
         parts = re.split(r'^\*\*If asked ([a-z_]+) ([\w-]+) (personal|story) (\d+)\*\*$', followups[0], flags=re.M)
         lines = speech(parts[0], speakers)
         cast = {speakers[residents[site][0]] for site in sites}
         assert {line.speaker for line in lines} == cast, f'{key}: both residents must speak'
         level = max(by_key[residents[site][1]]['level'] for site in sites)
+        if len(recall) > 1:
+            target, exchange = recall[1:]
+            assert target in by_key and by_key[target]['phase'] == 'after' and by_key[target]['level'] > level, \
+                f'{key}: recall needs a later level clear'
+            assert target not in recalls, f'{target}: two meetings share a recall'
+            assert {site for site, source in zip(followups[1::4], followups[2::4]) if not source} == set(sites), \
+                f'{key}: both residents need a first account'
+            recalls[target] = compile_recall(exchange, sites, key, cast, speakers, by_key[target]['lines'])
         output.append('    {key=%s, phase="meeting", sites={%s}, level=%d, lines={' %
                       (quote(key), ', '.join(map(quote, sites)), level))
         output.extend('        ' + line.lua() + ',' for line in lines)
@@ -170,7 +198,10 @@ def compile_town(source, beats, speakers):
             output.extend(meeting_questions(followups, sites, key, visits, residents, speakers))
         output.append('    }},')
 
-    return compile_replies(callbacks, by_key, introductions, answers), output
+    fields = compile_replies(callbacks, by_key, introductions, answers)
+    for target, recall in recalls.items():
+        fields[target] = fields.get(target, '') + recall
+    return fields, output
 
 
 def compile_replies(callbacks, beats, introductions, answers):
