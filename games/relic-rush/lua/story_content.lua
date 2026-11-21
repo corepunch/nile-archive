@@ -748,30 +748,66 @@ return {
         {"marisol", "Elena, my aunt lent you that netting needle. Where does it say whose it is?"},
         {"elena", "On the card, in her own hand if she'll come. I've left her my pen."},
     }},
-    {key="visit-aviary-placed-aviary", phase="visit", building="aviary", checkpoint="placed-aviary", level=81, lines={
-        {"lio", "Take this fig, Mara. Hold out your sleeve. If he steps onto it, he's picked his neighbour."},
-        {"mara", "Both feet, Lio. Does that make us neighbours?"},
-        {"lio", "If he gives you the fig back, it makes you family. I wouldn't count on it."},
+    {key="visit-aviary-placed-aviary", phase="visit", building="aviary", checkpoint="placed-aviary", level=81, prompt="Ask Lio", choices={
+        {key="visit-aviary-placed-aviary.personal", topic="personal", label="How did you two meet?", lines={
+            {"mara", "Lio, did you pick him out of a whole flock?"},
+            {"lio", "He picked me. I'd sit on the step with my breakfast. By Thursday I was cutting two figs."},
+        }},
+        {key="visit-aviary-placed-aviary", topic="story", label="How do I make friends here?", lines={
+            {"lio", "Take this fig, Mara. Hold out your sleeve. If he steps onto it, he's picked his neighbour."},
+            {"mara", "Both feet, Lio. Does that make us neighbours?"},
+            {"lio", "If he gives you the fig back, it makes you family. I wouldn't count on it."},
+        }},
     }},
-    {key="visit-aviary-after-85", phase="visit", building="aviary", checkpoint="after-85", level=85, lines={
-        {"mara", "Lio, could your bird tell my voice from Kessler's if we said the same thing?"},
-        {"lio", "He does your laugh between words, Mara. I've never heard him need it for Kessler."},
+    {key="visit-aviary-after-85", phase="visit", building="aviary", checkpoint="after-85", level=85, prompt="Ask Lio", choices={
+        {key="visit-aviary-after-85.personal", topic="personal", label="Does he copy you too?", lines={
+            {"mara", "What's the one thing you wish you'd never taught him, Lio?"},
+            {"lio", "My snore. I took him to dinner once. My aunt was halfway through a song."},
+        }},
+        {key="visit-aviary-after-85", topic="story", label="Can he tell our voices apart?", lines={
+            {"mara", "Lio, could your bird tell my voice from Kessler's if we said the same thing?"},
+            {"lio", "He does your laugh between words, Mara. I've never heard him need it for Kessler."},
+        }},
     }},
-    {key="visit-aviary-restore-91", phase="visit", building="aviary", checkpoint="restore-91", level=91, lines={
-        {"marisol", "Lio, if my aunt hears that bird call the flood, how does she know it's really time?"},
-        {"lio", "Tell her to wait for my whistle. Two fingers, loud and ugly. He won't put a claw in his beak."},
+    {key="visit-aviary-restore-91", phase="visit", building="aviary", checkpoint="restore-91", level=91, prompt="Ask Lio", choices={
+        {key="visit-aviary-restore-91.personal", topic="personal", label="Who taught you to whistle?", lines={
+            {"marisol", "Lio, could you always whistle that loud?"},
+            {"lio", "My sister taught me across a hill. It was a whole summer before she heard me answer."},
+        }},
+        {key="visit-aviary-restore-91", topic="story", label="Which flood call is yours?", lines={
+            {"marisol", "Lio, if my aunt hears that bird call the flood, how does she know it's really time?"},
+            {"lio", "Tell her to wait for my whistle. Two fingers, loud and ugly. He won't put a claw in his beak."},
+        }},
     }},
-    {key="visit-aviary-after-92", phase="visit", building="aviary", checkpoint="after-92", level=92, lines={
-        {"tomas", "Lio, why bring a dry scrap of slate to the flood watch?"},
-        {"lio", "To copy your chalk mark, Tomas. If the water takes yours, we can still show the next watch."},
+    {key="visit-aviary-after-92", phase="visit", building="aviary", checkpoint="after-92", level=92, prompt="Ask Lio", choices={
+        {key="visit-aviary-after-92.personal", topic="personal", label="Why do you carry string?", lines={
+            {"tomas", "Got any string to spare, Lio?"},
+            {"lio", "To tie my lunch pail shut. Take some, Tomas. I change the knot daily. Guess who learned yesterday’s."},
+        }},
+        {key="visit-aviary-after-92", topic="story", label="Why copy the water mark?", lines={
+            {"tomas", "Lio, why bring a dry scrap of slate to the flood watch?"},
+            {"lio", "To copy your chalk mark, Tomas. If the water takes yours, we can still show the next watch."},
+        }},
     }},
-    {key="visit-aviary-restore-96", phase="visit", building="aviary", checkpoint="restore-96", level=96, lines={
-        {"lio", "Tomas, will you put your initials beside mine on the slate? The chalk stayed dry."},
-        {"tomas", "Give me the blunt end, Lio. Leave room underneath. There'll be another tide."},
+    {key="visit-aviary-restore-96", phase="visit", building="aviary", checkpoint="restore-96", level=96, prompt="Ask Lio", choices={
+        {key="visit-aviary-restore-96.personal", topic="personal", label="Do you miss the hills?", lines={
+            {"marisol", "Is there anything you miss from home, Lio? My aunt's going up the hill."},
+            {"lio", "Tell her to bring my sister down for supper. I want her to hear what he calls me now."},
+        }},
+        {key="visit-aviary-restore-96", topic="story", label="Who signs the tide slate?", lines={
+            {"lio", "Tomas, will you put your initials beside mine on the slate? The chalk stayed dry."},
+            {"tomas", "Give me the blunt end, Lio. Leave room underneath. There'll be another tide."},
+        }},
     }},
-    {key="visit-aviary-after-100", phase="visit", building="aviary", checkpoint="after-100", level=100, lines={
-        {"lio", "Ines, would you teach me the answering flash? I'd like to take a night so you two can sleep."},
-        {"ines", "Third flash comes late, Lio. Think of a bird deciding whether to part with a fig."},
-        {"lio", "I've got time to make tea between flashes, then. Shall I put the kettle on?"},
+    {key="visit-aviary-after-100", phase="visit", building="aviary", checkpoint="after-100", level=100, prompt="Ask Lio", choices={
+        {key="visit-aviary-after-100.personal", topic="personal", label="What keeps you company?", lines={
+            {"ines", "Shall I sit with you a little longer, Lio?"},
+            {"lio", "Please. He tucks his head under his wing the minute I start a story. Let me try one on you."},
+        }},
+        {key="visit-aviary-after-100", topic="story", label="Will you take a night watch?", lines={
+            {"lio", "Ines, would you teach me the answering flash? I'd like to take a night so you two can sleep."},
+            {"ines", "Third flash comes late, Lio. Think of a bird deciding whether to part with a fig."},
+            {"lio", "I've got time to make tea between flashes, then. Shall I put the kettle on?"},
+        }},
     }},
 }

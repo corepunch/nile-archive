@@ -804,7 +804,7 @@ Shown after the level 100 turn. The market stays open and lit behind it, with sn
 
 ## Town dialogue
 
-Tap the resident’s building to hear the latest **Visit** whose checkpoint the player has seen. An unheard visit puts a speech bubble over the building. Finishing the exchange or choosing Skip acknowledges that visit in the save. Leaving mid-conversation keeps it unheard. Visits are repeatable and optional. [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the stall or its speech bubble to ask Ada a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
 
@@ -910,31 +910,73 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **Visit glassblower placed-glassblower**
 
+**Ask personal | What did you make first?**
+
+- **Pip:** What was the first thing you blew, Ada?
+- **Ada:** A marble. I was aiming for a vase. Here, Pip. You can try it on the cobbles.
+
+**Ask story | Where will you keep the key?**
+
 - **Agnes:** Ada, shall I keep your furnace key on my hook overnight?
 - **Ada:** Under my pillow tonight, Mrs Holt. In the morning I want to reach for it and find it's mine.
 
 **Visit glassblower after-74**
+
+**Ask personal | Do you bake too?**
+
+- **Agnes:** Do you bake at home, Ada?
+- **Ada:** I tried your gingerbread men. I kept turning the tray like a blowing iron. They lost their hats.
+
+**Ask story | Why give the dome feet?**
 
 - **Agnes:** Ada, why did you give my gingerbread dome three little glass feet?
 - **Ada:** Put your nose down here, Mrs Holt. What's the use of a whole gingerbread house nobody can smell?
 
 **Visit glassblower after-84**
 
+**Ask personal | Do you play an instrument?**
+
+- **Noelle:** Have you ever played in a band, Ada?
+- **Ada:** Only the spoons. Lend me two and hum that waltz. I'll come in when you nod.
+
+**Ask story | How far does the bell carry?**
+
 - **Ada:** Noelle, could you ring the bell for me? I only ever hear my glass from the bench.
-- **Noelle:** You can hear it from Gran's step, Ada. Hang on, I'll run across and do it again.
+- **Noelle:** Go stand on Gran's step, Ada. You can hear it clear over there. Wave when you want me to ring.
 
 **Visit glassblower after-89**
+
+**Ask personal | What warms your hands?**
+
+- **Pip:** Ada, what do you put in your pockets when you're out here in the cold?
+- **Ada:** A baked potato in each. You can have the left one. I've butter in my lunch tin.
+
+**Ask story | Can I help shelter the lamp?**
 
 - **Pip:** Ada, if I cup my hands round the station lamp, will that help?
 - **Ada:** Put them in your pockets, Pip. I made the glass to do that job. You keep ten warm fingers.
 
 **Visit glassblower after-94**
 
+**Ask personal | Where would you go by train?**
+
+- **Mary:** If I bought you a ticket, Ada, where would you get off?
+- **Ada:** The seaside. I've never seen the green glass the waves turn smooth. I'd fill both pockets.
+
+**Ask story | Could Mary see the lamp?**
+
 - **Mary:** Ada, Pip says you'd trade a whole pocketful of glass for a minute on the footplate. Is that true?
 - **Ada:** I'd settle for the view from your carriage, Mary. Could you see the lamp from the bend?
 - **Mary:** Small as a shirt button. I had my coat on before the brakes squeaked.
 
 **Visit glassblower after-100**
+
+**Ask personal | Will you teach me?**
+
+- **Pip:** When I'm tall enough, Ada, will you teach me to blow glass?
+- **Ada:** Let's start today. Pick a colour for your first marble. You can reach that shelf just fine.
+
+**Ask story | Will you stay for January?**
 
 - **Noelle:** Ada, I'm ordering a bell for my own front door. Will you still be here in January?
 - **Ada:** Knock in the morning, Noelle. The key lives on a hook now. I sleep better without it in my ear.
@@ -1072,6 +1114,8 @@ Optional scenes, one per building, played on the next return to town after its f
 - **Compile:** `python3 tools/prepare_story.py` writes `lua/story_content.lua`; it requires a scene after every wish 1–100.
 
 ## Changelog
+
+- 2026-11-21: Each of the six Ada visits now offers two questions. The original exchange is the story answer and retains its heard status in older saves.
 
 - 2026-11-21: Six repeatable resident visits follow the introduction, later scenes and the finale. Each visit plays the latest exchange the player has reached.
 

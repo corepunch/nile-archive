@@ -269,6 +269,8 @@ shot("resident-return", "390x844", "--story-beat after-74 --story-built --story-
 local visit = "--lua tests/fixtures/resident-visit;games/christmas-market/lua;. --visit-game christmas-market --frames 260 --visit-stage "
 shot("resident-visit-first", "480x900", visit .. "placed-glassblower")
 shot("resident-visit-later", "390x844", visit .. "after-84 --safe-area 0,47,0,34")
+shot("resident-questions-480", "480x900", visit .. "placed-glassblower --visit-questions")
+shot("resident-questions-390", "390x844", visit .. "after-84 --visit-questions --safe-area 0,47,0,34")
 
 local marker = "--lua tests/fixtures/resident-visit;games/christmas-market/lua;. --visit-game christmas-market --visit-marker --frames 45"
 shot("unheard-visit-480", "480x900", marker)

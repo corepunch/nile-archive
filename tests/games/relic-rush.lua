@@ -36,8 +36,8 @@ shot("debug-phone-board", "390x844", "--debug-walkthrough --level 4 --frames 180
 shot("debug-phone-town", "390x844", "--debug-walkthrough --city 2 --frames 180 --safe-area 0,47,0,34")
 shot("story-handoff", "480x900", "--city 4 --look 925,2110 --story-beat after-10 --story-line 2 --frames 240")
 shot("story-handoff-phone", "390x844", "--city 4 --look 925,2110 --story-beat after-10 --story-line 2 --frames 240 --safe-area 0,47,0,34")
-shot("story-choice", "480x900", "--story-choice after-10")
-shot("story-choice-phone", "390x844", "--story-choice after-10 --safe-area 0,47,0,34")
+shot("story-choice", "480x900", "--story-choice restore-16")
+shot("story-choice-phone", "390x844", "--story-choice restore-16 --safe-area 0,47,0,34")
 -- Line gems and the rainbow gem: both axes of every kind, then one real swap each.
 local gems = "--level 30 --special-states "
 shot("line-gem-states", "480x900", gems .. "--frames 60")
@@ -341,6 +341,8 @@ shot("resident-return", "390x844", "--story-beat after-85 --story-built --story-
 local visit = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --frames 260 --visit-stage "
 shot("resident-visit-first", "480x900", visit .. "placed-aviary")
 shot("resident-visit-later", "390x844", visit .. "after-100 --safe-area 0,47,0,34")
+shot("resident-questions-480", "480x900", visit .. "placed-aviary --visit-questions")
+shot("resident-questions-390", "390x844", visit .. "after-100 --visit-questions --safe-area 0,47,0,34")
 
 local marker = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --visit-marker --frames 45"
 shot("unheard-visit-480", "480x900", marker)

@@ -516,10 +516,14 @@ function D.bind(R, W)
             else island_with(journey.earned(beat.level or 0)) end
             R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
             while story.active() do story.next() end
-            local lines = {}
-            local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end)
-            for i = tonumber(app.arg("story-line")) or 1, #spoken do lines[#lines + 1] = spoken[i] end
-            R.queue_story({key = beat.key, lines = lines}, true)
+            if beat.phase == "visit" then
+                R.open_story_choice(beat, true)
+            else
+                local lines = {}
+                local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end)
+                for i = tonumber(app.arg("story-line")) or 1, #spoken do lines[#lines + 1] = spoken[i] end
+                R.queue_story({key = beat.key, lines = lines}, true)
+            end
         end
         local choice_key = app.arg("story-choice")
         if choice_key then

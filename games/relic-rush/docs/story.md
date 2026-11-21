@@ -843,7 +843,7 @@ Choice prompt: Who should answer the signal?
 
 ## Town dialogue
 
-Tap the resident’s building to hear the latest **Visit** whose checkpoint the player has seen. An unheard visit puts a speech bubble over the building. Finishing the exchange or choosing Skip acknowledges that visit in the save. Leaving mid-conversation keeps it unheard. Visits are repeatable and optional. [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
+Tap the aviary or its speech bubble to ask Lio a personal question or a question about the latest story checkpoint you have witnessed. Either answer can be replayed. Finishing an answer or choosing Skip marks only that question heard. The bubble stays until both answers have been heard. Closing the menu or leaving mid-answer keeps the question new. [Question menu](screenshots/resident-questions-480.jpg) · [First visit](screenshots/resident-visit-first.jpg) · [Later visit](screenshots/resident-visit-later.jpg)
 
 Confirming one of these purchases starts its own conversation. A “With” heading replaces the numbered line of a later scene when that building stands. The printed campaign line plays otherwise. [Purchase screenshot](screenshots/town-story-purchase.jpg) · [Later callback](screenshots/town-story-callback.jpg)
 
@@ -950,31 +950,73 @@ Confirming one of these purchases starts its own conversation. A “With” head
 
 **Visit aviary placed-aviary**
 
+**Ask personal | How did you two meet?**
+
+- **Mara:** Lio, did you pick him out of a whole flock?
+- **Lio:** He picked me. I'd sit on the step with my breakfast. By Thursday I was cutting two figs.
+
+**Ask story | How do I make friends here?**
+
 - **Lio:** Take this fig, Mara. Hold out your sleeve. If he steps onto it, he's picked his neighbour.
 - **Mara:** Both feet, Lio. Does that make us neighbours?
 - **Lio:** If he gives you the fig back, it makes you family. I wouldn't count on it.
 
 **Visit aviary after-85**
 
+**Ask personal | Does he copy you too?**
+
+- **Mara:** What's the one thing you wish you'd never taught him, Lio?
+- **Lio:** My snore. I took him to dinner once. My aunt was halfway through a song.
+
+**Ask story | Can he tell our voices apart?**
+
 - **Mara:** Lio, could your bird tell my voice from Kessler's if we said the same thing?
 - **Lio:** He does your laugh between words, Mara. I've never heard him need it for Kessler.
 
 **Visit aviary restore-91**
+
+**Ask personal | Who taught you to whistle?**
+
+- **Marisol:** Lio, could you always whistle that loud?
+- **Lio:** My sister taught me across a hill. It was a whole summer before she heard me answer.
+
+**Ask story | Which flood call is yours?**
 
 - **Marisol:** Lio, if my aunt hears that bird call the flood, how does she know it's really time?
 - **Lio:** Tell her to wait for my whistle. Two fingers, loud and ugly. He won't put a claw in his beak.
 
 **Visit aviary after-92**
 
+**Ask personal | Why do you carry string?**
+
+- **Tomas:** Got any string to spare, Lio?
+- **Lio:** To tie my lunch pail shut. Take some, Tomas. I change the knot daily. Guess who learned yesterday’s.
+
+**Ask story | Why copy the water mark?**
+
 - **Tomas:** Lio, why bring a dry scrap of slate to the flood watch?
 - **Lio:** To copy your chalk mark, Tomas. If the water takes yours, we can still show the next watch.
 
 **Visit aviary restore-96**
 
+**Ask personal | Do you miss the hills?**
+
+- **Marisol:** Is there anything you miss from home, Lio? My aunt's going up the hill.
+- **Lio:** Tell her to bring my sister down for supper. I want her to hear what he calls me now.
+
+**Ask story | Who signs the tide slate?**
+
 - **Lio:** Tomas, will you put your initials beside mine on the slate? The chalk stayed dry.
 - **Tomas:** Give me the blunt end, Lio. Leave room underneath. There'll be another tide.
 
 **Visit aviary after-100**
+
+**Ask personal | What keeps you company?**
+
+- **Ines:** Shall I sit with you a little longer, Lio?
+- **Lio:** Please. He tucks his head under his wing the minute I start a story. Let me try one on you.
+
+**Ask story | Will you take a night watch?**
 
 - **Lio:** Ines, would you teach me the answering flash? I'd like to take a night so you two can sleep.
 - **Ines:** Third flash comes late, Lio. Think of a bird deciding whether to part with a fig.
@@ -1093,6 +1135,8 @@ Crew requests were removed from the game (commit f98aedd2), along with their sce
 The scenes play over the live island with the speaking character’s portrait. The keeper’s words come from the watch book in the camp scene. `tools/prepare_story.py` compiles this script into `lua/story_content.lua`; it requires a scene after every expedition and one at each story restoration. Five writers drafted one chapter each from a shared outline; a continuity editor reconciled them (the cabinet number, the key, the register, Ines's reveal, who knows what when) and a separate cold reader read the result chapter by chapter.
 
 ## Changelog
+
+- 2026-11-21: Each of the six Lio visits now offers two questions. The original exchange is the story answer and retains its heard status in older saves.
 
 - 2026-11-21: Six repeatable resident visits follow the introduction, later scenes and the finale. Each visit plays the latest exchange the player has reached.
 

@@ -678,29 +678,65 @@ return {
         {"rosa", "Mary, tuck that rug round your knees. When did we last go for a ride together?"},
         {"mary", "When my boots still had buckles, Rosa. Budge over. There's room for Pip."},
     }},
-    {key="visit-glassblower-placed-glassblower", phase="visit", building="glassblower", checkpoint="placed-glassblower", level=71, lines={
-        {"agnes", "Ada, shall I keep your furnace key on my hook overnight?"},
-        {"ada", "Under my pillow tonight, Mrs Holt. In the morning I want to reach for it and find it's mine."},
+    {key="visit-glassblower-placed-glassblower", phase="visit", building="glassblower", checkpoint="placed-glassblower", level=71, prompt="Ask Ada", choices={
+        {key="visit-glassblower-placed-glassblower.personal", topic="personal", label="What did you make first?", lines={
+            {"pip", "What was the first thing you blew, Ada?"},
+            {"ada", "A marble. I was aiming for a vase. Here, Pip. You can try it on the cobbles."},
+        }},
+        {key="visit-glassblower-placed-glassblower", topic="story", label="Where will you keep the key?", lines={
+            {"agnes", "Ada, shall I keep your furnace key on my hook overnight?"},
+            {"ada", "Under my pillow tonight, Mrs Holt. In the morning I want to reach for it and find it's mine."},
+        }},
     }},
-    {key="visit-glassblower-after-74", phase="visit", building="glassblower", checkpoint="after-74", level=74, lines={
-        {"agnes", "Ada, why did you give my gingerbread dome three little glass feet?"},
-        {"ada", "Put your nose down here, Mrs Holt. What's the use of a whole gingerbread house nobody can smell?"},
+    {key="visit-glassblower-after-74", phase="visit", building="glassblower", checkpoint="after-74", level=74, prompt="Ask Ada", choices={
+        {key="visit-glassblower-after-74.personal", topic="personal", label="Do you bake too?", lines={
+            {"agnes", "Do you bake at home, Ada?"},
+            {"ada", "I tried your gingerbread men. I kept turning the tray like a blowing iron. They lost their hats."},
+        }},
+        {key="visit-glassblower-after-74", topic="story", label="Why give the dome feet?", lines={
+            {"agnes", "Ada, why did you give my gingerbread dome three little glass feet?"},
+            {"ada", "Put your nose down here, Mrs Holt. What's the use of a whole gingerbread house nobody can smell?"},
+        }},
     }},
-    {key="visit-glassblower-after-84", phase="visit", building="glassblower", checkpoint="after-84", level=84, lines={
-        {"ada", "Noelle, could you ring the bell for me? I only ever hear my glass from the bench."},
-        {"noelle", "You can hear it from Gran's step, Ada. Hang on, I'll run across and do it again."},
+    {key="visit-glassblower-after-84", phase="visit", building="glassblower", checkpoint="after-84", level=84, prompt="Ask Ada", choices={
+        {key="visit-glassblower-after-84.personal", topic="personal", label="Do you play an instrument?", lines={
+            {"noelle", "Have you ever played in a band, Ada?"},
+            {"ada", "Only the spoons. Lend me two and hum that waltz. I'll come in when you nod."},
+        }},
+        {key="visit-glassblower-after-84", topic="story", label="How far does the bell carry?", lines={
+            {"ada", "Noelle, could you ring the bell for me? I only ever hear my glass from the bench."},
+            {"noelle", "Go stand on Gran's step, Ada. You can hear it clear over there. Wave when you want me to ring."},
+        }},
     }},
-    {key="visit-glassblower-after-89", phase="visit", building="glassblower", checkpoint="after-89", level=89, lines={
-        {"pip", "Ada, if I cup my hands round the station lamp, will that help?"},
-        {"ada", "Put them in your pockets, Pip. I made the glass to do that job. You keep ten warm fingers."},
+    {key="visit-glassblower-after-89", phase="visit", building="glassblower", checkpoint="after-89", level=89, prompt="Ask Ada", choices={
+        {key="visit-glassblower-after-89.personal", topic="personal", label="What warms your hands?", lines={
+            {"pip", "Ada, what do you put in your pockets when you're out here in the cold?"},
+            {"ada", "A baked potato in each. You can have the left one. I've butter in my lunch tin."},
+        }},
+        {key="visit-glassblower-after-89", topic="story", label="Can I help shelter the lamp?", lines={
+            {"pip", "Ada, if I cup my hands round the station lamp, will that help?"},
+            {"ada", "Put them in your pockets, Pip. I made the glass to do that job. You keep ten warm fingers."},
+        }},
     }},
-    {key="visit-glassblower-after-94", phase="visit", building="glassblower", checkpoint="after-94", level=94, lines={
-        {"mary", "Ada, Pip says you'd trade a whole pocketful of glass for a minute on the footplate. Is that true?"},
-        {"ada", "I'd settle for the view from your carriage, Mary. Could you see the lamp from the bend?"},
-        {"mary", "Small as a shirt button. I had my coat on before the brakes squeaked."},
+    {key="visit-glassblower-after-94", phase="visit", building="glassblower", checkpoint="after-94", level=94, prompt="Ask Ada", choices={
+        {key="visit-glassblower-after-94.personal", topic="personal", label="Where would you go by train?", lines={
+            {"mary", "If I bought you a ticket, Ada, where would you get off?"},
+            {"ada", "The seaside. I've never seen the green glass the waves turn smooth. I'd fill both pockets."},
+        }},
+        {key="visit-glassblower-after-94", topic="story", label="Could Mary see the lamp?", lines={
+            {"mary", "Ada, Pip says you'd trade a whole pocketful of glass for a minute on the footplate. Is that true?"},
+            {"ada", "I'd settle for the view from your carriage, Mary. Could you see the lamp from the bend?"},
+            {"mary", "Small as a shirt button. I had my coat on before the brakes squeaked."},
+        }},
     }},
-    {key="visit-glassblower-after-100", phase="visit", building="glassblower", checkpoint="after-100", level=100, lines={
-        {"noelle", "Ada, I'm ordering a bell for my own front door. Will you still be here in January?"},
-        {"ada", "Knock in the morning, Noelle. The key lives on a hook now. I sleep better without it in my ear."},
+    {key="visit-glassblower-after-100", phase="visit", building="glassblower", checkpoint="after-100", level=100, prompt="Ask Ada", choices={
+        {key="visit-glassblower-after-100.personal", topic="personal", label="Will you teach me?", lines={
+            {"pip", "When I'm tall enough, Ada, will you teach me to blow glass?"},
+            {"ada", "Let's start today. Pick a colour for your first marble. You can reach that shelf just fine."},
+        }},
+        {key="visit-glassblower-after-100", topic="story", label="Will you stay for January?", lines={
+            {"noelle", "Ada, I'm ordering a bell for my own front door. Will you still be here in January?"},
+            {"ada", "Knock in the morning, Noelle. The key lives on a hook now. I sleep better without it in my ear."},
+        }},
     }},
 }

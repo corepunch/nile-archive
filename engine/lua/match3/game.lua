@@ -338,6 +338,15 @@ function G.journey(content)
         end
     end
 
+    function M.unheard_visit(p, visit)
+        if visit then
+            for _, answer in ipairs(visit.choices) do
+                if not p.story_seen[answer.key] then return true end
+            end
+        end
+        return false
+    end
+
     function M.lines_for(beat, owns, seen)
         local variant = beat.variant
         if not variant or not owns(variant.building) then return beat.lines end
@@ -399,7 +408,10 @@ function G.journey(content)
             end
         end
         for _, b in ipairs(visits) do
-            p.story_seen[b.key] = s:int("narrative.visit." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
+            for _, answer in ipairs(b.choices) do
+                local key = answer.key
+                p.story_seen[key] = s:int("narrative.visit." .. key, p.story_seen[key] and 1 or 0) == 1
+            end
         end
         for _, b in ipairs(M.upgrades) do
             p.story_seen[b.key] = s:int("narrative.v1." .. b.key, p.story_seen[b.key] and 1 or 0) == 1
@@ -1210,13 +1222,12 @@ function G.bind(R, over)
             play = R.play_next,
             about = R.building_words,
             unheard_visit = function(kind)
-                local visit = visit_for_kind(kind)
-                return visit and not R.prog.story_seen[visit.key]
+                return journey.unheard_visit(R.prog, visit_for_kind(kind))
             end,
             tap_building = function(item)
                 local visit = visit_for_kind(R.island.items[item + 1].type)
                 if not visit then return false end
-                R.queue_story(visit)
+                R.open_story_choice(visit)
                 return true
             end,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
@@ -1266,17 +1277,27 @@ function G.bind(R, over)
     choices = ui.modals(skin)
 
     local function choice_reply(beat, index, preview)
-        R.queue_story({key=beat.key, lines=beat.choices[index].lines}, preview)
+        local answer = beat.choices[index]
+        R.queue_story({key=answer.key or beat.key, phase=beat.phase, lines=answer.lines}, preview)
     end
 
     function R.open_story_choice(beat, preview)
+        local visit = beat.phase == "visit"
         local children = {match3.popup_header(beat.prompt)}
         for index, option in ipairs(beat.choices) do
-            children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54}
+            if visit then
+                local topic = option.topic == "personal" and "PERSONAL" or "TOWN STORY"
+                local status = R.prog.story_seen[option.key] and "Heard" or "New"
+                children[#children + 1] = N.label {text=topic .. " · " .. status, em=15, text_style="caption"}
+            end
+            children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
+        end
+        if visit then
+            children[#children + 1] = N.button {id="cancel", text="Back to town", height=36, role="link", em=18}
         end
         R.choice_form = ui.form{root=N.column {panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end
-        assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=false}))
+        assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=visit}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
         R.overlay = R.OV_STORY_CHOICE
     end
@@ -1287,7 +1308,7 @@ function G.bind(R, over)
         if choices:active() then choices:close(nil, nil, true) end
         R.story_choice_beat, R.story_choice_preview = nil, nil
         R.overlay = R.OV_NONE
-        if not preview then
+        if not preview and beat.phase ~= "visit" then
             R.prog.story_choices = R.prog.story_choices or {}
             R.prog.story_choices[beat.key] = index
             R.save_progress()
@@ -1298,7 +1319,13 @@ function G.bind(R, over)
 
     function R.draw_story_choice(dt)
         local event = choices:draw(dt, {reduced_motion=R.reduced_motion})
-        if event and event.kind == "click" then
+        if not event then return end
+        if event.id == "cancel" and R.story_choice_beat.phase == "visit" then
+            choices:close(nil, function()
+                R.story_choice_beat, R.story_choice_preview = nil, nil
+                R.overlay = R.OV_NONE
+            end)
+        elseif event.kind == "click" then
             choices:close(nil, function() R.choose_story_option(tonumber(event.id)) end)
         end
     end

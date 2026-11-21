@@ -6,6 +6,22 @@ local site = game == "relic-rush" and "aviary" or "glassblower"
 local kind = island.kinds[site]
 local init, frame = desc.init, desc.frame
 local item, tick = nil, 0
+local stage = app.arg("visit-stage")
+local first = "placed-" .. site
+
+local function select_question(id)
+    assert(R.overlay == R.OV_STORY_CHOICE and not story.active(), "resident questions should be open")
+    app.inject_click(assert(R.choice_form.boxes[id]):center())
+end
+
+local function finish_answer(index)
+    local visit = require("journey").visit(R.prog, site)
+    local answer = visit.choices[index]
+    assert(story.active() and R.story_current.key == answer.key and R.story_current.lines == answer.lines,
+        "the tapped question plays its own answer")
+    assert(not R.prog.story_seen[answer.key], "an unfinished answer is still new")
+    while story.active() do story.next() end
+end
 
 function desc.init()
     init()
@@ -40,6 +56,11 @@ function desc.frame(dt)
         frame(dt)
         return
     end
+    if app.arg("visit-questions") and stage == first and tick >= 52 then
+        assert(R.overlay == R.OV_STORY_CHOICE and R.town.hooks.unheard_visit(kind))
+        frame(dt)
+        return
+    end
     if tick == 30 then tap() end
     if tick == 35 then
         assert(not story.active() and R.town.bubble and R.town.bubble.item == item - 1, "unmet resident uses ordinary building bubble")
@@ -48,18 +69,40 @@ function desc.frame(dt)
     elseif tick == 37 then
         local box = assert(R.town:visit_marker_bounds(item - 1), "marker must be on screen")
         app.inject_click(box:center())
-    elseif tick == 40 then
-        assert(story.active() and R.story_current.phase == "visit", "tapping the marker opens the visit")
-        assert(R.town.hooks.unheard_visit(kind), "an unfinished conversation is still unheard")
-        while story.active() do story.next() end
-    elseif tick == 45 then
-        assert(not R.town.hooks.unheard_visit(kind), "finishing the conversation clears its marker")
-        local stage = app.arg("visit-stage")
-        R.prog.story_seen[stage] = true
-        assert((not not R.town.hooks.unheard_visit(kind)) == (stage ~= "placed-" .. site), "only new dialogue restores the marker")
+    elseif tick == 52 then
+        select_question("cancel")
+    elseif tick == 68 then
+        assert(R.overlay == R.OV_NONE and R.town.hooks.unheard_visit(kind), "leaving keeps the marker")
         tap()
-    elseif tick == 50 then
-        assert(story.active() and R.story_current.phase == "visit", "the building remains tappable on repeat visits")
+    elseif tick == 88 then
+        select_question("2")
+    elseif tick == 108 then
+        finish_answer(2)
+    elseif tick == 112 then
+        assert(R.town.hooks.unheard_visit(kind), "the other question keeps the bubble")
+        tap()
+    elseif tick == 134 then
+        select_question("1")
+    elseif tick == 155 then
+        finish_answer(1)
+    elseif tick == 160 then
+        assert(not R.town.hooks.unheard_visit(kind), "hearing both answers clears the marker")
+        R.prog.story_seen[stage] = true
+        assert(R.town.hooks.unheard_visit(kind) == (stage ~= first), "a new checkpoint restores the marker")
+        tap()
+    elseif tick == 180 then
+        select_question(app.arg("visit-questions") and "1" or "2")
+    elseif tick == 200 and app.arg("visit-questions") then
+        finish_answer(1)
+    elseif tick == 205 and app.arg("visit-questions") then
+        assert(R.town.hooks.unheard_visit(kind), "the later story answer is still new")
+        tap()
+    elseif tick == 225 then
+        if app.arg("visit-questions") then
+            assert(R.overlay == R.OV_STORY_CHOICE)
+        else
+            assert(story.active() and R.story_current.phase == "visit", "a heard answer can be replayed")
+        end
     end
     frame(dt)
 end

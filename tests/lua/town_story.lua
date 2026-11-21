@@ -97,7 +97,10 @@ local milestones = site == "aviary" and {"after-85","restore-91","after-92","res
 local visiting = {level=100, story_seen={}}
 local function check_stage(checkpoint)
     local visit = journey.visit(visiting, site)
-    check(visit and visit.checkpoint == checkpoint and #visit.lines >= 2, "tap follows the latest witnessed milestone")
+    check(visit and visit.checkpoint == checkpoint and #visit.choices == 2, "tap follows the latest witnessed milestone")
+    for _, answer in ipairs(visit.choices) do
+        check(#answer.lines >= 2 and answer.label:sub(-1) == "?", "each question has an exchange")
+    end
     check(visit == journey.visit(visiting, site) and not visiting.story_seen[visit.key], "visit is repeatable and never advances the campaign")
 end
 visiting.story_seen[arrival.key] = true
@@ -113,10 +116,36 @@ save.read("resident-visit", function(s) journey.serialize(s, visiting) end)
 visiting.story_seen[arrival.key] = true
 check_stage("after-100")
 
--- Finishing a visit is independent of its story trigger and survives a restart.
+-- The pre-question save format can credit only the original story answer.
 local last = journey.visit(visiting, site)
-visiting.story_seen[last.key] = true
-save.write("heard-resident", function(s) journey.serialize(s, visiting) end)
+local personal, original = table.unpack(last.choices)
+save.write("heard-resident", function(s) s:int("narrative.visit." .. last.key, 1) end)
 local reloaded = {}
 save.read("heard-resident", function(s) journey.serialize(s, reloaded) end)
-check(journey.visit(reloaded, site) == last and reloaded.story_seen[last.key], "a heard visit stays available without a new marker after reload")
+check(reloaded.story_seen[original.key] and not reloaded.story_seen[personal.key], "legacy save recognises the original answer")
+check(journey.unheard_visit(reloaded, last), "legacy player can discover the new personal question")
+
+-- Choosing alone never consumes an answer, even across a save and restart.
+R.prog, R.quiet = visiting, true
+R.open_story_choice(last)
+check(R.choose_story_option(1) and story.active(), "selecting the personal question opens its answer")
+save.write("interrupted-answer", function(s) journey.serialize(s, visiting) end)
+reloaded = {}
+save.read("interrupted-answer", function(s) journey.serialize(s, reloaded) end)
+check(not reloaded.story_seen[personal.key] and not reloaded.story_choices[last.key], "unfinished answer remains new")
+while story.active() do story.next() end
+R.story_tick()
+check(visiting.story_seen[personal.key] and not visiting.story_seen[original.key], "only the finished answer is heard")
+save.write("one-answer", function(s) journey.serialize(s, visiting) end)
+reloaded = {}
+save.read("one-answer", function(s) journey.serialize(s, reloaded) end)
+check(reloaded.story_seen[personal.key] and journey.unheard_visit(reloaded, last), "partial visit survives reload")
+R.prog = reloaded
+R.open_story_choice(last)
+check(R.choose_story_option(2), "the second question remains available")
+while story.active() do story.next() end
+R.story_tick()
+save.write("both-answers", function(s) journey.serialize(s, reloaded) end)
+reloaded = {}
+save.read("both-answers", function(s) journey.serialize(s, reloaded) end)
+check(journey.visit(reloaded, site) == last and not journey.unheard_visit(reloaded, last), "both answers stay heard on reload")
