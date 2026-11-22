@@ -6,10 +6,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SHEETS = {
-    'source.png': [('relic-rush', 'lio', (0, 0, 768, 880)),
-                   ('christmas-market', 'ada', (768, 0, 1536, 880))],
-    'chart-and-clock.png': [('relic-rush', 'nera', (0, 0, 768, 1024)),
-                            ('christmas-market', 'otis', (768, 0, 1536, 1024))],
+    'source.png': [('christmas-market', 'ada', (768, 0, 1536, 880))],
+    'chart-and-clock.png': [('christmas-market', 'otis', (768, 0, 1536, 1024))],
 }
 
 

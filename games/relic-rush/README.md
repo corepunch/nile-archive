@@ -7,7 +7,7 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first square match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-The first launch goes straight to The Landing, the first of 100 expeditions.
+The first launch opens at The Landing. Sela asks her brother for a bucket before the first move.
 Swap adjacent pieces, match horizontally or vertically, and clear the turquoise
 plaques within the move budget. Claim the resources to visit the island, then
 tap Build to see the next restoration. Each board uses five piece kinds and
@@ -155,51 +155,15 @@ restorations introduces a portrait painting of that site on eligible boards once
 the player confirms construction. Replays use the same expedition gates.
 See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 
-See the [reference study, original cast and asset gallery](docs/art-direction-v2.md) and [complete generation prompts](docs/art-direction-v2-prompts.json).
-
-![Original expedition cast: Elena, Mara, Tomas and Adrian](art/art-direction/expedition-cast.png)
-
-Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, Tomas Reed keeps the harbor, and Adrian Vale finances the trip. Their busts (cut by `tools/prepare_assets.py` from that lineup) appear in the game's dialogue.
-
 ## Story and world
 
-The [proposed ancient-city campaign](docs/story.md) follows a potter, a miller and a ferry pilot as they return fresh water to the quay. It is awaiting direction approval.
+Sela and her daughter Ina come home after the flood. The quay has no drinking water. Repair the hillside well, follow the old clay pipe to Oren’s mill, and help Tavi use the tide to turn the wheel. The [playable script](docs/story.md) contains the opening, construction scenes, upgrade dialogue and the optional story of Ina learning to row.
 
-The [playable script](docs/story-live.md) runs 100 expeditions in five chapters of twenty. Every expedition has a scene on its first clear, and ten story restorations (after levels 1, 16, 21, 36, 41, 46, 61, 66, 91 and 96) play a scene when placed. The question is who is signalling back to Mara's lamp.
+![Sela the potter, Oren the miller and Tavi the ferry pilot](art/art-direction/harbour-family.png)
 
-1. **A Light Below** (1–20): the crew restores the Spring well, finds the watch book at the Expedition camp and sees three flashes from under the cliff. The reply choice is at the camp (16).
-2. **Tracks on the Terrace** (21–40): the Jungle market and Tide clock tower lead to a note, "Wall unsafe. I. R.", and a crack through the quay wall.
-3. **The Keeper's Return** (41–60): the Harbour plaza register and the Harbour lodge name Ines, Tomas's sister, and point to cabinet seventeen.
-4. **The Claim** (61–80): the Keeper's archive and the Lighthouse bring Ines's signed plan and second landing, and Adrian's claim on the island.
-5. **Keep the Light** (81–100): the Temple of the Sun and Jade fountain end it. Adrian surrenders the claim, the bypass holds, and Ines answers with three flashes and comes home.
+The opening plays on the first board. Returning towns receive a recap. Ordinary clears without a scene go straight to the reward. At the Cartographer’s House and Great Aviary, a speech bubble marks an unheard question. Hearing the end of the rowing lesson unlocks a picture at that home.
 
-A first clear advances the expedition counter. Every won expedition banks its matched resources. Construction, currency and story progress persist across saves.
-
-The speaker’s name tag and the Skip button sit equally far from the dialogue bar, with the name above and Skip below.
-
-Nera Cruz moves into the Cartographer’s House after expedition 56. Ask about the folded corner, then take a bearing with her at Cormorant Rock (67).
-
-Lio Valez moves down from the hills when the Great Aviary opens. He returns on expeditions 85, 91 and 92. Six milestones bring new personal and town questions, including a pair after the finale. A speech bubble marks unheard questions. Tap it or the building to start a lone question or choose among several. After an answer, ask another or choose **Back to town**. Hearing the last answer clears the bubble and ends the visit. On expedition 91 Lio remembers Mara asking about his snore at the aviary.
-
-Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin.
-
-At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still. On the flood watch at 92, Lio offers to draw Nera for his sister. Their exchange remembers whose account of the portrait Mara heard. Both homes offer one last question after the flood watch. Lio tells Mara where his sister hung the drawings. Nera tells her where to look for the missing pencil. Hearing either closing answer lets you see the two sketches facing each other when you visit that resident.
-
-Bring Lio’s account of his sister to Nera, or ask Lio about the ear Nera kept redrawing. Either exchange gives Mara something she can take back to the other resident.
-
-All twenty campaign purchases now have a character response. The ten purchases between story gates trigger a conversation on confirmation. Later dialogue checks whether the building actually stands. Compare `--story-beat after-12 --story-line 1` with the same preview plus `--story-built`, or preview the purchase with `--story-beat placed-workshop`.
-
-`lua/story_content.lua` is compiled directly from the script by `python3 games/relic-rush/tools/prepare_story.py`; `--check` catches drift and runs with the other asset checks in `make test-assets` and `make test`. `lua/journey.lua` holds the restoration schedule, recap and changing tap lines as data (the engine keeps the keyed checkpoints); `lua/narrative.lua` holds the cast; the engine (`engine/lua/match3/game.lua`) delivers the scenes. Preview any scene with `--story-beat before-11` or `--story-beat after-30 --story-line 3`. Restoration dialogue uses named speakers over the live island. The earlier request scenes and paintings remain in the story archive.
-
-| Elena | Mara | Tomas | Adrian | Word bubble |
-| --- | --- | --- | --- | --- |
-| ![Elena](docs/screenshots/dialogue-elena.jpg) | ![Mara](docs/screenshots/dialogue-mara.jpg) | ![Tomas](docs/screenshots/dialogue-tomas.jpg) | ![Adrian](docs/screenshots/dialogue-adrian.jpg) | ![Bubble](docs/screenshots/island-bubble.jpg) |
-
-On a 390 × 844 iPhone (safe-area insets 47 top, 34 bottom) the island and the jungle run to the screen edges while the controls stay inside the safe area. The screen grows taller there (480 × 939) rather than showing bars: the top HUD stays at the top, the tools and the island's bottom buttons move down to the bottom edge, and the board and dialogs stay centred:
-
-| Island | Board |
-| --- | --- |
-| ![Island on an iPhone](docs/screenshots/phone-island.jpg) | ![Board on an iPhone](docs/screenshots/square-tide-chamber.jpg) |
+Run `python3 games/relic-rush/tools/prepare_story.py --check` to check the playable script. Preview the opening with `--story-beat before-01`.
 
 ## Expedition and restoration loop
 
@@ -229,12 +193,12 @@ game. Each event fires once per profile, and the save keeps which events are don
   charged bonus and the catalogue.
 - **Upgrades.** Sixteen, with Rome 2's ids `man_01` to `man_16` (Rome's citizens, kept by the
   cast we know; [the table](../../docs/CAMPAIGN_DESIGN.md#upgrades-romes-citizens-kept-by-the-cast-we-know)):
-  a second rope and pulley at the Spring well (Tomas), a second saw bench at the Carpenter's workshop
-  (Mara), a polished lens at the Lighthouse (Mara) and so on. Placing the building arms its feat (a resource
+  a second rope and pulley at the Spring well (Oren), a second saw bench at the Carpenter's workshop
+  (Sela), a bronze reflector at the Lighthouse (Tavi) and so on. Placing the building arms its feat (a resource
   earned in one level, a long match or a run of moves); meeting it upgrades the building, awards a trophy and gives
   a lasting perk: more Coins, Food or Supplies in every won expedition, or a tool whose pieces charge one point
   more per match. The building's card shows the feat while it is armed, then "Upgraded: ..." with the perk. The scene,
-  spoken by the keeper, is the upgrade's entry in `docs/story-live.md` under `## Upgrades` and plays on the next return to
+  spoken by the keeper, is the upgrade's entry in `docs/story.md` under `## Upgrades` and plays on the next return to
   town (a toast if it is missing).
 - **Test flag.** `--user-events-test` fires the `test=true` events at once,
   like Rome's F5 cheat.
@@ -243,7 +207,7 @@ The building upgrade is recorded but has no art yet.
 
 ## Campaign
 
-The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels: A Light Below (1–20), Tracks on the Terrace (21–40), The Keeper’s Return (41–60), The Claim (61–80) and Keep the Light (81–100). Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` fills and trims their plaques to the tier target and `tools/tune_moves.py` fits their move budgets. Every tier starts from the median clear × 1.25, rounded up. Relic Rush multiplies that result by 1.5 and rounds up again. Slow bot samples do not raise the budget. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
+The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels. Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` fills and trims their plaques to the tier target and `tools/tune_moves.py` fits their move budgets. Every tier starts from the median clear × 1.25, rounded up. Relic Rush multiplies that result by 1.5 and rounds up again. Slow bot samples do not raise the budget. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
 
 ## Buildings
 

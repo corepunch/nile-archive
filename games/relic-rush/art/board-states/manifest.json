@@ -9,35 +9,6 @@
       "docs/review/resident-markers/unheard-visit-390-after.jpg"
     ]
   },
-  "nera_portrait": {
-    "source": "../../art/match3-residents/chart-and-clock.png",
-    "prompt": "../../art/match3-residents/chart-and-clock.prompt.txt",
-    "runtime": "data/story/characters/nera.png",
-    "reproduction": "python3 tools/resident_portraits.py",
-    "states": [
-      "dialogue bust"
-    ],
-    "review": [
-      "docs/screenshots/nera-arrival.jpg",
-      "docs/screenshots/nera-questions.jpg",
-      "docs/screenshots/nera-unasked.jpg",
-      "docs/screenshots/nera-remembered.jpg"
-    ],
-    "registration": "left half, authored alpha, bottom-centred on 320 x 480"
-  },
-  "resident_portrait": {
-    "source": "../../art/match3-residents/source.png",
-    "prompt": "../../art/match3-residents/prompt.txt",
-    "runtime": "data/story/characters/lio.png",
-    "reproduction": "python3 tools/resident_portraits.py",
-    "states": [
-      "dialogue bust"
-    ],
-    "review": [
-      "docs/screenshots/resident-arrival.jpg",
-      "docs/screenshots/resident-return.jpg"
-    ]
-  },
   "main_menu": {
     "source": "art/menu/source.png",
     "prompt": "art/menu/prompt.txt",
@@ -355,19 +326,12 @@
     "data/common/fonts/LilitaOne-Regular.ttf",
     "data/common/fonts/lilitaone-OFL.txt",
     "data/menu/valley.jpg",
-    "data/story/characters/adrian.png",
-    "data/story/characters/elena.png",
-    "data/story/characters/keeper.png",
-    "data/story/characters/lio.png",
-    "data/story/characters/mara.png",
-    "data/story/characters/marisol.png",
-    "data/story/characters/nera.png",
-    "data/story/characters/tomas.png",
-    "data/story/finale/safe-landing.jpg",
-    "data/story/finale/signal-plate.png",
+    "data/story/characters/oren.png",
+    "data/story/characters/sela.png",
+    "data/story/characters/tavi.png",
     "data/story/scenes/broken-cable.jpg",
-    "data/story/scenes/facing-sketches.jpg",
     "data/story/scenes/harbor-chart.jpg",
+    "data/story/scenes/ina-first-crossing.jpg",
     "data/story/scenes/reef-warning.jpg",
     "data/story/scenes/shutter-closed.png",
     "data/story/scenes/shutter-open.png"
@@ -701,18 +665,13 @@
     "review": "docs/screenshots/review/discovery-stars/"
   },
   "story": {
-    "source": "art/art-direction/expedition-cast.png",
+    "source": "art/art-direction/harbour-family.png",
     "import": "python3 games/relic-rush/tools/prepare_assets.py --portraits-only",
-    "source_orientation": "Runtime crops face right. Adrian is mirrored horizontally on export from the original lineup. Mara retains her original crop canvas after removing a disconnected neighboring fragment. The engine mirrors the right slot.",
+    "source_orientation": "Cropped left to right. Tavi is mirrored before registration so the renderer can reflect the right slot.",
     "cast": {
-      "elena": "data/story/characters/elena.png",
-      "mara": "data/story/characters/mara.png",
-      "tomas": "data/story/characters/tomas.png",
-      "adrian": "data/story/characters/adrian.png",
-      "keeper": "data/story/characters/keeper.png",
-      "marisol": "data/story/characters/marisol.png",
-      "lio": "data/story/characters/lio.png",
-      "nera": "data/story/characters/nera.png"
+      "sela": "data/story/characters/sela.png",
+      "oren": "data/story/characters/oren.png",
+      "tavi": "data/story/characters/tavi.png"
     },
     "states": [
       "speaking",
@@ -721,21 +680,18 @@
       "shout"
     ],
     "presentation": "Existing island and two board paintings, shared engine portrait staging and bubbles; body text 31.5 points, names/building bubbles 22.5 points. No new bitmap states or tint-authored variants.",
-    "script": "docs/story-live.md",
+    "script": "docs/story.md",
     "compile": "python3 games/relic-rush/tools/prepare_story.py",
-    "review": "docs/review/story/README.md",
-    "marisol": {
-      "source": "art/art-direction/marisol.png",
-      "prompt": "art/art-direction/marisol-prompt.txt",
-      "style_reference": "data/story/characters/tomas.png",
-      "import": "python3 games/relic-rush/tools/prepare_assets.py --portraits-only",
-      "review": "docs/review/campaign-cast/README.md"
-    },
-    "keeper": {
-      "source": "art/art-direction/ancient-keeper.png",
-      "prompt": "art/art-direction/ancient-keeper-prompt.txt",
-      "import": "python3 games/relic-rush/tools/prepare_assets.py --keeper-only",
-      "review": "docs/review/chapter-one/keeper-480.jpg"
+    "prompt": "art/art-direction/harbour-family.prompt.txt",
+    "preview": [
+      "shot story-opening",
+      "shot phone-story-opening",
+      "shot ferry-pilot"
+    ],
+    "keepsake": {
+      "source": "art/art-direction/ina-first-crossing.png",
+      "runtime": "data/story/scenes/ina-first-crossing.jpg",
+      "checkpoint": "meeting-map_room-aviary.after-92"
     }
   },
   "particle_sprites": {
@@ -1044,50 +1000,6 @@
       "registration": "art/match3-atlas.json",
       "reproduction": "python3 tools/match3_atlas.py",
       "review": "docs/screenshots/review/sun-coin/README.md"
-    }
-  },
-  "finale": {
-    "generator": "built-in ImageGen",
-    "registration": "tools/prepare_finale_art.py",
-    "assets": {
-      "signal-plate": {
-        "source": "art/finale/signal-plate.png",
-        "prompt": "art/finale/signal-plate.prompt.txt",
-        "runtime": "data/story/finale/signal-plate.png",
-        "size": [
-          128,
-          128
-        ],
-        "crop": [
-          204,
-          256,
-          1028,
-          959
-        ],
-        "paint_size": [
-          94,
-          80
-        ],
-        "reference": "art/quest-objects/scenario-icons.png"
-      },
-      "safe-landing": {
-        "source": "art/finale/safe-landing.png",
-        "prompt": "art/finale/safe-landing.prompt.txt",
-        "runtime": "data/story/finale/safe-landing.jpg",
-        "size": [
-          864,
-          1152
-        ],
-        "lantern": [
-          0.459,
-          0.423
-        ],
-        "references": [
-          "art/art-direction/expedition-cast.png",
-          "data/board/backs/scene-1.jpg",
-          "art/story-pictures/broken-relay.png"
-        ]
-      }
     }
   },
   "archived_story_art": {

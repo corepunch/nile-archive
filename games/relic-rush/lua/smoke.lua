@@ -52,7 +52,7 @@ local function campaign()
     elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == last_purchase
         and (R.overlay == R.OV_NONE or R.overlay == R.OV_FINALE) and R.prog.story_seen["after-100"] then
         -- The last clear scene closes on the finale card (the engine's, over the town).
-        assert(R.prog.story_choices["restore-16"] == 1, "campaign smoke: Mara answered the signal")
+        assert(R.prog.story_choices["restore-16"] == 1, "campaign smoke: Sela chose to carry the water")
         print(("campaign smoke passed: %d expeditions, %d story beats, %d restorations"):format(
             R.prog.level, #played, island.campaign_count(c)))
         app.quit()

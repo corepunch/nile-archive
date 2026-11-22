@@ -8,7 +8,6 @@
 local R = require("state")
 require("art").bind_board_backdrops(R.scenes)
 require("screens")
-require("finale")
 require("narrative")
 require("progress")
 require("smoke")

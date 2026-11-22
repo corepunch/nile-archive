@@ -23,7 +23,7 @@ return {
         },
     },
     speech = {scale = 1.5, name = 22.5},
-    region_speaker = "mara",
+    region_speaker = "sela",
     board = {
         kudos = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"},
         pieces = {
@@ -55,9 +55,9 @@ return {
         earn = "CLEAR NEW EXPEDITIONS TO OPEN IT",
     },
     finale = {
-        title = "To be continued...",
+        title = "Breakfast at the quay",
         lines = {
-            {"THE QUAY IS SAFE. OTHER LIGHTS ARE WAITING.", 16},
+            {"THE SPRING RUNS TO THE QUAY AGAIN.", 16},
             {"Your island stays open to build and explore.", 16},
         },
         button = "BACK TO MY ISLAND",
@@ -100,5 +100,5 @@ return {
         reserved = "RESOURCES RESERVED FOR RESTORATION",
         full = "ISLAND IS FULL",
     },
-    debug = {victory = 1, catalogue_card = 37, narrator = "tomas"},
+    debug = {victory = 1, catalogue_card = 37, narrator = "oren"},
 }

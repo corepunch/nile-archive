@@ -50,9 +50,7 @@ function R.smoke()
             click(menu, "settings")
             stage = 1
         else
-            if testing.game == "christmas-market" then
-                assert(story.active() and R.story_current.key == "before-01", "the opening scene belongs to the first board")
-            end
+            assert(story.active() and R.story_current.key == "before-01", "the opening scene belongs to the first board")
             stage = 4
         end
     elseif stage == 1 and R.overlay == R.OV_PAUSE and R.dialog_settled() then

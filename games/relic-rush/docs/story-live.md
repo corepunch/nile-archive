@@ -1,4 +1,6 @@
-# Relic Rush: A Light Below
+# Archive · A Light Below
+
+This is the retired expedition script. The playable campaign is [A Crust Each Way](story.md).
 
 **Status:** One hundred expeditions in five chapters of twenty, one per epoch of four restorations. Every expedition has a scene on its first clear; the ten story restorations have a scene when they are placed. The reply choice is at the Expedition camp (16).
 
