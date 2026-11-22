@@ -720,3 +720,8 @@ the marker boxes for tests.
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex
 values. The bubble uses the shared transition when it appears and fades away
 on a tap or timeout.
+
+The shared match-3 construction form also accepts a project's keeper. The game
+supplies the name and portrait through `R.project_keeper(kind)`. The form gives
+the portrait its own column beside the building image on cards that have a
+keeper. The purpose, board reward and price stay below the images.

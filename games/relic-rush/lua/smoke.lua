@@ -20,28 +20,22 @@ local function press_tile(key)
 end
 
 -- --smoke --campaign: all five square chapters (a hundred expeditions), through the real result, Claim,
--- region, placement, dialogue and Play controls. Each board's goals are met
+-- region, placement and Play controls. Each board's goals are met
 -- before one real swap, so this checks the flow; the extended greedy-bot
 -- rules test checks that the boards themselves can be won.
-local played = {}
 local last_purchase = 0
 for n, step in ipairs(island.ladder) do
     if step.after <= rules.LEVELS then last_purchase = n end
 end
 local function campaign()
     if frames > 160000 then   -- a hundred boards of up to 108 cells
-        error(("campaign smoke stalled at level %d (overlay %d, island %s, story %s)"):format(
-            R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
+        error(("campaign smoke stalled at level %d (overlay %d, island %s)"):format(
+            R.prog.level, R.overlay, tostring(R.on_island)))
     end
     if R.diving() then return end   -- the town HUD, Confirm included, is not drawn during the dive
-    if R.overlay == R.OV_STORY_CHOICE and not R.dialog_settled() then return end
+    assert(not story.active() and R.overlay ~= R.OV_STORY_CHOICE, "the campaign runs without dialogue")
     if wait > 0 then wait = wait - 1; return end
     wait = 2
-    if story.active() then
-        local b = R.story_current
-        if b and played[#played] ~= b.key then played[#played + 1] = b.key end
-        app.inject_click(vec2(240, 300)); return
-    end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
@@ -50,15 +44,10 @@ local function campaign()
     if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == last_purchase
-        and (R.overlay == R.OV_NONE or R.overlay == R.OV_FINALE) and R.prog.story_seen["after-100"] then
-        -- The last clear scene closes on the finale card (the engine's, over the town).
-        assert(R.prog.story_choices["restore-16"] == 1, "campaign smoke: Sela chose to carry the water")
-        print(("campaign smoke passed: %d expeditions, %d story beats, %d restorations"):format(
-            R.prog.level, #played, island.campaign_count(c)))
+        and R.on_island and R.overlay == R.OV_NONE then
+        print(("campaign smoke passed: %d expeditions, %d restorations"):format(
+            R.prog.level, island.campaign_count(c)))
         app.quit()
-    elseif R.overlay == R.OV_STORY_CHOICE then
-        local box = R.choice_form.boxes["1"]
-        if box then app.inject_click(box:center()); wait = 10 end
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() and R.result_form.boxes.claim then app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_WONDER then
@@ -114,11 +103,7 @@ function R.smoke()
         return
     end
     wait = 3
-    if story.active() then   -- tap through the dialogue
-        assert(R.phase ~= R.PH_PRESENT or R.intro.t == 0, "smoke: the board fills only after the dialogue")
-        app.inject_click(vec2(240, 300))
-        return
-    end
+    assert(not story.active(), "the campaign runs without dialogue")
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return

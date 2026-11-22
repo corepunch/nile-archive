@@ -11,6 +11,7 @@ R.g = rules.game_start(0, 1)
 check(R.debug_skip_level() and R.g.won and R.overlay == R.OV_RESULT, 'skip opens the normal result')
 check(not R.debug_skip_level(), 'a completed board cannot be skipped twice')
 local expected = rules.level_reward(R.g, R.wonders, R.prog)
+check(R.result_action(true, expected) == R.words.result.visit, 'the first clear opens the first construction')
 R.claim_reward()
 check(R.prog.level == 1 and R.prog.wallet[1] == expected[1], 'first clear grants the normal reward')
 local wallet = R.prog.wallet[1]
@@ -35,6 +36,28 @@ check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds a
 R.on_island, R.overlay = true, R.OV_NONE
 
 local relic = testing.game == "relic-rush"
+if not relic then
+    local theo = R.project_keeper(island.kinds.lumber)
+    check(theo.id == "theo" and theo == R.project_keeper(island.kinds.rink)
+        and theo == R.project_keeper(island.kinds.fir_snowy), 'related projects share Theo’s portrait')
+    for _, step in ipairs(island.ladder) do
+        check(R.project_keeper(step.kind).portrait_path ~= nil, 'each construction has a project portrait')
+    end
+end
+R.prog.story_recap = true
+R.quiet = false
+R.story_tick()
+check(not R.story_current and not story.active(), 'older campaign saves cannot replay their recap')
+R.quiet = true
+R.g = R.make_board(1, 2)
+R.on_island = false
+check(R.debug_skip_level(), 'win an ordinary board')
+check(R.result_action(true, purse()) == "COLLECT & PLAY NEXT", 'an ordinary result offers the next board')
+R.claim_reward()
+check(R.prog.level == 2 and R.g.level == 2 and not R.on_island and R.overlay == R.OV_NONE,
+    'collecting an ordinary win starts the next board directly')
+R.on_island = true
+
 local function reward_piece(g, reward)
     for kind, piece in pairs(g.resource_yields) do
         if piece == reward then return kind end

@@ -122,7 +122,7 @@ R.register_result(function()
     return {
         title=breakdown.first and "Expedition complete" or "Replay complete",
         subtitle=("LEVEL %d · %s"):format(R.g.level + 1, rules.level_of(R.g).name),
-        resources=resources, action="COLLECT & RETURN",
+        resources=resources, action=R.result_action(breakdown.first, reward),
     }
 end)
 
@@ -177,8 +177,8 @@ function R.building_reward(kind)
     if not step then return end
     local unlock = step.unlock
     local bonus = unlock.bonus
-    if bonus then return {id=bonus.key, icon=R.board_art[bonus.icon]} end
-    return {id=unlock.key, icon=R.board_art[chip_prefix .. unlock.key],
+    if bonus then return {id=bonus.key, name=bonus.name, icon=R.board_art[bonus.icon]} end
+    return {id=unlock.key, name=unlock.name, icon=R.board_art[chip_prefix .. unlock.key],
         amount=unlock.amount, unit=currency_icon(unlock.slot)}
 end
 

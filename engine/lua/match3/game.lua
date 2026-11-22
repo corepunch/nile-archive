@@ -34,6 +34,7 @@ G.DEFAULTS = {
     app = {title = "Match-3 town", id = "match3-game", clear = "#09211F"},
     menu = {play = "CONTINUE", settings = "SETTINGS", label = "MAIN MENU"},
     packs = {"kind"},        -- piece packs; the first is the default, --tiles picks another
+    campaign_dialogue = true,
     speech = {scale = 1, name = 15},
     region_speaker = "",
     board = {},
@@ -293,6 +294,8 @@ function G.bind(R, over)
     R.game_bound = true
     local W = G.config(over)
     R.words = W
+    local campaign_dialogue = W.campaign_dialogue
+    local preview_visits = app.arg("shot") and app.arg("visit-game")
     local rules = require("rules")
     local island = require("island")
     local journey = require("journey")
@@ -588,8 +591,14 @@ function G.bind(R, over)
     local wonder_form = ui.form{
         root = N.column {panel=true,
             match3.popup_header("Building details", nil, W.corner_close and "close"),
-            N.image {id="sprite", height=205},
-            N.label {id="about", wrap=true, em=19, text_style="body"},
+            N.row {gap=10,align="center",
+                N.image {id="sprite", height=205, grow=1},
+                N.column {visible_field="show_keeper",width=126,gap=5,
+                    N.image {id="keeper_portrait",height=136},
+                    N.label {id="keeper_name",wrap=true,em=16,text_style="gold"},
+                },
+            },
+            N.label {id="about", wrap=true, em=19, text_style="body", visible_field="show_about"},
             N.label {id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
             N.row {visible_field="show_upgrade",
                 N.spacer {grow=1},
@@ -630,8 +639,14 @@ function G.bind(R, over)
         funding_play = needs_funding and (R.prog.level < rules.LEVELS or step.after <= R.prog.level)
         match3.set_popup_header(wonder_form, w.name)
         local upgrade = R.upgrade_card and R.upgrade_card(i)
-        local about = journey.building_about(i, R.prog.level, w.about)
-        if upgrade then about = about .. "\n" .. upgrade.about end
+        local keeper = R.project_keeper and R.project_keeper(i)
+        wonder_form.values.show_keeper = keeper ~= nil
+        if keeper then
+            wonder_form:set("keeper_portrait", texture.load(keeper.portrait_path)):set("keeper_name", keeper.name)
+        end
+        local about = campaign_dialogue and journey.building_about(i, R.prog.level, w.about) or w.about or ""
+        if upgrade then about = about == "" and upgrade.about or about .. "\n" .. upgrade.about end
+        wonder_form.values.show_about = about ~= ""
         local ok, message = wonder_form:push{sprite=w.sprite, about=about,
             action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or funding_play and (R.prog.level < rules.LEVELS and W.card.play or "EARN RESOURCES") or W.card.back}
         assert(ok, message)
@@ -658,8 +673,9 @@ function G.bind(R, over)
         wonder_form.values.show_gets, wonder_form.values.show_amounts = #gets > 0, count > 0
         wonder_form.values.show_both = groups == 2
         assert(wonder_form:set_items("gets", gets))
-        wonder_form.values.show_unlock = unlock_text ~= nil and #gets == 0
-        wonder_form:set("unlock", unlock_text or "")
+        local reward_name = not campaign_dialogue and reward and reward.name
+        wonder_form.values.show_unlock = not not (reward_name or unlock_text and #gets == 0)
+        wonder_form:set("unlock", reward_name and ("Unlocks %s"):format(reward_name) or unlock_text or "")
         assert(wonder_form:set_items("price", price))
         local funding
         if needs_funding then
@@ -756,7 +772,9 @@ function G.bind(R, over)
         if event.id == "open" and R.island:unlock(z, R.prog.wallet) then
             R.island_focus(R.island.zones[z + 1].marker, R.island.cam.zoom)
             R.save_progress()
-            if journey.regions[z] then story.add({W.region_speaker, journey.regions[z], story.SHOUT}) end
+            if campaign_dialogue and journey.regions[z] then
+                story.add({W.region_speaker, journey.regions[z], story.SHOUT})
+            end
             R.tone(820)
         end
         R.overlay = R.OV_NONE
@@ -984,8 +1002,9 @@ function G.bind(R, over)
         local kind = R.island.items[item + 1].type
         local definition = R.buildings[kind + 1]
         local upgrade = R.upgrade_card and R.upgrade_card(kind)
-        return definition.name .. "\n" .. journey.building_about(kind, R.prog.level, definition.about)
-            .. (upgrade and upgrade.short and "\n" .. upgrade.short or "")
+        local words = definition.name
+        if campaign_dialogue then words = words .. "\n" .. journey.building_about(kind, R.prog.level, definition.about) end
+        return words .. (upgrade and upgrade.short and "\n" .. upgrade.short or "")
     end
 
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
@@ -1021,7 +1040,9 @@ function G.bind(R, over)
     function R.town_setup()
         visited_item = nil
         local function visit_for_kind(kind)
-            return journey.visit(R.prog, island.buildings[kind + 1].key)
+            if campaign_dialogue or preview_visits then
+                return journey.visit(R.prog, island.buildings[kind + 1].key)
+            end
         end
         R.town = town.new(R.island, require("town_config"), {
             skin = skin,
@@ -1064,15 +1085,20 @@ function G.bind(R, over)
             placed = function(ev, fresh)
                 if fresh then
                     local kind = R.island.items[ev.building + 1].type
-                    journey.placed(R.prog, island.buildings[kind + 1].key)
-                end
-                if fresh and island.purchase_confirmed then
-                    local site = island.purchase_confirmed(R.island, R.island.items[ev.building + 1].type, app.clock())
-                    if site then R.island_focus(site, R.island.cam.zoom) end
+                    if campaign_dialogue then
+                        journey.placed(R.prog, island.buildings[kind + 1].key)
+                    else
+                        local reward = R.board_art and R.building_reward(kind)
+                        if reward and reward.name then R.notice(("Unlocked: %s"):format(reward.name)) end
+                    end
+                    if island.purchase_confirmed then
+                        local site = island.purchase_confirmed(R.island, kind, app.clock())
+                        if site then R.island_focus(site, R.island.cam.zoom) end
+                    end
                 end
                 for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
                 R.tone(740)
-                R.save_progress()   -- the building's story beat follows from R.story_tick
+                R.save_progress()
             end,
             bubble_text = function() return R.speech_style(15) end,
             reduced_motion = function() return R.reduced_motion end,
@@ -1174,6 +1200,7 @@ function G.bind(R, over)
     end
 
     function R.next_story(before_level)
+        if not campaign_dialogue then return end
         if before_level == nil then
             local pending = R.prog.pending_answer
             if pending then return answer_beat(pending, "visit") end
@@ -1215,7 +1242,7 @@ function G.bind(R, over)
             end
             if b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
-        if R.quiet or story.active() then return end
+        if not campaign_dialogue or R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
@@ -1253,10 +1280,12 @@ function G.bind(R, over)
             R.prog.wallet[rules.CLEARED] = R.prog.level
         end
         R.island:serialize(s)
-        story.serialize(s)
-        journey.serialize(s, R.prog)
+        if campaign_dialogue then
+            story.serialize(s)
+            journey.serialize(s, R.prog)
+        end
         if save.is_reading(s) then
-            journey.migrate(R.prog, version)
+            if campaign_dialogue then journey.migrate(R.prog, version) end
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
         if R.serialize_campaign then R.serialize_campaign(s) end
@@ -1293,6 +1322,7 @@ function G.bind(R, over)
         if not R.quiet then
             local l = rules.level_of(R.g)
             R.mission(R.board_lesson and R.board_lesson(R.g) or l.lesson, ("%d. %s"):format(lvl + 1, l.name)); R.present_board()
+            if not campaign_dialogue and lvl == 0 then R.notice(l.lesson) end
         end
         return true
     end
@@ -1307,7 +1337,26 @@ function G.bind(R, over)
         return R.start_level(level)
     end
 
-    -- After the results dialog closes: bank the reward and go build.
+    -- Route first clears to town when a purchase opens or is ready. A shortfall
+    -- can be earned on later boards. Replays always return to town.
+    local function result_destination(first, level, wallet)
+        if not first then return "town" end
+        if level >= LEVELS then return "complete" end
+        local kind, position = island.next_step(R.island, level)
+        if kind and (island.ladder[position].after == level or island.can_buy(R.island, wallet, level, kind)) then
+            return "build"
+        end
+        return "play"
+    end
+
+    function R.result_action(first, reward)
+        local destination = result_destination(first, R.prog.level + (first and 1 or 0), R.prog.wallet + reward)
+        if destination == "play" then return "COLLECT & PLAY NEXT" end
+        if destination == "build" then return W.result.visit end
+        return "COLLECT"
+    end
+
+    -- Bank the reward only after the results dialog closes.
     function R.claim_reward()
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders, R.island)
         if not paid then return end
@@ -1316,6 +1365,14 @@ function G.bind(R, over)
         if not app.arg("debug-walkthrough") then R.submit_leaderboard_progress() end
         R.save_progress()
         R.on_island = true
+        if not campaign_dialogue then
+            local destination = result_destination(first, R.prog.level, R.prog.wallet)
+            R.overlay = destination == "complete" and R.OV_COMPLETE or R.OV_NONE
+            if destination == "play" then R.play_next()
+            elseif destination == "build" then R.notice(W.notices.reward_building)
+            elseif not first then R.notice(W.notices.reward_replay) end
+            return
+        end
         R.overlay = first and R.g.story_clear == journey.beats[#journey.beats].key and R.OV_FINALE
             or first and R.prog.level >= rules.LEVELS and R.OV_COMPLETE or R.OV_NONE
         R.notice(first and (journey.wonder_at(R.prog.level) and W.notices.reward_building or W.notices.reward_story) or W.notices.reward_replay)
@@ -1567,7 +1624,8 @@ function G.app(R)
         local at_result = drawn_overlay == R.OV_RESULT
         local outcome = at_result or drawn_overlay == R.OV_FAILED
         local revealing = at_result and elements.reveal_holding(R, rules)
-        local clear_due = at_result and not R.quiet and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
+        local clear_due = W.campaign_dialogue and at_result and not R.quiet
+            and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
         local story_wait = talking or revealing or clear_due
         if outcome then
             ui.block(app.bleed())
@@ -1625,15 +1683,19 @@ function G.app(R)
 
     local function init()
         R.font = R.skin:font("lilita")
-        story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
-                                      edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
-                                      portrait_height = .34, centered = true, inward = true,
-                                      edge_to_edge = true, skip = "SKIP"})
         local art = require("art")
-        for ending, path in pairs(art.resident_keepsakes or {}) do
-            local picture = texture.load(path)
-            assert(picture.tex, "missing resident keepsake: " .. path)
-            R.visit_pictures[ending] = picture
+        local dialog = app.arg("dialog")
+        if W.campaign_dialogue or app.arg("story-beat") or app.arg("story-choice") or app.arg("visit-game")
+            or dialog == "intro" or dialog == "adrian" or dialog == "mara" or dialog == "tomas" then
+            story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
+                                          edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
+                                          portrait_height = .34, centered = true, inward = true,
+                                          edge_to_edge = true, skip = "SKIP"})
+            for ending, path in pairs(art.resident_keepsakes or {}) do
+                local picture = texture.load(path)
+                assert(picture.tex, "missing resident keepsake: " .. path)
+                R.visit_pictures[ending] = picture
+            end
         end
         local board_skin = art.skin()
         for _, action in ipairs{"action-build", "action-play", "action-pause"} do
@@ -1694,7 +1756,9 @@ function G.app(R)
         if R.prog.level >= LEVELS then
             R.g.won, R.on_island = true, true
         end
-        if R.prog.story_recap or R.next_story(nil) or journey.next_placement(R.prog) then R.on_island = true end
+        if W.campaign_dialogue and (R.prog.story_recap or R.next_story(nil) or journey.next_placement(R.prog)) then
+            R.on_island = true
+        end
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end
         if W.menu.continue_in_town and R.prog.level > 0 then R.on_island = true end
         if R.resume_completed then R.resume_completed() end

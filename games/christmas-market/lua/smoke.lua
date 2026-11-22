@@ -32,11 +32,7 @@ function R.smoke()
         return
     end
     smoke_wait = 3
-    if story.active() then   -- tap through the dialogue
-        assert(R.phase ~= R.PH_PRESENT or R.intro.t == 0, "smoke: the board fills only after the dialogue")
-        app.inject_click(vec2(240, 300))
-        return
-    end
+    assert(not story.active(), "the campaign runs without dialogue")
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
@@ -90,6 +86,9 @@ function R.smoke()
         assert((R.town.navigation:get("play") or "") == "", "smoke: Play shows no level number")
         app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
     elseif smoke_stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
+        local card = R.wonder_form
+        assert(card:get("keeper_name") == "Noelle" and card.boxes.keeper_portrait and card.boxes.sprite,
+            "the Welcome arch card shows its project keeper and building art")
         app.inject_click(R.wonder_form.boxes.action:center()); smoke_stage = 3
     elseif smoke_stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD

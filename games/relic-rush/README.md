@@ -155,27 +155,17 @@ restorations introduces a portrait painting of that site on eligible boards once
 the player confirms construction. Replays use the same expedition gates.
 See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 
-## Story and world
-
-Sela and her daughter Ina come home after the flood. The quay has no drinking water. Repair the hillside well, follow the old clay pipe to Oren’s mill, and help Tavi use the tide to turn the wheel. The [playable script](docs/story.md) contains the opening, construction scenes, upgrade dialogue and the optional story of Ina learning to row.
-
-![Sela the potter, Oren the miller and Tavi the ferry pilot](art/art-direction/harbour-family.png)
-
-The opening plays on the first board. Returning towns receive a recap. Ordinary clears without a scene go straight to the reward. At the Cartographer’s House and Great Aviary, a speech bubble marks an unheard question. Hearing the end of the rowing lesson unlocks a picture at that home.
-
-Run `python3 games/relic-rush/tools/prepare_story.py --check` to check the playable script. Preview the opening with `--story-beat before-01`.
-
 ## Expedition and restoration loop
 
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all turquoise plaques within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Return to the island. At a restoration milestone, check the price and play the next expedition if you need more resources. Clearing the tablets and claiming the reward opens the next expedition. If you build later, the island story picks up where you left it.
+4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. Open Build to see its cost or what you still need.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
-6. See how the crew uses what you built, then set out again. The 100 boards open twenty restorations, one after every fifth board.
+6. Construction adds a new resource piece or tool to later boards. The 100 boards open twenty restorations, one after every fifth board.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
-The Spring well's water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The Build card shows the price or the amounts still needed alongside its one reward.
+The Spring well's water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The construction card explains what the building does and shows its piece or tool beside the price or amounts still needed.
 
 ### Tutorials and upgrades (`lua/user_events.lua`)
 
@@ -215,7 +205,7 @@ The Build card describes how each site works and who depends on it. Its price an
 
 [Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 
-The ladder has twenty purchases, one available after every fifth board (after levels 1, 6, 11 … 96), four per epoch. It follows the purchase order of the Windows edition of Cradle of Rome 2, with names that match the artwork (the Rome name is in brackets). The Spring well, Expedition camp, Jungle market, Tide clock tower, Harbour plaza, Harbour lodge, Keeper's archive, Lighthouse, Temple of the Sun and Jade fountain are story restorations with a placement scene and hold the next level; the others must be bought before the next story restoration. The [campaign balance check](docs/square-match3.md#construction-balance) fits the prices to the resources the bot earns by clearing boards in order, so the expected campaign needs no replays.
+The ladder has twenty purchases, one available after every fifth board (after levels 1, 6, 11 … 96), four per epoch. It follows the purchase order of the Windows edition of Cradle of Rome 2, with names that match the artwork (the Rome name is in brackets). The Spring well, Expedition camp, Jungle market, Tide clock tower, Harbour plaza, Harbour lodge, Keeper's archive, Lighthouse, Temple of the Sun and Jade fountain are restoration milestones in the purchase order. The [campaign balance check](docs/square-match3.md#construction-balance) fits the prices to the resources the bot earns by clearing boards in order, so the expected campaign needs no replays.
 
 | After level | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
@@ -274,7 +264,7 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
   can feature one bonus gem family. Matching 30 fills one use, and activation
   costs zero moves. [Bonus effects and restorations](docs/board-progression.md#bonus-pieces)
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
-- Each won attempt banks what the crew brings back. First clears count toward boards cleared. Chapter 1 story progress follows island actions.
+- Each won attempt banks what the crew brings back. First clears count toward boards cleared. Restoration progress follows confirmed placement.
 - Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - Adjacent clouded regions open by the number of boards cleared. There are no stars or compasses.
 - The settings gear sits beside the three resource balances. Buildings, Play and Expeditions occupy the town's bottom row. Both catalogues scroll continuously. The building shop shows three cards per row.
@@ -327,7 +317,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 - `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every board at least once in its seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
-- `--smoke --campaign` plays the 100 expeditions through the real result, Claim, region, placement, dialogue and Play controls. Each board's goals are met before one real swap. Every story beat must play once, in script order, and be acknowledged, and the run must end on the finale with the ten story restorations placed and every region open. A stuck story or restoration gate fails it with the level and the beats played so far. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
+- `--smoke --campaign` plays the 100 expeditions through the real result, Collect, region, placement and Play controls. Each board's goals are met before one real swap. The run checks that dialogue never interrupts play and ends after the completion card with all twenty purchases placed. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone and Android device builds, touch feel, safe areas and performance still need device QA.
 
@@ -425,9 +415,9 @@ The town row draws Build, Play, Levels and Pause as enamel buttons sized to thei
 slots. A single [painted strip](../../art/match3-buttons/README.md) supplies the
 128×128 action icons. The board draws its own bonus pieces on the same buttons.
 
-For a local story walkthrough, launch `./build/relic-rush --debug-walkthrough`.
+For a local construction walkthrough, launch `./build/relic-rush --debug-walkthrough`.
 Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.
-On the island, **Advance** places an earned story building or starts the next board.
+On the island, **Advance** places an earned campaign building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
 ### Board

@@ -17,7 +17,7 @@ Both also have [compact title](docs/screenshots/main-menu-phone.jpg) and
 
 In an Xcode Debug build for iPhone, the iOS Simulator or macOS, tap **SKIP >>**
 at the top right of the board to have the bot finish the level. Claim the reward
-and follow the usual story prompts. Release builds hide the button.
+and follow the construction prompts. Release builds hide the button.
 
 ![The 41 market buildings and decorations](docs/screenshots/buildings.jpg)
 
@@ -128,29 +128,17 @@ The interface look (text palettes, panels, the red buttons and their states, foc
 Board, HUD and character art is spatially extracted by `python3 games/christmas-market/tools/prepare_assets.py`. Buildings are rendered by `tools/render_buildings.py` and imported by `tools/prepare_catalogue.py`. See the [asset catalogue](docs/asset-catalogue.md) and the [building catalogue](docs/building-catalogue.md).
 
 
-## Story
+## Market projects
 
-The 100 playable wishes run through five Advents. Ten stalls carry the story (Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree) and ten more fill the ladder between them: one purchase every five levels. The [script](docs/story.md) runs five Advents of twenty wishes to Christmas Eve: Noelle arrives to help for Advent, lights the market's lane, and by the last Advent a late passenger and a light to come home to bring everyone together. There is no villain.
+Clear panes to bank resources and build twenty projects across the 100 boards. Collect and play the next board on ordinary wins. When a project opens or becomes affordable, Collect takes you to the market.
 
-Otis Bell brings his clock to the Station Kiosk after wish 46. Ask how he passes the time and he’ll remember whose buttons Pip chose when they wait outside Henrik’s door at wish 63.
-
-Ada Pike arrives from across the lake when the Glassblower’s stall opens. She returns at wishes 74, 84, 89 and 90. Six milestones bring new personal and town questions, including a pair after the finale. A speech bubble marks unheard questions. Tap it or the building to start a lone question or choose among several. After an answer, ask another or choose **Back to town**. Hearing the last answer clears the bubble and ends the visit. At wish 90 Ada remembers the cue she and Noelle agreed on at the stall.
-
-Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him.
-
-At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move. After Pip’s telegram at 85, Ada and Otis lend him their game while he waits for his mum. Their exchange remembers whose account of the first game Pip heard. After the pair lend Pip their tin lid, both homes offer one last question. Ada explains how Pip won the game. Otis tells Noelle what happened when he tried to coach. Hearing either closing answer lets you see the blue glass button in Pip’s mitten when you visit that resident.
-
-Pip can ask Ada whether Otis left the double jump on purpose, or ask Otis what Ada’s two pings sounded like from his end of the board. Either answer gives Pip a reason to walk back.
-
-All twenty campaign purchases now have a character response. The ten purchases between story gates trigger a conversation on confirmation. Later dialogue checks whether the building actually stands. Compare `--story-beat after-98 --story-line 2` with the same preview plus `--story-built`, or preview the purchase with `--story-beat placed-sleigh`.
-
-`lua/story_content.lua` is compiled from the script by `python3 games/christmas-market/tools/prepare_story.py`; `--check` catches drift in `make test`. `lua/journey.lua` holds the stall schedule, recap and changing tap lines as data; `lua/narrative.lua` holds the cast. The engine (`engine/lua/match3/game.lua`) keeps the checkpoints and plays the scenes. Preview any scene with `--story-beat before-11`, or `--story-beat after-30 --story-line 15`, and `--frames 240` for fully typed text. All eleven speakers use painted busts. Sources and export commands are in the [asset catalogue](docs/asset-catalogue.md#story-cast). Review captures are in [docs/review/story](docs/review/story/README.md).
+Each project card explains what you are building, shows the price or shortfall, and names the piece or tool it adds to the board. The keeper's painted portrait appears beside the project. Theo Marsh looks after the Lumber workshop, Ice house, Winter skating rink and Christmas tree, and also appears on snowy-tree projects. See the [portrait catalogue](docs/asset-catalogue.md#project-portraits).
 
 ## Review and validation
 
-| Snowy market | Festive puzzle | Noelle |
-| --- | --- | --- |
-| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/spruce-palette/letter.jpg) | ![Dialogue](docs/screenshots/review/market-wishes/opening-390.jpg) |
+| Snowy market | Festive puzzle |
+| --- | --- |
+| ![Market](docs/screenshots/market.jpg) | ![Puzzle](docs/screenshots/review/spruce-palette/letter.jpg) |
 
 Build with `make CFLAGS="-O2 -g -Werror" christmas-market build/test/christmas-market`.
 Run `build/test/christmas-market --extended "rules campaign_play" "rules christmas" "smoke game" "smoke campaign"`
@@ -159,8 +147,7 @@ matches and checks the 100 wishes and twenty purchases. The standard
 smoke uses real input for a win, construction, building pickup and movement,
 decoration shopping, replay and the next level. The campaign smoke prepares
 each board and the wallet for one real winning move, then drives Collect,
-region opening, construction, dialogue and Play through the end screen.
-`rules christmas_story` covers the story scheduler and saved progress.
+region opening, construction and Play through the completion screen.
 
 ## Leaderboard
 
@@ -185,7 +172,7 @@ Board artwork fills its registered square slots. In dialogue, portraits face eac
 The 0.7-second wipe from town reveals the board as it assembles. If dialogue is playing, the entrance waits for it to end. Cells ripple in, treats fall, blockers land and a light sweeps across the board. Tap to skip the entrance. Reduced motion uses a short fade. See [the engine timeline](../../docs/ENGINE.md#board-entrance).
 During refills, each treat gives a small bounce when it comes to rest in its slot. Reduce Motion suppresses the bounce.
 
-Popups use measured vertical forms. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Results display Tokens, Treats and Materials in three equal columns, with each icon above a plain number. Above Collect, the card shows the amounts the next stall still needs, its picture once the wallet covers it, or a first clear's story find. In reels the result sections still settle on one timeline, which the first tap skips. See [docs/MOTION.md](../../docs/MOTION.md) and the [dialog motion review](docs/review/dialog-motion/README.md).
+Popups use measured vertical forms. Every popup uses the shared title panel. Settings shows the current board as its subtitle during play. Results display Tokens, Treats and Materials in three equal columns, with each icon above a plain number. If a stall is available, the results show either the shortfall or a picture of the funded stall. In reels the result sections still settle on one timeline, which the first tap skips. See [docs/MOTION.md](../../docs/MOTION.md) and the [dialog motion review](docs/review/dialog-motion/README.md).
 
 ![The result dialog arriving](docs/screenshots/reward-entrance-reel.gif)
 
@@ -204,9 +191,9 @@ The town row draws Build, Play, Levels and Pause as enamel buttons sized to thei
 slots. A single [painted strip](../../art/match3-buttons/README.md) supplies the
 128×128 action icons. The board draws its own bonus pieces on the same buttons.
 
-For a local story walkthrough, launch `./build/christmas-market --debug-walkthrough`.
+For a local construction walkthrough, launch `./build/christmas-market --debug-walkthrough`.
 Tap **Skip level** at the top right of the board, read any scene, then claim the usual reward.
-On the island, **Advance** places an earned story building or starts the next board.
+On the island, **Advance** places an earned campaign building or starts the next board.
 The walkthrough has its own save. Add `--fresh` to start at the opening without saving.
 
 The Reindeer stable introduces the Farrier's hammer and the Candlelight shop introduces

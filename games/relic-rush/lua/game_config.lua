@@ -5,6 +5,8 @@ return {
     app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F"},
     menu = {title = {"RELIC RUSH"}, subtitle = "THE LOST VALLEY", town = "VISIT ISLAND"},
     corner_close = true,
+    campaign_dialogue = false,
+    result = {visit = "COLLECT & VISIT ISLAND"},
     packs = {"relics", "jewels", "resources"},
     transitions = {
         style = "wipe",
@@ -35,9 +37,8 @@ return {
         background = {min_height=900, align_y=.35, motes={255, 228, 139, 70}},
     },
     notices = {
-        reward_building = "Resources banked. Tap Build for the next restoration.",
-        reward_story = "Resources banked. Tap Build for the next restoration.",
-        reward_replay = "Resources banked. Tap Build for the next restoration.",
+        reward_building = "Tap Build for the next restoration.",
+        reward_replay = "Resources collected.",
         all_open = "Your whole island is open to explore.",
         quit = "Your board is saved. Tap Play to continue expedition %d.",
     },
@@ -80,7 +81,7 @@ return {
         close = "BACK TO ISLAND",
         categories = {
             {"all", "All treasures"},
-            {"wonder", "Story wonders"},
+            {"wonder", "Restorations"},
             {"building", "Buildings"},
             {"tree", "Trees"},
             {"bush", "Shrubs"},

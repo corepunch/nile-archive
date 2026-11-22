@@ -1169,15 +1169,6 @@ local boards = {
 }
 
 local levels, shapes = require("match3.shapes").square_levels(boards, 9, 12, "Light every blue pane.")
--- First-clear story finds (docs/story.md#story-finds-and-market-resources).
-for level, find in pairs{
-    [31] = {key="cocoa", name="Cocoa mug"},
-    [56] = {key="scarf", name="Blue practice scarf"},
-    [61] = {key="letter", name="Brown envelope"},
-    [83] = {key="ribbon", name="Red wish ribbon"},
-    [85] = {key="telegram", name="Blue telegram"},
-    [89] = {key="lantern", name="Borrowed lantern"},
-} do levels[level].story_piece = find end
 
 -- Four in a line leave a line gem of that color; five leave a rainbow gem.
 return {levels=levels, colors=5, shapes=shapes, wonder_levels={1,11,21,31,51,56,61,76,81,91},

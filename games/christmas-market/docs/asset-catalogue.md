@@ -522,6 +522,17 @@ but is no longer registered. The earlier
 [frost-edge review](screenshots/review/frost-edges/after-480x900.jpg) shows the
 retired rims.
 
+## Project portraits
+
+Christmas Market uses the existing painted portraits on construction cards. The card
+shows one portrait and the keeper's name beside the project art, with the same portrait
+at full price, shortfall and completed states. Keeper assignments come from the
+upgrade roster and the project overrides in [screens.lua](../lua/screens.lua).
+Theo Marsh appears on the Lumber workshop, Ice house, Winter skating rink, Christmas
+tree and snowy-tree decorations. Ada Pike appears on the Glassblower's stall.
+Use the named captures "shot project-lumber" and "shot project-skating" in the
+Christmas Market test suite to review the two supported phone layouts.
+
 ## Story cast
 
 The original [supporting cast sheet](../art/story-cast.png) used Noelle as its reference. Its prompt is under `story_cast` in [character-and-icon-prompts.json](../art/character-and-icon-prompts.json). The [second ImageGen sheet](../art/new-story-cast.png) adds Mrs Alder, Mr Finch, Mary Larkin and Rosa, using the first sheet and Noelle's cutout for style. [Exact prompt](../art/new-story-cast-prompt.txt) · [Phone review](review/campaign-cast/README.md) · [Issue #110](https://github.com/corepunch/nile-archive/issues/110)

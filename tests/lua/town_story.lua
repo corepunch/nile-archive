@@ -1,4 +1,5 @@
--- Use the same town confirmation and story queue that a player sees.
+-- Run the archived town script through the engine's opt-in story mode.
+require('game_config').campaign_dialogue = true
 local R, island, journey = require("state"), require("island"), require("journey")
 require("main")
 R.test_mode, R.quiet, R.overlay, R.on_island = true, false, R.OV_NONE, true

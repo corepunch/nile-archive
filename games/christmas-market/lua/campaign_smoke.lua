@@ -1,5 +1,5 @@
 -- campaign_smoke.lua — --smoke --campaign: the hundred square wishes, through the
--- real result, Collect, region, stall card, placement, dialogue and Play
+-- real result, Collect, region, stall card, placement and Play
 -- controls. Each board's goals are met before one real swap, so this checks
 -- the flow; the extended greedy-bot rules test checks the boards themselves.
 local R = require("state")
@@ -7,7 +7,6 @@ local rules = require("rules")
 local island = require("island")
 
 local frames, wait, partner = 0, 0, -1
-local played = {}
 local due = 0
 for _, step in ipairs(island.ladder) do
     if step.after <= rules.LEVELS then due = due + 1 end
@@ -16,18 +15,13 @@ end
 function R.campaign_smoke()
     frames = frames + 1
     if frames > 48000 then   -- a hundred boards of up to 108 cells
-        error(("campaign smoke stalled at level %d (overlay %d, market %s, story %s)"):format(
-            R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
+        error(("campaign smoke stalled at level %d (overlay %d, market %s)"):format(
+            R.prog.level, R.overlay, tostring(R.on_island)))
     end
     if R.diving() then return end   -- the town HUD, Confirm included, is not drawn during the dive
-    if R.overlay == R.OV_STORY_CHOICE and not R.dialog_settled() then return end
+    assert(not story.active() and R.overlay ~= R.OV_STORY_CHOICE, "the campaign runs without dialogue")
     if wait > 0 then wait = wait - 1; return end
     wait = 2
-    if story.active() then
-        local b = R.story_current
-        if b and played[#played] ~= b.key then played[#played + 1] = b.key end
-        app.inject_click(vec2(240, 300)); return
-    end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
@@ -36,10 +30,9 @@ function R.campaign_smoke()
     if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == due
-        and R.prog.story_seen["after-100"] and (R.overlay == R.OV_NONE or R.overlay == R.OV_FINALE) then
-        -- The last beat ends the story with the finale card.
-        print(("campaign smoke passed: %d winter wishes, %d story beats, %d stalls"):format(
-            R.prog.level, #played, island.campaign_count(c)))
+        and R.on_island and R.overlay == R.OV_NONE then
+        print(("campaign smoke passed: %d winter wishes, %d stalls"):format(
+            R.prog.level, island.campaign_count(c)))
         app.quit()
     elseif R.overlay == R.OV_RESULT then
         local claim = R.result_form.boxes.claim

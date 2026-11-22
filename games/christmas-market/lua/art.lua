@@ -81,8 +81,6 @@ function A.load()
     for _, level in ipairs(require("campaign").levels) do
         local name = level.reveal and level.reveal.picture
         if name then textures[name] = texture.load("story/floors/" .. name .. ".jpg") end
-        local find = level.story_piece
-        if find then textures["story-" .. find.key] = piece("story-" .. find.key) end
     end
     for kind = 0, #economy.pieces do textures["market-" .. kind] = piece("market-" .. kind) end
         return textures

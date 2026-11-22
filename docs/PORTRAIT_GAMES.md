@@ -62,10 +62,11 @@ the screen edges, centers the text vertically in a full-width bar, and centers
 the speaker's name tag on its top border. Games supply the skin, cast and
 dialogue. Cast art faces right and the engine mirrors the right slot.
 
-## Story progression and previews
+## Campaign progression and archived dialogue previews
 
-Relic Rush and Christmas Market advance through board clears, story beats and
-confirmed placement of required buildings.
+Relic Rush and Christmas Market advance through board clears and confirmed construction.
+Set "campaign_dialogue" in the game configuration to enable runtime scenes. Both games disable it.
+Explicit preview flags below still open archived dialogue for development.
 
 A journey can show first-clear dialogue before Results with `clear_before_result`
 and schedule a separate `restore` scene after placement. A beat with choices

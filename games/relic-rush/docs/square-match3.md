@@ -9,7 +9,7 @@ points and the meter fills at 90. Long matches count each Hammer once.
 
 In an Xcode Debug build for iPhone, the iOS Simulator or macOS, **SKIP >>** runs the
 reference bot through legal swaps at up to two moves per frame. It can keep
-playing after the move counter reaches zero. The normal win dialogue and reward follow.
+playing after the move counter reaches zero. The normal results card follows.
 
 ## Line gems and rainbow gems
 
@@ -61,7 +61,7 @@ The lower-left house opens the next purchase. Its readout shows the
 remaining amount for each required resource. If the wallet covers the price
 early, the readout shows the expedition to clear. A particle trail circles
 the house when both the level requirement and price are met. Open placement
-from the card, choose a site, then confirm to pay once. The card links to the
+from the card, choose a site, then confirm to pay once. The card explains the project, names its board reward and shows the cost or shortfall. The card links to the
 decoration shop. After level 100, a pending purchase can offer a replay for
 resources.
 
@@ -78,8 +78,7 @@ only the cells the bot reaches last, so its median clear fits the tier (easy
 24 moves, normal 28, hard 30, boss 32), and `tools/tune_moves.py` fits each
 board's `moves`. Plaques cover 95% of the cells on average, and the fitted move budget includes Relic Rush’s additional 1.5 multiplier.
 
-The existing first-clear and construction scenes tell Ines’s story.
-Plaques are still the goal and the five slots carry the regular resource,
+Plaques are the goal. The five slots carry the regular resource,
 score and bonus pieces.
 
 The [shared floor study](../../../art/match3-square/README.md) records the
