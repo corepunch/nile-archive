@@ -39,6 +39,8 @@ It carries guidance in a character's voice instead. On the island, with the shop
 - **It names the button on screen**, so the tutorial needs no arrow text.
 - **It's not story.** Nothing later depends on the chairs.
 
+**The same person carries both layers.** In the opening story scene (a second gameplay screenshot), Mrs. Talbot greets June in the estate garden, beside a wrought-iron chair and a small table under a tree: "Thank you, June. Clare and Harry's deaths were so unexpected. It's just awful." The island never tells story, but the people the player knows from the island are the people in the story, and the story's backdrops are places on the estate. That line also differs from the bundled `funnel_1` text ("I'm devastated by what's happened"), so the opening's wording has changed between versions.
+
 - Wooga's own help page describes Orchid Island (June's family estate) as placing, upgrading and restoring buildings and decorations, which earn flowers that unlock chapters and scenes. It mentions no dialogue. [Wooga: Orchid Island](https://wooga.theymes.com/hc/en/junes-journey/articles/what-do-i-do-on-orchid-island-413)
 - A 2020 Game Developer breakdown calls the island and the scenes a dependency loop: scene rewards build the island, and island currency unlocks scenes. Its one criticism is that the island has no narration. [Game Developer breakdown](https://gamedeveloper.com/design/june-s-journey-breakdown)
 - Sources disagree on what gates a chapter (stars in 2020, flowers now). Either way the island is the gate, not the storyteller.
