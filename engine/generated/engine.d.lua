@@ -722,6 +722,15 @@ function app.arg(name) end
 ---@return boolean
 function app.debug_autoplay() end
 
+---Whether the current platform can request the system to open an HTTPS page.
+---@return boolean
+function app.has_https_opener() end
+
+---Ask the system to open an HTTPS page. Returns false if unsupported or the URL cannot be handed off.
+---@param url string
+---@return boolean
+function app.open_https(url) end
+
 ---An asset path resolved against the data root.
 ---@param rel string
 ---@return string

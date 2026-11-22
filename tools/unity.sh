@@ -95,6 +95,7 @@ UNITY
 #endif
 #include "third_party/platform/audio/audio_wav.c"
 #include "platform/animation_clock_platform.c"
+#include "platform/app_links.c"
 UNITY
         ;;
     launcher) cat <<'UNITY'

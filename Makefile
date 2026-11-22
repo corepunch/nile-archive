@@ -80,7 +80,7 @@ build/engine/lua.o: $(UNITY) engine/src/lua_lib.c $(LUA_DIR)/lua.h $(wildcard $(
 	@mkdir -p $(dir $@)
 	sh $(UNITY) lua | $(CC) $(CFLAGS) -std=c11 -Wall $(LUA_FLAGS) $(ENGINE_INC) -x c -c -o $@ -
 
-build/engine/platform.o: $(UNITY) engine/src/platform/web_audio.c engine/src/platform/haptic_platform.c engine/src/haptic.h engine/src/platform/gamecenter_platform.c engine/src/gamecenter.h engine/src/platform/animation_clock_platform.c engine/src/animation_clock.h engine/src/engine.h $(PLATFORM_DEPS)
+build/engine/platform.o: $(UNITY) engine/src/platform/web_audio.c engine/src/platform/haptic_platform.c engine/src/haptic.h engine/src/platform/gamecenter_platform.c engine/src/gamecenter.h engine/src/platform/animation_clock_platform.c engine/src/animation_clock.h engine/src/platform/app_links.c engine/src/engine.h $(PLATFORM_DEPS)
 	@mkdir -p $(dir $@)
 	sh $(UNITY) platform | $(CC) $(CFLAGS) -std=gnu11 -Wall $(ENGINE_INC) -x c $(PLATFORM_FLAGS) -c -o $@ -
 

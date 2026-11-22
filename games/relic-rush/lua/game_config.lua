@@ -2,7 +2,8 @@
 -- over the engine's defaults (match3.game DEFAULTS): tables merge field by
 -- field, lists replace.
 return {
-    app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F"},
+    app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F",
+        privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
     menu = {title = {"RELIC RUSH"}, subtitle = "THE LOST VALLEY", town = "VISIT ISLAND"},
     corner_close = true,
     campaign_dialogue = false,

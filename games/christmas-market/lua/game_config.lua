@@ -2,7 +2,8 @@
 -- over the engine's defaults (match3.game DEFAULTS): tables merge field by
 -- field, lists replace.
 return {
-    app = {title = "Christmas Market - Winter Wishes", id = "christmas-market", clear = "#09211F"},
+    app = {title = "Christmas Market - Winter Wishes", id = "christmas-market", clear = "#09211F",
+        privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
     menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", play = "PLAY",
         town = "VISIT MARKET", continue_in_town = true, first_launch = true},
     campaign_dialogue = false,

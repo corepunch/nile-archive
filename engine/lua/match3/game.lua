@@ -648,7 +648,9 @@ function G.bind(R, over)
         else R.overlay = R.OV_NONE end
     end})
 
-    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard, W.corner_close, W.menu.label)
+    local privacy_link = W.app.privacy_url and app.has_https_opener()
+    local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard,
+        W.corner_close, W.menu.label, privacy_link)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         assert(pause_form:push(R))
@@ -666,6 +668,7 @@ function G.bind(R, over)
             R.overlay = R.OV_NONE
             R.open_menu()
         elseif action == "guide" then R.overlay = R.OV_GUIDE
+        elseif action == "privacy" then app.open_https(W.app.privacy_url)
         elseif action == "restart" then R.overlay = R.OV_CONFIRM
         elseif action == "leaderboard" then R.open_leaderboard()
         elseif action == "quit" then   -- the unfinished board waits in town

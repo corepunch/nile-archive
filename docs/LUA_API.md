@@ -939,6 +939,22 @@ Whether this local debug build may show the match-3 skip button.
 
 **Returns:** `boolean`
 
+### `app.has_https_opener()`
+
+Whether the current platform can request the system to open an HTTPS page.
+
+**Returns:** `boolean`
+
+### `app.open_https(url)`
+
+Ask the system to open an HTTPS page. Returns false if unsupported or the URL cannot be handed off.
+
+| Argument | Type | |
+|---|---|---|
+| `url` | `string` |  |
+
+**Returns:** `boolean`
+
 ### `app.path(rel)`
 
 An asset path resolved against the data root.
