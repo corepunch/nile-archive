@@ -25,7 +25,8 @@
 --
 -- Options: skin, board (required), title, count (rows asked for, 1-25, default
 -- 25), width (default 420), rows (rows visible without scrolling, default 8),
--- format(score) -> string, texts (see DEFAULTS), modals, id (default "leaderboard").
+-- format(score) -> string, texts (see DEFAULTS), modals, id (default "leaderboard"),
+-- panel_role (optional skin role for the dialog background).
 -- Skin roles used if the skin defines them: title, leaderboard_row,
 -- leaderboard_me (the player's own row) and leaderboard_note (the status line).
 -- Without Game Center it shows the player's own best, so it works everywhere.
@@ -66,7 +67,7 @@ function L.new(options)
     local texts = self.texts
     local visible_rows = options.rows or 8
     local me_suffix = " " .. texts.you
-    self.form = ui.form{root = N.column {panel = true,
+    self.form = ui.form{root = N.column {panel = true, role = options.panel_role,
         options.header and options.header(texts.title, nil, options.corner_close and "close") or
             N.label {id = "title", text = texts.title, role = "title", height = 44},
         -- the chosen tab is an accent button, the other a flat caption, whatever the skin does for "selected"

@@ -11,6 +11,13 @@ for _, cat in ipairs(W.catalogue.categories) do check(#cat == 2, "a category is 
 check(W.notices.reward_building ~= game.DEFAULTS.notices.reward_building, "the game words replace the engine defaults")
 check(W.confirm.body == game.DEFAULTS.confirm.body, "words a game leaves out keep the engine default")
 
+local R = require("state")
+require("main")
+for _, form in ipairs{R.pause_form,R.wonder_form,R.result_form,R.failed_form,R.epoch_form} do
+    check(form.root.role=="popup_parchment", "the game registers the shared scroll on centered popups")
+end
+check(not R.catalogue_form.root.role, "the full-height catalogue keeps its edge-to-edge panel")
+
 local merged = game.config({catalogue = {categories = {{"all", "All"}}}, speech = {scale = 2}})
 check(#merged.catalogue.categories == 1 and merged.catalogue.title == game.DEFAULTS.catalogue.title,
       "arrays replace, objects merge field by field")

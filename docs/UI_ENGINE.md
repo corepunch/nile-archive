@@ -335,9 +335,14 @@ caption; forms then keep the native button paint.
 | `{fill, fill2?, radius}` | Rounded rectangle, optionally a vertical gradient |
 | `{border, width, radius}` | Rounded outline |
 | `{shadow, radius, blur}` | Soft shadow |
-| `{image, slice?, fit?}` | Authored art: stretched, `fit = "contain"`, or nine-slice with `slice = {left, top, right, bottom}` |
+| `{image, slice?, fit?}` | Authored art: stretched, `fit = "contain"`, or nine-slice with `slice = {left, top, right, bottom}` in source pixels |
 | `{check, width}` | A tick, for checkboxes without artwork |
 | `{paint = function(box, node, state, skin, screen_box, alpha)}` | Game code, for ornaments the table can't express |
+
+An `image` can name a texture or be a function that returns one on first
+use. The skin caches the result. With `slice` and `fit = "width"`, the fixed
+edges scale in proportion to the destination width. Set the left and right
+cuts to zero for a top, middle and bottom strip.
 
 Every layer takes `height_ratio` (keep the top fraction, for gloss), then
 `inset` (a number or `{left, top, right, bottom}`; negative grows) and
@@ -667,12 +672,18 @@ projects, a progress gauge while funding, a trail when affordable, and a
 checkmark after construction. Locked project buttons open their details.
 Settings uses the town header's `menu(bounds)` slot.
 
-The phase title opens the match-3 `OV_EPOCH` form on the `epoch_scroll` panel.
-Its two data-backed grids center three phase medallions above two. Each uses the `epoch_medal` skin,
+The phase title opens the match-3 `OV_EPOCH` form. Its two data-backed grids
+center three phase medallions above two. Each uses the `epoch_medal` skin,
 with an authored locked frame, a selected highlight and the shared completed
 checkmark. The city's normal fog follows its saved zone mask. The campaign
 sets the next bit after the phase's last clear and fourth project are both
 complete, then opens the chooser over the new district.
+
+The chooser shares the `popup_parchment` panel with centered match-3 dialogs
+such as Settings, results, project cards and the leaderboard. The top and
+bottom rolls use 96 source pixels each and keep their proportions. Only the
+canvas between them changes height as the form's content changes. The
+full-height catalogue uses its edge-to-edge panel.
 
 `town_config.lua` can opt into `bottom.layout = "play-primary"`: a centered large
 `navigation_play` button flanked by equally sized `navigation_build` and

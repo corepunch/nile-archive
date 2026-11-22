@@ -186,17 +186,23 @@ local function image_of(skin, name)
     local image = skin.images[name]
     if image then return image end
     local path = skin.def.images and skin.def.images[name] or name
-    image = type(path) == 'string' and texture.load(path) or path
+    if type(path) == 'string' then image = texture.load(path)
+    elseif type(path) == 'function' then image = path()
+    else image = path end
     skin.images[name] = image
     return image
 end
 
-local function nine_slice(t, dst, l, t_, r, b, tint)
+local function nine_slice(t, dst, slice, scale, tint)
+    local l, t_, r, b = edges(slice)
     local w, h = t.w, t.h
     local xs = {0, l, w - r, w}
     local ys = {0, t_, h - b, h}
-    local dx = {dst.x, dst.x + l, dst.x + dst.w - r, dst.x + dst.w}
-    local dy = {dst.y, dst.y + t_, dst.y + dst.h - b, dst.y + dst.h}
+    -- Source cuts stay on the same pixels through resize and motion.
+    -- For tiny boxes shrink the edges together to leave no overlapping slices.
+    local k = math.min(scale, dst.w / math.max(1, l + r), dst.h / math.max(1, t_ + b))
+    local dx = {dst.x, dst.x + l * k, dst.x + dst.w - r * k, dst.x + dst.w}
+    local dy = {dst.y, dst.y + t_ * k, dst.y + dst.h - b * k, dst.y + dst.h}
     for i = 1, 3 do for j = 1, 3 do
         local src = rect(xs[i], ys[j], xs[i + 1] - xs[i], ys[j + 1] - ys[j])
         local out = rect(dx[i], dy[j], dx[i + 1] - dx[i], dy[j + 1] - dy[j])
@@ -244,8 +250,8 @@ local function draw_layer(skin, layer, box, look, node, st)
         if image and image.w > 0 then
             local tint = color(255, 255, 255, math.floor(255 * alpha + .5))
             if layer.slice then
-                local sl, st_, sr, sb = edges(layer.slice)
-                nine_slice(image, out, sl * scale, st_ * scale, sr * scale, sb * scale, tint)
+                local edge_scale = layer.fit == 'width' and out.w / image.w or scale
+                nine_slice(image, out, layer.slice, edge_scale, tint)
             elseif layer.fit == 'contain' then gfx.image(image, out:fit(texture.size(image)), tint)
             else gfx.image(image, out, tint) end
         end

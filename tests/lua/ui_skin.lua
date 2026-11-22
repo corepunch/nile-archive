@@ -112,6 +112,41 @@ near(image_form.boxes.art.w,100,"paint transform does not change logical bounds"
 check(images[3].box.h==100 and images[3].tint.a==255,"settled skin restores full size and opacity")
 check(images[4].box.h==100 and images[4].tint.a==255,"native image fallback stays available")
 
+-- A popup's rolls stay in proportion at every height. Only the paper between
+-- them grows. Animation moves the same source cuts and fades them together.
+local image_part, load_engine = gfx.image_part, texture.load_engine
+local scroll = {tex=true,w=944,h=939}
+local scroll_skin = ui.skin{controls={panel={variants={
+    popup_parchment=require("match3.buttons").popup_parchment(),
+}}}}
+local parts, loads = {}, 0
+texture.load_engine=function() loads=loads+1;return scroll end -- luacheck: ignore 122
+gfx.image_part=function(_,src,dst,tint) parts[#parts+1]={src=src,dst=dst,tint=tint} end -- luacheck: ignore 122
+local function scroll_slices(height)
+    parts = {}
+    scroll_skin:paint_panel(rect(10,20,400,height), {role="popup_parchment"})
+    return parts
+end
+local short, tall = scroll_slices(180), scroll_slices(650)
+scroll_skin.transform=function() return .5,vec2(5,7),.25 end
+local animated = scroll_slices(650)
+gfx.image_part, texture.load_engine = image_part, load_engine -- luacheck: ignore 122
+check(#short==3 and #tall==3 and #animated==3,"parchment draws a roll, canvas and roll")
+check(loads==1,"the shared parchment texture loads once per skin")
+for i=1,3 do
+    near(animated[i].src.y,tall[i].src.y,"animation preserves source cuts")
+    near(animated[i].src.h,tall[i].src.h,"animation preserves source slice height")
+    near(animated[i].dst.h,tall[i].dst.h*.5,"animation scales destination slice height")
+    check(animated[i].tint.a==64,"each slice shares popup opacity")
+end
+for _,i in ipairs{1,3} do
+    near(short[i].dst.h,tall[i].dst.h,"roll height does not follow card height")
+    near(short[i].dst.h/short[i].dst.w,short[i].src.h/scroll.w,"roll keeps its aspect ratio")
+end
+near(tall[2].dst.h-short[2].dst.h,470,"paper absorbs the card's height change")
+near(tall[2].dst.y,tall[1].dst.y+tall[1].dst.h,"paper meets top roll")
+near(tall[3].dst.y,tall[2].dst.y+tall[2].dst.h,"bottom roll meets paper")
+
 -- Checkbox: an engine control, bound like a toggle, painted by the skin.
 local form=ui.form{root=N.column {gap=4,
     N.checkbox {id="hints",text="Hints",height=30},

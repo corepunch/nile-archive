@@ -21,8 +21,9 @@ and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/m
 The painted medallions show one to four lit candles for the Advents and a
 gold star for Christmas. Future phases use the sixth, a bronze keyhole. The
 choices use the same art when hovered, held or focused. A gold rim marks the
-selected choice and the shared tick marks completion. The scroll is a static
-frame.
+selected choice and the shared tick marks completion. The chooser and the
+other centered popups share the scroll. Its top and bottom rolls keep their
+proportions while the paper between them fits the content.
 
 - ImageGen originals: [medallion sheet](../art/epoch-medals/source.png),
   [medallion prompt](../art/epoch-medals/prompt.txt),

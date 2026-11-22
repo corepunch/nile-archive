@@ -109,8 +109,16 @@ function B.project()
     return {normal = look, hover = look, pressed = look, disabled = look}
 end
 
-function B.epoch_scroll()
-    return {normal = {layers = {{image="epoch-scroll", inset={-16,-27,-16,-27}}}}}
+local function parchment_image()
+    local image = texture.load_engine("data/board/epoch-scroll.png")
+    assert(image.tex, "missing popup parchment")
+    return image
+end
+
+function B.popup_parchment()
+    return {normal = {layers = {{
+        image=parchment_image, slice={0,96,0,96}, fit="width", inset={-16,-27,-16,-27},
+    }}}}
 end
 
 function B.epoch_medal()

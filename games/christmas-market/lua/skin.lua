@@ -54,7 +54,7 @@ return ui.skin{
             {fill = "#EFCC87", radius = 16, inset = 2},
             {fill = "#FFEFBC", radius = 13, inset = 5},
         }}, variants = {
-                epoch_scroll = buttons.epoch_scroll(),
+                popup_parchment = buttons.popup_parchment(),
                 -- The rule under a popup's title: a thin line threaded through a diamond.
                 popup_rule = {normal = {layers = {
                     {fill = "#C9A464", radius = 1, inset = {0, 6, 0, 6}},

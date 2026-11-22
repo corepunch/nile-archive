@@ -488,6 +488,7 @@ function G.bind(R, over)
     local function popup(id, form, config)
         assert(form.root.kind == "column" and not popups[id], "popup requires a unique vertical form")
         assert(form.root.children[1] and form.root.children[1].role == "popup_header", "popup requires a shared header")
+        form.root.role = "popup_parchment"
         popups[id] = config
         config.form = form
     end
@@ -798,7 +799,7 @@ function G.bind(R, over)
         local function medal(entry)
             return N.button {id="medal", role="epoch_medal", height=113, text=entry.name, medal=entry}
         end
-        local form = ui.form(N.column {panel=true,role="epoch_scroll",
+        local form = ui.form(N.column {panel=true,
             match3.popup_header(W.epoch_title),
             N.column {gap=4,
                 N.uniform_grid {id="epoch_top",rows=1,gap=5,item=medal},
@@ -817,11 +818,6 @@ function G.bind(R, over)
         })
         R.epoch_form = form
         popup(R.OV_EPOCH, form, {width=430, dismiss=false, prepare=function(d)
-            if not skin.images["epoch-scroll"] then
-                local scroll = texture.load_engine("data/board/epoch-scroll.png")
-                assert(scroll.tex, "missing epoch scroll")
-                skin.images["epoch-scroll"] = scroll
-            end
             local chosen = R.epoch_page
             if d.epoch_page == chosen then return end
             d.epoch_page = chosen
@@ -1356,7 +1352,7 @@ function G.bind(R, over)
         if visit then
             children[#children + 1] = N.button {id="cancel", text="Back to town", height=44, role="link", em=18}
         end
-        R.choice_form = ui.form{root=N.column {panel=true, children=children}}
+        R.choice_form = ui.form{root=N.column {panel=true,role="popup_parchment",children=children}}
         if choices:active() then choices:close(nil, nil, true) end
         assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=not not visit}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
@@ -1621,7 +1617,8 @@ function G.bind(R, over)
     end
 
     -- The Game Center leaderboard tracks boards cleared when rewards are claimed.
-    local boards = require("leaderboard").boards{skin = skin, width = 400, header = match3.popup_header, corner_close = W.corner_close, texts = W.leaderboard and W.leaderboard.texts}
+    local boards = require("leaderboard").boards{skin=skin,width=400,panel_role="popup_parchment",
+        header=match3.popup_header,corner_close=W.corner_close,texts=W.leaderboard and W.leaderboard.texts}
     function R.submit_leaderboard_progress()
         local c = W.leaderboard
         if c then gamecenter.submit(c.board, R.prog.level) end
