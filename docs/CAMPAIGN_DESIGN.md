@@ -115,21 +115,13 @@ Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre:
 
 ## Cast economy
 
-Players remember a few people well, not many people faintly. Before adding a speaker, give the line to someone the player already knows.
-
-- **What the references do.** Tropicats starts with one quest-giver and adds about one per chapter of forty levels: five by level 170, six in 2,800 levels, and Elsie gives 249 of its 274 quests ([story reference](tropicats-reference/STORY.md)). Its upgrades restore a known character's place, such as Cubby's grill and Lily's hut. Rome 2's citizens are anonymous figures that never speak. Life games grow the same shopkeepers' shops instead of adding new shopkeepers, and screenwriters merge minor roles into existing characters so the audience tracks fewer people.
-- **At most one new speaker per epoch**, and none in the first. The exception is a long-awaited arrival the whole story has been building to, such as Pip's mum and Gran stepping off the last train.
-- **Talk about a person before they speak.** A new speaker is planted in others' lines first (Mrs Alder's candles and cup, Mr Finch's goat, Pip's mum, Gran), so their first line is a payoff, not an introduction.
-- **Every speaker has a want and comes back.** A character who speaks has a want of their own and appears in at least three beats. Anyone with less stays a name in someone else's mouth.
-- **Growth before addition.** A building's improvement, a new job or a return visit belongs to someone the player knows. Give the keeper the change, not a newcomer.
-- **Name only what recurs.** A one-off helper is "the farrier" or "Marisol's cousin", not a new name.
+Players remember a few people well, not many people faintly. Before adding a speaker, give the line to someone the player already knows. Name only who recurs; a one-off helper is "the ferry hand", not a new name. Upgrades belong to a character the player already knows.
 
 ## Story cadence
 
-The full rules are in [STORY_WRITING.md](STORY_WRITING.md). In short:
+The rules are in [STORY_WRITING.md](STORY_WRITING.md). In short:
 
-- **One scene after every level's first clear**, two or three lines, and one when each story building is placed. Replays are silent.
-- **Speech only.** Every line is said by someone to someone, wanting something. No narration, no captions, no reports of what the screen shows. [Why](STORY_WRITING.md#speech-only-no-narration).
-- **Each epoch is a chapter** with one question. Its four purchases set it up, move it on and pay it off; its boss level turns it.
+- **First-clear scenes follow each game's script.** Replays are silent. Many levels need no scene.
+- **Every line is something a person would say there,** true to what the player just did. Characters may talk to the player.
+- **Each epoch is a chapter** that moves the game's one goal on. Its four purchases are what changes in the town.
 - **Upgrades add optional scenes** from the building's keeper; the required story never depends on them.
-- **The cast stays small and grows deeper.** See [Cast economy](#cast-economy): at most one new speaker per epoch, planted before they speak. A new speaker without a painted bust is shown with a name plate until one is painted (track it in an issue).
