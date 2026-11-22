@@ -72,26 +72,15 @@ function R.building_reward(kind)
 end
 
 R.register_result(function()
-    local spec = rules.level_of(R.g)
     local breakdown = rules.reward_breakdown(R.g, R.wonders, R.prog)
     local reward, first = breakdown.total, breakdown.first
     local resources = {}
     for slot, currency in ipairs(economy.currencies) do
         resources[slot] = {id=currency.name, amount=reward[slot], icon=currency_icon(slot)}
     end
-    -- The next stall's remaining cost or its picture once it is funded.
-    local kind = island.next_step(R.island, first and R.g.level + 1 or R.prog.level)
-    local w = kind and R.buildings[kind + 1]
-    local next_step
-    if w then
-        local have, missing = R.prog.wallet + reward, purse()
-        for slot in ipairs(economy.currencies) do missing[slot] = math.max(0, w.cost[slot] - have[slot]) end
-        next_step = R.result_next(w, R.currency_prices(missing))
-    end
     return {
         title=first and "Wish granted!" or "Replay complete",
-        subtitle=("%d. %s"):format(R.g.level + 1, spec.name),
-        resources=resources, next_step=next_step, action=R.result_action(first, reward),
+        resources=resources, action=R.result_action(first, reward),
     }
 end)
 
@@ -130,7 +119,7 @@ local function guide_icon(box, icon)
     if icon.special then R.draw_match_special({special=icon.special}, at, 48 / (R.HEX_R * 2), 255) end
 end
 local guide_form = match3.guide_form({
-    title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING PIECES",
+    title = "Market keeper's guide",
     done = "LET'S MAKE MAGIC",
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))

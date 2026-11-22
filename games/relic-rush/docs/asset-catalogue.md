@@ -15,14 +15,12 @@ Re-encode the source with
 from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
 and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
 
-## Epoch chooser
+## Epoch medals
 
 The painted medallions show a spring, a mill, a sailboat, a lighthouse and a
-sun fountain. Future epochs use the sixth, a bronze keyhole. The choices use
-the same art when hovered, held or focused. A gold rim marks the selected
-choice and the shared tick marks completion. The chooser and the other
-centered popups share the scroll. Its top and bottom rolls keep their
-proportions while the paper between them fits the content.
+sun fountain. Future epochs use the sixth, a bronze keyhole. Completed
+medals use the original shading with a sepia ink pass. The current medal
+uses the original colors. The medal screen shares the popup scroll.
 
 - ImageGen originals: [medallion sheet](../art/epoch-medals/source.png),
   [medallion prompt](../art/epoch-medals/prompt.txt),
@@ -33,8 +31,8 @@ proportions while the paper between them fits the content.
   `python3 tools/epoch_medals.py` from the repository root to trim transparent
   margins, center the medallions and resize the scroll.
 - Game capture cases: `shot epoch-window` (480 × 900) and
-  `shot epoch-window-phone` (390 × 844), with completed, selected, and locked
-  choices after revealing a district.
+  `shot epoch-window-phone` (390 × 844), covering current, completed and
+  locked medals.
 
 ## Construction backdrops
 
@@ -1116,7 +1114,7 @@ The [script](story.md) supplies the spoken lines and both island visits. See the
 
 The building card lists its price and what the building brings side by side as
 the engine's icon-and-figure amounts (the `resource_indicator` prefab). It reuses
-existing art and adds none. `R.building_gets` in `lua/screens.lua` maps each
+existing art and adds none. `R.building_reward` in `lua/screens.lua` maps each
 ladder unlock to its reward. A new piece shows its board art above the currency icon and a plain number. The food and supplies icons use the extra space beside a single digit. A bonus shows its `bonus-<key>` gem alone. Reproduce with
 `./build/relic-rush --headless --mute --fresh --size 390x844 --card 3 --shot out.png`.
 Reviewed in game at 480×900 and 390×844 for a piece (Workshop, Well, Temple), a

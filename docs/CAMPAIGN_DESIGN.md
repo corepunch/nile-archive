@@ -42,7 +42,7 @@ The campaign's shape:
 - **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a farrier's hammer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
 - **Regions open with the phase.** After 20, 40, 60 and 80 clears and the four projects in each phase, fog lifts as the next phase opens. Completing the final phase opens the last district. Older saves keep land they already opened.
-- **The phase chooser** opens from the town's phase title and after each new district opens. Its five medals show completed, available and locked phases. Select one to see level and project progress. Play resumes the current phase, and Replay starts a completed phase at its first board.
+- **The phase medals** appear after Continue on the main menu and when a phase opens a new district. Past phases have muted medals, the current phase has a full-color medal, and future phases carry a lock. Play resumes the current campaign.
 
 ## Balance
 
@@ -115,4 +115,4 @@ Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre:
 
 ## Project copy
 
-Describe what each building does in ordinary language. Show a separate name and icon for its board reward. In Christmas Market, the same portrait can appear on related projects. Dialogue scripts remain available for development previews.
+Describe what each building does in ordinary language. Use the board reward icon under You Get. In Christmas Market, the same portrait can appear on related projects. Dialogue scripts remain available for development previews.

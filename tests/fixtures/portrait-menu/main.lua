@@ -62,6 +62,20 @@ function R.smoke()
     elseif stage == 3 and R.overlay == R.OV_NONE then
         assert(R.on_menu, "closing title settings must return to the title")
         click(menu, "continue")
+        stage = 31
+    elseif stage == 31 and R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        local medal = R.epoch_form.nodes.epoch_top.children[1]
+        app.inject_click(medal.box:center() + vec2(0, R.drop / 2))
+        stage = 32
+    elseif stage == 32 then
+        assert(R.on_menu and R.overlay == R.OV_EPOCH, "the medals are read-only")
+        click(R.epoch_form, "back", true)
+        stage = 33
+    elseif stage == 33 and R.on_menu and R.overlay == R.OV_NONE then
+        click(menu, "continue")
+        stage = 34
+    elseif stage == 34 and R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        click(R.epoch_form, "play", true)
         stage = 4
     elseif stage == 4 and not R.on_menu then
         if completed then
@@ -79,6 +93,9 @@ function R.smoke()
         stage = 6
     elseif stage == 6 and R.on_menu and menu.boxes.continue then
         click(menu, "continue")
+        stage = 61
+    elseif stage == 61 and R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        click(R.epoch_form, "play", true)
         stage = 7
     elseif stage == 7 and not R.on_menu then
         assert(not R.on_island and R.g == game, "leaving for the title must keep the active board")

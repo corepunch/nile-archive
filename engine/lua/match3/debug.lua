@@ -225,9 +225,9 @@ function D.bind(R, W)
         a = app.arg("epoch-window")
         if a then
             R.on_island, R.toast_time = true, 0
-            local award = app.arg("epoch-award") and R.completed_epochs() or 0
-            if award > 0 then R.island_focus(R.island.zones[award + 1].marker, R.island.cam.zoom) end
-            R.open_epoch(tonumber(a), award)
+            local award = app.arg("epoch-award") and R.completed_epochs() or nil
+            if award then R.island_focus(R.island.zones[award + 1].marker, R.island.cam.zoom) end
+            R.open_epoch(award)
         end
         if app.arg("showcase") then
             local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),

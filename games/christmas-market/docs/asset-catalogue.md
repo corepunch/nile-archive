@@ -16,14 +16,12 @@ Re-encode the source with
 from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
 and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
 
-## Advent chooser
+## Advent and Christmas medals
 
 The painted medallions show one to four lit candles for the Advents and a
-gold star for Christmas. Future phases use the sixth, a bronze keyhole. The
-choices use the same art when hovered, held or focused. A gold rim marks the
-selected choice and the shared tick marks completion. The chooser and the
-other centered popups share the scroll. Its top and bottom rolls keep their
-proportions while the paper between them fits the content.
+gold star for Christmas. Future phases use the sixth, a bronze keyhole.
+Completed medals use the original shading with a sepia ink pass. The current
+medal uses the original colors. The medal screen shares the popup scroll.
 
 - ImageGen originals: [medallion sheet](../art/epoch-medals/source.png),
   [medallion prompt](../art/epoch-medals/prompt.txt),
@@ -34,8 +32,8 @@ proportions while the paper between them fits the content.
   `python3 tools/epoch_medals.py` from the repository root to trim transparent
   margins, center the medallions and resize the scroll.
 - Game capture cases: `shot epoch-window` (480 × 900) and
-  `shot epoch-window-phone` (390 × 844), with completed, selected, and locked
-  choices after revealing a district.
+  `shot epoch-window-phone` (390 × 844), covering current, completed and
+  locked medals.
 
 ## Construction backdrops
 

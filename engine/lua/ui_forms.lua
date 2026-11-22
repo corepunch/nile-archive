@@ -139,9 +139,8 @@ function ui.prefab(kind, build)
     if type(kind) ~= 'string' or type(build) ~= 'function' or classes[kind] then fail('invalid prefab ' .. tostring(kind)) end
     prefabs[kind] = build
 end
--- Every card, a form whose root is a panel, keeps the same parchment around
--- its content and the same gap between its rows. A template cannot choose its
--- own, so no card drifts from the others.
+-- Cards share the default inset and row gap. Skins may give a panel artwork
+-- role its own inset so content clears the art's border.
 ui.FORM_PADDING, ui.FORM_GAP = 20, 14
 function ui.form(template)
     assert(type(template) == 'table', 'ui.form expects a template')
@@ -268,9 +267,12 @@ end
 local function style_for(n, skin)
     return n.style or (skin.style and skin.style(n)) or (skin.styles and skin.styles[n.role or n.kind]) or (skin.theme or ui.theme())[n.role == 'title' and 'title' or (n.kind == 'button' or n.kind == 'toggle') and (n.accent and 'accent_text' or 'button') or 'text']
 end
-local function inset(n)
+local function inset(n, skin, form)
     local class=classes[n.kind]
     if class.inset then return class.inset(n) end
+    if n==form.root and n.panel and skin.panel_padding then
+        return padding(skin.panel_padding(n) or n.padding)
+    end
     return padding(n.padding)
 end
 -- Measure: the width on offer in, the size wanted out. Heights are never
@@ -278,7 +280,7 @@ end
 local function measure(n, width, skin, form)
     if not visible(n, form.values) then return 0,0 end
     width=n.width or width
-    local l,t,r,b = inset(n)
+    local l,t,r,b = inset(n,skin,form)
     local class,w,h = classes[n.kind],0,0
     if class.measure_override then w,h=class.measure_override(n,math.max(0,width-l-r),skin,form) end
     return math.max(n.min_width or 0,n.width or w+l+r),math.max(n.min_height or 0,n.height or h+t+b)
@@ -289,7 +291,7 @@ local function arrange(n, box, skin, form)
     if n.id then form.boxes[n.id]=box end
     local class=classes[n.kind]
     if not class.arrange_override or (#n.children == 0 and not n.scroll) then return end
-    local l,t,r,b=inset(n)
+    local l,t,r,b=inset(n,skin,form)
     class.arrange_override(n,rect(box.x+l,box.y+t,math.max(0,box.w-l-r),math.max(0,box.h-t-b)),skin,form)
 end
 -- A child in a slot of its own (a border's inside, a grid's cell): it fills

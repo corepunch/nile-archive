@@ -560,6 +560,9 @@ function ui.skin(def)
     -- above keep distinct names so these fields never shadow them.
     skin.style = function(node) return skin:measure_style(node) end
     skin.panel = def.controls and def.controls.panel and function(box, node) skin:paint_panel(box, node) end or nil
+    if skin.panel then
+        skin.panel_padding = function(node) return control_spec(skin, 'panel', node).padding end
+    end
     skin.border = function(box, node) skin:paint_border(box, node) end
     -- Theme colours are checked now; its text styles wait for the fonts.
     for k, v in pairs(def.theme or {}) do

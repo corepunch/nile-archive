@@ -479,14 +479,15 @@ Results show the banked currencies as `resource_indicator` prefabs in a one-row 
 columns across the dialog, however many currencies the game has. Each is an icon above
 its figure, with no caption because the icon names the resource. The building
 card lists its price and what the building brings with the same element, side
-by side under PRICE and YOU GET captions; while the building is being funded the price group lists what is missing under STILL NEEDED. An entry marked `done` draws the skin's `done_tick` panel (normally `Skin:paint_tick`, the tick a met board goal shows: the skin's `tick` image when registered, else two strokes) in place of its figure. Games may also opt into a results-card next-building block: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
+by side in one row under PRICE and YOU GET. The price group uses STILL MISSING
+when the wallet falls short. An entry marked `done` uses the skin's
+`done_tick` panel in place of its figure. The reward icon identifies the
+unlocked piece or tool. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
 shows its icon alone, and `label` adds one word under a larger figure only
 for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
-builds the node from a resource record. A game lists what a building brings in
-`R.building_gets(kind)`, which may return a second value to replace the YOU GET
-caption when the gift recurs (Christmas Market's EVERY WISH and EVERY WIN);
-without it the card shows the building's unlock text.
+builds the node from a resource record. The game supplies the building's
+reward through `R.building_reward(kind)`.
 Running copy and captions on parchment use the skin's flat `body` and `caption`
 text styles. The outlined styles are for titles, buttons and figures. Optional content participates in the measured stack only
 when visible, so the Collect button follows the last row. The building shop,
@@ -672,17 +673,18 @@ projects, a progress gauge while funding, a trail when affordable, and a
 checkmark after construction. Locked project buttons open their details.
 Settings uses the town header's `menu(bounds)` slot.
 
-The phase title opens the match-3 `OV_EPOCH` form. Its two data-backed grids
-center three phase medallions above two. Each uses the `epoch_medal` skin,
-with an authored locked frame, a selected highlight and the shared completed
-checkmark. The city's normal fog follows its saved zone mask. The campaign
-sets the next bit after the phase's last clear and fourth project are both
-complete, then opens the chooser over the new district.
+Continue from the main menu opens the match-3 `OV_EPOCH` medal screen. Its
+read-only grids center three medals above two, with muted artwork for completed
+phases, full color for the current phase and a keyhole for future phases.
+The city's fog follows the saved zone mask. Completing the phase's last
+clear and fourth project opens the next district and shows the medals again.
 
-The chooser shares the `popup_parchment` panel with centered match-3 dialogs
+The medal screen shares the `popup_parchment` panel with centered match-3 dialogs
 such as Settings, results, project cards and the leaderboard. The top and
 bottom rolls use 96 source pixels each and keep their proportions. Only the
 canvas between them changes height as the form's content changes. The
+panel variant's `padding` gives the form 36 units on each side so text and
+buttons clear the decorated rails. The
 full-height catalogue uses its edge-to-edge panel.
 
 `town_config.lua` can opt into `bottom.layout = "play-primary"`: a centered large

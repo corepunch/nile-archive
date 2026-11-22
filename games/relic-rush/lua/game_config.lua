@@ -7,7 +7,7 @@ return {
     corner_close = true,
     campaign_dialogue = false,
     epochs = {"Epoch I", "Epoch II", "Epoch III", "Epoch IV", "Epoch V"},
-    epoch_title = "Choose an epoch",
+    epoch_title = "Epochs",
     epoch_medal_names = {"Spring Camp", "Mill and Market", "Harbour Town", "Coastal Watch", "Sun Temple"},
     result = {visit = "COLLECT & VISIT ISLAND"},
     packs = {"relics", "jewels", "resources"},
@@ -52,7 +52,7 @@ return {
         title = "Top explorers",
     },
     confirm = {title = "Restart this expedition?"},
-    failed = {title = "One more adventure?", subtitle = "THE RUINS WILL WAIT FOR YOU.", town = "VISIT ISLAND"},
+    failed = {town = "VISIT ISLAND"},
     zone = {
         subtitle = "A NEW PLACE TO DISCOVER",
         cleared = "EXPEDITIONS CLEARED  %d / %d",
@@ -62,7 +62,6 @@ return {
         title = "Breakfast at the quay",
         lines = {
             {"THE SPRING RUNS TO THE QUAY AGAIN.", 16},
-            {"Your island stays open to build and explore.", 16},
         },
         button = "BACK TO MY ISLAND",
     },
@@ -70,13 +69,11 @@ return {
         title = "You won!",
         lines = {
             {"YOU COMPLETED ALL %d EXPEDITIONS.", 16},
-            {"Your island stays open to build and explore.", 16},
         },
         button = "BACK TO MY ISLAND",
     },
     card = {
         back = "BACK TO ISLAND",
-        moving = "HOLD AND DRAG ON THE ISLAND TO MOVE",
         locked = "COMPLETE MORE LEVELS TO RESTORE THIS WONDER",
     },
     catalogue = {

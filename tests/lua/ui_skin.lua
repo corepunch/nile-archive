@@ -146,6 +146,14 @@ end
 near(tall[2].dst.h-short[2].dst.h,470,"paper absorbs the card's height change")
 near(tall[2].dst.y,tall[1].dst.y+tall[1].dst.h,"paper meets top roll")
 near(tall[3].dst.y,tall[2].dst.y+tall[2].dst.h,"bottom roll meets paper")
+local padded = ui.form(N.column {panel=true,role="popup_parchment",N.spacer {id="content",height=40}})
+for _,width in ipairs{396,430} do
+    local bounds = rect(10,20,width,80)
+    padded:layout(bounds,scroll_skin)
+    local content = padded.boxes.content
+    check(content.x-bounds.x==36 and bounds:max().x-content:max().x==36,
+        "parchment keeps equal room between content and its side rails")
+end
 
 -- Checkbox: an engine control, bound like a toggle, painted by the skin.
 local form=ui.form{root=N.column {gap=4,

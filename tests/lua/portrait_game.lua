@@ -9,7 +9,7 @@ check(W.app.id == testing.game, "game_config.lua is read at load time and names 
 check(#W.packs >= 1 and #W.catalogue.categories >= 3, "packs and shop categories come from the game")
 for _, cat in ipairs(W.catalogue.categories) do check(#cat == 2, "a category is {key, label}") end
 check(W.notices.reward_building ~= game.DEFAULTS.notices.reward_building, "the game words replace the engine defaults")
-check(W.confirm.body == game.DEFAULTS.confirm.body, "words a game leaves out keep the engine default")
+check(W.confirm.cancel == game.DEFAULTS.confirm.cancel, "words a game leaves out keep the engine default")
 
 local R = require("state")
 require("main")
@@ -17,6 +17,8 @@ for _, form in ipairs{R.pause_form,R.wonder_form,R.result_form,R.failed_form,R.e
     check(form.root.role=="popup_parchment", "the game registers the shared scroll on centered popups")
 end
 check(not R.catalogue_form.root.role, "the full-height catalogue keeps its edge-to-edge panel")
+check(not R.wonder_form.nodes.unlock and not R.wonder_form.nodes.upgrade and not R.result_form.nodes.next_step,
+    "reward icons and essential figures carry the popup without extra unlock or next-project copy")
 
 local merged = game.config({catalogue = {categories = {{"all", "All"}}}, speech = {scale = 2}})
 check(#merged.catalogue.categories == 1 and merged.catalogue.title == game.DEFAULTS.catalogue.title,

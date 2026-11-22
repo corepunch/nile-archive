@@ -26,7 +26,6 @@
 --   projects()              phase title and ordered project records (id, icon, state, progress)
 --   project(id)             open the selected project
 --   project_rim(box)        optional effect around the affordable project
---   phase()                 open the campaign phase window
 --   zone_ready(z)           optional availability for a closed region's marker
 --   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool,
 --                            portrait=texture, progress=0..1}, ...}: round
@@ -161,7 +160,7 @@ function T.new(c, config, hooks)
     })
     if b.layout == "projects" then
         v.navigation = ui.form(N.column {gap = 2,
-            N.button {id = "phase", height = 34, flat = true, em = 19, text_style = "cream"},
+            N.label {id = "phase", height = 34, em = 19, text_style = "cream"},
             N.uniform_grid {id = "actions", rows = 1, gap = 4, item = function(entry)
                 return N.button {id = "action", role = entry.id == "play" and "navigation_play" or "navigation_project",
                     height = b.height - 36, text = "", project = entry.project}
@@ -208,7 +207,7 @@ function View:layout()
             actions[#actions + 1] = {id = "play"}
             assert(form:set_items("actions", actions))
             self.project_phase = title
-            form:set("phase", title .. "  ›")
+            form:set("phase", title)
         end
         local boxes = form:layout(row, self.hooks.skin)
         local actions = form.nodes.actions.children
@@ -479,8 +478,7 @@ function View:bottom(active)
         if self.ready_project and h.project_rim then h.project_rim(self.ready_project) end
         if event then
             haptic.play(haptic.TICK, .6)
-            if event.id == "phase" then h.phase()
-            elseif event.key == "play" then h.play()
+            if event.key == "play" then h.play()
             else h.project(event.key) end
         end
         return

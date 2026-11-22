@@ -151,17 +151,14 @@ Use either building key or `neither` in place of `both` to hear the other versio
 
 ## First launch and main menu
 
-A fresh profile opens directly on level 1. Christmas Market plays Noelle's
-opening scene there before the board is playable. Collecting a first-clear
+A fresh profile opens directly on level 1. Collecting a first-clear
 reward takes the player to the island or market, where they can spend the
 resources on construction.
 
 Later launches and the Main Menu link in in-game Settings open the illustrated
-title screen. Continue returns to the parked board or town in the current
-session. After relaunch, Continue opens the campaign checkpoint and honors
-unclaimed results and pending town scenes. Christmas Market returns to the
-market after the first clear. Visit Island or Visit Market appears once the
-player has a clear and Continue would go to a playable board. Settings shares
+title screen. Continue opens the phase medals. Back returns to the title,
+and Play resumes the current board or restores an unclaimed result. Visit
+Island or Visit Market gives direct access to construction. Settings shares
 the guide, leaderboard and saved Sound and Reduce Motion preferences with
 in-game Settings.
 

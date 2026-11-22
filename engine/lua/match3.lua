@@ -542,7 +542,7 @@ end
 
 function E.guide_form(copy, guide_icon, corner)
     return ui.form(N.column {panel=true,
-        E.popup_header(copy.title, copy.instructions, corner and "done"),
+        E.popup_header(copy.title, nil, corner and "done"),
         N.list {id="topics",scroll=true,height=520,gap=6,item=function(entry)
             local align=entry.icon and "start" or "center"
             return N.row {gap=10,align="center",
@@ -553,7 +553,7 @@ function E.guide_form(copy, guide_icon, corner)
                 },
             }
         end},
-        N.label {text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
+        N.label {text="TOOLS DO NOT COST MOVES.",height=28,em=13,text_style="caption"},
         not corner and N.button {id="done",text=copy.done,height=45,em=25} or nil,
     })
 end

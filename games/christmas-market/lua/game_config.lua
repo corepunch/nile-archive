@@ -6,7 +6,7 @@ return {
     menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", town = "VISIT MARKET", continue_in_town = true},
     campaign_dialogue = false,
     epochs = {"First Advent", "Second Advent", "Third Advent", "Fourth Advent", "Christmas"},
-    epoch_title = "Choose a season",
+    epoch_title = "Advent & Christmas",
     result = {visit = "COLLECT & VISIT MARKET"},
     transitions = {
         style = "wipe",
@@ -51,7 +51,7 @@ return {
         title = "Merriest markets",
     },
     confirm = {title = "Restart this winter wish?"},
-    failed = {title = "One more winter wish?", subtitle = "THE MARKET WILL WAIT FOR YOU.", town = "VISIT MARKET"},
+    failed = {town = "VISIT MARKET"},
     zone = {
         subtitle = "MORE ROOM FOR CHRISTMAS CHEER",
         cleared = "WISHES GRANTED  %d / %d",
@@ -70,13 +70,11 @@ return {
         title = "You did it!",
         lines = {
             {"ALL %d WINTER WISHES CAME TRUE.", 16},
-            {"Your market stays open to decorate.", 16},
         },
         button = "BACK TO MY MARKET",
     },
     card = {
         back = "BACK TO MARKET",
-        moving = "HOLD AND DRAG IN THE MARKET TO MOVE",
         locked = "COMPLETE MORE PUZZLES TO BUILD THIS STALL",
         every_wish = "EVERY WISH", moves = "MOVES",
     },

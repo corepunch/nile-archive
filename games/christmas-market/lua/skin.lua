@@ -55,6 +55,7 @@ return ui.skin{
             {fill = "#FFEFBC", radius = 13, inset = 5},
         }}, variants = {
                 popup_parchment = buttons.popup_parchment(),
+                epoch_medal = buttons.epoch_medal(),
                 -- The rule under a popup's title: a thin line threaded through a diamond.
                 popup_rule = {normal = {layers = {
                     {fill = "#C9A464", radius = 1, inset = {0, 6, 0, 6}},
@@ -115,7 +116,6 @@ return ui.skin{
                                               face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
                 navigation_build = buttons.navigation("build"),
                 navigation_project = buttons.project(),
-                epoch_medal = buttons.epoch_medal(),
                 navigation_play = buttons.navigation("play", {text = "cream", em = 44}),
                 navigation_pause = buttons.navigation("pause"),
                 -- Confirm and cancel a placement beside the lifted building.

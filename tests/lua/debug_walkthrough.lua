@@ -195,12 +195,18 @@ check(save.write('epoch-award', R.serialize), 'save the acknowledged award and p
 R.island.open, R.prog.epoch_seen = 1, nil
 check(save.read('epoch-award', R.serialize) and R.island:zone_open(2) and R.prog.epoch_seen == 1
     and not R.show_epoch_award(R.completed_epochs()), 'reload preserves older map access and does not repeat the award')
-R.open_epoch(4)
+R.open_menu()
+R.menu.actions.continue()
+check(R.on_menu and R.overlay == R.OV_EPOCH, 'Continue opens the medal screen over the main menu')
+R.close_epoch(false)
+check(R.on_menu and R.overlay == R.OV_NONE, 'Back on the medal screen returns to the main menu')
+R.menu.actions.continue()
 R.close_epoch(true)
-check(R.on_island and not R.epoch_replay_end, 'a future phase cannot start')
-R.open_epoch(1)
+check(not R.on_menu and not R.on_island and R.g.level == 20, 'Play opens the current phase at the next board')
+check(R.debug_skip_level(), 'win the current board')
+local pending = R.g
+R.open_menu()
+R.menu.actions.continue()
 R.close_epoch(true)
-check(not R.on_island and R.g.level == 0 and R.epoch_replay_end == 20, 'replaying the first phase starts its opening board')
-check(R.debug_skip_level(), 'win the replayed board')
-R.claim_reward()
-check(R.g.level == 1 and R.prog.level == 20 and not R.on_island, 'replay continues through the phase without advancing the campaign')
+check(R.overlay == R.OV_RESULT and R.g == pending and R.prog.level == 20,
+    'Play restores an unclaimed result before advancing the campaign')

@@ -95,7 +95,7 @@ Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
 The bottom row shows the current Advent or Christmas with four projects and Play. Tap any project to see its price, shortfall or level requirement. Locked projects appear in gray, affordable projects have a trail, and completed projects have a checkmark. Play another wish to earn the missing resources. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
-Tap the Advent or Christmas title to open its illustrated chooser. Each phase's twenty boards and four projects clear the fog from one district. Completed phases can be replayed from the chooser.
+Continue from the main menu shows the Advent and Christmas medals. Play resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
 
 There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the

@@ -76,7 +76,6 @@ R.register_result(function()
     end
     return {
         title=breakdown.first and "Expedition complete" or "Replay complete",
-        subtitle=("LEVEL %d · %s"):format(R.g.level + 1, rules.level_of(R.g).name),
         resources=resources, action=R.result_action(breakdown.first, reward),
     }
 end)
@@ -138,7 +137,7 @@ function R.building_reward(kind)
 end
 
 local guide_form = match3.guide_form({
-    title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",
+    title = "Explorer's guide",
     done = "LET'S EXPLORE",
 }, guide_icon, R.words.corner_close)
 assert(guide_form:set_items("topics",guide_entries))
