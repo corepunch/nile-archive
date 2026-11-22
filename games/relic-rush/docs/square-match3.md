@@ -7,7 +7,7 @@ identical pieces. A board spawns five kinds. Bonus pieces replace a kind
 once its building is confirmed. Each matched Hammer piece gives 3 charge
 points and the meter fills at 90. Long matches count each Hammer once.
 
-In an Xcode Debug build for macOS or the iOS Simulator, **SKIP >>** runs the
+In an Xcode Debug build for iPhone, the iOS Simulator or macOS, **SKIP >>** runs the
 reference bot through legal swaps at up to two moves per frame. It can keep
 playing after the move counter reaches zero. The normal win dialogue and reward follow.
 

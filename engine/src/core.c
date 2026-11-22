@@ -169,8 +169,8 @@ bool app_debug_autoplay(void)
 {
 #if defined(ENGINE_TEST)
     return app_arg("debug-autoplay") != NULL;
-#elif defined(MATCH3_DEBUG_AUTOPLAY) && (TARGET_OS_OSX || (defined(AX_PLATFORM_IOS) && TARGET_OS_SIMULATOR))
-    return true;   /* Xcode Debug on macOS and the iOS Simulator */
+#elif defined(MATCH3_DEBUG_AUTOPLAY)
+    return true;   /* Enabled by the match-3 Xcode Debug configurations. */
 #else
     return false;
 #endif
