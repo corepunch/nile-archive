@@ -111,7 +111,7 @@ This is an authoring brief, not proof that the current level 13 implements it.
 ## Give the two campaigns different rhythms
 
 Relic Rush's existing story is an investigation with escalating discoveries and
-threats. Its [story guide and script](../../games/relic-rush/docs/story.md) already
+threats. Its [story guide and script](../../games/relic-rush/docs/story-live.md) already
 connect frost, names, equipment and the temple to the mystery. Board emphasis can
 favor excavation, blocked sightlines, deliberate special creation and sudden
 access to a new region. Keep a previously learned mechanic available during a

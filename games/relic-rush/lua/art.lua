@@ -4,7 +4,7 @@ local buttons = require("match3.buttons")
 local economy = require("economy")
 local A = {}
 A.menu_backdrop = "menu/valley.jpg"
-A.resident_keepsakes = {["meeting-map_room-aviary.after-92"]="story/scenes/facing-sketches.jpg"}
+A.resident_keepsakes = {["meeting-map_room-aviary.after-92"]="story/scenes/ina-first-crossing.jpg"}
 A.board_backdrops = {[economy.opening_backdrop] = "board/backs/" .. economy.opening_backdrop .. ".jpg"}
 for _, unlock in ipairs(economy.unlocks) do
     A.board_backdrops[unlock.building] = "board/backs/" .. unlock.building .. ".jpg"
@@ -22,14 +22,12 @@ function A.bind_board_backdrops(scenes)
         return picture
     end})
 end
-A.story={cast={"elena","mara","tomas","adrian","keeper","marisol","lio","nera"},
-    keeper_source="art/art-direction/ancient-keeper.png",marisol_source="art/art-direction/marisol.png",source="art/art-direction/expedition-cast.png",
+A.story={cast={"sela","oren","tavi"}, source="art/art-direction/harbour-family.png",
     scenes="existing-island-and-board-paintings",text_scale=1.5,states={"speaking","listening","thought","shout"}}
-A.finale = {plate="signal-plate", landing="safe-landing", lantern=vec2(.459,.423)}
 A.quest_handoffs = {
     chart={title="The Harbor Chart", path="story/scenes/harbor-chart.jpg"},
     cable={title="The Broken Cable", path="story/scenes/broken-cable.jpg"},
-    shutter={title="The view from Mara’s skiff", path="story/scenes/reef-warning.jpg"},
+    shutter={title="View from the reef", path="story/scenes/reef-warning.jpg"},
 }
 A.story_pieces = {"chart", "supplies", "lens", "cable", "tools", "note", "gear", "marker"}
 A.story_campaign_frames = {"pliers"}
@@ -143,8 +141,6 @@ function A.load()
             textures["resource-" .. key] = image
         end
     end
-    textures[A.finale.plate] = texture.load("story/finale/" .. A.finale.plate .. ".png")
-    textures[A.finale.landing] = texture.load("story/finale/" .. A.finale.landing .. ".jpg")
     return textures
 end
 

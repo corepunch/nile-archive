@@ -26,7 +26,7 @@ A board with a legal move never reshuffles, and with lines of three there is alm
 
 ## Crew requests
 
-Between purchases the crew asks for things of its own. [Story and scenes](story.md#crew-requests) · [Request data](../lua/quests.lua)
+Between purchases the crew asks for things of its own. [Story and scenes](story-live.md#crew-requests) · [Request data](../lua/quests.lua)
 
 - **A request has its own piece.** It stands on the boards only while the request is open and short of pieces. It matches like any other piece and banks nothing in the wallet. Each one matched counts toward the request. A tool hit does not count, as with resources.
 - **Pieces bank on a win.** The board shows no request counters; the island marker shows what is banked. A lost or abandoned board banks none. The results card lists them beside the resources.

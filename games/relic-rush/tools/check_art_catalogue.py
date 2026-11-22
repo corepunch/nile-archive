@@ -247,24 +247,18 @@ with Image.open(ROOT / topaz["runtime"]) as sheet:
 
 import subprocess
 import sys
-finale = manifest["finale"]
-for name, item in finale["assets"].items():
-    assert f'`{name}`' in doc and f'"{name}"' in art
-    assert item["runtime"] in shipped
-    assert all((ROOT / item[key]).is_file() for key in ("source", "prompt"))
-subprocess.run([sys.executable, str(ROOT / finale["registration"]), "--check"], check=True)
-
+subprocess.run([sys.executable, str(ROOT / 'tools/prepare_finale_art.py'), '--check'], check=True)
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
 cast = manifest['story']['cast']
-narrative = (ROOT / 'lua/narrative.lua').read_text()
+story_cast = (ROOT / 'lua/story_cast.lua').read_text()
 assert cast == {speaker: f'data/{path}' for speaker, path in re.findall(
-    r"\{id='([^']+)'[^\n]*?portrait_path='([^']+)'", narrative)}
+    r"\{id='([^']+)'[^\n]*?portrait_path='([^']+)'", story_cast)}
 declaration = re.search(r'A\.story=\{cast=\{([^}]+)\}', art).group(1)
 assert set(re.findall(r'"([^"]+)"', declaration)) == set(cast)
 assert all(path in shipped for path in cast.values())
-for speaker in ('keeper', 'marisol'):
-    assert all((ROOT / manifest['story'][speaker][key]).is_file()
-               for key in ('source', 'prompt', 'review'))
+assert {p.stem for p in (ROOT / 'data/story/characters').glob('*.png')} == set(cast)
+for key in ('source', 'prompt'):
+    assert (ROOT / manifest['story'][key]).is_file()
 assert manifest['story']['states'] == ['speaking','listening','thought','shout']
 assert 'A.story=' in art and '31.5' in doc
 

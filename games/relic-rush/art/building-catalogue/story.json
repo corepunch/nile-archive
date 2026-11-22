@@ -1,14 +1,14 @@
 {
   "camp": {
-    "about": "Unlocks Bomb. Hit a 3×3 square around a cell.",
+    "about": "Work crews pitch their tents where the day's digging ends. The cook hangs a pot by the path so a latecomer can find supper without waking a tentful of sleepers.",
     "cost": [1680, 640, 725]
   },
   "well": {
-    "about": "Water buckets earn 3 Food each.",
+    "about": "A ring of fitted stones keeps loose earth out of the spring. The rim has a low shelf where a child can rest a full jar before lifting it.",
     "cost": [35, 0, 0]
   },
   "quay_steps": {
-    "about": "",
+    "about": "Porters use the lowest dry step to board a boat. As the tide rises they move their baskets up the stone stair, one landing at a time.",
     "cost": [0, 0, 0],
     "paint": {
       "geometry": "art/building-catalogue/painted-v1/quay-steps-geometry.png",
@@ -27,93 +27,99 @@
     }
   },
   "workshop": {
-    "about": "Timber bundles earn 5 Supplies each.",
+    "about": "Boatwrights steam planks over a trench of hot stones, then bend them round wooden pegs. A split plank still makes a pair of good oar blades.",
     "cost": [1515, 565, 0]
   },
   "market": {
-    "about": "Ration jars earn 4 Food each.",
+    "about": "Growers bring fruit down in leaf-lined baskets. The jars go home full of salt fish, packed for villages too far inland to smell the sea.",
     "cost": [1580, 595, 880]
   },
   "gateway": {
-    "about": "Shrimp earn 6 Food each.",
+    "about": "The sun mosaic belongs to everyone on market mornings. Fishers spread their catch around its rim and leave the centre clear for the porters with their baskets.",
     "cost": [945, 1455, 1265]
   },
   "lodge": {
-    "about": "The dock crews turn this hourglass to time their watches. Adds five moves.",
+    "about": "Boat crews share sleeping mats here between tides. The keeper saves the places nearest the door for those who must put out before dawn.",
     "cost": [895, 1710, 1170]
   },
   "archive": {
-    "about": "The archive keeps the signet rings of the island's old keepers.",
+    "about": "A keeper presses each household's seal into wet clay beside its account. Even a borrower who cannot read can find her own mark and call for witnesses.",
     "cost": [930, 1775, 1100]
   },
   "observatory": {
-    "about": "Unlocks Mixer. Shuffle the pieces.",
+    "about": "Watchers sight the rising stars between pairs of stone uprights. The first dawn appearance of the rainy season's star gives farmers time to bring their grain under cover.",
     "cost": [1280, 1855, 1160]
   },
   "fountain": {
-    "about": "Emeralds earn 11 Coins each.",
+    "about": "Clay pipes bring spring water to the jade basin. The lip is cut low on one side so a small child can dip a cup while the tall jars fill.",
     "cost": [2120, 2375, 1485]
   },
   "temple": {
-    "about": "Unlocks Star. Clear all pieces of a chosen kind.",
+    "about": "Households bring a little of their first flour to the sun court. The temple ovens bake it into small loaves for people who have come to town with nothing to offer.",
     "cost": [2045, 2400, 1525]
   },
   "log_cabin": {
-    "about": "Unlocks Hammer. Hit one cell.",
+    "about": "Trappers hang wet hides under the eaves and stretch them on willow hoops. A traveller who finds the cabin empty may sleep by the hearth and leave a split log for the next guest.",
     "cost": [655, 240, 0]
   },
   "apothecary": {
+    "about": "The herbalist dries leaves on reed trays and keeps the roots in separate clay pots. A sprig tied to each lid tells an apprentice which plant grew it.",
     "cost": [220, 15, 0]
   },
   "mess_hall": {
+    "about": "Crews bring their own bowls to the long tables. One cook can feed a whole shift while the hearth is hot and have the grain soaking for the next.",
     "cost": [240, 0, 16]
   },
   "stilt_house": {
+    "about": "Timber posts carry the sleeping floor above the flood line. A family can tie its boat to the steps and come home even when the lane is under water.",
     "cost": [260, 0, 17]
   },
   "map_room": {
-    "about": "The cartographer's storm charts guide lightning to the board.",
+    "about": "Pilots bring the cartographer depths knotted into sounding cords. A shoal earns its place on the harbour chart when a second boat finds it.",
     "cost": [915, 1760, 1120]
   },
   "greenhouse": {
+    "about": "Tender seedlings spend their first weeks under cover. The gardener opens the shelter early, before the midday heat can wilt a whole bed.",
     "cost": [300, 20, 0]
   },
   "trading_post": {
-    "about": "Dressed stones earn 7 Supplies each.",
+    "about": "Masons dress one face of each block at the quarry. At the post a buyer lays two faces together. Daylight in the joint means more work before the stones can go on the cart.",
     "cost": [1180, 990, 890]
   },
   "water_mill": {
-    "about": "Grain bundles earn 5 Food each.",
+    "about": "Water turns a paddle wheel geared to the upper millstone. A miller tests the meal between finger and thumb. A fine loaf calls for a narrower gap between the stones.",
     "cost": [960, 1175, 1145]
   },
   "clock_tower": {
-    "about": "Unlocks Shield. Hit the row through a chosen cell.",
+    "about": "The harbour watch cuts a mark on the staff at each highest tide. Pilots consult the marks before they risk a deep-laden boat over the bar.",
     "cost": [880, 1270, 1140]
   },
   "lighthouse": {
-    "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
+    "about": "The keepers haul baskets of dry wood to the brazier before dusk. Out at sea a pilot steers towards the fire until the harbour mouth opens between the reefs.",
     "cost": [1020, 1730, 1060]
   },
   "treehouse": {
+    "about": "Fruit pickers keep a sleeping platform among the branches. A watcher with a rattle can turn a flock away before it strips the ripest tree.",
     "cost": [400, 0, 27]
   },
   "aviary": {
-    "about": "The aviary keepers wear woven sandals on their rounds.",
+    "about": "Boat crews take birds from this loft to sea in wicker cages. Released with a slip of linen round one leg, a bird can bring word home before the rowers make land.",
     "cost": [1585, 2250, 1425]
   },
   "beached_ship": {
-    "about": "The crew salvaged scarabs from the schooner's cargo.",
+    "about": "Shipwrights draw the pegs from a stranded hull at low tide. Curved ribs are worth saving whole. A young boatbuilder might wait a season to find a tree bent to the same shape.",
     "cost": [1165, 1845, 1150]
   },
   "amphitheater": {
-    "about": "Helmets from the old contests survive beneath the arena seats.",
+    "about": "On contest days the wrestlers oil their shoulders under the lowest tier. On hearing days a petitioner stands on the same patch of sand and the whole town can hear.",
     "cost": [850, 1785, 1150]
   },
   "museum": {
-    "about": "The collection includes harps once played in the island's halls.",
+    "about": "Families lend the hall things too dear to sell. On feast days a player may lift a harp from its peg so the children hear the instrument their grandparents danced to.",
     "cost": [1755, 2215, 1455]
   },
   "hanging_gardens": {
+    "about": "Each terrace drains into the bed below. Gardeners carry water to the top at dawn and plant the thirstiest herbs where the first runnel falls.",
     "cost": [550, 37, 0]
   }
 }

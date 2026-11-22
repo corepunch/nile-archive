@@ -245,7 +245,7 @@ do
     local building=relic and "well" or "arch"
     local who=U.by_id.man_03.upgrade.keeper
     local beat={key="upgrade-man_03",phase="upgrade",event="man_03",building="x",
-        lines={{who,"Water for everyone!"},{relic and "mara" or "noelle","Thank you."}}}
+        lines={{who,"Water for everyone!"},{relic and "sela" or "noelle","Thank you."}}}
     -- set the authored scene aside to see the fallback, then use a known one
     local authored={}
     for i=#journey.upgrades,1,-1 do

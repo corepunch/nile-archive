@@ -83,9 +83,9 @@ A 12-move median gets 23 moves in Relic Rush and 15 in Christmas Market. Slow ru
 
 Rome 2's sixteen citizens (`settings/user_events.xml`, events `man_01` to `man_16`) are optional skill feats tied to buildings. When the building stands, its feat is armed. Meeting it once upgrades the building for good and gives one lasting perk: **income every level** in one currency, or **a tool that comes more often**. In Rome the citizen is an anonymous figure that appears at the building and never speaks.
 
-We keep the feats, the upgrades and the perks, and give each upgrade to **the character who already runs that building**. Agnes gets a second oven; Tomas mends his father's traps. No new person arrives: the player sees someone they know get better at what they do.
+We keep the feats, the upgrades and the perks, and give each upgrade to **the character who already runs that building**. Agnes gets a second oven; Oren sharpens his father's adze. No new person arrives: the player sees someone they know get better at what they do.
 
-- **The upgrade is the keeper's scene.** Its two to four lines are the keeper and one other main character, about what has improved and what it means to them. The perk is felt in the world ("I'll have a tray out before the first train"), never named as a rule ("your Treats income rises").
+- **The upgrade is the keeper's scene.** The keeper speaks to a neighbour about the improvement and what they can do with it. The perk is felt in the world ("I'll have a tray out before the first train"), never named as a rule ("your Treats income rises").
 - **Optional and timeless.** An upgrade plays on the next return to town after its feat, at any point after its building stands, so it never refers to story events by level and never depends on them. The required story never depends on an upgrade.
 - **Perks are scaled to our income.** The feat "earn X in one level" asks for about twice the mean board income in that currency in the ten levels after the building. Income per level is Rome's ratio of perk to threshold, capped at 20% of the threshold and rounded to fives. A tool upgrade makes its tool's piece charge one point more per match; two on one slot add up.
 - **Rome feats we cannot measure get the nearest equivalent.** "Collect three lives" becomes three wins in a row without a failed level; feats in seconds keep Rome's time.
@@ -94,22 +94,22 @@ We keep the feats, the upgrades and the perks, and give each upgrade to **the ch
 
 | # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas Market upgrade (keeper) |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Well (`man_03`) | 245 Food / 240 Treats in one level | +15 every win | Spring well: a second rope and pulley (Tomas) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
-| 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Tomas) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
-| 3 | Sawmill (`man_02`) | 520 Supplies / 395 Materials in one level | +105 / +75 every win | Carpenter's workshop: a second saw bench (Mara) | Lumber workshop: a drying shed for the pine (Theo) |
-| 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a proper powder store (Adrian) | Firework stall: a rocket rack, ready in threes (Pip) |
-| 5 | Farm (`man_05`) | 560 Food / 315 Treats in one level | +95 / +50 every win | Jungle market: the hill farms send their carts (Marisol) | Gingerbread bakery: a second oven (Agnes) |
-| 6 | Mine (`man_06`) | 550 Supplies / 585 Materials in one level | +110 / +115 every win | Stone trading post: a cart road to the quarry (Adrian) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
-| 7 | Mill (`man_07`) | 625 Food / 400 Treats in one level | +125 / +80 every win | Water mill: a second millstone (Elena) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
-| 8 | Thermae (`man_08`) | Five matches of five in one level | Shield charges faster | Tide clock tower: a warning chime (Tomas) | Ice house: a second ice saw on the lake (Theo) |
-| 9 | Port (`man_09`) | 850 Food / 575 Treats in one level | +170 / +115 every win | Harbour plaza: a fish market every morning (Marisol) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
-| 10 | Coliseum (`man_10`) | 460 Coins / 985 Tokens in one level | +90 / +195 every win | Stone amphitheatre: market-day shows (Adrian) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
-| 11 | House of the Vestals (`man_11`) | Two matches of five in a row | Lightning charges faster | Cartographer's house: storm charts on the wall (Elena) | Candlelight shop: Mr Wren trims every wick (Mr Wren) |
-| 12 | Lighthouse (`man_12`) | 15 matches within 20 seconds | Plus charges faster | Lighthouse: a polished lens (Mara) | North Pole post office: a second sorting rack (Pip) |
-| 13 | Nero's Golden House (`man_13`) | 690 Coins / 1070 Tokens in one level | +140 / +210 every win | Beached schooner: a ferry to the hill villages (Mara) | Glassblower's stall: a second furnace (Theo) |
-| 14 | Mausoleum (`man_14`) | Three wins in a row without a failed level | Mixer charges faster | Star observatory: the telescope realigned (Elena) | Reindeer carousel: a band organ (Pip) |
-| 15 | Theatre (`man_15`) | 990 Coins / 1170 Tokens in one level | +200 / +235 every win | Relic museum: a reading room open to all (Adrian) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
-| 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Temple of the Sun: the keepers' watch roster (Tomas) | Christmas tree: a star for the top (Theo) |
+| 1 | Well (`man_03`) | 245 Food / 240 Treats in one level | +15 every win | Spring well: a second rope and pulley (Oren) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
+| 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Oren) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
+| 3 | Sawmill (`man_02`) | 520 Supplies / 395 Materials in one level | +105 / +75 every win | Carpenter's workshop: a second saw bench (Sela) | Lumber workshop: a drying shed for the pine (Theo) |
+| 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a dry tool store (Sela) | Firework stall: a rocket rack, ready in threes (Pip) |
+| 5 | Farm (`man_05`) | 560 Food / 315 Treats in one level | +95 / +50 every win | Jungle market: the hill farms send their carts (Tavi) | Gingerbread bakery: a second oven (Agnes) |
+| 6 | Mine (`man_06`) | 550 Supplies / 585 Materials in one level | +110 / +115 every win | Stone trading post: a cart road to the quarry (Sela) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
+| 7 | Mill (`man_07`) | 625 Food / 400 Treats in one level | +125 / +80 every win | Water mill: a second millstone (Oren) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
+| 8 | Thermae (`man_08`) | Five matches of five in one level | Shield charges faster | Tide clock tower: a warning chime (Tavi) | Ice house: a second ice saw on the lake (Theo) |
+| 9 | Port (`man_09`) | 850 Food / 575 Treats in one level | +170 / +115 every win | Harbour plaza: a fish market every morning (Tavi) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
+| 10 | Coliseum (`man_10`) | 460 Coins / 985 Tokens in one level | +90 / +195 every win | Stone amphitheatre: market-day shows (Oren) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
+| 11 | House of the Vestals (`man_11`) | Two matches of five in a row | Lightning charges faster | Cartographer's house: storm charts on the wall (Tavi) | Candlelight shop: Mr Wren trims every wick (Mr Wren) |
+| 12 | Lighthouse (`man_12`) | 15 matches within 20 seconds | Plus charges faster | Lighthouse: a bronze reflector (Tavi) | North Pole post office: a second sorting rack (Pip) |
+| 13 | Nero's Golden House (`man_13`) | 690 Coins / 1070 Tokens in one level | +140 / +210 every win | Beached schooner: a ferry to the hill villages (Tavi) | Glassblower's stall: a second furnace (Theo) |
+| 14 | Mausoleum (`man_14`) | Three wins in a row without a failed level | Mixer charges faster | Star observatory: the sighting stones aligned (Sela) | Reindeer carousel: a band organ (Pip) |
+| 15 | Theatre (`man_15`) | 990 Coins / 1170 Tokens in one level | +200 / +235 every win | Relic museum: a reading room open to all (Sela) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
+| 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Temple of the Sun: the keepers' watch roster (Oren) | Christmas tree: a star for the top (Theo) |
 
 Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas Market.
 

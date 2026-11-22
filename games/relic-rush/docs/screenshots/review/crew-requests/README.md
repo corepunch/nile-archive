@@ -3,7 +3,7 @@
 Relic Rush now matches straight lines of three among six kinds. The sixth slot
 shows quartz, or the piece of an open crew request. Open requests stand as
 round markers down the island's left edge, under the next building.
-[Rules](../../../match4-rules.md#crew-requests) · [Story](../../../story.md#crew-requests)
+[Rules](../../../match4-rules.md#crew-requests) · [Story](../../../story-live.md#crew-requests)
 
 ## The first-epoch investigation
 

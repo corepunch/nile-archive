@@ -1,4 +1,4 @@
-"""Register the finale and request hand-in paintings from their authored sources."""
+"""Register the archived request hand-in paintings from their authored sources."""
 import argparse
 from io import BytesIO
 import json
@@ -13,7 +13,7 @@ parser.add_argument("--check", action="store_true")
 args = parser.parse_args()
 
 crew = spec["crew_requests"]
-for name, item in (spec["finale"]["assets"] | crew["handoffs"] | crew["shutter_states"]).items():
+for name, item in (crew["handoffs"] | crew["shutter_states"]).items():
     with Image.open(ROOT / item["source"]) as master:
         if "crop" in item:
             sprite = master.crop(item["crop"])

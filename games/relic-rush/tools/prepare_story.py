@@ -1,13 +1,12 @@
 """Compile the reviewed story's spoken lines; --check detects script/runtime drift."""
 import argparse
-import json
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
-from town_story import compile_town
+from town_story import Line, compile_town, quote
 
 text = (ROOT / 'docs/story.md').read_text()
 # The upgrades' scenes live in their own section; the level beats never see it.
@@ -17,10 +16,10 @@ town_source = re.search(r'^## Town dialogue\n.*?(?=^## |\Z)', text, re.S | re.M)
 source = text.replace(upgrade_source, '').replace(town_source, '')
 source = re.sub(r'^## Citizens\n.*?(?=^## |\Z)', '', source, flags=re.S | re.M).split('## Crew requests')[0]   # also drop the superseded Citizens section
 beats, beat, choice = [], None, None
-speakers = {'Nera': 'nera', 'Lio': 'lio', 'Elena': 'elena', 'Mara': 'mara', 'Tomas': 'tomas', 'Adrian': 'adrian', 'Kessler': 'kessler', 'Ines': 'ines',
-            'Ancient keeper': 'keeper', 'Marisol': 'marisol'}
-# Rome 2's upgrade events (games/relic-rush/lua/user_events.lua) and the keeper who must speak in each.
-keeper_speakers = {'man_03': 'Tomas', 'man_04': 'Tomas', 'man_02': 'Mara', 'man_01': 'Adrian', 'man_05': 'Marisol', 'man_06': 'Adrian', 'man_07': 'Elena', 'man_08': 'Tomas', 'man_09': 'Marisol', 'man_10': 'Adrian', 'man_11': 'Elena', 'man_12': 'Mara', 'man_13': 'Mara', 'man_14': 'Elena', 'man_15': 'Adrian', 'man_16': 'Tomas'}
+speakers = {name: name.lower() for name in ('Sela', 'Oren', 'Tavi')}
+# The runtime owns the keeper and title of each optional upgrade.
+upgrade_data = (ROOT / 'lua/user_events.lua').read_text()
+keepers = dict(re.findall(r'\{id="(man_\d+)", building="[^"]+", title="[^"]+", keeper="([^"]+)"', upgrade_data))
 for line in source.splitlines():
     heading = re.match(r'\*\*(Before level|Level|After restoration) (\d+)', line)
     if heading:
@@ -51,7 +50,7 @@ for line in upgrade_source.splitlines():
     heading = re.match(r'\*\*Upgrade (man_\d\d) · ([^·*]+) · ([^*]+)\*\*\s*$', line)
     if line.startswith('**Upgrade'):
         assert heading, 'write each upgrade heading as **Upgrade man_NN · <title> · <Building name>**: ' + line
-        assert heading[1] in keeper_speakers, 'unknown upgrade event ' + heading[1]
+        assert heading[1] in keepers, 'unknown upgrade event ' + heading[1]
         upgrade = {'key': 'upgrade-' + heading[1], 'event': heading[1], 'title': heading[2].strip(), 'building': heading[3].strip(), 'lines': []}
         upgrades.append(upgrade)
     spoken = re.match(r'- \*\*(' + '|'.join(speakers) + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
@@ -59,27 +58,42 @@ for line in upgrade_source.splitlines():
         assert spoken, 'Relic Rush dialogue requires a named cast member: ' + line
     if spoken and upgrade:
         upgrade['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
-assert len({c['event'] for c in upgrades}) == len(upgrades), 'an upgrade has two scenes'
+assert len({c['event'] for c in upgrades}) == len(upgrades) == len(keepers), 'an upgrade has two scenes'
 for c in upgrades:
     assert c['lines'] and len(c['lines']) <= 48, c['key'] + ' needs spoken lines'
-    assert speakers[keeper_speakers[c['event']]] in {who for who, _, _ in c['lines']}, \
-        c['key'] + ' must have its keeper (' + keeper_speakers[c['event']] + ') speak'
+    assert keepers[c['event']] in {who for who, _, _ in c['lines']}, \
+        c['key'] + ' must have its keeper (' + keepers[c['event']] + ') speak'
     assert all(len(text) <= 100 for _, text, _ in c['lines']), c['key'] + ' has a line over 100 characters'
-# One beat after every expedition's first clear and one scene per story restoration.
+# Quiet boards need no beat. Bookend the campaign and cover every story restoration.
 keys = [b['key'] for b in beats]
 assert len(set(keys)) == len(keys), 'a level has two beats of one phase'
-assert {b['level'] for b in beats if b['phase'] == 'after'} == set(range(1, 101))
+assert keys[0] == 'before-01' and keys[-1] == 'after-100'
+assert all(1 <= b['level'] <= 100 for b in beats)
 assert {b['level'] for b in beats if b['phase'] == 'restore'} == {1, 16, 21, 36, 41, 46, 61, 66, 91, 96}
 assert all(b['lines'] and len(b['lines']) <= 48 for b in beats)
 assert all(bool(b.get('prompt')) == bool(b['choices']) for b in beats)
 assert all(len({c['id'] for c in b['choices']}) == len(b['choices']) and all(c['lines'] for c in b['choices']) for b in beats)
 assert all(len(text) <= 100 for b in beats for group in [b['lines']] + [c['lines'] for c in b['choices']] for _, text, _ in group)
-quote = lambda s: json.dumps(s, ensure_ascii=False)
+def emit_speech(line, listener=None, *, mode=None):
+    options = []
+    if mode:
+        options.append('mode=story.' + mode.upper())
+    if listener:
+        options.append('listener=' + quote(listener))
+    if options:
+        return '%s(%s, {%s})' % (line.speaker, quote(line.text), ', '.join(options))
+    return '%s %s' % (line.speaker, quote(line.text))
+
+
 def emit_lines(items, indent):
-    return [indent + '{%s, %s%s},' % (quote(who), quote(text), ', story.' + kind.upper() if kind else '')
-            for who, text, kind in items]
-replies, town_beats = compile_town(town_source, beats, speakers)
-lines = ['-- Generated by tools/prepare_story.py from docs/story.md; edit the reviewed script.', 'return {']
+    return [indent + emit_speech(Line(who, text), mode=kind) + ',' for who, text, kind in items]
+
+
+replies, town_beats = compile_town(town_source, beats, speakers, render_line=emit_speech)
+lines = ['-- Generated by tools/prepare_story.py from docs/story.md; edit the reviewed script.',
+         'local cast = require("story_cast").by_id']
+lines.extend(f'local {speaker} = cast.{speaker}' for speaker in speakers.values())
+lines.extend(['', 'return {'])
 for b in beats:
     building = ', building=' + quote(b['building']) if 'building' in b else ''
     lines.append('    {key=%s, phase=%s, level=%d%s, lines={' % (quote(b['key']), quote(b['phase']), b['level'], building + replies.get(b['key'], '')))

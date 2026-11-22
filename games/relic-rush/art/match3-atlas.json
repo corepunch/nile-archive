@@ -1998,7 +1998,7 @@
       "games/relic-rush/data/board/backs/background.jpg": "cc8a50ab0c8b840ba18abe1c1f316d8573d044ef4bb1fd7c8166c42b92bfd122",
       "games/relic-rush/data/board/backs/scene-1.jpg": "2e920bae64aa714b72f19538d37c6dd137af74a677cdc237b6e6187d32ac15bc",
       "games/relic-rush/data/board/backs/scene-2.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
-      "games/relic-rush/tools/prepare_assets.py": "329ed99983a1537c3f7415d83bae63a497a59f55b85da675faf5d4376696d86a",
+      "games/relic-rush/tools/prepare_assets.py": "779721ca99eb10a27d48680b8a71390fd1e1413061e319cfac42fa2278ee6333",
       "tools/board_frame_decor.py": "80b0c5ac9248e2c73659f1d6977899d2494bf0b9ab9208afc4e5db6da84aed73",
       "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "7919c0b1d38f68c41fc6aa9ca30e4a47d4ab9154b3b39d354ab4ad2a9aa10784",

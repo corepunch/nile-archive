@@ -214,33 +214,17 @@ reproduces the transparent crops. `--level 5 --size 390x844` shows the water
 bucket in its live slot alongside the original story marker.
 
 
-## The signal finale
+## Harbour family portraits
 
-| Asset | Rule meaning and states | Source and runtime |
+Sela, Oren and Tavi use the same bust for speaking, listening, thought and shout. The dialogue renderer sets the pose, facing and speech bubble from the character's mouth anchor. All three portraits come from one transparent [painted sheet](../art/art-direction/harbour-family.png), styled against the expedition portraits. [Art brief](../art/art-direction/harbour-family.prompt.txt)
+
+| Speaker | Runtime art | First scene |
 | --- | --- | --- |
-| `signal-plate` | On board 30’s first clear, the recovered signal plate appears at the cleared site before the scene cuts to the landing. | ImageGen [source](../art/finale/signal-plate.png) and [prompt](../art/finale/signal-plate.prompt.txt). Cropped and uniformly fitted into a 128 px sprite with its painted alpha. Runtime `data/story/finale/signal-plate.png`. |
-| `safe-landing` | After the plate arrives, the first win cuts to Ines holding a lantern on the safe landing. She answers with the three flashes first seen on board 3. Reduced motion shows a steady light. | ImageGen [source](../art/finale/safe-landing.png) and [prompt](../art/finale/safe-landing.prompt.txt). Uncropped 864×1152 JPEG at `data/story/finale/safe-landing.jpg`. The manifest records the lantern coordinates for the glow. |
+| Sela, potter | `data/story/characters/sela.png` | `before-01`, line 1 |
+| Oren, miller | `data/story/characters/oren.png` | `before-01`, line 2 |
+| Tavi, ferry pilot | `data/story/characters/tavi.png` | `restore-21`, line 2 |
 
-Run `python3 games/relic-rush/tools/prepare_finale_art.py` to register both assets.
-The amber pulses reuse the board’s additive glow, with a shared delay and rhythm.
-See the [finale and sand review](screenshots/review/signal-finale/README.md).
-The old [board 8 painting](../art/story-pictures/broken-relay.png) is archived with its
-[historical review](review/story-mosaic/README.md).
-
-## Marisol and off-screen speakers
-
-Marisol, the Jungle market trader, has a right-facing painted bust in `data/story/characters/marisol.png` for her dialogue and upgrade scenes. Built-in ImageGen used Tomas's bust as the style reference. The [source](../art/art-direction/marisol.png) is resized proportionally by `python3 games/relic-rush/tools/prepare_assets.py --portraits-only`, preserving the authored alpha. The shared renderer mirrors the right slot and stages listening and speaking with the same art. [Exact prompt](../art/art-direction/marisol-prompt.txt) · [Phone review](review/campaign-cast/README.md) · [Issue #110](https://github.com/corepunch/nile-archive/issues/110)
-
-Kessler and Ines speak by radio and lamp and keep a name plate by design.
-
-## Ancient keeper portrait
-
-The Carpenter’s workshop supplies timber for Tomas’s cable reel. When the Expedition camp takes up the night watch, the crew reads the keeper’s words from the watch book. The
-static portrait has transparent edges and uses the standard story speaker slot.
-The [ImageGen original](../art/art-direction/ancient-keeper.png) and [prompt](../art/art-direction/ancient-keeper-prompt.txt)
-are retained. Run `python3 games/relic-rush/tools/prepare_assets.py --keeper-only`
-to register `data/story/characters/keeper.png`. See the native review at
-[480 × 900](review/chapter-one/keeper-480.jpg) and [390 × 844](review/chapter-one/keeper-390.jpg).
+Run `python3 games/relic-rush/tools/prepare_assets.py --portraits-only` to crop the three silhouettes, normalize Tavi's facing and export the ferry painting. The body text is 31.5 points. Preview the opening with `build/test/relic-rush "shot story-opening" "shot phone-story-opening"`.
 
 ## Build progress
 
@@ -250,7 +234,7 @@ Across the bottom of the existing lower-left `action-build` house, the town draw
 
 The following records describe the former hex campaign's optional requests and their review captures. The active square campaign uses the Build house for construction progress. Its board pieces credit score, resources or bonus charges.
 
-The crew's request pieces reuse five paintings from the campaign atlas. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
+The crew's request pieces reuse five paintings from the campaign atlas. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story-live.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
 
 | Request | Frame | Expeditions written for | Pieces on the same board |
 | --- | --- | --- | --- |
@@ -1091,13 +1075,9 @@ The shared form still owns hit testing, focus and activation. The smaller Expedi
 
 Straight-line match-3 rules: ordinary triples, four-in-line rays on all three axes, and five-plus prisms reuse the existing authored states. The guide now shows a prism alone for the five-plus recipe. Bomb artwork remains for existing pieces, tools/effect reviews and special combinations; no nonlinear group creates one. See [rules](match4-rules.md).
 
-## Three-episode story presentation
+## Campaign dialogue
 
-All 46 scenes / 120 lines reuse the authored cast sheet `art/art-direction/expedition-cast.png` and its four RGBA crops `data/story/characters/{elena,mara,tomas,adrian}.png`. Original prompts and crop reproduction are in [art direction](art-direction-v2.md) and `python3 games/relic-rush/tools/prepare_assets.py`. No character is missing: Elena investigates, Mara pilots the Marigold, Tomas is the archivist, and Adrian funds the expedition. Cornelius is an off-screen missing person, not a speaking fifth portrait. Kessler, the Meridian Society's man, speaks but is deliberately never seen: his radio and loudhailer lines are engine captions with a name tag and no bust, which is the intended final state, not a missing asset.
-
-The runtime cast all face right. The portrait import mirrors Adrian’s crop from the original lineup to match the other three. It also isolates Mara’s bust from a stray fragment of the neighboring portrait while keeping her canvas and anchors. Run `python3 games/relic-rush/tools/prepare_assets.py --portraits-only` to reproduce the exports. The story renderer mirrors the portrait on the right side and keeps partners facing one another across turns. [Phone captures](review/portrait-facing/README.md) show the staging. Body text is 31.5 points, names/building bubbles 22.5 points, retaining the cream/ink palette. All thirty boards use the existing packs and the Lagoon/Temple paintings; the island and all ten wonder sprites/registration remain unchanged. Narrative-specific building bubbles reveal only clues the player has reached. The implementation intentionally stages scenes over existing paintings rather than adding cinematic panel assets.
-
-Runtime contract: `lua/art.lua:A.story`; mapping: `art/board-states/manifest.json:story`. Script compilation: `python3 games/relic-rush/tools/prepare_story.py`. Reproduction and inspected game captures are in [story review](review/story/README.md); use `--story-beat before-11`, `--story-beat after-28`, or `--story-beat after-30 --story-line 9`.
+The [script](story.md) supplies the spoken lines and both island visits. See the [portrait registration](#harbour-family-portraits).
 
 ## Island streets
 
@@ -1184,19 +1164,13 @@ The original three striped-axis paintings stay in the master. Both campaigns
 stripe the existing piece along its square row or column.
 Regenerate the atlases with `python3 tools/pack_match_specials.py`.
 
-## Building resident portrait
-
-The confirmed purchase introduces **Lio Valez at the Great Aviary**. The same authored bust appears in three later level conversations once the player has met the resident. The dialogue renderer handles speaker position and mirroring. The [source sheet](../../../art/match3-residents/source.png) and [ImageGen prompt](../../../art/match3-residents/prompt.txt) produce `data/story/characters/lio.png` with `python3 tools/resident_portraits.py`. The crop retains the authored alpha and fits the dialogue canvas at 320 × 480. [Arrival](screenshots/resident-arrival.jpg) · [Return](screenshots/resident-return.jpg)
-
-The Cartographer’s House introduces **Nera Cruz**. The speaking and listening states share the authored bust and use the dialogue renderer’s slot mirroring. The [source sheet](../../../art/match3-residents/chart-and-clock.png) and [ImageGen prompt](../../../art/match3-residents/chart-and-clock.prompt.txt) register to `data/story/characters/nera.png` with `python3 tools/resident_portraits.py`. The left crop keeps the painted alpha on a 320 × 480 canvas. [Arrival](screenshots/nera-arrival.jpg) · [Visit](screenshots/nera-questions.jpg) · [Ordinary reply](screenshots/nera-unasked.jpg) · [Remembered reply](screenshots/nera-remembered.jpg)
-
 ## Resident keepsake
 
-Nera’s sketch of Lio and his parrot faces Lio’s sketch of Nera with her pencil tucked behind her ear. The runtime picture is `data/story/scenes/facing-sketches.jpg`. The entry for `meeting-map_room-aviary.after-92` in `lua/art.lua` connects it to the two homes. A resident’s completed closing answer reveals it there. The same illustration appears with remaining questions or in the building description. [Original sheet, prompt and export](../../../art/resident-keepsakes/README.md) · [Town visit](screenshots/resident-keepsake.jpg) · [Other home](screenshots/resident-keepsake-phone.jpg) · [Remaining questions](screenshots/resident-keepsake-choices.jpg)
+Ina's first crossing shows Tavi giving her the oars. Finishing either resident's final question reveals the picture at that home. The [original painting](../art/art-direction/ina-first-crossing.png) exports to `data/story/scenes/ina-first-crossing.jpg` with the portrait command above.
 
 ## Unheard resident visit
 
-The Great Aviary displays a three-dot speech bubble when Lio has new dialogue. The shared town screen anchors the existing `story.bubble_shape` to the live roof position and draws the dots with the town skin. This is a live UI element. It appears after the introduction and after a newly witnessed story checkpoint, and hides during dialogue, placement and overlays. Tapping the building or bubble asks a sole remaining question directly. Multiple questions open the existing town popup. Each question is available once. After the last question, the bubble clears and a tap shows the building description. Reproduce both phone captures with `build/test/all --suite=relic-rush "shot unheard-visit"`. [480 × 900](review/resident-markers/unheard-visit-480-after.jpg) · [390 × 844](review/resident-markers/unheard-visit-390-after.jpg)
+The Great Aviary displays a three-dot speech bubble when Oren has new dialogue. The shared town screen anchors the existing `story.bubble_shape` to the live roof position and draws the dots with the town skin. This is a live UI element. It appears after the introduction and after a newly witnessed story checkpoint, and hides during dialogue, placement and overlays. Tapping the building or bubble asks a sole remaining question directly. Multiple questions open the existing town popup. Each question is available once. After the last question, the bubble clears and a tap shows the building description. Reproduce both phone captures with `build/test/all --suite=relic-rush "shot unheard-visit"`. [480 × 900](review/resident-markers/unheard-visit-480-after.jpg) · [390 × 844](review/resident-markers/unheard-visit-390-after.jpg)
 
 Capture the question menu with the same command filtered to "shot resident-questions". [First questions](screenshots/resident-questions-480.jpg) · [Last question starts directly](screenshots/resident-questions-390.jpg)
 

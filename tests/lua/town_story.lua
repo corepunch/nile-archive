@@ -317,7 +317,7 @@ local function check_recall(side)
         check(lines[#recall.lines + i] == line, "the level remembers the account heard at " .. side)
     end
     if site == "aviary" then
-        check(lines[3][1] == "lio", "the existing flood-watch reply still plays before the portrait")
+        check(lines[3][1] == "oren", "Oren's line still plays before the recalled exchange")
     end
 end
 check(#journey.lines_for(recall, owns_both, {}) == #recall.lines, "the level waits for the pair to meet")

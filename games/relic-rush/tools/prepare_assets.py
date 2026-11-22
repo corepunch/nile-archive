@@ -83,38 +83,25 @@ def square_jewel():
 
 
 def prepare_portraits():
-    # Dialogue uses a right-facing source pose. Normalize Adrian from the
-    # original lineup before the engine mirrors portraits on the right side.
-    (DATA / 'story/characters').mkdir(parents=True, exist_ok=True)
-    cast = Image.open(ART / 'art-direction' / 'expedition-cast.png').convert('RGBA')
-    busts = {'elena': (40, 100, 370, 505), 'mara': (430, 95, 760, 500), 'tomas': (790, 100, 1120, 505), 'adrian': (1160, 85, 1490, 490)}
-    for name, box in busts.items():
-        im = cast.crop(box)
-        im.thumbnail((264, 324), Image.Resampling.LANCZOS)
-        if name == 'mara':
-            # The lineup crop catches a disconnected sliver of the next bust.
-            # Restore the sprite to its original canvas to keep its anchors.
-            sprite, bounds = isolate_sprite(im, with_box=True)
-            im = Image.new('RGBA', im.size)
-            im.paste(sprite, bounds[:2])
-        if name == 'adrian':
-            im = im.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
-        im.save(DATA / 'story/characters' / f'{name}.png', optimize=True)
-    marisol = Image.open(ART / 'art-direction' / 'marisol.png').convert('RGBA')
-    marisol.thumbnail((264, 324), Image.Resampling.LANCZOS)
-    marisol.save(DATA / 'story/characters' / 'marisol.png', optimize=True)
-
-
-def prepare_keeper():
-    keeper = Image.open(ART / 'art-direction' / 'ancient-keeper.png').convert('RGBA')
-    keeper.thumbnail((264, 324), Image.Resampling.LANCZOS)
-    keeper.save(DATA / 'story/characters/keeper.png', optimize=True)
+    folder = DATA / 'story/characters'
+    folder.mkdir(parents=True, exist_ok=True)
+    # These gutters separate each entire silhouette, including the cup and wheat.
+    with Image.open(ART / 'art-direction/harbour-family.png') as sheet:
+        assert sheet.mode == 'RGBA' and sheet.size == (2172, 724)
+        for name, left, right in [('sela', 40, 680), ('oren', 680, 1468), ('tavi', 1480, 2172)]:
+            bust = sheet.crop((left, 0, right, sheet.height))
+            if name == 'tavi':
+                # The renderer mirrors the right-hand slot. Store a right-facing source.
+                bust = bust.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+            bust.thumbnail((320, 364), Image.Resampling.LANCZOS)
+            bust.save(folder / (name + '.png'), optimize=True)
+    with Image.open(ART / 'art-direction/ina-first-crossing.png') as painting:
+        painting = painting.convert('RGB')
+        painting.thumbnail((768, 512), Image.Resampling.LANCZOS)
+        painting.save(DATA / 'story/scenes/ina-first-crossing.jpg', quality=92, optimize=True)
 
 
 def main():
-    if sys.argv[1:] == ['--keeper-only']:
-        prepare_keeper()
-        return
     if sys.argv[1:] == ['--portraits-only']:
         prepare_portraits()
         return
@@ -131,7 +118,6 @@ def main():
     square_jewel().save(REGISTERED / 'tile-sets/jewels/0.png', optimize=True)
 
     prepare_portraits()
-    prepare_keeper()
     print('relic-rush data ready')
     subprocess.run([sys.executable, str(ROOT / 'tools/board_assets.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'tools/prepare_hud.py')], check=True)
