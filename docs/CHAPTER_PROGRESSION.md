@@ -1,6 +1,6 @@
 # Each epoch tells one chapter in four purchases
 
-**Design proposal for Relic Rush and Christmas Market.** Relic Rush implements the four opening building quests and their next-building card. The epoch strip and keepsake box are proposed UI. Nile Archive keeps its June's Journey structure.
+**Archived design proposal for Relic Rush and Christmas Market.** See [Campaign design](CAMPAIGN_DESIGN.md) for the current board and construction flow.
 
 ## The epoch is the chapter
 

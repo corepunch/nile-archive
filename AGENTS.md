@@ -8,6 +8,8 @@ Relic Rush and Christmas Market each play 100 square match-3 levels. [CAMPAIGN_D
 
 Relic Rush groups the eight tools into four permanent slots. Hammer → Bomb, Shield → Plus, Hourglass → Mixer, and Lightning → Star. A replacement inherits the slot's single charge and replaces its predecessor on the board and toolbar. Expeditions retain a move budget, so the Hourglass awards extra moves. Each tool has its own painted piece. Its icon identifies it without a rank badge.
 
+For match-3 popup copy, check the equivalent [Cradle of Rome dialog](docs/cradle-of-rome-reference/README.md) first. Use the reference's amount of copy and add a line only when the player needs it to act. Let icons and figures speak for themselves. Keep the building description short and put Price or Still Missing beside You Get in one row. The reward icon identifies the unlock. The epoch screen needs a heading, medal names, Back and Play. Keep equal padding on both sides of the parchment, with room between the content and the decorated rails.
+
 ## Commit your work
 
 Commit every finished, verified step yourself, without being asked, and never close a turn with "nothing is committed" while your own changes sit uncommitted. Stage only the files you changed (and regenerated files that follow from them), leave other people's uncommitted edits alone, and say what you committed. Pushing and opening a pull request still wait for the user.

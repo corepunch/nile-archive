@@ -82,6 +82,7 @@ def checks(fast=False, arguments=(), games=()):
     scripts = [
         ("generated code", "tools/luagen.py", "--check"),
         ("Xcode projects", "tools/xcode/generate.py", "--check"),
+        ("Epoch artwork", "tools/epoch_medals.py", "--check"),
         ("Emergency assets", "games/emergency/tools/check_assets.py"),
         ("Relic Rush catalogue", "games/relic-rush/tools/check_art_catalogue.py"),
         ("Christmas catalogue", "games/christmas-market/tools/prepare_catalogue.py", "--check"),

@@ -21,8 +21,8 @@ check(island.owned(old, gingerbread) == 1, 'a progressed save keeps its Gingerbr
 island.restore_saved(old, 0)
 check(old.count == 1 and island.owned(old, starter) == 1 and old.items[1].pos:dist(pos) < .01,
       'an old opening save upgrades its starter in place')
--- Pip announces each region on the level the script gives it (docs/story.md#small-lines).
-local opens = {[15]=1, [30]=2, [50]=3, [70]=4, [85]=5}
+-- The map's minimum level thresholds match the five phase boundaries.
+local opens = {[20]=1, [40]=2, [60]=3, [80]=4, [100]=5}
 for level=0,rules.LEVELS-1 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')

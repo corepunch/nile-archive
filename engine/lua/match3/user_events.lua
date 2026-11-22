@@ -234,7 +234,7 @@ function M.install(R, cfg)
     local function arrive(e)
         local c = e.upgrade
         local journey = require("journey")
-        if journey.find_upgrade and journey.find_upgrade(e.id) then return end
+        if (not R.words or R.words.campaign_dialogue) and journey.find_upgrade and journey.find_upgrade(e.id) then return end
         local building = island.buildings[U.kinds[c.building] + 1]
         show(("%s: %s"):format(building.name, c.title))
     end
