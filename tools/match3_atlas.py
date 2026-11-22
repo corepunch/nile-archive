@@ -400,10 +400,10 @@ def square_cells(game, root):
                   (source, {name: materials[name] for name in ('square-selected', 'square-grout')}, 0)]
         inputs += [papyrus, papyrus.with_name('contact-layout.png'), papyrus.with_name('contact-prompt.txt')]
     else:
-        maple = root / 'art/square-frame/maple-floor.png'
-        sheets = [(maple, {'square-plain': (0, 0, CELL, CELL)}, 0),
-                  (source, {name: box for name, box in materials.items() if name != 'square-plain'}, 512)]
-        inputs.append(maple)
+        materials.pop('square-plain')
+        plain = root / 'art/square-cells/plain.png'
+        sheets = [(source, materials, 512), (plain, {'square-plain': (0, 0, 128, 128)}, 0)]
+        inputs.append(plain)
     for path, crops, row in sheets:
         with Image.open(path) as sheet:
             for name, (x0, y0, x1, y1) in crops.items():

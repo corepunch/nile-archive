@@ -20,8 +20,11 @@ def png(path):
     return struct.unpack('>II', data[16:24]), data[25]
 
 def main():
-    inventory = {str(p.relative_to(ROOT)): digest(p) for p in sorted((ROOT/'data').rglob('*'))
-                 if p.is_file() and p.name != '.DS_Store'}
+    inventory = {
+        str(path.relative_to(ROOT)): digest(path)
+        for path in sorted((ROOT/'data').rglob('*'))
+        if path.is_file() and path.name != '.DS_Store'
+    }
     manifest = json.loads(MANIFEST.read_text())
     if '--update' in sys.argv:
         manifest['runtime'] = inventory

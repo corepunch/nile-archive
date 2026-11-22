@@ -4,12 +4,14 @@
     python3 tools/balance.py relic-rush            # or: make balance GAME=relic-rush
     python3 tools/balance.py christmas-market
     python3 tools/balance.py relic-rush --trim     # first trim boards that run long
+    python3 tools/balance.py relic-rush --fill     # first cover every board with targets, then trim
     python3 tools/balance.py relic-rush --report   # prices and expected campaign only; writes nothing
 
 Steps, each from the square boards in games/<game>/lua/campaign.lua:
 
 1. Build the test binary.
-2. With --trim, remove the targets that make a board run long (tools/square_trim.py).
+2. With --trim, remove the targets that make a board run long (tools/square_trim.py);
+   with --fill, first turn every cell pieces can reach into a target.
 3. Fit every move budget to the bot's median game (tools/tune_moves.py).
 4. Play every board with those budgets, fit the purchase prices to the income
    (tests/lua/relic_balance.lua) and write them: Relic Rush to
@@ -178,6 +180,7 @@ def main():
     parser.add_argument('game')
     parser.add_argument('--seeds', type=int, default=40, help='games the bot plays per board')
     parser.add_argument('--trim', action='store_true', help='first trim boards whose median game runs long')
+    parser.add_argument('--fill', action='store_true', help='first cover every board from the third on with targets, then trim')
     parser.add_argument('--report', action='store_true',
                         help='only print the income-fitted prices and the expected campaign; write nothing')
     args = parser.parse_args()
@@ -185,9 +188,10 @@ def main():
     step('build', ['make', f'build/test/{args.game}'])
     if args.report:
         return fit_prices(args.game, args.seeds, write=False)
-    if args.trim:
+    if args.trim or args.fill:
         count = len(parse((ROOT / f'games/{args.game}/lua/campaign.lua').read_text()))
-        step('trim', [sys.executable, 'tools/square_trim.py', args.game, '--levels', f'1-{count}', '--seeds', str(args.seeds)])
+        step('trim', [sys.executable, 'tools/square_trim.py', args.game, '--seeds', str(args.seeds), '--levels',
+                      *([f'3-{count}', '--fill'] if args.fill else [f'1-{count}'])])
     step('budgets', [sys.executable, 'tools/tune_moves.py', args.game, '--seeds', str(args.seeds)])
     if args.game in PRICED:
         fit_prices(args.game, args.seeds)

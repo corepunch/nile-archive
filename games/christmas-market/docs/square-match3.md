@@ -17,7 +17,8 @@ playing after the move counter reaches zero. The normal reward and story follow.
 
 Four in a row or column leave a **line gem** where the swap landed (or at the
 line's first cell in a cascade). It is still its piece: the same treat or
-token under four cream bands that run the way it clears. Match it with two of
+token under cream ribbons that run the way it clears, with a rim of light and
+a glint that crosses it in that direction. Match it with two of
 its kind and it sweeps its whole row or column. Five or more in a line leave a
 **rainbow gem**, which matches nothing. Swap it with a neighbor to clear every
 piece of that kind, or tap it to clear the kind it was made from.
@@ -58,7 +59,7 @@ The [color map](market-pieces.md) pairs Cradle of Rome 2 pieces and purchase
 rewards with the Christmas Market artwork, yields and prices.
 
 The [100 ASCII layouts](../lua/campaign.lua) use a maximum field of nine
-columns by twelve rows. Each carries a `tier` (levels 1–4 tutorial, then per ten levels easy, easy, normal, normal, hard, easy, normal, normal, hard, boss), checked by `python3 tools/square_boards.py christmas-market`, trimmed by `tools/square_trim.py` and given its `moves` by `tools/tune_moves.py`. Dots are ordinary cells, asterisks single targets,
+columns by twelve rows. Each carries a `tier` (levels 1–4 tutorial, then per ten levels easy, easy, normal, normal, hard, easy, normal, normal, hard, boss), checked by `python3 tools/square_boards.py christmas-market`, covered with panes by `tools/square_trim.py --fill` (plain only where the bot reaches last, so the median clear fits 24 moves on easy boards, 28 on normal, 30 on hard and 32 on bosses) and given its `moves` by `tools/tune_moves.py`. Panes cover 95% of the cells on average, and no budget passes 40 moves. Dots are ordinary cells, asterisks single targets,
 plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes.
 
@@ -127,6 +128,8 @@ five toolbar states.
 
 ## Captures
 
+- [Level 14 before and after the panes covered it, 480 × 900](screenshots/review/covered-boards/level-14-480.jpg)
+- [The same at 390 × 844](screenshots/review/covered-boards/level-14-390.jpg)
 - [Winter Wreath](screenshots/square-winter-wreath.jpg)
 - [Christmas Star](screenshots/square-christmas-star.jpg)
 

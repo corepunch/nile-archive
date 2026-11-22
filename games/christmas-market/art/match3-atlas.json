@@ -1067,7 +1067,7 @@
     "frame_prompt": "art/square-frame/prompt.txt",
     "frames": {
       "square-plain": {
-        "source": "art/square-frame/maple-floor.png",
+        "source": "art/square-cells/plain.png",
         "crop": [
           0,
           0,
@@ -1726,7 +1726,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "fbe549250b741a9b0f250b88bc2bcfbaab24ab99100837ea258bfdb820a39851",
+    "recipe": "e2bd3bbf86ac3003cfa71d51f76755853cfd924acc37c624bf1dc390568c3e24",
     "inputs": {
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
@@ -1797,7 +1797,7 @@
       "games/christmas-market/art/registered/story-pieces/ribbon.png": "eeb31326273b44077d7505875ad9904adee339ff9d3438cd11ed7995933e585a",
       "games/christmas-market/art/registered/story-pieces/scarf.png": "d0f1287e1f8537db369d6a5e46218e2e1dac9cfb8d386eb51fa9b42804c6e9ac",
       "games/christmas-market/art/registered/story-pieces/telegram.png": "da4dcb762ad7bb9d46765606c49d59ff20ca49901defbc74906b85be5b291870",
-      "games/christmas-market/art/square-frame/maple-floor.png": "ed713cfeaf62d1519168fb29b2ea60edf6b2a9991cf260123ec98898689b1519",
+      "games/christmas-market/art/square-cells/plain.png": "ed713cfeaf62d1519168fb29b2ea60edf6b2a9991cf260123ec98898689b1519",
       "games/christmas-market/art/square-frame/prompt.txt": "61654f1a60c447e5776e90df66755fe5fee92ca4283df25ef1451b8b08dd40eb",
       "games/christmas-market/art/square-frame/styles.json": "029f01b1130d9cbc5588eebc1d00faacb371a2463fdc9e27a4919a57b8bff214",
       "games/christmas-market/art/square-frame/variants.png": "3df9d5d0d095006246bf3244c48cb652bc088f7170ecb8a598ae5ae0a797ee0b",

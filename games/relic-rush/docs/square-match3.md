@@ -15,7 +15,8 @@ playing after the move counter reaches zero. The normal win dialogue and reward 
 
 Four in a row or column leave a **line gem** where the swap landed (or at the
 line's first cell in a cascade). It is still its piece: the same relic under
-four cream bands that run the way it clears. Match it with two of its kind and
+cream ribbons that run the way it clears, with a rim of light and a glint
+that crosses it in that direction. Match it with two of its kind and
 it sweeps its whole row or column. Five or more in a line leave a **rainbow
 gem**, which matches nothing. Swap it with a neighbor to clear every piece of
 that kind, or tap it to clear the kind it was made from.
@@ -72,11 +73,10 @@ plus signs double targets, `c` and `C` single and double chains over
 targets, and hyphens holes. Each board has a `tier` (levels 1–4 tutorial,
 then per ten levels easy, easy, normal, normal, hard, easy, normal, normal,
 hard, boss). `python3 tools/square_boards.py relic-rush` validates them,
-`tools/square_trim.py` trims long ones to the tier (easy 30, normal 45, hard
-60, boss 70 targets at the bot's median) and `tools/tune_moves.py` fits each
-board's `moves`. The [move budget](level-moves.md) starts at the bot's median
-clear times 1.25, rounded up. Relic Rush multiplies that result by 1.5 and
-rounds up again.
+`tools/square_trim.py --fill` covers each board with plaques and leaves plain
+only the cells the bot reaches last, so its median clear fits the tier (easy
+24 moves, normal 28, hard 30, boss 32), and `tools/tune_moves.py` fits each
+board's `moves`. Plaques cover 95% of the cells on average, and the fitted move budget includes Relic Rush’s additional 1.5 multiplier.
 
 The existing first-clear and construction scenes tell Ines’s story.
 Plaques are still the goal and the five slots carry the regular resource,
@@ -131,6 +131,9 @@ BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules re
 ```
 
 ## Captures
+
+- [Hall of Pillars before and after the plaques covered it, 480 × 900](screenshots/review/covered-boards/level-14-480.jpg)
+- [The same at 390 × 844](screenshots/review/covered-boards/level-14-390.jpg)
 
 - [Harbour lodge before and after, 480 × 900](screenshots/review/building-rewards/lodge-480.jpg)
 - [Harbour lodge before and after, 390 × 844](screenshots/review/building-rewards/lodge-390.jpg)

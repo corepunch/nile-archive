@@ -26,7 +26,7 @@
         159.719
       ],
       "base_width": 273.205,
-      "gold": 965,
+      "gold": 1680,
       "stars": 0,
       "runtime": "data/city/buildings/camp.png",
       "image": [
@@ -36,9 +36,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        965,
-        355,
-        390
+        1680,
+        640,
+        725
       ],
       "about": "Unlocks Bomb. Hit a 3\u00d73 square around a cell.",
       "road": false,
@@ -106,7 +106,7 @@
         225.83
       ],
       "base_width": 359.808,
-      "gold": 985,
+      "gold": 1515,
       "stars": 0,
       "runtime": "data/city/buildings/workshop.png",
       "image": [
@@ -116,8 +116,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        985,
-        365,
+        1515,
+        565,
         0
       ],
       "about": "Timber bundles earn 5 Supplies each.",
@@ -146,7 +146,7 @@
         211.408
       ],
       "base_width": 359.808,
-      "gold": 905,
+      "gold": 1580,
       "stars": 30,
       "runtime": "data/city/buildings/market.png",
       "image": [
@@ -156,9 +156,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Farmers Market",
       "cost": [
-        905,
-        335,
-        495
+        1580,
+        595,
+        880
       ],
       "about": "Ration jars earn 4 Food each.",
       "road": false,
@@ -186,7 +186,7 @@
         202.13
       ],
       "base_width": 359.808,
-      "gold": 555,
+      "gold": 945,
       "stars": 0,
       "runtime": "data/city/buildings/gateway.png",
       "image": [
@@ -196,9 +196,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Original dry gathering plaza",
       "cost": [
-        555,
-        850,
-        780
+        945,
+        1455,
+        1265
       ],
       "about": "Shrimp earn 6 Food each.",
       "road": false,
@@ -226,7 +226,7 @@
         306.197
       ],
       "base_width": 409.808,
-      "gold": 505,
+      "gold": 895,
       "stars": 0,
       "runtime": "data/city/buildings/lodge.png",
       "image": [
@@ -236,9 +236,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Estate",
       "cost": [
-        505,
-        990,
-        705
+        895,
+        1710,
+        1170
       ],
       "about": "The dock crews turn this hourglass to time their watches. Adds five moves.",
       "road": false,
@@ -266,7 +266,7 @@
         258.785
       ],
       "base_width": 409.808,
-      "gold": 580,
+      "gold": 930,
       "stars": 0,
       "runtime": "data/city/buildings/archive.png",
       "image": [
@@ -276,9 +276,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lavish Library",
       "cost": [
-        580,
-        1060,
-        685
+        930,
+        1775,
+        1100
       ],
       "about": "The archive keeps the signet rings of the island's old keepers.",
       "road": false,
@@ -306,7 +306,7 @@
         271.521
       ],
       "base_width": 273.205,
-      "gold": 790,
+      "gold": 1280,
       "stars": 0,
       "runtime": "data/city/buildings/observatory.png",
       "image": [
@@ -316,9 +316,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Observatory",
       "cost": [
-        790,
-        1160,
-        730
+        1280,
+        1855,
+        1160
       ],
       "about": "Unlocks Mixer. Shuffle the pieces.",
       "road": false,
@@ -346,7 +346,7 @@
         291.86
       ],
       "base_width": 409.808,
-      "gold": 1415,
+      "gold": 2120,
       "stars": 0,
       "runtime": "data/city/buildings/fountain.png",
       "image": [
@@ -356,9 +356,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fountain",
       "cost": [
-        1415,
-        1620,
-        1020
+        2120,
+        2375,
+        1485
       ],
       "about": "Emeralds earn 11 Coins each.",
       "road": false,
@@ -386,7 +386,7 @@
         339.44
       ],
       "base_width": 546.41,
-      "gold": 1415,
+      "gold": 2045,
       "stars": 0,
       "runtime": "data/city/buildings/temple.png",
       "image": [
@@ -396,9 +396,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story finale, as a landmark",
       "cost": [
-        1415,
-        1625,
-        1010
+        2045,
+        2400,
+        1525
       ],
       "about": "Unlocks Star. Clear all pieces of a chosen kind.",
       "road": false,
@@ -426,7 +426,7 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 445,
+      "gold": 655,
       "stars": 0,
       "runtime": "data/city/buildings/log_cabin.png",
       "image": [
@@ -436,8 +436,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        445,
-        155,
+        655,
+        240,
         0
       ],
       "about": "Unlocks Hammer. Hit one cell.",
@@ -586,7 +586,7 @@
         233.232
       ],
       "base_width": 359.808,
-      "gold": 545,
+      "gold": 915,
       "stars": 0,
       "runtime": "data/city/buildings/map_room.png",
       "image": [
@@ -596,9 +596,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Schoolhouse",
       "cost": [
-        545,
-        1005,
-        665
+        915,
+        1760,
+        1120
       ],
       "about": "The cartographer's storm charts guide lightning to the board.",
       "road": false,
@@ -666,7 +666,7 @@
         260.814
       ],
       "base_width": 409.808,
-      "gold": 670,
+      "gold": 1180,
       "stars": 0,
       "runtime": "data/city/buildings/trading_post.png",
       "image": [
@@ -676,9 +676,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Central Station",
       "cost": [
-        670,
-        570,
-        505
+        1180,
+        990,
+        890
       ],
       "about": "Dressed stones earn 7 Supplies each.",
       "road": false,
@@ -706,7 +706,7 @@
         232.79
       ],
       "base_width": 409.808,
-      "gold": 560,
+      "gold": 960,
       "stars": 0,
       "runtime": "data/city/buildings/water_mill.png",
       "image": [
@@ -716,9 +716,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Windmill",
       "cost": [
-        560,
-        695,
-        680
+        960,
+        1175,
+        1145
       ],
       "about": "Grain bundles earn 5 Food each.",
       "road": false,
@@ -746,7 +746,7 @@
         306.519
       ],
       "base_width": 273.205,
-      "gold": 510,
+      "gold": 880,
       "stars": 0,
       "runtime": "data/city/buildings/clock_tower.png",
       "image": [
@@ -756,9 +756,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Clock Tower",
       "cost": [
-        510,
-        745,
-        690
+        880,
+        1270,
+        1140
       ],
       "about": "Unlocks Shield. Hit the row through a chosen cell.",
       "road": false,
@@ -786,7 +786,7 @@
         281.74
       ],
       "base_width": 273.205,
-      "gold": 625,
+      "gold": 1020,
       "stars": 0,
       "runtime": "data/city/buildings/lighthouse.png",
       "image": [
@@ -796,9 +796,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lighthouse",
       "cost": [
-        625,
-        1045,
-        665
+        1020,
+        1730,
+        1060
       ],
       "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
       "road": false,
@@ -866,7 +866,7 @@
         224.8
       ],
       "base_width": 409.808,
-      "gold": 1065,
+      "gold": 1585,
       "stars": 0,
       "runtime": "data/city/buildings/aviary.png",
       "image": [
@@ -876,9 +876,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Aviary",
       "cost": [
-        1065,
-        1500,
-        955
+        1585,
+        2250,
+        1425
       ],
       "about": "The aviary keepers wear woven sandals on their rounds.",
       "road": false,
@@ -906,7 +906,7 @@
         274.276
       ],
       "base_width": 446.41,
-      "gold": 735,
+      "gold": 1165,
       "stars": 0,
       "runtime": "data/city/buildings/beached_ship.png",
       "image": [
@@ -916,9 +916,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Pirate Ship",
       "cost": [
-        735,
-        1180,
-        750
+        1165,
+        1845,
+        1150
       ],
       "about": "The crew salvaged scarabs from the schooner's cargo.",
       "road": false,
@@ -946,7 +946,7 @@
         226.211
       ],
       "base_width": 496.41,
-      "gold": 510,
+      "gold": 850,
       "stars": 0,
       "runtime": "data/city/buildings/amphitheater.png",
       "image": [
@@ -956,9 +956,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Amphitheater",
       "cost": [
-        510,
-        1025,
-        670
+        850,
+        1785,
+        1150
       ],
       "about": "Helmets from the old contests survive beneath the arena seats.",
       "road": false,
@@ -986,7 +986,7 @@
         304.224
       ],
       "base_width": 496.41,
-      "gold": 1135,
+      "gold": 1755,
       "stars": 0,
       "runtime": "data/city/buildings/museum.png",
       "image": [
@@ -996,9 +996,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Museum",
       "cost": [
-        1135,
-        1475,
-        915
+        1755,
+        2215,
+        1455
       ],
       "about": "The collection includes harps once played in the island's halls.",
       "road": false,

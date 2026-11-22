@@ -74,15 +74,15 @@ do
     U.emit("island")
     check(st.done.city_well and st.available.man_03,'placing the well arms its upgrade')
     local g=R.make_board(11,7)
-    g.earnings[economy.PROVISIONS]=149
+    g.earnings[economy.PROVISIONS]=244
     U.emit("wave",{g=g,runs={4},longest=4})
-    check(not st.done.man_03,'149 Food is not the feat')
-    g.earnings[economy.PROVISIONS]=150
+    check(not st.done.man_03,'244 Food is not the feat')
+    g.earnings[economy.PROVISIONS]=245
     U.emit("wave",{g=g,runs={4},longest=4})
-    check(st.done.man_03 and U.upgrades("well")==1,'150 Food in one level upgrades the well')
+    check(st.done.man_03 and U.upgrades("well")==1,'245 Food in one level upgrades the well')
     g.won,g.moves=true,0
     local reward=rules.reward_breakdown(g,R.prog)
-    check(reward.total[economy.PROVISIONS]==160 and reward.total[economy.SUPPLIES]==0,'the well upgrade adds ten Food to a win and no Supplies')
+    check(reward.total[economy.PROVISIONS]==260 and reward.total[economy.SUPPLIES]==0,'the well upgrade adds fifteen Food to a win and no Supplies')
     local found=false
     for _,t in ipairs(U.trophies()) do if t.id=="TROPHY_03" then found=t.name:find("a second rope",1,true)~=nil end end
     check(found,'the well upgrade is a named trophy')
@@ -122,7 +122,7 @@ do
     check(not U.state().done.man_03,'a fresh profile starts with no upgrades')
     check(save.read("user-events-test",U.serialize),'read user events')
     local st=U.state()
-    check(st.done.man_03 and st.done.hint_01_close and not st.available.hint_01_2 and U.win_income()[economy.PROVISIONS]==10,
+    check(st.done.man_03 and st.done.hint_01_close and not st.available.hint_01_2 and U.win_income()[economy.PROVISIONS]==15,
         'done and switched-off events come back with their income')
 end
 
