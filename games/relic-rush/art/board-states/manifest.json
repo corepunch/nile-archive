@@ -721,7 +721,7 @@
       "shout"
     ],
     "presentation": "Existing island and two board paintings, shared engine portrait staging and bubbles; body text 31.5 points, names/building bubbles 22.5 points. No new bitmap states or tint-authored variants.",
-    "script": "docs/story.md",
+    "script": "docs/story-live.md",
     "compile": "python3 games/relic-rush/tools/prepare_story.py",
     "review": "docs/review/story/README.md",
     "marisol": {

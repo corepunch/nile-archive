@@ -40,7 +40,7 @@
         640,
         725
       ],
-      "about": "Unlocks Bomb. Hit a 3\u00d73 square around a cell.",
+      "about": "Work crews pitch their tents where the day's digging ends. The cook hangs a pot by the path so a latecomer can find supper without waking a tentful of sleepers.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/camp.png",
@@ -80,7 +80,7 @@
         0,
         0
       ],
-      "about": "Water buckets earn 3 Food each.",
+      "about": "A ring of fitted stones keeps loose earth out of the spring. The rim has a low shelf where a child can rest a full jar before lifting it.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/well.png",
@@ -120,7 +120,7 @@
         565,
         0
       ],
-      "about": "Timber bundles earn 5 Supplies each.",
+      "about": "Boatwrights steam planks over a trench of hot stones, then bend them round wooden pegs. A split plank still makes a pair of good oar blades.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/workshop.png",
@@ -160,7 +160,7 @@
         595,
         880
       ],
-      "about": "Ration jars earn 4 Food each.",
+      "about": "Growers bring fruit down in leaf-lined baskets. The jars go home full of salt fish, packed for villages too far inland to smell the sea.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/market.png",
@@ -200,7 +200,7 @@
         1455,
         1265
       ],
-      "about": "Shrimp earn 6 Food each.",
+      "about": "The sun mosaic belongs to everyone on market mornings. Fishers spread their catch around its rim and leave the centre clear for the porters with their baskets.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/gateway.png",
@@ -240,7 +240,7 @@
         1710,
         1170
       ],
-      "about": "The dock crews turn this hourglass to time their watches. Adds five moves.",
+      "about": "Boat crews share sleeping mats here between tides. The keeper saves the places nearest the door for those who must put out before dawn.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/lodge.png",
@@ -280,7 +280,7 @@
         1775,
         1100
       ],
-      "about": "The archive keeps the signet rings of the island's old keepers.",
+      "about": "A keeper presses each household's seal into wet clay beside its account. Even a borrower who cannot read can find her own mark and call for witnesses.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/archive.png",
@@ -320,7 +320,7 @@
         1855,
         1160
       ],
-      "about": "Unlocks Mixer. Shuffle the pieces.",
+      "about": "Watchers sight the rising stars between pairs of stone uprights. The first dawn appearance of the rainy season's star gives farmers time to bring their grain under cover.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/observatory.png",
@@ -360,7 +360,7 @@
         2375,
         1485
       ],
-      "about": "Emeralds earn 11 Coins each.",
+      "about": "Clay pipes bring spring water to the jade basin. The lip is cut low on one side so a small child can dip a cup while the tall jars fill.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/fountain.png",
@@ -400,7 +400,7 @@
         2400,
         1525
       ],
-      "about": "Unlocks Star. Clear all pieces of a chosen kind.",
+      "about": "Households bring a little of their first flour to the sun court. The temple ovens bake it into small loaves for people who have come to town with nothing to offer.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/temple.png",
@@ -440,7 +440,7 @@
         240,
         0
       ],
-      "about": "Unlocks Hammer. Hit one cell.",
+      "about": "Trappers hang wet hides under the eaves and stretch them on willow hoops. A traveller who finds the cabin empty may sleep by the hearth and leave a split log for the next guest.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/log_cabin.png",
@@ -480,7 +480,7 @@
         15,
         0
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "The herbalist dries leaves on reed trays and keeps the roots in separate clay pots. A sprig tied to each lid tells an apprentice which plant grew it.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/apothecary.png",
@@ -520,7 +520,7 @@
         0,
         16
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Crews bring their own bowls to the long tables. One cook can feed a whole shift while the hearth is hot and have the grain soaking for the next.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/mess_hall.png",
@@ -560,7 +560,7 @@
         0,
         17
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Timber posts carry the sleeping floor above the flood line. A family can tie its boat to the steps and come home even when the lane is under water.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/stilt_house.png",
@@ -600,7 +600,7 @@
         1760,
         1120
       ],
-      "about": "The cartographer's storm charts guide lightning to the board.",
+      "about": "Pilots bring the cartographer depths knotted into sounding cords. A shoal earns its place on the harbour chart when a second boat finds it.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/map_room.png",
@@ -640,7 +640,7 @@
         20,
         0
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Tender seedlings spend their first weeks under cover. The gardener opens the shelter early, before the midday heat can wilt a whole bed.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/greenhouse.png",
@@ -680,7 +680,7 @@
         990,
         890
       ],
-      "about": "Dressed stones earn 7 Supplies each.",
+      "about": "Masons dress one face of each block at the quarry. At the post a buyer lays two faces together. Daylight in the joint means more work before the stones can go on the cart.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/trading_post.png",
@@ -720,7 +720,7 @@
         1175,
         1145
       ],
-      "about": "Grain bundles earn 5 Food each.",
+      "about": "Water turns a paddle wheel geared to the upper millstone. A miller tests the meal between finger and thumb. A fine loaf calls for a narrower gap between the stones.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/water_mill.png",
@@ -760,7 +760,7 @@
         1270,
         1140
       ],
-      "about": "Unlocks Shield. Hit the row through a chosen cell.",
+      "about": "The harbour watch cuts a mark on the staff at each highest tide. Pilots consult the marks before they risk a deep-laden boat over the bar.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/clock_tower.png",
@@ -800,7 +800,7 @@
         1730,
         1060
       ],
-      "about": "Unlocks Plus. Choose a resource piece for 100 resources or another bonus to add a quarter charge.",
+      "about": "The keepers haul baskets of dry wood to the brazier before dusk. Out at sea a pilot steers towards the fire until the harbour mouth opens between the reefs.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/lighthouse.png",
@@ -840,7 +840,7 @@
         0,
         27
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Fruit pickers keep a sleeping platform among the branches. A watcher with a rattle can turn a flock away before it strips the ripest tree.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/treehouse.png",
@@ -880,7 +880,7 @@
         2250,
         1425
       ],
-      "about": "The aviary keepers wear woven sandals on their rounds.",
+      "about": "Boat crews take birds from this loft to sea in wicker cages. Released with a slip of linen round one leg, a bird can bring word home before the rowers make land.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/aviary.png",
@@ -920,7 +920,7 @@
         1845,
         1150
       ],
-      "about": "The crew salvaged scarabs from the schooner's cargo.",
+      "about": "Shipwrights draw the pegs from a stranded hull at low tide. Curved ribs are worth saving whole. A young boatbuilder might wait a season to find a tree bent to the same shape.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/beached_ship.png",
@@ -960,7 +960,7 @@
         1785,
         1150
       ],
-      "about": "Helmets from the old contests survive beneath the arena seats.",
+      "about": "On contest days the wrestlers oil their shoulders under the lowest tier. On hearing days a petitioner stands on the same patch of sand and the whole town can hear.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/amphitheater.png",
@@ -1000,7 +1000,7 @@
         2215,
         1455
       ],
-      "about": "The collection includes harps once played in the island's halls.",
+      "about": "Families lend the hall things too dear to sell. On feast days a player may lift a harp from its peg so the children hear the instrument their grandparents danced to.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/museum.png",
@@ -1040,7 +1040,7 @@
         37,
         0
       ],
-      "about": "Place this treasure anywhere on open grass.",
+      "about": "Each terrace drains into the bed below. Gardeners carry water to the top at dawn and plant the thirstiest herbs where the first runnel falls.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/hanging_gardens.png",
@@ -3880,7 +3880,7 @@
         0,
         0
       ],
-      "about": "",
+      "about": "Porters use the lowest dry step to board a boat. As the tide rises they move their baskets up the stone stair, one landing at a time.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/quay_steps.png",

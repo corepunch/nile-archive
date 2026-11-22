@@ -1,6 +1,6 @@
 # A light below · first-epoch playtest
 
-> This page records the 100-level campaign's predecessor: a ten-expedition first epoch with crew requests, which were removed from the game in commit f98aedd2. The current campaign is in [the script](story.md) and [square-match3.md](square-match3.md).
+> This page records the 100-level campaign's predecessor: a ten-expedition first epoch with crew requests, which were removed from the game in commit f98aedd2. The current campaign is in [the script](story-live.md) and [square-match3.md](square-match3.md).
 
 [Epoch one outline](epoch-one-outline.md): the whole epoch in play order.
 

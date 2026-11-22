@@ -24,4 +24,4 @@ The player changes these stories by building a home, listening at it, and taking
 
 Play both 100-level campaigns. Check both visiting orders, an interrupted answer, reopening the game, declining a question, and visiting after the finale. Read the densest question menu and the longest labels at 480 × 900 and 390 × 844. Check the roof bubble, a direct question, the continuation menu and the final return to town in the running games.
 
-The authored dialogue, knowledge timelines and plant-and-payoff sheets live in the [Relic Rush script](../games/relic-rush/docs/story.md) and the [Christmas Market script](../games/christmas-market/docs/story.md). The [authoring reference](PORTRAIT_GAMES.md#resident-visits-and-conditional-dialogue) describes the conditions.
+The authored dialogue, knowledge timelines and plant-and-payoff sheets live in the [Relic Rush script](../games/relic-rush/docs/story-live.md) and the [Christmas Market script](../games/christmas-market/docs/story.md). The [authoring reference](PORTRAIT_GAMES.md#resident-visits-and-conditional-dialogue) describes the conditions.

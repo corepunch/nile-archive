@@ -3,8 +3,6 @@
 -- for older saves, Mara's region lines and the wonders' changing tap lines.
 -- The bookkeeping (checkpoints, scheduling, migration) is the engine's
 -- (match3.game journey).
-local economy = require("economy")
-
 return require("match3.game").journey{
     beats = require("story_content"),
     wonder_levels = require("campaign").wonder_levels,
@@ -33,19 +31,9 @@ return require("match3.game").journey{
     },
     -- {kind, from level, line}: the latest reached replaces the catalogue line.
     about = {
-        {0, 16, "The camp keeps the night watch on the shore."},
-        {economy.WELL_KIND, 4, economy.unlock_text(economy.unlock_of("well"))},
-        {economy.WELL_KIND, 16, "Tomas helps keep the well running for the expedition."},
-        {economy.WORKSHOP_KIND, 12, economy.unlock_text(economy.unlock_of("workshop"))},
-        {economy.WORKSHOP_KIND, 16, "Tomas made a cable reel from the workshop's first offcuts."},
-        {3, 22, economy.unlock_text(economy.unlock_of("market"))},
-        {4, 41, "The plaza keeps the harbour register of the crews."},
-        {5, 46, "The crew has a table in the lodge to go over Ines's harbour log."},
-        {6, 61, "Cabinet seventeen holds Ines's drawings for the bypass."},
-        {6, 62, "Ines's plan stays here, where the keepers can consult it."},
-        {7, 76, "The observatory dome gives boats a landmark above the trees."},
-        {8, 96, "The bypass feeds the fountain basin."},
-        {9, 91, "The temple posts the warning for everyone working on the quay."},
-        {9, 100, "The wall holds and the warning carries. More stations are marked on Ines's chart."},
+        {4, 41, "The crews keep their register by the sun court. A porter looking for a berth can find the boat and its sailing day in the same place."},
+        {6, 62, "The keeper gives harbour plans a shelf of their own. A mason can lay a drawing flat here and take the measurements down to the quay."},
+        {9, 91, "The temple lends its steps to the harbour watch. A warning read aloud here reaches the porters as well as the pilots who can read the tide marks."},
+        {9, 100, "Keepers from the outlying stations meet in the sun court. Each takes home a copy of the harbour chart with the safe landings marked."},
     },
 }

@@ -250,7 +250,7 @@ Across the bottom of the existing lower-left `action-build` house, the town draw
 
 The following records describe the former hex campaign's optional requests and their review captures. The active square campaign uses the Build house for construction progress. Its board pieces credit score, resources or bonus charges.
 
-The crew's request pieces reuse five paintings from the campaign atlas. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
+The crew's request pieces reuse five paintings from the campaign atlas. A request's piece stands in a free score slot while the request is open, and quartz fills the sixth slot when nothing is asked. [Rules](match4-rules.md#crew-requests) · [Story](story-live.md#crew-requests) · [Review captures](screenshots/review/crew-requests/README.md)
 
 | Request | Frame | Expeditions written for | Pieces on the same board |
 | --- | --- | --- | --- |

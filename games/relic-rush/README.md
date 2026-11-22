@@ -163,7 +163,9 @@ Elena Voss leads the archaeological expedition. Mara Bell pilots the Marigold, T
 
 ## Story and world
 
-The [script](docs/story.md) runs 100 expeditions in five chapters of twenty. Every expedition has a scene on its first clear, and ten story restorations (after levels 1, 16, 21, 36, 41, 46, 61, 66, 91 and 96) play a scene when placed. The question is who is signalling back to Mara's lamp.
+The [proposed ancient-city campaign](docs/story.md) follows a potter, a miller and a ferry pilot as they return fresh water to the quay. It is awaiting direction approval.
+
+The [playable script](docs/story-live.md) runs 100 expeditions in five chapters of twenty. Every expedition has a scene on its first clear, and ten story restorations (after levels 1, 16, 21, 36, 41, 46, 61, 66, 91 and 96) play a scene when placed. The question is who is signalling back to Mara's lamp.
 
 1. **A Light Below** (1–20): the crew restores the Spring well, finds the watch book at the Expedition camp and sees three flashes from under the cliff. The reply choice is at the camp (16).
 2. **Tracks on the Terrace** (21–40): the Jungle market and Tide clock tower lead to a note, "Wall unsafe. I. R.", and a crack through the quay wall.
@@ -232,7 +234,7 @@ game. Each event fires once per profile, and the save keeps which events are don
   earned in one level, a long match or a run of moves); meeting it upgrades the building, awards a trophy and gives
   a lasting perk: more Coins, Food or Supplies in every won expedition, or a tool whose pieces charge one point
   more per match. The building's card shows the feat while it is armed, then "Upgraded: ..." with the perk. The scene,
-  spoken by the keeper, is the upgrade's entry in `docs/story.md` under `## Upgrades` and plays on the next return to
+  spoken by the keeper, is the upgrade's entry in `docs/story-live.md` under `## Upgrades` and plays on the next return to
   town (a toast if it is missing).
 - **Test flag.** `--user-events-test` fires the `test=true` events at once,
   like Rome's F5 cheat.
@@ -244,6 +246,8 @@ The building upgrade is recorded but has no art yet.
 The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels: A Light Below (1–20), Tracks on the Terrace (21–40), The Keeper’s Return (41–60), The Claim (61–80) and Keep the Light (81–100). Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` fills and trims their plaques to the tier target and `tools/tune_moves.py` fits their move budgets. Every tier starts from the median clear × 1.25, rounded up. Relic Rush multiplies that result by 1.5 and rounds up again. Slow bot samples do not raise the budget. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
 
 ## Buildings
+
+The Build card describes how each site works and who depends on it. Its price and board reward appear below the description.
 
 [Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 
