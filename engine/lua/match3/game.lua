@@ -108,7 +108,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_EPOCH = 12,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -794,6 +794,68 @@ function G.bind(R, over)
             {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
     end
 
+    if W.epochs then
+        local function medal(entry)
+            return N.button {id="medal", role="epoch_medal", height=113, text=entry.name, medal=entry}
+        end
+        local form = ui.form(N.column {panel=true,role="epoch_scroll",
+            match3.popup_header(W.epoch_title),
+            N.column {gap=4,
+                N.uniform_grid {id="epoch_top",rows=1,gap=5,item=medal},
+                N.row {N.spacer {grow=1},
+                    N.uniform_grid {id="epoch_bottom",rows=1,width=238,gap=5,item=medal},
+                    N.spacer {grow=1}},
+            },
+            N.column {gap=4,
+                N.label {id="progress",em=15,text_style="body"},
+                N.label {id="district",wrap=true,em=15,text_style="body"},
+            },
+            N.row {gap=12,
+                N.button {id="back",text="BACK",role="secondary",grow=1,height=48},
+                N.button {id="play",enabled_field="can_play",grow=1,height=48},
+            },
+        })
+        R.epoch_form = form
+        popup(R.OV_EPOCH, form, {width=430, dismiss=false, prepare=function(d)
+            if not skin.images["epoch-scroll"] then
+                local scroll = texture.load_engine("data/board/epoch-scroll.png")
+                assert(scroll.tex, "missing epoch scroll")
+                skin.images["epoch-scroll"] = scroll
+            end
+            local chosen = R.epoch_page
+            if d.epoch_page == chosen then return end
+            d.epoch_page = chosen
+            local completed = R.completed_epochs()
+            local active = math.min(#W.epochs, completed + 1)
+            local path = require("art").epoch_medals
+            local atlas = texture.load(path)
+            assert(atlas.tex, "missing epoch medallions: " .. path)
+            local cell = atlas.w // 3
+            local top, bottom = {}, {}
+            for i, name in ipairs(W.epoch_medal_names or W.epochs) do
+                local list = i <= 3 and top or bottom
+                local frame = i > active and 5 or i - 1
+                local icon = texture.region(atlas, rect((frame % 3) * cell, (frame // 3) * cell, cell, cell))
+                list[#list+1] = {id=i, name=name, icon=icon, done=i <= completed, selected=i == chosen}
+            end
+            assert(form:set_items("epoch_top", top))
+            assert(form:set_items("epoch_bottom", bottom))
+            local levels, size, built = R.epoch_progress(chosen)
+            form:set("progress", ("%d / %d levels  ·  %d / 4 projects"):format(levels, size, built))
+            local district = chosen == active and R.epoch_award or chosen
+            local opened = R.island:zone_open(district)
+            local name = R.island.zones[district + 1].name
+            form:set("district", opened and (name .. " is open") or ("Opens " .. name))
+            match3.set_popup_header(form, W.epoch_title, R.epoch_award and W.epochs[R.epoch_award] .. " complete")
+            local action = R.prog.level < LEVELS and "PLAY" or completed < #W.epochs and "EARN RESOURCES" or "CONTINUE"
+            form:set("play", R.epoch_replays(chosen, completed) and "REPLAY" or action)
+            form.values.can_play = chosen <= active
+        end, handle=function(event)
+            if event.source then R.epoch_page = event.key
+            else R.close_epoch(event.id == "play") end
+        end, live=function(event) return event.source == "epoch_top" or event.source == "epoch_bottom" end})
+    end
+
     -- Draws the open dialog over everything; it alone receives input.
     function R.overlays(dt)
         if R.overlay ~= R.modal_for then   -- a new dialog opens
@@ -995,6 +1057,7 @@ function G.bind(R, over)
     function R.expand()
         local z = R.island:next_zone(R.prog.wallet)
         if z < 0 then R.notice(W.notices.all_open)
+        elseif W.epochs then R.open_epoch(z)
         else R.zone_card, R.overlay = z, R.OV_ZONE end
     end
 
@@ -1014,6 +1077,9 @@ function G.bind(R, over)
     -- there is none, and it opens the "You won" card instead.
     local function can_play() return R.prog.level < LEVELS end
     function R.play_next()
+        if R.epoch_replay_end and R.g and not R.g.won and not R.g.lost then
+            return R.play_level(R.g.level)
+        end
         if can_play() then return R.play_level(R.prog.level) end
         R.overlay = R.OV_COMPLETE
         return false
@@ -1038,17 +1104,79 @@ function G.bind(R, over)
         end
     end
 
+    local PROJECTS_PER_EPOCH = 4
+    local levels_per_epoch = W.epochs and LEVELS // #W.epochs
+
+    function R.completed_epochs()
+        local _, position = island.next_step(R.island, R.prog.level)
+        local confirmed_or_waived = (position or #island.ladder + 1) - 1
+        return math.min(R.prog.level // levels_per_epoch, confirmed_or_waived // PROJECTS_PER_EPOCH)
+    end
+
+    function R.epoch_progress(epoch)
+        local p, c = R.prog, R.island
+        local levels = num.clampi(p.level - (epoch - 1) * levels_per_epoch, 0, levels_per_epoch)
+        local first = (epoch - 1) * PROJECTS_PER_EPOCH + 1
+        local built, waived = 0, island.waived(c)
+        for i = first, first + PROJECTS_PER_EPOCH - 1 do
+            if waived[i] or island.owned(c, island.ladder[i].kind) > 0 then built = built + 1 end
+        end
+        return levels, levels_per_epoch, built
+    end
+
+    function R.sync_epoch_regions()
+        if not W.epochs then return end
+        local completed = R.completed_epochs()
+        for z = 1, completed do R.island:unlock(z, R.prog.wallet) end
+        return completed
+    end
+
+    function R.open_epoch(page, award)
+        local active = math.min(#W.epochs, R.completed_epochs() + 1)
+        R.epoch_page = num.clampi(page or active, 1, #W.epochs)
+        R.epoch_award, R.overlay = award and award > 0 and award or nil, R.OV_EPOCH
+    end
+
+    function R.epoch_replays(page, completed)
+        return page <= completed and not (R.epoch_award == #W.epochs and page == #W.epochs)
+    end
+
+    function R.close_epoch(play)
+        local completed, page = R.completed_epochs(), R.epoch_page
+        local replay = R.epoch_replays(page, completed)
+        if R.epoch_award then
+            R.prog.epoch_seen = R.epoch_award
+            R.epoch_award = nil
+            R.save_progress()
+        end
+        R.overlay = R.OV_NONE
+        if not play then return end
+        if replay then
+            R.epoch_replay_end = page * levels_per_epoch
+            R.play_level((page - 1) * levels_per_epoch)
+        elseif page == math.min(#W.epochs, completed + 1) then
+            R.epoch_replay_end = nil
+            if R.prog.level < LEVELS then R.play_next()
+            elseif completed < #W.epochs then R.play_level(LEVELS - 1) end
+        end
+    end
+
+    function R.show_epoch_award(completed)
+        if completed and completed > (R.prog.epoch_seen or 0) then
+            R.on_island = true
+            local zone = R.island.zones[completed + 1]
+            R.island_focus(zone.marker, R.island.cam.zoom)
+            R.open_epoch(nil, completed)
+            return true
+        end
+    end
+
     function R.epoch_projects()
         local p, c = R.prog, R.island
-        local _, next_position = island.next_step(c, p.level)
-        local steps_per_epoch = 4
-        local last_epoch = #W.epochs
-        local cleared_epoch = p.level // (LEVELS // last_epoch) + 1
-        local purchase_epoch = ((next_position or #island.ladder) - 1) // steps_per_epoch + 1
-        local epoch = math.min(last_epoch, cleared_epoch, purchase_epoch)
+        local epoch = math.min(#W.epochs, R.completed_epochs() + 1)
         local projects = {}
-        for i = 1, steps_per_epoch do
-            local step = island.ladder[(epoch - 1) * steps_per_epoch + i]
+        for i = 1, PROJECTS_PER_EPOCH do
+            local step = island.ladder[(epoch - 1) * PROJECTS_PER_EPOCH + i]
             local kind = step.kind
             local project = {id=kind, icon=R.buildings[kind + 1].sprite, state="locked"}
             local blocked = ladder_blocked(kind, island.owned(c, kind))
@@ -1104,6 +1232,7 @@ function G.bind(R, over)
             end,
             projects = R.epoch_projects,
             project = R.open_project,
+            phase = R.open_epoch,
             project_rim = function(box)
                 if not R.reduced_motion and R.overlay == R.OV_NONE then
                     R.vfx_ready_rim(box:center(), math.min(box.w, box.h) * .46, R.now)
@@ -1138,7 +1267,11 @@ function G.bind(R, over)
                 visited_item = item
                 return R.open_story_choice(visit)
             end,
-            zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
+            zone_ready = W.epochs and function() return false end,
+            zone = function(z)
+                if W.epochs then R.open_epoch(z)
+                else R.zone_card, R.overlay = z, R.OV_ZONE end
+            end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
             suggest = function(kind) return island.island_suggestion(kind) end,
             placed = function(ev, fresh)
@@ -1154,6 +1287,7 @@ function G.bind(R, over)
                         local site = island.purchase_confirmed(R.island, kind, app.clock())
                         if site then R.island_focus(site, R.island.cam.zoom) end
                     end
+                    R.show_epoch_award(R.sync_epoch_regions())
                 end
                 for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
                 R.tone(740)
@@ -1348,6 +1482,14 @@ function G.bind(R, over)
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
         if R.serialize_campaign then R.serialize_campaign(s) end
+        if W.epochs then
+            local reading = save.is_reading(s)
+            local seen = s:int("epoch_seen", R.prog.epoch_seen or (reading and -1 or 0))
+            if reading then
+                local completed = R.sync_epoch_regions()
+                R.prog.epoch_seen = seen < 0 and completed or num.clampi(seen, 0, completed)
+            end
+        end
     end
     R.serialize = serialize
 
@@ -1409,6 +1551,9 @@ function G.bind(R, over)
     end
 
     function R.result_action(first, reward)
+        if not first and R.epoch_replay_end and R.g.level + 1 < R.epoch_replay_end then
+            return "COLLECT & PLAY NEXT"
+        end
         local destination = result_destination(first, R.prog.level + (first and 1 or 0), R.prog.wallet + reward)
         if destination == "play" then return "COLLECT & PLAY NEXT" end
         if destination == "build" then return W.result.visit end
@@ -1422,9 +1567,16 @@ function G.bind(R, over)
         if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
         if first and R.g.story_recall then R.prog.story_seen[R.g.story_recall] = true end
         if not app.arg("debug-walkthrough") then R.submit_leaderboard_progress() end
+        local completed = R.sync_epoch_regions()
         R.save_progress()
         R.on_island = true
         if not campaign_dialogue then
+            if not first and R.epoch_replay_end and R.g.level + 1 < R.epoch_replay_end then
+                R.play_level(R.g.level + 1)
+                return
+            end
+            R.epoch_replay_end = nil
+            if R.show_epoch_award(completed) then return end
             local destination = result_destination(first, R.prog.level, R.prog.wallet)
             R.overlay = destination == "complete" and R.OV_COMPLETE or R.OV_NONE
             if destination == "play" then R.play_next()
@@ -1793,6 +1945,7 @@ function G.app(R)
 
         R.sound, R.reduced_motion = true, false
         R.inspect, R.zone_card = -1, -1
+        R.epoch_award, R.epoch_replay_end = nil, nil
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
         R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
         local loaded
@@ -1821,6 +1974,7 @@ function G.app(R)
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end
         if W.menu.continue_in_town and R.prog.level > 0 then R.on_island = true end
         if R.resume_completed then R.resume_completed() end
+        if R.overlay == R.OV_NONE and W.epochs then R.show_epoch_award(R.completed_epochs()) end
         R.debug_screens()
         if app.arg("main-menu") or loaded and not R.test_mode and not preview then
             R.open_menu()

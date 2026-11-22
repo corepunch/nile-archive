@@ -12,7 +12,7 @@ local D = {}
 -- A direct preview takes precedence over a returning player's title screen.
 function D.direct_preview()
     for _, key in ipairs{
-        "level", "city", "opening-town", "epoch", "showcase", "placing", "zone", "victory", "replay-victory",
+        "level", "city", "opening-town", "epoch", "epoch-window", "showcase", "placing", "zone", "victory", "replay-victory",
         "card", "purchase-card", "catalogue", "catalogue-page", "catalogue-item", "catalogue-card",
         "build-review", "building-review", "dialog", "story-beat", "story-choice", "present", "mission", "kudos",
         "reveal", "goals-met", "art-board", "art-states", "hud-states", "element-states", "special-states", "fx",
@@ -37,22 +37,29 @@ function D.bind(R, W)
     -- A town after n story buildings: n buildings at their suggested spots and
     -- the regions a player would have opened by then, with Stars to match.
     -- With `purchases`, a town after that many ladder purchases instead.
-    local function island_with(n, purchases)
+    -- Phase previews reveal land as each set of four is placed.
+    local function island_with(n, purchases, levels_per_epoch)
         local opened_at = {0, 6, 9, 15, 21, 27}
         local last = purchases and island.ladder[purchases]
-        local cleared = last and last.after or n > 0 and journey.wonder_levels[n] or 0
-        R.prog.level, R.prog.wallet = cleared, wallet(340, cleared * 3)
+        local cleared = levels_per_epoch and purchases // 4 * levels_per_epoch
+            or last and last.after or n > 0 and journey.wonder_levels[n] or 0
+        R.prog.level, R.prog.wallet = cleared, wallet(340, levels_per_epoch and cleared or cleared * 3)
         R.island.count = 0
         local open = 1
-        for z = 1, ISLAND_ZONES - 1 do
-            if cleared >= opened_at[z + 1] then open = open | (1 << z) end
+        if not levels_per_epoch then
+            for z = 1, ISLAND_ZONES - 1 do
+                if cleared >= opened_at[z + 1] then open = open | (1 << z) end
+            end
         end
         R.island.open = tonumber(app.arg("open") or "") or open   -- --open MASK: only these regions (bit per region)
         R.island.open = R.island.open | 1
         local spend = purse(100000, 100000, 100000, cleared)
         local placed = 0
         while (purchases and placed < purchases or not purchases and island.wonder_count(R.island) < n)
-            and island.island_place_next(R.island, spend, cleared, 0) do placed = placed + 1 end
+            and island.island_place_next(R.island, spend, cleared, 0) do
+            placed = placed + 1
+            if levels_per_epoch and placed % 4 == 0 then R.sync_epoch_regions() end
+        end
     end
     R.island_with = island_with
 
@@ -211,10 +218,16 @@ function D.bind(R, W)
         a = app.arg("epoch")   -- --epoch N: the town once N epochs of four ladder purchases are bought
         if a then
             local completed = num.clampi(tonumber(a), 0, #W.epochs)
-            island_with(0, 4 * completed)
-            R.prog.level = completed * (LEVELS // #W.epochs)
-            R.prog.wallet[rules.CLEARED] = R.prog.level
+            island_with(0, 4 * completed, LEVELS // #W.epochs)
+            R.prog.epoch_seen = R.completed_epochs()
             R.on_island, R.toast_time = true, 0
+        end
+        a = app.arg("epoch-window")
+        if a then
+            R.on_island, R.toast_time = true, 0
+            local award = app.arg("epoch-award") and R.completed_epochs() or 0
+            if award > 0 then R.island_focus(R.island.zones[award + 1].marker, R.island.cam.zoom) end
+            R.open_epoch(tonumber(a), award)
         end
         if app.arg("showcase") then
             local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),

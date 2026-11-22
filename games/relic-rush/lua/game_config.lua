@@ -7,6 +7,8 @@ return {
     corner_close = true,
     campaign_dialogue = false,
     epochs = {"Epoch I", "Epoch II", "Epoch III", "Epoch IV", "Epoch V"},
+    epoch_title = "Choose an epoch",
+    epoch_medal_names = {"Spring Camp", "Mill and Market", "Harbour Town", "Coastal Watch", "Sun Temple"},
     result = {visit = "COLLECT & VISIT ISLAND"},
     packs = {"relics", "jewels", "resources"},
     transitions = {

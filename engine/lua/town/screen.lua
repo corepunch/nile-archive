@@ -26,6 +26,8 @@
 --   projects()              phase title and ordered project records (id, icon, state, progress)
 --   project(id)             open the selected project
 --   project_rim(box)        optional effect around the affordable project
+--   phase()                 open the campaign phase window
+--   zone_ready(z)           optional availability for a closed region's marker
 --   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool,
 --                            portrait=texture, progress=0..1}, ...}: round
 --                           markers down the left edge, under the header (requests, tasks)
@@ -159,10 +161,10 @@ function T.new(c, config, hooks)
     })
     if b.layout == "projects" then
         v.navigation = ui.form(N.column {gap = 2,
-            N.label {id = "phase", height = 22, em = 19, text_style = "cream"},
+            N.button {id = "phase", height = 34, flat = true, em = 19, text_style = "cream"},
             N.uniform_grid {id = "actions", rows = 1, gap = 4, item = function(entry)
                 return N.button {id = "action", role = entry.id == "play" and "navigation_play" or "navigation_project",
-                    height = b.height - 24, text = "", project = entry.project}
+                    height = b.height - 36, text = "", project = entry.project}
             end},
         })
     elseif b.layout == "play-primary" and b.pause then
@@ -200,12 +202,13 @@ function View:layout()
     if b.layout == "projects" then
         local title, projects = self.hooks.projects()
         local form = self.navigation
-        if title ~= form:get("phase") then
+        if title ~= self.project_phase then
             local actions = {}
             for i, project in ipairs(projects) do actions[i] = {id = project.id, project = project} end
             actions[#actions + 1] = {id = "play"}
             assert(form:set_items("actions", actions))
-            form:set("phase", title)
+            self.project_phase = title
+            form:set("phase", title .. "  ›")
         end
         local boxes = form:layout(row, self.hooks.skin)
         local actions = form.nodes.actions.children
@@ -316,7 +319,9 @@ function View:draw_markers(c)
         if not c:zone_open(z) then
             local p = cam:to_screen(zones[z + 1].marker)
             if p.x > view.x - 90 and p.x < view:max().x + 90 and p.y > view.y - 50 and p.y < view:max().y + 40 then
-                local ready = c:zone_available(z, self.hooks.wallet())
+                local ready
+                if self.hooks.zone_ready then ready = self.hooks.zone_ready(z)
+                else ready = c:zone_available(z, self.hooks.wallet()) end
                 if ready and not reduced then
                     local g = rgba(cfg.glow)
                     gfx.glow(p, 40, color(g.r, g.g, g.b, math.floor(110 + 60 * math.sin(self.time * 3))), color(g.r, g.g, g.b, 0))
@@ -474,7 +479,9 @@ function View:bottom(active)
         if self.ready_project and h.project_rim then h.project_rim(self.ready_project) end
         if event then
             haptic.play(haptic.TICK, .6)
-            if event.key == "play" then h.play() else h.project(event.key) end
+            if event.id == "phase" then h.phase()
+            elseif event.key == "play" then h.play()
+            else h.project(event.key) end
         end
         return
     end

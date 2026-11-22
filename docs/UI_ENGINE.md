@@ -667,6 +667,13 @@ projects, a progress gauge while funding, a trail when affordable, and a
 checkmark after construction. Locked project buttons open their details.
 Settings uses the town header's `menu(bounds)` slot.
 
+The phase title opens the match-3 `OV_EPOCH` form on the `epoch_scroll` panel.
+Its two data-backed grids center three phase medallions above two. Each uses the `epoch_medal` skin,
+with an authored locked frame, a selected highlight and the shared completed
+checkmark. The city's normal fog follows its saved zone mask. The campaign
+sets the next bit after the phase's last clear and fourth project are both
+complete, then opens the chooser over the new district.
+
 `town_config.lua` can opt into `bottom.layout = "play-primary"`: a centered large
 `navigation_play` button flanked by equally sized `navigation_build` and
 `navigation_pause` buttons. `bottom.build` and `bottom.secondary_height` size

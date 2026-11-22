@@ -15,6 +15,25 @@ Re-encode the source with
 from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
 and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
 
+## Epoch chooser
+
+The painted medallions show a spring, a mill, a sailboat, a lighthouse and a
+sun fountain. Future epochs use the sixth, a bronze keyhole. The choices use
+the same art when hovered, held or focused. A gold rim marks the selected
+choice and the shared tick marks completion. The scroll is a static frame.
+
+- ImageGen originals: [medallion sheet](../art/epoch-medals/source.png),
+  [medallion prompt](../art/epoch-medals/prompt.txt),
+  [scroll](../../../engine/art/epoch-scroll/source.png) and
+  [scroll prompt](../../../engine/art/epoch-scroll/prompt.txt).
+- Runtime: `data/city/epochs/medals.png` (three columns by two rows, 240 px
+  per cell) and `engine/data/board/epoch-scroll.png`. Run
+  `python3 tools/epoch_medals.py` from the repository root to trim transparent
+  margins, center the medallions and resize the scroll.
+- Game capture cases: `shot epoch-window` (480 × 900) and
+  `shot epoch-window-phone` (390 × 844), with completed, selected, and locked
+  choices after revealing a district.
+
 ## Construction backdrops
 
 The epoch row uses the registered building sprites as project icons. The shared

@@ -109,6 +109,28 @@ function B.project()
     return {normal = look, hover = look, pressed = look, disabled = look}
 end
 
+function B.epoch_scroll()
+    return {normal = {layers = {{image="epoch-scroll", inset={-16,-27,-16,-27}}}}}
+end
+
+function B.epoch_medal()
+    local look = {offset={0, 0}, layers={{paint=function(_, node, st, skin, out, alpha)
+        local medal = node.medal
+        local field = out:top(out.h - 23)
+        local icon = field:inflate(st.held and -5 or -2):fit(texture.size(medal.icon))
+        if medal.selected then
+            gfx.round_rect(out:inflate(-1), 10, color.alpha(rgb(0xE2C48E), alpha))
+            gfx.round_rect_line(out:inflate(-1), 10, 2, color.alpha(rgb(0x9E7030), alpha))
+        elseif st.hot then gfx.round_rect(out:inflate(-1), 10, color.alpha(rgb(0xF5E0B8), alpha)) end
+        gfx.image(medal.icon, icon, color.alpha(color.WHITE, alpha))
+        if medal.done and skin.images.tick then
+            gfx.image(skin.images.tick, rect.centered(icon:point(vec2(.83, .82)), size2(20, 20)), color.alpha(color.WHITE, alpha))
+        end
+    end}}}
+    return {normal=look, hover=look, pressed=look, disabled=look,
+        text="body", em=15, text_align={.5, 1}, text_inset={2, 5}, text_fit=true}
+end
+
 -- The portrait is cut to the face as a 16-gon with gfx.image_poly, never with
 -- gfx.sdf_mask: the renderer has one mask, and a medallion drawn inside a
 -- masked scene (the town under the dive wipe) must not replace or clear it.

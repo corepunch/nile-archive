@@ -41,7 +41,10 @@ local function campaign()
         return
     end
     local c = R.island
-    if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
+    if R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        assert(c:zone_open(R.epoch_award), "the epoch award opens its district")
+        app.inject_click(R.epoch_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
+    elseif R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == last_purchase
         and R.on_island and R.overlay == R.OV_NONE then
@@ -52,15 +55,11 @@ local function campaign()
         if R.dialog_settled() and R.result_form.boxes.claim then app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif R.overlay == R.OV_WONDER then
         if R.dialog_settled() then app.inject_click(R.wonder_form.boxes.action:center()); wait = 10 end
-    elseif R.overlay == R.OV_ZONE then
-        if R.dialog_settled() then app.inject_click(R.zone_form.boxes.open:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif c.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); wait = 10
     elseif R.on_island and R.overlay == R.OV_NONE then
-        local z = c:next_zone(R.prog.wallet)
-        if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
-        elseif island.next_step(c, R.prog.level) then
-            local kind = island.next_step(c, R.prog.level)
+        local kind = island.next_step(c, R.prog.level)
+        if kind then
             app.inject_click(R.town.project_boxes[kind]:center()); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10

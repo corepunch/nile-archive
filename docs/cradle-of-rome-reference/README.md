@@ -40,6 +40,16 @@ remain unverified.
 
 ## Source inventory
 
+The first game's `settings/scenes/common/common_dialogs.xml` defines
+`EpochSelectorDialog` with five campaign medallions in a three-over-two layout,
+separate completed, active and locked images, and Back and Play actions.
+`settings/scenes/common/common_graphics.xml` locates the parchment as
+`textures/scenes/common/selector_back.jpg`. The medal aliases are in
+`settings/scenes/city/city_graphics.xml` and the art in
+`textures/scenes/city/c_epoch.png`. The Windows sequel's selector uses the same
+arrangement and its illustrated completion cards are defined separately in
+`settings/scenes/shop/shop.xml`.
+
 Paths are relative to the local, ignored
 `reference/cradle-of-rome/resources/` directory. The original APK, its
 hashes and download URL are recorded in

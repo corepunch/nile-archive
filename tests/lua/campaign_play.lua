@@ -14,6 +14,7 @@ R.island = city.new()
 island.island_setup(R.island)
 R.wonders, R.buildings = island.wonders, island.buildings
 R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
+R.town_setup()
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, replays = 0, 0, 0, 0
@@ -66,9 +67,13 @@ for level = 1, rules.LEVELS do
     local reward = rules.level_reward(R.g, R.wonders, R.prog)
     local expected_wallet = R.prog.wallet + reward
     R.claim_reward()
-    if level == rules.LEVELS then
-        check(R.overlay == R.OV_COMPLETE and R.on_island, 'the last result opens the completion card')
-        R.overlay = R.OV_NONE
+    local completed = level // 20
+    check(R.island.open == (1 << (completed + 1)) - 1, 'each completed phase opens precisely one consecutive district')
+    if level % 20 == 0 then
+        check(R.overlay == R.OV_EPOCH and R.on_island and R.epoch_award == completed,
+            'a completed phase opens the illustrated chooser')
+        R.close_epoch(false)
+        check(not R.show_epoch_award(completed), 'the acknowledged phase does not announce again')
     end
     check(R.prog.level == level, 'first win advances one level')
     for slot = 1, 4 do
@@ -80,7 +85,6 @@ for level = 1, rules.LEVELS do
         print(("wish %02d · earned %d/%d/%d · stock %d/%d/%d · %d moves left"):format(
             level, income[1], income[3], income[2], wallet[1], wallet[3], wallet[2], moves_left))
     end
-    for z = 1, 5 do R.island:unlock(z, R.prog.wallet) end
     if island.next_step then
         -- Place each affordable project. A shortfall at a milestone would need a replay.
         local placed, short = {}, 0

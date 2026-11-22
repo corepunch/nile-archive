@@ -3,6 +3,7 @@
 local buttons = require("match3.buttons")
 local economy = require("economy")
 local A = {}
+A.epoch_medals = "city/epochs/medals.png"
 A.menu_backdrop = "menu/valley.jpg"
 A.resident_keepsakes = {["meeting-map_room-aviary.after-92"]="story/scenes/ina-first-crossing.jpg"}
 A.board_backdrops = {[economy.opening_backdrop] = "board/backs/" .. economy.opening_backdrop .. ".jpg"}

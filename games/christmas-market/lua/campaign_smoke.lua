@@ -27,7 +27,10 @@ function R.campaign_smoke()
         return
     end
     local c = R.island
-    if R.overlay == R.OV_COMPLETE and R.dialog_settled() then
+    if R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        assert(c:zone_open(R.epoch_award), "the seasonal award opens its district")
+        app.inject_click(R.epoch_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
+    elseif R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == due
         and R.on_island and R.overlay == R.OV_NONE then
@@ -42,19 +45,11 @@ function R.campaign_smoke()
         end
     elseif R.overlay == R.OV_WONDER then
         if R.dialog_settled() then app.inject_click(R.wonder_form.boxes.action:center()); wait = 10 end
-    elseif R.overlay == R.OV_ZONE then
-        if R.dialog_settled() then app.inject_click(R.zone_form.boxes.open:center() + vec2(0, R.drop / 2)); wait = 20 end
     elseif c.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); wait = 10   -- PLACE & BUILD
     elseif R.on_island and R.overlay == R.OV_NONE then
-        local z = c:next_zone(R.prog.wallet)
-        if z >= 0 and c:zone_available(z, R.prog.wallet) then
-            local marker = c.zones[z + 1].marker
-            R.island_focus(marker, c.cam.zoom)
-            app.inject_click(R.island.cam:to_screen(marker))
-            wait = 10
-        elseif island.next_step(c, R.prog.level) then
-            local kind = island.next_step(c, R.prog.level)
+        local kind = island.next_step(c, R.prog.level)
+        if kind then
             app.inject_click(R.town.project_boxes[kind]:center()); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10   -- Play the next wish

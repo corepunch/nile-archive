@@ -41,7 +41,8 @@ The campaign's shape:
 - **Projects follow purchase order.** The town row advances after the last level and all four purchases in the phase are complete. Earlier purchases waived by a migrated save do not hold the row back. Players can keep clearing boards while raising funds. Confirming a purchase enables its reward on eligible boards.
 - **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a farrier's hammer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
-- **Regions open** after 15, 30, 50, 70 and 85 levels cleared, through the town map.
+- **Regions open with the phase.** After 20, 40, 60 and 80 clears and the four projects in each phase, fog lifts as the next phase opens. Completing the final phase opens the last district. Older saves keep land they already opened.
+- **The phase chooser** opens from the town's phase title and after each new district opens. Its five medals show completed, available and locked phases. Select one to see level and project progress. Play resumes the current phase, and Replay starts a completed phase at its first board.
 
 ## Balance
 

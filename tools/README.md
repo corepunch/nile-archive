@@ -64,6 +64,7 @@ are the guides.
 | `pack_particles.py` | Registers particle frames for the `fx` atlas | imported by `match3_atlas.py` |
 | `pack_match_specials.py` | Repack the authored optional match specials for both games | `python3 tools/pack_match_specials.py` |
 | `match3_buttons.py` | Centers each campaign action icon in its 128 px button cell using the silhouette's pixel opacity | `python3 tools/match3_buttons.py`, then `python3 tools/match3_atlas.py` to repack |
+| `epoch_medals.py` | Registers the authored phase medallions and shared scroll for the two town choosers | `python3 tools/epoch_medals.py` (`--check` in `make test-assets`) |
 | `board_tiles.py` | Reproduces the archived hex floor artwork | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
 | `board_frame.py` | Reproduces the archived hex border and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |

@@ -40,7 +40,7 @@ for _, game in ipairs{"relic-rush", "christmas-market"} do
     end
     phase, first = "Second", 5
     view:layout()
-    check(form:get("phase") == phase and view.project_boxes[1] == nil and view.project_boxes[5] ~= nil,
+    check(view.project_phase == phase and view.project_boxes[1] == nil and view.project_boxes[5] ~= nil,
         "advancing the phase updates the project keys and hit targets")
     local screen = app.screen
     rawset(app, "screen", function() return rect(0, 47, 390, 763) end)

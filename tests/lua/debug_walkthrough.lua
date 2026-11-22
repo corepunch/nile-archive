@@ -48,6 +48,7 @@ local _, built_projects = R.epoch_projects()
 check(built_projects[1].state == "built", "the finished project stays on the row in color")
 R.prog.level = 20
 check(R.epoch_projects() == phase, "clearing all twenty boards keeps the phase open while it still has projects")
+check(R.sync_epoch_regions() == 0 and not R.island:zone_open(1), "the first district stays fogged while projects are due")
 R.prog.level = 1
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
@@ -173,3 +174,33 @@ check(rules.game_tool(resumed, tool - 1, target, R.pending), 'spend the previous
 R.finish_wave()
 check(R.make_board(next_level, 2).tools[tool] == 0 and R.prog[stock_key][tool] == 0,
     'changing boards cannot recover a spent tool')
+
+-- A player can reach the boundary short of the last purchase. Confirming it
+-- later opens the district once and preserves the epoch on reload.
+R.island = city.new()
+island.island_setup(R.island)
+R.prog = {level=20, seed=1, wallet=purse(99999,99999,99999,20), story_seen={}}
+R.on_island, R.overlay = true, R.OV_NONE
+R.town_setup()
+for _ = 1, 3 do
+    check(island.island_place_next(R.island, R.prog.wallet, 20, 0), 'place an earned project')
+end
+check(R.sync_epoch_regions() == 0 and not R.island:zone_open(1), 'three projects leave the next district fogged')
+check(R.town:begin(island.ladder[4].kind, false) and R.town:confirm(), 'confirm the fourth project after level 20')
+check(R.overlay == R.OV_EPOCH and R.epoch_award == 1 and R.island:zone_open(1),
+    'late fourth purchase presents the award and opens its district')
+R.close_epoch(false)
+R.island.open = R.island.open | (1 << 2)
+check(save.write('epoch-award', R.serialize), 'save the acknowledged award and previously opened land')
+R.island.open, R.prog.epoch_seen = 1, nil
+check(save.read('epoch-award', R.serialize) and R.island:zone_open(2) and R.prog.epoch_seen == 1
+    and not R.show_epoch_award(R.completed_epochs()), 'reload preserves older map access and does not repeat the award')
+R.open_epoch(4)
+R.close_epoch(true)
+check(R.on_island and not R.epoch_replay_end, 'a future phase cannot start')
+R.open_epoch(1)
+R.close_epoch(true)
+check(not R.on_island and R.g.level == 0 and R.epoch_replay_end == 20, 'replaying the first phase starts its opening board')
+check(R.debug_skip_level(), 'win the replayed board')
+R.claim_reward()
+check(R.g.level == 1 and R.prog.level == 20 and not R.on_island, 'replay continues through the phase without advancing the campaign')

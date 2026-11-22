@@ -6,6 +6,7 @@ return {
     menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", town = "VISIT MARKET", continue_in_town = true},
     campaign_dialogue = false,
     epochs = {"First Advent", "Second Advent", "Third Advent", "Fourth Advent", "Christmas"},
+    epoch_title = "Choose a season",
     result = {visit = "COLLECT & VISIT MARKET"},
     transitions = {
         style = "wipe",

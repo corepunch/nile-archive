@@ -325,6 +325,8 @@ shot("square-build-gate", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34
 shot("epoch-projects", "480x900", "--build-review ready --frames 48")
 shot("epoch-projects-phone", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34")
 shot("epoch-next", "390x844", "--epoch 1 --safe-area 0,47,0,34")
+shot("epoch-window", "480x900", "--epoch-window 1")
+shot("epoch-window-phone", "390x844", "--epoch 1 --epoch-window 2 --epoch-award --safe-area 0,47,0,34")
 
 -- Store captures use the 2× macOS backing scale. See docs/APP_STORE_SCREENSHOTS.md.
 if getenv("APP_STORE_SHOTS") == "1" then

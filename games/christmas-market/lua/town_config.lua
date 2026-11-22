@@ -18,7 +18,7 @@ return {
     bottom = {
         layout = "projects",
         bottom = 9,
-        height = 108,
+        height = 120,
         margin = 8,
     },
     bubble = {width = 300, title = "gold"},
