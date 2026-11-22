@@ -20,6 +20,9 @@ function V.bind(R, rules, config, art, base_pieces)
     R.kudos_words = board.kudos or R.kudos_words
     R.tool_notes = board.tool_notes or R.tool_notes
     R.locked_notice = board.locked
+    if board.tutorial_chain then
+        R.tutorial = require("match3.tutorial").new(R, rules, board.tutorial_chain)
+    end
     board_intro.bind(R, rules)
     match3.bind_board_ui(R, rules)
 
@@ -205,12 +208,11 @@ function V.bind(R, rules, config, art, base_pieces)
             draw(R)
         end
         if app.arg("hud-states") then art.draw_hud_catalogue(R) end
-        R.board_input(inp)
     end
 
     local screen = {}
     R.board_screen = screen
-    local function draw(inp, dt, fade, banners)
+    local function draw(inp, dt, fade, banners, active)
         if R.intro and R.intro:showing_backdrop() then
             R.draw_board_background(1)
             draw_motes()
@@ -222,12 +224,14 @@ function V.bind(R, rules, config, art, base_pieces)
             R.vfx_draw()
             R.vfx_particles()
             if banners then R.draw_board_banners(dt) end
+            local skipped = active and R.tutorial and R.tutorial:frame(inp, dt)
+            if not skipped then R.board_input(inp) end
         end
         if fade > 0 then R.draw_board_background(fade) end
     end
 
     function screen:frame(inp, dt, active, fade)
-        draw(active and inp or input{pos = inp.pos, pinch = 1}, dt, fade or 0, true)
+        draw(active and inp or input{pos = inp.pos, pinch = 1}, dt, fade or 0, true, active)
     end
 
     function screen:transition(inp, dt, fade)

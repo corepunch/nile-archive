@@ -30,6 +30,7 @@ return {
     speech = {scale = 1.5, name = 22.5},
     region_speaker = "sela",
     board = {
+        tutorial_chain = "Match through the chained piece. Match that cell again to clear its plaque.",
         kudos = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"},
         pieces = {
             campaign_prefix = "campaign-",

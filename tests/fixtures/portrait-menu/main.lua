@@ -5,6 +5,7 @@ local init = desc.init
 local stage, frames, game = 0, 0
 local returning = app.arg("returning") ~= nil
 local completed = app.arg("returning") == "result"
+local show_menu = returning or testing.game == "christmas-market"
 
 function desc.init()
     -- The runner isolates saves with --fresh. Exercise the normal launch path
@@ -28,7 +29,7 @@ function desc.init()
     rawset(save, "read", read)
     rawset(save, "write", write)
     R.test_mode = true
-    assert(R.on_menu == returning and wrote_profile ~= returning, "only the first launch creates a profile and bypasses the menu")
+    assert(R.on_menu == show_menu and wrote_profile ~= returning, "check title screen and profile creation on first launch")
     assert(not R.on_island and R.g.level == 0, "level one must be the first screen in the campaign")
     assert(R.overlay == R.OV_NONE and R.g.won == completed, "a saved result must wait behind the menu")
     game = R.g
@@ -45,7 +46,7 @@ function R.smoke()
     assert(not story.active() and not R.story_current, "the campaign must never interrupt play with dialogue")
     local menu = R.menu.form
     if stage == 0 then
-        if returning then
+        if show_menu then
             if not menu.boxes.settings then return end
             click(menu, "settings")
             stage = 1

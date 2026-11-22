@@ -3,6 +3,7 @@ rules("town_story")
 -- Relic Rush: every test, in one start of build/test/relic-rush. See docs/TESTING.md.
 rules("relic_story")
 rules("match_matrix")
+rules("match3_tutorial")
 rules("trickling")
 rules("haptics_board")
 rules("building_economy")
@@ -23,6 +24,10 @@ smoke()
 smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;.", "portrait-menu")
 smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;. --returning --size 390x844 --safe-area 0,47,0,34", "portrait-menu-returning")
 smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;. --returning result", "portrait-menu-result")
+local tutorial_review = "--lua tests/fixtures/match3-tutorial;games/relic-rush/lua;."
+smoke(tutorial_review, "match3-tutorial")
+shot("tutorial-match-three", "480x900", tutorial_review .. " --tutorial-lesson 1 --frames 8")
+shot("tutorial-rainbow", "390x844", tutorial_review .. " --tutorial-lesson 3 --frames 8 --safe-area 0,47,0,34")
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/relic-rush/lua;. --review-game relic-rush", "walkthrough-pointer", "quick")
 smoke("--debug-autoplay --lua tests/fixtures/board-autoplay;games/relic-rush/lua;. --size 240x450", "board-autoplay")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame

@@ -7,11 +7,11 @@ only. Set `DEVICE="name or UDID"` to choose one. See the
 
 An in-progress Christmas market game based on Relic Rush's square match-3 and free-placement city systems. The market has 41 buildings and decorations. Smoke rises from nine working chimneys in town. See the [building catalogue](docs/building-catalogue.md).
 
-The first launch opens level 1, where Noelle's opening scene plays over the
-puzzle. Collect the first reward to visit the market. Later launches show
-the illustrated title screen with Continue and Settings. **Main Menu** in
-Settings takes you back to the title. See the
-[title screen](docs/screenshots/main-menu.jpg) and [opening board](docs/screenshots/first-launch.jpg).
+The illustrated title screen offers Play and Settings from the first launch.
+The early wishes teach swaps, Line Gems, Rainbow Gems and tinsel on the board.
+New tools explain how to charge and use them. Collect the first reward to visit
+the market. **Main Menu** in Settings takes you back to the title. See the
+[title screen](docs/screenshots/main-menu.jpg) and [guided lessons](../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
 Both also have [compact title](docs/screenshots/main-menu-phone.jpg) and
 [compact board](docs/screenshots/first-launch-phone.jpg) captures.
 
@@ -95,7 +95,7 @@ Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
 The bottom bar shows four full-color project paintings for the current Advent or Christmas, followed by Next Level. Tap a project to see its price, shortfall or level requirement. A Need Funds tag marks a shortfall, a trail marks an affordable project, and a green checkmark marks a completed one. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
-Continue from the main menu shows the Advent and Christmas medals. Play resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
+Play from the main menu shows the Advent and Christmas medals. Play on the medals screen resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
 
 There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the

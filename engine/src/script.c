@@ -148,6 +148,7 @@ void script_open(const char *dir)
         {"lua/match3/specials.lua", "match3.specials"},
         {"lua/match3/elements_view.lua", "match3.elements_view"},
         {"lua/match3/screen.lua", "match3.screen"},
+        {"lua/match3/tutorial.lua", "match3.tutorial"},
         {"lua/match3/frames.lua", "match3.frames"},
         {"lua/board_intro.lua", NULL},
         {"lua/town/screen.lua", "town.screen"},

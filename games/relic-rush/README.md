@@ -22,6 +22,10 @@ campaign, and Settings opens Sound, Reduce Motion, the guide and the leaderboard
 Use **Main Menu** in Settings to return to the title. See the [title screen](docs/screenshots/main-menu.jpg)
 and [phone layout](docs/screenshots/main-menu-phone.jpg).
 
+The first four expeditions guide you through swaps, Line Gems, Rainbow Gems
+and chains. Tool tips show how to charge and use each tool when you earn it.
+See the [guided lessons](../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
+
 Building popup images and resource icons follow the panel’s entrance scale,
 position and opacity through the shared form skin. See the
 [popup and refill comparisons](docs/review/popup-refill/README.md).

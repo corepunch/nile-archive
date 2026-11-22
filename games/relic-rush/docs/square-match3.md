@@ -7,6 +7,10 @@ identical pieces. A board spawns five kinds. Bonus pieces replace a kind
 once its building is confirmed. Each matched Hammer piece gives 3 charge
 points and the meter fills at 90. Long matches count each Hammer once.
 
+The early boards teach matches of three, four and five and how to break a
+chain. Tools show their charging and use tips in play after construction.
+See the [guided lessons](../../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
+
 In an Xcode Debug build for iPhone, the iOS Simulator or macOS, **SKIP >>** runs the
 reference bot through legal swaps at up to two moves per frame. It can keep
 playing after the move counter reaches zero. The normal results card follows.

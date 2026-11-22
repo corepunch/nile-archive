@@ -1,5 +1,9 @@
 # Square match-3
 
+The early wishes teach matches of three, four and five and how to untie
+tinsel. Tools show their charging and use tips in play after construction.
+See the [guided lessons](../../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
+
 Match Christmas pieces to light the teal panes. The 100-level campaign opens twenty stalls, one after every fifth level (see the [construction sequence](market-pieces.md#construction-sequence)). Each stall unlocks one item. The first Advent brings mulled wine, the Farrier's hammer, bundled pine and the Firework Bomb. The hammer charges a single-cell blow. The Firework Bomb inherits that slot and its charge. Bundled pine replaces the mitten, and dressed stone later replaces the pine.
 
 A legal swap across a shared edge makes a row or column of three or more

@@ -3,7 +3,8 @@
 -- field, lists replace.
 return {
     app = {title = "Christmas Market - Winter Wishes", id = "christmas-market", clear = "#09211F"},
-    menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", town = "VISIT MARKET", continue_in_town = true},
+    menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", play = "PLAY",
+        town = "VISIT MARKET", continue_in_town = true, first_launch = true},
     campaign_dialogue = false,
     epochs = {"First Advent", "Second Advent", "Third Advent", "Fourth Advent", "Christmas"},
     epoch_title = "Advent & Christmas",
@@ -28,6 +29,7 @@ return {
     speech = {scale = 1, name = 15},
     region_speaker = "pip",
     board = {
+        tutorial_chain = "Match through the tied treat. Match that cell again to light its pane.",
         kudos = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"},
         locked = "Match the tied piece to untangle the tinsel.",
         pieces = {kind_prefix="market-", scale=1.06},

@@ -1855,12 +1855,13 @@ function E.new(config)
     end
 
     function R.select_tool(k)
-        if R.phase ~= PH_IDLE or R.autoplay then return end
+        if R.phase ~= PH_IDLE or R.autoplay or R.tutorial and R.tutorial.move then return end
         if R.tool >= 0 and R.tool ~= k and rules.game_tool_effect(R.tool, R.g) == "replenish" then
             use_tool(R.tool, nil, k + 1)
             return
         end
         if (R.g.tools[k + 1] or 0) > 0 and flags & E.NO_TOOLS == 0 then
+            if R.tutorial then R.tutorial:tool_selected(k + 1) end
             R.selected = -1
             if rules.game_tool_untargeted(k, R.g) then use_tool(k); return end
             R.tool = R.tool == k and -1 or k
@@ -1878,11 +1879,14 @@ function E.new(config)
         end
         R.idle_time = 0
         R.hint_a, R.hint_b = -1, -1
+        local tutorial = R.tutorial
+        if tutorial and not tutorial:allows_cell(cell) then R.selected = -1; return end
         if R.tool >= 0 then
             use_tool(R.tool, cell)
             return
         end
-        if specials and R.selected < 0 and not R.g.won and not R.g.lost and specials.tappable(R.g,cell) then
+        if specials and not (tutorial and tutorial.move) and R.selected < 0
+            and not R.g.won and not R.g.lost and specials.tappable(R.g,cell) then
             reset_match(R.pending)
             specials.activate(R.g,R.pending,cell)
             R.g.moves, R.g.combo = R.g.moves - 1, 0
@@ -2012,12 +2016,14 @@ function E.new(config)
 
     function R.attempt_swap(a, b)
         if R.phase ~= PH_IDLE or R.overlay ~= R.OV_NONE or R.on_island then return end
+        if R.tutorial and not R.tutorial:allows_swap(a, b) then return end
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
         R.idle_time = 0
         R.swap_a, R.swap_b = a, b
         snapshot()
         local g = R.g
         if rules.game_swap(g, a, b, R.pending) then
+            if R.tutorial then R.tutorial:swapped() end
             R.phase = PH_SWAP
             R.phase_time = 0
             R.play("swap")
@@ -2067,6 +2073,7 @@ function E.new(config)
     local choose_swap
     function R.start_autoplay()
         if R.autoplay or R.art_review or R.g.won or R.g.lost then return end
+        if R.tutorial then R.tutorial.move = nil end
         choose_swap = choose_swap or require("match3.bot")(rules)
         R.autoplay = 250
         R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
@@ -2093,6 +2100,7 @@ function E.new(config)
     end
 
     function R.idle_hint_age()
+        if R.tutorial and R.tutorial.move then return end
         local age = R.idle_time - 5
         if flags & E.NO_HINTS == 0 and R.phase == PH_IDLE and age > 0 and not R.g.won and not R.g.lost then
             return age

@@ -1377,6 +1377,7 @@ function G.bind(R, over)
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
         if R.serialize_campaign then R.serialize_campaign(s) end
+        if R.tutorial then R.tutorial:serialize(s) end
         if W.epochs then
             local reading = save.is_reading(s)
             local seen = s:int("epoch_seen", R.prog.epoch_seen or (reading and -1 or 0))
@@ -1409,7 +1410,8 @@ function G.bind(R, over)
     function R.start_level(chosen)
         local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
         if lvl > R.prog.level then return false end
-        R.reset_board(R.make_board(lvl, (R.prog.seed + lvl * 7919) & 0xFFFFFFFF))
+        local seed = (R.prog.seed + lvl * 7919) & 0xFFFFFFFF
+        R.reset_board(R.tutorial and R.tutorial:start(lvl, seed, R.make_board) or R.make_board(lvl, seed))
         R.on_island = false
         R.overlay = R.OV_NONE
         R.intro = nil
@@ -1554,7 +1556,7 @@ function G.bind_campaign_bonuses(R, island, loadout_for, backdrop_for)
         local g = R.g
         if g.bonus_preview or not g.tool_slots then return end
         local saved = R.prog.bonus_charge or {}
-        local changed = false
+        local changed = R.tutorial and R.tutorial:charge_changed()
         for tool, charge in pairs(g.tool_meter) do
             if (saved[tool] or 0) ~= charge then saved[tool], changed = charge, true end
         end
@@ -1862,6 +1864,7 @@ function G.app(R)
         -- Seed the town while the player starts on the board.
         if island.new_game and R.prog.level == 0 and R.island.count == 0 then island.new_game(R.island, app.clock()) end
         local preview = debug.direct_preview() or app.arg("debug-walkthrough")
+        if R.tutorial then R.tutorial.enabled = not R.test_mode and not preview end
         if not loaded and not preview and not app.arg("main-menu") then R.save_progress() end
         if not app.arg("smoke") and not app.arg("debug-walkthrough") then
             R.submit_leaderboard_progress()
@@ -1881,7 +1884,7 @@ function G.app(R)
         if R.resume_completed then R.resume_completed() end
         if R.overlay == R.OV_NONE and W.epochs then R.show_epoch_award(R.completed_epochs()) end
         R.debug_screens()
-        if app.arg("main-menu") or loaded and not R.test_mode and not preview then
+        if app.arg("main-menu") or (loaded or W.menu.first_launch) and not R.test_mode and not preview then
             R.open_menu()
             if app.arg("dialog") == "pause" then R.overlay = R.OV_PAUSE end
         end

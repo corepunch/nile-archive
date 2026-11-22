@@ -1212,3 +1212,11 @@ The Great Aviary displays a three-dot speech bubble when Oren has new dialogue. 
 Capture the question menu with the same command filtered to "shot resident-questions". [First questions](screenshots/resident-questions-480.jpg) · [Last question starts directly](screenshots/resident-questions-390.jpg)
 
 Five one-time questions share a single **Back to town** control. [480 × 900](screenshots/resident-full-menu.jpg) · [390 × 844](screenshots/resident-full-menu-phone.jpg)
+## Guided board lesson
+
+The shared board tutorial draws a cream outline around the relevant pieces,
+an arrow for the swap, and a matching outline around the charging tool.
+The outline and arrow use live cell and toolbar bounds. They introduce
+ordinary matches, Line Gems, Rainbow Gems, chains and earned tools using
+the current campaign pieces and skin. Reduce Motion keeps the arrow still.
+Review with `build/test/relic-rush "shot tutorial-"`.

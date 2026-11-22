@@ -151,13 +151,14 @@ Use either building key or `neither` in place of `both` to hear the other versio
 
 ## First launch and main menu
 
-A fresh profile opens directly on level 1. Collecting a first-clear
-reward takes the player to the island or market, where they can spend the
-resources on construction.
+A fresh Relic Rush profile opens directly on level 1. Christmas Market
+opens on its illustrated title screen from the first launch. Collecting
+the first reward takes the player to the island or market to build.
 
 Later launches and the Main Menu link in in-game Settings open the illustrated
-title screen. Continue opens the phase medals. Back returns to the title,
-and Play resumes the current board or restores an unclaimed result. Visit
+title screen. Continue in Relic Rush and Play in Christmas Market open the
+phase medals. Back returns to the title, and Play resumes the current board
+or restores an unclaimed result. Visit
 Island or Visit Market gives direct access to construction. Settings shares
 the guide, leaderboard and saved Sound and Reduce Motion preferences with
 in-game Settings.
@@ -175,6 +176,29 @@ puzzle gives the player something to spend before introducing the town.
 Use `--main-menu` to preview either title screen and `--opening-town` to see
 the seeded town. The direct board and town preview options still open their
 requested screen.
+
+## Guided board lessons
+
+The first four levels each teach one move on the real board. Level 1
+highlights a swap that clears a target with a match of three. Levels 2 and
+3 lead the player through making and firing a Line Gem and a Rainbow Gem.
+Level 4 highlights the first match through a chain or tie. The player
+can swipe or tap both pieces and can skip the lesson at any point.
+
+The opening deal is selected using the ordinary swap and cascade rules so
+the special survives and can be used in the next guided move. The board
+then continues normally. Replays of cleared levels omit the opening lesson.
+The existing guide remains available in Settings.
+
+Construction tools introduce themselves when their pieces appear on the board
+and again when their charge first becomes usable. Each rank remembers when
+the player has seen these instructions. They use the actual toolbar, board
+pieces and stored charge.
+
+The short, highlighted move follows the early hint pattern described in
+the [Candy Crush starter guide](https://play.google.com/store/apps/editorial?id=mc_editorialevergreen_post_install_candy_crush_saga_starter_tips_fcp).
+Spacing the introductions across boards follows
+[Royal Match's opening levels](https://www.youtube.com/watch?v=CA34zG-NWSw).
 
 ## Walkthrough
 
