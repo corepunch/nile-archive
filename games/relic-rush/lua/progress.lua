@@ -30,13 +30,12 @@ local function opening_unlock(g)
             return economy.bonus_lesson(g.bonus_debut), building
         elseif unlock.kind and (g.level + 1 == unlock.after + 1 or level.featured_resource == unlock.key) then
             if g.resource_yields and g.resource_yields[unlock.kind] == unlock then
-                local amount = g.yield_amounts and g.yield_amounts[unlock.kind]
-                return economy.unlock_text(unlock, amount), building
+                return unlock.name .. " are now on the board.", building
             end
         end
     end
     for _, piece in pairs(g.resource_yields or {}) do
-        if g.level + 1 == piece.first_level then return economy.unlock_text(piece) end
+        if g.level + 1 == piece.first_level then return piece.name .. " are now on the board." end
     end
 end
 
@@ -49,7 +48,6 @@ local present_board = R.present_board
 function R.present_board()
     present_board()
     local g = R.g
-    -- The finale has its own opening.
     if (g.level < 28 or g.bonus_debut) and g.moves == rules.level_of(g).moves and not app.arg("mission") then
         local text, building = opening_unlock(g)
         if text then
@@ -84,7 +82,6 @@ function R.serialize_campaign(s)
         if version < 7 and (island.owned(c, island.kinds.workshop) > 0 or version < 6 and p.level >= 10) then
             if island.owned(c, island.kinds.log_cabin) == 0 then
                 waived[island.ladder_position[island.kinds.log_cabin]] = true
-                p.story_seen["restore-07"] = true
             end
         end
     end

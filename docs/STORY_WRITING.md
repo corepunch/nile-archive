@@ -1,162 +1,36 @@
 # Writing game stories
 
-How to write the story of a city or match-3 game in this repository. A game's script lives in `games/<game>/docs/story.md`. [Relic Rush](../games/relic-rush/docs/story.md) and [Christmas Market](../games/christmas-market/docs/story.md) are worked examples.
+A game's script lives in `games/<game>/docs/story.md`; each game's tools compile it into its runtime story table. The story is short dialogue between levels, read on a phone, often a day apart. Most players will skim it. Write so that skimming still works and reading closely is a pleasure.
 
-The craft rules come from Infocom's practice, as collected in the [zilscript](https://github.com/corepunch/zilscript) writing guide (`docs/WRITING_ADVENTURES.md`, `skills/source_design_lessons.md`, `PROSE.md`). The pacing comes from [June's Journey and Tropicats](../reports/Прогрессия%20June%20Journey%20и%20Tropicats.md). Those games have parsers and transcripts; ours has short dialogue between levels, so the rules below are the part that survives the move.
+These rules replace an earlier, much longer guide. That guide rewarded lines for passing checks (a listener, an intention, a concrete detail), and produced lines that passed every check and that no person would say. The test now is simpler: would a player who just watched the screen believe this line?
 
-For a new match-3 campaign, read the extracted Tropicats opening, a regular quest and the finale before outlining your campaign milestones. Use the worked examples to connect a character's request, the puzzle or town action, and the resulting scene or world change. The handoff links all 70 chapters and explains how to retrieve exact dialogue and board data. [Tropicats story handoff](tropicats-reference/STORY.md#start-here-when-writing-a-new-campaign)
+## The rules
 
-## Order of work
+1. **Read it as the player.** Every scene follows something the player just did: cleared a board, placed a building. A line must be true to that moment. If the player built the well a second ago, nobody remembers drinking from it. If the building is new, people react to something new.
+2. **Would a person say this, here, out loud?** Read it aloud. If it sounds like a riddle, a craft manual or a line written to tick a box, cut it. Don't invent an errand ("Lend me your bucket", "Hold this while I…") just so the line has someone to talk to.
+3. **Plain, ordinary details.** People drink water; they don't taste buckets. Prefer the obvious word. A detail must be one a real person would mention.
+4. **Say something the screen doesn't.** What the new building means to someone, what they want next, a joke, a worry. Don't caption what the player can see.
+5. **Talk to the player.** The player is the builder. Characters can speak to "you" (thank you, ask you, tease you), as well as to each other. That is usually more natural than two people describing their work to each other.
+6. **Check how it could be misread.** Sleeping arrangements, beds, undressing, who stays with whom: avoid them unless the scene is about that. State a relationship ("my brother", "the captain") before a line depends on it.
+7. **Short.** Two to four lines per scene, each under about 100 characters. Many levels need no scene at all. Silence is better than filler.
+8. **Few people, each recognisable.** Three or four speakers carry a game. Each has a different way of talking, so you can tell who speaks with the name plate covered.
+9. **The story has somewhere to go.** One goal the whole game moves towards, said early by someone who wants it, and reached at the end. Each chapter moves it on.
+10. **No mechanics in dialogue.** Moves, tiles and boosters go in the level's `lesson` line.
+11. **Match the game's feeling.** Christmas Market is joyful: no tragedy, guilt or dark secrets. Relic Rush is a warm adventure about founding a town.
 
-Do these in order, and keep each one in the script document.
+## Speech only, no narration
 
-1. **One sentence of play fantasy.** What is the player doing and why does it feel good? "A text adventure" or "a match-3 with a story" is not an answer. "I am building the cosiest Christmas market in the north, and every stall makes somebody's wish come true" is.
-   **Name the feeling too,** and check every plot idea against it. Each game wants a different one. Relic Rush can carry a lie and a threat. Christmas Market exists to give the player the Christmas spirit, so a fire and a guilty secret are wrong for it however gently they are told.
-2. **What this world wants, or what is broken in it.** List it before any plot. Blockers, buildings and clues should come from this list, so that they feel as if they were always true. Ice in the tropics is a clue because the world explains it; ice as a difficulty step is only a mechanic.
-3. **What really happened.** Write the full truth in time order, including what the player never sees. Clues come from this, not the other way round.
-4. **The question.** Mystery is one engine among several. A warm story can run on a countdown, a chain of wishes or a surprise being prepared, with no secret worse than a birthday present. One question the whole game answers, asked by a character in the first few levels. Each episode should move it forward and end by raising a bigger one.
-5. **Working materials** (below).
-6. **The script**, line by line.
-7. **Checks** (below), then the implementation notes.
+Every line sits in a speech bubble under a portrait. There is no narrator, so every line is something that character says. That doesn't mean every line must give someone an order. A character can simply react: "Look at that. A real roof."
 
-## Working materials
+## Before calling it done
 
-The world is bigger than working memory, so keep these sheets in the script document and reconcile the lines against them. Do not write 180 lines in one pass and hope.
-
-| Sheet | Holds | Catches |
-| --- | --- | --- |
-| **Truth timeline** | What happened, in order | Contradictions, and motives that do not add up |
-| **Knowledge ledger** | What the player and each character know, level by level | A character acting on what they cannot know yet, a reveal that lands twice |
-| **Plant and payoff** | Each planted thing, where it pays off | Payoffs with no plant, plants nobody collects |
-| **Clue chain** | Which clue leads to which conclusion | Conclusions that need a guess |
-| **Cast arcs** | Start, end, voice, and what each character does | A character who only talks |
-| **Beat and wonder table** | Level, wonder, speakers, line count | Budget overruns, speakers absent from the story at that moment |
-| **Changelog** | Dated list of what changed and what is still owed | Lost decisions between sessions |
-
-## Fair mysteries
-
-For games that use one.
-
-- **The answer must already be in the world.** A player should think "of course", never "how could I have known". Every reveal needs at least one clue, planted well before it, and the best ones need two facts from different places, which the player connects. That moment is the point of the game.
-- **Put the clue and its meaning in different beats.** Say what a glance takes in, and let the conclusion arrive later. "A chimney, standing alone" is a clue. "A fire destroyed this row" in the same line is a summary.
-- **Voice the player's wrong theory.** Infocom wrote responses for the plausible wrong answers to a puzzle. Our version: a main character states the theory the player is likely to hold, in full, and the evidence breaks it. Do this about once per episode, and have the character admit it. It rewards a player who was ahead and redirects one who was not.
-- **A small cast cannot hide who.** With three or four speakers, the suspect is obvious by the middle of an episode. Make the surprise why, or what it cost, and keep the character's motive unguessable even when the name is not.
-- **One tell is enough.** A joke such as "I've never liked candles" can give away a reveal thirteen levels early. Give a clue a plain everyday excuse, so that it only looks like a clue afterwards.
-- **Keep some mystery alive.** Do not answer everything. End each episode with a question the player could not have asked before it.
-- **Twists from the Infocom list:** the reversal (the goal changes), the revelation (one fact rearranges everything before it), the callback (an early joke turns out to matter). Each must survive a re-read.
-
-## Borrowing from films
-
-Genre films are a good source of technique. Take the mechanism, not the plot: strangers who write to each other while quarrelling in person, everyone you helped turning up when things go wrong. Name each technique and its source in the script, so a reader can check nothing was copied. See [Christmas Market](../games/christmas-market/docs/story.md#what-we-take-from-christmas-films).
-
-## Characters
-
-- **Few people, known well.** Give a new line to someone the player already knows before inventing a speaker. Plant a person in others' lines before they speak, and keep to at most one new speaker per epoch ([cast economy](CAMPAIGN_DESIGN.md#cast-economy)).
-- **Behaviour, not just dialogue.** Memorable characters change the state of the game: they leave, steal, hide, arrive, give, refuse. Each main character must do at least one thing that changes the plot, and go through at least three visible states over the game (for example suspicious, exposed, trusted).
-- **Each voice has a job.** A reader should be able to name the speaker with the name plate covered.
-- **Objects with two roles.** Every important object has at least two of: practical use, clue, joke, worldbuilding, risk, reward, memory marker. A chisel that is a clue and a tool, or a joke about peaches that becomes evidence, will be remembered. A generic key will not.
-- **What is on the portrait counts.** The player stares at the bust for the whole game. If a character is holding something, it should matter.
-
-## Writing lines
-
-- **The screen shows only the story.** Dialogue never names moves, amulets, boards cleared or tiles. Mechanics go in the level `lesson`, a separate slot. The simulation stays underneath.
-- **Text and picture divide the work.** The town, the board and any painting already show what happened. A line says what it means to the speaker or what happens next, never what the player can see. A concrete detail belongs inside something a person says to someone ("You've laid twelve plates. Who's the twelfth for?"), never as a caption ("Twelve bunks. Plates still on the table."). See [Speech only](#speech-only-no-narration).
-- **Short and concrete.** Aim for under 100 characters per line, and one idea per line. Name a thing rather than a feeling: not "she looked sad", but a character changing the subject.
-- **One beat, one change.** Each beat leaves something different from how it found it: a new fact, a changed relationship or a new problem. If two beats could swap without anyone noticing, one is redundant.
-- **Beats play alone, perhaps a day apart.** A thread must be understandable after a gap, so bring each one back every few levels and restate rules or objects in passing.
-- **Recurring words become memory.** Repeat a few anchors in the same words (a place, an object, a catchphrase), so the player can retell the story in them. Keep names stable.
-- **Humour comes from people and from failure.** Keep it dry, and mix it with real stakes. Comedy lands better next to danger than next to more comedy.
-
-## Speech only: no narration
-
-Our scenes have no narrator. Every line appears in a speech bubble under a character's portrait, over the live town. There are no captions, no stage directions and no voice-over. So every line must be something that person would say out loud, right now, to someone who is there.
-
-A **report** is narration put in a character's mouth: the character describes the scene or announces events to nobody, as a caption would. "The crew comes ashore." "Boot prints in the wet clay. One pair going up." "The bakery's up! Cinnamon, clove and hot sugar." It is unacceptable for five reasons:
-
-1. **Nobody talks like that.** People speak to someone, wanting something. A report has no listener and no intention, so the character turns into a camera and the scene stops being a scene.
-2. **It repeats the screen.** The player has just placed the bakery or cleared the board. Saying so tells them what they watched a second ago, and the line is wasted.
-3. **It erases the voices.** Reports sound the same whoever says them. Cover the name plate on "The farrier's done! Four new shoes!" and nobody can tell who spoke. A voice comes from what a person wants and how they push for it.
-4. **It turns a story into a ticker.** A hundred levels of announcements read like a news feed. Players skip a ticker, then miss the beats that matter.
-5. **It hides the drama.** A report tells us an event happened. Dialogue lets us watch two people react to it, disagree about it or act on it, which is the only drama a two-line scene can carry.
-
-**Every line passes four tests.**
-
-- **Listener:** who is it said to? Name them, or say "you", or answer what they just said.
-- **Intention:** what does the speaker want from that person? To ask, offer, tease, warn, thank, refuse, confess, decide or persuade.
-- **Voice:** with the name plate covered, could you tell who is speaking?
-- **New:** does it tell the player something the screen does not show?
-
-**Facts arrive inside wants.** A clue is something a person points out because it changes what they will do next. Background comes up because someone needs it, not because the writer does. A letter or note may be read aloud only when a character reads it to someone and reacts to it in the same beat.
-
-| Report (narration) | Speech |
-| --- | --- |
-| **Mara:** Boot prints in the wet clay. One pair going up the stair, one pair coming down. | **Mara:** Elena, your boots or someone else's? Size six, up the stair and back down. |
-| **Elena:** The builders found this behind a stall beam: a sealed food bag, dated last week. | **Elena:** Tomas, who on this island dates their food bags? This one's from last Tuesday. |
-| **Pip:** The farrier's done! Four new shoes and sleigh bells on the harness! Listen to him! | **Pip:** Noelle, shut your eyes and listen! That's the sleigh-horse, in his new bells! |
-| **Noelle:** The bakery's up! Cinnamon, clove and hot sugar, and the whole square smells like Gran's kitchen. | **Noelle:** Agnes, your oven's been cold since Gran left. Will you light it for me? |
-| **Elena:** Adrian had the radio talking a minute ago. Now it's in pieces on the paving. | **Elena:** Adrian, you had that radio working a minute ago. Why is it in pieces? |
-
-**Checks.** Before handing a script over, list every line with no listener and no intention. `python3 tools/story_lines.py <game>` finds candidates: lines with no "I", "we", "you", name or question. Rewrite each one or cut it. The cold reader is asked to flag any line that reads like a caption.
-
-## Structure
-
-Starting template for a three-episode game, with 10 levels and 50–70 lines per episode. Tune it per game.
-
-| Position | Role | Lines |
-| --- | --- | --- |
-| Before level 1 | Opening, panel | 7–8 |
-| 1–2 | Setup | 3–4 each |
-| 3–6 | Clues | 3–5 each |
-| 7 | Wrong theory collapses | 4–6 |
-| 8 | Pressure rises, easier level | 3–5 |
-| 9 | A building gives the last clue | 4–6 |
-| Before 10 | One short reason this level matters | 3 |
-| 10 | Turn and hook, panel | 10–14 |
-
-Beat order: result → island → place the wonder → beat → next goal. Wonders are split across episodes, and mechanic `lesson` lines stay separate.
-
-- **The opening is playable at once.** One landmark, one object, one thing that is blocked, and a reward within the first minute. Open on something interesting, never on backstory or "welcome to".
-- **Environmental storytelling first.** Prefer a letter, a burn mark or a bricked-up door to a character explaining. Put history in artifacts, and let characters argue about what they mean.
-- **The world answers back.** Things change after a reveal. A building's tap bubble can change once the player knows what it means, which is cheap and rewards curiosity. Failure screens and small lines keep the voice too.
-- **Finish what the characters start.** If two residents promise to draw a portrait or play a game, put the outcome on the plant-and-payoff sheet. Decide where a curious player can learn it. When each resident has a side to tell, read both visit orders and end the thread once the player has heard both.
-- **The ending must:** pay off at least two things planted earlier, include a real decision or a real gift from a main character, and show what comes next.
-- **Walk straight into the sequel.** Zork I's last room is the first room of Zork II, and players remember one continuous journey although nothing carries over. Open each episode at the place and moment the last one stopped. The "To be continued" screen should feel like the next step in that place, not an advertisement.
-
-## Checks
-
-Do these before calling a script done.
-
-- **Count.** Lines per beat and episode against the budget, longest line, and no unknown speakers. A small script over the document will do.
-- **Read it cold.** The author of a mystery cannot judge it, as Lebling found when he got his own puzzle wrong. Give a separate agent or person the script one episode at a time, with no notes, and ask: what do you think happened, who is lying, what will happen next, and how did this make you feel? Fix what they could not reach, what they guessed too early, and any beat that breaks the feeling.
-- **Cross the story with the systems.** Each piece is usually right on its own, and the bugs live where two meet:
-  - **Replays and retries** must not repeat a beat.
-  - **Queued beats:** a region opening and a wonder in the same moment must not collide or spoil each other.
-  - **Skip:** a player who skips a line must still have what they need, so restate key facts once, later.
-  - **Saves from older versions** have beats they will never see, and need migrating or a recap.
-  - **Waiting:** a story deadline must not be contradicted by gates or replays. Count time in story events ("two days out", moved on by beats) rather than real time.
-  - **Placement order:** a beat tied to a building must fit any place the player can put it, so never say where it stands.
-  - **Unavailable characters:** a character who has left the story cannot speak at a wonder.
-- **Check in the game** on the primary and alternate phone sizes: longest lines, longest scene, and every new speaker.
-
-## What does not apply
-
-Parsers, verb coverage, mapping, mazes, inventory and unwinnable states are about a form we do not use. Our equivalents are in the checks above. Game-wide hints already exist as the idle hint on the board, so the story needs none.
+- Read the whole script aloud, start to finish, in one sitting. Fix every line where you wince.
+- Ask a separate reader, a person if possible, to read it cold and mark any line that is confusing, unnatural or open to a wrong reading.
+- `python3 tools/story_lines.py <game>` lists lines that may be captions. It's a hint, not a test.
+- Look at the longest lines in the game on a phone-sized capture.
 
 ## Scenario overview
 
-`python3 tools/scenario_overview.py --capture` writes `build/scenarios/index.html`, one page
-for Relic Rush, Christmas Market and Nile Archive. It shows each game's cast with portraits,
-then every level or search in order, with its board capture or scene painting, the item it
-recovers, the building it funds, any story picture, and each story beat as dialogue. The data is
-read from the games' own Lua tables (`tools/scenario_dump.lua`, under the host `lua`). The
-match-3 boards come from one start of each game's test binary. Without `--capture` the page
-reuses the boards already in `build/shots/frames`. Images are embedded, so the file can be
-shared on its own.
+`python3 tools/scenario_overview.py --capture` writes `build/scenarios/index.html`, one page for Relic Rush, Christmas Market and Nile Archive. It shows each game's cast with portraits, then every level or search in order, with its board capture or scene painting, the building it funds, any story picture, and each story beat as dialogue. Without `--capture` the page reuses the boards already in `build/shots/frames`.
 
-`python3 tools/scenario_overview.py --epoch 1 --capture` writes `build/scenarios/epoch-1.html`
-instead: one [epoch](CHAPTER_PROGRESSION.md) of Relic Rush and Christmas Market. It shows the
-epoch's four ladder purchases with their build-card text, price and what each changes on later
-boards, the town once the fourth is confirmed, the levels played up to it with the pieces that
-pay on each, and every scene where it plays: on a first clear, or once the story building it
-waits for is placed. The purchases come from the engine's own ladder (`campaign_ladder`) and the
-town from `--epoch N`, so the page changes with the game.
+`python3 tools/scenario_overview.py --epoch 1 --capture` writes `build/scenarios/epoch-1.html` instead: one [epoch](CHAPTER_PROGRESSION.md) of Relic Rush and Christmas Market, with its four purchases, the town once the fourth is placed, and every scene in it.

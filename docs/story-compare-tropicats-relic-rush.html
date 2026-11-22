@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tropicats vs Relic Rush story</title>
+<style>
+  :root { --bg:#faf7f2; --fg:#2a2622; --mute:#6f665d; --line:#e2d9cc; --card:#fff; --tc:#1d7a5a; --rr:#b8602a; --steal:#fff4d6; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg:#1d1a17; --fg:#eee7dd; --mute:#a99f93; --line:#3a342d; --card:#26221e; --tc:#58c9a0; --rr:#f0995f; --steal:#3a3320; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif; }
+  main { max-width:1180px; margin:0 auto; padding:28px 16px 64px; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  h2 { font-size:19px; margin:40px 0 10px; }
+  p.lead { color:var(--mute); margin:0 0 18px; max-width:78ch; }
+  .tc { color:var(--tc); } .rr { color:var(--rr); }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; margin:16px 0 8px; }
+  .stat { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .stat b { font-size:22px; display:block; }
+  .stat small { color:var(--mute); }
+  .wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--card); }
+  table { border-collapse:collapse; width:100%; min-width:860px; }
+  th, td { text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--line); }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--mute); background:var(--bg); position:sticky; top:0; }
+  tr:last-child td { border-bottom:0; }
+  td:first-child { width:15%; font-weight:600; }
+  td.steal { background:var(--steal); width:26%; }
+  th.tc, td.tcc { border-top:3px solid var(--tc); } th.rr, td.rrc { border-top:3px solid var(--rr); }
+  tr td.tcc, tr td.rrc { border-top:0; }
+  .tag { display:inline-block; font-size:11px; padding:1px 7px; border-radius:99px; border:1px solid var(--line); color:var(--mute); margin-right:4px; }
+  .line { display:block; margin:2px 0; }
+  .line b { font-weight:600; }
+  .src { color:var(--mute); font-size:12px; }
+  ol.steal { padding-left:20px; } ol.steal li { margin:10px 0; }
+  .note { color:var(--mute); font-size:13px; margin-top:14px; max-width:90ch; }
+  @media (max-width:640px){ h1{font-size:22px} }
+</style>
+</head>
+<body>
+<main>
+  <h1><span class="tc">Tropicats</span> vs <span class="rr">Relic Rush: Landfall</span></h1>
+  <p class="lead">Both games are a match-3 where the player rebuilds a place and a few characters react to it. The difference is what a building <i>means</i>. In Tropicats every repair is a small reveal about someone you already know. In Landfall a building mostly announces what it is for.</p>
+
+  <div class="stats">
+    <div class="stat"><b class="tc">10,715 lines · 1,689 scenes</b><small>Tropicats, 70 chapters, 2,730 levels. About 3.9 lines and 0.6 scenes per level. 25+ recurring speakers; the top two (Ava, Elsie) have ~1,070 lines each.</small></div>
+    <div class="stat"><b class="rr">224 lines · 129 scenes</b><small>Relic Rush, 100 levels. 103 lines in 42 campaign scenes, the rest town talk. About 2.2 lines per level. 3 speakers: Sela 82, Oren 73, Tavi 69.</small></div>
+    <div class="stat"><b>What fires a scene</b><small>Tropicats: 1,080 on <i>task completed</i> (a repair), 297 quest start, 273 claim, only 33 on a level clear. Landfall: first clear of listed levels, plus building placement.</small></div>
+  </div>
+
+  <h2>By beat</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Beat</th><th class="tc">Tropicats</th><th class="rr">Relic Rush</th><th>What to steal</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Opening hook</td>
+        <td class="tcc">Earthquake. Elsie asks the Chief to stand the Great Totem back up. First line is a joke and a cheer: one scene per tiny repair (rubble, square, totem).<br><span class="src">chp1_q1</span></td>
+        <td class="rrc">Tavi lands everyone: <i>"Where's the town?" "There isn't one yet."</i> Clear goal (town, then ship for the families), good start.</td>
+        <td class="steal">Keep ours; it is stronger. Add what Tropicats does: the very first board clear gets a reaction too, not only the first build.</td>
+      </tr>
+      <tr>
+        <td>A request, then the work</td>
+        <td class="tcc">Each 10-level <b>quest</b> opens with a character saying what they need and why now. 3 to 5 repair tasks follow. Cubby wants to find the totem-cutter but is hungry, so: fix the grill.<br><span class="src">chp3_q2 · 297 quest starts</span></td>
+        <td class="rrc">Request lines are spread thin: Sela asks for a workshop, Tavi for a lodge. The need is sometimes a sentence about the town ("a town needs more than a dozen people") instead of one person's problem.</td>
+        <td class="steal">Make every purchase someone's <b>own errand</b>, said in their voice, with a reason that's about them (Oren's soup got rained on: already good). Aim for one named person per building.</td>
+      </tr>
+      <tr>
+        <td>Repair reveals a person</td>
+        <td class="tcc">The strongest trick. The thing just fixed tells you something private. The grill: Cubby's old love letters to Ava, never sent. A bench is where he naps. A coral he once gave Ava ended up back on the beach. The surfboard is his father's; he claims a seaweed allergy to avoid water.<br><span class="src">chp3_q2.1–4, chp3_q4.1–3</span></td>
+        <td class="rrc">Building scenes caption function: <i>"A roof that doesn't flap in the wind."</i> Funny, but it could be about any roof. Exceptions work: Sela's cup, Tavi on the beached ship ("built in Callira").</td>
+        <td class="steal">Per building, one object-and-memory line: what Oren left at home, whose boat the old steps were, Tavi's mother and the reef. The rule says <b>say something the screen doesn't</b>; this is how.</td>
+      </tr>
+      <tr>
+        <td>Running personal want</td>
+        <td class="tcc">Three crushes drive 30+ chapters: Cubby loves Ava, Ava rejects him, Olivia loves Cubby, he asks Olivia out. Each repair moves it a step, never resolves in one scene. Plus a love-rival jealousy beat (Ava "can't believe he fell for that nerd").<br><span class="src">chp3_q2, chp4_q1, chp5_q1</span></td>
+        <td class="rrc">Oren and bread, Sela and pots, Tavi and her mate/ship. These are jobs, not hopes. Nobody wants something from another person.</td>
+        <td class="steal">Give each of the three one small <b>person-to-person</b> want that keeps ticking (Tavi respects the reef, wants Sela to learn charts; Oren wants Tavi to admit she likes his bread). Warm, no tragedy, fits our tone rules.</td>
+      </tr>
+      <tr>
+        <td>Running gags</td>
+        <td class="tcc">Kip and his pet crab; Cubby's belly and bananas ("42 grilled bananas"); the shaman's nonsense wisdom; Ava's constant grudges. A gag recurs in other scenes so it pays off.</td>
+        <td class="rrc">Sela: "Everybody wants pots." Oren: bread. Good gags, each used four to six times, but mostly in a different scene each.</td>
+        <td class="steal">Tie one gag to an <b>object the player placed</b>, and bring it back across scenes. Oren's soup that got rained on can return when the roof leaks again.</td>
+      </tr>
+      <tr>
+        <td>Quest-end turn</td>
+        <td class="tcc">The claim scene ends on a reveal that creates the next quest. "The totem was cut down." "The suspect is a dog." The tea party becomes a trap, so the next quest is repairing Lily's trust.<br><span class="src">ftchp2_q1, ftchp4_q3, ftchp5_q2</span></td>
+        <td class="rrc">Mostly bridges: <i>"Now we need roofs before the rain finds us."</i> One real hook: the old steps, "Where did they all go?", but it answers itself with no payoff.</td>
+        <td class="steal">End each four-building epoch on a question or a small surprise, not a to-do. Use the steps and the Callira stones: one discovery per epoch that changes how the cast sees the place.</td>
+      </tr>
+      <tr>
+        <td>Disagreement</td>
+        <td class="tcc">Friction is constant but harmless: Ava wants to trap the dog, Lily protects him, Elsie keeps saying "shush". Same cast, different positions; resolved by an errand for the player.<br><span class="src">chp5_q2–q3</span></td>
+        <td class="rrc">Almost none. One good case: the Breadhaven vote ("That's not a vote, Oren. That's a bribe").</td>
+        <td class="steal">One recurring friendly argument per epoch (Sela vs Tavi on the old stones: dig or leave). Our tone rule is no villains, not no disagreements.</td>
+      </tr>
+      <tr>
+        <td>New people</td>
+        <td class="tcc">A new named character arrives with <b>their own building to repair</b>: Olivia's study, the shaman's shack, Lily's hut. They stay for the rest of the story. About a new face every 4 chapters.<br><span class="src">chp4_q2, chp5_q4</span></td>
+        <td class="rrc">Three characters for 100 levels. Hill people and the goat girl are mentioned but have no face or line. The families land at the end as "fifty-two people".</td>
+        <td class="steal">Add 2 to 3 named residents, each introduced by the building that houses them: the goat girl (trading post), a hill elder (market), Tavi's mate (lighthouse, who leaves). The player meets them as a reward.</td>
+      </tr>
+      <tr>
+        <td>Tutorial and play voice</td>
+        <td class="tcc">Characters address the Chief by name, a mix of in-joke and gentle teaching ("remind you how to build"). Scenes fire for the task, not the board, so the player feels the connection between a clear and a fix.</td>
+        <td class="rrc">Addresses "builder". Level lessons live in the <code>lesson</code> line, not in the story, which is by our rule.</td>
+        <td class="steal">Keep. Name the player once or twice at emotional spikes (thanks, teasing).</td>
+      </tr>
+      <tr>
+        <td>Ending</td>
+        <td class="tcc">Chapter 70 ends with a farewell visit to every friend; the Chief takes the crown. The last quest is a walk around the cast.<br><span class="src">chp70_q4</span></td>
+        <td class="rrc">Families land, fountain, the vote. Strong closer: Sela leaves the cup, the town takes the old name, Callira.</td>
+        <td class="steal">Add Tropicats' farewell walk: visit each named person once more (levels 97 to 99) before the vote. Cheap, and it is what players remember.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h2>By spoken line</h2>
+  <div class="wrap"><table>
+    <thead><tr><th>Aspect</th><th class="tc">Tropicats</th><th class="rr">Relic Rush</th><th>What to steal</th></tr></thead>
+    <tbody>
+      <tr><td>Scene size</td><td class="tcc">Typically 2 to 4 lines, up to 22. Average line 54 characters, longest 129. Two speakers in 809 scenes, three in 526.</td><td class="rrc">2 to 4 lines. Average about 55 characters.</td><td class="steal">Matches. No change.</td></tr>
+      <tr><td>Who speaks</td><td class="tcc">Each scene is built around the building's owner plus one foil. Foil gets the joke, owner gets the reveal.</td><td class="rrc">Any of the three speaks at any building. Lines are interchangeable between Sela and Oren in many scenes.</td><td class="steal">Bind a building to an owner. The owner speaks first and the other two react.</td></tr>
+      <tr><td>Jokes</td><td class="tcc">Pun on every line (purrfect, kitten me, Meowgic). Loud; wears thin.</td><td class="rrc">Dry, gentle: <i>"Two. She's coming back with another goat."</i></td><td class="steal">Keep ours dry. Use their <b>setup, escalation, button</b> shape, not the puns.</td></tr>
+      <tr><td>Reaction to the player</td><td class="tcc">Thanks, praise, nicknames, asking the player to promise ("Don't tell Ava").</td><td class="rrc">Occasional "builder". Tavi is dry about it.</td><td class="steal">Let someone confide in the player once per epoch. It creates a bond with a single line.</td></tr>
+      <tr><td>Mystery</td><td class="tcc">Always one open question, answered each chapter and replaced by the next. Who cut the totem? Who is the dog? Whose mother?</td><td class="rrc">One planted question (why did they leave) deliberately left open.</td><td class="steal">Add a smaller one per epoch with an answer: whose cup, whose steps, why a tide mark. Keep "why they left" as the big one.</td></tr>
+      <tr><td>Sample comparable moment</td>
+        <td class="tcc"><span class="line"><b>Cubby</b> (paraphrased) finds his old love letters while repairing the grill, then Elsie tells him life is short and he should send them.</span><span class="src">chp3_q2.4</span></td>
+        <td class="rrc"><span class="line"><b>Oren:</b> A roof that doesn't flap in the wind. I may never come out.</span><span class="line"><b>Sela:</b> You'll come out for supper.</span></td>
+        <td class="steal">Same length, same warmth. The Tropicats beat adds a past and a push to action.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Short list: what to steal first</h2>
+  <ol class="steal">
+    <li><b>Object-and-memory line in every building scene.</b> One personal fact attached to the thing just built. This is the biggest gap and costs nothing in art.</li>
+    <li><b>Give each building an owner.</b> The owner opens, a second person reacts. Settles who speaks and makes the town a set of homes.</li>
+    <li><b>Three to four more named residents, each arriving with a building.</b> The goat girl, a hill elder, Tavi's mate. Introduce at the first build and keep one line per epoch for them.</li>
+    <li><b>One person-to-person want per main character</b> that advances by a step per epoch. Tropicats' love triangle is the model; ours should be friendly (Sela wants Tavi's chart lessons, Oren wants Tavi to compliment the bread).</li>
+    <li><b>End each epoch on a reveal, not a to-do.</b> The old steps and Callira stones are the supply.</li>
+    <li><b>A farewell walk at levels 97 to 99.</b></li>
+  </ol>
+  <p class="note">Sources: the Tropicats figures come from the extracted <code>storydialogueconfig.json</code> and English localisation (1,689 scenes, 10,715 localised lines, counting every speaker line); chapter and quest ids are in <code>docs/tropicats-reference/story/</code>. Tropicats lines are paraphrased, not quoted, to keep the page a comparison. Relic Rush counts come from <code>games/relic-rush/docs/story.md</code> up to the changelog. The Landfall line count includes town and ask-in-town dialogue; the 103 campaign lines are first-clear and restoration scenes only. Do not edit Landfall copy from this page; a story change goes through <code>docs/STORY_WRITING.md</code> and a cold read.</p>
+</main>
+</body>
+</html>

@@ -2,11 +2,8 @@
 -- guide's rows and icons, and the wallet and town icons. The dialogs, their
 -- motion, the paint helpers and every other popup are the engine's
 -- (engine/lua/match3/game.lua); words are lua/game_config.lua.
-local N = ui.node
-
 local R = require("match3.game").bind(require("state"))
 local match3 = require("match3")
-local buttons = require("match3.buttons")
 local rules = require("rules")
 local economy = require("economy")
 local art = require("art")
@@ -67,48 +64,6 @@ function R.funding_shortfall(cost)
     return short and parts or {}
 end
 
--- The next purchase's funding is the quest markers' jade gauge across the
--- bottom of the Build button, filled by the share of the price the wallet
--- holds (the mean over the currencies it asks for), as on the markers. A full gauge is not drawn; the ready rim says it instead. A
--- funded purchase still waiting on a level keeps that level as a caption.
-local level_gate = ui.form(N.column {
-    N.column {panel=true,role="group",padding={6,4,6,5},
-        N.label {id="caption",em=13,text_style="caption"},
-    },
-})
-
-local function draw_build_progress(screen)
-    if R.island.placing >= 0 then return end
-    local _, position = island.next_step(R.island, R.prog.level)
-    local step = island.ladder[position]
-    if not step or step.after > rules.LEVELS then return end
-    local cost = island.buildings[step.kind + 1].cost
-    local missing = economy.shortfall(cost, R.prog.wallet)
-    local share, asked, short = 0, 0, false
-    for slot in ipairs(economy.currencies) do
-        if cost[slot] > 0 then
-            share, asked = share + 1 - missing[slot] / cost[slot], asked + 1
-            short = short or missing[slot] > 0
-        end
-    end
-    local button = R.town.navigation.boxes.build
-    if short then
-        buttons.gauge(button, share / asked)
-    elseif step.after > R.prog.level then
-        local width = 164
-        level_gate:set("caption", R.words.catalogue.complete:format(step.after))
-        local _, height = level_gate:measure(width, R.skin)
-        local x = num.clamp(button:center().x - width / 2, screen.x + 6, screen:max().x - width - 6)
-        level_gate:draw(rect(x, button.y - height - 6, width, height), R.skin, {interactive=false})
-    end
-end
-
-local town_setup = R.town_setup
-function R.town_setup()
-    town_setup()
-    R.town.hooks.extras = draw_build_progress
-end
-
 function R.town_middle_icon(at) R.compass_icon(at, 17) end
 
 R.register_result(function()
@@ -121,8 +76,7 @@ R.register_result(function()
     end
     return {
         title=breakdown.first and "Expedition complete" or "Replay complete",
-        subtitle=("LEVEL %d · %s"):format(R.g.level + 1, rules.level_of(R.g).name),
-        resources=resources, action="COLLECT & RETURN",
+        resources=resources, action=R.result_action(breakdown.first, reward),
     }
 end)
 
@@ -177,13 +131,13 @@ function R.building_reward(kind)
     if not step then return end
     local unlock = step.unlock
     local bonus = unlock.bonus
-    if bonus then return {id=bonus.key, icon=R.board_art[bonus.icon]} end
-    return {id=unlock.key, icon=R.board_art[chip_prefix .. unlock.key],
+    if bonus then return {id=bonus.key, name=bonus.name, icon=R.board_art[bonus.icon]} end
+    return {id=unlock.key, name=unlock.name, icon=R.board_art[chip_prefix .. unlock.key],
         amount=unlock.amount, unit=currency_icon(unlock.slot)}
 end
 
 local guide_form = match3.guide_form({
-    title = "Explorer's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING RELICS",
+    title = "Explorer's guide",
     done = "LET'S EXPLORE",
 }, guide_icon, R.words.corner_close)
 assert(guide_form:set_items("topics",guide_entries))

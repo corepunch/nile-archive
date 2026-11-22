@@ -16,6 +16,22 @@ Re-encode the source with
 from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
 and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
 
+## Advent and Christmas medals
+
+The painted medallions show one to four lit candles for the Advents and a
+gold star for Christmas. Future phases use the sixth, a bronze keyhole.
+Completed medals use the original shading with a sepia ink pass. The current
+medal uses the original colors.
+
+- ImageGen originals: [medallion sheet](../art/epoch-medals/source.png),
+  [medallion prompt](../art/epoch-medals/prompt.txt).
+- Runtime: `data/city/epochs/medals.png` (three columns by two rows, 240 px
+  per cell). Run `python3 tools/epoch_medals.py` from the repository root
+  to trim transparent margins and center the medallions.
+- Game capture cases: `shot epoch-window` (480 × 900) and
+  `shot epoch-window-phone` (390 × 844), covering current, completed and
+  locked medals.
+
 ## Construction backdrops
 
 The campaign's board shows the latest confirmed construction with a painting
@@ -521,6 +537,23 @@ left the atlas. The `art/icons.png` cell for snow keeps its place on the sheet
 but is no longer registered. The earlier
 [frost-edge review](screenshots/review/frost-edges/after-480x900.jpg) shows the
 retired rims.
+
+## Project portraits
+
+The Advent and Christmas row uses the registered building sprites. The shared
+`navigation_project` skin draws locked projects as grayscale recesses, tracks
+funding on available projects, highlights affordable projects with the ready
+trail, and uses the existing check on completed projects. Review the
+`epoch-projects`, `epoch-projects-phone` and `epoch-next` captures.
+
+Christmas Market uses the existing painted portraits on construction cards. The card
+shows one portrait and the keeper's name beside the project art, with the same portrait
+at full price, shortfall and completed states. Keeper assignments come from the
+upgrade roster and the project overrides in [screens.lua](../lua/screens.lua).
+Theo Marsh appears on the Lumber workshop, Ice house, Winter skating rink, Christmas
+tree and snowy-tree decorations. Ada Pike appears on the Glassblower's stall.
+Use the named captures "shot project-lumber" and "shot project-skating" in the
+Christmas Market test suite to review the two supported phone layouts.
 
 ## Story cast
 

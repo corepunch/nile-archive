@@ -40,7 +40,7 @@
         640,
         725
       ],
-      "about": "Work crews pitch their tents where the day's digging ends. The cook hangs a pot by the path so a latecomer can find supper without waking a tentful of sleepers.",
+      "about": "The camp gives excavation crews a place to sort supplies, mend tools and cook between shifts.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/camp.png",
@@ -80,7 +80,7 @@
         0,
         0
       ],
-      "about": "A ring of fitted stones keeps loose earth out of the spring. The rim has a low shelf where a child can rest a full jar before lifting it.",
+      "about": "The stone lining keeps loose earth out of the spring. A low rim makes it easy to fill buckets.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/well.png",
@@ -120,7 +120,7 @@
         565,
         0
       ],
-      "about": "Boatwrights steam planks over a trench of hot stones, then bend them round wooden pegs. A split plank still makes a pair of good oar blades.",
+      "about": "The sawbench turns logs into beams and planks for houses and boats.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/workshop.png",
@@ -160,7 +160,7 @@
         595,
         880
       ],
-      "about": "Growers bring fruit down in leaf-lined baskets. The jars go home full of salt fish, packed for villages too far inland to smell the sea.",
+      "about": "Island growers bring fruit and grain to market. The stalls pack provisions in clay jars for the road.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/market.png",
@@ -200,7 +200,7 @@
         1455,
         1265
       ],
-      "about": "The sun mosaic belongs to everyone on market mornings. Fishers spread their catch around its rim and leave the centre clear for the porters with their baskets.",
+      "about": "Fishing boats unload at the harbour plaza. The catch goes straight from the quay to the market stalls.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/gateway.png",
@@ -240,7 +240,7 @@
         1710,
         1170
       ],
-      "about": "Boat crews share sleeping mats here between tides. The keeper saves the places nearest the door for those who must put out before dawn.",
+      "about": "The lodge gives visiting crews a dry berth and a place to prepare for their next departure.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/lodge.png",
@@ -280,7 +280,7 @@
         1775,
         1100
       ],
-      "about": "A keeper presses each household's seal into wet clay beside its account. Even a borrower who cannot read can find her own mark and call for witnesses.",
+      "about": "The archive keeps harbour plans and trade records dry. Carved rings serve as seals for official documents.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/archive.png",
@@ -320,7 +320,7 @@
         1855,
         1160
       ],
-      "about": "Watchers sight the rising stars between pairs of stone uprights. The first dawn appearance of the rainy season's star gives farmers time to bring their grain under cover.",
+      "about": "Sight lines through the stone pillars help navigators mark the positions of stars throughout the year.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/observatory.png",
@@ -360,7 +360,7 @@
         2375,
         1485
       ],
-      "about": "Clay pipes bring spring water to the jade basin. The lip is cut low on one side so a small child can dip a cup while the tall jars fill.",
+      "about": "Water from the spring flows through the fountain into a basin faced with green stone.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/fountain.png",
@@ -400,7 +400,7 @@
         2400,
         1525
       ],
-      "about": "Households bring a little of their first flour to the sun court. The temple ovens bake it into small loaves for people who have come to town with nothing to offer.",
+      "about": "The temple courtyard hosts public ceremonies and feast days under the island's sun emblem.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/temple.png",
@@ -440,7 +440,7 @@
         240,
         0
       ],
-      "about": "Trappers hang wet hides under the eaves and stretch them on willow hoops. A traveller who finds the cabin empty may sleep by the hearth and leave a split log for the next guest.",
+      "about": "Trappers shelter here between trips. The cabin gives them a dry bench for repairing traps and gear.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/log_cabin.png",
@@ -600,7 +600,7 @@
         1760,
         1120
       ],
-      "about": "Pilots bring the cartographer depths knotted into sounding cords. A shoal earns its place on the harbour chart when a second boat finds it.",
+      "about": "Cartographers combine soundings from different crews to mark reefs and channels on a single chart.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/map_room.png",
@@ -680,7 +680,7 @@
         990,
         890
       ],
-      "about": "Masons dress one face of each block at the quarry. At the post a buyer lays two faces together. Daylight in the joint means more work before the stones can go on the cart.",
+      "about": "Quarry stone is squared and sorted here before it is traded to the island's builders.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/trading_post.png",
@@ -720,7 +720,7 @@
         1175,
         1145
       ],
-      "about": "Water turns a paddle wheel geared to the upper millstone. A miller tests the meal between finger and thumb. A fine loaf calls for a narrower gap between the stones.",
+      "about": "The stream turns the millwheel. Inside, millstones grind the island's harvest into flour.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/water_mill.png",
@@ -760,7 +760,7 @@
         1270,
         1140
       ],
-      "about": "The harbour watch cuts a mark on the staff at each highest tide. Pilots consult the marks before they risk a deep-laden boat over the bar.",
+      "about": "The harbour watch tracks the tide from this tower. Pilots use its signals to time a shallow crossing.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/clock_tower.png",
@@ -800,7 +800,7 @@
         1730,
         1060
       ],
-      "about": "The keepers haul baskets of dry wood to the brazier before dusk. Out at sea a pilot steers towards the fire until the harbour mouth opens between the reefs.",
+      "about": "A brazier above the harbour marks the entrance at night, when the reefs are hardest to see.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/lighthouse.png",
@@ -880,7 +880,7 @@
         2250,
         1425
       ],
-      "about": "Boat crews take birds from this loft to sea in wicker cages. Released with a slip of linen round one leg, a bird can bring word home before the rowers make land.",
+      "about": "Crews carry homing birds aboard to send messages back to shore. The loft keeps the birds safe between voyages.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/aviary.png",
@@ -920,7 +920,7 @@
         1845,
         1150
       ],
-      "about": "Shipwrights draw the pegs from a stranded hull at low tide. Curved ribs are worth saving whole. A young boatbuilder might wait a season to find a tree bent to the same shape.",
+      "about": "Shipwrights salvage valuable cargo and sound timber from the hull while the tide is out.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/beached_ship.png",
@@ -960,7 +960,7 @@
         1785,
         1150
       ],
-      "about": "On contest days the wrestlers oil their shoulders under the lowest tier. On hearing days a petitioner stands on the same patch of sand and the whole town can hear.",
+      "about": "The amphitheatre gives the town a place for contests and public gatherings. Armourers set up their stalls at the entrance.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/amphitheater.png",
@@ -1000,7 +1000,7 @@
         2215,
         1455
       ],
-      "about": "Families lend the hall things too dear to sell. On feast days a player may lift a harp from its peg so the children hear the instrument their grandparents danced to.",
+      "about": "The museum keeps the island's carvings and instruments together, where visitors can see how they were made.",
       "road": false,
       "shadow": {
         "runtime": "data/city/building-shadows/museum.png",

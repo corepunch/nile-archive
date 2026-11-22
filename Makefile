@@ -169,6 +169,7 @@ build/test-audio: tests/test_audio.c engine/src/audio.c engine/src/engine.h
 
 .PHONY: test-assets
 test-assets:
+	python3 tools/epoch_medals.py --check
 	python3 games/emergency/tools/check_assets.py
 	python3 games/relic-rush/tools/check_art_catalogue.py
 	python3 games/relic-rush/tools/board_assets.py --check

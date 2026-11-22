@@ -23,6 +23,10 @@
 --   menu(bounds)            draw and handle an optional header menu
 --   build(), play(), middle(), pause()   bottom actions
 --   build_rim(center, radius)           optional effect around the Build button
+--   projects()              phase title and ordered project records (id, icon, state, progress)
+--   project(id)             open the selected project
+--   project_rim(box)        optional effect around the affordable project
+--   zone_ready(z)           optional availability for a closed region's marker
 --   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool,
 --                            portrait=texture, progress=0..1}, ...}: round
 --                           markers down the left edge, under the header (requests, tasks)
@@ -154,7 +158,15 @@ function T.new(c, config, hooks)
         N.spacer {grow = 1},
         N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     })
-    if b.layout == "play-primary" and b.pause then
+    if b.layout == "projects" then
+        v.navigation = ui.form(N.column {gap = 2,
+            N.label {id = "phase", height = 34, em = 19, text_style = "cream"},
+            N.uniform_grid {id = "actions", rows = 1, gap = 4, item = function(entry)
+                return N.button {id = "action", role = entry.id == "play" and "navigation_play" or "navigation_project",
+                    height = b.height - 36, text = "", project = entry.project}
+            end},
+        })
+    elseif b.layout == "play-primary" and b.pause then
         v.navigation = ui.form(N.row {align = "center", gap = 8,
             N.spacer {grow = 1},
             N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
@@ -186,6 +198,29 @@ function View:layout()
     local s, b = app.screen(), self.cfg.bottom
     local row = rect(s.x + b.margin, s:max().y - b.bottom - b.height, s.w - 2 * b.margin, b.height)
     self.bottom_row = row
+    if b.layout == "projects" then
+        local title, projects = self.hooks.projects()
+        local form = self.navigation
+        if title ~= self.project_phase then
+            local actions = {}
+            for i, project in ipairs(projects) do actions[i] = {id = project.id, project = project} end
+            actions[#actions + 1] = {id = "play"}
+            assert(form:set_items("actions", actions))
+            self.project_phase = title
+            form:set("phase", title)
+        end
+        local boxes = form:layout(row, self.hooks.skin)
+        local actions = form.nodes.actions.children
+        self.project_boxes, self.ready_project = {}, nil
+        for i, project in ipairs(projects) do
+            local node = actions[i]
+            node.project = project
+            self.project_boxes[project.id] = boxes[node.id]
+            if project.state == "ready" then self.ready_project = boxes[node.id] end
+        end
+        self.buttons.play = boxes[actions[#actions].id]:center()
+        return self.buttons
+    end
     self.buttons.build = rect(row.x, row.y, b.build, b.height):center()
     self.buttons.play = rect(row:max().x - b.play, row.y, b.play, b.height):center()
     local m = b.middle
@@ -283,7 +318,9 @@ function View:draw_markers(c)
         if not c:zone_open(z) then
             local p = cam:to_screen(zones[z + 1].marker)
             if p.x > view.x - 90 and p.x < view:max().x + 90 and p.y > view.y - 50 and p.y < view:max().y + 40 then
-                local ready = c:zone_available(z, self.hooks.wallet())
+                local ready
+                if self.hooks.zone_ready then ready = self.hooks.zone_ready(z)
+                else ready = c:zone_available(z, self.hooks.wallet()) end
                 if ready and not reduced then
                     local g = rgba(cfg.glow)
                     gfx.glow(p, 40, color(g.r, g.g, g.b, math.floor(110 + 60 * math.sin(self.time * 3))), color(g.r, g.g, g.b, 0))
@@ -356,7 +393,7 @@ function View:header_layout(caps, cfg)
     local reserved = (leading_width or 0) + (menu and menu.size or 0) + #caps * oh
         + math.max(0, count - 1) * gap
     local wanted = 0
-    local key = {cfg.align, leading_width or 0}
+    local key = {cfg.align, leading_width or 0, menu and menu.size or 0}
     for _, cap in ipairs(caps) do
         local width = cap.width or cfg.width
         wanted = wanted + width
@@ -434,8 +471,18 @@ local function round_button(v, center)
     return st.clicked
 end
 
-function View:bottom()
+function View:bottom(active)
     local h, skin = self.hooks, self.hooks.skin
+    if self.cfg.bottom.layout == "projects" then
+        local event = self.navigation:draw(self.bottom_row, skin, {interactive = active, dim_controls = false})
+        if self.ready_project and h.project_rim then h.project_rim(self.ready_project) end
+        if event then
+            haptic.play(haptic.TICK, .6)
+            if event.key == "play" then h.play()
+            else h.project(event.key) end
+        end
+        return
+    end
     local m = self.cfg.bottom.middle
     if self.cfg.bottom.layout ~= "play-primary" and m.kind == "round" then
         if round_button(self, self.buttons.middle) then
@@ -623,7 +670,7 @@ function View:frame(inp, dt, active)
     self:header()
     if c.placing >= 0 then self:placement()
     elseif not (h.hide_bottom and h.hide_bottom()) then
-        self:bottom()
+        self:bottom(active)
         if h.rail then self:rail() end
     end
     if h.extras then h.extras(app.screen()) end

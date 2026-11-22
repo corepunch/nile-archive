@@ -1,5 +1,5 @@
 -- Extended, window-free campaign: win real boards, then use the game's reward
--- and story coordinators and the city purchase rules. The separate campaign
+-- coordinator and the city purchase rules. The separate campaign
 -- smoke exercises the controls, rendering and placement interaction.
 if not testing.extended then return end
 
@@ -12,49 +12,15 @@ require('main')
 R.test_mode, R.quiet, R.overlay = true, false, R.OV_NONE
 R.island = city.new()
 island.island_setup(R.island)
-R.wonders = island.wonders
+R.wonders, R.buildings = island.wonders, island.buildings
 R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
+R.town_setup()
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, replays = 0, 0, 0, 0
-local scene_order, scene_level, purchase_level = {}, {}, {}
-local scenes = 0
+local purchase_level = {}
 local relic_rush = testing.game == 'relic-rush'
 local user_events = relic_rush and require('user_events_runtime')
-local function owns_wonder(index)
-    return island.owned(R.island, island.wonder_kinds and island.wonder_kinds[index + 1] or index) > 0
-end
-
-local function finish_scene(before_reward)
-    local beat = R.story_current
-    local key = beat.key
-    assert(not scene_order[key], 'story scene played twice: ' .. key)
-    scenes = scenes + 1
-    scene_order[key], scene_level[key] = scenes, R.prog.level
-    while story.active() do story.next() end
-    R.story_tick()
-    if beat.choices then
-        assert(R.overlay == R.OV_STORY_CHOICE and R.story_choice_beat == beat, 'expected choices for ' .. key)
-        assert(R.choose_story_option(2), 'could not choose the reply')
-        while story.active() do story.next() end
-        R.story_tick()
-    end
-    if before_reward then check(R.g.story_clear == key, 'reply waits for the reward transaction')
-    else check(R.prog.story_seen[key], 'finished scene acknowledged: ' .. key) end
-end
-
-local function scene(expected, before_reward)
-    R.story_tick()
-    local actual = R.story_current and R.story_current.key or 'nothing'
-    assert(actual == expected, ('expected story scene %s, got %s'):format(expected, actual))
-    finish_scene(before_reward)
-end
-
-local function finish_town_story()
-    R.story_tick()
-    while R.story_current do finish_scene() end
-end
-
 -- The reference bot the move budgets are fitted to (tests/lua/tune_moves.lua).
 local profile = testing.bot_profile and require('bot_profile')(rules)
 local best_move = require('match3.bot')(profile and profile.rules or rules)
@@ -80,8 +46,8 @@ end
 for level = 1, rules.LEVELS do
     R.on_island, R.overlay = false, R.OV_NONE
     R.g = R.make_board(level - 1, 1)
-    local next_beat = journey.next(R.prog, owns_wonder, level - 1)
-    if next_beat and next_beat.phase == 'before' then scene(next_beat.key) end
+    R.story_tick()
+    check(not story.active() and not R.story_current, 'the board opens without dialogue')
     local won
     -- Fixed independent starts permit a failed board to be retried. They are
     -- a reproducible bot sample, not a prediction of human win rates.
@@ -94,23 +60,21 @@ for level = 1, rules.LEVELS do
     end
     assert(won, ('bot failed every start on level %d'):format(level))
     wins = wins + 1
-    local after = ('after-%02d'):format(level)
-    local first_exchange = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
-    if first_exchange then
-        R.overlay = R.OV_RESULT
-        -- Allow the headless clock to advance through any object reveal or
-        -- signal scene before the first-clear exchange.
-        for _ = 1, 8 do
-            R.story_tick()
-            if R.story_current then break end
-            R.now = R.now + 1
-        end
-        scene(after, true)
-    end
+    R.overlay = R.OV_RESULT
+    R.story_tick()
+    check(not story.active() and not R.story_current, 'the results open without dialogue')
+    local moves_left = R.g.moves
     local reward = rules.level_reward(R.g, R.wonders, R.prog)
     local expected_wallet = R.prog.wallet + reward
     R.claim_reward()
-    if R.overlay == R.OV_COMPLETE then R.overlay = R.OV_NONE end
+    local completed = level // 20
+    check(R.island.open == (1 << (completed + 1)) - 1, 'each completed phase opens precisely one consecutive district')
+    if level % 20 == 0 then
+        check(R.overlay == R.OV_EPOCH and R.on_island and R.epoch_award == completed,
+            'a completed phase opens the illustrated chooser')
+        R.close_epoch(false)
+        check(not R.show_epoch_award(completed), 'the acknowledged phase does not announce again')
+    end
     check(R.prog.level == level, 'first win advances one level')
     for slot = 1, 4 do
         check(R.prog.wallet[slot] == expected_wallet[slot], 'win pays once in wallet slot ' .. slot)
@@ -119,18 +83,10 @@ for level = 1, rules.LEVELS do
     if rules.FOOD then
         local income, wallet = reward, R.prog.wallet
         print(("wish %02d · earned %d/%d/%d · stock %d/%d/%d · %d moves left"):format(
-            level, income[1], income[3], income[2], wallet[1], wallet[3], wallet[2], R.g.moves))
+            level, income[1], income[3], income[2], wallet[1], wallet[3], wallet[2], moves_left))
     end
-    if journey.clear_before_result and not first_exchange and journey.find(after) and journey.find(after).phase == 'after' then scene(after) end
-    local kind = journey.wonder_at(level)
-    if kind then
-        check(not journey.next(R.prog, owns_wonder, nil), 'story waits for construction')
-    end
-    finish_town_story()
-    for z = 1, 5 do R.island:unlock(z, R.prog.wallet) end
     if island.next_step then
-        -- A ladder: place each open restoration when affordable. When the story
-        -- needs one the wallet cannot cover, replay this board for income.
+        -- Place each affordable project. A shortfall at a milestone would need a replay.
         local placed, short = {}, 0
         while true do
             local next_kind = island.next_step(R.island, R.prog.level)
@@ -140,9 +96,6 @@ for level = 1, rules.LEVELS do
             if island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0) then
                 placed[#placed + 1] = building.key
                 purchase_level[next_kind] = level
-                -- The headless placement helper bypasses the town's confirmation callback.
-                journey.placed(R.prog, building.key)
-                finish_town_story()
             elseif not owed then break
             else
                 short = short + 1
@@ -164,11 +117,12 @@ for level = 1, rules.LEVELS do
         print(("expedition %02d · earned %d/%d/%d · stock %d/%d/%d · replays %d · placed %s"):format(
             level, reward[1], reward[3], reward[2], wallet[1], wallet[3], wallet[2], short,
             #placed > 0 and table.concat(placed, ", ") or "-"))
-    elseif kind then
-        assert(island.island_place_next(R.island, R.prog.wallet, R.prog.level, 0), 'cannot place funded building')
     end
     if user_events then user_events.emit('island') end
-    finish_town_story()
+    local phase, projects = R.epoch_projects()
+    local epoch = math.min(level // 20 + 1, #R.words.epochs)
+    check(phase == R.words.epochs[epoch] and projects[1].id == island.ladder[(epoch - 1) * 4 + 1].kind,
+        'the phase advances after each block of clears and purchases')
 end
 local due = 0
 for _, step in ipairs(island.ladder) do
@@ -179,38 +133,8 @@ for _, step in ipairs(island.ladder) do
 end
 check(island.wonder_count(R.island) == journey.earned(rules.LEVELS), 'all earned story buildings placed')
 check(island.campaign_count(R.island) == due, 'every earned purchase placed')
-local previous = 0
-for _, beat in ipairs(journey.beats) do
-    if beat.level <= rules.LEVELS then
-        local order = scene_order[beat.key]
-        check(order and order > previous, 'campaign story order: ' .. beat.key)
-        previous = order or previous
-    end
-end
-
-local function played_before(first, second)
-    return scene_order[first] and scene_order[second] and scene_order[first] < scene_order[second]
-end
-
-for _, beat in ipairs(journey.placements) do
-    local level = purchase_level[island.kinds[beat.building]]
-    if beat.invitation then
-        level = math.max(level or 0, journey.find(beat.invitation).level)
-        check(played_before(beat.invitation, beat.key), 'resident arrives after their invitation: ' .. beat.key)
-    end
-    check(scene_level[beat.key] and scene_level[beat.key] == level, 'town scene plays at its first opportunity: ' .. beat.key)
-end
-
-local meeting = journey.find(relic_rush and 'meeting-map_room-aviary' or 'meeting-station_kiosk-glassblower')
-check(scene_level[meeting.key] == meeting.level, 'the residents meet as soon as both have arrived')
-local recall = journey.find(relic_rush and 'after-92' or 'after-85').recall
-check(R.prog.story_seen[recall.key] and not scene_order[recall.key], 'the first clear unlocks the ending without a town catch-up')
-for _, site in ipairs(meeting.sites) do
-    check(played_before('placed-' .. site, meeting.key), 'the meeting follows the introduction at ' .. site)
-end
-
 check(replays == 0, ('the reference playthrough needs %d replays for income'):format(replays))
-print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d of %d purchases, %d total earned, %d remaining, %d stars, %d scenes'):format(
-    wins, attempts-wins, replays, island.campaign_count(R.island), due, earned, R.prog.wallet[1], R.prog.wallet[4], scenes))
+print(('campaign play: %d wins, %d failed attempts, %d replays for income, %d of %d purchases, %d total earned, %d remaining, %d stars'):format(
+    wins, attempts-wins, replays, island.campaign_count(R.island), due, earned, R.prog.wallet[1], R.prog.wallet[4]))
 
 if profile then profile.report() end

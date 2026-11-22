@@ -12,13 +12,13 @@ local function finish()
 end
 function desc.init()
     init()
-    R.quiet, R.on_island, R.overlay = true, false, R.OV_NONE
-    R.story_current = nil
+    R.on_island, R.overlay = false, R.OV_NONE
 end
 function R.smoke()
     frames = frames + 1
     assert(frames < 1500, 'walkthrough pointer smoke timed out at stage ' .. stage)
     if R.diving() then return end
+    assert(not story.active() and not R.story_current, "opening, win and purchase must never start dialogue")
     if wait > 0 then wait = wait - 1; return end
     wait = 4
     if stage == 0 then
@@ -31,9 +31,8 @@ function R.smoke()
         app.inject_click(vec2(394, 136)); stage = 3
     elseif stage == 3 and island.wonder_count(R.island) == 1 then
         assert(R.island.placing < 0, 'town action must confirm placement')
-        R.quiet = false
-        if story.active() then story.next(); return end
-        if R.story_current or R.next_story(nil) then return end
+        local reward = R.building_reward(island.kinds[game == "relic-rush" and "well" or "arch"])
+        assert(R.toast == "Unlocked: " .. reward.name, "placement names its board reward")
         app.inject_click(vec2(394, 136)); stage = 4
     elseif stage == 4 and not R.on_island then
         assert(R.g.level == 1, 'town action must start the next board')

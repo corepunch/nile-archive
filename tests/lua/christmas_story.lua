@@ -49,7 +49,6 @@ for _,b in ipairs(journey.upgrades) do
         'each upgrade scene belongs to an upgrade event: '..b.key)
     for _,line in ipairs(b.lines) do check(cast[line[1]],'each upgrade line has a cast member: '..tostring(line[1])) end
 end
-local finds = 0
 for level=1,rules.LEVELS do
     local before=journey.next(p,owned(c),level-1)
     if before then
@@ -64,10 +63,6 @@ for level=1,rules.LEVELS do
     for _, e in ipairs(spec.chain_cells) do layers = layers + e.hits end
     for _, e in ipairs(spec.ice_cells or {}) do layers = layers + e.layers end
     check(g.initial_obstacles == layers, "every wish places exactly its authored tinsel, frost and stones")
-    if spec.story_piece then
-        finds = finds + 1
-        check(not spec.story_piece.kind and not g.goal_kind, "story finds leave all the board's goods in play")
-    end
     g.won=true;g.moves=0
     -- Supply the income for every ladder stall this clear opens.
     local opened, price = {}, purse()
@@ -114,7 +109,6 @@ for level=1,rules.LEVELS do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(finds == 6, "the six story finds do not consume a piece slot")
 check(c.count==20 and c.open==63 and p.wallet[4]==100,'a hundred clears open all twenty stalls and all five new regions')
 check(journey.next(p,owned(c),100)==nil,'finale ends at the hundredth wish, not the last stall')
 
@@ -174,28 +168,6 @@ local waivers = island.waived(fresh)
 check(waivers[island.ladder_position[island.kinds.gifts]] and not waivers[island.ladder_position[island.kinds.candles]],
       "the old waiver stays with the Gift wrapping pavilion after it changes gates")
 R.island = c
-
--- Real queue completion, interruption and save/read use the runtime coordinator.
-R.test_mode=true;R.quiet=false;R.overlay=R.OV_NONE;R.on_island=false
-R.island=c;R.g=rules.game_start(0,1)
-R.prog={level=0,story_seen={}}
-empty_queue();R.story_current=nil
-R.story_tick()
-check(story.active() and R.story_current.key=='before-01','new game opens the full opening scene')
-story.next()
-check(not R.prog.story_seen['before-01'],'a partially read beat is not acknowledged')
-save.write('story-interrupted',function(s) journey.serialize(s,R.prog) end)
-empty_queue();R.story_current=nil;R.prog={level=0,story_seen={}}
-save.read('story-interrupted',function(s) journey.serialize(s,R.prog) end)
-R.on_island=true   -- a new game starts in the market; the opening still plays
-R.story_tick()
-check(story.active() and R.story_current.key=='before-01','reload recovers the interrupted scene')
-empty_queue();R.story_tick()
-check(R.prog.story_seen['before-01'] and not story.active(),'finishing or skipping acknowledges exactly one scene')
-save.write('story-completed',function(s) journey.serialize(s,R.prog) end)
-R.prog={level=0,story_seen={}}
-save.read('story-completed',function(s) journey.serialize(s,R.prog) end)
-check(R.prog.story_seen['before-01'],'completed keys survive save/read')
 
 -- A version 2 player keeps every stall already built and starts episode two.
 local old={level=19,seed=55,wallet=purse(1234,12,34,30,7)}

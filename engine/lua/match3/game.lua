@@ -34,6 +34,7 @@ G.DEFAULTS = {
     app = {title = "Match-3 town", id = "match3-game", clear = "#09211F"},
     menu = {play = "CONTINUE", settings = "SETTINGS", label = "MAIN MENU"},
     packs = {"kind"},        -- piece packs; the first is the default, --tiles picks another
+    campaign_dialogue = true,
     speech = {scale = 1, name = 15},
     region_speaker = "",
     board = {},
@@ -49,10 +50,8 @@ G.DEFAULTS = {
         notes = {"", "Gold buys buildings.", ""},
     },
     pause = {guide = "GUIDE", quit = "QUIT", leaderboard = "LEADERBOARD"},
-    confirm = {title = "Restart this level?", body = "Restarting discards the resources you matched on this board.",
-               restart = "RESTART", cancel = "KEEP PLAYING"},
-    failed = {title = "One more try?", subtitle = "THE TOWN WILL WAIT FOR YOU.", hint = "Look for longer lines or use a tool.",
-              retry = "TRY AGAIN", town = "VISIT TOWN"},
+    confirm = {title = "Restart this level?", restart = "RESTART", cancel = "KEEP PLAYING"},
+    failed = {title = "Out of moves", retry = "TRY AGAIN", town = "VISIT TOWN"},
     zone = {subtitle = "A NEW PLACE TO DISCOVER", cleared = "LEVELS CLEARED  %d / %d", earn = "CLEAR NEW LEVELS TO OPEN IT",
             open = "OPEN THIS AREA", wait = "KEEP EXPLORING", close = "CLOSE"},
     finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
@@ -60,10 +59,10 @@ G.DEFAULTS = {
     -- A line's %d is the number of levels.
     complete = {title = "You won!", lines = {{"YOU COMPLETED ALL %d LEVELS.", 16}, {"Your town stays open to build.", 16}},
         button = "BACK TO TOWN"},
-    result = {needs = "%s STILL NEEDS", ready = "READY TO BUILD"},
-    card = {move = "MOVE THIS BUILDING", build = "CHOOSE A LOCATION", repair = "RESTORE ON SITE", back = "BACK TO TOWN",
-            gets = "YOU GET", price = "PRICE", missing = "STILL NEEDED", play = "PLAY",
-            moving = "HOLD AND DRAG IN TOWN TO MOVE", locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
+    result = {visit = "COLLECT & VISIT TOWN"},
+    card = {move = "MOVE", build = "BUILD", repair = "RESTORE", back = "BACK TO TOWN",
+            gets = "YOU GET", price = "PRICE", missing = "STILL MISSING", play = "PLAY",
+            locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
     catalogue = {
         title = "Build your town", close = "BACK TO TOWN",
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
@@ -107,7 +106,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_EPOCH = 12,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -293,6 +292,8 @@ function G.bind(R, over)
     R.game_bound = true
     local W = G.config(over)
     R.words = W
+    local campaign_dialogue = W.campaign_dialogue
+    local preview_visits = app.arg("shot") and app.arg("visit-game")
     local rules = require("rules")
     local island = require("island")
     local journey = require("journey")
@@ -489,14 +490,6 @@ function G.bind(R, over)
         config.form = form
     end
 
-    -- The results card's line about the next building `w`: what it still
-    -- needs after this win (`missing`, resource records), or its picture
-    -- once the wallet covers it.
-    function R.result_next(w, missing)
-        if #missing > 0 then return {needs=missing, needs_caption=W.result.needs:format(w.name:upper())} end
-        return {icon=w.sprite, heading=W.result.ready, title=w.name}
-    end
-
     function R.register_result(model)
         local form = ui.form(N.column {panel=true,
             match3.popup_header("Results"),
@@ -505,33 +498,13 @@ function G.bind(R, over)
                 N.label {id="score",em=44,text_style="gold"},
             },
             N.column {gap=7,paint_group={.62,.28,10},
-                N.label {text="RESOURCES TO BANK",em=13,text_style="caption"},
+                N.label {text="RESOURCES",em=13,text_style="caption"},
                 -- One row of equal cells, however many currencies the game banks.
                 N.uniform_grid {id="resources",rows=1,gap=9,item=function(entry)
                     return match3.resource_indicator(entry)
                 end},
             },
-            -- The next purchase, in at most two parts: what it still needs after
-            -- this win, as resource amounts, and one captioned picture row.
-            N.column {id="next_step",visible_field="show_next",panel=true,role="group",
-                padding={9,8,10,9},gap=6,paint_group={.9,.26,8},
-                    N.label {id="next_needs_caption",em=13,text_style="caption",visible_field="show_next_needs"},
-                    N.row {visible_field="show_next_needs",
-                        N.spacer {grow=1},
-                        N.list {id="next_needs",direction="row",gap=9,item=function(entry)
-                            return match3.resource_indicator(entry, 104)
-                        end},
-                        N.spacer {grow=1},
-                    },
-                    N.row {gap=10,align="center",visible_field="show_next_title",
-                        N.image {id="next_icon",width=58,height=58,visible_field="show_next_icon"},
-                        N.column {grow=1,gap=2,
-                            N.label {id="next_heading",wrap=true,text_align="start",em=12,text_style="caption"},
-                            N.label {id="next_title",wrap=true,text_align="start",em=21,text_style="gold"},
-                        },
-                    },
-                },
-            N.button {id="claim",height=54,paint_group={1.02,.22,8}},
+            N.button {id="claim",height=54,paint_group={.87,.22,8}},
         })
         R.result_form = form
         popup(R.OV_RESULT, form, {width=408, dismiss=false, prepare=function(d)
@@ -539,21 +512,9 @@ function G.bind(R, over)
             form:set("score", tostring(math.floor(R.g.score * count + .5)))
             if not d.fresh then return end
             local data = model()
-            local next_step = data.next_step
-            match3.set_popup_header(form, data.title, data.subtitle)
+            match3.set_popup_header(form, data.title)
             form:set("claim", data.action)
             assert(form:set_items("resources", data.resources))
-            local needs = next_step and next_step.needs or {}
-            form.values.show_next = next_step ~= nil
-            form.values.show_next_needs = #needs > 0
-            form.values.show_next_title = next_step ~= nil and next_step.title ~= nil
-            form.values.show_next_icon = next_step ~= nil and next_step.icon ~= nil
-            assert(form:set_items("next_needs", needs))
-            if next_step then
-                form:set("next_needs_caption", next_step.needs_caption or "")
-                    :set("next_icon", next_step.icon):set("next_heading", next_step.heading or "")
-                    :set("next_title", next_step.title or "")
-            end
         end, handle=function(event)
             if event.id ~= "claim" then return end
             if R.dialog_settled() then close_popup(R.claim_reward) else R.dialog_skip() end
@@ -569,13 +530,14 @@ function G.bind(R, over)
     -- and the amounts narrow together when five share the row. The list
     -- grows into the row's height, so a group of icons alone stands as tall
     -- as one of figures. A wider gap, with no rule, sets the groups apart.
-    local AMOUNT_GAP, GROUP_GAP, CARD_INNER = 9, 20, 372
+    local AMOUNT_GAP, GROUP_GAP, CARD_WIDTH = 9, 20, 420
+    local CARD_INNER = CARD_WIDTH - 2 * ui.FORM_PADDING
     local amount_width = 96
-    local function amounts(id, caption, visible, width)
+    local function amounts(id, caption, visible)
         return N.column {gap=5, visible_field=visible,
             N.label {id=id .. "_caption", text=caption, em=13, text_style="caption"},
             N.list {id=id,direction="row",gap=AMOUNT_GAP,grow=1,item=function(entry)
-                return match3.resource_indicator(entry, width or amount_width)
+                return match3.resource_indicator(entry, amount_width)
             end},
         }
     end
@@ -588,14 +550,11 @@ function G.bind(R, over)
     local wonder_form = ui.form{
         root = N.column {panel=true,
             match3.popup_header("Building details", nil, W.corner_close and "close"),
-            N.image {id="sprite", height=205},
-            N.label {id="about", wrap=true, em=19, text_style="body"},
-            N.label {id="unlock", wrap=true, em=16, text_style="body", visible_field="show_unlock"},
-            N.row {visible_field="show_upgrade",
-                N.spacer {grow=1},
-                amounts("upgrade", "", "show_upgrade", 96),
-                N.spacer {grow=1},
+            N.row {gap=10,align="center",
+                N.image {id="sprite", height=172, grow=1},
+                N.image {id="keeper_portrait",visible_field="show_keeper",width=110,height=132},
             },
+            N.label {id="about", wrap=true, em=17, text_style="body", visible_field="show_about"},
             N.row {visible_field="show_amounts",
                 N.spacer {grow=1},
                 amounts("price", W.card.price, "show_price"),
@@ -605,7 +564,7 @@ function G.bind(R, over)
             },
             N.label {id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
             N.button {id="action",height=56},
-            N.button {id="shop",text="OPEN BUILD SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
+            N.button {id="shop",text="SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
             not W.corner_close and N.button {id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
         },
         bindings={
@@ -615,31 +574,34 @@ function G.bind(R, over)
     }
     R.wonder_form = wonder_form
     local wonder_action, funding_play
-    popup(R.OV_WONDER, wonder_form, {width=420, prepare=function()
+    popup(R.OV_WONDER, wonder_form, {width=CARD_WIDTH, prepare=function()
         local i = R.inspect >= 0 and R.inspect or next_build()
         if not i or i < 0 or i >= #R.buildings then return false end
         local w = R.buildings[i + 1]
-        local unlock_text = island.buildings[i + 1].unlock_text
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local fixed = w.fixed_site and (w.fixed_site.x ~= 0 or w.fixed_site.y ~= 0)
         local movable = built and not fixed
-        local _, position = island.next_step(R.island, R.prog.level)
-        local step = not built and island.ladder[position]
-        if step and (step.kind ~= i or step.after > rules.LEVELS) then step = nil end
-        local needs_funding = step and not can_build
-        funding_play = needs_funding and (R.prog.level < rules.LEVELS or step.after <= R.prog.level)
+        local project = island.ladder[island.ladder_position[i]]
+        if project and project.after > LEVELS then project = nil end
+        local step = not built and project
+        local blocked = step and ladder_blocked(i, 0)
+        local needs_funding = step and not blocked and not can_build
+        funding_play = blocked == "later" or needs_funding
         match3.set_popup_header(wonder_form, w.name)
-        local upgrade = R.upgrade_card and R.upgrade_card(i)
-        local about = journey.building_about(i, R.prog.level, w.about)
-        if upgrade then about = about .. "\n" .. upgrade.about end
+        local keeper = R.project_keeper and R.project_keeper(i)
+        wonder_form.values.show_keeper = keeper ~= nil
+        if keeper then
+            wonder_form:set("keeper_portrait", texture.load(keeper.portrait_path))
+        end
+        local about = campaign_dialogue and journey.building_about(i, R.prog.level, w.about) or w.about or ""
+        wonder_form.values.show_about = about ~= ""
         local ok, message = wonder_form:push{sprite=w.sprite, about=about,
             action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or funding_play and (R.prog.level < rules.LEVELS and W.card.play or "EARN RESOURCES") or W.card.back}
         assert(ok, message)
         local show_price = step ~= nil or not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
         wonder_form.values.show_price = show_price
-        wonder_form.values.show_notice = not show_price or step ~= nil
-        wonder_form.values.show_shop = step ~= nil
+        wonder_form.values.show_shop = project ~= nil
         local reward = R.building_reward(i)
         local gets = reward and {reward} or {}
         local price = show_price and price_parts(w.cost) or {}
@@ -649,26 +611,20 @@ function G.bind(R, over)
         if #missing > 0 then price = missing end
         wonder_form:set("price_caption", #missing > 0 and W.card.missing or W.card.price)
         local count, groups = #gets + #price, (#gets > 0 and 1 or 0) + (#price > 0 and 1 or 0)
-        -- An upgrade's feat or perk: its own captioned row under the amounts.
-        local upgrade_entries = upgrade and upgrade.entries or {}
-        wonder_form.values.show_upgrade = #upgrade_entries > 0
-        wonder_form:set("upgrade_caption", upgrade and upgrade.caption or "")
-        assert(wonder_form:set_items("upgrade", upgrade_entries))
         amount_width = math.min(96, math.floor((CARD_INNER - GROUP_GAP * (groups - 1) - AMOUNT_GAP * (count - groups)) / math.max(1, count)))
         wonder_form.values.show_gets, wonder_form.values.show_amounts = #gets > 0, count > 0
         wonder_form.values.show_both = groups == 2
         assert(wonder_form:set_items("gets", gets))
-        wonder_form.values.show_unlock = unlock_text ~= nil and #gets == 0
-        wonder_form:set("unlock", unlock_text or "")
         assert(wonder_form:set_items("price", price))
         local funding
-        if needs_funding then
-            -- The amounts already say what is missing; a line is only for the level gate.
-            if R.prog.level < step.after then funding = W.catalogue.complete:format(step.after)
-            elseif #missing == 0 then funding = W.catalogue.poor
-            else wonder_form.values.show_notice = false end
+        if blocked == "later" then funding = W.catalogue.complete:format(step.after)
+        elseif blocked == "earlier" then funding = W.catalogue.earlier
+        elseif needs_funding and #missing == 0 then funding = W.catalogue.poor
+        elseif not built and not can_build and not step then
+            funding = show_price and W.catalogue.poor or W.card.locked
         end
-        wonder_form:set("notice", funding or step and can_build and W.result.ready or built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
+        wonder_form.values.show_notice = funding ~= nil
+        wonder_form:set("notice", funding)
         wonder_action = (can_build or movable) and {kind=i, item=movable and R.inspect_item or nil} or nil
     end, handle=function(event)
         local action = wonder_action
@@ -684,13 +640,10 @@ function G.bind(R, over)
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard, W.corner_close, W.menu.label)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
-        local level
-        if not R.on_island and not R.on_menu then level = ("%d. %s"):format(R.g.level + 1, rules.level_of(R.g).name) end
         assert(pause_form:push(R))
         pause_form.values.in_game = not R.on_menu
         pause_form.values.expedition = not R.on_island and not R.on_menu
         pause_form:set("resume", R.on_menu and "DONE" or "RESUME")
-        match3.set_popup_header(pause_form, "Settings", level)
     end, handle=function(event)
         local action = event.id
         if event.kind == "change" then
@@ -707,7 +660,7 @@ function G.bind(R, over)
         elseif action == "quit" then   -- the unfinished board waits in town
             R.on_island, R.overlay = true, R.OV_NONE
             local replay = R.prog.level >= rules.LEVELS
-            R.notice(replay and "Your board is saved. Open Build to continue earning resources."
+            R.notice(replay and "Your board is saved. Open its project to earn more resources."
                 or W.notices.quit:format(R.g.level + 1))
         end
     end, live=function(event)
@@ -715,7 +668,7 @@ function G.bind(R, over)
     end})
 
     local confirm_form = ui.form(N.column {panel=true,
-        match3.popup_header(W.confirm.title, W.confirm.body, W.corner_close and "close"),
+        match3.popup_header(W.confirm.title, nil, W.corner_close and "close"),
         N.button {id="confirm",text=W.confirm.restart,height=50},
         N.button {id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
     })
@@ -727,8 +680,7 @@ function G.bind(R, over)
 
     local failed = W.failed
     R.failed_form = ui.form(N.column {panel=true,
-        match3.popup_header(failed.title, failed.subtitle),
-        N.label {text=failed.hint,wrap=true,em=17,text_style=PAL_CREAM},
+        match3.popup_header(failed.title),
         N.button {id="retry",text=failed.retry,height=50},
         N.button {id="town",text=failed.town,height=42,role="secondary"},
     })
@@ -740,7 +692,6 @@ function G.bind(R, over)
     local zone_form = ui.form(N.column {panel=true,
         match3.popup_header("Region", nil, W.corner_close and "close"),
         N.label {id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
-        N.label {text=region.earn,wrap=true,em=19,text_style=PAL_CREAM},
         N.button {id="open",height=47},
         not W.corner_close and N.button {id="close",text=region.close,height=32,role="link",em=16} or nil,
     })
@@ -748,7 +699,7 @@ function G.bind(R, over)
     popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
         local z = R.zone_card
         local zone = R.island.zones[z + 1]
-        match3.set_popup_header(zone_form, zone.name, region.subtitle)
+        match3.set_popup_header(zone_form, zone.name)
         zone_form:set("cleared", region.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED]))
             :set("open", R.island:zone_available(z, R.prog.wallet) and region.open or region.wait)
     end, handle=function(event)
@@ -756,7 +707,9 @@ function G.bind(R, over)
         if event.id == "open" and R.island:unlock(z, R.prog.wallet) then
             R.island_focus(R.island.zones[z + 1].marker, R.island.cam.zoom)
             R.save_progress()
-            if journey.regions[z] then story.add({W.region_speaker, journey.regions[z], story.SHOUT}) end
+            if campaign_dialogue and journey.regions[z] then
+                story.add({W.region_speaker, journey.regions[z], story.SHOUT})
+            end
             R.tone(820)
         end
         R.overlay = R.OV_NONE
@@ -773,6 +726,50 @@ function G.bind(R, over)
         if overlay == R.OV_COMPLETE then R.complete_form = form end
         popup(overlay, form,
             {width=416, dismiss=false, handle=function() R.overlay = R.OV_NONE end})
+    end
+
+    if W.epochs then
+        local function medal(entry)
+            return N.column {gap=2,
+                N.label {text=entry.name,height=22,em=15,text_style="body"},
+                N.spacer {panel=true,role="epoch_medal",height=100,medal=entry},
+            }
+        end
+        local form = ui.form(N.column {panel=true,
+            match3.popup_header(W.epoch_title),
+            N.column {gap=4,
+                N.uniform_grid {id="epoch_top",rows=1,gap=5,item=medal},
+                N.row {N.spacer {grow=1},
+                    N.uniform_grid {id="epoch_bottom",rows=1,width=238,gap=5,item=medal},
+                    N.spacer {grow=1}},
+            },
+            N.row {gap=12,
+                N.button {id="back",text="BACK",role="secondary",grow=1,height=48},
+                N.button {id="play",text="PLAY",grow=1,height=48},
+            },
+        })
+        R.epoch_form = form
+        popup(R.OV_EPOCH, form, {width=430, dismiss=false, prepare=function(d)
+            if not d.fresh then return end
+            local completed = R.completed_epochs()
+            local active = math.min(#W.epochs, completed + 1)
+            local path = require("art").epoch_medals
+            local atlas = texture.load(path)
+            assert(atlas.tex, "missing epoch medallions: " .. path)
+            local cell = atlas.w // 3
+            local top, bottom = {}, {}
+            for i, name in ipairs(W.epoch_medal_names or W.epochs) do
+                local list = i <= 3 and top or bottom
+                local frame = i > active and 5 or i - 1
+                local icon = texture.region(atlas, rect((frame % 3) * cell, (frame // 3) * cell, cell, cell))
+                list[#list+1] = {id=i, name=name, icon=icon, done=i <= completed}
+            end
+            assert(form:set_items("epoch_top", top))
+            assert(form:set_items("epoch_bottom", bottom))
+            form:set("play", completed == #W.epochs and "CONTINUE" or "PLAY")
+        end, handle=function(event)
+            R.close_epoch(event.id == "play")
+        end})
     end
 
     -- Draws the open dialog over everything; it alone receives input.
@@ -974,6 +971,7 @@ function G.bind(R, over)
     end
 
     function R.expand()
+        if W.epochs then return end
         local z = R.island:next_zone(R.prog.wallet)
         if z < 0 then R.notice(W.notices.all_open)
         else R.zone_card, R.overlay = z, R.OV_ZONE end
@@ -984,8 +982,9 @@ function G.bind(R, over)
         local kind = R.island.items[item + 1].type
         local definition = R.buildings[kind + 1]
         local upgrade = R.upgrade_card and R.upgrade_card(kind)
-        return definition.name .. "\n" .. journey.building_about(kind, R.prog.level, definition.about)
-            .. (upgrade and upgrade.short and "\n" .. upgrade.short or "")
+        local words = definition.name
+        if campaign_dialogue then words = words .. "\n" .. journey.building_about(kind, R.prog.level, definition.about) end
+        return words .. (upgrade and upgrade.short and "\n" .. upgrade.short or "")
     end
 
     local function owes_building() return island.wonder_count(R.island) < journey.earned(R.prog.level) end
@@ -1018,10 +1017,94 @@ function G.bind(R, over)
         end
     end
 
+    local PROJECTS_PER_EPOCH = 4
+    local levels_per_epoch = W.epochs and LEVELS // #W.epochs
+
+    function R.completed_epochs()
+        local _, position = island.next_step(R.island, R.prog.level)
+        local confirmed_or_waived = (position or #island.ladder + 1) - 1
+        return math.min(R.prog.level // levels_per_epoch, confirmed_or_waived // PROJECTS_PER_EPOCH)
+    end
+
+    function R.sync_epoch_regions()
+        if not W.epochs then return end
+        local completed = R.completed_epochs()
+        for z = 1, completed do R.island:unlock(z, R.prog.wallet) end
+        return completed
+    end
+
+    function R.open_epoch(award)
+        R.epoch_award, R.overlay = award, R.OV_EPOCH
+    end
+
+    function R.close_epoch(play)
+        if R.epoch_award then
+            R.prog.epoch_seen = R.epoch_award
+            R.epoch_award = nil
+            R.save_progress()
+        end
+        R.overlay = R.OV_NONE
+        if not play then return end
+        if R.on_menu and R.resume_menu() then return end
+        if R.prog.level < LEVELS then R.play_next()
+        elseif R.completed_epochs() < #W.epochs then R.play_level(LEVELS - 1)
+        else R.on_island = true end
+    end
+
+    function R.show_epoch_award(completed)
+        if completed and completed > (R.prog.epoch_seen or 0) then
+            R.on_island = true
+            local zone = R.island.zones[completed + 1]
+            R.island_focus(zone.marker, R.island.cam.zoom)
+            R.open_epoch(completed)
+            return true
+        end
+    end
+
+    function R.epoch_projects()
+        local p, c = R.prog, R.island
+        local epoch = math.min(#W.epochs, R.completed_epochs() + 1)
+        local projects = {}
+        for i = 1, PROJECTS_PER_EPOCH do
+            local step = island.ladder[(epoch - 1) * PROJECTS_PER_EPOCH + i]
+            local kind = step.kind
+            local project = {id=kind, icon=R.buildings[kind + 1].sprite, state="locked"}
+            local blocked = ladder_blocked(kind, island.owned(c, kind))
+            if blocked == "built" then project.state = "built"
+            elseif not blocked then
+                if island.can_buy(c, p.wallet, p.level, kind) then project.state = "ready"
+                else
+                    local total, filled = 0, 0
+                    local cost = R.buildings[kind + 1].cost
+                    for slot = 1, 3 do
+                        if cost[slot] > 0 then
+                            total = total + 1
+                            filled = filled + math.min(1, p.wallet[slot] / cost[slot])
+                        end
+                    end
+                    project.state = "funding"
+                    if total > 0 then project.progress = filled / total end
+                end
+            end
+            projects[i] = project
+        end
+        return W.epochs[epoch], projects
+    end
+
+    function R.open_project(kind)
+        local item = -1
+        for i, building in ipairs(R.island.items) do
+            if building.type == kind then item = i - 1; break end
+        end
+        R.inspect, R.inspect_item, R.overlay = kind, item, R.OV_WONDER
+    end
+
     function R.town_setup()
         visited_item = nil
         local function visit_for_kind(kind)
-            return journey.visit(R.prog, island.buildings[kind + 1].key)
+            if campaign_dialogue or preview_visits then
+                return journey.visit(R.prog, island.buildings[kind + 1].key)
+            end
         end
         R.town = town.new(R.island, require("town_config"), {
             skin = skin,
@@ -1029,6 +1112,21 @@ function G.bind(R, over)
             notice = R.notice,
             capsules = R.header_capsules,
             pause = function() R.overlay = R.OV_PAUSE end,
+            menu = W.epochs and function(box)
+                local state = ui.hit(box, 0)
+                skin:paint_button(box, state, {role="navigation_pause"})
+                if state.clicked then
+                    haptic.play(haptic.TICK, .6)
+                    R.overlay = R.OV_PAUSE
+                end
+            end,
+            projects = R.epoch_projects,
+            project = R.open_project,
+            project_rim = function(box)
+                if not R.reduced_motion and R.overlay == R.OV_NONE then
+                    R.vfx_ready_rim(box:center(), math.min(box.w, box.h) * .46, R.now)
+                end
+            end,
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function()
                 local _, position = island.next_step(R.island, R.prog.level)
@@ -1058,21 +1156,27 @@ function G.bind(R, over)
                 visited_item = item
                 return R.open_story_choice(visit)
             end,
-            zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
+            zone_ready = W.epochs and function() return false end,
+            zone = not W.epochs and function(z)
+                R.zone_card, R.overlay = z, R.OV_ZONE
+            end,
             can_buy = function(kind) return island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) end,
             suggest = function(kind) return island.island_suggestion(kind) end,
             placed = function(ev, fresh)
                 if fresh then
                     local kind = R.island.items[ev.building + 1].type
-                    journey.placed(R.prog, island.buildings[kind + 1].key)
-                end
-                if fresh and island.purchase_confirmed then
-                    local site = island.purchase_confirmed(R.island, R.island.items[ev.building + 1].type, app.clock())
-                    if site then R.island_focus(site, R.island.cam.zoom) end
+                    if campaign_dialogue then
+                        journey.placed(R.prog, island.buildings[kind + 1].key)
+                    end
+                    if island.purchase_confirmed then
+                        local site = island.purchase_confirmed(R.island, kind, app.clock())
+                        if site then R.island_focus(site, R.island.cam.zoom) end
+                    end
+                    R.show_epoch_award(R.sync_epoch_regions())
                 end
                 for k = 0, 23 do R.vfx_emit(ev.screen - vec2(0, 30), k % 6, false) end
                 R.tone(740)
-                R.save_progress()   -- the building's story beat follows from R.story_tick
+                R.save_progress()
             end,
             bubble_text = function() return R.speech_style(15) end,
             reduced_motion = function() return R.reduced_motion end,
@@ -1137,7 +1241,7 @@ function G.bind(R, over)
         if visit then
             children[#children + 1] = N.button {id="cancel", text="Back to town", height=44, role="link", em=18}
         end
-        R.choice_form = ui.form{root=N.column {panel=true, children=children}}
+        R.choice_form = ui.form{root=N.column {panel=true,children=children}}
         if choices:active() then choices:close(nil, nil, true) end
         assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=not not visit}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
@@ -1174,6 +1278,7 @@ function G.bind(R, over)
     end
 
     function R.next_story(before_level)
+        if not campaign_dialogue then return end
         if before_level == nil then
             local pending = R.prog.pending_answer
             if pending then return answer_beat(pending, "visit") end
@@ -1215,7 +1320,7 @@ function G.bind(R, over)
             end
             if b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
-        if R.quiet or story.active() then return end
+        if not campaign_dialogue or R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
@@ -1253,13 +1358,23 @@ function G.bind(R, over)
             R.prog.wallet[rules.CLEARED] = R.prog.level
         end
         R.island:serialize(s)
-        story.serialize(s)
-        journey.serialize(s, R.prog)
+        if campaign_dialogue then
+            story.serialize(s)
+            journey.serialize(s, R.prog)
+        end
         if save.is_reading(s) then
-            journey.migrate(R.prog, version)
+            if campaign_dialogue then journey.migrate(R.prog, version) end
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
         if R.serialize_campaign then R.serialize_campaign(s) end
+        if W.epochs then
+            local reading = save.is_reading(s)
+            local seen = s:int("epoch_seen", R.prog.epoch_seen or (reading and -1 or 0))
+            if reading then
+                local completed = R.sync_epoch_regions()
+                R.prog.epoch_seen = seen < 0 and completed or num.clampi(seen, 0, completed)
+            end
+        end
     end
     R.serialize = serialize
 
@@ -1293,6 +1408,7 @@ function G.bind(R, over)
         if not R.quiet then
             local l = rules.level_of(R.g)
             R.mission(R.board_lesson and R.board_lesson(R.g) or l.lesson, ("%d. %s"):format(lvl + 1, l.name)); R.present_board()
+            if not campaign_dialogue and lvl == 0 then R.notice(l.lesson) end
         end
         return true
     end
@@ -1307,15 +1423,44 @@ function G.bind(R, over)
         return R.start_level(level)
     end
 
-    -- After the results dialog closes: bank the reward and go build.
+    -- Route first clears to town when a purchase opens or is ready. A shortfall
+    -- can be earned on later boards. Replays always return to town.
+    local function result_destination(first, level, wallet)
+        if not first then return "town" end
+        if level >= LEVELS then return "complete" end
+        local kind, position = island.next_step(R.island, level)
+        if kind and (island.ladder[position].after == level or island.can_buy(R.island, wallet, level, kind)) then
+            return "build"
+        end
+        return "play"
+    end
+
+    function R.result_action(first, reward)
+        local destination = result_destination(first, R.prog.level + (first and 1 or 0), R.prog.wallet + reward)
+        if destination == "play" then return "COLLECT & PLAY NEXT" end
+        if destination == "build" then return W.result.visit end
+        return "COLLECT"
+    end
+
+    -- Bank the reward only after the results dialog closes.
     function R.claim_reward()
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders, R.island)
         if not paid then return end
         if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
         if first and R.g.story_recall then R.prog.story_seen[R.g.story_recall] = true end
         if not app.arg("debug-walkthrough") then R.submit_leaderboard_progress() end
+        local completed = R.sync_epoch_regions()
         R.save_progress()
         R.on_island = true
+        if not campaign_dialogue then
+            if R.show_epoch_award(completed) then return end
+            local destination = result_destination(first, R.prog.level, R.prog.wallet)
+            R.overlay = destination == "complete" and R.OV_COMPLETE or R.OV_NONE
+            if destination == "play" then R.play_next()
+            elseif destination == "build" then R.notice(W.notices.reward_building)
+            elseif not first then R.notice(W.notices.reward_replay) end
+            return
+        end
         R.overlay = first and R.g.story_clear == journey.beats[#journey.beats].key and R.OV_FINALE
             or first and R.prog.level >= rules.LEVELS and R.OV_COMPLETE or R.OV_NONE
         R.notice(first and (journey.wonder_at(R.prog.level) and W.notices.reward_building or W.notices.reward_story) or W.notices.reward_replay)
@@ -1487,9 +1632,19 @@ function G.app(R)
         resume_overlay = R.overlay
         R.on_menu, R.overlay = true, R.OV_NONE
     end
+    function R.resume_menu()
+        R.on_menu = false
+        if resume_overlay == R.OV_RESULT or resume_overlay == R.OV_FAILED then
+            R.overlay = resume_overlay
+            return true
+        end
+    end
     local menu = require("menu.screen").new(W.menu, require("art").menu_backdrop, R.skin, {
         can_visit = function() return not R.on_island and not R.g.won and R.prog.level > 0 end,
-        continue = function() R.on_menu, R.overlay = false, resume_overlay end,
+        continue = function()
+            if W.epochs then R.open_epoch(R.epoch_award)
+            else R.on_menu, R.overlay = false, resume_overlay end
+        end,
         town = function()
             R.on_menu, R.on_island = false, true
         end,
@@ -1567,7 +1722,8 @@ function G.app(R)
         local at_result = drawn_overlay == R.OV_RESULT
         local outcome = at_result or drawn_overlay == R.OV_FAILED
         local revealing = at_result and elements.reveal_holding(R, rules)
-        local clear_due = at_result and not R.quiet and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
+        local clear_due = W.campaign_dialogue and at_result and not R.quiet
+            and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
         local story_wait = talking or revealing or clear_due
         if outcome then
             ui.block(app.bleed())
@@ -1625,15 +1781,19 @@ function G.app(R)
 
     local function init()
         R.font = R.skin:font("lilita")
-        story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
-                                      edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
-                                      portrait_height = .34, centered = true, inward = true,
-                                      edge_to_edge = true, skip = "SKIP"})
         local art = require("art")
-        for ending, path in pairs(art.resident_keepsakes or {}) do
-            local picture = texture.load(path)
-            assert(picture.tex, "missing resident keepsake: " .. path)
-            R.visit_pictures[ending] = picture
+        local dialog = app.arg("dialog")
+        if W.campaign_dialogue or app.arg("story-beat") or app.arg("story-choice") or app.arg("visit-game")
+            or dialog == "intro" or dialog == "adrian" or dialog == "mara" or dialog == "tomas" then
+            story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
+                                          edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
+                                          portrait_height = .34, centered = true, inward = true,
+                                          edge_to_edge = true, skip = "SKIP"})
+            for ending, path in pairs(art.resident_keepsakes or {}) do
+                local picture = texture.load(path)
+                assert(picture.tex, "missing resident keepsake: " .. path)
+                R.visit_pictures[ending] = picture
+            end
         end
         local board_skin = art.skin()
         for _, action in ipairs{"action-build", "action-play", "action-pause"} do
@@ -1665,15 +1825,16 @@ function G.app(R)
         R.island = city.new()
         island.island_setup(R.island)
         R.buildings = R.island.defs   -- with the sprites loaded
+        R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
         R.town_setup()
         R.wonders = {}
         for i = 1, island.WONDERS do R.wonders[i] = R.buildings[wonder_kind(island, i) + 1] end
 
         R.sound, R.reduced_motion = true, false
         R.inspect, R.zone_card = -1, -1
+        R.epoch_award = nil
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
         R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
-        R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
         local loaded
         if not app.arg("smoke") then
             loaded = save.read(R.progress_slot(), R.serialize)
@@ -1694,10 +1855,13 @@ function G.app(R)
         if R.prog.level >= LEVELS then
             R.g.won, R.on_island = true, true
         end
-        if R.prog.story_recap or R.next_story(nil) or journey.next_placement(R.prog) then R.on_island = true end
+        if W.campaign_dialogue and (R.prog.story_recap or R.next_story(nil) or journey.next_placement(R.prog)) then
+            R.on_island = true
+        end
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end
         if W.menu.continue_in_town and R.prog.level > 0 then R.on_island = true end
         if R.resume_completed then R.resume_completed() end
+        if R.overlay == R.OV_NONE and W.epochs then R.show_epoch_award(R.completed_epochs()) end
         R.debug_screens()
         if app.arg("main-menu") or loaded and not R.test_mode and not preview then
             R.open_menu()

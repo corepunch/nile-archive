@@ -11,6 +11,7 @@ R.g = rules.game_start(0, 1)
 check(R.debug_skip_level() and R.g.won and R.overlay == R.OV_RESULT, 'skip opens the normal result')
 check(not R.debug_skip_level(), 'a completed board cannot be skipped twice')
 local expected = rules.level_reward(R.g, R.wonders, R.prog)
+check(R.result_action(true, expected) == R.words.result.visit, 'the first clear opens the first construction')
 R.claim_reward()
 check(R.prog.level == 1 and R.prog.wallet[1] == expected[1], 'first clear grants the normal reward')
 local wallet = R.prog.wallet[1]
@@ -24,17 +25,57 @@ check(R.prog.level == 1 and R.prog.wallet[4] == expected[4], 'replay does not ad
 R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
-local nav, bonus_bounds = R.town.navigation.boxes, R.board_tool_bounds(0)
-for _, button in ipairs{nav.build, nav.levels, nav.pause} do
-    check(math.abs(button.w - bonus_bounds.w) < .01 and math.abs(button.h - bonus_bounds.h) < .01,
-        "the three secondary town buttons match the live bonus control")
+local phase, projects = R.epoch_projects()
+check(phase == R.words.epochs[1] and #projects == 4, "the current phase has four projects")
+check(projects[1].state == "ready" and projects[2].state == "locked", "the earned purchase and a future purchase look different")
+local funded_wallet = R.prog.wallet
+R.prog.wallet = purse(5)
+local _, funding_projects = R.epoch_projects()
+check(funding_projects[1].state == "funding" and funding_projects[1].progress > 0 and funding_projects[1].progress < 1,
+    "an earned project with a shortfall shows its funding progress")
+R.prog.wallet = funded_wallet
+for i, project in ipairs(projects) do
+    local bounds = R.town.project_boxes[project.id]
+    check(project.id == island.ladder[i].kind and bounds:max().x < R.town.buttons.play.x,
+        "projects follow construction order before Play")
 end
-check(nav.play.w == 124 and nav.play.h == 124, "Play keeps its larger target")
+R.open_project(projects[2].id)
+check(R.inspect == projects[2].id and R.inspect_item == -1 and R.overlay == R.OV_WONDER,
+    "a locked project opens its own details")
+R.overlay = R.OV_NONE
 check(R.debug_advance_town() and island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'town action confirms the earned building')
+local _, built_projects = R.epoch_projects()
+check(built_projects[1].state == "built", "the finished project stays on the row in color")
+R.prog.level = 20
+check(R.epoch_projects() == phase, "clearing all twenty boards keeps the phase open while it still has projects")
+check(R.sync_epoch_regions() == 0 and not R.island:zone_open(1), "the first district stays fogged while projects are due")
+R.prog.level = 1
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
 
 local relic = testing.game == "relic-rush"
+if not relic then
+    local theo = R.project_keeper(island.kinds.lumber)
+    check(theo.id == "theo" and theo == R.project_keeper(island.kinds.rink)
+        and theo == R.project_keeper(island.kinds.fir_snowy), 'related projects share Theo’s portrait')
+    for _, step in ipairs(island.ladder) do
+        check(R.project_keeper(step.kind).portrait_path ~= nil, 'each construction has a project portrait')
+    end
+end
+R.prog.story_recap = true
+R.quiet = false
+R.story_tick()
+check(not R.story_current and not story.active(), 'older campaign saves cannot replay their recap')
+R.quiet = true
+R.g = R.make_board(1, 2)
+R.on_island = false
+check(R.debug_skip_level(), 'win an ordinary board')
+check(R.result_action(true, purse()) == "COLLECT & PLAY NEXT", 'an ordinary result offers the next board')
+R.claim_reward()
+check(R.prog.level == 2 and R.g.level == 2 and not R.on_island and R.overlay == R.OV_NONE,
+    'collecting an ordinary win starts the next board directly')
+R.on_island = true
+
 local function reward_piece(g, reward)
     for kind, piece in pairs(g.resource_yields) do
         if piece == reward then return kind end
@@ -133,3 +174,39 @@ check(rules.game_tool(resumed, tool - 1, target, R.pending), 'spend the previous
 R.finish_wave()
 check(R.make_board(next_level, 2).tools[tool] == 0 and R.prog[stock_key][tool] == 0,
     'changing boards cannot recover a spent tool')
+
+-- A player can reach the boundary short of the last purchase. Confirming it
+-- later opens the district once and preserves the epoch on reload.
+R.island = city.new()
+island.island_setup(R.island)
+R.prog = {level=20, seed=1, wallet=purse(99999,99999,99999,20), story_seen={}}
+R.on_island, R.overlay = true, R.OV_NONE
+R.town_setup()
+for _ = 1, 3 do
+    check(island.island_place_next(R.island, R.prog.wallet, 20, 0), 'place an earned project')
+end
+check(R.sync_epoch_regions() == 0 and not R.island:zone_open(1), 'three projects leave the next district fogged')
+check(R.town:begin(island.ladder[4].kind, false) and R.town:confirm(), 'confirm the fourth project after level 20')
+check(R.overlay == R.OV_EPOCH and R.epoch_award == 1 and R.island:zone_open(1),
+    'late fourth purchase presents the award and opens its district')
+R.close_epoch(false)
+R.island.open = R.island.open | (1 << 2)
+check(save.write('epoch-award', R.serialize), 'save the acknowledged award and previously opened land')
+R.island.open, R.prog.epoch_seen = 1, nil
+check(save.read('epoch-award', R.serialize) and R.island:zone_open(2) and R.prog.epoch_seen == 1
+    and not R.show_epoch_award(R.completed_epochs()), 'reload preserves older map access and does not repeat the award')
+R.open_menu()
+R.menu.actions.continue()
+check(R.on_menu and R.overlay == R.OV_EPOCH, 'Continue opens the medal screen over the main menu')
+R.close_epoch(false)
+check(R.on_menu and R.overlay == R.OV_NONE, 'Back on the medal screen returns to the main menu')
+R.menu.actions.continue()
+R.close_epoch(true)
+check(not R.on_menu and not R.on_island and R.g.level == 20, 'Play opens the current phase at the next board')
+check(R.debug_skip_level(), 'win the current board')
+local pending = R.g
+R.open_menu()
+R.menu.actions.continue()
+R.close_epoch(true)
+check(R.overlay == R.OV_RESULT and R.g == pending and R.prog.level == 20,
+    'Play restores an unclaimed result before advancing the campaign')

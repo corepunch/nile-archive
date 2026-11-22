@@ -1,12 +1,10 @@
 -- The sixteen upgrades of docs/CAMPAIGN_DESIGN.md#upgrades, in either game: a
 -- feat (real board events) brings the upgrade, who upgrades the building,
 -- awards a trophy and gives one lasting perk (income in every win, or a tool
--- whose pieces charge one point more), with an arrival scene on the next
--- return to town. The game is the one this process runs (testing.game).
+-- whose pieces charge one point more). The game is testing.game.
 local rules=require("rules")
 local economy=require("economy")
 local island=require("island")
-local journey=require("journey")
 local R=require("state")
 require("main")
 local U=require("user_events_runtime")
@@ -36,9 +34,8 @@ local pick=relic and 1 or 2
 local SLOT={coins=1,food=2,supplies=3}
 
 local saved_prog, saved_island, saved_quiet, saved_story = R.prog, R.island, R.quiet, R.story_current
-local function fresh(read)
+local function fresh()
     R.prog={level=0,seed=1,wallet=purse(),story_seen={},bonus_charge={}}
-    if read then for _,b in ipairs(journey.beats) do R.prog.story_seen[b.key]=true end end
     R.island=city.new();island.island_setup(R.island)
     R.toast=nil
 end
@@ -238,63 +235,18 @@ end
 
 -- The arrival scene plays on the next return to town and never blocks progress.
 do
-    fresh(true)   -- the level story is read: only the upgrades' scenes are due
+    fresh()
     R.quiet=false
     R.overlay=R.OV_NONE
-    R.story_current,R.story_preview=nil,false
     local building=relic and "well" or "arch"
-    local who=U.by_id.man_03.upgrade.keeper
-    local beat={key="upgrade-man_03",phase="upgrade",event="man_03",building="x",
-        lines={{who,"Water for everyone!"},{relic and "sela" or "noelle","Thank you."}}}
-    -- set the authored scene aside to see the fallback, then use a known one
-    local authored={}
-    for i=#journey.upgrades,1,-1 do
-        if journey.upgrades[i].event=="man_03" then table.insert(authored,table.remove(journey.upgrades,i)) end
-    end
-    check(not journey.find_upgrade("man_03"),'the scene is set aside')
-    -- without a scene the arrival is a toast
     place(building)
     local g=R.make_board(0,7)
     g.earnings[2]=500
     U.emit("wave",{g=g,runs={},longest=0})
-    check(R.toast and R.toast:find(U.by_id.man_03.upgrade.title,1,true),'no scene: a toast names the upgrade')
-    -- with one, the scene waits for the town
-    fresh(true);R.toast=nil
-    table.insert(journey.upgrades,beat)
-    place(building)
-    check(journey.next_upgrade(R.prog,R.upgrade_done)==nil,'no scene before the arrival')
-    g=R.make_board(0,7)
-    g.earnings[2]=500
-    U.emit("wave",{g=g,runs={},longest=0})
-    check(R.toast==nil,'a scene replaces the toast')
-    check(journey.next_upgrade(R.prog,R.upgrade_done)==beat,'the scene is due once the upgrade is here')
-    R.on_island=false
-    R.story_tick()
-    check(R.story_current==nil,'the scene waits for the town, not the board')
+    check(R.toast and R.toast:find(U.by_id.man_03.upgrade.title,1,true),'an earned upgrade shows a short notice')
     R.on_island=true
     R.story_tick()
-    check(R.story_current==beat and story.active(),'the arrival scene plays on the return to town')
-    while story.active() do story.next() end
-    R.story_tick()
-    check(R.prog.story_seen[beat.key] and not R.story_current,'the scene is acknowledged and saved')
-    R.story_tick()
-    check(R.story_current==nil,'a seen scene does not repeat')
-    -- seen state persists
-    check(save.write("upgrade-test",journey.serialize and function(s) journey.serialize(s,R.prog) end),'write the seen scene')
-    R.prog.story_seen={}
-    check(save.read("upgrade-test",function(s) journey.serialize(s,R.prog) end),'read the seen scene')
-    check(R.prog.story_seen[beat.key],'a seen upgrade scene is remembered')
-    -- an unseen level beat plays first: an upgrade never holds the story back
-    R.prog.story_seen[beat.key]=nil
-    R.prog.story_seen[journey.beats[1].key]=nil
-    R.prog.level=5
-    R.story_tick()
-    check(R.story_current and R.story_current.phase~="upgrade",'level beats stay ahead of upgrade scenes')
-    while story.active() do story.next() end
-    R.story_current=nil
-    table.remove(journey.upgrades)
-    for _,b in ipairs(authored) do table.insert(journey.upgrades,b) end
-    check(#authored==0 or journey.find_upgrade("man_03"),'the authored scene is back')
+    check(not story.active() and not R.story_current,'upgrades cannot start dialogue on return to town')
     R.on_island=false
 end
 

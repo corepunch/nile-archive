@@ -1,4 +1,21 @@
 {
+  "epoch_medals": {
+    "source": "art/epoch-medals/source.png",
+    "prompt": "art/epoch-medals/prompt.txt",
+    "runtime": "data/city/epochs/medals.png",
+    "cell": [
+      240,
+      240
+    ],
+    "states": [
+      "available",
+      "available",
+      "available",
+      "available",
+      "available",
+      "locked"
+    ]
+  },
   "resident_visit_marker": {
     "buildings": [
       "glassblower",
@@ -205,6 +222,7 @@
     "data/city/buildings/toys.png": "2c24415b9b27dce8ec05b49b540ad8d9aabfb66ab1834604fd64ccca424bd1ad",
     "data/city/buildings/tree.png": "acfd2d54ac76075b9236305b10def2b9018fe662c6852a56b0fffbebce1a30a6",
     "data/city/buildings/wreath_arch.png": "e4aec881d042dd221743ac1e553d9dbe0fb0db8c0302cb16d4f295037f78c093",
+    "data/city/epochs/medals.png": "571018ce9424a1ac386345fdc56138e21c0f226490a54461a3ec3ec8c5fc03e8",
     "data/city/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/city/roads-sandstone.png": "a4da1560f4c0f9f9bce791a4a15399ed99482226558531327b455fec51ed8381",
     "data/city/roads.png": "a9341c19a5e03f829a84601615ccd7f9d3c48f97f0e07372d10bbed435b41373",

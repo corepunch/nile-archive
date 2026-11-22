@@ -1,4 +1,5 @@
--- Use the same town confirmation and story queue that a player sees.
+-- Run the archived town script through the engine's opt-in story mode.
+require('game_config').campaign_dialogue = true
 local R, island, journey = require("state"), require("island"), require("journey")
 require("main")
 R.test_mode, R.quiet, R.overlay, R.on_island = true, false, R.OV_NONE, true
@@ -317,7 +318,7 @@ local function check_recall(side)
         check(lines[#recall.lines + i] == line, "the level remembers the account heard at " .. side)
     end
     if site == "aviary" then
-        check(lines[3][1] == "oren", "the existing flood-watch reply still plays before the portrait")
+        check(lines[3][1] == "oren", "Oren's line still plays before the recalled exchange")
     end
 end
 check(#journey.lines_for(recall, owns_both, {}) == #recall.lines, "the level waits for the pair to meet")

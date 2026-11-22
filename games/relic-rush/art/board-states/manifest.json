@@ -1,4 +1,21 @@
 {
+  "epoch_medals": {
+    "source": "art/epoch-medals/source.png",
+    "prompt": "art/epoch-medals/prompt.txt",
+    "runtime": "data/city/epochs/medals.png",
+    "cell": [
+      240,
+      240
+    ],
+    "states": [
+      "available",
+      "available",
+      "available",
+      "available",
+      "available",
+      "locked"
+    ]
+  },
   "resident_visit_marker": {
     "buildings": ["aviary", "map_room"],
     "renderer": "engine/lua/town/screen.lua \u00b7 story.bubble_shape with town skin and three dots",
@@ -321,6 +338,7 @@
     "data/city/buildings/water_mill.png",
     "data/city/buildings/well.png",
     "data/city/buildings/workshop.png",
+    "data/city/epochs/medals.png",
     "data/city/island.jpg",
     "data/city/roads.png",
     "data/common/fonts/LilitaOne-Regular.ttf",

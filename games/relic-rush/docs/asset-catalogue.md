@@ -15,7 +15,29 @@ Re-encode the source with
 from this game's folder. Reviewed captures at [480 × 900](screenshots/main-menu.jpg)
 and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/main-menu-settings.jpg).
 
+## Epoch medals
+
+The painted medallions show a spring, a mill, a sailboat, a lighthouse and a
+sun fountain. Future epochs use the sixth, a bronze keyhole. Completed
+medals use the original shading with a sepia ink pass. The current medal
+uses the original colors.
+
+- ImageGen originals: [medallion sheet](../art/epoch-medals/source.png),
+  [medallion prompt](../art/epoch-medals/prompt.txt).
+- Runtime: `data/city/epochs/medals.png` (three columns by two rows, 240 px
+  per cell). Run `python3 tools/epoch_medals.py` from the repository root
+  to trim transparent margins and center the medallions.
+- Game capture cases: `shot epoch-window` (480 × 900) and
+  `shot epoch-window-phone` (390 × 844), covering current, completed and
+  locked medals.
+
 ## Construction backdrops
+
+The epoch row uses the registered building sprites as project icons. The shared
+`navigation_project` skin draws a grayscale recess for locked projects, a
+funding gauge or ready trail on earned projects, and the existing green check
+on completed projects. The `epoch-projects`, `epoch-projects-phone` and
+`epoch-next` captures exercise those states and sizes.
 
 The expedition landing is the opening scene. After the player confirms a
 restoration, eligible expeditions show the latest completed site. Replays
@@ -1089,7 +1111,7 @@ The [script](story.md) supplies the spoken lines and both island visits. See the
 
 The building card lists its price and what the building brings side by side as
 the engine's icon-and-figure amounts (the `resource_indicator` prefab). It reuses
-existing art and adds none. `R.building_gets` in `lua/screens.lua` maps each
+existing art and adds none. `R.building_reward` in `lua/screens.lua` maps each
 ladder unlock to its reward. A new piece shows its board art above the currency icon and a plain number. The food and supplies icons use the extra space beside a single digit. A bonus shows its `bonus-<key>` gem alone. Reproduce with
 `./build/relic-rush --headless --mute --fresh --size 390x844 --card 3 --shot out.png`.
 Reviewed in game at 480×900 and 390×844 for a piece (Workshop, Well, Temple), a

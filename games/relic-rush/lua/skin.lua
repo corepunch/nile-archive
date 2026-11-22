@@ -66,6 +66,7 @@ return ui.skin{
                 {fill = "#FFEFBC", radius = 13, inset = 5},
             }},
             variants = {
+                epoch_medal = buttons.epoch_medal(),
                 -- The rule under a popup's title: a thin line threaded through a diamond.
                 popup_rule = {normal = {layers = {
                     {fill = "#C9A464", radius = 1, inset = {0, 6, 0, 6}},
@@ -106,6 +107,7 @@ return ui.skin{
             variants = {
                 popup_close = buttons.navigation("close", nil, close_faces),
                 navigation_build=buttons.navigation("build"),
+                navigation_project = buttons.project(),
                 navigation_play = buttons.navigation("play", {text = "cream", em = 28, text_inset = {45, 0}, text_align = {.5, .45}, text_fit = true}),
                 navigation_pause = buttons.navigation("pause"),
                 flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE

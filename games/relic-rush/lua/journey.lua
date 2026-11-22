@@ -6,16 +6,16 @@
 return require("match3.game").journey{
     beats = require("story_content"),
     wonder_levels = require("campaign").wonder_levels,
-    version = 7,   -- Ancient harbour campaign. Older towns resume with a recap.
+    version = 7,   -- Landfall campaign. Older towns resume with a recap.
     clear_before_result = true,
     recap = {
-        {"sela", "The flood left our quay without drinking water. My daughter and I came back to mend the pipes."},
-        {96, {"oren", "The tide turns my wheel now. Bring Ina's cup down to the fountain."}},
-        {80, {"tavi", "Take the night ebb with Oren. Six families are still waiting for their flour."}},
-        {60, {"sela", "Help me read Mother's pledge. Can the mill give up the spring?"}},
-        {40, {"tavi", "Come to the basin at low tide. The water trapped inside could turn a wheel."}},
-        {16, {"oren", "If you turn the spring back to the quay, how do I grind the grain we owe?"}},
-        {0, {"oren", "Try the hillside well first. The lower quarter still has to fetch every jar."}},
+        {"tavi", "We came ashore with nothing, builder. Build us a town and I'll send the ship for the families."},
+        {96, {"sela", "The families are home. Come and see the new fountain."}},
+        {80, {"oren", "The ship's at sea. My birds are watching for her sails."}},
+        {60, {"sela", "We keep finding old stones with the same word carved on them."}},
+        {40, {"tavi", "Give me a real harbour, builder, and I'll send for the families."}},
+        {16, {"oren", "Somebody built harbour steps here long before us. Where did they all go?"}},
+        {0, {"sela", "There's a spring up in the rocks. Let's start with a well."}},
     },
     regions = {},
     about = {

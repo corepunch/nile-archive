@@ -474,14 +474,15 @@ Results show the banked currencies as `resource_indicator` prefabs in a one-row 
 columns across the dialog, however many currencies the game has. Each is an icon above
 its figure, with no caption because the icon names the resource. The building
 card lists its price and what the building brings with the same element, side
-by side under PRICE and YOU GET captions; while the building is being funded the price group lists what is missing under STILL NEEDED. An entry marked `done` draws the skin's `done_tick` panel (normally `Skin:paint_tick`, the tick a met board goal shows: the skin's `tick` image when registered, else two strokes) in place of its figure. Games may also opt into a results-card next-building block: `R.result_next(building, missing)` returns either the amounts the building still needs after the win, under a `<NAME> STILL NEEDS` caption, or its picture and name under READY TO BUILD (`words.result`). Resource amounts are never written as text. `unit` puts a second icon beside
+by side in one row under PRICE and YOU GET. The price group uses STILL MISSING
+when the wallet falls short. An entry marked `done` uses the skin's
+`done_tick` panel in place of its figure. The reward icon identifies the
+unlocked piece or tool. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
 shows its icon alone, and `label` adds one word under a larger figure only
 for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
-builds the node from a resource record. A game lists what a building brings in
-`R.building_gets(kind)`, which may return a second value to replace the YOU GET
-caption when the gift recurs (Christmas Market's EVERY WISH and EVERY WIN);
-without it the card shows the building's unlock text.
+builds the node from a resource record. The game supplies the building's
+reward through `R.building_reward(kind)`.
 Running copy and captions on parchment use the skin's flat `body` and `caption`
 text styles. The outlined styles are for titles, buttons and figures. Optional content participates in the measured stack only
 when visible, so the Collect button follows the last row. The building shop,
@@ -659,6 +660,22 @@ The engine animation clock supplies one timeline to shared tweens, scroll decele
 
 ## Town bottom navigation
 
+With `bottom.layout = "projects"`, a measured grid shows four project controls
+from the town's `projects()` hook and a fifth control for Play. Stable building
+keys route taps to `project(id)`. The label above the grid names the current
+phase. The `navigation_project` skin shows grayscale recessed art for locked
+projects, a progress gauge while funding, a trail when affordable, and a
+checkmark after construction. Locked project buttons open their details.
+Settings uses the town header's `menu(bounds)` slot.
+
+Continue from the main menu opens the match-3 `OV_EPOCH` medal screen. Its
+read-only grids center three medals above two, with muted artwork for completed
+phases, full color for the current phase and a keyhole for future phases.
+The city's fog follows the saved zone mask. Completing the phase's last
+clear and fourth project opens the next district and shows the medals again.
+
+The medal screen uses the standard match-3 dialog panel and buttons.
+
 `town_config.lua` can opt into `bottom.layout = "play-primary"`: a centered large
 `navigation_play` button flanked by equally sized `navigation_build` and
 `navigation_pause` buttons. `bottom.build` and `bottom.secondary_height` size
@@ -684,8 +701,7 @@ the game has one currency), for example `["coins", "supplies", "food"]`.
 Without the list the row holds them all. Campaign boards center a display-only row of Moves
 and currency capsules. Each capsule identifies its currency slot so matched
 pieces land on its icon. The centered board keeps four boosters and Pause
-in one bottom row. The town's `bottom.pause` option adds Pause to Build,
-Play and Wishes. Play is the largest control. Both surfaces use the same
+in one bottom row. Both surfaces use the same
 [runtime enamel button and painted icon strip](../art/match3-buttons/README.md).
 
 ## Town rail
@@ -720,3 +736,8 @@ the marker boxes for tests.
 scales with it. `bubble.fill` and `bubble.edge` accept named skin colors or hex
 values. The bubble uses the shared transition when it appears and fades away
 on a tap or timeout.
+
+The shared match-3 construction form also accepts a project's keeper. The game
+supplies the name and portrait through `R.project_keeper(kind)`. The form gives
+the portrait its own column beside the building image on cards that have a
+keeper. The purpose, board reward and price stay below the images.

@@ -15,6 +15,21 @@ end
 
 R.currency_icon = currency_icon   -- the citizens' perks on the building card
 
+local keepers = {gifts="noelle", sleigh="noelle", station_kiosk="otis", rink="theo", glassblower="ada"}
+for _, event in ipairs(require("user_events").events) do
+    local upgrade = event.upgrade
+    if upgrade and not keepers[upgrade.building] then keepers[upgrade.building] = upgrade.keeper end
+end
+local cast = {}
+for _, person in ipairs(require("narrative").cast) do cast[person.id] = person end
+
+function R.project_keeper(kind)
+    local building = island.buildings[kind + 1]
+    local id = keepers[building.key] or (building.category == "tree" and "theo")
+    if not id then return end
+    return assert(cast[id], "Unknown project keeper: " .. id)
+end
+
 function R.wallet_icons() return {R.life_art, currency_icon(economy.GOLD), R.hud_art.complete} end
 function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
 
@@ -50,37 +65,22 @@ function R.building_reward(kind)
     if not step then return end
     local unlock = step.unlock
     local bonus = unlock.bonus
-    if bonus then return {id=bonus.key, icon=R.board_art[bonus.icon]} end
+    if bonus then return {id=bonus.key, name=bonus.name, icon=R.board_art[bonus.icon]} end
     local frame = "market-" .. unlock.kind
     local piece = economy.pieces[unlock.kind]
-    return {id=frame, icon=R.board_art[frame], amount=piece.amount, unit=currency_icon(piece.slot)}
+    return {id=frame, name=piece.name, icon=R.board_art[frame], amount=piece.amount, unit=currency_icon(piece.slot)}
 end
 
 R.register_result(function()
-    local spec = rules.level_of(R.g)
     local breakdown = rules.reward_breakdown(R.g, R.wonders, R.prog)
     local reward, first = breakdown.total, breakdown.first
     local resources = {}
     for slot, currency in ipairs(economy.currencies) do
         resources[slot] = {id=currency.name, amount=reward[slot], icon=currency_icon(slot)}
     end
-    -- A first clear's story find, or else the next stall on the ladder: what
-    -- it still needs after this win, or its picture once the wallet covers it.
-    local find = first and spec.story_piece
-    local kind = island.next_step(R.island, first and R.g.level + 1 or R.prog.level)
-    local w = kind and R.buildings[kind + 1]
-    local next_step
-    if find then
-        next_step = {icon=R.board_art["story-" .. find.key], heading="RECOVERED", title=find.name}
-    elseif w then
-        local have, missing = R.prog.wallet + reward, purse()
-        for slot in ipairs(economy.currencies) do missing[slot] = math.max(0, w.cost[slot] - have[slot]) end
-        next_step = R.result_next(w, R.currency_prices(missing))
-    end
     return {
         title=first and "Wish granted!" or "Replay complete",
-        subtitle=("%d. %s"):format(R.g.level + 1, spec.name),
-        resources=resources, next_step=next_step, action="COLLECT",
+        resources=resources, action=R.result_action(first, reward),
     }
 end)
 
@@ -119,7 +119,7 @@ local function guide_icon(box, icon)
     if icon.special then R.draw_match_special({special=icon.special}, at, 48 / (R.HEX_R * 2), 255) end
 end
 local guide_form = match3.guide_form({
-    title = "Market keeper's guide", instructions = "SWIPE OR TAP TWO NEIGHBORING PIECES",
+    title = "Market keeper's guide",
     done = "LET'S MAKE MAGIC",
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))

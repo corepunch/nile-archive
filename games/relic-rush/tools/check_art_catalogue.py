@@ -250,9 +250,9 @@ import sys
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_finale_art.py'), '--check'], check=True)
 subprocess.run([sys.executable, str(ROOT / 'tools/prepare_story.py'), '--check'], check=True)
 cast = manifest['story']['cast']
-narrative = (ROOT / 'lua/narrative.lua').read_text()
+story_cast = (ROOT / 'lua/story_cast.lua').read_text()
 assert cast == {speaker: f'data/{path}' for speaker, path in re.findall(
-    r"\{id='([^']+)'[^\n]*?portrait_path='([^']+)'", narrative)}
+    r"\{id='([^']+)'[^\n]*?portrait_path='([^']+)'", story_cast)}
 declaration = re.search(r'A\.story=\{cast=\{([^}]+)\}', art).group(1)
 assert set(re.findall(r'"([^"]+)"', declaration)) == set(cast)
 assert all(path in shipped for path in cast.values())

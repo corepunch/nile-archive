@@ -115,7 +115,6 @@ function M.restore_saved(c)
 end
 
 local zone_names = {"Harbor glade", "Sunlit coast", "Fern meadow", "Sun garden", "Ancient heights", "Temple ridge"}
-local zone_cleared = {0, 15, 30, 50, 70, 85}   -- boards cleared before each region opens
 local zone_centers = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}
@@ -234,9 +233,9 @@ end
 -- Map, zones, wonders and rules for an engine city.
 function M.island_setup(c)
     c.defs = M.buildings
-    local zones = {}
+    local zones, levels = {}, #require("campaign").levels
     for z = 1, ZONES do
-        zones[z] = {name = zone_names[z], marker = zone_centers[z], needs = purse(0, 0, 0, zone_cleared[z]), cost = purse()}
+        zones[z] = {name = zone_names[z], marker = zone_centers[z], needs = purse(0, 0, 0, (z - 1) * levels // (ZONES - 1)), cost = purse()}
     end
     c.zones = zones
     c.buildable = function(_, p) return M.island_grass(p) end

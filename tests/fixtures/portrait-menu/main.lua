@@ -18,7 +18,7 @@ function desc.init()
         if slot ~= "progress" or not returning then return false end
         if completed then
             R.prog.completed = {level=0, rng=782341, moves=3, score=1200, earnings={40,0,0}}
-            R.prog.story_seen["before-01"] = true
+            R.prog.story_recap = true
         end
         return true
     end)
@@ -42,15 +42,14 @@ function R.smoke()
     frames = frames + 1
     assert(frames < 900, "portrait menu timed out at step " .. stage)
     if R.diving() then return end
+    assert(not story.active() and not R.story_current, "the campaign must never interrupt play with dialogue")
     local menu = R.menu.form
     if stage == 0 then
         if returning then
             if not menu.boxes.settings then return end
-            assert(not story.active() and not R.story_current, "the story must wait for Continue")
             click(menu, "settings")
             stage = 1
         else
-            assert(story.active() and R.story_current.key == "before-01", "the opening scene belongs to the first board")
             stage = 4
         end
     elseif stage == 1 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
@@ -63,6 +62,20 @@ function R.smoke()
     elseif stage == 3 and R.overlay == R.OV_NONE then
         assert(R.on_menu, "closing title settings must return to the title")
         click(menu, "continue")
+        stage = 31
+    elseif stage == 31 and R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        local medal = R.epoch_form.nodes.epoch_top.children[1]
+        app.inject_click(medal.box:center() + vec2(0, R.drop / 2))
+        stage = 32
+    elseif stage == 32 then
+        assert(R.on_menu and R.overlay == R.OV_EPOCH, "the medals are read-only")
+        click(R.epoch_form, "back", true)
+        stage = 33
+    elseif stage == 33 and R.on_menu and R.overlay == R.OV_NONE then
+        click(menu, "continue")
+        stage = 34
+    elseif stage == 34 and R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        click(R.epoch_form, "play", true)
         stage = 4
     elseif stage == 4 and not R.on_menu then
         if completed then
@@ -70,7 +83,6 @@ function R.smoke()
             app.quit()
             return
         end
-        if story.active() then story.next(); return end
         if R.mission_banner or R.phase == R.PH_PRESENT then app.inject_click(app.screen():center()); return end
         assert(not R.on_island and R.g == game and R.g.level == 0, "the campaign resumes on level one")
         app.inject_click(R.board_pause:center())
@@ -81,6 +93,9 @@ function R.smoke()
         stage = 6
     elseif stage == 6 and R.on_menu and menu.boxes.continue then
         click(menu, "continue")
+        stage = 61
+    elseif stage == 61 and R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        click(R.epoch_form, "play", true)
         stage = 7
     elseif stage == 7 and not R.on_menu then
         assert(not R.on_island and R.g == game, "leaving for the title must keep the active board")

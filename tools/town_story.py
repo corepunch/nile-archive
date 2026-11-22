@@ -18,10 +18,10 @@ class Line:
         return '{%s, %s%s}' % (quote(self.speaker), quote(self.text), addressed)
 
 
-def paired_lines(lines, cast, indent):
+def paired_lines(lines, cast, indent, render_line):
     """Show the new pair together on their first line, even in the middle of a level."""
     listener, = cast - {lines[0].speaker}
-    return [indent + line.lua(listener if i == 0 else None) + ',' for i, line in enumerate(lines)]
+    return [indent + render_line(line, listener if i == 0 else None) + ',' for i, line in enumerate(lines)]
 
 
 def speech(body, speakers):
@@ -40,7 +40,7 @@ def single_line(body, speakers):
     return lines[0]
 
 
-def meeting_questions(blocks, sites, key, visits, residents, speakers):
+def meeting_questions(blocks, sites, key, visits, residents, speakers, render_line):
     """Link the two accounts after reading both, so either can be written first."""
     questions = {}
     for site, source, label, body in zip(blocks[1::4], blocks[2::4], blocks[3::4], blocks[4::4]):
@@ -60,12 +60,12 @@ def meeting_questions(blocks, sites, key, visits, residents, speakers):
             fields = ', source=%s, heard_any={%s}' % (quote(residents[source][0]), ', '.join(heard))
         output.append('        {key=%s, building=%s, when=%s, topic="meeting"%s, label=%s, lines={' %
                       (quote(answer_key), quote(site), quote(key), fields, quote(label)))
-        output.extend('            ' + line.lua() + ',' for line in lines)
+        output.extend('            ' + render_line(line) + ',' for line in lines)
         output.append('        }},')
     return output
 
 
-def recall_questions(blocks, sites, checkpoint, residents, speakers):
+def recall_questions(blocks, sites, checkpoint, residents, speakers, render_line):
     homes = blocks[1::3]
     assert sorted(homes) == sorted(sites), f'{checkpoint}: write one final question at each home'
     output = []
@@ -75,7 +75,7 @@ def recall_questions(blocks, sites, checkpoint, residents, speakers):
         assert any(line.speaker == speakers[residents[site][0]] for line in lines), label
         output.append('        {key=%s, building=%s, when=%s, topic="recall", label=%s, lines={' %
                       (quote(checkpoint + '.' + site), quote(site), quote(checkpoint), quote(label)))
-        output.extend('            ' + line.lua() + ',' for line in lines)
+        output.extend('            ' + render_line(line) + ',' for line in lines)
         if len(parts) > 1:
             other, reply = parts[1:]
             alternate = speech(reply, speakers)
@@ -84,12 +84,12 @@ def recall_questions(blocks, sites, checkpoint, residents, speakers):
             output.append('        }, replies={')
             for index, line in enumerate(alternate, 1):
                 output.append('            {index=%d, building=%s, when=%s, line=%s},' %
-                              (index, quote(other), quote(checkpoint + '.' + other), line.lua()))
+                              (index, quote(other), quote(checkpoint + '.' + other), render_line(line)))
         output.append('        }},')
     return output
 
 
-def compile_recall(body, sites, meeting, cast, speakers, level_beat, residents):
+def compile_recall(body, sites, meeting, cast, speakers, level_beat, residents, render_line):
     body, *catchup = re.split(r'^\*\*Catch up in town\*\*$', body, flags=re.M)
     parts = re.split(r'^\*\*Heard ([a-z_]+)\*\*$', body, flags=re.M)
     histories = parts[1::2]
@@ -102,7 +102,7 @@ def compile_recall(body, sites, meeting, cast, speakers, level_beat, residents):
         assert {line.speaker for line in lines} == cast, f'{meeting}: both residents must speak in {history}'
         assert len(level_beat['lines']) + len(lines) <= 48, f'{meeting}: {history} exceeds the dialogue queue'
         output.append('        [%s]={' % quote(history))
-        output.extend(paired_lines(lines, cast, '            '))
+        output.extend(paired_lines(lines, cast, '            ', render_line))
         output.append('        },')
     if catchup:
         town, = catchup
@@ -110,14 +110,14 @@ def compile_recall(body, sites, meeting, cast, speakers, level_beat, residents):
         lines = speech(blocks[0], speakers)
         assert {line.speaker for line in lines} == cast, checkpoint
         output.append('    }, lines={')
-        output.extend(paired_lines(lines, cast, '        '))
+        output.extend(paired_lines(lines, cast, '        ', render_line))
         output.append('    }, followups={')
-        output.extend(recall_questions(blocks, sites, checkpoint, residents, speakers))
+        output.extend(recall_questions(blocks, sites, checkpoint, residents, speakers, render_line))
     output.append('    }}')
     return '\n'.join(output)
 
 
-def compile_town(source, beats, speakers):
+def compile_town(source, beats, speakers, *, render_line=Line.lua):
     by_key = {beat['key']: beat for beat in beats}
     purchases, callbacks, residents, visits = {}, {}, {}, {}
     meetings = {}
@@ -178,7 +178,7 @@ def compile_town(source, beats, speakers):
             fields = ', resident=%s, invitation=%s' % (quote(speaker), quote(invitation))
         output.append('    {key=%s, phase="placed", building=%s%s, lines={' %
                       (quote(key), quote(building), fields))
-        output.extend('        ' + line.lua() + ',' for line in lines)
+        output.extend('        ' + render_line(line) + ',' for line in lines)
         output.append('    }},')
 
     answers = {}
@@ -193,7 +193,7 @@ def compile_town(source, beats, speakers):
                 answers[site, checkpoint, topic] = (answer_key, level)
                 output.append('        {key=%s, topic=%s, label=%s, lines={' %
                               (quote(answer_key), quote(topic), quote(label)))
-                output.extend('            ' + line.lua() + ',' for line in lines)
+                output.extend('            ' + render_line(line) + ',' for line in lines)
                 output.append('        }},')
             output.append('    }},')
 
@@ -216,10 +216,10 @@ def compile_town(source, beats, speakers):
             assert target not in recalls, f'{target}: two meetings share a recall'
             assert {site for site, source in zip(followups[1::4], followups[2::4]) if not source} == set(sites), \
                 f'{key}: both residents need a first account'
-            recalls[target] = compile_recall(exchange, sites, key, cast, speakers, by_key[target], residents)
+            recalls[target] = compile_recall(exchange, sites, key, cast, speakers, by_key[target], residents, render_line)
         output.append('    {key=%s, phase="meeting", sites={%s}, level=%d, lines={' %
                       (quote(key), ', '.join(map(quote, sites)), level))
-        output.extend('        ' + line.lua() + ',' for line in lines)
+        output.extend('        ' + render_line(line) + ',' for line in lines)
         if len(parts) > 1:
             output.append('    }, replies={')
             targets = set()
@@ -234,19 +234,19 @@ def compile_town(source, beats, speakers):
                 assert (index, answer) not in targets, f'{key}: duplicate conditional line'
                 targets.add((index, answer))
                 output.append('        {index=%d, building=%s, when=%s, line=%s},' %
-                              (index, quote(site), quote(answer), line.lua()))
+                              (index, quote(site), quote(answer), render_line(line)))
         if len(followups) > 1:
             output.append('    }, followups={')
-            output.extend(meeting_questions(followups, sites, key, visits, residents, speakers))
+            output.extend(meeting_questions(followups, sites, key, visits, residents, speakers, render_line))
         output.append('    }},')
 
-    fields = compile_replies(callbacks, by_key, introductions, answers)
+    fields = compile_replies(callbacks, by_key, introductions, answers, render_line)
     for target, recall in recalls.items():
         fields[target] = fields.get(target, '') + recall
     return fields, output
 
 
-def compile_replies(callbacks, beats, introductions, answers):
+def compile_replies(callbacks, beats, introductions, answers, render_line):
     """Resolve author-facing references once. First eligible reply wins for each line."""
     replies = {}
     for (beat, index), (site, default, branches) in callbacks.items():
@@ -268,6 +268,6 @@ def compile_replies(callbacks, beats, introductions, answers):
             assert level < beats[beat]['level'], f'{beat}: {condition!r} must precede the reply'
             assert key not in conditions and line.speaker == default.speaker, f'{beat}: conflicting reply for {condition!r}'
             conditions.add(key)
-            rules.append('        {%s, when=%s, line=%s},' % (fields, quote(key), line.lua()))
-        rules.append('        {%s, line=%s},' % (fields, default.lua()))
+            rules.append('        {%s, when=%s, line=%s},' % (fields, quote(key), render_line(line)))
+        rules.append('        {%s, line=%s},' % (fields, render_line(default)))
     return {beat: ', replies={\n' + '\n'.join(rules) + '\n    }' for beat, rules in replies.items()}

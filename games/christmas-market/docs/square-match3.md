@@ -11,7 +11,7 @@ Christmas Market and Relic Rush.
 
 In an Xcode Debug build for iPhone, the iOS Simulator or macOS, **SKIP >>** runs the
 reference bot through legal swaps at up to two moves per frame. It can keep
-playing after the move counter reaches zero. The normal reward and story follow.
+playing after the move counter reaches zero. The normal results card follows.
 
 ## Line gems and rainbow gems
 
@@ -47,9 +47,11 @@ Reduce Motion hides the trail.
 
 ## Build
 
-The lower-left Build button opens the next purchase. The card shows the
-price or the amounts still needed. The particle trail runs when the level
-gate and resource price are met. Open placement from the card, choose a
+First Advent through Fourth Advent and Christmas each have four projects.
+The bottom row shows those projects followed by Play, and advances when the
+current phase's levels and projects are complete. Tap any project to see its
+keeper, board reward, price and requirements. A particle trail circles it when
+its level requirement and price are met. Open placement from the card, choose a
 site, then confirm to pay once. The card links to the decoration shop.
 After level 100, a pending purchase can offer a replay for resources.
 
@@ -166,12 +168,11 @@ build/test/all --suite=christmas-market 'shot pieces-board' 'shot phone-pieces-b
 
 Sixteen stalls earn an upgrade, after Cradle of Rome 2's citizens `man_01` to `man_16`
 ([the table](../../../docs/CAMPAIGN_DESIGN.md#upgrades-romes-citizens-kept-by-the-cast-we-know)): a second oven at
-the Gingerbread bakery (Agnes), a second furnace at the Glassblower's stall (Theo), a star for the Christmas tree
+the Gingerbread bakery (Agnes), a second furnace at the Glassblower's stall (Ada), a star for the Christmas tree
 (Theo) and so on, each kept by a character who already runs it. The Station kiosk, Gift wrapping pavilion, Winter
 skating rink and Santa's sleigh have none. [`lua/user_events.lua`](../lua/user_events.lua) holds the feats and perks
 (Tokens, Treats and Materials in every win, or a tool that charges one point more per match); the runtime is the
 engine's ([`match3/user_events.lua`](../../../engine/lua/match3/user_events.lua)), wired in by
 `lua/user_events_runtime.lua`. Placing the stall arms the feat; meeting it upgrades the stall and adds the perk.
 The income shows in the results card's totals like the carousel's. The stall's card shows the feat, then
-"Upgraded: ..." with the perk. The keeper's scene is the upgrade's entry in `docs/story.md` under `## Upgrades`,
-played on the next return to market (a toast if it is missing).
+"Upgraded: ..." with the perk. An upgrade displays a brief notice when earned.

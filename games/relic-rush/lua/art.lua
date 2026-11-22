@@ -3,6 +3,7 @@
 local buttons = require("match3.buttons")
 local economy = require("economy")
 local A = {}
+A.epoch_medals = "city/epochs/medals.png"
 A.menu_backdrop = "menu/valley.jpg"
 A.resident_keepsakes = {["meeting-map_room-aviary.after-92"]="story/scenes/ina-first-crossing.jpg"}
 A.board_backdrops = {[economy.opening_backdrop] = "board/backs/" .. economy.opening_backdrop .. ".jpg"}
@@ -103,7 +104,8 @@ function A.draw_hud_catalogue(R)
     for row,role in ipairs{"navigation_build","navigation_play","navigation_pause","popup_close"} do
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
-            R.skin:paint_button(rect(28+(i-1)*89,495+(row-1)*82,72,72),st,{role=role})
+            local skin = role == "popup_close" and R.skin.popup or R.skin
+            skin:paint_button(rect(28+(i-1)*89,495+(row-1)*82,72,72),st,{role=role})
         end
     end
 end
