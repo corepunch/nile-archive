@@ -423,12 +423,15 @@ for order, first_home in ipairs(meeting.sites) do
     local other_home = meeting.sites[3-order]
     for _, home in ipairs(meeting.sites) do
         settle_other_questions(home)
+        check(not journey.visit_keepsake(R.prog, journey.visit(R.prog, home)), "the shared scene alone cannot display the ending")
         check(#menu(home) == 1 and menu(home)[1].key == outcome.key .. "." .. home
             and R.town.hooks.unheard_visit(island.kinds[home]), "the saved exchange lights both roofs")
     end
     ask_meeting_question(first_home, outcome.key .. "." .. first_home)
     check(R.story_lines(R.story_current) == R.story_current.lines, "first resident gives their own account")
     finish_answer()
+    check(journey.visit_keepsake(R.prog, journey.visit(R.prog, first_home)) == outcome.key
+        and not journey.visit_keepsake(R.prog, journey.visit(R.prog, other_home)), "the picture belongs to the resident whose ending was heard")
     check(#menu(first_home) == 0 and #menu(other_home) == 1, "asking at one home leaves the other account available")
     ask_meeting_question(other_home, outcome.key .. "." .. other_home)
     local pending = R.prog.pending_answer
@@ -437,6 +440,8 @@ for order, first_home in ipairs(meeting.sites) do
     R.story_current, R.prog = nil, {level=100}
     save.read("interrupted-ending", function(s) journey.serialize(s, R.prog) end)
     local resumed = R.next_story(nil)
+    check(journey.visit_keepsake(R.prog, journey.visit(R.prog, first_home)) == outcome.key
+        and not journey.visit_keepsake(R.prog, journey.visit(R.prog, other_home)), "reload restores the picture only for a finished answer")
     check(resumed.key == pending.key and #menu(other_home) == 0, "returning to town resumes the selected last question")
     R.queue_story(resumed)
     local spoken = R.story_lines(resumed)
@@ -446,6 +451,7 @@ for order, first_home in ipairs(meeting.sites) do
     finish_answer()
     R.prog.story_seen["after-100"] = true
     for _, home in ipairs(meeting.sites) do
+        check(journey.visit_keepsake(R.prog, journey.visit(R.prog, home)) == outcome.key, "both homes keep the picture after the finale")
         for _, answer in ipairs(menu(home)) do check(answer.topic ~= "recall", "the ending stays heard at a later stage") end
     end
 end

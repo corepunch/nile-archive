@@ -33,7 +33,7 @@
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
 --   unheard_visit(kind)     whether this building type has a new resident conversation
 --   tap_building(item)      true if the game handled a tap on this placed building
---   about(item)             the bubble's words for a placed building (0-based item)
+--   about(item)             building description and optional illustration (0-based item)
 --   zone(z)                 a closed region's marker or land was tapped
 --   event(ev)               any other city event (BUILT, BLOCKED, ...)
 --   can_buy(kind)           may a new building of this kind be bought now
@@ -103,7 +103,7 @@ T.color = rgba
 -- as an outline, since the skins carry one weight per font), then the subtitle.
 -- The town config can choose the skin's text and color palettes.
 local TITLE_SCALE = 1.3
-local function bubble_draw(tip, utf8, sub, fill, edge, max_width, title_style)
+local function bubble_draw(tip, utf8, sub, fill, edge, max_width, title_style, picture, screen)
     local title, rest = utf8:match("^([^\n]*)\n(.*)$")
     if not title then
         story.bubble(tip, utf8, sub, fill, edge, max_width, story.SPEECH)
@@ -115,7 +115,11 @@ local function bubble_draw(tip, utf8, sub, fill, edge, max_width, title_style)
     local inner = max_width - 2 * pad
     local a, b = text.box_size(head, inner, title), text.box_size(sub, inner, rest)
     local size = size2(math.max(a.w, b.w) + 2 * pad, a.h + gap + b.h + top + vpad)
-    local screen = app.screen()
+    local art
+    if picture then
+        art = rect(0, 0, inner, math.min(208, screen.h * .34)):fit(texture.size(picture))
+        size = size2(math.max(size.w, art.w + 2 * pad), size.h + art.h + gap * 2)
+    end
     local box = rect.anchor(tip - vec2(0, 22), size, vec2(.5, 1))
     local margin = 8
     if rect.pos(box).y < rect.pos(screen).y + margin then box = rect.anchor(tip + vec2(0, 22), size, vec2(.5, 0)) end
@@ -124,6 +128,9 @@ local function bubble_draw(tip, utf8, sub, fill, edge, max_width, title_style)
     story.bubble_shape(box, tip, fill, edge, story.SPEECH)
     local inside = rect.make(rect.pos(box) + vec2(pad, top), size2(size.w - 2 * pad, size.h - top - vpad))
     text.box(head, inside:top(a.h), vec2(.5, .5), title)
+    if art then
+        gfx.image(picture, rect(inside:center().x - art.w / 2, inside.y + a.h + gap, art.w, art.h), color.WHITE)
+    end
     text.box(sub, inside:bottom(b.h), vec2(.5, .5), rest)
 end
 
@@ -247,12 +254,13 @@ end
 
 -- A word bubble over a placed building (0-based item).
 function View:say(item, text, seconds)
-    text = text or (self.hooks.about and self.hooks.about(item))
+    local picture
+    if not text and self.hooks.about then text, picture = self.hooks.about(item) end
     if not text or text == "" then self:dismiss_bubble(); return end
     local s = seconds or self.cfg.bubble.seconds
     local instant = self.hooks.reduced_motion and self.hooks.reduced_motion()
         or (app.arg("shot") and not app.arg("reel"))
-    self.bubble = {item = item, text = text, left = s > 0 and s or nil, motion=ui.popup_motion(instant)}
+    self.bubble = {item = item, text = text, picture = picture, left = s > 0 and s or nil, motion=ui.popup_motion(instant)}
 end
 
 function View:dismiss_bubble()
@@ -598,10 +606,15 @@ function View:frame(inp, dt, active)
         local style = bubble.text and skin:text(bubble.text, em)
             or h.bubble_text and h.bubble_text() or skin:text(self.cfg.markers.text, 15)
         local title = bubble.title and skin:text(bubble.title, (bubble.text and em or style.size) * TITLE_SCALE)
+        local screen = app.screen()
+        if b.picture then
+            local top = screen.y + (self.cfg.header.band_height or self.cfg.header.height)
+            screen = rect(screen.x, top, screen.w, self.bottom_row.y - top)
+        end
         gfx.clip(view)
         b.motion:paint(function()
             bubble_draw(sprite:point(vec2(.5, .08)), b.text, style, skin:color(bubble.fill), skin:color(bubble.edge),
-                        bubble.width, title)
+                        bubble.width, title, b.picture, screen)
         end, {floating=true})
         gfx.unclip()
     end

@@ -999,7 +999,27 @@ function G.bind(R, over)
         return false
     end
 
+    R.visit_pictures = {}
+    local function visit_picture(visit)
+        return R.visit_pictures[journey.visit_keepsake(R.prog, visit)]
+    end
+
+    local visited_item
+    local function show_visit_keepsake(visit)
+        if not R.on_island or not visit_picture(visit) then return end
+        local kind = island.kinds[visit.building]
+        if visited_item and visited_item < R.island.count and R.island.items[visited_item + 1].type == kind then
+            R.town:say(visited_item)
+            return
+        end
+        -- The answer may have resumed from a save without a tap in this session.
+        for i = 1, R.island.count do
+            if R.island.items[i].type == kind then R.town:say(i - 1); return end
+        end
+    end
+
     function R.town_setup()
+        visited_item = nil
         local function visit_for_kind(kind)
             return journey.visit(R.prog, island.buildings[kind + 1].key)
         end
@@ -1025,13 +1045,17 @@ function G.bind(R, over)
                 end
             end,
             play = R.play_next,
-            about = R.building_words,
+            about = function(item)
+                local kind = R.island.items[item + 1].type
+                return R.building_words(item), visit_picture(visit_for_kind(kind))
+            end,
             unheard_visit = function(kind)
                 return journey.unheard_visit(R.prog, visit_for_kind(kind))
             end,
             tap_building = function(item)
                 local visit = visit_for_kind(R.island.items[item + 1].type)
                 if not visit then return false end
+                visited_item = item
                 return R.open_story_choice(visit)
             end,
             zone = function(z) R.zone_card, R.overlay = z, R.OV_ZONE end,
@@ -1097,7 +1121,7 @@ function G.bind(R, over)
 
     function R.open_story_choice(beat, preview, entry)
         local continuing_visit = entry == "continue"
-        local visit = beat.phase == "visit"
+        local visit = beat.phase == "visit" and beat
         if visit then beat = journey.visit_menu(R.prog, beat) end
         if #beat.choices == 0 then return false end
         if visit and not continuing_visit and #beat.choices == 1 then
@@ -1105,6 +1129,8 @@ function G.bind(R, over)
             return true
         end
         local children = {match3.popup_header(beat.prompt)}
+        local picture = visit and visit_picture(visit)
+        if picture then children[#children + 1] = N.image {id="keepsake", image=picture, height=152} end
         for index, option in ipairs(beat.choices) do
             children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
         end
@@ -1113,7 +1139,7 @@ function G.bind(R, over)
         end
         R.choice_form = ui.form{root=N.column {panel=true, children=children}}
         if choices:active() then choices:close(nil, nil, true) end
-        assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=visit}))
+        assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=not not visit}))
         R.story_choice_beat, R.story_choice_preview = beat, preview
         R.overlay = R.OV_STORY_CHOICE
         return true
@@ -1182,7 +1208,10 @@ function G.bind(R, over)
             R.save_progress()
             if b.phase == "visit" then
                 local visit = journey.visit_after_answer(R.prog, b.key)
-                if visit and R.open_story_choice(visit, false, "continue") then return end
+                if visit then
+                    if R.open_story_choice(visit, false, "continue") then return end
+                    show_visit_keepsake(visit)
+                end
             end
             if b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
@@ -1601,6 +1630,11 @@ function G.app(R)
                                       portrait_height = .34, centered = true, inward = true,
                                       edge_to_edge = true, skip = "SKIP"})
         local art = require("art")
+        for ending, path in pairs(art.resident_keepsakes or {}) do
+            local picture = texture.load(path)
+            assert(picture.tex, "missing resident keepsake: " .. path)
+            R.visit_pictures[ending] = picture
+        end
         local board_skin = art.skin()
         for _, action in ipairs{"action-build", "action-play", "action-pause"} do
             R.skin.images[action] = assert(board_skin[action], "missing campaign icon: " .. action)

@@ -225,7 +225,8 @@
     "data/story/characters/wren.png": "4a1369fe8ac249af84ced5fa50bbe4c4eb1643c652aa0a1216163a6a6d218743",
     "data/story/floors/last-train.jpg": "6ab848dc7e192cfbd41f6988d082e7835a1b2158704d09f40385b239e9e00926",
     "data/story/floors/telegram.jpg": "a46376e609ce500b723e16256f94cadb9783abaf4972f8d05437f462b822be7c",
-    "data/story/floors/wish-ribbon.jpg": "c5073a610b2ba986a4bdf24358f37a3e4d7a1d9f539b6d10213dc6a47e4e565c"
+    "data/story/floors/wish-ribbon.jpg": "c5073a610b2ba986a4bdf24358f37a3e4d7a1d9f539b6d10213dc6a47e4e565c",
+    "data/story/scenes/pips-blue-button.jpg": "b16ce98a8b20db8ea8d62ebbac5136bd20136f8b9ce72bbe60f70ecbedee13e1"
   },
   "matching_rules": "Rows and columns: straight lines of three or more clear. Four in a line leave a line gem of that color and five a rainbow gem; boosters and tools add the rest.",
   "particle_sprites": {

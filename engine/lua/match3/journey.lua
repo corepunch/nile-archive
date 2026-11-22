@@ -92,6 +92,13 @@ local function new(content)
         return M.visit(p, answer_sites[key])
     end
 
+    -- The completed answer is the receipt, including in saves from before the artwork.
+    function M.visit_keepsake(p, visit)
+        for _, answer in ipairs(visit_options[visit] or {}) do
+            if answer.topic == "recall" and p.story_seen[answer.key] then return answer.when end
+        end
+    end
+
     local function available(p, answer)
         if p.story_seen[answer.key] or p.pending_answer == answer then return false end
         if answer.when and not p.story_seen[answer.when] then return false end

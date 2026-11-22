@@ -137,7 +137,9 @@ can be asked once. Asking it removes it from the menu
 and saves the pending answer. On returning to town, an interrupted answer plays again
 without another selection. Finishing it or pressing Skip records the memory and unlocks
 any related questions. When all questions are gone, tapping the building shows its
-description. Existing saves keep their heard answers and can unlock new replies.
+description. A game can associate a recall key with a painting in `art.resident_keepsakes`.
+The completed closing answer displays the painting at that home, alongside the remaining
+questions or inside the building description. Existing saves use the same answer record.
 
 Preview the ordinary reply with `--story-beat after-91 --story-built --story-line 2`.
 Add `--story-asked` for the first conditional reply at or after that line, or

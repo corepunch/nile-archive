@@ -181,7 +181,7 @@ Lio Valez moves down from the hills when the Great Aviary opens. He returns on e
 
 Once Lio and Nera have both moved in, he asks her to draw his parrot for his sister. If Mara asked Nera whether she draws for fun, Lio hears about Mara’s portrait and offers his own grin.
 
-At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still. On the flood watch at 92, Lio offers to draw Nera for his sister. Their exchange remembers whose account of the portrait Mara heard. Both homes offer one last question after the flood watch. Lio tells Mara where his sister hung the drawings. Nera tells her where to look for the missing pencil.
+At the Great Aviary, ask Lio what his sister thought of the portrait. At the Cartographer’s House, ask Nera how she got the pair to sit still. On the flood watch at 92, Lio offers to draw Nera for his sister. Their exchange remembers whose account of the portrait Mara heard. Both homes offer one last question after the flood watch. Lio tells Mara where his sister hung the drawings. Nera tells her where to look for the missing pencil. Hearing either closing answer lets you see the two sketches facing each other when you visit that resident.
 
 Bring Lio’s account of his sister to Nera, or ask Lio about the ear Nera kept redrawing. Either exchange gives Mara something she can take back to the other resident.
 

@@ -138,7 +138,7 @@ Ada Pike arrives from across the lake when the Glassblower’s stall opens. She 
 
 Once Otis and Ada have both moved in, a lost draughts button gives them an excuse for a game. Ask Otis why he keeps the dent in his tin and he tells Ada what it means to him.
 
-At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move. After Pip’s telegram at 85, Ada and Otis lend him their game while he waits for his mum. Their exchange remembers whose account of the first game Pip heard. After the pair lend Pip their tin lid, both homes offer one last question. Ada explains how Pip won the game. Otis tells Noelle what happened when he tried to coach.
+At the Station Kiosk, ask Otis how the first game went. At the Glassblower’s Stall, ask Ada about her blue button and the winning move. After Pip’s telegram at 85, Ada and Otis lend him their game while he waits for his mum. Their exchange remembers whose account of the first game Pip heard. After the pair lend Pip their tin lid, both homes offer one last question. Ada explains how Pip won the game. Otis tells Noelle what happened when he tried to coach. Hearing either closing answer lets you see the blue glass button in Pip’s mitten when you visit that resident.
 
 Pip can ask Ada whether Otis left the double jump on purpose, or ask Otis what Ada’s two pings sounded like from his end of the board. Either answer gives Pip a reason to walk back.
 

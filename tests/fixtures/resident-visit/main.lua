@@ -12,6 +12,8 @@ local first = "placed-" .. site
 local meeting = app.arg("visit-meeting") and assert(journey.find(app.arg("visit-meeting")))
 local ending = app.arg("visit-ending") and assert(journey.find(stage).recall)
 local full_menu = app.arg("visit-full-menu")
+local keepsake = app.arg("visit-keepsake")
+local several = full_menu or keepsake == "choices"
 local heard_at = app.arg("heard-at")
 local selected
 
@@ -37,24 +39,24 @@ function desc.init()
             position = math.max(position, island.ladder_position[island.kinds[home]])
             R.prog.story_seen["placed-" .. home] = true
         end
-        if full_menu then
+        if several then
             for _, beat in ipairs(journey.beats) do
                 if beat.level <= journey.find(stage).level then R.prog.story_seen[beat.key] = true end
             end
         end
         R.prog.story_seen[stage] = true
-        if not full_menu then
+        if not several then
             for _, answer in ipairs(journey.visit(R.prog, site).choices) do R.prog.story_seen[answer.key] = true end
         end
         journey.acknowledge(R.prog, meeting)
         if ending then
-            if not full_menu then
+            if not several then
                 for _, answer in ipairs(meeting.followups) do R.prog.story_seen[answer.key] = true end
             end
             journey.acknowledge(R.prog, ending)
         end
         if heard_at then
-            local source = full_menu and meeting or ending or meeting
+            local source = several and meeting or ending or meeting
             R.prog.story_seen[source.key .. "." .. heard_at] = true
         end
     end
@@ -101,12 +103,44 @@ local function remaining_question(index)
     assert(R.choice_form.boxes.cancel, "the player can leave the visit")
 end
 
+local function keepsake_visit()
+    local choices = keepsake == "choices"
+    local key = ending.key .. "." .. site
+    if tick == 52 then
+        if choices then
+            assert(not R.choice_form.boxes.keepsake, "no picture before the ending")
+            for i, answer in ipairs(R.story_choice_beat.choices) do
+                if answer.key == key then select_question(tostring(i)); break end
+            end
+        else direct_answer(key) end
+    elseif tick == 80 then
+        direct_answer(key)
+        while story.active() do story.next() end
+    elseif tick == 110 or tick == 175 then
+        assert(R.prog.story_seen[key] and not story.active(), "a completed ending stays heard")
+        if choices then
+            local box = assert(R.choice_form.boxes.keepsake)
+            assert(box.h >= 100 and box.y + box.h <= R.choice_form.boxes["1"].y, "picture fits above the questions")
+            assert(R.town.hooks.unheard_visit(kind) and #R.story_choice_beat.choices == 4)
+            if tick == 110 then select_question("cancel") end
+        else
+            assert(R.overlay == R.OV_NONE and not R.town.hooks.unheard_visit(kind), "the picture adds no question or marker")
+            local b = assert(R.town.bubble)
+            assert(b.item == item - 1 and b.picture and b.picture.w > 0, "this home displays the keepsake in town")
+        end
+    elseif tick == 140 then
+        if choices then tap_marker() else tap() end
+    end
+end
+
 function desc.frame(dt)
     tick = tick + 1
     if meeting then
         if tick == 30 then
             assert(R.town.hooks.unheard_visit(kind), "the meeting restores the marker")
             if ending then tap_marker() else tap() end
+        elseif keepsake then
+            keepsake_visit()
         elseif full_menu then
             if tick == 52 then
                 assert(R.story_choice_beat and #R.story_choice_beat.choices == 5, "all five distinct questions fit in one visit")

@@ -10,6 +10,7 @@ The player changes these stories by building a home, listening at it, and taking
 | Hear each side | His sister recognizes Lio’s bitten ear. Nera explains why she kept drawing it. Take either detail to the other home. | Ada wins with a double jump. Otis taught her the move. Take either account to the other home. |
 | Meet again at a level | On flood watch at 92, Lio offers to draw Nera. | After Pip’s telegram at 85, Ada and Otis give him a game while he waits. |
 | Find out how it ended | His sister hangs the portraits facing each other. Nera is hunting for the pencil behind her ear. | Pip wins Ada’s blue button with a trap. Otis lets him play it unaided. |
+| Revisit the finished story | See the two pencil sketches facing one another at each home whose closing answer you heard. | See the four-hole blue glass button in Pip’s mitten at each home whose closing answer you heard. |
 
 ## Visit flow
 
