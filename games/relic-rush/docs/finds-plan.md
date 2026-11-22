@@ -8,7 +8,7 @@ This follows June's Journey, which tells its whole story in its scenes and none 
 
 - **Levels carry the story.** They play in the same order for everyone, so the story can't arrive out of order. Most levels have a find: something the dig turns up, a line before the board about what they're digging for, and a reaction after about what it means.
 - **Buildings carry the montage.** A building changes what turns up on the boards (water buckets, timber, tools, and later rings, scarabs and harps). Placing one plays no scene. The Build button already shows the next purchase and its price.
-- **The town gets tutorial lines, not story.** June's Journey teaches its island through a character's small wish: Mrs. Talbot wanted to plant some flowers, so the player plants some. Relic Rush can do the same for the first few purchases and for moving a building: one line, a personal wish rather than a need, and nothing that the levels' story depends on.
+- **The town gets tutorial lines, not story.** June's Journey teaches its island through a character's small wish: Mrs. Talbot has been meaning to get new garden chairs, and suggests picking some out in the shop. Relic Rush can do the same for the first few purchases and for moving a building: one line, a personal wish rather than a need, and nothing that the levels' story depends on.
 - **Chapters are ten levels, and each is a place.** Nine levels of small finds lead up to a big find on the boss board (every tenth level), which answers the chapter's question and raises the next one. June's Journey works the same way: five scenes with clues, then an adventure scene that closes the chapter.
 
 ## The mystery
