@@ -10,7 +10,7 @@ Only chapter 1 ships with the app; later chapters are downloaded. The bundle has
 - **The first scene's four lines** (`jj-funnel-001`): the housekeeper, Mrs. Talbot, greets June and sends her to the grieving niece.
 - **Chapter 1 staging** (`chapters/001/chapter-001-dialogue-v2-*.json`): 84 rows with speaker, positions and moods. The text for these rows is not in the bundle.
 - **The loop, as the game explains it** (a tip string in `Data/level288`): find clues in scenes to earn currency; decorate the island to earn flowers; flowers raise your level and unlock new scenes.
-- **No island dialogue.** Searching every `level*` and `.assets` file for English sentences turned up shop, event and tutorial text only. Nothing a character says on the island.
+- **No island dialogue in the bundle.** Searching every `level*` and `.assets` file for English sentences turned up shop, event and tutorial text only. The game does have character-voiced island tutorials, which must be downloaded with the chapters: by the user's recollection, Mrs. Talbot says she wanted to plant some flowers, and that walks the player through planting.
 
 ## Chapter 1 in numbers
 
@@ -28,6 +28,8 @@ Only chapter 1 ships with the app; later chapters are downloaded. The bundle has
 Every scene play advances the story. The **before** block says what June is looking for and why; the **after** block says what the found object means. Clue art in the bundle is the object itself: a family picture, a crime photo, whiskey glasses, a footprint, a broken lock, a carafe, a bloody handkerchief, a window.
 
 ## The island carries no story
+
+It carries guidance in a character's voice instead. Mrs. Talbot's flowers line is a tutorial shaped as a small personal wish: she wanted to plant some flowers. It is not a need, it isn't story, and nothing follows from it but the planting.
 
 - Wooga's own help page describes Orchid Island (June's family estate) as placing, upgrading and restoring buildings and decorations, which earn flowers that unlock chapters and scenes. It mentions no dialogue. [Wooga: Orchid Island](https://wooga.theymes.com/hc/en/junes-journey/articles/what-do-i-do-on-orchid-island-413)
 - A 2020 Game Developer breakdown calls the island and the scenes a dependency loop: scene rewards build the island, and island currency unlocks scenes. Its one criticism is that the island has no narration. [Game Developer breakdown](https://gamedeveloper.com/design/june-s-journey-breakdown)
