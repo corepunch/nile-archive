@@ -1,7 +1,6 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
 -- engine's defaults (engine/lua/town/screen.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
-local tool_size = require("match3").TOOL_SIZE
 return {
     background = "#166E77",
     header = {
@@ -10,21 +9,17 @@ return {
         interactive = false,
         y = -2,
         band_height = 72,
+        menu = {size = 52, inset = 8, y = 8},
         x = 18,
         height = 32,
         gap = 18,
         overhang = 12,
     },
     bottom = {
-        layout = "play-primary",
+        layout = "projects",
         bottom = 9,
-        height = 124,
+        height = 108,
         margin = 8,
-        build = tool_size,
-        play = 124,
-        secondary_height = tool_size,
-        pause = true,
-        middle = {kind = "button"},
     },
     bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "bubble_face", edge = "bubble_edge"},
     texts = {

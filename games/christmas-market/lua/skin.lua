@@ -113,6 +113,7 @@ return ui.skin{
                 secondary = {normal = {set = {shadow = {fill = "#0A2A1E"}, body = {fill = "#1E5A3C"},
                                               face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
                 navigation_build = buttons.navigation("build"),
+                navigation_project = buttons.project(),
                 navigation_play = buttons.navigation("play", {text = "cream", em = 44}),
                 navigation_pause = buttons.navigation("pause"),
                 -- Confirm and cancel a placement beside the lifted building.

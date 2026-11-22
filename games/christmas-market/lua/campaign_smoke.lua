@@ -54,7 +54,8 @@ function R.campaign_smoke()
             app.inject_click(R.island.cam:to_screen(marker))
             wait = 10
         elseif island.next_step(c, R.prog.level) then
-            app.inject_click(R.town.buttons.build); wait = 10
+            local kind = island.next_step(c, R.prog.level)
+            app.inject_click(R.town.project_boxes[kind]:center()); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10   -- Play the next wish
         end

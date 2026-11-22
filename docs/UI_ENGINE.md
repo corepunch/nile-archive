@@ -659,6 +659,14 @@ The engine animation clock supplies one timeline to shared tweens, scroll decele
 
 ## Town bottom navigation
 
+With `bottom.layout = "projects"`, a measured grid shows four project controls
+from the town's `projects()` hook and a fifth control for Play. Stable building
+keys route taps to `project(id)`. The label above the grid names the current
+phase. The `navigation_project` skin shows grayscale recessed art for locked
+projects, a progress gauge while funding, a trail when affordable, and a
+checkmark after construction. Locked project buttons open their details.
+Settings uses the town header's `menu(bounds)` slot.
+
 `town_config.lua` can opt into `bottom.layout = "play-primary"`: a centered large
 `navigation_play` button flanked by equally sized `navigation_build` and
 `navigation_pause` buttons. `bottom.build` and `bottom.secondary_height` size
@@ -684,8 +692,7 @@ the game has one currency), for example `["coins", "supplies", "food"]`.
 Without the list the row holds them all. Campaign boards center a display-only row of Moves
 and currency capsules. Each capsule identifies its currency slot so matched
 pieces land on its icon. The centered board keeps four boosters and Pause
-in one bottom row. The town's `bottom.pause` option adds Pause to Build,
-Play and Wishes. Play is the largest control. Both surfaces use the same
+in one bottom row. Both surfaces use the same
 [runtime enamel button and painted icon strip](../art/match3-buttons/README.md).
 
 ## Town rail

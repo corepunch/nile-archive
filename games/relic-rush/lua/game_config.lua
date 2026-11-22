@@ -6,6 +6,7 @@ return {
     menu = {title = {"RELIC RUSH"}, subtitle = "THE LOST VALLEY", town = "VISIT ISLAND"},
     corner_close = true,
     campaign_dialogue = false,
+    epochs = {"Epoch I", "Epoch II", "Epoch III", "Epoch IV", "Epoch V"},
     result = {visit = "COLLECT & VISIT ISLAND"},
     packs = {"relics", "jewels", "resources"},
     transitions = {
@@ -37,7 +38,7 @@ return {
         background = {min_height=900, align_y=.35, motes={255, 228, 139, 70}},
     },
     notices = {
-        reward_building = "Tap Build for the next restoration.",
+        reward_building = "Select a project to see its cost.",
         reward_replay = "Resources collected.",
         all_open = "Your whole island is open to explore.",
         quit = "Your board is saved. Tap Play to continue expedition %d.",

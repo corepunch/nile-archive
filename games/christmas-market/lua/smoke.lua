@@ -84,7 +84,7 @@ function R.smoke()
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
         assert((R.town.navigation:get("play") or "") == "", "smoke: Play shows no level number")
-        app.inject_click(R.town.buttons.build); smoke_stage = 2   -- Build: the earned stall
+        app.inject_click(R.town.project_boxes[island.kinds.arch]:center()); smoke_stage = 2
     elseif smoke_stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         local card = R.wonder_form
         assert(card:get("keeper_name") == "Noelle" and card.boxes.keeper_portrait and card.boxes.sprite,

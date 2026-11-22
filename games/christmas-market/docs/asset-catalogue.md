@@ -524,6 +524,12 @@ retired rims.
 
 ## Project portraits
 
+The Advent and Christmas row uses the registered building sprites. The shared
+`navigation_project` skin draws locked projects as grayscale recesses, tracks
+funding on available projects, highlights affordable projects with the ready
+trail, and uses the existing check on completed projects. Review the
+`epoch-projects`, `epoch-projects-phone` and `epoch-next` captures.
+
 Christmas Market uses the existing painted portraits on construction cards. The card
 shows one portrait and the keeper's name beside the project art, with the same portrait
 at full price, shortfall and completed states. Keeper assignments come from the

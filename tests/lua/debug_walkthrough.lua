@@ -25,13 +25,30 @@ check(R.prog.level == 1 and R.prog.wallet[4] == expected[4], 'replay does not ad
 R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
-local nav, bonus_bounds = R.town.navigation.boxes, R.board_tool_bounds(0)
-for _, button in ipairs{nav.build, nav.levels, nav.pause} do
-    check(math.abs(button.w - bonus_bounds.w) < .01 and math.abs(button.h - bonus_bounds.h) < .01,
-        "the three secondary town buttons match the live bonus control")
+local phase, projects = R.epoch_projects()
+check(phase == R.words.epochs[1] and #projects == 4, "the current phase has four projects")
+check(projects[1].state == "ready" and projects[2].state == "locked", "the earned purchase and a future purchase look different")
+local funded_wallet = R.prog.wallet
+R.prog.wallet = purse(5)
+local _, funding_projects = R.epoch_projects()
+check(funding_projects[1].state == "funding" and funding_projects[1].progress > 0 and funding_projects[1].progress < 1,
+    "an earned project with a shortfall shows its funding progress")
+R.prog.wallet = funded_wallet
+for i, project in ipairs(projects) do
+    local bounds = R.town.project_boxes[project.id]
+    check(project.id == island.ladder[i].kind and bounds:max().x < R.town.buttons.play.x,
+        "projects follow construction order before Play")
 end
-check(nav.play.w == 124 and nav.play.h == 124, "Play keeps its larger target")
+R.open_project(projects[2].id)
+check(R.inspect == projects[2].id and R.inspect_item == -1 and R.overlay == R.OV_WONDER,
+    "a locked project opens its own details")
+R.overlay = R.OV_NONE
 check(R.debug_advance_town() and island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'town action confirms the earned building')
+local _, built_projects = R.epoch_projects()
+check(built_projects[1].state == "built", "the finished project stays on the row in color")
+R.prog.level = 20
+check(R.epoch_projects() == phase, "clearing all twenty boards keeps the phase open while it still has projects")
+R.prog.level = 1
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
 

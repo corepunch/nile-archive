@@ -160,7 +160,7 @@ See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all turquoise plaques within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. Open Build to see its cost or what you still need.
+4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. Select its slot in the bottom row to see its cost or what you still need.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Construction adds a new resource piece or tool to later boards. The 100 boards open twenty restorations, one after every fifth board.
 
@@ -201,7 +201,7 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 ## Buildings
 
-The Build card describes how each site works and who depends on it. Its price and board reward appear below the description.
+The island shows the current epoch's four projects, then Play. Locked buildings appear in gray, affordable projects have a trail, and completed projects have a checkmark. The next epoch appears after completing its predecessor's 20 levels and four projects. Tap a project to see its description, price and board reward.
 
 [Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 

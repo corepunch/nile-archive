@@ -106,6 +106,7 @@ return ui.skin{
             variants = {
                 popup_close = buttons.navigation("close", nil, close_faces),
                 navigation_build=buttons.navigation("build"),
+                navigation_project=buttons.project(),
                 navigation_play = buttons.navigation("play", {text = "cream", em = 28, text_inset = {45, 0}, text_align = {.5, .45}, text_fit = true}),
                 navigation_pause = buttons.navigation("pause"),
                 flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE

@@ -5,6 +5,7 @@ return {
     app = {title = "Christmas Market - Winter Wishes", id = "christmas-market", clear = "#09211F"},
     menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", town = "VISIT MARKET", continue_in_town = true},
     campaign_dialogue = false,
+    epochs = {"First Advent", "Second Advent", "Third Advent", "Fourth Advent", "Christmas"},
     result = {visit = "COLLECT & VISIT MARKET"},
     transitions = {
         style = "wipe",
@@ -33,7 +34,7 @@ return {
         review_replaces_tools = true,
     },
     notices = {
-        reward_building = "Tap Build for the next stall.",
+        reward_building = "Select a project to see its cost.",
         reward_replay = "Resources collected.",
         all_open = "The whole market is open.",
         quit = "Your board is saved. Tap Play to continue wish %d.",

@@ -60,7 +60,8 @@ local function campaign()
         local z = c:next_zone(R.prog.wallet)
         if z >= 0 and c:zone_available(z, R.prog.wallet) then R.expand(); wait = 10
         elseif island.next_step(c, R.prog.level) then
-            app.inject_click(R.town.buttons.build); wait = 10
+            local kind = island.next_step(c, R.prog.level)
+            app.inject_click(R.town.project_boxes[kind]:center()); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10
         end
@@ -163,7 +164,7 @@ function R.smoke()
         -- short wallet is topped up to the price of the well and the shrub.
         local cost = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost
         for slot = 1, 3 do R.prog.wallet[slot] = math.max(R.prog.wallet[slot], cost[slot]) end
-        app.inject_click(R.town.buttons.build); stage = 2
+        app.inject_click(R.town.project_boxes[island.kinds.well]:center()); stage = 2
     elseif stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         assert(R.inspect == island.kinds.well and R.wonder_form:get("action") == R.words.card.build,
             "Build opens the funded Well")
@@ -287,16 +288,18 @@ function R.smoke()
         assert(R.prog.wallet[1] == shop.pause_gold and R.prog.level == 1
                and R.prog.wallet[4] == 1 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
                "restart and quit must not award rewards or change restoration progress")
-        app.inject_click(R.town.buttons.pause); stage = 42
+        app.inject_click(R.town.buttons.menu); stage = 42
     elseif stage == 42 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
         assert((R.town.navigation:get("play") or "") == "", "smoke: Play still shows no level number")
-        app.inject_click(R.town.buttons.build); stage = 44
+        app.inject_click(R.town.project_boxes[island.kinds.log_cabin]:center()); stage = 44
     elseif stage == 44 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         assert(R.inspect == island.kinds.log_cabin and R.wonder_form.boxes.price and R.wonder_form:get("action") == R.words.card.play,
-            "Build shows the next restoration, the shortfall and Play")
+            "a future project opens its own price and Play action")
+        local gate = island.ladder[island.ladder_position[R.inspect]].after
+        assert(R.wonder_form:get("notice") == R.words.catalogue.complete:format(gate), "a locked project explains its level gate")
         app.inject_click(R.wonder_form.boxes.action:center()); stage = 45
     elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and R.g.moves == shop.resume_moves, "returning from island must preserve the suspended attempt")

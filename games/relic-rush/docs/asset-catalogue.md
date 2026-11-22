@@ -17,6 +17,12 @@ and [390 × 844](screenshots/main-menu-phone.jpg), with [Settings](screenshots/m
 
 ## Construction backdrops
 
+The epoch row uses the registered building sprites as project icons. The shared
+`navigation_project` skin draws a grayscale recess for locked projects, a
+funding gauge or ready trail on earned projects, and the existing green check
+on completed projects. The `epoch-projects`, `epoch-projects-phone` and
+`epoch-next` captures exercise those states and sizes.
+
 The expedition landing is the opening scene. After the player confirms a
 restoration, eligible expeditions show the latest completed site. Replays
 use the original expedition gates. This covers all twenty purchases in

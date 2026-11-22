@@ -209,7 +209,13 @@ function D.bind(R, W)
             end
         end
         a = app.arg("epoch")   -- --epoch N: the town once N epochs of four ladder purchases are bought
-        if a then island_with(0, num.clampi(4 * tonumber(a), 0, #island.ladder)); R.on_island = true; R.toast_time = 0 end
+        if a then
+            local completed = num.clampi(tonumber(a), 0, #W.epochs)
+            island_with(0, 4 * completed)
+            R.prog.level = completed * (LEVELS // #W.epochs)
+            R.prog.wallet[rules.CLEARED] = R.prog.level
+            R.on_island, R.toast_time = true, 0
+        end
         if app.arg("showcase") then
             local spots = {vec2(690, 2050), vec2(930, 2180), vec2(580, 1870), vec2(1050, 2000), vec2(820, 1900),
                            vec2(1180, 1800), vec2(760, 1700), vec2(1040, 1620), vec2(620, 1550), vec2(920, 1400)}

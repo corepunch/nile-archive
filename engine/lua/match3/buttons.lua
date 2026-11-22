@@ -65,13 +65,6 @@ local function progress_gauge(center, side, progress)
     end
 end
 
--- The same gauge over any round button drawn by B.paint in `box`, as the
--- town puts the next purchase's funding under its Build button.
-function B.gauge(box, progress)
-    local side = math.min(box.w, box.h) * .90
-    if side > 0 then progress_gauge(box:center(), side, progress) end
-end
-
 -- `progress` (0 to 1, optional) shows a gauge as on the medallion.
 function B.paint(box, image, state, alpha, face_colors, progress)
     local side = math.min(box.w, box.h) * .90
@@ -91,12 +84,29 @@ function B.paint(box, image, state, alpha, face_colors, progress)
     local anchor = B.centers[image]
     if anchor then dst = dst:offset(enamel:center() - dst:point(anchor)) end
     if disabled then
-        gfx.image_inset(image, dst, vec2(side * .014, side * .018), ink(sandstone))
+        gfx.image_inset(image, dst, vec2(side * .014, side * .018), ink(face.inset or sandstone))
     else
         gfx.image(image, dst:offset(vec2(0, side * .018)), ink(shade))
         gfx.image(image, dst, ink(color.WHITE))
     end
     if progress then progress_gauge(center, side, progress) end
+end
+
+local paper_gray = {top=rgb(0xDFDFDF), bottom=rgb(0xA6A6A6), inset=rgb(0xB8B8B8)}
+function B.project()
+    local look = {offset={0, 0}, layers={{paint=function(_, node, st, skin, out, alpha)
+        local project = node.project
+        if not project or not project.icon or not project.icon.tex then return end
+        local locked = project.state == "locked"
+        local state = locked and "disabled" or st.held and "pressed" or st.hot and "hover"
+            or project.state == "built" and "selected" or "normal"
+        B.paint(out, project.icon, state, alpha, locked and paper_gray or nil, project.progress)
+        if project.state == "built" and skin.images.tick then
+            local check = out:point(vec2(.77, .77))
+            gfx.image(skin.images.tick, rect.centered(check, size2(out.h * .24, out.h * .24)), color.alpha(color.WHITE, alpha))
+        end
+    end}}}
+    return {normal = look, hover = look, pressed = look, disabled = look}
 end
 
 -- The portrait is cut to the face as a 16-gon with gfx.image_poly, never with

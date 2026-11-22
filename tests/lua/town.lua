@@ -17,20 +17,37 @@ for _, game in ipairs({"relic-rush", "christmas-market", "nile-archive"}) do
     check(config and config.texts.placing, game .. " ships a town_config.lua with its wording")
 end
 
--- The two puzzle towns share the primary Play layout: Build, Play and Pause.
+-- The five campaign actions have equal, disjoint targets. Updating the
+-- phase replaces its four project keys and keeps the fifth Play action.
 for _, game in ipairs{"relic-rush", "christmas-market"} do
-    local config = town.config(town_config(game))
-    local b = config.bottom
-    check(b.layout == "play-primary" and b.play > b.build, "Play is the primary button")
-    check(b.build == b.secondary_height, "Build and Pause use matching square slots")
-    local view = town.new({}, config, {skin={}, wallet=function() return {} end, play_label=function() return "7" end})
-    local buttons = view.navigation.boxes
-    check(buttons.pause and buttons.play.w > buttons.pause.w, "Pause joins the bottom row and Play is largest")
-    near((buttons.build.x + buttons.pause:max().x) / 2, view.bottom_row:center().x, "the three-button row stays centered")
-    near(buttons.pause:center().y, view.buttons.play.y, "Pause and Play share a center line")
-    near(view.buttons.build.y, view.buttons.pause.y, "secondary buttons align")
-    near(view.buttons.play.x, view.bottom_row:center().x, "Play is the middle of the row")
-    check(not view.navigation.boxes.levels and not view.buttons.levels, "the level list has no button")
-    check(view.buttons.build.x + b.build/2 < view.buttons.play.x - b.play/2, "Build does not overlap Play")
-    check(view.buttons.play.x + b.play/2 < view.buttons.pause.x - b.build/2, "Pause does not overlap Play")
+    local config = town_config(game)
+    local phase, first = "First", 1
+    local function projects()
+        local items = {}
+        for i = 1, 4 do items[i] = {id=first + i - 1, state=i == 1 and "ready" or "locked"} end
+        return phase, items
+    end
+    local view = town.new({}, config, {skin={}, wallet=function() return {} end, projects=projects})
+    local form = view.navigation
+    local actions = form.nodes.actions.children
+    check(#actions == 5 and actions[5].item_key == "play", "the last of five actions is Play")
+    local play = form.boxes[actions[5].id]
+    for i = 1, 4 do
+        local box, next_box = view.project_boxes[i], form.boxes[actions[i + 1].id]
+        check(box:max().x < next_box.x, "project hit regions do not overlap")
+        near(box:center().y, play:center().y, "projects and Play share a center line")
+        near(box.w, play.w, "projects and Play share the available row")
+    end
+    phase, first = "Second", 5
+    view:layout()
+    check(form:get("phase") == phase and view.project_boxes[1] == nil and view.project_boxes[5] ~= nil,
+        "advancing the phase updates the project keys and hit targets")
+    local screen = app.screen
+    rawset(app, "screen", function() return rect(0, 47, 390, 763) end)
+    view:layout()
+    rawset(app, "screen", screen)
+    actions = form.nodes.actions.children
+    play = form.boxes[actions[5].id]
+    check(view.project_boxes[5].x >= 0 and play:max().x < 390 and play:max().y < 810 and play.w >= 44,
+        "all five targets fit the narrow phone's safe area")
 end

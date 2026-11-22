@@ -57,10 +57,10 @@ with rings.
 Amphoras are playable score pieces from the opening. See the
 [twenty prices and unlocks](../README.md#buildings).
 
-The lower-left house opens the next purchase. Its readout shows the
-remaining amount for each required resource. If the wallet covers the price
-early, the readout shows the expedition to clear. A particle trail circles
-the house when both the level requirement and price are met. Open placement
+The five epochs have four projects each. The town shows its current four
+projects followed by Play, and advances when its levels and projects are complete.
+Gray project buttons open the price and requirements. An earned project shows
+funding progress until its price is met, then a particle trail circles it. Open placement
 from the card, choose a site, then confirm to pay once. The card explains the project, names its board reward and shows the cost or shortfall. The card links to the
 decoration shop. After level 100, a pending purchase can offer a replay for
 resources.

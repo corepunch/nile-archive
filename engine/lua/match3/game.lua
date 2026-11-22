@@ -632,11 +632,12 @@ function G.bind(R, over)
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local fixed = w.fixed_site and (w.fixed_site.x ~= 0 or w.fixed_site.y ~= 0)
         local movable = built and not fixed
-        local _, position = island.next_step(R.island, R.prog.level)
-        local step = not built and island.ladder[position]
-        if step and (step.kind ~= i or step.after > rules.LEVELS) then step = nil end
-        local needs_funding = step and not can_build
-        funding_play = needs_funding and (R.prog.level < rules.LEVELS or step.after <= R.prog.level)
+        local project = island.ladder[island.ladder_position[i]]
+        if project and project.after > LEVELS then project = nil end
+        local step = not built and project
+        local blocked = step and ladder_blocked(i, 0)
+        local needs_funding = step and not blocked and not can_build
+        funding_play = blocked == "later" or needs_funding
         match3.set_popup_header(wonder_form, w.name)
         local upgrade = R.upgrade_card and R.upgrade_card(i)
         local keeper = R.project_keeper and R.project_keeper(i)
@@ -654,7 +655,7 @@ function G.bind(R, over)
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
         wonder_form.values.show_price = show_price
         wonder_form.values.show_notice = not show_price or step ~= nil
-        wonder_form.values.show_shop = step ~= nil
+        wonder_form.values.show_shop = project ~= nil
         local reward = R.building_reward(i)
         local gets = reward and {reward} or {}
         local price = show_price and price_parts(w.cost) or {}
@@ -678,10 +679,10 @@ function G.bind(R, over)
         wonder_form:set("unlock", reward_name and ("Unlocks %s"):format(reward_name) or unlock_text or "")
         assert(wonder_form:set_items("price", price))
         local funding
-        if needs_funding then
-            -- The amounts already say what is missing; a line is only for the level gate.
-            if R.prog.level < step.after then funding = W.catalogue.complete:format(step.after)
-            elseif #missing == 0 then funding = W.catalogue.poor
+        if blocked == "later" then funding = W.catalogue.complete:format(step.after)
+        elseif blocked == "earlier" then funding = W.catalogue.earlier
+        elseif needs_funding then
+            if #missing == 0 then funding = W.catalogue.poor
             else wonder_form.values.show_notice = false end
         end
         wonder_form:set("notice", funding or step and can_build and W.result.ready or built and (fixed and "RESTORED AT ITS ORIGINAL SITE" or W.card.moving) or W.card.locked)
@@ -723,7 +724,7 @@ function G.bind(R, over)
         elseif action == "quit" then   -- the unfinished board waits in town
             R.on_island, R.overlay = true, R.OV_NONE
             local replay = R.prog.level >= rules.LEVELS
-            R.notice(replay and "Your board is saved. Open Build to continue earning resources."
+            R.notice(replay and "Your board is saved. Open its project to earn more resources."
                 or W.notices.quit:format(R.g.level + 1))
         end
     end, live=function(event)
@@ -1037,6 +1038,49 @@ function G.bind(R, over)
         end
     end
 
+    function R.epoch_projects()
+        local p, c = R.prog, R.island
+        local _, next_position = island.next_step(c, p.level)
+        local steps_per_epoch = 4
+        local last_epoch = #W.epochs
+        local cleared_epoch = p.level // (LEVELS // last_epoch) + 1
+        local purchase_epoch = ((next_position or #island.ladder) - 1) // steps_per_epoch + 1
+        local epoch = math.min(last_epoch, cleared_epoch, purchase_epoch)
+        local projects = {}
+        for i = 1, steps_per_epoch do
+            local step = island.ladder[(epoch - 1) * steps_per_epoch + i]
+            local kind = step.kind
+            local project = {id=kind, icon=R.buildings[kind + 1].sprite, state="locked"}
+            local blocked = ladder_blocked(kind, island.owned(c, kind))
+            if blocked == "built" then project.state = "built"
+            elseif not blocked then
+                if island.can_buy(c, p.wallet, p.level, kind) then project.state = "ready"
+                else
+                    local total, filled = 0, 0
+                    local cost = R.buildings[kind + 1].cost
+                    for slot = 1, 3 do
+                        if cost[slot] > 0 then
+                            total = total + 1
+                            filled = filled + math.min(1, p.wallet[slot] / cost[slot])
+                        end
+                    end
+                    project.state = "funding"
+                    if total > 0 then project.progress = filled / total end
+                end
+            end
+            projects[i] = project
+        end
+        return W.epochs[epoch], projects
+    end
+
+    function R.open_project(kind)
+        local item = -1
+        for i, building in ipairs(R.island.items) do
+            if building.type == kind then item = i - 1; break end
+        end
+        R.inspect, R.inspect_item, R.overlay = kind, item, R.OV_WONDER
+    end
+
     function R.town_setup()
         visited_item = nil
         local function visit_for_kind(kind)
@@ -1050,6 +1094,21 @@ function G.bind(R, over)
             notice = R.notice,
             capsules = R.header_capsules,
             pause = function() R.overlay = R.OV_PAUSE end,
+            menu = W.epochs and function(box)
+                local state = ui.hit(box, 0)
+                skin:paint_button(box, state, {role="navigation_pause"})
+                if state.clicked then
+                    haptic.play(haptic.TICK, .6)
+                    R.overlay = R.OV_PAUSE
+                end
+            end,
+            projects = R.epoch_projects,
+            project = R.open_project,
+            project_rim = function(box)
+                if not R.reduced_motion and R.overlay == R.OV_NONE then
+                    R.vfx_ready_rim(box:center(), math.min(box.w, box.h) * .46, R.now)
+                end
+            end,
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function()
                 local _, position = island.next_step(R.island, R.prog.level)
@@ -1727,6 +1786,7 @@ function G.app(R)
         R.island = city.new()
         island.island_setup(R.island)
         R.buildings = R.island.defs   -- with the sprites loaded
+        R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
         R.town_setup()
         R.wonders = {}
         for i = 1, island.WONDERS do R.wonders[i] = R.buildings[wonder_kind(island, i) + 1] end
@@ -1735,7 +1795,6 @@ function G.app(R)
         R.inspect, R.zone_card = -1, -1
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
         R.quiet = app.arg("shot") ~= nil   -- stills skip the story unless asked for (--dialog)
-        R.prog = {level = 0, seed = 782341, wallet = purse(), story_seen = {}}
         local loaded
         if not app.arg("smoke") then
             loaded = save.read(R.progress_slot(), R.serialize)

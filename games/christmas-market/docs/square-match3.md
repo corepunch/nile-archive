@@ -47,9 +47,11 @@ Reduce Motion hides the trail.
 
 ## Build
 
-The lower-left Build button opens the next purchase. The card shows the
-project description, its keeper's portrait, its board reward and the price or the amounts still needed. The particle trail runs when the level
-gate and resource price are met. Open placement from the card, choose a
+First Advent through Fourth Advent and Christmas each have four projects.
+The bottom row shows those projects followed by Play, and advances when the
+current phase's levels and projects are complete. Tap any project to see its
+keeper, board reward, price and requirements. A particle trail circles it when
+its level requirement and price are met. Open placement from the card, choose a
 site, then confirm to pay once. The card links to the decoration shop.
 After level 100, a pending purchase can offer a replay for resources.
 

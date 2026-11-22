@@ -24,21 +24,21 @@ The player's minute-to-minute loop:
 
 1. **Play a level.** The board shows the current pieces and, from its building on, one tool piece. Thirty matched tool pieces charge the tool's slot once.
 2. **Collect.** The results card banks the matched resources. Ordinary wins lead to the next board. The results action returns to town when a project opens or is affordable.
-3. **Build.** In town, the Build button shows the next purchase with its price or shortfall. A particle trail circles the button when it is affordable. The card explains the project and shows its board reward. The player chooses a site and confirms.
+3. **Build.** The bottom row shows the current phase's four projects, in order, and Play. Select any project to see its cost, board reward and requirements. A trail marks a project you can buy. Choose a site and confirm.
 4. **See the change.** The next board shows the new piece or tool. Meeting a building's feat upgrades it, with a brief upgrade notice.
 
 The campaign's shape:
 
 | | Levels | Purchases | Construction milestones | Last level |
 | --- | --- | --- | --- | --- |
-| Epoch / Advent 1 | 1–20 | after 1, 6, 11, 16 | two | 20 |
-| 2 | 21–40 | after 21, 26, 31, 36 | two | 40 |
-| 3 | 41–60 | after 41, 46, 51, 56 | two | 60 |
-| 4 | 61–80 | after 61, 66, 71, 76 | two | 80 |
-| 5 | 81–100 | after 81, 86, 91, 96 | two | 100 |
+| Epoch I / First Advent | 1–20 | after 1, 6, 11, 16 | two | 20 |
+| Epoch II / Second Advent | 21–40 | after 21, 26, 31, 36 | two | 40 |
+| Epoch III / Third Advent | 41–60 | after 41, 46, 51, 56 | two | 60 |
+| Epoch IV / Fourth Advent | 61–80 | after 61, 66, 71, 76 | two | 80 |
+| Epoch V / Christmas | 81–100 | after 81, 86, 91, 96 | two | 100 |
 
 - **Purchases open every five levels** (`after` in `economy.unlocks`). The first is affordable after level 1, so the player builds within a minute.
-- **Projects follow purchase order.** A clear opens the next board even when a purchase needs more resources. Confirming a purchase enables its reward on eligible boards.
+- **Projects follow purchase order.** The town row advances after the last level and all four purchases in the phase are complete. Earlier purchases waived by a migrated save do not hold the row back. Players can keep clearing boards while raising funds. Confirming a purchase enables its reward on eligible boards.
 - **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a farrier's hammer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
 - **Regions open** after 15, 30, 50, 70 and 85 levels cleared, through the town map.

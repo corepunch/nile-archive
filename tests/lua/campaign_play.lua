@@ -12,7 +12,7 @@ require('main')
 R.test_mode, R.quiet, R.overlay = true, false, R.OV_NONE
 R.island = city.new()
 island.island_setup(R.island)
-R.wonders = island.wonders
+R.wonders, R.buildings = island.wonders, island.buildings
 R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
@@ -115,6 +115,10 @@ for level = 1, rules.LEVELS do
             #placed > 0 and table.concat(placed, ", ") or "-"))
     end
     if user_events then user_events.emit('island') end
+    local phase, projects = R.epoch_projects()
+    local epoch = math.min(level // 20 + 1, #R.words.epochs)
+    check(phase == R.words.epochs[epoch] and projects[1].id == island.ladder[(epoch - 1) * 4 + 1].kind,
+        'the phase advances after each block of clears and purchases')
 end
 local due = 0
 for _, step in ipairs(island.ladder) do
