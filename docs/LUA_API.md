@@ -1767,6 +1767,19 @@ Word-wrapped text aligned inside box, lines balanced in length; shrinks the font
 
 **Returns:** `rect`
 
+### `text.box_ink(s, box, align, utf8)`
+
+Wrapped text as in text.box, aligned vertically by the visible lettering.
+
+| Argument | Type | |
+|---|---|---|
+| `s` | `text_style` |  |
+| `box` | `rect` |  |
+| `align` | `vec2` |  |
+| `utf8` | `string` |  |
+
+**Returns:** `rect`
+
 ### `text.box_reveal(s, box, align, utf8, visible)`
 
 text.box showing only the first visible codepoints, every line already in its final place.

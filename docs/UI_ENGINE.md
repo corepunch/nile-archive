@@ -324,7 +324,8 @@ style of one kind of card: `border = {variants = {resource_indicator = {normal =
 A checkbox has `box` and `mark` looks (each with its own states), `size` and `gap`;
 a progress bar has `track`, `fill` and an optional `over` (a rim drawn on top).
 A control's caption takes `text`, `em`, `text_inset` (a number or `{x, y}`),
-`text_align` `{x, y}` and `text_fit` (shrink one line to fit). A control without
+`text_align` `{x, y}`, `text_fit` (shrink one line to fit) and `text_wrap`
+(wrap and fit multiple lines, with vertical alignment based on visible lettering). A control without
 state looks, such as `button = {text = "button", em = 17}`, only styles the
 caption; forms then keep the native button paint.
 
@@ -663,7 +664,12 @@ The engine animation clock supplies one timeline to shared tweens, scroll decele
 With `bottom.layout = "projects"`, a measured grid shows four project controls
 from the town's `projects()` hook and a fifth control for Play. Stable building
 keys route taps to `project(id)`. The label above the grid names the current
-phase. The `navigation_project` skin shows grayscale recessed art for locked
+phase. Setting `bottom.bar_role` uses the grid alone, sizes its cells square, and
+paints that panel variant through the bottom safe area. `bottom.bar_top_padding`
+sets the gap above the buttons and defaults to `bottom.margin`. `bottom.bottom`
+sets the gap below the buttons before the safe area. Set `bottom.play_text` for
+a caption on the fifth button. Relic Rush uses the project record’s
+`key` and purchase state to select a painting. The default `navigation_project` skin shows grayscale recessed art for locked
 projects, a progress gauge while funding, a trail when affordable, and a
 checkmark after construction. Locked project buttons open their details.
 Settings uses the town header's `menu(bounds)` slot.

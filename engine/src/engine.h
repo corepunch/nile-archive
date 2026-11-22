@@ -418,6 +418,7 @@ rect text_draw(text_style s, vec2 pos, vec2 pivot, const char *utf8);
 /* Word-wrapped text aligned inside box, lines balanced in length; shrinks the
  * font (down to 60%) if it would not fit. */
 rect text_box(text_style s, rect box, vec2 align, const char *utf8);
+rect text_box_ink(text_style s, rect box, vec2 align, const char *utf8);
 /* text_box showing only the first `visible` codepoints, every line already in
  * its final place: a typewriter that never re-wraps. */
 rect text_box_reveal(text_style s, rect box, vec2 align, const char *utf8, int visible);

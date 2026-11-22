@@ -25,7 +25,7 @@
 --   build_rim(center, radius)           optional effect around the Build button
 --   projects()              phase title and ordered project records (id, icon, state, progress)
 --   project(id)             open the selected project
---   project_rim(box)        optional effect around the affordable project
+--   project_rim(box)        optional effect around each affordable project
 --   zone_ready(z)           optional availability for a closed region's marker
 --   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool,
 --                            portrait=texture, progress=0..1}, ...}: round
@@ -159,13 +159,19 @@ function T.new(c, config, hooks)
         N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     })
     if b.layout == "projects" then
-        v.navigation = ui.form(N.column {gap = 2,
-            N.label {id = "phase", height = 34, em = 19, text_style = "cream"},
-            N.uniform_grid {id = "actions", rows = 1, gap = 4, item = function(entry)
-                return N.button {id = "action", role = entry.id == "play" and "navigation_play" or "navigation_project",
-                    height = b.height - 36, text = "", project = entry.project}
-            end},
-        })
+        local actions = N.uniform_grid {id = "actions", rows = 1, gap = b.gap or 4, item = function(entry)
+            local play = entry.id == "play"
+            return N.button {id = "action", role = play and "navigation_play" or "navigation_project",
+                text = play and b.play_text or "", project = entry.project}
+        end}
+        if b.bar_role then
+            v.navigation = ui.form(actions)
+        else
+            actions.height = b.height - 36
+            v.navigation = ui.form(N.column {gap = 2,
+                N.label {id = "phase", height = 34, em = 19, text_style = "cream"}, actions,
+            })
+        end
     elseif b.layout == "play-primary" and b.pause then
         v.navigation = ui.form(N.row {align = "center", gap = 8,
             N.spacer {grow = 1},
@@ -201,22 +207,27 @@ function View:layout()
     if b.layout == "projects" then
         local title, projects = self.hooks.projects()
         local form = self.navigation
+        if b.bar_role then
+            local side = (row.w - #projects * form.nodes.actions.gap) / (#projects + 1)
+            row = rect(row.x, s:max().y - b.bottom - side, row.w, side)
+            self.bottom_row = row
+        end
         if title ~= self.project_phase then
             local actions = {}
             for i, project in ipairs(projects) do actions[i] = {id = project.id, project = project} end
             actions[#actions + 1] = {id = "play"}
             assert(form:set_items("actions", actions))
             self.project_phase = title
-            form:set("phase", title)
+            if form.nodes.phase then form:set("phase", title) end
         end
         local boxes = form:layout(row, self.hooks.skin)
         local actions = form.nodes.actions.children
-        self.project_boxes, self.ready_project = {}, nil
+        self.project_boxes, self.ready_projects = {}, {}
         for i, project in ipairs(projects) do
             local node = actions[i]
             node.project = project
             self.project_boxes[project.id] = boxes[node.id]
-            if project.state == "ready" then self.ready_project = boxes[node.id] end
+            if project.state == "ready" then self.ready_projects[#self.ready_projects + 1] = boxes[node.id] end
         end
         self.buttons.play = boxes[actions[#actions].id]:center()
         return self.buttons
@@ -473,9 +484,22 @@ end
 
 function View:bottom(active)
     local h, skin = self.hooks, self.hooks.skin
-    if self.cfg.bottom.layout == "projects" then
+    local b = self.cfg.bottom
+    if b.layout == "projects" then
+        local bar = b.bar_role
+        if bar then
+            local full = app.bleed()
+            local top = self.navigation.boxes.actions.y - (b.bar_top_padding or b.margin)
+            local band = rect(full.x, top, full.w, full:max().y - top)
+            gfx.bleed(true)
+            skin:paint_panel(band, {role = bar})
+            gfx.bleed(false)
+            ui.block(band)
+        end
         local event = self.navigation:draw(self.bottom_row, skin, {interactive = active, dim_controls = false})
-        if self.ready_project and h.project_rim then h.project_rim(self.ready_project) end
+        if h.project_rim then
+            for _, box in ipairs(self.ready_projects) do h.project_rim(box) end
+        end
         if event then
             haptic.play(haptic.TICK, .6)
             if event.key == "play" then h.play()

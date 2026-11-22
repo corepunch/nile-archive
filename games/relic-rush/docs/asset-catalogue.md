@@ -33,11 +33,26 @@ uses the original colors.
 
 ## Construction backdrops
 
-The epoch row uses the registered building sprites as project icons. The shared
-`navigation_project` skin draws a grayscale recess for locked projects, a
-funding gauge or ready trail on earned projects, and the existing green check
-on completed projects. The `epoch-projects`, `epoch-projects-phone` and
-`epoch-next` captures exercise those states and sizes.
+The town bar shows four 192 px square details from the expedition paintings in
+rounded sandstone insets. A terracotta Next Level button fills the fifth slot.
+Each button has a rounded bevel and soft drop shadow.
+One sandstone sill spans the five slots and continues behind the home indicator.
+Its grain comes from the existing ImageGen [stone painting](../art/papyrus-board/stone-grain.png).
+The atlas at `data/city/epochs/projects.jpg` stores four full-color crops for each
+epoch. Every unbuilt project uses the original colors. The skin draws a small
+rounded clay-red Need Funds tag with a brass edge and a shadow at the bottom of an underfunded
+project's painting. The live Lilita One label and tag travel with the painting
+when pressed. A ready project has the existing particle trail, with a steady
+glow in Reduce Motion. A completed project keeps its color, dimmed behind the
+painted `shop-built` jade checkmark.
+Hover lights the project bevel and the Next Level face. Both faces sink toward
+their shadows on press and the form draws keyboard focus. Tapping any building
+opens its card.
+
+Run `python3 tools/project_thumbnails.py relic-rush` to reproduce the atlas
+and panel. The registration manifest records the painting and sandstone crops.
+Capture the completed, ready and underfunded states with
+`build/test/relic-rush 'shot epoch-purchase-choice'` at both phone sizes.
 
 The expedition landing is the opening scene. After the player confirms a
 restoration, eligible expeditions show the latest completed site. Replays

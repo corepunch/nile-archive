@@ -3350,6 +3350,18 @@ static int l_text_box(lua_State *L)
     return 1;
 }
 
+/* text.box_ink(s, box, align, utf8) */
+static int l_text_box_ink(lua_State *L)
+{
+    text_style a_s = api_check_text_style(L, 1);
+    rect a_box = api_check_rect(L, 2);
+    vec2 a_align = api_check_vec2(L, 3);
+    const char * a_utf8 = luaL_checkstring(L, 4);
+    rect r = text_box_ink(a_s, a_box, a_align, a_utf8);
+    api_push_rect(L, r);
+    return 1;
+}
+
 /* text.box_reveal(s, box, align, utf8, visible) */
 static int l_text_box_reveal(lua_State *L)
 {
@@ -4564,6 +4576,7 @@ static void open_text(lua_State *L)
         {"measure", l_text_measure},
         {"draw", l_text_draw},
         {"box", l_text_box},
+        {"box_ink", l_text_box_ink},
         {"box_reveal", l_text_box_reveal},
         {"box_size", l_text_box_size},
         {"length", l_text_length},

@@ -160,7 +160,7 @@ See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all turquoise plaques within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. Select its slot in the bottom row to see its cost or what you still need.
+4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. The four buildings stay in color on the sandstone sill. A particle trail marks an affordable project, and a green checkmark marks a completed one. Select a building to see its cost or what you still need.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Construction adds a new resource piece or tool to later boards. The 100 boards open twenty restorations, one after every fifth board.
 
@@ -201,13 +201,13 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 ## Buildings
 
-The island shows the current epoch's four projects, then Play. Locked buildings appear in gray, affordable projects have a trail, and completed projects have a checkmark. The next epoch appears after completing its predecessor's 20 levels and four projects. Tap a project to see its description, price and board reward.
+The island’s sandstone bar holds four full-color project paintings and a Next Level button. A small Need Funds tag marks projects with a shortfall. A particle trail marks projects you can afford, and a jade checkmark marks completed projects. Tap a project to see its description, price or shortfall, and board reward. The next epoch opens after you complete the current one’s 20 levels and four projects.
 
 [Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 
-The ladder has twenty purchases, one available after every fifth board (after levels 1, 6, 11 … 96), four per epoch. It follows the purchase order of the Windows edition of Cradle of Rome 2, with names that match the artwork (the Rome name is in brackets). The Spring well, Expedition camp, Jungle market, Tide clock tower, Harbour plaza, Harbour lodge, Keeper's archive, Lighthouse, Temple of the Sun and Jade fountain are restoration milestones in the purchase order. The [campaign balance check](docs/square-match3.md#construction-balance) fits the prices to the resources the bot earns by clearing boards in order, so the expected campaign needs no replays.
+Each epoch offers four projects. Once the first expedition is complete, you can build any project in the current epoch that you can afford. Catalogue order follows the Windows edition of Cradle of Rome 2 (Rome names are in brackets). The levels in the table are the [balance targets and board reward milestones](docs/square-match3.md#construction-balance). Once a building is confirmed and its reward's milestone has passed, its piece or tool can appear on the board.
 
-| After level | Restoration | Reward | Coins / Food / Supplies |
+| Target clear | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
 | 1 | Spring well (Well) | Water buckets | 35 / 0 / 0 |
 | 6 | Trapper's cabin (Hunter's Hut) | Hammer | 655 / 240 / 0 |
@@ -230,7 +230,7 @@ The ladder has twenty purchases, one available after every fifth board (after le
 | 91 | Temple of the Sun (Forum) | Star | 2045 / 2400 / 1525 |
 | 96 | Jade fountain (Fountain) | Emeralds | 2120 / 2375 / 1485 |
 
-A new game opens with the crew's Supply tent already pitched on the lawn; it is free scenery and moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
+A new game starts with the crew's free Supply tent in the center of the Harbor glade clearing. It moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Browse categories and pages, check the
 resource price and the number of boards cleared it needs, then choose a location and
 confirm. Cancelling is free. The resources
 needed for an earned restoration are reserved until placement. Purchases save

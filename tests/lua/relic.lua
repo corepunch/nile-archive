@@ -286,6 +286,12 @@ local function test_island()
     -- Use earned resources to exercise all confirmed placements without playing the boards.
     local c = city.new()
     island.island_setup(c)
+    island.new_game(c, 0)
+    local tent, well = island.kinds.supply_tent, island.kinds.well
+    check(c.count == 1 and c.items[1].type == tent and c:can_place(c.items[1].pos, tent, 0),
+        "the starter tent fits on open ground")
+    check(c:can_place(c:snap(island.island_suggestion(well), well), well),
+        "the starter tent leaves room at the spring")
     local p = {level = 0, seed = 0, wallet = purse()}
     for i = 0, LEVELS - 1 do
         local g = rules.game_start(i, i + 1)
@@ -303,7 +309,7 @@ local function test_island()
         check(p.wallet[rules.GOLD] == gold and p.level == i + 1, "reward once")
         for z = 1, island.ISLAND_ZONES - 1 do c:unlock(z, p.wallet) end
         while island.island_place_next(c, p.wallet, p.level, 0) do end
-        check(c.count == due and island.campaign_count(c) == due, "every opened ladder restoration fits, in order")
+        check(c.count == due + 1 and island.campaign_count(c) == due, "every opened ladder restoration fits alongside the tent")
         check(island.wonder_count(c) == require("journey").earned(p.level), "story restorations keep their schedule")
     end
     check(p.wallet[rules.CLEARED] == LEVELS, "every first clear counts once")

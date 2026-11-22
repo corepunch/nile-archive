@@ -53,8 +53,8 @@ function M.owned(c, kind)
 end
 
 -- The twenty-step campaign ladder (economy.unlocks), after Cradle of Rome:
--- order, gate, reserve, shop order and older saves are the engine's.
-require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
+-- Each twenty-expedition epoch offers a choice among its four projects.
+require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies, 20)
 for _, entry in ipairs(economy.unlocks) do
     local unlock = economy.building_unlock_text(entry)
     if unlock then M.buildings[M.kinds[entry.building] + 1].unlock_text = "Unlocks " .. unlock end
@@ -84,11 +84,11 @@ function M.migrate_wallet(progress, c)
     wallet[economy.GOLD] = math.max(wallet[economy.GOLD], reserved[economy.GOLD])
 end
 
--- The crew's tent is in place when the player first visits the island. It is
--- scenery: free, movable and outside the campaign ladder.
+-- Pitch the crew's tent in the middle of the Harbor glade clearing.
+-- It is free, movable scenery outside the campaign ladder.
 function M.new_game(c, now)
     local tent = M.kinds.supply_tent
-    local ok, spot = c:find_spot(tent, vec2(740, 2080))
+    local ok, spot = c:find_spot(tent, vec2(790, 1910))
     if ok then c:add(spot, tent, now) end
 end
 

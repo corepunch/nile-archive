@@ -223,6 +223,8 @@
     "data/city/buildings/tree.png": "acfd2d54ac76075b9236305b10def2b9018fe662c6852a56b0fffbebce1a30a6",
     "data/city/buildings/wreath_arch.png": "e4aec881d042dd221743ac1e553d9dbe0fb0db8c0302cb16d4f295037f78c093",
     "data/city/epochs/medals.png": "571018ce9424a1ac386345fdc56138e21c0f226490a54461a3ec3ec8c5fc03e8",
+    "data/city/epochs/projects.jpg": "e223b3310169cdcb7df4e8b70b9c7b3e2924ad82a1cdbfaa1ddb7307f9e9e22a",
+    "data/city/epochs/town-bar.jpg": "09126435bfee4eba89d4b2d88fcc6763acfaec968589a17d7ac456e97a3f1c7f",
     "data/city/island.jpg": "dd36e95d320f3c55a59fbe2b010ef90560f272ecfbe71806241c50f4fb2531e8",
     "data/city/roads-sandstone.png": "a4da1560f4c0f9f9bce791a4a15399ed99482226558531327b455fec51ed8381",
     "data/city/roads.png": "a9341c19a5e03f829a84601615ccd7f9d3c48f97f0e07372d10bbed435b41373",
@@ -914,6 +916,51 @@
         "source": "art/construction-backdrops/purchases-18-20.jpg",
         "prompt": "art/construction-backdrops/purchases-18-20-prompt.txt"
       }
+    }
+  },
+  "town_bar_panel": {
+    "source": "../relic-rush/art/papyrus-board/stone-grain.png",
+    "prompt": "../relic-rush/art/papyrus-board/stone-grain-prompt.txt",
+    "crop": [
+      0,
+      445,
+      1254,
+      759
+    ],
+    "runtime": "data/city/epochs/town-bar.jpg",
+    "states": "Sandstone sill beneath the five rounded buttons, extending to the physical bottom edge."
+  },
+  "project_thumbnails": {
+    "runtime": "data/city/epochs/projects.jpg",
+    "cell": 192,
+    "layout": "Four square full-color crops per Advent in purchase order, one row per Advent.",
+    "states": {
+      "built": "Dimmed original colors with the shop-built checkmark",
+      "ready": "Original colors with an animated particle trail or a steady glow in Reduce Motion",
+      "funding": "Original colors with a Need Funds tag",
+      "locked": "Original colors"
+    },
+    "crop_top": {
+      "welcome-arch": 76,
+      "reindeer-stable": 42,
+      "lumber-workshop": 109,
+      "firework-stall": 104,
+      "gingerbread-bakery": 118,
+      "snowy-chapel": 142,
+      "hot-cocoa-kiosk": 142,
+      "ice-house": 146,
+      "lakeside-smokehouse": 198,
+      "station-kiosk": 142,
+      "toymakers-workshop": 142,
+      "candlelight-shop": 153,
+      "gift-wrapping-pavilion": 115,
+      "north-pole-post-office": 131,
+      "glassblowers-stall": 185,
+      "reindeer-carousel": 164,
+      "winter-skating-rink": 185,
+      "woodcarvers-hall": 153,
+      "christmas-tree": 120,
+      "santas-sleigh": 316
     }
   }
 }

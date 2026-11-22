@@ -9,6 +9,7 @@
 -- (number or {left, top, right, bottom}) and `offset` {x, y}; a state's
 -- `offset` moves every layer that isn't `fixed`.
 local buttons = require("match3.buttons")
+local economy = require("economy")
 local resource_fill = color(13, 47, 41, 0xE1)
 
 return ui.skin{
@@ -41,6 +42,7 @@ return ui.skin{
         -- above are for titles, buttons and figures.
         body = {font = "lilita", em = 64, fill = "#5A4226"},
         caption = {font = "lilita", em = 64, fill = "#9A7A48", tracking = 2},
+        funding_tag = {font = "lilita", em = 12, fill = "#FFF1CB"},
         -- A popup's title is written on its parchment, not on a plate.
         popup_title = {extends = "body"},
         popup_subtitle = {extends = "caption"},
@@ -55,6 +57,7 @@ return ui.skin{
             {fill = "#FFEFBC", radius = 13, inset = 5},
         }}, variants = {
                 epoch_medal = buttons.epoch_medal(),
+                project_bar = buttons.project_bar(),
                 -- The rule under a popup's title: a thin line threaded through a diamond.
                 popup_rule = {normal = {layers = {
                     {fill = "#C9A464", radius = 1, inset = {0, 6, 0, 6}},
@@ -114,8 +117,12 @@ return ui.skin{
                 secondary = {normal = {set = {shadow = {fill = "#0A2A1E"}, body = {fill = "#1E5A3C"},
                                               face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
                 navigation_build = buttons.navigation("build"),
-                navigation_project = buttons.project(),
-                navigation_play = buttons.navigation("play", {text = "cream", em = 44}),
+                navigation_project = buttons.project(economy.unlocks),
+                navigation_play = buttons.project_play{
+                    normal = {fill = "#C55355", fill2 = "#862735"},
+                    hover = {fill = "#D76764", fill2 = "#9E3642"},
+                    pressed = {fill = "#AD424D", fill2 = "#702433"},
+                },
                 navigation_pause = buttons.navigation("pause"),
                 -- Confirm and cancel a placement beside the lifted building.
                 placement_confirm = {normal = {layers = {

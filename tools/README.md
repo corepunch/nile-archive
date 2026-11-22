@@ -69,6 +69,7 @@ are the guides.
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
 | `board_frame.py` | Reproduces the archived hex border and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |
 | `square_board_frame.py` | Bakes painted oak and textured sandstone into square perimeter modules and compares the eight winter materials | imported by `match3_atlas.py` or `python3 tools/square_board_frame.py --review build/square-frames.jpg` |
+| `project_thumbnails.py` | Crops twenty project paintings into each match-3 town bar atlas and renders its sandstone panel | `python3 tools/project_thumbnails.py christmas-market`; also accepts `relic-rush` |
 | `board_frame_decor.py` | Registers separately painted board decorations | imported by `board_frame.py` |
 | `hex_tile_art.py` | Checks sprites against the engine's flat-top tile face | `python3 tools/hex_tile_art.py <art.png> --mode fill --strict` |
 | `artkit.py` | Shared Pillow and NumPy helpers for the art scripts | imported |

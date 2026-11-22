@@ -172,6 +172,8 @@ shot("phone-leaderboard", "390x844", "--dialog leaderboard --gamecenter-demo --s
 shot("result-leaderboard", "480x900", "--victory --gamecenter-demo")
 shot("phone-card", "390x844", "--card 1 --safe-area 0,47,0,34")
 shot("island-village", "480x900", "--showcase")
+shot("starter-clearing", "480x900", "--opening-town --frames 8 --footprints")
+shot("starter-clearing-phone", "390x844", "--opening-town --frames 8 --safe-area 0,47,0,34")
 shot("footprints", "480x900", "--showcase --footprints")
 shot("phone-island-placement", "390x844", "--city 6 --placing focused --safe-area 0,47,0,34")
 
@@ -324,6 +326,8 @@ shot("square-build-progress-phone", "390x844", "--city 3 --frames 48 --safe-area
 shot("square-build-gate", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34")
 shot("epoch-projects", "480x900", "--build-review ready --frames 48")
 shot("epoch-projects-phone", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34")
+shot("epoch-purchase-choice", "480x900", "--build-review choice --frames 48")
+shot("epoch-purchase-choice-phone", "390x844", "--build-review choice --frames 48 --safe-area 0,47,0,34")
 shot("epoch-next", "390x844", "--epoch 1 --safe-area 0,47,0,34")
 shot("epoch-window", "480x900", "--epoch-window")
 shot("epoch-window-phone", "390x844", "--epoch 1 --epoch-window --epoch-award --safe-area 0,47,0,34")

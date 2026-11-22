@@ -472,6 +472,11 @@ static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int
 
 rect text_box(text_style s, rect box, vec2 align, const char *utf8) { return box_layout(s, box, align, utf8, -1, true, false); }
 
+rect text_box_ink(text_style s, rect box, vec2 align, const char *utf8)
+{
+    return box_layout(s, box, align, utf8, -1, true, true);
+}
+
 rect text_box_reveal(text_style s, rect box, vec2 align, const char *utf8, int visible)
 {
     return box_layout(s, box, align, utf8, visible, true, false);

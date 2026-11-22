@@ -162,6 +162,9 @@ shot("project-lumber-phone", "390x844", "--card 1 --safe-area 0,47,0,34")
 shot("project-skating-phone", "390x844", "--card 8 --safe-area 0,47,0,34")
 shot("epoch-projects", "480x900", "--build-review ready --frames 48")
 shot("epoch-projects-phone", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34")
+for advent = 2, 5 do
+    shot("advent-town-" .. advent, "480x900", "--epoch " .. (advent - 1))
+end
 shot("epoch-next", "390x844", "--epoch 4 --safe-area 0,47,0,34")
 shot("epoch-window", "480x900", "--epoch-window")
 shot("epoch-window-phone", "390x844", "--epoch 4 --epoch-window --epoch-award --safe-area 0,47,0,34")

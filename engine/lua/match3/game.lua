@@ -141,13 +141,17 @@ end
 -- passed: those stay on sale and never block. Installs on `island`: ladder,
 -- ladder_position, catalogue_order, next_step, next_build, ladder_blocked,
 -- campaign_count, reserved_cost, can_spend, can_buy, waived, set_waived and
--- waive_passed. `slots` is the number of spendable wallet slots.
+-- waive_passed. `slots` is the number of spendable wallet slots. Passing
+-- `levels_per_epoch` lets players choose among affordable projects in the
+-- current epoch while keeping the nominal milestones for rewards and balance.
+local PROJECTS_PER_EPOCH = 4
+
 local function wonder_kind(island, index)
     if island.wonder_kinds then return island.wonder_kinds[index] end
     return index - 1
 end
 
-function G.campaign_ladder(island, unlocks, journey, slots)
+function G.campaign_ladder(island, unlocks, journey, slots, levels_per_epoch)
     local M, WONDERS = island, island.WONDERS
     M.ladder, M.ladder_position = {}, {}
     local type_of = {}
@@ -162,7 +166,9 @@ function G.campaign_ladder(island, unlocks, journey, slots)
             optional[kind] = unlock.after
         else
             local n = #M.ladder + 1
-            M.ladder[n] = {kind=kind, unlock=unlock, after=unlock.after, story=index ~= nil}
+            local epoch = (n - 1) // PROJECTS_PER_EPOCH
+            local opens = levels_per_epoch and math.max(unlocks[1].after, epoch * levels_per_epoch)
+            M.ladder[n] = {kind=kind, unlock=unlock, after=unlock.after, story=index ~= nil, opens=opens}
             M.ladder_position[kind] = n
         end
     end
@@ -206,8 +212,12 @@ function G.campaign_ladder(island, unlocks, journey, slots)
         end
         local step = M.ladder[n]
         if M.owned(c, kind) > 0 then return "built" end
-        if step.after > level then return "later", step.after end
-        if not waived(c, n) and M.next_step(c, level) ~= kind then return "earlier" end
+        local opens = step.opens or step.after
+        if opens > level then return "later", opens end
+        if waived(c, n) then return false end
+        local _, first_pending = M.next_step(c, level)
+        local first_in_epoch = n - (n - 1) % PROJECTS_PER_EPOCH
+        if first_pending < (step.opens and first_in_epoch or n) then return "earlier" end
         return false
     end
 
@@ -584,7 +594,8 @@ function G.bind(R, over)
         local project = island.ladder[island.ladder_position[i]]
         if project and project.after > LEVELS then project = nil end
         local step = not built and project
-        local blocked = step and ladder_blocked(i, 0)
+        local blocked, opens
+        if step then blocked, opens = ladder_blocked(i, 0) end
         local needs_funding = step and not blocked and not can_build
         funding_play = blocked == "later" or needs_funding
         match3.set_popup_header(wonder_form, w.name)
@@ -617,7 +628,7 @@ function G.bind(R, over)
         assert(wonder_form:set_items("gets", gets))
         assert(wonder_form:set_items("price", price))
         local funding
-        if blocked == "later" then funding = W.catalogue.complete:format(step.after)
+        if blocked == "later" then funding = W.catalogue.complete:format(opens)
         elseif blocked == "earlier" then funding = W.catalogue.earlier
         elseif needs_funding and #missing == 0 then funding = W.catalogue.poor
         elseif not built and not can_build and not step then
@@ -1017,7 +1028,6 @@ function G.bind(R, over)
         end
     end
 
-    local PROJECTS_PER_EPOCH = 4
     local levels_per_epoch = W.epochs and LEVELS // #W.epochs
 
     function R.completed_epochs()
@@ -1068,7 +1078,7 @@ function G.bind(R, over)
         for i = 1, PROJECTS_PER_EPOCH do
             local step = island.ladder[(epoch - 1) * PROJECTS_PER_EPOCH + i]
             local kind = step.kind
-            local project = {id=kind, icon=R.buildings[kind + 1].sprite, state="locked"}
+            local project = {id=kind, key=island.buildings[kind + 1].key, icon=R.buildings[kind + 1].sprite, state="locked"}
             local blocked = ladder_blocked(kind, island.owned(c, kind))
             if blocked == "built" then project.state = "built"
             elseif not blocked then
@@ -1428,9 +1438,17 @@ function G.bind(R, over)
     local function result_destination(first, level, wallet)
         if not first then return "town" end
         if level >= LEVELS then return "complete" end
-        local kind, position = island.next_step(R.island, level)
-        if kind and (island.ladder[position].after == level or island.can_buy(R.island, wallet, level, kind)) then
-            return "build"
+        local c, ladder = R.island, island.ladder
+        local _, position = island.next_step(c, level)
+        if not position then return "play" end
+        local last = ladder[position].opens and ((position - 1) // PROJECTS_PER_EPOCH + 1) * PROJECTS_PER_EPOCH or position
+        local waived = island.waived(c)
+        for n = position, math.min(last, #ladder) do
+            local step = ladder[n]
+            if not waived[n] and (island.can_buy(c, wallet, level, step.kind)
+                or step.after == level and not island.ladder_blocked(c, level, step.kind)) then
+                return "build"
+            end
         end
         return "play"
     end

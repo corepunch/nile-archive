@@ -1,7 +1,7 @@
 local bonuses = require("match3.bonuses")
 
 -- Three wallet slots. Score-only pieces have no wallet yield.
--- The sequel sets the construction order. The amphora is an opening score piece.
+-- The sequel sets the catalogue order. The amphora is an opening score piece.
 local E = {
     GOLD=1, PROVISIONS=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
@@ -32,8 +32,8 @@ E.bonuses = B
 
 -- The twenty purchases in the Windows sequel's epochs.xml. Stable catalogue keys
 -- retain the island's original artwork and old saves. The eight bonus IDs use
--- their first-game identities. One purchase opens every five expeditions,
--- four to each of the five epochs; first_level is the first board it supplies.
+-- their first-game identities. The five-expedition cadence sets the target
+-- purchase dates for balance; first_level is the first board each can supply.
 E.unlocks = {
     {building="well", rome="city_well", tile=5, first_level=2, key="water", name="Water buckets", kind=3, slot=E.PROVISIONS, amount=3},
     {building="log_cabin", rome="city_hunter", tile=600, first_level=7, bonus=B.hammer},

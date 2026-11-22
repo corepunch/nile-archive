@@ -1191,6 +1191,14 @@ function text.draw(s, pos, pivot, utf8) end
 ---@return rect
 function text.box(s, box, align, utf8) end
 
+---Wrapped text as in text.box, aligned vertically by the visible lettering.
+---@param s text_style
+---@param box rect
+---@param align vec2
+---@param utf8 string
+---@return rect
+function text.box_ink(s, box, align, utf8) end
+
 ---text.box showing only the first visible codepoints, every line already in its final place.
 ---@param s text_style
 ---@param box rect

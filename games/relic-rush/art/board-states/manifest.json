@@ -339,6 +339,8 @@
     "data/city/buildings/well.png",
     "data/city/buildings/workshop.png",
     "data/city/epochs/medals.png",
+    "data/city/epochs/projects.jpg",
+    "data/city/epochs/town-bar.jpg",
     "data/city/island.jpg",
     "data/city/roads.png",
     "data/common/fonts/LilitaOne-Regular.ttf",
@@ -1951,6 +1953,47 @@
         "runtime": "data/board/backs/fountain.jpg",
         "sha256": "89fbd2ed179c15546ee075c6fd2a59a4c280da52e21f5ca7c61cead65e16c76d"
       }
+    }
+  },
+  "town_bar_panel": {
+    "source": "art/papyrus-board/stone-grain.png",
+    "prompt": "art/papyrus-board/stone-grain-prompt.txt",
+    "crop": [0, 445, 1254, 759],
+    "runtime": "data/city/epochs/town-bar.jpg",
+    "state": "One sandstone sill behind four rounded building insets and a rounded terracotta Next Level button with soft drop shadows, extending to the physical bottom edge.",
+    "review": "shot epoch-projects and shot epoch-projects-phone"
+  },
+  "project_thumbnails": {
+    "runtime": "data/city/epochs/projects.jpg",
+    "cell": 192,
+    "layout": "Each epoch is one row of four full-color squares, in purchase order. Crop squares use the full width of each construction backdrop.",
+    "states": {
+      "built": "dimmed original color crop with the existing shop-built jade checkmark centered over it",
+      "ready": "original color with the existing particle trail",
+      "funding": "original color with the skin's rounded clay-red Need Funds tag and drop shadow along the lower edge",
+      "locked": "original color"
+    },
+    "crop_top": {
+      "well": 210,
+      "log_cabin": 120,
+      "workshop": 75,
+      "camp": 125,
+      "market": 130,
+      "trading_post": 100,
+      "water_mill": 115,
+      "clock_tower": 22,
+      "gateway": 30,
+      "lodge": 80,
+      "amphitheater": 75,
+      "map_room": 110,
+      "archive": 85,
+      "lighthouse": 35,
+      "beached_ship": 124,
+      "observatory": 100,
+      "aviary": 80,
+      "museum": 110,
+      "temple": 85,
+      "fountain": 130
     }
   }
 }

@@ -9,7 +9,7 @@ Cradle of Rome 2 (GameTop Windows edition, data in `reference/cradle-of-rome-2/r
 | Loop | Rome 2 | Our games |
 | --- | --- | --- |
 | **The board** | Clear every marble tablet before the time runs out. Matched coins, food and materials go to the wallet. | Clear every plaque or pane within a move budget. Matched pieces pay Coins/Tokens, Food/Treats and Supplies/Materials. |
-| **The purchase** | Twenty buildings in five epochs of four. Each pays off on the board: a richer piece or one of eight tools. | The same twenty rewards in the same order, one purchase every five levels, four per epoch (Relic Rush) or Advent (Christmas Market). |
+| **The purchase** | Twenty buildings in five epochs of four. Players can choose any affordable project in the current epoch. Each adds a richer piece or one of eight tools. | Four projects per epoch or Advent. Relic Rush offers any affordable project in the active epoch. Christmas Market opens projects at their scheduled clears. |
 | **The citizen** | Sixteen buildings each arm one optional feat. Meeting it brings a citizen, upgrades the building and adds income every level or makes its tool come more often. | The same sixteen feats upgrade the building through the character who runs it (see [Upgrades](#upgrades-romes-citizens-kept-by-the-cast-we-know)). |
 
 Both games count moves. The campaign advances through board clears and construction, with short instructions on the board and project card.
@@ -29,7 +29,7 @@ The player's minute-to-minute loop:
 
 The campaign's shape:
 
-| | Levels | Purchases | Construction milestones | Last level |
+| | Levels | Balance targets | Construction milestones | Last level |
 | --- | --- | --- | --- | --- |
 | Epoch I / First Advent | 1–20 | after 1, 6, 11, 16 | two | 20 |
 | Epoch II / Second Advent | 21–40 | after 21, 26, 31, 36 | two | 40 |
@@ -37,8 +37,8 @@ The campaign's shape:
 | Epoch IV / Fourth Advent | 61–80 | after 61, 66, 71, 76 | two | 80 |
 | Epoch V / Christmas | 81–100 | after 81, 86, 91, 96 | two | 100 |
 
-- **Purchases open every five levels** (`after` in `economy.unlocks`). The first is affordable after level 1, so the player builds within a minute.
-- **Projects follow purchase order.** The town row advances after the last level and all four purchases in the phase are complete. Earlier purchases waived by a migrated save do not hold the row back. Players can keep clearing boards while raising funds. Confirming a purchase enables its reward on eligible boards.
+- **Construction begins after level 1.** The five-level cadence (`after` in `economy.unlocks`) sets the price targets and reward milestones. Relic Rush makes all four projects in the current epoch available at once, with separate price checks.
+- **Complete the phase to advance.** The town row advances after the last level and all four purchases in the phase are complete. Earlier purchases waived by a migrated save do not hold the row back. Players can keep clearing boards while raising funds. Confirming a purchase enables its reward on eligible boards.
 - **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a farrier's hammer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
 - **Regions open with the phase.** After 20, 40, 60 and 80 clears and the four projects in each phase, fog lifts as the next phase opens. Completing the final phase opens the last district. Older saves keep land they already opened.
@@ -66,7 +66,7 @@ A 12-move median gets 23 moves in Relic Rush and 15 in Christmas Market. Slow ru
 
 - **Keep Rome's currency mix.** Each purchase uses the currency mix of its counterpart in the GameTop Windows `epochs.xml`. Only the price amounts are fitted.
 - **Fit to the bot's income without optional upgrades.** Players who earn upgrades build sooner and have more resources for decorations.
-- **Fund each purchase at its unlock.** The income forecast and the fixed-seed `campaign_play` test both require all twenty purchases on their scheduled levels with zero replays for income. Failed board attempts can be retried.
+- **Fund each purchase by its target clear.** The income forecast and the fixed-seed `campaign_play` test both require all twenty purchases by their scheduled levels with zero replays for income. Failed board attempts can be retried.
 - **Keep total prices nondecreasing.** The fitter caps any early price spike at the next purchase's total while retaining every currency it uses.
 - **Refit after any change** to boards, piece yields, unlock order or upgrade perks, and commit the regenerated catalogue.
 

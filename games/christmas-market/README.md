@@ -93,7 +93,7 @@ come to reopen starts there. The stall can be moved for free. [Opening market](d
 
 Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
-The bottom row shows the current Advent or Christmas with four projects and Play. Tap any project to see its price, shortfall or level requirement. Locked projects appear in gray, affordable projects have a trail, and completed projects have a checkmark. Play another wish to earn the missing resources. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
+The bottom bar shows four full-color project paintings for the current Advent or Christmas, followed by Next Level. Tap a project to see its price, shortfall or level requirement. A Need Funds tag marks a shortfall, a trail marks an affordable project, and a green checkmark marks a completed one. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
 Continue from the main menu shows the Advent and Christmas medals. Play resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
 

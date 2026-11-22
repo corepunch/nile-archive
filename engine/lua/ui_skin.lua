@@ -301,8 +301,8 @@ function Skin:paint(kind, box, st, node)
 end
 
 -- The caption sits in the box less the look's inset and `text_inset` (a number
--- or {x, y}), moved with the look; `text_align` places it and `text_fit`
--- shrinks a single line that would not fit.
+-- or {x, y}), moved with the look. `text_align` places it, `text_wrap` allows
+-- multiple lines, and `text_fit` shrinks a single line that would not fit.
 function Skin:paint_caption(kind, box, caption, st, node, align)
     local name, em, look, spec = caption_for(self, kind, node, st)
     spec = spec or {}
@@ -313,7 +313,9 @@ function Skin:paint_caption(kind, box, caption, st, node, align)
     local out = transformed(self, inner)
     local place = align or (spec.text_align and vec(spec.text_align)) or vec2(.5, .5)
     local s = make_style(self, name, em, true)
-    if spec.text_fit then text.fit(s, out, place, caption) else text.inside(s, out, place, caption) end
+    if spec.text_wrap then text.box_ink(s, out, place, caption)
+    elseif spec.text_fit then text.fit(s, out, place, caption)
+    else text.inside(s, out, place, caption) end
 end
 
 function Skin:paint_panel(box, node) self:paint('panel', box, nil, node) end

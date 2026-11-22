@@ -34,6 +34,20 @@ medal uses the original colors.
 
 ## Construction backdrops
 
+The town bar shows four 192 px square details from the winter paintings in
+rounded sandstone frames with soft shadows. The fifth slot is the red enamel
+Next Level button. A Need Funds tag marks a shortfall, the existing particle
+trail marks affordable projects, and a green checkmark overlays the dimmed
+painting of a completed project. Reduce Motion uses a steady glow. Hover
+brightens the bevel or enamel, and the button sinks towards its shadow on press.
+The form draws keyboard focus.
+
+The [art manifest](../art/manifest.json) records the five rows of painted
+thumbnails and the shared sandstone crop. Rebuild both runtime files with
+`python3 tools/project_thumbnails.py christmas-market`. Review the live bar at
+both phone sizes with `shot epoch-projects` and the later Advents with
+`shot advent-town`.
+
 The campaign's board shows the latest confirmed construction with a painting
 for that wish. On the first visit to a newly unlocked backdrop, the full
 portrait holds for 0.9 seconds before the board arrives. Both states use the

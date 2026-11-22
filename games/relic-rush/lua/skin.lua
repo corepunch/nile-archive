@@ -9,6 +9,7 @@
 -- `height_ratio` (the top fraction, taken before the inset); a state's
 -- `offset` moves every layer that isn't `fixed`.
 local buttons = require("match3.buttons")
+local economy = require("economy")
 local resource_fill = color(13, 47, 41, 0xD7)
 
 local rgb = color.hex
@@ -18,6 +19,7 @@ local close_faces = {
     selected = {top=rgb(0xF36B49), bottom=rgb(0xB13224)},
     pressed  = {top=rgb(0x982D25), bottom=rgb(0xC54936)},
 }
+
 
 return ui.skin{
     fonts = {
@@ -51,6 +53,7 @@ return ui.skin{
         -- above are for titles, buttons and figures.
         body = {font = "lilita", em = 64, fill = "#5A4226"},
         caption = {font = "lilita", em = 64, fill = "#9A7A48", tracking = 2},
+        funding_tag = {font = "lilita", em = 12, fill = "#FFF1CB"},
         -- A popup's title is written on its parchment, not on a plate.
         popup_title = {extends = "body"},
         popup_subtitle = {extends = "caption"},
@@ -67,6 +70,7 @@ return ui.skin{
             }},
             variants = {
                 epoch_medal = buttons.epoch_medal(),
+                project_bar = buttons.project_bar(),
                 -- The rule under a popup's title: a thin line threaded through a diamond.
                 popup_rule = {normal = {layers = {
                     {fill = "#C9A464", radius = 1, inset = {0, 6, 0, 6}},
@@ -107,8 +111,8 @@ return ui.skin{
             variants = {
                 popup_close = buttons.navigation("close", nil, close_faces),
                 navigation_build=buttons.navigation("build"),
-                navigation_project = buttons.project(),
-                navigation_play = buttons.navigation("play", {text = "cream", em = 28, text_inset = {45, 0}, text_align = {.5, .45}, text_fit = true}),
+                navigation_project = buttons.project(economy.unlocks),
+                navigation_play = buttons.project_play(),
                 navigation_pause = buttons.navigation("pause"),
                 flat = {normal = {layers = {}}},   -- a text-only action, such as CLOSE
                 -- Secondary actions (Restart, Quit) in carved wood, beside the jade primary.

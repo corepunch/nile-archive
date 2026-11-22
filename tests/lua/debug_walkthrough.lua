@@ -2,6 +2,7 @@
 local rules, island, journey = require('rules'), require('island'), require('journey')
 local R = require('state')
 local economy = require('economy')
+local relic = testing.game == "relic-rush"
 require('main')
 R.test_mode, R.quiet, R.overlay, R.on_island = true, true, R.OV_NONE, false
 R.island = city.new(); island.island_setup(R.island)
@@ -27,7 +28,8 @@ for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
 local phase, projects = R.epoch_projects()
 check(phase == R.words.epochs[1] and #projects == 4, "the current phase has four projects")
-check(projects[1].state == "ready" and projects[2].state == "locked", "the earned purchase and a future purchase look different")
+check(projects[1].state == "ready" and projects[2].state == (relic and "ready" or "locked"),
+    "project states reflect the game's purchase rules")
 local funded_wallet = R.prog.wallet
 R.prog.wallet = purse(5)
 local _, funding_projects = R.epoch_projects()
@@ -37,11 +39,11 @@ R.prog.wallet = funded_wallet
 for i, project in ipairs(projects) do
     local bounds = R.town.project_boxes[project.id]
     check(project.id == island.ladder[i].kind and bounds:max().x < R.town.buttons.play.x,
-        "projects follow construction order before Play")
+        "projects appear in catalogue order before Play")
 end
 R.open_project(projects[2].id)
 check(R.inspect == projects[2].id and R.inspect_item == -1 and R.overlay == R.OV_WONDER,
-    "a locked project opens its own details")
+    "each project opens its own details")
 R.overlay = R.OV_NONE
 check(R.debug_advance_town() and island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'town action confirms the earned building')
 local _, built_projects = R.epoch_projects()
@@ -53,7 +55,6 @@ R.prog.level = 1
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
 
-local relic = testing.game == "relic-rush"
 if not relic then
     local theo = R.project_keeper(island.kinds.lumber)
     check(theo.id == "theo" and theo == R.project_keeper(island.kinds.rink)
@@ -67,6 +68,7 @@ R.quiet = false
 R.story_tick()
 check(not R.story_current and not story.active(), 'older campaign saves cannot replay their recap')
 R.quiet = true
+R.prog.wallet = purse(0, 0, 0, 1)
 R.g = R.make_board(1, 2)
 R.on_island = false
 check(R.debug_skip_level(), 'win an ordinary board')
@@ -74,6 +76,7 @@ check(R.result_action(true, purse()) == "COLLECT & PLAY NEXT", 'an ordinary resu
 R.claim_reward()
 check(R.prog.level == 2 and R.g.level == 2 and not R.on_island and R.overlay == R.OV_NONE,
     'collecting an ordinary win starts the next board directly')
+R.prog.wallet = funded_wallet
 R.on_island = true
 
 local function reward_piece(g, reward)

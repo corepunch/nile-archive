@@ -6,7 +6,8 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 
-local frames, wait, partner = 0, 0, -1
+local frames, wait, partner, advents = 0, 0, -1, 0
+local completion_seen = false
 local due = 0
 for _, step in ipairs(island.ladder) do
     if step.after <= rules.LEVELS then due = due + 1 end
@@ -28,14 +29,24 @@ function R.campaign_smoke()
     end
     local c = R.island
     if R.overlay == R.OV_EPOCH and R.dialog_settled() then
+        assert(R.epoch_award == advents + 1 and R.completed_epochs() == R.epoch_award,
+            "each completed Advent shows its award once, in order")
+        advents = R.epoch_award
         assert(c:zone_open(R.epoch_award), "the seasonal award opens its district")
         app.inject_click(R.epoch_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.overlay == R.OV_COMPLETE and R.dialog_settled() then
+        completion_seen = R.prog.epoch_seen == #R.words.epochs
         app.inject_click(R.complete_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.prog.level == rules.LEVELS and island.campaign_count(c) == due
         and R.on_island and R.overlay == R.OV_NONE then
-        print(("campaign smoke passed: %d winter wishes, %d stalls"):format(
-            R.prog.level, island.campaign_count(c)))
+        assert(advents == #R.words.epochs and R.prog.epoch_seen == advents, "the final Advent is acknowledged")
+        if not completion_seen then
+            app.inject_click(R.town.buttons.play)
+            wait = 10
+            return
+        end
+        print(("campaign smoke passed: %d winter wishes, %d stalls, %d Advents"):format(
+            R.prog.level, island.campaign_count(c), advents))
         app.quit()
     elseif R.overlay == R.OV_RESULT then
         local claim = R.result_form.boxes.claim

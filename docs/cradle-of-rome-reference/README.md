@@ -165,6 +165,13 @@ construction unlocks, the exact credits by tile, and Adventure multipliers.
 The source files are `settings/scenes/shop/epochs.xml` and
 `settings/scenes/game/{game_balls,field_balls,game_settings}.xml`.
 
+Awem's guide lets players select the blueprint for any project they can
+afford in the shop. The GameTop data defines separate blueprint thresholds
+and prices for each of the four projects in an epoch. For example, the
+Hunter's Hut and Sawmill both cost Gold and Food. A wallet with 3,000 Gold
+and 2,500 Food can choose either, and a wallet with 4,000 Gold and 4,000 Food
+covers both. [Awem's construction guide](https://support.awem.com/hc/en-gb/articles/200686242-Building-the-City)
+
 | First epoch | Gold | Supplies | Food | Unlock |
 | --- | ---: | ---: | ---: | --- |
 | Well | 500 | 0 | 0 | Water bucket, 3 Food |

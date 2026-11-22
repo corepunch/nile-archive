@@ -49,8 +49,7 @@ do
     check(island.island_place_next(c,bank,1,0),'confirm the well')
     check(R.make_board(1,19).resource_yields[3]==economy.unlock_of("well"),'water follows construction')
     check(R.make_board(1,19).backdrop=="well",'confirming the well unlocks its backdrop')
-    check(not island.island_place_next(c,bank,5,0),'the cabin waits for clear six')
-    check(island.island_place_next(c,bank,6,0),'confirm the cabin')
+    check(island.island_place_next(c,bank,6,0),'confirm the cabin at its balance milestone')
     local first = R.make_board(6,19)
     check(first.bonus_debut == economy.bonuses.hammer and first.tool_meter[1]==0,'the cabin debuts Hammer')
     local workshop = island.kinds.workshop
@@ -136,6 +135,51 @@ do
         and lodge.resource_yields[3].amount == 6, "the lodge adds only the Hourglass")
     check(map_room.bonus_debut == economy.bonuses.lightning and map_room.resource_yields[0].key == "helmet"
         and ring.resource_yields[0].key == "ring", "only the archive replaces helmets with rings")
+end
+
+-- Buy a later project from the town card's placement path with a wallet that
+-- covers either project by itself. Placement spends the chosen price once.
+do
+    local old_city, old_progress, old_town = R.island, R.prog, R.town
+    local old_buildings, old_placement = R.buildings, R.placement_form
+    local old_test_mode, old_motion = R.test_mode, R.reduced_motion
+    local c = city.new()
+    island.island_setup(c)
+    local cabin, workshop = island.kinds.log_cabin, island.kinds.workshop
+    local well_price = island.buildings[island.kinds.well + 1].cost
+    local workshop_price = island.buildings[workshop + 1].cost
+    local bank = well_price + workshop_price + purse(0, 0, 0, 10)
+    check(not island.can_buy(c, bank, 0, workshop), 'the first clear opens construction')
+    check(island.island_place_next(c, bank, 1, 0), 'build the first resource producer')
+    R.island, R.prog = c, {level=10, wallet=bank}
+    R.buildings, R.test_mode, R.reduced_motion = island.buildings, true, true
+    R.town_setup()
+    local _, projects = R.epoch_projects()
+    check(projects[2].id == cabin and projects[2].state == "ready"
+        and projects[3].id == workshop and projects[3].state == "ready", 'either project is affordable before clear eleven')
+    check(R.town:begin(workshop, false), 'select the workshop while the cabin is unbuilt')
+    check(R.prog.wallet:covers(workshop_price) and island.owned(c, workshop) == 0, 'preview leaves the wallet and ownership alone')
+    check(R.town:confirm() and island.owned(c, workshop) == 1, 'confirm the chosen project first')
+    local _, remaining = R.epoch_projects()
+    check(remaining[2].state == "funding" and remaining[3].state == "built",
+        'the bar shows the first project shortfall and the chosen project complete')
+    check(bank[1] == 0 and bank[2] == 0 and bank[3] == 0, 'the selected project charges its exact price')
+    check(not island.can_buy(c, workshop_price, 10, workshop), 'an owned project cannot be bought again')
+    local later = island.kinds.trading_post
+    local blocked, opens = island.ladder_blocked(c, 19, later)
+    check(blocked == "later" and opens == 20, 'next epoch waits for the last clear')
+    check(island.ladder_blocked(c, 20, later) == "earlier", 'next epoch waits for unfinished projects')
+    local first_epoch = purse(9000, 9000, 9000, 20)
+    check(island.island_place_next(c, first_epoch, 20, 0) and island.island_place_next(c, first_epoch, 20, 0),
+        'finish both remaining projects after the out-of-order purchase')
+    R.prog.level, R.prog.wallet = 21, island.buildings[later + 1].cost + purse(0, 0, 0, 21)
+    local _, next_epoch = R.epoch_projects()
+    check(next_epoch[1].state == "funding" and next_epoch[2].id == later and next_epoch[2].state == "ready",
+        'later projects can be ready when the first is too expensive')
+    check(R.result_action(true, purse()) == R.words.result.visit, 'a later affordable project routes a win to town')
+    R.island, R.prog, R.town = old_city, old_progress, old_town
+    R.buildings, R.placement_form = old_buildings, old_placement
+    R.test_mode, R.reduced_motion = old_test_mode, old_motion
 end
 
 -- Like Cradle of Rome's ladder, each new piece pays toward the next purchase.

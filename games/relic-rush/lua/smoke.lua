@@ -296,9 +296,8 @@ function R.smoke()
         app.inject_click(R.town.project_boxes[island.kinds.log_cabin]:center()); stage = 44
     elseif stage == 44 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         assert(R.inspect == island.kinds.log_cabin and R.wonder_form.boxes.price and R.wonder_form:get("action") == R.words.card.play,
-            "a future project opens its own price and Play action")
-        local gate = island.ladder[island.ladder_position[R.inspect]].after
-        assert(R.wonder_form:get("notice") == R.words.catalogue.complete:format(gate), "a locked project explains its level gate")
+            "an underfunded project opens its own resource figures and Play action")
+        assert(R.wonder_form:get("price_caption") == R.words.card.missing, "an underfunded project shows its shortfall")
         app.inject_click(R.wonder_form.boxes.action:center()); stage = 45
     elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and R.g.moves == shop.resume_moves, "returning from island must preserve the suspended attempt")

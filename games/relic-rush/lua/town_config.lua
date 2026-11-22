@@ -17,9 +17,12 @@ return {
     },
     bottom = {
         layout = "projects",
-        bottom = 9,
-        height = 120,
-        margin = 8,
+        bar_role = "project_bar",
+        play_text = "Next\nLevel",
+        gap = 5,
+        bottom = 12,
+        bar_top_padding = 12,
+        margin = 6,
     },
     bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "bubble_face", edge = "bubble_edge"},
     texts = {

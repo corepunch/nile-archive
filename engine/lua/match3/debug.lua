@@ -210,6 +210,12 @@ function D.bind(R, W)
             island_with(0)
             R.prog.level = island.ladder[1].after
             R.prog.wallet = a == "short" and purse(15, 0, 0, R.prog.level) or wallet(340, R.prog.level)
+            if a == "choice" then
+                island_with(0, 1)
+                local later = island.ladder[3]
+                R.prog.level = later.after - 1
+                R.prog.wallet = R.buildings[later.kind + 1].cost + purse(0, 0, 0, R.prog.level)
+            end
             R.on_island, R.toast_time = true, 0
             if a == "short" then
                 R.inspect, R.inspect_item, R.overlay = island.ladder[1].kind, -1, R.OV_WONDER

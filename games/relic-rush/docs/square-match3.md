@@ -58,10 +58,12 @@ Amphoras are playable score pieces from the opening. See the
 [twenty prices and unlocks](../README.md#buildings).
 
 The five epochs have four projects each. The town shows its current four
-projects followed by Play, and advances when its levels and projects are complete.
-Gray project buttons open the price and requirements. An earned project shows
-funding progress until its price is met, then a particle trail circles it. Open placement
-from the card, choose a site, then confirm to pay once. The card explains the project, names its board reward and shows the cost or shortfall. The card links to the
+projects followed by Next Level, and advances when its levels and projects are complete.
+After the first expedition, each project in the current epoch can be built as soon
+as its own price is covered. Tap a painting to see its price or shortfall and
+board reward. All project paintings keep their color. A Need Funds tag marks a shortfall,
+a moving trail marks an affordable project, and a jade checkmark marks a completed one.
+Open placement from the card, choose a site, then confirm to pay once. The card links to the
 decoration shop. After level 100, a pending purchase can offer a replay for
 resources.
 
@@ -120,8 +122,8 @@ Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 `python3 tools/balance.py relic-rush` fits the twenty purchase prices to the
 bot's measured income: the balance sample tries 40 deals per board and
 applies the average income per win to the purchase order. With the fitted
-prices the expected campaign needs no replays, and each purchase is
-affordable on its first eligible clear. Earnings vary with the deals and
+prices the expected campaign needs no replays, with resources for each purchase
+by its target clear. Earnings vary with the deals and
 matches. The seeded campaign check funds and places every ladder purchase
 in order from the first win of each board.
 

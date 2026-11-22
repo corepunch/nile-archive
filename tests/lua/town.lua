@@ -48,6 +48,10 @@ for _, game in ipairs{"relic-rush", "christmas-market"} do
     rawset(app, "screen", screen)
     actions = form.nodes.actions.children
     play = form.boxes[actions[5].id]
+    if game == "relic-rush" then
+        near(play.w, play.h, "Next Level is square on a narrow phone")
+        check(not form.nodes.phase and actions[5].text == "Next\nLevel", "the bar labels its next-level action on two lines")
+    end
     check(view.project_boxes[5].x >= 0 and play:max().x < 390 and play:max().y < 810 and play.w >= 44,
         "all five targets fit the narrow phone's safe area")
 end

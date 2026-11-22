@@ -48,10 +48,11 @@ Reduce Motion hides the trail.
 ## Build
 
 First Advent through Fourth Advent and Christmas each have four projects.
-The bottom row shows those projects followed by Play, and advances when the
+The bottom bar shows the four project paintings followed by Next Level, and advances when the
 current phase's levels and projects are complete. Tap any project to see its
-keeper, board reward, price and requirements. A particle trail circles it when
-its level requirement and price are met. Open placement from the card, choose a
+keeper, board reward, price and requirements. Need Funds marks a shortfall,
+a particle trail marks a project you can build, and a green checkmark marks
+a completed project. Open placement from the card, choose a
 site, then confirm to pay once. The card links to the decoration shop.
 After level 100, a pending purchase can offer a replay for resources.
 
