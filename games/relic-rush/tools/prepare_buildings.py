@@ -66,10 +66,15 @@ def main():
     (ART / 'manifest.json').write_text(json.dumps(dict(source=registry['master'], generator=registry['scene_generator'],
         registration='art/building-catalogue/registration.json', camera=registry['camera'],
         paintover=registry.get('paintover'), items=entries), indent=2) + '\n')
+    # Translation catalogues are text, checked by tools/l10n.py, as in check_art_catalogue.py.
+    # The manifest keeps its hand formatting unless the inventory really changed.
     inventory = ROOT / 'art/board-states/manifest.json'
     board = json.loads(inventory.read_text())
-    board['runtime_inventory'] = sorted(str(p.relative_to(ROOT)) for p in (ROOT / 'data').rglob('*') if p.is_file())
-    inventory.write_text(json.dumps(board, indent=2) + '\n')
+    runtime = sorted(str(p.relative_to(ROOT)) for p in (ROOT / 'data').rglob('*')
+                     if p.is_file() and 'common/l10n' not in p.relative_to(ROOT).as_posix())
+    if board['runtime_inventory'] != runtime:
+        board['runtime_inventory'] = runtime
+        inventory.write_text(json.dumps(board, indent=2) + '\n')
     print(f'Relic Rush catalogue: {len(entries)} buildings')
 
 

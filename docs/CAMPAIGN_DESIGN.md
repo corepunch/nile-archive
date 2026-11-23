@@ -60,7 +60,7 @@ The move fit uses 40 starts per board with the pieces and tools earned by that l
 
 Line gems and rainbow gems are why the boards can be covered: a line gem sweeps a whole row or column of plaques, so a fully covered board takes the bot 20 to 34 moves where it took about 110 before the gems. When the rules change what a move clears, fill and trim again before fitting budgets and prices.
 
-A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas at Bellmere move budgets](../games/christmas-market/docs/level-moves.md)
+A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins, including the [finale](MATCH3_ENGINE.md#finale-leftover-moves) that turns leftover moves into line gems. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas at Bellmere move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 

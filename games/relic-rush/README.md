@@ -234,26 +234,26 @@ Each epoch offers four projects. Once the first expedition is complete, you can 
 
 | Target clear | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
-| 1 | Spring well (Well) | Water buckets | 35 / 0 / 0 |
-| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 655 / 240 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 1515 / 565 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 1680 / 640 / 725 |
-| 21 | Jungle market (Farm) | Ration jars | 1580 / 595 / 880 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 1180 / 990 / 890 |
-| 31 | Water mill (Mill) | Grain bundles | 960 / 1175 / 1145 |
-| 36 | Tide clock tower (Thermae) | Shield | 880 / 1270 / 1140 |
-| 41 | Harbour plaza (Port) | Shrimp | 945 / 1455 / 1265 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass | 895 / 1710 / 1170 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 850 / 1785 / 1150 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning | 915 / 1760 / 1120 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 930 / 1775 / 1100 |
-| 66 | Lighthouse | Plus | 1020 / 1730 / 1060 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 1165 / 1845 / 1150 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1280 / 1855 / 1160 |
-| 81 | Great aviary (Pantheon) | Sandals | 1585 / 2250 / 1425 |
-| 86 | Relic museum (Theatre) | Harps | 1755 / 2215 / 1455 |
-| 91 | Temple of the Sun (Forum) | Star | 2045 / 2400 / 1525 |
-| 96 | Jade fountain (Fountain) | Emeralds | 2120 / 2375 / 1485 |
+| 1 | Spring well (Well) | Water buckets | 70 / 0 / 0 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 1195 / 430 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 2665 / 1000 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 3095 / 1165 / 1380 |
+| 21 | Jungle market (Farm) | Ration jars | 2910 / 1090 / 1650 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 2160 / 1850 / 1650 |
+| 31 | Water mill (Mill) | Grain bundles | 1860 / 2235 / 2180 |
+| 36 | Tide clock tower (Thermae) | Shield | 1685 / 2410 / 2190 |
+| 41 | Harbour plaza (Port) | Shrimp | 1765 / 2705 / 2375 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass | 1690 / 3325 / 2315 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 1625 / 3450 / 2260 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning | 1780 / 3465 / 2205 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 1820 / 3460 / 2175 |
+| 66 | Lighthouse | Plus | 1995 / 3360 / 2105 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 2250 / 3620 / 2255 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 2470 / 3540 / 2225 |
+| 81 | Great aviary (Pantheon) | Sandals | 2955 / 4145 / 2615 |
+| 86 | Relic museum (Theatre) | Harps | 3330 / 4285 / 2720 |
+| 91 | Temple of the Sun (Forum) | Star | 3790 / 4495 / 2825 |
+| 96 | Jade fountain (Fountain) | Emeralds | 3910 / 4415 / 2795 |
 
 A new game starts with the crew's free Supply tent in the center of the Harbor glade clearing. It moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Pick a row with a price you can cover, then choose a location and
 confirm. Cancelling is free. The resources

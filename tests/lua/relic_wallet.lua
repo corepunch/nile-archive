@@ -3,6 +3,12 @@ local economy=require("economy")
 local island=require("island")
 local R=require("state")
 require("main")
+-- Enough of every currency for the whole purchase ladder at its fitted prices.
+local function ladder_bank(gems)
+    local bank=purse(0,0,0,gems)
+    for _,step in ipairs(island.ladder) do bank=bank+island.buildings[step.kind+1].cost end
+    return bank
+end
 -- A plain cell inside a playable 3×3 area, for tool checks.
 local function open_cell(g)
     for i=0,rules.CELLS-1 do
@@ -32,7 +38,7 @@ end
 -- Confirmed restorations persist across eligible boards without taking story slots.
 do
     R.island=city.new();island.island_setup(R.island)
-    local bank=purse(9000,9000,9000,90)
+    local bank=ladder_bank(90)
     local locked=R.make_board(1,19)
     local match=rules.new_match()
     check(next(locked.tool_meter) == nil, 'all bonus sockets require confirmed construction')
@@ -277,7 +283,7 @@ end
 do
     local saved_island, saved_prog = R.island, R.prog
     local c = city.new(); island.island_setup(c)
-    local bank = purse(5000, 5000, 5000, 90)
+    local bank = ladder_bank(90)
     for z = 1, 5 do c:unlock(z, bank) end
     local market = island.kinds.market
     for _, n in ipairs{1, 4} do   -- the well and the camp, the story buildings before the market
@@ -378,7 +384,7 @@ do
     R.island=city.new();island.island_setup(R.island)
     R.wonders=island.wonders
     R.prog={level=16,seed=1,wallet=purse(),story_seen={}}
-    local bank=purse(9000,9000,9000,12)
+    local bank=ladder_bank(12)
     check(island.island_place_next(R.island,bank,1,0) and island.island_place_next(R.island,bank,6,0),
         'legacy well and cabin already placed')
     check(save.write('relic-resource-legacy',function(s)
