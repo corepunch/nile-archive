@@ -26,7 +26,7 @@
         159.719
       ],
       "base_width": 273.205,
-      "gold": 2045,
+      "gold": 2060,
       "stars": 0,
       "runtime": "data/city/buildings/camp.png",
       "image": [
@@ -36,9 +36,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        2045,
-        775,
-        890
+        2060,
+        760,
+        880
       ],
       "about": "The camp gives excavation crews a place to sort supplies, mend tools and cook between shifts.",
       "road": false,
@@ -66,7 +66,7 @@
         191.175
       ],
       "base_width": 273.205,
-      "gold": 50,
+      "gold": 45,
       "stars": 0,
       "runtime": "data/city/buildings/well.png",
       "image": [
@@ -76,7 +76,7 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        50,
+        45,
         0,
         0
       ],
@@ -106,7 +106,7 @@
         225.83
       ],
       "base_width": 359.808,
-      "gold": 1820,
+      "gold": 1825,
       "stars": 0,
       "runtime": "data/city/buildings/workshop.png",
       "image": [
@@ -116,8 +116,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story restoration, as a landmark",
       "cost": [
-        1820,
-        675,
+        1825,
+        685,
         0
       ],
       "about": "The sawbench turns logs into beams and planks for houses and boats.",
@@ -146,7 +146,7 @@
         211.408
       ],
       "base_width": 359.808,
-      "gold": 1910,
+      "gold": 1920,
       "stars": 30,
       "runtime": "data/city/buildings/market.png",
       "image": [
@@ -156,9 +156,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Farmers Market",
       "cost": [
-        1910,
-        725,
-        1080
+        1920,
+        720,
+        1070
       ],
       "about": "Island growers bring fruit and grain to market. The stalls pack provisions in clay jars for the road.",
       "road": false,
@@ -186,7 +186,7 @@
         202.13
       ],
       "base_width": 359.808,
-      "gold": 1185,
+      "gold": 1165,
       "stars": 0,
       "runtime": "data/city/buildings/gateway.png",
       "image": [
@@ -196,9 +196,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Original dry gathering plaza",
       "cost": [
-        1185,
-        1820,
-        1590
+        1165,
+        1810,
+        1595
       ],
       "about": "Fishing boats unload at the harbour plaza. The catch goes straight from the quay to the market stalls.",
       "road": false,
@@ -226,7 +226,7 @@
         306.197
       ],
       "base_width": 409.808,
-      "gold": 1100,
+      "gold": 1105,
       "stars": 0,
       "runtime": "data/city/buildings/lodge.png",
       "image": [
@@ -236,9 +236,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Estate",
       "cost": [
-        1100,
-        2140,
-        1490
+        1105,
+        2195,
+        1550
       ],
       "about": "The lodge gives visiting crews a dry berth and a place to prepare for their next departure.",
       "road": false,
@@ -266,7 +266,7 @@
         258.785
       ],
       "base_width": 409.808,
-      "gold": 1160,
+      "gold": 1195,
       "stars": 0,
       "runtime": "data/city/buildings/archive.png",
       "image": [
@@ -276,9 +276,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lavish Library",
       "cost": [
-        1160,
-        2205,
-        1390
+        1195,
+        2250,
+        1425
       ],
       "about": "The archive keeps harbour plans and trade records dry. Carved rings serve as seals for official documents.",
       "road": false,
@@ -306,7 +306,7 @@
         271.521
       ],
       "base_width": 273.205,
-      "gold": 1590,
+      "gold": 1605,
       "stars": 0,
       "runtime": "data/city/buildings/observatory.png",
       "image": [
@@ -316,9 +316,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Observatory",
       "cost": [
-        1590,
-        2275,
-        1435
+        1605,
+        2335,
+        1470
       ],
       "about": "Sight lines through the stone pillars help navigators mark the positions of stars throughout the year.",
       "road": false,
@@ -346,7 +346,7 @@
         291.86
       ],
       "base_width": 409.808,
-      "gold": 2620,
+      "gold": 2625,
       "stars": 0,
       "runtime": "data/city/buildings/fountain.png",
       "image": [
@@ -356,9 +356,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Fountain",
       "cost": [
-        2620,
-        2935,
-        1845
+        2625,
+        2955,
+        1860
       ],
       "about": "Water from the spring flows through the fountain into a basin faced with green stone.",
       "road": false,
@@ -386,7 +386,7 @@
         339.44
       ],
       "base_width": 546.41,
-      "gold": 2530,
+      "gold": 2570,
       "stars": 0,
       "runtime": "data/city/buildings/temple.png",
       "image": [
@@ -396,9 +396,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "story finale, as a landmark",
       "cost": [
-        2530,
-        2990,
-        1870
+        2570,
+        2985,
+        1880
       ],
       "about": "The temple courtyard hosts public ceremonies and feast days under the island's sun emblem.",
       "road": false,
@@ -426,7 +426,7 @@
         193.791
       ],
       "base_width": 273.205,
-      "gold": 835,
+      "gold": 840,
       "stars": 0,
       "runtime": "data/city/buildings/log_cabin.png",
       "image": [
@@ -436,8 +436,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Summer House",
       "cost": [
-        835,
-        305,
+        840,
+        300,
         0
       ],
       "about": "Trappers shelter here between trips. The cabin gives them a dry bench for repairing traps and gear.",
@@ -586,7 +586,7 @@
         233.232
       ],
       "base_width": 359.808,
-      "gold": 1140,
+      "gold": 1155,
       "stars": 0,
       "runtime": "data/city/buildings/map_room.png",
       "image": [
@@ -596,9 +596,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Schoolhouse",
       "cost": [
-        1140,
-        2195,
-        1415
+        1155,
+        2260,
+        1450
       ],
       "about": "Cartographers combine soundings from different crews to mark reefs and channels on a single chart.",
       "road": false,
@@ -666,7 +666,7 @@
         260.814
       ],
       "base_width": 409.808,
-      "gold": 1435,
+      "gold": 1415,
       "stars": 0,
       "runtime": "data/city/buildings/trading_post.png",
       "image": [
@@ -676,8 +676,8 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Central Station",
       "cost": [
-        1435,
-        1205,
+        1415,
+        1215,
         1085
       ],
       "about": "Quarry stone is squared and sorted here before it is traded to the island's builders.",
@@ -706,7 +706,7 @@
         232.79
       ],
       "base_width": 409.808,
-      "gold": 1230,
+      "gold": 1235,
       "stars": 0,
       "runtime": "data/city/buildings/water_mill.png",
       "image": [
@@ -716,9 +716,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Windmill",
       "cost": [
-        1230,
-        1490,
-        1440
+        1235,
+        1500,
+        1460
       ],
       "about": "The stream turns the millwheel. Inside, millstones grind the island's harvest into flour.",
       "road": false,
@@ -746,7 +746,7 @@
         306.519
       ],
       "base_width": 273.205,
-      "gold": 1115,
+      "gold": 1120,
       "stars": 0,
       "runtime": "data/city/buildings/clock_tower.png",
       "image": [
@@ -756,9 +756,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Clock Tower",
       "cost": [
-        1115,
-        1595,
-        1455
+        1120,
+        1620,
+        1460
       ],
       "about": "The harbour watch tracks the tide from this tower. Pilots use its signals to time a shallow crossing.",
       "road": false,
@@ -786,7 +786,7 @@
         281.74
       ],
       "base_width": 273.205,
-      "gold": 1270,
+      "gold": 1305,
       "stars": 0,
       "runtime": "data/city/buildings/lighthouse.png",
       "image": [
@@ -796,9 +796,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Lighthouse",
       "cost": [
-        1270,
-        2155,
-        1340
+        1305,
+        2190,
+        1385
       ],
       "about": "A brazier above the harbour marks the entrance at night, when the reefs are hardest to see.",
       "road": false,
@@ -866,7 +866,7 @@
         224.8
       ],
       "base_width": 409.808,
-      "gold": 1935,
+      "gold": 1980,
       "stars": 0,
       "runtime": "data/city/buildings/aviary.png",
       "image": [
@@ -876,9 +876,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Aviary",
       "cost": [
-        1935,
-        2765,
-        1760
+        1980,
+        2790,
+        1765
       ],
       "about": "Crews carry homing birds aboard to send messages back to shore. The loft keeps the birds safe between voyages.",
       "road": false,
@@ -906,7 +906,7 @@
         274.276
       ],
       "base_width": 446.41,
-      "gold": 1415,
+      "gold": 1445,
       "stars": 0,
       "runtime": "data/city/buildings/beached_ship.png",
       "image": [
@@ -916,9 +916,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Pirate Ship",
       "cost": [
-        1415,
-        2255,
-        1410
+        1445,
+        2330,
+        1480
       ],
       "about": "Shipwrights salvage valuable cargo and sound timber from the hull while the tide is out.",
       "road": false,
@@ -946,7 +946,7 @@
         226.211
       ],
       "base_width": 496.41,
-      "gold": 1060,
+      "gold": 1080,
       "stars": 0,
       "runtime": "data/city/buildings/amphitheater.png",
       "image": [
@@ -956,9 +956,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Amphitheater",
       "cost": [
-        1060,
-        2230,
-        1450
+        1080,
+        2290,
+        1490
       ],
       "about": "The amphitheatre gives the town a place for contests and public gatherings. Armourers set up their stalls at the entrance.",
       "road": false,
@@ -986,7 +986,7 @@
         304.224
       ],
       "base_width": 496.41,
-      "gold": 2225,
+      "gold": 2235,
       "stars": 0,
       "runtime": "data/city/buildings/museum.png",
       "image": [
@@ -996,9 +996,9 @@
       "source": "art/building-catalogue/relic_rush_buildings.blend",
       "reference": "Museum",
       "cost": [
-        2225,
-        2840,
-        1835
+        2235,
+        2850,
+        1810
       ],
       "about": "The museum keeps the island's carvings and instruments together, where visitors can see how they were made.",
       "road": false,

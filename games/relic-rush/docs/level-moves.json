@@ -1,1002 +1,1002 @@
 [
  {
-  "fastest": 4,
+  "fastest": 2,
   "level": 1,
-  "median": 7,
-  "moves": 14,
-  "seeds": 40,
+  "median": 6,
+  "moves": 12,
+  "seeds": 200,
   "tier": "tutorial",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 194
  },
  {
-  "fastest": 4,
+  "fastest": 2,
   "level": 2,
   "median": 7,
   "moves": 14,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "tutorial",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 192
  },
  {
   "fastest": 6,
   "level": 3,
-  "median": 13,
-  "moves": 26,
-  "seeds": 40,
+  "median": 14,
+  "moves": 27,
+  "seeds": 200,
   "tier": "tutorial",
-  "wins": 40,
-  "within": 40
+  "wins": 200,
+  "within": 188
  },
  {
-  "fastest": 8,
+  "fastest": 5,
   "level": 4,
-  "median": 16,
-  "moves": 30,
-  "seeds": 40,
+  "median": 17,
+  "moves": 33,
+  "seeds": 200,
   "tier": "tutorial",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 190
  },
  {
   "fastest": 5,
   "level": 5,
-  "median": 18,
-  "moves": 35,
-  "seeds": 40,
+  "median": 19,
+  "moves": 36,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 190
  },
  {
-  "fastest": 10,
+  "fastest": 8,
   "level": 6,
-  "median": 20,
-  "moves": 38,
-  "seeds": 40,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 35
+  "wins": 200,
+  "within": 183
  },
  {
   "fastest": 6,
   "level": 7,
   "median": 22,
   "moves": 42,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 183
  },
  {
-  "fastest": 10,
+  "fastest": 8,
   "level": 8,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 191
+ },
+ {
+  "fastest": 7,
+  "level": 9,
+  "median": 26,
+  "moves": 50,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 193
+ },
+ {
+  "fastest": 6,
+  "level": 10,
   "median": 24,
   "moves": 45,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 36
+  "seeds": 200,
+  "tier": "boss",
+  "wins": 200,
+  "within": 198
  },
  {
-  "fastest": 12,
-  "level": 9,
-  "median": 25,
-  "moves": 48,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 37
+  "fastest": 6,
+  "level": 11,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 194
+ },
+ {
+  "fastest": 8,
+  "level": 12,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 189
  },
  {
   "fastest": 9,
-  "level": 10,
-  "median": 22,
-  "moves": 42,
-  "seeds": 40,
-  "tier": "boss",
-  "wins": 40,
-  "within": 40
- },
- {
-  "fastest": 11,
-  "level": 11,
-  "median": 20,
-  "moves": 38,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 40
- },
- {
-  "fastest": 12,
-  "level": 12,
-  "median": 21,
-  "moves": 41,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 34
- },
- {
-  "fastest": 11,
   "level": 13,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
+  "median": 25,
+  "moves": 48,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 40
+  "wins": 200,
+  "within": 194
  },
  {
-  "fastest": 5,
+  "fastest": 3,
   "level": 14,
   "median": 27,
   "moves": 51,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 188
  },
  {
-  "fastest": 16,
+  "fastest": 8,
   "level": 15,
   "median": 27,
   "moves": 51,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 40
+  "wins": 200,
+  "within": 192
  },
  {
-  "fastest": 12,
+  "fastest": 6,
   "level": 16,
-  "median": 24,
-  "moves": 45,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 37
- },
- {
-  "fastest": 13,
-  "level": 17,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 32
- },
- {
-  "fastest": 12,
-  "level": 18,
-  "median": 28,
-  "moves": 53,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 12,
-  "level": 19,
   "median": 25,
   "moves": 48,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 38
- },
- {
-  "fastest": 15,
-  "level": 20,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
-  "tier": "boss",
-  "wins": 40,
-  "within": 40
- },
- {
-  "fastest": 14,
-  "level": 21,
-  "median": 22,
-  "moves": 42,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 9,
-  "level": 22,
-  "median": 20,
-  "moves": 38,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 192
  },
  {
   "fastest": 10,
-  "level": 23,
-  "median": 25,
-  "moves": 48,
-  "seeds": 40,
+  "level": 17,
+  "median": 26,
+  "moves": 50,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 32
+  "wins": 200,
+  "within": 162
  },
  {
-  "fastest": 11,
+  "fastest": 9,
+  "level": 18,
+  "median": 29,
+  "moves": 56,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 189
+ },
+ {
+  "fastest": 9,
+  "level": 19,
+  "median": 25,
+  "moves": 48,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 193
+ },
+ {
+  "fastest": 8,
+  "level": 20,
+  "median": 26,
+  "moves": 50,
+  "seeds": 200,
+  "tier": "boss",
+  "wins": 200,
+  "within": 193
+ },
+ {
+  "fastest": 6,
+  "level": 21,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 191
+ },
+ {
+  "fastest": 8,
+  "level": 22,
+  "median": 20,
+  "moves": 38,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 190
+ },
+ {
+  "fastest": 9,
+  "level": 23,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 173
+ },
+ {
+  "fastest": 9,
   "level": 24,
   "median": 26,
   "moves": 50,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 188
  },
  {
   "fastest": 11,
   "level": 25,
-  "median": 21,
-  "moves": 41,
-  "seeds": 40,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 177
  },
  {
-  "fastest": 14,
+  "fastest": 3,
   "level": 26,
   "median": 24,
   "moves": 45,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 186
  },
  {
   "fastest": 9,
   "level": 27,
-  "median": 27,
-  "moves": 51,
-  "seeds": 40,
+  "median": 29,
+  "moves": 56,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 185
  },
  {
   "fastest": 11,
   "level": 28,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 190
  },
  {
-  "fastest": 9,
+  "fastest": 4,
   "level": 29,
-  "median": 24,
-  "moves": 45,
-  "seeds": 40,
+  "median": 25,
+  "moves": 48,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 195
  },
  {
-  "fastest": 19,
+  "fastest": 16,
   "level": 30,
-  "median": 31,
-  "moves": 59,
-  "seeds": 40,
+  "median": 33,
+  "moves": 63,
+  "seeds": 200,
   "tier": "boss",
-  "wins": 40,
-  "within": 40
+  "wins": 200,
+  "within": 198
  },
  {
   "fastest": 9,
   "level": 31,
-  "median": 22,
-  "moves": 42,
-  "seeds": 40,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 189
  },
  {
   "fastest": 10,
   "level": 32,
   "median": 23,
   "moves": 44,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 191
  },
  {
-  "fastest": 12,
+  "fastest": 7,
   "level": 33,
-  "median": 20,
-  "moves": 38,
-  "seeds": 40,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 190
  },
  {
   "fastest": 11,
   "level": 34,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 36
+  "wins": 200,
+  "within": 185
  },
  {
-  "fastest": 17,
+  "fastest": 9,
   "level": 35,
-  "median": 29,
-  "moves": 56,
-  "seeds": 40,
+  "median": 35,
+  "moves": 66,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 34
+  "wins": 200,
+  "within": 172
  },
  {
-  "fastest": 12,
+  "fastest": 9,
   "level": 36,
-  "median": 24,
-  "moves": 45,
-  "seeds": 40,
+  "median": 25,
+  "moves": 48,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 185
  },
  {
-  "fastest": 12,
+  "fastest": 8,
   "level": 37,
   "median": 24,
   "moves": 45,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 191
  },
  {
-  "fastest": 12,
+  "fastest": 5,
   "level": 38,
-  "median": 24,
-  "moves": 45,
-  "seeds": 40,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 34
+  "wins": 200,
+  "within": 170
  },
  {
   "fastest": 10,
   "level": 39,
   "median": 25,
   "moves": 48,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 194
  },
  {
-  "fastest": 21,
+  "fastest": 17,
   "level": 40,
-  "median": 31,
-  "moves": 59,
-  "seeds": 40,
+  "median": 34,
+  "moves": 65,
+  "seeds": 200,
   "tier": "boss",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 188
  },
  {
-  "fastest": 12,
+  "fastest": 8,
   "level": 41,
   "median": 21,
   "moves": 41,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 193
  },
  {
   "fastest": 7,
   "level": 42,
-  "median": 24,
-  "moves": 45,
-  "seeds": 40,
+  "median": 25,
+  "moves": 48,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 36
+  "wins": 200,
+  "within": 180
  },
  {
-  "fastest": 6,
+  "fastest": 4,
   "level": 43,
-  "median": 22,
-  "moves": 42,
-  "seeds": 40,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 40
+  "wins": 200,
+  "within": 195
  },
  {
   "fastest": 4,
   "level": 44,
-  "median": 20,
-  "moves": 38,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 38
- },
- {
-  "fastest": 18,
-  "level": 45,
-  "median": 30,
-  "moves": 57,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 9,
-  "level": 46,
   "median": 21,
   "moves": 41,
-  "seeds": 40,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 188
+ },
+ {
+  "fastest": 8,
+  "level": 45,
+  "median": 29,
+  "moves": 56,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 193
+ },
+ {
+  "fastest": 8,
+  "level": 46,
+  "median": 20,
+  "moves": 38,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 40
+  "wins": 200,
+  "within": 196
  },
  {
   "fastest": 7,
   "level": 47,
   "median": 23,
   "moves": 44,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 188
  },
  {
-  "fastest": 12,
+  "fastest": 5,
   "level": 48,
-  "median": 19,
-  "moves": 36,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 38
- },
- {
-  "fastest": 14,
-  "level": 49,
   "median": 23,
   "moves": 44,
-  "seeds": 40,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 190
+ },
+ {
+  "fastest": 11,
+  "level": 49,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 33
+  "wins": 200,
+  "within": 176
  },
  {
   "fastest": 16,
   "level": 50,
-  "median": 30,
-  "moves": 57,
-  "seeds": 40,
+  "median": 32,
+  "moves": 60,
+  "seeds": 200,
   "tier": "boss",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 190
  },
  {
   "fastest": 6,
   "level": 51,
   "median": 19,
   "moves": 36,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 183
  },
  {
-  "fastest": 11,
+  "fastest": 8,
   "level": 52,
   "median": 21,
   "moves": 41,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 35
+  "wins": 200,
+  "within": 183
  },
  {
-  "fastest": 9,
+  "fastest": 6,
   "level": 53,
-  "median": 21,
-  "moves": 41,
-  "seeds": 40,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 192
  },
  {
-  "fastest": 12,
+  "fastest": 11,
   "level": 54,
   "median": 27,
   "moves": 51,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 191
  },
  {
-  "fastest": 14,
+  "fastest": 8,
   "level": 55,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
+  "median": 24,
+  "moves": 45,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 181
  },
  {
-  "fastest": 14,
+  "fastest": 9,
   "level": 56,
   "median": 24,
   "moves": 45,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 189
  },
  {
   "fastest": 4,
   "level": 57,
   "median": 23,
   "moves": 44,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 34
+  "wins": 200,
+  "within": 184
  },
  {
-  "fastest": 13,
+  "fastest": 7,
   "level": 58,
-  "median": 22,
-  "moves": 42,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 11,
-  "level": 59,
-  "median": 25,
-  "moves": 48,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 37
- },
- {
-  "fastest": 18,
-  "level": 60,
-  "median": 29,
-  "moves": 56,
-  "seeds": 40,
-  "tier": "boss",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 11,
-  "level": 61,
   "median": 24,
   "moves": 45,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 39
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 192
  },
  {
   "fastest": 8,
-  "level": 62,
-  "median": 23,
-  "moves": 44,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "level": 59,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 181
+ },
+ {
+  "fastest": 17,
+  "level": 60,
+  "median": 33,
+  "moves": 63,
+  "seeds": 200,
+  "tier": "boss",
+  "wins": 200,
+  "within": 197
  },
  {
   "fastest": 9,
+  "level": 61,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 181
+ },
+ {
+  "fastest": 7,
+  "level": 62,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 185
+ },
+ {
+  "fastest": 2,
   "level": 63,
   "median": 21,
   "moves": 41,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 190
  },
  {
   "fastest": 12,
   "level": 64,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
+  "median": 24,
+  "moves": 45,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 192
  },
  {
-  "fastest": 14,
+  "fastest": 10,
   "level": 65,
   "median": 26,
   "moves": 50,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 35
+  "wins": 200,
+  "within": 172
  },
  {
-  "fastest": 14,
+  "fastest": 10,
   "level": 66,
   "median": 24,
   "moves": 45,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 190
+ },
+ {
+  "fastest": 10,
+  "level": 67,
+  "median": 24,
+  "moves": 45,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 188
+ },
+ {
+  "fastest": 5,
+  "level": 68,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 190
  },
  {
   "fastest": 13,
-  "level": 67,
-  "median": 23,
-  "moves": 44,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 38
- },
- {
-  "fastest": 11,
-  "level": 68,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 38
- },
- {
-  "fastest": 15,
   "level": 69,
-  "median": 25,
-  "moves": 48,
-  "seeds": 40,
+  "median": 28,
+  "moves": 53,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 37
- },
- {
-  "fastest": 16,
-  "level": 70,
-  "median": 27,
-  "moves": 51,
-  "seeds": 40,
-  "tier": "boss",
-  "wins": 40,
-  "within": 37
- },
- {
-  "fastest": 9,
-  "level": 71,
-  "median": 22,
-  "moves": 42,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 36
- },
- {
-  "fastest": 11,
-  "level": 72,
-  "median": 21,
-  "moves": 41,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 36
- },
- {
-  "fastest": 12,
-  "level": 73,
-  "median": 21,
-  "moves": 41,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 187
  },
  {
   "fastest": 14,
-  "level": 74,
-  "median": 28,
-  "moves": 53,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 40
+  "level": 70,
+  "median": 26,
+  "moves": 50,
+  "seeds": 200,
+  "tier": "boss",
+  "wins": 200,
+  "within": 191
  },
  {
-  "fastest": 13,
-  "level": 75,
+  "fastest": 5,
+  "level": 71,
   "median": 23,
   "moves": 44,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 34
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 180
  },
  {
-  "fastest": 12,
+  "fastest": 7,
+  "level": 72,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 190
+ },
+ {
+  "fastest": 11,
+  "level": 73,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 188
+ },
+ {
+  "fastest": 11,
+  "level": 74,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 189
+ },
+ {
+  "fastest": 6,
+  "level": 75,
+  "median": 25,
+  "moves": 48,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 177
+ },
+ {
+  "fastest": 6,
   "level": 76,
   "median": 22,
   "moves": 42,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 193
  },
  {
-  "fastest": 11,
+  "fastest": 10,
   "level": 77,
-  "median": 27,
-  "moves": 51,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 35
- },
- {
-  "fastest": 14,
-  "level": 78,
   "median": 28,
   "moves": 53,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 38
- },
- {
-  "fastest": 12,
-  "level": 79,
-  "median": 25,
-  "moves": 48,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 36
- },
- {
-  "fastest": 17,
-  "level": 80,
-  "median": 27,
-  "moves": 51,
-  "seeds": 40,
-  "tier": "boss",
-  "wins": 40,
-  "within": 36
+  "wins": 200,
+  "within": 188
  },
  {
   "fastest": 9,
+  "level": 78,
+  "median": 30,
+  "moves": 57,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 190
+ },
+ {
+  "fastest": 4,
+  "level": 79,
+  "median": 25,
+  "moves": 48,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 185
+ },
+ {
+  "fastest": 13,
+  "level": 80,
+  "median": 33,
+  "moves": 63,
+  "seeds": 200,
+  "tier": "boss",
+  "wins": 200,
+  "within": 195
+ },
+ {
+  "fastest": 7,
   "level": 81,
   "median": 24,
   "moves": 45,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 34
+  "wins": 200,
+  "within": 181
  },
  {
-  "fastest": 10,
+  "fastest": 3,
   "level": 82,
-  "median": 23,
-  "moves": 44,
-  "seeds": 40,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 36
- },
- {
-  "fastest": 11,
-  "level": 83,
-  "median": 27,
-  "moves": 51,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 183
  },
  {
   "fastest": 10,
-  "level": 84,
+  "level": 83,
   "median": 28,
   "moves": 53,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 37
- },
- {
-  "fastest": 14,
-  "level": 85,
-  "median": 29,
-  "moves": 56,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 182
  },
  {
   "fastest": 8,
+  "level": 84,
+  "median": 28,
+  "moves": 53,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 179
+ },
+ {
+  "fastest": 8,
+  "level": 85,
+  "median": 31,
+  "moves": 59,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 191
+ },
+ {
+  "fastest": 7,
   "level": 86,
   "median": 23,
   "moves": 44,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 192
  },
  {
-  "fastest": 14,
+  "fastest": 11,
   "level": 87,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 183
  },
  {
-  "fastest": 16,
+  "fastest": 6,
   "level": 88,
-  "median": 26,
-  "moves": 50,
-  "seeds": 40,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 196
  },
  {
   "fastest": 7,
   "level": 89,
-  "median": 28,
-  "moves": 53,
-  "seeds": 40,
+  "median": 30,
+  "moves": 57,
+  "seeds": 200,
   "tier": "hard",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 184
  },
  {
-  "fastest": 21,
+  "fastest": 13,
   "level": 90,
-  "median": 32,
-  "moves": 60,
-  "seeds": 40,
+  "median": 36,
+  "moves": 68,
+  "seeds": 200,
   "tier": "boss",
-  "wins": 40,
-  "within": 38
+  "wins": 200,
+  "within": 194
  },
  {
-  "fastest": 11,
+  "fastest": 6,
   "level": 91,
-  "median": 20,
-  "moves": 38,
-  "seeds": 40,
+  "median": 23,
+  "moves": 44,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 37
+  "wins": 200,
+  "within": 189
  },
  {
   "fastest": 6,
   "level": 92,
   "median": 22,
   "moves": 42,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "easy",
-  "wins": 40,
-  "within": 35
+  "wins": 200,
+  "within": 185
  },
  {
-  "fastest": 10,
+  "fastest": 7,
   "level": 93,
-  "median": 24,
-  "moves": 45,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 38
- },
- {
-  "fastest": 10,
-  "level": 94,
-  "median": 28,
-  "moves": 53,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 13,
-  "level": 95,
   "median": 27,
   "moves": 51,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 8,
-  "level": 96,
-  "median": 24,
-  "moves": 45,
-  "seeds": 40,
-  "tier": "easy",
-  "wins": 40,
-  "within": 39
- },
- {
-  "fastest": 16,
-  "level": 97,
-  "median": 28,
-  "moves": 53,
-  "seeds": 40,
+  "seeds": 200,
   "tier": "normal",
-  "wins": 40,
-  "within": 32
+  "wins": 200,
+  "within": 176
  },
  {
-  "fastest": 13,
-  "level": 98,
+  "fastest": 7,
+  "level": 94,
+  "median": 27,
+  "moves": 51,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 198
+ },
+ {
+  "fastest": 11,
+  "level": 95,
   "median": 26,
   "moves": 50,
-  "seeds": 40,
-  "tier": "normal",
-  "wins": 40,
-  "within": 37
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 193
+ },
+ {
+  "fastest": 2,
+  "level": 96,
+  "median": 22,
+  "moves": 42,
+  "seeds": 200,
+  "tier": "easy",
+  "wins": 200,
+  "within": 187
  },
  {
   "fastest": 12,
-  "level": 99,
-  "median": 25,
-  "moves": 48,
-  "seeds": 40,
-  "tier": "hard",
-  "wins": 40,
-  "within": 38
+  "level": 97,
+  "median": 29,
+  "moves": 56,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 181
  },
  {
-  "fastest": 17,
+  "fastest": 9,
+  "level": 98,
+  "median": 28,
+  "moves": 53,
+  "seeds": 200,
+  "tier": "normal",
+  "wins": 200,
+  "within": 188
+ },
+ {
+  "fastest": 4,
+  "level": 99,
+  "median": 26,
+  "moves": 50,
+  "seeds": 200,
+  "tier": "hard",
+  "wins": 200,
+  "within": 196
+ },
+ {
+  "fastest": 12,
   "level": 100,
-  "median": 32,
-  "moves": 60,
-  "seeds": 40,
+  "median": 33,
+  "moves": 63,
+  "seeds": 200,
   "tier": "boss",
-  "wins": 40,
-  "within": 39
+  "wins": 200,
+  "within": 199
  }
 ]

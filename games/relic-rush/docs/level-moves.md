@@ -7,103 +7,103 @@ Slow runs do not increase it. "Within budget" measures this bot sample; it is no
 
 | # | Board | Tier | Moves | Median | Fastest | Within budget |
 | ---: | --- | --- | ---: | ---: | ---: | ---: |
-| 1 | The Landing | tutorial | 14 | 7 | 4 | 39/40 |
-| 2 | Jade Steps | tutorial | 14 | 7 | 4 | 39/40 |
-| 3 | The Ceiba Court | tutorial | 26 | 13 | 6 | 40/40 |
-| 4 | Gate of Reeds | tutorial | 30 | 16 | 8 | 38/40 |
-| 5 | Trapper’s Terrace | hard | 35 | 18 | 5 | 39/40 |
-| 6 | Rain Channel | easy | 38 | 20 | 10 | 35/40 |
-| 7 | The Timber Path | normal | 42 | 22 | 6 | 39/40 |
-| 8 | Sun Court | normal | 45 | 24 | 10 | 36/40 |
-| 9 | River Carvings | hard | 48 | 25 | 12 | 37/40 |
-| 10 | Tide Chamber | boss | 42 | 22 | 9 | 40/40 |
-| 11 | Fallen Colonnade | easy | 38 | 20 | 11 | 40/40 |
-| 12 | Choked Gateway | easy | 41 | 21 | 12 | 34/40 |
-| 13 | The Spire Keep | normal | 50 | 26 | 11 | 40/40 |
-| 14 | Hall of Pillars | normal | 51 | 27 | 5 | 39/40 |
-| 15 | Broken Aqueduct | hard | 51 | 27 | 16 | 40/40 |
-| 16 | The Overlook | easy | 45 | 24 | 12 | 37/40 |
-| 17 | Moss Bridge | normal | 50 | 26 | 13 | 32/40 |
-| 18 | Twin Wells | normal | 53 | 28 | 12 | 39/40 |
-| 19 | Inner Sun Court | hard | 48 | 25 | 12 | 38/40 |
-| 20 | Heart of the Temple | boss | 50 | 26 | 15 | 40/40 |
-| 21 | Sun Disc | easy | 42 | 22 | 14 | 39/40 |
-| 22 | Pilgrim Stair | easy | 38 | 20 | 9 | 37/40 |
-| 23 | Arch Gate | normal | 48 | 25 | 10 | 32/40 |
-| 24 | Temple Front | normal | 50 | 26 | 11 | 37/40 |
-| 25 | Star Dome | hard | 41 | 21 | 11 | 37/40 |
-| 26 | Cenote Ring | easy | 45 | 24 | 14 | 37/40 |
-| 27 | Colonnade Walk | normal | 51 | 27 | 9 | 39/40 |
-| 28 | Idol Head | normal | 50 | 26 | 11 | 39/40 |
-| 29 | Serpent Coil | hard | 45 | 24 | 9 | 38/40 |
-| 30 | Sun Altar | boss | 59 | 31 | 19 | 40/40 |
-| 31 | Beached Hull | easy | 42 | 22 | 9 | 37/40 |
-| 32 | Lantern Tower | easy | 44 | 23 | 10 | 39/40 |
-| 33 | Terrace Garden | normal | 38 | 20 | 12 | 38/40 |
-| 34 | Water Cistern | normal | 50 | 26 | 11 | 36/40 |
-| 35 | Jaguar Gate | hard | 56 | 29 | 17 | 34/40 |
-| 36 | Moss Well | easy | 45 | 24 | 12 | 39/40 |
-| 37 | Sunken Plaza | normal | 45 | 24 | 12 | 38/40 |
-| 38 | Stone Bridge | normal | 45 | 24 | 12 | 34/40 |
-| 39 | Temple of Winds | hard | 48 | 25 | 10 | 38/40 |
-| 40 | Serpent Throne | boss | 59 | 31 | 21 | 37/40 |
-| 41 | Reed Hut | easy | 41 | 21 | 12 | 38/40 |
-| 42 | Tide Pool | easy | 45 | 24 | 7 | 36/40 |
-| 43 | Lookout Mesa | normal | 42 | 22 | 6 | 40/40 |
-| 44 | Bone Stair | normal | 38 | 20 | 4 | 38/40 |
-| 45 | Vault Door | hard | 57 | 30 | 18 | 39/40 |
-| 46 | Dawn Terrace | easy | 41 | 21 | 9 | 40/40 |
-| 47 | Salt Stair | normal | 44 | 23 | 7 | 38/40 |
-| 48 | Jaguar Lintel | normal | 36 | 19 | 12 | 38/40 |
-| 49 | Drowned Arch | hard | 44 | 23 | 14 | 33/40 |
-| 50 | Idol of Rain | boss | 57 | 30 | 16 | 39/40 |
-| 51 | Mole Walk | easy | 36 | 19 | 6 | 37/40 |
-| 52 | Kelp Terrace | easy | 41 | 21 | 11 | 35/40 |
-| 53 | Ceiba Roots | normal | 41 | 21 | 9 | 38/40 |
-| 54 | Tide Stairs | normal | 51 | 27 | 12 | 38/40 |
-| 55 | Signal Tower | hard | 50 | 26 | 14 | 38/40 |
-| 56 | Wrack Line | easy | 45 | 24 | 14 | 39/40 |
-| 57 | Serpent Wall | normal | 44 | 23 | 4 | 34/40 |
-| 58 | Wreck of the Gull | normal | 42 | 22 | 13 | 39/40 |
-| 59 | Sunken Cistern | hard | 48 | 25 | 11 | 37/40 |
-| 60 | Disc of Noon | boss | 56 | 29 | 18 | 39/40 |
-| 61 | Reed Landing | easy | 45 | 24 | 11 | 39/40 |
-| 62 | Stone Fisher | easy | 44 | 23 | 8 | 37/40 |
-| 63 | Moss Parapet | normal | 41 | 21 | 9 | 39/40 |
-| 64 | Chac Stair | normal | 50 | 26 | 12 | 37/40 |
-| 65 | Obsidian Well | hard | 50 | 26 | 14 | 35/40 |
-| 66 | Dome Ring | easy | 45 | 24 | 14 | 37/40 |
-| 67 | Cormorant Rock | normal | 44 | 23 | 13 | 38/40 |
-| 68 | Palm Court | normal | 50 | 26 | 11 | 38/40 |
-| 69 | Wreck Gate | hard | 48 | 25 | 15 | 37/40 |
-| 70 | Maw of the Jaguar | boss | 51 | 27 | 16 | 37/40 |
-| 71 | Ferry Steps | easy | 42 | 22 | 9 | 36/40 |
-| 72 | Net Loft | easy | 41 | 21 | 11 | 36/40 |
-| 73 | Ochre Vault | normal | 41 | 21 | 12 | 38/40 |
-| 74 | Obsidian Lintel | normal | 53 | 28 | 14 | 40/40 |
-| 75 | The Drowned Stair | hard | 44 | 23 | 13 | 34/40 |
-| 76 | Kapok Roots | easy | 42 | 22 | 12 | 37/40 |
-| 77 | Ocelot Gate | normal | 51 | 27 | 11 | 35/40 |
-| 78 | Salt Terrace | normal | 53 | 28 | 14 | 38/40 |
-| 79 | Lantern Spiral | hard | 48 | 25 | 12 | 36/40 |
-| 80 | Sunken Vault | boss | 51 | 27 | 17 | 36/40 |
-| 81 | Stairway of Kites | easy | 45 | 24 | 9 | 34/40 |
-| 82 | Mist Cenote | easy | 44 | 23 | 10 | 36/40 |
-| 83 | Idol of Salt | normal | 51 | 27 | 11 | 37/40 |
-| 84 | The Quiet Terraces | normal | 53 | 28 | 10 | 37/40 |
-| 85 | Coiled Serpent | hard | 56 | 29 | 14 | 38/40 |
-| 86 | Rush Landing | easy | 44 | 23 | 8 | 37/40 |
-| 87 | Ember Colonnade | normal | 50 | 26 | 14 | 37/40 |
-| 88 | Moonwell Arch | normal | 50 | 26 | 16 | 39/40 |
-| 89 | Watcher's Tier | hard | 53 | 28 | 7 | 38/40 |
-| 90 | The Light Below | boss | 60 | 32 | 21 | 38/40 |
-| 91 | Parrot Steps | easy | 38 | 20 | 11 | 37/40 |
-| 92 | Wetlands Walk | easy | 42 | 22 | 6 | 35/40 |
-| 93 | Tern Rock Light | normal | 45 | 24 | 10 | 38/40 |
-| 94 | Bell Cistern | normal | 53 | 28 | 10 | 39/40 |
-| 95 | The Beached Mast | hard | 51 | 27 | 13 | 39/40 |
-| 96 | Fern Window | easy | 45 | 24 | 8 | 39/40 |
-| 97 | Jade Cartouche | normal | 53 | 28 | 16 | 32/40 |
-| 98 | Orchard of Idols | normal | 50 | 26 | 13 | 37/40 |
-| 99 | Star Eater's Dome | hard | 48 | 25 | 12 | 38/40 |
-| 100 | The Sunken Sanctum | boss | 60 | 32 | 17 | 39/40 |
+| 1 | The Landing | tutorial | 12 | 6 | 2 | 194/200 |
+| 2 | Jade Steps | tutorial | 14 | 7 | 2 | 192/200 |
+| 3 | The Ceiba Court | tutorial | 27 | 14 | 6 | 188/200 |
+| 4 | Gate of Reeds | tutorial | 33 | 17 | 5 | 190/200 |
+| 5 | Trapper’s Terrace | hard | 36 | 19 | 5 | 190/200 |
+| 6 | Rain Channel | easy | 42 | 22 | 8 | 183/200 |
+| 7 | The Timber Path | normal | 42 | 22 | 6 | 183/200 |
+| 8 | Sun Court | normal | 42 | 22 | 8 | 191/200 |
+| 9 | River Carvings | hard | 50 | 26 | 7 | 193/200 |
+| 10 | Tide Chamber | boss | 45 | 24 | 6 | 198/200 |
+| 11 | Fallen Colonnade | easy | 42 | 22 | 6 | 194/200 |
+| 12 | Choked Gateway | easy | 51 | 27 | 8 | 189/200 |
+| 13 | The Spire Keep | normal | 48 | 25 | 9 | 194/200 |
+| 14 | Hall of Pillars | normal | 51 | 27 | 3 | 188/200 |
+| 15 | Broken Aqueduct | hard | 51 | 27 | 8 | 192/200 |
+| 16 | The Overlook | easy | 48 | 25 | 6 | 192/200 |
+| 17 | Moss Bridge | normal | 50 | 26 | 10 | 162/200 |
+| 18 | Twin Wells | normal | 56 | 29 | 9 | 189/200 |
+| 19 | Inner Sun Court | hard | 48 | 25 | 9 | 193/200 |
+| 20 | Heart of the Temple | boss | 50 | 26 | 8 | 193/200 |
+| 21 | Sun Disc | easy | 42 | 22 | 6 | 191/200 |
+| 22 | Pilgrim Stair | easy | 38 | 20 | 8 | 190/200 |
+| 23 | Arch Gate | normal | 51 | 27 | 9 | 173/200 |
+| 24 | Temple Front | normal | 50 | 26 | 9 | 188/200 |
+| 25 | Star Dome | hard | 44 | 23 | 11 | 177/200 |
+| 26 | Cenote Ring | easy | 45 | 24 | 3 | 186/200 |
+| 27 | Colonnade Walk | normal | 56 | 29 | 9 | 185/200 |
+| 28 | Idol Head | normal | 44 | 23 | 11 | 190/200 |
+| 29 | Serpent Coil | hard | 48 | 25 | 4 | 195/200 |
+| 30 | Sun Altar | boss | 63 | 33 | 16 | 198/200 |
+| 31 | Beached Hull | easy | 44 | 23 | 9 | 189/200 |
+| 32 | Lantern Tower | easy | 44 | 23 | 10 | 191/200 |
+| 33 | Terrace Garden | normal | 42 | 22 | 7 | 190/200 |
+| 34 | Water Cistern | normal | 51 | 27 | 11 | 185/200 |
+| 35 | Jaguar Gate | hard | 66 | 35 | 9 | 172/200 |
+| 36 | Moss Well | easy | 48 | 25 | 9 | 185/200 |
+| 37 | Sunken Plaza | normal | 45 | 24 | 8 | 191/200 |
+| 38 | Stone Bridge | normal | 51 | 27 | 5 | 170/200 |
+| 39 | Temple of Winds | hard | 48 | 25 | 10 | 194/200 |
+| 40 | Serpent Throne | boss | 65 | 34 | 17 | 188/200 |
+| 41 | Reed Hut | easy | 41 | 21 | 8 | 193/200 |
+| 42 | Tide Pool | easy | 48 | 25 | 7 | 180/200 |
+| 43 | Lookout Mesa | normal | 44 | 23 | 4 | 195/200 |
+| 44 | Bone Stair | normal | 41 | 21 | 4 | 188/200 |
+| 45 | Vault Door | hard | 56 | 29 | 8 | 193/200 |
+| 46 | Dawn Terrace | easy | 38 | 20 | 8 | 196/200 |
+| 47 | Salt Stair | normal | 44 | 23 | 7 | 188/200 |
+| 48 | Jaguar Lintel | normal | 44 | 23 | 5 | 190/200 |
+| 49 | Drowned Arch | hard | 51 | 27 | 11 | 176/200 |
+| 50 | Idol of Rain | boss | 60 | 32 | 16 | 190/200 |
+| 51 | Mole Walk | easy | 36 | 19 | 6 | 183/200 |
+| 52 | Kelp Terrace | easy | 41 | 21 | 8 | 183/200 |
+| 53 | Ceiba Roots | normal | 42 | 22 | 6 | 192/200 |
+| 54 | Tide Stairs | normal | 51 | 27 | 11 | 191/200 |
+| 55 | Signal Tower | hard | 45 | 24 | 8 | 181/200 |
+| 56 | Wrack Line | easy | 45 | 24 | 9 | 189/200 |
+| 57 | Serpent Wall | normal | 44 | 23 | 4 | 184/200 |
+| 58 | Wreck of the Gull | normal | 45 | 24 | 7 | 192/200 |
+| 59 | Sunken Cistern | hard | 51 | 27 | 8 | 181/200 |
+| 60 | Disc of Noon | boss | 63 | 33 | 17 | 197/200 |
+| 61 | Reed Landing | easy | 44 | 23 | 9 | 181/200 |
+| 62 | Stone Fisher | easy | 44 | 23 | 7 | 185/200 |
+| 63 | Moss Parapet | normal | 41 | 21 | 2 | 190/200 |
+| 64 | Chac Stair | normal | 45 | 24 | 12 | 192/200 |
+| 65 | Obsidian Well | hard | 50 | 26 | 10 | 172/200 |
+| 66 | Dome Ring | easy | 45 | 24 | 10 | 190/200 |
+| 67 | Cormorant Rock | normal | 45 | 24 | 10 | 188/200 |
+| 68 | Palm Court | normal | 44 | 23 | 5 | 190/200 |
+| 69 | Wreck Gate | hard | 53 | 28 | 13 | 187/200 |
+| 70 | Maw of the Jaguar | boss | 50 | 26 | 14 | 191/200 |
+| 71 | Ferry Steps | easy | 44 | 23 | 5 | 180/200 |
+| 72 | Net Loft | easy | 44 | 23 | 7 | 190/200 |
+| 73 | Ochre Vault | normal | 44 | 23 | 11 | 188/200 |
+| 74 | Obsidian Lintel | normal | 51 | 27 | 11 | 189/200 |
+| 75 | The Drowned Stair | hard | 48 | 25 | 6 | 177/200 |
+| 76 | Kapok Roots | easy | 42 | 22 | 6 | 193/200 |
+| 77 | Ocelot Gate | normal | 53 | 28 | 10 | 188/200 |
+| 78 | Salt Terrace | normal | 57 | 30 | 9 | 190/200 |
+| 79 | Lantern Spiral | hard | 48 | 25 | 4 | 185/200 |
+| 80 | Sunken Vault | boss | 63 | 33 | 13 | 195/200 |
+| 81 | Stairway of Kites | easy | 45 | 24 | 7 | 181/200 |
+| 82 | Mist Cenote | easy | 42 | 22 | 3 | 183/200 |
+| 83 | Idol of Salt | normal | 53 | 28 | 10 | 182/200 |
+| 84 | The Quiet Terraces | normal | 53 | 28 | 8 | 179/200 |
+| 85 | Coiled Serpent | hard | 59 | 31 | 8 | 191/200 |
+| 86 | Rush Landing | easy | 44 | 23 | 7 | 192/200 |
+| 87 | Ember Colonnade | normal | 51 | 27 | 11 | 183/200 |
+| 88 | Moonwell Arch | normal | 51 | 27 | 6 | 196/200 |
+| 89 | Watcher's Tier | hard | 57 | 30 | 7 | 184/200 |
+| 90 | The Light Below | boss | 68 | 36 | 13 | 194/200 |
+| 91 | Parrot Steps | easy | 44 | 23 | 6 | 189/200 |
+| 92 | Wetlands Walk | easy | 42 | 22 | 6 | 185/200 |
+| 93 | Tern Rock Light | normal | 51 | 27 | 7 | 176/200 |
+| 94 | Bell Cistern | normal | 51 | 27 | 7 | 198/200 |
+| 95 | The Beached Mast | hard | 50 | 26 | 11 | 193/200 |
+| 96 | Fern Window | easy | 42 | 22 | 2 | 187/200 |
+| 97 | Jade Cartouche | normal | 56 | 29 | 12 | 181/200 |
+| 98 | Orchard of Idols | normal | 53 | 28 | 9 | 188/200 |
+| 99 | Star Eater's Dome | hard | 50 | 26 | 4 | 196/200 |
+| 100 | The Sunken Sanctum | boss | 63 | 33 | 12 | 199/200 |

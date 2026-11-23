@@ -114,7 +114,7 @@ rewards and the Windows edition of Cradle of Rome 2 purchase order.
 
 Play from the main menu shows the Advent and Christmas medals. Play on the medals screen resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
 
-There are no lives: a failed wish can be retried at once.
+There are no lives: a failed wish can be retried at once, with a new deal.
 Snow drifts over the village behind the controls. Reduce Motion keeps the
 flakes still.
 

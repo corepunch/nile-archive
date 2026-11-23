@@ -123,7 +123,7 @@ Rebuild from the repository root with `python3 tools/match3_atlas.py`.
 ## Construction balance
 
 `python3 tools/balance.py relic-rush` fits the twenty purchase prices to the
-bot's measured income: the balance sample tries 40 deals per board and
+bot's measured income: the balance sample tries 200 deals per board and
 applies the average income per win to the purchase order. With the fitted
 prices the expected campaign needs no replays, with resources for each purchase
 by its target clear. Earnings vary with the deals and
@@ -131,7 +131,7 @@ matches. The seeded campaign check funds and places every ladder purchase
 in order from the first win of each board.
 
 ```sh
-BALANCE_RUNS=40 build/test/relic-rush --extended 'rules campaign_play' 'rules relic_balance'
+BALANCE_RUNS=200 build/test/relic-rush --extended 'rules campaign_play' 'rules relic_balance'
 ```
 
 ## Captures

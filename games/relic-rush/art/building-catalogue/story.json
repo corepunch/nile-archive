@@ -1,11 +1,11 @@
 {
   "camp": {
     "about": "The camp gives excavation crews a place to sort supplies, mend tools and cook between shifts.",
-    "cost": [2045, 775, 890]
+    "cost": [2060, 760, 880]
   },
   "well": {
     "about": "The stone lining keeps loose earth out of the spring. A low rim makes it easy to fill buckets.",
-    "cost": [50, 0, 0]
+    "cost": [45, 0, 0]
   },
   "quay_steps": {
     "about": "Porters use the lowest dry step to board a boat. As the tide rises they move their baskets up the stone stair, one landing at a time.",
@@ -28,39 +28,39 @@
   },
   "workshop": {
     "about": "The sawbench turns logs into beams and planks for houses and boats.",
-    "cost": [1820, 675, 0]
+    "cost": [1825, 685, 0]
   },
   "market": {
     "about": "Island growers bring fruit and grain to market. The stalls pack provisions in clay jars for the road.",
-    "cost": [1910, 725, 1080]
+    "cost": [1920, 720, 1070]
   },
   "gateway": {
     "about": "Fishing boats unload at the harbour plaza. The catch goes straight from the quay to the market stalls.",
-    "cost": [1185, 1820, 1590]
+    "cost": [1165, 1810, 1595]
   },
   "lodge": {
     "about": "The lodge gives visiting crews a dry berth and a place to prepare for their next departure.",
-    "cost": [1100, 2140, 1490]
+    "cost": [1105, 2195, 1550]
   },
   "archive": {
     "about": "The archive keeps harbour plans and trade records dry. Carved rings serve as seals for official documents.",
-    "cost": [1160, 2205, 1390]
+    "cost": [1195, 2250, 1425]
   },
   "observatory": {
     "about": "Sight lines through the stone pillars help navigators mark the positions of stars throughout the year.",
-    "cost": [1590, 2275, 1435]
+    "cost": [1605, 2335, 1470]
   },
   "fountain": {
     "about": "Water from the spring flows through the fountain into a basin faced with green stone.",
-    "cost": [2620, 2935, 1845]
+    "cost": [2625, 2955, 1860]
   },
   "temple": {
     "about": "The temple courtyard hosts public ceremonies and feast days under the island's sun emblem.",
-    "cost": [2530, 2990, 1870]
+    "cost": [2570, 2985, 1880]
   },
   "log_cabin": {
     "about": "Trappers shelter here between trips. The cabin gives them a dry bench for repairing traps and gear.",
-    "cost": [835, 305, 0]
+    "cost": [840, 300, 0]
   },
   "apothecary": {
     "about": "The herbalist dries leaves on reed trays and keeps the roots in separate clay pots. A sprig tied to each lid tells an apprentice which plant grew it.",
@@ -76,7 +76,7 @@
   },
   "map_room": {
     "about": "Cartographers combine soundings from different crews to mark reefs and channels on a single chart.",
-    "cost": [1140, 2195, 1415]
+    "cost": [1155, 2260, 1450]
   },
   "greenhouse": {
     "about": "Tender seedlings spend their first weeks under cover. The gardener opens the shelter early, before the midday heat can wilt a whole bed.",
@@ -84,19 +84,19 @@
   },
   "trading_post": {
     "about": "Quarry stone is squared and sorted here before it is traded to the island's builders.",
-    "cost": [1435, 1205, 1085]
+    "cost": [1415, 1215, 1085]
   },
   "water_mill": {
     "about": "The stream turns the millwheel. Inside, millstones grind the island's harvest into flour.",
-    "cost": [1230, 1490, 1440]
+    "cost": [1235, 1500, 1460]
   },
   "clock_tower": {
     "about": "The harbour watch tracks the tide from this tower. Pilots use its signals to time a shallow crossing.",
-    "cost": [1115, 1595, 1455]
+    "cost": [1120, 1620, 1460]
   },
   "lighthouse": {
     "about": "A brazier above the harbour marks the entrance at night, when the reefs are hardest to see.",
-    "cost": [1270, 2155, 1340]
+    "cost": [1305, 2190, 1385]
   },
   "treehouse": {
     "about": "Fruit pickers keep a sleeping platform among the branches. A watcher with a rattle can turn a flock away before it strips the ripest tree.",
@@ -104,19 +104,19 @@
   },
   "aviary": {
     "about": "Crews carry homing birds aboard to send messages back to shore. The loft keeps the birds safe between voyages.",
-    "cost": [1935, 2765, 1760]
+    "cost": [1980, 2790, 1765]
   },
   "beached_ship": {
     "about": "Shipwrights salvage valuable cargo and sound timber from the hull while the tide is out.",
-    "cost": [1415, 2255, 1410]
+    "cost": [1445, 2330, 1480]
   },
   "amphitheater": {
     "about": "The amphitheatre gives the town a place for contests and public gatherings. Armourers set up their stalls at the entrance.",
-    "cost": [1060, 2230, 1450]
+    "cost": [1080, 2290, 1490]
   },
   "museum": {
     "about": "The museum keeps the island's carvings and instruments together, where visitors can see how they were made.",
-    "cost": [2225, 2840, 1835]
+    "cost": [2235, 2850, 1810]
   },
   "hanging_gardens": {
     "about": "Each terrace drains into the bed below. Gardeners carry water to the top at dawn and plant the thirstiest herbs where the first runnel falls.",

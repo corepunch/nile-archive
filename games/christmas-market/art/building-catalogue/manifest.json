@@ -56,8 +56,8 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1670,
-    615,
+    1695,
+    620,
     0
    ],
    "stars": 0,
@@ -86,9 +86,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1630,
-    590,
-    885
+    1635,
+    600,
+    895
    ],
    "stars": 0,
    "about": "A brick oven bakes spiced gingerbread. The counter has room to cool and ice each tray.",
@@ -116,9 +116,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1650,
-    790,
-    1300
+    1665,
+    800,
+    1305
    ],
    "stars": 0,
    "about": "A stove at the kiosk keeps cocoa hot. It faces the lane so visitors can buy a cup on their way through.",
@@ -146,9 +146,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    1850,
-    1330,
-    1620
+    1885,
+    1370,
+    1640
    ],
    "stars": 0,
    "about": "The toy bench has room to cut, sand and paint wooden blocks and other small toys.",
@@ -176,9 +176,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    2165,
-    1410,
-    1685
+    2210,
+    1470,
+    1745
    ],
    "stars": 0,
    "about": "A long sheltered counter gives shoppers room to wrap parcels and tie on tags.",
@@ -206,9 +206,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    2140,
-    1415,
-    1700
+    2165,
+    1475,
+    1745
    ],
    "stars": 0,
    "about": "The shop pours candles and trims the wicks for the lanterns that light the market lanes.",
@@ -236,9 +236,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    2375,
-    1350,
-    1565
+    2450,
+    1390,
+    1610
    ],
    "stars": 0,
    "about": "The covered carousel gives children a place to ride. Wind-up toys keep the queue busy.",
@@ -266,9 +266,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    2415,
-    1340,
-    1545
+    2490,
+    1370,
+    1600
    ],
    "stars": 0,
    "about": "The rink kiosk lends skates and sharpens blades beside the ice.",
@@ -296,9 +296,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    2685,
-    1255,
-    1480
+    2705,
+    1280,
+    1505
    ],
    "stars": 0,
    "about": "The tall fir anchors the market square. Its star can be seen from the far end of the lane.",
@@ -771,9 +771,9 @@
    ],
    "base_width": 223.205,
    "cost": [
-    2690,
-    1265,
-    1470
+    2735,
+    1270,
+    1495
    ],
    "stars": 0,
    "about": "The sleigh carries sacks of presents through snowy lanes where a cart would sink.",
@@ -801,9 +801,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1605,
+    1620,
     920,
-    1365
+    1360
    ],
    "stars": 0,
    "about": "Blocks cut from the frozen lake are shaped and stacked here before they thaw.",
@@ -947,9 +947,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1595,
-    970,
-    1385
+    1620,
+    980,
+    1395
    ],
    "stars": 0,
    "about": "The smokehouse cures lake trout over a slow fire, so the fish can keep through winter.",
@@ -1007,9 +1007,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    2270,
-    1380,
-    1620
+    2325,
+    1435,
+    1675
    ],
    "stars": 0,
    "about": "Letters and parcels are sorted by destination before they leave the market.",
@@ -1037,8 +1037,8 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1520,
-    680,
+    1545,
+    685,
     910
    ],
    "stars": 0,
@@ -1067,7 +1067,7 @@
    ],
    "base_width": 359.808,
    "cost": [
-    725,
+    720,
     255,
     0
    ],
@@ -1097,9 +1097,9 @@
    ],
    "base_width": 409.808,
    "cost": [
-    2495,
-    1305,
-    1510
+    2575,
+    1330,
+    1560
    ],
    "stars": 0,
    "about": "Woodcarvers shape and paint reindeer for the stalls. Drying shelves keep each fresh coat clear of the dust.",
@@ -1127,9 +1127,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1475,
-    540,
-    555
+    1500,
+    555,
+    565
    ],
    "stars": 0,
    "about": "The stall keeps fireworks dry and ready for the evening display over the square.",
@@ -1157,9 +1157,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    1850,
-    1295,
-    1645
+    1905,
+    1335,
+    1650
    ],
    "stars": 0,
    "about": "The station clock tells shoppers how long they have before the next train.",
@@ -1187,9 +1187,9 @@
    ],
    "base_width": 273.205,
    "cost": [
-    2285,
-    1375,
-    1620
+    2355,
+    1430,
+    1655
    ],
    "stars": 0,
    "about": "The furnace keeps glass hot enough to blow into thin, hollow baubles.",

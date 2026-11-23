@@ -1362,6 +1362,12 @@ function G.bind(R, over)
     function R.start_level(chosen)
         local lvl = num.clampi(chosen or R.prog.level, 0, LEVELS - 1)
         if lvl > R.prog.level then return false end
+        -- A lost attempt moves the deal on, as a win does: a retry gets a new
+        -- board, not the same hard one again.
+        if R.g and R.g.lost and R.g.level == lvl then
+            R.prog.seed = R.g.rng
+            R.save_progress()
+        end
         local seed = (R.prog.seed + lvl * 7919) & 0xFFFFFFFF
         R.reset_board(R.tutorial and R.tutorial:start(lvl, seed, R.make_board) or R.make_board(lvl, seed))
         R.on_island = false

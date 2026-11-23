@@ -215,7 +215,7 @@ test-bot: build/test/all
 	BOT_PROFILE=1 ./build/test/all --suite=relic-rush --suite=christmas-market --extended "rules campaign_play"
 
 .PHONY: test-balance
-test-balance: export BALANCE_RUNS ?= 40
+test-balance: export BALANCE_RUNS ?= 200
 test-balance:
 	@test "$$BALANCE_RUNS" -gt 0 || { echo "BALANCE_RUNS must be a positive integer" >&2; exit 2; }
 	python3 tools/balance.py relic-rush --report --seeds $$BALANCE_RUNS

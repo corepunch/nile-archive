@@ -211,9 +211,9 @@ For Relic Rush balance, CI plays boards 1, 47 and 98 on fixed seeds,
 checking that the bot wins within five games and earns all three currencies. To measure win
 rates and fit restoration prices across all 100 boards, run `make test-balance`
 or select **Relic Rush balance** and **Run workflow** in GitHub Actions.
-The run plays forty seeds per board, one board per process, and prints the
+The run plays 200 seeds per board, one board per process, and prints the
 fitted prices and the expected campaign; it writes nothing. Override the
-sample size with `make test-balance BALANCE_RUNS=80`. `make balance
+sample size with `make test-balance BALANCE_RUNS=400`. `make balance
 GAME=relic-rush` runs the same fit and writes the budgets and prices.
 
 The two on-demand 100-board UI campaigns render a 240×450 window at the logical phone

@@ -58,7 +58,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('game')
     parser.add_argument('--levels', help='A-B or a comma-separated list, one-based and inclusive (default: all)')
-    parser.add_argument('--seeds', type=int, default=40)
+    parser.add_argument('--seeds', type=int, default=200)   # 40 underestimated slow deals
     parser.add_argument('--chunk', type=int, default=12, help='boards per sampling process')
     args = parser.parse_args()
     game = ROOT / 'games' / args.game

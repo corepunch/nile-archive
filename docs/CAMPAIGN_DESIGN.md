@@ -56,11 +56,11 @@ The [greedy bot](../engine/lua/match3/bot.lua) plays every board many times so t
 | Move budget | Median clear × 1.25, rounded up, for every tier. Relic Rush multiplies that result by 1.5 and rounds up again. Trim late targets when a board runs long. | `python3 tools/tune_moves.py <game>` |
 | Prices | Budget from the average of the mean and lower-quartile winning income. Each purchase uses 65% of the projected wallet in its currencies, with 50% for the first purchase. | `python3 tools/balance.py <game>` |
 
-The move fit uses 40 starts per board with the pieces and tools earned by that level. The bot plays by swapping pieces and saves its tools. It prioritizes target layers and blocker damage, then weighs first-wave score, holes that can feed pieces onto remaining targets, and newly created gems. A line gem adds the value of two ordinary clears and a rainbow gem adds five. The bot tries both destinations for a line-gem cross and evaluates the visible first wave without random refills.
+The move fit uses 200 starts per board (40 read the slow deals' tail too low) with the pieces and tools earned by that level. The bot plays by swapping pieces and saves its tools. It prioritizes target layers and blocker damage, then weighs first-wave score, holes that can feed pieces onto remaining targets, and newly created gems. A line gem adds the value of two ordinary clears and a rainbow gem adds five. The bot tries both destinations for a line-gem cross and evaluates the visible first wave without random refills.
 
 Line gems and rainbow gems are why the boards can be covered: a line gem sweeps a whole row or column of plaques, so a fully covered board takes the bot 20 to 34 moves where it took about 110 before the gems. When the rules change what a move clears, fill and trim again before fitting budgets and prices.
 
-A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins, including the [finale](MATCH3_ENGINE.md#finale-leftover-moves) that turns leftover moves into bombs. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas at Bellmere move budgets](../games/christmas-market/docs/level-moves.md)
+A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Slow runs remain visible in the within-budget count. The price fit uses 200 different starts per board and counts income from wins, including the [finale](MATCH3_ENGINE.md#finale-leftover-moves) that turns leftover moves into bombs. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas at Bellmere move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 
@@ -97,19 +97,19 @@ We keep the feats, the upgrades and the perks, and give each upgrade to **the ch
 | --- | --- | --- | --- | --- | --- |
 | 1 | Well (`man_03`) | 300 Food / 265 Treats in one level | +20 / +15 every win | Spring well: a second rope and pulley (Oren) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
 | 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Oren) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
-| 3 | Sawmill (`man_02`) | 625 Supplies / 430 Materials in one level | +125 / +80 every win | Carpenter's workshop: a second saw bench (Sela) | Lumber workshop: a drying shed for the pine (Theo) |
+| 3 | Sawmill (`man_02`) | 610 Supplies / 440 Materials in one level | +120 / +80 every win | Carpenter's workshop: a second saw bench (Sela) | Lumber workshop: a drying shed for the pine (Theo) |
 | 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a dry tool store (Sela) | Firework stall: a rocket rack, ready in threes (Pip) |
 | 5 | Farm (`man_05`) | 690 Food / 345 Treats in one level | +115 / +55 every win | Jungle market: the hill farms send their carts (Tavi) | Gingerbread bakery: a second oven (Agnes) |
-| 6 | Mine (`man_06`) | 710 Supplies / 640 Materials in one level | +140 / +125 every win | Stone trading post: a cart road to the quarry (Sela) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
-| 7 | Mill (`man_07`) | 790 Food / 435 Treats in one level | +155 / +85 every win | Water mill: a second millstone (Oren) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
+| 6 | Mine (`man_06`) | 700 Supplies / 635 Materials in one level | +140 / +125 every win | Stone trading post: a cart road to the quarry (Sela) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
+| 7 | Mill (`man_07`) | 800 Food / 440 Treats in one level | +155 / +85 every win | Water mill: a second millstone (Oren) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
 | 8 | Thermae (`man_08`) | Five matches of five in one level | Shield charges faster | Tide clock tower: a warning chime (Tavi) | Ice house: a second ice saw on the lake (Theo) |
-| 9 | Port (`man_09`) | 1060 Food / 625 Treats in one level | +210 / +125 every win | Harbour plaza: a fish market every morning (Tavi) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
-| 10 | Coliseum (`man_10`) | 570 Coins / 1060 Tokens in one level | +110 / +210 every win | Stone amphitheatre: market-day shows (Oren) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
+| 9 | Port (`man_09`) | 1095 Food / 640 Treats in one level | +215 / +125 every win | Harbour plaza: a fish market every morning (Tavi) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
+| 10 | Coliseum (`man_10`) | 570 Coins / 1040 Tokens in one level | +110 / +205 every win | Stone amphitheatre: market-day shows (Oren) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
 | 11 | House of the Vestals (`man_11`) | Two matches of five in a row | Lightning charges faster | Cartographer's house: storm charts on the wall (Tavi) | Candlelight shop: Mr Wren trims every wick (Mr Wren) |
 | 12 | Lighthouse (`man_12`) | 15 matches within 20 seconds | Plus charges faster | Lighthouse: a bronze reflector (Tavi) | North Pole post office: a second sorting rack (Pip) |
-| 13 | Nero's Golden House (`man_13`) | 850 Coins / 1165 Tokens in one level | +170 / +230 every win | Beached schooner: a ferry to the hill villages (Tavi) | Glassblower's stall: a second furnace (Ada) |
+| 13 | Nero's Golden House (`man_13`) | 865 Coins / 1180 Tokens in one level | +170 / +235 every win | Beached schooner: a ferry to the hill villages (Tavi) | Glassblower's stall: a second furnace (Ada) |
 | 14 | Mausoleum (`man_14`) | Three wins in a row without a failed level | Mixer charges faster | Star observatory: the sighting stones aligned (Sela) | Reindeer carousel: a band organ (Pip) |
-| 15 | Theatre (`man_15`) | 1235 Coins / 1270 Tokens in one level | +245 / +250 every win | Relic museum: a reading room open to all (Sela) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
+| 15 | Theatre (`man_15`) | 1245 Coins / 1270 Tokens in one level | +245 / +250 every win | Relic museum: a reading room open to all (Sela) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
 | 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Temple of the Sun: the keepers' watch roster (Oren) | Christmas tree: a star for the top (Theo) |
 
 Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas at Bellmere.

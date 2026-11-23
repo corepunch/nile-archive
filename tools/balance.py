@@ -242,7 +242,7 @@ def write_price_tables(game):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('game')
-    parser.add_argument('--seeds', type=int, default=40, help='games the bot plays per board')
+    parser.add_argument('--seeds', type=int, default=200, help='games the bot plays per board')
     parser.add_argument('--trim', action='store_true', help='first trim boards whose median game runs long')
     parser.add_argument('--fill', action='store_true', help='first cover every board from the third on with targets, then trim')
     parser.add_argument('--report', action='store_true',

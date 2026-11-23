@@ -40,7 +40,7 @@ The top wallet shows Coins, Supplies and Food on both screens. Matches
 preview in the wallet during an expedition and bank after a successful clear.
 The completion dialog shows the expedition score.
 The first clear of The Landing pays at least 35 Coins, enough to buy the Spring well before level 2. Later restorations add Food and Supplies, and from the Expedition camp on every purchase uses all three. Boards cleared unlock shop stock and land. There are no lives: a failed
-board can be retried at once.
+board can be retried at once, with a new deal.
 
 Tap a placed building for its name and subtitle above it. Only one stays open. The next press dismisses it. A stationary hold picks up a building through the shared mover, with Confirm/Cancel preserving saved state.
 
@@ -234,26 +234,26 @@ Each epoch offers four projects. Once the first expedition is complete, you can 
 
 | Target clear | Restoration | Reward | Coins / Food / Supplies |
 | ---: | --- | --- | --- |
-| 1 | Spring well (Well) | Water buckets | 50 / 0 / 0 |
-| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 835 / 305 / 0 |
-| 11 | Carpenter's workshop (Sawmill) | Timber | 1820 / 675 / 0 |
-| 16 | Expedition camp (Village) | Bomb | 2045 / 775 / 890 |
-| 21 | Jungle market (Farm) | Ration jars | 1910 / 725 / 1080 |
-| 26 | Stone trading post (Quarry) | Dressed stones | 1435 / 1205 / 1085 |
-| 31 | Water mill (Mill) | Grain bundles | 1230 / 1490 / 1440 |
-| 36 | Tide clock tower (Thermae) | Shield | 1115 / 1595 / 1455 |
-| 41 | Harbour plaza (Port) | Shrimp | 1185 / 1820 / 1590 |
-| 46 | Harbour lodge (Curia Octavia) | Hourglass | 1100 / 2140 / 1490 |
-| 51 | Stone amphitheatre (Coliseum) | Helmets | 1060 / 2230 / 1450 |
-| 56 | Cartographer's house (House of the Vestals) | Lightning | 1140 / 2195 / 1415 |
-| 61 | Keeper's archive (Aqueduct) | Rings | 1160 / 2205 / 1390 |
-| 66 | Lighthouse | Plus | 1270 / 2155 / 1340 |
-| 71 | Beached schooner (Nero's Golden House) | Scarabs | 1415 / 2255 / 1410 |
-| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1590 / 2275 / 1435 |
-| 81 | Great aviary (Pantheon) | Sandals | 1935 / 2765 / 1760 |
-| 86 | Relic museum (Theatre) | Harps | 2225 / 2840 / 1835 |
-| 91 | Temple of the Sun (Forum) | Star | 2530 / 2990 / 1870 |
-| 96 | Jade fountain (Fountain) | Emeralds | 2620 / 2935 / 1845 |
+| 1 | Spring well (Well) | Water buckets | 45 / 0 / 0 |
+| 6 | Trapper's cabin (Hunter's Hut) | Hammer | 840 / 300 / 0 |
+| 11 | Carpenter's workshop (Sawmill) | Timber | 1825 / 685 / 0 |
+| 16 | Expedition camp (Village) | Bomb | 2060 / 760 / 880 |
+| 21 | Jungle market (Farm) | Ration jars | 1920 / 720 / 1070 |
+| 26 | Stone trading post (Quarry) | Dressed stones | 1415 / 1215 / 1085 |
+| 31 | Water mill (Mill) | Grain bundles | 1235 / 1500 / 1460 |
+| 36 | Tide clock tower (Thermae) | Shield | 1120 / 1620 / 1460 |
+| 41 | Harbour plaza (Port) | Shrimp | 1165 / 1810 / 1595 |
+| 46 | Harbour lodge (Curia Octavia) | Hourglass | 1105 / 2195 / 1550 |
+| 51 | Stone amphitheatre (Coliseum) | Helmets | 1080 / 2290 / 1490 |
+| 56 | Cartographer's house (House of the Vestals) | Lightning | 1155 / 2260 / 1450 |
+| 61 | Keeper's archive (Aqueduct) | Rings | 1195 / 2250 / 1425 |
+| 66 | Lighthouse | Plus | 1305 / 2190 / 1385 |
+| 71 | Beached schooner (Nero's Golden House) | Scarabs | 1445 / 2330 / 1480 |
+| 76 | Star observatory (Mausoleum of Augustus) | Mixer | 1605 / 2335 / 1470 |
+| 81 | Great aviary (Pantheon) | Sandals | 1980 / 2790 / 1765 |
+| 86 | Relic museum (Theatre) | Harps | 2235 / 2850 / 1810 |
+| 91 | Temple of the Sun (Forum) | Star | 2570 / 2985 / 1880 |
+| 96 | Jade fountain (Fountain) | Emeralds | 2625 / 2955 / 1860 |
 
 A new game starts with the crew's free Supply tent in the center of the Harbor glade clearing. It moves like any other building. Players may continue expeditions while saving for construction. The shop offers repeatable scenery alongside the campaign buildings. Pick a row with a price you can cover, then choose a location and
 confirm. Cancelling is free. The resources
