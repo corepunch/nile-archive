@@ -1,6 +1,6 @@
--- Extended, window-free campaign: win real boards, then use the game's reward
--- coordinator and the city purchase rules. The separate campaign
--- smoke exercises the controls, rendering and placement interaction.
+-- Extended, window-free campaign with Story off: win real boards, then use
+-- the game's reward coordinator and city purchase rules. The separate
+-- campaign smoke exercises the controls, rendering and placement interaction.
 if not testing.extended then return end
 
 local rules = require('rules')
@@ -15,6 +15,7 @@ island.island_setup(R.island)
 R.wonders, R.buildings = island.wonders, island.buildings
 R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.town_setup()
+R.story = false
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
 local attempts, wins, earned, replays = 0, 0, 0, 0

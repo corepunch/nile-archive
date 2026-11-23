@@ -32,8 +32,8 @@ function R.smoke()
         app.inject_click(vec2(394, 136)); stage = 3
     elseif stage == 3 and island.wonder_count(R.island) == 1 then
         assert(R.island.placing < 0, 'town action must confirm placement')
-        local reward = R.building_reward(island.kinds[game == "relic-rush" and "well" or "arch"])
-        assert(R.toast == "Unlocked: " .. reward.name, "placement names its board reward")
+        local kind = island.kinds[game == "relic-rush" and "well" or "arch"]
+        assert(island.owned(R.island, kind) == 1, 'placement grants the first project')
         app.inject_click(vec2(394, 136)); stage = 4
     elseif stage == 4 and not R.on_island then
         assert(R.g.level == 1, 'town action must start the next board')

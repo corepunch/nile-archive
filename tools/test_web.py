@@ -10,6 +10,19 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def collect_runtime_errors(page):
+    errors = []
+
+    def on_console(message):
+        # Emscripten sends native stderr to the generated launcher console.
+        if message.type == 'error' and message.location['url'].endswith('/index.js'):
+            errors.append(message.text)
+
+    page.on('console', on_console)
+    page.on('pageerror', lambda error: errors.append(str(error)))
+    return errors
+
+
 def main():
     handler = functools.partial(SimpleHTTPRequestHandler, directory=str(ROOT / 'dist'))
     server = ThreadingHTTPServer(('127.0.0.1', 0), handler)
@@ -19,8 +32,7 @@ def main():
             browser = playwright.chromium.launch(args=['--enable-unsafe-swiftshader'])
             for game in ('nile-archive', 'relic-rush', 'christmas-market', 'emergency'):
                 page = browser.new_page(viewport={'width': 800, 'height': 600})
-                errors = []
-                page.on('pageerror', lambda error: errors.append(str(error)))
+                errors = collect_runtime_errors(page)
                 page.goto(f'http://127.0.0.1:{server.server_port}/{game}/?fresh&mute')
                 page.wait_for_function('window.Module && Module.calledRun', timeout=60000)
                 colors = page.evaluate('''() => new Promise(resolve => requestAnimationFrame(() => {

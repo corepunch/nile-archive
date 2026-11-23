@@ -20,6 +20,17 @@ t:case('popup header measures only visible text',function()
     t:check(height() == title_height and not form.boxes.subtitle, "removing context also removes its gap")
     t:check(not pcall(E.set_popup_header, form, nil), "an updated title must also contain text")
 end)
+t:case('settings privacy link follows opener availability',function()
+    local function layout(has_opener)
+        local form = E.pause_form("GUIDE", "QUIT", "LEADERBOARD", true, "MENU", has_opener)
+        local _, h = form:measure(300)
+        return form:layout(rect(0,0,300,h))
+    end
+    local without_opener = layout(false)
+    t:check(without_opener.resume and without_opener.guide, "settings layout works without a browser opener")
+    t:check(not without_opener.privacy, "no privacy row without a browser opener")
+    t:check(layout(true).privacy ~= nil, "privacy row appears with a browser opener")
+end)
 local function config(flags)
     return {flags=flags, radius=4, colors=6, match_min=4,
         levels={{name='Test',moves=20,score=1000,relics=3,chains=0,ice=0}},
