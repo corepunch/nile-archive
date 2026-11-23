@@ -482,8 +482,7 @@ unlocked piece or tool. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
 shows its icon alone, and `label` adds one word under a larger figure only
 for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
-builds the node from a resource record. Shop prices set `inline=true` on
-the record to put the icon beside the amount. The game supplies the building's
+builds the node from a resource record. The game supplies the building's
 reward through `R.building_reward(kind)`.
 Running copy and captions on parchment use the skin's flat `body` and `caption`
 text styles. The outlined styles are for titles, buttons and figures. Optional content participates in the measured stack only

@@ -36,12 +36,8 @@ uses the original colors.
 The town bar reuses the round enamel Build and Pause buttons with the
 [painted jade Play sprite](../../../art/match3-buttons/README.md#town-play)
 centred between them. The Build rim uses the board’s existing blue particles
-when an eligible project is affordable. The four current quest projects lead a list separated by thin rules. The shop overlays
-the existing HUD frames `shop-locked` and `shop-built` on building sprites. Each resource icon sits beside its price on a single line beneath the building name.
-The town checklist reuses `shop-built` for completed projects and the Build
-rim particles for affordable projects. With Reduce Motion, affordable projects
-use a filled teal marker. Review the badges in the phone shop capture and
-the checklist in the phone town capture.
+when an eligible project is affordable. The catalogue groups the building
+sprites by epoch. Review with `shot epoch-projects-phone` and the catalogue capture.
 
 ## Construction backdrops
 
@@ -631,7 +627,7 @@ buttons without captions; choosing one names it and its effect in the toast.
 ## Expedition header
 
 The campaign board centers its display-only row of Moves, Coins, Supplies
-and Food. The Pause gear matches the boosters in size and sits at the right end of their row.
+and Food. The smaller Pause gear sits at the right end of the booster row.
 The circular Moves medallion turns red for the last five moves.
 Resource counts include pending earnings, and matched pieces land on their
 currency icons. [Current board](screenshots/bonus-toolbar-phone.jpg)

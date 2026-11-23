@@ -366,10 +366,8 @@ function D.bind(R, W)
             R.toast_time = 0
         end
         if app.arg("catalogue") then
-            local filter = app.arg("catalogue")
-            if filter == "current" then island_with(0, 1) else island_with(4) end
-            R.on_island = true
-            R.open_catalogue(filter, tonumber(app.arg("catalogue-page")) or 1); R.toast_time = 0
+            island_with(4); R.on_island = true
+            R.open_catalogue(app.arg("catalogue"), tonumber(app.arg("catalogue-page")) or 1); R.toast_time = 0
         end
         if app.arg("replay-victory") then
             island_with(4); R.g = rules.game_start(1, 123478); R.g.won = true; R.g.score = 5860; R.g.moves = 12

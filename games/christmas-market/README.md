@@ -50,7 +50,7 @@ Each board spawns five piece kinds. Building the Reindeer stable adds the Farrie
 The puzzle and town share a wallet with a coin, food basket, and logs with stone. Each green resource
 capsule has the brass rim and drop shadow of the round buttons. A round moves counter
 sits beside the wallet on the puzzle. The deep blue tablets mark the objectives on parchment cells, which meet at
-hairline seams; cleared tablets return to parchment. The Pause gear beside the bonuses opens
+hairline seams; cleared tablets return to parchment. The smaller Pause gear beside the bonuses opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
@@ -98,15 +98,12 @@ come to reopen starts there. The stall can be moved for free. [Opening market](d
 Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
 The town bar puts Play between the round Build button and the Pause gear.
-Build opens the shop. The four buildings marked Quest for the current Advent appear first,
-followed by decorations and other optional stock. Each card shows prices in one row below the building name,
-with unaffordable amounts shown in red. The town checklist shows
-the current Advent’s projects. Particles mark the projects you can build now.
-Tap a project in the catalogue to see its shortfall or reward.
+Build opens the catalogue grouped by Advent, with a trail when an open
+project is affordable. Tap a row to see its price or shortfall and reward.
 The [color map and construction ladder](docs/market-pieces.md) track the
 rewards and the Windows edition of Cradle of Rome 2 purchase order.
 
-Play from the main menu shows the Advent and Christmas medals. Play on the medals screen resumes the current phase. Welcome Square is open from the start. Each new Advent or Christmas reveals one of the four locked districts after the previous phase’s twenty boards and four projects. Tap a question mark to see when a district opens. Swipe to coast across the map, with a gentle rebound at the edge.
+Play from the main menu shows the Advent and Christmas medals. Play on the medals screen resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
 
 There are no lives: a failed wish can be retried at once.
 Snow drifts over the village behind the controls. Reduce Motion keeps the

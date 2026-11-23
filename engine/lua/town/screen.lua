@@ -147,12 +147,12 @@ function T.new(c, config, hooks)
         N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     })
     if b.layout == "play-primary" and b.pause then
-        v.navigation = ui.form(N.row {
-            N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height,
-                pin = {.25, .5}, pin_offset = {-b.play / 4, 0}},
-            N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height, pin = {.5, .5}},
-            N.button {id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height,
-                pin = {.75, .5}, pin_offset = {b.play / 4, 0}},
+        v.navigation = ui.form(N.row {align = "center", gap = 8,
+            N.spacer {grow = 1},
+            N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
+            N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
+            N.button {id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height},
+            N.spacer {grow = 1},
         })
     elseif b.layout == "play-primary" then
         v.navigation = ui.form(N.row {align = "center", gap = 8,

@@ -1,7 +1,6 @@
 -- The shared town screen's configuration: the merge of a game's
 -- lua/town_config.lua over the engine defaults (engine/lua/town/screen.lua).
 local town = require("town.screen")
-local tool_size = require("match3").TOOL_SIZE
 
 local cfg = town.config({header = {align = "right", role = town.none}, bottom = {middle = {kind = "custom"}}})
 check(cfg.header.align == "right" and cfg.header.role == nil, "a game overrides one field and town.none clears a default")
@@ -29,10 +28,7 @@ for _, game in ipairs{"relic-rush", "christmas-market"} do
     near(build:center().y, play:center().y, "Build shares the Play center line")
     near(pause:center().y, play:center().y, "Pause shares the Play center line")
     near(play:center().x, app.screen():center().x, "Play is centered on screen")
-    near(build:center().x, (app.screen().x + play.x) / 2, "Build is centered in the gap to the left of Play")
-    near(pause:center().x, (app.screen():max().x + play:max().x) / 2, "Pause is centered in the gap to the right of Play")
-    check(build.w == tool_size and build.h == tool_size and pause.w == tool_size and pause.h == tool_size,
-        "Build and Pause use the board's bonus button size")
+    check(build.w == build.h and pause.w < play.w, "Build is round and Pause is smaller than Play")
     check(form.nodes.play.level == 1, "Play displays the first level in a fresh campaign")
     next_level = 100
     view:layout()
@@ -45,8 +41,6 @@ for _, game in ipairs{"relic-rush", "christmas-market"} do
     check(form.nodes.play.level == nil, "Play receives no level after the final win")
     build, play, pause = form.boxes.build, form.boxes.play, form.boxes.pause
     near(play:center().x, 195, "Play stays centered on a narrow phone")
-    near(build:center().x, play.x / 2, "Build stays centered in the left gap on a narrow phone")
-    near(pause:center().x, (390 + play:max().x) / 2, "Pause stays centered in the right gap on a narrow phone")
     check(build.x >= 0 and pause:max().x < 390 and pause:max().y < 810 and pause.w >= 44,
         "all three targets fit the narrow phone's safe area")
 end

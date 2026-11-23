@@ -82,7 +82,19 @@ return {
         every_wish = "EVERY WISH", moves = "MOVES",
     },
     catalogue = {
+        title = "Build your market",
+        categories = {
+            {"all", "All Christmas magic"},
+            {"wonder", "Market stalls"},
+            {"building", "Decorations"},
+            {"tree", "Snowy trees"},
+            {"cottage", "Cottages"},
+        },
+        category = "all",
+        built = "BUILT",
         poor = "MORE RESOURCES NEEDED",
+        reserved = "RESERVED FOR STALLS",
+        full = "MARKET IS FULL",
     },
     debug = {victory = 3, catalogue_card = 10, narrator = "noelle"},
 }

@@ -35,20 +35,6 @@ t:case('settings privacy link follows opener availability',function()
     t:check(not without_opener.privacy, "no privacy row without a browser opener")
     t:check(layout(true).privacy ~= nil, "privacy row appears with a browser opener")
 end)
-t:case('Pause matches the bonus toolbar at each width',function()
-    local rules = E.new{}
-    local game = H.board(rules)
-    game.tool_slots = {true, true, true, true}
-    local view = E.view{g=game}
-    rules.bind_view(view)
-    for _, width in ipairs({480, 390}) do
-        view.SCREEN_W = width
-        view.layout()
-        local last = view.board_tool_bounds(#game.tool_slots - 1)
-        t:check(view.board_pause.w == last.w and view.board_pause.h == last.h and view.board_pause.x > last:max().x,
-            "Pause shares the bonus size and has its own hit target")
-    end
-end)
 local function config(flags)
     return {flags=flags, radius=4, colors=6, match_min=4,
         levels={{name='Test',moves=20,score=1000,relics=3,chains=0,ice=0}},

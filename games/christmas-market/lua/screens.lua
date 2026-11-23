@@ -33,7 +33,7 @@ function R.currency_prices(cost)
     local parts = {}
     for slot, currency in ipairs(economy.currencies) do
         if cost[slot] > 0 then
-            parts[#parts + 1] = {id=currency.name, name=currency.name, slot=slot, amount=cost[slot], icon=currency_icon(slot)}
+            parts[#parts + 1] = {id=currency.name, name=currency.name, amount=cost[slot], icon=currency_icon(slot)}
         end
     end
     return parts

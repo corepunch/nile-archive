@@ -37,12 +37,8 @@ medal uses the original colors.
 The town bar reuses the round enamel Build and Pause buttons with the
 [painted jade Play sprite](../../../art/match3-buttons/README.md#town-play)
 centred between them. The Build rim uses the board’s existing blue particles
-when an eligible project is affordable. The four current quest projects lead a list separated by thin rules. The shop overlays
-the existing HUD frames `shop-locked` and `shop-built` on building sprites. Each resource icon sits beside its price on a single line beneath the building name.
-The town checklist reuses `shop-built` for completed projects and the Build
-rim particles for affordable projects. With Reduce Motion, affordable projects
-use a filled teal marker. Review the badges in the phone shop capture and
-the checklist in the phone town capture.
+when an eligible project is affordable. The catalogue groups the building
+sprites by epoch. Review with `shot epoch-projects-phone` and the catalogue capture.
 
 ## Construction backdrops
 
@@ -208,9 +204,10 @@ screens, in the catalogue, and on results and building cards. Repack with
 The centered, display-only row contains a round Moves medallion and the
 Tokens, Treats and Materials counters.
 Pending earnings appear in the counters and matched resources fly to their
-icons. The board is centered vertically, with four boosters and an equally sized
-Pause gear in one bottom row. Town Build and Pause share the booster size and
-sit on either side of the larger Play button.
+icons. The board is centered vertically, with four boosters and a smaller
+Pause gear in one bottom row. The town shows the resource wallet above the Build, Play,
+Wishes and Pause controls.
+Play is the largest control.
 [480 × 900 board](screenshots/review/winter-boosters/toolbar-480.jpg) · [390 × 844 board](screenshots/review/winter-boosters/toolbar-390.jpg)
 
 ## Campaign booster buttons
