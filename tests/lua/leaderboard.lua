@@ -35,3 +35,6 @@ gamecenter.submit('stars', 5)
 gamecenter.load('stars')
 local mine = gamecenter.entries('stars')[1]
 check(mine.id == '' and mine.photo == nil and mine.photo_rev == 0, 'the local row has no portrait yet')
+local placeholder = leaderboard.new{skin = {text = function() return ui.theme().small end}, board = 'stars'}
+local drawn, err = pcall(placeholder.portrait, placeholder, rect(0, 0, 36, 36), {name = 'Alice', me = true})
+check(drawn, err or 'a missing photo can draw the player’s initial')

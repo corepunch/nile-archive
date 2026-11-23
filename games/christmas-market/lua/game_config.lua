@@ -68,23 +68,18 @@ return {
             {"Fernhollow has asked for a few lights of its own.", 16},
             {"THE ROAD TO FERNHOLLOW", 13, "cream"},
         },
-        button = "BACK TO MY MARKET",
     },
     complete = {
         title = "You did it!",
         lines = {
             {"ALL %d WINTER WISHES CAME TRUE.", 16},
         },
-        button = "BACK TO MY MARKET",
     },
     card = {
-        back = "BACK TO MARKET",
-        locked = "COMPLETE MORE PUZZLES TO BUILD THIS STALL",
         every_wish = "EVERY WISH", moves = "MOVES",
     },
     catalogue = {
         title = "Build your market",
-        close = "BACK TO MARKET",
         categories = {
             {"all", "All Christmas magic"},
             {"wonder", "Market stalls"},
@@ -94,8 +89,6 @@ return {
         },
         category = "all",
         built = "BUILT",
-        complete = "COMPLETE WISH %d",
-        earlier = "BUILD EARLIER STALLS",
         poor = "MORE RESOURCES NEEDED",
         reserved = "RESERVED FOR STALLS",
         full = "MARKET IS FULL",

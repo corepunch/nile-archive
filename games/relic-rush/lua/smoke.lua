@@ -15,8 +15,8 @@ local shop = {}        -- what the catalogue and resume stages remember
 -- Press a list row's button by its stable item key.
 local function press_tile(key)
     local node = R.catalogue_tile(key)
-    if node then app.inject_click(R.catalogue_form.boxes[node.id]:center()) end
-    return node
+    local box = node and R.catalogue_form.boxes[node.id]
+    if box then app.inject_click(box:center()); return node end
 end
 
 -- --smoke --campaign: all five square chapters (a hundred expeditions), through the real result, Claim,
@@ -53,6 +53,9 @@ local function campaign()
         app.quit()
     elseif R.overlay == R.OV_RESULT then
         if R.dialog_settled() and R.result_form.boxes.claim then app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); wait = 20 end
+    elseif R.overlay == R.OV_SHOP then
+        local kind = island.next_step(c, R.prog.level)
+        if press_tile(island.buildings[kind + 1].key) then wait = 10 end
     elseif R.overlay == R.OV_WONDER then
         if R.dialog_settled() then app.inject_click(R.wonder_form.boxes.action:center()); wait = 10 end
     elseif c.placing >= 0 then
@@ -60,7 +63,7 @@ local function campaign()
     elseif R.on_island and R.overlay == R.OV_NONE then
         local kind = island.next_step(c, R.prog.level)
         if kind then
-            app.inject_click(R.town.project_boxes[kind]:center()); wait = 10
+            app.inject_click(R.town.buttons.build); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10
         end
@@ -158,12 +161,14 @@ function R.smoke()
         end
     elseif stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        assert(R.town.navigation.nodes.actions.children[5].level == 2, "smoke: Play shows level 2")
+        assert(R.town.navigation.nodes.play.level == 2, "smoke: Play shows level 2")
         -- The balance tests measure income; this run only needs the flow, so a
         -- short wallet is topped up to the price of the well and the shrub.
         local cost = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost
         for slot = 1, 3 do R.prog.wallet[slot] = math.max(R.prog.wallet[slot], cost[slot]) end
-        app.inject_click(R.town.project_boxes[island.kinds.well]:center()); stage = 2
+        app.inject_click(R.town.buttons.build); stage = 101
+    elseif stage == 101 and R.overlay == R.OV_SHOP then
+        if press_tile("well") then stage = 2 end
     elseif stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         assert(R.inspect == island.kinds.well and R.wonder_form:get("action") == R.words.card.build,
             "Build opens the funded Well")
@@ -287,19 +292,24 @@ function R.smoke()
         assert(R.prog.wallet[1] == shop.pause_gold and R.prog.level == 1
                and R.prog.wallet[4] == 1 and R.prog.wallet[5] == 0 and island.wonder_count(R.island) == 1,
                "restart and quit must not award rewards or change restoration progress")
-        app.inject_click(R.town.buttons.menu); stage = 42
+        app.inject_click(R.town.buttons.pause); stage = 42
     elseif stage == 42 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
-        app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
+        app.inject_click(R.pause_form.boxes.close:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
-        assert(R.town.navigation.nodes.actions.children[5].level == 2, "smoke: Play still shows level 2 after quitting")
-        app.inject_click(R.town.project_boxes[island.kinds.log_cabin]:center()); stage = 44
+        assert(R.town.navigation.nodes.play.level == 2, "smoke: Play still shows level 2 after quitting")
+        app.inject_click(R.town.buttons.build); stage = 143
+    elseif stage == 143 and R.overlay == R.OV_SHOP then
+        if press_tile("log_cabin") then stage = 44 end
     elseif stage == 44 and R.overlay == R.OV_WONDER and R.dialog_settled() then
-        assert(R.inspect == island.kinds.log_cabin and R.wonder_form.boxes.price and R.wonder_form:get("action") == R.words.card.play,
-            "an underfunded project opens its own resource figures and Play action")
+        local card = R.wonder_form.boxes
+        assert(R.inspect == island.kinds.log_cabin and card.price and card.close and not card.action,
+            "an underfunded project opens its own resource figures and closes from the corner")
         assert(R.wonder_form:get("price_caption") == R.words.card.missing, "an underfunded project shows its shortfall")
-        app.inject_click(R.wonder_form.boxes.action:center()); stage = 45
-    elseif stage == 45 and not R.on_island and R.overlay == R.OV_NONE then
+        app.inject_click(card.close:center() + vec2(0, R.drop / 2)); stage = 45
+    elseif stage == 45 and R.on_island and R.overlay == R.OV_NONE then
+        app.inject_click(R.town.buttons.play); stage = 46
+    elseif stage == 46 and not R.on_island and R.overlay == R.OV_NONE then
         assert(R.g == shop.resume_game and R.g.moves == shop.resume_moves, "returning from island must preserve the suspended attempt")
         print("smoke test passed: sound checkbox -> guide -> puzzle -> claim -> restoration -> pan/move -> catalogue purchase/cancel -> level 2 from Play -> pause/background resume -> restart (cancel, confirm) -> quit to island -> island pause -> next restoration card -> resume expedition")
         app.quit()

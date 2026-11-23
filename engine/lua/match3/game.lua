@@ -52,22 +52,22 @@ G.DEFAULTS = {
     confirm = {title = "Restart this level?", restart = "RESTART", cancel = "KEEP PLAYING"},
     failed = {title = "Out of moves", retry = "TRY AGAIN", town = "VISIT TOWN"},
     zone = {subtitle = "A NEW PLACE TO DISCOVER", cleared = "LEVELS CLEARED  %d / %d", earn = "CLEAR NEW LEVELS TO OPEN IT",
-            open = "OPEN THIS AREA", wait = "KEEP EXPLORING", close = "CLOSE"},
-    finale = {title = "To be continued", lines = {}, button = "BACK TO TOWN"},
+            open = "OPEN THIS AREA"},
+    finale = {title = "To be continued", lines = {}},
     -- Every level is cleared: shown after the last win, and by Play from then on.
     -- A line's %d is the number of levels.
-    complete = {title = "You won!", lines = {{"YOU COMPLETED ALL %d LEVELS.", 16}, {"Your town stays open to build.", 16}},
-        button = "BACK TO TOWN"},
+    complete = {title = "You won!", lines = {{"YOU COMPLETED ALL %d LEVELS.", 16}, {"Your town stays open to build.", 16}}},
     result = {visit = "COLLECT & VISIT TOWN"},
-    card = {move = "MOVE", build = "BUILD", repair = "RESTORE", back = "BACK TO TOWN",
-            gets = "YOU GET", price = "PRICE", missing = "STILL MISSING", play = "PLAY",
-            locked = "COMPLETE MORE LEVELS TO BUILD THIS", close = "CLOSE"},
+    card = {move = "MOVE", build = "BUILD", repair = "RESTORE",
+            gets = "YOU GET", price = "PRICE", missing = "STILL MISSING",
+            locked = "LOCKED"},
     catalogue = {
-        title = "Build your town", close = "BACK TO TOWN",
+        title = "Build your town",
         categories = {{"all", "Everything"}, {"wonder", "Story buildings"}, {"building", "Buildings"}},
         category = "all",
-        build = "BUILD", built = "BUILT", complete = "COMPLETE LEVEL %d", earlier = "BUILD EARLIER BUILDINGS",
-        cleared = "CLEAR %d LEVELS", poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
+        decorations = "Decorations", build = "BUILD", built = "BUILT", locked = "LOCKED", opens = "OPENS IN %s",
+        earlier = "FINISH THE PREVIOUS PROJECTS",
+        poor = "MORE GOLD NEEDED", reserved = "GOLD RESERVED FOR BUILDINGS", full = "TOWN IS FULL",
         row = "%d x %d tiles  ·  Owned %d",
     },
     debug = {victory = 1, catalogue_card = 10, narrator = ""},
@@ -184,8 +184,8 @@ function G.campaign_ladder(island, unlocks, journey, slots, levels_per_epoch)
     function M.waived(c) return waivers[c] or {} end
     function M.set_waived(c, positions) waivers[c] = positions end
 
-    -- The next building to place and its position. The type is nil while that
-    -- one waits for a later clear.
+    -- The earliest outstanding project and its balance milestone. Players
+    -- can buy any eligible project through ladder_blocked and can_buy.
     function M.next_step(c, level)
         for n, step in ipairs(M.ladder) do
             if not waived(c, n) and M.owned(c, step.kind) == 0 then
@@ -492,6 +492,10 @@ function G.bind(R, over)
         return false
     end
 
+    local function project_epoch(position)
+        return (position - 1) // PROJECTS_PER_EPOCH + 1
+    end
+
     local popups = {}
     local function popup(id, form, config)
         assert(form.root.kind == "column" and not popups[id], "popup requires a unique vertical form")
@@ -559,7 +563,7 @@ function G.bind(R, over)
     -- R.building_reward(kind) returns the board piece with its payout, if any.
     local wonder_form = ui.form{
         root = N.column {panel=true,
-            match3.popup_header("Building details", nil, W.corner_close and "close"),
+            match3.popup_header("Building details", nil, "close"),
             N.column {gap=6,padding={16,0,16,0},
                 N.image {id="sprite",height=198},
                 N.label {id="about",wrap=true,em=17,text_style="body",visible_field="show_about"},
@@ -572,9 +576,8 @@ function G.bind(R, over)
                 N.spacer {grow=1},
             },
             N.label {id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
-            N.button {id="action",height=56},
+            N.button {id="action",height=56,visible_field="show_action"},
             N.button {id="shop",text="SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
-            not W.corner_close and N.button {id="close",text=W.card.close,height=28,flat=true,em=16} or nil,
         },
         bindings={
             {id="sprite",field="sprite",type="texture",readonly=true},
@@ -582,7 +585,7 @@ function G.bind(R, over)
         },
     }
     R.wonder_form = wonder_form
-    local wonder_action, funding_play
+    local wonder_action, replay_for_funding
     popup(R.OV_WONDER, wonder_form, {width=CARD_WIDTH, prepare=function()
         local i = R.inspect >= 0 and R.inspect or next_build()
         if not i or i < 0 or i >= #R.buildings then return false end
@@ -590,18 +593,20 @@ function G.bind(R, over)
         local can_build, built = island.can_buy(R.island, R.prog.wallet, R.prog.level, i), R.inspect_item and R.inspect_item >= 0
         local fixed = w.fixed_site and (w.fixed_site.x ~= 0 or w.fixed_site.y ~= 0)
         local movable = built and not fixed
-        local project = island.ladder[island.ladder_position[i]]
+        local position = island.ladder_position[i]
+        local project = island.ladder[position]
         if project and project.after > LEVELS then project = nil end
         local step = not built and project
-        local blocked, opens
-        if step then blocked, opens = ladder_blocked(i, 0) end
+        local blocked = step and ladder_blocked(i, 0)
         local needs_funding = step and not blocked and not can_build
-        funding_play = blocked == "later" or needs_funding
+        replay_for_funding = needs_funding and R.prog.level >= rules.LEVELS
         match3.set_popup_header(wonder_form, w.name)
         local about = dialogue_on() and journey.building_about(i, R.prog.level, w.about) or w.about or ""
         wonder_form.values.show_about = about ~= ""
-        local ok, message = wonder_form:push{sprite=w.sprite, about=about,
-            action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or funding_play and (R.prog.level < rules.LEVELS and W.card.play or "EARN RESOURCES") or W.card.back}
+        local action = movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build)
+            or replay_for_funding and "EARN RESOURCES"
+        wonder_form.values.show_action = not not action
+        local ok, message = wonder_form:push{sprite=w.sprite, about=about, action=action or ""}
         assert(ok, message)
         local show_price = step ~= nil or not built and (can_build or R.currency_prices and w.needs and
             R.prog.wallet:covers(w.needs) and (i >= island.WONDERS or i < journey.earned(R.prog.level)))
@@ -622,7 +627,9 @@ function G.bind(R, over)
         assert(wonder_form:set_items("gets", gets))
         assert(wonder_form:set_items("price", price))
         local funding
-        if blocked == "later" then funding = W.catalogue.complete:format(opens)
+        if blocked == "later" then
+            local epoch = W.epochs and W.epochs[project_epoch(position)]
+            funding = epoch and W.catalogue.opens:format(epoch:upper()) or W.catalogue.locked
         elseif blocked == "earlier" then funding = W.catalogue.earlier
         elseif needs_funding and #missing == 0 then funding = W.catalogue.poor
         elseif not built and not can_build and not step then
@@ -634,23 +641,21 @@ function G.bind(R, over)
     end, handle=function(event)
         local action = wonder_action
         if event.id == "action" and action then R.island_begin(action.kind, true, action.item)
-        elseif event.id == "action" and funding_play then
+        elseif event.id == "action" and replay_for_funding then
             R.overlay = R.OV_NONE
-            if R.prog.level < rules.LEVELS then R.play_next()
-            else R.play_level(rules.LEVELS - 1) end
+            R.play_level(rules.LEVELS - 1)
         elseif event.id == "shop" then R.open_catalogue("all")
         else R.overlay = R.OV_NONE end
     end})
 
     local privacy_link = W.app.privacy_url and app.has_https_opener()
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard,
-        W.corner_close, W.menu.label, privacy_link, campaign_dialogue)
+        W.menu.label, privacy_link, campaign_dialogue)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         assert(pause_form:push(R))
         pause_form.values.in_game = not R.on_menu
         pause_form.values.expedition = not R.on_island and not R.on_menu
-        pause_form:set("resume", R.on_menu and "DONE" or "RESUME")
     end, handle=function(event)
         local action = event.id
         if event.kind == "change" then
@@ -681,7 +686,7 @@ function G.bind(R, over)
     end})
 
     local confirm_form = ui.form(N.column {panel=true,
-        match3.popup_header(W.confirm.title, nil, W.corner_close and "close"),
+        match3.popup_header(W.confirm.title, nil, "close"),
         N.button {id="confirm",text=W.confirm.restart,height=50},
         N.button {id="cancel",text=W.confirm.cancel,height=32,role="link",em=20},
     })
@@ -703,18 +708,17 @@ function G.bind(R, over)
 
     local region = W.zone
     local zone_form = ui.form(N.column {panel=true,
-        match3.popup_header("Region", nil, W.corner_close and "close"),
+        match3.popup_header("Region", nil, "close"),
         N.label {id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
-        N.button {id="open",height=47},
-        not W.corner_close and N.button {id="close",text=region.close,height=32,role="link",em=16} or nil,
+        N.button {id="open",text=region.open,height=47,visible_field="can_open"},
     })
     R.zone_form = zone_form   -- the campaign smoke runs press its Open button
     popup(R.OV_ZONE, zone_form, {width=420, prepare=function()
         local z = R.zone_card
         local zone = R.island.zones[z + 1]
         match3.set_popup_header(zone_form, zone.name)
+        zone_form.values.can_open = R.island:zone_available(z, R.prog.wallet)
         zone_form:set("cleared", region.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED]))
-            :set("open", R.island:zone_available(z, R.prog.wallet) and region.open or region.wait)
     end, handle=function(event)
         local z = R.zone_card
         if event.id == "open" and R.island:unlock(z, R.prog.wallet) then
@@ -730,11 +734,10 @@ function G.bind(R, over)
 
     -- The story's last scene (finale) and the last level (complete) close on the same card.
     for overlay, words in pairs{[R.OV_FINALE] = W.finale, [R.OV_COMPLETE] = W.complete} do
-        local card = {match3.popup_header(words.title)}
+        local card = {match3.popup_header(words.title, nil, "back")}
         for _, line in ipairs(words.lines) do
             card[#card+1] = N.label {text=line[1]:format(rules.LEVELS),wrap=true,em=line[2],text_style=line[3] or PAL_WHITE}
         end
-        card[#card+1] = N.button {id="back",text=words.button,height=50}
         local form = ui.form(N.column {panel=true,children=card})
         if overlay == R.OV_COMPLETE then R.complete_form = form end
         popup(overlay, form,
@@ -887,31 +890,38 @@ function G.bind(R, over)
             R.paragraph(record.action, rect(right.x, box.y + 36, right.w, box.h - 42), 11, PAL_CREAM)
         else R.paragraph(record.action, right:inflate(-2), 11, PAL_CREAM) end
     end
-    local catalogue_form = match3.catalogue_form(C.title, C.close, paint_row, W.corner_close)
+    local catalogue_form = match3.catalogue_form(C.title, paint_row)
     R.catalogue_form = catalogue_form
 
     local tiles = {}   -- building key -> its row record
     local catalogue_rows = {}
     for i in ipairs(island.catalogue) do catalogue_rows[i] = i end
     local function refresh_catalogue()
-        local records = {}
+        local records, building_ids = {}, {}
         local cat = categories[category][1]
         local wallet = R.prog.wallet
+        local section
         -- A game may list its catalogue in another order (rows stay save data).
         for _, i in ipairs(island.catalogue_order or catalogue_rows) do
             local meta = island.catalogue[i]
             if cat == "all" or meta.category == cat then
+                local position = island.ladder_position[i - 1]
+                local epoch = position and project_epoch(position)
+                local heading = W.epochs and (epoch and W.epochs[epoch] or C.decorations)
+                if heading and section ~= heading then
+                    section = heading
+                    records[#records + 1] = {id=epoch and "epoch-" .. epoch or "decorations", heading=heading}
+                end
                 local def = R.buildings[i]
                 local owned = island.owned(R.island, i - 1)
                 local available = island.can_buy(R.island, wallet, R.prog.level, i - 1)
                 local action, state = C.build, "ready"
-                local blocked, at = ladder_blocked(i - 1, owned)
+                local blocked = ladder_blocked(i - 1, owned)
                 if blocked ~= nil then
-                    local reason = blocked == "built" and C.built or blocked == "later" and C.complete:format(at) or
-                        blocked == "earlier" and C.earlier
+                    local reason = blocked == "built" and C.built or blocked and C.locked
                     if reason then action, state = reason, owned > 0 and "built" or "locked" end
                     if not reason and not wallet:covers(def.cost) then action, state = C.poor, "poor" end
-                elseif wallet[rules.CLEARED] < meta.cleared then action, state = C.cleared:format(meta.cleared), "locked"
+                elseif wallet[rules.CLEARED] < meta.cleared then action, state = C.locked, "locked"
                 elseif not wallet:covers(def.cost) then action, state = C.poor, "poor"
                 elseif island.can_spend and not island.can_spend(R.island, wallet, R.prog.level, def.cost)
                     or not island.can_spend and wallet[rules.GOLD] - island.reserved_gold(R.island, R.prog.level) < def.cost[1] then
@@ -921,13 +931,14 @@ function G.bind(R, over)
                 for _, part in ipairs(parts) do part.short = wallet[part.slot or rules.GOLD] < part.amount end
                 local note = meta.unlock_text or C.row:format(meta.size.w, meta.size.h, owned)
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts, state=state,
-                    note=note, available=available, action=action, slim=state == "built"}
+                    note=note, available=available, action=action, slim=state == "built", project=position ~= nil}
                 records[#records + 1], tiles[meta.key] = record, record
+                building_ids[#building_ids + 1] = meta.key
             end
         end
         assert(catalogue_form:set_items("stock", records))
         catalogue_form:set("category", categories[category][2])
-        return records
+        return building_ids
     end
 
     -- The row's button node and record for a building key, for smoke tests that press it.
@@ -939,15 +950,17 @@ function G.bind(R, over)
         end
     end
 
-    function R.open_catalogue(filter, review_page)
+    function R.open_catalogue(filter, review_page, focus_epoch)
         local old_category = category
         if filter then
             for i, cat in ipairs(categories) do if cat[1] == filter then category = i end end
         end
         if shop:active() then shop:close(nil, nil, true) end
-        local records = refresh_catalogue()
-        if review_page and #records > 0 then   -- review pages are six rows apart
-            catalogue_form:scroll_to("stock", records[num.clampi((math.floor(review_page) - 1) * 6 + 1, 1, #records)].id)
+        local ids = refresh_catalogue()
+        if focus_epoch then catalogue_form:scroll_to("stock", "epoch-" .. focus_epoch)
+        elseif review_page and review_page > 1 and #ids > 0 then   -- review pages are six buildings apart
+            catalogue_form:scroll_to("stock", ids[num.clampi((math.floor(review_page) - 1) * 6 + 1, 1, #ids)])
+        elseif review_page then catalogue_form:scroll_to("stock")
         elseif category ~= old_category then catalogue_form:scroll_to("stock") end
         assert(shop:open("catalogue", catalogue_form, {}, MODAL))
         R.overlay = R.OV_SHOP
@@ -963,7 +976,9 @@ function G.bind(R, over)
             catalogue_form:scroll_to("stock")
         elseif event.source == "stock" then
             local record = catalogue_form:get_item("stock", event.key)
-            if record and record.available then
+            if record and record.project then
+                shop:close(nil, function() R.open_project(record.kind) end)
+            elseif record and record.available then
                 shop:close(nil, function()
                     R.overlay = R.OV_NONE
                     R.island_begin(record.kind, true)
@@ -1053,34 +1068,16 @@ function G.bind(R, over)
         end
     end
 
-    function R.epoch_projects()
-        local p, c = R.prog, R.island
-        local epoch = math.min(#W.epochs, R.completed_epochs() + 1)
-        local projects = {}
-        for i = 1, PROJECTS_PER_EPOCH do
-            local step = island.ladder[(epoch - 1) * PROJECTS_PER_EPOCH + i]
-            local kind = step.kind
-            local project = {id=kind, key=island.buildings[kind + 1].key, icon=R.buildings[kind + 1].sprite, state="locked"}
-            local blocked = ladder_blocked(kind, island.owned(c, kind))
-            if blocked == "built" then project.state = "built"
-            elseif not blocked then
-                if island.can_buy(c, p.wallet, p.level, kind) then project.state = "ready"
-                else
-                    local total, filled = 0, 0
-                    local cost = R.buildings[kind + 1].cost
-                    for slot = 1, 3 do
-                        if cost[slot] > 0 then
-                            total = total + 1
-                            filled = filled + math.min(1, p.wallet[slot] / cost[slot])
-                        end
-                    end
-                    project.state = "funding"
-                    if total > 0 then project.progress = filled / total end
-                end
-            end
-            projects[i] = project
+    function R.active_epoch()
+        return math.min(#W.epochs, R.completed_epochs() + 1)
+    end
+
+    function R.can_build_project()
+        local c, p = R.island, R.prog
+        for _, step in ipairs(island.ladder) do
+            if island.can_buy(c, p.wallet, p.level, step.kind) then return true end
         end
-        return W.epochs[epoch], projects
+        return false
     end
 
     function R.open_project(kind)
@@ -1098,33 +1095,10 @@ function G.bind(R, over)
             notice = R.notice,
             capsules = R.header_capsules,
             pause = function() R.overlay = R.OV_PAUSE end,
-            menu = W.epochs and function(box)
-                local state = ui.hit(box, 0)
-                skin:paint_button(box, state, {role="navigation_pause"})
-                if state.clicked then
-                    haptic.play(haptic.TICK, .6)
-                    R.overlay = R.OV_PAUSE
-                end
-            end,
-            projects = R.epoch_projects,
-            project = R.open_project,
-            project_rim = function(box)
-                if not R.reduced_motion and R.overlay == R.OV_NONE then
-                    R.vfx_ready_rim(box:center(), math.min(box.w, box.h) * .48, R.now)
-                end
-            end,
             middle_icon = function(at) R.town_middle_icon(at) end,
-            build = function()
-                local _, position = island.next_step(R.island, R.prog.level)
-                local step = island.ladder[position]
-                if step and step.after <= LEVELS then
-                    R.inspect, R.inspect_item, R.overlay = step.kind, -1, R.OV_WONDER
-                else R.open_catalogue("all") end
-            end,
+            build = function() R.open_catalogue("all", nil, W.epochs and R.active_epoch()) end,
             build_rim = function(center, radius)
-                local kind = island.next_step(R.island, R.prog.level)
-                if kind and not R.reduced_motion and R.overlay == R.OV_NONE
-                    and island.can_buy(R.island, R.prog.wallet, R.prog.level, kind) then
+                if not R.reduced_motion and R.overlay == R.OV_NONE and R.can_build_project() then
                     R.vfx_ready_rim(center, radius, R.now)
                 end
             end,
@@ -1324,7 +1298,7 @@ function G.bind(R, over)
         for n = position, math.min(last, #ladder) do
             local step = ladder[n]
             if not waived[n] and (island.can_buy(c, wallet, level, step.kind)
-                or step.after == level and not island.ladder_blocked(c, level, step.kind)) then
+                or (step.opens or step.after) == level and not island.ladder_blocked(c, level, step.kind)) then
                 return "build"
             end
         end
@@ -1387,7 +1361,7 @@ function G.bind(R, over)
     end
 
     -- The Game Center leaderboard tracks boards cleared when rewards are claimed.
-    local boards = require("leaderboard").boards{skin = skin, width = 400, header = match3.popup_header, corner_close = W.corner_close, texts = W.leaderboard and W.leaderboard.texts}
+    local boards = require("leaderboard").boards{skin = skin, width = 400, header = match3.popup_header, corner_close = true, texts = W.leaderboard and W.leaderboard.texts}
     function R.submit_leaderboard_progress()
         local c = W.leaderboard
         if c then gamecenter.submit(c.board, R.prog.level) end

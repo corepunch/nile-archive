@@ -9,8 +9,20 @@
 -- (number or {left, top, right, bottom}) and `offset` {x, y}; a state's
 -- `offset` moves every layer that isn't `fixed`.
 local buttons = require("match3.buttons")
-local economy = require("economy")
 local resource_fill = color(13, 47, 41, 0xE1)
+local function cancel_button(shadow, inset)
+    return {normal = {layers = {
+        {fill = shadow, radius = 28, offset = {0, 4}, fixed = true},
+        {fill = "#85232E", radius = 28},
+        {fill = "#B84041", radius = 25, inset = 3},
+        {inset = inset, paint = function(box, _, _, _, out, alpha)
+            local ink = color.alpha(color(255, 249, 226), alpha)
+            local width = 5 * out.w / box.w
+            gfx.line(out:point(vec2(0, 0)), out:point(vec2(1, 1)), width, ink)
+            gfx.line(out:point(vec2(1, 0)), out:point(vec2(0, 1)), width, ink)
+        end},
+    }}}
+end
 
 return ui.skin{
     fonts = {
@@ -43,7 +55,6 @@ return ui.skin{
         -- above are for titles, buttons and figures.
         body = {font = "lilita", em = 64, fill = "#5A4226"},
         caption = {font = "lilita", em = 64, fill = "#9A7A48", tracking = 2},
-        funding_tag = {font = "lilita", em = 12, fill = "#FFF1CB"},
         -- A popup's title is written on its parchment, not on a plate.
         popup_title = {extends = "body"},
         popup_subtitle = {extends = "caption"},
@@ -111,13 +122,13 @@ return ui.skin{
             pressed = {offset = {0, 2}},
             disabled = {set = {body = {fill = "#4B5E50"}, face = {fill = "#6E7E6C"}, gloss = {fill = "#82917D"}}},
             variants = {
+                popup_close = cancel_button("#111D37B8", 13),
                 flat = {normal = {layers = {}}},
                 link = {text = "gold", normal = {layers = {}}},
                 -- Secondary actions (Restart, Quit) in evergreen, beside the red primary.
                 secondary = {normal = {set = {body = {fill = "#1E5A3C"},
                                               face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
                 navigation_build = buttons.navigation("build"),
-                navigation_project = buttons.project(economy.unlocks),
                 navigation_play = buttons.project_play(),
                 navigation_pause = buttons.navigation("pause"),
                 -- Confirm and cancel a placement beside the lifted building.
@@ -127,15 +138,7 @@ return ui.skin{
                     {fill = "#3F9A5C", radius = 25, inset = 3},
                     {check = "#FFF9E2", width = 5, inset = 10},
                 }}, disabled = {alpha = .45}},
-                placement_cancel = {normal = {layers = {
-                    {fill = "button_shadow", radius = 28, offset = {0, 4}, fixed = true},
-                    {fill = "#85232E", radius = 28},
-                    {fill = "#B84041", radius = 25, inset = 3},
-                    {inset = 18, paint = function(box)
-                        gfx.line(box:point(vec2(0, 0)), box:point(vec2(1, 1)), 5, color(255, 249, 226))
-                        gfx.line(box:point(vec2(1, 0)), box:point(vec2(0, 1)), 5, color(255, 249, 226))
-                    end},
-                }}},
+                placement_cancel = cancel_button("button_shadow", 18),
             },
         },
         toggle = {extends = "button"},

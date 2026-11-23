@@ -47,10 +47,10 @@ The 100 winter wishes use square boards up to 9 × 12. Swap two neighboring trea
 
 Each board spawns five piece kinds. Building the Reindeer stable adds the Farrier's hammer. Match 30 to charge a blow on a chosen cell. The Firework stall upgrades that slot to Firework Bomb and carries over its charge. Each campaign purchase adds one piece or tool. [Compare all 20 rewards with Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 
-The puzzle and town use the same wallet and blue Settings gear. Each green resource
-capsule has the brass rim and drop shadow of the round buttons. The remaining moves
-are shown below the wallet on the puzzle. The deep blue tablets mark the objectives on parchment cells, which meet at
-hairline seams; cleared tablets return to parchment. Pause opens
+The puzzle and town share a wallet with a coin, food basket, and logs with stone. Each green resource
+capsule has the brass rim and drop shadow of the round buttons. A round moves counter
+sits beside the wallet on the puzzle. The deep blue tablets mark the objectives on parchment cells, which meet at
+hairline seams; cleared tablets return to parchment. The smaller Pause gear beside the bonuses opens
 the Market Keeper's Guide alongside Sound and Reduce Motion.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
@@ -97,7 +97,11 @@ come to reopen starts there. The stall can be moved for free. [Opening market](d
 
 Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
-Four round buttons show the current Advent or Christmas project paintings. The triangular Play button shows the next wish number. Tap a project to see its price, shortfall or level requirement. A Need Funds tag marks a shortfall, a trail marks an affordable project, and a green checkmark marks a completed one. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
+The town bar puts Play between the round Build button and the Pause gear.
+Build opens the catalogue grouped by Advent, with a trail when an open
+project is affordable. Tap a row to see its price or shortfall and reward.
+The [color map and construction ladder](docs/market-pieces.md) track the
+rewards and the Windows edition of Cradle of Rome 2 purchase order.
 
 Play from the main menu shows the Advent and Christmas medals. Play on the medals screen resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
 

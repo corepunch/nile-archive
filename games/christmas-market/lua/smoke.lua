@@ -86,8 +86,12 @@ function R.smoke()
         end
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        assert(R.town.navigation.nodes.actions.children[5].level == 2, "smoke: Play shows level 2")
-        app.inject_click(R.town.project_boxes[island.kinds.arch]:center()); smoke_stage = 2
+        assert(R.town.navigation.nodes.play.level == 2, "smoke: Play shows level 2")
+        app.inject_click(R.town.buttons.build); smoke_stage = 101
+    elseif smoke_stage == 101 and R.overlay == R.OV_SHOP then
+        local node = R.catalogue_tile("arch")
+        local box = node and R.catalogue_form.boxes[node.id]
+        if box then app.inject_click(box:center()); smoke_stage = 2 end
     elseif smoke_stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         local boxes = R.wonder_form.boxes
         assert(boxes.sprite and math.abs(boxes.sprite:center().x - boxes.action:center().x) < .1,

@@ -62,6 +62,11 @@ function R.campaign_smoke()
             app.inject_click(claim:center() + vec2(0, R.drop / 2))
             wait = 20
         end
+    elseif R.overlay == R.OV_SHOP then
+        local kind = island.next_step(c, R.prog.level)
+        local node = R.catalogue_tile(island.buildings[kind + 1].key)
+        local box = node and R.catalogue_form.boxes[node.id]
+        if box then app.inject_click(box:center()); wait = 10 end
     elseif R.overlay == R.OV_WONDER then
         if R.dialog_settled() then app.inject_click(R.wonder_form.boxes.action:center()); wait = 10 end
     elseif c.placing >= 0 then
@@ -69,7 +74,7 @@ function R.campaign_smoke()
     elseif R.on_island and R.overlay == R.OV_NONE then
         local kind = island.next_step(c, R.prog.level)
         if kind then
-            app.inject_click(R.town.project_boxes[kind]:center()); wait = 10
+            app.inject_click(R.town.buttons.build); wait = 10
         elseif R.prog.level < rules.LEVELS then
             app.inject_click(R.town.buttons.play); wait = 10   -- Play the next wish
         end

@@ -111,21 +111,26 @@ end
 -- Full-screen sheets under the wallet row. One building per row: the whole
 -- row is the button (id 'pick') and paint_row draws its art, name, price and
 -- action. A record marked slim (already built) takes a short row.
-function E.catalogue_form(title, close, paint_row, corner)
+function E.catalogue_form(title, paint_row)
     return ui.form(N.column {panel=true,
-        E.popup_header(title, nil, corner and "close", true),
+        E.popup_header(title, nil, "close", true),
         N.row {height=38,gap=8,
             N.button {id='category_prev',text='<',width=42,em=22},
             N.label {id='category',grow=1,em=21},
             N.button {id='category_next',text='>',width=42,em=22},
         },
         N.list {id='stock',scroll=true,grow=1,gap=6,item=function(record)
+            if record.heading then
+                return N.row {height=32,gap=10,align="center",
+                    N.label {text=record.heading,text_style="popup_title",em=17},
+                    N.spacer {grow=1,panel=true,role="popup_rule",height=14},
+                }
+            end
             return N.overlay {height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,
                 N.custom {paint=function(box) paint_row(box, record) end},
-                N.button {id='pick',text='',flat=true,enabled=record.available},
+                N.button {id='pick',text='',flat=true,enabled=record.project or record.available},
             }
         end},
-        not corner and N.button {id='close',text=close,height=42,em=21} or nil,
     })
 end
 
@@ -202,7 +207,7 @@ function E.hud(override)
 end
 
 -- Toolbar buttons: their glyphs draw about a fifth larger than board pieces.
--- Five buttons and their gaps fit 480 points; narrower screens shrink them.
+-- The four boosters and smaller Pause button share the bottom row.
 E.TOOL_SIZE = 86
 local GOAL_W, GOAL_GAP = 70, 16
 
@@ -296,13 +301,12 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         },
     })
 
-    -- A square gold rim echoes the board cells and warms to red at low moves.
+    -- The round gold rim surrounds a face that warms to red at low moves.
     function R.draw_moves(c, arrive, radius)
         radius = radius or 40
         local scale = radius / 40
-        local side = radius * math.sqrt(3) * arrive
-        local box = rect.centered(c, size2.splat(side))
-        local bevel = 6 * scale * arrive
+        local drawn = radius * .9 * arrive
+        local depth = scale * arrive
         local moves = R.g.moves
         local urgent = moves <= 5 and not R.g.won
         if urgent and not R.reduced_motion then
@@ -311,15 +315,15 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
                 rgba(255, 92, 40, 70 + 50 * math.sin(R.now * 6)), rgba(255, 92, 40, 0))
             gfx.additive(false)
         end
-        gfx.round_rect(box:offset(vec2(0, 5 * scale * arrive)), bevel, rgba(3, 20, 18, 150))
-        gfx.round_rect(box, bevel, rgba(116, 74, 33))
-        gfx.round_rect(box:inflate(-2 * scale * arrive), bevel, rgba(236, 196, 112))
-        gfx.round_rect(box:inflate(-4 * scale * arrive):offset(vec2(0, scale * arrive)), bevel, rgba(176, 120, 48))
+        gfx.circle(c + vec2(0, 5 * depth), drawn, rgba(3, 20, 18, 150))
+        gfx.circle(c, drawn, rgba(116, 74, 33))
+        gfx.circle(c, drawn - 2 * depth, rgba(236, 196, 112))
+        gfx.circle(c + vec2(0, depth), drawn - 4 * depth, rgba(176, 120, 48))
         local face = R.skin:color(urgent and "moves_low" or "moves_face")
         local glow = R.skin:color(urgent and "moves_low_glow" or "moves_glow")
-        local inset = box:inflate(-6 * scale * arrive)
-        gfx.round_rect(inset, bevel, face)
-        gfx.glow(c + vec2(0, -4 * scale * arrive), inset.w * .43, glow, color.alpha(face, 0))
+        local inner = drawn - 6 * depth
+        gfx.circle(c, inner, face)
+        gfx.glow(c + vec2(0, -4 * depth), inner * .86, glow, color.alpha(face, 0))
         if arrive < .8 then return end   -- the numbers come with the settled medallion
         local caption, count = moves_form.nodes.caption, moves_form.nodes.count
         count.em, count.text_style = 29 * arrive * scale, urgent and PAL_WHITE or PAL_GOLD
@@ -328,7 +332,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         count.height = text.ink(R.skin:measure_text(count.text_style, count.em), value).h
         moves_form.nodes.stack.gap = 6 * arrive * scale
         moves_form:set("count", value)
-        moves_form:draw(rect.centered(c, size2(side, side)), R.skin, {interactive=false})
+        moves_form:draw(rect.centered(c, size2.splat(2 * drawn)), R.skin, {interactive=false})
     end
 
     function R.goal_target(kind)
@@ -540,9 +544,9 @@ function E.bind_town_board_hud(R)
     end
 end
 
-function E.guide_form(copy, guide_icon, corner)
+function E.guide_form(copy, guide_icon)
     return ui.form(N.column {panel=true,
-        E.popup_header(copy.title, copy.instructions, corner and "done"),
+        E.popup_header(copy.title, copy.instructions, "done"),
         N.list {id="topics",scroll=true,height=520,gap=6,item=function(entry)
             local align=entry.icon and "start" or "center"
             return N.row {gap=10,align="center",
@@ -554,23 +558,22 @@ function E.guide_form(copy, guide_icon, corner)
             }
         end},
         N.label {text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
-        not corner and N.button {id="done",text=copy.done,height=45,em=25} or nil,
     })
 end
 
-function E.pause_form(guide_label, quit_label, leaderboard_label, corner, menu_label, privacy_link, story)
+function E.pause_form(guide_label, quit_label, leaderboard_label, menu_label, privacy_link, story)
     return ui.form{
         root=N.column {panel=true,
-            E.popup_header("Settings", nil, corner and "close"),
+            E.popup_header("Settings", nil, "close"),
             N.column {panel=true,role="group",padding={18,8,18,10},gap=6,
                 N.checkbox {id="sound",text="SOUND",height=50},
                 N.checkbox {id="motion",text="REDUCE MOTION",height=50},
                 story and N.checkbox {id="story",text="STORY",height=50} or nil,
             },
-            N.column {gap=12,
+            N.column {gap=12,visible_field="expedition",
                 N.button {id="resume",text="RESUME",height=52},
-                N.button {id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
-                N.button {id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil,visible_field="expedition"},
+                N.button {id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil},
+                N.button {id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil},
             },
             N.button {id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
             N.row {gap=8,
@@ -1781,8 +1784,12 @@ function E.new(config)
             if neutral_hud then hud_y = toast_y - HUD_H - 4 end
         end
         R.hud_rect = rect(0, hud_y, w, HUD_H)
-        R.board_pause = bonuses and R.board_tool_bounds(#bonuses)
-            or rect.centered(vec2(w - 46, R.hud_rect:center().y), size2(64, 64))
+        if bonuses then
+            local slot = R.board_tool_bounds(#bonuses)
+            R.board_pause = slot:inflate(-slot.w * .15)
+        else
+            R.board_pause = rect.centered(vec2(w - 46, R.hud_rect:center().y), size2.splat(60))
+        end
         R.board_toast = rect(38, toast_y, w - 76, 28)
     end
     -- Where a backdrop of this pixel size goes in the bleed rect `full`:

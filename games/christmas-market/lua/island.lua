@@ -50,7 +50,7 @@ end
 -- The twenty-stall ladder (economy.unlocks), after Cradle of Rome: order,
 -- gate, reserve, shop order and older saves are the engine's. Each stall's
 -- card shows what it adds as icons (screens.lua).
-require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies)
+require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies, 20)
 
 local starter = M.kinds.rosa_stall
 for i, row in ipairs(M.catalogue_order) do

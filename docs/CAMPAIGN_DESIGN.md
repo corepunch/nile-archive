@@ -24,7 +24,7 @@ The player's minute-to-minute loop:
 
 1. **Play a level.** The board shows the current pieces and, from its building on, one tool piece. Thirty matched tool pieces charge the tool's slot once.
 2. **Collect.** The results card banks the matched resources. Ordinary wins lead to the next board. The results action returns to town when a project opens or is affordable.
-3. **Build.** The bottom row shows the current phase's four projects, in order, and Play. Select any project to see its cost, board reward and requirements. A trail marks a project you can buy. Choose a site and confirm.
+3. **Build.** The bottom row puts Play between Build and Pause. Build opens the catalogue grouped by phase. Select a project to see its cost and reward. A trail circles Build when a campaign project is affordable. Choose a site and confirm.
 4. **See the change.** The next board shows the new piece or tool. Meeting a building's feat upgrades it, with a brief upgrade notice.
 
 The campaign's shape:
@@ -37,8 +37,8 @@ The campaign's shape:
 | Epoch IV / Fourth Advent | 61–80 | after 61, 66, 71, 76 | two | 80 |
 | Epoch V / Christmas | 81–100 | after 81, 86, 91, 96 | two | 100 |
 
-- **Construction begins after level 1.** The five-level cadence (`after` in `economy.unlocks`) sets the price targets and reward milestones. Relic Rush makes all four projects in the current epoch available at once, with separate price checks.
-- **Complete the phase to advance.** The town row advances after the last level and all four purchases in the phase are complete. Earlier purchases waived by a migrated save do not hold the row back. Players can keep clearing boards while raising funds. Confirming a purchase enables its reward on eligible boards.
+- **Construction begins after level 1.** The five-level cadence (`after` in `economy.unlocks`) sets the price targets and reward milestones. Both games make all four projects in the current phase available at once, with separate price checks.
+- **Complete the phase to advance.** The active phase advances after the last level and all four purchases in the phase are complete. Earlier purchases waived by a migrated save do not hold the phase back. Players can keep clearing boards while raising funds. Confirming a purchase enables its reward on eligible boards.
 - **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a farrier's hammer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
 - **Regions open with the phase.** After 20, 40, 60 and 80 clears and the four projects in each phase, fog lifts as the next phase opens. Completing the final phase opens the last district. Older saves keep land they already opened.

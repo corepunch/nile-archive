@@ -60,16 +60,27 @@ function R.smoke()
         click(R.pause_form, "motion", true)
         stage = 2
     elseif stage == 2 and R.reduced_motion then
+        gamecenter.submit("stars", 1)
+        click(R.pause_form, "leaderboard", true)
+        stage = 22
+    elseif stage == 22 then
+        local board = R.leaderboard_active()
+        if not board or not board.form.boxes.close then return end
+        assert(R.overlay == R.OV_PAUSE and #board.form.nodes.rows.children > 0,
+            "the leaderboard renders the local score above Settings")
+        click(board.form, "close")
+        stage = 23
+    elseif stage == 23 and not R.leaderboard_active() and R.dialog_settled() then
         assert((R.pause_form.boxes.story ~= nil) == christmas, "only Christmas Market offers a story setting")
         if christmas and returning then
             click(R.pause_form, "story", true)
             stage = 21
         else
-            click(R.pause_form, "resume", true)
+            click(R.pause_form, "close", true)
             stage = 3
         end
     elseif stage == 21 and R.story == false then
-        click(R.pause_form, "resume", true)
+        click(R.pause_form, "close", true)
         stage = 3
     elseif stage == 3 and R.overlay == R.OV_NONE then
         assert(R.on_menu, "closing title settings must return to the title")

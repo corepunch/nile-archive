@@ -138,8 +138,7 @@ end
 
 local guide_form = match3.guide_form({
     title = "Explorer's guide",
-    done = "LET'S EXPLORE",
-}, guide_icon, R.words.corner_close)
+}, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))
 R.guide_form,R.guide_entries=guide_form,guide_entries -- measured bounds and the source rows are checked by the input smoke test
 R.register_guide(guide_form)

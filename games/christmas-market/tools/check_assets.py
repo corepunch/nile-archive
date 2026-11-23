@@ -36,6 +36,9 @@ def main():
     registration = json.loads((ROOT/'art/registration.json').read_text())
     assert 'buildings' not in registration and len(registration['icons']) == 19
     atlas = json.loads((ROOT/'art/match3-atlas.json').read_text())
+    for name, path in manifest['wallet_icons'].items():
+        assert (ROOT / path).is_file()
+        assert atlas['frames'][name]['atlas'] == 'pieces', name
     pieces = manifest['festive_pieces']
     assert png(ROOT/pieces['source']) == ((1536,1024),6)
     assert png(ROOT/pieces['layout']) == ((1536,1024),6)

@@ -154,15 +154,13 @@ do
     R.island, R.prog = c, {level=10, wallet=bank}
     R.buildings, R.test_mode, R.reduced_motion = island.buildings, true, true
     R.town_setup()
-    local _, projects = R.epoch_projects()
-    check(projects[2].id == cabin and projects[2].state == "ready"
-        and projects[3].id == workshop and projects[3].state == "ready", 'either project is affordable before clear eleven')
+    check(island.can_buy(c, bank, 10, cabin) and island.can_buy(c, bank, 10, workshop),
+        'either project is affordable before clear eleven')
     check(R.town:begin(workshop, false), 'select the workshop while the cabin is unbuilt')
     check(R.prog.wallet:covers(workshop_price) and island.owned(c, workshop) == 0, 'preview leaves the wallet and ownership alone')
     check(R.town:confirm() and island.owned(c, workshop) == 1, 'confirm the chosen project first')
-    local _, remaining = R.epoch_projects()
-    check(remaining[2].state == "funding" and remaining[3].state == "built",
-        'the bar shows the first project shortfall and the chosen project complete')
+    check(not island.can_buy(c, bank, 10, cabin) and island.owned(c, workshop) == 1,
+        'the chosen project is complete and the wallet is short for the remaining project')
     check(bank[1] == 0 and bank[2] == 0 and bank[3] == 0, 'the selected project charges its exact price')
     check(not island.can_buy(c, workshop_price, 10, workshop), 'an owned project cannot be bought again')
     local later = island.kinds.trading_post
@@ -173,8 +171,9 @@ do
     check(island.island_place_next(c, first_epoch, 20, 0) and island.island_place_next(c, first_epoch, 20, 0),
         'finish both remaining projects after the out-of-order purchase')
     R.prog.level, R.prog.wallet = 21, island.buildings[later + 1].cost + purse(0, 0, 0, 21)
-    local _, next_epoch = R.epoch_projects()
-    check(next_epoch[1].state == "funding" and next_epoch[2].id == later and next_epoch[2].state == "ready",
+    local first = island.ladder[5].kind
+    check(not island.can_buy(c, R.prog.wallet, 21, first) and island.can_buy(c, R.prog.wallet, 21, later)
+        and R.can_build_project(),
         'later projects can be ready when the first is too expensive')
     check(R.result_action(true, purse()) == R.words.result.visit, 'a later affordable project routes a win to town')
     R.island, R.prog, R.town = old_city, old_progress, old_town

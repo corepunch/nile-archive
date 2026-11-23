@@ -107,11 +107,11 @@ Clear every turquoise plaque to finish the expedition. Tavi, Oren and Sela come 
 ## Shared UI and dialog layers
 
 The island and the board share one wallet and Settings bar. The green resource
-capsules have the same brass rim and drop shadow as the round buttons. The board shows
-Moves at the left of the resource balances. The medallion turns red at five
+capsules have the same brass rim and drop shadow as the round buttons. A circular Moves
+counter sits at the left of the resource balances and turns red at five
 moves. Blue tablets mark the board objective. Winning banks the resources
 earned in the three slots.
-Four large circular bonus sockets sit in one row below the centered board from the first
+Four large circular bonus sockets sit beside a smaller Settings gear below the board from the first
 expedition. Settings opens the Explorer's Guide,
 and Results shows the score and rewards. Full-size popup actions use raised gold or ochre stone buttons. Small actions use text, and the corner X sits on red enamel. The build catalogue lists buildings directly on the scroll. Results show outlined resource icons and figures. Popup cards lift and fade in over a
 dimmed background, then drift down as they close. The board fades away before
@@ -165,9 +165,9 @@ See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all turquoise plaques within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. The four building paintings sit in round brass medallions. A particle trail marks an affordable project, and a green checkmark marks a completed one. Select a building to see its cost or what you still need.
+4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. Tap Build to see projects grouped by epoch and select one for its cost. A particle trail marks Build when any eligible project is affordable.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
-6. Construction adds a new resource piece or tool to later boards. The 100 boards open twenty restorations, one after every fifth board.
+6. Construction adds a new resource piece or tool to later boards. The campaign has twenty restorations across five epochs.
 
 A matched sun coin earns 5 Coins and a silver coin 3. Leaves, flowers and amphoras add score only.
 The Spring well's water buckets earn Food from expedition 2. The Trapper's cabin introduces Hammer, and the Carpenter's workshop introduces timber worth Supplies. Buying the Expedition camp replaces Hammer with Bomb. The construction card explains what the building does and shows its piece or tool beside the price or amounts still needed.
@@ -206,7 +206,11 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 ## Buildings
 
-Four round buttons show the island’s current project paintings. The triangular Play button shows the next expedition number. A small Need Funds tag marks projects with a shortfall. A particle trail marks projects you can afford, and a jade checkmark marks completed projects. Tap a project to see its description, price or shortfall, and board reward. The next epoch opens after you complete the current one’s 20 levels and four projects.
+Build opens the catalogue grouped by epoch. A particle trail circles Build
+when a project is affordable. Select a project for its price or shortfall
+and board reward. The triangular Play button shows the next expedition
+between Build and Pause. The next epoch opens after the current one’s
+20 expeditions and four projects.
 
 [Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 

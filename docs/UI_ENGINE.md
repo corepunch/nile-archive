@@ -469,7 +469,7 @@ unlock and finale. Every match-3 popup starts with `match3.popup_header(title, s
 
 The header writes the title on the card itself, in the skin's `popup_title` text style, with the subtitle in `popup_subtitle` and a thin rule under both (the skin's `popup_rule` panel variant). It has no plate of its own: a filled, rimmed bar the width of the buttons below read as one more button.
 
-Pass a close action ID as the third argument to `match3.popup_header(title, subtitle, close_id)` for a dismissible card. The header pins a 44-unit button on the card's top right corner, overhanging it, so the title keeps the full width. A full-screen sheet has no room outside its corner: pass `true` as the fourth argument to keep the button inside it. The Relic Rush skin uses the shared round-button renderer for `popup_close` and supplies a red face palette and the `action-close` glyph.
+Pass a close action ID as the third argument to `match3.popup_header(title, subtitle, close_id)` for a dismissible card. The header pins a 44-unit button on the card's top right corner, overhanging it, so the title keeps the full width. A full-screen sheet has no room outside its corner: pass `true` as the fourth argument to keep the button inside it. Relic Rush uses the shared round-button renderer, red enamel and the `action-close` glyph for `popup_close`. Christmas at Bellmere shares its red cancel button style between the card corner and placement controls.
 
 Results show the banked currencies as `resource_indicator` prefabs in a one-row `uniform_grid`: equal
 columns across the dialog, however many currencies the game has. Each is an icon above

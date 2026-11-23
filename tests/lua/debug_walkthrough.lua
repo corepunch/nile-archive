@@ -2,7 +2,7 @@
 local rules, island, journey = require('rules'), require('island'), require('journey')
 local R = require('state')
 local economy = require('economy')
-local relic = testing.game == "relic-rush"
+local relic = testing.game == 'relic-rush'
 require('main')
 R.test_mode, R.quiet, R.overlay, R.on_island = true, true, R.OV_NONE, false
 R.island = city.new(); island.island_setup(R.island)
@@ -26,30 +26,33 @@ check(R.prog.level == 1 and R.prog.wallet[4] == expected[4], 'replay does not ad
 R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
-local phase, projects = R.epoch_projects()
-check(phase == R.words.epochs[1] and #projects == 4, "the current phase has four projects")
-check(projects[1].state == "ready" and projects[2].state == (relic and "ready" or "locked"),
-    "project states reflect the game's purchase rules")
+R.board_art = {}   -- rule tests build the list without loading textures
+local first, second = R.words.epochs[1], R.words.epochs[2]
+local first_project, second_project = island.ladder[1], island.ladder[2]
 local funded_wallet = R.prog.wallet
-R.prog.wallet = purse(5)
-local _, funding_projects = R.epoch_projects()
-check(funding_projects[1].state == "funding" and funding_projects[1].progress > 0 and funding_projects[1].progress < 1,
-    "an earned project with a shortfall shows its funding progress")
-R.prog.wallet = funded_wallet
-for i, project in ipairs(projects) do
-    local bounds = R.town.project_boxes[project.id]
-    check(project.id == island.ladder[i].kind and bounds:max().x < R.town.buttons.play.x,
-        "projects appear in catalogue order before Play")
+check(R.active_epoch() == 1 and R.can_build_project(), "the first epoch has an affordable project")
+R.open_catalogue("all")
+local stock = R.catalogue_form.nodes.stock
+local function row(index) return stock.records[stock.children[index].item_key] end
+check(row(1).heading == first and row(6).heading == second,
+    "the catalogue separates the four projects in each epoch")
+for i = 1, 4 do
+    local project = row(i + 1)
+    check(project.kind == island.ladder[i].kind and project.available,
+        "every project in the opened epoch can be bought in catalogue order when funded")
 end
-R.open_project(projects[2].id)
-check(R.inspect == projects[2].id and R.inspect_item == -1 and R.overlay == R.OV_WONDER,
+check(not row(7).available and row(7).action == R.words.catalogue.locked,
+    "future projects show a lock without a level requirement")
+R.prog.wallet = purse(5)
+check(not R.can_build_project(), "a short wallet does not light the Build control")
+R.prog.wallet = funded_wallet
+R.open_project(second_project.kind)
+check(R.inspect == second_project.kind and R.inspect_item == -1 and R.overlay == R.OV_WONDER,
     "each project opens its own details")
 R.overlay = R.OV_NONE
-check(R.debug_advance_town() and island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'town action confirms the earned building')
-local _, built_projects = R.epoch_projects()
-check(built_projects[1].state == "built", "the finished project stays on the row in color")
+check(R.debug_advance_town() and island.owned(R.island, first_project.kind) == 1, 'town action confirms the earned building')
 R.prog.level = 20
-check(R.epoch_projects() == phase, "clearing all twenty boards keeps the phase open while it still has projects")
+check(R.active_epoch() == 1, "clearing all twenty boards keeps the phase open while it still has projects")
 check(R.sync_epoch_regions() == 0 and not R.island:zone_open(1), "the first district stays fogged while projects are due")
 R.prog.level = 1
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')

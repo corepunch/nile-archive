@@ -6,7 +6,7 @@ On the first wish, after the third move settles, Noelle explains how to clear
 the remaining blue target tiles if Story is enabled.
 See the [guided lessons](../../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
 
-Match Christmas pieces to light the teal panes. The 100-level campaign opens twenty stalls, one after every fifth level (see the [construction sequence](market-pieces.md#construction-sequence)). Each stall unlocks one item. The first Advent brings mulled wine, the Farrier's hammer, bundled pine and the Firework Bomb. The hammer charges a single-cell blow. The Firework Bomb inherits that slot and its charge. Bundled pine replaces the mitten, and dressed stone later replaces the pine.
+Match Christmas pieces to light the teal panes. The 100-level campaign groups twenty stalls into five phases (see the [construction sequence](market-pieces.md#construction-sequence)). Each stall unlocks one item. The first Advent brings mulled wine, the Farrier's hammer, bundled pine and the Firework Bomb. The hammer charges a single-cell blow. The Firework Bomb inherits that slot and its charge. Bundled pine replaces the mitten, and dressed stone later replaces the pine.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind
@@ -54,13 +54,12 @@ Reduce Motion hides the trail.
 ## Build
 
 First Advent through Fourth Advent and Christmas each have four projects.
-The town shows the four project paintings in round buttons. The triangular Play
-button shows the next wish number. The town advances when the current phase's
-levels and projects are complete. Tap any project to see its
-keeper, board reward, price and requirements. Need Funds marks a shortfall,
-a particle trail marks a project you can build, and a green checkmark marks
-a completed project. Open placement from the card, choose a
-site, then confirm to pay once. The card links to the decoration shop.
+Build opens the stall catalogue at the current phase. Its four projects are
+available in any order once the phase opens. A particle trail circles Build
+if you can afford a project. Tap a row for the price or shortfall and board
+reward, then choose a site and confirm. Play shows the next wish number
+between the round Build button and the Pause gear. The next phase opens
+after its predecessor’s twenty wishes and four projects are complete.
 After level 100, a pending purchase can offer a replay for resources.
 
 ## Levels and art

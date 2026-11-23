@@ -32,25 +32,15 @@ medal uses the original colors.
   `shot epoch-window-phone` (390 × 844), covering current, completed and
   locked medals.
 
+## Town controls
+
+The town bar reuses the round enamel Build and Pause buttons with the
+[painted jade Play sprite](../../../art/match3-buttons/README.md#town-play)
+centred between them. The Build rim uses the board’s existing blue particles
+when an eligible project is affordable. The catalogue groups the building
+sprites by epoch. Review with `shot epoch-projects-phone` and the catalogue capture.
+
 ## Construction backdrops
-
-Four circular brass medallions float over the town. Each medallion clips an
-existing 192 px construction painting to the round enamel well. The shared
-[green jade Play sprite](../../../art/match3-buttons/README.md#town-play) has a rounded
-triangular face and an antique brass lip. The game centers the next level number
-on the enamel. After the final level it shows the existing completion checkmark
-and opens the results. The `shot hud-states` capture shows the four painted states
-and a three-digit label.
-
-The four projects keep their painted colors. A Need Funds tag marks a shortfall.
-A particle trail circles an affordable project when motion is enabled. A
-completed project is dimmed behind the existing jade checkmark. The bevel
-brightens on hover and sinks on press. The form draws keyboard focus.
-
-The [art manifest](../art/manifest.json) records the painting crops and states.
-Run `python3 tools/project_thumbnails.py christmas-market` to rebuild
-`data/city/epochs/projects.jpg`. Review the controls at both phone sizes using
-`shot epoch-projects`.
 
 The campaign's board shows the latest confirmed construction with a painting
 for that wish. On the first visit to a newly unlocked backdrop, the full
@@ -193,12 +183,29 @@ The [original hex surfaces](../../../docs/review/match3-elements/README.md)
 document earlier board states.
 
 
+## Card close button
+
+The `popup_close` button in `lua/skin.lua` uses the placement cancel
+control's red face and ivory cross, sized for the card corner. The game
+draws it live, with the skin's normal and pressed states and the form's
+keyboard focus. Reproduce the reviewed 480 × 900 building card with
+`build/test/all --suite=christmas-market "shot building-card"`.
+
 ## Campaign board header
 
-The centered, display-only row contains Moves, Tokens, Treats and Materials.
+The wallet uses the painted food basket and logs with stone from the
+[registered resource source](../../relic-rush/art/resource-pieces/wallet-supplies-food.png).
+The [manifest](../art/manifest.json) maps those unchanged 128 px RGBA frames
+into `data/board/pieces.png`. They represent Treats and Materials on both
+screens, in the catalogue, and on results and building cards. Repack with
+`python3 tools/match3_atlas.py`. Review with `shot epoch-projects-phone` and
+`shot phone-shop`.
+
+The centered, display-only row contains a round Moves medallion and the
+Tokens, Treats and Materials counters.
 Pending earnings appear in the counters and matched resources fly to their
-icons. The board is centered vertically, with four boosters and Pause in
-one bottom row. The town shows the resource wallet above the Build, Play,
+icons. The board is centered vertically, with four boosters and a smaller
+Pause gear in one bottom row. The town shows the resource wallet above the Build, Play,
 Wishes and Pause controls.
 Play is the largest control.
 [480 × 900 board](screenshots/review/winter-boosters/toolbar-480.jpg) · [390 × 844 board](screenshots/review/winter-boosters/toolbar-390.jpg)

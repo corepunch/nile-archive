@@ -10,7 +10,7 @@ local island = require("island")
 local picture = R.picture
 
 local function currency_icon(slot)
-    return R.board_art["market-" .. economy.currencies[slot].kind]
+    return R.board_art[economy.currencies[slot].frame]
 end
 
 R.currency_icon = currency_icon   -- the citizens' perks on the building card
@@ -105,7 +105,6 @@ local function guide_icon(box, icon)
 end
 local guide_form = match3.guide_form({
     title = "Market keeper's guide",
-    done = "LET'S MAKE MAGIC",
 }, guide_icon)
 assert(guide_form:set_items("topics",guide_entries))
 R.guide_form,R.guide_entries=guide_form,guide_entries -- measured bounds and the source rows are checked by the input smoke test

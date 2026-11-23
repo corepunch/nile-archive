@@ -445,6 +445,7 @@ def game_sprites(game, root):
         inputs += [registered / name for name in ('campaign-pieces.png', 'result-icons.png', 'bonus-gems.png')]
     else:
         manifest = json.loads((root / 'art/manifest.json').read_text())
+        files.update((name, (root / path).resolve()) for name, path in manifest['wallet_icons'].items())
         buttons = manifest['bonus_buttons']
         bonus_frames = list(buttons['icons'].values())
         goods = manifest['market_goods']

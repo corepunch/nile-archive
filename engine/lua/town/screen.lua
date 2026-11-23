@@ -23,16 +23,13 @@
 --   menu(bounds)            draw and handle an optional header menu
 --   build(), play(), middle(), pause()   bottom actions
 --   build_rim(center, radius)           optional effect around the Build button
---   projects()              phase title and ordered project records (id, icon, state, progress)
---   project(id)             open the selected project
---   project_rim(box)        optional effect around each affordable project
 --   zone_ready(z)           optional availability for a closed region's marker
 --   rail()                  {{id=, icon=texture, value=string, ready=bool, waiting=bool,
 --                            portrait=texture, progress=0..1}, ...}: round
 --                           markers down the left edge, under the header (requests, tasks)
 --   rail_tap(id)            a rail marker was tapped
 --   rail_paint(box, entry, state, ready_time)   paints one marker's face and icon (default: a plain disc)
---   play_label()            next level number for projects, or optional Play caption
+--   play_label()            next level number printed on Play
 --   middle_icon(center)     the icon in the round middle button
 --   draw_middle(center)     replaces the round middle button (middle.kind "custom")
 --   about(item)            building description (0-based item)
@@ -149,14 +146,7 @@ function T.new(c, config, hooks)
         N.spacer {grow = 1},
         N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     })
-    if b.layout == "projects" then
-        local actions = N.uniform_grid {id = "actions", rows = 1, gap = b.gap or 4, item = function(entry)
-            local play = entry.id == "play"
-            return N.button {id = "action", role = play and "navigation_play" or "navigation_project",
-                project = entry.project}
-        end}
-        v.navigation = ui.form(actions)
-    elseif b.layout == "play-primary" and b.pause then
+    if b.layout == "play-primary" and b.pause then
         v.navigation = ui.form(N.row {align = "center", gap = 8,
             N.spacer {grow = 1},
             N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
@@ -188,33 +178,6 @@ function View:layout()
     local s, b = app.screen(), self.cfg.bottom
     local row = rect(s.x + b.margin, s:max().y - b.bottom - b.height, s.w - 2 * b.margin, b.height)
     self.bottom_row = row
-    if b.layout == "projects" then
-        local title, projects = self.hooks.projects()
-        local form = self.navigation
-        local side = math.min(b.height, (row.w - #projects * form.nodes.actions.gap) / (#projects + 1))
-        row = rect(row.x, s:max().y - b.bottom - side, row.w, side)
-        self.bottom_row = row
-        if title ~= self.project_phase then
-            local actions = {}
-            for i, project in ipairs(projects) do actions[i] = {id = project.id, project = project} end
-            actions[#actions + 1] = {id = "play"}
-            assert(form:set_items("actions", actions))
-            self.project_phase = title
-        end
-        local boxes = form:layout(row, self.hooks.skin)
-        local actions = form.nodes.actions.children
-        self.project_boxes, self.ready_projects = {}, {}
-        for i, project in ipairs(projects) do
-            local node = actions[i]
-            node.project = project
-            self.project_boxes[project.id] = boxes[node.id]
-            if project.state == "ready" then self.ready_projects[#self.ready_projects + 1] = boxes[node.id] end
-        end
-        local play = actions[#actions]
-        play.level = self.hooks.play_label and self.hooks.play_label()
-        self.buttons.play = boxes[play.id]:center()
-        return self.buttons
-    end
     self.buttons.build = rect(row.x, row.y, b.build, b.height):center()
     self.buttons.play = rect(row:max().x - b.play, row.y, b.play, b.height):center()
     local m = b.middle
@@ -232,6 +195,7 @@ function View:layout()
         self.buttons.middle = nil   -- this layout has no middle control
         self.buttons.pause = boxes.pause and boxes.pause:center()
     end
+    if self.hooks.play_label then self.navigation.nodes.play.level = self.hooks.play_label() end
     self:header_layout({})
     return self.buttons
 end
@@ -467,30 +431,15 @@ end
 function View:bottom(active)
     local h, skin = self.hooks, self.hooks.skin
     local b = self.cfg.bottom
-    if b.layout == "projects" then
-        local event = self.navigation:draw(self.bottom_row, skin, {interactive = active, dim_controls = false})
-        if h.project_rim then
-            for _, box in ipairs(self.ready_projects) do h.project_rim(box) end
-        end
-        if event then
-            haptic.play(haptic.TICK, .6)
-            if event.key == "play" then h.play()
-            else h.project(event.key) end
-        end
-        return
-    end
-    local m = self.cfg.bottom.middle
-    if self.cfg.bottom.layout ~= "play-primary" and m.kind == "round" then
+    local m, primary = b.middle, b.layout == "play-primary"
+    if not primary and m.kind == "round" then
         if round_button(self, self.buttons.middle) then
             haptic.play(haptic.TICK, .6)
             if h.middle then h.middle() end
         end
-    elseif self.cfg.bottom.layout ~= "play-primary" and h.draw_middle then h.draw_middle(self.buttons.middle) end
-    local primary = self.cfg.bottom.layout == "play-primary"
+    elseif not primary and h.draw_middle then h.draw_middle(self.buttons.middle) end
     if primary then gfx.bleed(true) end
-    -- Play's caption is the game's: the number of the level it starts.
-    if h.play_label then self.navigation:set("play", h.play_label()) end
-    local event = self.navigation:draw(self.bottom_row, skin)
+    local event = self.navigation:draw(self.bottom_row, skin, {interactive=active, dim_controls=false})
     if h.build_rim then
         local box = self.navigation.boxes.build
         h.build_rim(box:center(), math.min(box.w, box.h) * .46)

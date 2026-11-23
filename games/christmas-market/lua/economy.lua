@@ -5,9 +5,9 @@ local E = {
     GOLD=1, FOOD=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
     currencies={
-        {name="Tokens", kind=3},
-        {name="Treats", kind=11},
-        {name="Materials", kind=4},
+        {name="Tokens", frame="market-3"},
+        {name="Treats", frame="resource-wallet-food"},
+        {name="Materials", frame="resource-wallet-supplies"},
     },
     pieces={
         [0]={name="Snow-dusted fir"},
@@ -54,8 +54,8 @@ E.bonuses = B
 -- Fir, mitten, silver coin, gold coin and candy cane. The cane's slot becomes Treats.
 local BASE = {0, 1, 2, 3, 15}
 
--- The twenty purchases follow Cradle of Rome 2's epochs.xml, one every five
--- wishes, four to each Advent (docs/market-pieces.md). Each building gives
+-- Four purchases per Advent follow Cradle of Rome 2's epochs.xml.
+-- The original wish milestones time the board rewards. Each building gives
 -- what its stall sells: material and treat pieces replace their palette line.
 -- Each purchase unlocks a single regular or charging piece in Rome's order.
 E.unlocks = {

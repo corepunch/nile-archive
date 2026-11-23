@@ -108,7 +108,7 @@ function L:portrait(box, record)
     local ok, style = pcall(self.skin.text, self.skin, "body", 18)
     if ok and style then
         local initial = record.name:match(utf8.charpattern) or "?"
-        text.in_(style, box, vec2(.5, .5), initial:upper())
+        text.inside(style, box, vec2(.5, .5), initial:upper())
     end
 end
 

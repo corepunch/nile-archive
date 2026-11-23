@@ -84,6 +84,7 @@ function A.load()
         if name then textures[name] = texture.load("story/floors/" .. name .. ".jpg") end
     end
     for kind = 0, #economy.pieces do textures["market-" .. kind] = piece("market-" .. kind) end
+    for _, currency in ipairs(economy.currencies) do textures[currency.frame] = piece(currency.frame) end
         return textures
 end
 

@@ -1684,7 +1684,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/match3/README.md",
   "provenance": {
-    "recipe": "e2bd3bbf86ac3003cfa71d51f76755853cfd924acc37c624bf1dc390568c3e24",
+    "recipe": "27ea9bdf4d7bea55090144e3bb7489cf30d36d6d87d6d2c8cb8b3bf5248a4486",
     "inputs": {
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
       "engine/art/match3/brick.prompt.txt": "fc0f0a55a07b87a3071871100c26b09aaba40a3d6ca39a86a891446ee44bc38b",

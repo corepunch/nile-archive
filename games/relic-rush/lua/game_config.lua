@@ -5,7 +5,6 @@ return {
     app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F",
         privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
     menu = {title = {"RELIC RUSH"}, subtitle = "THE LOST VALLEY", town = "VISIT ISLAND"},
-    corner_close = true,
     campaign_dialogue = false,
     epochs = {"Epoch I", "Epoch II", "Epoch III", "Epoch IV", "Epoch V"},
     epoch_title = "Epochs",
@@ -65,22 +64,15 @@ return {
         lines = {
             {"THE SPRING RUNS TO THE QUAY AGAIN.", 16},
         },
-        button = "BACK TO MY ISLAND",
     },
     complete = {
         title = "You won!",
         lines = {
             {"YOU COMPLETED ALL %d EXPEDITIONS.", 16},
         },
-        button = "BACK TO MY ISLAND",
-    },
-    card = {
-        back = "BACK TO ISLAND",
-        locked = "COMPLETE MORE LEVELS TO RESTORE THIS WONDER",
     },
     catalogue = {
         title = "Build your valley",
-        close = "BACK TO ISLAND",
         categories = {
             {"all", "All treasures"},
             {"wonder", "Restorations"},

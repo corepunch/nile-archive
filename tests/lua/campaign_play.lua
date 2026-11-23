@@ -120,9 +120,8 @@ for level = 1, rules.LEVELS do
             #placed > 0 and table.concat(placed, ", ") or "-"))
     end
     if user_events then user_events.emit('island') end
-    local phase, projects = R.epoch_projects()
     local epoch = math.min(level // 20 + 1, #R.words.epochs)
-    check(phase == R.words.epochs[epoch] and projects[1].id == island.ladder[(epoch - 1) * 4 + 1].kind,
+    check(R.active_epoch() == epoch,
         'the phase advances after each block of clears and purchases')
 end
 local due = 0

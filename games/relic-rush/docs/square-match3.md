@@ -61,16 +61,14 @@ with rings.
 Amphoras are playable score pieces from the opening. See the
 [twenty prices and unlocks](../README.md#buildings).
 
-The five epochs have four projects each. The town shows the current four
-projects in round buttons. The triangular Play button shows the next expedition
-number. The town advances when the epoch’s levels and projects are complete.
-After the first expedition, each project in the current epoch can be built as soon
-as its own price is covered. Tap a painting to see its price or shortfall and
-board reward. All project paintings keep their color. A Need Funds tag marks a shortfall,
-a moving trail marks an affordable project, and a jade checkmark marks a completed one.
-Open placement from the card, choose a site, then confirm to pay once. The card links to the
-decoration shop. After level 100, a pending purchase can offer a replay for
-resources.
+The five epochs have four projects each. Build opens the catalogue at the
+current epoch. After the first expedition, you can build its projects in any
+order as soon as the wallet covers their price. A particle trail circles
+Build if any open project is affordable. Tap a row for the price or shortfall
+and board reward, choose a site, then confirm. The triangular Play button
+shows the next expedition between Build and Pause. The town advances when
+the epoch’s levels and projects are complete. After level 100, a pending
+purchase can offer a replay for resources.
 
 ## Levels and art
 

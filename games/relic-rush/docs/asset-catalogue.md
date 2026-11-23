@@ -31,25 +31,15 @@ uses the original colors.
   `shot epoch-window-phone` (390 × 844), covering current, completed and
   locked medals.
 
+## Town controls
+
+The town bar reuses the round enamel Build and Pause buttons with the
+[painted jade Play sprite](../../../art/match3-buttons/README.md#town-play)
+centred between them. The Build rim uses the board’s existing blue particles
+when an eligible project is affordable. The catalogue groups the building
+sprites by epoch. Review with `shot epoch-projects-phone` and the catalogue capture.
+
 ## Construction backdrops
-
-Four circular brass medallions float over the town. Each medallion clips an
-existing 192 px construction painting to the round enamel well. The shared
-[green jade Play sprite](../../../art/match3-buttons/README.md#town-play) has a rounded
-triangular face and an antique brass lip. The game centers the next level number
-on the enamel. After the final level it shows the existing completion checkmark
-and opens the results. The `shot hud-states` capture shows the four painted states
-and a three-digit label.
-
-The four projects keep their painted colors. A Need Funds tag marks a shortfall.
-A particle trail circles an affordable project when motion is enabled. A
-completed project is dimmed behind the existing jade checkmark. The bevel
-brightens on hover and sinks on press. The form draws keyboard focus.
-
-The [art manifest](../art/board-states/manifest.json) records the painting crops and states.
-Run `python3 tools/project_thumbnails.py relic-rush` to rebuild
-`data/city/epochs/projects.jpg`. Review the controls at both phone sizes using
-`shot epoch-purchase-choice`.
 
 The expedition landing is the opening scene. After the player confirms a
 restoration, eligible expeditions show the latest completed site. Replays
@@ -637,8 +627,8 @@ buttons without captions; choosing one names it and its effect in the toast.
 ## Expedition header
 
 The campaign board centers its display-only row of Moves, Coins, Supplies
-and Food. Pause sits at the right end of the booster row. The Moves medallion
-shows its low-move state when needed.
+and Food. The smaller Pause gear sits at the right end of the booster row.
+The circular Moves medallion turns red for the last five moves.
 Resource counts include pending earnings, and matched pieces land on their
 currency icons. [Current board](screenshots/bonus-toolbar-phone.jpg)
 
@@ -860,7 +850,7 @@ gradient with a darker rim). Below it come the jade RESUME and two secondary
 actions in carved wood (`controls.button.variants.secondary`, same layers and
 states as the jade button: pressed sinks 2 units, disabled drains it). EXPLORER'S
 GUIDE is a gold text link (`variants.link`: no layers; pressed moves the text).
-From the island Pause shows only Resume. RESTART opens a confirmation
+On the island, use the corner X to dismiss Settings. RESTART opens a confirmation
 (`OV_CONFIRM`): RESTART in jade and KEEP PLAYING as a link, which returns to
 Pause. QUIT TO ISLAND keeps the unfinished board. All are engine geometry
 with no bitmap. Captures at both sizes, in the board and on the island, are in

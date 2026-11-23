@@ -92,61 +92,11 @@ function B.paint(box, image, state, alpha, face_colors, progress)
     if progress then progress_gauge(center, side, progress) end
 end
 
-local function paint_funding_tag(skin, out, alpha)
-    local side = math.min(out.w, out.h)
-    local width, height = side * .81, side * .22
-    local tag = rect.centered(out:center() + vec2(0, side * .37), size2(width, height))
-    local radius = height * .38
-    gfx.shadow(tag:offset(vec2(0, height * .1)), radius, height * .15, color.alpha(rgb(0x2D180C), alpha * .65))
-    gfx.round_rect(tag, radius, color.alpha(rgb(0xE2B978), alpha))
-    gfx.round_rect(tag:inflate(-height * .06), radius - height * .06, color.alpha(rgb(0x723620), alpha))
-    text.fit(skin:text("funding_tag", height * .64):faded(1 - alpha), tag:inflate2(vec2(-width * .06, 0)),
-        vec2(.5, .5), "NEED FUNDS")
-end
-
 local function button_state(st)
     if st.disabled then return "disabled" end
     if st.held then return "pressed" end
     if st.hot then return "hover" end
     return "normal"
-end
-
--- Atlas rows follow the four projects in each advent or expedition epoch.
-function B.project(unlocks)
-    local thumbnails
-    return {
-        normal = {layers = {{paint = function(_, node, st, skin, out, alpha)
-            local project = node.project
-            if not project then return end
-            if not thumbnails then
-                local sheet = texture.load("city/epochs/projects.jpg")
-                assert(sheet.tex, "missing project thumbnails")
-                local cell = sheet.w / 4
-                thumbnails = {}
-                for i, unlock in ipairs(unlocks) do
-                    local x, y = (i - 1) % 4 * cell, ((i - 1) // 4) * cell
-                    thumbnails[unlock.building] = texture.region(sheet, rect(x, y, cell, cell))
-                end
-            end
-            local state = button_state(st)
-            local built = project.state == "built"
-            B.medallion(out:inflate(-math.min(out.w, out.h) * .02), thumbnails[project.key], {
-                state = state, alpha = alpha, crop = true,
-                tint = built and rgb(0xA6A6A6) or color.WHITE,
-            })
-            if state == "pressed" then out = out:offset(vec2(0, out.h * .023)) end
-            local tick = skin.images.tick
-            if built and tick then
-                local side = math.min(out.w, out.h) * .66
-                local dst = rect.centered(out:center(), size2(side, side)):fit(texture.size(tick))
-                gfx.image(tick, dst:offset(vec2(0, side * .06)), color.alpha(rgb(0x24160B), alpha * .7))
-                gfx.image(tick, dst, color.alpha(color.WHITE, alpha))
-            elseif project.state == "funding" then
-                paint_funding_tag(skin, out, alpha)
-            end
-        end}}},
-        pressed = {offset = {0, 0}},
-    }
 end
 
 -- Shared painted face. The level number sits inside the widest part of the triangle.

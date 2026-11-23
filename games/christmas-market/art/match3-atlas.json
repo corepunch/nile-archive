@@ -395,7 +395,7 @@
         128
       ]
     },
-    "story-cocoa": {
+    "resource-wallet-food": {
       "atlas": "pieces",
       "box": [
         640,
@@ -404,7 +404,7 @@
         128
       ]
     },
-    "story-lantern": {
+    "resource-wallet-supplies": {
       "atlas": "pieces",
       "box": [
         768,
@@ -413,7 +413,7 @@
         128
       ]
     },
-    "story-letter": {
+    "story-cocoa": {
       "atlas": "pieces",
       "box": [
         896,
@@ -422,7 +422,7 @@
         128
       ]
     },
-    "story-ribbon": {
+    "story-lantern": {
       "atlas": "pieces",
       "box": [
         0,
@@ -431,7 +431,7 @@
         128
       ]
     },
-    "story-scarf": {
+    "story-letter": {
       "atlas": "pieces",
       "box": [
         128,
@@ -440,10 +440,28 @@
         128
       ]
     },
-    "story-telegram": {
+    "story-ribbon": {
       "atlas": "pieces",
       "box": [
         256,
+        640,
+        128,
+        128
+      ]
+    },
+    "story-scarf": {
+      "atlas": "pieces",
+      "box": [
+        384,
+        640,
+        128,
+        128
+      ]
+    },
+    "story-telegram": {
+      "atlas": "pieces",
+      "box": [
+        512,
         640,
         128,
         128
@@ -1066,20 +1084,6 @@
     "frame_source": "art/square-frame/variants.png",
     "frame_prompt": "art/square-frame/prompt.txt",
     "frames": {
-      "square-plain": {
-        "source": "art/square-cells/plain.png",
-        "crop": [
-          0,
-          0,
-          128,
-          128
-        ],
-        "size": [
-          128,
-          128
-        ],
-        "registered": "art/registered/square-cells/square-plain.png"
-      },
       "square-target": {
         "source": "../../art/match3-square/source.png",
         "crop": [
@@ -1141,6 +1145,20 @@
           128
         ],
         "registered": "art/registered/square-cells/square-grout.png"
+      },
+      "square-plain": {
+        "source": "art/square-cells/plain.png",
+        "crop": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "size": [
+          128,
+          128
+        ],
+        "registered": "art/registered/square-cells/square-plain.png"
       },
       "square-frame-1": {
         "generator": "../../tools/square_board_frame.py",
@@ -1726,7 +1744,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "e2bd3bbf86ac3003cfa71d51f76755853cfd924acc37c624bf1dc390568c3e24",
+    "recipe": "27ea9bdf4d7bea55090144e3bb7489cf30d36d6d87d6d2c8cb8b3bf5248a4486",
     "inputs": {
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
@@ -1803,6 +1821,8 @@
       "games/christmas-market/art/square-frame/variants.png": "3df9d5d0d095006246bf3244c48cb652bc088f7170ecb8a598ae5ae0a797ee0b",
       "games/christmas-market/data/board/backs/background.jpg": "4f8fecfd1362236b8755e1ef49b40c3926ee1abc6eec918eae932618356c01d7",
       "games/christmas-market/data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
+      "games/relic-rush/art/registered/resource-pieces/wallet-food.png": "0e9289814444b3b2223b3058c10c9e01f7dcaf3c68e57662779c391ebad5380c",
+      "games/relic-rush/art/registered/resource-pieces/wallet-supplies.png": "56d752b61f5fa5870f0225e468ed3d2a901ce6d8a5183f1806781946b942f502",
       "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
       "tools/match3_theme_art.py": "7919c0b1d38f68c41fc6aa9ca30e4a47d4ab9154b3b39d354ab4ad2a9aa10784",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368",
@@ -1813,8 +1833,8 @@
       "games/christmas-market/data/board/cells.png": "fc971b7df590510a9d8c6129e842cf1ff4575828b15f1cf53e9b029477494f9e",
       "games/christmas-market/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/christmas-market/data/board/hud.png": "5e578b922dd9d174d04cc0eb0c3fbb5d0fba6de174530b13cf8b47fa42421ba8",
-      "games/christmas-market/data/board/pieces.png": "f1cc6b84351b859ad970369a344fa6c07601cb816962c2c1a1b3275c6c69eaf3",
-      "games/christmas-market/lua/match3_atlases.lua": "9de13174101cc3242a4ede236cbc8fe464f6f91b72be88a8937784924c2b8e26",
+      "games/christmas-market/data/board/pieces.png": "eb0de789d77127cb76eaa6acea5876d9346a0de60bc40292763b5def8d4fd06f",
+      "games/christmas-market/lua/match3_atlases.lua": "64b93a84006ec49ac1329039849523aca238023f8c0eb18f9374006b414a8347",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
       "games/christmas-market/lua/match3_skin.lua": "d6606a045c2c933a6f5b94b36d8572c6d8974ec976ecfd20916c4c8b3f8a2e6d"
     }
