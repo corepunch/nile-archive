@@ -5,6 +5,8 @@
 -- axial hex grid flood-filled from six region centres, so every region is one
 -- connected patch) and which regions touch. Placement, unlocking, moving and
 -- drawing are the engine's.
+local l10n = require("l10n")
+local tr = l10n.tr
 local M = {}
 local journey = require("journey")
 local economy = require("economy")
@@ -57,7 +59,8 @@ end
 require("match3.game").campaign_ladder(M, economy.unlocks, journey, #economy.currencies, 20)
 for _, entry in ipairs(economy.unlocks) do
     local unlock = economy.building_unlock_text(entry)
-    if unlock then M.buildings[M.kinds[entry.building] + 1].unlock_text = "Unlocks " .. unlock end
+    -- TRANSLATORS: %s is the bonus tool or the resource piece that the building unlocks
+    if unlock then M.buildings[M.kinds[entry.building] + 1].unlock_text = tr("Unlocks %s"):format(unlock) end
 end
 
 local function scenery_building(kind)
@@ -114,7 +117,7 @@ function M.restore_saved(c)
     return needs_relocation
 end
 
-local zone_names = {"Harbor glade", "Sunlit coast", "Fern meadow", "Sun garden", "Ancient heights"}
+local zone_names = {tr("Harbor glade"), tr("Sunlit coast"), tr("Fern meadow"), tr("Sun garden"), tr("Ancient heights")}
 local zone_seeds = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}

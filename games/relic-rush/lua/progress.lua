@@ -1,3 +1,5 @@
+local l10n = require("l10n")
+local tr = l10n.tr
 local R = require("state")
 local rules = require("rules")
 local island = require("island")
@@ -30,12 +32,12 @@ local function opening_unlock(g)
             return economy.bonus_lesson(g.bonus_debut), building
         elseif unlock.kind and (g.level + 1 == unlock.after + 1 or level.featured_resource == unlock.key) then
             if g.resource_yields and g.resource_yields[unlock.kind] == unlock then
-                return unlock.name .. " are now on the board.", building
+                return tr("%s are now on the board."):format(unlock.name), building
             end
         end
     end
     for _, piece in pairs(g.resource_yields or {}) do
-        if g.level + 1 == piece.first_level then return piece.name .. " are now on the board." end
+        if g.level + 1 == piece.first_level then return tr("%s are now on the board."):format(piece.name) end
     end
 end
 

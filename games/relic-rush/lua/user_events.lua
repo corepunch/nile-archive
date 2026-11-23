@@ -30,6 +30,8 @@
 --
 -- The upgrades' feats and perks are docs/CAMPAIGN_DESIGN.md#upgrades, scaled
 -- to Relic Rush's boards.
+local l10n = require("l10n")
+local tr = l10n.tr
 local economy = require("economy")
 
 local events = {
@@ -38,16 +40,16 @@ local events = {
     -- until the player makes a first line of three.
     {id="hint_01_1",
         If={"IF_GAME_SHOW_MOVE_HINT", amount=1},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Swap the two glowing gems to line up three."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("Swap the two glowing gems to line up three.")}}},
     {id="hint_01_2",
         If={"IF_GAME_SHOW_MOVE_HINT", amount=2},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Swipe a gem onto its neighbour to make a line of three."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("Swipe a gem onto its neighbour to make a line of three.")}}},
     {id="hint_01_3",
         If={"IF_GAME_SHOW_MOVE_HINT", amount=3},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Try the glowing pair. Match three in a row or column."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("Try the glowing pair. Match three in a row or column.")}}},
     {id="hint_01_4",
         If={"IF_GAME_SHOW_MOVE_HINT", amount=5},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Tap a gem, then the neighbour to swap it with."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("Tap a gem, then the neighbour to swap it with.")}}},
     {id="hint_01_close",
         If={"IF_PLAYER_MAKE_MATCH", length=3},
         Then={
@@ -59,29 +61,29 @@ local events = {
     {id="hint_02_1", available=false,
         If={"IF_GAME_PUZZLE_TILE_APPEAR"},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", delay=7,
-            text="Match on the turquoise plaques to clear them. Clear every plaque to finish the expedition."}}},
+            text=tr("Match on the turquoise plaques to clear them. Clear every plaque to finish the expedition.")}}},
     {id="hint_02_2",
         If={"IF_GAME_DOUBLE_PUZZLE_TILE_APPEAR"},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="A double plaque needs two matches on it."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("A double plaque needs two matches on it.")}}},
     {id="hint_07",
         If={"IF_GAME_LOCK_APPEAR"},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="A chain holds its gem in place and takes the first hit."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("A chain holds its gem in place and takes the first hit.")}}},
     {id="hint_08",
         If={"IF_GAME_DOUBLE_LOCK_APPEAR"},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="A double chain takes two hits before its gem is free."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("A double chain takes two hits before its gem is free.")}}},
     {id="hint_09",
         If={"IF_GAME_FREEZE_APPEAR"},
-        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text="Ice holds its gem and takes the first hit."}}},
+        Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("Ice holds its gem and takes the first hit.")}}},
     -- Rome's hint_10 fires below 900 seconds; Relic Rush runs out of moves instead.
     {id="hint_10", available=false, from_level=2,
         If={"IF_GAME_MOVES_FALL_BELOW", moves=4},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", delay=1,
-            text="Three moves left. A charged bonus can clear the last plaques."}}},
+            text=tr("Three moves left. A charged bonus can clear the last plaques.")}}},
     -- hint_11_<bonus> follow after this table: one per bonus.
     {id="hint_12",
         If={"IF_GAME_SHOP_ENTER"},
         Then={{"THEN_SHOW_TUTORIAL", id="HINT_CITY",
-            text="Restorations cost Coins, Supplies and Food. Winning an expedition opens the next one."}}},
+            text=tr("Restorations cost Coins, Supplies and Food. Winning an expedition opens the next one.")}}},
 
 }
 
@@ -92,37 +94,38 @@ local function income(id, amount) return {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", 
 local function tool(id) return {"THEN_GAME_CHARGE_TOOL", id=id, amount=1} end
 
 local upgrades = {
-    {id="man_03", building="well", title="a second rope and pulley", keeper="oren",
+    -- TRANSLATORS: an upgrade's title: what the building gains, shown as "Upgraded: %s." and after the building's name
+    {id="man_03", building="well", title=tr("a second rope and pulley"), keeper="oren",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=245}, perk=income("food", 15)},
-    {id="man_04", building="log_cabin", title="his father's tools sharpened", keeper="oren",
+    {id="man_04", building="log_cabin", title=tr("his father's tools sharpened"), keeper="oren",
         If={"IF_PLAYER_MAKE_MATCH", length=5}, perk=tool("hammer")},
-    {id="man_02", building="workshop", title="a second saw bench", keeper="sela",
+    {id="man_02", building="workshop", title=tr("a second saw bench"), keeper="sela",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=520}, perk=income("supplies", 105)},
-    {id="man_01", building="camp", title="a dry tool store", keeper="sela",
+    {id="man_01", building="camp", title=tr("a dry tool store"), keeper="sela",
         If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=10}, perk=tool("bomb")},
-    {id="man_05", building="market", title="the hill farms send their carts", keeper="tavi",
+    {id="man_05", building="market", title=tr("the hill farms send their carts"), keeper="tavi",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=560}, perk=income("food", 95)},
-    {id="man_06", building="trading_post", title="a cart road to the quarry", keeper="sela",
+    {id="man_06", building="trading_post", title=tr("a cart road to the quarry"), keeper="sela",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=550}, perk=income("supplies", 110)},
-    {id="man_07", building="water_mill", title="a second millstone", keeper="oren",
+    {id="man_07", building="water_mill", title=tr("a second millstone"), keeper="oren",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=625}, perk=income("food", 125)},
-    {id="man_08", building="clock_tower", title="a warning chime", keeper="tavi",
+    {id="man_08", building="clock_tower", title=tr("a warning chime"), keeper="tavi",
         If={"IF_PLAYER_MAKE_MATCH_IN_LEVEL", amount=5, min_length=5}, perk=tool("shield")},
-    {id="man_09", building="gateway", title="a fish market every morning", keeper="tavi",
+    {id="man_09", building="gateway", title=tr("a fish market every morning"), keeper="tavi",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=850}, perk=income("food", 170)},
-    {id="man_10", building="amphitheater", title="market-day shows", keeper="oren",
+    {id="man_10", building="amphitheater", title=tr("market-day shows"), keeper="oren",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=460}, perk=income("coins", 90)},
-    {id="man_11", building="map_room", title="storm charts on the wall", keeper="tavi",
+    {id="man_11", building="map_room", title=tr("storm charts on the wall"), keeper="tavi",
         If={"IF_PLAYER_MAKE_MATCH_SERIES", amount=2, min_length=5}, perk=tool("lightning")},
-    {id="man_12", building="lighthouse", title="a bronze reflector", keeper="tavi",
+    {id="man_12", building="lighthouse", title=tr("a bronze reflector"), keeper="tavi",
         If={"IF_PLAYER_MAKE_MATCH_IN_TIME", amount=15, min_length=3, time=20}, perk=tool("plus")},
-    {id="man_13", building="beached_ship", title="a ferry to the hill villages", keeper="tavi",
+    {id="man_13", building="beached_ship", title=tr("a ferry to the hill villages"), keeper="tavi",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=690}, perk=income("coins", 140)},
-    {id="man_14", building="observatory", title="the sighting stones aligned", keeper="sela",
+    {id="man_14", building="observatory", title=tr("the sighting stones aligned"), keeper="sela",
         If={"IF_PLAYER_COMPLETE_LEVELS_WITHOUT_LIFE_LOSS", amount=3}, perk=tool("mixer")},
-    {id="man_15", building="museum", title="a reading room open to all", keeper="sela",
+    {id="man_15", building="museum", title=tr("a reading room open to all"), keeper="sela",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=990}, perk=income("coins", 200)},
-    {id="man_16", building="temple", title="the keepers' watch roster", keeper="oren",
+    {id="man_16", building="temple", title=tr("the keepers' watch roster"), keeper="oren",
         If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=15}, perk=tool("star")},
 }
 for _, event in ipairs(require("match3.user_events").upgrade_events(upgrades)) do table.insert(events, event) end
@@ -130,17 +133,18 @@ for _, event in ipairs(require("match3.user_events").upgrade_events(upgrades)) d
 -- The first line gem and the first rainbow gem each explain themselves once.
 table.insert(events, {id="hint_line_gem",
     If={"IF_PLAYER_MAKE_MATCH", length=4, max_length=4},
-    Then={{"THEN_SHOW_TUTORIAL", id="HINT_LINE_GEM", text="Four in a line leave a striped gem. Match it to sweep its line."}}})
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_LINE_GEM", text=tr("Four in a line leave a striped gem. Match it to sweep its line.")}}})
 table.insert(events, {id="hint_rainbow_gem",
     If={"IF_PLAYER_MAKE_MATCH", length=5},
-    Then={{"THEN_SHOW_TUTORIAL", id="HINT_RAINBOW_GEM", text="Five in a line leave a rainbow gem. Swap it to clear one kind."}}})
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_RAINBOW_GEM", text=tr("Five in a line leave a rainbow gem. Swap it to clear one kind.")}}})
 
 -- hint_11_<bonus>: Rome's IF_GAME_BONUS_READY hints, one per bonus.
 for _, slot in ipairs(economy.bonus_slots) do
     for _, bonus in ipairs(slot.levels) do
         table.insert(events, {id="hint_11_" .. bonus.key,
             If={"IF_GAME_BONUS_READY", id=bonus.key},
-            Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=bonus.name .. " is charged. Tap it. " .. bonus.effect}}})
+            -- TRANSLATORS: the first %s is a bonus tool's name, the second the sentence saying what it does
+            Then={{"THEN_SHOW_TUTORIAL", id="HINT_ARROW", text=tr("%s is charged. Tap it. %s"):format(bonus.name, bonus.effect)}}})
     end
 end
 

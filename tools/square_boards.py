@@ -17,8 +17,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TIERS = {'tutorial', 'easy', 'normal', 'hard', 'boss'}
-BOARD = re.compile(r'\{\s*name\s*=\s*"([^"]+)"([^{}]*)\}', re.S)
-FIELD = re.compile(r'\w+\s*=\s*("[^"]*"|[^,"]+)')
+# A board's name and lesson may be marked for translation: name=tr("...").
+BOARD = re.compile(r'\{\s*name\s*=\s*(?:tr\()?"([^"]+)"\)?([^{}]*)\}', re.S)
+FIELD = re.compile(r'\w+\s*=\s*(tr\("[^"]*"\)|"[^"]*"|[^,"]+)')
 
 
 def parse(text):

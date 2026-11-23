@@ -2,14 +2,14 @@
 local l10n = require("l10n")
 local tr = l10n.tr
 local boards = {
-    {name="Lantern Lane", tier="tutorial", moves=9,
+    {name=tr("Lantern Lane"), tier="tutorial", moves=9,
         ".......",
         ".**.**.",
         ".*****.",
         "..***..",
         "..***..",
         "......."},
-    {name="Winter Wreath", tier="tutorial", moves=12,
+    {name=tr("Winter Wreath"), tier="tutorial", moves=12,
         "--...--",
         "-.***.-",
         ".**.**.",
@@ -17,7 +17,7 @@ local boards = {
         "-.***.-",
         "--***--",
         "--...--"},
-    {name="Window Lights", tier="tutorial", moves=18,
+    {name=tr("Window Lights"), tier="tutorial", moves=18,
         "..*****..",
         ".*******.",
         ".*******.",
@@ -25,7 +25,7 @@ local boards = {
         ".*******.",
         ".*******.",
         "..*****.."},
-    {name="Ribbon Street", tier="tutorial", moves=20, lesson="Match through a tied treat to untangle it. Then light its pane.",
+    {name=tr("Ribbon Street"), tier="tutorial", moves=20, lesson=tr("Match through a tied treat to untangle it. Then light its pane."),
         ".....----",
         ".****----",
         ".*c*****.",
@@ -34,7 +34,7 @@ local boards = {
         ".*****c*.",
         "----****.",
         "----....."},
-    {name="Workshop Crossing", tier="hard", moves=23,
+    {name=tr("Workshop Crossing"), tier="hard", moves=23,
         "---.*.---",
         "---***---",
         ".*******.",
@@ -44,7 +44,7 @@ local boards = {
         ".*******.",
         "---***---",
         "---.*.---"},
-    {name="Snowflake Lane", tier="easy", moves=24,
+    {name=tr("Snowflake Lane"), tier="easy", moves=24,
         "..-----..",
         ".*.---.*.",
         "*********",
@@ -54,7 +54,7 @@ local boards = {
         "*********",
         ".*.---.*.",
         "..-----.."},
-    {name="Gingerbread Gables", tier="normal", moves=27,
+    {name=tr("Gingerbread Gables"), tier="normal", moves=27,
         "---***---",
         "--*****--",
         "-*******-",
@@ -64,7 +64,7 @@ local boards = {
         "*********",
         "*********",
         "..*****.."},
-    {name="Toy Shop Windows", tier="normal", moves=29,
+    {name=tr("Toy Shop Windows"), tier="normal", moves=29,
         "..*****..",
         "*********",
         "**c***c**",
@@ -75,7 +75,7 @@ local boards = {
         "**c***c**",
         "*********",
         "..*****.."},
-    {name="Cocoa for Two", tier="hard", moves=32, lesson="Double knots take two matches. Then light the pane.",
+    {name=tr("Cocoa for Two"), tier="hard", moves=32, lesson=tr("Double knots take two matches. Then light the pane."),
         "****-****",
         "****-****",
         "*********",
@@ -87,7 +87,7 @@ local boards = {
         "**C***C**",
         "*********",
         "*********"},
-    {name="Christmas Star", tier="boss", moves=28,
+    {name=tr("Christmas Star"), tier="boss", moves=28,
         "---***---",
         "--*****--",
         "--*****--",
@@ -101,7 +101,7 @@ local boards = {
         "--*****--",
         "--*****--"},
     -- 11
-    {name="Snowball Alley", tier="easy", moves=24,
+    {name=tr("Snowball Alley"), tier="easy", moves=24,
         "*******",
         "*******",
         "*******",
@@ -111,7 +111,7 @@ local boards = {
         "*******"},
 
     -- 12
-    {name="Chestnut Corner", tier="easy", moves=27,
+    {name=tr("Chestnut Corner"), tier="easy", moves=27,
         "-*****-",
         "*******",
         "*******",
@@ -122,7 +122,7 @@ local boards = {
         "-*****-"},
 
     -- 13
-    {name="Sleigh Ride", tier="normal", moves=28,
+    {name=tr("Sleigh Ride"), tier="normal", moves=28,
         "*********",
         "*********",
         "**c***c**",
@@ -130,7 +130,7 @@ local boards = {
         "*********"},
 
     -- 14
-    {name="Silver Bell", tier="normal", moves=30,
+    {name=tr("Silver Bell"), tier="normal", moves=30,
         "----*----",
         "---***---",
         "--*****--",
@@ -141,7 +141,7 @@ local boards = {
         ".*******."},
 
     -- 15
-    {name="Sugar House", tier="hard", moves=34,
+    {name=tr("Sugar House"), tier="hard", moves=34,
         "----*----",
         "---***---",
         "--*****--",
@@ -153,7 +153,7 @@ local boards = {
         "*********"},
 
     -- 16
-    {name="Mitten Line", tier="easy", moves=23,
+    {name=tr("Mitten Line"), tier="easy", moves=23,
         "-*****-",
         "-*****-",
         "-*****-",
@@ -164,7 +164,7 @@ local boards = {
         "-*****-"},
 
     -- 17
-    {name="Candy Cross", tier="normal", moves=25,
+    {name=tr("Candy Cross"), tier="normal", moves=25,
         "*********",
         "*********",
         "*********",
@@ -176,7 +176,7 @@ local boards = {
         "*********"},
 
     -- 18
-    {name="Skating Rink", tier="normal", moves=30,
+    {name=tr("Skating Rink"), tier="normal", moves=30,
         "--*****--",
         "--*****--",
         "-*******-",
@@ -186,7 +186,7 @@ local boards = {
         "--*****--"},
 
     -- 19
-    {name="Snowman", tier="hard", moves=30,
+    {name=tr("Snowman"), tier="hard", moves=30,
         "--***--",
         "-*****-",
         "-*****-",
@@ -199,7 +199,7 @@ local boards = {
         "-*****-"},
 
     -- 20
-    {name="Midnight Star", tier="boss", moves=40,
+    {name=tr("Midnight Star"), tier="boss", moves=40,
         "----+----",
         "---+++---",
         "--+++++--",
@@ -210,7 +210,7 @@ local boards = {
         ".+++++++."},
 
     -- 21
-    {name="Holly Ring", tier="easy", moves=23,
+    {name=tr("Holly Ring"), tier="easy", moves=23,
         "-*****-",
         "-*****-",
         "*******",
@@ -221,7 +221,7 @@ local boards = {
         "-*****-"},
 
     -- 22
-    {name="Stocking Pair", tier="easy", moves=29,
+    {name=tr("Stocking Pair"), tier="easy", moves=29,
         "*******",
         "*******",
         "***-***",
@@ -231,7 +231,7 @@ local boards = {
         ".*****."},
 
     -- 23
-    {name="Chapel Window", tier="normal", moves=30,
+    {name=tr("Chapel Window"), tier="normal", moves=30,
         "--***--",
         "-*****-",
         "*******",
@@ -242,7 +242,7 @@ local boards = {
         "*******"},
 
     -- 24
-    {name="Lantern Pair", tier="normal", moves=35,
+    {name=tr("Lantern Pair"), tier="normal", moves=35,
         "*********",
         "****-****",
         "*+*+-+*+*",
@@ -251,7 +251,7 @@ local boards = {
         "*********"},
 
     -- 25
-    {name="Cracker Bonbon", tier="hard", moves=33,
+    {name=tr("Cracker Bonbon"), tier="hard", moves=33,
         "-*******-",
         "-*******-",
         "***c*c***",
@@ -261,7 +261,7 @@ local boards = {
         "-*******-"},
 
     -- 26
-    {name="Little Angel", tier="easy", moves=29,
+    {name=tr("Little Angel"), tier="easy", moves=29,
         "----*----",
         "---***---",
         "*********",
@@ -272,7 +272,7 @@ local boards = {
         "-*******-"},
 
     -- 27
-    {name="Ornament", tier="normal", moves=34,
+    {name=tr("Ornament"), tier="normal", moves=34,
         "----*----",
         "---***---",
         "-*******-",
@@ -283,7 +283,7 @@ local boards = {
         "--*****--"},
 
     -- 28
-    {name="Stall Row", tier="normal", moves=35,
+    {name=tr("Stall Row"), tier="normal", moves=35,
         ".*******.",
         ".*-*+*-*.",
         "**-***-**",
@@ -292,7 +292,7 @@ local boards = {
         "*********"},
 
     -- 29
-    {name="Gift Box", tier="hard", moves=37,
+    {name=tr("Gift Box"), tier="hard", moves=37,
         "--*****--",
         "*********",
         "C***+***C",
@@ -303,7 +303,7 @@ local boards = {
         "*********"},
 
     -- 30
-    {name="Great Fir", tier="boss", moves=39,
+    {name=tr("Great Fir"), tier="boss", moves=39,
         "----+----",
         "---+++---",
         "---+++---",
@@ -316,7 +316,7 @@ local boards = {
         "-.+++++.-"},
 
     -- 31
-    {name="Nutcracker", tier="easy", moves=28,
+    {name=tr("Nutcracker"), tier="easy", moves=28,
         "--***--",
         "-*****-",
         "-*****-",
@@ -329,7 +329,7 @@ local boards = {
         "-*****-"},
 
     -- 32
-    {name="Honey Cake", tier="easy", moves=25,
+    {name=tr("Honey Cake"), tier="easy", moves=25,
         ".*****.",
         "-*****-",
         "*******",
@@ -339,7 +339,7 @@ local boards = {
         "*******"},
 
     -- 33
-    {name="Carousel Day", tier="normal", moves=32,
+    {name=tr("Carousel Day"), tier="normal", moves=32,
         "---***---",
         "-*******-",
         "****+****",
@@ -349,7 +349,7 @@ local boards = {
         "..-*-*-.."},
 
     -- 34
-    {name="Frozen Pond", tier="normal", moves=28,
+    {name=tr("Frozen Pond"), tier="normal", moves=28,
         "-*******-",
         "*********",
         "*********",
@@ -358,7 +358,7 @@ local boards = {
         "-*******-"},
 
     -- 35
-    {name="Frost Flower", tier="hard", moves=29,
+    {name=tr("Frost Flower"), tier="hard", moves=29,
         "*********",
         "*********",
         "*********",
@@ -370,7 +370,7 @@ local boards = {
         "*********"},
 
     -- 36
-    {name="Gingerbread Man", tier="easy", moves=29,
+    {name=tr("Gingerbread Man"), tier="easy", moves=29,
         "-*****-",
         "-*****-",
         "-*****-",
@@ -382,7 +382,7 @@ local boards = {
         ".*****."},
 
     -- 37
-    {name="Peppermint Swirl", tier="normal", moves=28,
+    {name=tr("Peppermint Swirl"), tier="normal", moves=28,
         "*********",
         "*********",
         "*********",
@@ -392,7 +392,7 @@ local boards = {
         "*********"},
 
     -- 38
-    {name="Hearth Glow", tier="normal", moves=35,
+    {name=tr("Hearth Glow"), tier="normal", moves=35,
         "*********",
         "**c***c**",
         "***---***",
@@ -402,7 +402,7 @@ local boards = {
         "**.....**"},
 
     -- 39
-    {name="Twelfth Crown", tier="hard", moves=35,
+    {name=tr("Twelfth Crown"), tier="hard", moves=35,
         "*-*-*-*-*",
         "*********",
         "*********",
@@ -411,7 +411,7 @@ local boards = {
         "*********"},
 
     -- 40
-    {name="Rose Window", tier="boss", moves=38,
+    {name=tr("Rose Window"), tier="boss", moves=38,
         "---...---",
         "----+----",
         "---+++---",
@@ -424,7 +424,7 @@ local boards = {
         "----+----",
         "---...---"},
     -- 41
-    {name="Pine Whisper", tier="easy", moves=29,
+    {name=tr("Pine Whisper"), tier="easy", moves=29,
         "---***---",
         "--*****--",
         "--*****--",
@@ -436,7 +436,7 @@ local boards = {
         "---***---"},
 
     -- 42
-    {name="Bell Tower Bells", tier="easy", moves=30,
+    {name=tr("Bell Tower Bells"), tier="easy", moves=30,
         "---***---",
         "--*****--",
         "-*******-",
@@ -449,7 +449,7 @@ local boards = {
         "---***---"},
 
     -- 43
-    {name="Skate Pond", tier="normal", moves=32,
+    {name=tr("Skate Pond"), tier="normal", moves=32,
         "---***---",
         "--*****--",
         "-*******-",
@@ -461,7 +461,7 @@ local boards = {
         "---***---"},
 
     -- 44
-    {name="Ribbon and Bow", tier="normal", moves=32,
+    {name=tr("Ribbon and Bow"), tier="normal", moves=32,
         "-*******-",
         "*********",
         "*********",
@@ -473,7 +473,7 @@ local boards = {
         "*********"},
 
     -- 45
-    {name="Frost on the Pane", tier="hard", moves=29,
+    {name=tr("Frost on the Pane"), tier="hard", moves=29,
         "---***---",
         "--*****--",
         "-*******-",
@@ -487,7 +487,7 @@ local boards = {
         "--*****--"},
 
     -- 46
-    {name="Gingerbread Row", tier="easy", moves=29,
+    {name=tr("Gingerbread Row"), tier="easy", moves=29,
         "---***---",
         "--*****--",
         "-*******-",
@@ -499,7 +499,7 @@ local boards = {
         "*********"},
 
     -- 47
-    {name="Hearth Stockings", tier="normal", moves=34,
+    {name=tr("Hearth Stockings"), tier="normal", moves=34,
         "*********",
         "***-.-***",
         "***-.-***",
@@ -511,7 +511,7 @@ local boards = {
         "---...---"},
 
     -- 48
-    {name="Wreath Door", tier="normal", moves=35,
+    {name=tr("Wreath Door"), tier="normal", moves=35,
         "-.**.**.-",
         "--*****--",
         "-.**-**.-",
@@ -523,7 +523,7 @@ local boards = {
         "-.**.**.-"},
 
     -- 49
-    {name="Spice Rack Glow", tier="hard", moves=34,
+    {name=tr("Spice Rack Glow"), tier="hard", moves=34,
         "*********",
         "*********",
         "c*******c",
@@ -536,7 +536,7 @@ local boards = {
         "*********"},
 
     -- 50
-    {name="Midnight Mass", tier="boss", moves=39,
+    {name=tr("Midnight Mass"), tier="boss", moves=39,
         "---...---",
         "--+++++--",
         "-+++++++-",
@@ -548,7 +548,7 @@ local boards = {
         "---...---"},
 
     -- 51
-    {name="Angel Wings", tier="easy", moves=29,
+    {name=tr("Angel Wings"), tier="easy", moves=29,
         "---***---",
         "--*****--",
         "*********",
@@ -560,7 +560,7 @@ local boards = {
         "---***---"},
 
     -- 52
-    {name="Nutcracker Parade", tier="easy", moves=29,
+    {name=tr("Nutcracker Parade"), tier="easy", moves=29,
         "---***---",
         "--*****--",
         "--*****--",
@@ -573,7 +573,7 @@ local boards = {
         "--*****--"},
 
     -- 53
-    {name="Cinnamon Carousel", tier="normal", moves=30,
+    {name=tr("Cinnamon Carousel"), tier="normal", moves=30,
         "---***---",
         "--*****--",
         "-*******-",
@@ -586,7 +586,7 @@ local boards = {
         "*********"},
 
     -- 54
-    {name="Hot Cider Kettle", tier="normal", moves=34,
+    {name=tr("Hot Cider Kettle"), tier="normal", moves=34,
         "---***---",
         "---***---",
         "--*****--",
@@ -599,7 +599,7 @@ local boards = {
         "---***---"},
 
     -- 55
-    {name="Lantern Walk", tier="hard", moves=38,
+    {name=tr("Lantern Walk"), tier="hard", moves=38,
         "---***---",
         "---***---",
         "--*****--",
@@ -613,7 +613,7 @@ local boards = {
         "---.*.---"},
 
     -- 56
-    {name="Snowman Square", tier="easy", moves=30,
+    {name=tr("Snowman Square"), tier="easy", moves=30,
         "---***---",
         "--*****--",
         "--*****--",
@@ -626,7 +626,7 @@ local boards = {
         "--*****--"},
 
     -- 57
-    {name="Santa Post Box", tier="normal", moves=29,
+    {name=tr("Santa Post Box"), tier="normal", moves=29,
         "---***---",
         "--*****--",
         "-*******-",
@@ -640,7 +640,7 @@ local boards = {
         "-*******-"},
 
     -- 58
-    {name="Carol Steps", tier="normal", moves=29,
+    {name=tr("Carol Steps"), tier="normal", moves=29,
         "---***---",
         "--*****--",
         "--*****--",
@@ -652,7 +652,7 @@ local boards = {
         "*********"},
 
     -- 59
-    {name="Cracker Pop", tier="hard", moves=37,
+    {name=tr("Cracker Pop"), tier="hard", moves=37,
         ".*******.",
         "*********",
         "**ccccc**",
@@ -664,7 +664,7 @@ local boards = {
         "*********"},
 
     -- 60
-    {name="Holly Berry Lane", tier="boss", moves=39,
+    {name=tr("Holly Berry Lane"), tier="boss", moves=39,
         "---+++---",
         "--+++++--",
         "-+++++++-",
@@ -676,7 +676,7 @@ local boards = {
         "---...---"},
 
     -- 61
-    {name="Silver Bells Stall", tier="easy", moves=28,
+    {name=tr("Silver Bells Stall"), tier="easy", moves=28,
         "-*******-",
         "*********",
         "*********",
@@ -688,7 +688,7 @@ local boards = {
         "---***---"},
 
     -- 62
-    {name="Mistletoe Arch", tier="easy", moves=30,
+    {name=tr("Mistletoe Arch"), tier="easy", moves=30,
         "---***---",
         "--*****--",
         "-*******-",
@@ -701,7 +701,7 @@ local boards = {
         "---***---"},
 
     -- 63
-    {name="Clock Tower Chimes", tier="normal", moves=34,
+    {name=tr("Clock Tower Chimes"), tier="normal", moves=34,
         "--***--",
         "--***--",
         "-*****-",
@@ -716,7 +716,7 @@ local boards = {
         "*******"},
 
     -- 64
-    {name="Marzipan Pantry", tier="normal", moves=32,
+    {name=tr("Marzipan Pantry"), tier="normal", moves=32,
         "*********",
         "*********",
         "*********",
@@ -729,7 +729,7 @@ local boards = {
         "---***---"},
 
     -- 65
-    {name="Toy Train Depot", tier="hard", moves=33,
+    {name=tr("Toy Train Depot"), tier="hard", moves=33,
         "---***---",
         "---***---",
         "-*******-",
@@ -742,7 +742,7 @@ local boards = {
         "*********"},
 
     -- 66
-    {name="Tinsel Terrace", tier="normal", moves=33,
+    {name=tr("Tinsel Terrace"), tier="normal", moves=33,
         "*********",
         "*********",
         "*********",
@@ -755,7 +755,7 @@ local boards = {
         "---***---"},
 
     -- 67
-    {name="Pudding Hearth", tier="easy", moves=29,
+    {name=tr("Pudding Hearth"), tier="easy", moves=29,
         "---***---",
         "--*****--",
         "-*******-",
@@ -767,7 +767,7 @@ local boards = {
         "--*****--"},
 
     -- 68
-    {name="Starlit Sleigh", tier="normal", moves=32,
+    {name=tr("Starlit Sleigh"), tier="normal", moves=32,
         "*********",
         "*********",
         "*********",
@@ -780,7 +780,7 @@ local boards = {
         "*********"},
 
     -- 69
-    {name="Drum Roll Ball", tier="hard", moves=34,
+    {name=tr("Drum Roll Ball"), tier="hard", moves=34,
         "---***---",
         "--*****--",
         "-*******-",
@@ -793,7 +793,7 @@ local boards = {
         "--*****--"},
 
     -- 70
-    {name="Yule Crown Rink", tier="boss", moves=40,
+    {name=tr("Yule Crown Rink"), tier="boss", moves=40,
         "---+++---",
         ".+++++++.",
         "+++++++++",
@@ -804,7 +804,7 @@ local boards = {
         "--+++++--",
         "---...---"},
     -- 71
-    {name="Candle Glow", tier="easy", moves=25,
+    {name=tr("Candle Glow"), tier="easy", moves=25,
         "---*---",
         "--***--",
         "-*****-",
@@ -816,7 +816,7 @@ local boards = {
         "*******"},
 
     -- 72
-    {name="Sleigh Bells Ring", tier="easy", moves=30,
+    {name=tr("Sleigh Bells Ring"), tier="easy", moves=30,
         "----*----",
         "--*****--",
         "-*******-",
@@ -828,7 +828,7 @@ local boards = {
         "----*----"},
 
     -- 73
-    {name="Frost Crystal", tier="normal", moves=29,
+    {name=tr("Frost Crystal"), tier="normal", moves=29,
         "*********",
         "*********",
         "*********",
@@ -840,7 +840,7 @@ local boards = {
         "*********"},
 
     -- 74
-    {name="Ginger Cottage", tier="normal", moves=35,
+    {name=tr("Ginger Cottage"), tier="normal", moves=35,
         "-*--*--*-",
         "-*-***-*-",
         "-*******-",
@@ -852,7 +852,7 @@ local boards = {
         "*********"},
 
     -- 75
-    {name="Mantel Stockings", tier="hard", moves=37,
+    {name=tr("Mantel Stockings"), tier="hard", moves=37,
         "*********",
         "*********",
         "****-****",
@@ -865,7 +865,7 @@ local boards = {
         ".*******."},
 
     -- 76
-    {name="Ribboned Gift", tier="easy", moves=25,
+    {name=tr("Ribboned Gift"), tier="easy", moves=25,
         "-*****-",
         "*******",
         "*******",
@@ -875,7 +875,7 @@ local boards = {
         "*******"},
 
     -- 77
-    {name="Carousel Canopy", tier="normal", moves=35,
+    {name=tr("Carousel Canopy"), tier="normal", moves=35,
         "----*----",
         "---***---",
         "--*****--",
@@ -887,7 +887,7 @@ local boards = {
         "-*******-"},
 
     -- 78
-    {name="Skaters Pond", tier="normal", moves=34,
+    {name=tr("Skaters Pond"), tier="normal", moves=34,
         "*********",
         "-*******-",
         "*********",
@@ -898,7 +898,7 @@ local boards = {
         "*********"},
 
     -- 79
-    {name="Frozen Fountain", tier="hard", moves=35,
+    {name=tr("Frozen Fountain"), tier="hard", moves=35,
         "----*----",
         "---***---",
         "--*C*C*--",
@@ -910,7 +910,7 @@ local boards = {
         "-*******-"},
 
     -- 80
-    {name="Midnight Bells", tier="boss", moves=40,
+    {name=tr("Midnight Bells"), tier="boss", moves=40,
         "+++++++++",
         "+++++++++",
         "+++++++++",
@@ -922,7 +922,7 @@ local boards = {
         "-...-...-"},
 
     -- 81
-    {name="Snowman Parade", tier="easy", moves=27,
+    {name=tr("Snowman Parade"), tier="easy", moves=27,
         "--***--",
         "-*****-",
         "-*****-",
@@ -934,7 +934,7 @@ local boards = {
         "-*****-"},
 
     -- 82
-    {name="Herald Angel", tier="easy", moves=28,
+    {name=tr("Herald Angel"), tier="easy", moves=28,
         "----*----",
         "---***---",
         "*********",
@@ -945,7 +945,7 @@ local boards = {
         "---***---"},
 
     -- 83
-    {name="Nutcracker Watch", tier="normal", moves=33,
+    {name=tr("Nutcracker Watch"), tier="normal", moves=33,
         "---*---",
         "--***--",
         "-*****-",
@@ -959,7 +959,7 @@ local boards = {
         "-*-*-*-"},
 
     -- 84
-    {name="Glass Bauble", tier="normal", moves=32,
+    {name=tr("Glass Bauble"), tier="normal", moves=32,
         "---***---",
         "---***---",
         "-*******-",
@@ -971,7 +971,7 @@ local boards = {
         "--*****--"},
 
     -- 85
-    {name="Paper Lantern Walk", tier="hard", moves=38,
+    {name=tr("Paper Lantern Walk"), tier="hard", moves=38,
         "-.--*--.-",
         "*********",
         "*C*.*.*C*",
@@ -982,7 +982,7 @@ local boards = {
         "*********"},
 
     -- 86
-    {name="Wreath on the Door", tier="easy", moves=30,
+    {name=tr("Wreath on the Door"), tier="easy", moves=30,
         "-*******-",
         "***.-.***",
         "***---***",
@@ -994,7 +994,7 @@ local boards = {
         "..*****.."},
 
     -- 87
-    {name="Stained Glass Glow", tier="normal", moves=35,
+    {name=tr("Stained Glass Glow"), tier="normal", moves=35,
         "----*----",
         "---***---",
         "--*****--",
@@ -1008,7 +1008,7 @@ local boards = {
         ".*******."},
 
     -- 88
-    {name="Striped Awnings", tier="normal", moves=33,
+    {name=tr("Striped Awnings"), tier="normal", moves=33,
         "*********",
         "*********",
         "*********",
@@ -1019,7 +1019,7 @@ local boards = {
         "*********"},
 
     -- 89
-    {name="Last Train Home", tier="hard", moves=27,
+    {name=tr("Last Train Home"), tier="hard", moves=27,
         "---***---",
         "---***---",
         "-*******-",
@@ -1030,7 +1030,7 @@ local boards = {
         "*********"},
 
     -- 90
-    {name="Choir Loft", tier="boss", moves=40,
+    {name=tr("Choir Loft"), tier="boss", moves=40,
         "--+++++--",
         "-+++++++-",
         "+++++++++",
@@ -1043,7 +1043,7 @@ local boards = {
         "-...-...-"},
 
     -- 91
-    {name="Sleigh at Dusk", tier="easy", moves=27,
+    {name=tr("Sleigh at Dusk"), tier="easy", moves=27,
         ".-------.",
         "*********",
         "*********",
@@ -1054,7 +1054,7 @@ local boards = {
         ".*******."},
 
     -- 92
-    {name="Pine Boughs", tier="easy", moves=29,
+    {name=tr("Pine Boughs"), tier="easy", moves=29,
         "----*----",
         "---***---",
         "--*****--",
@@ -1067,7 +1067,7 @@ local boards = {
         "--.***.--"},
 
     -- 93
-    {name="Spiced Star", tier="normal", moves=30,
+    {name=tr("Spiced Star"), tier="normal", moves=30,
         "----*----",
         "---***---",
         "-*******-",
@@ -1079,7 +1079,7 @@ local boards = {
         "----*----"},
 
     -- 94
-    {name="Fireside Tales", tier="normal", moves=34,
+    {name=tr("Fireside Tales"), tier="normal", moves=34,
         "***...***",
         "***.-.***",
         "***C.C***",
@@ -1091,7 +1091,7 @@ local boards = {
         "........."},
 
     -- 95
-    {name="Gate of Lights", tier="hard", moves=35,
+    {name=tr("Gate of Lights"), tier="hard", moves=35,
         "--.***.--",
         "-.......-",
         "***---***",
@@ -1103,7 +1103,7 @@ local boards = {
         "........."},
 
     -- 96
-    {name="Snow Globe", tier="easy", moves=30,
+    {name=tr("Snow Globe"), tier="easy", moves=30,
         "--*****--",
         "-*******-",
         "*********",
@@ -1116,7 +1116,7 @@ local boards = {
         "-..*-*..-"},
 
     -- 97
-    {name="Shepherds Star", tier="normal", moves=34,
+    {name=tr("Shepherds Star"), tier="normal", moves=34,
         "---***---",
         "--*****--",
         "--**C**--",
@@ -1130,7 +1130,7 @@ local boards = {
         ".*.*-*.*."},
 
     -- 98
-    {name="Toy Soldier March", tier="normal", moves=30,
+    {name=tr("Toy Soldier March"), tier="normal", moves=30,
         "---*---",
         "--***--",
         "-*****-",
@@ -1143,7 +1143,7 @@ local boards = {
         "-*.-.*-"},
 
     -- 99
-    {name="Twelve Chimes", tier="hard", moves=33,
+    {name=tr("Twelve Chimes"), tier="hard", moves=33,
         "--**C**--",
         "-*******-",
         "*********",
@@ -1155,7 +1155,7 @@ local boards = {
         "--*****--"},
 
     -- 100
-    {name="Christmas Eve", tier="boss", moves=38,
+    {name=tr("Christmas Eve"), tier="boss", moves=38,
         "---+++---",
         "---+++---",
         "--+++++--",

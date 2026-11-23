@@ -1,15 +1,19 @@
 -- game_config.lua — the words and options of the shared match-3 screens, merged
 -- over the engine's defaults (match3.game DEFAULTS): tables merge field by
 -- field, lists replace.
+local l10n = require("l10n")
+local tr = l10n.tr
+
 return {
     app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F",
         privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
-    menu = {title = {"RELIC RUSH"}, subtitle = "THE LOST VALLEY", town = "VISIT ISLAND"},
+    menu = {title = {tr("RELIC RUSH")}, subtitle = tr("THE LOST VALLEY"), town = tr("VISIT ISLAND")},
     campaign_dialogue = false,
-    epochs = {"Epoch I", "Epoch II", "Epoch III", "Epoch IV", "Epoch V"},
-    epoch_title = "Epochs",
-    epoch_medal_names = {"Spring Camp", "Mill and Market", "Harbour Town", "Coastal Watch", "Sun Temple"},
-    result = {visit = "COLLECT & VISIT ISLAND"},
+    epochs = {tr("Epoch I"), tr("Epoch II"), tr("Epoch III"), tr("Epoch IV"), tr("Epoch V")},
+    epoch_title = tr("Epochs"),
+    -- TRANSLATORS: the medal won for finishing each epoch, named for what the town built in it
+    epoch_medal_names = {tr("Spring Camp"), tr("Mill and Market"), tr("Harbour Town"), tr("Coastal Watch"), tr("Sun Temple")},
+    result = {visit = tr("COLLECT & VISIT ISLAND")},
     packs = {"relics", "jewels", "resources"},
     transitions = {
         style = "wipe",
@@ -30,12 +34,13 @@ return {
     speech = {scale = 1.5, name = 22.5},
     region_speaker = "sela",
     town_tip = {
-        {"sela", "Look, we have enough to build!"},
-        {"sela", "This epoch’s projects are listed at the top left. Tap one that says Ready to build."},
+        {"sela", tr("Look, we have enough to build!")},
+        {"sela", tr("This epoch’s projects are listed at the top left. Tap one that says Ready to build.")},
     },
     board = {
-        tutorial_chain = "Match through the chained piece. Match that cell again to clear its plaque.",
-        kudos = {"Brilliant!", "Magnificent!", "Legendary!", "Sunstorm!"},
+        tutorial_chain = tr("Match through the chained piece. Match that cell again to clear its plaque."),
+        -- TRANSLATORS: praise over the board for ever bigger cascades; "Sunstorm" is a made-up word
+        kudos = {tr("Brilliant!"), tr("Magnificent!"), tr("Legendary!"), tr("Sunstorm!")},
         pieces = {
             campaign_prefix = "campaign-",
             story_prefix = "story-",
@@ -45,40 +50,40 @@ return {
         background = {min_height=900, align_y=.35, motes={255, 228, 139, 70}},
     },
     notices = {
-        reward_building = "Select a project to see its cost.",
-        reward_replay = "Resources collected.",
-        all_open = "Your whole island is open to explore.",
-        quit = "Your board is saved. Tap Play to continue expedition %d.",
+        reward_building = tr("Select a project to see its cost."),
+        reward_replay = tr("Resources collected."),
+        all_open = tr("Your whole island is open to explore."),
+        quit = tr("Your board is saved. Tap Play to continue expedition %d."),
     },
     capsules = {show = {"coins", "supplies", "food"}},
-    pause = {guide = "EXPLORER'S GUIDE", quit = "QUIT TO ISLAND", leaderboard = "LEADERBOARD"},
+    pause = {guide = tr("EXPLORER'S GUIDE"), quit = tr("QUIT TO ISLAND"), leaderboard = tr("LEADERBOARD")},
     leaderboard = {
         board = "stars",
-        title = "Top explorers",
+        title = tr("Top explorers"),
     },
-    confirm = {title = "Restart this expedition?"},
-    failed = {town = "VISIT ISLAND"},
+    confirm = {title = tr("Restart this expedition?")},
+    failed = {town = tr("VISIT ISLAND")},
     zone = {
-        subtitle = "A NEW PLACE TO DISCOVER",
-        cleared = "EXPEDITIONS CLEARED  %d / %d",
-        earn = "CLEAR NEW EXPEDITIONS TO OPEN IT",
+        subtitle = tr("A NEW PLACE TO DISCOVER"),
+        cleared = tr("EXPEDITIONS CLEARED  %d / %d"),
+        earn = tr("CLEAR NEW EXPEDITIONS TO OPEN IT"),
     },
     finale = {
-        title = "Breakfast at the quay",
+        title = tr("Breakfast at the quay"),
         lines = {
-            {"THE SPRING RUNS TO THE QUAY AGAIN.", 16},
+            {tr("THE SPRING RUNS TO THE QUAY AGAIN."), 16},
         },
     },
     complete = {
-        title = "You won!",
+        title = tr("You won!"),
         lines = {
-            {"YOU COMPLETED ALL %d EXPEDITIONS.", 16},
+            {tr("YOU COMPLETED ALL %d EXPEDITIONS."), 16},
         },
     },
     catalogue = {
-        title = "Build your valley",
-        earlier = "RESTORE EARLIER WONDERS",
-        poor = "MORE RESOURCES NEEDED",
+        title = tr("Build your valley"),
+        earlier = tr("RESTORE EARLIER WONDERS"),
+        poor = tr("MORE RESOURCES NEEDED"),
     },
     debug = {victory = 1, catalogue_card = 37, narrator = "oren"},
 }

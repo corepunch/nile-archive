@@ -38,7 +38,11 @@ story = setmetatable({}, {__index = function(_, k) return type(k) == "string" an
 setmetatable(_G, {__index = function() return stub end})
 
 package.path = ("games/%s/lua/?.lua;"):format(game) .. package.path
-local loaded = {state = {}}
+-- Text marked for translation reads in the language the game is written in.
+local loaded = {state = {}, l10n = {
+    tr = function(s) return s end, trc = function(_, s) return s end, N_ = function(s) return s end,
+    trn = function(one, many, n) return n == 1 and one or many end, upper = string.upper,
+}}
 function require(name)
     if loaded[name] ~= nil then return loaded[name] end
     -- These engine modules build campaign data without opening a game.

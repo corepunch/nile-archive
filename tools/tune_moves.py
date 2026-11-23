@@ -85,7 +85,7 @@ def main():
         seen[0] += 1
         moves = budget.get(seen[0])
         return m.group(1) + (f' moves={moves},' if moves else m.group(2) or '')
-    text = re.sub(r'(\{name="[^"]+", tier="\w+",)( moves=\d+,)?', fit, campaign.read_text())
+    text = re.sub(r'(\{name=(?:tr\()?"[^"]+"\)?, tier="\w+",)( moves=\d+,)?', fit, campaign.read_text())
     campaign.write_text(text)
     names = {n: b['name'] for n, b in enumerate(boards, 1)}
     md = ['# Move budgets', '',

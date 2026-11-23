@@ -1,6 +1,9 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
 -- engine's defaults (engine/lua/town/screen.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
+local l10n = require("l10n")
+local tr = l10n.tr
+
 return {
     background = "#166E77",
     smooth_pan = true,
@@ -22,11 +25,11 @@ return {
     },
     bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "bubble_face", edge = "bubble_edge"},
     texts = {
-        placing = "Drag the building to choose a spot, or scroll the land.",
-        unchanged = "Your island is unchanged.",
-        blocked = "Choose open grass clear of other buildings.",
-        cant_afford = "Earn more expedition treasures to build this.",
-        cant_buy = "Earn more expedition treasures to build this.",
-        no_room = "Open more land before placing this building.",
+        placing = tr("Drag the building to choose a spot, or scroll the land."),
+        unchanged = tr("Your island is unchanged."),
+        blocked = tr("Choose open grass clear of other buildings."),
+        cant_afford = tr("Earn more expedition treasures to build this."),
+        cant_buy = tr("Earn more expedition treasures to build this."),
+        no_room = tr("Open more land before placing this building."),
     },
 }

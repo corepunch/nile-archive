@@ -1,13 +1,15 @@
 -- Original square-cell expeditions. See match3.shapes.square_levels for the map legend.
+local l10n = require("l10n")
+local tr = l10n.tr
 local boards = {
-    {name="The Landing", tier="tutorial", moves=14,
+    {name=tr("The Landing"), tier="tutorial", moves=14,
         ".......",
         "...*...",
         ".*****.",
         ".*****.",
         "...*...",
         "......."},
-    {name="Jade Steps", tier="tutorial", moves=14,
+    {name=tr("Jade Steps"), tier="tutorial", moves=14,
         "--.....",
         "-...**.",
         "..****.",
@@ -15,7 +17,7 @@ local boards = {
         ".***...",
         ".**...-",
         ".....--"},
-    {name="The Ceiba Court", tier="tutorial", moves=26,
+    {name=tr("The Ceiba Court"), tier="tutorial", moves=26,
         ".*****.",
         ".*****.",
         ".*****.",
@@ -23,7 +25,7 @@ local boards = {
         ".*****.",
         ".*****.",
         ".*****."},
-    {name="Gate of Reeds", tier="tutorial", moves=30, lesson="Match through a chained piece to free it. Then clear the plaque underneath.",
+    {name=tr("Gate of Reeds"), tier="tutorial", moves=30, lesson=tr("Match through a chained piece to free it. Then clear the plaque underneath."),
         "--..*..--",
         ".*******.",
         "***c*c***",
@@ -31,7 +33,7 @@ local boards = {
         "***c*c***",
         ".*******.",
         "--..*..--"},
-    {name="Trapper’s Terrace", tier="hard", moves=35,
+    {name=tr("Trapper’s Terrace"), tier="hard", moves=35,
         ".*******.",
         "*********",
         "*********",
@@ -40,7 +42,7 @@ local boards = {
         "-*******-",
         "--*****--",
         "--..*..--"},
-    {name="Rain Channel", tier="easy", moves=38,
+    {name=tr("Rain Channel"), tier="easy", moves=38,
         "...---...",
         "***---***",
         "*********",
@@ -50,7 +52,7 @@ local boards = {
         "*********",
         "***---***",
         "...---..."},
-    {name="The Timber Path", tier="normal", moves=42,
+    {name=tr("The Timber Path"), tier="normal", moves=42,
         "....-----",
         "****-----",
         "*********",
@@ -60,7 +62,7 @@ local boards = {
         "*********",
         "-----****",
         "-----...."},
-    {name="Sun Court", tier="normal", moves=45,
+    {name=tr("Sun Court"), tier="normal", moves=45,
         "--..*..--",
         "-*******-",
         "*********",
@@ -71,7 +73,7 @@ local boards = {
         "*********",
         "-*******-",
         "--..*..--"},
-    {name="River Carvings", tier="hard", moves=48, lesson="Heavy chains take two matches. Then clear their plaques.",
+    {name=tr("River Carvings"), tier="hard", moves=48, lesson=tr("Heavy chains take two matches. Then clear their plaques."),
         "...---...",
         "***---***",
         "*********",
@@ -83,7 +85,7 @@ local boards = {
         "*********",
         "***---***",
         "...---..."},
-    {name="Tide Chamber", tier="boss", moves=42,
+    {name=tr("Tide Chamber"), tier="boss", moves=42,
         "--*****--",
         "-*******-",
         "*********",
@@ -96,7 +98,7 @@ local boards = {
         "*********",
         "-*******-",
         "--*****--"},
-    {name="Fallen Colonnade", tier="easy", moves=38,
+    {name=tr("Fallen Colonnade"), tier="easy", moves=38,
         "--*****--",
         "-*******-",
         "*********",
@@ -106,7 +108,7 @@ local boards = {
         "*********",
         "-*******-",
         "--*****--"},
-    {name="Choked Gateway", tier="easy", moves=41,
+    {name=tr("Choked Gateway"), tier="easy", moves=41,
         ".**---**.",
         "***---***",
         "**c---c**",
@@ -115,7 +117,7 @@ local boards = {
         "*********",
         "--*****--",
         "--*****--"},
-    {name="The Spire Keep", tier="normal", moves=50,
+    {name=tr("The Spire Keep"), tier="normal", moves=50,
         "---***---",
         "---***---",
         "--*****--",
@@ -126,7 +128,7 @@ local boards = {
         "*********",
         "*********",
         "--*****--"},
-    {name="Hall of Pillars", tier="normal", moves=51,
+    {name=tr("Hall of Pillars"), tier="normal", moves=51,
         "*********",
         "*********",
         "**c***c**",
@@ -137,7 +139,7 @@ local boards = {
         "**c***c**",
         "*********",
         "*********"},
-    {name="Broken Aqueduct", tier="hard", moves=51,
+    {name=tr("Broken Aqueduct"), tier="hard", moves=51,
         "*****----",
         "*****----",
         "**C******",
@@ -149,7 +151,7 @@ local boards = {
         ".*+*****.",
         ".****----",
         ".****----"},
-    {name="The Overlook", tier="easy", moves=45,
+    {name=tr("The Overlook"), tier="easy", moves=45,
         "--*****--",
         ".*******.",
         ".*******.",
@@ -160,7 +162,7 @@ local boards = {
         "*********",
         ".*******.",
         "--*****--"},
-    {name="Moss Bridge", tier="normal", moves=50,
+    {name=tr("Moss Bridge"), tier="normal", moves=50,
         ".****----",
         "*+***----",
         "*+****---",
@@ -170,7 +172,7 @@ local boards = {
         "---****+*",
         "----***+*",
         "----****."},
-    {name="Twin Wells", tier="normal", moves=53,
+    {name=tr("Twin Wells"), tier="normal", moves=53,
         "*********",
         "*********",
         "**C***C**",
@@ -181,7 +183,7 @@ local boards = {
         "**+***+**",
         "*********",
         ".*******."},
-    {name="Inner Sun Court", tier="hard", moves=48,
+    {name=tr("Inner Sun Court"), tier="hard", moves=48,
         "--*****--",
         "-*******-",
         "**c***c**",
@@ -193,7 +195,7 @@ local boards = {
         "**c***c**",
         "-*******-",
         "--*****--"},
-    {name="Heart of the Temple", tier="boss", moves=50,
+    {name=tr("Heart of the Temple"), tier="boss", moves=50,
         "-***-***-",
         "*********",
         "*********",
@@ -206,7 +208,7 @@ local boards = {
         "---*+*---",
         "---***---"},
     -- 21
-    {name="Sun Disc", tier="easy", moves=42,
+    {name=tr("Sun Disc"), tier="easy", moves=42,
         "--*****--",
         "-*******-",
         "*********",
@@ -215,7 +217,7 @@ local boards = {
         "-*******-",
         "--*****--"},
     -- 22
-    {name="Pilgrim Stair", tier="easy", moves=38,
+    {name=tr("Pilgrim Stair"), tier="easy", moves=38,
         "--***--",
         "-*****-",
         "*******",
@@ -225,7 +227,7 @@ local boards = {
         "*******",
         "-*****-"},
     -- 23
-    {name="Arch Gate", tier="normal", moves=48,
+    {name=tr("Arch Gate"), tier="normal", moves=48,
         "*********",
         "*********",
         "***---***",
@@ -234,7 +236,7 @@ local boards = {
         "***.-.***",
         ".*.....*."},
     -- 24
-    {name="Temple Front", tier="normal", moves=50,
+    {name=tr("Temple Front"), tier="normal", moves=50,
         "---***---",
         "--*****--",
         "-*******-",
@@ -244,7 +246,7 @@ local boards = {
         "*********",
         ".*******."},
     -- 25
-    {name="Star Dome", tier="hard", moves=41,
+    {name=tr("Star Dome"), tier="hard", moves=41,
         "--***--",
         "-*****-",
         "*******",
@@ -255,7 +257,7 @@ local boards = {
         "*******",
         "*******"},
     -- 26
-    {name="Cenote Ring", tier="easy", moves=45,
+    {name=tr("Cenote Ring"), tier="easy", moves=45,
         "--.***.--",
         "-*******-",
         "*********",
@@ -265,7 +267,7 @@ local boards = {
         "-*******-",
         "--.***.--"},
     -- 27
-    {name="Colonnade Walk", tier="normal", moves=51,
+    {name=tr("Colonnade Walk"), tier="normal", moves=51,
         "*********",
         "*********",
         "*-*-*-*-*",
@@ -274,7 +276,7 @@ local boards = {
         "*********",
         ".*******."},
     -- 28
-    {name="Idol Head", tier="normal", moves=50,
+    {name=tr("Idol Head"), tier="normal", moves=50,
         "-*****-",
         "*******",
         "***-***",
@@ -284,7 +286,7 @@ local boards = {
         "-*****-",
         "--***--"},
     -- 29
-    {name="Serpent Coil", tier="hard", moves=45,
+    {name=tr("Serpent Coil"), tier="hard", moves=45,
         "*********",
         "*********",
         "*********",
@@ -295,7 +297,7 @@ local boards = {
         "*********",
         "*********"},
     -- 30
-    {name="Sun Altar", tier="boss", moves=59,
+    {name=tr("Sun Altar"), tier="boss", moves=59,
         "---+++---",
         "--+++++--",
         "-+++++++-",
@@ -305,7 +307,7 @@ local boards = {
         "--+++++--",
         "-.+++++.-"},
     -- 31
-    {name="Beached Hull", tier="easy", moves=42,
+    {name=tr("Beached Hull"), tier="easy", moves=42,
         "---***---",
         "--*****--",
         "-*******-",
@@ -314,7 +316,7 @@ local boards = {
         "-*******-",
         "--*****--"},
     -- 32
-    {name="Lantern Tower", tier="easy", moves=44,
+    {name=tr("Lantern Tower"), tier="easy", moves=44,
         "--***--",
         "--***--",
         "--***--",
@@ -327,7 +329,7 @@ local boards = {
         "*******",
         "-*****-"},
     -- 33
-    {name="Terrace Garden", tier="normal", moves=38,
+    {name=tr("Terrace Garden"), tier="normal", moves=38,
         "---***---",
         "---***---",
         "-*******-",
@@ -337,7 +339,7 @@ local boards = {
         "*********",
         "-*******-"},
     -- 34
-    {name="Water Cistern", tier="normal", moves=50,
+    {name=tr("Water Cistern"), tier="normal", moves=50,
         "*******",
         "*******",
         "*******",
@@ -347,7 +349,7 @@ local boards = {
         "*******",
         ".**.**."},
     -- 35
-    {name="Jaguar Gate", tier="hard", moves=56,
+    {name=tr("Jaguar Gate"), tier="hard", moves=56,
         "--*****--",
         "-*******-",
         "***c*c***",
@@ -358,7 +360,7 @@ local boards = {
         "-**.*.**-",
         "--.....--"},
     -- 36
-    {name="Moss Well", tier="easy", moves=45,
+    {name=tr("Moss Well"), tier="easy", moves=45,
         "--***--",
         "--***--",
         "-*****-",
@@ -369,7 +371,7 @@ local boards = {
         "-*****-",
         "--***--"},
     -- 37
-    {name="Sunken Plaza", tier="normal", moves=45,
+    {name=tr("Sunken Plaza"), tier="normal", moves=45,
         "-*******-",
         "*********",
         "***c*c***",
@@ -378,7 +380,7 @@ local boards = {
         "*********",
         "-*******-"},
     -- 38
-    {name="Stone Bridge", tier="normal", moves=45,
+    {name=tr("Stone Bridge"), tier="normal", moves=45,
         "-.*****.-",
         "-*******-",
         "--*****--",
@@ -389,7 +391,7 @@ local boards = {
         "-*******-",
         "-.*****.-"},
     -- 39
-    {name="Temple of Winds", tier="hard", moves=48,
+    {name=tr("Temple of Winds"), tier="hard", moves=48,
         "---***---",
         "--*****--",
         "--*****--",
@@ -401,7 +403,7 @@ local boards = {
         "*********",
         "*********"},
     -- 40
-    {name="Serpent Throne", tier="boss", moves=59,
+    {name=tr("Serpent Throne"), tier="boss", moves=59,
         "...+.+...",
         "+++++++++",
         "+++.-.+++",
@@ -411,7 +413,7 @@ local boards = {
         "+++++++++",
         "...+.+..."},
     -- 41
-    {name="Reed Hut", tier="easy", moves=41,
+    {name=tr("Reed Hut"), tier="easy", moves=41,
         "--***--",
         "-*****-",
         "*******",
@@ -421,7 +423,7 @@ local boards = {
         "-*****-",
         ".*****."},
     -- 42
-    {name="Tide Pool", tier="easy", moves=45,
+    {name=tr("Tide Pool"), tier="easy", moves=45,
         "-..***..-",
         "-*******-",
         ".*-***-*.",
@@ -430,7 +432,7 @@ local boards = {
         "-*******-",
         "-..***..-"},
     -- 43
-    {name="Lookout Mesa", tier="normal", moves=42,
+    {name=tr("Lookout Mesa"), tier="normal", moves=42,
         "--*****--",
         "--*****--",
         "-**c*c**-",
@@ -441,7 +443,7 @@ local boards = {
         "*********",
         "*********"},
     -- 44
-    {name="Bone Stair", tier="normal", moves=38,
+    {name=tr("Bone Stair"), tier="normal", moves=38,
         "--***--",
         "-*****-",
         "-*****-",
@@ -453,7 +455,7 @@ local boards = {
         "-*****-",
         "--***--"},
     -- 45
-    {name="Vault Door", tier="hard", moves=57,
+    {name=tr("Vault Door"), tier="hard", moves=57,
         "-*.***.*-",
         "-*******-",
         "***C*C***",
@@ -465,7 +467,7 @@ local boards = {
         "-*******-",
         "-*.***.*-"},
     -- 46
-    {name="Dawn Terrace", tier="easy", moves=41,
+    {name=tr("Dawn Terrace"), tier="easy", moves=41,
         "--***--",
         "-*****-",
         "*******",
@@ -475,7 +477,7 @@ local boards = {
         ".*****.",
         ".*****."},
     -- 47
-    {name="Salt Stair", tier="normal", moves=44,
+    {name=tr("Salt Stair"), tier="normal", moves=44,
         "----*----",
         "---***---",
         "--*****--",
@@ -486,7 +488,7 @@ local boards = {
         "*********"},
 
     -- 48
-    {name="Jaguar Lintel", tier="normal", moves=36,
+    {name=tr("Jaguar Lintel"), tier="normal", moves=36,
         "-*******-",
         "*********",
         "*********",
@@ -496,7 +498,7 @@ local boards = {
         "*********"},
 
     -- 49
-    {name="Drowned Arch", tier="hard", moves=44,
+    {name=tr("Drowned Arch"), tier="hard", moves=44,
         "-*******-",
         "*********",
         "*********",
@@ -506,7 +508,7 @@ local boards = {
         ".*.---.*."},
 
     -- 50
-    {name="Idol of Rain", tier="boss", moves=57,
+    {name=tr("Idol of Rain"), tier="boss", moves=57,
         "--+++--",
         "-+++++-",
         "+++++++",
@@ -518,7 +520,7 @@ local boards = {
         "-+++++-"},
 
     -- 51
-    {name="Mole Walk", tier="easy", moves=36,
+    {name=tr("Mole Walk"), tier="easy", moves=36,
         "-****-",
         "******",
         "******",
@@ -529,7 +531,7 @@ local boards = {
         "******"},
 
     -- 52
-    {name="Kelp Terrace", tier="easy", moves=41,
+    {name=tr("Kelp Terrace"), tier="easy", moves=41,
         "--------",
         "--****--",
         "-******-",
@@ -540,7 +542,7 @@ local boards = {
         "********"},
 
     -- 53
-    {name="Ceiba Roots", tier="normal", moves=41,
+    {name=tr("Ceiba Roots"), tier="normal", moves=41,
         "-*******-",
         "*********",
         "**c***c**",
@@ -550,7 +552,7 @@ local boards = {
         "-*******-"},
 
     -- 54
-    {name="Tide Stairs", tier="normal", moves=51,
+    {name=tr("Tide Stairs"), tier="normal", moves=51,
         "****-****",
         "****-****",
         "*********",
@@ -559,7 +561,7 @@ local boards = {
         "--*****--"},
 
     -- 55
-    {name="Signal Tower", tier="hard", moves=50,
+    {name=tr("Signal Tower"), tier="hard", moves=50,
         "---*---",
         "--***--",
         "--***--",
@@ -573,7 +575,7 @@ local boards = {
         "*******"},
 
     -- 56
-    {name="Wrack Line", tier="easy", moves=45,
+    {name=tr("Wrack Line"), tier="easy", moves=45,
         "***---***",
         "*********",
         "*********",
@@ -583,7 +585,7 @@ local boards = {
         "-*******-"},
 
     -- 57
-    {name="Serpent Wall", tier="normal", moves=44,
+    {name=tr("Serpent Wall"), tier="normal", moves=44,
         "-*******-",
         "*********",
         "*********",
@@ -592,7 +594,7 @@ local boards = {
         "****c****"},
 
     -- 58
-    {name="Wreck of the Gull", tier="normal", moves=42,
+    {name=tr("Wreck of the Gull"), tier="normal", moves=42,
         "--*****--",
         "-*******-",
         "*********",
@@ -602,7 +604,7 @@ local boards = {
         "--*****--"},
 
     -- 59
-    {name="Sunken Cistern", tier="hard", moves=48,
+    {name=tr("Sunken Cistern"), tier="hard", moves=48,
         "-***.***-",
         "*********",
         "****-****",
@@ -612,7 +614,7 @@ local boards = {
         "-***.***-"},
 
     -- 60
-    {name="Disc of Noon", tier="boss", moves=56,
+    {name=tr("Disc of Noon"), tier="boss", moves=56,
         "--.+++.--",
         "-+++++++-",
         "+++++++++",
@@ -622,7 +624,7 @@ local boards = {
         "--.+++.--"},
 
     -- 61
-    {name="Reed Landing", tier="easy", moves=45,
+    {name=tr("Reed Landing"), tier="easy", moves=45,
         "****-****",
         "*********",
         "*********",
@@ -631,7 +633,7 @@ local boards = {
         "*********"},
 
     -- 62
-    {name="Stone Fisher", tier="easy", moves=44,
+    {name=tr("Stone Fisher"), tier="easy", moves=44,
         "--*****--",
         "-**c*c**-",
         "*********",
@@ -641,7 +643,7 @@ local boards = {
         "..*****.."},
 
     -- 63
-    {name="Moss Parapet", tier="normal", moves=41,
+    {name=tr("Moss Parapet"), tier="normal", moves=41,
         "*********",
         "*********",
         "*********",
@@ -649,7 +651,7 @@ local boards = {
         "*********"},
 
     -- 64
-    {name="Chac Stair", tier="normal", moves=50,
+    {name=tr("Chac Stair"), tier="normal", moves=50,
         "----*----",
         "---***---",
         "--*****--",
@@ -660,7 +662,7 @@ local boards = {
         "*********"},
 
     -- 65
-    {name="Obsidian Well", tier="hard", moves=50,
+    {name=tr("Obsidian Well"), tier="hard", moves=50,
         "-*******-",
         "-*+++++*-",
         "****-****",
@@ -670,7 +672,7 @@ local boards = {
         "-.*...*.-"},
 
     -- 66
-    {name="Dome Ring", tier="easy", moves=45,
+    {name=tr("Dome Ring"), tier="easy", moves=45,
         "--*C*C*--",
         "-*******-",
         "*********",
@@ -679,7 +681,7 @@ local boards = {
         "-*******-"},
 
     -- 67
-    {name="Cormorant Rock", tier="normal", moves=44,
+    {name=tr("Cormorant Rock"), tier="normal", moves=44,
         "----*----",
         "----*----",
         "---***---",
@@ -691,7 +693,7 @@ local boards = {
         "-*******-"},
 
     -- 68
-    {name="Palm Court", tier="normal", moves=50,
+    {name=tr("Palm Court"), tier="normal", moves=50,
         "-*******-",
         "**C***C**",
         "*********",
@@ -701,7 +703,7 @@ local boards = {
         "-*******-"},
 
     -- 69
-    {name="Wreck Gate", tier="hard", moves=48,
+    {name=tr("Wreck Gate"), tier="hard", moves=48,
         "-*******-",
         "**C***C**",
         "*********",
@@ -711,7 +713,7 @@ local boards = {
         "*********"},
 
     -- 70
-    {name="Maw of the Jaguar", tier="boss", moves=51,
+    {name=tr("Maw of the Jaguar"), tier="boss", moves=51,
         "-..+++..-",
         "-+++++++-",
         ".+++++++.",
@@ -721,7 +723,7 @@ local boards = {
         "-..+++..-"},
 
     -- 71
-    {name="Ferry Steps", tier="easy", moves=42,
+    {name=tr("Ferry Steps"), tier="easy", moves=42,
         "****-****",
         "*********",
         "*********",
@@ -730,7 +732,7 @@ local boards = {
         "*********"},
 
     -- 72
-    {name="Net Loft", tier="easy", moves=41,
+    {name=tr("Net Loft"), tier="easy", moves=41,
         "-*******-",
         "-*******-",
         "*********",
@@ -739,7 +741,7 @@ local boards = {
         "-*******-"},
 
     -- 73
-    {name="Ochre Vault", tier="normal", moves=41,
+    {name=tr("Ochre Vault"), tier="normal", moves=41,
         "-*******-",
         "*********",
         "**C***C**",
@@ -747,7 +749,7 @@ local boards = {
         "*********",
         "*********"},
     -- 74
-    {name="Obsidian Lintel", tier="normal", moves=53,
+    {name=tr("Obsidian Lintel"), tier="normal", moves=53,
         "*********",
         "*c*****c*",
         ".-*****-.",
@@ -756,7 +758,7 @@ local boards = {
         ".*******.",
         "..*****.."},
     -- 75
-    {name="The Drowned Stair", tier="hard", moves=44,
+    {name=tr("The Drowned Stair"), tier="hard", moves=44,
         "----*----",
         "---***---",
         "---*+*---",
@@ -767,7 +769,7 @@ local boards = {
         "*********",
         "*********"},
     -- 76
-    {name="Kapok Roots", tier="easy", moves=42,
+    {name=tr("Kapok Roots"), tier="easy", moves=42,
         "--*****--",
         "-*******-",
         "*********",
@@ -777,7 +779,7 @@ local boards = {
         "*********",
         "-*******-"},
     -- 77
-    {name="Ocelot Gate", tier="normal", moves=51,
+    {name=tr("Ocelot Gate"), tier="normal", moves=51,
         "-*******-",
         "-.*****.-",
         ".*-***-*.",
@@ -787,7 +789,7 @@ local boards = {
         "***C*C***",
         "*********"},
     -- 78
-    {name="Salt Terrace", tier="normal", moves=53,
+    {name=tr("Salt Terrace"), tier="normal", moves=53,
         "---------",
         "*********",
         "-*******-",
@@ -798,7 +800,7 @@ local boards = {
         "*********",
         "-*******-"},
     -- 79
-    {name="Lantern Spiral", tier="hard", moves=48,
+    {name=tr("Lantern Spiral"), tier="hard", moves=48,
         "-*******-",
         "*********",
         "**C***C**",
@@ -809,7 +811,7 @@ local boards = {
         "*********",
         "-*******-"},
     -- 80
-    {name="Sunken Vault", tier="boss", moves=51,
+    {name=tr("Sunken Vault"), tier="boss", moves=51,
         "--+++++--",
         "-+++++++-",
         ".+++++++.",
@@ -818,7 +820,7 @@ local boards = {
         "-+++++++-",
         "--+++++--"},
     -- 81
-    {name="Stairway of Kites", tier="easy", moves=45,
+    {name=tr("Stairway of Kites"), tier="easy", moves=45,
         "---***---",
         "--*****--",
         "-*******-",
@@ -828,7 +830,7 @@ local boards = {
         "--*****--",
         "---***---"},
     -- 82
-    {name="Mist Cenote", tier="easy", moves=44,
+    {name=tr("Mist Cenote"), tier="easy", moves=44,
         "--****--",
         "-******-",
         "-******-",
@@ -838,7 +840,7 @@ local boards = {
         "-******-",
         "--****--"},
     -- 83
-    {name="Idol of Salt", tier="normal", moves=51,
+    {name=tr("Idol of Salt"), tier="normal", moves=51,
         "--*****--",
         "-*******-",
         "*********",
@@ -849,7 +851,7 @@ local boards = {
         "-*******-",
         "*********"},
     -- 84
-    {name="The Quiet Terraces", tier="normal", moves=53,
+    {name=tr("The Quiet Terraces"), tier="normal", moves=53,
         "*********",
         "*********",
         "-*******-",
@@ -859,7 +861,7 @@ local boards = {
         "---***---",
         "---***---"},
     -- 85
-    {name="Coiled Serpent", tier="hard", moves=56,
+    {name=tr("Coiled Serpent"), tier="hard", moves=56,
         "*********",
         "**c***c**",
         "-*******-",
@@ -870,7 +872,7 @@ local boards = {
         "*********",
         "-*******-"},
     -- 86
-    {name="Rush Landing", tier="easy", moves=44,
+    {name=tr("Rush Landing"), tier="easy", moves=44,
         "*********",
         "*********",
         "*-*****-*",
@@ -879,7 +881,7 @@ local boards = {
         ".*******.",
         ".*******."},
     -- 87
-    {name="Ember Colonnade", tier="normal", moves=50,
+    {name=tr("Ember Colonnade"), tier="normal", moves=50,
         "*********",
         "*********",
         "**C***C**",
@@ -890,7 +892,7 @@ local boards = {
         "*********",
         "*********"},
     -- 88
-    {name="Moonwell Arch", tier="normal", moves=50,
+    {name=tr("Moonwell Arch"), tier="normal", moves=50,
         "--*****--",
         "-*C***C*-",
         "*********",
@@ -901,7 +903,7 @@ local boards = {
         "*********",
         "*********"},
     -- 89
-    {name="Watcher's Tier", tier="hard", moves=53,
+    {name=tr("Watcher's Tier"), tier="hard", moves=53,
         "---------",
         "-*******-",
         "---***---",
@@ -913,7 +915,7 @@ local boards = {
         "-+*****+-",
         ".*******."},
     -- 90
-    {name="The Light Below", tier="boss", moves=60,
+    {name=tr("The Light Below"), tier="boss", moves=60,
         "---+++---",
         "--+++++--",
         "-+++++++-",
@@ -924,7 +926,7 @@ local boards = {
         "-+++++++-",
         "--+++++--"},
     -- 91
-    {name="Parrot Steps", tier="easy", moves=38,
+    {name=tr("Parrot Steps"), tier="easy", moves=38,
         "----*----",
         "---***---",
         "--*****--",
@@ -934,7 +936,7 @@ local boards = {
         "-*******-",
         "--*****--"},
     -- 92
-    {name="Wetlands Walk", tier="easy", moves=42,
+    {name=tr("Wetlands Walk"), tier="easy", moves=42,
         "-******-",
         "-******-",
         "********",
@@ -944,7 +946,7 @@ local boards = {
         "-******-",
         "-******-"},
     -- 93
-    {name="Tern Rock Light", tier="normal", moves=45,
+    {name=tr("Tern Rock Light"), tier="normal", moves=45,
         "---***---",
         "--*****--",
         "-*******-",
@@ -955,7 +957,7 @@ local boards = {
         "*********",
         "*********"},
     -- 94
-    {name="Bell Cistern", tier="normal", moves=53,
+    {name=tr("Bell Cistern"), tier="normal", moves=53,
         ".*******.",
         "-*C***C*-",
         "--*****--",
@@ -966,7 +968,7 @@ local boards = {
         "-*******-",
         "-.**-**.-"},
     -- 95
-    {name="The Beached Mast", tier="hard", moves=51,
+    {name=tr("The Beached Mast"), tier="hard", moves=51,
         "----*----",
         "---***---",
         "---*+*---",
@@ -978,7 +980,7 @@ local boards = {
         "-*******-",
         "-*******-"},
     -- 96
-    {name="Fern Window", tier="easy", moves=45,
+    {name=tr("Fern Window"), tier="easy", moves=45,
         "-*******-",
         "*********",
         "-*******-",
@@ -988,7 +990,7 @@ local boards = {
         "-*******-",
         ".*******."},
     -- 97
-    {name="Jade Cartouche", tier="normal", moves=53,
+    {name=tr("Jade Cartouche"), tier="normal", moves=53,
         "***C*C***",
         "-*******-",
         "****+****",
@@ -998,7 +1000,7 @@ local boards = {
         "-*******-",
         ".*******."},
     -- 98
-    {name="Orchard of Idols", tier="normal", moves=50,
+    {name=tr("Orchard of Idols"), tier="normal", moves=50,
         "*********",
         "-*c***c*-",
         "*********",
@@ -1008,7 +1010,7 @@ local boards = {
         "*********",
         "-*******-"},
     -- 99
-    {name="Star Eater's Dome", tier="hard", moves=48,
+    {name=tr("Star Eater's Dome"), tier="hard", moves=48,
         "--**+**--",
         "-*+***+*-",
         "-C*+*+*C-",
@@ -1020,7 +1022,7 @@ local boards = {
         "--**+**--",
         "--*****--"},
     -- 100
-    {name="The Sunken Sanctum", tier="boss", moves=60,
+    {name=tr("The Sunken Sanctum"), tier="boss", moves=60,
         "---+++---",
         "--+++++--",
         "-+++++++-",
@@ -1036,7 +1038,7 @@ local boards = {
 }
 
 local floor = {normal="square-plain", covered="square-target", double="square-double", tablet_hint=true}
-local levels, shapes = require("match3.shapes").square_levels(boards, 9, 12, "Clear every turquoise plaque.", {floor=floor})
+local levels, shapes = require("match3.shapes").square_levels(boards, 9, 12, tr("Clear every turquoise plaque."), {floor=floor})
 for i, level in ipairs(levels) do level.background = (i - 1) % 10 < 5 and 1 or 2 end
 
 -- Four in a line leave a line gem of that color; five leave a rainbow gem.
