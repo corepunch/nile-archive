@@ -21,7 +21,7 @@ function V.bind(R, rules, config, art, base_pieces)
     R.tool_notes = board.tool_notes or R.tool_notes
     R.locked_notice = board.locked
     if board.tutorial_chain then
-        R.tutorial = require("match3.tutorial").new(R, rules, board.tutorial_chain)
+        R.tutorial = require("match3.tutorial").new(R, rules, board.tutorial_chain, board.tutorial_goal)
     end
     board_intro.bind(R, rules)
     match3.bind_board_ui(R, rules)
@@ -91,14 +91,15 @@ function V.bind(R, rules, config, art, base_pieces)
         elements.piece_glow(tex, area, alpha, side, rainbow and spectrum(still and 0 or R.now * .16 + phase) or LINE_GLOW,
             .62 + .38 * pulse)
     end
-    function R.draw_relic(tile, at, scale, alpha, aspect)
+    function R.draw_relic(tile, at, scale, alpha, aspect, guided)
         local banded = colored_specials[tile.special]
         if tile.special and not banded then
             local tex = R.match_special_texture(tile)
             local side = R.HEX_R * 2 * scale * (special_scale[tile.special] or 1)
             local area = rect.centered(at, size2(side * aspect, side / aspect))
             elements.piece_shadow(tex, area, alpha, side)
-            if tile.special == "color_bomb" then gem_glow(tex, area, at, alpha, side, true) end
+            if guided then elements.piece_glow(tex, area, alpha, side, LINE_GLOW, 1)
+            elseif tile.special == "color_bomb" then gem_glow(tex, area, at, alpha, side, true) end
             return gfx.image(tex, area, color(255, 255, 255, alpha))
         end
         if tile.kind < 0 then return end
@@ -107,9 +108,9 @@ function V.bind(R, rules, config, art, base_pieces)
         tex = R.board_piece_crops and R.board_piece_crops[tex] or tex
         local area = rect.centered(at, size2(side * aspect, side / aspect))
         elements.piece_shadow(tex, area, alpha, side)
-        if banded then
-            gem_glow(tex, area, at, alpha, side)
-            R.draw_banded(tex, area, tile.axis, alpha)
+        if guided then elements.piece_glow(tex, area, alpha, side, LINE_GLOW, 1)
+        elseif banded then gem_glow(tex, area, at, alpha, side) end
+        if banded then R.draw_banded(tex, area, tile.axis, alpha)
         else gfx.image(tex, area, color(255, 255, 255, alpha)) end
     end
     function R.draw_gem_glint(tile, at, scale, alpha)
@@ -156,7 +157,7 @@ function V.bind(R, rules, config, art, base_pieces)
         end
     end
 
-    local function draw_pieces(sx)
+    local function draw_pieces(sx, highlights)
         local cover = elements.reveal_cover(R, rules)
         if cover <= 0 then return end
         gfx.clip(R.BOARD_CLIP)
@@ -164,7 +165,8 @@ function V.bind(R, rules, config, art, base_pieces)
             if rules.game_cell_active(R.g, i) then
                 local tile, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
                 if clip then gfx.clip(clip) end
-                R.draw_relic(tile, at, scale * elements.selection_scale(R, i), alpha * cover, aspect)
+                R.draw_relic(tile, at, scale * elements.selection_scale(R, i), alpha * cover, aspect,
+                    highlights and highlights[i])
                 if clip then gfx.clip(R.BOARD_CLIP) end
             end
         end
@@ -189,13 +191,13 @@ function V.bind(R, rules, config, art, base_pieces)
         end
     end
 
-    local function draw_board(inp)
+    local function draw_board(inp, highlights)
         R.draw_board_background(1)
         draw_motes()
         R.draw_board_hud()
         local sx = not R.reduced_motion and R.shake > 0 and math.sin(R.now * 110) * R.shake * 15 or 0
         elements.ground(R, rules, sx, R.board_floor())
-        draw_pieces(sx)
+        draw_pieces(sx, highlights)
         elements.square_blockers(R, rules, sx)
         elements.blockers(R, rules, sx)
         if R.intro then draw_sheen(sx) end
@@ -220,12 +222,15 @@ function V.bind(R, rules, config, art, base_pieces)
             return
         end
         if fade < 1 then
-            draw_board(inp)
+            local tutorial = active and R.tutorial
+            local talking = tutorial and tutorial:show_goal_reminder()
+            local step = tutorial and not talking and tutorial:step()
+            draw_board(inp, step and step.cells)
             R.vfx_draw()
             R.vfx_particles()
             if banners then R.draw_board_banners(dt) end
-            local skipped = active and R.tutorial and R.tutorial:frame(inp, dt)
-            if not skipped then R.board_input(inp) end
+            local skipped = step and tutorial:frame(inp, dt, step)
+            if not talking and not skipped then R.board_input(inp) end
         end
         if fade > 0 then R.draw_board_background(fade) end
     end
@@ -241,6 +246,10 @@ end
 
 function V.load(R, art, config)
     R.board_art = art.load()
+    if R.tutorial then
+        R.tutorial.arrow = texture.load_engine("data/board/hints/tutorial-arrow.png")
+        assert(R.tutorial.arrow.tex, "missing tutorial arrow")
+    end
     local skin = match3.skin(require("match3_skin"))
     elements.load_square(R.board_art, skin)
     R.board_piece_crops = {}

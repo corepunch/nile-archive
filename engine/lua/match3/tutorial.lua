@@ -75,13 +75,13 @@ local function opening_move(rules, g, lesson)
     end)
 end
 
-function Tutorial.new(R, rules, chain_copy)
+function Tutorial.new(R, rules, chain_copy, goal_line)
     local skip = ui.form(ui.node.button {id="skip", text="Skip", role="link", em=16, height=44})
-    return setmetatable({R=R, rules=rules, chain_copy=chain_copy, skip=skip}, Tutorial)
+    return setmetatable({R=R, rules=rules, chain_copy=chain_copy, goal_line=goal_line, skip=skip}, Tutorial)
 end
 
 function Tutorial:start(level, seed, make)
-    self.move, self.tip = nil, nil
+    self.move, self.tip, self.goal_shown = nil, nil, false
     local g = make(level, seed)
     local lesson = lessons[level + 1]
     if not self.enabled or not lesson or level ~= self.R.prog.level then return g end
@@ -98,6 +98,22 @@ function Tutorial:start(level, seed, make)
         self.move = action
     end
     return g
+end
+
+function Tutorial:ready()
+    local R = self.R
+    return self.enabled and R.g and R.phase == R.PH_IDLE and not R.mission_banner and not R.art_review
+        and not R.autoplay and not R.g.won and not R.g.lost and R.overlay == R.OV_NONE
+end
+
+function Tutorial:show_goal_reminder()
+    local R, g = self.R, self.R.g
+    if not self.goal_line or self.goal_shown or not R.dialogue_on() or not self:ready()
+        or g.level ~= 0 or R.prog.level ~= 0 or g.oil_left == 0
+        or self.rules.level_of(g).moves - g.moves < 3 then return end
+    self.goal_shown = true
+    story.add(self.goal_line)
+    return true
 end
 
 function Tutorial:allows_cell(cell)
@@ -167,36 +183,22 @@ function Tutorial:tool_tip()
     end
 end
 
-local function highlight(box, ink)
-    gfx.round_rect_line(box, 7, 5, color(27, 21, 14, 230))
-    gfx.round_rect_line(box, 7, 2.5, ink)
+function Tutorial:step()
+    if not self:ready() then return end
+    self.tip = not self.move and self:tool_tip() or nil
+    return self.move or self.tip
 end
 
-function Tutorial:frame(inp, dt)
-    local R = self.R
-    if not self.enabled or R.phase ~= R.PH_IDLE or R.mission_banner or R.art_review or R.autoplay
-        or R.g.won or R.g.lost or R.overlay ~= R.OV_NONE then return end
-    local move = self.move
-    self.tip = not move and self:tool_tip() or nil
-    local step = move or self.tip
-    if not step then return end
-
+function Tutorial:frame(inp, dt, step)
+    local R, move = self.R, self.move
     local ink = color(255, 227, 151)
-    local side = R.cell_width - 3
-    for cell in pairs(step.cells or {}) do
-        highlight(rect.centered(R.cell_pos(cell), size2(side, side)), ink)
-    end
     if move then
         local a, b = R.cell_pos(move.a), R.cell_pos(move.b)
         local direction = (b - a):norm()
-        local cross = vec2(-direction.y, direction.x)
         local slide = R.reduced_motion and 0 or 4 * math.sin(R.now * 5)
-        local from, tip = a + direction:scale(10 + slide), b - direction:scale(8 - slide)
-        local tail = tip - direction:scale(10)
-        gfx.line(from, tip, 7, color(27, 21, 14, 230))
-        gfx.line(from, tip, 3.5, ink)
-        gfx.line(tip, tail + cross:scale(7), 3.5, ink)
-        gfx.line(tip, tail - cross:scale(7), 3.5, ink)
+        local center = (a + b):scale(.5) + direction:scale(slide)
+        local bounds = rect.centered(center, size2.splat(R.cell_width * .88))
+        gfx.image_rot(self.arrow, bounds:fit(texture.size(self.arrow)), math.atan(direction.y, direction.x), color.WHITE)
     end
 
     local style = R.pal(R.PAL_CREAM, 18)
@@ -205,7 +207,7 @@ function Tutorial:frame(inp, dt)
     local y = R.hud_rect:max().y + 22
     if step.tool then
         local button = R.board_tool_bounds(step.tool - 1)
-        highlight(button:inflate(-6), ink)
+        gfx.round_rect_line(button:inflate(-6), 9, 2, ink)
         y = button.y - height - 15
     end
     local panel = rect(18, y, width, height)

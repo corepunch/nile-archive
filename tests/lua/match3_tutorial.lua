@@ -49,6 +49,29 @@ end
 tutorial:start(0, 782341, make)
 check(not tutorial.move, "replays of cleared levels do not repeat guided moves")
 
+local goal = require("game_config").board.tutorial_goal
+if goal then
+    R.prog.level = 0
+    R.PH_IDLE, R.OV_NONE = 0, 0
+    R.phase, R.overlay = R.PH_IDLE, R.OV_NONE
+    R.dialogue_on = function() return true end
+    local bellmere = Tutorial.new(R, rules, "Match through the blocker.", goal)
+    bellmere.enabled = true
+    R.g = bellmere:start(0, 1, make)
+    local moves = R.g.moves
+    for spent = 0, 2 do
+        R.g.moves = moves - spent
+        check(not bellmere:show_goal_reminder(), "the goal reminder waits until three moves have been spent")
+    end
+    R.g.moves = moves - 3
+    R.phase = 1
+    check(not bellmere:show_goal_reminder(), "the goal reminder waits for the cascade to settle")
+    R.phase = R.PH_IDLE
+    check(bellmere:show_goal_reminder() and story.active(), "the settled third move queues the goal reminder")
+    story.next()
+    check(not bellmere:show_goal_reminder() and not story.active(), "the reminder plays once")
+end
+
 local unlock = require("economy").unlocks[2]
 local bonus = unlock.bonus
 restored[unlock.building] = true

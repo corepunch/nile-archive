@@ -52,6 +52,17 @@ local function independent(a, b)
     return not R.tutorial:allows_swap(a, b)
 end
 
+local function leaves_targets(a, b)
+    local trial, wave = rules.game_copy(R.g), rules.new_match()
+    assert(rules.game_swap(trial, a, b, wave))
+    repeat
+        rules.game_apply(trial, wave)
+        rules.game_collapse(trial, true)
+        rules.game_matches(trial, wave)
+    until wave.hits == 0
+    return trial.oil_left > 0
+end
+
 local function charge(a, b)
     local trial, wave = rules.game_copy(R.g), rules.new_match()
     assert(rules.game_swap(trial, a, b, wave))
@@ -105,11 +116,27 @@ function desc.frame(dt)
                 assert(R.g.obstacles < tracked, "the highlighted match must break a tie or chain")
                 start(2)
                 stage = "skip"
+            elseif testing.game == "christmas-market" then
+                assert(not story.active(), "Noelle waits beyond the opening swap")
+                swap(other_swap(leaves_targets))
+                stage = "second"
             else
                 lesson = lesson + 1
                 start(lesson)
             end
         end
+    elseif stage == "second" and R.g.moves == moves - 2 and R.phase == R.PH_IDLE then
+        assert(not story.active(), "Noelle waits beyond the second move")
+        swap(other_swap(leaves_targets))
+        stage = "third"
+    elseif stage == "third" and R.g.moves == moves - 3 and R.phase == R.PH_IDLE then
+        assert(story.active(), "Noelle reminds the player to clear blue tiles after three moves")
+        story.next()
+        stage = "resume"
+    elseif stage == "resume" then
+        assert(not story.active(), "the reminder plays once and the board resumes")
+        lesson = 2
+        start(lesson)
     elseif stage == "fired" and R.g.moves == moves - 2 and R.phase == R.PH_CLEAR then
         local effects = R.pending.special_effects
         assert(effects and effects[1].name == expected and not R.tutorial.move, "the guided swap must fire the special")

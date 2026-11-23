@@ -31,6 +31,7 @@ return {
     region_speaker = "pip",
     board = {
         tutorial_chain = "Match through the tied treat. Match that cell again to light its pane.",
+        tutorial_goal = {"noelle", "To finish, clear all the blue tiles. Make matches over them."},
         kudos = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"},
         locked = "Match the tied piece to untangle the tinsel.",
         pieces = {kind_prefix="market-", scale=1.06},

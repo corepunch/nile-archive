@@ -825,9 +825,9 @@ The Station Kiosk introduces **Otis Bell**. The speaking and listening states sh
 
 ## Guided board lesson
 
-The shared board tutorial draws a cream outline around the relevant pieces,
-an arrow for the swap, and a matching outline around the charging tool.
-The outline and arrow use live cell and toolbar bounds. They introduce
+The shared board tutorial lights the silhouettes of the relevant pieces,
+uses a [painted ivory arrow](../../../engine/art/match3/tutorial-arrow.md) for the swap,
+and rims the charging tool in cream. These cues introduce
 ordinary matches, Line Gems, Rainbow Gems, tinsel and earned tools using
 the current campaign pieces and skin. Reduce Motion keeps the arrow still.
 Review with `build/test/christmas-market "shot tutorial-"`.
