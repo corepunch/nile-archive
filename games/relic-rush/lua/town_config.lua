@@ -17,7 +17,7 @@ return {
     },
     bottom = {
         layout = "play-primary",
-        build = 64, play = 100, height = 100, secondary_height = 64,
+        build = 86, play = 100, height = 100, secondary_height = 86,   -- Build and Pause match the board's bonus buttons (match3.TOOL_SIZE)
         bottom = 12, pause = true,
     },
     bubble = {width = 300, title = "gold", text = "cream", em = 18, fill = "bubble_face", edge = "bubble_edge"},
