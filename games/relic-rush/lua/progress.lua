@@ -4,20 +4,6 @@ local R = require("state")
 local rules = require("rules")
 local island = require("island")
 local economy = require("economy")
-function R.debug_fill_earnings(g)
-    if g.level ~= R.prog.level then return end
-    local level = g.level + 1
-    local matched = purse(table.unpack(g.earnings))
-    local cost = island.reserved_cost(R.island, level)
-    local next_kind = island.next_step(R.island, level)
-    if next_kind then
-        local next_cost = island.buildings[next_kind + 1].cost
-        if not cost:covers(next_cost) then cost = next_cost end
-    end
-    local needed = economy.shortfall(cost, R.prog.wallet + matched)
-    for i = 1, #g.earnings do g.earnings[i] = g.earnings[i] + needed[i] end
-end
-
 local game = require("match3.game")
 local bonuses = require("match3.bonuses")
 game.bind_campaign_bonuses(R, island, economy.board_loadout, function(_, number, restored)

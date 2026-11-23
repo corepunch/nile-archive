@@ -1,4 +1,4 @@
--- The opt-in walkthrough calls the ordinary reward and placement paths.
+-- The skip and advance test helpers call the ordinary reward and placement paths.
 local rules, island, journey = require('rules'), require('island'), require('journey')
 local R = require('state')
 local economy = require('economy')

@@ -1338,7 +1338,7 @@ function G.bind(R, over)
     end
 
     local function progress_slot()
-        return app.arg("debug-walkthrough") and "walkthrough" or "progress"
+        return "progress"
     end
     R.progress_slot = progress_slot
 
@@ -1410,7 +1410,7 @@ function G.bind(R, over)
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders, R.island)
         if not paid then return end
         if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
-        if not app.arg("debug-walkthrough") then R.submit_leaderboard_progress() end
+        R.submit_leaderboard_progress()
         local completed = R.sync_epoch_regions()
         R.save_progress()
         R.on_island = true
@@ -1422,11 +1422,11 @@ function G.bind(R, over)
         elseif not first then R.notice(W.notices.reward_replay) end
     end
 
-    -- Opt-in walkthrough controls use the same result and placement paths as play.
+    -- Test and capture helpers: win the board or take the next town step
+    -- through the same result and placement paths as play.
     function R.debug_skip_level()
         if R.on_island or not R.g or R.g.won or R.g.lost or R.overlay ~= R.OV_NONE then return false end
         local g = R.g
-        if R.debug_fill_earnings and app.arg("debug-walkthrough") then R.debug_fill_earnings(g) end
         g.score = math.max(g.score, rules.level_of(g).score)
         for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
         g.oil_left = 0
@@ -1581,7 +1581,6 @@ function G.app(R)
     local debug = require("match3.debug")
     require("match3").bind_town_board_hud(R)
     local still = app.arg("shot") and not app.arg("reel")
-    local walkthrough = app.arg("debug-walkthrough")
     local board_exit, resume_overlay
     function R.open_menu()
         resume_overlay = R.overlay
@@ -1693,17 +1692,6 @@ function G.app(R)
             local screen = R.on_menu and menu or R.on_island and R.town or R.board_screen
             screen:frame(world, dt, interactive, ease.in_out_cubic((board_exit or 0) / BOARD_OUT))
         end
-        local show_walkthrough = walkthrough and interactive and not R.on_menu and not backdrop_only
-        if show_walkthrough then
-            local label = R.on_island and "Advance" or "Skip level"
-            local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
-            local state = ui.hit(bounds, 0)
-            R.paint_button(bounds, state, true)
-            R.say(label, bounds:inflate(-8), 18, R.PAL_CREAM)
-            if state.clicked then
-                if R.on_island then R.debug_advance_town() else R.debug_skip_level() end
-            end
-        end
         if not R.on_menu and not backdrop_only then R.draw_toast() end
         ui.set_enabled(true)
         local scene = clear_due and not revealing and R.clear_scene and R.clear_scene()
@@ -1786,10 +1774,10 @@ function G.app(R)
         end
         -- Seed the town before the player enters the campaign.
         if island.new_game and R.prog.level == 0 and R.island.count == 0 then island.new_game(R.island, app.clock()) end
-        local preview = debug.direct_preview() or app.arg("debug-walkthrough")
+        local preview = debug.direct_preview()
         if R.tutorial then R.tutorial.enabled = not R.test_mode and not preview end
         if not loaded and not preview and not app.arg("main-menu") then R.save_progress() end
-        if not app.arg("smoke") and not app.arg("debug-walkthrough") then
+        if not app.arg("smoke") then
             R.submit_leaderboard_progress()
         end
         R.story_current, R.story_preview, R.story_before_result = nil, false, false

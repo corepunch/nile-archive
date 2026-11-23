@@ -127,12 +127,6 @@ the [Candy Crush starter guide](https://play.google.com/store/apps/editorial?id=
 Spacing the introductions across boards follows
 [Royal Match's opening levels](https://www.youtube.com/watch?v=CA34zG-NWSw).
 
-## Walkthrough
-
-Both games support `--debug-walkthrough`. Skip level opens the normal results.
-Advance confirms an earned restoration or opens the next board. The
-walkthrough uses its own save and does not report scores to Game Center.
-
 ## Inventory (November 2026)
 
 The two square campaigns use the same board constructor, modular border
