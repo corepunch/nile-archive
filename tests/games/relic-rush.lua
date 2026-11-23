@@ -352,3 +352,7 @@ shot("resident-return", "390x844", "--story-beat after-85 --story-built --story-
 
 shot("pilot-arrival", "480x900", "--story-beat placed-map_room --frames 240")
 shot("pilot-unasked", "480x900", "--story-beat after-67 --story-built --story-line 2 --frames 240")
+-- Other languages: the longest Latin text, Cyrillic, and CJK with its line breaks (docs/LOCALIZATION.md).
+shot("lang-de-pause", "480x900", "--lang de --dialog pause")
+shot("lang-ru-shop", "480x900", "--lang ru --catalogue")
+shot("lang-ja-dialogue", "480x900", "--lang ja --dialog intro --frames 240")

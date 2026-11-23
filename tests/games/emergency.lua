@@ -20,3 +20,6 @@ shot("pause", "1368x1026", "--level 1 --pause")
 reel("emergency-pause-motion", 9, 3, "1200x900", "--level 1 --pause --reel")
 shot("briefing", "1368x1026", "--level 1 --dialog --frames 240")
 shot("menu-leaderboard", "1368x1026", "--leaderboard --gamecenter-demo")
+-- Other languages: the longest Latin text and Korean (docs/LOCALIZATION.md).
+shot("lang-de-menu", "1368x1026", "--lang de")
+shot("lang-ko-outskirts", "1200x900", "--lang ko --level 1")

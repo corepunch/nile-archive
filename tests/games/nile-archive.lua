@@ -74,3 +74,7 @@ shot("chapter2-dialogue-long", "1200x900", "--story-beat c2t2 --story-line 10 --
 shot("chapter2-dialogue-long-ipad", "1368x1026", "--story-beat c2t2 --story-line 10 --frames 240")
 shot("chapter3-dialogue-horem", "1200x900", "--story-beat c3t2 --story-line 4 --frames 240")
 shot("chapter3-dialogue-horem-ipad", "1368x1026", "--story-beat c3t2 --story-line 4 --frames 240")
+-- Other languages: written in Russian; German runs longest, Japanese breaks between characters (docs/LOCALIZATION.md).
+shot("lang-de-chapters", "1200x900", "--lang de --screen chapters --frames 30")
+shot("lang-ja-island", "1200x900", "--lang ja --screen island")
+shot("lang-en-build", "1200x900", "--lang en --screen build")

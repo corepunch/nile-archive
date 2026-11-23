@@ -275,3 +275,7 @@ end
 
 shot("town-story-purchase", "480x900", "--story-beat placed-reindeer_stable --frames 240")
 shot("town-story-purchase-phone", "390x844", "--story-beat placed-reindeer_stable --frames 240 --safe-area 0,47,0,34")
+-- Other languages: the longest Latin text, Cyrillic, and CJK with its line breaks (docs/LOCALIZATION.md).
+shot("lang-de-shop", "480x900", "--lang de --catalogue")
+shot("lang-ru-dialogue", "480x900", "--lang ru --dialog intro --frames 180")
+shot("lang-zh-pause", "390x844", "--lang zh-Hans --main-menu --dialog pause --safe-area 0,47,0,34")
