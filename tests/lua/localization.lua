@@ -115,8 +115,10 @@ for _, game in ipairs{"relic-rush", "christmas-market", "emergency", "nile-archi
     for i, tag in ipairs(listed) do
         languages[tag] = true
         local name = game .. "/" .. tag
-        local text = i > 1 and app.read_text("games/" .. game .. "/data/common/l10n/" .. tag .. ".po")
-        if i > 1 then
+        -- A source language with more than two plural forms keeps its own catalogue.
+        local wanted = i > 1 or l10n.plural_rule(tag) ~= "one_other"
+        local text = wanted and app.read_text("games/" .. game .. "/data/common/l10n/" .. tag .. ".po")
+        if wanted then
             check(text ~= nil, name .. ".po exists")
             local po = text and l10n.parse_po(text)
             if po then

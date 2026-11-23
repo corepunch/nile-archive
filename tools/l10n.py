@@ -80,7 +80,9 @@ class Domain:
 
     @property
     def targets(self) -> list[str]:
-        return [tag for tag in self.languages if tag != self.source]
+        """Every catalogue: each translation, and a non-English source's own,
+        which holds the plural forms a two-form msgid cannot (see l10n.lua)."""
+        return [tag for tag in self.languages if tag != self.source or plural_rule(tag) != "one_other"]
 
     def po(self, tag: str) -> Path:
         return self.catalogues / f"{tag}.po"
@@ -305,14 +307,15 @@ def check(d: Domain) -> list[str]:
         missing = [k for k in wanted if k not in have]
         if stale or missing:
             problems.append(f"{name}: {len(missing)} new and {len(stale)} stale entries (run tools/l10n.py update {d.name})")
-        untranslated = [e for e in entries if e.key in wanted and not e.translated]
+        own = tag == d.source        # only its plural forms are required
+        untranslated = [e for e in entries if e.key in wanted and not e.translated and (not own or e.plural is not None)]
         if untranslated:
             sample = untranslated[0].msgid.replace("\n", "\\n")[:60]
             problems.append(f"{name}: {len(untranslated)} untranslated or fuzzy entries, first {sample!r}")
         nplurals = int(re.search(r"nplurals=(\d+)", PLURAL_FORMS[plural_rule(tag)]).group(1))
         drawn = font_chars(game_fonts + [FONT_DIR / f for f in script_fonts(tag)]) if game_fonts or d.name == "engine" else None
         for e in entries:
-            if e.key not in wanted or not e.translated:
+            if e.key not in wanted or not e.translated or (own and e.plural is None):
                 continue
             if e.plural is not None and len(e.forms) != nplurals:
                 problems.append(f"{name}: {e.msgid!r} needs {nplurals} plural forms")

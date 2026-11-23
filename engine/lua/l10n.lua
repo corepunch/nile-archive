@@ -255,8 +255,10 @@ local game_entries, engine_entries = {}, {}
 -- in, and every language the game offers (the source first).
 l10n.language, l10n.source, l10n.languages = ENGINE_SOURCE, ENGINE_SOURCE, {ENGINE_SOURCE}
 
-local function catalogue(read, path, tag, source)
-    if tag == source then return {} end
+-- A game written in a language with more plural forms than English keeps a
+-- catalogue of its own language too, holding just those forms (an msgid pair
+-- has only two); other entries there stay empty and show the source.
+local function catalogue(read, path, tag)
     local text = read(path .. tag .. ".po")
     return text and l10n.parse_po(text).entries or {}
 end
@@ -264,8 +266,8 @@ end
 -- Show everything marked from now on in `tag`, one of l10n.languages.
 function l10n.use(tag)
     l10n.language = tag
-    game_entries = catalogue(app.read_text, GAME_DIR, tag, l10n.source)
-    engine_entries = catalogue(app.read_engine_text, ENGINE_DIR, tag, ENGINE_SOURCE)
+    game_entries = catalogue(app.read_text, GAME_DIR, tag)
+    engine_entries = tag == ENGINE_SOURCE and {} or catalogue(app.read_engine_text, ENGINE_DIR, tag)
     use_fonts(tag)
 end
 
