@@ -68,5 +68,6 @@ DerivedData/
 # Local reference recordings and source masters remain outside version control.
 /reference/
 
-# Local image-generation scratch output.
+# Local image-generation scratch output and local renders (music previews, ...).
 /generated_images
+/output/
