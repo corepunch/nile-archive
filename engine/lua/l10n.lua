@@ -11,8 +11,8 @@
 --     trc("verb on a button", "Build")
 --     local N_ = l10n.N_      -- marks text kept as a key, shown later with tr(key)
 --
--- A comment starting "TRANSLATORS:" on the line before a marked string
--- reaches the translator with it.
+-- A translator note (a comment that opens with the word TRANSLATORS and a
+-- colon) on the line before a marked string reaches the translator with it.
 --
 -- The marked text is the msgid, as in gettext: tools/l10n.py extracts it with
 -- xgettext and merges it into every catalogue with msgmerge. A missing or
