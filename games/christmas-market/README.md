@@ -1,4 +1,4 @@
-# Christmas Market
+# Christmas at Bellmere
 
 From the repository root, `make -C games/christmas-market ios` builds, signs,
 installs and launches on a connected iPhone. The native iOS target is iPhone
@@ -10,7 +10,7 @@ An in-progress Christmas market game based on Relic Rush's square match-3 and fr
 The illustrated title screen offers Play and Settings from the first launch.
 The early wishes teach swaps, Line Gems, Rainbow Gems and tinsel on the board.
 New tools explain how to charge and use them. Collect the first reward to visit
-the market. Noelle and Agnes welcome you before the first wish. Each new stall
+the market. On the first board, Noelle explains how matches fund the market, and Agnes welcomes you in from the cold. Each new stall
 gets a short scene as someone moves in, and every five wishes the town gets on
 with Christmas ([script](docs/story.md)). **Story** in Settings turns the scenes off. **Main Menu** in Settings takes you back to the title. See the
 [title screen](docs/screenshots/main-menu.jpg) and [guided lessons](../../docs/PORTRAIT_GAMES.md#guided-board-lessons).

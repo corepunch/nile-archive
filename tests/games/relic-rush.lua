@@ -42,8 +42,6 @@ shot("debug-phone-board", "390x844", "--debug-walkthrough --level 4 --frames 180
 shot("debug-phone-town", "390x844", "--debug-walkthrough --city 2 --frames 180 --safe-area 0,47,0,34")
 shot("story-handoff", "480x900", "--city 4 --look 925,2110 --story-beat after-10 --story-line 2 --frames 240")
 shot("story-handoff-phone", "390x844", "--city 4 --look 925,2110 --story-beat after-10 --story-line 2 --frames 240 --safe-area 0,47,0,34")
-shot("story-choice", "480x900", "--story-choice restore-16")
-shot("story-choice-phone", "390x844", "--story-choice restore-16 --safe-area 0,47,0,34")
 -- Line gems and the rainbow gem: both axes of every kind, then one real swap each.
 local gems = "--level 30 --special-states "
 shot("line-gem-states", "480x900", gems .. "--frames 60")
@@ -307,9 +305,6 @@ shot("phone-story-finale", "390x844", "--story-beat after-100 --story-line 3 --f
 shot("story-level-20", "480x900", "--level 20")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
 
-
-
-
 -- tools/scenario_overview.py --capture: every board as it opens and the town after each
 -- epoch of four purchases, for the scenario and epoch overviews.
 -- Only with SPRITE_SCENARIO=1, so make test, test-full and shots never run them.
@@ -352,38 +347,8 @@ end
 shot("town-story-purchase", "480x900", "--story-beat placed-workshop --frames 240")
 shot("town-story-callback", "390x844", "--story-beat after-12 --story-line 1 --story-built --frames 240 --safe-area 0,47,0,34")
 
-shot("resident-meeting", "480x900", "--story-beat meeting-map_room-aviary --story-line 2 --frames 240")
-shot("resident-meeting-memory", "390x844", "--story-beat meeting-map_room-aviary --story-line 2 --story-asked --frames 240 --safe-area 0,47,0,34")
 shot("resident-arrival", "480x900", "--story-beat placed-aviary --story-line 2 --frames 240")
 shot("resident-return", "390x844", "--story-beat after-85 --story-built --story-line 2 --frames 240 --safe-area 0,47,0,34")
-shot("resident-memory-unasked", "480x900", "--story-beat after-91 --story-line 2 --story-built --frames 240")
-shot("resident-memory-asked", "390x844", "--story-beat after-91 --story-line 2 --story-asked --frames 240 --safe-area 0,47,0,34")
 
-local visit = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --frames 260 --visit-stage "
-shot("resident-keep-talking", "480x900", visit .. "after-85 --visit-continue")
-shot("resident-visit-first", "480x900", visit .. "placed-aviary")
-shot("resident-visit-later", "390x844", visit .. "after-100 --safe-area 0,47,0,34")
-shot("resident-questions-480", "480x900", visit .. "placed-aviary --visit-questions")
-shot("resident-full-menu", "480x900", visit .. "after-92 --visit-meeting meeting-map_room-aviary --visit-ending --visit-full-menu --heard-at map_room")
-shot("resident-full-menu-phone", "390x844", visit .. "after-92 --visit-meeting meeting-map_room-aviary --visit-ending --visit-full-menu --heard-at map_room --safe-area 0,47,0,34")
-shot("resident-ending", "480x900", visit .. "after-92 --visit-meeting meeting-map_room-aviary --visit-ending --visit-site aviary")
-shot("resident-ending-other", "390x844", visit .. "after-92 --visit-meeting meeting-map_room-aviary --visit-ending --visit-site map_room --heard-at aviary --safe-area 0,47,0,34")
-shot("resident-keepsake", "480x900", visit .. "after-92 --visit-meeting meeting-map_room-aviary --visit-ending --visit-site aviary --visit-keepsake town")
-shot("resident-keepsake-phone", "390x844", visit .. "after-92 --visit-meeting meeting-map_room-aviary --visit-ending --visit-site map_room --heard-at aviary --visit-keepsake town --safe-area 0,47,0,34")
-shot("resident-keepsake-choices", "390x844", visit .. "after-92 --visit-meeting meeting-map_room-aviary --visit-ending --visit-site aviary --heard-at map_room --visit-keepsake choices --safe-area 0,47,0,34")
-shot("meeting-recall", "480x900", "--story-beat after-92 --story-sides both --story-line 5 --frames 240")
-shot("meeting-recall-phone", "390x844", "--story-beat after-92 --story-sides map_room --story-line 4 --frames 240 --safe-area 0,47,0,34")
-shot("meeting-followup-direct", "390x844", visit .. "after-85 --visit-meeting meeting-map_room-aviary --visit-questions --safe-area 0,47,0,34")
-shot("meeting-followup-answer", "480x900", visit .. "after-67 --visit-site map_room --visit-meeting meeting-map_room-aviary")
-shot("meeting-reply-menu", "390x844", visit .. "after-85 --visit-meeting meeting-map_room-aviary --heard-at map_room --visit-questions --safe-area 0,47,0,34")
-shot("meeting-reply-answer", "480x900", visit .. "after-67 --visit-site map_room --visit-meeting meeting-map_room-aviary --heard-at aviary")
-shot("resident-questions-390", "390x844", visit .. "after-100 --visit-questions --safe-area 0,47,0,34")
 shot("pilot-arrival", "480x900", "--story-beat placed-map_room --frames 240")
-shot("pilot-questions", "390x844", visit .. "placed-map_room --visit-site map_room --visit-questions --safe-area 0,47,0,34")
-shot("pilot-revisit", "390x844", visit .. "after-100 --visit-site map_room --visit-questions --safe-area 0,47,0,34")
 shot("pilot-unasked", "480x900", "--story-beat after-67 --story-built --story-line 2 --frames 240")
-shot("pilot-remembered", "390x844", "--story-beat after-67 --story-asked --story-line 2 --frames 240 --safe-area 0,47,0,34")
-
-local marker = "--lua tests/fixtures/resident-visit;games/relic-rush/lua;. --visit-game relic-rush --visit-marker --frames 45"
-shot("unheard-visit-480", "480x900", marker)
-shot("unheard-visit-390", "390x844", marker .. " --safe-area 0,47,0,34")

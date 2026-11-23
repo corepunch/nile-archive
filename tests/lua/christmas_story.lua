@@ -192,3 +192,18 @@ preserved:add(c.items[1].pos,9,0)
 island.restore_saved(preserved,10)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy Christmas tree')
 empty_queue()
+
+-- The normal opening is a fixed scene on the first board, after it enters.
+R.prog, R.g = {level=0, story_seen={}}, rules.game_start(0, 1)
+R.test_mode, R.quiet, R.on_island, R.overlay = true, false, false, R.OV_NONE
+R.phase = R.PH_PRESENT
+R.story_tick()
+check(not story.active(), "the board enters before the opening dialogue")
+R.phase = R.PH_IDLE
+R.story_tick()
+check(story.active() and R.story_current == journey.beats[1] and R.story_current.lines[1][1] == "noelle",
+    "Noelle explains the market on the first board")
+empty_queue()
+R.story_tick()
+check(not story.active() and not R.story_current and R.prog.story_seen["before-01"],
+    "the opening ends after its lines and is acknowledged for the save")

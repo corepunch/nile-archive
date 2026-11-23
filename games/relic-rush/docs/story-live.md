@@ -1,6 +1,6 @@
 # Archive · A Light Below
 
-This is the retired expedition script. The playable campaign is [A Crust Each Way](story.md).
+This is the retired expedition script, including its historical dialogue choices. The [Landfall script](story.md) is the source for current dialogue previews.
 
 **Status:** One hundred expeditions in five chapters of twenty, one per epoch of four restorations. Every expedition has a scene on its first clear; the ten story restorations have a scene when they are placed. The reply choice is at the Expedition camp (16).
 

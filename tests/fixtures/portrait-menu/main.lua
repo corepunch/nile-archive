@@ -5,7 +5,7 @@ local init = desc.init
 local stage, frames, game = 0, 0
 local returning = app.arg("returning") ~= nil
 local completed = app.arg("returning") == "result"
-local show_menu = returning or testing.game == "christmas-market"
+local christmas = testing.game == "christmas-market"
 
 function desc.init()
     -- The runner isolates saves with --fresh. Exercise the normal launch path
@@ -29,8 +29,9 @@ function desc.init()
     rawset(save, "read", read)
     rawset(save, "write", write)
     R.test_mode = true
-    assert(R.on_menu == show_menu and wrote_profile ~= returning, "check title screen and profile creation on first launch")
-    assert(not R.on_island and R.g.level == 0, "level one must be the first screen in the campaign")
+    assert(R.on_menu, "normal launch must open the title screen")
+    assert(wrote_profile ~= returning, "only a first launch must create a profile")
+    assert(not R.on_island and R.g.level == 0, "level one must be ready behind the title screen")
     assert(R.overlay == R.OV_NONE and R.g.won == completed, "a saved result must wait behind the menu")
     game = R.g
 end
@@ -44,26 +45,29 @@ function R.smoke()
     assert(frames < 900, "portrait menu timed out at step " .. stage)
     if R.diving() then return end
     if story.active() then   -- only the opening, before the first board
-        assert(not R.on_menu and R.story_current and R.story_current.key == "before-01", "the title never starts dialogue")
+        assert(christmas and not R.on_menu and not R.on_island and R.phase == R.PH_IDLE
+            and R.story_current and R.story_current.key == "before-01", "Noelle speaks on the first board after its entrance")
         story.next()
         return
     end
     local menu = R.menu.form
     if stage == 0 then
-        if show_menu then
-            if not menu.boxes.settings then return end
-            click(menu, "settings")
-            stage = 1
-        else
-            stage = 4
-        end
+        if not menu.boxes.settings then return end
+        click(menu, "settings")
+        stage = 1
     elseif stage == 1 and R.overlay == R.OV_PAUSE and R.dialog_settled() then
         assert(not R.pause_form.values.expedition and not R.pause_form.values.in_game, "title settings carry no board actions")
         click(R.pause_form, "motion", true)
         stage = 2
-    elseif stage == 2 and R.reduced_motion and R.pause_form.boxes.story and R.story then
-        click(R.pause_form, "story", true)   -- Settings → Story off: no scene plays from here
-        stage = 21
+    elseif stage == 2 and R.reduced_motion then
+        assert((R.pause_form.boxes.story ~= nil) == christmas, "only Christmas Market offers a story setting")
+        if christmas and returning then
+            click(R.pause_form, "story", true)
+            stage = 21
+        else
+            click(R.pause_form, "resume", true)
+            stage = 3
+        end
     elseif stage == 21 and R.story == false then
         click(R.pause_form, "resume", true)
         stage = 3
@@ -94,6 +98,9 @@ function R.smoke()
         end
         if R.mission_banner or R.phase == R.PH_PRESENT then app.inject_click(app.screen():center()); return end
         assert(not R.on_island and R.g == game and R.g.level == 0, "the campaign resumes on level one")
+        if christmas and not returning then
+            assert(R.prog.story_seen["before-01"], "the opening plays before the first move")
+        end
         app.inject_click(R.board_pause:center())
         stage = 5
     elseif stage == 5 and R.overlay == R.OV_PAUSE and R.dialog_settled() then

@@ -8,14 +8,14 @@
 
 ## How scenes play
 
-- **Opening.** Before the first board, Noelle and Agnes welcome the player to Bellmere.
+- **Opening.** On the first board, Noelle welcomes the player and explains what matching does for the market. Agnes welcomes the player in from the cold.
 - **One line each.** In a scene every speaker says one line.
 - **New stalls.** Placing a stall plays its scene once, after the player confirms the site. Someone starts using it: Theo sets out his firs under the arch, Pip feeds the reindeer. A scene talks only about its own stall.
 - **Along the way.** Every five wishes (3, 8, 13 … 98) and on the hundredth, a first clear plays a short scene before the result card. These are people going about their Christmas business. They never mention a stall, because the player may not have built it yet, and they never ask for one.
 - **Replays are silent.** Each scene plays once per save.
 - **Settings → Story** turns every scene off. Turning it back on starts from the current wish; nothing skipped is replayed.
 
-Lines are speech, never narration. Mechanics stay in each board's lesson line.
+Lines are speech, never narration. The opening explains what resources are for. The board lessons show how to play.
 
 ## Cast
 
@@ -40,10 +40,12 @@ Bramble, Mr Finch's goat, does not speak.
 
 ## Opening
 
+The board is in view. This scene plays before the first move.
+
 **Before level 1**
 
-- **Noelle:** You came! Welcome to Bellmere. Gran's old market is empty. Let's open it by Christmas Eve.
-- **Agnes:** Rosa's granddaughter, and a helper too, in this snow. Come in when you're frozen. There's buns.
+- **Noelle:** Welcome to Bellmere! Make matches to collect resources and help me rebuild the market.
+- **Agnes:** Come in when you get cold, love. There's buns.
 
 ## New stalls
 

@@ -33,7 +33,7 @@ ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio'
 ENGINE_SOURCE_DIRS = {'haptic_platform': 'engine/src/platform', 'gamecenter_platform': 'engine/src/platform', 'api_lua': 'engine/generated'}
 
 GAMES = {
-    'christmas-market': dict(name='Christmas Market', bundle='com.corepunch.christmasmarket', device='iphone', orientations=('Portrait', 'PortraitUpsideDown')),
+    'christmas-market': dict(name='Christmas at Bellmere', bundle='com.corepunch.christmasmarket', device='iphone', orientations=('Portrait', 'PortraitUpsideDown')),
     # Preserve the published bundle identity so Emergency updates installed copies.
     'emergency': dict(name='Emergency', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     # device: the iOS target - 'ipad' (device family 2) or 'iphone' (family 1)

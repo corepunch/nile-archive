@@ -7,7 +7,6 @@ return {
     menu = {title = {"RELIC RUSH"}, subtitle = "THE LOST VALLEY", town = "VISIT ISLAND"},
     corner_close = true,
     campaign_dialogue = false,
-    story_intro = true,   -- the opening scene only; the Landfall campaign script is archived
     epochs = {"Epoch I", "Epoch II", "Epoch III", "Epoch IV", "Epoch V"},
     epoch_title = "Epochs",
     epoch_medal_names = {"Spring Camp", "Mill and Market", "Harbour Town", "Coastal Watch", "Sun Temple"},

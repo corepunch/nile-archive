@@ -35,7 +35,7 @@ Captain Tavi's ship puts a dozen settlers and their builder, the player, ashore 
 
 ## Campaign
 
-**In the game only the opening plays** (`story_intro` in `lua/game_config.lua`), before the first board, and Settings → Story turns it off. The rest of this script is archived: the engine's story tests still run it, but the campaign does not.
+**Archived Landfall script.** The live campaign opens with a guided board tutorial. The story is available through scene previews and used by engine tests.
 
 The numbered scenes play once, on the first clear. Levels between them have no scene. Building scenes play when the building is placed. The player can ask Tavi and Oren more in town.
 
@@ -81,18 +81,6 @@ The numbered scenes play once, on the first clear. Levels between them have no s
 - **Sela:** Tavi, the camp crew dug up old stone steps. Cut by hand and worn smooth.
 - **Tavi:** Harbour steps. Somebody tied up their boats here long before us.
 - **Oren:** Then where did they all go?
-
-Choice prompt: What should we do with the old steps?
-
-### Choice: clear | Clear them for the boats
-
-- **Sela:** Let's clear them. The boats could tie up right at the bottom.
-- **Tavi:** Good. My crew is tired of wading ashore.
-
-### Choice: wait | Leave them for now
-
-- **Oren:** Leave them for now. We need houses more than stairs.
-- **Tavi:** Fair enough. They've waited this long.
 
 **Level 20**
 
@@ -374,210 +362,13 @@ Choice prompt: What should we do with the old steps?
 
 - **Tavi:** Two months, if the wind is fair. Plenty of time to finish the town.
 
-**If asked placed-map_room personal**
-
-- **Tavi:** Two months, if the wind is fair. My mother would have done it in six weeks.
-
 **With aviary after-91 2**
 
 - **Oren:** I'll do the bread. And my birds will watch for the sails.
 
-**If asked after-85 personal**
-
-- **Oren:** I'll do the bread. The grey one will spot the sails before any of us.
-
 **With aviary after-92 3**
 
 - **Oren:** Take my grey bird. Send her back with a head count, so I know how much to bake.
-
-**Visit map_room placed-map_room**
-
-**Ask personal | Why the sea?**
-
-- **Sela:** Why did you go to sea, Tavi?
-- **Tavi:** My mother had a fishing boat and nobody else to sail it.
-
-**Ask story | How do you chart a reef?**
-
-- **Sela:** How do you chart a reef you can't see?
-- **Tavi:** A rope with a weight. Drop it, count the knots, write it down. A thousand times.
-
-**Visit map_room after-67**
-
-**Ask personal | Do you miss the ship?**
-
-- **Sela:** Do you miss the ship?
-- **Tavi:** Like a lost tooth. I keep reaching for it.
-
-**Ask story | Will she find us?**
-
-- **Sela:** What if your mate can't find the island?
-- **Tavi:** She'll see our lighthouse from far out at sea.
-
-**Visit map_room after-100**
-
-**Ask personal | Will you sail again?**
-
-- **Sela:** Will you go back to sea?
-- **Tavi:** Someday. Right now I want to sit somewhere that doesn't move.
-
-**Ask story | Who pilots the boats now?**
-
-- **Sela:** Who'll pilot the boats over the reef now?
-- **Tavi:** I'm teaching two of the hill boys. They're brave. Not careful yet.
-
-**Visit aviary placed-aviary**
-
-**Ask personal | Why birds?**
-
-- **Sela:** Why birds, Oren?
-- **Oren:** Since the crossing, I like anything that always finds its way home.
-
-**Ask story | What are they for?**
-
-- **Sela:** What can a bird do that a boat can't?
-- **Oren:** Fly a day's sail in an hour and come straight back with a message.
-
-**Visit aviary after-85**
-
-**Ask personal | Has one come back yet?**
-
-- **Sela:** Has a bird come back yet?
-- **Oren:** Every one. The grey one beat me home from the harbour.
-
-**Ask story | Could one reach the ship?**
-
-- **Sela:** Could a bird reach the ship at sea?
-- **Oren:** Not from here. But Tavi could row one out and let it go.
-
-**Visit aviary restore-91**
-
-**Ask personal | Bread for the feast?**
-
-- **Sela:** How much bread are you making for the feast?
-- **Oren:** All of it. Every loaf this island can hold.
-
-**Ask story | Any news from sea?**
-
-- **Sela:** Any news from the ship?
-- **Oren:** Not yet. I check the loft every morning before breakfast.
-
-**Visit aviary after-92**
-
-**Ask personal | Did you bake enough?**
-
-- **Sela:** Did you bake enough?
-- **Oren:** Three loaves left over. I'm calling that perfect.
-
-**Ask story | Keeping the birds?**
-
-- **Sela:** Will you keep the birds now the ship is home?
-- **Oren:** Of course. Tavi wants one on every boat that leaves this harbour.
-
-**Visit aviary restore-96**
-
-**Ask personal | Why the crowd?**
-
-- **Sela:** Why is everyone at the fountain?
-- **Oren:** The children found your old cup. They're taking turns with it.
-
-**Ask story | Are they settling in?**
-
-- **Sela:** Are the families settling in?
-- **Oren:** Three days here and they're already arguing about bread. They're home.
-
-**Visit aviary after-100**
-
-**Ask personal | Happy, Oren?**
-
-- **Sela:** Is this what you hoped for, Oren?
-- **Oren:** A mill, a loft and a whole town to feed. Yes.
-
-**Ask story | What's next?**
-
-- **Sela:** What will you do tomorrow?
-- **Oren:** Bake for fifty-two more people. Ask me again the day after.
-
-**Meeting map_room aviary**
-
-- **Oren:** Tavi, my birds can't find a ship at sea. But they can fly home from one.
-- **Tavi:** Then when her sails show up, I'll row out with a bird and send it back.
-- **Oren:** With a head count. I need to know how much bread to make.
-
-**If asked map_room after-67 personal 2**
-
-- **Tavi:** Any excuse to get back on a boat. I'll row out with a bird and send it back.
-
-**If asked map_room after-67 personal 3**
-
-- **Oren:** You'd row out with or without a bird, Tavi.
-
-**Ask at aviary | Which bird will go?**
-
-- **Sela:** Which bird will Tavi take?
-- **Oren:** The grey one. She's never once got lost.
-
-**Ask at map_room | How far will you row?**
-
-- **Sela:** How far out will you row?
-- **Tavi:** Past the reef, where the water's deep. A big ship can't come closer without me.
-
-**Ask at map_room after aviary | The grey bird?**
-
-- **Sela:** Oren's giving you his grey bird.
-- **Tavi:** His best one? He really does want that head count.
-
-**Ask at aviary after map_room | Past the reef?**
-
-- **Sela:** Tavi's rowing out past the reef. Isn't that dangerous?
-- **Oren:** For anyone else. She drew the chart.
-
-**Recall after-92**
-
-**Heard neither**
-
-- **Tavi:** Is the bird ready, Oren?
-- **Oren:** Fed and ready. Count twice before you let her go.
-
-**Heard aviary**
-
-- **Oren:** Here's the grey one. She's never once got lost.
-- **Tavi:** Then she'll beat me home. Get the ovens hot.
-
-**Heard map_room**
-
-- **Tavi:** I'll wait past the reef. If it gets dark, light the fire.
-- **Oren:** It's the middle of the day, Tavi. Just go.
-
-**Heard both**
-
-- **Oren:** The grey bird, past the reef, a head count. Anything else?
-- **Tavi:** Yes. Push the boat, Oren!
-
-**Catch up in town**
-
-- **Tavi:** Push me off, Oren. I'm going out to meet her.
-- **Oren:** Go. The bread will be out of the oven before you're back.
-
-**Ask at aviary | Did the bird come back?**
-
-- **Sela:** Did the grey bird come back?
-- **Oren:** Within the hour. Fifty-two people aboard. I need more flour.
-
-**If heard map_room**
-
-- **Sela:** Tavi got out past the reef. Did your bird beat her back?
-- **Oren:** By an hour. Fifty-two aboard. I need more flour.
-
-**Ask at map_room | How was it out there?**
-
-- **Sela:** How was it out there?
-- **Tavi:** They were all at the rail, waving. I took her over the reef myself.
-
-**If heard aviary**
-
-- **Sela:** Fifty-two people, Oren says. Did they all fit?
-- **Tavi:** Just. Half of them waved at the town the whole way in.
 
 ## Upgrades
 
@@ -647,4 +438,4 @@ Choice prompt: What should we do with the old steps?
 
 ## Changelog
 
-22 November 2026 · Replaced "A Crust Each Way" with "Landfall": settlers land from Tavi's ship and found a town, and the families arrive at the end. Same cast faces with new roles; Ina is gone. Same scene keys and resident structure, so saves and town visits keep working.
+22 November 2026 · Replaced "A Crust Each Way" with "Landfall": settlers land from Tavi's ship and found a town, and the families arrive at the end. Same cast faces with new roles; Ina is gone. It retained existing campaign scene keys for save compatibility.

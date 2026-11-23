@@ -212,8 +212,8 @@ end
 for _, size in ipairs{"480x900", "390x844"} do
     local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
     local prefix = size == "390x844" and "phone-story-" or "story-"
-    shot(prefix .. "opening", size, "--story-beat before-01 --frames 240" .. safe)
-    shot(prefix .. "agnes", size, "--story-beat before-01 --story-line 2 --frames 240" .. safe)
+    shot(prefix .. "opening", size, "--level 1 --story-beat before-01 --frames 240" .. safe)
+    shot(prefix .. "agnes", size, "--level 1 --story-beat before-01 --story-line 2 --frames 240" .. safe)
     shot(prefix .. "theo", size, "--story-beat placed-arch --frames 240" .. safe)
     shot(prefix .. "pip", size, "--story-beat after-03 --frames 240" .. safe)
     shot(prefix .. "shout", size, "--story-beat after-88 --frames 240" .. safe)
@@ -229,8 +229,8 @@ for _, speaker in ipairs{"alder", "finch", "ada", "otis", "wren", "henrik", "mar
     shot("cast-" .. speaker .. "-phone", "390x844", args .. " --safe-area 0,47,0,34")
 end
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
-shot("dialogue-bar-480", "480x900", "--story-beat before-01 --talk-through 270 --frames 535")
-shot("dialogue-bar-390", "390x844", "--story-beat before-01 --talk-through 270 --frames 535 --safe-area 0,47,0,34")
+shot("dialogue-bar-480", "480x900", "--level 1 --story-beat before-01 --talk-through 270 --frames 535")
+shot("dialogue-bar-390", "390x844", "--level 1 --story-beat before-01 --talk-through 270 --frames 535 --safe-area 0,47,0,34")
 
 reel("fx-shatter",24,2,"480x900","--fx shatter --reel")
 shot("phone-pieces-board","390x844","--art-board --safe-area 0,47,0,34")

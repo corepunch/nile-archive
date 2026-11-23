@@ -1111,7 +1111,7 @@ Straight-line match-3 rules: ordinary triples, four-in-line rays on all three ax
 
 ## Campaign dialogue
 
-The [script](story.md) supplies the spoken lines and both island visits. See the [portrait registration](#harbour-family-portraits).
+The [archived script](story.md) supplies the spoken lines for dialogue previews. See the [portrait registration](#harbour-family-portraits).
 
 ## Island streets
 
@@ -1199,17 +1199,10 @@ The original three striped-axis paintings stay in the master. Both campaigns
 stripe the existing piece along its square row or column.
 Regenerate the atlases with `python3 tools/pack_match_specials.py`.
 
-## Resident keepsake
+## Archived resident keepsake
 
-Ina's first crossing shows Tavi giving her the oars. Finishing either resident's final question reveals the picture at that home. The [original painting](../art/art-direction/ina-first-crossing.png) exports to `data/story/scenes/ina-first-crossing.jpg` with the portrait command above.
+`data/story/scenes/ina-first-crossing.jpg` is archived artwork from the former town question system. [Original painting](../art/art-direction/ina-first-crossing.png).
 
-## Unheard resident visit
-
-The Great Aviary displays a three-dot speech bubble when Oren has new dialogue. The shared town screen anchors the existing `story.bubble_shape` to the live roof position and draws the dots with the town skin. This is a live UI element. It appears after the introduction and after a newly witnessed story checkpoint, and hides during dialogue, placement and overlays. Tapping the building or bubble asks a sole remaining question directly. Multiple questions open the existing town popup. Each question is available once. After the last question, the bubble clears and a tap shows the building description. Reproduce both phone captures with `build/test/all --suite=relic-rush "shot unheard-visit"`. [480 × 900](review/resident-markers/unheard-visit-480-after.jpg) · [390 × 844](review/resident-markers/unheard-visit-390-after.jpg)
-
-Capture the question menu with the same command filtered to "shot resident-questions". [First questions](screenshots/resident-questions-480.jpg) · [Last question starts directly](screenshots/resident-questions-390.jpg)
-
-Five one-time questions share a single **Back to town** control. [480 × 900](screenshots/resident-full-menu.jpg) · [390 × 844](screenshots/resident-full-menu-phone.jpg)
 ## Guided board lesson
 
 The shared board tutorial draws a cream outline around the relevant pieces,

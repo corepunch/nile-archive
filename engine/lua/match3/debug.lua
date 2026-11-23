@@ -14,7 +14,7 @@ function D.direct_preview()
     for _, key in ipairs{
         "level", "city", "opening-town", "epoch", "epoch-window", "showcase", "placing", "zone", "victory", "replay-victory",
         "card", "purchase-card", "catalogue", "catalogue-page", "catalogue-item", "catalogue-card",
-        "build-review", "building-review", "dialog", "story-beat", "story-choice", "present", "mission", "kudos",
+        "build-review", "building-review", "dialog", "story-beat", "present", "mission", "kudos",
         "reveal", "goals-met", "art-board", "art-states", "hud-states", "element-states", "special-states", "fx",
     } do
         if app.arg(key) then return true end
@@ -537,56 +537,21 @@ function D.bind(R, W)
         if beat_key then
             local beat = assert(journey.find(beat_key), "unknown story beat")
             local first = tonumber(app.arg("story-line")) or 1
-            local building = (beat.phase == "placed" or beat.phase == "visit") and beat.building
+            local building = beat.phase == "placed" and beat.building
             local position = building and island.ladder_position[island.kinds[building]]
-            local seen = {}
-            for _, site in ipairs(beat.sites or {}) do
-                position = math.max(position or 0, island.ladder_position[island.kinds[site]])
-            end
-            local wanted, asked = app.arg("story-when"), app.arg("story-asked")
-            local sides = app.arg("story-sides")
-            if sides then
-                local recall = assert(beat.recall, "scene has no meeting recall")
-                assert(recall.exchanges[sides], "unknown listening history")
-                local meeting = journey.find(recall.meeting)
-                seen[meeting.key] = true
-                for _, site in ipairs(meeting.sites) do
-                    position = math.max(position or 0, island.ladder_position[island.kinds[site]])
-                end
-                for _, answer in ipairs(meeting.followups) do
-                    if sides == "both" or sides == answer.building then seen[answer.key] = true end
-                end
-            end
-            if app.arg("story-built") or asked or wanted or sides then
-                local remembered
+            if app.arg("story-built") then
                 for _, reply in ipairs(beat.replies or {}) do
                     position = math.max(position or 0, island.ladder_position[island.kinds[reply.building]])
-                    if reply.introduction then seen[reply.introduction] = true end
-                    if reply.when and (reply.when == wanted or (asked and not wanted and not remembered and reply.index >= first)) then
-                        remembered = reply.when
-                    end
                 end
-                if asked or wanted then seen[assert(remembered, "scene has no matching conditional reply")] = true end
             end
             if position then island_with(0, position)
             else island_with(journey.earned(beat.level or 0)) end
-            R.on_island, R.overlay, R.intro, R.phase, R.toast_time = true, R.OV_NONE, nil, R.PH_IDLE, 0
+            R.on_island, R.overlay, R.intro, R.phase, R.toast_time = not app.arg("level"), R.OV_NONE, nil, R.PH_IDLE, 0
             while story.active() do story.next() end
-            if beat.phase == "visit" then
-                R.open_story_choice(beat, true)
-            else
-                local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end, next(seen) and seen or nil)
-                R.queue_story({key = beat.key, lines = spoken}, true)
-                -- Advance as a player would so the previous speaker stays in view.
-                for _ = 2, first do story.next() end
-            end
-        end
-        local choice_key = app.arg("story-choice")
-        if choice_key then
-            local beat = assert(journey.find(choice_key), "unknown story choice")
-            island_with(journey.earned(beat.level))
-            R.on_island, R.toast_time = true, 0
-            R.open_story_choice(beat, true)
+            local spoken = journey.lines_for(beat, function(site) return island.owned(R.island, island.kinds[site]) > 0 end)
+            R.queue_story({key = beat.key, lines = spoken}, true)
+            -- Advance as a player would so the previous speaker stays in view.
+            for _ = 2, first do story.next() end
         end
         -- A debug screen may have replaced the board, or shown something else instead.
         if R.intro then

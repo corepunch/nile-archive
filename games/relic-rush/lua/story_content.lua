@@ -43,15 +43,6 @@ return {
         sela "Tavi, the camp crew dug up old stone steps. Cut by hand and worn smooth.",
         tavi "Harbour steps. Somebody tied up their boats here long before us.",
         oren "Then where did they all go?",
-    }, prompt="What should we do with the old steps?", choices={
-        {id="clear", label="Clear them for the boats", lines={
-            sela "Let's clear them. The boats could tie up right at the bottom.",
-            tavi "Good. My crew is tired of wading ashore.",
-        }},
-        {id="wait", label="Leave them for now", lines={
-            oren "Leave them for now. We need houses more than stairs.",
-            tavi "Fair enough. They've waited this long.",
-        }},
     }},
     {key="after-20", phase="after", level=20, lines={
         oren "Tavi, there's smoke over the hills. We're not alone here.",
@@ -153,7 +144,6 @@ return {
         oren "And to bring flour.",
     }},
     {key="after-67", phase="after", level=67, replies={
-        {index=2, building="map_room", introduction="placed-map_room", when="visit-map_room-placed-map_room.personal", line=tavi "Two months, if the wind is fair. My mother would have done it in six weeks."},
         {index=2, building="map_room", introduction="placed-map_room", line=tavi "Two months, if the wind is fair. Plenty of time to finish the town."},
     }, lines={
         oren "How long until the ship comes back?",
@@ -193,7 +183,6 @@ return {
         tavi "Put them where the families can see them when they land.",
     }},
     {key="after-91", phase="after", level=91, replies={
-        {index=2, building="aviary", introduction="placed-aviary", when="visit-aviary-after-85.personal", line=oren "I'll do the bread. The grey one will spot the sails before any of us."},
         {index=2, building="aviary", introduction="placed-aviary", line=oren "I'll do the bread. And my birds will watch for the sails."},
     }, lines={
         sela "When the families land, they'll need a feast. And somewhere to hold it.",
@@ -206,42 +195,7 @@ return {
     }},
     {key="after-92", phase="after", level=92, replies={
         {index=3, building="aviary", introduction="placed-aviary", line=oren "Take my grey bird. Send her back with a head count, so I know how much to bake."},
-    }, recall={key="meeting-map_room-aviary.after-92", meeting="meeting-map_room-aviary", exchanges={
-        ["neither"]={
-            tavi("Is the bird ready, Oren?", {listener="oren"}),
-            oren "Fed and ready. Count twice before you let her go.",
-        },
-        ["aviary"]={
-            oren("Here's the grey one. She's never once got lost.", {listener="tavi"}),
-            tavi "Then she'll beat me home. Get the ovens hot.",
-        },
-        ["map_room"]={
-            tavi("I'll wait past the reef. If it gets dark, light the fire.", {listener="oren"}),
-            oren "It's the middle of the day, Tavi. Just go.",
-        },
-        ["both"]={
-            oren("The grey bird, past the reef, a head count. Anything else?", {listener="tavi"}),
-            tavi "Yes. Push the boat, Oren!",
-        },
     }, lines={
-        tavi("Push me off, Oren. I'm going out to meet her.", {listener="oren"}),
-        oren "Go. The bread will be out of the oven before you're back.",
-    }, followups={
-        {key="meeting-map_room-aviary.after-92.aviary", building="aviary", when="meeting-map_room-aviary.after-92", topic="recall", label="Did the bird come back?", lines={
-            sela "Did the grey bird come back?",
-            oren "Within the hour. Fifty-two people aboard. I need more flour.",
-        }, replies={
-            {index=1, building="map_room", when="meeting-map_room-aviary.after-92.map_room", line=sela "Tavi got out past the reef. Did your bird beat her back?"},
-            {index=2, building="map_room", when="meeting-map_room-aviary.after-92.map_room", line=oren "By an hour. Fifty-two aboard. I need more flour."},
-        }},
-        {key="meeting-map_room-aviary.after-92.map_room", building="map_room", when="meeting-map_room-aviary.after-92", topic="recall", label="How was it out there?", lines={
-            sela "How was it out there?",
-            tavi "They were all at the rail, waving. I took her over the reef myself.",
-        }, replies={
-            {index=1, building="aviary", when="meeting-map_room-aviary.after-92.aviary", line=sela "Fifty-two people, Oren says. Did they all fit?"},
-            {index=2, building="aviary", when="meeting-map_room-aviary.after-92.aviary", line=tavi "Just. Half of them waved at the town the whole way in."},
-        }},
-    }}, lines={
         sela "Sails on the horizon! Tavi, is that her?",
         tavi "That's her. I'm rowing out to bring her over the reef.",
         oren "Bring them in hungry. I've been baking all week.",
@@ -349,120 +303,5 @@ return {
     {key="placed-museum", phase="placed", building="museum", lines={
         sela "Everything we've dug up, on shelves. Except my cup. I still use that.",
         oren "A potter with a hundred cups, drinking from someone else's.",
-    }},
-    {key="visit-map_room-placed-map_room", phase="visit", building="map_room", checkpoint="placed-map_room", level=56, prompt="Ask Tavi", choices={
-        {key="visit-map_room-placed-map_room.personal", topic="personal", label="Why the sea?", lines={
-            sela "Why did you go to sea, Tavi?",
-            tavi "My mother had a fishing boat and nobody else to sail it.",
-        }},
-        {key="visit-map_room-placed-map_room", topic="story", label="How do you chart a reef?", lines={
-            sela "How do you chart a reef you can't see?",
-            tavi "A rope with a weight. Drop it, count the knots, write it down. A thousand times.",
-        }},
-    }},
-    {key="visit-map_room-after-67", phase="visit", building="map_room", checkpoint="after-67", level=67, prompt="Ask Tavi", choices={
-        {key="visit-map_room-after-67.personal", topic="personal", label="Do you miss the ship?", lines={
-            sela "Do you miss the ship?",
-            tavi "Like a lost tooth. I keep reaching for it.",
-        }},
-        {key="visit-map_room-after-67", topic="story", label="Will she find us?", lines={
-            sela "What if your mate can't find the island?",
-            tavi "She'll see our lighthouse from far out at sea.",
-        }},
-    }},
-    {key="visit-map_room-after-100", phase="visit", building="map_room", checkpoint="after-100", level=100, prompt="Ask Tavi", choices={
-        {key="visit-map_room-after-100.personal", topic="personal", label="Will you sail again?", lines={
-            sela "Will you go back to sea?",
-            tavi "Someday. Right now I want to sit somewhere that doesn't move.",
-        }},
-        {key="visit-map_room-after-100", topic="story", label="Who pilots the boats now?", lines={
-            sela "Who'll pilot the boats over the reef now?",
-            tavi "I'm teaching two of the hill boys. They're brave. Not careful yet.",
-        }},
-    }},
-    {key="visit-aviary-placed-aviary", phase="visit", building="aviary", checkpoint="placed-aviary", level=81, prompt="Ask Oren", choices={
-        {key="visit-aviary-placed-aviary.personal", topic="personal", label="Why birds?", lines={
-            sela "Why birds, Oren?",
-            oren "Since the crossing, I like anything that always finds its way home.",
-        }},
-        {key="visit-aviary-placed-aviary", topic="story", label="What are they for?", lines={
-            sela "What can a bird do that a boat can't?",
-            oren "Fly a day's sail in an hour and come straight back with a message.",
-        }},
-    }},
-    {key="visit-aviary-after-85", phase="visit", building="aviary", checkpoint="after-85", level=85, prompt="Ask Oren", choices={
-        {key="visit-aviary-after-85.personal", topic="personal", label="Has one come back yet?", lines={
-            sela "Has a bird come back yet?",
-            oren "Every one. The grey one beat me home from the harbour.",
-        }},
-        {key="visit-aviary-after-85", topic="story", label="Could one reach the ship?", lines={
-            sela "Could a bird reach the ship at sea?",
-            oren "Not from here. But Tavi could row one out and let it go.",
-        }},
-    }},
-    {key="visit-aviary-restore-91", phase="visit", building="aviary", checkpoint="restore-91", level=91, prompt="Ask Oren", choices={
-        {key="visit-aviary-restore-91.personal", topic="personal", label="Bread for the feast?", lines={
-            sela "How much bread are you making for the feast?",
-            oren "All of it. Every loaf this island can hold.",
-        }},
-        {key="visit-aviary-restore-91", topic="story", label="Any news from sea?", lines={
-            sela "Any news from the ship?",
-            oren "Not yet. I check the loft every morning before breakfast.",
-        }},
-    }},
-    {key="visit-aviary-after-92", phase="visit", building="aviary", checkpoint="after-92", level=92, prompt="Ask Oren", choices={
-        {key="visit-aviary-after-92.personal", topic="personal", label="Did you bake enough?", lines={
-            sela "Did you bake enough?",
-            oren "Three loaves left over. I'm calling that perfect.",
-        }},
-        {key="visit-aviary-after-92", topic="story", label="Keeping the birds?", lines={
-            sela "Will you keep the birds now the ship is home?",
-            oren "Of course. Tavi wants one on every boat that leaves this harbour.",
-        }},
-    }},
-    {key="visit-aviary-restore-96", phase="visit", building="aviary", checkpoint="restore-96", level=96, prompt="Ask Oren", choices={
-        {key="visit-aviary-restore-96.personal", topic="personal", label="Why the crowd?", lines={
-            sela "Why is everyone at the fountain?",
-            oren "The children found your old cup. They're taking turns with it.",
-        }},
-        {key="visit-aviary-restore-96", topic="story", label="Are they settling in?", lines={
-            sela "Are the families settling in?",
-            oren "Three days here and they're already arguing about bread. They're home.",
-        }},
-    }},
-    {key="visit-aviary-after-100", phase="visit", building="aviary", checkpoint="after-100", level=100, prompt="Ask Oren", choices={
-        {key="visit-aviary-after-100.personal", topic="personal", label="Happy, Oren?", lines={
-            sela "Is this what you hoped for, Oren?",
-            oren "A mill, a loft and a whole town to feed. Yes.",
-        }},
-        {key="visit-aviary-after-100", topic="story", label="What's next?", lines={
-            sela "What will you do tomorrow?",
-            oren "Bake for fifty-two more people. Ask me again the day after.",
-        }},
-    }},
-    {key="meeting-map_room-aviary", phase="meeting", sites={"map_room", "aviary"}, level=81, lines={
-        oren "Tavi, my birds can't find a ship at sea. But they can fly home from one.",
-        tavi "Then when her sails show up, I'll row out with a bird and send it back.",
-        oren "With a head count. I need to know how much bread to make.",
-    }, replies={
-        {index=2, building="map_room", when="visit-map_room-after-67.personal", line=tavi "Any excuse to get back on a boat. I'll row out with a bird and send it back."},
-        {index=3, building="map_room", when="visit-map_room-after-67.personal", line=oren "You'd row out with or without a bird, Tavi."},
-    }, followups={
-        {key="meeting-map_room-aviary.aviary", building="aviary", when="meeting-map_room-aviary", topic="meeting", label="Which bird will go?", lines={
-            sela "Which bird will Tavi take?",
-            oren "The grey one. She's never once got lost.",
-        }},
-        {key="meeting-map_room-aviary.map_room", building="map_room", when="meeting-map_room-aviary", topic="meeting", label="How far will you row?", lines={
-            sela "How far out will you row?",
-            tavi "Past the reef, where the water's deep. A big ship can't come closer without me.",
-        }},
-        {key="meeting-map_room-aviary.map_room.reply", building="map_room", when="meeting-map_room-aviary", topic="meeting", source="Oren", heard_any={"meeting-map_room-aviary.aviary", "meeting-map_room-aviary.aviary.reply"}, label="The grey bird?", lines={
-            sela "Oren's giving you his grey bird.",
-            tavi "His best one? He really does want that head count.",
-        }},
-        {key="meeting-map_room-aviary.aviary.reply", building="aviary", when="meeting-map_room-aviary", topic="meeting", source="Tavi", heard_any={"meeting-map_room-aviary.map_room", "meeting-map_room-aviary.map_room.reply"}, label="Past the reef?", lines={
-            sela "Tavi's rowing out past the reef. Isn't that dangerous?",
-            oren "For anyone else. She drew the chart.",
-        }},
     }},
 }

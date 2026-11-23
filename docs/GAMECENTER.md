@@ -101,7 +101,7 @@ capture with `--gamecenter-demo`.
 | Game | Leaderboard | Opened from |
 | --- | --- | --- |
 | Relic Rush | `stars` (expeditions cleared) | Settings |
-| Christmas Market | `stars` (winter wishes cleared) | Settings |
+| Christmas at Bellmere | `stars` (winter wishes cleared) | Settings |
 | Nile Archive | `influence` (campaign influence) | Chapter list |
 | Emergency | `rescue` (sum of the best district speed scores) | Menu |
 
@@ -137,7 +137,7 @@ can send them. New score reports must match the declared board. An app descripto
 without `gamecenter_board` can still report scores to any leaderboard.
 
 In App Store Connect, make the overall leaderboard the default and archive any
-live `level_01` through `level_100` leaderboards for Relic Rush and Christmas Market,
+live `level_01` through `level_100` leaderboards for Relic Rush and Christmas at Bellmere,
 `search_1` through `search_15` for Nile Archive, and `district_01` through `district_05`
 for Emergency. Archiving hides these leaderboards from Game Center itself.
 [Apple's leaderboard management guide](https://developer.apple.com/help/app-store-connect/configure-game-center/manage-leaderboards/)

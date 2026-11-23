@@ -163,7 +163,7 @@ for level=1,rules.LEVELS do
                 'the Well scene opens with Sela at the new well')
         end
         if level==16 then
-            check(placed.phase=='restore' and placed.choices and #placed.choices==2, 'the old harbour steps offer two replies')
+            check(placed.phase=='restore' and #placed.lines==3, 'the old harbour steps have one fixed exchange')
         end
         p.story_seen[placed.key]=true
     end
@@ -185,12 +185,7 @@ R.test_mode,R.quiet=true,false
 for level=1,rules.LEVELS do
     check(R.play_level(level-1) and R.g.level==level-1,'Play opens expedition '..level)
     R.story_tick()
-    if level==1 then   -- only the landing plays, before the first board
-        check(R.story_current and R.story_current.key=='before-01','the first Play opens with the landing')
-        while story.active() do story.next() end
-        R.story_tick()
-    end
-    check(not story.active() and not R.story_current,'Play opens no other dialogue')
+    check(not story.active() and not R.story_current,'Play opens the board without a dialogue')
     local board=R.g
     R.on_island=true
     check(R.play_level(level-1) and R.g==board and not R.on_island,'Play resumes the same expedition')
@@ -204,8 +199,8 @@ for level=1,rules.LEVELS do
     check(R.prog.level==level,'Collect opens the next expedition')
 end
 local others=0
-for key,seen in pairs(R.prog.story_seen) do if seen and key~='before-01' then others=others+1 end end
-check(R.island.count==0 and R.prog.story_seen['before-01'] and others==0,'all boards clear with only the landing heard')
+for _,seen in pairs(R.prog.story_seen) do if seen then others=others+1 end end
+check(R.island.count==0 and others==0,'all boards clear without dialogue')
 check(R.overlay==R.OV_COMPLETE and R.on_island,'the last clear shows the completion card')
 
 -- A player from the twenty-expedition script keeps their clears and meets the next opening.

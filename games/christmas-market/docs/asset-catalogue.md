@@ -6,7 +6,7 @@ The painting of Bellmere at blue hour leads into the campaign. Built-in
 ImageGen produced the [941 × 1672 source](../art/menu/source.png) from the
 [recorded prompt](../art/menu/prompt.txt). The game loads
 `data/menu/bellmere.jpg` as a centered full-bleed crop, with one static state.
-The title and subtitle are live Lilita One text. Play, Visit Market and
+The two-line title is live Lilita One text. Play, Visit Market and
 Settings use the skin's existing primary and link controls across normal,
 pressed, hover, keyboard focus and disabled states. Visit Market appears when
 the campaign has a clear and Play leads to a playable board.
@@ -819,17 +819,10 @@ The confirmed purchase introduces **Ada Pike at the Glassblower’s stall**. The
 
 The Station Kiosk introduces **Otis Bell**. The speaking and listening states share the authored bust and use the dialogue renderer’s slot mirroring. The [source sheet](../../../art/match3-residents/chart-and-clock.png) and [ImageGen prompt](../../../art/match3-residents/chart-and-clock.prompt.txt) register to `data/story/characters/otis.png` with `python3 tools/resident_portraits.py`. The right crop keeps the painted alpha on a 320 × 480 canvas. [Arrival](screenshots/otis-arrival.jpg) · [Visit](screenshots/otis-questions.jpg) · [Ordinary reply](screenshots/otis-unasked.jpg) · [Remembered reply](screenshots/otis-remembered.jpg)
 
-## Resident keepsake
+## Archived resident keepsake
 
-Pip’s red knitted mitten holds the glass button he won from Ada, with Otis’s checked tin lid underneath. The runtime picture is `data/story/scenes/pips-blue-button.jpg`. The entry for `meeting-station_kiosk-glassblower.after-85` in `lua/art.lua` connects it to the two homes. A resident’s completed closing answer reveals it there. The same illustration appears with remaining questions or in the building description. [Original sheet, prompt and export](../../../art/resident-keepsakes/README.md) · [Town visit](screenshots/resident-keepsake.jpg) · [Other home](screenshots/resident-keepsake-phone.jpg) · [Remaining questions](screenshots/resident-keepsake-choices.jpg)
+`data/story/scenes/pips-blue-button.jpg` is archived artwork from the former town question system. [Original sheet, prompt and export](../../../art/resident-keepsakes/README.md).
 
-## Unheard resident visit
-
-The Glassblower’s Stall displays a three-dot speech bubble when Ada has new dialogue. The shared town screen anchors the existing `story.bubble_shape` to the live roof position and draws the dots with the town skin. This is a live UI element. It appears after the introduction and after a newly witnessed story checkpoint, and hides during dialogue, placement and overlays. Tapping the building or bubble asks a sole remaining question directly. Multiple questions open the existing town popup. Each question is available once. After the last question, the bubble clears and a tap shows the building description. Reproduce both phone captures with `build/test/all --suite=christmas-market "shot unheard-visit"`. [480 × 900](review/resident-markers/unheard-visit-480-after.jpg) · [390 × 844](review/resident-markers/unheard-visit-390-after.jpg)
-
-Capture the question menu with the same command filtered to "shot resident-questions". [First questions](screenshots/resident-questions-480.jpg) · [Last question starts directly](screenshots/resident-questions-390.jpg)
-
-Five one-time questions share a single **Back to town** control. [480 × 900](screenshots/resident-full-menu.jpg) · [390 × 844](screenshots/resident-full-menu-phone.jpg)
 ## Guided board lesson
 
 The shared board tutorial draws a cream outline around the relevant pieces,

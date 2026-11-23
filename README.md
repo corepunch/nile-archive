@@ -6,7 +6,7 @@ One repository, one small **C11 + platform** engine, games driven by **Lua** on 
 | --- | --- | --- | --- |
 | ![](games/nile-archive/docs/screenshots/island.jpg) | **[Архив Нила / Nile Archive](games/nile-archive/README.md)** (Russian) | Hidden-object scenes painted in Ptolemaic Egypt | Restore an island estate: buildings, influence, new shores |
 | ![](games/relic-rush/docs/screenshots/square-jade-steps.jpg) | **[Relic Rush · The Lost Valley](games/relic-rush/README.md)** (English) | Square match-3 on 10 boards up to 9 × 12 with plaques and chains | Restore four island buildings, place decorations and open regions |
-| ![](games/christmas-market/docs/screenshots/market.jpg) | **[Christmas Market](games/christmas-market/README.md)** (English, prototype) | Festive square match-3 on 10 boards up to 9 × 12 | Build a snowy Christmas market with six campaign stalls, repeatable decorations and Noelle as the market keeper |
+| ![](games/christmas-market/docs/screenshots/market.jpg) | **[Christmas at Bellmere](games/christmas-market/README.md)** (English, prototype) | Festive square match-3 on 10 boards up to 9 × 12 | Build a snowy Christmas market with six campaign stalls, repeatable decorations and Noelle as the market keeper |
 | ![](games/emergency/docs/screenshots/outskirts.jpg) | **[Emergency · After the Eruption](games/emergency/README.md)** (English) | Dispatch workers, clear routes, repair supply stations and evacuate five districts | A linked rescue campaign with recruits, pet escorts and saved chapter progress |
 
 [Clayfight](https://github.com/corepunch/clayfight) is maintained separately in `~/Developer/clayfight`, with its native C simulation, arcade ROM pipeline and photo workshop.
@@ -68,7 +68,7 @@ Native builds need a C compiler and the pinned [platform](https://github.com/cor
 
 ```sh
 git submodule update --init   # Lua, once
-make              # builds Nile Archive, Relic Rush, Christmas Market and Emergency
+make              # builds Nile Archive, Relic Rush, Christmas at Bellmere and Emergency
 make run-nile     # or: make run-relic / make run-emergency
 make test         # all rule/renderer/preflight checks, 5s test budget after builds
 make test-fast    # same checks without a window/GPU

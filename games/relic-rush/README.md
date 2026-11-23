@@ -7,7 +7,8 @@ See the [device deployment guide](../../tools/xcode/README.md#deploy-to-a-connec
 
 A portrait mobile-first square match-3 / island-restoration prototype, written in C11 on the repository's shared platform engine ([`engine/`](../../engine)), the same engine that runs [Nile Archive](../nile-archive). The island is the engine's `city`; text, shapes, input, camera, saves and sound come from the engine; this folder holds the rules, the content and the look. The WebAssembly preview runs the same C code; the browser page is only a fullscreen canvas.
 
-The first launch opens at The Landing. Sela asks her brother for a bucket before the first move.
+The illustrated title screen opens on every launch. Choose Continue, then Play
+on the epoch medals screen to start The Landing on a fresh profile.
 Swap adjacent pieces, match horizontally or vertically, and clear the turquoise
 plaques within the move budget. Claim the resources to visit the island, then
 tap Build to see the next restoration. Each board uses five piece kinds and
@@ -15,14 +16,13 @@ fits inside a 9 × 12 square grid.
 
 In an Xcode Debug build for iPhone, the iOS Simulator or macOS, tap **SKIP >>**
 at the top right of the board to have the bot finish the expedition. Follow the
-usual dialogue and reward prompts. Release builds hide the button.
+usual reward prompts. Release builds hide the button.
 
-Later launches open the illustrated title screen. Continue returns to the
-campaign, and Settings opens Sound, Reduce Motion, the guide and the leaderboard.
+Continue returns to the campaign, and Settings opens Sound, Reduce Motion, the guide and the leaderboard.
 Use **Main Menu** in Settings to return to the title. See the [title screen](docs/screenshots/main-menu.jpg)
 and [phone layout](docs/screenshots/main-menu-phone.jpg).
 
-The first four expeditions guide you through swaps, Line Gems, Rainbow Gems
+The first four expeditions use text and board highlights to teach swaps, Line Gems, Rainbow Gems
 and chains. Tool tips show how to charge and use each tool when you earn it.
 See the [guided lessons](../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
 
@@ -134,7 +134,7 @@ See [UI architecture, Playrix/Candy Crush references and regression checks](docs
 
 ## Effects and motion
 
-Coloured match fragments, resource trails and cascade chimes follow each clear. During refills, each gem gives a small bounce when it comes to rest in its slot. Reduce Motion suppresses the bounce. The result screen counts the score up. The 0.7-second wipe from the island reveals the board as it assembles. If dialogue is playing, the entrance waits for it to end. The HUD lands, cells ripple out from the centre, relics drop and bounce, blockers slam on and a sheen runs across the board. Tap to skip the entrance. Reduced motion uses a short fade. See [the board entrance](../../docs/ENGINE.md#board-entrance).
+Coloured match fragments, resource trails and cascade chimes follow each clear. During refills, each gem gives a small bounce when it comes to rest in its slot. Reduce Motion suppresses the bounce. The result screen counts the score up. The 0.7-second wipe from the island reveals the board as it assembles. The HUD lands, cells ripple out from the centre, relics drop and bounce, blockers slam on and a sheen runs across the board. Tap to skip the entrance. Reduced motion uses a short fade. See [the board entrance](../../docs/ENGINE.md#board-entrance).
 
 ![Actual SDL effects demonstration](docs/screenshots/effects-reel.gif)
 
@@ -323,7 +323,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 - `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every board at least once in its seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
-- `--smoke --campaign` plays the 100 expeditions through the real result, Collect, region, placement and Play controls. Each board's goals are met before one real swap. The run taps through the landing scene, checks that no other dialogue interrupts play and ends after the completion card with all twenty purchases placed. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
+- `--smoke --campaign` plays the 100 expeditions through the real result, Collect, region, placement and Play controls. Each board's goals are met before one real swap. The run checks that play stays free of dialogue and ends after the completion card with all twenty purchases placed. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone and Android device builds, touch feel, safe areas and performance still need device QA.
 

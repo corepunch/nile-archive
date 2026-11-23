@@ -11,7 +11,7 @@ identical pieces. A board spawns five kinds. Bonus pieces replace a kind
 once its building is confirmed. Thirty matched bonus pieces fill their
 permanent slot exactly once. Spending the tool empties the slot. The
 [shared ranks and charge rules](../../../docs/MATCH3_ENGINE.md) apply to both
-Christmas Market and Relic Rush.
+Christmas at Bellmere and Relic Rush.
 
 In an Xcode Debug build for iPhone, the iOS Simulator or macOS, **SKIP >>** runs the
 reference bot through legal swaps at up to two moves per frame. It can keep
@@ -64,7 +64,7 @@ After level 100, a pending purchase can offer a replay for resources.
 ## Levels and art
 
 The [color map](market-pieces.md) pairs Cradle of Rome 2 pieces and purchase
-rewards with the Christmas Market artwork, yields and prices.
+rewards with the Christmas at Bellmere artwork, yields and prices.
 
 The [100 ASCII layouts](../lua/campaign.lua) use a maximum field of nine
 columns by twelve rows. Each carries a `tier` (levels 1–4 tutorial, then per ten levels easy, easy, normal, normal, hard, easy, normal, normal, hard, boss), checked by `python3 tools/square_boards.py christmas-market`, covered with panes by `tools/square_trim.py --fill` (plain only where the bot reaches last, so the median clear fits 24 moves on easy boards, 28 on normal, 30 on hard and 32 on bosses) and given its `moves` by `tools/tune_moves.py`. Panes cover 95% of the cells on average, and no budget passes 40 moves. Dots are ordinary cells, asterisks single targets,

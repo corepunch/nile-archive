@@ -7,9 +7,11 @@ Screen.__index = Screen
 function M.new(copy, art, skin, actions)
     local title = {gap=0}
     for _, line in ipairs(copy.title) do
-        title[#title + 1] = N.label {text=line, em=78, height=71, text_style="menu_title"}
+        title[#title + 1] = N.label {text=line, em=copy.title_em or 78, height=71, text_style="menu_title"}
     end
-    title[#title + 1] = N.label {text=copy.subtitle, em=22, height=39, text_style="menu_subtitle"}
+    if copy.subtitle then
+        title[#title + 1] = N.label {text=copy.subtitle, em=copy.subtitle_em or 22, height=39, text_style="menu_subtitle"}
+    end
     local controls = ui.form(N.column {gap=12,
         N.button {id="continue",text=copy.play,height=66,em=31},
         N.row {gap=12,

@@ -239,38 +239,18 @@ else
         if event.upgrade then upgrade_site[event.id] = event.upgrade.building end
     end
     for i, b in ipairs(require("story_content")) do
-        local choices = {}
-        for k, c in ipairs(b.choices or b.followups or {}) do
-            choices[k] = {key = c.key, building = c.building, source = c.source, label = c.label, lines = lines_of(c.lines)}
-        end
         -- As journey.next schedules it: a scene after a wonder level waits for
         -- that level's story building, unless it plays on the clear itself.
-        local waits = b.phase ~= "meeting" and b.phase ~= "visit" and b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]
+        local waits = b.phase ~= "before" and not (b.phase == "after" and journey.clear_before_result) and story_key[b.level]
         if b.phase == "placed" then waits = b.building
         elseif b.phase == "upgrade" then waits = assert(upgrade_site[b.event]) end
         local replies = {}
         for k, r in ipairs(b.replies or {}) do
-            replies[k] = {building = r.building, index = r.index, introduction = r.introduction, when = r.when, lines = lines_of({r.line})}
+            replies[k] = {building = r.building, index = r.index, introduction = r.introduction, lines = lines_of({r.line})}
         end
-        local recall
-        local endings
-        if b.recall then
-            recall = {}
-            for history, lines in pairs(b.recall.exchanges) do recall[history] = lines_of(lines) end
-            if b.recall.followups then
-                endings = {}
-                for k, answer in ipairs(b.recall.followups) do
-                    local alternate = {table.unpack(answer.lines)}
-                    for _, reply in ipairs(answer.replies or {}) do alternate[reply.index] = reply.line end
-                    endings[k] = {building = answer.building, label = answer.label, lines = lines_of(answer.lines),
-                                  alternate = answer.replies and lines_of(alternate)}
-                end
-            end
-        end
-        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits], replies = b.replies and replies, resident = b.resident,
-                        recall = recall, catchup = b.recall and b.recall.lines and lines_of(b.recall.lines), endings = endings,
-                        meeting_sites = b.sites, visit_site = b.phase == "visit" and b.building or nil, checkpoint = b.checkpoint, prompt = b.prompt, waits_for = waits or nil,
-                        lines = lines_of(b.lines), choices = #choices > 0 and choices or nil}
+        out.beats[i] = {key = b.key, phase = b.phase, level = b.level or purchase_level[waits],
+                        replies = b.replies and replies, resident = b.resident, waits_for = waits or nil,
+                        lines = lines_of(b.lines)}
     end
 end
 

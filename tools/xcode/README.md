@@ -37,7 +37,7 @@ make ios-emergency DEVICE=<UDID> TEAM=<development-team-id>
 
 `tools/xcode/deploy.py` queries `xcrun devicectl` using JSON, excluding
 unavailable devices and simulators. It chooses the only available device in
-the game's target family. Christmas Market and Relic Rush target iPhone.
+the game's target family. Christmas at Bellmere and Relic Rush target iPhone.
 Nile Archive and Emergency target iPad. Missing or ambiguous
 selection stops before building and lists the matching names. `DEVICE` accepts
 an exact device name, hardware UDID, CoreDevice identifier or ECID.
@@ -58,7 +58,7 @@ never edits the committed signing configuration or bundle identifier.
 runs only after a successful build, and launch only after a successful install.
 The app's actual built Info.plist supplies its bundle identifier.
 
-Relic Rush and Christmas Market show **SKIP >>** at the upper right of an active
+Relic Rush and Christmas at Bellmere show **SKIP >>** at the upper right of an active
 match-3 board in Xcode Debug builds on iPhone, the iOS Simulator and macOS.
 `make ios GAME=relic-rush CONFIGURATION=Debug` builds and installs it on a connected
 iPhone. Release builds hide the button. The native test runner enables it with

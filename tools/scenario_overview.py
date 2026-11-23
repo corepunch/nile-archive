@@ -91,7 +91,6 @@ class Page:
                           for c in data['cast']}
         self.steps = {s['key']: s for s in data.get('ladder', [])}
         self.residents = {b['key']: b['resident'] for b in data['beats'] if b.get('resident')}
-        self.questions = {c['key']: c['label'] for b in data['beats'] if b.get('visit_site') for c in b['choices']}
         self.frames = data.get('frames', {})   # atlas frames the dump named
         self.atlases, self.icons = {}, {}
 
@@ -137,11 +136,6 @@ class Page:
         if not label:   # a scene after a story building's level waits until that building stands
             step = self.steps.get(b.get('waits_for'))
             label = f'After the {step["name"]} is placed' if step else PHASES.get(b['phase'], b['phase'])
-        if b.get('meeting_sites'):
-            names = [self.steps[site]['name'] for site in b['meeting_sites']]
-            label = f"Once the residents of the {names[0]} and the {names[1]} have both moved in"
-        if b.get('visit_site'):
-            label = f"Tap the {self.steps[b['visit_site']]['name']} after {b['checkpoint']}"
         if b.get('phase') == 'upgrade':
             label = 'When the building upgrade is earned'
         body = self.lines(b.get('lines', []))
@@ -151,34 +145,9 @@ class Page:
             if introduction := reply.get('introduction'):
                 resident = self.cast[self.residents[introduction]]['name']
                 condition += f" and you have met {resident}"
-            if when := reply.get('when'):
-                condition += f" and you asked “{self.questions[when]}”" if when in self.questions else f" and you saw {when}"
             body += f'<p class="pick">{esc(condition)}, line {reply["index"]} becomes</p>{self.lines(reply["lines"])}'
-        for history, lines in b.get('recall', {}).items():
-            if history in ('both', 'neither'):
-                heard = 'both sides' if history == 'both' else 'neither side'
-            else:
-                resident = self.cast[self.residents['placed-' + history]]['name']
-                heard = f'only {resident}’s side'
-            body += f'<p class="pick">After the pair meets, if you heard {esc(heard)}</p>{self.lines(lines)}'
-        if b.get('catchup'):
-            body += '<p class="pick">Catch up in town</p>' + self.lines(b['catchup'])
-        for answer in b.get('endings', []):
-            name = self.steps[answer['building']]['name']
-            body += f'<p class="pick">{esc(name)} · {esc(answer["label"])}</p>{self.lines(answer["lines"])}'
-            if answer.get('alternate'):
-                body += '<p class="pick">After hearing the other resident</p>' + self.lines(answer['alternate'])
         if b.get('note'):
             body = f'<p class="note">Journal: {esc(b["note"])}</p>' + body
-        if b.get('choices'):
-            opts = []
-            for c in b['choices']:
-                place = self.steps[c['building']]['name'] if c.get('building') else 'Choice'
-                if c.get('source'):
-                    place += f' after hearing {c["source"]}’s account'
-                opts.append(f'<div class="choice"><div class="pick">{esc(place)}: {esc(c["label"])}</div>{self.lines(c["lines"])}</div>')
-            prompt = 'Ask at either building after the meeting' if b.get('meeting_sites') else b.get('prompt') or 'The player chooses'
-            body += f'<div class="prompt">{esc(prompt)}</div><div class="choices">{"".join(opts)}</div>'
         return (f'<details class="beat" open><summary><span class="phase">{esc(label)}</span>'
                 f'<code>{esc(b["key"])}</code><span class="count">{len(b.get("lines", []))} lines</span></summary>{body}</details>')
 
@@ -189,7 +158,7 @@ class Page:
     def cast_strip(self, speaking_only=False):
         spoken = {}
         for b in self.d['beats']:
-            for line in b.get('lines', []) + [l for c in b.get('choices') or [] for l in c['lines']]:
+            for line in b.get('lines', []):
                 spoken[line.get('speaker')] = spoken.get(line.get('speaker'), 0) + 1
         cards = ''.join(f'<figure class="person">{self.avatar(c["id"], "portrait")}<figcaption><b>{esc(c["name"])}</b>'
                         f'<span>{esc(c.get("role"))}</span><small>{spoken.get(c["id"], 0)} lines</small></figcaption></figure>'
@@ -427,8 +396,7 @@ h3{margin:0 0 4px;font-size:19px;display:flex;gap:10px;align-items:baseline}.num
 .who{font-weight:700;font-size:13px}.mode{font-weight:400;color:var(--muted)}.said{background:var(--bubble);border-radius:4px 12px 12px 12px;padding:6px 10px}
 .thought .said{font-style:italic}.shout .said{font-weight:700}
 .note{background:var(--chip);border-left:3px solid var(--accent);padding:6px 10px;border-radius:6px}
-.prompt{font-weight:700;margin-top:10px}.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
-.choice{border:1px dashed var(--line);border-radius:10px;padding:6px 10px}.pick{color:var(--accent);font-weight:700}
+.pick{color:var(--accent);font-weight:700}
 .ico{width:40px;height:40px;flex:none;display:inline-block;background:center/contain no-repeat}
 .narration{color:var(--muted);font-style:italic;margin:8px 0 8px 48px}
 .epoch{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start;margin-bottom:24px}

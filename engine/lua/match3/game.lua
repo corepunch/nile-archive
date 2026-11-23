@@ -105,7 +105,7 @@ function G.state()
         intro = nil,
 
         -- overlays and board phases
-        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_STORY_CHOICE = 11, OV_EPOCH = 12,
+        OV_NONE = 0, OV_GUIDE = 1, OV_PAUSE = 2, OV_RESULT = 3, OV_FAILED = 4, OV_WONDER = 5, OV_FINALE = 6, OV_ZONE = 7, OV_SHOP = 8, OV_COMPLETE = 9, OV_CONFIRM = 10, OV_EPOCH = 12,
         PAL_GOLD = "gold", PAL_CREAM = "cream", PAL_GREEN = "green", PAL_WHITE = "white", PAL_SHORT = "short",   -- text styles in skin.lua
 
         backdrop = nil, scenes = {}, relics = {}, glow = nil,
@@ -302,13 +302,9 @@ function G.bind(R, over)
     local W = G.config(over)
     R.words = W
     local campaign_dialogue = W.campaign_dialogue
-    -- story_intro: only the opening scene plays, before the first board.
-    local intro_only = not campaign_dialogue and W.story_intro
-    local scripted = campaign_dialogue or intro_only
     -- The player can turn the story off in Settings (R.story).
     local function dialogue_on() return campaign_dialogue and R.story ~= false end
     R.dialogue_on = dialogue_on
-    local preview_visits = app.arg("shot") and app.arg("visit-game")
     local rules = require("rules")
     local island = require("island")
     local journey = require("journey")
@@ -413,7 +409,7 @@ function G.bind(R, over)
 
     ------------------------------------------------------------ dialogs
 
-    local shop, choices
+    local shop
 
     function R.open_dialog(settled)
         local old = R.dialog
@@ -434,7 +430,6 @@ function G.bind(R, over)
     -- Has the entrance, parts included, finished?
     function R.dialog_settled()
         if R.overlay == R.OV_SHOP then return shop:ready() end
-        if R.overlay == R.OV_STORY_CHOICE then return choices:ready() end
         local d = R.dialog
         return R.modal_for == R.overlay and d ~= nil and d.entry >= 1 and not (d.after_exit or d.closed)
             and (d.tl == nil or d.tl:is_done())
@@ -649,7 +644,7 @@ function G.bind(R, over)
 
     local privacy_link = W.app.privacy_url and app.has_https_opener()
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard,
-        W.corner_close, W.menu.label, privacy_link, scripted)
+        W.corner_close, W.menu.label, privacy_link, campaign_dialogue)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         assert(pause_form:push(R))
@@ -799,7 +794,6 @@ function G.bind(R, over)
         end
         if R.overlay == R.OV_NONE then return end
         if R.overlay == R.OV_SHOP then R.draw_catalogue(dt); return end
-        if R.overlay == R.OV_STORY_CHOICE then R.draw_story_choice(dt); return end
         local d = R.dialog
         local inp = input.get()
         local covered = R.leaderboard_active()
@@ -1016,25 +1010,6 @@ function G.bind(R, over)
         return false
     end
 
-    R.visit_pictures = {}
-    local function visit_picture(visit)
-        return R.visit_pictures[journey.visit_keepsake(R.prog, visit)]
-    end
-
-    local visited_item
-    local function show_visit_keepsake(visit)
-        if not R.on_island or not visit_picture(visit) then return end
-        local kind = island.kinds[visit.building]
-        if visited_item and visited_item < R.island.count and R.island.items[visited_item + 1].type == kind then
-            R.town:say(visited_item)
-            return
-        end
-        -- The answer may have resumed from a save without a tap in this session.
-        for i = 1, R.island.count do
-            if R.island.items[i].type == kind then R.town:say(i - 1); return end
-        end
-    end
-
     local levels_per_epoch = W.epochs and LEVELS // #W.epochs
 
     function R.completed_epochs()
@@ -1117,12 +1092,6 @@ function G.bind(R, over)
     end
 
     function R.town_setup()
-        visited_item = nil
-        local function visit_for_kind(kind)
-            if dialogue_on() or preview_visits then
-                return journey.visit(R.prog, island.buildings[kind + 1].key)
-            end
-        end
         R.town = town.new(R.island, require("town_config"), {
             skin = skin,
             wallet = function() return R.prog.wallet end,
@@ -1161,19 +1130,7 @@ function G.bind(R, over)
             end,
             play = R.play_next,
             play_label = function() return can_play() and R.prog.level + 1 or nil end,
-            about = function(item)
-                local kind = R.island.items[item + 1].type
-                return R.building_words(item), visit_picture(visit_for_kind(kind))
-            end,
-            unheard_visit = function(kind)
-                return journey.unheard_visit(R.prog, visit_for_kind(kind))
-            end,
-            tap_building = function(item)
-                local visit = visit_for_kind(R.island.items[item + 1].type)
-                if not visit then return false end
-                visited_item = item
-                return R.open_story_choice(visit)
-            end,
+            about = R.building_words,
             zone_ready = W.epochs and function() return false end,
             zone = not W.epochs and function(z)
                 R.zone_card, R.overlay = z, R.OV_ZONE
@@ -1221,97 +1178,14 @@ function G.bind(R, over)
         R.story_current = beat
         R.story_preview = preview
         R.story_before_result = before_result
-        local lines, recall = R.story_lines(beat)
-        R.playing_recall = recall
-        for _, line in ipairs(lines) do story.add(line) end
-    end
-
-    choices = ui.modals(skin)
-
-    local function answer_beat(answer, phase, key)
-        return {key=answer.key or key, phase=phase, lines=answer.lines, replies=answer.replies}
-    end
-
-    local function choice_reply(beat, index, preview)
-        local answer = beat.choices[index]
-        if beat.phase == "visit" and not preview then
-            R.prog.pending_answer = answer
-            R.save_progress()
-        end
-        R.queue_story(answer_beat(answer, beat.phase, beat.key), preview)
-    end
-
-    function R.open_story_choice(beat, preview, entry)
-        local continuing_visit = entry == "continue"
-        local visit = beat.phase == "visit" and beat
-        if visit then beat = journey.visit_menu(R.prog, beat) end
-        if #beat.choices == 0 then return false end
-        if visit and not continuing_visit and #beat.choices == 1 then
-            choice_reply(beat, 1, preview)
-            return true
-        end
-        local children = {match3.popup_header(beat.prompt)}
-        local picture = visit and visit_picture(visit)
-        if picture then children[#children + 1] = N.image {id="keepsake", image=picture, height=152} end
-        for index, option in ipairs(beat.choices) do
-            children[#children + 1] = N.button {id=tostring(index), text=option.label, height=54, em=visit and 20 or nil}
-        end
-        if visit then
-            children[#children + 1] = N.button {id="cancel", text="Back to town", height=44, role="link", em=18}
-        end
-        R.choice_form = ui.form{root=N.column {panel=true,children=children}}
-        if choices:active() then choices:close(nil, nil, true) end
-        assert(choices:open(beat.key, R.choice_form, {}, {width=416, close_on_background=not not visit}))
-        R.story_choice_beat, R.story_choice_preview = beat, preview
-        R.overlay = R.OV_STORY_CHOICE
-        return true
-    end
-
-    function R.choose_story_option(index)
-        local beat, preview = R.story_choice_beat, R.story_choice_preview
-        if not beat or not beat.choices[index] then return false end
-        if choices:active() then choices:close(nil, nil, true) end
-        R.story_choice_beat, R.story_choice_preview = nil, nil
-        R.overlay = R.OV_NONE
-        if not preview and beat.phase ~= "visit" then
-            R.prog.story_choices = R.prog.story_choices or {}
-            R.prog.story_choices[beat.key] = index
-            R.save_progress()
-        end
-        choice_reply(beat, index, preview)
-        return true
-    end
-
-    function R.draw_story_choice(dt)
-        local event = choices:draw(dt, {reduced_motion=R.reduced_motion})
-        if not event then return end
-        if event.id == "cancel" and R.story_choice_beat.phase == "visit" then
-            choices:close(nil, function()
-                R.story_choice_beat, R.story_choice_preview = nil, nil
-                R.overlay = R.OV_NONE
-            end)
-        elseif event.kind == "click" then
-            choices:close(nil, function() R.choose_story_option(tonumber(event.id)) end)
-        end
+        for _, line in ipairs(R.story_lines(beat)) do story.add(line) end
     end
 
     function R.next_story(before_level)
-        if intro_only then
-            local intro = journey.beats[1]
-            if R.story ~= false and before_level == 0 and R.prog.level == 0 and intro.phase == "before"
-                and not R.prog.story_seen[intro.key] then return intro end
-            return
-        end
         if not dialogue_on() then return end
         if before_level == nil then
-            local pending = R.prog.pending_answer
-            if pending then return answer_beat(pending, "visit") end
             local arrival = journey.next_arrival(R.prog, owns_building)
             if arrival then return arrival end
-            local meeting = journey.next_meeting(R.prog, owns_building)
-            if meeting then return meeting end
-            local recall = journey.next_recall(R.prog, owns_building)
-            if recall then return recall end
         end
         return journey.next(R.prog, function(index)
             return island.owned(R.island, wonder_kind(island, index + 1)) > 0
@@ -1322,29 +1196,19 @@ function G.bind(R, over)
     function R.story_tick()
         if R.story_current then
             if story.active() then return end
-            local b, recall = R.story_current, R.playing_recall
-            R.story_current, R.playing_recall = nil, nil
+            local b = R.story_current
+            R.story_current = nil
             if R.story_preview then R.story_preview = false; return end
             if R.story_before_result then
                 R.story_before_result = false
                 R.g.story_clear = b.key
-                R.g.story_recall = recall
                 return
             end
-            if recall then R.prog.story_seen[recall] = true end
-            if b.choices then R.open_story_choice(b); return end
-            if not journey.acknowledge(R.prog, b) then return end
+            journey.acknowledge(R.prog, b)
             R.save_progress()
-            if b.phase == "visit" then
-                local visit = journey.visit_after_answer(R.prog, b.key)
-                if visit then
-                    if R.open_story_choice(visit, false, "continue") then return end
-                    show_visit_keepsake(visit)
-                end
-            end
             if b.phase ~= "before" and b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
-        if not (dialogue_on() or intro_only and R.story ~= false) or R.quiet or story.active() then return end
+        if not dialogue_on() or R.quiet or story.active() then return end
         if R.overlay == R.OV_RESULT and R.g and dialogue_on() then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
@@ -1357,15 +1221,12 @@ function G.bind(R, over)
             R.queue_story({key="recap", lines=journey.recap(R.prog.level)})
             return
         end
-        local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
+        local before = not R.on_island and R.g and R.g.level or nil
         local b = R.next_story(before)
         if not b and R.on_island and dialogue_on() then b = journey.next_placement(R.prog) end
         if not b and R.on_island and dialogue_on() and R.upgrade_done then b = journey.next_upgrade(R.prog, R.upgrade_done) end
-        if b and (R.on_island or b.phase == "before") then
-            local reply = R.prog.story_choices and R.prog.story_choices[b.key]
-            if reply then choice_reply(b, reply)
-            else R.queue_story(b) end
-        end
+        if b and b.phase == "before" and not R.on_island and (R.phase ~= R.PH_IDLE or R.mission_banner) then return end
+        if b and (R.on_island or b.phase == "before") then R.queue_story(b) end
     end
 
     ------------------------------------------------------------- flow
@@ -1382,12 +1243,12 @@ function G.bind(R, over)
             R.prog.wallet[rules.CLEARED] = R.prog.level
         end
         R.island:serialize(s)
-        if scripted then
+        if campaign_dialogue then
             story.serialize(s)
             journey.serialize(s, R.prog)
         end
         if save.is_reading(s) then
-            if scripted then journey.migrate(R.prog, version) end
+            if campaign_dialogue then journey.migrate(R.prog, version) end
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
         if R.serialize_campaign then R.serialize_campaign(s) end
@@ -1406,7 +1267,7 @@ function G.bind(R, over)
     function R.serialize_settings(s)
         R.sound = s:int("sound", R.sound and 1 or 0) ~= 0
         R.reduced_motion = s:int("reduce_motion", R.reduced_motion and 1 or 0) ~= 0
-        R.story = s:int("story", R.story ~= false and 1 or 0) ~= 0
+        if campaign_dialogue then R.story = s:int("story", R.story ~= false and 1 or 0) ~= 0 end
     end
 
     local function progress_slot()
@@ -1482,7 +1343,6 @@ function G.bind(R, over)
         local paid, first = rules.progress_reward(R.prog, R.g, R.wonders, R.island)
         if not paid then return end
         if first and R.g.story_clear then R.prog.story_seen[R.g.story_clear] = true end
-        if first and R.g.story_recall then R.prog.story_seen[R.g.story_recall] = true end
         if not app.arg("debug-walkthrough") then R.submit_leaderboard_progress() end
         local completed = R.sync_epoch_regions()
         R.save_progress()
@@ -1812,17 +1672,12 @@ function G.app(R)
         R.font = R.skin:font("lilita")
         local art = require("art")
         local dialog = app.arg("dialog")
-        if W.campaign_dialogue or W.story_intro or app.arg("story-beat") or app.arg("story-choice") or app.arg("visit-game")
+        if W.campaign_dialogue or app.arg("story-beat")
             or dialog == "intro" or dialog == "adrian" or dialog == "mara" or dialog == "tomas" then
             story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
                                           edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
                                           portrait_height = .34, centered = true, inward = true,
                                           edge_to_edge = true, skip = "SKIP"})
-            for ending, path in pairs(art.resident_keepsakes or {}) do
-                local picture = texture.load(path)
-                assert(picture.tex, "missing resident keepsake: " .. path)
-                R.visit_pictures[ending] = picture
-            end
         end
         local board_skin = art.skin()
         for _, action in ipairs{"action-build", "action-play", "action-pause"} do
@@ -1870,7 +1725,7 @@ function G.app(R)
             save.read("settings", R.serialize_settings)
             sfx.enable(R.sound)
         end
-        -- Seed the town while the player starts on the board.
+        -- Seed the town before the player enters the campaign.
         if island.new_game and R.prog.level == 0 and R.island.count == 0 then island.new_game(R.island, app.clock()) end
         local preview = debug.direct_preview() or app.arg("debug-walkthrough")
         if R.tutorial then R.tutorial.enabled = not R.test_mode and not preview end
@@ -1878,8 +1733,7 @@ function G.app(R)
         if not app.arg("smoke") and not app.arg("debug-walkthrough") then
             R.submit_leaderboard_progress()
         end
-        R.story_current, R.story_preview, R.story_before_result, R.playing_recall = nil, false, false, nil
-        R.story_choice_beat, R.story_choice_preview = nil, nil
+        R.story_current, R.story_preview, R.story_before_result = nil, false, false
         R.layout()
         R.start_level()
         if R.prog.level >= LEVELS then
@@ -1893,7 +1747,7 @@ function G.app(R)
         if R.resume_completed then R.resume_completed() end
         if R.overlay == R.OV_NONE and W.epochs then R.show_epoch_award(R.completed_epochs()) end
         R.debug_screens()
-        if app.arg("main-menu") or (loaded or W.menu.first_launch) and not R.test_mode and not preview then
+        if app.arg("main-menu") or not R.test_mode and not preview then
             R.open_menu()
             if app.arg("dialog") == "pause" then R.overlay = R.OV_PAUSE end
         end

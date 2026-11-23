@@ -1,4 +1,4 @@
--- Christmas Market · Winter Wishes — square-grid match-3 winter wishes that build a Christmas market.
+-- Christmas at Bellmere — square-grid match-3 winter wishes that build a Christmas market.
 --
 -- The game is data: lua/game_config.lua (words), lua/town_config.lua (the town), the
 -- campaign, story and building tables, skin.lua, art.lua and the PNGs. The

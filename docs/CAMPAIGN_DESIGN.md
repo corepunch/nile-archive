@@ -1,6 +1,6 @@
 # Designing a match-3 campaign: flow, balance, upgrades and cast
 
-How Relic Rush and Christmas Market are put together, on Cradle of Rome 2 as the backbone. Read it before changing a campaign's levels, purchases, prices or upgrades. Board layout is in [LEVEL_DESIGN.md](LEVEL_DESIGN.md).
+How Relic Rush and Christmas at Bellmere are put together, on Cradle of Rome 2 as the backbone. Read it before changing a campaign's levels, purchases, prices or upgrades. Board layout is in [LEVEL_DESIGN.md](LEVEL_DESIGN.md).
 
 ## The backbone: Cradle of Rome 2
 
@@ -9,16 +9,16 @@ Cradle of Rome 2 (GameTop Windows edition, data in `reference/cradle-of-rome-2/r
 | Loop | Rome 2 | Our games |
 | --- | --- | --- |
 | **The board** | Clear every marble tablet before the time runs out. Matched coins, food and materials go to the wallet. | Clear every plaque or pane within a move budget. Matched pieces pay Coins/Tokens, Food/Treats and Supplies/Materials. |
-| **The purchase** | Twenty buildings in five epochs of four. Players can choose any affordable project in the current epoch. Each adds a richer piece or one of eight tools. | Four projects per epoch or Advent. Relic Rush offers any affordable project in the active epoch. Christmas Market opens projects at their scheduled clears. |
+| **The purchase** | Twenty buildings in five epochs of four. Players can choose any affordable project in the current epoch. Each adds a richer piece or one of eight tools. | Four projects per epoch or Advent. Relic Rush offers any affordable project in the active epoch. Christmas at Bellmere opens projects at their scheduled clears. |
 | **The citizen** | Sixteen buildings each arm one optional feat. Meeting it brings a citizen, upgrades the building and adds income every level or makes its tool come more often. | The same sixteen feats upgrade the building through the character who runs it (see [Upgrades](#upgrades-romes-citizens-kept-by-the-cast-we-know)). |
 
 Both games count moves. The campaign advances through board clears and construction, with short instructions on the board and project card.
 
 ## Game flow
 
-The first launch starts on level 1. After collecting the opening reward, the
-player visits the town with resources to spend. Later launches open the
-[main menu](PORTRAIT_GAMES.md#first-launch-and-main-menu).
+Every launch opens the [main menu](PORTRAIT_GAMES.md#first-launch-and-main-menu).
+A new player starts level 1 from there, then visits the town with resources
+from the opening reward.
 
 The player's minute-to-minute loop:
 
@@ -60,7 +60,7 @@ The move fit uses 40 starts per board with the pieces and tools earned by that l
 
 Line gems and rainbow gems are why the boards can be covered: a line gem sweeps a whole row or column of plaques, so a fully covered board takes the bot 20 to 34 moves where it took about 110 before the gems. When the rules change what a move clears, fill and trim again before fitting budgets and prices.
 
-A 12-move median gets 23 moves in Relic Rush and 15 in Christmas Market. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas Market move budgets](../games/christmas-market/docs/level-moves.md)
+A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas at Bellmere move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 
@@ -72,7 +72,7 @@ A 12-move median gets 23 moves in Relic Rush and 15 in Christmas Market. Slow ru
 
 **What one board pays.** Measured with the current boards (bot, mean per won board, Coins/Tokens · Food/Treats · Supplies/Materials):
 
-| Levels | Relic Rush | Christmas Market |
+| Levels | Relic Rush | Christmas at Bellmere |
 | --- | --- | --- |
 | 1–20 | 360 · 135 · 121 | 311 · 114 · 91 |
 | 21–40 | 202 · 287 · 252 | 315 · 174 · 256 |
@@ -92,7 +92,7 @@ We keep the feats, the upgrades and the perks, and give each upgrade to **the ch
 - **The perk is shown.** The building's card shows the feat while it is armed and the upgrade with its perk once met, as resource indicators; the income is part of every win's total.
 - **Shared runtime.** Both games run Rome's If/Then events on `engine/lua/match3/user_events.lua`; each game supplies its data in `lua/user_events.lua` ([engine notes](MATCH3_ENGINE.md)).
 
-| # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas Market upgrade (keeper) |
+| # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas at Bellmere upgrade (keeper) |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Well (`man_03`) | 245 Food / 240 Treats in one level | +15 every win | Spring well: a second rope and pulley (Oren) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
 | 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Oren) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
@@ -111,12 +111,12 @@ We keep the feats, the upgrades and the perks, and give each upgrade to **the ch
 | 15 | Theatre (`man_15`) | 990 Coins / 1170 Tokens in one level | +200 / +235 every win | Relic museum: a reading room open to all (Sela) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
 | 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Temple of the Sun: the keepers' watch roster (Oren) | Christmas tree: a star for the top (Theo) |
 
-Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas Market.
+Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas at Bellmere.
 
 ## Project copy
 
-Describe what each building does in ordinary language. Show a separate name and icon for its board reward. In Christmas Market, the same portrait can appear on related projects.
+Describe what each building does in ordinary language. Show a separate name and icon for its board reward. In Christmas at Bellmere, the same portrait can appear on related projects.
 
 ## Story
 
-Scenes stay small and never steer construction. Christmas Market plays an opening, a short scene when each stall is placed (someone starts using it), and a scene every five boards of people going about Christmas (`games/christmas-market/docs/story.md`). Relic Rush plays only its opening (`story_intro`); the rest of its script is archived. **Settings → Story** turns scenes off; turning them back on continues from the current board without replaying what was missed (`journey.skip_backlog`).
+Scenes stay small and never steer construction. In Christmas at Bellmere, Noelle explains the resource loop on the first board. Characters react when each stall is placed and talk about Christmas between some boards. Tap through each scene. **Settings → Story** controls playback and resumes from current progress. Relic Rush teaches the game through board highlights and text hints.

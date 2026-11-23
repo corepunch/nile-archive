@@ -1,6 +1,6 @@
-# Relic Rush and Christmas Market: one game, two skins
+# Relic Rush and Christmas at Bellmere: one game, two skins
 
-Relic Rush and Christmas Market share the portrait puzzle and city engine.
+Relic Rush and Christmas at Bellmere share the portrait puzzle and city engine.
 Both match three in a line and spawn five kinds on each board. Board
 presentation comes from Lua settings, level data and the skin's PNGs.
 
@@ -30,7 +30,7 @@ Each game's `lua/` supplies:
   sheets) and the
   parts of `screens.lua` that are art: the results card, guide rows and icons,
   wallet capsule icons.
-- **Tests:** `smoke.lua` and Christmas Market's `campaign_smoke.lua`, keyed
+- **Tests:** `smoke.lua` and Christmas at Bellmere's `campaign_smoke.lua`, keyed
   to each game's content.
 
 Words live in `lua/game_config.lua`, a module returning one table, merged over
@@ -48,7 +48,7 @@ plus the art hooks `R.wallet_icons()`, `R.town_middle_icon(at)` and `R.cast`.
 
 Games with several currencies supply `R.currency_capsules(balance)` and
 `R.currency_prices(cost)`. A capsule's `id` is the name `capsules.show` in
-`game_config.lua` uses to place it in the wallet row. Relic Rush and Christmas Market supply price entries
+`game_config.lua` uses to place it in the wallet row. Relic Rush and Christmas at Bellmere supply price entries
 with a stable ID, name, icon and amount. The shared town and board wallet
 targets the appropriate capsule when a match earns a resource.
 `R.board_context(preview)` selects a match palette variant from the game state.
@@ -64,101 +64,28 @@ dialogue. Cast art faces right and the engine mirrors the right slot.
 
 ## Campaign progression and archived dialogue previews
 
-Relic Rush and Christmas Market advance through board clears and confirmed construction.
-Set "campaign_dialogue" in the game configuration to enable runtime scenes. Both games disable it.
-Explicit preview flags below still open archived dialogue for development.
+Relic Rush and Christmas at Bellmere advance through board clears and confirmed construction.
+Christmas at Bellmere plays tap-through scenes. Noelle introduces the resource loop on the first board, after
+the entrance animation and before the first move. Relic Rush uses board hints for its tutorial.
 
-A journey can show first-clear dialogue before Results with `clear_before_result`
-and schedule a separate `restore` scene after placement. A beat with choices
-uses the shared form and modal stack. The selection is saved before the reply
-plays, and the scene is acknowledged after the reply finishes. Use
-`--story-choice restore-16` to preview the Relic Rush prompt.
+The journey can play first-clear dialogue before Results with `clear_before_result` and
+schedule a separate scene after a purchase. Archived Relic Rush scenes can be previewed
+with `--story-beat KEY`, optionally with `--story-line N`. Use `--level 1 --story-beat before-01`
+to preview the Christmas at Bellmere opening on its board.
 
-A game can play a short board-specific scene before dialogue and
-Results. `R.clear_scene()` returns the active scene and `R.draw_clear_scene(scene, inp)`
-draws it. The game owns first-clear eligibility, timing, and any skip input.
-Relic Rush uses this for the light on board 3 and Ines's reply on board 30.
-
-Results keep the board HUD in the blurred background so the card title and
-actions have a clear foreground.
-
-### Resident visits and conditional dialogue
-
-The [resident story plan](RESIDENT_STORIES.md) traces both arcs and the visit controls. Each game's authoring source is the **Town dialogue** section in its `docs/story.md`.
-Run its `tools/prepare_story.py` to compile the script into `lua/story_content.lua`.
-The following headers come from Lio and Nera's visits, callbacks and meeting.
-
-| Header | What it controls |
-| --- | --- |
-| `**Placed aviary introduces Lio after-81**` | The invitation and the owned building unlock the introduction. Finishing the introduction unlocks visits. |
-| `**Visit aviary after-85**` | A tap offers the latest visit whose checkpoint the player has witnessed. The first visit uses `placed-aviary`. |
-| `**Ask personal \| Does he copy you too?**` | The following lines answer that question. Each visit has a personal and a story question. |
-| `**With aviary after-91 2**` | The following line replaces line 2 when the aviary stands. If a resident speaks, the compiler also requires their introduction. |
-| `**If asked after-85 personal**` | Within that replacement, use the following reply if the player heard this particular answer at this building. |
-| `**If seen after-85**` | Within a replacement, use the following reply if the player witnessed this earlier campaign scene. |
-| `**Meeting map_room aviary**` | A one-time town conversation between the residents of these two buildings. Both must have finished their introductions. |
-| `**If asked map_room after-67 personal 2**` | Replace line 2 of the meeting if the player heard Nera's personal answer at this checkpoint. Either resident can deliver the changed line. |
-| `**Ask at aviary \| Did your sister like Nera's sketch?**` | After the meeting, add this question to Lio's visits. Put the answer below it, and give the other resident their own `Ask at` block. |
-| `**Ask at map_room after aviary \| What about Lio's ear?**` | Once the player hears Lio's account of this meeting, Mara can bring it up with Nera. |
-| `**Recall after-92**` | At the end of a meeting's script, name a later level where the pair speak together again. The exchange follows that level's usual lines when their meeting has finished and both homes stand. |
-| `**Heard aviary**` | Within a recall, write four short exchanges. Use each building key for its resident’s side alone, plus `neither` and `both`. Hearing the resident's original account or their follow-up counts. |
-| `**Catch up in town**` | After the four histories, give the pair a short exchange that also works after the finale. It plays once if the level scene finished before the pair met or an older save lacks a record of the exchange. |
-| `**Ask at aviary \| Where did your sketch of Nera go?**` | After the catch-up text, give each resident one closing question. Finishing the shared exchange at the level or in town unlocks both questions across all later visit stages. |
-| `**If heard map_room**` | Inside a closing question, replace its exchange if the other resident has already answered theirs. Keep the same speaker sequence. Both the visitor’s question and the resident’s answer can acknowledge what was said. |
-
-Several lines in a scene can each have a `With` block. Within one block, write the ordinary
-building reply first, then the conditional replies in priority order. The first satisfied
-condition wins. If none match, the resident gives the ordinary reply. If the building or
-introduction is missing, the original campaign line plays. The compiler checks line numbers,
-speakers, duplicate conditions and references to earlier scenes and questions.
-
-The journey reads the town's ownership and the player's saved story history when a scene
-starts. Resolving lines never changes either. Finishing a visit answer or pressing Skip
-records its stable key. The game then checks the current questions at that answer’s building,
-including after a saved answer resumes. If any remain, the player can pick one or return to town.
-The last answer ends the visit. The roof bubble and future dialogue both consult that record.
-Question wording and display order can change independently of the key. Building, checkpoint
-and topic identifiers are part of the save format. The original one-answer visit key still
-credits the story question in older saves.
-
-Write the meeting as a complete exchange that works when the player has visited neither
-resident. Choose an earlier visit for a memory the player can discover before the second
-resident arrives. The listed order of the two building keys identifies the meeting in saves.
-Older towns with both residents can see it on their next return. Finishing or skipping the
-scene records it. Leaving midway makes the whole exchange available again.
-
-Put the follow-up questions at the end of the meeting. Each participant can have an
-opening question and a question based on what the other resident told the player.
-Either answer from the other building can supply that detail, so write both versions
-to establish it. Read the conversation in both directions, including the trip back.
-Give each reply something fresh, and let the question label use only what the visitor
-already knows. Tapping either the building or its roof bubble asks a lone remaining
-question immediately. Two or more available questions open the menu. Each question
-can be asked once. Asking it removes it from the menu
-and saves the pending answer. On returning to town, an interrupted answer plays again
-without another selection. Finishing it or pressing Skip records the memory and unlocks
-any related questions. When all questions are gone, tapping the building shows its
-description. A game can associate a recall key with a painting in `art.resident_keepsakes`.
-The completed closing answer displays the painting at that home, alongside the remaining
-questions or inside the building description. Existing saves use the same answer record.
-
-Preview the ordinary reply with `--story-beat after-91 --story-built --story-line 2`.
-Add `--story-asked` for the first conditional reply at or after that line, or
-`--story-when visit-aviary-after-85.personal` for a particular saved condition.
-The scenario overview lists the alternatives in the same priority order.
-Preview a meeting recall with `--story-beat after-92 --story-sides both --story-line 4`.
-Use either building key or `neither` in place of `both` to hear the other versions.
+The **Town dialogue** section in the Relic Rush script uses `**Placed building_key**`
+for a purchase scene. `**With building_key beat-key 2**` replaces line 2 if the building
+stands. If the replacement features a resident, it also waits for their introduction.
+Run the game's `tools/prepare_story.py` to update `lua/story_content.lua`.
 
 ## First launch and main menu
 
-A fresh Relic Rush profile opens directly on level 1. Christmas Market
-opens on its illustrated title screen from the first launch. Collecting
-the first reward takes the player to the island or market to build.
-
-Later launches and the Main Menu link in in-game Settings open the illustrated
-title screen. Continue in Relic Rush and Play in Christmas Market open the
-phase medals. Back returns to the title, and Play resumes the current board
-or restores an unclaimed result. Visit
+Both games open on the illustrated title screen on every launch. The Main
+Menu link in in-game Settings also returns there. Continue in Relic Rush and
+Play in Christmas at Bellmere open the phase medals. Back returns to the title.
+Play on the medals screen starts level 1 for a fresh profile, resumes the
+current board or restores an unclaimed result. Collecting the first reward
+takes the player to the island or market to build. Visit
 Island or Visit Market gives direct access to construction. Settings shares
 the guide, leaderboard and saved Sound and Reduce Motion preferences with
 in-game Settings.
@@ -223,16 +150,16 @@ Fixed in the engine, so both games now behave the same way:
 
 | Behaviour | Was in | Missing from | Now |
 |---|---|---|---|
-| Popups open and close at once, with no entrance or exit tween (a stalled clock on device left Pause's dim with no panel, commit 7122d63); modal backdrops snap in (`snap_backdrop`), so the shop is dimmed on its first frame | Relic Rush | Christmas Market (tweened every dialog; its lists showed an undimmed first frame) | Both, `match3.game` dialogs and lists |
-| Pause shows Restart (asks first) and Quit, which keeps the unfinished board for Play to resume | Relic Rush | Christmas Market (the smoke test even asserted they were absent) | Both; Christmas Market's skin gains an evergreen `secondary` button |
+| Popups open and close at once, with no entrance or exit tween (a stalled clock on device left Pause's dim with no panel, commit 7122d63); modal backdrops snap in (`snap_backdrop`), so the shop is dimmed on its first frame | Relic Rush | Christmas at Bellmere (tweened every dialog; its lists showed an undimmed first frame) | Both, `match3.game` dialogs and lists |
+| Pause shows Restart (asks first) and Quit, which keeps the unfinished board for Play to resume | Relic Rush | Christmas at Bellmere (the smoke test even asserted they were absent) | Both; Christmas at Bellmere's skin gains an evergreen `secondary` button |
 | Play shows the number of the level it starts; there is no level list, so a cleared level is not replayed, and once every level is cleared the "You won" card opens after the last win and from Play | New | Both had a Levels button and list | Both |
-| Choosing a level clears the overlay before `play_level`, so a refused start does not leave a dead overlay state | Christmas Market | Relic Rush | Both |
-| The building card shows the story's current line for the building (`journey.building_about`), as the tap bubble does | Christmas Market | Relic Rush (showed the static catalogue line) | Both |
-| Per-level backdrop scene (`level.background`) | Relic Rush | Christmas Market (hard-coded "level 5 and on") | Both read `level.background` with the same fallback |
-| `--talk-through`, `--scroll-review`, `--placing focused`, `--dialog confirm` debug entry points | Relic Rush | Christmas Market | Both |
-| `--present`, `--goals-met`, `--dialog bubble` with the story's words, `--victory clue`, debug wallets without legacy slots | Christmas Market | Relic Rush | Both |
-| `R.expand()` (open the next region from code) | Relic Rush | Christmas Market | Both |
-| Board entrance haptics (`R.intro_haptics`) | Relic Rush | Christmas Market | Both (fixed earlier in `engine/lua/board_intro.lua`) |
+| Choosing a level clears the overlay before `play_level`, so a refused start does not leave a dead overlay state | Christmas at Bellmere | Relic Rush | Both |
+| The building card shows the story's current line for the building (`journey.building_about`), as the tap bubble does | Christmas at Bellmere | Relic Rush (showed the static catalogue line) | Both |
+| Per-level backdrop scene (`level.background`) | Relic Rush | Christmas at Bellmere (hard-coded "level 5 and on") | Both read `level.background` with the same fallback |
+| `--talk-through`, `--scroll-review`, `--placing focused`, `--dialog confirm` debug entry points | Relic Rush | Christmas at Bellmere | Both |
+| `--present`, `--goals-met`, `--dialog bubble` with the story's words, `--victory clue`, debug wallets without legacy slots | Christmas at Bellmere | Relic Rush | Both |
+| `R.expand()` (open the next region from code) | Relic Rush | Christmas at Bellmere | Both |
+| Board entrance haptics (`R.intro_haptics`) | Relic Rush | Christmas at Bellmere | Both (fixed earlier in `engine/lua/board_intro.lua`) |
 
 ### Intentional skin
 
@@ -243,15 +170,15 @@ Kept per game, as data or painting code:
 - `game_config.lua` and the skin atlases supply the piece mappings, piece
   size, background and motes. Both boards use the same cell coordinates,
   blocker layering and perimeter masks. The cells atlas supplies sandstone
-  and leaves in Relic Rush, and aged oak and holly in Christmas Market.
+  and leaves in Relic Rush, and aged oak and holly in Christmas at Bellmere.
 - `screens.lua`: the results card (Relic Rush's breakdown vs Christmas
   Market's chips), guide rows and icons, wallet icons.
 - Speech style: Relic Rush's dialogue is 1.5× (`speech.scale` in game_config.lua)
-  with a 22.5 name plate; Christmas Market uses 1× and 15.
+  with a 22.5 name plate; Christmas at Bellmere uses 1× and 15.
 - `art.lua`: review sheets, packs (`relics`/`jewels`/`resources` vs
   `festive`) and the HUD catalogue.
 - `island.lua`: Relic Rush's lawn is a polygon and its fog has clouds;
-  Christmas Market's is a rectangle with paths and blue fog.
+  Christmas at Bellmere's is a rectangle with paths and blue fog.
 - The town's middle button icon.
 
 ### Content and data
@@ -271,5 +198,5 @@ Follow-ups, tracked here until done:
 
 - The results card and guide icons are two hand-painted layouts.
 - The smoke tests are separate scripts keyed to each game's content
-  (`lua/smoke.lua` in both; Christmas Market's moved out of `main.lua`).
+  (`lua/smoke.lua` in both; Christmas at Bellmere's moved out of `main.lua`).
 - `island.lua`'s region map logic is copied; only its data differs.
