@@ -170,6 +170,14 @@ decoration shopping, replay and the next level. The campaign smoke prepares
 each board and the wallet for one real winning move, then drives Collect,
 region opening, construction and Play through the completion screen.
 
+## Languages
+
+The game is written in English and translated into German, Spanish, French,
+Italian, Brazilian Portuguese, Russian, Japanese, Korean and Simplified Chinese
+(`data/common/l10n/`). It follows the device's language; `--lang ja` picks one.
+Mark new player-visible text with `tr` and translate it in every catalogue:
+see [docs/LOCALIZATION.md](../../docs/LOCALIZATION.md).
+
 ## Leaderboard
 
 The LEADERBOARD link in Settings opens the overall rankings by winter wishes cleared. The game

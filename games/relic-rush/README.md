@@ -85,6 +85,14 @@ Captured from the engine build with `make shots` (headless, software renderer). 
 | ![Large island with locked regions](docs/screenshots/island-zones.jpg) | ![Boards required to open land](docs/screenshots/island-unlock.jpg) |
 | ![Buildings stand clear of the soft fog at a region border](docs/screenshots/island-fog.jpg) | ![A building that can't go here turns red](docs/screenshots/island-blocked.jpg) |
 
+## Languages
+
+The game is written in English and translated into German, Spanish, French,
+Italian, Brazilian Portuguese, Russian, Japanese, Korean and Simplified Chinese
+(`data/common/l10n/`). It follows the device's language; `--lang ja` picks one.
+Mark new player-visible text with `tr` and translate it in every catalogue:
+see [docs/LOCALIZATION.md](../../docs/LOCALIZATION.md).
+
 ## Leaderboard
 
 The LEADERBOARD link in Settings opens the overall rankings by expeditions cleared. The game updates

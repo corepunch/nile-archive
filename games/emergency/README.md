@@ -91,6 +91,14 @@ python3 games/emergency/tools/import_episode.py
 python3 games/emergency/tools/preserve_source.py --verify
 ```
 
+## Languages
+
+The game is written in English and translated into German, Spanish, French,
+Italian, Brazilian Portuguese, Russian, Japanese, Korean and Simplified Chinese
+(`data/common/l10n/`). It follows the device's language; `--lang ja` picks one.
+Mark new player-visible text with `tr` and translate it in every catalogue:
+see [docs/LOCALIZATION.md](../../docs/LOCALIZATION.md).
+
 ## Leaderboard
 
 Pause, help, district results and the leaderboard use the same fade and slide
