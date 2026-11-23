@@ -126,19 +126,20 @@
         110
       ],
       "offset": [
-        14,
-        11
+        12,
+        9
       ],
       "alpha_center": [
-        63.9058,
-        63.6628
+        61.9058,
+        61.6628
       ],
       "registered_box": [
         128,
         128,
         128,
         128
-      ]
+      ],
+      "anchor": "silhouette"
     },
     "market-6": {
       "name": "toy blocks",

@@ -10,7 +10,7 @@ return {
         ["booster-shield-icon"]={0.5023374,0.4785617},
         ["booster-star-icon"]={0.5003707,0.4961590},
         ["market-10"]={0.4994015,0.5035466},
-        ["market-5"]={0.5195312,0.5117188},
+        ["market-5"]={0.5039062,0.4960938},
     },
     images={
         ["background"]="board/backs/background.jpg",

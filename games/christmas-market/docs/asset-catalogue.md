@@ -253,7 +253,9 @@ record the original alpha and the fitted crops. The station clock adds five
 moves and ice skates earn Tokens. The strip's first third is a reindeer head
 that stood in for the hammer for a few hours on 20 November; it is retired,
 and the stable's charge piece is the Farrier's hammer from the
-[winter stalls sheet](../art/market-goods/winter-stalls.png) again. [Live boards, the stall card and all tool button states](screenshots/review/building-rewards/README.md).
+[winter stalls sheet](../art/market-goods/winter-stalls.png) again. Its heavy head pulls the centre of mass
+off its outline, so like the fir it is centred by its silhouette (`silhouette_centered`
+in the [art manifest](../art/manifest.json)), which moves it 2 px up and left. [Live boards, the stall card and all tool button states](screenshots/review/building-rewards/README.md).
 `market-1` points to the original light-blue `festive-3` frame from row two,
 column one of the [festive atlas](../art/festive-pieces/source.png). The campaign,
 guide and festive previews share that single registered sprite. The corresponding
