@@ -40,8 +40,8 @@ when an eligible project is affordable. The shop lists the current
 phase's building sprites, then the decorations. It draws the existing HUD frames
 `shop-locked` and `shop-built` large over a locked or built building's sprite.
 Review with `shot epoch-projects-phone` and the phone shop capture.
-The quest tracker at the upper left is drawn straight on the map with the
-skin's `quest_number` panels (gold coins with the row's number) and the board
+The quest tracker at the upper left sits on the skin's `quest_tracker` border
+(dark glass) with `quest_number` panels (gold coins with the row's number) and the board
 goals' `done_tick` once a project is built.
 
 ## Construction backdrops
