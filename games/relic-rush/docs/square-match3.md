@@ -37,8 +37,8 @@ only clear. The rules are the engine's `striped` and `color_bomb`
 switched on in [`lua/campaign.lua`](../lua/campaign.lua).
 
 A won board spends its leftover moves before the result: five at a time, five
-random pieces become line gems and fire, and everything they sweep pays its
-Coins, Food and Supplies. See the [finale](../../../docs/MATCH3_ENGINE.md#finale-leftover-moves).
+random pieces become line gems and fire. What they sweep pays a small share of
+its Coins, Food and Supplies, worth less with every extra move, so matches stay the income. See the [finale](../../../docs/MATCH3_ENGINE.md#finale-leftover-moves).
 
 Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear

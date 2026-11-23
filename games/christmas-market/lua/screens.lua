@@ -62,13 +62,12 @@ end
 R.register_result(function()
     local breakdown = rules.reward_breakdown(R.g, R.wonders, R.prog)
     local reward, first = breakdown.total, breakdown.first
-    local resources = {}
+    local resources, bonus = {}, {}   -- bonus: the decorations' share, in the same order
     for slot, currency in ipairs(economy.currencies) do
-        local amount = reward[slot] - (slot == economy.GOLD and breakdown.decoration or 0)
-        resources[slot] = {id=currency.id, amount=amount, icon=currency_icon(slot)}
+        local share = breakdown.decoration[slot]
+        resources[slot] = {id=currency.id, amount=reward[slot] - share, icon=currency_icon(slot)}
+        if share > 0 then bonus[#bonus+1] = {id="decoration-" .. slot, amount="+" .. share, icon=currency_icon(slot)} end
     end
-    local bonus = breakdown.decoration > 0
-        and {id="decoration", amount="+" .. breakdown.decoration, icon=currency_icon(economy.GOLD)} or nil
     return {
         title=first and tr("Wish granted!") or tr("Replay complete"),
         resources=resources, bonus=bonus, action=R.result_action(first, reward),

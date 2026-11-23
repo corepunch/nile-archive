@@ -320,8 +320,9 @@ function M.install(R, cfg)
         if ev.waves >= (c.min_length or 2) then b.series[e.id] = (b.series[e.id] or 0) + 1 end
         return (b.series[e.id] or 0) >= c.amount
     end}
-    IF.IF_PLAYER_GET_RESOURCE_IN_LEVEL = {on="wave", test=function(c, ev) return slot_amount(ev.g, c.id) >= c.amount end}
-    IF.IF_PLAYER_GET_SCORE_IN_LEVEL = {on="wave", test=function(c, ev) return slot_amount(ev.g, "score") >= c.amount end}
+    -- "banked" follows every wave that pays, the finale's included; "wave" only the player's.
+    IF.IF_PLAYER_GET_RESOURCE_IN_LEVEL = {on="banked", test=function(c, ev) return slot_amount(ev.g, c.id) >= c.amount end}
+    IF.IF_PLAYER_GET_SCORE_IN_LEVEL = {on="banked", test=function(c, ev) return slot_amount(ev.g, "score") >= c.amount end}
     IF.IF_PLAYER_GET_RESOURCE = {on="won", test=function(c, ev, _, e, st)
         return count_in(st, e.id, slot_amount(ev.g, c.id)) >= c.amount
     end}
@@ -455,7 +456,11 @@ function M.install(R, cfg)
     local finish_wave = R.finish_wave
     function R.finish_wave(fast)
         local g = R.g
-        if g.won then return finish_wave(fast) end   -- the finale's waves are not the player's moves
+        if g.won then   -- the finale's waves pay, but they are not the player's moves
+            finish_wave(fast)
+            U.emit("banked", {g=g})
+            return
+        end
         local b = board(g)
         local runs = runs_of(g, R.pending)
         local oil = g.oil_left
@@ -465,6 +470,7 @@ function M.install(R, cfg)
         b.waves, b.longest = g.combo, math.max(b.longest, longest)
         if oil and g.oil_left and g.oil_left < oil then b.effective = true end
         U.emit("wave", {g=g, runs=runs, longest=longest})
+        U.emit("banked", {g=g})
     end
 
     local open_catalogue = R.open_catalogue
@@ -516,7 +522,8 @@ function M.install(R, cfg)
             U.emit("move", {g=g, waves=b.waves, longest=b.longest, effective=b.effective})
             b.waves, b.longest, b.effective = 0, 0, false
         end
-        if g.won and not b.won and g.level == R.prog.level then
+        -- A board is won for good once it settles: after the finale has paid out.
+        if g.won and not b.won and R.phase == R.PH_IDLE and g.level == R.prog.level then
             b.won = true
             st.clean = not b.bonus_used and (st.clean or 0) + 1 or 0
             U.emit("won", {g=g})

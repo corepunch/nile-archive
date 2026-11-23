@@ -440,8 +440,13 @@ a won board spends its leftover moves before the result, as Candy Crush does.
 Each round turns up to N random plain, unlocked pieces into line gems on random
 axes, takes that many moves, holds them for a beat (`PH_FINALE`) and fires them
 in one wave. The wave's settle arms the next round until no moves are left, then
-the result opens. Swept pieces bank as any special's sweep does, so the
-leftover moves become resources. The rules are `game_finale_arm` and
+the result opens. Matches stay the board's income, so the finale pays a small,
+diminishing share of what it sweeps: the k-th leftover move is worth
+ln(1 + 1/k) of `finale_share`, and n moves together pay in proportion to
+ln(1 + n). Going from 2 to 4 moves left pays about 1.5 times as much, and from
+2 to 6 about 1.8 times. Each round pays its moves' average share, and fractions
+carry from piece to piece. Square campaigns set 1.25, which the balance sample
+measures at about a tenth on top of the matches. The rules are `game_finale_arm` and
 `game_finale_fire`; `game_finale` plays every round with its cascades at once
 for bots and the balance simulations, so measured income
 includes the finale. Finale waves are not player moves: user events skip them.

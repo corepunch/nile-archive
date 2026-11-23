@@ -18,7 +18,9 @@ Steps, each from the square boards in games/<game>/lua/campaign.lua:
    art/building-catalogue/story.json (and the purchase table in its README),
    Christmas Market to art/building-catalogue/catalogue.json; then regenerate
    lua/buildings.lua and the manifest.
-5. Run the game's rule tests.
+5. Fit the citizens' "bank N in one level" feats to the same income and write
+   them to lua/user_events.lua and docs/CAMPAIGN_DESIGN.md.
+6. Run the game's rule tests.
 
 The bots run the rules alone: no window, renderer or audio is opened. Boards
 are spread over one process per processor.
@@ -124,6 +126,68 @@ def fit_prices(game, seeds, write=True):
     print(f'prices: {changed} of {len(prices)} changed; {summary}  ({time.time() - started:.0f} s)', flush=True)
     step('catalogue', [sys.executable, f'games/{game}/{generator}'])
     write_price_tables(game)
+    fit_feats(game, incomes)
+
+
+# A feat's currency by its id, in income (cost) order, and its name in each game.
+FEAT_SLOTS = {'coins': 0, 'food': 1, 'supplies': 2}
+FEAT_WORDS = {'relic-rush': ('Coins', 'Food', 'Supplies'), 'christmas-market': ('Tokens', 'Treats', 'Materials')}
+FEAT_ROW = re.compile(r'(\{id="(man_\d+)", building="(\w+)"[^\n]*\n\s*If=\{"IF_PLAYER_GET_RESOURCE_IN_LEVEL", '
+                      r'id="(\w+)", amount=)(\d+)(\}, perk=income\("\w+", )(\d+)')
+
+
+def round5(value):
+    return max(5, int(5 * round(value / 5)))
+
+
+def first_levels(game):
+    """The first board each ladder building is available after, from lua/economy.lua."""
+    text = (ROOT / 'games' / game / 'lua/economy.lua').read_text()
+    levels = {key: int(n) for key, n in re.findall(r'building="(\w+)"[^}\n]*?first_level=(\d+)', text)}
+    levels.update({key: int(n) + 1 for key, n in re.findall(r'building="(\w+)"[^}\n]*?after=(\d+)', text)})
+    return levels
+
+
+def feat_rows(game):
+    return FEAT_ROW.finditer((ROOT / 'games' / game / 'lua/user_events.lua').read_text())
+
+
+def fit_feats(game, incomes):
+    """A "bank N in one level" feat asks for twice the mean income in its currency over the
+    ten boards after its building, in fives. Its perk keeps Rome's share of the threshold."""
+    path = ROOT / 'games' / game / 'lua/user_events.lua'
+    levels, by_level = first_levels(game), {row['level']: row['income'] for row in incomes}
+
+    def fitted(match):
+        building, currency, amount, perk = match.group(3), match.group(4), int(match.group(5)), int(match.group(7))
+        first = levels[building]
+        window = [by_level[n][FEAT_SLOTS[currency]] for n in range(first, first + 10) if n in by_level]
+        threshold = round5(2 * sum(window) / len(window))
+        cap = max(5, 5 * int(threshold * .2 // 5))   # a perk is at most a fifth of its feat
+        return f'{match.group(1)}{threshold}{match.group(6)}{min(cap, round5(threshold * perk / amount))}'
+    text, count = FEAT_ROW.subn(fitted, path.read_text())
+    path.write_text(text)
+    write_feat_table()
+    print(f'feats: {count} income feats fitted', flush=True)
+
+
+def write_feat_table():
+    """Copy both games' fitted feats into the upgrade table of docs/CAMPAIGN_DESIGN.md."""
+    feats = {game: {m.group(2): (FEAT_SLOTS[m.group(4)], int(m.group(5)), int(m.group(7))) for m in feat_rows(game)}
+             for game in FEAT_WORDS}
+    path = ROOT / 'docs/CAMPAIGN_DESIGN.md'
+    lines = path.read_text().split('\n')
+    for n, line in enumerate(lines):
+        key = re.search(r'\(`(man_\d+)`\)', line)
+        if not key or key.group(1) not in feats['relic-rush']:
+            continue
+        (rr_slot, rr_amount, rr_perk), (cm_slot, cm_amount, cm_perk) = (feats[g][key.group(1)] for g in FEAT_WORDS)
+        cells = line.split('|')
+        cells[3] = (f' {rr_amount} {FEAT_WORDS["relic-rush"][rr_slot]} / '
+                    f'{cm_amount} {FEAT_WORDS["christmas-market"][cm_slot]} in one level ')
+        cells[4] = f' +{rr_perk} every win ' if rr_perk == cm_perk else f' +{rr_perk} / +{cm_perk} every win '
+        lines[n] = '|'.join(cells)
+    path.write_text('\n'.join(lines))
 
 
 # Currency names in cost order, as the docs spell a price out in words.

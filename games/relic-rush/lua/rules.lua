@@ -25,12 +25,12 @@ function M.reward_breakdown(g, progress)
     local first = not progress or g.level == progress.level
     local matched = purse(table.unpack(g.earnings or {}))
     local income = M.perk_income and M.perk_income() or purse()   -- the citizens' perks
-    local decoration = M.decoration_income and M.decoration_income() or 0   -- the town's decorations
+    local decoration = M.decoration_income and M.decoration_income(matched) or purse()   -- the town's decorations
     local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
     if g.won and first and g.level == 0 then
         reward[M.GOLD] = math.max(reward[M.GOLD], spring_well.cost[M.GOLD])
     end
-    reward[M.GOLD] = reward[M.GOLD] + decoration
+    reward = reward + decoration
     return {first=first, income=income, decoration=decoration, total=reward}
 end
 

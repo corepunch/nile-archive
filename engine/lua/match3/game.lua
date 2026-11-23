@@ -294,27 +294,31 @@ function G.campaign_ladder(island, unlocks, journey, slots, levels_per_epoch)
         if predates then M.waive_passed(c, level) end
     end
 
-    -- Every kind of decoration standing in town pays gold on each won board:
-    -- one for every DECORATION_RETURN of its price, rounded up, so a piece
-    -- pays for itself in about twenty wins. A second copy of a kind adds
-    -- nothing, which keeps the dividend bounded by the catalogue.
-    function M.decoration_dividend(kind)
-        local d = M.buildings[kind + 1]
-        if not d or not d.decoration then return 0 end
-        local price = 0
-        for slot = 1, slots do price = price + (d.cost[slot] or 0) end
-        return math.ceil(price / G.DECORATION_RETURN)
-    end
-    function M.decoration_bonus(c)
-        local seen, total = {}, 0
+    -- The kinds of decoration standing in town add a percentage to the
+    -- resources every won board collects, with diminishing returns: n kinds
+    -- add DECORATION_SCALE * ln(1 + n / DECORATION_SCALE) percent, about 1%
+    -- for the first, 7% for ten and 11% for twenty. A second copy of a kind
+    -- adds nothing. Matches stay the board's income; decorations are a perk.
+    local function percent_for(kinds) return G.DECORATION_SCALE * math.log(1 + kinds / G.DECORATION_SCALE) end
+    local function decoration_kinds(c)
+        local seen, kinds = {}, 0
         for _, b in ipairs(c.items) do
-            if not seen[b.type] then seen[b.type] = true; total = total + M.decoration_dividend(b.type) end
+            local d = M.buildings[b.type + 1]
+            if d and d.decoration and not seen[b.type] then seen[b.type], kinds = true, kinds + 1 end
         end
-        return total
+        return kinds
+    end
+    function M.decoration_bonus(c) return percent_for(decoration_kinds(c)) end
+    -- What placing `kind` would add now: 0 for a project or a kind already standing.
+    function M.decoration_gain(c, kind)
+        local d = M.buildings[kind + 1]
+        if not (d and d.decoration) or M.owned(c, kind) > 0 then return 0 end
+        local kinds = decoration_kinds(c)
+        return percent_for(kinds + 1) - percent_for(kinds)
     end
     return M
 end
-G.DECORATION_RETURN = 20
+G.DECORATION_SCALE = 10
 
 G.journey = require("match3.journey")
 
@@ -336,9 +340,13 @@ function G.bind(R, over)
     local journey = require("journey")
     local match3 = require("match3")
     local LEVELS = rules.LEVELS
-    -- reward_breakdown adds the town's decoration bonus to every win.
-    function rules.decoration_income()
-        return R.island and island.decoration_bonus and island.decoration_bonus(R.island) or 0
+    -- reward_breakdown adds the town's decoration bonus to every win: its
+    -- percentage of the collected resources, in each currency.
+    function rules.decoration_income(collected)
+        local percent = R.island and island.decoration_bonus and island.decoration_bonus(R.island) or 0
+        local bonus = purse()
+        for slot = 1, 3 do bonus[slot] = math.floor(collected[slot] * percent / 100 + .5) end
+        return bonus
     end
     local rgba = color
 
@@ -567,8 +575,8 @@ function G.bind(R, over)
             match3.set_popup_header(form, data.title)
             form:set("claim", data.action)
             assert(form:set_items("resources", data.resources))
-            form.values.show_bonus = data.bonus ~= nil
-            assert(form:set_items("bonus", data.bonus and {data.bonus} or {}))
+            form.values.show_bonus = data.bonus ~= nil and #data.bonus > 0
+            assert(form:set_items("bonus", data.bonus or {}))
         end, handle=function(event)
             if event.id ~= "claim" then return end
             if R.dialog_settled() then close_popup(R.claim_reward) else R.dialog_skip() end
@@ -654,12 +662,14 @@ function G.bind(R, over)
         wonder_form.values.show_shop = project ~= nil
         local reward = R.building_reward(i)
         local gets = reward and {reward} or {}
-        -- A decoration of a new kind adds its bonus to every win.
-        local dividend = not built and island.decoration_dividend and island.owned(R.island, i) == 0
-            and island.decoration_dividend(i) or 0
+        -- A decoration of a new kind adds its percentage to every win, in each currency.
+        local dividend = not built and island.decoration_gain and island.decoration_gain(R.island, i) or 0
         if dividend > 0 then
-            local gold = price_parts(purse(dividend))[1]
-            gets = {{id="dividend", icon=gold.icon, amount="+" .. dividend}}
+            local label = ("+%.1f%%"):format(dividend):gsub("%.0%%$", "%%")
+            gets = {}
+            for slot, part in ipairs(price_parts(purse(1, 1, 1))) do
+                gets[slot] = {id="dividend-" .. slot, icon=part.icon, amount=label}
+            end
         end
         wonder_form:set("gets_caption", dividend > 0 and W.card.dividend or W.card.gets)
         local price = show_price and price_parts(w.cost) or {}

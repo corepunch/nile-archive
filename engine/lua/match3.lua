@@ -930,6 +930,19 @@ function E.new(config)
         return true
     end
 
+    -- Pays a cleared piece into the wallet. After a win only the finale clears
+    -- pieces, and they pay its current round's share (game_finale_arm);
+    -- fractions carry to the next piece, so the wallet stays whole.
+    local function pay(g, slot, amount)
+        if g.won and g.finale_share then
+            g.finale_carry = g.finale_carry or {0, 0, 0}
+            local owed = g.finale_carry[slot] + amount * g.finale_share
+            amount = math.floor(owed)
+            g.finale_carry[slot] = owed - amount
+        end
+        g.earnings[slot] = g.earnings[slot] + amount
+    end
+
     -- Clear one wave; returns the relics cleared.
     function M.game_apply(g, m)
         local pierce_kind = m.pierce_kind
@@ -978,7 +991,7 @@ function E.new(config)
                                     local amount = resource.amount * (length and g.resource_multipliers[length] or 1)
                                     local banked = M.match_banks(g, m, i)
                                     if resource.slot and banked then
-                                        g.earnings[resource.slot] = g.earnings[resource.slot] + amount
+                                        pay(g, resource.slot, amount)
                                     elseif resource.item and banked then
                                         -- A quest piece: counted by its own key, apart from the wallet.
                                         g.items[resource.item] = (g.items[resource.item] or 0) + amount
@@ -1621,9 +1634,12 @@ function E.new(config)
 
     -- The finale: a won board spends its leftover moves FINALE_BATCH at a
     -- time. Each round turns that many plain pieces into line gems, which fire
-    -- in one wave; what they sweep pays like any special's sweep. A game opts
-    -- in with config.finale_batch, which needs the striped special.
-    M.FINALE_BATCH = config.finale_batch
+    -- in one wave. Matches stay the board's income: the k-th leftover move is
+    -- worth ln(1 + 1/k) of FINALE_SHARE, so n moves together pay in proportion
+    -- to ln(1 + n) (2 -> 4 moves about 1.5 times, 2 -> 6 about 1.8 times) and a
+    -- round's sweep pays its moves' average. A game opts in with
+    -- config.finale_batch, which needs the striped special, and finale_share.
+    M.FINALE_BATCH, M.FINALE_SHARE = config.finale_batch, config.finale_share
     if M.FINALE_BATCH then
         local striped = false
         for _, name in ipairs(config.special_rules or {}) do striped = striped or name == "striped" end
@@ -1648,6 +1664,10 @@ function E.new(config)
             g.tiles[cell] = tile(g.tiles[cell].kind, "striped", randn(g, M.AXES))
             armed[k] = cell
         end
+        -- Moves k = a .. b of the finale are worth ln((b + 1) / a) together.
+        local spent = g.finale_spent or 0
+        g.finale_spent = spent + count
+        g.finale_share = M.FINALE_SHARE and M.FINALE_SHARE * math.log((spent + count + 1) / (spent + 1)) / count
         g.moves = g.moves - count
         return armed
     end
@@ -2335,7 +2355,7 @@ end
 function E.square_campaign(campaign)
     local rules = E.new{flags=E.LINE_MATCHES | E.COLOR_TOOL, square=true, columns=9, rows=12,
         colors=campaign.colors, match_min=3, refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
-        special_rules=campaign.special_rules, finale_batch=5,
+        special_rules=campaign.special_rules, finale_batch=5, finale_share=1.25,
         kind_flags={[0]=E.GOAL, [2]=E.WOOD, [4]=E.STONE}}
     local start = rules.game_start
     local function wins_in_one(g)

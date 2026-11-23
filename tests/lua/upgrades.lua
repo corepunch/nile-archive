@@ -11,23 +11,23 @@ local U=require("user_events_runtime")
 local relic=testing.game=="relic-rush"
 
 -- The design table: feat and perk by Rome 2 event, with Relic Rush / Christmas Market amounts.
--- {id, building (RR, CM), condition, {RR amount, CM amount}, perk resource or tool, {RR, CM} income}
+-- {id, building (RR, CM), condition, perk resource or tool, {RR, CM} tool feat size}; income feats are fitted
 local spec={
-    {"man_03","well","arch","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food",{245,240},{15,15}},
+    {"man_03","well","arch","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food"},
     {"man_04","log_cabin","reindeer_stable","IF_PLAYER_MAKE_MATCH","hammer",{5,5}},
-    {"man_02","workshop","lumber","IF_PLAYER_GET_RESOURCE_IN_LEVEL","supplies",{520,395},{105,75}},
+    {"man_02","workshop","lumber","IF_PLAYER_GET_RESOURCE_IN_LEVEL","supplies"},
     {"man_01","camp","firework_stall","IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES","bomb",{10,10}},
-    {"man_05","market","bakery","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food",{560,315},{95,50}},
-    {"man_06","trading_post","chapel","IF_PLAYER_GET_RESOURCE_IN_LEVEL","supplies",{550,585},{110,115}},
-    {"man_07","water_mill","cocoa","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food",{625,400},{125,80}},
+    {"man_05","market","bakery","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food"},
+    {"man_06","trading_post","chapel","IF_PLAYER_GET_RESOURCE_IN_LEVEL","supplies"},
+    {"man_07","water_mill","cocoa","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food"},
     {"man_08","clock_tower","igloo","IF_PLAYER_MAKE_MATCH_IN_LEVEL","shield",{5,5}},
-    {"man_09","gateway","log_cabin","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food",{850,575},{170,115}},
-    {"man_10","amphitheater","toys","IF_PLAYER_GET_RESOURCE_IN_LEVEL","coins",{460,985},{90,195}},
+    {"man_09","gateway","log_cabin","IF_PLAYER_GET_RESOURCE_IN_LEVEL","food"},
+    {"man_10","amphitheater","toys","IF_PLAYER_GET_RESOURCE_IN_LEVEL","coins"},
     {"man_11","map_room","candles","IF_PLAYER_MAKE_MATCH_SERIES","lightning",{2,2}},
     {"man_12","lighthouse","post_office","IF_PLAYER_MAKE_MATCH_IN_TIME","plus",{15,15}},
-    {"man_13","beached_ship","glassblower","IF_PLAYER_GET_RESOURCE_IN_LEVEL","coins",{690,1070},{140,210}},
+    {"man_13","beached_ship","glassblower","IF_PLAYER_GET_RESOURCE_IN_LEVEL","coins"},
     {"man_14","observatory","carousel","IF_PLAYER_COMPLETE_LEVELS_WITHOUT_LIFE_LOSS","mixer",{3,3}},
-    {"man_15","museum","santa_workshop","IF_PLAYER_GET_RESOURCE_IN_LEVEL","coins",{990,1170},{200,235}},
+    {"man_15","museum","santa_workshop","IF_PLAYER_GET_RESOURCE_IN_LEVEL","coins"},
     {"man_16","temple","tree","IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES","star",{15,15}},
 }
 local pick=relic and 1 or 2
@@ -68,8 +68,11 @@ do
                 check(perk[1]=="THEN_GAME_CHARGE_TOOL" and perk.id==row[5] and perk.amount==1,id..' charges '..row[5])
                 check(e.If.length==row[6][pick] or e.If.amount==row[6][pick],id..' feat size')
             else
-                check(perk[1]=="THEN_PLAYER_ADD_RESOURCE_PER_LEVEL" and perk.id==row[5] and perk.amount==row[7][pick],id..' income')
-                check(e.If.id==row[5] and e.If.amount==row[6][pick],id..' feat amount')
+                -- tools/balance.py fits the amounts to the bot's income; the shape is the design.
+                local amount=e.If.amount
+                check(perk[1]=="THEN_PLAYER_ADD_RESOURCE_PER_LEVEL" and perk.id==row[5] and perk.amount>0
+                    and perk.amount%5==0 and perk.amount<=amount*.2,id..' income')
+                check(e.If.id==row[5] and amount>0 and amount%5==0,id..' feat amount')
             end
             check(cast[e.upgrade.keeper] and cast[e.upgrade.keeper].role,id..' is kept by a cast member: '..tostring(e.upgrade.keeper))
             check(e.upgrade.title and #e.upgrade.title>3 and not cast[e.upgrade.title],id..' has a title')
@@ -101,10 +104,10 @@ for _,row in ipairs(spec) do
     local b=g.user_events
     if kind=="IF_PLAYER_GET_RESOURCE_IN_LEVEL" then
         g.earnings[SLOT[c.id]]=c.amount-1
-        U.emit("wave",{g=g,runs={},longest=0})
+        U.emit("banked",{g=g})
         check(not st.done[id],id..' one short of its feat')
         g.earnings[SLOT[c.id]]=c.amount
-        U.emit("wave",{g=g,runs={},longest=0})
+        U.emit("banked",{g=g})
     elseif kind=="IF_PLAYER_MAKE_MATCH" then
         U.emit("wave",{g=g,runs={c.length-1},longest=c.length-1})
         check(not st.done[id],id..' a shorter line is not the feat')
@@ -171,10 +174,10 @@ do
     place(relic and "well" or "arch")
     local g=R.make_board(0,7)
     g.earnings[2]=1000
-    U.emit("wave",{g=g,runs={},longest=0})
+    U.emit("banked",{g=g})
     check(st.done.man_03,'the first upgrade arrived')
     local before=U.win_income()[2]
-    U.emit("wave",{g=g,runs={},longest=0})
+    U.emit("banked",{g=g})
     check(U.win_income()[2]==before and U.upgrades(relic and "well" or "arch")==1,'an upgrade arrives once')
 end
 
@@ -185,19 +188,20 @@ do
     local building=relic and "well" or "arch"
     place(building)
     local g=R.make_board(R.prog.level,7)
-    g.earnings={0,relic and 245 or 240,0}
-    U.emit("wave",{g=g,runs={},longest=0})
+    local perk=U.by_id.man_03.Then[3].amount   -- the feat and perk are fitted by tools/balance.py
+    g.earnings={0,U.by_id.man_03.If.amount,0}
+    U.emit("banked",{g=g})
     check(U.state().done.man_03,'the well upgrade came on its Food feat in one level')
     g.won,g.moves=true,0
     local matched=purse(table.unpack(g.earnings))
     local wallet=R.prog.wallet
     local reward=breakdown(g)
-    check(reward.total[2]==matched[2]+15,'a win pays the matched Food and the upgrade\'s fifteen')
+    check(reward.total[2]==matched[2]+perk,'a win pays the matched Food and the upgrade\'s income')
     check(reward.total[1]==matched[1] and reward.total[3]==matched[3],'no other currency changes')
     local ok=relic and rules.progress_reward(R.prog,g) or rules.progress_reward(R.prog,g,island.wonders)
-    check(ok and R.prog.wallet[2]==wallet[2]+matched[2]+15,'the wallet gains the income when the win is claimed')
+    check(ok and R.prog.wallet[2]==wallet[2]+matched[2]+perk,'the wallet gains the income when the win is claimed')
     local replay=rules.game_start(g.level,9);replay.won=true;replay.moves=0;replay.earnings={0,0,0}
-    check(breakdown(replay).total[2]==15,'a replay win still pays the income')
+    check(breakdown(replay).total[2]==perk,'a replay win still pays the income')
 end
 
 -- A tool upgrade makes the tool's pieces charge one point more per match (4, not 3).
@@ -242,7 +246,7 @@ do
     place(building)
     local g=R.make_board(0,7)
     g.earnings[2]=500
-    U.emit("wave",{g=g,runs={},longest=0})
+    U.emit("banked",{g=g})
     check(R.toast and R.toast:find(U.by_id.man_03.upgrade.title,1,true),'an earned upgrade shows a short notice')
     R.on_island=true
     R.story_tick()
@@ -259,13 +263,14 @@ do
     place(building)
     local card=U.card(kind)
     check(card and card.caption=="FEAT" and card.about:find(U.by_id.man_03.upgrade.title,1,true),'armed: the card names the upgrade and the feat')
-    check(#card.entries==1 and card.entries[1].amount==(relic and 245 or 240),'the feat\'s amount is a resource indicator, not text')
-    check(not card.about:find(relic and "245" or "240",1,true),'no resource amount is written into the sentence')
+    local feat=U.by_id.man_03.If.amount
+    check(#card.entries==1 and card.entries[1].amount==feat,'the feat\'s amount is a resource indicator, not text')
+    check(not card.about:find(tostring(feat),1,true),'no resource amount is written into the sentence')
     local g=R.make_board(0,7)
     g.earnings[2]=500
-    U.emit("wave",{g=g,runs={},longest=0})
+    U.emit("banked",{g=g})
     card=U.card(kind)
-    check(card and card.caption=="EVERY WIN" and card.entries[1].amount=="+15" and card.short:find("Upgraded: ",1,true),
+    check(card and card.caption=="EVERY WIN" and card.entries[1].amount=="+"..U.by_id.man_03.Then[3].amount and card.short:find("Upgraded: ",1,true),
         'arrived: the card shows the perk as an indicator and the tap line names the upgrade')
     local buildings=R.buildings
     R.buildings=buildings or island.buildings
@@ -290,12 +295,12 @@ do
     place(building)
     local g=R.make_board(0,7)
     g.earnings[2]=500
-    U.emit("wave",{g=g,runs={},longest=0})
+    U.emit("banked",{g=g})
     check(save.write("upgrades-test",U.serialize),'write upgrades')
     fresh()
     check(not U.state().done.man_03 and U.win_income()[2]==0,'a fresh profile has no upgrades')
     check(save.read("upgrades-test",U.serialize),'read upgrades')
-    check(U.state().done.man_03 and U.win_income()[2]==15 and U.upgrades(building)==1,'an upgrade and their perk come back')
+    check(U.state().done.man_03 and U.win_income()[2]==U.by_id.man_03.Then[3].amount and U.upgrades(building)==1,'an upgrade and their perk come back')
 end
 
 R.prog, R.island, R.quiet, R.story_current = saved_prog, saved_island, saved_quiet, saved_story

@@ -66,7 +66,7 @@ A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Sl
 
 - **Keep Rome's currency mix.** Each purchase uses the currency mix of its counterpart in the GameTop Windows `epochs.xml`. Only the price amounts are fitted.
 - **Fit to the bot's income without optional upgrades.** Players who earn upgrades build sooner and have more resources for decorations.
-- **Decorations are an investment.** Each kind of decoration standing in town adds a twentieth of its price, rounded up, in Coins/Tokens to every won board, so it pays for itself in about twenty wins. A second copy of a kind adds nothing, which caps the bonus at the catalogue: about 280 Coins a win for all 66 Relic Rush decorations, about 60 Tokens for Christmas at Bellmere's 15. The results card shows it as Decoration bonus; an unbought kind's card shows it under Every win. The bot buys no decorations, so prices are fitted without it.
+- **Matches are the income; the rest are perks.** The board's matches earn nearly everything. The [finale](MATCH3_ENGINE.md#finale-leftover-moves) pays a diminishing share for leftover moves, about a tenth on top of the matches. Decorations add a percentage of each win's collected resources with diminishing returns: n kinds standing in town add 10 × ln(1 + n/10) percent, about 1% for the first, 7% for ten, 11% for twenty and 20% for all 66 Relic Rush kinds (9% for Christmas at Bellmere's 15). A second copy of a kind adds nothing. The results card shows the decorations' share as Decoration bonus, and an unbought kind's card shows what it would add under Every win. The bot buys no decorations, so prices are fitted without them.
 - **Fund each purchase by its target clear.** The income forecast and the fixed-seed `campaign_play` test both require all twenty purchases by their scheduled levels with zero replays for income. Failed board attempts can be retried.
 - **Keep total prices nondecreasing.** The fitter caps any early price spike at the next purchase's total while retaining every currency it uses.
 - **Refit after any change** to boards, piece yields, unlock order or upgrade perks, and commit the regenerated catalogue.
@@ -88,28 +88,28 @@ Rome 2's sixteen citizens (`settings/user_events.xml`, events `man_01` to `man_1
 We keep the feats, the upgrades and the perks, and give each upgrade to **the character who already runs that building**. Agnes gets a second oven; Oren sharpens his father's adze. No new person arrives: the player sees someone they know get better at what they do.
 
 - **Optional upgrades.** An upgrade takes effect when the player completes its feat. The building card shows the feat and the earned perk.
-- **Perks are scaled to our income.** The feat "earn X in one level" asks for about twice the mean board income in that currency in the ten levels after the building. Income per level is Rome's ratio of perk to threshold, capped at 20% of the threshold and rounded to fives. A tool upgrade makes its tool's piece charge one point more per match; two on one slot add up.
+- **Perks are scaled to our income.** The feat "earn X in one level" asks for twice the mean board income in that currency over the ten levels after the building, rounded to fives, and counts everything banked on the board, the finale included. `tools/balance.py` fits it with the prices. Income per level is Rome's ratio of perk to threshold, capped at 20% of the threshold and rounded to fives. A tool upgrade makes its tool's piece charge one point more per match; two on one slot add up.
 - **Rome feats we cannot measure get the nearest equivalent.** "Collect three lives" becomes three wins in a row without a failed level; feats in seconds keep Rome's time.
 - **The perk is shown.** The building's card shows the feat while it is armed and the upgrade with its perk once met, as resource indicators; the income is part of every win's total.
 - **Shared runtime.** Both games run Rome's If/Then events on `engine/lua/match3/user_events.lua`; each game supplies its data in `lua/user_events.lua` ([engine notes](MATCH3_ENGINE.md)).
 
 | # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas at Bellmere upgrade (keeper) |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Well (`man_03`) | 245 Food / 240 Treats in one level | +15 every win | Spring well: a second rope and pulley (Oren) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
+| 1 | Well (`man_03`) | 300 Food / 265 Treats in one level | +20 / +15 every win | Spring well: a second rope and pulley (Oren) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
 | 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Oren) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
-| 3 | Sawmill (`man_02`) | 520 Supplies / 395 Materials in one level | +105 / +75 every win | Carpenter's workshop: a second saw bench (Sela) | Lumber workshop: a drying shed for the pine (Theo) |
+| 3 | Sawmill (`man_02`) | 625 Supplies / 430 Materials in one level | +125 / +80 every win | Carpenter's workshop: a second saw bench (Sela) | Lumber workshop: a drying shed for the pine (Theo) |
 | 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a dry tool store (Sela) | Firework stall: a rocket rack, ready in threes (Pip) |
-| 5 | Farm (`man_05`) | 560 Food / 315 Treats in one level | +95 / +50 every win | Jungle market: the hill farms send their carts (Tavi) | Gingerbread bakery: a second oven (Agnes) |
-| 6 | Mine (`man_06`) | 550 Supplies / 585 Materials in one level | +110 / +115 every win | Stone trading post: a cart road to the quarry (Sela) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
-| 7 | Mill (`man_07`) | 625 Food / 400 Treats in one level | +125 / +80 every win | Water mill: a second millstone (Oren) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
+| 5 | Farm (`man_05`) | 690 Food / 345 Treats in one level | +115 / +55 every win | Jungle market: the hill farms send their carts (Tavi) | Gingerbread bakery: a second oven (Agnes) |
+| 6 | Mine (`man_06`) | 710 Supplies / 640 Materials in one level | +140 / +125 every win | Stone trading post: a cart road to the quarry (Sela) | Snowy chapel: the masons' yard behind the chapel (Mr Wren) |
+| 7 | Mill (`man_07`) | 790 Food / 435 Treats in one level | +155 / +85 every win | Water mill: a second millstone (Oren) | Hot cocoa kiosk: Mrs Alder's ladle and second pot (Mrs Alder) |
 | 8 | Thermae (`man_08`) | Five matches of five in one level | Shield charges faster | Tide clock tower: a warning chime (Tavi) | Ice house: a second ice saw on the lake (Theo) |
-| 9 | Port (`man_09`) | 850 Food / 575 Treats in one level | +170 / +115 every win | Harbour plaza: a fish market every morning (Tavi) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
-| 10 | Coliseum (`man_10`) | 460 Coins / 985 Tokens in one level | +90 / +195 every win | Stone amphitheatre: market-day shows (Oren) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
+| 9 | Port (`man_09`) | 1060 Food / 625 Treats in one level | +210 / +125 every win | Harbour plaza: a fish market every morning (Tavi) | Lakeside smokehouse: a second smoking rack (Mr Finch) |
+| 10 | Coliseum (`man_10`) | 570 Coins / 1060 Tokens in one level | +110 / +210 every win | Stone amphitheatre: market-day shows (Oren) | Toymaker's workshop: a second bench and a shop bell (Henrik) |
 | 11 | House of the Vestals (`man_11`) | Two matches of five in a row | Lightning charges faster | Cartographer's house: storm charts on the wall (Tavi) | Candlelight shop: Mr Wren trims every wick (Mr Wren) |
 | 12 | Lighthouse (`man_12`) | 15 matches within 20 seconds | Plus charges faster | Lighthouse: a bronze reflector (Tavi) | North Pole post office: a second sorting rack (Pip) |
-| 13 | Nero's Golden House (`man_13`) | 690 Coins / 1070 Tokens in one level | +140 / +210 every win | Beached schooner: a ferry to the hill villages (Tavi) | Glassblower's stall: a second furnace (Ada) |
+| 13 | Nero's Golden House (`man_13`) | 850 Coins / 1165 Tokens in one level | +170 / +230 every win | Beached schooner: a ferry to the hill villages (Tavi) | Glassblower's stall: a second furnace (Ada) |
 | 14 | Mausoleum (`man_14`) | Three wins in a row without a failed level | Mixer charges faster | Star observatory: the sighting stones aligned (Sela) | Reindeer carousel: a band organ (Pip) |
-| 15 | Theatre (`man_15`) | 990 Coins / 1170 Tokens in one level | +200 / +235 every win | Relic museum: a reading room open to all (Sela) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
+| 15 | Theatre (`man_15`) | 1235 Coins / 1270 Tokens in one level | +245 / +250 every win | Relic museum: a reading room open to all (Sela) | Woodcarvers' hall: Henrik's old apprentices come back (Henrik) |
 | 16 | Forum (`man_16`) | 15 moves in a row that each clear a target | Star charges faster | Temple of the Sun: the keepers' watch roster (Oren) | Christmas tree: a star for the top (Theo) |
 
 Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre: the Harbour lodge, Keeper's archive, Great aviary and Jade fountain in Relic Rush, and the Station kiosk, Gift wrapping pavilion, Winter skating rink and Santa's sleigh in Christmas at Bellmere.

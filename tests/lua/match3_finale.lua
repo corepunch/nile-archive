@@ -1,4 +1,4 @@
--- A won board's leftover moves become line gems, five a round, and pay out.
+-- A won board's leftover moves become line gems, five a round, and pay a little, logarithmically.
 local rules = require("rules")
 
 local function total(g)
@@ -14,6 +14,8 @@ check(rules.game_finale_arm(g) == nil, "a board still in play has no finale")
 g.won, g.moves = true, 7
 local armed = rules.game_finale_arm(g)
 check(#armed == 5 and g.moves == 2, "a round spends five moves on five pieces")
+check(math.abs(g.finale_share - rules.FINALE_SHARE * math.log(6) / 5) < 1e-9,
+    "the first five moves are worth ln 6 of the share together")
 for _, cell in ipairs(armed) do
     check(g.tiles[cell].special == "striped", "an armed piece becomes a line gem of its own kind")
 end
@@ -23,6 +25,8 @@ rules.game_apply(g, m)
 rules.game_collapse(g, true)
 local last = rules.game_finale_arm(g)
 check(#last == 2 and g.moves == 0, "the last round arms only the moves that are left")
+check(math.abs(g.finale_share - rules.FINALE_SHARE * math.log(8 / 6) / 2) < 1e-9,
+    "later moves are worth less: moves six and seven add ln(8/6)")
 check(rules.game_finale_arm(g) == nil, "the finale ends with the moves")
 
 local board = rules.game_start(0, 4242)
@@ -30,4 +34,4 @@ board.won, board.moves = true, 12
 local earned = total(board)
 rules.game_finale(board, m)
 check(board.moves == 0 and board.won, "the whole finale spends every move and the board stays won")
-check(total(board) > earned, "the pieces the line gems sweep away pay their resources")
+check(total(board) > earned, "the pieces the line gems sweep away pay a share of their resources")

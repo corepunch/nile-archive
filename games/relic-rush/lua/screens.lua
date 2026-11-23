@@ -72,14 +72,12 @@ function R.town_middle_icon(at) R.compass_icon(at, 17) end
 R.register_result(function()
     local breakdown = rules.reward_breakdown(R.g, R.prog)
     local reward = breakdown.total
-    local resources = {}
+    local resources, bonus = {}, {}   -- bonus: the decorations' share, in the same order
     for _, slot in ipairs(economy.currency_order) do
-        local kind = economy.currencies[slot]
-        local amount = reward[slot] - (slot == economy.GOLD and breakdown.decoration or 0)
-        resources[#resources+1] = {id=kind.key, amount=amount, icon=currency_icon(slot)}
+        local kind, share = economy.currencies[slot], breakdown.decoration[slot]
+        resources[#resources+1] = {id=kind.key, amount=reward[slot] - share, icon=currency_icon(slot)}
+        if share > 0 then bonus[#bonus+1] = {id="decoration-" .. slot, amount="+" .. share, icon=currency_icon(slot)} end
     end
-    local bonus = breakdown.decoration > 0
-        and {id="decoration", amount="+" .. breakdown.decoration, icon=currency_icon(economy.GOLD)} or nil
     return {
         title=breakdown.first and tr("Expedition complete") or tr("Replay complete"),
         resources=resources, bonus=bonus, action=R.result_action(breakdown.first, reward),
