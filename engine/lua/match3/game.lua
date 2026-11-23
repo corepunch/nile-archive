@@ -24,6 +24,8 @@
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
 -- See docs/PORTRAIT_GAMES.md.
 local N = ui.node
+local l10n = require("l10n")
+local tr = l10n.tr
 
 local G = {}
 local BOARD_OUT = .30
@@ -31,8 +33,8 @@ local BOARD_OUT = .30
 ------------------------------------------------------------------- words
 
 G.DEFAULTS = {
-    app = {title = "Match-3 town", id = "match3-game", clear = "#09211F"},
-    menu = {play = "CONTINUE", settings = "SETTINGS", label = "MAIN MENU"},
+    app = {title = tr("Match-3 town"), id = "match3-game", clear = "#09211F"},
+    menu = {play = tr("CONTINUE"), settings = tr("SETTINGS"), label = tr("MAIN MENU")},
     packs = {"kind"},        -- piece packs; the first is the default, --tiles picks another
     campaign_dialogue = true,
     speech = {scale = 1, name = 15},
@@ -41,34 +43,38 @@ G.DEFAULTS = {
     -- project can be built in town.
     board = {},
     notices = {
-        reward_building = "Building funded! Spare gold is yours to decorate.",
-        reward_replay = "Replay gold collected. Choose something in the shop.",
-        relocate = "Some buildings need a new spot. Hold one to move it.",
-        all_open = "The whole town is open.",
-        quit = "Your board is saved. Tap Play to continue level %d.",
+        reward_building = tr("Building funded! Spare gold is yours to decorate."),
+        reward_replay = tr("Replay gold collected. Choose something in the shop."),
+        relocate = tr("Some buildings need a new spot. Hold one to move it."),
+        all_open = tr("The whole town is open."),
+        quit = tr("Your board is saved. Tap Play to continue level %d."),
     },
     capsules = {
-        notes = {"", "Gold buys buildings.", ""},
+        notes = {"", tr("Gold buys buildings."), ""},
     },
-    pause = {guide = "GUIDE", quit = "QUIT", leaderboard = "LEADERBOARD"},
-    confirm = {title = "Restart this level?", restart = "RESTART", cancel = "KEEP PLAYING"},
-    failed = {title = "Out of moves", retry = "TRY AGAIN", town = "VISIT TOWN"},
-    zone = {subtitle = "A NEW PLACE TO DISCOVER", cleared = "LEVELS CLEARED  %d / %d", earn = "CLEAR NEW LEVELS TO OPEN IT",
-            open = "OPEN THIS AREA"},
-    finale = {title = "To be continued", lines = {}},
+    pause = {guide = tr("GUIDE"), quit = tr("QUIT"), leaderboard = tr("LEADERBOARD")},
+    confirm = {title = tr("Restart this level?"), restart = tr("RESTART"), cancel = tr("KEEP PLAYING")},
+    failed = {title = tr("Out of moves"), retry = tr("TRY AGAIN"), town = tr("VISIT TOWN")},
+    zone = {subtitle = tr("A NEW PLACE TO DISCOVER"), cleared = tr("LEVELS CLEARED  %d / %d"),
+            earn = tr("CLEAR NEW LEVELS TO OPEN IT"), open = tr("OPEN THIS AREA")},
+    finale = {title = tr("To be continued"), lines = {}},
     -- Every level is cleared: shown after the last win, and by Play from then on.
     -- A line's %d is the number of levels.
-    complete = {title = "You won!", lines = {{"YOU COMPLETED ALL %d LEVELS.", 16}, {"Your town stays open to build.", 16}}},
-    result = {visit = "COLLECT & VISIT TOWN"},
-    card = {move = "MOVE", build = "BUILD", repair = "RESTORE",
-            gets = "YOU GET", price = "PRICE", missing = "STILL MISSING",
-            locked = "LOCKED"},
+    complete = {title = tr("You won!"), lines = {
+        -- TRANSLATORS: %d is the campaign's number of levels, always 100
+        {tr("YOU COMPLETED ALL %d LEVELS."), 16}, {tr("Your town stays open to build."), 16}}},
+    result = {visit = tr("COLLECT & VISIT TOWN")},
+    card = {move = tr("MOVE"), build = tr("BUILD"), repair = tr("RESTORE"),
+            gets = tr("YOU GET"), price = tr("PRICE"), missing = tr("STILL MISSING"),
+            locked = tr("LOCKED")},
     catalogue = {
-        title = "Build your town",
-        projects = "Projects", decorations = "Decorations", progress = "%d / %d",
-        locked = "LOCKED", opens = "OPENS IN %s",
-        earlier = "FINISH THE PREVIOUS PROJECTS",
-        poor = "MORE GOLD NEEDED", ready = "Ready to build!",
+        title = tr("Build your town"),
+        projects = tr("Projects"), decorations = tr("Decorations"), progress = "%d / %d",
+        locked = tr("LOCKED"),
+        -- TRANSLATORS: %s is an epoch's name
+        opens = tr("OPENS IN %s"),
+        earlier = tr("FINISH THE PREVIOUS PROJECTS"),
+        poor = tr("MORE GOLD NEEDED"), ready = tr("Ready to build!"),
     },
     debug = {victory = 1, catalogue_card = 10, narrator = ""},
 }
@@ -506,13 +512,13 @@ function G.bind(R, over)
 
     function R.register_result(model)
         local form = ui.form(N.column {panel=true,
-            match3.popup_header("Results"),
+            match3.popup_header(tr("Results")),
             N.column {gap=1,paint_group={.24,.32,9},
-                N.label {text="SCORE",em=13,text_style="caption"},
+                N.label {text=tr("SCORE"),em=13,text_style="caption"},
                 N.label {id="score",em=44,text_style="gold"},
             },
             N.column {gap=7,paint_group={.62,.28,10},
-                N.label {text="RESOURCES",em=13,text_style="caption"},
+                N.label {text=tr("RESOURCES"),em=13,text_style="caption"},
                 -- One row of equal cells, however many currencies the game banks.
                 N.uniform_grid {id="resources",rows=1,gap=9,item=function(entry)
                     return match3.resource_indicator(entry)
@@ -563,7 +569,7 @@ function G.bind(R, over)
     -- R.building_reward(kind) returns the board piece with its payout, if any.
     local wonder_form = ui.form{
         root = N.column {panel=true,
-            match3.popup_header("Building details", nil, "close"),
+            match3.popup_header(tr("Building details"), nil, "close"),
             N.column {gap=6,padding={16,0,16,0},
                 N.image {id="sprite",height=198},
                 N.label {id="about",wrap=true,em=17,text_style="body",visible_field="show_about"},
@@ -577,7 +583,7 @@ function G.bind(R, over)
             },
             N.label {id="notice",wrap=true,em=15,text_style="body",visible_field="show_notice"},
             N.button {id="action",height=56,visible_field="show_action"},
-            N.button {id="shop",text="SHOP",height=30,flat=true,em=16,visible_field="show_shop"},
+            N.button {id="shop",text=tr("SHOP"),height=30,flat=true,em=16,visible_field="show_shop"},
         },
         bindings={
             {id="sprite",field="sprite",type="texture",readonly=true},
@@ -604,7 +610,7 @@ function G.bind(R, over)
         local about = dialogue_on() and journey.building_about(i, R.prog.level, w.about) or w.about or ""
         wonder_form.values.show_about = about ~= ""
         local action = movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build)
-            or replay_for_funding and "EARN RESOURCES"
+            or replay_for_funding and tr("EARN RESOURCES")
         wonder_form.values.show_action = not not action
         local ok, message = wonder_form:push{sprite=w.sprite, about=about, action=action or ""}
         assert(ok, message)
@@ -629,7 +635,7 @@ function G.bind(R, over)
         local funding
         if blocked == "later" then
             local epoch = W.epochs and W.epochs[project_epoch(position)]
-            funding = epoch and W.catalogue.opens:format(epoch:upper()) or W.catalogue.locked
+            funding = epoch and W.catalogue.opens:format(l10n.upper(epoch)) or W.catalogue.locked
         elseif blocked == "earlier" then funding = W.catalogue.earlier
         elseif needs_funding and #missing == 0 then funding = W.catalogue.poor
         elseif not built and not can_build and not step then
@@ -678,7 +684,7 @@ function G.bind(R, over)
         elseif action == "quit" then   -- the unfinished board waits in town
             R.on_island, R.overlay = true, R.OV_NONE
             local replay = R.prog.level >= rules.LEVELS
-            R.notice(replay and "Your board is saved. Open its project to earn more resources."
+            R.notice(replay and tr("Your board is saved. Open its project to earn more resources.")
                 or W.notices.quit:format(R.g.level + 1))
         end
     end, live=function(event)
@@ -708,7 +714,7 @@ function G.bind(R, over)
 
     local region = W.zone
     local zone_form = ui.form(N.column {panel=true,
-        match3.popup_header("Region", nil, "close"),
+        match3.popup_header(tr("Region"), nil, "close"),
         N.label {id="cleared",wrap=true,em=24,text_style=PAL_GOLD},
         N.button {id="open",text=region.open,height=47,visible_field="can_open"},
     })
@@ -720,7 +726,8 @@ function G.bind(R, over)
         zone_form.values.can_open = not W.epochs and R.island:zone_available(z, R.prog.wallet)
         local requirement
         if W.epochs then
-            requirement = region.epoch_hint and region.epoch_hint(z + 1) or "Unlocked in " .. W.epochs[z + 1]
+            -- TRANSLATORS: %s is an epoch's name
+            requirement = region.epoch_hint and region.epoch_hint(z + 1) or tr("Unlocked in %s"):format(W.epochs[z + 1])
         else
             requirement = region.cleared:format(R.prog.wallet[rules.CLEARED], zone.needs[rules.CLEARED])
         end
@@ -766,8 +773,8 @@ function G.bind(R, over)
                     N.spacer {grow=1}},
             },
             N.row {gap=12,
-                N.button {id="back",text="BACK",role="secondary",grow=1,height=48},
-                N.button {id="play",text="PLAY",grow=1,height=48},
+                N.button {id="back",text=tr("BACK"),role="secondary",grow=1,height=48},
+                N.button {id="play",text=tr("PLAY"),grow=1,height=48},
             },
         })
         R.epoch_form = form
@@ -788,7 +795,7 @@ function G.bind(R, over)
             end
             assert(form:set_items("epoch_top", top))
             assert(form:set_items("epoch_bottom", bottom))
-            form:set("play", completed == #W.epochs and "CONTINUE" or "PLAY")
+            form:set("play", completed == #W.epochs and tr("CONTINUE") or tr("PLAY"))
         end, handle=function(event)
             R.close_epoch(event.id == "play")
         end})
@@ -1351,9 +1358,9 @@ function G.bind(R, over)
 
     function R.result_action(first, reward)
         local destination = result_destination(first, R.prog.level + (first and 1 or 0), R.prog.wallet + reward)
-        if destination == "play" then return "COLLECT & PLAY NEXT" end
+        if destination == "play" then return tr("COLLECT & PLAY NEXT") end
         if destination == "build" then return W.result.visit end
-        return "COLLECT"
+        return tr("COLLECT")
     end
 
     -- Bank the reward only after the results dialog closes.
@@ -1698,7 +1705,7 @@ function G.app(R)
             story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
                                           edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
                                           portrait_height = .34, centered = true, inward = true,
-                                          edge_to_edge = true, skip = "SKIP"})
+                                          edge_to_edge = true, skip = tr("SKIP")})
         end
         local board_skin = art.skin()
         for _, action in ipairs{"action-build", "action-play", "action-pause"} do

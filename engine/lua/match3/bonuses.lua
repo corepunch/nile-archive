@@ -1,23 +1,26 @@
 -- The four permanent slots for the square campaigns. A skin supplies the
 -- name, image and optional targeting copy for each rank.
+local l10n = require("l10n")
+local tr = l10n.tr
+
 local B = {THRESHOLD=90}
 
 local layout = {
     {key="impact", legacy_slot="blast", levels={
-        {key="hammer", name="Hammer", action="hit", effect="Hit one cell."},
-        {key="bomb", name="Bomb", action="blast", effect="Hit a 3×3 square around a cell."},
+        {key="hammer", name=tr("Hammer"), action="hit", effect=tr("Hit one cell.")},
+        {key="bomb", name=tr("Bomb"), action="blast", effect=tr("Hit a 3×3 square around a cell.")},
     }},
     {key="shield", legacy_slot="sweep", levels={
-        {key="shield", name="Shield", action="row", effect="Hit the row through a chosen cell."},
-        {key="plus", name="Plus", action="replenish", resource_amount=100, effect="Choose a resource piece for 100 resources or another bonus to add a quarter charge."},
+        {key="shield", name=tr("Shield"), action="row", effect=tr("Hit the row through a chosen cell.")},
+        {key="plus", name=tr("Plus"), action="replenish", resource_amount=100, effect=tr("Choose a resource piece for 100 resources or another bonus to add a quarter charge.")},
     }},
     {key="hourglass", legacy_slot="recharge", levels={
-        {key="hourglass", name="Hourglass", action="moves", effect="Add five moves."},
-        {key="mixer", name="Mixer", action="shuffle", effect="Shuffle the pieces."},
+        {key="hourglass", name=tr("Hourglass"), action="moves", effect=tr("Add five moves.")},
+        {key="mixer", name=tr("Mixer"), action="shuffle", effect=tr("Shuffle the pieces.")},
     }},
     {key="lightning", legacy_slot="star", levels={
-        {key="lightning", name="Lightning", action="lightning", hits=15, effect="Strike up to fifteen random cells."},
-        {key="star", name="Star", action="color", effect="Clear all pieces of a chosen kind."},
+        {key="lightning", name=tr("Lightning"), action="lightning", hits=15, effect=tr("Strike up to fifteen random cells.")},
+        {key="star", name=tr("Star"), action="color", effect=tr("Clear all pieces of a chosen kind.")},
     }},
 }
 

@@ -1,6 +1,8 @@
 -- Reusable deterministic match-3 engine. Game configuration is data and
 -- integer behavior flags; graphics never implement matching, gravity or input.
 local N = ui.node
+local l10n = require("l10n")
+local tr = l10n.tr
 
 local buttons = require("match3.buttons")
 local E = {
@@ -328,7 +330,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     -- The row vertically centres the column by its visible lettering.
     local moves_form = ui.form(N.row {align="center",
         N.column {id="stack", grow=1,
-            N.label {id="caption", text="MOVES", text_style=PAL_CREAM, em=9},
+            N.label {id="caption", text=tr("MOVES"), text_style=PAL_CREAM, em=9},
             N.label {id="count", text_style=PAL_GOLD},
         },
     })
@@ -589,22 +591,22 @@ function E.guide_form(copy, guide_icon)
                 },
             }
         end},
-        N.label {text="TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE.",height=28,em=13,text_style="caption"},
+        N.label {text=tr("TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE."),height=28,em=13,text_style="caption"},
     })
 end
 
 function E.pause_form(guide_label, quit_label, leaderboard_label, menu_label, privacy_link, story)
     return ui.form{
         root=N.column {panel=true,
-            E.popup_header("Settings", nil, "close"),
+            E.popup_header(tr("Settings"), nil, "close"),
             N.column {panel=true,role="group",padding={18,8,18,10},gap=6,
-                N.checkbox {id="sound",text="SOUND",height=50},
-                N.checkbox {id="motion",text="REDUCE MOTION",height=50},
-                story and N.checkbox {id="story",text="STORY",height=50} or nil,
+                N.checkbox {id="sound",text=tr("SOUND"),height=50},
+                N.checkbox {id="motion",text=tr("REDUCE MOTION"),height=50},
+                story and N.checkbox {id="story",text=tr("STORY"),height=50} or nil,
             },
             N.column {gap=12,visible_field="expedition",
-                N.button {id="resume",text="RESUME",height=52},
-                N.button {id="restart",text="RESTART",height=46,role="secondary",visible=quit_label~=nil},
+                N.button {id="resume",text=tr("RESUME"),height=52},
+                N.button {id="restart",text=tr("RESTART"),height=46,role="secondary",visible=quit_label~=nil},
                 N.button {id="quit",text=quit_label,height=46,role="secondary",visible=quit_label~=nil},
             },
             N.button {id="leaderboard",text=leaderboard_label,height=32,role="link",em=20,visible=leaderboard_label~=nil},
@@ -612,7 +614,7 @@ function E.pause_form(guide_label, quit_label, leaderboard_label, menu_label, pr
                 N.button {id="guide",text=guide_label,height=32,grow=1,role="link",em=20},
                 menu_label and N.button {id="menu",text=menu_label,height=32,grow=1,role="link",em=20,visible_field="in_game"},
             },
-            privacy_link and N.button {id="privacy",text="PRIVACY POLICY",height=32,role="link",em=18} or nil,
+            privacy_link and N.button {id="privacy",text=tr("PRIVACY POLICY"),height=32,role="link",em=18} or nil,
         },
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"},
             story and {id="story",field="story",type="boolean"} or nil},
@@ -715,7 +717,7 @@ function E.new(config)
     M.COLORS, M.MATCH_MIN = config.colors or 6, config.match_min or 3
     assert(math.type(M.COLORS) == "integer" and M.COLORS >= 3, "at least three match3 kinds required")
     assert(math.type(M.MATCH_MIN) == "integer" and M.MATCH_MIN >= 3, "match minimum must be at least three")
-    M.levels = config.levels or {{name="Resources", lesson="Connect matching resources.", moves=30, score=1000, relics=0, chains=0, ice=0}}
+    M.levels = config.levels or {{name=tr("Resources"), lesson=tr("Connect matching resources."), moves=30, score=1000, relics=0, chains=0, ice=0}}
     M.LEVELS, M.level_shapes = #M.levels, config.level_shapes or {}
     assert(M.LEVELS > 0, "match3 needs a level")
     local LEVELS, COLORS, MATCH_MIN = M.LEVELS, M.COLORS, M.MATCH_MIN
@@ -1753,12 +1755,13 @@ function E.new(config)
     local function noop() end
     R.tone, R.vfx_wave = R.tone or noop, R.vfx_wave or noop
     R.notice = R.notice or function(message) R.toast, R.toast_time = message, 3.6 end
-    R.tool_notes = R.tool_notes or {"Choose a piece to remove.", "Choose the centre of a blast.", "Choose a piece to clear its axes."}
+    R.tool_notes = R.tool_notes or {tr("Choose a piece to remove."), tr("Choose the centre of a blast."),
+        tr("Choose a piece to clear its axes.")}
     -- What an untargeted bonus did, and why it could not act, by effect name.
-    R.tool_done_notes = R.tool_done_notes or {shuffle="Pieces reshuffled.", moves="More moves added.",
-        replenish="Bonus collected.", charge="Your other bonuses gained charge."}
-    R.tool_refused_notes = R.tool_refused_notes or {shuffle="No shuffle available.",
-        charge="Your other bonuses are already charged."}
+    R.tool_done_notes = R.tool_done_notes or {shuffle=tr("Pieces reshuffled."), moves=tr("More moves added."),
+        replenish=tr("Bonus collected."), charge=tr("Your other bonuses gained charge.")}
+    R.tool_refused_notes = R.tool_refused_notes or {shuffle=tr("No shuffle available."),
+        charge=tr("Your other bonuses are already charged.")}
     function R.reset_board(g)
         R.g, R.pending = g, M.new_match()
         R.autoplay = nil
@@ -1893,7 +1896,7 @@ function E.new(config)
                 R.notice(R.tool_done_notes[still])
                 if R.update_bonus_charges then R.update_bonus_charges() end
             else R.finish_wave() end
-        elseif rules.game_tool_untargeted(k, R.g) then R.notice(R.tool_refused_notes[rules.game_tool_effect(k, R.g)] or "Nothing to do.") end
+        elseif rules.game_tool_untargeted(k, R.g) then R.notice(R.tool_refused_notes[rules.game_tool_effect(k, R.g)] or tr("Nothing to do.")) end
     end
 
     function R.select_tool(k)
@@ -1908,10 +1911,11 @@ function E.new(config)
             if rules.game_tool_untargeted(k, R.g) then use_tool(k); return end
             R.tool = R.tool == k and -1 or k
             local descriptor = tool_slot(R.g, k)
-            R.notice(R.tool < 0 and "Tool put away." or descriptor and descriptor.effect or R.tool_notes[k + 1])
+            R.notice(R.tool < 0 and tr("Tool put away.") or descriptor and descriptor.effect or R.tool_notes[k + 1])
         elseif R.g.tool_meter then
-            R.notice(R.g.tool_meter[k + 1] and "Match its pieces to charge this tool." or "Restore its building to unlock this tool.")
-        else R.notice("No charges left. More tools next expedition.") end
+            R.notice(R.g.tool_meter[k + 1] and tr("Match its pieces to charge this tool.")
+                or tr("Restore its building to unlock this tool."))
+        else R.notice(tr("No charges left. More tools next expedition.")) end
     end
     local function tap_cell(at)
         local cell = R.cell_at(at)
@@ -2013,7 +2017,7 @@ function E.new(config)
     end
 
     -- Praise for long cascades. Games may replace the words.
-    R.kudos_words = R.kudos_words or {"Nice!", "Great!", "Amazing!", "Spectacular!"}
+    R.kudos_words = R.kudos_words or {tr("Nice!"), tr("Great!"), tr("Amazing!"), tr("Spectacular!")}
     local function kudos(level)
         level = math.min(level, #R.kudos_words)
         R.kudos = {text = R.kudos_words[level], level = level, t = 0}
@@ -2076,7 +2080,7 @@ function E.new(config)
             -- A chain, ice or a carved stone holds one of the two. A free piece
             -- slides to the blocker and back; a held one only refuses. A hole
             -- or an empty cell is no swap at all and stays silent.
-            R.notice(R.locked_notice or "Ice and chains must be broken first.")
+            R.notice(R.locked_notice or tr("Ice and chains must be broken first."))
             if movable_for_swap(g, a) then
                 reject_swap(true)
             else
@@ -2099,7 +2103,7 @@ function E.new(config)
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
             if not fast then
                 animate_shuffle(from)
-                R.notice("No moves. Board reshuffled.")
+                R.notice(tr("No moves. Board reshuffled."))
             end
         end
         if R.g.won then

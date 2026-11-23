@@ -73,6 +73,9 @@
 --   THEN_CITY_UPGRADE_BUILDING id               the building's upgrade level rises
 --   THEN_PLAYER_ADD_GAME_CENTER_TROPHY id       a Game Center achievement
 --   THEN_USER_EVENT_AVAILABLE id available      turns the space-separated events on or off
+local l10n = require("l10n")
+local tr = l10n.tr
+
 local M = {}
 
 function M.install(R, cfg)
@@ -536,27 +539,40 @@ function M.install(R, cfg)
     local function currency_name(id) return economy.currencies[assert(SLOTS[id], id)].name end
     local function currency_icon(id) return R.board_art and R.currency_icon and R.currency_icon(SLOTS[id]) end
 
-    -- A feat as the end of "... when you ...", and as resource amounts when it
-    -- counts a resource (the standard indicator, never "150 Food" in a sentence).
-    local function feat_of(e)
+    -- The armed upgrade's card sentence, one whole sentence for each feat, and
+    -- the resource amounts when the feat counts a resource (the standard
+    -- indicator, never "150 Food" in a sentence). `title` names the upgrade.
+    local function feat_of(e, title)
         local c, kind = e.If, e.If[1]
-        local target = cfg.target or "plaque"
         if kind == "IF_PLAYER_GET_RESOURCE_IN_LEVEL" then
-            return ("bank this much %s in one level"):format(currency_name(c.id)),
+            -- TRANSLATORS: the upgrade ("a second saw bench"), a resource name (Food); the amount is shown beside it
+            return tr("Upgrade: %s, when you bank this much %s in one level."):format(title, currency_name(c.id)),
                 {{id="feat-" .. c.id, icon=currency_icon(c.id), amount=c.amount}}
-        elseif kind == "IF_PLAYER_MAKE_MATCH" then return ("make a match of %d or more"):format(c.length)
+        elseif kind == "IF_PLAYER_MAKE_MATCH" then
+            -- TRANSLATORS: the upgrade ("a second saw bench"), then the shortest line that counts
+            return tr("Upgrade: %s, when you make a match of %d or more."):format(title, c.length)
         elseif kind == "IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES" then
-            return ("make %d moves in a row that each clear a %s"):format(c.amount, target)
+            -- TRANSLATORS: the upgrade ("a second saw bench"), a count, the goal tile's name (plaque)
+            return tr("Upgrade: %s, when you make %d moves in a row that each clear a %s."):format(title, c.amount,
+                -- TRANSLATORS: a board goal tile, in the form the sentence "... each clear a %s" needs
+                cfg.target or tr("plaque"))
         elseif kind == "IF_PLAYER_MAKE_MATCH_IN_LEVEL" then
-            return ("make %d matches of %d or more in one level"):format(c.amount, c.min_length or 3)
+            -- TRANSLATORS: the upgrade ("a second saw bench"), a count, then the shortest line that counts
+            return tr("Upgrade: %s, when you make %d matches of %d or more in one level."):format(title, c.amount,
+                c.min_length or 3)
         elseif kind == "IF_PLAYER_MAKE_MATCH_SERIES" then
-            return ("make a match of %d or more in %d moves in a row"):format(c.min_length or 3, c.amount)
+            -- TRANSLATORS: the upgrade ("a second saw bench"), the shortest line that counts, a count
+            return tr("Upgrade: %s, when you make a match of %d or more in %d moves in a row."):format(title,
+                c.min_length or 3, c.amount)
         elseif kind == "IF_PLAYER_MAKE_MATCH_IN_TIME" then
-            return ("make %d matches within %d seconds"):format(c.amount, c.time)
+            -- TRANSLATORS: the upgrade ("a second saw bench"), a count of matches, then of seconds
+            return tr("Upgrade: %s, when you make %d matches within %d seconds."):format(title, c.amount, c.time)
         elseif kind == "IF_PLAYER_COMPLETE_LEVELS_WITHOUT_LIFE_LOSS" then
-            return ("win %d levels in a row without a failed one"):format(c.amount)
+            -- TRANSLATORS: the upgrade ("a second saw bench"), then a count of levels
+            return tr("Upgrade: %s, when you win %d levels in a row without a failed one."):format(title, c.amount)
         end
-        return "meet their feat"
+        -- TRANSLATORS: %s is the upgrade ("a second saw bench"); "their" is the building's keeper
+        return tr("Upgrade: %s, when you meet their feat."):format(title)
     end
     U.feat_of = feat_of
 
@@ -564,11 +580,12 @@ function M.install(R, cfg)
     local function perk_of(e)
         for _, t in ipairs(e.Then) do
             if t[1] == "THEN_PLAYER_ADD_RESOURCE_PER_LEVEL" then
-                return "", "EVERY WIN",
+                return "", tr("EVERY WIN"),
                     {{id="perk-" .. t.id, icon=currency_icon(t.id), amount="+" .. t.amount}}
             elseif t[1] == "THEN_GAME_CHARGE_TOOL" then
                 local bonus = economy.bonuses[t.id]
-                return ("The %s charges faster."):format(bonus.name), "TOOL",
+                -- TRANSLATORS: %s is a tool's name (Hammer, Bomb ...)
+                return tr("The %s charges faster."):format(bonus.name), tr("TOOL"),
                     {{id="perk-" .. t.id, icon=R.board_art and R.board_art[bonus.icon]}}
             end
         end
@@ -585,11 +602,12 @@ function M.install(R, cfg)
         local st, title = U.state(), e.upgrade.title
         if st.done[e.id] then
             local text, caption, entries = perk_of(e)
-            local short = ("Upgraded: %s."):format(title)
+            -- TRANSLATORS: %s is the upgrade ("a second saw bench")
+            local short = tr("Upgraded: %s."):format(title)
             return {about=text ~= "" and short .. " " .. text or short, caption=caption, entries=entries, short=short}
         elseif st.available[e.id] then
-            local feat, entries = feat_of(e)
-            return {about=("Upgrade: %s, when you %s."):format(title, feat), caption="FEAT", entries=entries or {}}
+            local about, entries = feat_of(e, title)
+            return {about=about, caption=tr("FEAT"), entries=entries or {}}
         end
     end
 

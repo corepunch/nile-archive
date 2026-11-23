@@ -50,6 +50,8 @@
 --   extras(screen)          game-only HUD (Nile Archive's player plate, ...)
 --   hide_bottom()           true while a game panel (Nile Archive's build tray) replaces the bottom row
 local N = ui.node
+local l10n = require("l10n")
+local tr = l10n.tr
 
 local T = {}
 T.none = {}   -- in a game's town_config.lua, clears a default
@@ -78,13 +80,13 @@ local DEFAULTS = {
     bubble = {width = 300, seconds = 0, fill = "#FFF6DEF5", edge = "#664427"},
     focus = {lift = 90, min_zoom = .65},
     texts = {
-        placing = "Drag the building to choose a spot, or scroll the land.",
-        restoring = "Confirm to restore this building at its original site.",
-        unchanged = "Nothing changed.",
-        blocked = "Choose open ground clear of other buildings.",
-        cant_afford = "Not enough to build this yet.",
-        cant_buy = "This building is not available yet.",
-        no_room = "Open more land before placing this building.",
+        placing = tr("Drag the building to choose a spot, or scroll the land."),
+        restoring = tr("Confirm to restore this building at its original site."),
+        unchanged = tr("Nothing changed."),
+        blocked = tr("Choose open ground clear of other buildings."),
+        cant_afford = tr("Not enough to build this yet."),
+        cant_buy = tr("This building is not available yet."),
+        no_room = tr("Open more land before placing this building."),
     },
 }
 

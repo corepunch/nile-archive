@@ -30,16 +30,19 @@
 -- leaderboard_me (the player's own row) and leaderboard_note (the status line).
 -- Without Game Center it shows the player's own best, so it works everywhere.
 local N = ui.node
+local l10n = require("l10n")
+local tr = l10n.tr
 
 local L = {}
 L.__index = L
 
 local DEFAULTS = {
-    title = "Leaderboard", everyone = "Everyone", friends = "Friends", close = "Close", native = "Game Center",
-    you = "(you)", loading = "Loading...", empty = "No scores yet. Be the first!",
-    empty_friends = "None of your friends have played yet.",
-    sign_in = "Sign in to Game Center to compare with other players.",
-    sign_in_friends = "Sign in to Game Center to see your friends.",
+    title = tr("Leaderboard"), everyone = tr("Everyone"), friends = tr("Friends"), close = tr("Close"), native = "Game Center",
+    -- TRANSLATORS: follows the player's own name in the leaderboard
+    you = tr("(you)"), loading = tr("Loading..."), empty = tr("No scores yet. Be the first!"),
+    empty_friends = tr("None of your friends have played yet."),
+    sign_in = tr("Sign in to Game Center to compare with other players."),
+    sign_in_friends = tr("Sign in to Game Center to see your friends."),
 }
 
 local function plain(score)
@@ -108,7 +111,7 @@ function L:portrait(box, record)
     local ok, style = pcall(self.skin.text, self.skin, "body", 18)
     if ok and style then
         local initial = record.name:match(utf8.charpattern) or "?"
-        text.inside(style, box, vec2(.5, .5), initial:upper())
+        text.inside(style, box, vec2(.5, .5), l10n.upper(initial))
     end
 end
 

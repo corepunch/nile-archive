@@ -1,13 +1,16 @@
 -- Guided opening moves and contextual lessons for the construction tools.
+local l10n = require("l10n")
+local tr = l10n.tr
+
 local Tutorial = {}
 Tutorial.__index = Tutorial
 
 local lessons = {
-    {copy="Swap the highlighted pieces to match three in a line.", length=3, seed=1},
-    {copy="Match four in a line to make a Line Gem.", length=4, special="striped", seed=12,
-        follow="Match the Line Gem with pieces of its kind to clear a whole line."},
-    {copy="Match five in a line to make a Rainbow Gem.", length=5, special="color_bomb", seed=24,
-        follow="Swap the Rainbow Gem with a piece to clear every piece of that kind."},
+    {copy=tr("Swap the highlighted pieces to match three in a line."), length=3, seed=1},
+    {copy=tr("Match four in a line to make a Line Gem."), length=4, special="striped", seed=12,
+        follow=tr("Match the Line Gem with pieces of its kind to clear a whole line.")},
+    {copy=tr("Match five in a line to make a Rainbow Gem."), length=5, special="color_bomb", seed=24,
+        follow=tr("Swap the Rainbow Gem with a piece to clear every piece of that kind.")},
     {length=3, chain=true, seed=1},
 }
 
@@ -76,7 +79,7 @@ local function opening_move(rules, g, lesson)
 end
 
 function Tutorial.new(R, rules, chain_copy, goal_line)
-    local skip = ui.form(ui.node.button {id="skip", text="Skip", role="link", em=16, height=44})
+    local skip = ui.form(ui.node.button {id="skip", text=tr("Skip"), role="link", em=16, height=44})
     return setmetatable({R=R, rules=rules, chain_copy=chain_copy, goal_line=goal_line, skip=skip}, Tutorial)
 end
 
@@ -165,7 +168,8 @@ function Tutorial:tool_tip()
         local points, flag = g.tool_meter[bonus.tool], tool_flag(bonus, true)
         if points == g.tool_threshold and seen & flag == 0 and R.tool < 0
             and R.bonus_display_charge(bonus.tool) == points then
-            return {tool=bonus.tool, flag=flag, points=points, copy=("Tap %s. %s"):format(bonus.name, bonus.effect)}
+            -- TRANSLATORS: a tool's name, then the sentence saying what it does
+            return {tool=bonus.tool, flag=flag, points=points, copy=tr("Tap %s. %s"):format(bonus.name, bonus.effect)}
         end
     end
     local bonus = g.bonus
@@ -179,7 +183,8 @@ function Tutorial:tool_tip()
     end
     if next(cells) then
         return {tool=bonus.tool, flag=flag, points=points, cells=cells,
-            copy=("Match %s pieces to charge the tool."):format(bonus.name)}
+            -- TRANSLATORS: %s is a tool's name (Hammer, Bomb ...): its pieces charge it
+            copy=tr("Match %s pieces to charge the tool."):format(bonus.name)}
     end
 end
 
