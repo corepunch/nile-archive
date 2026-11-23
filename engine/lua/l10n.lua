@@ -219,9 +219,9 @@ function l10n.parse_languages(text) return split(text, "\n") end
 local FONT_DIR = "data/common/fonts/"
 local SCRIPT_FONTS = {
     default = {"NotoSans-Bold.ttf"},
-    ja = {"NotoSansCJKjp-Regular.otf", "NotoSans-Bold.ttf"},
-    ko = {"NotoSansCJKkr-Regular.otf", "NotoSans-Bold.ttf"},
-    ["zh-Hans"] = {"NotoSansCJKsc-Regular.otf", "NotoSans-Bold.ttf"},
+    ja = {"NotoSansCJKjp-Regular.ttf", "NotoSans-Bold.ttf"},
+    ko = {"NotoSansCJKkr-Regular.ttf", "NotoSans-Bold.ttf"},
+    ["zh-Hans"] = {"NotoSansCJKsc-Regular.ttf", "NotoSans-Bold.ttf"},
 }
 
 -- The engine fonts, in fallback order, for a language.

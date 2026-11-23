@@ -112,7 +112,9 @@ every language. Noto Sans CJK JP, KR and SC come first for Japanese, Korean
 and Chinese, so Han characters take each language's own forms.
 
 The fonts hold only the characters the catalogues use, plus ASCII and common
-punctuation. After translating, refit them from the full Noto fonts
+punctuation. They are TrueType with overlapping strokes merged: outlines and
+shadows come from signed distance fields, which would otherwise outline the
+strokes inside each CJK character. After translating, refit them from the full Noto fonts
 (github.com/notofonts/noto-cjk and github.com/notofonts/latin-greek-cyrillic):
 
 ```sh

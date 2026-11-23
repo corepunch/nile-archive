@@ -20,7 +20,8 @@ every other language a game offers.
     python3 tools/l10n.py fill DOMAIN TAG FILE  merge a translator's PO into the catalogue
     python3 tools/l10n.py fonts --source DIR    subset the engine's script fonts to the catalogues
 
-Needs gettext (xgettext, msgmerge, msgfmt) and, for fonts and check, fontTools.
+Needs gettext (xgettext, msgmerge, msgfmt), fontTools for fonts and check, and
+skia-pathops for fonts.
 See docs/LOCALIZATION.md.
 """
 from __future__ import annotations
@@ -54,13 +55,13 @@ PLURAL_RULE = {
     "ja": "none", "ko": "none", "zh": "none", "id": "none", "th": "none", "vi": "none",
     "ru": "slavic", "uk": "slavic", "be": "slavic", "pl": "polish",
 }
-# Source file for each engine script font, and the languages whose characters
+# Each engine script font: its source file, and the languages whose characters
 # it must hold (None: every language).
 SCRIPT_FONTS = {
-    "NotoSans-Bold.ttf": None,
-    "NotoSansCJKjp-Regular.otf": {"ja"},
-    "NotoSansCJKkr-Regular.otf": {"ko"},
-    "NotoSansCJKsc-Regular.otf": {"zh-Hans"},
+    "NotoSans-Bold.ttf": ("NotoSans-Bold.ttf", None),
+    "NotoSansCJKjp-Regular.ttf": ("NotoSansCJKjp-Regular.otf", {"ja"}),
+    "NotoSansCJKkr-Regular.ttf": ("NotoSansCJKkr-Regular.otf", {"ko"}),
+    "NotoSansCJKsc-Regular.ttf": ("NotoSansCJKsc-Regular.otf", {"zh-Hans"}),
 }
 # Characters every subset keeps, so numbers, prices and punctuation never
 # depend on what the catalogues happen to say today.
@@ -272,7 +273,7 @@ def font_chars(paths: list[Path]) -> set[int]:
 
 
 def script_fonts(tag: str) -> list[str]:
-    own = [name for name, langs in SCRIPT_FONTS.items() if langs and (tag in langs or tag.split("-")[0] in langs)]
+    own = [name for name, (_, langs) in SCRIPT_FONTS.items() if langs and (tag in langs or tag.split("-")[0] in langs)]
     return own + ["NotoSans-Bold.ttf"]
 
 
@@ -402,13 +403,52 @@ def catalogue_chars(tags: set[str] | None) -> str:
     return "".join(sorted(c for c in chars if drawable(c) or c == " "))
 
 
+def to_truetype(font) -> None:
+    """Quadratic TrueType outlines without overlaps, in place. The engine draws
+    outlines and shadows from signed distance fields (stb_truetype), which
+    read the edges of overlapping strokes as edges of the glyph: Noto CJK
+    draws its characters from overlapping CFF strokes."""
+    from fontTools.pens.cu2quPen import Cu2QuPen
+    from fontTools.pens.ttGlyphPen import TTGlyphPen
+    from fontTools.ttLib import newTable
+    from fontTools.ttLib.removeOverlaps import removeOverlaps
+    if "CFF " in font:
+        order = font.getGlyphOrder()
+        glyphs = font.getGlyphSet()
+        quadratic = {}
+        for name in order:
+            pen = TTGlyphPen(glyphs)
+            glyphs[name].draw(Cu2QuPen(pen, 1.0, reverse_direction=True))
+            quadratic[name] = pen.glyph()
+        font["loca"] = newTable("loca")
+        font["glyf"] = glyf = newTable("glyf")
+        glyf.glyphOrder, glyf.glyphs = order, quadratic
+        for table in ("CFF ", "VORG"):
+            if table in font:
+                del font[table]
+        for name, glyph in quadratic.items():
+            glyph.recalcBounds(glyf)
+            width, _ = font["hmtx"][name]
+            font["hmtx"][name] = (width, getattr(glyph, "xMin", 0))
+        maxp = font["maxp"]
+        maxp.tableVersion = 0x00010000
+        for field in ("maxZones", "maxTwilightPoints", "maxStorage", "maxFunctionDefs", "maxInstructionDefs",
+                      "maxStackElements", "maxSizeOfInstructions"):
+            setattr(maxp, field, 1 if field == "maxZones" else 0)
+        maxp.recalc(font)
+        post = font["post"]
+        post.formatType, post.extraNames, post.mapping = 2.0, [], {}
+        font.sfntVersion = "\0\1\0\0"
+    removeOverlaps(font)
+
+
 def fonts(source: Path) -> None:
     from fontTools import subset
     FONT_DIR.mkdir(parents=True, exist_ok=True)
-    for name, tags in SCRIPT_FONTS.items():
-        found = next((p for p in source.rglob("*") if p.name.lower() == name.lower()), None)
+    for name, (origin, tags) in SCRIPT_FONTS.items():
+        found = next((p for p in source.rglob("*") if p.name.lower() == origin.lower()), None)
         if not found:
-            sys.exit(f"{name} not found under {source}")
+            sys.exit(f"{origin} not found under {source}")
         text = catalogue_chars(tags)
         out = FONT_DIR / name
         options = subset.Options()
@@ -421,6 +461,7 @@ def fonts(source: Path) -> None:
         subsetter = subset.Subsetter(options)
         subsetter.populate(text=text)
         subsetter.subset(font)
+        to_truetype(font)
         subset.save_font(font, str(out), options)
         print(f"{out.relative_to(ROOT)}: {len(text)} characters, {out.stat().st_size // 1024} KB")
 
