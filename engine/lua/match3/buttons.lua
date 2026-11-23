@@ -92,118 +92,97 @@ function B.paint(box, image, state, alpha, face_colors, progress)
     if progress then progress_gauge(center, side, progress) end
 end
 
-local corners = {vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1)}
-
--- Follow the rounded bevel within image_poly's 16-point limit.
-local function rounded_picture(image, box, radius, tint)
-    local inner = box:inflate(-radius)
-    local points, uv = {}, {}
-    for corner, position in ipairs(corners) do
-        local center = inner:point(position)
-        local start = math.pi * (1 + (corner - 1) * .5)
-        for segment = 0, 3 do
-            local point = center + vec2.polar(start + math.pi * segment / 6, radius)
-            points[#points + 1] = point
-            uv[#uv + 1] = vec2((point.x - box.x) / box.w * image.w, (point.y - box.y) / box.h * image.h)
-        end
-    end
-    gfx.image_poly(image, points, uv, tint)
+local function paint_funding_tag(skin, out, alpha)
+    local side = math.min(out.w, out.h)
+    local width, height = side * .81, side * .22
+    local tag = rect.centered(out:center() + vec2(0, side * .37), size2(width, height))
+    local radius = height * .38
+    gfx.shadow(tag:offset(vec2(0, height * .1)), radius, height * .15, color.alpha(rgb(0x2D180C), alpha * .65))
+    gfx.round_rect(tag, radius, color.alpha(rgb(0xE2B978), alpha))
+    gfx.round_rect(tag:inflate(-height * .06), radius - height * .06, color.alpha(rgb(0x723620), alpha))
+    text.fit(skin:text("funding_tag", height * .64):faded(1 - alpha), tag:inflate2(vec2(-width * .06, 0)),
+        vec2(.5, .5), "NEED FUNDS")
 end
 
--- Leave the cast shadow fixed when the rounded bevel sinks on press.
-local stone_rim = {
-    {shadow = "#38211485", radius = 16, blur = 5, inset = {1, 1, 1, 2}, offset = {0, 5}, fixed = true},
-    {fill = "#795131", radius = 16},
-    {name = "lit_stone", fill = "#FFE5AC", fill2 = "#BC8A51", radius = 14, inset = {1, 1, 1, 3}},
-    {fill = "#6F4729", radius = 12, inset = {4, 4, 4, 5}},
-}
-
-local function stone_tile(face)
-    local layers = {table.unpack(stone_rim)}
-    for _, layer in ipairs(face) do layers[#layers + 1] = layer end
-    return layers
-end
-
-local function paint_funding_tag(box, skin, out, alpha)
-    local scale = out.w / box.w
-    local width = math.min(out.w - 6 * scale, 68 * scale)
-    local tag = rect(out.x + (out.w - width) / 2, out:max().y - 23 * scale, width, 20 * scale)
-    gfx.shadow(tag:offset(vec2(0, 2 * scale)), 6 * scale, 3 * scale, color.alpha(rgb(0x2D180C), alpha * .65))
-    gfx.round_rect(tag, 6 * scale, color.alpha(rgb(0xE2B978), alpha))
-    gfx.round_rect(tag:inflate(-scale), 5 * scale, color.alpha(rgb(0x723620), alpha))
-    text.fit(skin:text("funding_tag", 12), tag:inflate2(vec2(-4 * scale, 0)), vec2(.5, .5), "NEED FUNDS")
+local function button_state(st)
+    if st.disabled then return "disabled" end
+    if st.held then return "pressed" end
+    if st.hot then return "hover" end
+    return "normal"
 end
 
 -- Atlas rows follow the four projects in each advent or expedition epoch.
 function B.project(unlocks)
     local thumbnails
     return {
-        normal = {layers = stone_tile{
-            {inset = {6, 6, 6, 6}, paint = function(box, node, _, skin, out, alpha)
-                local project = node.project
-                if not project then return end
-                local built = project.state == "built"
-                if not thumbnails then
-                    local sheet = texture.load("city/epochs/projects.jpg")
-                    assert(sheet.tex, "missing project thumbnails")
-                    local cell = sheet.w / 4
-                    thumbnails = {}
-                    for i, unlock in ipairs(unlocks) do
-                        local x, y = (i - 1) % 4 * cell, ((i - 1) // 4) * cell
-                        thumbnails[unlock.building] = texture.region(sheet, rect(x, y, cell, cell))
-                    end
+        normal = {layers = {{paint = function(_, node, st, skin, out, alpha)
+            local project = node.project
+            if not project then return end
+            if not thumbnails then
+                local sheet = texture.load("city/epochs/projects.jpg")
+                assert(sheet.tex, "missing project thumbnails")
+                local cell = sheet.w / 4
+                thumbnails = {}
+                for i, unlock in ipairs(unlocks) do
+                    local x, y = (i - 1) % 4 * cell, ((i - 1) // 4) * cell
+                    thumbnails[unlock.building] = texture.region(sheet, rect(x, y, cell, cell))
                 end
-                local image = thumbnails[project.key]
-                local tint = built and rgb(0xA6A6A6) or color.WHITE
-                -- Preserve the dive transition's mask while rounding the painting.
-                rounded_picture(image, out, 10 * out.w / box.w, color.alpha(tint, alpha))
-                local tick = skin.images.tick
-                if built and tick then
-                    local side = math.min(out.w, out.h) * .76
-                    local dst = rect.centered(out:center(), size2(side, side)):fit(texture.size(tick))
-                    gfx.image(tick, dst:offset(vec2(0, side * .06)), color.alpha(rgb(0x24160B), alpha * .7))
-                    gfx.image(tick, dst, color.alpha(color.WHITE, alpha))
-                elseif project.state == "funding" then
-                    paint_funding_tag(box, skin, out, alpha)
-                end
-            end},
-        }},
-        hover = {set = {lit_stone = {fill = "#FFF3D1"}}},
-        pressed = {offset = {0, 2}},
+            end
+            local state = button_state(st)
+            local built = project.state == "built"
+            B.medallion(out:inflate(-math.min(out.w, out.h) * .02), thumbnails[project.key], {
+                state = state, alpha = alpha, crop = true,
+                tint = built and rgb(0xA6A6A6) or color.WHITE,
+            })
+            if state == "pressed" then out = out:offset(vec2(0, out.h * .023)) end
+            local tick = skin.images.tick
+            if built and tick then
+                local side = math.min(out.w, out.h) * .66
+                local dst = rect.centered(out:center(), size2(side, side)):fit(texture.size(tick))
+                gfx.image(tick, dst:offset(vec2(0, side * .06)), color.alpha(rgb(0x24160B), alpha * .7))
+                gfx.image(tick, dst, color.alpha(color.WHITE, alpha))
+            elseif project.state == "funding" then
+                paint_funding_tag(skin, out, alpha)
+            end
+        end}}},
+        pressed = {offset = {0, 0}},
     }
 end
 
--- Terracotta is the default; winter markets can supply their own enamel colors.
-function B.project_play(palette)
-    palette = palette or {
-        normal = {fill = "#C36543", fill2 = "#913F28"},
-        hover = {fill = "#D0714C", fill2 = "#A4482D"},
-        pressed = {fill = "#A84C30", fill2 = "#823523"},
-    }
+-- Shared painted face. The level number sits inside the widest part of the triangle.
+local play_states = {"normal", "hover", "pressed", "disabled"}
+function B.project_play()
+    local frames
     return {
-        text = "cream", em = 25, text_wrap = true,
-        normal = {layers = stone_tile{
-            {fill = "#E8A264", radius = 10, inset = {6, 6, 6, 7}},
-            {name = "enamel", fill = palette.normal.fill, fill2 = palette.normal.fill2, radius = 9, inset = {7, 7, 7, 9}},
-            {paint = function(_, node, _, skin, out, alpha)
-                if node and node.text and node.text ~= "" then return end
-                local icon = skin.images["action-play"]
-                if icon then gfx.image(icon, out:inflate(-out.h * .21):fit(texture.size(icon)), color.alpha(color.WHITE, alpha)) end
-            end},
-        }},
-        hover = {set = {enamel = palette.hover}},
-        pressed = {offset = {0, 2}, set = {enamel = palette.pressed}},
-        disabled = {alpha = .55},
+        normal = {layers = {{paint = function(_, node, st, skin, out, alpha)
+            if not frames then
+                local sheet = texture.load_engine("data/board/town-play.png")
+                assert(sheet.tex, "missing town Play atlas")
+                local cell = sheet.w / 2
+                frames = {}
+                for i, state in ipairs(play_states) do
+                    local x, y = (i - 1) % 2 * cell, ((i - 1) // 2) * cell
+                    frames[state] = texture.region(sheet, rect(x, y, cell, cell))
+                end
+            end
+            local state = button_state(st)
+            local side = math.min(out.w, out.h)
+            local depth = state == "pressed" and side * .02 or 0
+            local artwork = rect.centered(out:center() + vec2(0, depth), size2.splat(side * 1.05))
+            local function ink(c) return color.alpha(c, alpha) end
+            gfx.image(frames[state], artwork, ink(color.WHITE))
+            local center = artwork:point(vec2(.43, .48))
+            if node.level then
+                local number = rect.centered(center, size2(side * .42, side * .44))
+                text.fit(skin:text("cream", side * .36):faded(1 - alpha), number, vec2(.5, .5), tostring(node.level))
+            elseif skin.images.tick then
+                local icon = skin.images.tick
+                local dst = rect.centered(center, size2(side * .42, side * .42)):fit(texture.size(icon))
+                gfx.image(icon, dst, ink(color.WHITE))
+            end
+        end}}},
+        pressed = {offset = {0, 0}},
     }
-end
-
-function B.project_bar()
-    return {normal = {layers = {
-        {image = "city/epochs/town-bar.jpg"},
-        {fill = "#835934", height_ratio = .025},
-        {fill = "#FAE3AE", height_ratio = .035, offset = {0, 2}},
-        {fill = "#AA7A4680", height_ratio = .025, offset = {0, 6}},
-    }}}
 end
 
 function B.epoch_medal()
@@ -241,6 +220,7 @@ end
 -- hover, pressed or disabled, as for the buttons: pressed sinks, disabled
 -- turns the rim pewter and fades the picture) and a `progress` from 0 to 1,
 -- drawn as a gauge across the bottom; `alpha` (0 to 1) fades it with a popup.
+-- Square project paintings set `crop` for a centred cut and can supply a `tint`.
 function B.medallion(box, image, options)
     options = options or {}
     local side = math.min(box.w, box.h)
@@ -249,6 +229,8 @@ function B.medallion(box, image, options)
     local disabled, pressed = state == "disabled", state == "pressed"
     local rim = disabled and pewter or brass
     local face = faces[state == "hover" and "hover" or "normal"]
+    local top, bottom = rim.top, rim.bottom
+    if options.crop and state == "hover" then top, bottom = rgb(0xFFFCED), rgb(0xD69951) end
     local alpha = options.alpha or 1
     local function ink(c) return alpha < 1 and color.alpha(c, alpha) or c end
     local center = box:center()
@@ -256,15 +238,17 @@ function B.medallion(box, image, options)
     local depth, bezel, well, enamel = frame_boxes(body, pressed)
     gfx.circle(center + vec2(0, depth), side * .5, ink(shade))
     gfx.circle(center, side * .5, ink(rim.edge))
-    gfx.round_rect_grad(bezel, bezel.w / 2, ink(rim.top), ink(rim.bottom))
+    gfx.round_rect_grad(bezel, bezel.w / 2, ink(top), ink(bottom))
     gfx.circle(well:center(), well.w / 2, ink(rim.lip))
     gfx.round_rect_grad(enamel, enamel.w / 2, ink(face.top), ink(face.bottom))
     local size = image and texture.size(image)
     if size and size.w > 0 and size.h > 0 then
         local w = enamel.w * 1.08
         local h = math.max(enamel.h, w * size.h / size.w)
-        portrait_cut(image, rect(enamel:center().x - w / 2, enamel.y - enamel.h * .02, w, h), enamel,
-            color(255, 255, 255, math.floor((disabled and 140 or 255) * alpha + .5)))
+        local dst = rect.centered(enamel:center(), size2(w, h))
+        if not options.crop then dst = rect(dst.x, enamel.y - enamel.h * .02, w, h) end
+        local tint = color.alpha(options.tint or color.WHITE, alpha * (disabled and .55 or 1))
+        portrait_cut(image, dst, enamel, tint)
         local lip = (well.w - enamel.w) / 2
         gfx.ring(enamel:center(), enamel.w / 2 + lip / 2, lip, ink(rim.lip))
     end

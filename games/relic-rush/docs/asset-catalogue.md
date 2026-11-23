@@ -33,26 +33,23 @@ uses the original colors.
 
 ## Construction backdrops
 
-The town bar shows four 192 px square details from the expedition paintings in
-rounded sandstone insets. A terracotta Next Level button fills the fifth slot.
-Each button has a rounded bevel and soft drop shadow.
-One sandstone sill spans the five slots and continues behind the home indicator.
-Its grain comes from the existing ImageGen [stone painting](../art/papyrus-board/stone-grain.png).
-The atlas at `data/city/epochs/projects.jpg` stores four full-color crops for each
-epoch. Every unbuilt project uses the original colors. The skin draws a small
-rounded clay-red Need Funds tag with a brass edge and a shadow at the bottom of an underfunded
-project's painting. The live Lilita One label and tag travel with the painting
-when pressed. A ready project has the existing particle trail, with a steady
-glow in Reduce Motion. A completed project keeps its color, dimmed behind the
-painted `shop-built` jade checkmark.
-Hover lights the project bevel and the Next Level face. Both faces sink toward
-their shadows on press and the form draws keyboard focus. Tapping any building
-opens its card.
+Four circular brass medallions float over the town. Each medallion clips an
+existing 192 px construction painting to the round enamel well. The shared
+[green jade Play sprite](../../../art/match3-buttons/README.md#town-play) has a rounded
+triangular face and an antique brass lip. The game centers the next level number
+on the enamel. After the final level it shows the existing completion checkmark
+and opens the results. The `shot hud-states` capture shows the four painted states
+and a three-digit label.
 
-Run `python3 tools/project_thumbnails.py relic-rush` to reproduce the atlas
-and panel. The registration manifest records the painting and sandstone crops.
-Capture the completed, ready and underfunded states with
-`build/test/relic-rush 'shot epoch-purchase-choice'` at both phone sizes.
+The four projects keep their painted colors. A Need Funds tag marks a shortfall.
+A particle trail circles an affordable project when motion is enabled. A
+completed project is dimmed behind the existing jade checkmark. The bevel
+brightens on hover and sinks on press. The form draws keyboard focus.
+
+The [art manifest](../art/board-states/manifest.json) records the painting crops and states.
+Run `python3 tools/project_thumbnails.py relic-rush` to rebuild
+`data/city/epochs/projects.jpg`. Review the controls at both phone sizes using
+`shot epoch-purchase-choice`.
 
 The expedition landing is the opening scene. After the player confirms a
 restoration, eligible expeditions show the latest completed site. Replays
@@ -1124,6 +1121,7 @@ The [script](story.md) supplies the spoken lines and both island visits. See the
 
 ## Building card: what a building brings
 
+The card centers the existing building sprite above a short description.
 The building card lists its price and what the building brings side by side as
 the engine's icon-and-figure amounts (the `resource_indicator` prefab). It reuses
 existing art and adds none. `R.building_reward` in `lua/screens.lua` maps each

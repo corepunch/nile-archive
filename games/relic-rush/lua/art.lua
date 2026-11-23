@@ -105,7 +105,8 @@ function A.draw_hud_catalogue(R)
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
             local skin = role == "popup_close" and R.skin.popup or R.skin
-            skin:paint_button(rect(28+(i-1)*89,495+(row-1)*82,72,72),st,{role=role})
+            local level = role == "navigation_play" and 100 or nil
+            skin:paint_button(rect(28+(i-1)*89,495+(row-1)*82,72,72),st,{role=role,level=level})
         end
     end
 end

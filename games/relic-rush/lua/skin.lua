@@ -70,7 +70,6 @@ return ui.skin{
             }},
             variants = {
                 epoch_medal = buttons.epoch_medal(),
-                project_bar = buttons.project_bar(),
                 -- The rule under a popup's title: a thin line threaded through a diamond.
                 popup_rule = {normal = {layers = {
                     {fill = "#C9A464", radius = 1, inset = {0, 6, 0, 6}},

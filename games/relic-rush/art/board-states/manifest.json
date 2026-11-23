@@ -340,7 +340,6 @@
     "data/city/buildings/workshop.png",
     "data/city/epochs/medals.png",
     "data/city/epochs/projects.jpg",
-    "data/city/epochs/town-bar.jpg",
     "data/city/island.jpg",
     "data/city/roads.png",
     "data/common/fonts/LilitaOne-Regular.ttf",
@@ -1955,18 +1954,16 @@
       }
     }
   },
-  "town_bar_panel": {
-    "source": "art/papyrus-board/stone-grain.png",
-    "prompt": "art/papyrus-board/stone-grain-prompt.txt",
-    "crop": [0, 445, 1254, 759],
-    "runtime": "data/city/epochs/town-bar.jpg",
-    "state": "One sandstone sill behind four rounded building insets and a rounded terracotta Next Level button with soft drop shadows, extending to the physical bottom edge.",
-    "review": "shot epoch-projects and shot epoch-projects-phone"
-  },
   "project_thumbnails": {
     "runtime": "data/city/epochs/projects.jpg",
     "cell": 192,
     "layout": "Each epoch is one row of four full-color squares, in purchase order. Crop squares use the full width of each construction backdrop.",
+    "display": "Large brass medallions crop each square painting into the round enamel well. The bevel brightens on hover and sinks on press.",
+    "play": {
+      "artwork": "../../art/match3-buttons/town-play.json",
+      "runtime": "../../engine/data/board/town-play.png",
+      "display": "Rounded green jade face with a brass rim. The game centers the live next level on the enamel, or shows the existing checkmark after the final level."
+    },
     "states": {
       "built": "dimmed original color crop with the existing shop-built jade checkmark centered over it",
       "ready": "original color with the existing particle trail",

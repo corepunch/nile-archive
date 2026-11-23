@@ -34,19 +34,23 @@ medal uses the original colors.
 
 ## Construction backdrops
 
-The town bar shows four 192 px square details from the winter paintings in
-rounded sandstone frames with soft shadows. The fifth slot is the red enamel
-Next Level button. A Need Funds tag marks a shortfall, the existing particle
-trail marks affordable projects, and a green checkmark overlays the dimmed
-painting of a completed project. Reduce Motion uses a steady glow. Hover
-brightens the bevel or enamel, and the button sinks towards its shadow on press.
-The form draws keyboard focus.
+Four circular brass medallions float over the town. Each medallion clips an
+existing 192 px construction painting to the round enamel well. The shared
+[green jade Play sprite](../../../art/match3-buttons/README.md#town-play) has a rounded
+triangular face and an antique brass lip. The game centers the next level number
+on the enamel. After the final level it shows the existing completion checkmark
+and opens the results. The `shot hud-states` capture shows the four painted states
+and a three-digit label.
 
-The [art manifest](../art/manifest.json) records the five rows of painted
-thumbnails and the shared sandstone crop. Rebuild both runtime files with
-`python3 tools/project_thumbnails.py christmas-market`. Review the live bar at
-both phone sizes with `shot epoch-projects` and the later Advents with
-`shot advent-town`.
+The four projects keep their painted colors. A Need Funds tag marks a shortfall.
+A particle trail circles an affordable project when motion is enabled. A
+completed project is dimmed behind the existing jade checkmark. The bevel
+brightens on hover and sinks on press. The form draws keyboard focus.
+
+The [art manifest](../art/manifest.json) records the painting crops and states.
+Run `python3 tools/project_thumbnails.py christmas-market` to rebuild
+`data/city/epochs/projects.jpg`. Review the controls at both phone sizes using
+`shot epoch-projects`.
 
 The campaign's board shows the latest confirmed construction with a painting
 for that wish. On the first visit to a newly unlocked backdrop, the full
@@ -552,22 +556,13 @@ but is no longer registered. The earlier
 [frost-edge review](screenshots/review/frost-edges/after-480x900.jpg) shows the
 retired rims.
 
-## Project portraits
+## Town project controls
 
 The Advent and Christmas row uses the registered building sprites. The shared
 `navigation_project` skin draws locked projects as grayscale recesses, tracks
 funding on available projects, highlights affordable projects with the ready
 trail, and uses the existing check on completed projects. Review the
 `epoch-projects`, `epoch-projects-phone` and `epoch-next` captures.
-
-Christmas Market uses the existing painted portraits on construction cards. The card
-shows one portrait and the keeper's name beside the project art, with the same portrait
-at full price, shortfall and completed states. Keeper assignments come from the
-upgrade roster and the project overrides in [screens.lua](../lua/screens.lua).
-Theo Marsh appears on the Lumber workshop, Ice house, Winter skating rink, Christmas
-tree and snowy-tree decorations. Ada Pike appears on the Glassblower's stall.
-Use the named captures "shot project-lumber" and "shot project-skating" in the
-Christmas Market test suite to review the two supported phone layouts.
 
 ## Story cast
 
@@ -759,6 +754,7 @@ building being moved is free. Confirm or Cancel hides the guides. Debug
 
 ## Stall card: what a stall adds
 
+The card centers the existing building sprite above a short description.
 The stall card lists its price and one item side by side as icon-and-figure
 amounts. `R.building_reward` in `lua/screens.lua` uses the painted board piece
 or charging piece from the same ladder that drives the board.

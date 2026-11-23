@@ -31,9 +31,11 @@ The original transparent building atlas and the labeled reference sheet are pres
 
 The supplied portrait is now the identity reference for Noelle, the main character (`art/noelle-reference.jpg`). Her transparent cutout is used in dialogue. Her [portrait app icon](art/app-icon-1024.png) is installed in the iOS/macOS `AppIcon` catalogue; its opaque square master leaves corner masking to the OS. `python3 games/christmas-market/tools/prepare_character.py` reproduces the portrait resize and all icon sizes. Built-in ImageGen prompts are in `art/character-and-icon-prompts.json`.
 
-Building cards and their contents lift and fade in together. After a win or
-loss, the board fades away before the result card arrives. Cards fade out
-before moving on, with instant transitions under Reduce Motion.
+Building cards center a large preview of the project above its description,
+with the price or shortfall beside the board reward. The card and its contents
+lift and fade in together. After a win or loss, the board fades away before the
+result card arrives. Cards fade out before moving on, with instant transitions
+under Reduce Motion.
 
 Haptics accompany matches, tools, cascades, trickling landings,
 results, income collection and confirmed building placement/relocation. Dragging
@@ -95,7 +97,7 @@ come to reopen starts there. The stall can be moved for free. [Opening market](d
 
 Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
-The bottom bar shows four full-color project paintings for the current Advent or Christmas, followed by Next Level. Tap a project to see its price, shortfall or level requirement. A Need Funds tag marks a shortfall, a trail marks an affordable project, and a green checkmark marks a completed one. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
+Four round buttons show the current Advent or Christmas project paintings. The triangular Play button shows the next wish number. Tap a project to see its price, shortfall or level requirement. A Need Funds tag marks a shortfall, a trail marks an affordable project, and a green checkmark marks a completed one. The [color map and construction ladder](docs/market-pieces.md) show where the pieces come from and how each purchase follows the Windows edition of Cradle of Rome 2.
 
 Play from the main menu shows the Advent and Christmas medals. Play on the medals screen resumes the current phase. Each phase's twenty boards and four projects lift the fog from one district and show the medals again.
 
@@ -135,8 +137,6 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 ## Market projects
 
 Clear panes to bank resources and build twenty projects across the 100 boards. Collect and play the next board on ordinary wins. When a project opens or becomes affordable, Collect takes you to the market.
-
-Each project card explains what you are building, shows the price or shortfall, and names the piece or tool it adds to the board. The keeper's painted portrait appears beside the project. Theo Marsh looks after the Lumber workshop, Ice house, Winter skating rink and Christmas tree, and also appears on snowy-tree projects. See the [portrait catalogue](docs/asset-catalogue.md#project-portraits).
 
 ## Review and validation
 

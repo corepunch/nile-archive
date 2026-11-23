@@ -164,7 +164,7 @@ function R.smoke()
         end
     elseif stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        assert((R.town.navigation:get("play") or "") == "", "smoke: Play shows no level number")
+        assert(R.town.navigation.nodes.actions.children[5].level == 2, "smoke: Play shows level 2")
         -- The balance tests measure income; this run only needs the flow, so a
         -- short wallet is topped up to the price of the well and the shrub.
         local cost = island.wonders[1].cost + R.buildings[island.kinds.shrub + 1].cost
@@ -298,7 +298,7 @@ function R.smoke()
         assert(not R.pause_form.boxes.restart and not R.pause_form.boxes.quit, "island pause must hide expedition-only actions")
         app.inject_click(R.pause_form.boxes.resume:center() + vec2(0, R.drop / 2)); stage = 43
     elseif stage == 43 and R.overlay == R.OV_NONE then
-        assert((R.town.navigation:get("play") or "") == "", "smoke: Play still shows no level number")
+        assert(R.town.navigation.nodes.actions.children[5].level == 2, "smoke: Play still shows level 2 after quitting")
         app.inject_click(R.town.project_boxes[island.kinds.log_cabin]:center()); stage = 44
     elseif stage == 44 and R.overlay == R.OV_WONDER and R.dialog_settled() then
         assert(R.inspect == island.kinds.log_cabin and R.wonder_form.boxes.price and R.wonder_form:get("action") == R.words.card.play,

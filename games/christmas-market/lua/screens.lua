@@ -15,21 +15,6 @@ end
 
 R.currency_icon = currency_icon   -- the citizens' perks on the building card
 
-local keepers = {gifts="noelle", sleigh="noelle", station_kiosk="otis", rink="theo", glassblower="ada"}
-for _, event in ipairs(require("user_events").events) do
-    local upgrade = event.upgrade
-    if upgrade and not keepers[upgrade.building] then keepers[upgrade.building] = upgrade.keeper end
-end
-local cast = {}
-for _, person in ipairs(require("narrative").cast) do cast[person.id] = person end
-
-function R.project_keeper(kind)
-    local building = island.buildings[kind + 1]
-    local id = keepers[building.key] or (building.category == "tree" and "theo")
-    if not id then return end
-    return assert(cast[id], "Unknown project keeper: " .. id)
-end
-
 function R.wallet_icons() return {R.life_art, currency_icon(economy.GOLD), R.hud_art.complete} end
 function R.town_middle_icon(at) gfx.image(R.hud_art.complete, rect.centered(at, size2(44, 44)), color.WHITE) end
 

@@ -1,0 +1,13 @@
+{
+  "source": "art/match3-buttons/town-play-source.png",
+  "prompt": "art/match3-buttons/town-play-prompt.txt",
+  "runtime": "engine/data/board/town-play.png",
+  "cell_size": 256,
+  "fit": 246,
+  "frames": {
+    "normal": [70, 62, 584, 610],
+    "hover": [660, 62, 1174, 610],
+    "pressed": [70, 657, 584, 1205],
+    "disabled": [660, 657, 1174, 1205]
+  }
+}

@@ -17,12 +17,9 @@ return {
     },
     bottom = {
         layout = "projects",
-        bar_role = "project_bar",
-        play_text = "Next\nLevel",
-        gap = 5,
+        gap = 4,
         bottom = 12,
-        bar_top_padding = 12,
-        margin = 6,
+        margin = 5,
     },
     bubble = {width = 300, title = "gold"},
     weather = {

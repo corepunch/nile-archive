@@ -26,3 +26,21 @@ to compare the pixels. Review the live [town row](../../games/relic-rush/docs/sc
 [bonus toolbar](../../games/relic-rush/docs/screenshots/enamel-toolbar.jpg),
 [Relic Rush action states](../../games/relic-rush/docs/screenshots/hud-states.jpg)
 and [Christmas Market booster states](../../games/christmas-market/docs/screenshots/art-states.jpg).
+
+## Town Play
+
+Both games use the same painted jade face and antique brass rim. The rounded
+triangle gives Play its own silhouette among the four building medallions. The
+game places the live next level number slightly left of center, where the jade
+face is widest. After level 100 it uses the game's completion checkmark.
+
+The [ImageGen source](town-play-source.png), [prompt](town-play-prompt.txt) and
+[registration](town-play.json) reproduce
+`engine/data/board/town-play.png`. Its four 256 px cells are normal and hover on
+top, then pressed and disabled below. The source crops keep their painted
+alpha, scale uniformly and center in each cell. Pressing lowers the whole
+button slightly. Keyboard focus is drawn by the form and uses the normal face.
+
+Run `python3 tools/town_play_art.py` to register the atlas. Review
+both games with `shot epoch-projects`, `shot epoch-projects-phone` and
+`shot hud-states`. The HUD review uses 100 to check all three digits at button size.

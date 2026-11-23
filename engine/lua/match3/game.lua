@@ -565,11 +565,10 @@ function G.bind(R, over)
     local wonder_form = ui.form{
         root = N.column {panel=true,
             match3.popup_header("Building details", nil, W.corner_close and "close"),
-            N.row {gap=10,align="center",
-                N.image {id="sprite", height=172, grow=1},
-                N.image {id="keeper_portrait",visible_field="show_keeper",width=110,height=132},
+            N.column {gap=6,padding={16,0,16,0},
+                N.image {id="sprite",height=198},
+                N.label {id="about",wrap=true,em=17,text_style="body",visible_field="show_about"},
             },
-            N.label {id="about", wrap=true, em=17, text_style="body", visible_field="show_about"},
             N.row {visible_field="show_amounts",
                 N.spacer {grow=1},
                 amounts("price", W.card.price, "show_price"),
@@ -604,11 +603,6 @@ function G.bind(R, over)
         local needs_funding = step and not blocked and not can_build
         funding_play = blocked == "later" or needs_funding
         match3.set_popup_header(wonder_form, w.name)
-        local keeper = R.project_keeper and R.project_keeper(i)
-        wonder_form.values.show_keeper = keeper ~= nil
-        if keeper then
-            wonder_form:set("keeper_portrait", texture.load(keeper.portrait_path))
-        end
         local about = dialogue_on() and journey.building_about(i, R.prog.level, w.about) or w.about or ""
         wonder_form.values.show_about = about ~= ""
         local ok, message = wonder_form:push{sprite=w.sprite, about=about,
@@ -1147,7 +1141,7 @@ function G.bind(R, over)
             project = R.open_project,
             project_rim = function(box)
                 if not R.reduced_motion and R.overlay == R.OV_NONE then
-                    R.vfx_ready_rim(box:center(), math.min(box.w, box.h) * .46, R.now)
+                    R.vfx_ready_rim(box:center(), math.min(box.w, box.h) * .48, R.now)
                 end
             end,
             middle_icon = function(at) R.town_middle_icon(at) end,
@@ -1166,6 +1160,7 @@ function G.bind(R, over)
                 end
             end,
             play = R.play_next,
+            play_label = function() return can_play() and R.prog.level + 1 or nil end,
             about = function(item)
                 local kind = R.island.items[item + 1].type
                 return R.building_words(item), visit_picture(visit_for_kind(kind))

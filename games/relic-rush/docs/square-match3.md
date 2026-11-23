@@ -61,8 +61,9 @@ with rings.
 Amphoras are playable score pieces from the opening. See the
 [twenty prices and unlocks](../README.md#buildings).
 
-The five epochs have four projects each. The town shows its current four
-projects followed by Next Level, and advances when its levels and projects are complete.
+The five epochs have four projects each. The town shows the current four
+projects in round buttons. The triangular Play button shows the next expedition
+number. The town advances when the epoch’s levels and projects are complete.
 After the first expedition, each project in the current epoch can be built as soon
 as its own price is covered. Tap a painting to see its price or shortfall and
 board reward. All project paintings keep their color. A Need Funds tag marks a shortfall,

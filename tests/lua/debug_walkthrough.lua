@@ -55,14 +55,6 @@ R.prog.level = 1
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
 
-if not relic then
-    local theo = R.project_keeper(island.kinds.lumber)
-    check(theo.id == "theo" and theo == R.project_keeper(island.kinds.rink)
-        and theo == R.project_keeper(island.kinds.fir_snowy), 'related projects share Theo’s portrait')
-    for _, step in ipairs(island.ladder) do
-        check(R.project_keeper(step.kind).portrait_path ~= nil, 'each construction has a project portrait')
-    end
-end
 R.prog.story_recap = true
 R.quiet = false
 R.story_tick()

@@ -21,16 +21,18 @@ end
 -- phase replaces its four project keys and keeps the fifth Play action.
 for _, game in ipairs{"relic-rush", "christmas-market"} do
     local config = town_config(game)
-    local phase, first = "First", 1
+    local phase, first, next_level = "First", 1, 1
     local function projects()
         local items = {}
         for i = 1, 4 do items[i] = {id=first + i - 1, state=i == 1 and "ready" or "locked"} end
         return phase, items
     end
-    local view = town.new({}, config, {skin={}, wallet=function() return {} end, projects=projects})
+    local view = town.new({}, config, {skin={}, wallet=function() return {} end, projects=projects,
+        play_label=function() return next_level end})
     local form = view.navigation
     local actions = form.nodes.actions.children
     check(#actions == 5 and actions[5].item_key == "play", "the last of five actions is Play")
+    check(actions[5].level == 1, "Play displays the first level in a fresh campaign")
     local play = form.boxes[actions[5].id]
     for i = 1, 4 do
         local box, next_box = view.project_boxes[i], form.boxes[actions[i + 1].id]
@@ -38,7 +40,10 @@ for _, game in ipairs{"relic-rush", "christmas-market"} do
         near(box:center().y, play:center().y, "projects and Play share a center line")
         near(box.w, play.w, "projects and Play share the available row")
     end
-    phase, first = "Second", 5
+    next_level = 100
+    view:layout()
+    check(actions[5].level == 100, "Play updates the level even when the project row stays the same")
+    phase, first, next_level = "Second", 5, nil
     view:layout()
     check(view.project_phase == phase and view.project_boxes[1] == nil and view.project_boxes[5] ~= nil,
         "advancing the phase updates the project keys and hit targets")
@@ -48,10 +53,8 @@ for _, game in ipairs{"relic-rush", "christmas-market"} do
     rawset(app, "screen", screen)
     actions = form.nodes.actions.children
     play = form.boxes[actions[5].id]
-    if game == "relic-rush" then
-        near(play.w, play.h, "Next Level is square on a narrow phone")
-        check(not form.nodes.phase and actions[5].text == "Next\nLevel", "the bar labels its next-level action on two lines")
-    end
+    near(play.w, play.h, "the round controls fit their hit areas on a narrow phone")
+    check(actions[5].level == nil, "Play receives no level after the final win")
     check(view.project_boxes[5].x >= 0 and play:max().x < 390 and play:max().y < 810 and play.w >= 44,
         "all five targets fit the narrow phone's safe area")
 end

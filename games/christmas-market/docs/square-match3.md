@@ -52,8 +52,9 @@ Reduce Motion hides the trail.
 ## Build
 
 First Advent through Fourth Advent and Christmas each have four projects.
-The bottom bar shows the four project paintings followed by Next Level, and advances when the
-current phase's levels and projects are complete. Tap any project to see its
+The town shows the four project paintings in round buttons. The triangular Play
+button shows the next wish number. The town advances when the current phase's
+levels and projects are complete. Tap any project to see its
 keeper, board reward, price and requirements. Need Funds marks a shortfall,
 a particle trail marks a project you can build, and a green checkmark marks
 a completed project. Open placement from the card, choose a

@@ -86,12 +86,12 @@ function R.smoke()
         end
     elseif smoke_stage == 1 and R.on_island and R.overlay == R.OV_NONE then
         if R.prog.level ~= 1 then error("smoke: the win was not banked") end
-        assert((R.town.navigation:get("play") or "") == "", "smoke: Play shows no level number")
+        assert(R.town.navigation.nodes.actions.children[5].level == 2, "smoke: Play shows level 2")
         app.inject_click(R.town.project_boxes[island.kinds.arch]:center()); smoke_stage = 2
     elseif smoke_stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
-        local card = R.wonder_form
-        assert(R.project_keeper(island.kinds.arch).id == "noelle" and card.boxes.keeper_portrait and card.boxes.sprite,
-            "the Welcome arch card shows its project keeper and building art")
+        local boxes = R.wonder_form.boxes
+        assert(boxes.sprite and math.abs(boxes.sprite:center().x - boxes.action:center().x) < .1,
+            "the Welcome arch preview is centered above the build action")
         app.inject_click(R.wonder_form.boxes.action:center()); smoke_stage = 3
     elseif smoke_stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD

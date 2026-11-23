@@ -26,8 +26,9 @@ The first four expeditions guide you through swaps, Line Gems, Rainbow Gems
 and chains. Tool tips show how to charge and use each tool when you earn it.
 See the [guided lessons](../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
 
-Building popup images and resource icons follow the panel’s entrance scale,
-position and opacity through the shared form skin. See the
+The building popup centers a large preview above its description and pairs the
+price or shortfall with the board reward. The preview and resource icons follow
+the panel’s entrance scale, position and opacity. See the
 [popup and refill comparisons](docs/review/popup-refill/README.md).
 
 Haptics accompany matches, cascades, trickling landings,
@@ -164,7 +165,7 @@ See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all turquoise plaques within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. The four buildings stay in color on the sandstone sill. A particle trail marks an affordable project, and a green checkmark marks a completed one. Select a building to see its cost or what you still need.
+4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. The four building paintings sit in round brass medallions. A particle trail marks an affordable project, and a green checkmark marks a completed one. Select a building to see its cost or what you still need.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Construction adds a new resource piece or tool to later boards. The 100 boards open twenty restorations, one after every fifth board.
 
@@ -205,7 +206,7 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 ## Buildings
 
-The island’s sandstone bar holds four full-color project paintings and a Next Level button. A small Need Funds tag marks projects with a shortfall. A particle trail marks projects you can afford, and a jade checkmark marks completed projects. Tap a project to see its description, price or shortfall, and board reward. The next epoch opens after you complete the current one’s 20 levels and four projects.
+Four round buttons show the island’s current project paintings. The triangular Play button shows the next expedition number. A small Need Funds tag marks projects with a shortfall. A particle trail marks projects you can afford, and a jade checkmark marks completed projects. Tap a project to see its description, price or shortfall, and board reward. The next epoch opens after you complete the current one’s 20 levels and four projects.
 
 [Compare all twenty rewards with Christmas Market and Cradle of Rome 2](../../docs/cradle-of-rome-reference/building-rewards.html).
 

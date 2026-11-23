@@ -68,7 +68,8 @@ function A.draw_hud_catalogue(R)
     for row,kind in ipairs{"build","play","pause"} do
         for i,state in ipairs(A.states) do
             local st={selected=state=="selected",held=state=="pressed",hot=state=="hover",disabled=state=="disabled"}
-            R.skin:paint_button(rect(28+(i-1)*89,540+(row-1)*88,72,72),st,{role="navigation_"..kind})
+            local level = kind == "play" and 100 or nil
+            R.skin:paint_button(rect(28+(i-1)*89,540+(row-1)*88,72,72),st,{role="navigation_"..kind,level=level})
         end
     end
     R.say_at("Noelle, market keeper",vec2(240,835),17,R.PAL_CREAM,400)

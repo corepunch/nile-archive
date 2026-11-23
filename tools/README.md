@@ -63,13 +63,14 @@ are the guides.
 | `match3_theme_art.py` | Registers each portrait game's board-theme sheet | imported by `match3_atlas.py` |
 | `pack_particles.py` | Registers particle frames for the `fx` atlas | imported by `match3_atlas.py` |
 | `pack_match_specials.py` | Repack the authored optional match specials for both games | `python3 tools/pack_match_specials.py` |
+| `town_play_art.py` | Registers the four painted states of the shared town Play button | `python3 tools/town_play_art.py`; use `--check` to validate the atlas |
 | `match3_buttons.py` | Centers each campaign action icon in its 128 px button cell using the silhouette's pixel opacity | `python3 tools/match3_buttons.py`, then `python3 tools/match3_atlas.py` to repack |
 | `epoch_medals.py` | Registers the authored phase medallions for the two town choosers | `python3 tools/epoch_medals.py` (`--check` in `make test-assets`) |
 | `board_tiles.py` | Reproduces the archived hex floor artwork | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
 | `board_frame.py` | Reproduces the archived hex border and its registration guide | `python3 tools/board_frame.py --output build/board-frame` |
 | `square_board_frame.py` | Bakes painted oak and textured sandstone into square perimeter modules and compares the eight winter materials | imported by `match3_atlas.py` or `python3 tools/square_board_frame.py --review build/square-frames.jpg` |
-| `project_thumbnails.py` | Crops twenty project paintings into each match-3 town bar atlas and renders its sandstone panel | `python3 tools/project_thumbnails.py christmas-market`; also accepts `relic-rush` |
+| `project_thumbnails.py` | Crops twenty project paintings into each match-3 town medallion atlas | `python3 tools/project_thumbnails.py christmas-market`; also accepts `relic-rush` |
 | `board_frame_decor.py` | Registers separately painted board decorations | imported by `board_frame.py` |
 | `hex_tile_art.py` | Checks sprites against the engine's flat-top tile face | `python3 tools/hex_tile_art.py <art.png> --mode fill --strict` |
 | `artkit.py` | Shared Pillow and NumPy helpers for the art scripts | imported |

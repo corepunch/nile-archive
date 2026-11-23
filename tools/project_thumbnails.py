@@ -1,4 +1,4 @@
-"""Register the paintings and sandstone for a match-3 town bar."""
+"""Register the paintings for the match-3 town medallions."""
 import argparse
 import json
 from pathlib import Path
@@ -37,13 +37,6 @@ def render(game):
     runtime = root / bar["runtime"]
     runtime.parent.mkdir(parents=True, exist_ok=True)
     sheet.save(runtime, quality=92, subsampling=0, optimize=True)
-
-    panel = manifest["town_bar_panel"]
-    with Image.open(root / panel["source"]) as sandstone:
-        strip = sandstone.crop(tuple(panel["crop"])).convert("RGB")
-        strip.resize((960, 240), Image.Resampling.LANCZOS).save(
-            root / panel["runtime"], quality=91, optimize=True
-        )
 
 
 if __name__ == "__main__":
