@@ -1,0 +1,606 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: engine\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. TRANSLATORS: follows the player's own name in the leaderboard
+#: engine/lua/leaderboard.lua
+msgid "(you)"
+msgstr "(나)"
+
+#: engine/lua/leaderboard.lua
+msgid "Close"
+msgstr "닫기"
+
+#: engine/lua/leaderboard.lua
+msgid "Everyone"
+msgstr "전체"
+
+#: engine/lua/leaderboard.lua
+msgid "Friends"
+msgstr "친구"
+
+#: engine/lua/leaderboard.lua
+msgid "Leaderboard"
+msgstr "순위표"
+
+#: engine/lua/leaderboard.lua
+msgid "Loading..."
+msgstr "불러오는 중..."
+
+#: engine/lua/leaderboard.lua
+msgid "No scores yet. Be the first!"
+msgstr "아직 점수가 없어요. 첫 번째가 되어 보세요!"
+
+#: engine/lua/leaderboard.lua
+msgid "None of your friends have played yet."
+msgstr "아직 플레이한 친구가 없어요."
+
+#: engine/lua/leaderboard.lua
+msgid "Sign in to Game Center to compare with other players."
+msgstr "다른 플레이어와 비교하려면 Game Center에 로그인하세요."
+
+#: engine/lua/leaderboard.lua
+msgid "Sign in to Game Center to see your friends."
+msgstr "친구를 보려면 Game Center에 로그인하세요."
+
+#: engine/lua/match3.lua
+msgid "Amazing!"
+msgstr "대단해요!"
+
+#: engine/lua/match3.lua
+msgid "Bonus collected."
+msgstr "보너스를 모았어요."
+
+#: engine/lua/match3.lua
+msgid "Choose a piece to clear its axes."
+msgstr "조각을 골라 가로세로 줄을 지우세요."
+
+#: engine/lua/match3.lua
+msgid "Choose a piece to remove."
+msgstr "없앨 조각을 고르세요."
+
+#: engine/lua/match3.lua
+msgid "Choose the centre of a blast."
+msgstr "폭발의 중심을 고르세요."
+
+#: engine/lua/match3.lua
+msgid "Connect matching resources."
+msgstr "같은 자원을 이어 보세요."
+
+#: engine/lua/match3.lua
+msgid "Great!"
+msgstr "멋져요!"
+
+#: engine/lua/match3.lua
+msgid "Ice and chains must be broken first."
+msgstr "얼음과 사슬을 먼저 깨야 해요."
+
+#: engine/lua/match3.lua
+msgid "MOVES"
+msgstr "이동"
+
+#: engine/lua/match3.lua
+msgid "Match its pieces to charge this tool."
+msgstr "이 도구의 조각을 맞춰 충전하세요."
+
+#: engine/lua/match3.lua
+msgid "More moves added."
+msgstr "이동 횟수가 늘었어요."
+
+#: engine/lua/match3.lua
+msgid "Nice!"
+msgstr "좋아요!"
+
+#: engine/lua/match3.lua
+msgid "No charges left. More tools next expedition."
+msgstr "남은 횟수가 없어요. 다음 탐험에서 도구가 더 생겨요."
+
+#: engine/lua/match3.lua
+msgid "No moves. Board reshuffled."
+msgstr "움직일 곳이 없어요. 판을 다시 섞었어요."
+
+#: engine/lua/match3.lua
+msgid "No shuffle available."
+msgstr "섞을 수 없어요."
+
+#: engine/lua/match3.lua
+msgid "Nothing to do."
+msgstr "할 일이 없어요."
+
+#: engine/lua/match3.lua
+msgid "PRIVACY POLICY"
+msgstr "개인정보 처리방침"
+
+#: engine/lua/match3.lua
+msgid "Pieces reshuffled."
+msgstr "조각을 다시 섞었어요."
+
+#: engine/lua/match3.lua
+msgid "REDUCE MOTION"
+msgstr "움직임 줄이기"
+
+#: engine/lua/match3.lua engine/lua/match3/game.lua
+msgid "RESTART"
+msgstr "다시 시작"
+
+#: engine/lua/match3.lua
+msgid "RESUME"
+msgstr "계속"
+
+#: engine/lua/match3.lua
+msgid "Resources"
+msgstr "자원"
+
+#: engine/lua/match3.lua
+msgid "Restore its building to unlock this tool."
+msgstr "이 도구를 열려면 해당 건물을 복구하세요."
+
+#: engine/lua/match3.lua
+msgid "SOUND"
+msgstr "소리"
+
+#: engine/lua/match3.lua
+msgid "STORY"
+msgstr "이야기"
+
+#: engine/lua/match3.lua
+msgid "Settings"
+msgstr "설정"
+
+#: engine/lua/match3.lua
+msgid "Spectacular!"
+msgstr "환상적이에요!"
+
+#: engine/lua/match3.lua
+msgid "TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE."
+msgstr "도구는 이동 횟수를 쓰지 않아요. 도구를 누른 다음 칸을 누르세요."
+
+#: engine/lua/match3.lua
+msgid "Tool put away."
+msgstr "도구를 넣었어요."
+
+#: engine/lua/match3.lua
+msgid "Your other bonuses are already charged."
+msgstr "다른 보너스는 이미 충전됐어요."
+
+#: engine/lua/match3.lua
+msgid "Your other bonuses gained charge."
+msgstr "다른 보너스도 충전됐어요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Add five moves."
+msgstr "이동 5회를 더해요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Bomb"
+msgstr "폭탄"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Choose a resource piece for 100 resources or another bonus to add a quarter charge."
+msgstr "자원 조각을 고르면 자원 100을 얻고, 다른 보너스를 고르면 충전이 4분의 1 차올라요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Clear all pieces of a chosen kind."
+msgstr "고른 종류의 조각을 모두 지워요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hammer"
+msgstr "망치"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit a 3×3 square around a cell."
+msgstr "고른 칸 주위 3×3 영역을 쳐요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit one cell."
+msgstr "한 칸을 쳐요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit the row through a chosen cell."
+msgstr "고른 칸이 있는 가로줄을 쳐요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hourglass"
+msgstr "모래시계"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Lightning"
+msgstr "번개"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Mixer"
+msgstr "믹서"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Plus"
+msgstr "플러스"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Shield"
+msgstr "방패"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Shuffle the pieces."
+msgstr "조각을 섞어요."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Star"
+msgstr "별"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Strike up to fifteen random cells."
+msgstr "무작위 칸을 최대 열다섯 개 때려요."
+
+#: engine/lua/match3/game.lua
+msgid "A NEW PLACE TO DISCOVER"
+msgstr "새로운 곳을 발견해요"
+
+#: engine/lua/match3/game.lua
+msgid "BACK"
+msgstr "뒤로"
+
+#: engine/lua/match3/game.lua
+msgid "BUILD"
+msgstr "건설"
+
+#: engine/lua/match3/game.lua
+msgid "Build your town"
+msgstr "마을을 세워요"
+
+#: engine/lua/match3/game.lua
+msgid "Building details"
+msgstr "건물 정보"
+
+#: engine/lua/match3/game.lua
+msgid "Building funded! Spare gold is yours to decorate."
+msgstr "건물 자금이 모였어요! 남은 금은 장식에 쓰세요."
+
+#: engine/lua/match3/game.lua
+msgid "CLEAR NEW LEVELS TO OPEN IT"
+msgstr "새 레벨을 깨면 열려요"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT"
+msgstr "받기"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT & PLAY NEXT"
+msgstr "받고 다음 판 하기"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT & VISIT TOWN"
+msgstr "받고 마을 가기"
+
+#: engine/lua/match3/game.lua
+msgid "CONTINUE"
+msgstr "계속하기"
+
+#: engine/lua/match3/game.lua
+msgid "Decorations"
+msgstr "장식"
+
+#: engine/lua/match3/game.lua
+msgid "EARN RESOURCES"
+msgstr "자원 모으기"
+
+#: engine/lua/match3/game.lua
+msgid "FINISH THE PREVIOUS PROJECTS"
+msgstr "이전 프로젝트를 먼저 끝내세요"
+
+#: engine/lua/match3/game.lua
+msgid "GUIDE"
+msgstr "안내"
+
+#: engine/lua/match3/game.lua
+msgid "Gold buys buildings."
+msgstr "금으로 건물을 사요."
+
+#: engine/lua/match3/game.lua
+msgid "KEEP PLAYING"
+msgstr "계속하기"
+
+#: engine/lua/match3/game.lua
+msgid "LEADERBOARD"
+msgstr "순위표"
+
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "LEVELS CLEARED  %d / %d"
+msgstr "클리어한 레벨  %d / %d"
+
+#: engine/lua/match3/game.lua
+msgid "LOCKED"
+msgstr "잠김"
+
+#: engine/lua/match3/game.lua
+msgid "MAIN MENU"
+msgstr "메인 메뉴"
+
+#: engine/lua/match3/game.lua
+msgid "MORE GOLD NEEDED"
+msgstr "금이 더 필요해요"
+
+#: engine/lua/match3/game.lua
+msgid "MOVE"
+msgstr "이동"
+
+#: engine/lua/match3/game.lua
+msgid "Match-3 town"
+msgstr "매치3 마을"
+
+#: engine/lua/match3/game.lua
+msgid "OPEN THIS AREA"
+msgstr "이 지역 열기"
+
+#. TRANSLATORS: %s is an epoch's name
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "OPENS IN %s"
+msgstr "%s에서 열려요"
+
+#: engine/lua/match3/game.lua
+msgid "Out of moves"
+msgstr "이동 횟수 소진"
+
+#: engine/lua/match3/game.lua
+msgid "PLAY"
+msgstr "플레이"
+
+#: engine/lua/match3/game.lua
+msgid "PRICE"
+msgstr "가격"
+
+#: engine/lua/match3/game.lua
+msgid "Projects"
+msgstr "프로젝트"
+
+#: engine/lua/match3/game.lua
+msgid "QUIT"
+msgstr "그만두기"
+
+#: engine/lua/match3/game.lua
+msgid "RESOURCES"
+msgstr "자원"
+
+#: engine/lua/match3/game.lua
+msgid "RESTORE"
+msgstr "복구"
+
+#: engine/lua/match3/game.lua
+msgid "Ready to build!"
+msgstr "건설할 준비가 됐어요!"
+
+#: engine/lua/match3/game.lua
+msgid "Region"
+msgstr "지역"
+
+#: engine/lua/match3/game.lua
+msgid "Replay gold collected. Choose something in the shop."
+msgstr "다시 하기로 얻은 금을 모았어요. 상점에서 골라 보세요."
+
+#: engine/lua/match3/game.lua
+msgid "Restart this level?"
+msgstr "이 레벨을 다시 시작할까요?"
+
+#: engine/lua/match3/game.lua
+msgid "Results"
+msgstr "결과"
+
+#: engine/lua/match3/game.lua
+msgid "SCORE"
+msgstr "점수"
+
+#: engine/lua/match3/game.lua
+msgid "SETTINGS"
+msgstr "설정"
+
+#: engine/lua/match3/game.lua
+msgid "SHOP"
+msgstr "상점"
+
+#: engine/lua/match3/game.lua
+msgid "SKIP"
+msgstr "건너뛰기"
+
+#: engine/lua/match3/game.lua
+msgid "STILL MISSING"
+msgstr "부족한 자원"
+
+#: engine/lua/match3/game.lua
+msgid "Some buildings need a new spot. Hold one to move it."
+msgstr "새 자리가 필요한 건물이 있어요. 길게 눌러 옮겨 보세요."
+
+#: engine/lua/match3/game.lua
+msgid "TRY AGAIN"
+msgstr "다시 도전"
+
+#: engine/lua/match3/game.lua
+msgid "The whole town is open."
+msgstr "마을이 모두 열렸어요."
+
+#: engine/lua/match3/game.lua
+msgid "To be continued"
+msgstr "다음 이야기에서 계속돼요"
+
+#. TRANSLATORS: %s is an epoch's name
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "Unlocked in %s"
+msgstr "%s에서 열렸어요"
+
+#: engine/lua/match3/game.lua
+msgid "VISIT TOWN"
+msgstr "마을 가기"
+
+#. TRANSLATORS: %d is the campaign's number of levels, always 100
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "YOU COMPLETED ALL %d LEVELS."
+msgstr "%d개 레벨을 모두 클리어했어요."
+
+#: engine/lua/match3/game.lua
+msgid "YOU GET"
+msgstr "얻는 것"
+
+#: engine/lua/match3/game.lua
+msgid "You won!"
+msgstr "승리했어요!"
+
+#: engine/lua/match3/game.lua
+msgid "Your board is saved. Open its project to earn more resources."
+msgstr "판이 저장됐어요. 프로젝트를 열어 자원을 더 모으세요."
+
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue level %d."
+msgstr "판이 저장됐어요. 플레이를 눌러 레벨 %d을(를) 이어 하세요."
+
+#: engine/lua/match3/game.lua
+msgid "Your town stays open to build."
+msgstr "마을은 계속 열려 있어요. 지어 보세요."
+
+#. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...): its pieces charge it
+#: engine/lua/match3/tutorial.lua
+#, lua-format
+msgid "Match %s pieces to charge the tool."
+msgstr "%s 조각을 맞춰 도구를 충전하세요."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match five in a line to make a Rainbow Gem."
+msgstr "다섯 개를 한 줄로 맞춰 무지개 보석을 만드세요."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match four in a line to make a Line Gem."
+msgstr "네 개를 한 줄로 맞춰 줄 보석을 만드세요."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match the Line Gem with pieces of its kind to clear a whole line."
+msgstr "줄 보석을 같은 종류의 조각과 맞춰 한 줄을 통째로 지우세요."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Skip"
+msgstr "건너뛰기"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Swap the Rainbow Gem with a piece to clear every piece of that kind."
+msgstr "무지개 보석을 조각과 바꿔서 그 종류의 조각을 모두 지우세요."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Swap the highlighted pieces to match three in a line."
+msgstr "표시된 조각을 바꿔서 세 개를 한 줄로 맞추세요."
+
+#. TRANSLATORS: a tool's name, then the sentence saying what it does
+#: engine/lua/match3/tutorial.lua
+#, lua-format
+msgid "Tap %s. %s"
+msgstr "%s을(를) 누르세요. %s"
+
+#: engine/lua/match3/user_events.lua
+msgid "EVERY WIN"
+msgstr "매 승리"
+
+#: engine/lua/match3/user_events.lua
+msgid "FEAT"
+msgstr "업적"
+
+#: engine/lua/match3/user_events.lua
+msgid "TOOL"
+msgstr "도구"
+
+#. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...)
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "The %s charges faster."
+msgstr "%s의 충전이 더 빨라져요."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a resource name (Food); the amount is shown beside it
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you bank this much %s in one level."
+msgstr "업그레이드: %s - 한 레벨에서 %s을(를) 이만큼 모으면 얻어요."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count, then the shortest line that counts
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d matches of %d or more in one level."
+msgstr "업그레이드: %s - 한 레벨에서 %d번, %d개 이상 매치를 만들면 얻어요."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count of matches, then of seconds
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d matches within %d seconds."
+msgstr "업그레이드: %s - %d번 매치를 %d초 안에 만들면 얻어요."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count, the goal tile's name (plaque)
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d moves in a row that each clear a %s."
+msgstr "업그레이드: %s - 연속 %d번 움직여 매번 %s을(를) 지우면 얻어요."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), the shortest line that counts, a count
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make a match of %d or more in %d moves in a row."
+msgstr "업그레이드: %s - %d개 이상 매치를 연속 %d번 움직임 안에 만들면 얻어요."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), then the shortest line that counts
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make a match of %d or more."
+msgstr "업그레이드: %s - %d개 이상 매치를 만들면 얻어요."
+
+#. TRANSLATORS: %s is the upgrade ("a second saw bench"); "their" is the building's keeper
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you meet their feat."
+msgstr "업그레이드: %s - 주인의 업적을 달성하면 얻어요."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), then a count of levels
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you win %d levels in a row without a failed one."
+msgstr "업그레이드: %s - 실패 없이 %d개 레벨을 연속으로 클리어하면 얻어요."
+
+#. TRANSLATORS: %s is the upgrade ("a second saw bench")
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgraded: %s."
+msgstr "업그레이드 완료: %s."
+
+#. TRANSLATORS: a board goal tile, in the form the sentence "... each clear a %s" needs
+#: engine/lua/match3/user_events.lua
+msgid "plaque"
+msgstr "명판"
+
+#: engine/lua/town/screen.lua
+msgid "Choose open ground clear of other buildings."
+msgstr "다른 건물과 겹치지 않는 빈 땅을 고르세요."
+
+#: engine/lua/town/screen.lua
+msgid "Confirm to restore this building at its original site."
+msgstr "확인을 누르면 원래 자리에 건물을 복구해요."
+
+#: engine/lua/town/screen.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "건물을 끌어 자리를 고르거나 땅을 스크롤하세요."
+
+#: engine/lua/town/screen.lua
+msgid "Not enough to build this yet."
+msgstr "아직 건설하기에 부족해요."
+
+#: engine/lua/town/screen.lua
+msgid "Nothing changed."
+msgstr "달라진 게 없어요."
+
+#: engine/lua/town/screen.lua
+msgid "Open more land before placing this building."
+msgstr "이 건물을 놓기 전에 땅을 더 여세요."
+
+#: engine/lua/town/screen.lua
+msgid "This building is not available yet."
+msgstr "이 건물은 아직 쓸 수 없어요."

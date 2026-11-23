@@ -1,0 +1,339 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: emergency\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "City Centre"
+msgstr "Centro de la ciudad"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "City Centre: restore every evacuation route and bring the remaining residents and pets to headquarters."
+msgstr "Centro de la ciudad: restablece todas las rutas de evacuación y lleva a los residentes y mascotas que quedan hasta el cuartel general."
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Cut-off District"
+msgstr "Distrito aislado"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Cut-off District: reopen the surviving roads around the cooled lava and reach each isolated group."
+msgstr "Distrito aislado: reabre las carreteras que quedan en pie alrededor de la lava enfriada y llega hasta cada grupo aislado."
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Outskirts"
+msgstr "Afueras"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Outskirts: reopen the roads and reach four residents. Repair stations to restore automatic supplies."
+msgstr "Afueras: reabre las carreteras y llega hasta cuatro residentes. Repara las estaciones para recuperar los suministros automáticos."
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Suburbs"
+msgstr "Barrios periféricos"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Suburbs: reconnect the homes and timber yard. Restore the office to fund heavy debris removal."
+msgstr "Barrios periféricos: reconecta las casas y el aserradero. Restaura la oficina para financiar la retirada de escombros pesados."
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Town Square"
+msgstr "Plaza Mayor"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Town Square: reopen the inner streets and rescue the repair crew. Stations supply resources automatically."
+msgstr "Plaza Mayor: reabre las calles interiores y rescata a la cuadrilla de reparación. Las estaciones suministran recursos automáticamente."
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d food"
+msgid_plural "%d food"
+msgstr[0] "%d de comida"
+msgstr[1] "%d de comida"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d money"
+msgid_plural "%d money"
+msgstr[0] "%d de dinero"
+msgstr[1] "%d de dinero"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d wood"
+msgid_plural "%d wood"
+msgstr[0] "%d de madera"
+msgstr[1] "%d de madera"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "A worker is on the way."
+msgstr "Un trabajador va de camino."
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Clear ash and rubble"
+msgstr "Retirar ceniza y escombros"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Clear heavy basalt"
+msgstr "Retirar basalto pesado"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Dismantle collapsed wall"
+msgstr "Desmontar muro derrumbado"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "District office"
+msgstr "Oficina del distrito"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Field kitchen"
+msgstr "Cocina de campaña"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Queued - tap to cancel"
+msgstr "En cola - toca para cancelar"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Repair the road"
+msgstr "Reparar la carretera"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue a cat"
+msgstr "Rescatar a un gato"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue a dog"
+msgstr "Rescatar a un perro"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue headquarters"
+msgstr "Cuartel de rescate"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue worker"
+msgstr "Rescatista"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Resident"
+msgstr "Residente"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Restored."
+msgstr "Restaurado."
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Returns to headquarters automatically once the route is safe."
+msgstr "Vuelve solo al cuartel general en cuanto la ruta es segura."
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Salvage roof beams"
+msgstr "Recuperar vigas del tejado"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Supplies arrive automatically every 5 seconds."
+msgstr "Los suministros llegan solos cada 5 segundos."
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Tap a job to send a worker. Tap again to cancel a queued job."
+msgstr "Toca una tarea para enviar a un trabajador. Vuelve a tocarla para cancelarla si está en cola."
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Tap to assign"
+msgstr "Toca para asignar"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Timber yard"
+msgstr "Aserradero"
+
+#. TRANSLATORS: district number and name on a menu button
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%02d   %s   - restored"
+msgstr "%02d   %s   - restaurado"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d pet"
+msgid_plural "%d pets"
+msgstr[0] "%d mascota"
+msgstr[1] "%d mascotas"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d resident"
+msgid_plural "%d residents"
+msgstr[0] "%d residente"
+msgstr[1] "%d residentes"
+
+#. TRANSLATORS: the time is minutes:seconds
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d road restored in %d:%02d."
+msgid_plural "%d roads restored in %d:%02d."
+msgstr[0] "%d carretera restaurada en %d:%02d."
+msgstr[1] "%d carreteras restauradas en %d:%02d."
+
+#. TRANSLATORS: a job's name, then what it needs
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: games/emergency/lua/main.lua
+msgid "+ supplies"
+msgstr "+ suministros"
+
+#: games/emergency/lua/main.lua
+msgid "AFTER THE ERUPTION"
+msgstr "TRAS LA ERUPCIÓN"
+
+#. TRANSLATORS: the first %s is "%d residents", the second "%d pets"
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "All %s and %s are safe."
+msgstr "Están a salvo: %s y %s."
+
+#: games/emergency/lua/main.lua
+msgid "District restored!"
+msgstr "¡Distrito restaurado!"
+
+#: games/emergency/lua/main.lua
+msgid "Districts"
+msgstr "Distritos"
+
+#: games/emergency/lua/main.lua
+msgid "EMERGENCY"
+msgstr "EMERGENCIA"
+
+#. TRANSLATORS: HUD heading; %02d is the district number
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "EMERGENCY  /  %02d"
+msgstr "EMERGENCIA  /  %02d"
+
+#: games/emergency/lua/main.lua
+msgid "Emergency - After the Eruption"
+msgstr "Emergencia - Tras la erupción"
+
+#: games/emergency/lua/main.lua
+msgid "Every route matters"
+msgstr "Cada ruta cuenta"
+
+#: games/emergency/lua/main.lua
+msgid "Five districts. One rescue team. A fresh start."
+msgstr "Cinco distritos. Un equipo de rescate. Un nuevo comienzo."
+
+#: games/emergency/lua/main.lua
+msgid "Food"
+msgstr "Comida"
+
+#: games/emergency/lua/main.lua
+msgid "Hint"
+msgstr "Pista"
+
+#: games/emergency/lua/main.lua
+msgid "How to play"
+msgstr "Cómo jugar"
+
+#: games/emergency/lua/main.lua
+msgid "Leaderboard"
+msgstr "Clasificación"
+
+#: games/emergency/lua/main.lua
+msgid "Let the team finish its jobs and the stations deliver supplies."
+msgstr "Deja que el equipo termine sus tareas y que las estaciones entreguen suministros."
+
+#: games/emergency/lua/main.lua
+msgid "Money"
+msgstr "Dinero"
+
+#: games/emergency/lua/main.lua
+msgid "Next district"
+msgstr "Siguiente distrito"
+
+#: games/emergency/lua/main.lua
+msgid "Pause"
+msgstr "Pausa"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "People %d/%d   Pets %d/%d   Roads %d/%d"
+msgstr "Personas %d/%d   Mascotas %d/%d   Carreteras %d/%d"
+
+#: games/emergency/lua/main.lua
+msgid "Play the episode again"
+msgstr "Jugar el episodio otra vez"
+
+#: games/emergency/lua/main.lua
+msgid "Ready"
+msgstr "Listo"
+
+#: games/emergency/lua/main.lua
+msgid "Reopen the streets. Restore supplies. Bring everyone home."
+msgstr "Reabre las calles. Restablece los suministros. Lleva a todos a casa."
+
+#: games/emergency/lua/main.lua
+msgid "Replay district"
+msgstr "Repetir distrito"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue dispatch"
+msgstr "Central de rescate"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue paused"
+msgstr "Rescate en pausa"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue score"
+msgstr "Puntuación de rescate"
+
+#: games/emergency/lua/main.lua
+msgid "Restart district"
+msgstr "Reiniciar distrito"
+
+#: games/emergency/lua/main.lua
+msgid "Restore the city, one route at a time"
+msgstr "Restaura la ciudad, ruta a ruta"
+
+#: games/emergency/lua/main.lua
+msgid "Resume rescue"
+msgstr "Reanudar rescate"
+
+#: games/emergency/lua/main.lua
+msgid "START RESCUE"
+msgstr "INICIAR RESCATE"
+
+#: games/emergency/lua/main.lua
+msgid "Sound"
+msgstr "Sonido"
+
+#: games/emergency/lua/main.lua
+msgid ""
+"Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n"
+"\n"
+"Kitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n"
+"\n"
+"Drag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home."
+msgstr ""
+"Toca los escombros, las carreteras dañadas o una estación para asignar a un trabajador. Las tareas no disponibles pasan a la cola; vuelve a tocarlas para cancelarlas.\n"
+"\n"
+"Las cocinas, los aserraderos y las oficinas producen suministros automáticamente. Los residentes y los trabajadores atrapados vuelven cuando su ruta es segura. Asigna a un trabajador para rescatar mascotas.\n"
+"\n"
+"Arrastra para mover el mapa. Pellizca o desplaza para hacer zoom. Restaura todas las carreteras y lleva a todos a casa."
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "WORKERS  %d / %d"
+msgstr "TRABAJADORES  %d / %d"
+
+#: games/emergency/lua/main.lua
+msgid "Wood"
+msgstr "Madera"
+
+#: games/emergency/lua/main.lua
+msgid "Your team and production are paused."
+msgstr "Tu equipo y la producción están en pausa."

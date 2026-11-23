@@ -1,0 +1,606 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: engine\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. TRANSLATORS: follows the player's own name in the leaderboard
+#: engine/lua/leaderboard.lua
+msgid "(you)"
+msgstr "(toi)"
+
+#: engine/lua/leaderboard.lua
+msgid "Close"
+msgstr "Fermer"
+
+#: engine/lua/leaderboard.lua
+msgid "Everyone"
+msgstr "Tous"
+
+#: engine/lua/leaderboard.lua
+msgid "Friends"
+msgstr "Amis"
+
+#: engine/lua/leaderboard.lua
+msgid "Leaderboard"
+msgstr "Classement"
+
+#: engine/lua/leaderboard.lua
+msgid "Loading..."
+msgstr "Chargement…"
+
+#: engine/lua/leaderboard.lua
+msgid "No scores yet. Be the first!"
+msgstr "Aucun score pour l'instant. Sois le premier !"
+
+#: engine/lua/leaderboard.lua
+msgid "None of your friends have played yet."
+msgstr "Aucun de tes amis n'a encore joué."
+
+#: engine/lua/leaderboard.lua
+msgid "Sign in to Game Center to compare with other players."
+msgstr "Connecte-toi à Game Center pour te comparer aux autres joueurs."
+
+#: engine/lua/leaderboard.lua
+msgid "Sign in to Game Center to see your friends."
+msgstr "Connecte-toi à Game Center pour voir tes amis."
+
+#: engine/lua/match3.lua
+msgid "Amazing!"
+msgstr "Incroyable !"
+
+#: engine/lua/match3.lua
+msgid "Bonus collected."
+msgstr "Bonus récupéré."
+
+#: engine/lua/match3.lua
+msgid "Choose a piece to clear its axes."
+msgstr "Choisis une pièce pour dégager sa ligne et sa colonne."
+
+#: engine/lua/match3.lua
+msgid "Choose a piece to remove."
+msgstr "Choisis une pièce à retirer."
+
+#: engine/lua/match3.lua
+msgid "Choose the centre of a blast."
+msgstr "Choisis le centre de l'explosion."
+
+#: engine/lua/match3.lua
+msgid "Connect matching resources."
+msgstr "Relie des ressources identiques."
+
+#: engine/lua/match3.lua
+msgid "Great!"
+msgstr "Super !"
+
+#: engine/lua/match3.lua
+msgid "Ice and chains must be broken first."
+msgstr "Il faut d'abord briser la glace et les chaînes."
+
+#: engine/lua/match3.lua
+msgid "MOVES"
+msgstr "COUPS"
+
+#: engine/lua/match3.lua
+msgid "Match its pieces to charge this tool."
+msgstr "Aligne ses pièces pour charger cet outil."
+
+#: engine/lua/match3.lua
+msgid "More moves added."
+msgstr "Coups supplémentaires ajoutés."
+
+#: engine/lua/match3.lua
+msgid "Nice!"
+msgstr "Bien joué !"
+
+#: engine/lua/match3.lua
+msgid "No charges left. More tools next expedition."
+msgstr "Plus de charges. D'autres outils à la prochaine expédition."
+
+#: engine/lua/match3.lua
+msgid "No moves. Board reshuffled."
+msgstr "Plus de coups. Plateau mélangé."
+
+#: engine/lua/match3.lua
+msgid "No shuffle available."
+msgstr "Aucun mélange disponible."
+
+#: engine/lua/match3.lua
+msgid "Nothing to do."
+msgstr "Rien à faire."
+
+#: engine/lua/match3.lua
+msgid "PRIVACY POLICY"
+msgstr "CONFIDENTIALITÉ"
+
+#: engine/lua/match3.lua
+msgid "Pieces reshuffled."
+msgstr "Pièces mélangées."
+
+#: engine/lua/match3.lua
+msgid "REDUCE MOTION"
+msgstr "MOINS D'ANIMATIONS"
+
+#: engine/lua/match3.lua engine/lua/match3/game.lua
+msgid "RESTART"
+msgstr "RECOMMENCER"
+
+#: engine/lua/match3.lua
+msgid "RESUME"
+msgstr "REPRENDRE"
+
+#: engine/lua/match3.lua
+msgid "Resources"
+msgstr "Ressources"
+
+#: engine/lua/match3.lua
+msgid "Restore its building to unlock this tool."
+msgstr "Restaure son bâtiment pour débloquer cet outil."
+
+#: engine/lua/match3.lua
+msgid "SOUND"
+msgstr "SON"
+
+#: engine/lua/match3.lua
+msgid "STORY"
+msgstr "HISTOIRE"
+
+#: engine/lua/match3.lua
+msgid "Settings"
+msgstr "Réglages"
+
+#: engine/lua/match3.lua
+msgid "Spectacular!"
+msgstr "Spectaculaire !"
+
+#: engine/lua/match3.lua
+msgid "TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE."
+msgstr "LES OUTILS NE COÛTENT AUCUN COUP. TOUCHE-EN UN, PUIS UNE CASE."
+
+#: engine/lua/match3.lua
+msgid "Tool put away."
+msgstr "Outil rangé."
+
+#: engine/lua/match3.lua
+msgid "Your other bonuses are already charged."
+msgstr "Tes autres bonus sont déjà chargés."
+
+#: engine/lua/match3.lua
+msgid "Your other bonuses gained charge."
+msgstr "Tes autres bonus se sont chargés."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Add five moves."
+msgstr "Ajoute cinq coups."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Bomb"
+msgstr "Bombe"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Choose a resource piece for 100 resources or another bonus to add a quarter charge."
+msgstr "Choisis une pièce de ressource pour 100 ressources, ou un autre bonus pour ajouter un quart de charge."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Clear all pieces of a chosen kind."
+msgstr "Retire toutes les pièces d'un type choisi."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hammer"
+msgstr "Marteau"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit a 3×3 square around a cell."
+msgstr "Frappe un carré de 3×3 autour d'une case."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit one cell."
+msgstr "Frappe une case."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit the row through a chosen cell."
+msgstr "Frappe la ligne passant par une case choisie."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hourglass"
+msgstr "Sablier"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Lightning"
+msgstr "Foudre"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Mixer"
+msgstr "Mélangeur"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Plus"
+msgstr "Croix"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Shield"
+msgstr "Bouclier"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Shuffle the pieces."
+msgstr "Mélange les pièces."
+
+#: engine/lua/match3/bonuses.lua
+msgid "Star"
+msgstr "Étoile"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Strike up to fifteen random cells."
+msgstr "Frappe jusqu'à quinze cases au hasard."
+
+#: engine/lua/match3/game.lua
+msgid "A NEW PLACE TO DISCOVER"
+msgstr "UN NOUVEAU LIEU À DÉCOUVRIR"
+
+#: engine/lua/match3/game.lua
+msgid "BACK"
+msgstr "RETOUR"
+
+#: engine/lua/match3/game.lua
+msgid "BUILD"
+msgstr "CONSTRUIRE"
+
+#: engine/lua/match3/game.lua
+msgid "Build your town"
+msgstr "Construis ta ville"
+
+#: engine/lua/match3/game.lua
+msgid "Building details"
+msgstr "Détails du bâtiment"
+
+#: engine/lua/match3/game.lua
+msgid "Building funded! Spare gold is yours to decorate."
+msgstr "Bâtiment financé ! L'or en trop sert à décorer."
+
+#: engine/lua/match3/game.lua
+msgid "CLEAR NEW LEVELS TO OPEN IT"
+msgstr "TERMINE DE NOUVEAUX NIVEAUX POUR L'OUVRIR"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT"
+msgstr "RÉCUPÉRER"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT & PLAY NEXT"
+msgstr "RÉCUPÉRER ET SUIVANT"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT & VISIT TOWN"
+msgstr "RÉCUPÉRER ET VISITER"
+
+#: engine/lua/match3/game.lua
+msgid "CONTINUE"
+msgstr "CONTINUER"
+
+#: engine/lua/match3/game.lua
+msgid "Decorations"
+msgstr "Décorations"
+
+#: engine/lua/match3/game.lua
+msgid "EARN RESOURCES"
+msgstr "GAGNE DES RESSOURCES"
+
+#: engine/lua/match3/game.lua
+msgid "FINISH THE PREVIOUS PROJECTS"
+msgstr "TERMINE LES PROJETS PRÉCÉDENTS"
+
+#: engine/lua/match3/game.lua
+msgid "GUIDE"
+msgstr "GUIDE"
+
+#: engine/lua/match3/game.lua
+msgid "Gold buys buildings."
+msgstr "L'or achète des bâtiments."
+
+#: engine/lua/match3/game.lua
+msgid "KEEP PLAYING"
+msgstr "CONTINUER À JOUER"
+
+#: engine/lua/match3/game.lua
+msgid "LEADERBOARD"
+msgstr "CLASSEMENT"
+
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "LEVELS CLEARED  %d / %d"
+msgstr "NIVEAUX TERMINÉS  %d / %d"
+
+#: engine/lua/match3/game.lua
+msgid "LOCKED"
+msgstr "VERROUILLÉ"
+
+#: engine/lua/match3/game.lua
+msgid "MAIN MENU"
+msgstr "MENU PRINCIPAL"
+
+#: engine/lua/match3/game.lua
+msgid "MORE GOLD NEEDED"
+msgstr "IL FAUT PLUS D'OR"
+
+#: engine/lua/match3/game.lua
+msgid "MOVE"
+msgstr "DÉPLACER"
+
+#: engine/lua/match3/game.lua
+msgid "Match-3 town"
+msgstr "Ville match-3"
+
+#: engine/lua/match3/game.lua
+msgid "OPEN THIS AREA"
+msgstr "OUVRIR CETTE ZONE"
+
+#. TRANSLATORS: %s is an epoch's name
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "OPENS IN %s"
+msgstr "OUVRE DANS %s"
+
+#: engine/lua/match3/game.lua
+msgid "Out of moves"
+msgstr "Plus de coups"
+
+#: engine/lua/match3/game.lua
+msgid "PLAY"
+msgstr "JOUER"
+
+#: engine/lua/match3/game.lua
+msgid "PRICE"
+msgstr "PRIX"
+
+#: engine/lua/match3/game.lua
+msgid "Projects"
+msgstr "Projets"
+
+#: engine/lua/match3/game.lua
+msgid "QUIT"
+msgstr "QUITTER"
+
+#: engine/lua/match3/game.lua
+msgid "RESOURCES"
+msgstr "RESSOURCES"
+
+#: engine/lua/match3/game.lua
+msgid "RESTORE"
+msgstr "RESTAURER"
+
+#: engine/lua/match3/game.lua
+msgid "Ready to build!"
+msgstr "Prêt à construire !"
+
+#: engine/lua/match3/game.lua
+msgid "Region"
+msgstr "Région"
+
+#: engine/lua/match3/game.lua
+msgid "Replay gold collected. Choose something in the shop."
+msgstr "Or de rejeu récupéré. Choisis quelque chose à la boutique."
+
+#: engine/lua/match3/game.lua
+msgid "Restart this level?"
+msgstr "Recommencer ce niveau ?"
+
+#: engine/lua/match3/game.lua
+msgid "Results"
+msgstr "Résultats"
+
+#: engine/lua/match3/game.lua
+msgid "SCORE"
+msgstr "SCORE"
+
+#: engine/lua/match3/game.lua
+msgid "SETTINGS"
+msgstr "RÉGLAGES"
+
+#: engine/lua/match3/game.lua
+msgid "SHOP"
+msgstr "BOUTIQUE"
+
+#: engine/lua/match3/game.lua
+msgid "SKIP"
+msgstr "PASSER"
+
+#: engine/lua/match3/game.lua
+msgid "STILL MISSING"
+msgstr "IL MANQUE"
+
+#: engine/lua/match3/game.lua
+msgid "Some buildings need a new spot. Hold one to move it."
+msgstr "Certains bâtiments ont besoin d'un nouvel emplacement. Maintiens-en un pour le déplacer."
+
+#: engine/lua/match3/game.lua
+msgid "TRY AGAIN"
+msgstr "RÉESSAYER"
+
+#: engine/lua/match3/game.lua
+msgid "The whole town is open."
+msgstr "Toute la ville est ouverte."
+
+#: engine/lua/match3/game.lua
+msgid "To be continued"
+msgstr "À suivre"
+
+#. TRANSLATORS: %s is an epoch's name
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "Unlocked in %s"
+msgstr "Débloqué dans %s"
+
+#: engine/lua/match3/game.lua
+msgid "VISIT TOWN"
+msgstr "VISITER LA VILLE"
+
+#. TRANSLATORS: %d is the campaign's number of levels, always 100
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "YOU COMPLETED ALL %d LEVELS."
+msgstr "TU AS TERMINÉ LES %d NIVEAUX."
+
+#: engine/lua/match3/game.lua
+msgid "YOU GET"
+msgstr "TU OBTIENS"
+
+#: engine/lua/match3/game.lua
+msgid "You won!"
+msgstr "Gagné !"
+
+#: engine/lua/match3/game.lua
+msgid "Your board is saved. Open its project to earn more resources."
+msgstr "Ton plateau est sauvegardé. Ouvre son projet pour gagner plus de ressources."
+
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue level %d."
+msgstr "Ton plateau est sauvegardé. Touche Jouer pour continuer le niveau %d."
+
+#: engine/lua/match3/game.lua
+msgid "Your town stays open to build."
+msgstr "Ta ville reste ouverte à la construction."
+
+#. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...): its pieces charge it
+#: engine/lua/match3/tutorial.lua
+#, lua-format
+msgid "Match %s pieces to charge the tool."
+msgstr "Aligne des pièces %s pour charger l'outil."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match five in a line to make a Rainbow Gem."
+msgstr "Aligne cinq pièces pour créer une gemme arc-en-ciel."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match four in a line to make a Line Gem."
+msgstr "Aligne quatre pièces pour créer une gemme de ligne."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match the Line Gem with pieces of its kind to clear a whole line."
+msgstr "Associe la gemme de ligne à des pièces de son type pour dégager toute une ligne."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Skip"
+msgstr "Passer"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Swap the Rainbow Gem with a piece to clear every piece of that kind."
+msgstr "Échange la gemme arc-en-ciel avec une pièce pour retirer toutes les pièces de ce type."
+
+#: engine/lua/match3/tutorial.lua
+msgid "Swap the highlighted pieces to match three in a line."
+msgstr "Échange les pièces en surbrillance pour en aligner trois."
+
+#. TRANSLATORS: a tool's name, then the sentence saying what it does
+#: engine/lua/match3/tutorial.lua
+#, lua-format
+msgid "Tap %s. %s"
+msgstr "Touche %s. %s"
+
+#: engine/lua/match3/user_events.lua
+msgid "EVERY WIN"
+msgstr "CHAQUE VICTOIRE"
+
+#: engine/lua/match3/user_events.lua
+msgid "FEAT"
+msgstr "EXPLOIT"
+
+#: engine/lua/match3/user_events.lua
+msgid "TOOL"
+msgstr "OUTIL"
+
+#. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...)
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "The %s charges faster."
+msgstr "%s se charge plus vite."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a resource name (Food); the amount is shown beside it
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you bank this much %s in one level."
+msgstr "Amélioration : %s, quand tu engranges ce total en %s sur un niveau."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count, then the shortest line that counts
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d matches of %d or more in one level."
+msgstr "Amélioration : %s, quand tu fais %d alignements de %d pièces ou plus en un niveau."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count of matches, then of seconds
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d matches within %d seconds."
+msgstr "Amélioration : %s, quand tu fais %d alignements en %d secondes."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count, the goal tile's name (plaque)
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d moves in a row that each clear a %s."
+msgstr "Amélioration : %s, quand tu fais %d coups d'affilée qui dégagent chacun %s."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), the shortest line that counts, a count
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make a match of %d or more in %d moves in a row."
+msgstr "Amélioration : %s, quand tu fais un alignement de %d pièces ou plus en %d coups d'affilée."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), then the shortest line that counts
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make a match of %d or more."
+msgstr "Amélioration : %s, quand tu fais un alignement de %d pièces ou plus."
+
+#. TRANSLATORS: %s is the upgrade ("a second saw bench"); "their" is the building's keeper
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you meet their feat."
+msgstr "Amélioration : %s, quand tu réalises son exploit."
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), then a count of levels
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you win %d levels in a row without a failed one."
+msgstr "Amélioration : %s, quand tu gagnes %d niveaux d'affilée sans en rater un."
+
+#. TRANSLATORS: %s is the upgrade ("a second saw bench")
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgraded: %s."
+msgstr "Amélioré : %s."
+
+#. TRANSLATORS: a board goal tile, in the form the sentence "... each clear a %s" needs
+#: engine/lua/match3/user_events.lua
+msgid "plaque"
+msgstr "une plaque"
+
+#: engine/lua/town/screen.lua
+msgid "Choose open ground clear of other buildings."
+msgstr "Choisis un terrain libre, à l'écart des autres bâtiments."
+
+#: engine/lua/town/screen.lua
+msgid "Confirm to restore this building at its original site."
+msgstr "Confirme pour restaurer ce bâtiment à son emplacement d'origine."
+
+#: engine/lua/town/screen.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "Fais glisser le bâtiment pour choisir un emplacement, ou fais défiler le terrain."
+
+#: engine/lua/town/screen.lua
+msgid "Not enough to build this yet."
+msgstr "Pas encore assez pour construire ceci."
+
+#: engine/lua/town/screen.lua
+msgid "Nothing changed."
+msgstr "Rien n'a changé."
+
+#: engine/lua/town/screen.lua
+msgid "Open more land before placing this building."
+msgstr "Ouvre plus de terrain avant de placer ce bâtiment."
+
+#: engine/lua/town/screen.lua
+msgid "This building is not available yet."
+msgstr "Ce bâtiment n'est pas encore disponible."

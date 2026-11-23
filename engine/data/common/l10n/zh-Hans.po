@@ -1,0 +1,606 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: engine\n"
+"Language: zh-Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. TRANSLATORS: follows the player's own name in the leaderboard
+#: engine/lua/leaderboard.lua
+msgid "(you)"
+msgstr "（你）"
+
+#: engine/lua/leaderboard.lua
+msgid "Close"
+msgstr "关闭"
+
+#: engine/lua/leaderboard.lua
+msgid "Everyone"
+msgstr "所有人"
+
+#: engine/lua/leaderboard.lua
+msgid "Friends"
+msgstr "好友"
+
+#: engine/lua/leaderboard.lua
+msgid "Leaderboard"
+msgstr "排行榜"
+
+#: engine/lua/leaderboard.lua
+msgid "Loading..."
+msgstr "加载中……"
+
+#: engine/lua/leaderboard.lua
+msgid "No scores yet. Be the first!"
+msgstr "还没有成绩，来拿第一吧！"
+
+#: engine/lua/leaderboard.lua
+msgid "None of your friends have played yet."
+msgstr "你的好友还没有人玩过。"
+
+#: engine/lua/leaderboard.lua
+msgid "Sign in to Game Center to compare with other players."
+msgstr "登录 Game Center，与其他玩家一较高下。"
+
+#: engine/lua/leaderboard.lua
+msgid "Sign in to Game Center to see your friends."
+msgstr "登录 Game Center，查看你的好友。"
+
+#: engine/lua/match3.lua
+msgid "Amazing!"
+msgstr "太棒了！"
+
+#: engine/lua/match3.lua
+msgid "Bonus collected."
+msgstr "已领取奖励。"
+
+#: engine/lua/match3.lua
+msgid "Choose a piece to clear its axes."
+msgstr "选一个棋子，清除它所在的行和列。"
+
+#: engine/lua/match3.lua
+msgid "Choose a piece to remove."
+msgstr "选一个要消除的棋子。"
+
+#: engine/lua/match3.lua
+msgid "Choose the centre of a blast."
+msgstr "选择爆炸的中心。"
+
+#: engine/lua/match3.lua
+msgid "Connect matching resources."
+msgstr "连接相同的资源。"
+
+#: engine/lua/match3.lua
+msgid "Great!"
+msgstr "很棒！"
+
+#: engine/lua/match3.lua
+msgid "Ice and chains must be broken first."
+msgstr "必须先打破冰块和锁链。"
+
+#: engine/lua/match3.lua
+msgid "MOVES"
+msgstr "步数"
+
+#: engine/lua/match3.lua
+msgid "Match its pieces to charge this tool."
+msgstr "匹配对应的棋子，为这个工具充能。"
+
+#: engine/lua/match3.lua
+msgid "More moves added."
+msgstr "已增加步数。"
+
+#: engine/lua/match3.lua
+msgid "Nice!"
+msgstr "不错！"
+
+#: engine/lua/match3.lua
+msgid "No charges left. More tools next expedition."
+msgstr "没有充能了。下次远征会有更多工具。"
+
+#: engine/lua/match3.lua
+msgid "No moves. Board reshuffled."
+msgstr "无路可走，棋盘已重新洗牌。"
+
+#: engine/lua/match3.lua
+msgid "No shuffle available."
+msgstr "无法洗牌。"
+
+#: engine/lua/match3.lua
+msgid "Nothing to do."
+msgstr "没什么可做的。"
+
+#: engine/lua/match3.lua
+msgid "PRIVACY POLICY"
+msgstr "隐私政策"
+
+#: engine/lua/match3.lua
+msgid "Pieces reshuffled."
+msgstr "棋子已重新洗牌。"
+
+#: engine/lua/match3.lua
+msgid "REDUCE MOTION"
+msgstr "减少动态效果"
+
+#: engine/lua/match3.lua engine/lua/match3/game.lua
+msgid "RESTART"
+msgstr "重来"
+
+#: engine/lua/match3.lua
+msgid "RESUME"
+msgstr "继续"
+
+#: engine/lua/match3.lua
+msgid "Resources"
+msgstr "资源"
+
+#: engine/lua/match3.lua
+msgid "Restore its building to unlock this tool."
+msgstr "修复对应的建筑即可解锁这个工具。"
+
+#: engine/lua/match3.lua
+msgid "SOUND"
+msgstr "声音"
+
+#: engine/lua/match3.lua
+msgid "STORY"
+msgstr "剧情"
+
+#: engine/lua/match3.lua
+msgid "Settings"
+msgstr "设置"
+
+#: engine/lua/match3.lua
+msgid "Spectacular!"
+msgstr "惊艳！"
+
+#: engine/lua/match3.lua
+msgid "TOOLS DO NOT COST MOVES. TAP ONE, THEN A TILE."
+msgstr "使用工具不消耗步数。先点工具，再点格子。"
+
+#: engine/lua/match3.lua
+msgid "Tool put away."
+msgstr "已收起工具。"
+
+#: engine/lua/match3.lua
+msgid "Your other bonuses are already charged."
+msgstr "你的其他奖励已经充满了。"
+
+#: engine/lua/match3.lua
+msgid "Your other bonuses gained charge."
+msgstr "你的其他奖励获得了充能。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Add five moves."
+msgstr "增加五步。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Bomb"
+msgstr "炸弹"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Choose a resource piece for 100 resources or another bonus to add a quarter charge."
+msgstr "选一个资源棋子可得 100 资源，选其他奖励则增加四分之一充能。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Clear all pieces of a chosen kind."
+msgstr "清除所选种类的所有棋子。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hammer"
+msgstr "锤子"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit a 3×3 square around a cell."
+msgstr "击中一个格子周围的 3×3 范围。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit one cell."
+msgstr "击中一个格子。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hit the row through a chosen cell."
+msgstr "击中所选格子所在的整行。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Hourglass"
+msgstr "沙漏"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Lightning"
+msgstr "闪电"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Mixer"
+msgstr "搅拌器"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Plus"
+msgstr "十字"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Shield"
+msgstr "盾牌"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Shuffle the pieces."
+msgstr "重新洗牌。"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Star"
+msgstr "星星"
+
+#: engine/lua/match3/bonuses.lua
+msgid "Strike up to fifteen random cells."
+msgstr "随机击中最多十五个格子。"
+
+#: engine/lua/match3/game.lua
+msgid "A NEW PLACE TO DISCOVER"
+msgstr "等你发现的新地方"
+
+#: engine/lua/match3/game.lua
+msgid "BACK"
+msgstr "返回"
+
+#: engine/lua/match3/game.lua
+msgid "BUILD"
+msgstr "建造"
+
+#: engine/lua/match3/game.lua
+msgid "Build your town"
+msgstr "建设你的小镇"
+
+#: engine/lua/match3/game.lua
+msgid "Building details"
+msgstr "建筑详情"
+
+#: engine/lua/match3/game.lua
+msgid "Building funded! Spare gold is yours to decorate."
+msgstr "建造资金已备齐！多余的金币可以用来装饰。"
+
+#: engine/lua/match3/game.lua
+msgid "CLEAR NEW LEVELS TO OPEN IT"
+msgstr "通关新关卡即可开启"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT"
+msgstr "领取"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT & PLAY NEXT"
+msgstr "领取并继续"
+
+#: engine/lua/match3/game.lua
+msgid "COLLECT & VISIT TOWN"
+msgstr "领取并回小镇"
+
+#: engine/lua/match3/game.lua
+msgid "CONTINUE"
+msgstr "继续"
+
+#: engine/lua/match3/game.lua
+msgid "Decorations"
+msgstr "装饰"
+
+#: engine/lua/match3/game.lua
+msgid "EARN RESOURCES"
+msgstr "赚取资源"
+
+#: engine/lua/match3/game.lua
+msgid "FINISH THE PREVIOUS PROJECTS"
+msgstr "先完成之前的项目"
+
+#: engine/lua/match3/game.lua
+msgid "GUIDE"
+msgstr "指南"
+
+#: engine/lua/match3/game.lua
+msgid "Gold buys buildings."
+msgstr "金币可以买建筑。"
+
+#: engine/lua/match3/game.lua
+msgid "KEEP PLAYING"
+msgstr "继续游戏"
+
+#: engine/lua/match3/game.lua
+msgid "LEADERBOARD"
+msgstr "排行榜"
+
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "LEVELS CLEARED  %d / %d"
+msgstr "已通关  %d / %d"
+
+#: engine/lua/match3/game.lua
+msgid "LOCKED"
+msgstr "未解锁"
+
+#: engine/lua/match3/game.lua
+msgid "MAIN MENU"
+msgstr "主菜单"
+
+#: engine/lua/match3/game.lua
+msgid "MORE GOLD NEEDED"
+msgstr "金币不足"
+
+#: engine/lua/match3/game.lua
+msgid "MOVE"
+msgstr "移动"
+
+#: engine/lua/match3/game.lua
+msgid "Match-3 town"
+msgstr "三消小镇"
+
+#: engine/lua/match3/game.lua
+msgid "OPEN THIS AREA"
+msgstr "开启此区域"
+
+#. TRANSLATORS: %s is an epoch's name
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "OPENS IN %s"
+msgstr "%s 开启"
+
+#: engine/lua/match3/game.lua
+msgid "Out of moves"
+msgstr "步数用完了"
+
+#: engine/lua/match3/game.lua
+msgid "PLAY"
+msgstr "开始"
+
+#: engine/lua/match3/game.lua
+msgid "PRICE"
+msgstr "价格"
+
+#: engine/lua/match3/game.lua
+msgid "Projects"
+msgstr "项目"
+
+#: engine/lua/match3/game.lua
+msgid "QUIT"
+msgstr "退出"
+
+#: engine/lua/match3/game.lua
+msgid "RESOURCES"
+msgstr "资源"
+
+#: engine/lua/match3/game.lua
+msgid "RESTORE"
+msgstr "修复"
+
+#: engine/lua/match3/game.lua
+msgid "Ready to build!"
+msgstr "可以建造了！"
+
+#: engine/lua/match3/game.lua
+msgid "Region"
+msgstr "区域"
+
+#: engine/lua/match3/game.lua
+msgid "Replay gold collected. Choose something in the shop."
+msgstr "已领取重玩奖励金币。去商店挑点东西吧。"
+
+#: engine/lua/match3/game.lua
+msgid "Restart this level?"
+msgstr "重新开始这一关？"
+
+#: engine/lua/match3/game.lua
+msgid "Results"
+msgstr "结算"
+
+#: engine/lua/match3/game.lua
+msgid "SCORE"
+msgstr "得分"
+
+#: engine/lua/match3/game.lua
+msgid "SETTINGS"
+msgstr "设置"
+
+#: engine/lua/match3/game.lua
+msgid "SHOP"
+msgstr "商店"
+
+#: engine/lua/match3/game.lua
+msgid "SKIP"
+msgstr "跳过"
+
+#: engine/lua/match3/game.lua
+msgid "STILL MISSING"
+msgstr "还差"
+
+#: engine/lua/match3/game.lua
+msgid "Some buildings need a new spot. Hold one to move it."
+msgstr "有些建筑需要换个位置。长按建筑即可移动。"
+
+#: engine/lua/match3/game.lua
+msgid "TRY AGAIN"
+msgstr "再试一次"
+
+#: engine/lua/match3/game.lua
+msgid "The whole town is open."
+msgstr "整个小镇都已开放。"
+
+#: engine/lua/match3/game.lua
+msgid "To be continued"
+msgstr "未完待续"
+
+#. TRANSLATORS: %s is an epoch's name
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "Unlocked in %s"
+msgstr "%s 解锁"
+
+#: engine/lua/match3/game.lua
+msgid "VISIT TOWN"
+msgstr "回小镇"
+
+#. TRANSLATORS: %d is the campaign's number of levels, always 100
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "YOU COMPLETED ALL %d LEVELS."
+msgstr "你已通关全部 %d 关。"
+
+#: engine/lua/match3/game.lua
+msgid "YOU GET"
+msgstr "你将获得"
+
+#: engine/lua/match3/game.lua
+msgid "You won!"
+msgstr "你赢了！"
+
+#: engine/lua/match3/game.lua
+msgid "Your board is saved. Open its project to earn more resources."
+msgstr "棋盘已保存。打开对应项目可赚取更多资源。"
+
+#: engine/lua/match3/game.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue level %d."
+msgstr "棋盘已保存。点击“开始”继续第 %d 关。"
+
+#: engine/lua/match3/game.lua
+msgid "Your town stays open to build."
+msgstr "你的小镇随时可以继续建设。"
+
+#. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...): its pieces charge it
+#: engine/lua/match3/tutorial.lua
+#, lua-format
+msgid "Match %s pieces to charge the tool."
+msgstr "匹配%s的棋子，为工具充能。"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match five in a line to make a Rainbow Gem."
+msgstr "五个连成一线，可生成彩虹宝石。"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match four in a line to make a Line Gem."
+msgstr "四个连成一线，可生成线条宝石。"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Match the Line Gem with pieces of its kind to clear a whole line."
+msgstr "让线条宝石与同色棋子匹配，可清除一整条线。"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Skip"
+msgstr "跳过"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Swap the Rainbow Gem with a piece to clear every piece of that kind."
+msgstr "把彩虹宝石与棋子交换，可清除所有同种棋子。"
+
+#: engine/lua/match3/tutorial.lua
+msgid "Swap the highlighted pieces to match three in a line."
+msgstr "交换高亮的棋子，让三个连成一线。"
+
+#. TRANSLATORS: a tool's name, then the sentence saying what it does
+#: engine/lua/match3/tutorial.lua
+#, lua-format
+msgid "Tap %s. %s"
+msgstr "点击%s。%s"
+
+#: engine/lua/match3/user_events.lua
+msgid "EVERY WIN"
+msgstr "每次获胜"
+
+#: engine/lua/match3/user_events.lua
+msgid "FEAT"
+msgstr "成就"
+
+#: engine/lua/match3/user_events.lua
+msgid "TOOL"
+msgstr "工具"
+
+#. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...)
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "The %s charges faster."
+msgstr "%s充能更快。"
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a resource name (Food); the amount is shown beside it
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you bank this much %s in one level."
+msgstr "升级：%s，在一关中攒够这么多%s时获得。"
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count, then the shortest line that counts
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d matches of %d or more in one level."
+msgstr "升级：%s，在一关中完成 %d 次 %d 连及以上的匹配时获得。"
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count of matches, then of seconds
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d matches within %d seconds."
+msgstr "升级：%s，完成 %d 次匹配，且总用时不超过 %d 秒时获得。"
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), a count, the goal tile's name (plaque)
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make %d moves in a row that each clear a %s."
+msgstr "升级：%s，连续 %d 步都消除%s时获得。"
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), the shortest line that counts, a count
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make a match of %d or more in %d moves in a row."
+msgstr "升级：%s，达成 %d 连及以上的匹配，并连续保持 %d 步时获得。"
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), then the shortest line that counts
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you make a match of %d or more."
+msgstr "升级：%s，完成一次 %d 连及以上的匹配时获得。"
+
+#. TRANSLATORS: %s is the upgrade ("a second saw bench"); "their" is the building's keeper
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you meet their feat."
+msgstr "升级：%s，达成其成就时获得。"
+
+#. TRANSLATORS: the upgrade ("a second saw bench"), then a count of levels
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgrade: %s, when you win %d levels in a row without a failed one."
+msgstr "升级：%s，连续通过 %d 关且不失败时获得。"
+
+#. TRANSLATORS: %s is the upgrade ("a second saw bench")
+#: engine/lua/match3/user_events.lua
+#, lua-format
+msgid "Upgraded: %s."
+msgstr "已升级：%s。"
+
+#. TRANSLATORS: a board goal tile, in the form the sentence "... each clear a %s" needs
+#: engine/lua/match3/user_events.lua
+msgid "plaque"
+msgstr "铭牌"
+
+#: engine/lua/town/screen.lua
+msgid "Choose open ground clear of other buildings."
+msgstr "选一块没有其他建筑的空地。"
+
+#: engine/lua/town/screen.lua
+msgid "Confirm to restore this building at its original site."
+msgstr "确认后，建筑将在原址修复。"
+
+#: engine/lua/town/screen.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "拖动建筑选择位置，或滚动查看土地。"
+
+#: engine/lua/town/screen.lua
+msgid "Not enough to build this yet."
+msgstr "还不够建造。"
+
+#: engine/lua/town/screen.lua
+msgid "Nothing changed."
+msgstr "没有变化。"
+
+#: engine/lua/town/screen.lua
+msgid "Open more land before placing this building."
+msgstr "放置这座建筑前，请先开拓更多土地。"
+
+#: engine/lua/town/screen.lua
+msgid "This building is not available yet."
+msgstr "这座建筑暂未开放。"

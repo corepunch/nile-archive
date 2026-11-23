@@ -1,0 +1,2133 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: relic-rush\n"
+"Language: zh-Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "A brazier above the harbour marks the entrance at night, when the reefs are hardest to see."
+msgstr "港口上方的火盆在夜里标出入口，那时暗礁最难辨认。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Bamboo grove"
+msgstr "竹林"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Banana plant"
+msgstr "香蕉树"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Barrels"
+msgstr "木桶"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Beached schooner"
+msgstr "搁浅的纵帆船"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Berry bush"
+msgstr "浆果灌木"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Big-leaf monstera"
+msgstr "大叶龟背竹"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Birdbath"
+msgstr "鸟浴盆"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Blooming bromeliad"
+msgstr "盛开的凤梨花"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Blue lilies"
+msgstr "蓝睡莲"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Boulder"
+msgstr "巨石"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Broken column"
+msgstr "断裂的石柱"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Campfire"
+msgstr "篝火"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Canopy treehouse"
+msgstr "树冠树屋"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Capybara"
+msgstr "水豚"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Carpenter's workshop"
+msgstr "木匠工坊"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Cartographer's house"
+msgstr "制图师之家"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Cartographers combine soundings from different crews to mark reefs and channels on a single chart."
+msgstr "制图师汇总各船队测得的水深，把暗礁和航道标在同一张海图上。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Clipped hedge block"
+msgstr "修剪方正的树篱"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crews bring their own bowls to the long tables. One cook can feed a whole shift while the hearth is hot and have the grain soaking for the next."
+msgstr "船员们自带碗，坐到长桌前。炉火正旺时，一位厨师就能喂饱一整班人，还能把下一班的谷物提前泡上。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crews carry homing birds aboard to send messages back to shore. The loft keeps the birds safe between voyages."
+msgstr "船员出海带着信鸽，好把消息传回岸上。航行间隙，鸽舍让鸟儿安心歇息。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crystal cluster"
+msgstr "水晶簇"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Curious monkey"
+msgstr "好奇的猴子"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Dig site"
+msgstr "挖掘现场"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Duck pond"
+msgstr "鸭塘"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Each terrace drains into the bed below. Gardeners carry water to the top at dawn and plant the thirstiest herbs where the first runnel falls."
+msgstr "每层梯台的水都流进下一层花圃。园丁天一亮就把水提到顶层，最渴的药草就种在第一道水渠落下的地方。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Expedition camp"
+msgstr "远征营地"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Expedition flag"
+msgstr "远征旗"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Explorer statue"
+msgstr "探险家雕像"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Explorer's globe"
+msgstr "探险家的地球仪"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fan palm"
+msgstr "扇叶棕榈"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Field telescope"
+msgstr "野外望远镜"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fishing boats unload at the harbour plaza. The catch goes straight from the quay to the market stalls."
+msgstr "渔船在港口广场卸货，渔获从码头直接送到集市摊位。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flower bed"
+msgstr "花圃"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flower planter"
+msgstr "花盆"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flowering shrub"
+msgstr "开花灌木"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Forest fern"
+msgstr "森林蕨类"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Frangipani"
+msgstr "鸡蛋花"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fruit pickers keep a sleeping platform among the branches. A watcher with a rattle can turn a flock away before it strips the ripest tree."
+msgstr "采果人在枝杈间搭了睡觉的平台。守望者摇起响板，就能在鸟群啄光最熟的那棵树之前把它们赶走。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Garden bench"
+msgstr "花园长椅"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Garden swing"
+msgstr "花园秋千"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Giant kapok"
+msgstr "巨型木棉"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Giant stone head"
+msgstr "巨型石头像"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Glass greenhouse"
+msgstr "玻璃温室"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Golden idol"
+msgstr "黄金神像"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Great aviary"
+msgstr "大鸟舍"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Hanging gardens"
+msgstr "空中花园"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Harbour lodge"
+msgstr "港口客舍"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Harbour plaza"
+msgstr "港口广场"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Herbalist's hut"
+msgstr "药草师小屋"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Island growers bring fruit and grain to market. The stalls pack provisions in clay jars for the road."
+msgstr "岛上的农人把水果和谷物运到集市，摊位把路上吃的口粮装进陶罐。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jade fountain"
+msgstr "翡翠喷泉"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jade gazebo"
+msgstr "翡翠凉亭"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jaguar guardian"
+msgstr "美洲豹守卫"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jungle market"
+msgstr "丛林集市"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Keeper's archive"
+msgstr "守护者档案馆"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lantern post"
+msgstr "灯笼柱"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lighthouse"
+msgstr "灯塔"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lily pond"
+msgstr "睡莲池"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Little fountain"
+msgstr "小喷泉"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mango tree"
+msgstr "芒果树"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Market cart"
+msgstr "集市推车"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mess hall"
+msgstr "食堂"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mossy boulders"
+msgstr "长满青苔的巨石"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Palm hammock"
+msgstr "棕榈吊床"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Papaya tree"
+msgstr "木瓜树"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Parrot perch"
+msgstr "鹦鹉栖木"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Picnic rug"
+msgstr "野餐毯"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Place this treasure anywhere on open grass."
+msgstr "可把这件珍宝放在任何一片空草地上。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Porters use the lowest dry step to board a boat. As the tide rises they move their baskets up the stone stair, one landing at a time."
+msgstr "搬运工从最低的干燥台阶登船。潮水上涨时，他们把篮子沿石阶一级一级往上挪。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Quarry stone is squared and sorted here before it is traded to the island's builders."
+msgstr "采石场的石料在这里切方、分拣，再卖给岛上的建筑工。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Quay steps"
+msgstr "码头台阶"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rainbow garden"
+msgstr "彩虹花园"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Red hibiscus"
+msgstr "红芙蓉"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Relic museum"
+msgstr "遗物博物馆"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Riverside reeds"
+msgstr "河边芦苇"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rock spring"
+msgstr "岩泉"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Round jungle tree"
+msgstr "圆冠丛林树"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Round shrub"
+msgstr "圆灌木"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rowboat"
+msgstr "划艇"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Ruined arch"
+msgstr "残破的拱门"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Shipwrights salvage valuable cargo and sound timber from the hull while the tide is out."
+msgstr "退潮时，造船匠从船壳里抢救贵重货物和完好的木料。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sight lines through the stone pillars help navigators mark the positions of stars throughout the year."
+msgstr "透过石柱的瞄准线，帮领航员标出全年各颗星星的位置。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Signpost"
+msgstr "路标"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Spring well"
+msgstr "泉井"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Star observatory"
+msgstr "观星台"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stilt house"
+msgstr "高脚屋"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone amphitheatre"
+msgstr "石砌露天剧场"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone idol"
+msgstr "石像"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone trading post"
+msgstr "石料交易站"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sun obelisk"
+msgstr "太阳方尖碑"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sundial"
+msgstr "日晷"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sunning turtle"
+msgstr "晒太阳的乌龟"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sunny daisies"
+msgstr "向阳雏菊"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Supply crates"
+msgstr "补给箱"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Supply tent"
+msgstr "补给帐篷"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Temple cypress"
+msgstr "神庙柏树"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Temple of the Sun"
+msgstr "太阳神庙"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tender seedlings spend their first weeks under cover. The gardener opens the shelter early, before the midday heat can wilt a whole bed."
+msgstr "娇嫩的幼苗头几周要在遮盖下生长。园丁会趁早打开遮棚，免得正午的暑热晒蔫整片苗床。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The amphitheatre gives the town a place for contests and public gatherings. Armourers set up their stalls at the entrance."
+msgstr "露天剧场让小镇有了比赛和集会的场所，铠甲匠在入口处摆起摊位。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The archive keeps harbour plans and trade records dry. Carved rings serve as seals for official documents."
+msgstr "档案馆让港口图纸和贸易记录保持干燥，刻花的指环可以当作公文的印章。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The camp gives excavation crews a place to sort supplies, mend tools and cook between shifts."
+msgstr "营地是挖掘队的落脚处，可以整理补给、修理工具，换班间隙还能生火做饭。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The harbour watch tracks the tide from this tower. Pilots use its signals to time a shallow crossing."
+msgstr "港口守望员在这座塔上观测潮汐，领航员按它的信号掐准浅水通过的时机。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The herbalist dries leaves on reed trays and keeps the roots in separate clay pots. A sprig tied to each lid tells an apprentice which plant grew it."
+msgstr "药草师把叶子摊在芦苇托盘上晾干，根茎则分装在不同的陶罐里。每个罐盖上系一小枝，徒弟一看就知道是哪种植物。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The lodge gives visiting crews a dry berth and a place to prepare for their next departure."
+msgstr "客舍给来访的船员一个干爽的铺位，也是他们准备下次起航的地方。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The museum keeps the island's carvings and instruments together, where visitors can see how they were made."
+msgstr "博物馆把岛上的雕刻和仪器收藏在一起，参观者可以看看它们是怎么做成的。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The sawbench turns logs into beams and planks for houses and boats."
+msgstr "锯木台把原木锯成横梁和木板，用来造房子和造船。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The stone lining keeps loose earth out of the spring. A low rim makes it easy to fill buckets."
+msgstr "石砌的井壁挡住松散的泥土，不让它落进泉水，低矮的井沿方便打水。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The stream turns the millwheel. Inside, millstones grind the island's harvest into flour."
+msgstr "溪水推动水车，磨坊里的石磨把岛上的收成磨成面粉。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The temple courtyard hosts public ceremonies and feast days under the island's sun emblem."
+msgstr "神庙庭院在岛上的太阳徽记下，举行公共仪式和节日盛宴。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tide clock tower"
+msgstr "潮汐钟楼"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tiki torch"
+msgstr "提基火炬"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Timber posts carry the sleeping floor above the flood line. A family can tie its boat to the steps and come home even when the lane is under water."
+msgstr "木桩把卧室地板托在洪水线之上。就算小巷被水淹了，一家人也能把船拴在台阶上，照样回家。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Topiary ball"
+msgstr "修剪成球的灌木"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Toucan perch"
+msgstr "巨嘴鸟栖木"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Trapper's cabin"
+msgstr "猎人小屋"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Trappers shelter here between trips. The cabin gives them a dry bench for repairing traps and gear."
+msgstr "猎人们在两次出猎之间在这里歇脚，小屋里有张干爽的长凳，供他们修补陷阱和装备。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Treasure chest"
+msgstr "宝箱"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Twin palms"
+msgstr "双生棕榈"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Vine pergola"
+msgstr "藤蔓棚架"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water from the spring flows through the fountain into a basin faced with green stone."
+msgstr "泉水流过喷泉，注入一座镶着青石的水池。"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water mill"
+msgstr "水磨坊"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water pump"
+msgstr "水泵"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Wild orchids"
+msgstr "野生兰花"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Young palm"
+msgstr "小棕榈"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Arch Gate"
+msgstr "拱门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Beached Hull"
+msgstr "搁浅的船壳"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Bell Cistern"
+msgstr "钟形水窖"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Bone Stair"
+msgstr "白骨台阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Broken Aqueduct"
+msgstr "断裂的引水渠"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ceiba Roots"
+msgstr "木棉树根"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Cenote Ring"
+msgstr "天然井环"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Chac Stair"
+msgstr "恰克台阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Choked Gateway"
+msgstr "堵塞的门道"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Clear every turquoise plaque."
+msgstr "清除每一块青绿色铭牌。"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Coiled Serpent"
+msgstr "盘蛇"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Colonnade Walk"
+msgstr "柱廊漫步"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Cormorant Rock"
+msgstr "鸬鹚岩"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Dawn Terrace"
+msgstr "黎明梯台"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Disc of Noon"
+msgstr "正午之盘"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Dome Ring"
+msgstr "穹顶之环"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Drowned Arch"
+msgstr "没水的拱门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ember Colonnade"
+msgstr "余烬柱廊"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Fallen Colonnade"
+msgstr "倒塌的柱廊"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Fern Window"
+msgstr "蕨叶窗"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ferry Steps"
+msgstr "渡口台阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Gate of Reeds"
+msgstr "芦苇之门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Hall of Pillars"
+msgstr "群柱大厅"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Heart of the Temple"
+msgstr "神庙之心"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Heavy chains take two matches. Then clear their plaques."
+msgstr "粗锁链要匹配两次，然后清除它们下面的铭牌。"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol Head"
+msgstr "神像头"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol of Rain"
+msgstr "雨神像"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol of Salt"
+msgstr "盐神像"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Inner Sun Court"
+msgstr "内层太阳庭院"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jade Cartouche"
+msgstr "翡翠王名圈"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jade Steps"
+msgstr "翡翠台阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jaguar Gate"
+msgstr "美洲豹之门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jaguar Lintel"
+msgstr "美洲豹门楣"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Kapok Roots"
+msgstr "木棉根"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Kelp Terrace"
+msgstr "海带梯台"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lantern Spiral"
+msgstr "灯笼螺旋"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lantern Tower"
+msgstr "灯笼塔"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lookout Mesa"
+msgstr "瞭望台地"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Match through a chained piece to free it. Then clear the plaque underneath."
+msgstr "匹配被锁链缠住的棋子，把它解放出来。然后清除下面的铭牌。"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Maw of the Jaguar"
+msgstr "美洲豹之口"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Mist Cenote"
+msgstr "雾中天然井"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Mole Walk"
+msgstr "防波堤步道"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moonwell Arch"
+msgstr "月井拱门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Bridge"
+msgstr "青苔桥"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Parapet"
+msgstr "青苔矮墙"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Well"
+msgstr "青苔井"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Net Loft"
+msgstr "渔网阁楼"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Obsidian Lintel"
+msgstr "黑曜石门楣"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Obsidian Well"
+msgstr "黑曜石井"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ocelot Gate"
+msgstr "虎猫之门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ochre Vault"
+msgstr "赭石穹窖"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Orchard of Idols"
+msgstr "神像果园"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Palm Court"
+msgstr "棕榈庭院"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Parrot Steps"
+msgstr "鹦鹉台阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Pilgrim Stair"
+msgstr "朝圣者阶梯"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Rain Channel"
+msgstr "雨水渠"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Reed Hut"
+msgstr "芦苇小屋"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Reed Landing"
+msgstr "芦苇渡头"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "River Carvings"
+msgstr "河边石刻"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Rush Landing"
+msgstr "灯芯草渡头"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Salt Stair"
+msgstr "盐阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Salt Terrace"
+msgstr "盐梯台"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Coil"
+msgstr "蛇盘"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Throne"
+msgstr "蛇王座"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Wall"
+msgstr "蛇墙"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Signal Tower"
+msgstr "信号塔"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stairway of Kites"
+msgstr "鸢尾阶梯"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Star Dome"
+msgstr "星穹"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Star Eater's Dome"
+msgstr "噬星者之穹"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stone Bridge"
+msgstr "石桥"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stone Fisher"
+msgstr "石渔夫"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Altar"
+msgstr "太阳祭坛"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Court"
+msgstr "太阳庭院"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Disc"
+msgstr "日轮"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Cistern"
+msgstr "沉没的水窖"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Plaza"
+msgstr "下沉广场"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Vault"
+msgstr "沉没的穹窖"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Temple Front"
+msgstr "神庙正面"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Temple of Winds"
+msgstr "风之神庙"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tern Rock Light"
+msgstr "燕鸥岩灯"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Terrace Garden"
+msgstr "梯台花园"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Beached Mast"
+msgstr "搁浅的桅杆"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Ceiba Court"
+msgstr "木棉庭院"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Drowned Stair"
+msgstr "没水的台阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Landing"
+msgstr "登陆处"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Light Below"
+msgstr "下方的光"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Overlook"
+msgstr "俯瞰台"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Quiet Terraces"
+msgstr "寂静梯台"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Spire Keep"
+msgstr "尖塔堡"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Sunken Sanctum"
+msgstr "沉没圣所"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Timber Path"
+msgstr "木材小径"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Chamber"
+msgstr "潮汐室"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Pool"
+msgstr "潮池"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Stairs"
+msgstr "潮汐台阶"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Trapper’s Terrace"
+msgstr "猎人梯台"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Twin Wells"
+msgstr "双井"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Vault Door"
+msgstr "穹窖之门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Watcher's Tier"
+msgstr "守望层"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Water Cistern"
+msgstr "蓄水窖"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wetlands Walk"
+msgstr "湿地漫步"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wrack Line"
+msgstr "漂流物线"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wreck Gate"
+msgstr "沉船之门"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wreck of the Gull"
+msgstr "海鸥号残骸"
+
+#. TRANSLATORS: a piece's plural name, then how many of a currency (Coins, Food, Supplies) each one earns
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "%s earn +%d %s each."
+msgstr "每个%s可得 +%d %s。"
+
+#. TRANSLATORS: both %s are bonus tool names: the new tool, then the one it replaces
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "%s replaces %s and keeps its charge."
+msgstr "%s取代%s，并保留其充能。"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Amphora"
+msgstr "双耳陶罐"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Coins"
+msgstr "金币"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Dressed stones"
+msgstr "凿石"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Emeralds"
+msgstr "祖母绿"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Flower"
+msgstr "花"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Food"
+msgstr "食物"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Grain bundles"
+msgstr "谷束"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Harps"
+msgstr "竖琴"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Helmets"
+msgstr "头盔"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Leaf"
+msgstr "叶"
+
+#. TRANSLATORS: %s is a bonus tool's name; its pieces charge it
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "Match %d %s piece for one charge."
+msgid_plural "Match %d %s pieces for one charge."
+msgstr[0] "匹配 %d 个%s棋子，充一次能。"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Ration jars"
+msgstr "口粮罐"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Rings"
+msgstr "戒指"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Sandals"
+msgstr "凉鞋"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Scarabs"
+msgstr "圣甲虫"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Shrimp"
+msgstr "虾"
+
+#: games/relic-rush/lua/economy.lua games/relic-rush/lua/screens.lua
+msgid "Silver coins"
+msgstr "银币"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Sun coin"
+msgstr "太阳币"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Supplies"
+msgstr "补给"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Timber bundles"
+msgstr "木材捆"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Water buckets"
+msgstr "水桶"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "A NEW PLACE TO DISCOVER"
+msgstr "等你发现的新地方"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Breakfast at the quay"
+msgstr "码头早餐"
+
+#. TRANSLATORS: praise over the board for ever bigger cascades; "Sunstorm" is a made-up word
+#: games/relic-rush/lua/game_config.lua
+msgid "Brilliant!"
+msgstr "绝妙！"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Build your valley"
+msgstr "建设你的山谷"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "CLEAR NEW EXPEDITIONS TO OPEN IT"
+msgstr "通关新远征即可开启"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "COLLECT & VISIT ISLAND"
+msgstr "领取并回岛上"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Coastal Watch"
+msgstr "海岸守望"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "EXPEDITIONS CLEARED  %d / %d"
+msgstr "已通关远征  %d / %d"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "EXPLORER'S GUIDE"
+msgstr "探险家指南"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch I"
+msgstr "第一纪元"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch II"
+msgstr "第二纪元"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch III"
+msgstr "第三纪元"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch IV"
+msgstr "第四纪元"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch V"
+msgstr "第五纪元"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epochs"
+msgstr "纪元"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Harbour Town"
+msgstr "港口小镇"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "LEADERBOARD"
+msgstr "排行榜"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Legendary!"
+msgstr "传奇！"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Look, we have enough to build!"
+msgstr "看，够建造了！"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "MORE RESOURCES NEEDED"
+msgstr "资源不足"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Magnificent!"
+msgstr "壮丽！"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Match through the chained piece. Match that cell again to clear its plaque."
+msgstr "匹配被锁链缠住的棋子。再在那一格匹配一次，清除它的铭牌。"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Mill and Market"
+msgstr "磨坊与集市"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "QUIT TO ISLAND"
+msgstr "回岛上"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "RELIC RUSH"
+msgstr "遗物探险"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "RESTORE EARLIER WONDERS"
+msgstr "先修复早期奇迹"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Resources collected."
+msgstr "已领取资源。"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Restart this expedition?"
+msgstr "重新开始这次远征？"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Select a project to see its cost."
+msgstr "选择一个项目，查看所需费用。"
+
+#. TRANSLATORS: the medal won for finishing each epoch, named for what the town built in it
+#: games/relic-rush/lua/game_config.lua
+msgid "Spring Camp"
+msgstr "泉边营地"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Sun Temple"
+msgstr "太阳神庙"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Sunstorm!"
+msgstr "日暴！"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "THE LOST VALLEY"
+msgstr "失落的山谷"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "THE SPRING RUNS TO THE QUAY AGAIN."
+msgstr "泉水又流到码头了。"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "This epoch’s projects are listed at the top left. Tap one that says Ready to build."
+msgstr "本纪元的项目列在左上角。点击显示“可以建造”的那个。"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Top explorers"
+msgstr "顶尖探险家"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "VISIT ISLAND"
+msgstr "回岛上"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "YOU COMPLETED ALL %d EXPEDITIONS."
+msgstr "你已通关全部 %d 次远征。"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "You won!"
+msgstr "你赢了！"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue expedition %d."
+msgstr "棋盘已保存。点击“开始”继续第 %d 次远征。"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Your whole island is open to explore."
+msgstr "整座岛都可以探索了。"
+
+#: games/relic-rush/lua/island.lua
+msgid "Ancient heights"
+msgstr "远古高地"
+
+#: games/relic-rush/lua/island.lua
+msgid "Fern meadow"
+msgstr "蕨草地"
+
+#: games/relic-rush/lua/island.lua
+msgid "Harbor glade"
+msgstr "港湾林间空地"
+
+#: games/relic-rush/lua/island.lua
+msgid "Sun garden"
+msgstr "太阳花园"
+
+#: games/relic-rush/lua/island.lua
+msgid "Sunlit coast"
+msgstr "阳光海岸"
+
+#. TRANSLATORS: %s is the bonus tool or the resource piece that the building unlocks
+#: games/relic-rush/lua/island.lua
+#, lua-format
+msgid "Unlocks %s"
+msgstr "解锁%s"
+
+#: games/relic-rush/lua/journey.lua
+msgid "Bakers share the temple ovens on feast days. Children waiting for the first loaves fetch water from the quay."
+msgstr "节日里，面包师们共用神庙的烤炉。等第一炉面包的孩子们，就去码头提水。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "Give me a real harbour, builder, and I'll send for the families."
+msgstr "给我一座像样的港口，建造师，我就去接家人们。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "Neighbours bring their witnesses to the temple steps. Both sides can hear the terms before they press a seal into the clay."
+msgstr "邻里双方带着见证人来到神庙台阶前。在泥板上按下印章之前，双方都能听清条款。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "Somebody built harbour steps here long before us. Where did they all go?"
+msgstr "早在我们之前，就有人在这里修了码头台阶。他们都去哪儿了？"
+
+#: games/relic-rush/lua/journey.lua
+msgid "The crews keep their register by the sun court. A porter looking for a berth can find the boat and its sailing day in the same place."
+msgstr "船队的登记册放在太阳庭院旁。想找铺位的搬运工，在同一个地方就能查到船和启航的日子。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "The families are home. Come and see the new fountain."
+msgstr "家人们都回来了。快来看看新喷泉。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "The keeper gives harbour plans a shelf of their own. A mason can lay a drawing flat here and take the measurements down to the quay."
+msgstr "守护者给港口图纸专门留了一层架子。石匠可以把图纸平铺在这里，再把尺寸带到码头去。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "The ship's at sea. My birds are watching for her sails."
+msgstr "船还在海上。我的鸟儿正在等她的帆影。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "There's a spring up in the rocks. Let's start with a well."
+msgstr "岩石上面有一眼泉。咱们先打口井吧。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "We came ashore with nothing, builder. Build us a town and I'll send the ship for the families."
+msgstr "我们空着手上了岸，建造师。给我们建座小镇，我就派船去接家人。"
+
+#: games/relic-rush/lua/journey.lua
+msgid "We keep finding old stones with the same word carved on them."
+msgstr "我们总是挖到刻着同一个词的老石头。"
+
+#: games/relic-rush/lua/progress.lua
+#, lua-format
+msgid "%s are now on the board."
+msgstr "棋盘上现在有%s了。"
+
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "%s earned from matches. Spend it on the island."
+msgstr "通过匹配获得的%s。可在岛上花掉。"
+
+#. TRANSLATORS: %s is a currency: Coins, Supplies or Food
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "%s from matches is banked on a win."
+msgstr "通过匹配获得的%s，过关时才会入账。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Chains"
+msgstr "锁链"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Clear every turquoise plaque to win. Match pieces on a plaque or hit it with a tool."
+msgstr "清除每块青绿色铭牌即可获胜。在铭牌上匹配棋子，或用工具击中它。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Expedition complete"
+msgstr "远征完成"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Explorer's guide"
+msgstr "探险家指南"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Five in a line: rainbow gem"
+msgstr "五个连线：彩虹宝石"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Four in a line: line gem"
+msgstr "四个连线：线条宝石"
+
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "From expedition %d."
+msgstr "来自第 %d 次远征。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Gold coins"
+msgstr "金币"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Green plaques"
+msgstr "绿色铭牌"
+
+#: games/relic-rush/lua/screens.lua
+msgid "It keeps its color. Match it again to sweep its whole row or column."
+msgstr "它保持原色。再次匹配，可清除它所在的整行或整列。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Leaves, flowers and amphoras"
+msgstr "叶子、花朵和双耳陶罐"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Line up 3+ pieces"
+msgstr "三个以上连成一线"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match resource pieces and win to bank Coins, Supplies and Food."
+msgstr "匹配资源棋子并过关，即可存入金币、补给和食物。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match straight lines horizontally or vertically."
+msgstr "横向或纵向连成直线。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match the chained piece or hit it with a tool. If the cell has a plaque, clear it with another hit."
+msgstr "匹配被锁链缠住的棋子，或用工具击中它。如果那格有铭牌，再击中一次就能清除。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match twice to clear a green plaque. Its first hit turns it turquoise."
+msgstr "匹配两次才能清除绿色铭牌。第一次击中会让它变成青绿色。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Replay complete"
+msgstr "重玩完成"
+
+#. TRANSLATORS: %s is a building's name, then two sentences: how the bonus charges and what it does
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "Restore %s. %s %s"
+msgstr "修复%s。%s%s"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Stock the expedition"
+msgstr "备齐远征物资"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Swap it with a neighbor to clear every piece of that kind."
+msgstr "与相邻的棋子交换，清除所有同种棋子。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "These pieces earn score only. See your score at the end of the expedition."
+msgstr "这些棋子只计分。远征结束时查看你的得分。"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Turquoise plaques"
+msgstr "青绿色铭牌"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Ferry pilot"
+msgstr "渡船领航员"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Miller"
+msgstr "磨坊主"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Oren"
+msgstr "奥伦"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Potter"
+msgstr "陶匠"
+
+#. TRANSLATORS: Sela, Oren and Tavi are given names; each role is that character's trade
+#: games/relic-rush/lua/story_cast.lua
+msgid "Sela"
+msgstr "塞拉"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Tavi"
+msgstr "塔维"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A dry shed for the tools. No more rusty saws after a rainy night."
+msgstr "给工具搭了间干棚子。下过雨的夜晚，锯子再也不会生锈了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A ferry up the coast to the hill villages. Cheaper than walking, and drier."
+msgstr "沿海岸到山村的渡船。比走路省钱，还不会淋湿。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A harbour square! Somebody's already selling fish on it."
+msgstr "港口广场！已经有人在上面卖鱼了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A loft of my own. I've always wanted one."
+msgstr "我自己的鸽舍。我一直想要一个。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A month without news of the ship. I hate waiting."
+msgstr "一个月了，船一点消息都没有。我最讨厌等了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A potter with a hundred cups, drinking from someone else's."
+msgstr "一个有上百只杯子的陶匠，却用别人的杯子喝水。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A proper road to the quarry. The carts don't get stuck any more."
+msgstr "通往采石场的像样大路。大车再也不会陷住了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A roof that doesn't flap in the wind. I may never come out."
+msgstr "一个风吹不响的屋顶。我可能再也不出来了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A show every market day now. I never miss the jugglers."
+msgstr "现在每逢集日都有表演。杂耍艺人我一场都不落。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "All right, it's better than Breadhaven. Let's put it to a vote."
+msgstr "好吧，是比“面包港”好听。咱们投票决定。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "An old woman asked me who built the harbour steps. She thought we did."
+msgstr "有位老奶奶问我，码头台阶是谁修的。她还以为是我们呢。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And a cook. Ideally me."
+msgstr "还得有个厨子。最好是我。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And the vote's in. It's Callira. Breadhaven came second."
+msgstr "投票结果出来了：卡利拉。“面包港”排第二。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And to bring flour."
+msgstr "还有，带点面粉回来。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Anyone can come and read the old stones now. Bring your children."
+msgstr "现在谁都可以来读读这些老石头。带上你们的孩子。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Are you getting ready to send the ship?"
+msgstr "你是在准备派船了吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Aren't you sailing with her?"
+msgstr "你不跟船一起走吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Bring them in hungry. I've been baking all week."
+msgstr "让他们饿着肚子来。我已经烤了一整个星期了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, I need a house with a big table and good light. For my charts."
+msgstr "建造师，我需要一座有大桌子、采光好的房子，用来画海图。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, can he have that mill now? Before his arms fall off."
+msgstr "建造师，现在能让他用上那座磨坊了吧？趁他胳膊还没累掉。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, it rained straight into my soup last night."
+msgstr "建造师，昨晚的雨直接落进了我的汤里。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, the crew needs a camp. Tents, a cook fire, somewhere for the tools."
+msgstr "建造师，船员们需要一座营地：帐篷、灶火，还有放工具的地方。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, there's an old wreck on the rocks. Can we haul her up the beach?"
+msgstr "建造师，礁石上有艘旧沉船。咱们能把她拖到沙滩上吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Can I watch? I've never seen anyone make a chart."
+msgstr "我能看吗？我从没见人画过海图。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Can you hear me up there, Oren?"
+msgstr "奥伦，上面听得见我吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Carts from the hill farms every week now. Beans, mangoes, and far too many goats."
+msgstr "现在每周都有山里农场的大车过来，拉着豆子、芒果，还有多得过头的山羊。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Clean water from our own well. No more ship's barrels!"
+msgstr "喝上自家井里的清水了。再也不用喝船上的桶装水啦！"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Counting stars, Oren. It's quicker than counting days."
+msgstr "数星星呢，奥伦。比数日子快。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Did you sell her one?"
+msgstr "你卖给她了吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Every night. Tell your mate to hurry."
+msgstr "每天夜里都点。告诉你的大副快点回来。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Every word. Even the ones about me."
+msgstr "每个字都听得见。连说我的那几句也是。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everybody wants pots, Oren. They just don't know it yet."
+msgstr "人人都想要陶罐，奥伦。只是他们自己还不知道。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone ashore! Builder, welcome to our new home. When there's a town, I'll send for the families."
+msgstr "都上岸了！建造师，欢迎来到我们的新家。等有了小镇，我就去接家人们。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone's arguing about the town's name. Let's settle it at the amphitheatre."
+msgstr "大家都在争小镇的名字。咱们去露天剧场定下来吧。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone's arguing about what to call this place."
+msgstr "大家都在争这地方该叫什么。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everything we've dug up, on shelves. Except my cup. I still use that."
+msgstr "我们挖出来的东西都上了架。除了我的杯子，那个我还在用。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Fifty-two new neighbours, a harbour and a light. Not bad for a beach, builder."
+msgstr "五十二位新邻居，一座港口，一盏灯。对一片沙滩来说，不赖吧，建造师。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Four people want Breadhaven. Me, and three people I gave bread to."
+msgstr "四个人想叫“面包港”：我，还有三个吃过我面包的人。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Fresh fish on the plaza every morning. The gulls are delighted."
+msgstr "广场上每天早晨都有鲜鱼。海鸥们乐坏了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Gently. She's older than my grandmother."
+msgstr "轻点。她比我奶奶还老。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Give them a lodge with a big table. Sailors eat like I do."
+msgstr "给他们一间有大桌子的客舍。水手们吃饭跟我一个样。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Give them an hour. They'll be telling sea stories to anyone who sits still."
+msgstr "给他们一小时。谁坐着不动，他们就拉着谁讲海上的故事。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good light and a big table. I'll have the reef drawn in a month."
+msgstr "采光好，桌子大。一个月内我就能把暗礁画出来。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good ones. Now I can bring a ship in without scraping her."
+msgstr "是啊，还是行家。这下我领船进港，不会再刮着船底了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good work, builder. Now we need roofs before the rain finds us."
+msgstr "干得好，建造师。趁雨还没找上门，咱们得先盖屋顶。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good. The families should know whose harbour this was."
+msgstr "好。家人们应该知道，这原本是谁的港口。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Harbour steps. Somebody tied up their boats here long before us."
+msgstr "是码头台阶。早在我们之前，就有人把船拴在这里了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "He's teaching his birds to find a ship. Don't interrupt him."
+msgstr "他在教他的鸽子找船。别打扰他。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Hear that? That's the sound of bread."
+msgstr "听见了吗？那是面包的声音。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "How long until the ship comes back?"
+msgstr "船还要多久才回来？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I like porridge."
+msgstr "我喜欢喝粥。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I lost a net on the reef last night. I need to know when the tide's high."
+msgstr "昨晚我在暗礁那儿丢了一张网。我得知道什么时候涨潮。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I sat on the old wreck last night, looking at the stars my mate steers by."
+msgstr "昨晚我坐在那艘旧沉船上，望着我的大副用来导航的星星。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'll do the bread. And my birds will watch for the sails."
+msgstr "面包我来做。我的鸽子来盯着帆影。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'll do the bread. Somebody else can do everything else."
+msgstr "面包我来做。其他的事，谁爱干谁干。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm going to fill every pot we own. Just because I can."
+msgstr "我要把咱们所有的锅都装满。就因为我能。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm leaving the old cup by the spout. It was the first thing I found here."
+msgstr "我把那只旧杯子留在出水口旁。那是我在这儿找到的第一件东西。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm measuring the depth, Oren. Every circle is a line on my chart."
+msgstr "我在测水深呢，奥伦。每划一个圈，海图上就多一条线。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I've put my name down for the night watch. Somebody has to keep the temple ovens warm."
+msgstr "我报名守夜了。总得有人让神庙的烤炉一直暖着。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "In the new workshop. I've already claimed the corner by the window."
+msgstr "就在新工坊里。靠窗的角落我已经占好了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "It must be the harbour's name. You don't carve a word that often unless you're proud of it."
+msgstr "这肯定是港口的名字。要不是引以为傲，谁会把一个词刻这么多遍。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Let's keep them somewhere dry before someone builds a wall with them."
+msgstr "得赶紧把它们收到干燥的地方，别让谁拿去砌了墙。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look at them, builder. Sitting down without holding on to anything."
+msgstr "看看他们，建造师。坐下来的时候，什么都不用扶了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look at those timbers. I'd bet she was built in Callira."
+msgstr "看这些木料。我敢打赌，她是在卡利拉造的。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look through both stones. That's the bright star in the south, right in the gap."
+msgstr "从两块石头中间望过去。那就是南边那颗亮星，正好落在缝里。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look what I dug up by the spring. A cup! Somebody lived here before us."
+msgstr "看我在泉边挖到了什么！一只杯子！在我们之前，这儿住过人。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Lovely beach. Where's the town?"
+msgstr "好漂亮的沙滩。镇子在哪儿呢？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Make it a big one. I'm planning soup."
+msgstr "做个大的。我打算拿它煮汤。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "More old stones keep turning up. Some of them have writing on."
+msgstr "老石头越挖越多，有些上面还刻着字。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My crew has lived on that ship for months. They'd like a floor that doesn't rock."
+msgstr "我的船员在那条船上住了好几个月。他们想要一块不晃的地板。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My father's old axe, sharpened. It cuts like it did when I was a boy."
+msgstr "我父亲的旧斧子，磨好了。砍起来跟我小时候一样利落。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My first customer was a girl with a goat. She wanted a grindstone."
+msgstr "我的第一位顾客是个牵着山羊的小姑娘。她想要一块磨石。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My vote's for Breadhaven."
+msgstr "我投“面包港”一票。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My wheat's in the ground. Now I need a mill, or it's porridge forever."
+msgstr "我的小麦种下去了。现在得有座磨坊，不然就只能一直喝粥。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My wheel fits! Oren, the first pot is yours."
+msgstr "我的陶轮正合适！奥伦，第一只陶罐归你。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Nearly. I won't bring the families over that reef without a chart."
+msgstr "快了。没有海图，我可不会领着家人们过那片暗礁。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "No. But children will climb on her for a hundred years."
+msgstr "不会了。不过孩子们会在她身上爬上一百年。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Now the tower rings at high water. Nobody gets caught on the reef by surprise."
+msgstr "现在涨潮时塔会鸣钟。谁也不会在暗礁上措手不及了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Out at sea, my mate steers by the stars. I'd like to watch them too."
+msgstr "在海上，我的大副靠星星导航。我也想看看它们。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Put them where the families can see them when they land."
+msgstr "放在家人们上岸就能看到的地方。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sails on the horizon! Tavi, is that her?"
+msgstr "地平线上有帆！塔维，是她吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, are you sure the hill people want pots?"
+msgstr "塞拉，你确定山里人想要陶罐吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, where are you going to put your potter's wheel?"
+msgstr "塞拉，你打算把陶轮放哪儿？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, why is Tavi rowing in circles out by the reef?"
+msgstr "塞拉，塔维为什么在暗礁那边划着船转圈？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "She's counting the days."
+msgstr "她在数日子。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "She's measuring how deep it is. Every circle is a line on her chart."
+msgstr "她在测水有多深。每划一个圈，她的海图上就多一条线。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "So nobody remembers. Whoever they were, they left a long time ago."
+msgstr "这么说没人记得了。不管他们是谁，反正早就离开了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "So whoever lived here were sailors too."
+msgstr "这么说，住在这儿的人也是水手。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somebody from Callira drank from it. Now all of us can."
+msgstr "卡利拉的某个人曾用它喝过水。现在我们大家都能用了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somebody has to pilot the families over the reef. That's me. My mate will sail her."
+msgstr "得有人领着家人们过暗礁，那就是我。船由我的大副来开。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somewhere dry, with a big door. A workshop."
+msgstr "干燥的地方，还要有扇大门。一间工坊。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Storm charts on the wall. Now everyone can see where the bad weather comes from."
+msgstr "墙上挂着风暴图。现在谁都能看出坏天气是从哪儿来的。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take it to the mill. The wheel's already turning."
+msgstr "拿去磨坊吧。水车已经转起来了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take my grey bird. Send her back with a head count, so I know how much to bake."
+msgstr "带上我的灰鸽子。让她带着人数飞回来，我好知道要烤多少。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take the spares, not the hull. She has to fetch the families."
+msgstr "拿备用的，别动船壳。她还得去接家人们。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi's been up every night this week."
+msgstr "塔维这星期天天夜里都没睡。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, can we take planks from the ship?"
+msgstr "塔维，咱们能从船上拆点木板吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, have you seen Oren today?"
+msgstr "塔维，你今天见到奥伦了吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, the camp crew dug up old stone steps. Cut by hand and worn smooth."
+msgstr "塔维，营地的挖掘队挖出了一段旧石阶。手工凿的，都磨光滑了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, there's smoke over the hills. We're not alone here."
+msgstr "塔维，山那边冒烟了。这儿不止我们几个。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, when will you send the ship for the families?"
+msgstr "塔维，你什么时候派船去接家人们？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Teach them to find a ship and I'll be impressed."
+msgstr "要是你能教会它们找船，我就服了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tell them yes. A town needs more than a dozen people."
+msgstr "告诉他们可以。一座小镇，可不能只有十几个人。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That bright one, low in the south. When it's overhead, she'll be home."
+msgstr "南边低处那颗亮的。等它升到头顶，她就到家了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's her. I'm rowing out to bring her over the reef."
+msgstr "就是她。我划船出去，领她过暗礁。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's not a vote, Oren. That's a bribe."
+msgstr "这可不是投票，奥伦。这是贿赂。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's the sound of you talking about bread again."
+msgstr "那是你又在念叨面包的声音。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The chart's done. Now I need a light, so the ship can find her way back."
+msgstr "海图画好了。现在我需要一盏灯，好让船找到回来的路。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill families are asking if they can move down to the harbour."
+msgstr "山里的人家问，能不能搬到港口来住。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people came! Three baskets of mangoes for two of my pots."
+msgstr "山里人来了！两只我的陶罐，换了三篮芒果。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people say Callira had a sun temple that baked bread for strangers."
+msgstr "山里人说，卡利拉有座太阳神庙，会给陌生人烤面包。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people want stone for their houses. We've got a whole cliff of it."
+msgstr "山里人想要石头盖房子。我们有整整一面悬崖的石头。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The old marks were right. They show high water to the inch."
+msgstr "老刻痕没错。涨潮的水位，一寸不差。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The same word is carved on every stone we've found. Callira."
+msgstr "我们找到的每块石头上，都刻着同一个词：卡利拉。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The ship sails tonight. Keep that fire lit every night, builder, so she can find us."
+msgstr "船今晚起航。建造师，每天夜里都要把那堆火点着，好让她找到我们。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The wheat's ripe, and I'm still grinding it between two rocks."
+msgstr "小麦熟了，我还在用两块石头磨呢。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then I approve of Callira."
+msgstr "那我赞成“卡利拉”。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then eat in the cabin tonight. That's what the roof is for."
+msgstr "那今晚就在小屋里吃吧。屋顶就是干这个用的。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then it's a harbour. Builder, my crew needs a lodge, and I need a chart of the reef."
+msgstr "那它就是个港口了。建造师，我的船员需要一间客舍，我还需要一张暗礁海图。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then keep homing birds. They could carry news."
+msgstr "那就养几只信鸽吧。它们能送消息。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's be good neighbours. Builder, how about a market?"
+msgstr "那咱们就做好邻居。建造师，建个集市怎么样？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's get a roof up. A cabin next?"
+msgstr "那就把屋顶盖起来。接下来建间小屋？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's give them a fountain. With cups for everyone."
+msgstr "那就给他们建座喷泉，人人都有杯子用。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's sell it. The trading post is ready for them."
+msgstr "那咱们就卖吧。交易站已经准备好迎接他们了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's sell it. We'll need a trading post."
+msgstr "那咱们就卖掉它。得建个交易站。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then somebody else knew where the water was. That's a good sign."
+msgstr "那就是说，之前也有人知道水在哪儿。这是个好兆头。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then we'll build somewhere to watch them from."
+msgstr "那咱们就建个地方，好观察它们。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then we're ready. All we need now is the ship."
+msgstr "那咱们就准备好了。现在只差船了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then where did they all go?"
+msgstr "那他们都去哪儿了？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "There are old lines cut in the rock by the steps. Could they be tide marks?"
+msgstr "台阶旁的岩石上刻着一些旧线条。会不会是潮位标记？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "There's a spring up in the rocks, Oren. Fresh water! That's a start."
+msgstr "奥伦，岩石上面有一眼泉。淡水！这就是个开头。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "They're all ashore, builder. Fifty-two people, and every one of them wants water."
+msgstr "他们都上岸了，建造师。五十二个人，个个都想喝水。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Twelve birds, and every one of them knows this loft is home."
+msgstr "十二只鸽子，每一只都认得这间鸽舍是家。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two buckets at once now. The queue for water just got half as long."
+msgstr "现在一次能打两桶。排队打水的队伍一下子短了一半。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two millstones! Twice the flour, and still only one of me."
+msgstr "两块磨石！面粉翻倍，可我还是只有一个人。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two months, Tavi says, if the wind is fair."
+msgstr "塔维说，要两个月，前提是风顺。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two months, if the wind is fair. Plenty of time to finish the town."
+msgstr "风顺的话要两个月。足够咱们把小镇建完了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two saw benches. Now the planks get cut while I'm at my wheel."
+msgstr "两张锯木台。现在我转陶轮的时候，木板也有人锯了。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two. She's coming back with another goat."
+msgstr "卖了两块。她还要带另一只山羊回来呢。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Up here, Sela! The grey one just beat me home from the harbour."
+msgstr "在上面呢，塞拉！那只灰鸽子刚从港口飞回来，比我还快。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Watch quietly, then."
+msgstr "那就安安静地看。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "We've got shelves of old things from Callira now. Coins, lamps, a carved comb."
+msgstr "我们现在有好几架来自卡利拉的老物件：硬币、油灯，还有一把雕花梳子。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Welcome home, everyone. Welcome to Callira."
+msgstr "欢迎回家，各位。欢迎来到卡利拉。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "When the families land, they'll need a feast. And somewhere to hold it."
+msgstr "家人们上岸后，需要一顿盛宴，还得有个办宴席的地方。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "When the town has a harbour. A ship that size needs one."
+msgstr "等小镇有了港口。那么大的船，得有个港口才行。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Which star is your mate steering by?"
+msgstr "你的大副是靠哪颗星星导航的？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Will she ever sail again?"
+msgstr "她还能再扬帆吗？"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "With bronze behind the fire, ships can see our light twice as far."
+msgstr "火后面加了块青铜，船在两倍远的地方就能看到我们的灯光。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "You would."
+msgstr "你肯定喜欢。"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "You'll come out for supper."
+msgstr "吃晚饭你总得出来吧。"
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Choose open grass clear of other buildings."
+msgstr "选一块没有其他建筑的空草地。"
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "拖动建筑选择位置，或滚动查看土地。"
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Earn more expedition treasures to build this."
+msgstr "多赚些远征珍宝才能建造这座建筑。"
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Open more land before placing this building."
+msgstr "放置这座建筑前，请先开拓更多土地。"
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Your island is unchanged."
+msgstr "你的小岛没有变化。"
+
+#. TRANSLATORS: the first %s is a bonus tool's name, the second the sentence saying what it does
+#: games/relic-rush/lua/user_events.lua
+#, lua-format
+msgid "%s is charged. Tap it. %s"
+msgstr "%s已充满。点击它。%s"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A chain holds its gem in place and takes the first hit."
+msgstr "锁链会固定住宝石，并承受第一下击打。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A double chain takes two hits before its gem is free."
+msgstr "双层锁链要击中两下，宝石才能解脱。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A double plaque needs two matches on it."
+msgstr "双层铭牌需要在上面匹配两次。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Five in a line leave a rainbow gem. Swap it to clear one kind."
+msgstr "五个连线会留下彩虹宝石。交换它，可清除一种棋子。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Four in a line leave a striped gem. Match it to sweep its line."
+msgstr "四个连线会留下线条宝石。匹配它，可清除它所在的线。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Ice holds its gem and takes the first hit."
+msgstr "冰块会冻住宝石，并承受第一下击打。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Match on the turquoise plaques to clear them. Clear every plaque to finish the expedition."
+msgstr "在青绿色铭牌上匹配来清除它们。清除所有铭牌，远征即告完成。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Restorations cost Coins, Supplies and Food. Winning an expedition opens the next one."
+msgstr "修复需要金币、补给和食物。赢下一次远征，就能开启下一次。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Swap the two glowing gems to line up three."
+msgstr "交换两颗发光的宝石，让三个连成一线。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Swipe a gem onto its neighbour to make a line of three."
+msgstr "把宝石滑向相邻的一格，凑成三连。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Tap a gem, then the neighbour to swap it with."
+msgstr "先点一颗宝石，再点要交换的相邻宝石。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Three moves left. A charged bonus can clear the last plaques."
+msgstr "只剩三步了。充满的奖励能清掉最后几块铭牌。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Try the glowing pair. Match three in a row or column."
+msgstr "试试那对发光的宝石。让三个连成一行或一列。"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a bronze reflector"
+msgstr "一块青铜反光板"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a cart road to the quarry"
+msgstr "通往采石场的大车路"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a dry tool store"
+msgstr "一间干燥的工具库"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a ferry to the hill villages"
+msgstr "一条通往山村的渡船"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a fish market every morning"
+msgstr "每天清晨的鱼市"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a reading room open to all"
+msgstr "一间向所有人开放的阅览室"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a second millstone"
+msgstr "第二块磨石"
+
+#. TRANSLATORS: an upgrade's title: what the building gains, shown as "Upgraded: %s." and after the building's name
+#: games/relic-rush/lua/user_events.lua
+msgid "a second rope and pulley"
+msgstr "第二根绳索和滑轮"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a second saw bench"
+msgstr "第二张锯木台"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a warning chime"
+msgstr "一座预警钟"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "his father's tools sharpened"
+msgstr "父亲的工具磨好了"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "market-day shows"
+msgstr "集日表演"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "storm charts on the wall"
+msgstr "墙上的风暴图"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the hill farms send their carts"
+msgstr "山里农场送来大车"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the keepers' watch roster"
+msgstr "守护者的值守表"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the sighting stones aligned"
+msgstr "瞄准石已对齐"

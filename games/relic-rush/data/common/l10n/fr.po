@@ -1,0 +1,2134 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: relic-rush\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "A brazier above the harbour marks the entrance at night, when the reefs are hardest to see."
+msgstr "Un brasero au-dessus du port marque l'entrée la nuit, quand les récifs sont les plus difficiles à voir."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Bamboo grove"
+msgstr "Bosquet de bambous"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Banana plant"
+msgstr "Bananier"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Barrels"
+msgstr "Tonneaux"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Beached schooner"
+msgstr "Goélette échouée"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Berry bush"
+msgstr "Buisson de baies"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Big-leaf monstera"
+msgstr "Monstera à grandes feuilles"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Birdbath"
+msgstr "Bain d'oiseaux"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Blooming bromeliad"
+msgstr "Broméliacée en fleur"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Blue lilies"
+msgstr "Lis bleus"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Boulder"
+msgstr "Rocher"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Broken column"
+msgstr "Colonne brisée"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Campfire"
+msgstr "Feu de camp"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Canopy treehouse"
+msgstr "Cabane dans la canopée"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Capybara"
+msgstr "Capybara"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Carpenter's workshop"
+msgstr "Atelier du charpentier"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Cartographer's house"
+msgstr "Maison du cartographe"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Cartographers combine soundings from different crews to mark reefs and channels on a single chart."
+msgstr "Les cartographes réunissent les sondages de plusieurs équipages pour porter récifs et chenaux sur une seule carte."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Clipped hedge block"
+msgstr "Bloc de haie taillée"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crews bring their own bowls to the long tables. One cook can feed a whole shift while the hearth is hot and have the grain soaking for the next."
+msgstr "Les équipes apportent leurs bols aux longues tables. Un seul cuisinier nourrit toute une équipe tant que l'âtre est chaud, et fait tremper le grain pour la suivante."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crews carry homing birds aboard to send messages back to shore. The loft keeps the birds safe between voyages."
+msgstr "Les équipages embarquent des pigeons voyageurs pour envoyer des messages à terre. Le pigeonnier met les oiseaux à l'abri entre deux voyages."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crystal cluster"
+msgstr "Amas de cristaux"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Curious monkey"
+msgstr "Singe curieux"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Dig site"
+msgstr "Site de fouilles"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Duck pond"
+msgstr "Mare aux canards"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Each terrace drains into the bed below. Gardeners carry water to the top at dawn and plant the thirstiest herbs where the first runnel falls."
+msgstr "Chaque terrasse s'écoule dans le massif en dessous. Les jardiniers montent l'eau au sommet à l'aube et plantent les herbes les plus assoiffées là où tombe le premier filet."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Expedition camp"
+msgstr "Camp d'expédition"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Expedition flag"
+msgstr "Fanion d'expédition"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Explorer statue"
+msgstr "Statue d'explorateur"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Explorer's globe"
+msgstr "Globe de l'explorateur"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fan palm"
+msgstr "Palmier éventail"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Field telescope"
+msgstr "Longue-vue de terrain"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fishing boats unload at the harbour plaza. The catch goes straight from the quay to the market stalls."
+msgstr "Les bateaux de pêche déchargent sur la place du port. La pêche va directement du quai aux étals du marché."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flower bed"
+msgstr "Massif de fleurs"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flower planter"
+msgstr "Jardinière fleurie"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flowering shrub"
+msgstr "Arbuste fleuri"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Forest fern"
+msgstr "Fougère des bois"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Frangipani"
+msgstr "Frangipanier"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fruit pickers keep a sleeping platform among the branches. A watcher with a rattle can turn a flock away before it strips the ripest tree."
+msgstr "Les cueilleurs gardent une plateforme pour dormir dans les branches. Un guetteur muni d'une crécelle peut chasser une volée avant qu'elle ne dépouille l'arbre le plus mûr."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Garden bench"
+msgstr "Banc de jardin"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Garden swing"
+msgstr "Balançoire de jardin"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Giant kapok"
+msgstr "Kapokier géant"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Giant stone head"
+msgstr "Tête de pierre géante"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Glass greenhouse"
+msgstr "Serre en verre"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Golden idol"
+msgstr "Idole dorée"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Great aviary"
+msgstr "Grande volière"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Hanging gardens"
+msgstr "Jardins suspendus"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Harbour lodge"
+msgstr "Auberge du port"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Harbour plaza"
+msgstr "Place du port"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Herbalist's hut"
+msgstr "Cabane de l'herboriste"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Island growers bring fruit and grain to market. The stalls pack provisions in clay jars for the road."
+msgstr "Les cultivateurs de l'île apportent fruits et grain au marché. Les étals emballent les provisions dans des jarres d'argile pour la route."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jade fountain"
+msgstr "Fontaine de jade"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jade gazebo"
+msgstr "Pavillon de jade"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jaguar guardian"
+msgstr "Jaguar gardien"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jungle market"
+msgstr "Marché de la jungle"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Keeper's archive"
+msgstr "Archives du gardien"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lantern post"
+msgstr "Poteau à lanterne"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lighthouse"
+msgstr "Phare"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lily pond"
+msgstr "Bassin aux nénuphars"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Little fountain"
+msgstr "Petite fontaine"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mango tree"
+msgstr "Manguier"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Market cart"
+msgstr "Charrette de marché"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mess hall"
+msgstr "Réfectoire"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mossy boulders"
+msgstr "Rochers moussus"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Palm hammock"
+msgstr "Hamac sous les palmiers"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Papaya tree"
+msgstr "Papayer"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Parrot perch"
+msgstr "Perchoir à perroquets"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Picnic rug"
+msgstr "Plaid de pique-nique"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Place this treasure anywhere on open grass."
+msgstr "Place ce trésor n'importe où sur l'herbe libre."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Porters use the lowest dry step to board a boat. As the tide rises they move their baskets up the stone stair, one landing at a time."
+msgstr "Les porteurs utilisent la marche sèche la plus basse pour monter à bord. Quand la marée monte, ils remontent leurs paniers sur l'escalier de pierre, un palier à la fois."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Quarry stone is squared and sorted here before it is traded to the island's builders."
+msgstr "La pierre de carrière est équarrie et triée ici avant d'être vendue aux bâtisseurs de l'île."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Quay steps"
+msgstr "Marches du quai"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rainbow garden"
+msgstr "Jardin arc-en-ciel"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Red hibiscus"
+msgstr "Hibiscus rouge"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Relic museum"
+msgstr "Musée des reliques"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Riverside reeds"
+msgstr "Roseaux de la rive"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rock spring"
+msgstr "Source dans le rocher"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Round jungle tree"
+msgstr "Arbre rond de la jungle"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Round shrub"
+msgstr "Arbuste rond"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rowboat"
+msgstr "Barque"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Ruined arch"
+msgstr "Arche en ruine"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Shipwrights salvage valuable cargo and sound timber from the hull while the tide is out."
+msgstr "Les charpentiers de marine récupèrent cargaison précieuse et bois sain dans la coque à marée basse."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sight lines through the stone pillars help navigators mark the positions of stars throughout the year."
+msgstr "Les lignes de visée entre les piliers de pierre aident les navigateurs à repérer la position des étoiles tout au long de l'année."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Signpost"
+msgstr "Panneau indicateur"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Spring well"
+msgstr "Puits de la source"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Star observatory"
+msgstr "Observatoire des étoiles"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stilt house"
+msgstr "Maison sur pilotis"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone amphitheatre"
+msgstr "Amphithéâtre de pierre"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone idol"
+msgstr "Idole de pierre"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone trading post"
+msgstr "Comptoir de pierre"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sun obelisk"
+msgstr "Obélisque du Soleil"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sundial"
+msgstr "Cadran solaire"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sunning turtle"
+msgstr "Tortue au soleil"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sunny daisies"
+msgstr "Pâquerettes ensoleillées"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Supply crates"
+msgstr "Caisses de provisions"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Supply tent"
+msgstr "Tente de ravitaillement"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Temple cypress"
+msgstr "Cyprès du temple"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Temple of the Sun"
+msgstr "Temple du Soleil"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tender seedlings spend their first weeks under cover. The gardener opens the shelter early, before the midday heat can wilt a whole bed."
+msgstr "Les jeunes pousses passent leurs premières semaines à l'abri. Le jardinier ouvre l'abri tôt, avant que la chaleur de midi ne flétrisse tout un massif."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The amphitheatre gives the town a place for contests and public gatherings. Armourers set up their stalls at the entrance."
+msgstr "L'amphithéâtre offre à la ville un lieu pour les concours et les rassemblements. Les armuriers installent leurs étals à l'entrée."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The archive keeps harbour plans and trade records dry. Carved rings serve as seals for official documents."
+msgstr "Les archives gardent au sec les plans du port et les registres de commerce. Des anneaux gravés servent de sceaux aux documents officiels."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The camp gives excavation crews a place to sort supplies, mend tools and cook between shifts."
+msgstr "Le camp offre aux équipes de fouille un endroit pour trier les provisions, réparer les outils et cuisiner entre deux relais."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The harbour watch tracks the tide from this tower. Pilots use its signals to time a shallow crossing."
+msgstr "La vigie du port suit la marée depuis cette tour. Les pilotes se servent de ses signaux pour caler une traversée en eaux basses."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The herbalist dries leaves on reed trays and keeps the roots in separate clay pots. A sprig tied to each lid tells an apprentice which plant grew it."
+msgstr "L'herboriste fait sécher les feuilles sur des claies de roseau et garde les racines dans des pots d'argile séparés. Un brin noué à chaque couvercle indique à l'apprenti de quelle plante il s'agit."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The lodge gives visiting crews a dry berth and a place to prepare for their next departure."
+msgstr "L'auberge offre aux équipages de passage une couchette au sec et un endroit pour préparer leur prochain départ."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The museum keeps the island's carvings and instruments together, where visitors can see how they were made."
+msgstr "Le musée réunit les sculptures et les instruments de l'île, pour que les visiteurs voient comment ils ont été faits."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The sawbench turns logs into beams and planks for houses and boats."
+msgstr "L'établi de scie transforme les troncs en poutres et en planches pour les maisons et les bateaux."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The stone lining keeps loose earth out of the spring. A low rim makes it easy to fill buckets."
+msgstr "Le revêtement de pierre empêche la terre meuble d'entrer dans la source. Un rebord bas facilite le remplissage des seaux."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The stream turns the millwheel. Inside, millstones grind the island's harvest into flour."
+msgstr "Le ruisseau fait tourner la roue du moulin. À l'intérieur, les meules transforment la récolte de l'île en farine."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The temple courtyard hosts public ceremonies and feast days under the island's sun emblem."
+msgstr "La cour du temple accueille cérémonies publiques et jours de fête sous l'emblème solaire de l'île."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tide clock tower"
+msgstr "Tour de l'horloge des marées"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tiki torch"
+msgstr "Torche tiki"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Timber posts carry the sleeping floor above the flood line. A family can tie its boat to the steps and come home even when the lane is under water."
+msgstr "Des poteaux de bois portent le plancher au-dessus de la ligne de crue. Une famille peut amarrer sa barque aux marches et rentrer chez elle même quand la ruelle est inondée."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Topiary ball"
+msgstr "Boule topiaire"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Toucan perch"
+msgstr "Perchoir à toucans"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Trapper's cabin"
+msgstr "Cabane du trappeur"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Trappers shelter here between trips. The cabin gives them a dry bench for repairing traps and gear."
+msgstr "Les trappeurs s'abritent ici entre deux sorties. La cabane leur offre un banc au sec pour réparer pièges et équipement."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Treasure chest"
+msgstr "Coffre au trésor"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Twin palms"
+msgstr "Palmiers jumeaux"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Vine pergola"
+msgstr "Pergola de vigne"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water from the spring flows through the fountain into a basin faced with green stone."
+msgstr "L'eau de la source traverse la fontaine et coule dans un bassin habillé de pierre verte."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water mill"
+msgstr "Moulin à eau"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water pump"
+msgstr "Pompe à eau"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Wild orchids"
+msgstr "Orchidées sauvages"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Young palm"
+msgstr "Jeune palmier"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Arch Gate"
+msgstr "Porte de l'arche"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Beached Hull"
+msgstr "Coque échouée"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Bell Cistern"
+msgstr "Citerne des cloches"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Bone Stair"
+msgstr "Escalier d'os"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Broken Aqueduct"
+msgstr "Aqueduc brisé"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ceiba Roots"
+msgstr "Racines du ceiba"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Cenote Ring"
+msgstr "Anneau du cénote"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Chac Stair"
+msgstr "Escalier de Chac"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Choked Gateway"
+msgstr "Porche obstrué"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Clear every turquoise plaque."
+msgstr "Dégage toutes les plaques turquoise."
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Coiled Serpent"
+msgstr "Serpent enroulé"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Colonnade Walk"
+msgstr "Allée de la colonnade"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Cormorant Rock"
+msgstr "Rocher des cormorans"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Dawn Terrace"
+msgstr "Terrasse de l'aube"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Disc of Noon"
+msgstr "Disque de midi"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Dome Ring"
+msgstr "Anneau du dôme"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Drowned Arch"
+msgstr "Arche noyée"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ember Colonnade"
+msgstr "Colonnade de braise"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Fallen Colonnade"
+msgstr "Colonnade effondrée"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Fern Window"
+msgstr "Fenêtre aux fougères"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ferry Steps"
+msgstr "Marches du bac"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Gate of Reeds"
+msgstr "Porte des roseaux"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Hall of Pillars"
+msgstr "Salle des piliers"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Heart of the Temple"
+msgstr "Cœur du temple"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Heavy chains take two matches. Then clear their plaques."
+msgstr "Les grosses chaînes demandent deux alignements. Puis dégage leurs plaques."
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol Head"
+msgstr "Tête d'idole"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol of Rain"
+msgstr "Idole de la pluie"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol of Salt"
+msgstr "Idole du sel"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Inner Sun Court"
+msgstr "Cour intérieure du Soleil"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jade Cartouche"
+msgstr "Cartouche de jade"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jade Steps"
+msgstr "Marches de jade"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jaguar Gate"
+msgstr "Porte du jaguar"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jaguar Lintel"
+msgstr "Linteau du jaguar"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Kapok Roots"
+msgstr "Racines du kapokier"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Kelp Terrace"
+msgstr "Terrasse des algues"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lantern Spiral"
+msgstr "Spirale de lanternes"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lantern Tower"
+msgstr "Tour aux lanternes"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lookout Mesa"
+msgstr "Mesa du guet"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Match through a chained piece to free it. Then clear the plaque underneath."
+msgstr "Aligne à travers une pièce enchaînée pour la libérer. Puis dégage la plaque dessous."
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Maw of the Jaguar"
+msgstr "Gueule du jaguar"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Mist Cenote"
+msgstr "Cénote de brume"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Mole Walk"
+msgstr "Chemin de la jetée"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moonwell Arch"
+msgstr "Arche du puits lunaire"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Bridge"
+msgstr "Pont de mousse"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Parapet"
+msgstr "Parapet moussu"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Well"
+msgstr "Puits moussu"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Net Loft"
+msgstr "Grenier aux filets"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Obsidian Lintel"
+msgstr "Linteau d'obsidienne"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Obsidian Well"
+msgstr "Puits d'obsidienne"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ocelot Gate"
+msgstr "Porte de l'ocelot"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ochre Vault"
+msgstr "Voûte d'ocre"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Orchard of Idols"
+msgstr "Verger des idoles"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Palm Court"
+msgstr "Cour des palmiers"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Parrot Steps"
+msgstr "Marches des perroquets"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Pilgrim Stair"
+msgstr "Escalier des pèlerins"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Rain Channel"
+msgstr "Canal de la pluie"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Reed Hut"
+msgstr "Hutte de roseaux"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Reed Landing"
+msgstr "Débarcadère aux roseaux"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "River Carvings"
+msgstr "Sculptures de la rivière"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Rush Landing"
+msgstr "Débarcadère des joncs"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Salt Stair"
+msgstr "Escalier de sel"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Salt Terrace"
+msgstr "Terrasse de sel"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Coil"
+msgstr "Anneau du serpent"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Throne"
+msgstr "Trône du serpent"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Wall"
+msgstr "Mur du serpent"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Signal Tower"
+msgstr "Tour de signalisation"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stairway of Kites"
+msgstr "Escalier des cerfs-volants"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Star Dome"
+msgstr "Dôme des étoiles"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Star Eater's Dome"
+msgstr "Dôme du mangeur d'étoiles"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stone Bridge"
+msgstr "Pont de pierre"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stone Fisher"
+msgstr "Pêcheur de pierre"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Altar"
+msgstr "Autel du Soleil"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Court"
+msgstr "Cour du Soleil"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Disc"
+msgstr "Disque solaire"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Cistern"
+msgstr "Citerne engloutie"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Plaza"
+msgstr "Place engloutie"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Vault"
+msgstr "Voûte engloutie"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Temple Front"
+msgstr "Façade du temple"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Temple of Winds"
+msgstr "Temple des vents"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tern Rock Light"
+msgstr "Feu du rocher des sternes"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Terrace Garden"
+msgstr "Jardin en terrasse"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Beached Mast"
+msgstr "Le mât échoué"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Ceiba Court"
+msgstr "La cour du ceiba"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Drowned Stair"
+msgstr "L'escalier noyé"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Landing"
+msgstr "Le débarcadère"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Light Below"
+msgstr "La lumière d'en bas"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Overlook"
+msgstr "Le belvédère"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Quiet Terraces"
+msgstr "Les terrasses calmes"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Spire Keep"
+msgstr "Le donjon de la flèche"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Sunken Sanctum"
+msgstr "Le sanctuaire englouti"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Timber Path"
+msgstr "Le chemin de bois"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Chamber"
+msgstr "Chambre des marées"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Pool"
+msgstr "Mare de marée"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Stairs"
+msgstr "Escaliers des marées"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Trapper’s Terrace"
+msgstr "Terrasse du trappeur"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Twin Wells"
+msgstr "Puits jumeaux"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Vault Door"
+msgstr "Porte de la voûte"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Watcher's Tier"
+msgstr "Gradin du guetteur"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Water Cistern"
+msgstr "Citerne d'eau"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wetlands Walk"
+msgstr "Promenade des marais"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wrack Line"
+msgstr "Laisse de mer"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wreck Gate"
+msgstr "Porte de l'épave"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wreck of the Gull"
+msgstr "Épave de la Mouette"
+
+#. TRANSLATORS: a piece's plural name, then how many of a currency (Coins, Food, Supplies) each one earns
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "%s earn +%d %s each."
+msgstr "%s : +%d %s par pièce."
+
+#. TRANSLATORS: both %s are bonus tool names: the new tool, then the one it replaces
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "%s replaces %s and keeps its charge."
+msgstr "%s remplace %s et garde sa charge."
+
+#: games/relic-rush/lua/economy.lua
+msgid "Amphora"
+msgstr "Amphore"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Coins"
+msgstr "Pièces"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Dressed stones"
+msgstr "Pierres taillées"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Emeralds"
+msgstr "Émeraudes"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Flower"
+msgstr "Fleur"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Food"
+msgstr "Nourriture"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Grain bundles"
+msgstr "Gerbes de blé"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Harps"
+msgstr "Harpes"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Helmets"
+msgstr "Casques"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Leaf"
+msgstr "Feuille"
+
+#. TRANSLATORS: %s is a bonus tool's name; its pieces charge it
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "Match %d %s piece for one charge."
+msgid_plural "Match %d %s pieces for one charge."
+msgstr[0] "Aligne %d pièce %s pour une charge."
+msgstr[1] "Aligne %d pièces %s pour une charge."
+
+#: games/relic-rush/lua/economy.lua
+msgid "Ration jars"
+msgstr "Pots de rations"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Rings"
+msgstr "Anneaux"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Sandals"
+msgstr "Sandales"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Scarabs"
+msgstr "Scarabées"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Shrimp"
+msgstr "Crevettes"
+
+#: games/relic-rush/lua/economy.lua games/relic-rush/lua/screens.lua
+msgid "Silver coins"
+msgstr "Pièces d'argent"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Sun coin"
+msgstr "Pièce soleil"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Supplies"
+msgstr "Provisions"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Timber bundles"
+msgstr "Fagots de bois"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Water buckets"
+msgstr "Seaux d'eau"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "A NEW PLACE TO DISCOVER"
+msgstr "UN NOUVEAU LIEU À DÉCOUVRIR"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Breakfast at the quay"
+msgstr "Petit-déjeuner sur le quai"
+
+#. TRANSLATORS: praise over the board for ever bigger cascades; "Sunstorm" is a made-up word
+#: games/relic-rush/lua/game_config.lua
+msgid "Brilliant!"
+msgstr "Brillant !"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Build your valley"
+msgstr "Construis ta vallée"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "CLEAR NEW EXPEDITIONS TO OPEN IT"
+msgstr "TERMINE DE NOUVELLES EXPÉDITIONS POUR L'OUVRIR"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "COLLECT & VISIT ISLAND"
+msgstr "RÉCUPÉRER ET VISITER L'ÎLE"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Coastal Watch"
+msgstr "Veille côtière"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "EXPEDITIONS CLEARED  %d / %d"
+msgstr "EXPÉDITIONS TERMINÉES  %d / %d"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "EXPLORER'S GUIDE"
+msgstr "GUIDE DE L'EXPLORATEUR"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch I"
+msgstr "Époque I"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch II"
+msgstr "Époque II"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch III"
+msgstr "Époque III"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch IV"
+msgstr "Époque IV"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch V"
+msgstr "Époque V"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epochs"
+msgstr "Époques"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Harbour Town"
+msgstr "Ville portuaire"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "LEADERBOARD"
+msgstr "CLASSEMENT"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Legendary!"
+msgstr "Légendaire !"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Look, we have enough to build!"
+msgstr "Regarde, on a de quoi construire !"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "MORE RESOURCES NEEDED"
+msgstr "IL FAUT PLUS DE RESSOURCES"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Magnificent!"
+msgstr "Magnifique !"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Match through the chained piece. Match that cell again to clear its plaque."
+msgstr "Aligne à travers la pièce enchaînée. Aligne cette case encore une fois pour dégager sa plaque."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Mill and Market"
+msgstr "Moulin et marché"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "QUIT TO ISLAND"
+msgstr "RETOUR À L'ÎLE"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "RELIC RUSH"
+msgstr "RELIC RUSH"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "RESTORE EARLIER WONDERS"
+msgstr "RESTAURE LES MERVEILLES ANCIENNES"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Resources collected."
+msgstr "Ressources récupérées."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Restart this expedition?"
+msgstr "Recommencer cette expédition ?"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Select a project to see its cost."
+msgstr "Choisis un projet pour voir son coût."
+
+#. TRANSLATORS: the medal won for finishing each epoch, named for what the town built in it
+#: games/relic-rush/lua/game_config.lua
+msgid "Spring Camp"
+msgstr "Camp de la source"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Sun Temple"
+msgstr "Temple du Soleil"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Sunstorm!"
+msgstr "Tempête solaire !"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "THE LOST VALLEY"
+msgstr "LA VALLÉE PERDUE"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "THE SPRING RUNS TO THE QUAY AGAIN."
+msgstr "LA SOURCE COULE DE NOUVEAU JUSQU'AU QUAI."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "This epoch’s projects are listed at the top left. Tap one that says Ready to build."
+msgstr "Les projets de cette époque sont listés en haut à gauche. Touche-en un qui indique Prêt à construire."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Top explorers"
+msgstr "Meilleurs explorateurs"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "VISIT ISLAND"
+msgstr "VISITER L'ÎLE"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "YOU COMPLETED ALL %d EXPEDITIONS."
+msgstr "TU AS TERMINÉ LES %d EXPÉDITIONS."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "You won!"
+msgstr "Gagné !"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue expedition %d."
+msgstr "Ton plateau est sauvegardé. Touche Jouer pour continuer l'expédition %d."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Your whole island is open to explore."
+msgstr "Toute ton île est ouverte à l'exploration."
+
+#: games/relic-rush/lua/island.lua
+msgid "Ancient heights"
+msgstr "Hauteurs antiques"
+
+#: games/relic-rush/lua/island.lua
+msgid "Fern meadow"
+msgstr "Prairie aux fougères"
+
+#: games/relic-rush/lua/island.lua
+msgid "Harbor glade"
+msgstr "Clairière du port"
+
+#: games/relic-rush/lua/island.lua
+msgid "Sun garden"
+msgstr "Jardin du Soleil"
+
+#: games/relic-rush/lua/island.lua
+msgid "Sunlit coast"
+msgstr "Côte ensoleillée"
+
+#. TRANSLATORS: %s is the bonus tool or the resource piece that the building unlocks
+#: games/relic-rush/lua/island.lua
+#, lua-format
+msgid "Unlocks %s"
+msgstr "Débloque : %s"
+
+#: games/relic-rush/lua/journey.lua
+msgid "Bakers share the temple ovens on feast days. Children waiting for the first loaves fetch water from the quay."
+msgstr "Les jours de fête, les boulangers se partagent les fours du temple. Les enfants qui attendent les premiers pains vont chercher l'eau au quai."
+
+#: games/relic-rush/lua/journey.lua
+msgid "Give me a real harbour, builder, and I'll send for the families."
+msgstr "Donne-moi un vrai port, bâtisseur, et je ferai venir les familles."
+
+#: games/relic-rush/lua/journey.lua
+msgid "Neighbours bring their witnesses to the temple steps. Both sides can hear the terms before they press a seal into the clay."
+msgstr "Les voisins amènent leurs témoins sur les marches du temple. Chaque partie entend les conditions avant d'appuyer son sceau dans l'argile."
+
+#: games/relic-rush/lua/journey.lua
+msgid "Somebody built harbour steps here long before us. Where did they all go?"
+msgstr "Quelqu'un a construit des marches de port ici bien avant nous. Où sont-ils tous partis ?"
+
+#: games/relic-rush/lua/journey.lua
+msgid "The crews keep their register by the sun court. A porter looking for a berth can find the boat and its sailing day in the same place."
+msgstr "Les équipages tiennent leur registre près de la cour du Soleil. Un porteur en quête d'une place y trouve le bateau et son jour d'appareillage."
+
+#: games/relic-rush/lua/journey.lua
+msgid "The families are home. Come and see the new fountain."
+msgstr "Les familles sont chez elles. Viens voir la nouvelle fontaine."
+
+#: games/relic-rush/lua/journey.lua
+msgid "The keeper gives harbour plans a shelf of their own. A mason can lay a drawing flat here and take the measurements down to the quay."
+msgstr "Le gardien réserve une étagère aux plans du port. Un maçon peut y poser un dessin à plat et descendre les mesures jusqu'au quai."
+
+#: games/relic-rush/lua/journey.lua
+msgid "The ship's at sea. My birds are watching for her sails."
+msgstr "Le navire est en mer. Mes oiseaux guettent ses voiles."
+
+#: games/relic-rush/lua/journey.lua
+msgid "There's a spring up in the rocks. Let's start with a well."
+msgstr "Il y a une source dans les rochers. Commençons par un puits."
+
+#: games/relic-rush/lua/journey.lua
+msgid "We came ashore with nothing, builder. Build us a town and I'll send the ship for the families."
+msgstr "Nous avons débarqué sans rien, bâtisseur. Construis-nous une ville et j'enverrai le navire chercher les familles."
+
+#: games/relic-rush/lua/journey.lua
+msgid "We keep finding old stones with the same word carved on them."
+msgstr "On n'arrête pas de trouver de vieilles pierres avec le même mot gravé dessus."
+
+#: games/relic-rush/lua/progress.lua
+#, lua-format
+msgid "%s are now on the board."
+msgstr "%s sont maintenant sur le plateau."
+
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "%s earned from matches. Spend it on the island."
+msgstr "Gagné grâce aux alignements : %s. À dépenser sur l'île."
+
+#. TRANSLATORS: %s is a currency: Coins, Supplies or Food
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "%s from matches is banked on a win."
+msgstr "Gains des alignements mis de côté à la victoire : %s."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Chains"
+msgstr "Chaînes"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Clear every turquoise plaque to win. Match pieces on a plaque or hit it with a tool."
+msgstr "Dégage toutes les plaques turquoise pour gagner. Aligne des pièces sur une plaque ou frappe-la avec un outil."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Expedition complete"
+msgstr "Expédition terminée"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Explorer's guide"
+msgstr "Guide de l'explorateur"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Five in a line: rainbow gem"
+msgstr "Cinq alignées : gemme arc-en-ciel"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Four in a line: line gem"
+msgstr "Quatre alignées : gemme de ligne"
+
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "From expedition %d."
+msgstr "À partir de l'expédition %d."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Gold coins"
+msgstr "Pièces d'or"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Green plaques"
+msgstr "Plaques vertes"
+
+#: games/relic-rush/lua/screens.lua
+msgid "It keeps its color. Match it again to sweep its whole row or column."
+msgstr "Elle garde sa couleur. Aligne-la encore pour balayer toute sa ligne ou sa colonne."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Leaves, flowers and amphoras"
+msgstr "Feuilles, fleurs et amphores"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Line up 3+ pieces"
+msgstr "Aligne 3 pièces ou plus"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match resource pieces and win to bank Coins, Supplies and Food."
+msgstr "Aligne des pièces de ressource et gagne pour mettre de côté Pièces, Provisions et Nourriture."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match straight lines horizontally or vertically."
+msgstr "Fais des lignes droites, à l'horizontale ou à la verticale."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match the chained piece or hit it with a tool. If the cell has a plaque, clear it with another hit."
+msgstr "Aligne la pièce enchaînée ou frappe-la avec un outil. Si la case a une plaque, dégage-la d'un autre coup."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match twice to clear a green plaque. Its first hit turns it turquoise."
+msgstr "Aligne deux fois pour dégager une plaque verte. Le premier coup la rend turquoise."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Replay complete"
+msgstr "Rejeu terminé"
+
+#. TRANSLATORS: %s is a building's name, then two sentences: how the bonus charges and what it does
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "Restore %s. %s %s"
+msgstr "Restaure : %s. %s %s"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Stock the expedition"
+msgstr "Approvisionne l'expédition"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Swap it with a neighbor to clear every piece of that kind."
+msgstr "Échange-la avec une voisine pour retirer toutes les pièces de ce type."
+
+#: games/relic-rush/lua/screens.lua
+msgid "These pieces earn score only. See your score at the end of the expedition."
+msgstr "Ces pièces ne rapportent que du score. Tu verras ton score à la fin de l'expédition."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Turquoise plaques"
+msgstr "Plaques turquoise"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Ferry pilot"
+msgstr "Pilote du bac"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Miller"
+msgstr "Meunier"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Oren"
+msgstr "Oren"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Potter"
+msgstr "Potière"
+
+#. TRANSLATORS: Sela, Oren and Tavi are given names; each role is that character's trade
+#: games/relic-rush/lua/story_cast.lua
+msgid "Sela"
+msgstr "Sela"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Tavi"
+msgstr "Tavi"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A dry shed for the tools. No more rusty saws after a rainy night."
+msgstr "Un abri sec pour les outils. Fini les scies rouillées après une nuit de pluie."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A ferry up the coast to the hill villages. Cheaper than walking, and drier."
+msgstr "Un bac le long de la côte jusqu'aux villages des collines. Moins fatigant que la marche, et plus sec."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A harbour square! Somebody's already selling fish on it."
+msgstr "Une place de port ! Quelqu'un y vend déjà du poisson."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A loft of my own. I've always wanted one."
+msgstr "Un pigeonnier à moi. J'en ai toujours rêvé."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A month without news of the ship. I hate waiting."
+msgstr "Un mois sans nouvelles du navire. Je déteste attendre."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A potter with a hundred cups, drinking from someone else's."
+msgstr "Une potière avec cent tasses, qui boit dans celle de quelqu'un d'autre."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A proper road to the quarry. The carts don't get stuck any more."
+msgstr "Une vraie route jusqu'à la carrière. Les charrettes ne s'embourbent plus."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A roof that doesn't flap in the wind. I may never come out."
+msgstr "Un toit qui ne claque pas au vent. Je ne sortirai peut-être plus jamais."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A show every market day now. I never miss the jugglers."
+msgstr "Un spectacle chaque jour de marché, maintenant. Je ne rate jamais les jongleurs."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "All right, it's better than Breadhaven. Let's put it to a vote."
+msgstr "D'accord, c'est mieux que Havre-de-Pain. Passons au vote."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "An old woman asked me who built the harbour steps. She thought we did."
+msgstr "Une vieille dame m'a demandé qui avait construit les marches du port. Elle croyait que c'était nous."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And a cook. Ideally me."
+msgstr "Et un cuisinier. De préférence moi."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And the vote's in. It's Callira. Breadhaven came second."
+msgstr "Et le vote est tombé. C'est Callira. Havre-de-Pain arrive deuxième."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And to bring flour."
+msgstr "Et d'apporter de la farine."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Anyone can come and read the old stones now. Bring your children."
+msgstr "Tout le monde peut venir lire les vieilles pierres, maintenant. Amenez vos enfants."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Are you getting ready to send the ship?"
+msgstr "Tu te prépares à envoyer le navire ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Aren't you sailing with her?"
+msgstr "Tu ne pars pas avec elle ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Bring them in hungry. I've been baking all week."
+msgstr "Amène-les affamés. Je cuis du pain toute la semaine."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, I need a house with a big table and good light. For my charts."
+msgstr "Bâtisseur, il me faut une maison avec une grande table et une bonne lumière. Pour mes cartes."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, can he have that mill now? Before his arms fall off."
+msgstr "Bâtisseur, il peut avoir ce moulin, maintenant ? Avant que ses bras ne tombent."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, it rained straight into my soup last night."
+msgstr "Bâtisseur, la pluie est tombée droit dans ma soupe cette nuit."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, the crew needs a camp. Tents, a cook fire, somewhere for the tools."
+msgstr "Bâtisseur, l'équipe a besoin d'un camp. Des tentes, un feu pour cuisiner, un endroit pour les outils."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, there's an old wreck on the rocks. Can we haul her up the beach?"
+msgstr "Bâtisseur, il y a une vieille épave sur les rochers. On peut la hisser sur la plage ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Can I watch? I've never seen anyone make a chart."
+msgstr "Je peux regarder ? Je n'ai jamais vu quelqu'un dessiner une carte."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Can you hear me up there, Oren?"
+msgstr "Tu m'entends, là-haut, Oren ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Carts from the hill farms every week now. Beans, mangoes, and far too many goats."
+msgstr "Des charrettes des fermes des collines toutes les semaines, maintenant. Des haricots, des mangues et beaucoup trop de chèvres."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Clean water from our own well. No more ship's barrels!"
+msgstr "De l'eau propre de notre propre puits. Fini les tonneaux du navire !"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Counting stars, Oren. It's quicker than counting days."
+msgstr "Je compte les étoiles, Oren. C'est plus rapide que de compter les jours."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Did you sell her one?"
+msgstr "Tu lui en as vendu une ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Every night. Tell your mate to hurry."
+msgstr "Chaque nuit. Dis à ton second de se dépêcher."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Every word. Even the ones about me."
+msgstr "Chaque mot. Même ceux qui parlent de moi."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everybody wants pots, Oren. They just don't know it yet."
+msgstr "Tout le monde veut des pots, Oren. Ils ne le savent pas encore, c'est tout."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone ashore! Builder, welcome to our new home. When there's a town, I'll send for the families."
+msgstr "Tout le monde à terre ! Bâtisseur, bienvenue dans notre nouveau foyer. Quand il y aura une ville, je ferai venir les familles."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone's arguing about the town's name. Let's settle it at the amphitheatre."
+msgstr "Tout le monde se dispute sur le nom de la ville. Réglons ça à l'amphithéâtre."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone's arguing about what to call this place."
+msgstr "Tout le monde se dispute sur le nom à donner à cet endroit."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everything we've dug up, on shelves. Except my cup. I still use that."
+msgstr "Tout ce qu'on a déterré, sur des étagères. Sauf ma tasse. Je m'en sers encore."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Fifty-two new neighbours, a harbour and a light. Not bad for a beach, builder."
+msgstr "Cinquante-deux nouveaux voisins, un port et un phare. Pas mal pour une plage, bâtisseur."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Four people want Breadhaven. Me, and three people I gave bread to."
+msgstr "Quatre personnes veulent Havre-de-Pain. Moi, et trois personnes à qui j'ai donné du pain."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Fresh fish on the plaza every morning. The gulls are delighted."
+msgstr "Du poisson frais sur la place chaque matin. Les mouettes sont ravies."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Gently. She's older than my grandmother."
+msgstr "Doucement. Elle est plus vieille que ma grand-mère."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Give them a lodge with a big table. Sailors eat like I do."
+msgstr "Donne-leur une auberge avec une grande table. Les marins mangent comme moi."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Give them an hour. They'll be telling sea stories to anyone who sits still."
+msgstr "Laisse-leur une heure. Ils raconteront des histoires de mer à quiconque reste tranquille."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good light and a big table. I'll have the reef drawn in a month."
+msgstr "Une bonne lumière et une grande table. J'aurai dessiné le récif en un mois."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good ones. Now I can bring a ship in without scraping her."
+msgstr "Des bons. Maintenant, je peux faire entrer un navire sans lui érafler la coque."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good work, builder. Now we need roofs before the rain finds us."
+msgstr "Beau travail, bâtisseur. Maintenant, il nous faut des toits avant que la pluie ne nous trouve."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good. The families should know whose harbour this was."
+msgstr "Bien. Les familles doivent savoir à qui était ce port."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Harbour steps. Somebody tied up their boats here long before us."
+msgstr "Des marches de port. Quelqu'un amarrait ses bateaux ici bien avant nous."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "He's teaching his birds to find a ship. Don't interrupt him."
+msgstr "Il apprend à ses oiseaux à retrouver un navire. Ne le dérange pas."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Hear that? That's the sound of bread."
+msgstr "Tu entends ? C'est le bruit du pain."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "How long until the ship comes back?"
+msgstr "Dans combien de temps le navire revient-il ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I like porridge."
+msgstr "J'aime la bouillie."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I lost a net on the reef last night. I need to know when the tide's high."
+msgstr "J'ai perdu un filet sur le récif cette nuit. Il me faut savoir quand la marée est haute."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I sat on the old wreck last night, looking at the stars my mate steers by."
+msgstr "Je me suis assise sur la vieille épave cette nuit, à regarder les étoiles que suit mon second."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'll do the bread. And my birds will watch for the sails."
+msgstr "Je ferai le pain. Et mes oiseaux guetteront les voiles."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'll do the bread. Somebody else can do everything else."
+msgstr "Je ferai le pain. Quelqu'un d'autre peut s'occuper du reste."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm going to fill every pot we own. Just because I can."
+msgstr "Je vais remplir tous les pots qu'on a. Juste parce que je peux."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm leaving the old cup by the spout. It was the first thing I found here."
+msgstr "Je laisse la vieille tasse près du bec. C'est la première chose que j'ai trouvée ici."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm measuring the depth, Oren. Every circle is a line on my chart."
+msgstr "Je mesure la profondeur, Oren. Chaque cercle est une ligne sur ma carte."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I've put my name down for the night watch. Somebody has to keep the temple ovens warm."
+msgstr "Je me suis inscrit pour la veille de nuit. Il faut bien que quelqu'un garde les fours du temple chauds."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "In the new workshop. I've already claimed the corner by the window."
+msgstr "Dans le nouvel atelier. J'ai déjà réservé le coin près de la fenêtre."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "It must be the harbour's name. You don't carve a word that often unless you're proud of it."
+msgstr "Ce doit être le nom du port. On ne grave pas un mot aussi souvent sans en être fier."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Let's keep them somewhere dry before someone builds a wall with them."
+msgstr "Mettons-les au sec avant que quelqu'un ne s'en serve pour bâtir un mur."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look at them, builder. Sitting down without holding on to anything."
+msgstr "Regarde-les, bâtisseur. Assis, sans se cramponner à rien."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look at those timbers. I'd bet she was built in Callira."
+msgstr "Regarde ces bois. Je parie qu'elle a été construite à Callira."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look through both stones. That's the bright star in the south, right in the gap."
+msgstr "Regarde entre les deux pierres. C'est la brillante étoile du sud, pile dans l'intervalle."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look what I dug up by the spring. A cup! Somebody lived here before us."
+msgstr "Regarde ce que j'ai déterré près de la source. Une tasse ! Quelqu'un vivait ici avant nous."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Lovely beach. Where's the town?"
+msgstr "Jolie plage. Où est la ville ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Make it a big one. I'm planning soup."
+msgstr "Fais-la grande. Je prévois une soupe."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "More old stones keep turning up. Some of them have writing on."
+msgstr "On continue à trouver de vieilles pierres. Certaines portent de l'écriture."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My crew has lived on that ship for months. They'd like a floor that doesn't rock."
+msgstr "Mon équipage vit sur ce navire depuis des mois. Il aimerait un sol qui ne tangue pas."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My father's old axe, sharpened. It cuts like it did when I was a boy."
+msgstr "La vieille hache de mon père, affûtée. Elle coupe comme quand j'étais petit."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My first customer was a girl with a goat. She wanted a grindstone."
+msgstr "Ma première cliente était une fille avec une chèvre. Elle voulait une meule."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My vote's for Breadhaven."
+msgstr "Mon vote va à Havre-de-Pain."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My wheat's in the ground. Now I need a mill, or it's porridge forever."
+msgstr "Mon blé est en terre. Maintenant, il me faut un moulin, sinon c'est de la bouillie pour toujours."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My wheel fits! Oren, the first pot is yours."
+msgstr "Mon tour entre ! Oren, le premier pot est pour toi."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Nearly. I won't bring the families over that reef without a chart."
+msgstr "Presque. Je ne ferai pas passer les familles sur ce récif sans carte."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "No. But children will climb on her for a hundred years."
+msgstr "Non. Mais les enfants grimperont dessus pendant cent ans."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Now the tower rings at high water. Nobody gets caught on the reef by surprise."
+msgstr "Maintenant, la tour sonne à marée haute. Personne ne se fait surprendre sur le récif."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Out at sea, my mate steers by the stars. I'd like to watch them too."
+msgstr "En mer, mon second se guide aux étoiles. J'aimerais les observer aussi."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Put them where the families can see them when they land."
+msgstr "Mets-les là où les familles pourront les voir en débarquant."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sails on the horizon! Tavi, is that her?"
+msgstr "Des voiles à l'horizon ! Tavi, c'est elle ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, are you sure the hill people want pots?"
+msgstr "Sela, tu es sûre que les gens des collines veulent des pots ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, where are you going to put your potter's wheel?"
+msgstr "Sela, où vas-tu mettre ton tour de potière ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, why is Tavi rowing in circles out by the reef?"
+msgstr "Sela, pourquoi Tavi rame-t-elle en rond près du récif ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "She's counting the days."
+msgstr "Elle compte les jours."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "She's measuring how deep it is. Every circle is a line on her chart."
+msgstr "Elle mesure la profondeur. Chaque cercle est une ligne sur sa carte."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "So nobody remembers. Whoever they were, they left a long time ago."
+msgstr "Donc personne ne s'en souvient. Qui qu'ils aient été, ils sont partis il y a longtemps."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "So whoever lived here were sailors too."
+msgstr "Donc ceux qui vivaient ici étaient des marins aussi."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somebody from Callira drank from it. Now all of us can."
+msgstr "Quelqu'un de Callira y a bu. Maintenant, nous tous pouvons le faire."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somebody has to pilot the families over the reef. That's me. My mate will sail her."
+msgstr "Quelqu'un doit piloter les familles par-dessus le récif. Ce sera moi. Mon second conduira le navire."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somewhere dry, with a big door. A workshop."
+msgstr "Un endroit sec, avec une grande porte. Un atelier."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Storm charts on the wall. Now everyone can see where the bad weather comes from."
+msgstr "Des cartes des tempêtes au mur. Maintenant, tout le monde voit d'où vient le mauvais temps."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take it to the mill. The wheel's already turning."
+msgstr "Porte-le au moulin. La roue tourne déjà."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take my grey bird. Send her back with a head count, so I know how much to bake."
+msgstr "Prends mon oiseau gris. Renvoie-le avec le compte des gens, que je sache combien de pain cuire."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take the spares, not the hull. She has to fetch the families."
+msgstr "Prends les planches de rechange, pas la coque. Il faut qu'elle aille chercher les familles."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi's been up every night this week."
+msgstr "Tavi veille toutes les nuits cette semaine."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, can we take planks from the ship?"
+msgstr "Tavi, on peut prendre des planches au navire ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, have you seen Oren today?"
+msgstr "Tavi, tu as vu Oren aujourd'hui ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, the camp crew dug up old stone steps. Cut by hand and worn smooth."
+msgstr "Tavi, l'équipe du camp a déterré de vieilles marches de pierre. Taillées à la main et polies par l'usure."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, there's smoke over the hills. We're not alone here."
+msgstr "Tavi, il y a de la fumée au-dessus des collines. On n'est pas seuls ici."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, when will you send the ship for the families?"
+msgstr "Tavi, quand enverras-tu le navire chercher les familles ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Teach them to find a ship and I'll be impressed."
+msgstr "Apprends-leur à retrouver un navire et je serai impressionnée."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tell them yes. A town needs more than a dozen people."
+msgstr "Dis-leur oui. Une ville a besoin de plus d'une douzaine de personnes."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That bright one, low in the south. When it's overhead, she'll be home."
+msgstr "Cette brillante, basse dans le sud. Quand elle sera au zénith, le navire sera de retour."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's her. I'm rowing out to bring her over the reef."
+msgstr "C'est elle. Je pars à la rame la faire passer par-dessus le récif."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's not a vote, Oren. That's a bribe."
+msgstr "Ce n'est pas un vote, Oren. C'est un pot-de-vin."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's the sound of you talking about bread again."
+msgstr "C'est le bruit de toi qui reparles de pain."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The chart's done. Now I need a light, so the ship can find her way back."
+msgstr "La carte est finie. Maintenant, il me faut un phare, pour que le navire retrouve son chemin."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill families are asking if they can move down to the harbour."
+msgstr "Les familles des collines demandent si elles peuvent descendre s'installer au port."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people came! Three baskets of mangoes for two of my pots."
+msgstr "Les gens des collines sont venus ! Trois paniers de mangues pour deux de mes pots."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people say Callira had a sun temple that baked bread for strangers."
+msgstr "Les gens des collines disent que Callira avait un temple du Soleil qui cuisait du pain pour les étrangers."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people want stone for their houses. We've got a whole cliff of it."
+msgstr "Les gens des collines veulent de la pierre pour leurs maisons. On a toute une falaise."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The old marks were right. They show high water to the inch."
+msgstr "Les vieilles marques avaient raison. Elles indiquent la marée haute au pouce près."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The same word is carved on every stone we've found. Callira."
+msgstr "Le même mot est gravé sur chaque pierre qu'on a trouvée. Callira."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The ship sails tonight. Keep that fire lit every night, builder, so she can find us."
+msgstr "Le navire appareille ce soir. Garde ce feu allumé chaque nuit, bâtisseur, pour qu'il nous retrouve."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The wheat's ripe, and I'm still grinding it between two rocks."
+msgstr "Le blé est mûr, et je le broie encore entre deux pierres."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then I approve of Callira."
+msgstr "Alors j'approuve Callira."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then eat in the cabin tonight. That's what the roof is for."
+msgstr "Alors mange dans la cabane ce soir. C'est à ça que sert le toit."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then it's a harbour. Builder, my crew needs a lodge, and I need a chart of the reef."
+msgstr "Alors c'est un port. Bâtisseur, mon équipage a besoin d'une auberge, et il me faut une carte du récif."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then keep homing birds. They could carry news."
+msgstr "Alors élève des pigeons voyageurs. Ils pourraient porter des nouvelles."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's be good neighbours. Builder, how about a market?"
+msgstr "Alors soyons de bons voisins. Bâtisseur, et si on faisait un marché ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's get a roof up. A cabin next?"
+msgstr "Alors montons un toit. Une cabane ensuite ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's give them a fountain. With cups for everyone."
+msgstr "Alors offrons-leur une fontaine. Avec des tasses pour tous."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's sell it. The trading post is ready for them."
+msgstr "Alors vendons-la. Le comptoir est prêt pour eux."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's sell it. We'll need a trading post."
+msgstr "Alors vendons-la. Il nous faudra un comptoir."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then somebody else knew where the water was. That's a good sign."
+msgstr "Alors quelqu'un d'autre savait où était l'eau. C'est bon signe."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then we'll build somewhere to watch them from."
+msgstr "Alors on construira un endroit d'où les observer."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then we're ready. All we need now is the ship."
+msgstr "Alors nous sommes prêts. Il ne nous manque plus que le navire."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then where did they all go?"
+msgstr "Alors où sont-ils tous partis ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "There are old lines cut in the rock by the steps. Could they be tide marks?"
+msgstr "Il y a de vieilles lignes taillées dans le rocher près des marches. Ce seraient des marques de marée ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "There's a spring up in the rocks, Oren. Fresh water! That's a start."
+msgstr "Il y a une source dans les rochers, Oren. De l'eau fraîche ! C'est un début."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "They're all ashore, builder. Fifty-two people, and every one of them wants water."
+msgstr "Ils sont tous à terre, bâtisseur. Cinquante-deux personnes, et chacune veut de l'eau."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Twelve birds, and every one of them knows this loft is home."
+msgstr "Douze oiseaux, et chacun sait que ce pigeonnier est chez lui."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two buckets at once now. The queue for water just got half as long."
+msgstr "Deux seaux à la fois, maintenant. La file pour l'eau vient de raccourcir de moitié."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two millstones! Twice the flour, and still only one of me."
+msgstr "Deux meules ! Deux fois plus de farine, et toujours un seul de moi."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two months, Tavi says, if the wind is fair."
+msgstr "Deux mois, dit Tavi, si le vent est bon."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two months, if the wind is fair. Plenty of time to finish the town."
+msgstr "Deux mois, si le vent est bon. Largement le temps de finir la ville."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two saw benches. Now the planks get cut while I'm at my wheel."
+msgstr "Deux établis de scie. Maintenant, les planches se coupent pendant que je suis à mon tour."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two. She's coming back with another goat."
+msgstr "Deux. Elle revient avec une autre chèvre."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Up here, Sela! The grey one just beat me home from the harbour."
+msgstr "Là-haut, Sela ! Le gris vient de me battre au retour du port."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Watch quietly, then."
+msgstr "Alors regarde sans bruit."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "We've got shelves of old things from Callira now. Coins, lamps, a carved comb."
+msgstr "On a maintenant des étagères de vieilles choses de Callira. Des pièces, des lampes, un peigne sculpté."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Welcome home, everyone. Welcome to Callira."
+msgstr "Bienvenue chez vous, tout le monde. Bienvenue à Callira."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "When the families land, they'll need a feast. And somewhere to hold it."
+msgstr "Quand les familles débarqueront, il leur faudra un festin. Et un endroit pour le tenir."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "When the town has a harbour. A ship that size needs one."
+msgstr "Quand la ville aura un port. Un navire de cette taille en a besoin."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Which star is your mate steering by?"
+msgstr "Quelle étoile suit ton second ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Will she ever sail again?"
+msgstr "Elle naviguera de nouveau un jour ?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "With bronze behind the fire, ships can see our light twice as far."
+msgstr "Avec du bronze derrière le feu, les navires voient notre lumière deux fois plus loin."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "You would."
+msgstr "Ça ne m'étonne pas."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "You'll come out for supper."
+msgstr "Tu sortiras pour le souper."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Choose open grass clear of other buildings."
+msgstr "Choisis un coin d'herbe libre, à l'écart des autres bâtiments."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "Fais glisser le bâtiment pour choisir un emplacement, ou fais défiler le terrain."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Earn more expedition treasures to build this."
+msgstr "Gagne plus de trésors d'expédition pour construire ceci."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Open more land before placing this building."
+msgstr "Ouvre plus de terrain avant de placer ce bâtiment."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Your island is unchanged."
+msgstr "Ton île n'a pas changé."
+
+#. TRANSLATORS: the first %s is a bonus tool's name, the second the sentence saying what it does
+#: games/relic-rush/lua/user_events.lua
+#, lua-format
+msgid "%s is charged. Tap it. %s"
+msgstr "Charge prête : %s. Touche l'outil. %s"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A chain holds its gem in place and takes the first hit."
+msgstr "Une chaîne retient sa gemme en place et encaisse le premier coup."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A double chain takes two hits before its gem is free."
+msgstr "Une double chaîne encaisse deux coups avant de libérer sa gemme."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A double plaque needs two matches on it."
+msgstr "Une plaque double demande deux alignements dessus."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Five in a line leave a rainbow gem. Swap it to clear one kind."
+msgstr "Cinq alignées laissent une gemme arc-en-ciel. Échange-la pour retirer un type de pièce."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Four in a line leave a striped gem. Match it to sweep its line."
+msgstr "Quatre alignées laissent une gemme rayée. Aligne-la pour balayer sa ligne."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Ice holds its gem and takes the first hit."
+msgstr "La glace retient sa gemme et encaisse le premier coup."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Match on the turquoise plaques to clear them. Clear every plaque to finish the expedition."
+msgstr "Aligne sur les plaques turquoise pour les dégager. Dégage-les toutes pour terminer l'expédition."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Restorations cost Coins, Supplies and Food. Winning an expedition opens the next one."
+msgstr "Les restaurations coûtent des Pièces, des Provisions et de la Nourriture. Gagner une expédition ouvre la suivante."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Swap the two glowing gems to line up three."
+msgstr "Échange les deux gemmes lumineuses pour en aligner trois."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Swipe a gem onto its neighbour to make a line of three."
+msgstr "Fais glisser une gemme sur sa voisine pour former une ligne de trois."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Tap a gem, then the neighbour to swap it with."
+msgstr "Touche une gemme, puis la voisine avec laquelle l'échanger."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Three moves left. A charged bonus can clear the last plaques."
+msgstr "Il reste trois coups. Un bonus chargé peut dégager les dernières plaques."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Try the glowing pair. Match three in a row or column."
+msgstr "Essaie la paire lumineuse. Aligne trois pièces en ligne ou en colonne."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a bronze reflector"
+msgstr "un réflecteur de bronze"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a cart road to the quarry"
+msgstr "une route de charrettes jusqu'à la carrière"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a dry tool store"
+msgstr "une réserve d'outils au sec"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a ferry to the hill villages"
+msgstr "un bac vers les villages des collines"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a fish market every morning"
+msgstr "un marché au poisson chaque matin"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a reading room open to all"
+msgstr "une salle de lecture ouverte à tous"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a second millstone"
+msgstr "une seconde meule"
+
+#. TRANSLATORS: an upgrade's title: what the building gains, shown as "Upgraded: %s." and after the building's name
+#: games/relic-rush/lua/user_events.lua
+msgid "a second rope and pulley"
+msgstr "une seconde corde et poulie"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a second saw bench"
+msgstr "un second établi de scie"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a warning chime"
+msgstr "un carillon d'alerte"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "his father's tools sharpened"
+msgstr "les outils de son père affûtés"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "market-day shows"
+msgstr "des spectacles les jours de marché"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "storm charts on the wall"
+msgstr "des cartes des tempêtes au mur"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the hill farms send their carts"
+msgstr "les fermes des collines envoient leurs charrettes"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the keepers' watch roster"
+msgstr "le tableau de garde des gardiens"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the sighting stones aligned"
+msgstr "les pierres de visée alignées"

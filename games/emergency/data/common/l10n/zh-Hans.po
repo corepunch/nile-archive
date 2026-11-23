@@ -1,0 +1,333 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: emergency\n"
+"Language: zh-Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "City Centre"
+msgstr "市中心"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "City Centre: restore every evacuation route and bring the remaining residents and pets to headquarters."
+msgstr "市中心：修复所有疏散路线，把剩下的居民和宠物送到指挥部。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Cut-off District"
+msgstr "孤立街区"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Cut-off District: reopen the surviving roads around the cooled lava and reach each isolated group."
+msgstr "孤立街区：打通冷却熔岩周围尚存的道路，找到每一批被困的人。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Outskirts"
+msgstr "城郊"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Outskirts: reopen the roads and reach four residents. Repair stations to restore automatic supplies."
+msgstr "城郊：打通道路，找到四位居民。修复补给站，恢复自动补给。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Suburbs"
+msgstr "近郊"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Suburbs: reconnect the homes and timber yard. Restore the office to fund heavy debris removal."
+msgstr "近郊：把住宅和木材场重新连通。修复办事处，筹集清理重型碎石的经费。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Town Square"
+msgstr "市镇广场"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Town Square: reopen the inner streets and rescue the repair crew. Stations supply resources automatically."
+msgstr "市镇广场：打通内城街道，救出抢修队。补给站会自动供应资源。"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d food"
+msgid_plural "%d food"
+msgstr[0] "%d 食物"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d money"
+msgid_plural "%d money"
+msgstr[0] "%d 金钱"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d wood"
+msgid_plural "%d wood"
+msgstr[0] "%d 木材"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "A worker is on the way."
+msgstr "工人正在赶来。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Clear ash and rubble"
+msgstr "清理火山灰和碎石"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Clear heavy basalt"
+msgstr "清除重型玄武岩"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Dismantle collapsed wall"
+msgstr "拆除坍塌的墙"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "District office"
+msgstr "街区办事处"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Field kitchen"
+msgstr "野战厨房"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Queued - tap to cancel"
+msgstr "排队中，点击取消"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Repair the road"
+msgstr "修复道路"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue a cat"
+msgstr "救出一只猫"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue a dog"
+msgstr "救出一只狗"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue headquarters"
+msgstr "救援指挥部"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue worker"
+msgstr "救援队员"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Resident"
+msgstr "居民"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Restored."
+msgstr "已修复。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Returns to headquarters automatically once the route is safe."
+msgstr "路线安全后会自动返回指挥部。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Salvage roof beams"
+msgstr "回收屋顶横梁"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Supplies arrive automatically every 5 seconds."
+msgstr "补给每 5 秒自动送达。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Tap a job to send a worker. Tap again to cancel a queued job."
+msgstr "点击任务派出工人。再次点击可取消排队的任务。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Tap to assign"
+msgstr "点击派工"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Timber yard"
+msgstr "木材场"
+
+#. TRANSLATORS: district number and name on a menu button
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%02d   %s   - restored"
+msgstr "%02d   %s   - 已修复"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d pet"
+msgid_plural "%d pets"
+msgstr[0] "%d 只宠物"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d resident"
+msgid_plural "%d residents"
+msgstr[0] "%d 位居民"
+
+#. TRANSLATORS: the time is minutes:seconds
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d road restored in %d:%02d."
+msgid_plural "%d roads restored in %d:%02d."
+msgstr[0] "修复了 %d 条道路，用时 %d:%02d。"
+
+#. TRANSLATORS: a job's name, then what it needs
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%s: %s"
+msgstr "%s：%s"
+
+#: games/emergency/lua/main.lua
+msgid "+ supplies"
+msgstr "+ 补给"
+
+#: games/emergency/lua/main.lua
+msgid "AFTER THE ERUPTION"
+msgstr "火山喷发之后"
+
+#. TRANSLATORS: the first %s is "%d residents", the second "%d pets"
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "All %s and %s are safe."
+msgstr "%s和%s全部平安。"
+
+#: games/emergency/lua/main.lua
+msgid "District restored!"
+msgstr "街区修复完成！"
+
+#: games/emergency/lua/main.lua
+msgid "Districts"
+msgstr "街区"
+
+#: games/emergency/lua/main.lua
+msgid "EMERGENCY"
+msgstr "紧急救援"
+
+#. TRANSLATORS: HUD heading; %02d is the district number
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "EMERGENCY  /  %02d"
+msgstr "紧急救援  /  %02d"
+
+#: games/emergency/lua/main.lua
+msgid "Emergency - After the Eruption"
+msgstr "紧急救援：火山喷发之后"
+
+#: games/emergency/lua/main.lua
+msgid "Every route matters"
+msgstr "每条路线都很重要"
+
+#: games/emergency/lua/main.lua
+msgid "Five districts. One rescue team. A fresh start."
+msgstr "五个街区，一支救援队，一个全新的开始。"
+
+#: games/emergency/lua/main.lua
+msgid "Food"
+msgstr "食物"
+
+#: games/emergency/lua/main.lua
+msgid "Hint"
+msgstr "提示"
+
+#: games/emergency/lua/main.lua
+msgid "How to play"
+msgstr "玩法"
+
+#: games/emergency/lua/main.lua
+msgid "Leaderboard"
+msgstr "排行榜"
+
+#: games/emergency/lua/main.lua
+msgid "Let the team finish its jobs and the stations deliver supplies."
+msgstr "让队伍完成手头的任务，等补给站送来补给。"
+
+#: games/emergency/lua/main.lua
+msgid "Money"
+msgstr "金钱"
+
+#: games/emergency/lua/main.lua
+msgid "Next district"
+msgstr "下一个街区"
+
+#: games/emergency/lua/main.lua
+msgid "Pause"
+msgstr "暂停"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "People %d/%d   Pets %d/%d   Roads %d/%d"
+msgstr "人员 %d/%d   宠物 %d/%d   道路 %d/%d"
+
+#: games/emergency/lua/main.lua
+msgid "Play the episode again"
+msgstr "重玩本章"
+
+#: games/emergency/lua/main.lua
+msgid "Ready"
+msgstr "就绪"
+
+#: games/emergency/lua/main.lua
+msgid "Reopen the streets. Restore supplies. Bring everyone home."
+msgstr "打通街道，恢复补给，带大家回家。"
+
+#: games/emergency/lua/main.lua
+msgid "Replay district"
+msgstr "重玩街区"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue dispatch"
+msgstr "救援调度"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue paused"
+msgstr "救援已暂停"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue score"
+msgstr "救援得分"
+
+#: games/emergency/lua/main.lua
+msgid "Restart district"
+msgstr "重新开始街区"
+
+#: games/emergency/lua/main.lua
+msgid "Restore the city, one route at a time"
+msgstr "一条路一条路，重建这座城"
+
+#: games/emergency/lua/main.lua
+msgid "Resume rescue"
+msgstr "继续救援"
+
+#: games/emergency/lua/main.lua
+msgid "START RESCUE"
+msgstr "开始救援"
+
+#: games/emergency/lua/main.lua
+msgid "Sound"
+msgstr "声音"
+
+#: games/emergency/lua/main.lua
+msgid ""
+"Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n"
+"\n"
+"Kitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n"
+"\n"
+"Drag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home."
+msgstr ""
+"点击碎石、受损的道路或补给站来派出工人。暂时无法进行的任务会进入队列，再次点击可取消。\n"
+"\n"
+"厨房、木材场和办事处会自动产出补给。路线安全后，居民和被困的队员会自行返回。派工人去救援宠物。\n"
+"\n"
+"拖动平移，双指捏合或滚动缩放。修复每一条道路，带大家回家。"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "WORKERS  %d / %d"
+msgstr "工人  %d / %d"
+
+#: games/emergency/lua/main.lua
+msgid "Wood"
+msgstr "木材"
+
+#: games/emergency/lua/main.lua
+msgid "Your team and production are paused."
+msgstr "你的队伍和生产已暂停。"

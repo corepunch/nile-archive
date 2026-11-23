@@ -1,0 +1,1718 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: christmas-market\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A brick oven bakes spiced gingerbread. The counter has room to cool and ice each tray."
+msgstr "벽돌 오븐에서 향신료 진저브레드를 구워요. 카운터에서 쟁반마다 식히고 아이싱할 수 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A collection of carved reindeer, wrapped for the gift stall."
+msgstr "선물 가게에 놓을 포장한 조각 순록 모음이에요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A covered counter for the market's first stall."
+msgstr "장터의 첫 가게를 위한 지붕 덮인 판매대예요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A covered stall keeps the reindeer dry. The farrier has room to mend their harness and fit shoes."
+msgstr "지붕 덮인 가게가 순록을 비로부터 지켜 줘요. 편자공이 마구를 고치고 편자를 달 공간이 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A fir heavy with fresh snow."
+msgstr "갓 내린 눈이 소복한 전나무예요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A friendly snowman is saving you a seat."
+msgstr "다정한 눈사람이 당신 자리를 맡아 두고 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on tags."
+msgstr "길고 아늑한 카운터에서 소포를 싸고 꼬리표를 달 수 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
+msgstr "장터 입구의 뱅쇼 카운터에서 방문객이 몸을 녹여요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A seat for watching the snow fall."
+msgstr "눈 내리는 풍경을 바라보는 자리예요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A stove at the kiosk keeps cocoa hot. It faces the lane so visitors can buy a cup on their way through."
+msgstr "키오스크의 난로가 코코아를 따뜻하게 지켜 줘요. 골목 쪽을 향해 있어서 지나가다 한 잔 살 수 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A warm light with a wreath on its post."
+msgstr "기둥에 리스를 건 따뜻한 불빛이에요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Baubles, a golden star and twinkling lights."
+msgstr "장식 공, 황금 별, 반짝이는 전구예요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Blocks cut from the frozen lake are shaped and stacked here before they thaw."
+msgstr "얼어붙은 호수에서 잘라 낸 얼음 블록을 녹기 전에 다듬어 쌓아요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Candlelight shop"
+msgstr "양초 가게"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Candy canes"
+msgstr "지팡이 사탕"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Carrot nose, coal buttons, red scarf."
+msgstr "당근 코, 숯 단추, 빨간 목도리."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Carved from the frozen lake."
+msgstr "얼어붙은 호수에서 깎아 냈어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Christmas tree"
+msgstr "크리스마스 트리"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Decorated fir"
+msgstr "꾸민 전나무"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Firework stall"
+msgstr "불꽃놀이 가게"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Four firs keep each other warm."
+msgstr "전나무 네 그루가 서로를 따뜻하게 해 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Frosted birch"
+msgstr "서리 앉은 자작나무"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Giant bauble"
+msgstr "거대한 장식 공"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gift wrapping pavilion"
+msgstr "선물 포장 파빌리온"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gingerbread bakery"
+msgstr "진저브레드 빵집"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gingerbread house"
+msgstr "진저브레드 집"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Glassblower's stall"
+msgstr "유리공예 가게"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Granite under a soft white cap."
+msgstr "부드러운 흰 모자를 쓴 화강암이에요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gran’s old stall"
+msgstr "할머니의 오래된 가게"
+
+#: games/christmas-market/lua/buildings.lua
+#: games/christmas-market/lua/narrative.lua
+msgid "Hot cocoa kiosk"
+msgstr "핫코코아 키오스크"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Ice house"
+msgstr "얼음 집"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Ice star sculpture"
+msgstr "얼음 별 조각상"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lakeside smokehouse"
+msgstr "호숫가 훈제소"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lamp post"
+msgstr "가로등"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lantern firs"
+msgstr "등불 전나무"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Letters and parcels are sorted by destination before they leave the market."
+msgstr "편지와 소포는 장터를 떠나기 전에 목적지별로 분류해요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Letters to Santa"
+msgstr "산타에게 보내는 편지"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lumber workshop"
+msgstr "목재 작업장"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Masons dress stone in the chapel yard. The cut blocks supply foundations for the market."
+msgstr "석공들이 성당 마당에서 돌을 다듬어요. 잘라 낸 블록은 장터의 기초가 돼요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "North Pole post office"
+msgstr "북극 우체국"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Nutcracker guard"
+msgstr "호두까기 인형 경비병"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "One bauble too big for any tree."
+msgstr "어떤 트리에도 안 들어가는 커다란 장식 공이에요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Penguin pair"
+msgstr "펭귄 한 쌍"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Peppermint stripes in a snow drift."
+msgstr "눈더미 속 페퍼민트 줄무늬예요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Pile of presents"
+msgstr "선물 더미"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Pine grove"
+msgstr "소나무 숲"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Post your wish list here."
+msgstr "여기에 소원 목록을 부치세요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Ready for the long flight."
+msgstr "긴 비행을 떠날 준비가 됐어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Reindeer"
+msgstr "순록"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Reindeer carousel"
+msgstr "순록 회전목마"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Reindeer stable"
+msgstr "순록 마구간"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Santa's sleigh"
+msgstr "산타의 썰매"
+
+#: games/christmas-market/lua/buildings.lua
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowman"
+msgstr "눈사람"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowman bench"
+msgstr "눈사람 벤치"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy bench"
+msgstr "눈 덮인 벤치"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy chapel"
+msgstr "눈 덮인 성당"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy fir"
+msgstr "눈 덮인 전나무"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy firs and a lantern make the paths feel like home."
+msgstr "눈 덮인 전나무와 등불이 길을 고향처럼 느끼게 해 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy rocks"
+msgstr "눈 덮인 바위"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Standing to attention all season."
+msgstr "시즌 내내 차렷 자세로 서 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Station kiosk"
+msgstr "역 키오스크"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The covered carousel gives children a place to ride. Wind-up toys keep the queue busy."
+msgstr "지붕 덮인 회전목마에 아이들이 타요. 태엽 장난감이 줄 선 아이들을 즐겁게 해 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The furnace keeps glass hot enough to blow into thin, hollow baubles."
+msgstr "가마가 유리를 불어 얇고 속 빈 장식 공을 만들 만큼 뜨겁게 달궈 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The rink kiosk lends skates and sharpens blades beside the ice."
+msgstr "링크 키오스크에서 스케이트를 빌려주고 얼음 옆에서 날을 갈아 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The roof sparkles with sugar-frosted fireworks."
+msgstr "지붕이 설탕 서리 입힌 불꽃놀이로 반짝여요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The shop pours candles and trims the wicks for the lanterns that light the market lanes."
+msgstr "가게에서 초를 붓고, 장터 골목을 밝힐 등불의 심지를 다듬어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The sleigh carries sacks of presents through snowy lanes where a cart would sink."
+msgstr "썰매는 수레가 빠질 눈길로 선물 자루를 날라요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The smokehouse cures lake trout over a slow fire, so the fish can keep through winter."
+msgstr "훈제소에서 호수 송어를 약한 불에 훈제해서 겨우내 두고 먹을 수 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The stall keeps fireworks dry and ready for the evening display over the square."
+msgstr "가게에서 불꽃놀이를 마른 채로 두었다가 저녁 광장 불꽃놀이에 쓰도록 준비해요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The station clock tells shoppers how long they have before the next train."
+msgstr "역 시계가 다음 기차까지 얼마나 남았는지 알려 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The tall fir anchors the market square. Its star can be seen from the far end of the lane."
+msgstr "키 큰 전나무가 장터 광장의 중심을 잡아요. 골목 끝에서도 꼭대기 별이 보여요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The toy bench has room to cut, sand and paint wooden blocks and other small toys."
+msgstr "장난감 작업대에서 나무 블록과 작은 장난감을 자르고, 다듬고, 칠할 수 있어요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The workshop saws pine for stalls and signboards. A roof keeps the bundled lumber dry."
+msgstr "작업장에서 가게와 간판에 쓸 소나무를 켜요. 지붕이 묶어 둔 목재를 말려 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Toymaker’s workshop"
+msgstr "장난감 장인의 작업장"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Visitors from the other pole, in scarves."
+msgstr "목도리를 두른, 반대쪽 극지방에서 온 손님들이에요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Walk under the evergreen and bells."
+msgstr "상록수와 종 아래로 걸어 보세요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Welcome arch"
+msgstr "환영 아치"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "White bark and snow on every twig."
+msgstr "하얀 껍질과 가지마다 내려앉은 눈."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Winter skating rink"
+msgstr "겨울 스케이트장"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Woodcarvers shape and paint reindeer for the stalls. Drying shelves keep each fresh coat clear of the dust."
+msgstr "조각가들이 가게에 놓을 순록을 깎고 칠해요. 건조 선반이 갓 칠한 칠을 먼지로부터 지켜 줘요."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Woodcarvers' hall"
+msgstr "조각가의 홀"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Wreath arch"
+msgstr "리스 아치"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Angel Wings"
+msgstr "천사의 날개"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Bell Tower Bells"
+msgstr "종탑의 종"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Candle Glow"
+msgstr "촛불의 빛"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Candy Cross"
+msgstr "사탕 십자가"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Carol Steps"
+msgstr "캐럴 계단"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Carousel Canopy"
+msgstr "회전목마 천막"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Carousel Day"
+msgstr "회전목마의 날"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Chapel Window"
+msgstr "성당 창문"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Chestnut Corner"
+msgstr "밤 코너"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Choir Loft"
+msgstr "성가대석"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Christmas Eve"
+msgstr "크리스마스 이브"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Christmas Star"
+msgstr "크리스마스 별"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cinnamon Carousel"
+msgstr "계피 회전목마"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Clock Tower Chimes"
+msgstr "시계탑의 종소리"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cocoa for Two"
+msgstr "둘이서 코코아"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cracker Bonbon"
+msgstr "크래커 봉봉"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cracker Pop"
+msgstr "크래커 팡"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Double knots take two matches. Then light the pane."
+msgstr "이중 매듭은 두 번 맞춰야 풀려요. 그런 다음 유리창에 불을 밝히세요."
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Drum Roll Ball"
+msgstr "북소리 공"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Fireside Tales"
+msgstr "난롯가 이야기"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frost Crystal"
+msgstr "서리 결정"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frost Flower"
+msgstr "서리꽃"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frost on the Pane"
+msgstr "유리창의 서리"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frozen Fountain"
+msgstr "얼어붙은 분수"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frozen Pond"
+msgstr "얼어붙은 연못"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gate of Lights"
+msgstr "불빛의 문"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gift Box"
+msgstr "선물 상자"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ginger Cottage"
+msgstr "진저 오두막"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gingerbread Gables"
+msgstr "진저브레드 박공"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gingerbread Man"
+msgstr "진저브레드 맨"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gingerbread Row"
+msgstr "진저브레드 거리"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Glass Bauble"
+msgstr "유리 장식 공"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Great Fir"
+msgstr "큰 전나무"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Hearth Glow"
+msgstr "벽난로의 온기"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Hearth Stockings"
+msgstr "벽난로 양말"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Herald Angel"
+msgstr "전령 천사"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Holly Berry Lane"
+msgstr "호랑가시나무 열매 길"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Holly Ring"
+msgstr "호랑가시나무 리스"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Honey Cake"
+msgstr "꿀 케이크"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Hot Cider Kettle"
+msgstr "따뜻한 사과주 주전자"
+
+#: games/christmas-market/lua/campaign.lua
+#: games/christmas-market/lua/island.lua
+msgid "Lantern Lane"
+msgstr "등불 골목"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Lantern Pair"
+msgstr "등불 한 쌍"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Lantern Walk"
+msgstr "등불 산책길"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Last Train Home"
+msgstr "집으로 가는 마지막 기차"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Light every blue pane."
+msgstr "파란 유리창을 모두 밝히세요."
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Little Angel"
+msgstr "작은 천사"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Mantel Stockings"
+msgstr "벽난로 선반 양말"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Marzipan Pantry"
+msgstr "마지판 저장고"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Match through a tied treat to untangle it. Then light its pane."
+msgstr "묶인 간식 위에서 맞춰 풀어 주세요. 그런 다음 그 칸의 유리창을 밝히세요."
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Midnight Bells"
+msgstr "자정의 종"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Midnight Mass"
+msgstr "자정 미사"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Midnight Star"
+msgstr "자정의 별"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Mistletoe Arch"
+msgstr "겨우살이 아치"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Mitten Line"
+msgstr "벙어리장갑 줄"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Nutcracker"
+msgstr "호두까기 인형"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Nutcracker Parade"
+msgstr "호두까기 인형 행진"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Nutcracker Watch"
+msgstr "호두까기 인형 파수"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ornament"
+msgstr "장식 오너먼트"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Paper Lantern Walk"
+msgstr "종이 등불 산책"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Peppermint Swirl"
+msgstr "페퍼민트 소용돌이"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Pine Boughs"
+msgstr "소나무 가지"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Pine Whisper"
+msgstr "솔바람 속삭임"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Pudding Hearth"
+msgstr "푸딩 난로"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ribbon Street"
+msgstr "리본 거리"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ribbon and Bow"
+msgstr "리본과 나비매듭"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ribboned Gift"
+msgstr "리본 맨 선물"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Rose Window"
+msgstr "장미창"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Santa Post Box"
+msgstr "산타 우체통"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Shepherds Star"
+msgstr "목동의 별"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Silver Bell"
+msgstr "은종"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Silver Bells Stall"
+msgstr "은종 가게"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Skate Pond"
+msgstr "스케이트 연못"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Skaters Pond"
+msgstr "스케이터의 연못"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Skating Rink"
+msgstr "스케이트장"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sleigh Bells Ring"
+msgstr "울려라 썰매 방울"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sleigh Ride"
+msgstr "썰매 타기"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sleigh at Dusk"
+msgstr "해질녘의 썰매"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snow Globe"
+msgstr "스노볼"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowball Alley"
+msgstr "눈싸움 골목"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowflake Lane"
+msgstr "눈송이 골목"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowman Parade"
+msgstr "눈사람 퍼레이드"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowman Square"
+msgstr "눈사람 광장"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Spice Rack Glow"
+msgstr "향신료 선반의 불빛"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Spiced Star"
+msgstr "향신료 별"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Stained Glass Glow"
+msgstr "스테인드글라스의 빛"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Stall Row"
+msgstr "가게 거리"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Starlit Sleigh"
+msgstr "별빛 썰매"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Stocking Pair"
+msgstr "양말 한 쌍"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Striped Awnings"
+msgstr "줄무늬 차양"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sugar House"
+msgstr "설탕 집"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Tinsel Terrace"
+msgstr "틴셀 테라스"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Toy Shop Windows"
+msgstr "장난감 가게 쇼윈도"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Toy Soldier March"
+msgstr "장난감 병정 행진"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Toy Train Depot"
+msgstr "장난감 기차 차고"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Twelfth Crown"
+msgstr "열두 번째 왕관"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Twelve Chimes"
+msgstr "열두 번의 종소리"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Window Lights"
+msgstr "창문 불빛"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Winter Wreath"
+msgstr "겨울 리스"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Workshop Crossing"
+msgstr "작업장 사거리"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Wreath Door"
+msgstr "리스 문"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Wreath on the Door"
+msgstr "문에 건 리스"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Yule Crown Rink"
+msgstr "율 왕관 링크"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Bundled pine"
+msgstr "묶은 소나무"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Candle lantern"
+msgstr "양초 등불"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Candy cane"
+msgstr "지팡이 사탕"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Carved reindeer"
+msgstr "조각 순록"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Dressed stone"
+msgstr "다듬은 돌"
+
+#: games/christmas-market/lua/economy.lua
+#: games/christmas-market/lua/screens.lua
+msgid "Farrier's hammer"
+msgstr "편자공의 망치"
+
+#: games/christmas-market/lua/economy.lua
+#: games/christmas-market/lua/screens.lua
+msgid "Firework Bomb"
+msgstr "불꽃놀이 폭탄"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Frost shield"
+msgstr "서리 방패"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Gingerbread man"
+msgstr "진저브레드 맨"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Glass bauble"
+msgstr "유리 장식 공"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Hot cocoa"
+msgstr "핫코코아"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Ice pendant"
+msgstr "얼음 펜던트"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Ice skates"
+msgstr "스케이트"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Knitted mitten"
+msgstr "뜨개 벙어리장갑"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Materials"
+msgstr "재료"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Mulled wine"
+msgstr "뱅쇼"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Pretzel"
+msgstr "프레첼"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Santa hat"
+msgstr "산타 모자"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Silver snowflake coin"
+msgstr "은빛 눈송이 동전"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Smoked trout"
+msgstr "훈제 송어"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Snow-dusted fir"
+msgstr "눈 덮인 전나무"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Station clock"
+msgstr "역 시계"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Sun coin"
+msgstr "태양 동전"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Tokens"
+msgstr "토큰"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Toy blocks"
+msgstr "장난감 블록"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Treats"
+msgstr "간식"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Wind-up top"
+msgstr "태엽 팽이"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Winter vase"
+msgstr "겨울 꽃병"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Wish cross"
+msgstr "소원 십자가"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Wrapped gift"
+msgstr "포장한 선물"
+
+#. TRANSLATORS: %d is the number of wishes in the campaign (100)
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "ALL %d WINTER WISHES CAME TRUE."
+msgstr "%d개의 겨울 소원이 모두 이루어졌어요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "AT BELLMERE"
+msgstr "벨미어에서"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Advent & Christmas"
+msgstr "대림절과 크리스마스"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Build your market"
+msgstr "장터를 세워요"
+
+#. TRANSLATORS: the title screen reads CHRISTMAS / AT BELLMERE (Bellmere is the town)
+#: games/christmas-market/lua/game_config.lua
+msgid "CHRISTMAS"
+msgstr "크리스마스"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "COLLECT & VISIT MARKET"
+msgstr "받고 장터 가기"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Christmas"
+msgstr "크리스마스"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Christmas Magic!"
+msgstr "크리스마스 마법!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "EVERY WISH"
+msgstr "모든 소원"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Fernhollow has asked for a few lights of its own."
+msgstr "펀홀로가 자기네 불빛도 조금 켜 달라고 부탁했어요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "First Advent"
+msgstr "첫째 대림절"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Fourth Advent"
+msgstr "넷째 대림절"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "GRANT NEW WISHES TO OPEN IT"
+msgstr "새 소원을 이루면 열려요"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Jolly!"
+msgstr "즐거워요!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "LEADERBOARD"
+msgstr "순위표"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Look at that, we have enough to build!"
+msgstr "와, 이제 지을 수 있겠어요!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MARKET GUIDE"
+msgstr "장터 안내"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MORE RESOURCES NEEDED"
+msgstr "자원이 더 필요해요"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MORE ROOM FOR CHRISTMAS CHEER"
+msgstr "크리스마스 기쁨을 위한 더 넓은 자리"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MOVES"
+msgstr "이동"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Magical!"
+msgstr "마법 같아요!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Match the tied piece to untangle the tinsel."
+msgstr "묶인 조각을 맞춰 틴셀을 풀어 주세요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Match through the tied treat. Match that cell again to light its pane."
+msgstr "묶인 간식을 지나게 맞춰 보세요. 그 칸을 한 번 더 맞추면 유리창에 불이 켜져요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Merriest markets"
+msgstr "가장 즐거운 장터"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Merry!"
+msgstr "신나요!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "PLAY"
+msgstr "플레이"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "QUIT TO MARKET"
+msgstr "장터로 나가기"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Resources collected."
+msgstr "자원을 모았어요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Restart this winter wish?"
+msgstr "이 겨울 소원을 다시 시작할까요?"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Second Advent"
+msgstr "둘째 대림절"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Select a project to see its cost."
+msgstr "프로젝트를 골라 비용을 확인하세요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "THE ROAD TO FERNHOLLOW"
+msgstr "펀홀로로 가는 길"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "The whole market is open."
+msgstr "장터가 모두 열렸어요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "There's a light in Noelle's window."
+msgstr "노엘의 창문에 불빛이 켜졌어요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Third Advent"
+msgstr "셋째 대림절"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "This Advent’s stalls are listed at the top left. Tap one that says Ready to build."
+msgstr "이번 대림절의 가게가 왼쪽 위에 나와 있어요. 지을 준비 완료라고 적힌 곳을 누르세요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "To be continued"
+msgstr "다음 이야기에서 계속돼요"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "To finish, clear all the blue tiles. Make matches over them."
+msgstr "끝내려면 파란 칸을 모두 지우세요. 그 위에서 매치를 만드세요."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Unlocked at Christmas"
+msgstr "크리스마스에 열려요"
+
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "Unlocked in Advent %d"
+msgstr "대림절 %d에 열려요"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "VISIT MARKET"
+msgstr "장터 가기"
+
+#. TRANSLATORS: wishes granted so far / wishes needed to open this part of the market
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "WISHES GRANTED  %d / %d"
+msgstr "이룬 소원  %d / %d"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "You did it!"
+msgstr "해냈어요!"
+
+#. TRANSLATORS: %d is the number of the wish (level) in progress
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue wish %d."
+msgstr "판이 저장됐어요. 플레이를 눌러 소원 %d을(를) 이어 가세요."
+
+#: games/christmas-market/lua/island.lua
+msgid "Carolers Court"
+msgstr "캐럴러스 코트"
+
+#: games/christmas-market/lua/island.lua
+msgid "Gingerbread Green"
+msgstr "진저브레드 그린"
+
+#: games/christmas-market/lua/island.lua
+msgid "Starlight Terrace"
+msgstr "별빛 테라스"
+
+#: games/christmas-market/lua/island.lua
+msgid "Welcome Square"
+msgstr "환영 광장"
+
+#: games/christmas-market/lua/journey.lua
+msgid "Carolers Court's open! Mrs Alder's already in it, singing flat."
+msgstr "캐럴러스 코트가 열렸어요! 올더 부인이 벌써 와서 음정 틀리게 노래하고 있어요."
+
+#: games/christmas-market/lua/journey.lua
+msgid "Evergreen Hill's open! You can see the whole line from up here!"
+msgstr "에버그린 힐이 열렸어요! 여기서 보니 장터 전체가 다 보여요!"
+
+#: games/christmas-market/lua/journey.lua
+msgid "Gingerbread Green's open! It doesn't smell of gingerbread yet. Give it a week."
+msgstr "진저브레드 그린이 열렸어요! 아직 진저브레드 냄새는 안 나요. 일주일만 기다려요."
+
+#: games/christmas-market/lua/journey.lua
+msgid "Lantern Lane's clear! There's a lamp post that still works if you kick it."
+msgstr "등불 골목이 깨끗해졌어요! 걷어차면 아직 켜지는 가로등이 하나 있어요."
+
+#: games/christmas-market/lua/journey.lua
+msgid "Starlight Terrace is open! You can hear the Fenwick choir from up here. Nearly in tune."
+msgstr "별빛 테라스가 열렸어요! 여기서 펜윅 성가대 소리가 들려요. 거의 음정이 맞아요."
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Ada Pike"
+msgstr "에이다 파이크"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Agnes Holt"
+msgstr "아그네스 홀트"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Baker"
+msgstr "제빵사"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Bellmere glassblower"
+msgstr "벨미어 유리공예가"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Christmas market keeper"
+msgstr "크리스마스 장터 지기"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Fisherman, Lakeside smokehouse"
+msgstr "어부, 호숫가 훈제소"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Henrik Strand"
+msgstr "헨리크 스트란드"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mary Larkin"
+msgstr "메리 라킨"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mr Finch"
+msgstr "핀치 씨"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mr Wren"
+msgstr "렌 씨"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mrs Alder"
+msgstr "올더 부인"
+
+#. TRANSLATORS: a speaker's name and role on the story screen
+#: games/christmas-market/lua/narrative.lua
+msgid "Noelle"
+msgstr "노엘"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Noelle's gran"
+msgstr "노엘의 할머니"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Otis Bell"
+msgstr "오티스 벨"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Pip Larkin"
+msgstr "핍 라킨"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Pip's mum"
+msgstr "핍의 엄마"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Post runner"
+msgstr "우편 배달 소년"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Rosa"
+msgstr "로사"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Station clock keeper"
+msgstr "역 시계지기"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "The man with the broom"
+msgstr "빗자루 아저씨"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Theo Marsh"
+msgstr "테오 마시"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Toymaker"
+msgstr "장난감 장인"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Tree seller"
+msgstr "나무 장수"
+
+#. TRANSLATORS: %s is a currency: Tokens, Treats or Materials
+#: games/christmas-market/lua/screens.lua
+#, lua-format
+msgid "%s from matches are banked on a win."
+msgstr "매치로 모은 %s이(가) 승리하면 적립돼요."
+
+#: games/christmas-market/lua/screens.lua
+#, lua-format
+msgid "%s from matches pay for stalls and decorations."
+msgstr "매치로 모은 %s(으)로 가게와 장식을 사요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "A green pane turns blue after its first hit. Match again to light it."
+msgstr "초록 유리창은 처음 맞으면 파랗게 변해요. 한 번 더 맞추면 불이 켜져요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Bank your matches"
+msgstr "매치를 적립해요"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Build the Reindeer stable. Match 30 hammers to charge one blow. Tap a cell to hit it."
+msgstr "순록 마구간을 지으세요. 망치를 30개 맞추면 한 번 칠 수 있어요. 칸을 눌러 치세요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Each matched piece pays its own value. Clear the board to bank what you earned."
+msgstr "맞춘 조각은 각자의 값만큼 쳐 줘요. 판을 비워 번 것을 적립하세요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Five in a line: rainbow gem"
+msgstr "다섯 개 한 줄: 무지개 보석"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Four in a line: line gem"
+msgstr "네 개 한 줄: 줄 보석"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Green panes"
+msgstr "초록 유리창"
+
+#: games/christmas-market/lua/screens.lua
+msgid "It keeps its color. Match it again to sweep its whole row or column."
+msgstr "색은 그대로예요. 한 번 더 맞추면 가로줄이나 세로줄 전체가 쓸려 나가요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Light the panes"
+msgstr "유리창을 밝혀요"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Line up three or more"
+msgstr "세 개 이상 한 줄로 맞춰요"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Market keeper's guide"
+msgstr "장터 지기 안내서"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
+msgstr "동전을 맞춰 아치 비용을 마련하세요. 아치의 뱅쇼는 간식을 벌어요. 목재 작업장은 재료로 쓸 소나무를 더해요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match identical pieces in a straight line horizontally or vertically."
+msgstr "같은 조각을 가로나 세로로 한 줄에 맞추세요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match on a pane or hit it with a tool to light it. Light them all to finish."
+msgstr "유리창 위에서 매치를 만들거나 도구로 쳐서 불을 켜세요. 모두 켜면 끝나요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match the tied piece or hit it with a tool. Then clear the piece to light the pane."
+msgstr "묶인 조각을 맞추거나 도구로 치세요. 그다음 조각을 지우면 유리창에 불이 켜져요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Replay complete"
+msgstr "다시 하기 완료"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Stock the market"
+msgstr "장터를 채워요"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Swap it with a neighbor to clear every piece of that kind."
+msgstr "이웃한 조각과 바꾸면 그 종류의 조각이 모두 지워져요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell to hit a 3×3 square."
+msgstr "불꽃놀이 가게가 망치를 대신하고 충전도 그대로예요. 칸을 누르면 3×3 영역을 쳐요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "빵집은 뱅쇼를 진저브레드 맨으로 바꿔요. 코코아 키오스크는 핫코코아를 판에 올려요."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Untangle tinsel"
+msgstr "틴셀을 풀어요"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Winter treats"
+msgstr "겨울 간식"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Wish granted!"
+msgstr "소원이 이루어졌어요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A TELEGRAM! MUM'S ON THE LAST TRAIN ON CHRISTMAS EVE! SHE'S COMING!"
+msgstr "전보다! 엄마가 크리스마스 이브 마지막 기차로 온대! 오신대!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A candle for every window on the square, and a spare. Somebody always comes home late."
+msgstr "광장의 창문마다 초 하나씩, 그리고 여분 하나. 늦게 돌아오는 사람은 늘 있으니까."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A dry roof for the planks. They won't warp in the snow now."
+msgstr "판자가 마른 지붕 아래 있게 됐어요. 이제 눈이 와도 휘지 않을 거예요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A furnace of my own. Three breaths for a bauble, five for a big one."
+msgstr "드디어 내 가마예요. 장식 공은 숨 세 번, 큰 건 다섯 번이면 돼요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A kiosk with a clock. Trains run late in the snow, but this clock won't."
+msgstr "시계가 달린 키오스크예요. 눈이 오면 기차는 늦어도, 이 시계는 안 늦어요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A proper bench, and a window. My soldiers can face the square now."
+msgstr "제대로 된 작업대에 창문까지. 이제 내 병정들이 광장을 바라볼 수 있겠어요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A proper oven at last. First gingerbread's yours, love. Don't argue, just eat it."
+msgstr "드디어 제대로 된 오븐이야. 첫 진저브레드는 네 거란다, 얘야. 사양하지 말고 그냥 먹어."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A real post office, with a stamp that goes clunk! Got any letters for Santa?"
+msgstr "진짜 우체국이야, 쿵 하고 찍히는 도장도 있고! 산타에게 보낼 편지 있어?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A sleigh, with real bells! Mr Wren, have you ever driven one?"
+msgstr "진짜 방울이 달린 썰매예요! 렌 씨, 몰아 본 적 있으세요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A sound roof on the chapel. The choir will be glad of it. So will the pigeons."
+msgstr "성당 지붕이 튼튼해졌어요. 성가대가 좋아하겠어요. 비둘기들도요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A wooden train for the Fenwick boy. The wheels must turn without a squeak."
+msgstr "펜윅네 아이에게 줄 나무 기차예요. 바퀴가 삐걱 소리 없이 굴러가야 해요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Ada, it's beautiful. It catches the whole evening."
+msgstr "에이다, 정말 아름다워요. 저녁 풍경이 통째로 담겼어요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "All this, in one December? Noelle, love, I'd never have believed it."
+msgstr "이걸 한 달 만에요? 노엘, 얘야, 나는 믿지 못했을 거야."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Beeswax and cinnamon. The whole square smells of it, Mr Wren."
+msgstr "밀랍과 계피 냄새예요. 광장 전체에서 나요, 렌 씨."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Better do as she says. Nobody's ever won an argument with Agnes."
+msgstr "시키는 대로 하는 게 낫겠어요. 아그네스랑 말다툼해서 이긴 사람은 없으니까요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Can I do the wrapping? I'm brilliant at bows!"
+msgstr "제가 포장해도 돼요? 저 리본 매듭 진짜 잘 지어요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Can we watch, Ada? I've never seen glass made."
+msgstr "구경해도 돼요, 에이다? 유리 만드는 거 본 적 없어요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Carollers at every door tonight! Open yours and you get a song. Don't, and you get two."
+msgstr "오늘 밤엔 집집마다 캐럴을 불러 줘요! 문을 열면 한 곡, 안 열면 두 곡이에요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Choir practice tonight, and you're both coming. Somebody has to stand next to me."
+msgstr "오늘 밤 성가대 연습이에요. 두 분 다 오세요. 제 옆에 서 줄 사람이 필요하거든요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Cocoa with cream, and a pinch of cinnamon. First cup's on me, dear."
+msgstr "생크림에 계피 한 꼬집을 넣은 코코아예요. 첫 잔은 내가 살게, 얘야."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Come in when you get cold, love. There's buns."
+msgstr "추우면 들어오렴, 얘야. 빵 있단다."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Every house on the square gets one. It's a market rule."
+msgstr "광장의 집마다 하나씩 줘요. 장터 규칙이에요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Everyone else? That's not a team, Pip. That's the whole town."
+msgstr "나머지 모두라고? 그건 팀이 아니라 온 마을이야, 핍."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Fireworks! Can I light one? Just a little one?"
+msgstr "불꽃놀이다! 제가 불 붙여도 돼요? 아주 작은 거 하나만요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "First Sunday of Advent. You light the first candle on the wreath, love. New hands bring luck."
+msgstr "대림절 첫 일요일이야. 리스의 첫 초는 네가 켜렴, 얘야. 새 손이 복을 가져온단다."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Frost ferns on every window this morning. Clever things."
+msgstr "오늘 아침 창마다 서리 고사리가 피었네. 참 영리하기도 하지."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Go on, Pip. Flat hand, and mind your fingers."
+msgstr "해 봐, 핍. 손바닥을 펴고, 손가락 조심하고."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Go on. Make a wish while you're at it."
+msgstr "해 봐. 하는 김에 소원도 빌고."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Good. My butter goes in first, Theo."
+msgstr "좋아. 내 버터가 먼저 들어가야 해요, 테오."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Hello! I'm Pip, I do the post. Are you the new helper? You've got snow on your hat."
+msgstr "안녕! 나는 핍이고 우편을 맡고 있어. 새 도우미야? 모자에 눈이 앉았어."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I didn't do it on my own, Gran. Merry Christmas, everyone."
+msgstr "저 혼자 한 거 아니에요, 할머니. 모두들 메리 크리스마스!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I haven't skated since I was a girl. Hold my arm, love. Don't let go."
+msgstr "소녀 때 이후로 스케이트는 처음이야. 팔 좀 잡아 줘, 얘야. 놓으면 안 돼."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I made a paper chain as long as the square, out of last week's newspaper!"
+msgstr "지난주 신문으로 광장만큼 긴 종이 사슬을 만들었어요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I've got you, Agnes. Look, you're doing it!"
+msgstr "잡고 있어요, 아그네스. 봐요, 타고 있잖아요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I've kept a little fir back. For your gran's window, if you want it."
+msgstr "작은 전나무를 하나 남겨 뒀어. 네 할머니 창가에 두고 싶으면 가져가."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Ice from the lake, cut and stacked. Mr Finch says it gets thicker every week."
+msgstr "호수에서 잘라 쌓은 얼음이에요. 핀치 씨 말로는 매주 두꺼워진대요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Ice is thick enough on the lake now. Bramble's been out on it since Tuesday."
+msgstr "이제 호수 얼음이 충분히 두꺼워요. 브램블은 화요일부터 그 위에 나가 있어요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Is that safe for a goat, Mr Finch?"
+msgstr "염소한테 안전한 건가요, 핀치 씨?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Is that your goat, Mr Finch? She's eating the tinsel."
+msgstr "저게 핀치 씨 염소예요? 틴셀을 먹고 있는데요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "It goes round! Noelle, it actually goes round! I'm having the reindeer!"
+msgstr "돌아간다! 노엘, 진짜로 돌아가요! 나는 순록 탈래요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Just the one. Make sure he gets it, Pip."
+msgstr "딱 하나만. 꼭 그 애가 받게 해 줘, 핍."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Leave your boots out tonight! St Nicholas fills them with oranges and nuts."
+msgstr "오늘 밤 장화를 내놓으렴! 성 니콜라우스가 오렌지와 견과류를 채워 주신단다."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Letter for you, Noelle! From your gran!"
+msgstr "노엘 앞으로 편지예요! 할머니가 보내셨어요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mittens are good, Theo. Who's the friend?"
+msgstr "벙어리장갑 좋네요, 테오. 그 친구가 누구예요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mr Bell, can I wind it? I'll be ever so careful."
+msgstr "벨 씨, 제가 태엽 감아도 돼요? 아주 조심할게요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mr Strand, do the drums really play?"
+msgstr "스트란드 씨, 북이 진짜 울려요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mr Wren, do you ever put that broom down?"
+msgstr "렌 씨, 그 빗자루 내려놓을 때도 있어요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mrs Alder sings louder than the organ. Bring a scarf."
+msgstr "올더 부인은 오르간보다 목소리가 커요. 목도리 챙겨 오세요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mrs Holt, Mr Strand says your chimney smokes and your bread's burnt."
+msgstr "홀트 부인, 스트란드 씨가 굴뚝에서 연기 나고 빵도 탔대요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mum cooks on the coastal steamer. She's trying to get home for Christmas. I don't mind either way."
+msgstr "엄마는 연안 증기선에서 요리해요. 크리스마스에 집에 오려고 애쓰는 중이에요. 저는 오든 안 오든 상관없어요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Nobody lights anything before midnight on New Year's Eve, Pip."
+msgstr "섣달그믐 자정 전에는 아무도 불 붙이면 안 돼, 핍."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Of course it goes round. I made the horses. Mind the reindeer, Pip, it's the fastest."
+msgstr "당연히 돌아가지. 말은 내가 만들었는걸. 순록 조심해, 핍. 제일 빨라."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Once or twice, Pip. Only ever on the one night of the year."
+msgstr "한두 번요, 핍. 일 년에 딱 그날 밤에만요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Pip knows everyone in Bellmere, and what they're all getting for Christmas."
+msgstr "핍은 벨미어의 모든 사람을 알고, 다들 크리스마스에 뭘 받는지도 알아요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Pip! Look how you've grown. And look at this square!"
+msgstr "핍! 많이 컸구나. 그리고 이 광장 좀 봐!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Pip, that's my parcel you've wrapped. And my mitten."
+msgstr "핍, 그거 내 소포잖아. 내 장갑도 싸 버렸고."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Reindeer! Can I feed them? I've got carrots in both pockets!"
+msgstr "순록이다! 먹이 줘도 돼요? 양쪽 주머니에 당근 있어요!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Room for carving at last. My old apprentices said they'd come if there was space."
+msgstr "드디어 조각할 자리가 생겼어요. 옛 제자들이 자리만 있으면 오겠다고 했거든요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "She's coming on the last train tomorrow, Pip, with your mum!"
+msgstr "내일 마지막 기차로 오신대, 핍. 네 엄마랑 같이!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Shortest day of the year. From tomorrow, a little more light every evening."
+msgstr "일 년 중 가장 짧은 날이에요. 내일부터는 저녁마다 빛이 조금씩 길어져요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Smoked trout by Saturday. Bramble, that's not for you."
+msgstr "토요일까지 훈제 송어 나와요. 브램블, 그건 네 거 아니야."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Snowball fight by the fountain! Theo against everyone else!"
+msgstr "분수 옆에서 눈싸움이다! 테오 대 나머지 전부!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Snowy boots and all, Pip?"
+msgstr "눈 묻은 장화 그대로, 핍?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "St Lucia's day. Saffron buns, curled like a cat's tail. Take two."
+msgstr "성 루치아의 날이야. 고양이 꼬리처럼 말린 사프란 빵이지. 두 개 가져가."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Tell that man it's toasted. On purpose."
+msgstr "저 사람한테 말해 줘요. 일부러 구운 거라고."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Thank you, Mrs Alder. You're humming carols already."
+msgstr "고마워요, 올더 부인. 벌써 캐럴을 흥얼거리시네요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "That's Theo. He sells the trees, and he argues with everything."
+msgstr "저 사람이 테오예요. 나무를 파는데, 뭐든 따지고 들어요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "That's an arch. Right. I'll sell my firs under it. Everyone walks through here."
+msgstr "아치라. 좋아. 이 아래서 전나무를 팔아야겠군. 다들 여기로 지나다니니까."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "The news has never looked so festive, Pip."
+msgstr "뉴스가 이렇게 축제 같았던 적이 없어, 핍."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Then she'll want a warm bun when she steps off. I'll have one ready."
+msgstr "그럼 내리자마자 따뜻한 빵이 필요하겠네. 하나 준비해 둘게."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Theo Marsh. Did you just do something nice?"
+msgstr "테오 마시. 방금 뭔가 좋은 일 한 거 아니에요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Theo, it's perfect. Did you walk the whole hill for it?"
+msgstr "테오, 완벽해요. 이거 가져오려고 언덕을 다 걸어 올랐어요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Theo, why is there a fir tree in Gran's doorway?"
+msgstr "테오, 할머니 현관에 왜 전나무가 있어요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "There's space now, Henrik. I hope they make it for Christmas."
+msgstr "이제 자리가 있어요, 헨리크. 크리스마스에 맞춰 오면 좋겠네요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "There. The best fir I've got, right in the middle of the square."
+msgstr "자. 내가 가진 제일 좋은 전나무야. 광장 한가운데에 놓았어."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "We'd better leave the door open, then."
+msgstr "그럼 문을 열어 둬야겠네요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Welcome to Bellmere! Make matches to collect resources and help me rebuild the market."
+msgstr "벨미어에 온 걸 환영해요! 매치로 자원을 모아서 장터를 다시 세우는 걸 도와줘요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "What do you get someone who has everything? Asking for a friend. Are mittens good?"
+msgstr "다 가진 사람한테는 뭘 선물하죠? 친구 얘기예요. 벙어리장갑 괜찮을까요?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You make that sound like good news, Mr Wren."
+msgstr "좋은 소식처럼 말씀하시네요, 렌 씨."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You said \"take two\" yesterday, Agnes. And the day before."
+msgstr "어제도 ‘두 개 가져가’라고 했잖아요, 아그네스. 그제도요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've been oiling that one wheel for an hour, Henrik."
+msgstr "한 시간째 그 바퀴 하나에 기름칠하고 있어요, 헨리크."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've been out sweeping since six, Mr Wren. It snowed all night."
+msgstr "여섯 시부터 쓸고 계시네요, 렌 씨. 밤새 눈이 왔는데."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've got sawdust in your hair, Theo. And pine needles."
+msgstr "머리에 톱밥이 묻었어요, 테오. 솔잎도요."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've read that postcard ten times today, Pip."
+msgstr "그 엽서, 오늘만 열 번 읽었어, 핍."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Your window wants a star, Noelle. Blue glass. Seven breaths, it took. Hang it high."
+msgstr "노엘, 창문에 별이 필요해요. 파란 유리로요. 숨을 일곱 번 불었어요. 높이 걸어요."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Choose open snow clear of other buildings."
+msgstr "다른 건물과 겹치지 않는 빈 눈밭을 고르세요."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "건물을 끌어 자리를 고르거나 땅을 스크롤하세요."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Match more pieces to earn the resources for this."
+msgstr "더 많은 조각을 맞춰 필요한 자원을 모으세요."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Open more land before placing this building."
+msgstr "이 건물을 놓기 전에 땅을 더 여세요."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Your market is unchanged."
+msgstr "장터는 그대로예요."
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Five in a line leave a rainbow gem. Swap it to clear one kind."
+msgstr "다섯 개 한 줄이면 무지개 보석이 남아요. 바꾸면 한 종류가 지워져요."
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Four in a line leave a striped gem. Match it to sweep its line."
+msgstr "네 개 한 줄이면 줄무늬 보석이 남아요. 맞추면 그 줄이 쓸려 나가요."
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Henrik's old apprentices come back"
+msgstr "헨리크의 옛 제자들이 돌아와요"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Mr Wren trims every wick"
+msgstr "렌 씨가 심지를 모두 다듬어요"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Mrs Alder's ladle and second pot"
+msgstr "올더 부인의 국자와 두 번째 냄비"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a band organ"
+msgstr "밴드 오르간"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a drying shed for the pine"
+msgstr "소나무를 말리는 건조장"
+
+#. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
+#: games/christmas-market/lua/user_events.lua
+msgid "a mulled-wine hatch in the arch"
+msgstr "아치 안의 뱅쇼 창구"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a new harness and bells for the reindeer"
+msgstr "순록을 위한 새 마구와 방울"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a rocket rack, ready in threes"
+msgstr "세 발씩 준비된 로켓 선반"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second bench and a shop bell"
+msgstr "두 번째 작업대와 가게 종"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second furnace"
+msgstr "두 번째 가마"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second ice saw on the lake"
+msgstr "호수의 두 번째 얼음톱"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second oven"
+msgstr "두 번째 오븐"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second smoking rack"
+msgstr "두 번째 훈제 선반"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second sorting rack"
+msgstr "두 번째 분류 선반"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a star for the top"
+msgstr "꼭대기에 올릴 별"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "the masons' yard behind the chapel"
+msgstr "성당 뒤 석공 마당"

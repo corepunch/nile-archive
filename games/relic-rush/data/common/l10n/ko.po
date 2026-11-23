@@ -1,0 +1,2133 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: relic-rush\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "A brazier above the harbour marks the entrance at night, when the reefs are hardest to see."
+msgstr "항구 위의 화로가 암초가 가장 보이지 않는 밤에 입구를 알려 줘요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Bamboo grove"
+msgstr "대나무 숲"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Banana plant"
+msgstr "바나나 나무"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Barrels"
+msgstr "통"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Beached schooner"
+msgstr "좌초한 스쿠너선"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Berry bush"
+msgstr "딸기 덤불"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Big-leaf monstera"
+msgstr "큰잎 몬스테라"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Birdbath"
+msgstr "새 물통"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Blooming bromeliad"
+msgstr "꽃핀 브로멜리아"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Blue lilies"
+msgstr "푸른 백합"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Boulder"
+msgstr "바위"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Broken column"
+msgstr "부러진 기둥"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Campfire"
+msgstr "모닥불"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Canopy treehouse"
+msgstr "나무 위 오두막"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Capybara"
+msgstr "카피바라"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Carpenter's workshop"
+msgstr "목수의 작업장"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Cartographer's house"
+msgstr "지도 제작자의 집"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Cartographers combine soundings from different crews to mark reefs and channels on a single chart."
+msgstr "지도 제작자들이 여러 선원의 측심 기록을 모아 암초와 물길을 한 장의 지도에 표시해요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Clipped hedge block"
+msgstr "다듬은 산울타리 블록"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crews bring their own bowls to the long tables. One cook can feed a whole shift while the hearth is hot and have the grain soaking for the next."
+msgstr "선원들이 긴 식탁에 자기 그릇을 가져와요. 요리사 한 명이 화덕이 뜨거운 동안 교대조 전체를 먹이고 다음 곡식을 불려 둬요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crews carry homing birds aboard to send messages back to shore. The loft keeps the birds safe between voyages."
+msgstr "선원들은 배에 전서구를 싣고 가서 소식을 육지로 보내요. 새장은 항해 사이에 새들을 안전하게 지켜 줘요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Crystal cluster"
+msgstr "수정 무리"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Curious monkey"
+msgstr "호기심 많은 원숭이"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Dig site"
+msgstr "발굴지"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Duck pond"
+msgstr "오리 연못"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Each terrace drains into the bed below. Gardeners carry water to the top at dawn and plant the thirstiest herbs where the first runnel falls."
+msgstr "계단식 밭마다 아래 밭으로 물이 빠져요. 정원사는 새벽에 꼭대기까지 물을 나르고, 가장 목마른 허브는 첫 물길이 닿는 곳에 심어요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Expedition camp"
+msgstr "탐험 야영지"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Expedition flag"
+msgstr "탐험 깃발"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Explorer statue"
+msgstr "탐험가 동상"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Explorer's globe"
+msgstr "탐험가의 지구본"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fan palm"
+msgstr "부채야자"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Field telescope"
+msgstr "야외 망원경"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fishing boats unload at the harbour plaza. The catch goes straight from the quay to the market stalls."
+msgstr "고기잡이배가 항구 광장에 짐을 내려요. 잡은 고기는 부두에서 곧장 시장 가판대로 가요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flower bed"
+msgstr "화단"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flower planter"
+msgstr "화분 화단"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Flowering shrub"
+msgstr "꽃 피는 관목"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Forest fern"
+msgstr "숲 고사리"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Frangipani"
+msgstr "플루메리아"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Fruit pickers keep a sleeping platform among the branches. A watcher with a rattle can turn a flock away before it strips the ripest tree."
+msgstr "과일 따는 사람들이 가지 사이에 잠자리 단을 마련해 둬요. 딸랑이를 든 파수꾼이 가장 잘 익은 나무를 새 떼가 털기 전에 쫓아낼 수 있어요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Garden bench"
+msgstr "정원 벤치"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Garden swing"
+msgstr "정원 그네"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Giant kapok"
+msgstr "거대한 케이폭"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Giant stone head"
+msgstr "거대한 석상 머리"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Glass greenhouse"
+msgstr "유리 온실"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Golden idol"
+msgstr "황금 우상"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Great aviary"
+msgstr "대형 새장"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Hanging gardens"
+msgstr "공중 정원"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Harbour lodge"
+msgstr "항구 숙소"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Harbour plaza"
+msgstr "항구 광장"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Herbalist's hut"
+msgstr "약초사의 오두막"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Island growers bring fruit and grain to market. The stalls pack provisions in clay jars for the road."
+msgstr "섬의 농부들이 과일과 곡식을 시장에 가져와요. 가판대에서 길 떠날 양식을 토기 단지에 담아 줘요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jade fountain"
+msgstr "비취 분수"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jade gazebo"
+msgstr "비취 정자"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jaguar guardian"
+msgstr "재규어 수호상"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Jungle market"
+msgstr "정글 시장"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Keeper's archive"
+msgstr "관리인의 기록소"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lantern post"
+msgstr "등불 기둥"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lighthouse"
+msgstr "등대"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Lily pond"
+msgstr "백합 연못"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Little fountain"
+msgstr "작은 분수"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mango tree"
+msgstr "망고나무"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Market cart"
+msgstr "시장 수레"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mess hall"
+msgstr "식당 막사"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Mossy boulders"
+msgstr "이끼 낀 바위"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Palm hammock"
+msgstr "야자 해먹"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Papaya tree"
+msgstr "파파야 나무"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Parrot perch"
+msgstr "앵무새 횃대"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Picnic rug"
+msgstr "피크닉 돗자리"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Place this treasure anywhere on open grass."
+msgstr "이 보물을 탁 트인 풀밭 아무 데나 놓으세요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Porters use the lowest dry step to board a boat. As the tide rises they move their baskets up the stone stair, one landing at a time."
+msgstr "짐꾼들은 가장 낮은 마른 계단에서 배에 올라요. 물이 차오르면 바구니를 돌계단 위로 한 단씩 옮겨요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Quarry stone is squared and sorted here before it is traded to the island's builders."
+msgstr "채석한 돌을 여기서 네모나게 다듬고 분류해서 섬의 건축가들에게 팔아요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Quay steps"
+msgstr "부두 계단"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rainbow garden"
+msgstr "무지개 정원"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Red hibiscus"
+msgstr "붉은 히비스커스"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Relic museum"
+msgstr "유물 박물관"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Riverside reeds"
+msgstr "강가 갈대"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rock spring"
+msgstr "바위 샘"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Round jungle tree"
+msgstr "둥근 정글 나무"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Round shrub"
+msgstr "둥근 관목"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Rowboat"
+msgstr "노 젓는 보트"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Ruined arch"
+msgstr "폐허 아치"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Shipwrights salvage valuable cargo and sound timber from the hull while the tide is out."
+msgstr "조선공들이 썰물 때 선체에서 값진 화물과 튼튼한 목재를 건져 내요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sight lines through the stone pillars help navigators mark the positions of stars throughout the year."
+msgstr "돌기둥 사이로 보이는 시선이 항해사들이 일 년 내내 별의 위치를 표시하도록 도와줘요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Signpost"
+msgstr "이정표"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Spring well"
+msgstr "샘 우물"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Star observatory"
+msgstr "별 관측소"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stilt house"
+msgstr "수상 가옥"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone amphitheatre"
+msgstr "돌 원형극장"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone idol"
+msgstr "돌 우상"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Stone trading post"
+msgstr "석조 교역소"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sun obelisk"
+msgstr "태양 오벨리스크"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sundial"
+msgstr "해시계"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sunning turtle"
+msgstr "햇볕 쬐는 거북"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Sunny daisies"
+msgstr "햇살 데이지"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Supply crates"
+msgstr "보급 상자"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Supply tent"
+msgstr "보급 천막"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Temple cypress"
+msgstr "신전 사이프러스"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Temple of the Sun"
+msgstr "태양 신전"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tender seedlings spend their first weeks under cover. The gardener opens the shelter early, before the midday heat can wilt a whole bed."
+msgstr "여린 모종은 첫 몇 주를 덮개 아래서 보내요. 정원사는 한낮 더위가 화단 전체를 시들게 하기 전에 일찍 덮개를 열어요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The amphitheatre gives the town a place for contests and public gatherings. Armourers set up their stalls at the entrance."
+msgstr "원형극장은 마을에 대회와 공개 모임을 위한 자리를 마련해 줘요. 무구 장인들이 입구에 가판대를 세워요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The archive keeps harbour plans and trade records dry. Carved rings serve as seals for official documents."
+msgstr "기록소는 항구 도면과 교역 기록을 마른 채로 보관해요. 새긴 반지는 공문서의 인장으로 써요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The camp gives excavation crews a place to sort supplies, mend tools and cook between shifts."
+msgstr "야영지는 발굴대가 물자를 분류하고, 도구를 고치고, 교대 사이에 밥을 지을 곳이에요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The harbour watch tracks the tide from this tower. Pilots use its signals to time a shallow crossing."
+msgstr "항구 감시대는 이 탑에서 조수를 지켜봐요. 도선사들은 이 신호로 얕은 곳을 건널 때를 맞춰요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The herbalist dries leaves on reed trays and keeps the roots in separate clay pots. A sprig tied to each lid tells an apprentice which plant grew it."
+msgstr "약초사는 갈대 쟁반에 잎을 말리고 뿌리는 따로 토기 단지에 보관해요. 뚜껑마다 묶은 잔가지가 견습생에게 어떤 식물인지 알려 줘요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The lodge gives visiting crews a dry berth and a place to prepare for their next departure."
+msgstr "숙소는 찾아온 선원들에게 마른 잠자리와 다음 출항을 준비할 곳을 마련해 줘요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The museum keeps the island's carvings and instruments together, where visitors can see how they were made."
+msgstr "박물관은 섬의 조각품과 기구를 한곳에 모아 방문객이 어떻게 만들어졌는지 볼 수 있게 해요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The sawbench turns logs into beams and planks for houses and boats."
+msgstr "톱작업대가 통나무를 집과 배에 쓸 들보와 널빤지로 만들어요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The stone lining keeps loose earth out of the spring. A low rim makes it easy to fill buckets."
+msgstr "돌 테두리가 흙이 샘에 들어가지 않게 막아요. 낮은 가장자리 덕에 물통을 채우기 쉬워요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The stream turns the millwheel. Inside, millstones grind the island's harvest into flour."
+msgstr "시냇물이 물레방아를 돌려요. 안에서는 맷돌이 섬의 수확을 가루로 갈아요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "The temple courtyard hosts public ceremonies and feast days under the island's sun emblem."
+msgstr "신전 안뜰에서는 섬의 태양 문장 아래 공개 의식과 축제일이 열려요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tide clock tower"
+msgstr "조수 시계탑"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Tiki torch"
+msgstr "티키 횃불"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Timber posts carry the sleeping floor above the flood line. A family can tie its boat to the steps and come home even when the lane is under water."
+msgstr "목재 기둥이 잠자리 바닥을 침수선 위로 받쳐 줘요. 골목이 물에 잠겨도 가족은 계단에 배를 묶고 집에 돌아올 수 있어요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Topiary ball"
+msgstr "공 모양 전정수"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Toucan perch"
+msgstr "큰부리새 횃대"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Trapper's cabin"
+msgstr "사냥꾼의 오두막"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Trappers shelter here between trips. The cabin gives them a dry bench for repairing traps and gear."
+msgstr "사냥꾼들은 여행 사이에 여기서 쉬어요. 오두막에는 덫과 장비를 고칠 마른 벤치가 있어요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Treasure chest"
+msgstr "보물 상자"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Twin palms"
+msgstr "쌍둥이 야자"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Vine pergola"
+msgstr "덩굴 퍼걸러"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water from the spring flows through the fountain into a basin faced with green stone."
+msgstr "샘물이 분수를 지나 초록 돌로 덮은 물받이로 흘러요."
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water mill"
+msgstr "물레방앗간"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Water pump"
+msgstr "물펌프"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Wild orchids"
+msgstr "야생 난초"
+
+#: games/relic-rush/lua/buildings.lua
+msgid "Young palm"
+msgstr "어린 야자"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Arch Gate"
+msgstr "아치 문"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Beached Hull"
+msgstr "뭍에 오른 선체"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Bell Cistern"
+msgstr "종 저수조"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Bone Stair"
+msgstr "뼈 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Broken Aqueduct"
+msgstr "무너진 수로"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ceiba Roots"
+msgstr "세이바 뿌리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Cenote Ring"
+msgstr "세노테 고리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Chac Stair"
+msgstr "찰 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Choked Gateway"
+msgstr "막힌 관문"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Clear every turquoise plaque."
+msgstr "청록색 명판을 모두 지우세요."
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Coiled Serpent"
+msgstr "똬리 튼 뱀"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Colonnade Walk"
+msgstr "기둥 회랑길"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Cormorant Rock"
+msgstr "가마우지 바위"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Dawn Terrace"
+msgstr "새벽 테라스"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Disc of Noon"
+msgstr "정오의 원반"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Dome Ring"
+msgstr "돔 고리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Drowned Arch"
+msgstr "물에 잠긴 아치"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ember Colonnade"
+msgstr "불씨 회랑"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Fallen Colonnade"
+msgstr "쓰러진 회랑"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Fern Window"
+msgstr "고사리 창"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ferry Steps"
+msgstr "나루 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Gate of Reeds"
+msgstr "갈대 문"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Hall of Pillars"
+msgstr "기둥의 전당"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Heart of the Temple"
+msgstr "신전의 심장"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Heavy chains take two matches. Then clear their plaques."
+msgstr "굵은 사슬은 두 번 맞춰야 해요. 그다음 아래 명판을 지우세요."
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol Head"
+msgstr "우상의 머리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol of Rain"
+msgstr "비의 우상"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Idol of Salt"
+msgstr "소금의 우상"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Inner Sun Court"
+msgstr "안쪽 태양 안뜰"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jade Cartouche"
+msgstr "비취 카르투슈"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jade Steps"
+msgstr "비취 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jaguar Gate"
+msgstr "재규어 문"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Jaguar Lintel"
+msgstr "재규어 인방"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Kapok Roots"
+msgstr "케이폭 뿌리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Kelp Terrace"
+msgstr "다시마 테라스"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lantern Spiral"
+msgstr "등불 나선"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lantern Tower"
+msgstr "등불 탑"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Lookout Mesa"
+msgstr "전망 고원"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Match through a chained piece to free it. Then clear the plaque underneath."
+msgstr "사슬 묶인 조각 위에서 맞춰 풀어 주세요. 그다음 아래의 명판을 지우세요."
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Maw of the Jaguar"
+msgstr "재규어의 아가리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Mist Cenote"
+msgstr "안개 세노테"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Mole Walk"
+msgstr "방파제 길"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moonwell Arch"
+msgstr "달우물 아치"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Bridge"
+msgstr "이끼 다리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Parapet"
+msgstr "이끼 난간"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Moss Well"
+msgstr "이끼 우물"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Net Loft"
+msgstr "그물 다락"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Obsidian Lintel"
+msgstr "흑요석 인방"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Obsidian Well"
+msgstr "흑요석 우물"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ocelot Gate"
+msgstr "오셀롯 문"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Ochre Vault"
+msgstr "황토 천장"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Orchard of Idols"
+msgstr "우상의 과수원"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Palm Court"
+msgstr "야자 안뜰"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Parrot Steps"
+msgstr "앵무새 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Pilgrim Stair"
+msgstr "순례자의 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Rain Channel"
+msgstr "비 물길"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Reed Hut"
+msgstr "갈대 오두막"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Reed Landing"
+msgstr "갈대 선착장"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "River Carvings"
+msgstr "강의 조각들"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Rush Landing"
+msgstr "러시 선착장"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Salt Stair"
+msgstr "소금 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Salt Terrace"
+msgstr "소금 테라스"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Coil"
+msgstr "뱀의 똬리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Throne"
+msgstr "뱀의 옥좌"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Serpent Wall"
+msgstr "뱀의 벽"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Signal Tower"
+msgstr "신호탑"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stairway of Kites"
+msgstr "연의 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Star Dome"
+msgstr "별 돔"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Star Eater's Dome"
+msgstr "별 먹는 자의 돔"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stone Bridge"
+msgstr "돌다리"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Stone Fisher"
+msgstr "돌 낚시꾼"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Altar"
+msgstr "태양 제단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Court"
+msgstr "태양 안뜰"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sun Disc"
+msgstr "태양 원반"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Cistern"
+msgstr "가라앉은 저수조"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Plaza"
+msgstr "가라앉은 광장"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Sunken Vault"
+msgstr "가라앉은 금고"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Temple Front"
+msgstr "신전 정면"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Temple of Winds"
+msgstr "바람의 신전"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tern Rock Light"
+msgstr "제비갈매기 바위 등대"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Terrace Garden"
+msgstr "계단식 정원"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Beached Mast"
+msgstr "좌초한 돛대"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Ceiba Court"
+msgstr "세이바 안뜰"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Drowned Stair"
+msgstr "물에 잠긴 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Landing"
+msgstr "선착장"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Light Below"
+msgstr "아래의 빛"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Overlook"
+msgstr "전망대"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Quiet Terraces"
+msgstr "고요한 계단밭"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Spire Keep"
+msgstr "첨탑 요새"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Sunken Sanctum"
+msgstr "가라앉은 성소"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "The Timber Path"
+msgstr "목재 길"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Chamber"
+msgstr "조수의 방"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Pool"
+msgstr "조수 웅덩이"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Tide Stairs"
+msgstr "조수 계단"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Trapper’s Terrace"
+msgstr "사냥꾼의 테라스"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Twin Wells"
+msgstr "쌍둥이 우물"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Vault Door"
+msgstr "금고 문"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Watcher's Tier"
+msgstr "감시자의 층"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Water Cistern"
+msgstr "물 저수조"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wetlands Walk"
+msgstr "습지 산책로"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wrack Line"
+msgstr "해초선"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wreck Gate"
+msgstr "난파선 문"
+
+#: games/relic-rush/lua/campaign.lua
+msgid "Wreck of the Gull"
+msgstr "갈매기호의 잔해"
+
+#. TRANSLATORS: a piece's plural name, then how many of a currency (Coins, Food, Supplies) each one earns
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "%s earn +%d %s each."
+msgstr "%s 하나당 +%d %s"
+
+#. TRANSLATORS: both %s are bonus tool names: the new tool, then the one it replaces
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "%s replaces %s and keeps its charge."
+msgstr "%s이(가) %s을(를) 대체하며 충전량을 이어받아요."
+
+#: games/relic-rush/lua/economy.lua
+msgid "Amphora"
+msgstr "암포라"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Coins"
+msgstr "동전"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Dressed stones"
+msgstr "다듬은 돌"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Emeralds"
+msgstr "에메랄드"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Flower"
+msgstr "꽃"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Food"
+msgstr "식량"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Grain bundles"
+msgstr "곡식 다발"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Harps"
+msgstr "하프"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Helmets"
+msgstr "투구"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Leaf"
+msgstr "잎"
+
+#. TRANSLATORS: %s is a bonus tool's name; its pieces charge it
+#: games/relic-rush/lua/economy.lua
+#, lua-format
+msgid "Match %d %s piece for one charge."
+msgid_plural "Match %d %s pieces for one charge."
+msgstr[0] "%d개의 %s 조각을 맞추면 한 번 충전돼요."
+
+#: games/relic-rush/lua/economy.lua
+msgid "Ration jars"
+msgstr "식량 단지"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Rings"
+msgstr "반지"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Sandals"
+msgstr "샌들"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Scarabs"
+msgstr "스카라베"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Shrimp"
+msgstr "새우"
+
+#: games/relic-rush/lua/economy.lua games/relic-rush/lua/screens.lua
+msgid "Silver coins"
+msgstr "은화"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Sun coin"
+msgstr "태양 동전"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Supplies"
+msgstr "물자"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Timber bundles"
+msgstr "목재 다발"
+
+#: games/relic-rush/lua/economy.lua
+msgid "Water buckets"
+msgstr "물동이"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "A NEW PLACE TO DISCOVER"
+msgstr "새로운 곳을 발견해요"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Breakfast at the quay"
+msgstr "부두의 아침 식사"
+
+#. TRANSLATORS: praise over the board for ever bigger cascades; "Sunstorm" is a made-up word
+#: games/relic-rush/lua/game_config.lua
+msgid "Brilliant!"
+msgstr "눈부셔요!"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Build your valley"
+msgstr "계곡을 세워요"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "CLEAR NEW EXPEDITIONS TO OPEN IT"
+msgstr "새 탐험을 클리어하면 열려요"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "COLLECT & VISIT ISLAND"
+msgstr "받고 섬 가기"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Coastal Watch"
+msgstr "해안 감시"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "EXPEDITIONS CLEARED  %d / %d"
+msgstr "클리어한 탐험  %d / %d"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "EXPLORER'S GUIDE"
+msgstr "탐험가 안내서"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch I"
+msgstr "시대 I"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch II"
+msgstr "시대 II"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch III"
+msgstr "시대 III"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch IV"
+msgstr "시대 IV"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epoch V"
+msgstr "시대 V"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Epochs"
+msgstr "시대"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Harbour Town"
+msgstr "항구 마을"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "LEADERBOARD"
+msgstr "순위표"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Legendary!"
+msgstr "전설적이에요!"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Look, we have enough to build!"
+msgstr "보세요, 지을 만큼 모였어요!"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "MORE RESOURCES NEEDED"
+msgstr "자원이 더 필요해요"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Magnificent!"
+msgstr "장엄해요!"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Match through the chained piece. Match that cell again to clear its plaque."
+msgstr "사슬 묶인 조각을 지나게 맞춰 보세요. 그 칸을 한 번 더 맞추면 명판이 지워져요."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Mill and Market"
+msgstr "방앗간과 시장"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "QUIT TO ISLAND"
+msgstr "섬으로 나가기"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "RELIC RUSH"
+msgstr "렐릭 러시"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "RESTORE EARLIER WONDERS"
+msgstr "이전 불가사의 복구"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Resources collected."
+msgstr "자원을 모았어요."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Restart this expedition?"
+msgstr "이 탐험을 다시 시작할까요?"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Select a project to see its cost."
+msgstr "프로젝트를 골라 비용을 확인하세요."
+
+#. TRANSLATORS: the medal won for finishing each epoch, named for what the town built in it
+#: games/relic-rush/lua/game_config.lua
+msgid "Spring Camp"
+msgstr "샘 야영지"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Sun Temple"
+msgstr "태양 신전"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Sunstorm!"
+msgstr "태양폭풍!"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "THE LOST VALLEY"
+msgstr "잃어버린 계곡"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "THE SPRING RUNS TO THE QUAY AGAIN."
+msgstr "샘물이 다시 부두까지 흘러요."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "This epoch’s projects are listed at the top left. Tap one that says Ready to build."
+msgstr "이번 시대의 프로젝트가 왼쪽 위에 나와 있어요. 지을 준비 완료라고 적힌 곳을 누르세요."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Top explorers"
+msgstr "최고의 탐험가"
+
+#: games/relic-rush/lua/game_config.lua
+msgid "VISIT ISLAND"
+msgstr "섬 가기"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "YOU COMPLETED ALL %d EXPEDITIONS."
+msgstr "%d개 탐험을 모두 클리어했어요."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "You won!"
+msgstr "승리했어요!"
+
+#: games/relic-rush/lua/game_config.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue expedition %d."
+msgstr "판이 저장됐어요. 플레이를 눌러 탐험 %d을(를) 이어 가세요."
+
+#: games/relic-rush/lua/game_config.lua
+msgid "Your whole island is open to explore."
+msgstr "섬 전체가 탐험할 수 있게 열렸어요."
+
+#: games/relic-rush/lua/island.lua
+msgid "Ancient heights"
+msgstr "고대의 고지"
+
+#: games/relic-rush/lua/island.lua
+msgid "Fern meadow"
+msgstr "고사리 초원"
+
+#: games/relic-rush/lua/island.lua
+msgid "Harbor glade"
+msgstr "항구 숲터"
+
+#: games/relic-rush/lua/island.lua
+msgid "Sun garden"
+msgstr "태양 정원"
+
+#: games/relic-rush/lua/island.lua
+msgid "Sunlit coast"
+msgstr "햇살 해안"
+
+#. TRANSLATORS: %s is the bonus tool or the resource piece that the building unlocks
+#: games/relic-rush/lua/island.lua
+#, lua-format
+msgid "Unlocks %s"
+msgstr "%s 해금"
+
+#: games/relic-rush/lua/journey.lua
+msgid "Bakers share the temple ovens on feast days. Children waiting for the first loaves fetch water from the quay."
+msgstr "잔칫날이면 제빵사들이 신전 화덕을 같이 써요. 첫 빵을 기다리는 아이들은 부두에서 물을 길어 와요."
+
+#: games/relic-rush/lua/journey.lua
+msgid "Give me a real harbour, builder, and I'll send for the families."
+msgstr "건축가, 제대로 된 항구를 지어 줘. 그러면 가족들을 부르러 보낼게."
+
+#: games/relic-rush/lua/journey.lua
+msgid "Neighbours bring their witnesses to the temple steps. Both sides can hear the terms before they press a seal into the clay."
+msgstr "이웃끼리 신전 계단에 증인을 데려와요. 양쪽 모두 조건을 듣고 나서 점토에 인장을 눌러요."
+
+#: games/relic-rush/lua/journey.lua
+msgid "Somebody built harbour steps here long before us. Where did they all go?"
+msgstr "누군가 우리보다 훨씬 전에 여기 항구 계단을 지었어. 그 사람들은 다 어디로 갔을까?"
+
+#: games/relic-rush/lua/journey.lua
+msgid "The crews keep their register by the sun court. A porter looking for a berth can find the boat and its sailing day in the same place."
+msgstr "선원들은 태양 안뜰 옆에 명부를 둬요. 배를 찾는 짐꾼은 같은 자리에서 배와 출항일을 알 수 있어요."
+
+#: games/relic-rush/lua/journey.lua
+msgid "The families are home. Come and see the new fountain."
+msgstr "가족들이 다 왔어요. 새 분수 보러 와요."
+
+#: games/relic-rush/lua/journey.lua
+msgid "The keeper gives harbour plans a shelf of their own. A mason can lay a drawing flat here and take the measurements down to the quay."
+msgstr "기록 관리인은 항구 도면에 선반 하나를 따로 줘요. 석공은 여기에 도면을 펼쳐 놓고 치수를 재서 부두로 내려가요."
+
+#: games/relic-rush/lua/journey.lua
+msgid "The ship's at sea. My birds are watching for her sails."
+msgstr "배는 바다에 있어요. 내 새들이 돛을 기다리고 있어요."
+
+#: games/relic-rush/lua/journey.lua
+msgid "There's a spring up in the rocks. Let's start with a well."
+msgstr "저 위 바위 틈에 샘이 있어. 우물부터 시작하자."
+
+#: games/relic-rush/lua/journey.lua
+msgid "We came ashore with nothing, builder. Build us a town and I'll send the ship for the families."
+msgstr "우리는 빈손으로 상륙했어, 건축가. 마을을 지어 주면 가족들 데리러 배를 보낼게."
+
+#: games/relic-rush/lua/journey.lua
+msgid "We keep finding old stones with the same word carved on them."
+msgstr "같은 글자가 새겨진 오래된 돌이 자꾸 나와요."
+
+#: games/relic-rush/lua/progress.lua
+#, lua-format
+msgid "%s are now on the board."
+msgstr "%s이(가) 이제 판에 나와요."
+
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "%s earned from matches. Spend it on the island."
+msgstr "매치로 모은 %s. 섬에서 쓰세요."
+
+#. TRANSLATORS: %s is a currency: Coins, Supplies or Food
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "%s from matches is banked on a win."
+msgstr "매치로 모은 %s이(가) 승리하면 적립돼요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Chains"
+msgstr "사슬"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Clear every turquoise plaque to win. Match pieces on a plaque or hit it with a tool."
+msgstr "청록색 명판을 모두 지우면 승리해요. 명판 위에서 조각을 맞추거나 도구로 치세요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Expedition complete"
+msgstr "탐험 완료"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Explorer's guide"
+msgstr "탐험가 안내서"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Five in a line: rainbow gem"
+msgstr "다섯 개 한 줄: 무지개 보석"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Four in a line: line gem"
+msgstr "네 개 한 줄: 줄 보석"
+
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "From expedition %d."
+msgstr "탐험 %d에서."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Gold coins"
+msgstr "금화"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Green plaques"
+msgstr "초록 명판"
+
+#: games/relic-rush/lua/screens.lua
+msgid "It keeps its color. Match it again to sweep its whole row or column."
+msgstr "색은 그대로예요. 한 번 더 맞추면 가로줄이나 세로줄 전체가 쓸려 나가요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Leaves, flowers and amphoras"
+msgstr "잎, 꽃, 암포라"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Line up 3+ pieces"
+msgstr "3개 이상 한 줄로 맞춰요"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match resource pieces and win to bank Coins, Supplies and Food."
+msgstr "자원 조각을 맞추고 승리해서 동전, 물자, 식량을 적립하세요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match straight lines horizontally or vertically."
+msgstr "가로나 세로로 한 줄에 맞추세요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match the chained piece or hit it with a tool. If the cell has a plaque, clear it with another hit."
+msgstr "사슬 묶인 조각을 맞추거나 도구로 치세요. 그 칸에 명판이 있으면 한 번 더 쳐서 지우세요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Match twice to clear a green plaque. Its first hit turns it turquoise."
+msgstr "초록 명판은 두 번 맞춰야 지워져요. 처음 맞으면 청록색으로 변해요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Replay complete"
+msgstr "다시 하기 완료"
+
+#. TRANSLATORS: %s is a building's name, then two sentences: how the bonus charges and what it does
+#: games/relic-rush/lua/screens.lua
+#, lua-format
+msgid "Restore %s. %s %s"
+msgstr "%s 복구. %s %s"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Stock the expedition"
+msgstr "탐험 준비"
+
+#: games/relic-rush/lua/screens.lua
+msgid "Swap it with a neighbor to clear every piece of that kind."
+msgstr "이웃한 조각과 바꾸면 그 종류의 조각이 모두 지워져요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "These pieces earn score only. See your score at the end of the expedition."
+msgstr "이 조각들은 점수만 올려 줘요. 점수는 탐험이 끝나면 확인하세요."
+
+#: games/relic-rush/lua/screens.lua
+msgid "Turquoise plaques"
+msgstr "청록색 명판"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Ferry pilot"
+msgstr "나룻배 사공"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Miller"
+msgstr "방앗간 주인"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Oren"
+msgstr "오렌"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Potter"
+msgstr "도공"
+
+#. TRANSLATORS: Sela, Oren and Tavi are given names; each role is that character's trade
+#: games/relic-rush/lua/story_cast.lua
+msgid "Sela"
+msgstr "셀라"
+
+#: games/relic-rush/lua/story_cast.lua
+msgid "Tavi"
+msgstr "타비"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A dry shed for the tools. No more rusty saws after a rainy night."
+msgstr "도구를 둘 마른 창고야. 이제 비 온 다음 날 녹슨 톱은 없어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A ferry up the coast to the hill villages. Cheaper than walking, and drier."
+msgstr "언덕 마을까지 해안을 오가는 나룻배예요. 걷는 것보다 싸고, 덜 젖어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A harbour square! Somebody's already selling fish on it."
+msgstr "항구 광장이다! 벌써 누가 생선을 팔고 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A loft of my own. I've always wanted one."
+msgstr "나만의 다락이야. 늘 갖고 싶었어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A month without news of the ship. I hate waiting."
+msgstr "배 소식 없이 한 달째야. 기다리는 거 정말 싫어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A potter with a hundred cups, drinking from someone else's."
+msgstr "컵이 백 개나 있는 도공이 남의 컵으로 마시고 있네요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A proper road to the quarry. The carts don't get stuck any more."
+msgstr "채석장까지 제대로 된 길이야. 이제 수레가 안 빠져."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A roof that doesn't flap in the wind. I may never come out."
+msgstr "바람에 펄럭이지 않는 지붕이라니. 다시는 안 나갈지도 몰라요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "A show every market day now. I never miss the jugglers."
+msgstr "이제 장날마다 공연이 있어요. 저글러는 한 번도 안 빠져요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "All right, it's better than Breadhaven. Let's put it to a vote."
+msgstr "좋아, 브레드헤이븐보다는 낫네. 투표로 정하자."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "An old woman asked me who built the harbour steps. She thought we did."
+msgstr "할머니 한 분이 항구 계단을 누가 지었는지 물으셨어요. 우리가 지은 줄 아시더라고요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And a cook. Ideally me."
+msgstr "요리사도요. 되도록 나로요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And the vote's in. It's Callira. Breadhaven came second."
+msgstr "투표 결과가 나왔어. 칼리라야. 브레드헤이븐은 2등."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "And to bring flour."
+msgstr "그리고 밀가루를 가져오라고."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Anyone can come and read the old stones now. Bring your children."
+msgstr "이제 누구나 와서 오래된 돌을 읽을 수 있어요. 아이들도 데려오세요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Are you getting ready to send the ship?"
+msgstr "배 보낼 준비하는 거야?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Aren't you sailing with her?"
+msgstr "같이 배 타고 가는 거 아니었어?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Bring them in hungry. I've been baking all week."
+msgstr "배고픈 채로 데려와요. 일주일 내내 빵을 구웠어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, I need a house with a big table and good light. For my charts."
+msgstr "건축가, 큰 식탁과 좋은 빛이 드는 집이 필요해. 내 해도 때문에."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, can he have that mill now? Before his arms fall off."
+msgstr "건축가님, 이제 저 사람에게 방앗간 지어 주면 안 돼요? 팔 떨어지기 전에요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, it rained straight into my soup last night."
+msgstr "건축가님, 어젯밤 비가 수프 속으로 그대로 떨어졌어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, the crew needs a camp. Tents, a cook fire, somewhere for the tools."
+msgstr "건축가, 선원들한테 야영지가 필요해. 천막, 취사 불, 도구 둘 곳."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Builder, there's an old wreck on the rocks. Can we haul her up the beach?"
+msgstr "건축가, 바위에 낡은 난파선이 있어. 해변으로 끌어올릴 수 있을까?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Can I watch? I've never seen anyone make a chart."
+msgstr "구경해도 돼요? 해도 만드는 건 한 번도 못 봤어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Can you hear me up there, Oren?"
+msgstr "위에서 내 말 들려, 오렌?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Carts from the hill farms every week now. Beans, mangoes, and far too many goats."
+msgstr "이제 매주 언덕 농장에서 수레가 와요. 콩, 망고, 그리고 너무 많은 염소."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Clean water from our own well. No more ship's barrels!"
+msgstr "우리 우물에서 나온 깨끗한 물이야. 이제 배의 물통은 안녕!"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Counting stars, Oren. It's quicker than counting days."
+msgstr "별을 세는 중이야, 오렌. 날짜 세는 것보다 빨라."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Did you sell her one?"
+msgstr "그 사람한테 하나 팔았어요?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Every night. Tell your mate to hurry."
+msgstr "매일 밤이야. 네 동료더러 서두르라고 전해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Every word. Even the ones about me."
+msgstr "한 마디도 빼놓지 않고요. 나 얘기까지 전부."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everybody wants pots, Oren. They just don't know it yet."
+msgstr "다들 냄비가 필요해요, 오렌. 아직 모를 뿐이에요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone ashore! Builder, welcome to our new home. When there's a town, I'll send for the families."
+msgstr "다들 상륙해! 건축가, 우리 새 보금자리에 온 걸 환영해. 마을이 생기면 가족들을 부를게."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone's arguing about the town's name. Let's settle it at the amphitheatre."
+msgstr "다들 마을 이름을 두고 다투고 있어요. 원형극장에서 결정해요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everyone's arguing about what to call this place."
+msgstr "다들 이곳을 뭐라 부를지로 다투고 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Everything we've dug up, on shelves. Except my cup. I still use that."
+msgstr "파낸 것들을 전부 선반에 올렸어요. 내 컵만 빼고요. 그건 아직 쓰거든요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Fifty-two new neighbours, a harbour and a light. Not bad for a beach, builder."
+msgstr "이웃 쉰두 명에 항구에 등대까지. 해변치곤 나쁘지 않네, 건축가."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Four people want Breadhaven. Me, and three people I gave bread to."
+msgstr "브레드헤이븐에 네 명이에요. 저하고, 제가 빵 준 사람 셋이요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Fresh fish on the plaza every morning. The gulls are delighted."
+msgstr "매일 아침 광장에 싱싱한 생선이 나와요. 갈매기들이 신났어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Gently. She's older than my grandmother."
+msgstr "살살. 우리 할머니보다 오래된 배야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Give them a lodge with a big table. Sailors eat like I do."
+msgstr "큰 식탁이 있는 숙소를 지어 줘. 선원들은 나만큼 먹어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Give them an hour. They'll be telling sea stories to anyone who sits still."
+msgstr "한 시간만 주면 가만히 앉은 사람 아무한테나 바다 이야기를 풀어 놓을걸."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good light and a big table. I'll have the reef drawn in a month."
+msgstr "좋은 빛과 큰 식탁이면 한 달 안에 암초를 다 그려 낼게."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good ones. Now I can bring a ship in without scraping her."
+msgstr "좋은 거예요. 이제 배를 긁히지 않고 들일 수 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good work, builder. Now we need roofs before the rain finds us."
+msgstr "수고했어, 건축가. 이제 비가 닥치기 전에 지붕이 필요해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Good. The families should know whose harbour this was."
+msgstr "좋아. 가족들은 이 항구가 누구 것이었는지 알아야 해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Harbour steps. Somebody tied up their boats here long before us."
+msgstr "항구 계단이야. 누군가 우리보다 훨씬 전에 여기에 배를 묶었어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "He's teaching his birds to find a ship. Don't interrupt him."
+msgstr "새들한테 배 찾는 걸 가르치는 중이야. 방해하지 마."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Hear that? That's the sound of bread."
+msgstr "들려요? 빵 소리예요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "How long until the ship comes back?"
+msgstr "배는 얼마나 있어야 돌아와?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I like porridge."
+msgstr "나는 죽이 좋아요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I lost a net on the reef last night. I need to know when the tide's high."
+msgstr "어젯밤 암초에서 그물을 잃어버렸어요. 만조 때를 알아야 해요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I sat on the old wreck last night, looking at the stars my mate steers by."
+msgstr "어젯밤 낡은 난파선에 앉아서, 내 동료가 길잡이로 삼는 별을 올려다봤어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'll do the bread. And my birds will watch for the sails."
+msgstr "빵은 내가 맡을게요. 새들은 돛을 지켜볼 거고요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'll do the bread. Somebody else can do everything else."
+msgstr "빵은 내가 할게요. 나머지는 다른 사람이 하든가요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm going to fill every pot we own. Just because I can."
+msgstr "우리가 가진 냄비를 전부 채울 거예요. 그냥 할 수 있으니까요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm leaving the old cup by the spout. It was the first thing I found here."
+msgstr "옛날 컵은 물줄기 옆에 둘래요. 여기서 처음 찾은 거라서요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I'm measuring the depth, Oren. Every circle is a line on my chart."
+msgstr "깊이를 재고 있어, 오렌. 원 하나하나가 내 해도의 선이야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "I've put my name down for the night watch. Somebody has to keep the temple ovens warm."
+msgstr "야간 당번에 이름을 올렸어요. 누군가는 신전 화덕을 따뜻하게 지켜야 하니까요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "In the new workshop. I've already claimed the corner by the window."
+msgstr "새 작업장에요. 창가 구석은 벌써 내가 찜했어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "It must be the harbour's name. You don't carve a word that often unless you're proud of it."
+msgstr "항구 이름이 분명해요. 자랑스럽지 않고서야 같은 글자를 그렇게 자주 새기진 않죠."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Let's keep them somewhere dry before someone builds a wall with them."
+msgstr "누가 벽 쌓는 데 쓰기 전에 마른 곳에 보관하자."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look at them, builder. Sitting down without holding on to anything."
+msgstr "저 사람들 좀 봐, 건축가. 아무것도 붙잡지 않고 앉아 있어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look at those timbers. I'd bet she was built in Callira."
+msgstr "저 목재 좀 봐. 틀림없이 칼리라에서 만든 배야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look through both stones. That's the bright star in the south, right in the gap."
+msgstr "두 돌을 통해 봐. 남쪽의 밝은 별이 딱 그 틈에 있어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Look what I dug up by the spring. A cup! Somebody lived here before us."
+msgstr "샘가에서 이걸 파냈어요! 컵이에요! 우리 전에 누가 살았나 봐요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Lovely beach. Where's the town?"
+msgstr "해변은 멋진데. 마을은 어디 있지?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Make it a big one. I'm planning soup."
+msgstr "크게 지어 줘요. 수프를 끓일 생각이거든요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "More old stones keep turning up. Some of them have writing on."
+msgstr "오래된 돌이 계속 나와요. 글자가 새겨진 것도 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My crew has lived on that ship for months. They'd like a floor that doesn't rock."
+msgstr "우리 선원들은 몇 달째 저 배에서 살았어. 흔들리지 않는 바닥을 원할 거야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My father's old axe, sharpened. It cuts like it did when I was a boy."
+msgstr "아버지의 낡은 도끼를 갈았어. 어릴 때처럼 잘 들어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My first customer was a girl with a goat. She wanted a grindstone."
+msgstr "첫 손님은 염소를 데려온 여자아이였어요. 숫돌을 원하더라고요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My vote's for Breadhaven."
+msgstr "내 표는 브레드헤이븐이에요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My wheat's in the ground. Now I need a mill, or it's porridge forever."
+msgstr "밀을 심었어요. 이제 방앗간이 필요해요. 아니면 평생 죽만 먹어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "My wheel fits! Oren, the first pot is yours."
+msgstr "바퀴가 맞아요! 오렌, 첫 냄비는 네 거예요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Nearly. I won't bring the families over that reef without a chart."
+msgstr "거의. 해도 없이 가족들을 저 암초 위로 데려올 순 없어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "No. But children will climb on her for a hundred years."
+msgstr "아니. 하지만 아이들은 백 년은 그 배에 올라가 놀 거야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Now the tower rings at high water. Nobody gets caught on the reef by surprise."
+msgstr "이제 탑이 만조 때 울려요. 암초에서 불시에 갇힐 사람은 없어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Out at sea, my mate steers by the stars. I'd like to watch them too."
+msgstr "바다에선 내 동료가 별을 보고 배를 몰아. 나도 보고 싶어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Put them where the families can see them when they land."
+msgstr "가족들이 상륙할 때 보이는 자리에 놔요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sails on the horizon! Tavi, is that her?"
+msgstr "수평선에 돛이 보여! 타비, 저 배야?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, are you sure the hill people want pots?"
+msgstr "셀라, 언덕 사람들이 정말 냄비를 원할까?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, where are you going to put your potter's wheel?"
+msgstr "셀라, 물레는 어디에 놓을 거야?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Sela, why is Tavi rowing in circles out by the reef?"
+msgstr "셀라, 타비는 왜 암초 근처에서 빙빙 노를 젓고 있어?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "She's counting the days."
+msgstr "날짜를 세고 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "She's measuring how deep it is. Every circle is a line on her chart."
+msgstr "깊이를 재는 중이에요. 원 하나하나가 해도의 선이래요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "So nobody remembers. Whoever they were, they left a long time ago."
+msgstr "그래서 아무도 기억 못 하는 거야. 그게 누구였든, 아주 오래전에 떠났어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "So whoever lived here were sailors too."
+msgstr "그럼 여기 살던 사람들도 선원이었나 봐요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somebody from Callira drank from it. Now all of us can."
+msgstr "칼리라 사람이 이걸로 마셨어요. 이제 우리 모두가 마실 수 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somebody has to pilot the families over the reef. That's me. My mate will sail her."
+msgstr "누군가는 가족들을 태우고 암초를 넘어야 해. 그건 나야. 배는 동료가 몰 거야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Somewhere dry, with a big door. A workshop."
+msgstr "마른 곳에, 큰 문이 있는 곳으로요. 작업장이에요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Storm charts on the wall. Now everyone can see where the bad weather comes from."
+msgstr "벽에 폭풍 도표가 있어요. 이제 나쁜 날씨가 어디서 오는지 다 보여요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take it to the mill. The wheel's already turning."
+msgstr "방앗간으로 가져가요. 바퀴는 벌써 돌고 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take my grey bird. Send her back with a head count, so I know how much to bake."
+msgstr "내 회색 새를 데려가. 머릿수를 적어 돌려보내면 빵을 얼마나 구울지 알 테니까."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Take the spares, not the hull. She has to fetch the families."
+msgstr "선체 말고 예비 자재를 가져가. 배는 가족들을 데리러 가야 하니까."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi's been up every night this week."
+msgstr "타비는 이번 주 내내 매일 밤 올라와 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, can we take planks from the ship?"
+msgstr "타비, 배에서 널빤지를 가져가도 돼?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, have you seen Oren today?"
+msgstr "타비, 오늘 오렌 봤어?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, the camp crew dug up old stone steps. Cut by hand and worn smooth."
+msgstr "타비, 야영대가 오래된 돌계단을 파냈어. 손으로 깎아서 매끈하게 닳았어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, there's smoke over the hills. We're not alone here."
+msgstr "타비, 언덕 위로 연기가 올라와. 이곳에 우리만 있는 게 아니야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tavi, when will you send the ship for the families?"
+msgstr "타비, 가족들 데리러 언제 배를 보낼 거야?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Teach them to find a ship and I'll be impressed."
+msgstr "배 찾는 걸 가르치면 그땐 감탄해 줄게."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Tell them yes. A town needs more than a dozen people."
+msgstr "그렇다고 전해. 마을에는 열두어 명보다 많은 사람이 필요해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That bright one, low in the south. When it's overhead, she'll be home."
+msgstr "저 밝은 별, 남쪽 낮은 곳에 있는 거. 저게 머리 위에 오면 그 사람이 돌아와."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's her. I'm rowing out to bring her over the reef."
+msgstr "저 배야. 암초 너머로 데려오러 노 저어 나갈게."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's not a vote, Oren. That's a bribe."
+msgstr "그건 투표가 아니야, 오렌. 뇌물이지."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "That's the sound of you talking about bread again."
+msgstr "네가 또 빵 얘기 하는 소리야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The chart's done. Now I need a light, so the ship can find her way back."
+msgstr "해도는 끝났어. 이제 배가 길을 찾아 돌아오도록 등대가 필요해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill families are asking if they can move down to the harbour."
+msgstr "언덕 가족들이 항구로 내려와 살아도 되냐고 물어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people came! Three baskets of mangoes for two of my pots."
+msgstr "언덕 사람들이 왔어요! 내 냄비 두 개에 망고 세 바구니요!"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people say Callira had a sun temple that baked bread for strangers."
+msgstr "언덕 사람들 말로는 칼리라에 낯선 이들에게 빵을 구워 주던 태양 신전이 있었대요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The hill people want stone for their houses. We've got a whole cliff of it."
+msgstr "언덕 사람들이 집 지을 돌을 원해요. 우리한텐 절벽이 통째로 있잖아요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The old marks were right. They show high water to the inch."
+msgstr "옛 표시가 맞았어요. 만조 높이가 한 치도 틀리지 않아요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The same word is carved on every stone we've found. Callira."
+msgstr "지금까지 찾은 모든 돌에 같은 글자가 새겨져 있어요. 칼리라예요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The ship sails tonight. Keep that fire lit every night, builder, so she can find us."
+msgstr "배는 오늘 밤 떠나. 건축가, 우리가 찾을 수 있게 그 불을 매일 밤 지펴 줘."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "The wheat's ripe, and I'm still grinding it between two rocks."
+msgstr "밀이 익었는데 나는 아직도 돌 두 개 사이로 갈고 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then I approve of Callira."
+msgstr "그럼 나는 칼리라에 찬성이야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then eat in the cabin tonight. That's what the roof is for."
+msgstr "그럼 오늘 밤은 오두막 안에서 먹어. 지붕은 그러라고 있는 거야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then it's a harbour. Builder, my crew needs a lodge, and I need a chart of the reef."
+msgstr "그럼 항구네. 건축가, 선원들한테 숙소가, 나한텐 암초 해도가 필요해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then keep homing birds. They could carry news."
+msgstr "그럼 전서구를 길러. 소식을 실어 나를 수 있을 거야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's be good neighbours. Builder, how about a market?"
+msgstr "그럼 좋은 이웃이 되자. 건축가, 시장은 어때?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's get a roof up. A cabin next?"
+msgstr "그럼 지붕부터 올리자. 다음은 오두막?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's give them a fountain. With cups for everyone."
+msgstr "그럼 분수를 만들어 주자. 모두의 컵도 같이."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's sell it. The trading post is ready for them."
+msgstr "그럼 팔자. 교역소가 그들을 맞을 준비가 됐어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then let's sell it. We'll need a trading post."
+msgstr "그럼 팔자. 교역소가 필요하겠네."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then somebody else knew where the water was. That's a good sign."
+msgstr "그럼 물이 어딨는지 다른 누군가도 알았다는 거네. 좋은 징조야."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then we'll build somewhere to watch them from."
+msgstr "그럼 그들을 지켜볼 곳을 짓자."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then we're ready. All we need now is the ship."
+msgstr "그럼 준비됐어. 이제 배만 있으면 돼."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Then where did they all go?"
+msgstr "그럼 그 사람들은 다 어디로 갔어?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "There are old lines cut in the rock by the steps. Could they be tide marks?"
+msgstr "계단 옆 바위에 오래된 선이 새겨져 있어요. 조수 표시일 수도 있어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "There's a spring up in the rocks, Oren. Fresh water! That's a start."
+msgstr "저 위 바위 틈에 샘이 있어, 오렌. 맑은 물이야! 시작은 됐어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "They're all ashore, builder. Fifty-two people, and every one of them wants water."
+msgstr "다 상륙했어, 건축가. 쉰두 명이고, 모두 물을 원해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Twelve birds, and every one of them knows this loft is home."
+msgstr "새가 열두 마리인데 다들 이 다락이 집인 걸 알아요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two buckets at once now. The queue for water just got half as long."
+msgstr "이제 양동이 두 개를 한꺼번에 길어요. 물 기다리는 줄이 반으로 줄었어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two millstones! Twice the flour, and still only one of me."
+msgstr "맷돌이 두 개예요! 밀가루는 두 배인데 나는 여전히 한 명이에요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two months, Tavi says, if the wind is fair."
+msgstr "바람이 좋으면 두 달이래요, 타비가 그랬어요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two months, if the wind is fair. Plenty of time to finish the town."
+msgstr "바람이 좋으면 두 달. 마을을 마무리하기엔 충분해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two saw benches. Now the planks get cut while I'm at my wheel."
+msgstr "톱작업대가 둘이에요. 이제 내가 물레를 돌리는 동안 널빤지가 잘려요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Two. She's coming back with another goat."
+msgstr "둘이요. 염소를 한 마리 더 데리고 돌아온대요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Up here, Sela! The grey one just beat me home from the harbour."
+msgstr "여기야, 셀라! 회색 새가 항구에서 나보다 먼저 돌아왔어!"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Watch quietly, then."
+msgstr "그럼 조용히 구경해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "We've got shelves of old things from Callira now. Coins, lamps, a carved comb."
+msgstr "이제 칼리라에서 나온 오래된 물건이 선반 가득이에요. 동전, 등잔, 조각한 빗."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Welcome home, everyone. Welcome to Callira."
+msgstr "다들 어서 와요. 칼리라에 온 걸 환영해요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "When the families land, they'll need a feast. And somewhere to hold it."
+msgstr "가족들이 상륙하면 잔치가 필요해요. 잔치할 곳도요."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "When the town has a harbour. A ship that size needs one."
+msgstr "마을에 항구가 생기면. 그 정도 배엔 항구가 필요해."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Which star is your mate steering by?"
+msgstr "동료는 어떤 별을 보고 배를 몰아요?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "Will she ever sail again?"
+msgstr "저 배는 다시 항해할 수 있을까요?"
+
+#: games/relic-rush/lua/story_content.lua
+msgid "With bronze behind the fire, ships can see our light twice as far."
+msgstr "청동이 불 뒤를 받치면 배들이 우리 불빛을 두 배나 멀리서 볼 수 있어."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "You would."
+msgstr "넌 그러겠지."
+
+#: games/relic-rush/lua/story_content.lua
+msgid "You'll come out for supper."
+msgstr "저녁 먹으러는 나올 거죠."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Choose open grass clear of other buildings."
+msgstr "다른 건물과 겹치지 않는 빈 풀밭을 고르세요."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "건물을 끌어 자리를 고르거나 땅을 스크롤하세요."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Earn more expedition treasures to build this."
+msgstr "이걸 지으려면 탐험 보물을 더 모으세요."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Open more land before placing this building."
+msgstr "이 건물을 놓기 전에 땅을 더 여세요."
+
+#: games/relic-rush/lua/town_config.lua
+msgid "Your island is unchanged."
+msgstr "섬은 그대로예요."
+
+#. TRANSLATORS: the first %s is a bonus tool's name, the second the sentence saying what it does
+#: games/relic-rush/lua/user_events.lua
+#, lua-format
+msgid "%s is charged. Tap it. %s"
+msgstr "%s 충전 완료. 눌러 보세요. %s"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A chain holds its gem in place and takes the first hit."
+msgstr "사슬이 보석을 붙잡고 첫 타격을 막아요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A double chain takes two hits before its gem is free."
+msgstr "이중 사슬은 두 번 쳐야 보석이 풀려나요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "A double plaque needs two matches on it."
+msgstr "이중 명판은 위에서 두 번 맞춰야 해요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Five in a line leave a rainbow gem. Swap it to clear one kind."
+msgstr "다섯 개 한 줄이면 무지개 보석이 남아요. 바꾸면 한 종류가 지워져요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Four in a line leave a striped gem. Match it to sweep its line."
+msgstr "네 개 한 줄이면 줄무늬 보석이 남아요. 맞추면 그 줄이 쓸려 나가요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Ice holds its gem and takes the first hit."
+msgstr "얼음이 보석을 붙잡고 첫 타격을 막아요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Match on the turquoise plaques to clear them. Clear every plaque to finish the expedition."
+msgstr "청록색 명판 위에서 맞춰 지우세요. 명판을 모두 지우면 탐험이 끝나요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Restorations cost Coins, Supplies and Food. Winning an expedition opens the next one."
+msgstr "복구에는 동전, 물자, 식량이 들어요. 탐험에서 승리하면 다음 탐험이 열려요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Swap the two glowing gems to line up three."
+msgstr "빛나는 두 보석을 바꿔 세 개를 맞추세요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Swipe a gem onto its neighbour to make a line of three."
+msgstr "보석을 이웃한 보석 쪽으로 밀어 세 개 한 줄을 만드세요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Tap a gem, then the neighbour to swap it with."
+msgstr "보석을 누른 다음 바꿀 이웃을 누르세요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Three moves left. A charged bonus can clear the last plaques."
+msgstr "이동 3회 남았어요. 충전된 보너스로 마지막 명판을 지울 수 있어요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "Try the glowing pair. Match three in a row or column."
+msgstr "빛나는 한 쌍을 해 보세요. 가로나 세로로 세 개를 맞추세요."
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a bronze reflector"
+msgstr "청동 반사경"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a cart road to the quarry"
+msgstr "채석장으로 가는 수레길"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a dry tool store"
+msgstr "마른 도구 창고"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a ferry to the hill villages"
+msgstr "언덕 마을행 나룻배"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a fish market every morning"
+msgstr "매일 아침 열리는 생선 시장"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a reading room open to all"
+msgstr "모두에게 열린 독서실"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a second millstone"
+msgstr "두 번째 맷돌"
+
+#. TRANSLATORS: an upgrade's title: what the building gains, shown as "Upgraded: %s." and after the building's name
+#: games/relic-rush/lua/user_events.lua
+msgid "a second rope and pulley"
+msgstr "두 번째 밧줄과 도르래"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a second saw bench"
+msgstr "두 번째 톱작업대"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "a warning chime"
+msgstr "경고 종"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "his father's tools sharpened"
+msgstr "갈아 둔 아버지의 도구"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "market-day shows"
+msgstr "장날 공연"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "storm charts on the wall"
+msgstr "벽에 건 폭풍 도표"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the hill farms send their carts"
+msgstr "언덕 농장이 수레를 보내요"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the keepers' watch roster"
+msgstr "관리인의 당번표"
+
+#: games/relic-rush/lua/user_events.lua
+msgid "the sighting stones aligned"
+msgstr "맞춘 조준석"

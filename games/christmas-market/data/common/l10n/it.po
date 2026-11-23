@@ -1,0 +1,1718 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: christmas-market\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A brick oven bakes spiced gingerbread. The counter has room to cool and ice each tray."
+msgstr "Un forno di mattoni cuoce pan di zenzero speziato. Il bancone ha spazio per far raffreddare e glassare ogni teglia."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A collection of carved reindeer, wrapped for the gift stall."
+msgstr "Una collezione di renne intagliate, incartate per la bancarella dei regali."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A covered counter for the market's first stall."
+msgstr "Un banco coperto per la prima bancarella del mercato."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A covered stall keeps the reindeer dry. The farrier has room to mend their harness and fit shoes."
+msgstr "Una bancarella coperta tiene all'asciutto le renne. Il maniscalco ha spazio per riparare i finimenti e mettere i ferri."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A fir heavy with fresh snow."
+msgstr "Un abete carico di neve fresca."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A friendly snowman is saving you a seat."
+msgstr "Un pupazzo di neve amichevole ti tiene un posto."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on tags."
+msgstr "Un lungo bancone riparato dà ai clienti lo spazio per incartare i pacchi e legare i bigliettini."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
+msgstr "Un banco di vin brûlé all'ingresso del mercato offre ai visitatori che arrivano un posto dove scaldarsi."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A seat for watching the snow fall."
+msgstr "Un posto per guardare cadere la neve."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A stove at the kiosk keeps cocoa hot. It faces the lane so visitors can buy a cup on their way through."
+msgstr "Una stufa nel chiosco tiene caldo il cacao. Si affaccia sul viale, così i visitatori possono comprare una tazza mentre passano."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "A warm light with a wreath on its post."
+msgstr "Una luce calda con una ghirlanda sul palo."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Baubles, a golden star and twinkling lights."
+msgstr "Palline, una stella dorata e luci scintillanti."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Blocks cut from the frozen lake are shaped and stacked here before they thaw."
+msgstr "Qui si tagliano e si impilano blocchi di ghiaccio del lago gelato prima che si sciolgano."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Candlelight shop"
+msgstr "Negozio di candele"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Candy canes"
+msgstr "Bastoncini di zucchero"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Carrot nose, coal buttons, red scarf."
+msgstr "Naso di carota, bottoni di carbone, sciarpa rossa."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Carved from the frozen lake."
+msgstr "Scolpito nel lago gelato."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Christmas tree"
+msgstr "Albero di Natale"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Decorated fir"
+msgstr "Abete decorato"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Firework stall"
+msgstr "Bancarella dei fuochi d'artificio"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Four firs keep each other warm."
+msgstr "Quattro abeti che si scaldano a vicenda."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Frosted birch"
+msgstr "Betulla gelata"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Giant bauble"
+msgstr "Pallina gigante"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gift wrapping pavilion"
+msgstr "Padiglione dei pacchi regalo"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gingerbread bakery"
+msgstr "Panetteria di pan di zenzero"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gingerbread house"
+msgstr "Casetta di pan di zenzero"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Glassblower's stall"
+msgstr "Bancarella del soffiatore di vetro"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Granite under a soft white cap."
+msgstr "Granito sotto un morbido cappuccio bianco."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Gran’s old stall"
+msgstr "La vecchia bancarella della nonna"
+
+#: games/christmas-market/lua/buildings.lua
+#: games/christmas-market/lua/narrative.lua
+msgid "Hot cocoa kiosk"
+msgstr "Chiosco del cioccolato caldo"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Ice house"
+msgstr "Casa del ghiaccio"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Ice star sculpture"
+msgstr "Scultura di ghiaccio a stella"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lakeside smokehouse"
+msgstr "Affumicatoio sul lago"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lamp post"
+msgstr "Lampione"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lantern firs"
+msgstr "Abeti con lanterne"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Letters and parcels are sorted by destination before they leave the market."
+msgstr "Lettere e pacchi vengono smistati per destinazione prima di lasciare il mercato."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Letters to Santa"
+msgstr "Lettere a Babbo Natale"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Lumber workshop"
+msgstr "Falegnameria"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Masons dress stone in the chapel yard. The cut blocks supply foundations for the market."
+msgstr "I muratori sbozzano la pietra nel cortile della cappella. I blocchi tagliati forniscono le fondamenta del mercato."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "North Pole post office"
+msgstr "Ufficio postale del Polo Nord"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Nutcracker guard"
+msgstr "Guardia schiaccianoci"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "One bauble too big for any tree."
+msgstr "Una pallina troppo grande per qualsiasi albero."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Penguin pair"
+msgstr "Coppia di pinguini"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Peppermint stripes in a snow drift."
+msgstr "Strisce di menta in un cumulo di neve."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Pile of presents"
+msgstr "Mucchio di regali"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Pine grove"
+msgstr "Pineta"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Post your wish list here."
+msgstr "Imbuca qui la tua lista dei desideri."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Ready for the long flight."
+msgstr "Pronta per il lungo volo."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Reindeer"
+msgstr "Renna"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Reindeer carousel"
+msgstr "Giostra delle renne"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Reindeer stable"
+msgstr "Stalla delle renne"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Santa's sleigh"
+msgstr "Slitta di Babbo Natale"
+
+#: games/christmas-market/lua/buildings.lua
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowman"
+msgstr "Pupazzo di neve"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowman bench"
+msgstr "Panchina del pupazzo di neve"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy bench"
+msgstr "Panchina innevata"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy chapel"
+msgstr "Cappella innevata"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy fir"
+msgstr "Abete innevato"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy firs and a lantern make the paths feel like home."
+msgstr "Abeti innevati e una lanterna fanno sentire i sentieri come casa."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Snowy rocks"
+msgstr "Rocce innevate"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Standing to attention all season."
+msgstr "Sull'attenti per tutta la stagione."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Station kiosk"
+msgstr "Chiosco della stazione"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The covered carousel gives children a place to ride. Wind-up toys keep the queue busy."
+msgstr "La giostra coperta offre ai bambini un posto dove salire. I giocattoli a molla tengono occupata la fila."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The furnace keeps glass hot enough to blow into thin, hollow baubles."
+msgstr "La fornace tiene il vetro abbastanza caldo da soffiarlo in palline sottili e cave."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The rink kiosk lends skates and sharpens blades beside the ice."
+msgstr "Il chiosco della pista presta i pattini e affila le lame accanto al ghiaccio."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The roof sparkles with sugar-frosted fireworks."
+msgstr "Il tetto scintilla di fuochi d'artificio ricoperti di zucchero."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The shop pours candles and trims the wicks for the lanterns that light the market lanes."
+msgstr "Il negozio cola le candele e spunta gli stoppini per le lanterne che illuminano i viali del mercato."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The sleigh carries sacks of presents through snowy lanes where a cart would sink."
+msgstr "La slitta porta sacchi di regali lungo viali innevati dove un carretto affonderebbe."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The smokehouse cures lake trout over a slow fire, so the fish can keep through winter."
+msgstr "L'affumicatoio cura le trote del lago su un fuoco lento, così il pesce si conserva per tutto l'inverno."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The stall keeps fireworks dry and ready for the evening display over the square."
+msgstr "La bancarella tiene i fuochi d'artificio all'asciutto e pronti per lo spettacolo serale sulla piazza."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The station clock tells shoppers how long they have before the next train."
+msgstr "L'orologio della stazione dice ai clienti quanto tempo hanno prima del prossimo treno."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The tall fir anchors the market square. Its star can be seen from the far end of the lane."
+msgstr "L'alto abete è l'àncora della piazza del mercato. La sua stella si vede dall'altro capo del viale."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The toy bench has room to cut, sand and paint wooden blocks and other small toys."
+msgstr "Il banco dei giocattoli ha spazio per tagliare, levigare e dipingere cubetti di legno e altri giocattoli."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "The workshop saws pine for stalls and signboards. A roof keeps the bundled lumber dry."
+msgstr "La falegnameria sega il pino per bancarelle e insegne. Un tetto tiene all'asciutto le assi accatastate."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Toymaker’s workshop"
+msgstr "Bottega del fabbricante di giocattoli"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Visitors from the other pole, in scarves."
+msgstr "Visitatori dall'altro polo, con le sciarpe."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Walk under the evergreen and bells."
+msgstr "Passa sotto i sempreverdi e le campanelle."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Welcome arch"
+msgstr "Arco di benvenuto"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "White bark and snow on every twig."
+msgstr "Corteccia bianca e neve su ogni ramoscello."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Winter skating rink"
+msgstr "Pista di pattinaggio invernale"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Woodcarvers shape and paint reindeer for the stalls. Drying shelves keep each fresh coat clear of the dust."
+msgstr "Gli intagliatori modellano e dipingono renne per le bancarelle. Gli scaffali per asciugare proteggono dalla polvere ogni mano di colore fresca."
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Woodcarvers' hall"
+msgstr "Sala degli intagliatori"
+
+#: games/christmas-market/lua/buildings.lua
+msgid "Wreath arch"
+msgstr "Arco di ghirlande"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Angel Wings"
+msgstr "Ali d'angelo"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Bell Tower Bells"
+msgstr "Campane del campanile"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Candle Glow"
+msgstr "Luce di candela"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Candy Cross"
+msgstr "Croce di zucchero"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Carol Steps"
+msgstr "Gradini dei canti"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Carousel Canopy"
+msgstr "Baldacchino della giostra"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Carousel Day"
+msgstr "Giorno della giostra"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Chapel Window"
+msgstr "Vetrata della cappella"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Chestnut Corner"
+msgstr "Angolo delle castagne"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Choir Loft"
+msgstr "Cantoria"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Christmas Eve"
+msgstr "Vigilia di Natale"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Christmas Star"
+msgstr "Stella di Natale"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cinnamon Carousel"
+msgstr "Giostra alla cannella"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Clock Tower Chimes"
+msgstr "Rintocchi della torre dell'orologio"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cocoa for Two"
+msgstr "Cacao per due"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cracker Bonbon"
+msgstr "Bonbon a sorpresa"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Cracker Pop"
+msgstr "Scoppio di petardo"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Double knots take two matches. Then light the pane."
+msgstr "I nodi doppi richiedono due combinazioni. Poi accendi il vetro."
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Drum Roll Ball"
+msgstr "Palla del rullo di tamburo"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Fireside Tales"
+msgstr "Racconti accanto al fuoco"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frost Crystal"
+msgstr "Cristallo di brina"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frost Flower"
+msgstr "Fiore di brina"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frost on the Pane"
+msgstr "Brina sul vetro"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frozen Fountain"
+msgstr "Fontana ghiacciata"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Frozen Pond"
+msgstr "Stagno ghiacciato"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gate of Lights"
+msgstr "Cancello delle luci"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gift Box"
+msgstr "Scatola regalo"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ginger Cottage"
+msgstr "Casetta di zenzero"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gingerbread Gables"
+msgstr "Frontoni di pan di zenzero"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gingerbread Man"
+msgstr "Omino di pan di zenzero"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Gingerbread Row"
+msgstr "Fila di pan di zenzero"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Glass Bauble"
+msgstr "Pallina di vetro"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Great Fir"
+msgstr "Grande abete"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Hearth Glow"
+msgstr "Bagliore del camino"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Hearth Stockings"
+msgstr "Calze del camino"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Herald Angel"
+msgstr "Angelo annunciatore"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Holly Berry Lane"
+msgstr "Viale dell'agrifoglio"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Holly Ring"
+msgstr "Corona di agrifoglio"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Honey Cake"
+msgstr "Torta al miele"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Hot Cider Kettle"
+msgstr "Pentolone di sidro caldo"
+
+#: games/christmas-market/lua/campaign.lua
+#: games/christmas-market/lua/island.lua
+msgid "Lantern Lane"
+msgstr "Viale delle lanterne"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Lantern Pair"
+msgstr "Coppia di lanterne"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Lantern Walk"
+msgstr "Passeggiata con le lanterne"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Last Train Home"
+msgstr "L'ultimo treno verso casa"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Light every blue pane."
+msgstr "Accendi ogni vetro blu."
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Little Angel"
+msgstr "Angioletto"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Mantel Stockings"
+msgstr "Calze sulla mensola"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Marzipan Pantry"
+msgstr "Dispensa di marzapane"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Match through a tied treat to untangle it. Then light its pane."
+msgstr "Abbina attraverso il dolcetto legato per scioglierlo. Poi accendi il suo vetro."
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Midnight Bells"
+msgstr "Campane di mezzanotte"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Midnight Mass"
+msgstr "Messa di mezzanotte"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Midnight Star"
+msgstr "Stella di mezzanotte"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Mistletoe Arch"
+msgstr "Arco di vischio"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Mitten Line"
+msgstr "Fila di guanti"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Nutcracker"
+msgstr "Schiaccianoci"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Nutcracker Parade"
+msgstr "Parata degli schiaccianoci"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Nutcracker Watch"
+msgstr "Guardia degli schiaccianoci"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ornament"
+msgstr "Decorazione"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Paper Lantern Walk"
+msgstr "Passeggiata delle lanterne di carta"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Peppermint Swirl"
+msgstr "Spirale di menta"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Pine Boughs"
+msgstr "Rami di pino"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Pine Whisper"
+msgstr "Sussurro di pino"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Pudding Hearth"
+msgstr "Camino del budino"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ribbon Street"
+msgstr "Via dei nastri"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ribbon and Bow"
+msgstr "Nastro e fiocco"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Ribboned Gift"
+msgstr "Regalo con il nastro"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Rose Window"
+msgstr "Rosone"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Santa Post Box"
+msgstr "Cassetta postale di Babbo Natale"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Shepherds Star"
+msgstr "Stella dei pastori"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Silver Bell"
+msgstr "Campanella d'argento"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Silver Bells Stall"
+msgstr "Bancarella delle campanelle d'argento"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Skate Pond"
+msgstr "Stagno dei pattini"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Skaters Pond"
+msgstr "Stagno dei pattinatori"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Skating Rink"
+msgstr "Pista di pattinaggio"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sleigh Bells Ring"
+msgstr "Suonano i sonagli della slitta"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sleigh Ride"
+msgstr "Giro in slitta"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sleigh at Dusk"
+msgstr "Slitta al tramonto"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snow Globe"
+msgstr "Palla di neve con paesaggio"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowball Alley"
+msgstr "Vicolo delle palle di neve"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowflake Lane"
+msgstr "Viale dei fiocchi di neve"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowman Parade"
+msgstr "Parata dei pupazzi di neve"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Snowman Square"
+msgstr "Piazza dei pupazzi di neve"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Spice Rack Glow"
+msgstr "Bagliore degli scaffali delle spezie"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Spiced Star"
+msgstr "Stella speziata"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Stained Glass Glow"
+msgstr "Bagliore delle vetrate colorate"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Stall Row"
+msgstr "Fila di bancarelle"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Starlit Sleigh"
+msgstr "Slitta sotto le stelle"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Stocking Pair"
+msgstr "Coppia di calze"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Striped Awnings"
+msgstr "Tendoni a righe"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Sugar House"
+msgstr "Casa di zucchero"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Tinsel Terrace"
+msgstr "Terrazza di lustrini"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Toy Shop Windows"
+msgstr "Vetrine del negozio di giocattoli"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Toy Soldier March"
+msgstr "Marcia dei soldatini"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Toy Train Depot"
+msgstr "Deposito del trenino"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Twelfth Crown"
+msgstr "Corona dell'Epifania"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Twelve Chimes"
+msgstr "Dodici rintocchi"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Window Lights"
+msgstr "Luci alle finestre"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Winter Wreath"
+msgstr "Ghirlanda invernale"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Workshop Crossing"
+msgstr "Incrocio della bottega"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Wreath Door"
+msgstr "Porta con ghirlanda"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Wreath on the Door"
+msgstr "Ghirlanda sulla porta"
+
+#: games/christmas-market/lua/campaign.lua
+msgid "Yule Crown Rink"
+msgstr "Pista della corona di Yule"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Bundled pine"
+msgstr "Pino in fascio"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Candle lantern"
+msgstr "Lanterna a candela"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Candy cane"
+msgstr "Bastoncino di zucchero"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Carved reindeer"
+msgstr "Renna intagliata"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Dressed stone"
+msgstr "Pietra sbozzata"
+
+#: games/christmas-market/lua/economy.lua
+#: games/christmas-market/lua/screens.lua
+msgid "Farrier's hammer"
+msgstr "Martello del maniscalco"
+
+#: games/christmas-market/lua/economy.lua
+#: games/christmas-market/lua/screens.lua
+msgid "Firework Bomb"
+msgstr "Bomba di fuochi d'artificio"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Frost shield"
+msgstr "Scudo di brina"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Gingerbread man"
+msgstr "Omino di pan di zenzero"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Glass bauble"
+msgstr "Pallina di vetro"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Hot cocoa"
+msgstr "Cioccolata calda"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Ice pendant"
+msgstr "Ciondolo di ghiaccio"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Ice skates"
+msgstr "Pattini da ghiaccio"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Knitted mitten"
+msgstr "Muffola a maglia"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Materials"
+msgstr "Materiali"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Mulled wine"
+msgstr "Vin brûlé"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Pretzel"
+msgstr "Brezel"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Santa hat"
+msgstr "Cappello di Babbo Natale"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Silver snowflake coin"
+msgstr "Moneta fiocco di neve d'argento"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Smoked trout"
+msgstr "Trota affumicata"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Snow-dusted fir"
+msgstr "Abete spolverato di neve"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Station clock"
+msgstr "Orologio della stazione"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Sun coin"
+msgstr "Moneta sole"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Tokens"
+msgstr "Gettoni"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Toy blocks"
+msgstr "Cubetti di legno"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Treats"
+msgstr "Dolcetti"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Wind-up top"
+msgstr "Trottola a molla"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Winter vase"
+msgstr "Vaso invernale"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Wish cross"
+msgstr "Croce dei desideri"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Wrapped gift"
+msgstr "Regalo incartato"
+
+#. TRANSLATORS: %d is the number of wishes in the campaign (100)
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "ALL %d WINTER WISHES CAME TRUE."
+msgstr "TUTTI I %d DESIDERI D'INVERNO SI SONO AVVERATI."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "AT BELLMERE"
+msgstr "A BELLMERE"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Advent & Christmas"
+msgstr "Avvento e Natale"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Build your market"
+msgstr "Costruisci il tuo mercatino"
+
+#. TRANSLATORS: the title screen reads CHRISTMAS / AT BELLMERE (Bellmere is the town)
+#: games/christmas-market/lua/game_config.lua
+msgid "CHRISTMAS"
+msgstr "NATALE"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "COLLECT & VISIT MARKET"
+msgstr "RACCOGLI E VISITA IL MERCATINO"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Christmas"
+msgstr "Natale"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Christmas Magic!"
+msgstr "Magia di Natale!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "EVERY WISH"
+msgstr "OGNI DESIDERIO"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Fernhollow has asked for a few lights of its own."
+msgstr "Fernhollow ha chiesto qualche luce tutta sua."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "First Advent"
+msgstr "Prima settimana di Avvento"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Fourth Advent"
+msgstr "Quarta settimana di Avvento"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "GRANT NEW WISHES TO OPEN IT"
+msgstr "ESAUDISCI NUOVI DESIDERI PER APRIRLO"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Jolly!"
+msgstr "Allegro!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "LEADERBOARD"
+msgstr "CLASSIFICA"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Look at that, we have enough to build!"
+msgstr "Guarda, abbiamo abbastanza per costruire!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MARKET GUIDE"
+msgstr "GUIDA AL MERCATINO"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MORE RESOURCES NEEDED"
+msgstr "SERVONO ALTRE RISORSE"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MORE ROOM FOR CHRISTMAS CHEER"
+msgstr "PIÙ SPAZIO PER LA GIOIA DEL NATALE"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "MOVES"
+msgstr "MOSSE"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Magical!"
+msgstr "Magico!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Match the tied piece to untangle the tinsel."
+msgstr "Abbina il pezzo legato per sciogliere i lustrini."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Match through the tied treat. Match that cell again to light its pane."
+msgstr "Abbina attraverso il dolcetto legato. Abbina di nuovo quella cella per accendere il suo vetro."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Merriest markets"
+msgstr "I mercatini più allegri"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Merry!"
+msgstr "Evviva!"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "PLAY"
+msgstr "GIOCA"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "QUIT TO MARKET"
+msgstr "TORNA AL MERCATINO"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Resources collected."
+msgstr "Risorse raccolte."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Restart this winter wish?"
+msgstr "Ricominciare questo desiderio d'inverno?"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Second Advent"
+msgstr "Seconda settimana di Avvento"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Select a project to see its cost."
+msgstr "Seleziona un progetto per vederne il costo."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "THE ROAD TO FERNHOLLOW"
+msgstr "LA STRADA PER FERNHOLLOW"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "The whole market is open."
+msgstr "L'intero mercatino è aperto."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "There's a light in Noelle's window."
+msgstr "C'è una luce alla finestra di Noelle."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Third Advent"
+msgstr "Terza settimana di Avvento"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "This Advent’s stalls are listed at the top left. Tap one that says Ready to build."
+msgstr "Le bancarelle di questo Avvento sono elencate in alto a sinistra. Tocca una che dice Pronto a costruire."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "To be continued"
+msgstr "Continua..."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "To finish, clear all the blue tiles. Make matches over them."
+msgstr "Per finire, libera tutte le tessere blu. Fai delle combinazioni sopra di esse."
+
+#: games/christmas-market/lua/game_config.lua
+msgid "Unlocked at Christmas"
+msgstr "Sbloccato a Natale"
+
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "Unlocked in Advent %d"
+msgstr "Sbloccato nell'Avvento %d"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "VISIT MARKET"
+msgstr "VISITA IL MERCATINO"
+
+#. TRANSLATORS: wishes granted so far / wishes needed to open this part of the market
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "WISHES GRANTED  %d / %d"
+msgstr "DESIDERI ESAUDITI  %d / %d"
+
+#: games/christmas-market/lua/game_config.lua
+msgid "You did it!"
+msgstr "Ce l'hai fatta!"
+
+#. TRANSLATORS: %d is the number of the wish (level) in progress
+#: games/christmas-market/lua/game_config.lua
+#, lua-format
+msgid "Your board is saved. Tap Play to continue wish %d."
+msgstr "La tua partita è salvata. Tocca Gioca per continuare il desiderio %d."
+
+#: games/christmas-market/lua/island.lua
+msgid "Carolers Court"
+msgstr "Cortile dei Cantori"
+
+#: games/christmas-market/lua/island.lua
+msgid "Gingerbread Green"
+msgstr "Prato di Pan di Zenzero"
+
+#: games/christmas-market/lua/island.lua
+msgid "Starlight Terrace"
+msgstr "Terrazza delle Stelle"
+
+#: games/christmas-market/lua/island.lua
+msgid "Welcome Square"
+msgstr "Piazza di Benvenuto"
+
+#: games/christmas-market/lua/journey.lua
+msgid "Carolers Court's open! Mrs Alder's already in it, singing flat."
+msgstr "Il Cortile dei Cantori è aperto! La signora Alder è già lì, che canta stonata."
+
+#: games/christmas-market/lua/journey.lua
+msgid "Evergreen Hill's open! You can see the whole line from up here!"
+msgstr "La Collina Sempreverde è aperta! Da quassù si vede tutto il viale!"
+
+#: games/christmas-market/lua/journey.lua
+msgid "Gingerbread Green's open! It doesn't smell of gingerbread yet. Give it a week."
+msgstr "Il Prato di Pan di Zenzero è aperto! Non sa ancora di pan di zenzero. Dagli una settimana."
+
+#: games/christmas-market/lua/journey.lua
+msgid "Lantern Lane's clear! There's a lamp post that still works if you kick it."
+msgstr "Il Viale delle Lanterne è libero! C'è un lampione che funziona ancora, se gli dai un calcio."
+
+#: games/christmas-market/lua/journey.lua
+msgid "Starlight Terrace is open! You can hear the Fenwick choir from up here. Nearly in tune."
+msgstr "La Terrazza delle Stelle è aperta! Da quassù si sente il coro dei Fenwick. Quasi intonato."
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Ada Pike"
+msgstr "Ada Pike"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Agnes Holt"
+msgstr "Agnes Holt"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Baker"
+msgstr "Fornaia"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Bellmere glassblower"
+msgstr "Soffiatore di vetro di Bellmere"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Christmas market keeper"
+msgstr "Custode del mercatino di Natale"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Fisherman, Lakeside smokehouse"
+msgstr "Pescatore, affumicatoio sul lago"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Henrik Strand"
+msgstr "Henrik Strand"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mary Larkin"
+msgstr "Mary Larkin"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mr Finch"
+msgstr "Signor Finch"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mr Wren"
+msgstr "Signor Wren"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Mrs Alder"
+msgstr "Signora Alder"
+
+#. TRANSLATORS: a speaker's name and role on the story screen
+#: games/christmas-market/lua/narrative.lua
+msgid "Noelle"
+msgstr "Noelle"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Noelle's gran"
+msgstr "La nonna di Noelle"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Otis Bell"
+msgstr "Otis Bell"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Pip Larkin"
+msgstr "Pip Larkin"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Pip's mum"
+msgstr "La mamma di Pip"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Post runner"
+msgstr "Postino"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Rosa"
+msgstr "Rosa"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Station clock keeper"
+msgstr "Custode dell'orologio della stazione"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "The man with the broom"
+msgstr "L'uomo con la scopa"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Theo Marsh"
+msgstr "Theo Marsh"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Toymaker"
+msgstr "Fabbricante di giocattoli"
+
+#: games/christmas-market/lua/narrative.lua
+msgid "Tree seller"
+msgstr "Venditore di alberi"
+
+#. TRANSLATORS: %s is a currency: Tokens, Treats or Materials
+#: games/christmas-market/lua/screens.lua
+#, lua-format
+msgid "%s from matches are banked on a win."
+msgstr "I %s ottenuti con le combinazioni vengono messi da parte quando vinci."
+
+#: games/christmas-market/lua/screens.lua
+#, lua-format
+msgid "%s from matches pay for stalls and decorations."
+msgstr "I %s ottenuti con le combinazioni pagano bancarelle e decorazioni."
+
+#: games/christmas-market/lua/screens.lua
+msgid "A green pane turns blue after its first hit. Match again to light it."
+msgstr "Un vetro verde diventa blu dopo il primo colpo. Abbina di nuovo per accenderlo."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Bank your matches"
+msgstr "Metti da parte le combinazioni"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Build the Reindeer stable. Match 30 hammers to charge one blow. Tap a cell to hit it."
+msgstr "Costruisci la stalla delle renne. Abbina 30 martelli per caricare un colpo. Tocca una cella per colpirla."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Each matched piece pays its own value. Clear the board to bank what you earned."
+msgstr "Ogni pezzo abbinato vale quanto il suo valore. Libera la tavola per mettere da parte quello che hai guadagnato."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Five in a line: rainbow gem"
+msgstr "Cinque in linea: gemma arcobaleno"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Four in a line: line gem"
+msgstr "Quattro in linea: gemma linea"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Green panes"
+msgstr "Vetri verdi"
+
+#: games/christmas-market/lua/screens.lua
+msgid "It keeps its color. Match it again to sweep its whole row or column."
+msgstr "Mantiene il suo colore. Abbinala di nuovo per spazzare l'intera riga o colonna."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Light the panes"
+msgstr "Accendi i vetri"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Line up three or more"
+msgstr "Allinea tre o più pezzi"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Market keeper's guide"
+msgstr "Guida del custode del mercatino"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
+msgstr "Abbina le monete per finanziare l'arco. Il suo vin brûlé fa guadagnare dolcetti. La falegnameria aggiunge pino per i materiali."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match identical pieces in a straight line horizontally or vertically."
+msgstr "Abbina pezzi identici in linea retta, in orizzontale o in verticale."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match on a pane or hit it with a tool to light it. Light them all to finish."
+msgstr "Abbina su un vetro o colpiscilo con uno strumento per accenderlo. Accendili tutti per finire."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Match the tied piece or hit it with a tool. Then clear the piece to light the pane."
+msgstr "Abbina il pezzo legato o colpiscilo con uno strumento. Poi libera il pezzo per accendere il vetro."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Replay complete"
+msgstr "Rigiocata completata"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Stock the market"
+msgstr "Rifornisci il mercatino"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Swap it with a neighbor to clear every piece of that kind."
+msgstr "Scambiala con un pezzo vicino per eliminare tutti i pezzi di quel tipo."
+
+#: games/christmas-market/lua/screens.lua
+msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell to hit a 3×3 square."
+msgstr "La bancarella dei fuochi d'artificio sostituisce il martello e ne mantiene la carica. Tocca una cella per colpire un quadrato 3×3."
+
+#: games/christmas-market/lua/screens.lua
+msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "La panetteria sostituisce il vin brûlé con omini di pan di zenzero. Il chiosco del cacao mette la cioccolata calda sulla tavola."
+
+#: games/christmas-market/lua/screens.lua
+msgid "Untangle tinsel"
+msgstr "Sciogli i lustrini"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Winter treats"
+msgstr "Dolcetti d'inverno"
+
+#: games/christmas-market/lua/screens.lua
+msgid "Wish granted!"
+msgstr "Desiderio esaudito!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A TELEGRAM! MUM'S ON THE LAST TRAIN ON CHRISTMAS EVE! SHE'S COMING!"
+msgstr "UN TELEGRAMMA! LA MAMMA ARRIVA CON L'ULTIMO TRENO DELLA VIGILIA! STA ARRIVANDO!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A candle for every window on the square, and a spare. Somebody always comes home late."
+msgstr "Una candela per ogni finestra della piazza, e una di scorta. C'è sempre qualcuno che torna tardi."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A dry roof for the planks. They won't warp in the snow now."
+msgstr "Un tetto asciutto per le assi. Ora non si imbarcheranno con la neve."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A furnace of my own. Three breaths for a bauble, five for a big one."
+msgstr "Una fornace tutta mia. Tre soffi per una pallina, cinque per una grande."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A kiosk with a clock. Trains run late in the snow, but this clock won't."
+msgstr "Un chiosco con l'orologio. I treni fanno tardi con la neve, ma questo orologio no."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A proper bench, and a window. My soldiers can face the square now."
+msgstr "Un banco come si deve, e una finestra. Ora i miei soldatini possono guardare la piazza."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A proper oven at last. First gingerbread's yours, love. Don't argue, just eat it."
+msgstr "Finalmente un forno come si deve. Il primo pan di zenzero è tuo, tesoro. Non discutere, mangia."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A real post office, with a stamp that goes clunk! Got any letters for Santa?"
+msgstr "Un vero ufficio postale, con un timbro che fa clonk! Hai lettere per Babbo Natale?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A sleigh, with real bells! Mr Wren, have you ever driven one?"
+msgstr "Una slitta, con le campanelle vere! Signor Wren, ne ha mai guidata una?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A sound roof on the chapel. The choir will be glad of it. So will the pigeons."
+msgstr "Un tetto solido sulla cappella. Il coro ne sarà contento. E anche i piccioni."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "A wooden train for the Fenwick boy. The wheels must turn without a squeak."
+msgstr "Un trenino di legno per il ragazzo dei Fenwick. Le ruote devono girare senza uno scricchiolio."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Ada, it's beautiful. It catches the whole evening."
+msgstr "Ada, è bellissima. Cattura tutta la sera."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "All this, in one December? Noelle, love, I'd never have believed it."
+msgstr "Tutto questo, in un solo dicembre? Noelle, cara, non ci avrei mai creduto."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Beeswax and cinnamon. The whole square smells of it, Mr Wren."
+msgstr "Cera d'api e cannella. Tutta la piazza ne profuma, signor Wren."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Better do as she says. Nobody's ever won an argument with Agnes."
+msgstr "Meglio fare come dice lei. Nessuno ha mai vinto una discussione con Agnes."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Can I do the wrapping? I'm brilliant at bows!"
+msgstr "Posso fare io i pacchi? Con i fiocchi sono bravissima!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Can we watch, Ada? I've never seen glass made."
+msgstr "Possiamo guardare, Ada? Non ho mai visto fare il vetro."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Carollers at every door tonight! Open yours and you get a song. Don't, and you get two."
+msgstr "Stasera cantori a ogni porta! Se apri la tua, ti cantano una canzone. Se non apri, due."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Choir practice tonight, and you're both coming. Somebody has to stand next to me."
+msgstr "Stasera prove del coro, e venite tutti e due. Qualcuno deve pur stare accanto a me."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Cocoa with cream, and a pinch of cinnamon. First cup's on me, dear."
+msgstr "Cacao con panna e un pizzico di cannella. La prima tazza è offerta da me, cara."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Come in when you get cold, love. There's buns."
+msgstr "Entra quando hai freddo, tesoro. Ci sono i panini."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Every house on the square gets one. It's a market rule."
+msgstr "Ogni casa della piazza ne riceve una. È una regola del mercatino."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Everyone else? That's not a team, Pip. That's the whole town."
+msgstr "Tutti gli altri? Questa non è una squadra, Pip. È tutta la città."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Fireworks! Can I light one? Just a little one?"
+msgstr "Fuochi d'artificio! Posso accenderne uno? Solo uno piccolo?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "First Sunday of Advent. You light the first candle on the wreath, love. New hands bring luck."
+msgstr "Prima domenica d'Avvento. Tu accendi la prima candela della corona, tesoro. Mani nuove portano fortuna."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Frost ferns on every window this morning. Clever things."
+msgstr "Stamattina felci di ghiaccio su tutte le finestre. Furbe, loro."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Go on, Pip. Flat hand, and mind your fingers."
+msgstr "Dai, Pip. Mano piatta, e attento alle dita."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Go on. Make a wish while you're at it."
+msgstr "Avanti. E già che ci sei, esprimi un desiderio."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Good. My butter goes in first, Theo."
+msgstr "Bene. Il mio burro va per primo, Theo."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Hello! I'm Pip, I do the post. Are you the new helper? You've got snow on your hat."
+msgstr "Ciao! Sono Pip, faccio le consegne della posta. Sei tu il nuovo aiutante? Hai della neve sul cappello."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I didn't do it on my own, Gran. Merry Christmas, everyone."
+msgstr "Non l'ho fatto da sola, nonna. Buon Natale a tutti."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I haven't skated since I was a girl. Hold my arm, love. Don't let go."
+msgstr "Non pattino da quando ero ragazza. Tienimi il braccio, cara. Non mollarmi."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I made a paper chain as long as the square, out of last week's newspaper!"
+msgstr "Ho fatto una catena di carta lunga quanto la piazza, con il giornale della settimana scorsa!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I've got you, Agnes. Look, you're doing it!"
+msgstr "Ti tengo io, Agnes. Guarda, ce la fai!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "I've kept a little fir back. For your gran's window, if you want it."
+msgstr "Ho tenuto da parte un abetino. Per la finestra di tua nonna, se vuoi."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Ice from the lake, cut and stacked. Mr Finch says it gets thicker every week."
+msgstr "Ghiaccio del lago, tagliato e impilato. Il signor Finch dice che diventa più spesso ogni settimana."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Ice is thick enough on the lake now. Bramble's been out on it since Tuesday."
+msgstr "Ormai il ghiaccio del lago è spesso abbastanza. Bramble ci sta sopra da martedì."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Is that safe for a goat, Mr Finch?"
+msgstr "È sicuro per una capra, signor Finch?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Is that your goat, Mr Finch? She's eating the tinsel."
+msgstr "È la sua capra, signor Finch? Sta mangiando i lustrini."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "It goes round! Noelle, it actually goes round! I'm having the reindeer!"
+msgstr "Gira! Noelle, gira davvero! Io prendo la renna!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Just the one. Make sure he gets it, Pip."
+msgstr "Una sola. Fa' in modo che la riceva, Pip."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Leave your boots out tonight! St Nicholas fills them with oranges and nuts."
+msgstr "Stasera lasciate fuori gli stivali! San Nicola li riempie di arance e noci."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Letter for you, Noelle! From your gran!"
+msgstr "Una lettera per te, Noelle! Da tua nonna!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mittens are good, Theo. Who's the friend?"
+msgstr "I guanti vanno bene, Theo. E chi è l'amica?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mr Bell, can I wind it? I'll be ever so careful."
+msgstr "Signor Bell, posso caricarlo io? Starò attentissimo."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mr Strand, do the drums really play?"
+msgstr "Signor Strand, i tamburi suonano davvero?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mr Wren, do you ever put that broom down?"
+msgstr "Signor Wren, la mette mai giù quella scopa?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mrs Alder sings louder than the organ. Bring a scarf."
+msgstr "La signora Alder canta più forte dell'organo. Portati una sciarpa."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mrs Holt, Mr Strand says your chimney smokes and your bread's burnt."
+msgstr "Signora Holt, il signor Strand dice che il suo camino fa fumo e il suo pane è bruciato."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Mum cooks on the coastal steamer. She's trying to get home for Christmas. I don't mind either way."
+msgstr "La mamma fa la cuoca sul vapore costiero. Sta cercando di tornare a casa per Natale. A me va bene in tutti e due i modi."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Nobody lights anything before midnight on New Year's Eve, Pip."
+msgstr "Nessuno accende niente prima di mezzanotte a Capodanno, Pip."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Of course it goes round. I made the horses. Mind the reindeer, Pip, it's the fastest."
+msgstr "Certo che gira. I cavalli li ho fatti io. Attento alla renna, Pip, è la più veloce."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Once or twice, Pip. Only ever on the one night of the year."
+msgstr "Una o due volte, Pip. Ma solo nell'unica notte dell'anno."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Pip knows everyone in Bellmere, and what they're all getting for Christmas."
+msgstr "Pip conosce tutti a Bellmere, e cosa riceveranno a Natale."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Pip! Look how you've grown. And look at this square!"
+msgstr "Pip! Guarda come sei cresciuta. E guarda questa piazza!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Pip, that's my parcel you've wrapped. And my mitten."
+msgstr "Pip, quello è il mio pacco che hai incartato. E la mia muffola."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Reindeer! Can I feed them? I've got carrots in both pockets!"
+msgstr "Renne! Posso dargli da mangiare? Ho carote in tutte e due le tasche!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Room for carving at last. My old apprentices said they'd come if there was space."
+msgstr "Finalmente lo spazio per intagliare. I miei vecchi apprendisti dicevano che sarebbero venuti, se ci fosse stato posto."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "She's coming on the last train tomorrow, Pip, with your mum!"
+msgstr "Arriva domani con l'ultimo treno, Pip, con tua mamma!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Shortest day of the year. From tomorrow, a little more light every evening."
+msgstr "Il giorno più corto dell'anno. Da domani, un po' più di luce ogni sera."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Smoked trout by Saturday. Bramble, that's not for you."
+msgstr "Trota affumicata per sabato. Bramble, quella non è per te."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Snowball fight by the fountain! Theo against everyone else!"
+msgstr "Battaglia di palle di neve vicino alla fontana! Theo contro tutti gli altri!"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Snowy boots and all, Pip?"
+msgstr "Con gli stivali pieni di neve e tutto, Pip?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "St Lucia's day. Saffron buns, curled like a cat's tail. Take two."
+msgstr "Giorno di Santa Lucia. Panini allo zafferano, arrotolati come la coda di un gatto. Prendine due."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Tell that man it's toasted. On purpose."
+msgstr "Dì a quell'uomo che è tostato. Apposta."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Thank you, Mrs Alder. You're humming carols already."
+msgstr "Grazie, signora Alder. Sta già canticchiando le canzoni di Natale."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "That's Theo. He sells the trees, and he argues with everything."
+msgstr "Quello è Theo. Vende gli alberi e discute con tutto."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "That's an arch. Right. I'll sell my firs under it. Everyone walks through here."
+msgstr "Questo è un arco. Bene. Venderò i miei abeti qui sotto. Passano tutti da qui."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "The news has never looked so festive, Pip."
+msgstr "Le notizie non sono mai state così natalizie, Pip."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Then she'll want a warm bun when she steps off. I'll have one ready."
+msgstr "Allora vorrà un panino caldo quando scende. Gliene terrò pronto uno."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Theo Marsh. Did you just do something nice?"
+msgstr "Theo Marsh. Hai appena fatto qualcosa di carino?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Theo, it's perfect. Did you walk the whole hill for it?"
+msgstr "Theo, è perfetto. Hai fatto a piedi tutta la collina per prenderlo?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Theo, why is there a fir tree in Gran's doorway?"
+msgstr "Theo, perché c'è un abete sulla porta della nonna?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "There's space now, Henrik. I hope they make it for Christmas."
+msgstr "Ora c'è spazio, Henrik. Spero che arrivino per Natale."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "There. The best fir I've got, right in the middle of the square."
+msgstr "Ecco. Il miglior abete che ho, proprio in mezzo alla piazza."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "We'd better leave the door open, then."
+msgstr "Allora faremmo meglio a lasciare la porta aperta."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Welcome to Bellmere! Make matches to collect resources and help me rebuild the market."
+msgstr "Benvenuto a Bellmere! Fai delle combinazioni per raccogliere risorse e aiutami a ricostruire il mercatino."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "What do you get someone who has everything? Asking for a friend. Are mittens good?"
+msgstr "Cosa si regala a chi ha già tutto? Lo chiedo per un amico. I guanti vanno bene?"
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You make that sound like good news, Mr Wren."
+msgstr "Lo fa sembrare una buona notizia, signor Wren."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You said \"take two\" yesterday, Agnes. And the day before."
+msgstr "Ieri hai detto «prendine due», Agnes. E anche l'altro ieri."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've been oiling that one wheel for an hour, Henrik."
+msgstr "Sono due ore che ungi quella ruota, Henrik."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've been out sweeping since six, Mr Wren. It snowed all night."
+msgstr "È fuori a spazzare dalle sei, signor Wren. Ha nevicato tutta la notte."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've got sawdust in your hair, Theo. And pine needles."
+msgstr "Hai la segatura tra i capelli, Theo. E gli aghi di pino."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "You've read that postcard ten times today, Pip."
+msgstr "Oggi hai letto quella cartolina dieci volte, Pip."
+
+#: games/christmas-market/lua/story_content.lua
+msgid "Your window wants a star, Noelle. Blue glass. Seven breaths, it took. Hang it high."
+msgstr "La tua finestra vuole una stella, Noelle. Vetro blu. Sette soffi ci sono voluti. Appendila in alto."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Choose open snow clear of other buildings."
+msgstr "Scegli un posto sulla neve, lontano dagli altri edifici."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Drag the building to choose a spot, or scroll the land."
+msgstr "Trascina l'edificio per scegliere un posto, o scorri il terreno."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Match more pieces to earn the resources for this."
+msgstr "Abbina altri pezzi per guadagnare le risorse necessarie."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Open more land before placing this building."
+msgstr "Apri altro terreno prima di sistemare questo edificio."
+
+#: games/christmas-market/lua/town_config.lua
+msgid "Your market is unchanged."
+msgstr "Il tuo mercatino non è cambiato."
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Five in a line leave a rainbow gem. Swap it to clear one kind."
+msgstr "Cinque in linea lasciano una gemma arcobaleno. Scambiala per eliminare un tipo."
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Four in a line leave a striped gem. Match it to sweep its line."
+msgstr "Quattro in linea lasciano una gemma a righe. Abbinala per spazzare la sua linea."
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Henrik's old apprentices come back"
+msgstr "gli ex apprendisti di Henrik tornano"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Mr Wren trims every wick"
+msgstr "il signor Wren spunta ogni stoppino"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "Mrs Alder's ladle and second pot"
+msgstr "il mestolo e la seconda pentola della signora Alder"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a band organ"
+msgstr "un organetto"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a drying shed for the pine"
+msgstr "una tettoia per far asciugare il pino"
+
+#. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
+#: games/christmas-market/lua/user_events.lua
+msgid "a mulled-wine hatch in the arch"
+msgstr "un'apertura per il vin brûlé nell'arco"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a new harness and bells for the reindeer"
+msgstr "nuovi finimenti e campanelle per le renne"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a rocket rack, ready in threes"
+msgstr "un portarazzi, pronto a tre a tre"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second bench and a shop bell"
+msgstr "un secondo banco e una campanella per il negozio"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second furnace"
+msgstr "una seconda fornace"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second ice saw on the lake"
+msgstr "una seconda sega per il ghiaccio sul lago"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second oven"
+msgstr "un secondo forno"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second smoking rack"
+msgstr "un secondo affumicatoio"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a second sorting rack"
+msgstr "un secondo scaffale di smistamento"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "a star for the top"
+msgstr "una stella per la punta"
+
+#: games/christmas-market/lua/user_events.lua
+msgid "the masons' yard behind the chapel"
+msgstr "il cortile dei muratori dietro la cappella"

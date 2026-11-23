@@ -1,0 +1,333 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: emergency\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "City Centre"
+msgstr "市街中心部"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "City Centre: restore every evacuation route and bring the remaining residents and pets to headquarters."
+msgstr "市街中心部：避難路をすべて復旧し、残った住民とペットを本部へ連れ帰ろう。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Cut-off District"
+msgstr "孤立地区"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Cut-off District: reopen the surviving roads around the cooled lava and reach each isolated group."
+msgstr "孤立地区：冷えた溶岩の周りの生き残った道を開通させ、孤立した人々のもとへ向かおう。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Outskirts"
+msgstr "郊外"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Outskirts: reopen the roads and reach four residents. Repair stations to restore automatic supplies."
+msgstr "郊外：道路を開通させ、4人の住民のもとへ向かおう。施設を修理すると、物資が自動で届くようになる。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Suburbs"
+msgstr "住宅街"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Suburbs: reconnect the homes and timber yard. Restore the office to fund heavy debris removal."
+msgstr "住宅街：家々と製材所をつなごう。事務所を復旧すれば、重い瓦礫の撤去資金になる。"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Town Square"
+msgstr "中央広場"
+
+#: games/emergency/lua/emergency_levels.lua
+msgid "Town Square: reopen the inner streets and rescue the repair crew. Stations supply resources automatically."
+msgstr "中央広場：内側の通りを開通させ、修理班を救出しよう。施設が資源を自動で供給してくれる。"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d food"
+msgid_plural "%d food"
+msgstr[0] "食料%d"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d money"
+msgid_plural "%d money"
+msgstr[0] "お金%d"
+
+#: games/emergency/lua/emergency_sim.lua
+#, lua-format
+msgid "%d wood"
+msgid_plural "%d wood"
+msgstr[0] "木材%d"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "A worker is on the way."
+msgstr "作業員が向かっています。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Clear ash and rubble"
+msgstr "灰と瓦礫の撤去"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Clear heavy basalt"
+msgstr "重い玄武岩の撤去"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Dismantle collapsed wall"
+msgstr "崩れた壁の解体"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "District office"
+msgstr "地区事務所"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Field kitchen"
+msgstr "炊き出し所"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Queued - tap to cancel"
+msgstr "順番待ち - タップで取消"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Repair the road"
+msgstr "道路の修理"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue a cat"
+msgstr "ネコの救助"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue a dog"
+msgstr "イヌの救助"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue headquarters"
+msgstr "救助本部"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Rescue worker"
+msgstr "救助隊員"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Resident"
+msgstr "住民"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Restored."
+msgstr "復旧しました。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Returns to headquarters automatically once the route is safe."
+msgstr "道が安全になると、自動で本部へ戻ります。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Salvage roof beams"
+msgstr "屋根の梁の回収"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Supplies arrive automatically every 5 seconds."
+msgstr "物資は5秒ごとに自動で届きます。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Tap a job to send a worker. Tap again to cancel a queued job."
+msgstr "作業をタップすると作業員を派遣します。順番待ちの作業は、もう一度タップで取り消せます。"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Tap to assign"
+msgstr "タップして割り当て"
+
+#: games/emergency/lua/emergency_sim.lua
+msgid "Timber yard"
+msgstr "製材所"
+
+#. TRANSLATORS: district number and name on a menu button
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%02d   %s   - restored"
+msgstr "%02d   %s   - 復旧済み"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d pet"
+msgid_plural "%d pets"
+msgstr[0] "ペット%d匹"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d resident"
+msgid_plural "%d residents"
+msgstr[0] "住民%d人"
+
+#. TRANSLATORS: the time is minutes:seconds
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%d road restored in %d:%02d."
+msgid_plural "%d roads restored in %d:%02d."
+msgstr[0] "%d本の道路を%d:%02dで復旧しました。"
+
+#. TRANSLATORS: a job's name, then what it needs
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "%s: %s"
+msgstr "%s：%s"
+
+#: games/emergency/lua/main.lua
+msgid "+ supplies"
+msgstr "＋物資"
+
+#: games/emergency/lua/main.lua
+msgid "AFTER THE ERUPTION"
+msgstr "噴火のあとで"
+
+#. TRANSLATORS: the first %s is "%d residents", the second "%d pets"
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "All %s and %s are safe."
+msgstr "%sと%sは全員無事です。"
+
+#: games/emergency/lua/main.lua
+msgid "District restored!"
+msgstr "地区を復旧しました！"
+
+#: games/emergency/lua/main.lua
+msgid "Districts"
+msgstr "地区"
+
+#: games/emergency/lua/main.lua
+msgid "EMERGENCY"
+msgstr "エマージェンシー"
+
+#. TRANSLATORS: HUD heading; %02d is the district number
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "EMERGENCY  /  %02d"
+msgstr "エマージェンシー  /  %02d"
+
+#: games/emergency/lua/main.lua
+msgid "Emergency - After the Eruption"
+msgstr "エマージェンシー - 噴火のあとで"
+
+#: games/emergency/lua/main.lua
+msgid "Every route matters"
+msgstr "どの道も大切"
+
+#: games/emergency/lua/main.lua
+msgid "Five districts. One rescue team. A fresh start."
+msgstr "五つの地区。ひとつの救助隊。新たな出発。"
+
+#: games/emergency/lua/main.lua
+msgid "Food"
+msgstr "食料"
+
+#: games/emergency/lua/main.lua
+msgid "Hint"
+msgstr "ヒント"
+
+#: games/emergency/lua/main.lua
+msgid "How to play"
+msgstr "遊び方"
+
+#: games/emergency/lua/main.lua
+msgid "Leaderboard"
+msgstr "ランキング"
+
+#: games/emergency/lua/main.lua
+msgid "Let the team finish its jobs and the stations deliver supplies."
+msgstr "隊員が作業を終え、施設から物資が届くのを待ちましょう。"
+
+#: games/emergency/lua/main.lua
+msgid "Money"
+msgstr "お金"
+
+#: games/emergency/lua/main.lua
+msgid "Next district"
+msgstr "次の地区へ"
+
+#: games/emergency/lua/main.lua
+msgid "Pause"
+msgstr "一時停止"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "People %d/%d   Pets %d/%d   Roads %d/%d"
+msgstr "人 %d/%d   ペット %d/%d   道路 %d/%d"
+
+#: games/emergency/lua/main.lua
+msgid "Play the episode again"
+msgstr "エピソードをもう一度"
+
+#: games/emergency/lua/main.lua
+msgid "Ready"
+msgstr "準備完了"
+
+#: games/emergency/lua/main.lua
+msgid "Reopen the streets. Restore supplies. Bring everyone home."
+msgstr "通りを開通させ、物資を復旧し、みんなを家に帰そう。"
+
+#: games/emergency/lua/main.lua
+msgid "Replay district"
+msgstr "地区をもう一度"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue dispatch"
+msgstr "救助出動"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue paused"
+msgstr "救助を一時停止中"
+
+#: games/emergency/lua/main.lua
+msgid "Rescue score"
+msgstr "救助スコア"
+
+#: games/emergency/lua/main.lua
+msgid "Restart district"
+msgstr "地区をやり直す"
+
+#: games/emergency/lua/main.lua
+msgid "Restore the city, one route at a time"
+msgstr "ひとつずつ道をつないで、街を取り戻そう"
+
+#: games/emergency/lua/main.lua
+msgid "Resume rescue"
+msgstr "救助を再開"
+
+#: games/emergency/lua/main.lua
+msgid "START RESCUE"
+msgstr "救助開始"
+
+#: games/emergency/lua/main.lua
+msgid "Sound"
+msgstr "サウンド"
+
+#: games/emergency/lua/main.lua
+msgid ""
+"Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n"
+"\n"
+"Kitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n"
+"\n"
+"Drag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home."
+msgstr ""
+"瓦礫、壊れた道路、施設をタップして作業員を割り当てます。すぐに着手できない作業は順番待ちになり、もう一度タップで取り消せます。\n"
+"\n"
+"炊き出し所、製材所、事務所は物資を自動で生み出します。住民や取り残された作業員は、道が安全になると戻ってきます。ペットの救助には作業員を割り当てましょう。\n"
+"\n"
+"ドラッグで移動、ピンチやスクロールで拡大縮小。すべての道を復旧して、みんなを家に帰そう。"
+
+#: games/emergency/lua/main.lua
+#, lua-format
+msgid "WORKERS  %d / %d"
+msgstr "作業員  %d / %d"
+
+#: games/emergency/lua/main.lua
+msgid "Wood"
+msgstr "木材"
+
+#: games/emergency/lua/main.lua
+msgid "Your team and production are paused."
+msgstr "チームと生産は一時停止中です。"
