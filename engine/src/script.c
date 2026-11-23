@@ -131,11 +131,13 @@ const char *engine_path(const char *rel)
 void script_open(const char *dir)
 {
     L = luaL_newstate();
+    font_set_global_fallback(NULL);   /* the new script's l10n chooses its own */
     open_libs();
     script_modules_open(L, dir);
     api_open(L);
     /* the engine's own Lua, from the engine's resource directory, runs before main.lua */
     static const struct { const char *file, *module; } files[] = {
+        {"lua/l10n.lua", "l10n"},   /* first: the others' words resolve as they load */
         {"lua/tween.lua", NULL},
         {"lua/ui_forms.lua", NULL},
         {"lua/ui_skin.lua", NULL},
@@ -220,8 +222,8 @@ int script_dofile(const char *path)
 app_desc script_boot_args(const char *dir, const char *data_dir, int argc, char **argv)
 {
     app_boot_data(data_dir);   /* main.lua may read its JSON data while it loads */
+    app_boot_args(argc, argv); /* the engine's Lua reads --lang as it loads */
     script_open(dir);
-    app_boot_args(argc, argv);
     const char *roots = dir ? dir : ".";
     lua_pushlstring(L, roots, strcspn(roots, ";"));
     const char *path = lua_pushfstring(L, "%s/main.lua", lua_tostring(L, -1));
@@ -289,11 +291,9 @@ int lsave_write(lua_State *S)
     return 1;
 }
 
-/* app.read_text(rel): a whole text asset from the data root, or nil. Games
- * read their JSON configuration through it; scripts have no io library. */
-int lapp_read_text(lua_State *S)
+/* A whole text file, or nil if it is missing; scripts have no io library. */
+static int read_text_at(lua_State *S, const char *path)
 {
-    const char *path = app_path(luaL_checkstring(S, 1));
     FILE *file = path ? fopen(path, "rb") : NULL;
     if (!file) { lua_pushnil(S); return 1; }
     luaL_Buffer b;
@@ -305,6 +305,11 @@ int lapp_read_text(lua_State *S)
     luaL_pushresult(&b);
     return 1;
 }
+
+/* app.read_text(rel) reads the data root (games' JSON configuration, their
+ * catalogues); app.read_engine_text(rel) the engine's resource directory. */
+int lapp_read_text(lua_State *S) { return read_text_at(S, app_path(luaL_checkstring(S, 1))); }
+int lapp_read_engine_text(lua_State *S) { return read_text_at(S, engine_path(luaL_checkstring(S, 1))); }
 
 /* gamecenter.entries(board, scope): the rows as plain tables, or nil. */
 int lgamecenter_entries(lua_State *S)

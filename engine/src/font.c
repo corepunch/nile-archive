@@ -51,9 +51,8 @@ static struct {
 
 /* ------------------------------------------------------------------ fonts */
 
-font *font_load(const char *path)
+static font *font_load_file(const char *full)
 {
-    const char *full = app_path(path);
     FILE *file = fopen(full, "rb");
     if (!file) { fprintf(stderr, "font_load: cannot open %s\n", full); return NULL; }
     if (fseek(file, 0, SEEK_END)) { fclose(file); return NULL; }
@@ -76,10 +75,18 @@ font *font_load(const char *path)
     return f;
 }
 
+font *font_load(const char *path) { return font_load_file(app_path(path)); }
+font *font_load_engine(const char *path) { return font_load_file(engine_path(path)); }
+
 void font_set_fallback(font *f, font *fallback)
 {
     if (f) f->fallback = fallback;
 }
+
+/* Every font's own chain ends here: the scripts a game's display fonts lack
+ * (Cyrillic, CJK, ...) for the language being shown. Set by the l10n module. */
+static font *global_fallback;
+void font_set_global_fallback(font *fallback) { global_fallback = fallback; }
 
 static uint32_t utf8_next(const char **s)
 {
@@ -95,6 +102,8 @@ static uint32_t utf8_next(const char **s)
 static font *font_for(font *f, uint32_t cp)
 {
     for (font *it = f; it; it = it->fallback)
+        if (stbtt_FindGlyphIndex(&it->info, (int)cp)) return it;
+    for (font *it = global_fallback; it; it = it->fallback)
         if (stbtt_FindGlyphIndex(&it->info, (int)cp)) return it;
     return f;
 }
@@ -367,6 +376,45 @@ rect text_draw(text_style s, vec2 pos, vec2 pivot, const char *utf8)
 /* Greedy word wrap: returns the number of lines, line starts/ends in out arrays. */
 #define MAX_LINES 32
 
+/* Chinese and Japanese set no spaces between words: a line may break between
+ * any two ideographs or kana, but never before closing punctuation and small
+ * kana, nor after opening brackets (the basic kinsoku rules). Korean wraps at
+ * its spaces like the Latin scripts. */
+static bool ideographic(uint32_t c)
+{
+    return (c >= 0x3000 && c <= 0x30FF) || (c >= 0x31F0 && c <= 0x31FF) || (c >= 0x3400 && c <= 0x4DBF) ||
+           (c >= 0x4E00 && c <= 0x9FFF) || (c >= 0xF900 && c <= 0xFAFF) || (c >= 0xFF00 && c <= 0xFFEF);
+}
+
+static bool in_set(uint32_t c, const char *utf8_set)
+{
+    for (const char *p = utf8_set; *p;)
+        if (utf8_next(&p) == c) return true;
+    return false;
+}
+
+static bool break_between(uint32_t a, uint32_t b)
+{
+    if (!ideographic(a) && !ideographic(b)) return false;
+    return !in_set(b, "、。，．！？：；）」』】〉》〕｝ー・…‥ぁぃぅぇぉっゃゅょゎァィゥェォッャュョヮヵヶ.,!?:;)]}%") &&
+           !in_set(a, "（「『【〈《〔｛([{");
+}
+
+/* The end of the unbreakable run starting at p: the next space, newline or
+ * break opportunity between two codepoints. */
+static const char *word_end_of(const char *p)
+{
+    while (*p && *p != ' ' && *p != '\n') {
+        const char *next = p;
+        uint32_t a = utf8_next(&next);
+        if (!*next || *next == ' ' || *next == '\n') return next;
+        const char *after = next;
+        if (break_between(a, utf8_next(&after))) return next;
+        p = next;
+    }
+    return p;
+}
+
 static int wrap(metrics m, const char *s, float max_px, const char **starts, const char **ends, float *widest)
 {
     int n = 0;
@@ -375,8 +423,7 @@ static int wrap(metrics m, const char *s, float max_px, const char **starts, con
         const char *line = s, *end = s, *p = s;
         float w_end = 0;
         while (*p && *p != '\n') {
-            const char *word_end = p;
-            while (*word_end && *word_end != ' ' && *word_end != '\n') word_end++;
+            const char *word_end = word_end_of(p);
             float w = width_px(m, line, word_end);
             if (w > max_px && end != line) break;
             end = word_end;

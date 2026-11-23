@@ -165,6 +165,21 @@ const char *app_arg(const char *name)
     return NULL;
 }
 
+/* --lang wins. Otherwise a visible, interactive window follows the system;
+ * headless runs, captures, smoke runs and tests stay in the source language so
+ * their output never depends on the machine they run on. */
+const char *app_languages(void)
+{
+    const char *forced = app_arg("lang");
+    if (forced) return forced;
+#ifdef ENGINE_TEST
+    return "";
+#else
+    if (app_arg("headless") || app_arg("shot") || app_arg("smoke")) return "";
+    return axGetPreferredLanguages();
+#endif
+}
+
 bool app_debug_autoplay(void)
 {
 #if defined(ENGINE_TEST)

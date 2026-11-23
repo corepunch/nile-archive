@@ -742,6 +742,15 @@ function app.path(rel) end
 ---@return string?
 function app.read_text(rel) end
 
+---A text file relative to the engine's resource directory, whole; nil if it is missing. The l10n module reads the engine's own catalogues through it.
+---@param rel string
+---@return string?
+function app.read_engine_text(rel) end
+
+---The player's preferred languages as comma-separated BCP 47 tags, most preferred first ("pt-BR,en-US"). --lang TAGS overrides the system; headless runs, captures, smoke runs and tests return "" (the source language) unless --lang is given. See docs/LOCALIZATION.md.
+---@return string
+function app.languages() end
+
 ---Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.
 ---@param pts vec2[]
 ---@param colors color[]
@@ -1137,6 +1146,15 @@ function font.load(path) end
 ---@param f font
 ---@param fallback font
 function font.set_fallback(f, fallback) end
+
+---A .ttf or .otf relative to the engine's resource directory.
+---@param path string
+---@return font
+function font.load_engine(path) end
+
+---The chain every font falls back to after its own, for the scripts no game font covers. The l10n module sets it for the language being shown; nil clears it.
+---@param fallback? font
+function font.set_global_fallback(fallback) end
 
 ---@class stylelib
 ---@overload fun(t?: table): text_style

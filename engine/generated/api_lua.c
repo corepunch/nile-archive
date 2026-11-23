@@ -2599,6 +2599,14 @@ static int l_app_path(lua_State *L)
     return 1;
 }
 
+/* app.languages() */
+static int l_app_languages(lua_State *L)
+{
+    const char * r = app_languages();
+    lua_pushstring(L, r);
+    return 1;
+}
+
 /* app.mesh(pts, colors, indices) */
 static int l_app_renderer_geometry(lua_State *L)
 {
@@ -3268,6 +3276,23 @@ static int l_font_set_fallback(lua_State *L)
     font * a_f = (font *)lua_touserdata(L, 1);
     font * a_fallback = (font *)lua_touserdata(L, 2);
     font_set_fallback(a_f, a_fallback);
+    return 0;
+}
+
+/* font.load_engine(path) */
+static int l_font_load_engine(lua_State *L)
+{
+    const char * a_path = luaL_checkstring(L, 1);
+    font * r = font_load_engine(a_path);
+    api_push_font(L, r);
+    return 1;
+}
+
+/* font.set_global_fallback(fallback?) */
+static int l_font_set_global_fallback(lua_State *L)
+{
+    font * a_fallback = (font *)lua_touserdata(L, 1);
+    font_set_global_fallback(a_fallback);
     return 0;
 }
 
@@ -4423,6 +4448,8 @@ static void open_app(lua_State *L)
         {"open_https", l_app_open_https},
         {"path", l_app_path},
         {"read_text", lapp_read_text},
+        {"read_engine_text", lapp_read_engine_text},
+        {"languages", l_app_languages},
         {"mesh", l_app_renderer_geometry},
         {"inject_click", l_app_inject_click},
         {"inject_press", l_app_inject_press},
@@ -4564,6 +4591,8 @@ static void open_font(lua_State *L)
     static const luaL_Reg funcs[] = {
         {"load", l_font_load},
         {"set_fallback", l_font_set_fallback},
+        {"load_engine", l_font_load_engine},
+        {"set_global_fallback", l_font_set_global_fallback},
         {NULL, NULL}
     };
     luaL_newlib(L, funcs);

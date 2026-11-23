@@ -185,6 +185,8 @@
     <function name="open_https" c="app_open_https" doc="Ask the system to open an HTTPS page. Returns false if unsupported or the URL cannot be handed off."><arg name="url" type="string"/><returns type="bool"/></function>
     <function name="path" c="app_path" doc="An asset path resolved against the data root."><arg name="rel" type="string"/><returns type="string"/></function>
     <function name="read_text" impl="lapp_read_text" doc="A text asset (such as a JSON config) relative to the data root, whole; nil if it is missing."><arg name="rel" type="string"/><returns type="string" optional="true"/></function>
+    <function name="read_engine_text" impl="lapp_read_engine_text" doc="A text file relative to the engine's resource directory, whole; nil if it is missing. The l10n module reads the engine's own catalogues through it."><arg name="rel" type="string"/><returns type="string" optional="true"/></function>
+    <function name="languages" c="app_languages" doc="The player's preferred languages as comma-separated BCP 47 tags, most preferred first (&quot;pt-BR,en-US&quot;). --lang TAGS overrides the system; headless runs, captures, smoke runs and tests return &quot;&quot; (the source language) unless --lang is given. See docs/LOCALIZATION.md."><returns type="string"/></function>
     <function name="renderer_geometry" c="draw_mesh" lua="mesh" doc="Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.">
       <arg name="pts" type="vec2[]"/><arg name="colors" type="color[]"/><arg name="n" type="count" of="pts"/><arg name="indices" type="int[]"/><arg name="m" type="count" of="indices"/>
     </function>
@@ -314,6 +316,8 @@
   <module name="font" type="font">
     <function name="load" c="font_load" doc="A .ttf relative to the data root."><arg name="path" type="string"/><returns type="font"/></function>
     <function name="set_fallback" c="font_set_fallback" doc="Glyphs missing from f come from fallback."><arg name="f" type="font"/><arg name="fallback" type="font"/></function>
+    <function name="load_engine" c="font_load_engine" doc="A .ttf or .otf relative to the engine's resource directory."><arg name="path" type="string"/><returns type="font"/></function>
+    <function name="set_global_fallback" c="font_set_global_fallback" doc="The chain every font falls back to after its own, for the scripts no game font covers. The l10n module sets it for the language being shown; nil clears it."><arg name="fallback" type="font" optional="true"/></function>
   </module>
 
   <struct name="text_style" c="text_style" doc="How text is drawn. Only font and size are needed; zero means off. `style{font = f, size = 17, fill = color.hex(0xF4E8CA)}`.">

@@ -975,6 +975,22 @@ A text asset (such as a JSON config) relative to the data root, whole; nil if it
 
 **Returns:** `string?`
 
+### `app.read_engine_text(rel)`
+
+A text file relative to the engine's resource directory, whole; nil if it is missing. The l10n module reads the engine's own catalogues through it.
+
+| Argument | Type | |
+|---|---|---|
+| `rel` | `string` |  |
+
+**Returns:** `string?`
+
+### `app.languages()`
+
+The player's preferred languages as comma-separated BCP 47 tags, most preferred first ("pt-BR,en-US"). --lang TAGS overrides the system; headless runs, captures, smoke runs and tests return "" (the source language) unless --lang is given. See docs/LOCALIZATION.md.
+
+**Returns:** `string`
+
 ### `app.mesh(pts, colors, indices)`
 
 Draw coloured triangles: pts and colors have one entry per vertex, indices three per triangle (0-based). Lives here because it talks to the renderer directly.
@@ -1663,6 +1679,24 @@ Glyphs missing from f come from fallback.
 |---|---|---|
 | `f` | `font` |  |
 | `fallback` | `font` |  |
+
+### `font.load_engine(path)`
+
+A .ttf or .otf relative to the engine's resource directory.
+
+| Argument | Type | |
+|---|---|---|
+| `path` | `string` |  |
+
+**Returns:** `font`
+
+### `font.set_global_fallback(fallback?)  ·  fallback:set_global_fallback()`
+
+The chain every font falls back to after its own, for the scripts no game font covers. The l10n module sets it for the language being shown; nil clears it.
+
+| Argument | Type | |
+|---|---|---|
+| `fallback` | `font?` |  |
 
 ## style
 

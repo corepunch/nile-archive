@@ -241,6 +241,7 @@ double app_time(void);          /* seconds since start (frame time) */
 float app_dt(void);             /* duration of the current frame, seconds */
 double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
+const char *app_languages(void);        /* preferred BCP 47 tags, comma-separated, most preferred first */
 bool app_debug_autoplay(void);          /* local debug build may show the match-3 skip button */
 bool app_has_https_opener(void);
 bool app_open_https(const char *url);
@@ -390,7 +391,11 @@ void fx_clear(void);
 typedef struct font font;
 
 font *font_load(const char *path);
+font *font_load_engine(const char *path);   /* relative to the engine's resource directory */
 void font_set_fallback(font *f, font *fallback);
+/* The chain every font falls back to after its own: glyphs no game font has.
+ * The l10n module sets it for the language being shown; NULL clears it. */
+void font_set_global_fallback(font *fallback);
 
 /* All fields optional except font and size; zero means "off" (fill defaults to white). */
 typedef struct text_style {

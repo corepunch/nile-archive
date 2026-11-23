@@ -1,0 +1,12 @@
+# The language the game is written in, then every translation (<tag>.po beside this file).
+# See docs/LOCALIZATION.md.
+en
+de
+es
+fr
+it
+pt-BR
+ru
+ja
+ko
+zh-Hans

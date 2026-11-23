@@ -354,6 +354,9 @@ static uint32_t codepoint_at(const char *s, int at)
  * comma or dash. Only when a space follows, so "..." pauses once, at its end. */
 static float pause_after(uint32_t c, uint32_t next)
 {
+    /* Chinese and Japanese punctuation is full width and needs no space. */
+    if (c == 0x3002 || c == 0xFF01 || c == 0xFF1F) return .26f;   /* 。！？ */
+    if (c == 0x3001 || c == 0xFF0C || c == 0xFF1B) return .1f;    /* 、，； */
     if (next != ' ' && next != '\n') return 0;
     if (c == '.' || c == '!' || c == '?' || c == 0x2026) return .26f;
     if (c == ',' || c == ';' || c == ':' || c == 0x2014 || c == 0x2013) return .1f;
