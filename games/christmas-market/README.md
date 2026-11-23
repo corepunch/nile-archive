@@ -49,8 +49,8 @@ sits beside the wallet on the puzzle. The deep blue tablets mark the objectives 
 hairline seams; cleared tablets return to parchment. The smaller Pause gear beside the bonuses opens
 the Market Keeper's Guide alongside Sound and Reduce Motion. Sound also covers
 the synthesised soundtrack, "Lanterns on the Square" ([`lua/song.lua`](lua/song.lua)):
-a calm 32-bar F major loop at 84 bpm: pad, soft electric piano and bass under a
-flute-like lead, with a quiet celesta in the reprise.
+a warm 32-bar F major loop at 96 bpm with carol-like harmony: pad, soft electric
+piano and bass under a flute-like lead, celesta above it and sleigh bells on 2 and 4.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
 The board starts in Bellmere's village square. Each of the twenty campaign
