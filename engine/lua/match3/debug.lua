@@ -476,7 +476,7 @@ function D.bind(R, W)
                 put(0, 1, kinds[1], "color_bomb")
                 R.toast_time, R.art_review = 0, true
             else
-                -- --special-fire born|sweep|cross|rainbow|recolor: one real swap on
+                -- --special-fire match|born|sweep|cross|rainbow|recolor: one real swap on
                 -- frame 20 of a board with no other line, to film the gem at work.
                 for i = 0, rules.CELLS - 1 do
                     if g.active[i] and g.tiles[i].kind >= 0 and g.chain[i] == 0 and g.ice[i] == 0 then
@@ -484,7 +484,14 @@ function D.bind(R, W)
                     end
                 end
                 local one, two = kinds[2], kinds[4]
-                if fire == "born" then
+                if fire == "match" then   -- two plain lines of different colours, no gem or floor
+                    if g.oil then
+                        for i = 0, rules.CELLS - 1 do g.oil[i] = 0 end
+                        g.oil_left = 0
+                    end
+                    put(-1, 0, one); put(1, 0, one); put(0, 2, two); put(0, 3, two)
+                    special_swap = {put(0, 1, one), put(0, 0, two)}
+                elseif fire == "born" then
                     put(-2, 0, one); put(-1, 0, one); put(1, 0, one)
                     special_swap = {put(0, 1, one), put(0, 0, two)}
                 elseif fire == "sweep" then

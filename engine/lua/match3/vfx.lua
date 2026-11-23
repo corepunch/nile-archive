@@ -170,7 +170,7 @@ function V.bind(R, rules)
         for _ = 1, flying and 1 or count or 7 do
             local p = parts[part_next % PARTICLES + 1]
             part_next = part_next + 1
-            local a, speed = rng_float() * 2 * PI, 55 + rng_float() * 125
+            local a, speed = rng_float() * 2 * PI, 80 + rng_float() * 170
             local to = target or at
             p.at, p.vel, p.to = at, vec2.polar(a, speed) + vec2(0, -35), to
             p.age = flying and -rng_float() * .14 or 0
@@ -192,6 +192,64 @@ function V.bind(R, rules)
         if rules.is_goal_kind(R.g, p.kind) then R.goal_pulse = .22 else R.score_pulse = .22 end
     end
 
+    -- A flying piece's ribbon: a strip along the last stretch of its flight
+    -- path, a white-hot core inside its colour, tapering and fading to the tail.
+    -- Five strands across give soft edges without a texture.
+    local RIBBON_POINTS, RIBBON_SPAN = 16, .3   -- samples, and the share of the flight it trails
+    local STRANDS = {{-1, 0}, {-.42, .55}, {0, 1}, {.42, .55}, {1, 0}}   -- offset, brightness
+    local ribbon_pts, ribbon_cols, ribbon_idx, ribbon_at = {}, {}, {}, {}
+    local function ribbon(p, t, half_width, i)
+        local n = 0
+        for k = 0, RIBBON_POINTS - 1 do
+            local u = k / (RIBBON_POINTS - 1)
+            local tk = t - u * RIBBON_SPAN
+            if tk < 0 then break end
+            n = k + 1
+            ribbon_at[n] = flight(p, tk)
+        end
+        if n < 2 then return end
+        local ink = vfx_color(p.kind, 255)
+        local born = math.min(1, t / .12)   -- it unrolls from the board rather than popping in
+        local v = 0
+        for k = 1, n do
+            local u = (k - 1) / (RIBBON_POINTS - 1)
+            local dir = ribbon_at[math.max(1, k - 1)] - ribbon_at[math.min(n, k + 1)]
+            local len = dir:len()
+            local normal = len > 1e-4 and vec2(-dir.y / len, dir.x / len) or vec2(0, 1)
+            local width = half_width * ((1 - u) ^ .7 * .9 + .1)
+            local alpha = 255 * born * (1 - u) ^ 1.5
+            local heat = math.max(0, 1 - u * 3.2)   -- the head runs white, the tail its colour
+            for s, strand in ipairs(STRANDS) do
+                local hot = s == 3 and heat or heat * .35
+                local c = rgba(ink.r + (255 - ink.r) * hot, ink.g + (255 - ink.g) * hot,
+                    ink.b + (255 - ink.b) * hot, alpha * strand[2])
+                v = v + 1
+                ribbon_pts[v], ribbon_cols[v] = ribbon_at[k] + normal:scale(width * strand[1]), c
+            end
+        end
+        for k = v + 1, #ribbon_pts do ribbon_pts[k], ribbon_cols[k] = nil, nil end
+        local m = 0
+        for k = 0, n - 2 do
+            for s = 0, #STRANDS - 2 do
+                local a, b = k * #STRANDS + s, (k + 1) * #STRANDS + s
+                ribbon_idx[m + 1], ribbon_idx[m + 2], ribbon_idx[m + 3] = a, a + 1, b
+                ribbon_idx[m + 4], ribbon_idx[m + 5], ribbon_idx[m + 6] = a + 1, b + 1, b
+                m = m + 6
+            end
+        end
+        for k = m + 1, #ribbon_idx do ribbon_idx[k] = nil end
+        gfx.additive(true)
+        app.mesh(ribbon_pts, ribbon_cols, ribbon_idx)
+        -- sparks shed along the ribbon, twinkling as they fall behind
+        for k = 4, n, 4 do
+            local u = (k - 1) / (RIBBON_POINTS - 1)
+            local flicker = .5 + .5 * math.sin(t * 40 + i * 1.7 + k)
+            sprite("twinkle", ribbon_at[k] + vec2(0, u * 10), 6 + 6 * (1 - u), t * 6 + k,
+                rgba(255, 252, 226, 200 * born * (1 - u) * flicker))
+        end
+        gfx.additive(false)
+    end
+
     function R.vfx_particles()
         if R.reduced_motion then return end
         for i = 1, PARTICLES do
@@ -201,7 +259,7 @@ function V.bind(R, rules)
                 local fade = 1 - t
                 if p.flying then
                     local at = flight(p, t)
-                    for k = 4, 1, -1 do vfx_halo(flight(p, math.max(0, t - k * .025)), 9 - k, vfx_color(p.kind, 70 * (1 - k / 5))) end
+                    ribbon(p, t, 15, i)
                     vfx_halo(at, 19, vfx_color(p.kind, 125))
                     local size = 18 + 7 * math.sin(t * PI)
                     local piece = R.board_piece_texture and R.board_piece_texture(p.kind) or R.relics[p.kind + 1]
@@ -247,7 +305,10 @@ function V.bind(R, rules)
                 local kind = R.wave_ice[i] > 0 and 6 or R.wave_chain[i] > 0 and 7 or was.kind
                 local plane_hit = R.pending.plane_targets and R.pending.plane_targets[i]
                 add(FX_IMPACT, at, vec2(0, 0), kind, .3, plane_hit and .16 or 0, 0)
-                if not plane_hit then vfx_emit(at, kind, false) end
+                if not plane_hit then
+                    vfx_emit(at, kind, false)
+                    if R.vfx_burst then R.vfx_burst(at, R.HEX_R, vfx_color(kind, 255)) end
+                end
                 if R.wave_ice[i] == 0 and R.wave_chain[i] == 0 then
                     local to
                     local bonus_hits = R.pending.bonus_charge_by_cell
@@ -351,6 +412,10 @@ function V.bind(R, rules)
                 local cream = rgba(255, 249, 207, 220 * fade)
                 gfx.additive(true)
                 if e.type == FX_IMPACT then
+                    if t < .5 then   -- the white-hot core the cloud blooms from
+                        local core = (1 - t * 2) ^ 2
+                        sprite("flash", e.at, R.HEX_R * (1.4 + 1.6 * t), t * 2, rgba(255, 250, 232, 235 * core))
+                    end
                     vfx_halo(e.at, 20 + 35 * t, vfx_color(e.kind, 150 * fade))
                     ring_sprite("ring", e.at, 7 + 28 * t, c)
                     if t < .65 then spark(e.at, 16 * fade, PI / 4, cream) end

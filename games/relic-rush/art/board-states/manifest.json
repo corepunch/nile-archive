@@ -747,7 +747,7 @@
       "smoke-2": "whitePuff08",
       "smoke-3": "whitePuff12"
     },
-    "states": "transient alpha-blended smoke under breaking floor layers; dust tint at draw time; no interaction states",
+    "states": "transient alpha-blended smoke under breaking floor layers (dust tint) and over matched pieces (the piece's colour, quicker and smaller); tint at draw time; no interaction states",
     "reproduction": "python3 tools/match3_atlas.py",
     "review": "docs/screenshots/review/shatter/smoke-after.jpg",
     "frame_prefix": "fx-"

@@ -86,6 +86,8 @@ shot("line-gem-states-phone", "390x844", gems .. "--frames 60 --safe-area 0,47,0
 for _, fire in ipairs{"born", "sweep", "cross", "rainbow", "recolor"} do
     reel("line-gem-" .. fire, 12, 4, "480x900", gems .. "--special-fire " .. fire .. " --reel")
 end
+-- A plain match: coloured clouds burst and pieces fly to the counters on ribbons.
+reel("match-burst", 12, 7, "480x900", "--level 1 --special-states --special-fire match --reel")
 shot("campaign-access", "480x900", "--level 13")
 shot("campaign-thaw", "480x900", "--level 19")
 shot("phone-campaign-thaw", "390x844", "--level 19 --safe-area 0,47,0,34")

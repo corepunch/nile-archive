@@ -564,6 +564,15 @@ listed below. The shards are a procedural cut-out with no new states, and Reduce
 `build/test/all --suite=christmas-market 'reel fx-shatter'`.
 [Reviewed frames](screenshots/review/shatter/fx-shatter-480x900.jpg).
 
+A matched piece bursts as a coloured cloud: a white-hot `fx-flash` core and four
+quick `fx-smoke-0..3` puffs in the piece's effect colour (`R.vfx_burst` in
+`engine/lua/match3/shatter.lua`). Pieces that earn a resource fly to its counter on
+a procedural ribbon, white at the head and the piece's colour towards the tail
+(`ribbon` in `engine/lua/match3/vfx.lua`). Both are drawn from existing sprites and
+a coloured mesh with no new states, and Reduce Motion hides them. Capture with
+`build/test/all --suite=christmas-market 'reel match-burst'`.
+[Reviewed frames](screenshots/review/match-burst/match-burst-480x900.jpg).
+
 ## Ice
 
 The [ice archive](../../../art/match3-ice/README.md) records the source,

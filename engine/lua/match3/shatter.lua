@@ -17,11 +17,14 @@ S.PATTERNS, S.SITES, S.SITE_GAP = 8, 8, .44   -- fracture variety and shard coun
 S.CRACK = .07                                  -- shards hold, cracks glow, then burst
 S.SPEED, S.LIFT, S.GRAVITY = {3.4, 8.5}, {1.6, 4.2}, 46   -- r/s, r/s up, r/s²
 S.LIFE = {.43, .67}                            -- gone before they drop far below the cell
-S.PUFFS, S.PUFF_LIFE = 4, {1.05, 1.45}
 S.DUST = color(146, 118, 84)                   -- earthy smoke for every layer
-S.SMOKE_LIGHT = .7                             -- puffs lean this far from the dust towards white
-S.SMOKE_ALPHA = .85                            -- peak opacity, just after the burst
-S.SHARD_CAP, S.PUFF_CAP = 220, 96
+-- Puff styles: how many, how fast they spread (r/s) and rise, their start and
+-- end radius (r), life (s), how far the tint leans to white, and peak opacity.
+S.SMOKE = {count = 4, speed = {1.6, 3.2}, lift = {.6, 1.4}, r0 = {.35, .5}, r1 = {.85, 1.15},
+    life = {1.05, 1.45}, light = .7, alpha = .85}               -- a broken layer's dust
+S.BURST = {count = 4, speed = {2.4, 4.2}, lift = {.3, .9}, r0 = {.4, .55}, r1 = {1, 1.35},
+    life = {.4, .58}, light = .28, alpha = .9}                 -- a matched piece's coloured cloud
+S.SHARD_CAP, S.PUFF_CAP = 220, 160
 
 -- The unit hex: vertices at +-x like the board's cells, clockwise on screen.
 local SQUARE = {{-1, -1}, {1, -1}, {1, 1}, {-1, 1}}
@@ -124,6 +127,22 @@ function S.bind(R, rules)
         shard_next, puff_next = 0, 0
     end
 
+    -- Puffs billowing out of `at`, shaped by a style (S.SMOKE, S.BURST).
+    local function emit_puffs(at, radius, tint, style, delay)
+        for k = 1, style.count do
+            local p = puffs[puff_next % S.PUFF_CAP + 1]
+            puff_next = puff_next + 1
+            local a, d = (k + rand()) * TAU / style.count, (.15 + .45 * rand()) * radius
+            p.x, p.y = at.x + math.cos(a) * d, at.y + math.sin(a) * d * .85
+            local speed = range(style.speed) * radius
+            p.vx, p.vy = math.cos(a) * speed, math.sin(a) * speed * .7 - range(style.lift) * radius
+            p.r0, p.r1 = range(style.r0) * radius, range(style.r1) * radius
+            p.frame, p.angle, p.spin = 1 + math.floor(rand() * 4), rand() * TAU, (rand() - .5) * 1.6
+            p.tint, p.light, p.alpha = tint, style.light, style.alpha
+            p.age, p.delay, p.life = 0, delay + .05 * rand(), range(style.life)
+        end
+    end
+
     -- Break `art` into shards over a puff of dust (`dust`, default S.DUST). The art is drawn
     -- as floor cells are: a 2r square centred on `at`, or, given `src`, that
     -- texture rectangle mapped onto the hex (gfx.image_hex). Reduce Motion
@@ -169,18 +188,13 @@ function S.bind(R, rules)
             s.pop = rand() < .35 and .18 + .22 * rand() or 0   -- some come towards the camera
             s.age, s.delay, s.life = 0, S.CRACK + d * .035, range(S.LIFE)
         end
-        local tint = dust or S.DUST
-        for k = 1, S.PUFFS do
-            local p = puffs[puff_next % S.PUFF_CAP + 1]
-            puff_next = puff_next + 1
-            local a, d = (k + rand()) * TAU / S.PUFFS, (.15 + .45 * rand()) * radius
-            p.x, p.y = at.x + math.cos(a) * d, at.y + math.sin(a) * d * .85
-            local speed = (1.6 + 1.6 * rand()) * radius
-            p.vx, p.vy = math.cos(a) * speed, math.sin(a) * speed * .7 - (.6 + .8 * rand()) * radius
-            p.r0, p.r1 = (.35 + .15 * rand()) * radius, (.85 + .3 * rand()) * radius
-            p.frame, p.angle, p.spin = 1 + math.floor(rand() * 4), rand() * TAU, (rand() - .5) * 1.6
-            p.tint, p.age, p.delay, p.life = tint, 0, S.CRACK * .6 + .05 * rand(), range(S.PUFF_LIFE)
-        end
+        emit_puffs(at, radius, dust or S.DUST, S.SMOKE, S.CRACK * .6)
+    end
+
+    -- A matched piece's cloud: a few quick puffs in its own colour.
+    function R.vfx_burst(at, radius, tint)
+        if R.reduced_motion then return end
+        emit_puffs(at, radius, tint, S.BURST, 0)
     end
 
     local function update(dt)
@@ -266,15 +280,15 @@ function S.bind(R, rules)
 
     local function draw()
         if R.reduced_motion then return end
-        local smoke, light = R.vfx_smoke, S.SMOKE_LIGHT
+        local smoke = R.vfx_smoke
         for i = 1, S.PUFF_CAP do
             local p = puffs[i]
             local t = p.age - (p.delay or 0)
             if p.life > 0 and t > 0 then
                 local u = t / p.life
                 local grow = 1 - (1 - u) ^ 3
-                local alpha = S.SMOKE_ALPHA * math.min(1, u / .07) * (1 - u) ^ 1.3
-                local c = p.tint
+                local alpha = p.alpha * math.min(1, u / .07) * (1 - u) ^ 1.3
+                local c, light = p.tint, p.light
                 local r, g, b = c.r + (255 - c.r) * light, c.g + (255 - c.g) * light, c.b + (255 - c.b) * light
                 local size = 2 * (p.r0 + (p.r1 - p.r0) * grow)
                 gfx.image_rot(smoke[p.frame], rect.centered(vec2(p.x, p.y), size2.splat(size)), p.angle,
