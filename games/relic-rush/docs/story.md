@@ -41,10 +41,9 @@ The numbered scenes play once, on the first clear. Levels between them have no s
 
 **Before level 1**
 
-- **Tavi:** Everyone ashore! Builder, welcome to our new home.
+- **Tavi:** Everyone ashore! Builder, welcome to our new home. When there's a town, I'll send for the families.
 - **Oren:** Lovely beach. Where's the town?
-- **Tavi:** You're standing in it. Once it's a town, I'll send the ship back for the families.
-- **Sela:** There's a spring up in the rocks! Fresh water, Oren. We'll be fine here.
+- **Sela:** There's a spring up in the rocks, Oren. Fresh water! That's a start.
 
 **Level 1**
 

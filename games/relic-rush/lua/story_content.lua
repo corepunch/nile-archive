@@ -6,10 +6,9 @@ local tavi = cast.tavi
 
 return {
     {key="before-01", phase="before", level=1, lines={
-        tavi "Everyone ashore! Builder, welcome to our new home.",
+        tavi "Everyone ashore! Builder, welcome to our new home. When there's a town, I'll send for the families.",
         oren "Lovely beach. Where's the town?",
-        tavi "You're standing in it. Once it's a town, I'll send the ship back for the families.",
-        sela "There's a spring up in the rocks! Fresh water, Oren. We'll be fine here.",
+        sela "There's a spring up in the rocks, Oren. Fresh water! That's a start.",
     }},
     {key="after-01", phase="after", level=1, lines={
         sela "Look what I dug up by the spring. A cup! Somebody lived here before us.",

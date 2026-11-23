@@ -45,6 +45,8 @@ assert all(1 <= b['level'] <= LEVELS for b in levels)
 assert {b['building'] for b in scenes if b['phase'] == 'placed'} == set(ladder), 'every stall has a scene when placed'
 for b in scenes:
     assert 0 < len(b['lines']) <= 4, b['key'] + ' needs one to four lines'
+    who = [w for w, _, _ in b['lines']]
+    assert len(who) == len(set(who)), b['key'] + ' gives a speaker two lines: one line per character'
     assert all(len(text) <= 100 for _, text, _ in b['lines']), b['key'] + ' has a line over 100 characters'
 
 quote = lambda s: json.dumps(s, ensure_ascii=False)
