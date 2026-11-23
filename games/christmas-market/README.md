@@ -101,7 +101,10 @@ The town bar puts Play in the middle, with the round Build button and the
 Pause gear each centred in the space on its side.
 The town lists the current Advent's four projects at the upper left: a
 numbered row each (a tick once built), with "Ready to build!" under one you
-can afford and Build's particle trail circling its number. Tap a row to place a ready project or open
+can afford and Build's particle trail circling its number. The first time a
+stall can be built, Noelle says so and points at the list, which stays
+sharp above the dialogue's dim (`town_tip` in `lua/game_config.lua`, shown
+once, even with dialogue turned off). Tap a row to place a ready project or open
 its card.
 Build opens the shop at the current Advent: its four projects first, then the
 decorations. Each row has the stall's name with the icon of what a project

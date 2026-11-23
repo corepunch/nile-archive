@@ -30,6 +30,23 @@ R.board_art = {}   -- rule tests build the list without loading textures
 local first_project, second_project = island.ladder[1], island.ladder[2]
 local funded_wallet = R.prog.wallet
 check(R.active_epoch() == 1 and R.can_build_project(), "the first epoch has an affordable project")
+do   -- the town tip: once, when a project can first be built, with the task list above the dim
+    local was = {R.on_island, R.overlay, R.quiet, R.story, R.test_mode}
+    R.on_island, R.overlay, R.quiet, R.story, R.test_mode, R.prog.town_tip_seen = true, R.OV_NONE, false, true, false, nil
+    R.prog.story_seen = R.prog.story_seen or {}
+    while story.active() do story.next() end
+    for _ = 1, 20 do   -- any scene that is due plays first
+        if R.prog.town_tip_seen then break end
+        R.story_tick()
+        while story.active() and not R.town_tip_showing do story.next() end
+    end
+    check(R.prog.town_tip_seen and R.town_tip_showing and story.active(),
+        "the first affordable project in town starts the tip")
+    for _ = 1, 8 do if story.active() then story.next() end end
+    R.story_tick()
+    check(not R.town_tip_showing and not story.active(), "the tip is said once")
+    R.on_island, R.overlay, R.quiet, R.story, R.test_mode = was[1], was[2], was[3], was[4], was[5]
+end
 R.open_catalogue()
 local stock = R.catalogue_form.nodes.stock
 local function row(index) return stock.records[stock.children[index].item_key] end

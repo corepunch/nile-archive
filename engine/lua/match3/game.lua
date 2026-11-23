@@ -37,6 +37,8 @@ G.DEFAULTS = {
     campaign_dialogue = true,
     speech = {scale = 1, name = 15},
     region_speaker = "",
+    -- town_tip: story lines ({speaker, text}, ...) said once, the first time a
+    -- project can be built in town.
     board = {},
     notices = {
         reward_building = "Building funded! Spare gold is yours to decorate.",
@@ -1183,6 +1185,22 @@ function G.bind(R, over)
         end, before_level)
     end
 
+    -- Once, the first time a project can be built in town, a character says so
+    -- and points at the task list in the top left, which stays above the
+    -- dialogue's dim while they speak. A game without campaign dialogue still
+    -- shows it; with dialogue it waits for any scene that is due and keeps
+    -- quiet when the player has turned the story off. Scripted test runs, like
+    -- the board tutorial, never see it.
+    local function town_tip()
+        if not W.town_tip or R.test_mode or campaign_dialogue and R.story == false
+            or R.prog.town_tip_seen or not R.on_island or R.overlay ~= R.OV_NONE
+            or R.island.placing >= 0 or not R.can_build_project() then return false end
+        R.prog.town_tip_seen, R.town_tip_showing = true, true
+        R.save_progress()
+        for _, line in ipairs(W.town_tip) do story.add(line) end
+        return true
+    end
+
     -- Acknowledge a finished beat, then start the next one that is due.
     function R.story_tick()
         if R.story_current then
@@ -1199,7 +1217,9 @@ function G.bind(R, over)
             R.save_progress()
             if b.phase ~= "before" and b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
-        if not dialogue_on() or R.quiet or story.active() then return end
+        if R.town_tip_showing and not story.active() then R.town_tip_showing = false end
+        if R.quiet or story.active() then return end
+        if not dialogue_on() then town_tip(); return end
         if R.overlay == R.OV_RESULT and R.g and dialogue_on() then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
@@ -1216,6 +1236,7 @@ function G.bind(R, over)
         local b = R.next_story(before)
         if not b and R.on_island and dialogue_on() then b = journey.next_placement(R.prog) end
         if not b and R.on_island and dialogue_on() and R.upgrade_done then b = journey.next_upgrade(R.prog, R.upgrade_done) end
+        if not b and town_tip() then return end
         if b and b.phase == "before" and not R.on_island and (R.phase ~= R.PH_IDLE or R.mission_banner) then return end
         if b and (R.on_island or b.phase == "before") then R.queue_story(b) end
     end
@@ -1249,6 +1270,7 @@ function G.bind(R, over)
         end
         if R.serialize_campaign then R.serialize_campaign(s) end
         if R.tutorial then R.tutorial:serialize(s) end
+        R.prog.town_tip_seen = s:int("town_tip_seen", R.prog.town_tip_seen and 1 or 0) ~= 0
         if W.epochs then
             local reading = save.is_reading(s)
             local seen = s:int("epoch_seen", R.prog.epoch_seen or (reading and -1 or 0))
@@ -1659,7 +1681,10 @@ function G.app(R)
         local hud_above = not R.on_menu and not backdrop_only and not outcome and R.overlay ~= R.OV_GUIDE and not board
         if hud_above and (R.overlay ~= R.OV_NONE or talking) then
             ui.set_enabled(false)
-            if R.on_island then R.town:header() else R.draw_board_hud() end
+            if R.on_island then
+                R.town:header()
+                if R.town_tip_showing then R.town:quests(false) end   -- the list the tip points at
+            else R.draw_board_hud() end
             ui.set_enabled(true)
         end
     end
@@ -1668,7 +1693,7 @@ function G.app(R)
         R.font = R.skin:font("lilita")
         local art = require("art")
         local dialog = app.arg("dialog")
-        if W.campaign_dialogue or app.arg("story-beat")
+        if W.campaign_dialogue or W.town_tip or app.arg("story-beat")
             or dialog == "intro" or dialog == "adrian" or dialog == "mara" or dialog == "tomas" then
             story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
                                           edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,

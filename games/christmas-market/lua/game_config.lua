@@ -29,6 +29,10 @@ return {
     packs = {"festive"},
     speech = {scale = 1, name = 15},
     region_speaker = "pip",
+    town_tip = {
+        {"noelle", "Look at that, we have enough to build!"},
+        {"noelle", "This Advent’s stalls are listed at the top left. Tap one that says Ready to build."},
+    },
     board = {
         tutorial_chain = "Match through the tied treat. Match that cell again to light its pane.",
         tutorial_goal = {"noelle", "To finish, clear all the blue tiles. Make matches over them."},
