@@ -106,7 +106,7 @@ end
 function Tutorial:ready()
     local R = self.R
     return self.enabled and R.g and R.phase == R.PH_IDLE and not R.mission_banner and not R.art_review
-        and not R.autoplay and not R.g.won and not R.g.lost and R.overlay == R.OV_NONE
+        and not R.g.won and not R.g.lost and R.overlay == R.OV_NONE
 end
 
 function Tutorial:show_goal_reminder()

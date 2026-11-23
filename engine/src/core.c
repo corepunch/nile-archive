@@ -186,17 +186,6 @@ const char *app_languages(void)
 #endif
 }
 
-bool app_debug_autoplay(void)
-{
-#if defined(ENGINE_TEST)
-    return app_arg("debug-autoplay") != NULL;
-#elif defined(MATCH3_DEBUG_AUTOPLAY)
-    return true;   /* Enabled by the match-3 Xcode Debug configurations. */
-#else
-    return false;
-#endif
-}
-
 /* The logical screen keeps the design's short side and grows along the long
  * side with the screen, up to max_aspect (beyond that the renderer letterboxes).
  * Portrait screens use the design rotated, so layouts can adapt. Games with

@@ -14,10 +14,6 @@ plaques within the move budget. Claim the resources to visit the island, then
 tap Build to see the next restoration. Each board uses five piece kinds and
 fits inside a 9 × 12 square grid.
 
-In an Xcode Debug build for iPhone, the iOS Simulator or macOS, tap **SKIP >>**
-at the top right of the board to have the bot finish the expedition. Follow the
-usual reward prompts. Release builds hide the button.
-
 Continue returns to the campaign, and Settings opens Sound, Reduce Motion, the guide and the leaderboard.
 Use **Main Menu** in Settings to return to the title. See the [title screen](docs/screenshots/main-menu.jpg)
 and [phone layout](docs/screenshots/main-menu-phone.jpg).

@@ -242,7 +242,6 @@ float app_dt(void);             /* duration of the current frame, seconds */
 double app_clock(void);         /* wall clock, seconds since the Unix epoch */
 const char *app_arg(const char *name);  /* value after --name, "" for a bare flag, NULL if absent */
 const char *app_languages(void);        /* preferred BCP 47 tags, comma-separated, most preferred first */
-bool app_debug_autoplay(void);          /* local debug build may show the match-3 skip button */
 bool app_has_https_opener(void);
 bool app_open_https(const char *url);
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */

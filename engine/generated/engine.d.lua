@@ -719,10 +719,6 @@ function app.clock() end
 ---@return string?
 function app.arg(name) end
 
----Whether this local debug build may show the match-3 skip button.
----@return boolean
-function app.debug_autoplay() end
-
 ---Whether the current platform can request the system to open an HTTPS page.
 ---@return boolean
 function app.has_https_opener() end

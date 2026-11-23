@@ -4,6 +4,7 @@ rules("town_story")
 rules("relic_story")
 rules("match_matrix")
 rules("match3_tutorial")
+rules("match3_finale")
 rules("trickling")
 rules("haptics_board")
 rules("building_economy")
@@ -30,7 +31,6 @@ smoke(tutorial_review, "match3-tutorial")
 shot("tutorial-match-three", "480x900", tutorial_review .. " --tutorial-lesson 1 --frames 8")
 shot("tutorial-rainbow", "390x844", tutorial_review .. " --tutorial-lesson 3 --frames 8 --safe-area 0,47,0,34")
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/relic-rush/lua;. --review-game relic-rush", "walkthrough-pointer", "quick")
-smoke("--debug-autoplay --lua tests/fixtures/board-autoplay;games/relic-rush/lua;. --size 240x450", "board-autoplay")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
 
@@ -52,10 +52,10 @@ for _, fire in ipairs{"born", "sweep", "cross", "rainbow", "recolor"} do
 end
 -- A plain match: coloured clouds burst and pieces fly to the counters on ribbons.
 reel("match-burst", 12, 7, "480x900", "--level 1 --special-states --special-fire match --reel")
+-- The match wins the board; its leftover moves fire as line gems, five a round.
+reel("match-finale", 12, 40, "480x900", "--level 1 --special-states --special-fire match --reel")
 shot("goal-board", "480x900", "--level 2 --frames 180")
 shot("goal-board-phone", "390x844", "--level 2 --frames 180 --safe-area 0,47,0,34")
-shot("debug-skip-board", "480x900", "--debug-autoplay --level 2 --frames 180")
-shot("debug-skip-board-phone", "390x844", "--debug-autoplay --level 2 --frames 180 --safe-area 0,47,0,34")
 shot("construction-backdrop-landing", "390x844", "--level 1 --safe-area 0,47,0,34")
 for level=2,97,5 do
     shot("construction-backdrop-" .. level, "390x844", "--level " .. level .. " --safe-area 0,47,0,34")

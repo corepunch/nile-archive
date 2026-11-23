@@ -17,10 +17,6 @@ with Christmas ([script](docs/story.md)). **Story** in Settings turns the scenes
 Both also have [compact title](docs/screenshots/main-menu-phone.jpg) and
 [compact board](docs/screenshots/first-launch-phone.jpg) captures.
 
-In an Xcode Debug build for iPhone, the iOS Simulator or macOS, tap **SKIP >>**
-at the top right of the board to have the bot finish the level. Claim the reward
-and follow the construction prompts. Release builds hide the button.
-
 ![The 41 market buildings and decorations](docs/screenshots/buildings.jpg)
 
 The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects after the projects: snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.

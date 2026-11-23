@@ -2565,14 +2565,6 @@ static int l_app_arg(lua_State *L)
     return 1;
 }
 
-/* app.debug_autoplay() */
-static int l_app_debug_autoplay(lua_State *L)
-{
-    bool r = app_debug_autoplay();
-    lua_pushboolean(L, r);
-    return 1;
-}
-
 /* app.has_https_opener() */
 static int l_app_has_https_opener(lua_State *L)
 {
@@ -4443,7 +4435,6 @@ static void open_app(lua_State *L)
         {"dt", l_app_dt},
         {"clock", l_app_clock},
         {"arg", l_app_arg},
-        {"debug_autoplay", l_app_debug_autoplay},
         {"has_https_opener", l_app_has_https_opener},
         {"open_https", l_app_open_https},
         {"path", l_app_path},

@@ -455,6 +455,7 @@ function M.install(R, cfg)
     local finish_wave = R.finish_wave
     function R.finish_wave(fast)
         local g = R.g
+        if g.won then return finish_wave(fast) end   -- the finale's waves are not the player's moves
         local b = board(g)
         local runs = runs_of(g, R.pending)
         local oil = g.oil_left
@@ -482,7 +483,6 @@ function M.install(R, cfg)
     local board_update = R.board_update
     function R.board_update(dt)
         local g, phase, hint = R.g, R.phase, R.hint_a
-        local autoplay = R.autoplay
         board_update(dt)
         local st = U.state()
         if app.arg("user-events-test") and not st.tested then st.tested = true; U.fire_tests() end
@@ -512,7 +512,7 @@ function M.install(R, cfg)
             elseif n < was then b.bonus_used = true end
             b.tools[t] = n
         end
-        if (phase ~= R.PH_IDLE or autoplay) and R.phase == R.PH_IDLE and b.waves > 0 then
+        if phase ~= R.PH_IDLE and R.phase == R.PH_IDLE and b.waves > 0 then
             U.emit("move", {g=g, waves=b.waves, longest=b.longest, effective=b.effective})
             b.waves, b.longest, b.effective = 0, 0, false
         end

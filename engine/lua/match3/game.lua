@@ -1582,7 +1582,6 @@ function G.app(R)
     require("match3").bind_town_board_hud(R)
     local still = app.arg("shot") and not app.arg("reel")
     local walkthrough = app.arg("debug-walkthrough")
-    local debug_skip = not walkthrough and app.debug_autoplay()
     local board_exit, resume_overlay
     function R.open_menu()
         resume_overlay = R.overlay
@@ -1664,13 +1663,8 @@ function G.app(R)
         if inp.back and not R.on_menu and not talking and not transition:active() and R.overlay == R.OV_NONE then R.overlay = R.OV_PAUSE end
 
         local switching = transition:active()
-        if R.on_island then R.autoplay = nil end
-        local board_active = not R.on_menu and not R.on_island and not talking and not board and not switching
-            and R.overlay == R.OV_NONE
-        if not R.on_menu and not transition:covering() and (not R.autoplay or board_active) then
+        if not R.on_menu and not transition:covering() then
             R.board_update(dt)
-            -- Resolve up to two turns per frame so long boards still finish quickly.
-            if R.autoplay and R.phase == R.PH_IDLE then R.board_update(0) end
         end
         R.vfx_update(dt)
 
@@ -1691,7 +1685,7 @@ function G.app(R)
 
         local backdrop_only = not R.on_island and R.intro and R.intro:showing_backdrop()
         local interactive = R.overlay == R.OV_NONE and not talking and not board and not switching
-        local world = interactive and not R.autoplay and input.world() or input{pos = inp.pos, pinch = 1}
+        local world = interactive and input.world() or input{pos = inp.pos, pinch = 1}
         ui.set_enabled(interactive)
         if switching then
             transition:frame(inp, dt, paint_transition)
@@ -1700,20 +1694,14 @@ function G.app(R)
             screen:frame(world, dt, interactive, ease.in_out_cubic((board_exit or 0) / BOARD_OUT))
         end
         local show_walkthrough = walkthrough and interactive and not R.on_menu and not backdrop_only
-        local show_skip = debug_skip and board_active and interactive and not R.art_review
-            and not R.autoplay and not R.g.won and not R.g.lost
-        R.debug_skip_button = nil
-        if show_walkthrough or show_skip then
-            local label = show_skip and "SKIP >>" or R.on_island and "Advance" or "Skip level"
+        if show_walkthrough then
+            local label = R.on_island and "Advance" or "Skip level"
             local bounds = rect(318, R.on_island and 116 or R.hud_rect.y - 50, 152, 40)
-            if show_skip then R.debug_skip_button = bounds end
             local state = ui.hit(bounds, 0)
             R.paint_button(bounds, state, true)
             R.say(label, bounds:inflate(-8), 18, R.PAL_CREAM)
             if state.clicked then
-                if show_skip then R.start_autoplay()
-                elseif R.on_island then R.debug_advance_town()
-                else R.debug_skip_level() end
+                if R.on_island then R.debug_advance_town() else R.debug_skip_level() end
             end
         end
         if not R.on_menu and not backdrop_only then R.draw_toast() end

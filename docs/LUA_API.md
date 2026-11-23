@@ -933,12 +933,6 @@ Value after --name on the command line (or in the web page's query string): the 
 
 **Returns:** `string?`
 
-### `app.debug_autoplay()`
-
-Whether this local debug build may show the match-3 skip button.
-
-**Returns:** `boolean`
-
 ### `app.has_https_opener()`
 
 Whether the current platform can request the system to open an HTTPS page.

@@ -139,7 +139,8 @@ function R.smoke()
         if R.overlay == R.OV_RESULT then
             if R.modal_for == R.OV_RESULT and R.dialog_settled() then
                 local boxes = R.result_form.boxes
-                assert(not boxes.next_step and boxes.claim.y - boxes.resources:max().y <= 20,
+                local last = boxes.bonus or boxes.resources   -- the decoration bonus, once one stands
+                assert(not boxes.next_step and boxes.claim.y - last:max().y <= 20,
                     "claim follows the last visible result row without a reserved gap")
                 app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2)); stage = 1
             end

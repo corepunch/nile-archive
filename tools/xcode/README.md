@@ -58,12 +58,6 @@ never edits the committed signing configuration or bundle identifier.
 runs only after a successful build, and launch only after a successful install.
 The app's actual built Info.plist supplies its bundle identifier.
 
-Relic Rush and Christmas at Bellmere show **SKIP >>** at the upper right of an active
-match-3 board in Xcode Debug builds on iPhone, the iOS Simulator and macOS.
-`make ios GAME=relic-rush CONFIGURATION=Debug` builds and installs it on a connected
-iPhone. Release builds hide the button. The native test runner enables it with
-`--debug-autoplay`.
-
 Device builds stay local because they use connected hardware and local signing
 keys. Xcode intermediates, copied app assets and SDK caches may exceed 500 MB;
 the shared build directory avoids separate SDK caches for each game.

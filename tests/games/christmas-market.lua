@@ -9,6 +9,7 @@ rules("campaign_layout", ".")
 rules("match3_elements")
 rules("match_matrix")
 rules("match3_tutorial")
+rules("match3_finale")
 rules("trickling")
 rules("haptics_board")
 rules("building_economy")
@@ -26,7 +27,6 @@ smoke(tutorial_review .. " --size 390x844 --safe-area 0,47,0,34", "match3-tutori
 shot("tutorial-line", "390x844", tutorial_review .. " --tutorial-lesson 2 --frames 8 --safe-area 0,47,0,34")
 shot("tutorial-charge", "480x900", tutorial_review .. " --tutorial-lesson 5 --frames 8")
 smoke("--debug-walkthrough --lua tests/fixtures/walkthrough;games/christmas-market/lua;. --review-game christmas-market", "walkthrough-pointer", "quick")
-smoke("--debug-autoplay --lua tests/fixtures/board-autoplay;games/christmas-market/lua;. --size 390x844 --safe-area 0,47,0,34", "board-autoplay")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 
 shot("main-menu", "480x900", "--main-menu")
@@ -89,6 +89,8 @@ for _, fire in ipairs{"born", "sweep", "cross", "rainbow", "recolor"} do
 end
 -- A plain match: coloured clouds burst and pieces fly to the counters on ribbons.
 reel("match-burst", 12, 7, "480x900", "--level 1 --special-states --special-fire match --reel")
+-- The match wins the board; its leftover moves fire as line gems, five a round.
+reel("match-finale", 12, 40, "480x900", "--level 1 --special-states --special-fire match --reel")
 shot("campaign-access", "480x900", "--level 13")
 shot("campaign-thaw", "480x900", "--level 19")
 shot("phone-campaign-thaw", "390x844", "--level 19 --safe-area 0,47,0,34")

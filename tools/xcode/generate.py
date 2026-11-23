@@ -139,14 +139,12 @@ class Project:
         self.objects[uid] = dict(isa=isa, **fields)
         return uid
 
-    def configurations(self, key, settings, debug_settings=None):
+    def configurations(self, key, settings):
         configs = []
         for name in ('Debug', 'Release'):
             values = dict(settings, GCC_OPTIMIZATION_LEVEL='0' if name == 'Debug' else 's',
                           DEBUG_INFORMATION_FORMAT='dwarf' if name == 'Debug' else 'dwarf-with-dsym',
                           ONLY_ACTIVE_ARCH='YES' if name == 'Debug' else 'NO')
-            if name == 'Debug' and debug_settings:
-                values.update(debug_settings)
             uid = self.add(f'{key}/{name}', 'XCBuildConfiguration', name=name, buildSettings=values)
             for field, value in self.existing.get(uid, {}).get('buildSettings', {}).items():
                 if field.startswith(('CODE_SIGN', 'DEVELOPMENT_TEAM', 'PROVISIONING_PROFILE', 'PRODUCT_BUNDLE_IDENTIFIER')):
@@ -275,11 +273,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             write(bundle / 'Generated/macos.entitlements', plistlib.dumps({'com.apple.security.app-sandbox': True}).decode())
         if team:
             settings['DEVELOPMENT_TEAM'] = team
-        debug_settings = None
-        if game in ('relic-rush', 'christmas-market'):
-            debug_settings = {'GCC_PREPROCESSOR_DEFINITIONS':
-                              ['$(inherited)', 'MATCH3_DEBUG_AUTOPLAY=1']}
-        configs = project.configurations(name, settings, debug_settings)
+        configs = project.configurations(name, settings)
 
         info = dict(CFBundleExecutable='$(EXECUTABLE_NAME)', CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',
                     CFBundleName=meta.get('home', meta['name']), CFBundleDisplayName=meta.get('home', meta['name']), CFBundlePackageType='APPL',

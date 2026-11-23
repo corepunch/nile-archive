@@ -15,10 +15,6 @@ permanent slot exactly once. Spending the tool empties the slot. The
 [shared ranks and charge rules](../../../docs/MATCH3_ENGINE.md) apply to both
 Christmas at Bellmere and Relic Rush.
 
-In an Xcode Debug build for iPhone, the iOS Simulator or macOS, **SKIP >>** runs the
-reference bot through legal swaps at up to two moves per frame. It can keep
-playing after the move counter reaches zero. The normal results card follows.
-
 ## Line gems and rainbow gems
 
 Four in a row or column leave a **line gem** where the swap landed (or at the
@@ -42,6 +38,10 @@ first rainbow gem each show a one-line hint, and the Market keeper's guide
 lists both. The rules are the engine's
 `striped` and `color_bomb` ([optional match specials](../../../docs/MATCH3_ENGINE.md#optional-match-specials)),
 switched on in [`lua/campaign.lua`](../lua/campaign.lua).
+
+A won board spends its leftover moves before the result: five at a time, five
+random pieces become line gems and fire, and everything they sweep pays its
+Tokens, Treats and Materials. See the [finale](../../../docs/MATCH3_ENGINE.md#finale-leftover-moves).
 
 Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
