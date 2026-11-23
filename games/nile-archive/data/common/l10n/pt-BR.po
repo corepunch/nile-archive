@@ -1,0 +1,2416 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: nile-archive\n"
+"Language: pt-BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Акация"
+msgstr "Acácia"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Алоэ"
+msgstr "Aloé"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Амфоры"
+msgstr "Ânforas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Анубис"
+msgstr "Anúbis"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Базар"
+msgstr "Bazar"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Бегемотик"
+msgstr "Hipopótamo bebê"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Беседка-киоск"
+msgstr "Quiosque-pérgula"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Бирюза"
+msgstr "Turquesa"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Васильки"
+msgstr "Centáureas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Великая пирамида"
+msgstr "Grande Pirâmide"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Вилла вельможи"
+msgstr "Vila do nobre"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Виноградная пергола"
+msgstr "Pérgula de uvas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Винодельня"
+msgstr "Vinícola"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Глинобитный дом"
+msgstr "Casa de barro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Голова фараона"
+msgstr "Cabeça do faraó"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Голубой лотос"
+msgstr "Lótus azul"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Голубятня"
+msgstr "Pombal"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Гончарня"
+msgstr "Olaria"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Гранатовое дерево"
+msgstr "Romãzeira"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Двойная пальма"
+msgstr "Palmeira dupla"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Двор скульптора"
+msgstr "Pátio do escultor"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Деревце в кадке"
+msgstr "Árvore em vaso"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Живая изгородь"
+msgstr "Cerca viva"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Зернохранилище"
+msgstr "Celeiro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Золотой скарабей"
+msgstr "Escaravelho dourado"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_content.lua
+msgid "Ибис"
+msgstr "Íbis"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ирисы"
+msgstr "Íris"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Каменная скамья"
+msgstr "Banco de pedra"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Кипарис"
+msgstr "Cipreste"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Клумба"
+msgstr "Canteiro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Колонный зал"
+msgstr "Salão de colunas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Колосс"
+msgstr "Colosso"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Конюшня колесниц"
+msgstr "Estábulo de bigas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Корзины с зерном"
+msgstr "Cestos de grãos"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Костёр"
+msgstr "Fogueira"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кошка"
+msgstr "Gato"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Кошка Бастет"
+msgstr "Gata Bastet"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Крокодил"
+msgstr "Crocodilo"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Круглый куст"
+msgstr "Arbusto redondo"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Куст хны"
+msgstr "Arbusto de hena"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Маки"
+msgstr "Papoulas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Малая пирамида"
+msgstr "Pirâmide pequena"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Маяк"
+msgstr "Farol"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Навес с подушками"
+msgstr "Toldo com almofadas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ниломер"
+msgstr "Nilômetro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Нильский тростник"
+msgstr "Juncos do Nilo"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Обелиск"
+msgstr "Obelisco"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Олеандр"
+msgstr "Oleandro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Олива"
+msgstr "Oliveira"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Паланкин"
+msgstr "Palanquim"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пальма дум"
+msgstr "Palmeira-dum"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пальмовая роща"
+msgstr "Palmeiral"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Папирус"
+msgstr "Papiro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пекарня"
+msgstr "Padaria"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Песчаный валун"
+msgstr "Rochedo de areia"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пилон"
+msgstr "Pilono"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пир на циновке"
+msgstr "Banquete na esteira"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Повозка"
+msgstr "Carroça"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Причал с фелюкой"
+msgstr "Cais com falua"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пруд с ибисами"
+msgstr "Lago dos íbis"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пруд с лотосами"
+msgstr "Lago de lótus"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пюпитр писца"
+msgstr "Estante do escriba"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Раскопки"
+msgstr "Escavações"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ромашки"
+msgstr "Margaridas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ручная мельница"
+msgstr "Moinho manual"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сад фараона"
+msgstr "Jardim do faraó"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Светильник"
+msgstr "Lamparina"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Святилище Бастет"
+msgstr "Santuário de Bastet"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Святилище ладьи"
+msgstr "Santuário da barca"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Священное озеро"
+msgstr "Lago sagrado"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сикомор"
+msgstr "Sicômoro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Скалы пустыни"
+msgstr "Rochas do deserto"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Смоковница"
+msgstr "Figueira"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сокол"
+msgstr "Falcão"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Солнечные часы"
+msgstr "Relógio de sol"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Статуя писца"
+msgstr "Estátua do escriba"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сторожевая башня"
+msgstr "Torre de vigia"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сундук сокровищ"
+msgstr "Baú do tesouro"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сфинкс"
+msgstr "Esfinge"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Тамариск"
+msgstr "Tamargueira"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ткацкая мастерская"
+msgstr "Oficina de tecelagem"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Тростниковая лодка"
+msgstr "Barco de junco"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Узорный цветник"
+msgstr "Canteiro com padrões"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Указатель"
+msgstr "Placa indicativa"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Упавшая колонна"
+msgstr "Coluna caída"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Факел"
+msgstr "Tocha"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Финиковая пальма"
+msgstr "Tamareira"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Фонтанчик"
+msgstr "Fonte pequena"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Храм солнца"
+msgstr "Templo do sol"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Цветочный ящик"
+msgstr "Jardineira de flores"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Чаша для птиц"
+msgstr "Bebedouro de pássaros"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Шадуф"
+msgstr "Shaduf"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Шатёр"
+msgstr "Tenda"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Школа писцов"
+msgstr "Escola de escribas"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Штандарт"
+msgstr "Estandarte"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ящики"
+msgstr "Caixotes"
+
+#. TRANSLATORS: the objects a player looks for in the picture
+#: games/nile-archive/lua/archive_content.lua
+msgid "Анх"
+msgstr "Ankh"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Архив"
+msgstr "Arquivo"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Библиотека писца"
+msgstr "Biblioteca do escriba"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Библиотека, второй круг"
+msgstr "Biblioteca, segunda rodada"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Большая амфора"
+msgstr "Ânfora grande"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Бусы на ларце"
+msgstr "Colar sobre o cofre"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Бюст"
+msgstr "Busto"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "В библиотеке спрятан второй след."
+msgstr "Há um segundo rastro escondido na biblioteca."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Веер"
+msgstr "Leque"
+
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Весы"
+msgstr "Balança"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Весы отца что-то взвешивали."
+msgstr "A balança do pai pesava alguma coisa."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Вилы"
+msgstr "Forquilha"
+
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Виноград"
+msgstr "Uvas"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Гранат"
+msgstr "Romã"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Дверь под крылатым солнцем"
+msgstr "Porta sob o sol alado"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Двор хранителя"
+msgstr "Pátio do guardião"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Двор, второй круг"
+msgstr "Pátio, segunda rodada"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Дом садовника"
+msgstr "Casa do jardineiro"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Дочь хранителя · ищет отца и архив"
+msgstr "Filha do guardião · procura o pai e o arquivo"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Золотой кувшин"
+msgstr "Jarro dourado"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Инжир"
+msgstr "Figo"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Каламы"
+msgstr "Cálamos"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Карта"
+msgstr "Mapa"
+
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ключ"
+msgstr "Chave"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Корзина с зеленью"
+msgstr "Cesta de verduras"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Ладья"
+msgstr "Barca"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Ларец у бюста"
+msgstr "Cofre junto ao busto"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Лейка"
+msgstr "Regador"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Лодочница · проводник будущих глав"
+msgstr "Barqueira · guia dos próximos capítulos"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Мастерская"
+msgstr "Oficina"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Мерит"
+msgstr "Merit"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "На столах двора остались вещи отца. Начните с них."
+msgstr "Nas mesas do pátio ficaram as coisas do pai. Comece por elas."
+
+#. TRANSLATORS: a character's name and their role in the story
+#: games/nile-archive/lua/archive_content.lua
+msgid "Нефра"
+msgstr "Nefra"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть."
+msgstr "Uma nova margem foi aberta! Arraste a ilha para a esquerda para vê-la."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Перо"
+msgstr "Pena"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "План привёл к старому храму."
+msgstr "O plano levou ao templo antigo."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Пропавший хранитель · оставил подсказки"
+msgstr "Guardião desaparecido · deixou pistas"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Свиток"
+msgstr "Pergaminho"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Скарабей"
+msgstr "Escaravelho"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Фонтан"
+msgstr "Fonte"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Хорем"
+msgstr "Horem"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Храм Исиды"
+msgstr "Templo de Ísis"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Храм на закате"
+msgstr "Templo ao pôr do sol"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Чаша с огнём"
+msgstr "Taça de fogo"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Яблоко"
+msgstr "Maçã"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Яблоко указало на сад."
+msgstr "A maçã apontou para o jardim."
+
+#. TRANSLATORS: each %d is the coins paid for that part of the result
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid ""
+"%d за поиск · %d первая победа\n"
+"%d новые звёзды · %d без ошибок и подсказок"
+msgstr ""
+"%d por busca · %d primeira vitória\n"
+"%d estrelas novas · %d sem erros e sem dicas"
+
+#. TRANSLATORS: %s is the search's title; then items found and the total
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "%s · найдено %d из %d"
+msgstr "%s · %d de %d encontrados"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "(вы)"
+msgstr "(você)"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "ВРЕМЯ"
+msgstr "TEMPO"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Влияние"
+msgstr "Influência"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Войдите в Game Center, чтобы сравнить себя с другими игроками."
+msgstr "Entre no Game Center para se comparar com outros jogadores."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Войдите в Game Center, чтобы увидеть друзей."
+msgstr "Entre no Game Center para ver seus amigos."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Все"
+msgstr "Todos"
+
+#. TRANSLATORS: %d is the chapter number, %s the cache's title
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Глава %d · Тайник · %s"
+msgstr "Capítulo %d · Esconderijo · %s"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Глава %d завершена"
+msgstr "Capítulo %d concluído"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Главы"
+msgstr "Capítulos"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Дальше · Книга разливов"
+msgstr "Próximo · O Livro das Cheias"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Дальше · Печать"
+msgstr "Próximo · O Selo"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Друзья"
+msgstr "Amigos"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Журнал улик"
+msgstr "Diário de pistas"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "ЗАПИСЬ В ЖУРНАЛЕ"
+msgstr "ANOTAÇÃO NO DIÁRIO"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Загрузка..."
+msgstr "Carregando..."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#: games/nile-archive/lua/archive_island.lua
+msgid "Закрыть"
+msgstr "Fechar"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Записей: %d"
+msgstr "Anotações: %d"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Записи по этой сцене появятся в журнале по ходу расследования."
+msgstr "As anotações desta cena aparecerão no diário ao longo da investigação."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Записи появятся после первого поиска."
+msgstr "As anotações aparecerão após a primeira busca."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Играть"
+msgstr "Jogar"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Играть снова"
+msgstr "Jogar de novo"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Искать улику"
+msgstr "Buscar pista"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "К поискам"
+msgstr "Às buscas"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Люди острова"
+msgstr "Gente da ilha"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Меньше анимации"
+msgstr "Menos animação"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "НОВАЯ УЛИКА"
+msgstr "NOVA PISTA"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "На остров"
+msgstr "À ilha"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Награда за тайник · %d монета"
+msgid_plural "Награда за тайник · %d монет"
+msgstr[0] "Recompensa do esconderijo · %d moeda"
+msgstr[1] "Recompensa do esconderijo · %d moedas"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Найдите предметы в нужном порядке."
+msgstr "Encontre os objetos na ordem certa."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Никто из друзей ещё не играл."
+msgstr "Nenhum amigo jogou ainda."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Нужны три звезды"
+msgstr "Faltam três estrelas"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "ОЧКИ"
+msgstr "PONTOS"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Открыть тайник"
+msgstr "Abrir esconderijo"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Пауза"
+msgstr "Pausa"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Поиск завершён!"
+msgstr "Busca concluída!"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Пока нет результатов. Будьте первым!"
+msgstr "Ainda sem resultados. Seja o primeiro!"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Продолжение следует"
+msgstr "Continua..."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Продолжить"
+msgstr "Continuar"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Следующий поиск даст улику"
+msgstr "A próxima busca dará uma pista"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Сначала найдите предыдущие улики"
+msgstr "Encontre antes as pistas anteriores"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Строить за монеты"
+msgstr "Construir com moedas"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Таблица лидеров"
+msgstr "Ranking"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Тайник открыт"
+msgstr "Esconderijo aberto"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Тайник открыт. Запись в журнале."
+msgstr "Esconderijo aberto. Anotação no diário."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Улики %d/%d · Звёзды %d/3"
+msgstr "Pistas %d/%d · Estrelas %d/3"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Обследовать архив"
+msgstr "Examinar o arquivo"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Обследовать канал"
+msgstr "Examinar o canal"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Обследовать сад"
+msgstr "Examinar o jardim"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в архиве"
+msgstr "Obras no arquivo"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в мастерской"
+msgstr "Obras na oficina"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в саду"
+msgstr "Obras no jardim"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в храме"
+msgstr "Obras no templo"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы на канале"
+msgstr "Obras no canal"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Разобрать записи мастерской"
+msgstr "Decifrar as anotações da oficina"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Разобрать записи храма"
+msgstr "Decifrar as anotações do templo"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d звезда"
+msgid_plural "%d звёзд"
+msgstr[0] "%d estrela"
+msgstr[1] "%d estrelas"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета"
+msgid_plural "%d монет"
+msgstr[0] "%d moeda"
+msgstr[1] "%d moedas"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета · +%d влияния"
+msgid_plural "%d монет · +%d влияния"
+msgstr[0] "%d moeda · +%d de influência"
+msgstr[1] "%d moedas · +%d de influência"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета · +%d влияния после подтверждения"
+msgid_plural "%d монет · +%d влияния после подтверждения"
+msgstr[0] "%d moeda · +%d de influência após confirmar"
+msgstr[1] "%d moedas · +%d de influência após confirmar"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета после подтверждения"
+msgid_plural "%d монет после подтверждения"
+msgstr[0] "%d moeda após confirmar"
+msgstr[1] "%d moedas após confirmar"
+
+#. TRANSLATORS: %s is a building's name
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid ""
+"%s\n"
+"+%d влияния"
+msgstr ""
+"%s\n"
+"+%d de influência"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "+%d влияния"
+msgstr "+%d de influência"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "80 монет за сцену · бонусы за первую победу, новые звёзды и поиск без ошибок и подсказок"
+msgstr "80 moedas por cena · bônus pela primeira vitória, estrelas novas e busca sem erros nem dicas"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Берег стоит %d монету. Переиграйте открытую главу."
+msgid_plural "Берег стоит %d монет. Переиграйте открытую главу."
+msgstr[0] "A margem custa %d moeda. Jogue de novo um capítulo aberto."
+msgstr[1] "A margem custa %d moedas. Jogue de novo um capítulo aberto."
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Влияние дают постройки и украшения. Оно открывает поиски и не тратится."
+msgstr "Construções e decorações dão influência. Ela abre buscas e não é gasta."
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Вода"
+msgstr "Água"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Восстановление"
+msgstr "Restauração"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Все постройки"
+msgstr "Todas as construções"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выбрать"
+msgstr "Escolher"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выбрать место"
+msgstr "Escolher local"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выполнено"
+msgstr "Concluído"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выполнить"
+msgstr "Fazer"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Герои"
+msgstr "Heróis"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Дальний берег"
+msgstr "Margem distante"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Деревья"
+msgstr "Árvores"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Дома и мастерские"
+msgstr "Casas e oficinas"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Животные"
+msgstr "Animais"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Завершите предыдущую главу"
+msgstr "Conclua o capítulo anterior"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "ИСТОРИЯ ЗАВЕРШЕНА"
+msgstr "HISTÓRIA CONCLUÍDA"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Камни"
+msgstr "Pedras"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Кусты"
+msgstr "Arbustos"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Не хватает монет"
+msgstr "Faltam moedas"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Недостаточно монет. Пройдите сцену ещё раз."
+msgstr "Moedas insuficientes. Jogue a cena de novo."
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Нужно %d звезда"
+msgid_plural "Нужно %d звёзд"
+msgstr[0] "Falta %d estrela"
+msgstr[1] "Faltam %d estrelas"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Нужно завершить %d поиск"
+msgid_plural "Нужно завершить %d поисков"
+msgstr[0] "Falta concluir %d busca"
+msgstr[1] "Faltam concluir %d buscas"
+
+#: games/nile-archive/lua/archive_island.lua
+#: games/nile-archive/lua/town_config.lua
+msgid "Нужно свободное место на открытом берегу"
+msgstr "Precisa de espaço livre na margem aberta"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Остров заполнен"
+msgstr "Ilha cheia"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Отмена"
+msgstr "Cancelar"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "ПОВТОРИТЕ ПОИСК РАДИ УЛИКИ"
+msgstr "REPITA A BUSCA PARA ACHAR A PISTA"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "ПОИСК %d"
+msgstr "BUSCA %d"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Пальмовый берег"
+msgstr "Margem das palmeiras"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Памятники"
+msgstr "Monumentos"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Перемещение бесплатно"
+msgstr "Mover é grátis"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Постройка готова · +%d влияния"
+msgstr "Construção pronta · +%d de influência"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Постройка перемещена"
+msgstr "Construção movida"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Припасы"
+msgstr "Suprimentos"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Работы больше недоступны"
+msgstr "As obras não estão mais disponíveis"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Работы завершены · +%d влияния"
+msgstr "Obras concluídas · +%d de influência"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Работы на острове"
+msgstr "Obras na ilha"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "СЛЕДУЮЩАЯ ЦЕЛЬ"
+msgstr "PRÓXIMA META"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "СОБЕРИТЕ ТРИ ЗВЕЗДЫ"
+msgstr "GANHE TRÊS ESTRELAS"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Сад"
+msgstr "Jardim"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "След ведёт вверх по Нилу"
+msgstr "O rastro segue rio acima"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Сначала пройдите нужную главу или соберите больше звёзд"
+msgstr "Antes, conclua o capítulo exigido ou ganhe mais estrelas"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Статуи"
+msgstr "Estátuas"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "ТАЙНИК ГОТОВ"
+msgstr "ESCONDERIJO PRONTO"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Тростниковый берег"
+msgstr "Margem dos juncos"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Уже восстановлено"
+msgstr "Já restaurado"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Украшение на месте"
+msgstr "Decoração no lugar"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Цветы"
+msgstr "Flores"
+
+#: games/nile-archive/lua/archive_kit.lua
+msgid "Пропустить"
+msgstr "Pular"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Амбары Ликона стоят на том же рукаве. Что там осталось?"
+msgstr "Os celeiros de Likon ficam no mesmo braço. O que restou lá?"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Амбары, второй круг"
+msgstr "Celeiros, segunda rodada"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Амфора"
+msgstr "Ânfora"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Архив найден, но одной книги нет. Пересчитайте всё."
+msgstr "O arquivo foi achado, mas falta um livro. Conte tudo de novo."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "В податных сундуках могут быть письма."
+msgstr "Nos baús de impostos pode haver cartas."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ведро"
+msgstr "Balde"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Верёвка"
+msgstr "Corda"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Весло"
+msgstr "Remo"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Глина"
+msgstr "Argila"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Гребень"
+msgstr "Pente"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Дом Ликона брошен. Он уехал быстро."
+msgstr "A casa de Likon está abandonada. Ele partiu às pressas."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Дом надзирателя"
+msgstr "Casa do supervisor"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Дом надзирателя, второй круг"
+msgstr "Casa do supervisor, segunda rodada"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Допрос"
+msgstr "Interrogatório"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Затопленные амбары"
+msgstr "Celeiros alagados"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Зеркало"
+msgstr "Espelho"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Зерно"
+msgstr "Grãos"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Канат"
+msgstr "Cabo"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кисть"
+msgstr "Pincel"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кол"
+msgstr "Estaca"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Корзина"
+msgstr "Cesto"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Крыса"
+msgstr "Rato"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кубок"
+msgstr "Taça"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кувшин"
+msgstr "Jarro"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Куда ушла бы вода, если бы дамба устояла?"
+msgstr "Para onde a água teria ido se a represa tivesse aguentado?"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лаз выводит к ниломеру. Здесь отец встречал каждое утро."
+msgstr "A passagem leva ao nilômetro. Era ali que o pai passava toda manhã."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лампа"
+msgstr "Lâmpada"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ларец"
+msgstr "Cofre"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лесенка"
+msgstr "Escadinha"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лестница"
+msgstr "Escada"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лодочка"
+msgstr "Barquinho"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лопата"
+msgstr "Pá"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лотос"
+msgstr "Lótus"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лягушка"
+msgstr "Sapo"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мастерская печатей"
+msgstr "Oficina dos selos"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мерка"
+msgstr "Medida"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мешок"
+msgstr "Saco"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мешочек"
+msgstr "Saquinho"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Молоток"
+msgstr "Martelo"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Монеты"
+msgstr "Moedas"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мотыга"
+msgstr "Enxada"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ниломер, второй круг"
+msgstr "Nilômetro, segunda rodada"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Опись"
+msgstr "Inventário"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Отец боялся за дамбу. Надо увидеть её своими глазами."
+msgstr "O pai temia pela represa. É preciso ver com os próprios olhos."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Отчёт"
+msgstr "Relatório"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Перерезанная дамба"
+msgstr "Represa rompida"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Перстень"
+msgstr "Anel"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Печать"
+msgstr "Selo"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Письмо"
+msgstr "Carta"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Плащ"
+msgstr "Manto"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Последняя вещь"
+msgstr "A última coisa"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Посох"
+msgstr "Cajado"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Резец"
+msgstr "Cinzel"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Рейка"
+msgstr "Régua"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "С верхней ступени ниломера видно весь рукав."
+msgstr "Do degrau de cima do nilômetro se vê o braço inteiro."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Сандалии"
+msgstr "Sandálias"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Сандалия"
+msgstr "Sandália"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Серп"
+msgstr "Foice"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Сеть"
+msgstr "Rede"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "След киля"
+msgstr "Marca de quilha"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Совок"
+msgstr "Pazinha"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ступка"
+msgstr "Pilão"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Счётные камни"
+msgstr "Pedras de contar"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Табличка"
+msgstr "Tabuinha"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Там, где началась первая печать, закончится игра."
+msgstr "Onde começou o primeiro selo, o jogo vai terminar."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Тростинка"
+msgstr "Caniço"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Фонарь"
+msgstr "Lanterna"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Хранилище под храмом"
+msgstr "Depósito sob o templo"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Хранилище, второй круг"
+msgstr "Depósito, segunda rodada"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Цапля"
+msgstr "Garça"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Цепь"
+msgstr "Corrente"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Чернильница"
+msgstr "Tinteiro"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Что Ликон успел узнать раньше нас?"
+msgstr "O que Likon descobriu antes de nós?"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Восстановите мастерскую"
+msgstr "Restaure a oficina"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Восстановите фонтан"
+msgstr "Restaure a fonte"
+
+#: games/nile-archive/lua/archive_progress.lua
+#, lua-format
+msgid "Ещё %d влияния"
+msgstr "Mais %d de influência"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Нужны предыдущие улики"
+msgstr "Faltam as pistas anteriores"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Откройте предыдущий тайник"
+msgstr "Abra o esconderijo anterior"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Соберите все улики"
+msgstr "Reúna todas as pistas"
+
+#: games/nile-archive/lua/archive_scene.lua
+msgid "Бонус"
+msgstr "Bônus"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "«Мои амбары утопил хранитель Хорем. Его видели живым выше по реке. Иду за ним»."
+msgstr "“Meus celeiros foram afogados pelo guardião Horem. Ele foi visto vivo rio acima. Vou atrás dele.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "«Хранитель утопил». Удобная ложь для вора. Отец никогда бы не тронул свой дом."
+msgstr "“O guardião afogou.” Que mentira conveniente para um ladrão. Meu pai jamais tocaria na própria casa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "«Я видел, как он платил лодочнице. На золотом знаке — тростник и вода»."
+msgstr "“Eu o vi pagar a barqueira. No sinal de ouro havia junco e água.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А вот метка той воды. Выше всех. Такой ни я не видела, ни мать."
+msgstr "E aqui está a marca daquela água. Mais alta que todas. Nem eu nem minha mãe vimos uma assim."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А здесь написал честно: яблоко. В игре это значит: смотри сюда."
+msgstr "Aqui ele escreveu com sinceridade: maçã. No jogo isso quer dizer: olhe aqui."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А они целы. Тётка говорит, в ту ночь у них даже зерно не намокло. Весь остров там плясал."
+msgstr "Eles estão inteiros. Minha tia disse que, naquela noite, nem o grão deles molhou. A ilha toda dançou lá."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А потом пришла вода. Мой дом стоял на этом рукаве, писарша. Там теперь ил."
+msgstr "E então veio a água. Minha casa ficava neste braço, escriba. Agora é só lodo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А потом?"
+msgstr "E depois?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А серьга у тебя откуда? Золото, и работа тонкая. Странная вещь для лодочницы."
+msgstr "E esse brinco, de onde veio? É de ouro, trabalho fino. Coisa estranha para uma barqueira."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А что он мог один, против шестерых?"
+msgstr "E o que ele podia fazer sozinho contra seis?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Амбары Ликона затоплены, зерно сгнило."
+msgstr "Os celeiros de Likon estão alagados, e o grão apodreceu."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Амбары Ликона. Гребла молча, как ты просила."
+msgstr "Os celeiros de Likon. Remei calada, como você pediu."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Анх, веер, ключ, перо, кошка... Мерит, это игра. Наша игра."
+msgstr "Ankh, leque, chave, pena, gato... Merit, isto é um jogo. O nosso jogo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Архив без книг. Смешно. Но люди любят, когда у дома есть крыша."
+msgstr "Um arquivo sem livros. Que graça. Mas o povo gosta quando a casa tem teto."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Архив цел, 239 сундуков из 240. Нет Книги разливов. На ступенях свежая глина."
+msgstr "O arquivo está inteiro, 239 baús de 240. Falta o Livro das Cheias. Nos degraus há argila fresca."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Брали. Брат мой платил, пока поле не отдал."
+msgstr "Cobraram, sim. Meu irmão pagou até entregar o campo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Брат бы порадовался. Поделом ему, надзирателю."
+msgstr "Meu irmão ficaria feliz. Bem feito para o supervisor."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Брось, говорю. Режь, если так нужен."
+msgstr "Solte, estou dizendo. Corte, se precisa tanto."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В детстве он прятал по дому восемь вещей. Последняя всегда вела в следующую комнату."
+msgstr "Quando criança, ele escondia oito coisas pela casa. A última sempre levava ao próximo cômodo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В мастерской, в тайнике под верстаком. Едем домой."
+msgstr "Na oficina, no esconderijo sob a bancada. Vamos para casa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В списке вместо свитка — карта. Дальше нужна лодка Мерит."
+msgstr "Na lista, no lugar do pergaminho, há um mapa. Daqui para a frente precisamos do barco de Merit."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В списке яблоко. Яблони растут только у дома садовника. В ночь воды остров был пуст."
+msgstr "Na lista há uma maçã. Macieiras só crescem na casa do jardineiro. Na noite da água, a ilha estava vazia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В столицу пишут: воды мало, зерна мало. А с крестьян берут как за большую воду."
+msgstr "Escrevem à capital: pouca água, pouco grão. Mas cobram dos camponeses como se a cheia fosse grande."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вези. Разговаривать не обязательно."
+msgstr "Leve-me. Não precisa conversar."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Видишь? В списке вместо свитка стоит карта. В игре замена — это всегда подсказка."
+msgstr "Viu? Na lista, no lugar do pergaminho, está um mapa. No jogo, uma troca é sempre uma pista."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода затопила амбары Ликона. Нефра сомневается, что он приказал резать дамбу."
+msgstr "A água alagou os celeiros de Likon. Nefra duvida que ele tenha mandado cortar a represa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода их не смыла. Эта сторона была укрыта."
+msgstr "A água não os levou. Este lado estava protegido."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода поднимет то, что не поднимут руки. Сначала верни дом, потом людей, потом реку."
+msgstr "A água levanta o que as mãos não levantam. Primeiro devolva a casa, depois o povo, depois o rio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода придёт выше всех отметок. Удержит её дамба или нет, я не знаю, что хуже."
+msgstr "A água virá acima de todas as marcas. Se a represa vai segurar ou não, não sei o que é pior."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Возможно. Они отвлекли бы любого, кто искал Книгу."
+msgstr "Pode ser. Teriam distraído qualquer um que procurasse o Livro."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Возьму с собой. Последняя вещь всегда ведёт дальше."
+msgstr "Vou levar comigo. A última coisa sempre leva adiante."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вон твоя кошка опять сидит, как сторож. Что у неё на шее?"
+msgstr "Olha a sua gata sentada de novo, feito guarda. O que ela tem no pescoço?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот и всё, писарша. Нашла. Плясать будем?"
+msgstr "Pronto, escriba. Você achou. Vamos dançar?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот и сходи посмотри. А я постерегу лодку. Лодка у меня одна, как у тебя отец."
+msgstr "Então vá ver. Eu vigio o barco. Tenho um só, como você tem um só pai."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот как он успел! Тоже мне тайна."
+msgstr "Olha só, como ele conseguiu! Que mistério mais sem graça."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот он. В корнях яблони кувшин, запечатан. Твоей печатью, писарша."
+msgstr "Aqui está. Nas raízes da macieira, um jarro lacrado. Com o seu selo, escriba."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот оно, золото, в ухе. Ношу, чтобы помнить, сколько я стою."
+msgstr "Aí está o ouro, na orelha. Uso para lembrar quanto eu valho."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот письмо в податном сундуке. Рука Ликона: просит Книгу «для царской переписи»."
+msgstr "Aqui está uma carta no baú de impostos. A letra é de Likon: pede o Livro “para o censo real”."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот почему он написал «хранитель». Тростник и вода — печать нашей мастерской."
+msgstr "Por isso ele escreveu “guardião”. Junco e água são o selo da nossa oficina."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот тайник под верстаком. Пусто. Мерит, дай мне свою серьгу."
+msgstr "Aqui está o esconderijo sob a bancada. Vazio. Merit, me dê o seu brinco."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот черновик письма, свежий. Читай, я таких слов не знаю."
+msgstr "Aqui está um rascunho de carta, recente. Leia, eu não conheço essas palavras."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всех. Никто не утонул. Только я работала. За золото."
+msgstr "Todos. Ninguém se afogou. Só eu trabalhei. Por ouro."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всех? В ту самую ночь?"
+msgstr "Todos? Justo naquela noite?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всё, что осталось в амбарах, сгнило."
+msgstr "Tudo o que sobrou nos celeiros apodreceu."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всё-таки считаю. Куда ушла бы вода, если бы дамба устояла?"
+msgstr "Mesmo assim vou contar. Para onde a água teria ido se a represa tivesse aguentado?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Выходит, та записка не последняя. И он пишет так, будто знал, что люди уйдут."
+msgstr "Então aquele bilhete não foi o último. E ele escreve como se soubesse que o povo ia embora."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Выше всех отметок. За месяц, Мерит. Он знал."
+msgstr "Acima de todas as marcas. Um mês antes, Merit. Ele sabia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Гляди, сколько народу вернулось. При твоём отце так не шумели."
+msgstr "Veja quanta gente voltou. No tempo do seu pai não havia tanto barulho."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Да кому она нужна? Цифры про воду. Вода и так приходит каждый год."
+msgstr "Quem precisa dela? Números sobre a água. A água vem todo ano de qualquer jeito."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Дай сюда. Внутри его рука."
+msgstr "Me dê isso. Lá dentro está a letra dele."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Дамбу перерезали. Воду сюда привели."
+msgstr "A represa foi cortada. A água foi trazida para cá."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Дважды он писал в списке «гранат», а клал яблоко. Я решила, что он стареет."
+msgstr "Duas vezes ele escreveu “romã” na lista e guardou uma maçã. Achei que estava ficando velho."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Две борозды на колу. Твой киль мог их оставить?"
+msgstr "Dois sulcos na estaca. Sua quilha poderia tê-los feito?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Двести лет наш дом записывал высоту реки. Каждый локоть, каждый год."
+msgstr "Há duzentos anos nossa casa anota a altura do rio. Cada côvado, cada ano."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Девять месяцев я ждала в Мемфисе письма. А столы так и накрыты."
+msgstr "Esperei nove meses por uma carta em Mênfis. E as mesas continuam postas."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Держи конец. Мой узел, кроме меня, никто не развяжет. Мать так вязала."
+msgstr "Segure a ponta. Ninguém além de mim desfaz o meu nó. Minha mãe amarrava assim."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Думаешь, твои полки с маслом и верёвками были для Ликона?"
+msgstr "Acha que as suas prateleiras de óleo e cordas eram para Likon?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Думала, больше не спросишь."
+msgstr "Achei que você não ia mais perguntar."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если бы дамба устояла, вода смыла бы семь селений на правом берегу."
+msgstr "Se a represa tivesse aguentado, a água teria varrido sete povoados da margem direita."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если нас утопит, я выплыву первой. Предупреждаю честно."
+msgstr "Se nos afogarem, eu nado primeiro. Aviso com franqueza."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если ты читаешь это, то злишься. Правильно. Злись и считай."
+msgstr "Se você está lendo isto, está com raiva. Certo. Fique com raiva e conte."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если это он, он утопил твой дом. И мой. Мой, писарша!"
+msgstr "Se foi ele, afogou a sua casa. E a minha. A minha, escriba!"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Жив?!"
+msgstr "Vivo?!"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Забил! Вот теперь твой канал услышит воду."
+msgstr "Furou! Agora o seu canal vai ouvir a água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Замолчи."
+msgstr "Cale-se."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Записка отца: книги под храмом. Плита под крылатым солнцем не поднимается."
+msgstr "Bilhete do pai: os livros estão sob o templo. A laje sob o sol alado não levanta."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Записывает. Вот его день, вот вино, вот улыбка. Всё с датой."
+msgstr "Ele anota tudo. Aqui o dia dele, aqui o vinho, aqui o sorriso. Tudo com data."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Запись за месяц до воды. Он считал следующий разлив."
+msgstr "Registro de um mês antes da água. Ele calculava a próxima cheia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Заплатил золотом. Я такой платы в жизни не видела и вопросов не задавала."
+msgstr "Pagou em ouro. Nunca vi pagamento assim na vida e não fiz perguntas."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Зачем нам храм? Полки же ломятся. Вот твоя пропажа, бери да читай."
+msgstr "Para que precisamos do templo? As prateleiras estão cheias. Aqui está o que você perdeu, pegue e leia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Зачем? Ну, на."
+msgstr "Para quê? Ora, tome."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Здесь отец стоял каждое утро с рейкой. Вот его метки."
+msgstr "Aqui o pai ficava toda manhã com a régua. Estas são as marcas dele."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Злись и считай, писал он. Считать я пока не хочу."
+msgstr "“Fique com raiva e conte”, escreveu ele. Contar eu ainda não quero."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Злюсь. Считаю. Мерит, фонтан бьёт, канал полон."
+msgstr "Com raiva. Contando. Merit, a fonte jorra, o canal está cheio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Знал и написал в палату. А вот ответ: «Разлив ожидается слабый»."
+msgstr "Sabia e escreveu à Câmara. E aqui está a resposta: “Prevê-se cheia fraca.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, вряд ли это он. Одна вода накрыла архив и его амбары."
+msgstr "Então dificilmente foi ele. Uma só água cobriu o arquivo e os celeiros dele."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, попали иначе. Кто-то был здесь совсем недавно. И взял только одну книгу."
+msgstr "Então entraram de outro jeito. Alguém esteve aqui há muito pouco tempo. E levou só um livro."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, следующий вопрос задаст ниломер."
+msgstr "Então a próxima pergunta será do nilômetro."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, там записано, кто сколько должен был отдать. Тут у любого зачешутся руки."
+msgstr "Então ali está anotado quem devia entregar quanto. Isso coça a mão de qualquer um."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Золотой знак один. Им отец скреплял только то, за что отвечал сам."
+msgstr "Só há um sinal de ouro. Com ele, o pai selava apenas aquilo de que ele mesmo respondia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И вот зачем нужна вода. Утопить архив, и нет больше чисел. Так?"
+msgstr "E é por isso que a água era necessária. Afogar o arquivo e não há mais números. Certo?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И где он лежит, этот знак?"
+msgstr "E onde está esse sinal?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И людей отослал на праздник."
+msgstr "E mandou o povo para a festa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И на этот раз я не знаю, что резать."
+msgstr "E desta vez não sei o que cortar."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И сколько ей надо? Реку сюда на верёвке не приведёшь."
+msgstr "E quanta ela precisa? Não se traz o rio até aqui numa corda."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И спас семь селений. Если это он, записать придётся и то и другое."
+msgstr "E salvou sete povoados. Se foi ele, será preciso anotar as duas coisas."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И что сказал парень?"
+msgstr "E o que o rapaz disse?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И что? Амбары как амбары."
+msgstr "E daí? Celeiros são celeiros."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Игра не кончена. Последняя вещь всегда ведёт дальше. Где тут последняя?"
+msgstr "O jogo não acabou. A última coisa sempre leva adiante. Onde está a última aqui?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ил по самые балки. Здесь хранилось зерно Ликона."
+msgstr "Lodo até as vigas. Aqui ficava o grão de Likon."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ил укрывал дамбу после разлива. Теперь вода его смыла."
+msgstr "O lodo cobria a represa depois da cheia. Agora a água o levou."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ищи сама. Ты же у нас считаешь."
+msgstr "Procure você. É você quem conta."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "К храму. Значит, плиту держит не камень. Плите нужна вода."
+msgstr "Ao templo. Então não é a pedra que segura a laje. A laje precisa de água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Карта значит: пешком не дойдёшь. Покажи свою."
+msgstr "O mapa quer dizer: a pé você não chega. Mostre o seu."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ключ, скарабей, анх, перо. Вода уже шумит под плитой."
+msgstr "Chave, escaravelho, ankh, pena. A água já ruge sob a laje."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Книги он спрятал заранее."
+msgstr "Ele escondeu os livros de antemão."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Книги спрятаны под храмом. Восстанови остров — и библиотека снова откроется."
+msgstr "Os livros estão escondidos sob o templo. Restaure a ilha e a biblioteca abrirá de novo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кол, канат, весло. Покажи, как стояла лодка."
+msgstr "Estaca, cabo, remo. Mostre como o barco estava."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Конечно, не тронул бы. Свой дом, свои книги."
+msgstr "Claro que não tocaria. A própria casa, os próprios livros."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кошка тоже вещь? Она на меня смотрит."
+msgstr "Gato também é coisa? Ela está me olhando."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кошки сами узлов не вяжут. Лаз идёт вверх, на север. Там только ниломер."
+msgstr "Gatos não dão nó sozinhos. A passagem sobe para o norte. Lá só há o nilômetro."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Края пролома ровные. Дамбу перерезали лопатами. Это не разлив."
+msgstr "As bordas da brecha são retas. A represa foi cortada a pá. Isso não foi cheia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Крылатое солнце на этом ларе стоит криво. Под ним плита, и она не поднимается."
+msgstr "O sol alado neste baú está torto. Embaixo há uma laje, e ela não levanta."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто же меня тогда нанял?"
+msgstr "Quem então me contratou?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто же прячет библиотеку за библиотекой?"
+msgstr "Quem esconde uma biblioteca atrás da outra?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто их позвал, молчат. Говорят только: «Велели копать или тонуть»."
+msgstr "Quem os chamou, eles não dizem. Só falam: “Mandaram cavar ou se afogar.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто он был?"
+msgstr "Quem era ele?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто-то очень хорошо знал этот берег. Запишем."
+msgstr "Alguém conhecia muito bem esta margem. Vamos anotar."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто-то подправлял реку? Смелый человек."
+msgstr "Alguém andou mexendo no rio? Que homem corajoso."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лаз. Узкий, но маленький сундук протащить можно. Миу у входа сторожит."
+msgstr "Uma passagem. Estreita, mas dá para arrastar um baú pequeno. Miu vigia na entrada."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лейка, вилы, корзина. Садовые вещи собраны у воды, а не у сарая."
+msgstr "Regador, forquilha, cesto. As coisas de jardim estão juntas à beira da água, não no galpão."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон велел утопить собственное зерно? Весь свой запас?"
+msgstr "Likon mandou afogar o próprio grão? Todo o seu estoque?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон лжёт. Ему нужно, на кого свалить."
+msgstr "Likon mente. Precisa de alguém em quem pôr a culpa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон пишет в Мемфис: амбары утопил хранитель Хорем, и он жив."
+msgstr "Likon escreve a Mênfis: o guardião Horem afogou os celeiros, e está vivo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон поймал одного из шестерых. Вот его допрос, слово в слово."
+msgstr "Likon pegou um dos seis. Aqui está o interrogatório, palavra por palavra."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон просил Книгу «для царской переписи». Нефра подозревает, что полки — приманка."
+msgstr "Likon pediu o Livro “para o censo real”. Nefra suspeita que as prateleiras sejam isca."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон! Он в вашем доме вино пил. Лодку мою нанимать брезговал."
+msgstr "Likon! Bebeu vinho na casa de vocês. E nunca se dignou a alugar o meu barco."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон. Он ответил, что воды будет мало. Запишем."
+msgstr "Likon. Ele respondeu que a água seria pouca. Vamos anotar."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лица не видела. Руки только, тёмные, будто в смоле. А на том берегу амбары Ликона. У него и спроси."
+msgstr "Não vi o rosto. Só as mãos, escuras, como se sujas de piche. E na outra margem ficam os celeiros de Likon. Pergunte a ele."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лодка в ту ночь была лодкой Мерит. Её нанял человек в капюшоне. Плата — золото в её ухе."
+msgstr "Naquela noite, o barco era o de Merit. Um homem de capuz o contratou. O pagamento: o ouro na orelha dela."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лодочнице заплатили золотым знаком с тростником и водой."
+msgstr "A barqueira foi paga com um sinal de ouro com junco e água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Людей он отослал ещё днём. Совпадение? Или он ждал беды?"
+msgstr "Ele mandou o povo embora já de dia. Coincidência? Ou esperava desgraça?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Люди вернутся, когда будет куда. Сама их перевезу, если найдётся за что."
+msgstr "O povo volta quando houver para onde. Eu mesma os trago, se houver com que pagar."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Люди и правда едут. Сегодня пекарь спросил, правда ли, что у хранителя снова горит свет."
+msgstr "O povo está mesmo vindo. Hoje o padeiro perguntou se é verdade que a luz do guardião voltou a acender."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мало ли кто мог её украсть."
+msgstr "Qualquer um poderia tê-la roubado."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мало ли лодок на реке."
+msgstr "Há muitos barcos no rio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мало ли что я говорю."
+msgstr "Digo tanta coisa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мастерская. Твой отец тут просиживал ночи, глину мял."
+msgstr "A oficina. Seu pai passava as noites aqui, amassando argila."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Меня тоже. Садись. Будем злиться вдвоём."
+msgstr "Comigo também. Sente-se. Vamos ficar com raiva juntas."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Меня-то почему не спросил?"
+msgstr "Por que não me perguntou?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мерит, посмотри на ступени. Тут глина, и она ещё сырая."
+msgstr "Merit, olhe os degraus. Há argila, e ainda está úmida."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мерит, развяжи его."
+msgstr "Merit, solte-o."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мерит. Покажи верх своей карты."
+msgstr "Merit. Mostre o alto do seu mapa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Миу, иди сюда. Ошейник у тебя тот же, а узел свежий. Странно."
+msgstr "Miu, venha cá. A coleira é a mesma, mas o nó é novo. Estranho."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Многие."
+msgstr "Muitos."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мог. Я сама его чинила: два гвоздя так и торчат. Лодка была моя."
+msgstr "Podia. Fui eu que consertei: dois pregos continuam para fora. O barco era meu."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На колу канат. Рядом две борозды, словно от киля."
+msgstr "No poste, um cabo. Ao lado, dois sulcos, como de uma quilha."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На колу обрывок каната с речным узлом. Мерит не хочет на него смотреть."
+msgstr "No poste, um pedaço de cabo com nó de rio. Merit não quer olhar para ele."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На обороте печати проступил план острова. След ведёт к старому храму у восточного берега."
+msgstr "No verso do selo apareceu o plano da ilha. O rastro leva ao templo antigo, na margem leste."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На правый берег. Там семь селений, и стоят они ниже реки. Тётка моя там."
+msgstr "Para a margem direita. Lá estão os sete povoados, mais baixos que o rio. Minha tia mora lá."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На рукаве тоже всех позвали на праздник?"
+msgstr "No braço também chamaram todos para a festa?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На свитке — печать семейной мастерской. Отец успел спрятать архив до наводнения."
+msgstr "No pergaminho, o selo da oficina da família. O pai conseguiu esconder o arquivo antes da inundação."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На северном рукаве одна лодка и шесть лопат. На кормовом конце речной узел. Записано."
+msgstr "No braço norte, um barco e seis pás. Na popa, um nó de rio. Anotado."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На стене две шкалы. Вторая, свежая, занижает воду на два локтя."
+msgstr "Na parede há duas escalas. A segunda, nova, diminui a água em dois côvados."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На террасе ты сказала: твой узел, кроме тебя, никто не развяжет."
+msgstr "Na varanda você disse: ninguém além de você desfaz o seu nó."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Не здесь. Поехали на дамбу. Там скажу."
+msgstr "Aqui não. Vamos à represa. Lá eu conto."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Не я. На острове с той ночи никто не живёт."
+msgstr "Não fui eu. Ninguém mora na ilha desde aquela noite."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нет Книги разливов. Главной книги нашего дома."
+msgstr "Falta o Livro das Cheias. O livro principal da nossa casa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нет. Такой за горсть ячменя удавится."
+msgstr "Não. Esse se enforcaria por um punhado de cevada."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нефра. Раз ты здесь, ты всё сосчитала. Дамбу велел резать я. Записано моей рукой."
+msgstr "Nefra. Já que está aqui, você contou tudo. Fui eu que mandei cortar a represa. Está escrito de próprio punho."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Низ смотри сколько хочешь. Верх не для тебя, писарша."
+msgstr "A parte de baixo olhe quanto quiser. A de cima não é para você, escriba."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Никто ничего не видел. Хранитель ещё днём отпустил всех на праздник за реку, в Семь Селений."
+msgstr "Ninguém viu nada. O guardião dispensou todos ainda de dia, para a festa além do rio, nos Sete Povoados."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Но он успел спрятать книги и оставил подсказки. Я восстановлю наше поместье — и найду архив."
+msgstr "Mas ele conseguiu esconder os livros e deixou pistas. Vou restaurar a nossa propriedade e encontrar o arquivo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Новая записка в корнях яблони: сначала дом, потом люди, потом река."
+msgstr "Novo bilhete nas raízes da macieira: primeiro a casa, depois o povo, depois o rio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нравится мне твой отец. Жаль, не достать его веслом."
+msgstr "Gosto do seu pai. Pena não poder alcançá-lo com o remo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он был здесь. Видел, как заработал фонтан. И ушёл."
+msgstr "Ele esteve aqui. Viu a fonte funcionar. E foi embora."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он видел. Стоял тут и видел, и записал."
+msgstr "Ele viu. Esteve aqui, viu e anotou."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он всю ночь молчал. Руки тёмные. Я думала, смола. А вдруг чернила?"
+msgstr "Ele ficou calado a noite toda. Mãos escuras. Achei que era piche. E se fosse tinta?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он пишет мне. Не писцу, не наследнику. Мне."
+msgstr "Ele escreve para mim. Não para a escriba, nem para a herdeira. Para mim."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он пишет: «восстанови остров». Я думала, это красивые слова."
+msgstr "Ele escreve: “restaure a ilha”. Pensei que fossem palavras bonitas."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Она закрыла ухо платком. Вряд ли заметила, что закрыла."
+msgstr "Ela cobriu a orelha com um lenço. Dificilmente notou que cobriu."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Она ни разу не взглянула на этот кол. А ведь она смотрит на всё."
+msgstr "Ela nunca olhou para essa estaca. E olha para tudo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Они ниже настоящих на два локтя. По ним выходит, что разливы были плохие."
+msgstr "São dois côvados mais baixas que as verdadeiras. Por elas, as cheias teriam sido ruins."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Опись до разлива: двести сорок сундуков перенесены под храм."
+msgstr "Inventário de antes da cheia: duzentos e quarenta baús levados para baixo do templo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Опись составлена до разлива. Книга разливов хранила двухсотлетние записи воды."
+msgstr "O inventário foi feito antes da cheia. O Livro das Cheias guardava duzentos anos de registros da água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ответил: книга не покидает острова. Он улыбнулся. Такие улыбки я записываю."
+msgstr "Respondeu: o livro não sai da ilha. Ele sorriu. Esses sorrisos eu anoto."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец видел лодку и шесть лопат и записал это. А людей с острова он отослал ещё днём."
+msgstr "O pai viu o barco e as seis pás e anotou. E o povo da ilha ele mandou embora ainda de dia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец видел эти метки каждое утро и вёл свой счёт. Двести лет настоящих чисел против поддельных."
+msgstr "O pai via estas marcas toda manhã e mantinha a sua conta. Duzentos anos de números verdadeiros contra os falsos."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец исчез после наводнения, а библиотека опустела."
+msgstr "O pai desapareceu depois da inundação, e a biblioteca ficou vazia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец не верил в везение. Он верил в записи."
+msgstr "O pai não acreditava em sorte. Acreditava em registros."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец рассчитал небывалую воду и предупредил палату. Ответ: «Разлив ожидается слабый»."
+msgstr "O pai calculou uma água nunca vista e avisou a Câmara. Resposta: “Prevê-se cheia fraca.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец спрятал книги и отослал людей заранее. Нефра пока не хочет это считать."
+msgstr "O pai escondeu os livros e mandou o povo embora com antecedência. Nefra ainda não quer pensar nisso."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец твой и унёс, когда прятал. Делов-то."
+msgstr "Foi o seu pai que levou, quando escondeu. Simples assim."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отчёты с подписью Ликона расходятся со шкалой. Книга могла бы их проверить."
+msgstr "Os relatórios assinados por Likon não batem com a escala. O Livro poderia conferi-los."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ошейник. Тот самый свежий узел. А в бусине — его записка."
+msgstr "A coleira. O mesmo nó novo. E na conta, o bilhete dele."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Печать и руки человека в капюшоне указывают на Хорема. Нефре нужно подтверждение."
+msgstr "O selo e as mãos do homem de capuz apontam para Horem. Nefra precisa de confirmação."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Печать семейной мастерской. Отец спрятал архив заранее и начал нашу старую игру."
+msgstr "O selo da oficina da família. O pai escondeu o arquivo de antemão e começou o nosso velho jogo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "План острова указывает на старый храм. Свитки на полках — приманка."
+msgstr "O plano da ilha aponta para o templo antigo. Os pergaminhos das prateleiras são isca."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плата. Раз в жизни мне заплатили золотом. Больше не спрашивай."
+msgstr "Pagamento. Uma vez na vida me pagaram em ouro. Não pergunte mais."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плита на террасе и есть весы. С одной стороны камень, с другой вода."
+msgstr "A laje do terraço é a própria balança. De um lado a pedra, do outro a água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плита на террасе работает как весы: камень против воды."
+msgstr "A laje do terraço funciona como balança: pedra contra água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плиту только что подняли мы. Больше сюда никому не попасть."
+msgstr "Acabamos de levantar a laje. Ninguém mais entra aqui."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "По Книге следующая вода будет выше. Иду сверять к первому порогу."
+msgstr "Pelo Livro, a próxima água será mais alta. Vou conferir na primeira catarata."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Повезло людям."
+msgstr "Que sorte tem o povo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Под фонтаном сухой канал. Он идёт к храму."
+msgstr "Sob a fonte há um canal seco. Ele vai até o templo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Поддельные отчёты, двадцать лет. Он их даже не сжёг. Заберём: в Мемфисе их прочтут."
+msgstr "Relatórios falsos, vinte anos. Ele nem os queimou. Vamos levá-los: em Mênfis alguém vai ler."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Подожди. В описи двести сорок сундуков. Я насчитала двести тридцать девять."
+msgstr "Espere. No inventário são duzentos e quarenta baús. Eu contei duzentos e trinta e nove."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Подожди. Рядом вторые метки, резец другой, и работа новее."
+msgstr "Espere. Ao lado há outras marcas, o cinzel é diferente e o trabalho mais novo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Подпись можешь не читать."
+msgstr "A assinatura você pode nem ler."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Поехали отсюда. Комары."
+msgstr "Vamos embora daqui. Mosquitos."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Помоги снять. Не развязывается, сколько ни тяни."
+msgstr "Ajude a tirar. Não desata, por mais que eu puxe."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Порядок открытия: ключ, скарабей, анх, перо."
+msgstr "Ordem de abertura: chave, escaravelho, ankh, pena."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Порядок ты знаешь: ключ, скарабей, анх, перо. Как в тот год, когда тебе было шесть."
+msgstr "A ordem você sabe: chave, escaravelho, ankh, pena. Como no ano em que você tinha seis anos."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Последняя записка отца раскрыта."
+msgstr "A última anotação do pai foi revelada."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Посмотри на весы. На чашах не гири, а отметки локтей. Как на ниломере."
+msgstr "Olhe a balança. Nos pratos não há pesos, mas marcas de côvados. Como no nilômetro."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Постой. Амбары стоят на северном рукаве. Куда и пустили воду."
+msgstr "Pare. Os celeiros ficam no braço norte. Para onde soltaram a água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Пошла! Плита пошла. Ступени сухие. Отец, ты и это рассчитал."
+msgstr "Foi! A laje foi. Os degraus estão secos. Pai, você calculou até isso."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "При такой воде от них остался бы один ил."
+msgstr "Com uma água dessas, só sobraria lodo deles."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Прижимаю к глине. Это не монета. Тростник и вода."
+msgstr "Pressiono na argila. Isso não é moeda. É junco e água."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Причалили, писарша. Двор вода не тронула. Всё, что ниже, теперь ил: дома, мастерская, фонтан."
+msgstr "Chegamos, escriba. A água não tocou o pátio. Tudo o que está abaixo agora é lodo: casas, oficina, fonte."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Разверни любой свиток. Счета за масло, за зерно, за верёвку. Настоящих книг здесь нет."
+msgstr "Abra qualquer pergaminho. Contas de óleo, de grão, de corda. Livros de verdade, aqui não há."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Разлив решает всё. Вода высокая — поле родит, и царь берёт больше."
+msgstr "A cheia decide tudo. Água alta, o campo rende, e o rei cobra mais."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Речной узел. Я весь вечер его тянула. Кто на реке так вяжет?"
+msgstr "Nó de rio. Passei a noite inteira puxando. Quem amarra assim no rio?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "С верхней ступени дамба как на ладони. И его табличка за той ночь, вот."
+msgstr "Do degrau de cima a represa se vê na palma da mão. E aqui está a tabuinha dele daquela noite."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Семь селений за ночь не увезёшь. А один остров можно отпустить на праздник."
+msgstr "Sete povoados não se tiram em uma noite. Mas uma ilha se pode soltar para a festa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Семь селений или наш остров. Я выбрал и выбрал бы снова. Прощения не прошу."
+msgstr "Sete povoados ou a nossa ilha. Eu escolhi e escolheria de novo. Não peço perdão."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Сколько поднимается в хороший год. Он всё на свете мерил разливом."
+msgstr "Quanto sobe num ano bom. Ele media tudo no mundo pela cheia."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Следы идут не к двери, а к стене. Из-за сундуков тянет рекой."
+msgstr "As pegadas não vão à porta, mas à parede. Por trás dos baús sopra um ar de rio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Слышала. И что будешь делать, писарша?"
+msgstr "Ouvi. E o que vai fazer, escriba?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Смотри, под фонтаном канал. Старый, сухой и идёт прямо на восток."
+msgstr "Veja, sob a fonte há um canal. Velho, seco, e vai direto para o leste."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Срез твёрдый. Видишь борозды от лопат?"
+msgstr "O corte é duro. Está vendo os sulcos de pá?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Сундуки. Сколько же их тут... Целы?"
+msgstr "Baús. Quantos há aqui... Estão inteiros?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Считаю в третий раз: здесь двести тридцать девять. Книги разливов нет."
+msgstr "Estou contando pela terceira vez: aqui há duzentos e trinta e nove. Falta o Livro das Cheias."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Табличка говорит о лодке и узле. Он мог видеть их и с лодки."
+msgstr "A tabuinha fala de um barco e de um nó. Ele podia vê-los do próprio barco."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тайник пуст. Серьга Мерит — золотой знак мастерской."
+msgstr "O esconderijo está vazio. O brinco de Merit é o sinal de ouro da oficina."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Твой отец сделал замок размером с остров? Кто так живёт?"
+msgstr "Seu pai fez um castelo do tamanho de uma ilha? Quem vive assim?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тогда строим. Фонтан, мастерская, архив, храм. Запишем."
+msgstr "Então vamos construir. Fonte, oficina, arquivo, templo. Vamos anotar."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тот, кто ждал гостей. Вор увидит полные полки и не станет искать дальше."
+msgstr "Aquele que esperava visitas. O ladrão verá as prateleiras cheias e não procurará mais."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тростник и вода. Такую режут только у нас."
+msgstr "Junco e água. Só a nossa gente entalha isto."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тростника на реке хватает."
+msgstr "Junco não falta no rio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Труба от фонтана входит в противовес. Значит, плиту подняла вода."
+msgstr "O cano da fonte entra no contrapeso. Então foi a água que levantou a laje."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ты возила меня по острову. Ты смеялась. И всё это время ты знала?"
+msgstr "Você me levou pela ilha. Você ria. E todo esse tempo você sabia?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ты слышала. Ликон тоже идёт вверх по реке."
+msgstr "Você ouviu. Likon também sobe o rio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "У противовеса труба фонтана. За сундуками лаз к ниломеру, у Миу свежий узел."
+msgstr "No contrapeso há o cano da fonte. Atrás dos baús, a passagem para o nilômetro, e Miu tem um nó novo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Узел на дамбе похож на узел Мерит. Она обещает всё сказать на месте."
+msgstr "O nó na represa se parece com o de Merit. Ela promete contar tudo no local."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Успел? Вода пришла ночью, за один час. Никто на реке её не ждал. Что за печать?"
+msgstr "Conseguiu? A água veio à noite, numa hora só. Ninguém no rio a esperava. Que selo é esse?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Хорем жив. Он ушёл к первому порогу с Книгой. Следующая вода будет выше."
+msgstr "Horem está vivo. Foi para a primeira catarata com o Livro. A próxima água será mais alta."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Храм Исиды. Теперь хотя бы есть кому пожаловаться на реку."
+msgstr "O Templo de Ísis. Agora ao menos há quem ouça as queixas contra o rio."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Целы, и печати целы. Вся библиотека острова стоит под землёй, сухая."
+msgstr "Estão inteiros, e os selos também. Toda a biblioteca da ilha está sob a terra, seca."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Человек в капюшоне нанял меня на ночь. Шестеро парней с лопатами. Они сказали: чинить дамбу."
+msgstr "Um homem de capuz me contratou por uma noite. Seis rapazes com pás. Disseram: consertar a represa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Человек, у которого двести лет записей и один ключ."
+msgstr "Um homem com duzentos anos de registros e uma só chave."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Чужой обыщет всё, но в нашу игру играть не умеет. Поэтому игра."
+msgstr "Quem é de fora revira tudo, mas não sabe jogar o nosso jogo. Por isso é um jogo."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Шестеро с лопатами были из тех селений. Они скрывают, кто их позвал."
+msgstr "Os seis das pás eram desses povoados. Escondem quem os chamou."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Эти цифры я видела в Мемфисе, в отчётах зерновой палаты. Подпись: надзиратель Ликон."
+msgstr "Esses números eu vi em Mênfis, nos relatórios da Câmara dos Grãos. Assinatura: supervisor Likon."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Этим знаком он отвечал за свои поступки. Но кто вынес его из тайника?"
+msgstr "Com este sinal ele respondia pelos seus atos. Mas quem o tirou do esconderijo?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это Миу, кошка архива. Сытая, блестит. А кто кормит её с самого наводнения?"
+msgstr "Esta é Miu, a gata do arquivo. Bem alimentada, reluzente. E quem a alimenta desde a inundação?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это знак семейной мастерской, с первого свитка. Он хранился в тайнике дома."
+msgstr "É o sinal da oficina da família, do primeiro pergaminho. Ficava no esconderijo da casa."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это мог быть он. Печать, чернила, заранее спасённые люди. Но нам нужно знать."
+msgstr "Podia ser ele. Selo, tinta, gente salva de antemão. Mas precisamos saber."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это та плата. Он заплатил мне печатью вашего дома?"
+msgstr "É o pagamento daquela noite. Ele me pagou com o selo da sua casa?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Я вернулся за Книгой, пока ты строила. Увидел, как забил фонтан. Дальше смотреть не смог."
+msgstr "Voltei pelo Livro enquanto você construía. Vi a fonte jorrar. Não consegui olhar mais."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Я не просила тебя радоваться. Я просила грести."
+msgstr "Não pedi que se alegrasse. Pedi que remasse."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Я спросила родню. Те шестеро с лопатами были оттуда, из селений."
+msgstr "Perguntei à parentela. Os seis das pás eram de lá, dos povoados."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Яблоко и яблоко. Съешь, и поехали."
+msgstr "Maçã e maçã. Coma e vamos."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Яблони на острове только у дома садовника. Садовник что-нибудь видел в ту ночь?"
+msgstr "Só há macieiras na ilha junto à casa do jardineiro. O jardineiro viu algo naquela noite?"
+
+#: games/nile-archive/lua/main.lua
+msgid "«Архив Нила» играется только в альбомной ориентации. Поверните устройство."
+msgstr "“Arquivo do Nilo” só se joga na horizontal. Gire o aparelho."
+
+#: games/nile-archive/lua/main.lua
+msgid "Архив Нила"
+msgstr "Arquivo do Nilo"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Недостаточно монет. Переиграйте открытую главу."
+msgstr "Moedas insuficientes. Jogue de novo um capítulo aberto."
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Остров без изменений"
+msgstr "Ilha sem alterações"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Откройте берег, чтобы найти свободное место"
+msgstr "Abra a margem para achar espaço livre"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Перетащите постройку или коснитесь свободного места"
+msgstr "Arraste a construção ou toque num espaço livre"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Эта постройка уже восстановлена"
+msgstr "Esta construção já foi restaurada"

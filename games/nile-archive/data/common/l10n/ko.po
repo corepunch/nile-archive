@@ -1,0 +1,2407 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: nile-archive\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Акация"
+msgstr "아카시아"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Алоэ"
+msgstr "알로에"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Амфоры"
+msgstr "암포라"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Анубис"
+msgstr "아누비스"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Базар"
+msgstr "바자"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Бегемотик"
+msgstr "아기 하마"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Беседка-киоск"
+msgstr "정자 가판대"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Бирюза"
+msgstr "터키석"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Васильки"
+msgstr "수레국화"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Великая пирамида"
+msgstr "대피라미드"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Вилла вельможи"
+msgstr "귀족의 저택"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Виноградная пергола"
+msgstr "포도 덩굴 정자"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Винодельня"
+msgstr "포도주 양조장"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Глинобитный дом"
+msgstr "흙벽돌집"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Голова фараона"
+msgstr "파라오 두상"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Голубой лотос"
+msgstr "푸른 연꽃"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Голубятня"
+msgstr "비둘기장"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Гончарня"
+msgstr "도자 공방"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Гранатовое дерево"
+msgstr "석류나무"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Двойная пальма"
+msgstr "쌍둥이 야자수"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Двор скульптора"
+msgstr "조각가의 뜰"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Деревце в кадке"
+msgstr "화분 나무"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Живая изгородь"
+msgstr "생울타리"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Зернохранилище"
+msgstr "곡식 창고"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Золотой скарабей"
+msgstr "황금 스카라베"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_content.lua
+msgid "Ибис"
+msgstr "따오기"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ирисы"
+msgstr "붓꽃"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Каменная скамья"
+msgstr "돌 벤치"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Кипарис"
+msgstr "사이프러스"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Клумба"
+msgstr "화단"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Колонный зал"
+msgstr "기둥의 방"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Колосс"
+msgstr "거상"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Конюшня колесниц"
+msgstr "전차 마구간"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Корзины с зерном"
+msgstr "곡식 바구니"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Костёр"
+msgstr "모닥불"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кошка"
+msgstr "고양이"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Кошка Бастет"
+msgstr "바스테트의 고양이"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Крокодил"
+msgstr "악어"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Круглый куст"
+msgstr "둥근 덤불"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Куст хны"
+msgstr "헤나 덤불"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Маки"
+msgstr "양귀비"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Малая пирамида"
+msgstr "작은 피라미드"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Маяк"
+msgstr "등대"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Навес с подушками"
+msgstr "방석 차양"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ниломер"
+msgstr "나일로미터"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Нильский тростник"
+msgstr "나일 갈대"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Обелиск"
+msgstr "오벨리스크"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Олеандр"
+msgstr "협죽도"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Олива"
+msgstr "올리브나무"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Паланкин"
+msgstr "가마"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пальма дум"
+msgstr "둠야자"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пальмовая роща"
+msgstr "야자 숲"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Папирус"
+msgstr "파피루스"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пекарня"
+msgstr "빵집"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Песчаный валун"
+msgstr "모래 바위"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пилон"
+msgstr "탑문"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пир на циновке"
+msgstr "돗자리 잔치"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Повозка"
+msgstr "짐수레"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Причал с фелюкой"
+msgstr "펠루카 선착장"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пруд с ибисами"
+msgstr "따오기 연못"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пруд с лотосами"
+msgstr "연꽃 연못"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Пюпитр писца"
+msgstr "서기의 독서대"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Раскопки"
+msgstr "발굴지"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ромашки"
+msgstr "데이지"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ручная мельница"
+msgstr "손 맷돌"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сад фараона"
+msgstr "파라오의 정원"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Светильник"
+msgstr "등잔"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Святилище Бастет"
+msgstr "바스테트 성소"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Святилище ладьи"
+msgstr "신성한 배의 성소"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Священное озеро"
+msgstr "신성한 호수"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сикомор"
+msgstr "시카모어"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Скалы пустыни"
+msgstr "사막 바위"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Смоковница"
+msgstr "무화과나무"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сокол"
+msgstr "매"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Солнечные часы"
+msgstr "해시계"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Статуя писца"
+msgstr "서기상"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сторожевая башня"
+msgstr "망루"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сундук сокровищ"
+msgstr "보물 상자"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Сфинкс"
+msgstr "스핑크스"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Тамариск"
+msgstr "위성류"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ткацкая мастерская"
+msgstr "직물 공방"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Тростниковая лодка"
+msgstr "갈대배"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Узорный цветник"
+msgstr "무늬 화단"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Указатель"
+msgstr "이정표"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Упавшая колонна"
+msgstr "쓰러진 기둥"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Факел"
+msgstr "횃불"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Финиковая пальма"
+msgstr "대추야자"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Фонтанчик"
+msgstr "작은 분수"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Храм солнца"
+msgstr "태양 신전"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Цветочный ящик"
+msgstr "화분 상자"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Чаша для птиц"
+msgstr "새 물그릇"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Шадуф"
+msgstr "샤두프"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Шатёр"
+msgstr "천막"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Школа писцов"
+msgstr "서기 학교"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Штандарт"
+msgstr "깃발"
+
+#: games/nile-archive/lua/archive_catalogue.lua
+msgid "Ящики"
+msgstr "상자들"
+
+#. TRANSLATORS: the objects a player looks for in the picture
+#: games/nile-archive/lua/archive_content.lua
+msgid "Анх"
+msgstr "앙크"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Архив"
+msgstr "아카이브"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Библиотека писца"
+msgstr "서기의 도서관"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Библиотека, второй круг"
+msgstr "도서관, 두 번째 탐색"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Большая амфора"
+msgstr "큰 항아리"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Бусы на ларце"
+msgstr "상자 위 구슬"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Бюст"
+msgstr "흉상"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "В библиотеке спрятан второй след."
+msgstr "도서관에 두 번째 단서가 숨겨져 있어요."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Веер"
+msgstr "부채"
+
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Весы"
+msgstr "저울"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Весы отца что-то взвешивали."
+msgstr "아버지의 저울은 무언가를 재고 있었어요."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Вилы"
+msgstr "쇠스랑"
+
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Виноград"
+msgstr "포도"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Гранат"
+msgstr "석류"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Дверь под крылатым солнцем"
+msgstr "날개 달린 태양 아래의 문"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Двор хранителя"
+msgstr "기록관의 뜰"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Двор, второй круг"
+msgstr "뜰, 두 번째 탐색"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Дом садовника"
+msgstr "정원사의 집"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Дочь хранителя · ищет отца и архив"
+msgstr "기록관의 딸 · 아버지와 아카이브를 찾는 중"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Золотой кувшин"
+msgstr "황금 항아리"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Инжир"
+msgstr "무화과"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Каламы"
+msgstr "갈대 붓"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Карта"
+msgstr "지도"
+
+#: games/nile-archive/lua/archive_content.lua
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ключ"
+msgstr "열쇠"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Корзина с зеленью"
+msgstr "채소 바구니"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Ладья"
+msgstr "의식용 배"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Ларец у бюста"
+msgstr "흉상 옆 작은 상자"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Лейка"
+msgstr "물뿌리개"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Лодочница · проводник будущих глав"
+msgstr "뱃사공 · 앞으로의 장을 이끄는 길잡이"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Мастерская"
+msgstr "공방"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Мерит"
+msgstr "메리트"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "На столах двора остались вещи отца. Начните с них."
+msgstr "뜰의 탁자에 아버지의 물건이 남아 있어요. 거기서부터 시작해요."
+
+#. TRANSLATORS: a character's name and their role in the story
+#: games/nile-archive/lua/archive_content.lua
+msgid "Нефра"
+msgstr "네프라"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть."
+msgstr "새 강변이 열렸어요! 섬을 왼쪽으로 끌어서 살펴보세요."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Перо"
+msgstr "깃펜"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "План привёл к старому храму."
+msgstr "설계도가 낡은 신전으로 이어졌어요."
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Пропавший хранитель · оставил подсказки"
+msgstr "사라진 기록관 · 단서를 남겼어요"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Свиток"
+msgstr "두루마리"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Скарабей"
+msgstr "스카라베"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Фонтан"
+msgstr "분수"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Хорем"
+msgstr "호렘"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Храм Исиды"
+msgstr "이시스 신전"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Храм на закате"
+msgstr "노을 속 신전"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Чаша с огнём"
+msgstr "불 그릇"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Яблоко"
+msgstr "사과"
+
+#: games/nile-archive/lua/archive_content.lua
+msgid "Яблоко указало на сад."
+msgstr "사과가 정원을 가리켰어요."
+
+#. TRANSLATORS: each %d is the coins paid for that part of the result
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid ""
+"%d за поиск · %d первая победа\n"
+"%d новые звёзды · %d без ошибок и подсказок"
+msgstr ""
+"수색 %d · 첫 클리어 %d\n"
+"새 별 %d · 실수와 힌트 없음 %d"
+
+#. TRANSLATORS: %s is the search's title; then items found and the total
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "%s · найдено %d из %d"
+msgstr "%s · %d/%d 발견"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "(вы)"
+msgstr "(나)"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "ВРЕМЯ"
+msgstr "시간"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Влияние"
+msgstr "영향력"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Войдите в Game Center, чтобы сравнить себя с другими игроками."
+msgstr "Game Center에 로그인하면 다른 플레이어와 비교해 볼 수 있어요."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Войдите в Game Center, чтобы увидеть друзей."
+msgstr "Game Center에 로그인하면 친구를 볼 수 있어요."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Все"
+msgstr "전체"
+
+#. TRANSLATORS: %d is the chapter number, %s the cache's title
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Глава %d · Тайник · %s"
+msgstr "%d장 · 은닉처 · %s"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Глава %d завершена"
+msgstr "%d장 완료"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Главы"
+msgstr "장"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Дальше · Книга разливов"
+msgstr "다음 · 범람의 책"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Дальше · Печать"
+msgstr "다음 · 인장"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Друзья"
+msgstr "친구"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Журнал улик"
+msgstr "단서 기록"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "ЗАПИСЬ В ЖУРНАЛЕ"
+msgstr "기록 추가"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Загрузка..."
+msgstr "불러오는 중..."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#: games/nile-archive/lua/archive_island.lua
+msgid "Закрыть"
+msgstr "닫기"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Записей: %d"
+msgstr "기록: %d개"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Записи по этой сцене появятся в журнале по ходу расследования."
+msgstr "이 장면의 기록은 수사가 진행되면 단서 기록에 나타나요."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Записи появятся после первого поиска."
+msgstr "첫 수색이 끝나면 기록이 생겨요."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Играть"
+msgstr "플레이"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Играть снова"
+msgstr "다시 플레이"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Искать улику"
+msgstr "단서 찾기"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "К поискам"
+msgstr "수색으로"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Люди острова"
+msgstr "섬 사람들"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Меньше анимации"
+msgstr "애니메이션 줄이기"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "НОВАЯ УЛИКА"
+msgstr "새 단서"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "На остров"
+msgstr "섬으로"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Награда за тайник · %d монета"
+msgid_plural "Награда за тайник · %d монет"
+msgstr[0] "은닉처 보상 · 코인 %d개"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Найдите предметы в нужном порядке."
+msgstr "순서대로 물건을 찾아요."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Никто из друзей ещё не играл."
+msgstr "아직 플레이한 친구가 없어요."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Нужны три звезды"
+msgstr "별 3개 필요"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "ОЧКИ"
+msgstr "점수"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Открыть тайник"
+msgstr "은닉처 열기"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Пауза"
+msgstr "일시정지"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Поиск завершён!"
+msgstr "수색 완료!"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Пока нет результатов. Будьте первым!"
+msgstr "아직 기록이 없어요. 첫 번째가 되어 보세요!"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Продолжение следует"
+msgstr "다음 이야기에 계속"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Продолжить"
+msgstr "계속"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Следующий поиск даст улику"
+msgstr "다음 수색에서 단서를 얻어요"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Сначала найдите предыдущие улики"
+msgstr "먼저 이전 단서를 찾으세요"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Строить за монеты"
+msgstr "코인으로 짓기"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Таблица лидеров"
+msgstr "순위표"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Тайник открыт"
+msgstr "은닉처 열림"
+
+#: games/nile-archive/lua/archive_dialogs.lua
+msgid "Тайник открыт. Запись в журнале."
+msgstr "은닉처가 열렸어요. 단서 기록에 남겼어요."
+
+#: games/nile-archive/lua/archive_dialogs.lua
+#, lua-format
+msgid "Улики %d/%d · Звёзды %d/3"
+msgstr "단서 %d/%d · 별 %d/3"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Обследовать архив"
+msgstr "아카이브 조사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Обследовать канал"
+msgstr "수로 조사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Обследовать сад"
+msgstr "정원 조사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в архиве"
+msgstr "아카이브 공사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в мастерской"
+msgstr "공방 공사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в саду"
+msgstr "정원 공사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы в храме"
+msgstr "신전 공사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Работы на канале"
+msgstr "수로 공사"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Разобрать записи мастерской"
+msgstr "공방 기록 정리"
+
+#: games/nile-archive/lua/archive_economy.lua
+msgid "Разобрать записи храма"
+msgstr "신전 기록 정리"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d звезда"
+msgid_plural "%d звёзд"
+msgstr[0] "별 %d개"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета"
+msgid_plural "%d монет"
+msgstr[0] "코인 %d개"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета · +%d влияния"
+msgid_plural "%d монет · +%d влияния"
+msgstr[0] "코인 %d개 · 영향력 +%d"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета · +%d влияния после подтверждения"
+msgid_plural "%d монет · +%d влияния после подтверждения"
+msgstr[0] "코인 %d개 · 영향력 +%d (확인 후)"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "%d монета после подтверждения"
+msgid_plural "%d монет после подтверждения"
+msgstr[0] "확인 후 코인 %d개"
+
+#. TRANSLATORS: %s is a building's name
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid ""
+"%s\n"
+"+%d влияния"
+msgstr ""
+"%s\n"
+"영향력 +%d"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "+%d влияния"
+msgstr "영향력 +%d"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "80 монет за сцену · бонусы за первую победу, новые звёзды и поиск без ошибок и подсказок"
+msgstr "장면당 코인 80개 · 첫 클리어, 새 별, 실수와 힌트 없는 수색 보너스"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Берег стоит %d монету. Переиграйте открытую главу."
+msgid_plural "Берег стоит %d монет. Переиграйте открытую главу."
+msgstr[0] "강변은 코인 %d개예요. 열린 장을 다시 플레이해 보세요."
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Влияние дают постройки и украшения. Оно открывает поиски и не тратится."
+msgstr "건물과 장식이 영향력을 줘요. 영향력은 수색을 열어 주고 소모되지 않아요."
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Вода"
+msgstr "물"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Восстановление"
+msgstr "복원"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Все постройки"
+msgstr "모든 건물"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выбрать"
+msgstr "선택"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выбрать место"
+msgstr "위치 선택"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выполнено"
+msgstr "완료"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Выполнить"
+msgstr "진행"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Герои"
+msgstr "주인공들"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Дальний берег"
+msgstr "먼 강변"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Деревья"
+msgstr "나무"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Дома и мастерские"
+msgstr "집과 공방"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Животные"
+msgstr "동물"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Завершите предыдущую главу"
+msgstr "이전 장을 먼저 끝내세요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "ИСТОРИЯ ЗАВЕРШЕНА"
+msgstr "이야기 완료"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Камни"
+msgstr "돌"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Кусты"
+msgstr "덤불"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Не хватает монет"
+msgstr "코인이 부족해요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Недостаточно монет. Пройдите сцену ещё раз."
+msgstr "코인이 부족해요. 장면을 한 번 더 플레이하세요."
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Нужно %d звезда"
+msgid_plural "Нужно %d звёзд"
+msgstr[0] "별 %d개 필요"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Нужно завершить %d поиск"
+msgid_plural "Нужно завершить %d поисков"
+msgstr[0] "수색 %d개를 끝내야 해요"
+
+#: games/nile-archive/lua/archive_island.lua
+#: games/nile-archive/lua/town_config.lua
+msgid "Нужно свободное место на открытом берегу"
+msgstr "열린 강변에 빈자리가 필요해요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Остров заполнен"
+msgstr "섬이 가득 찼어요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Отмена"
+msgstr "취소"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "ПОВТОРИТЕ ПОИСК РАДИ УЛИКИ"
+msgstr "단서를 위해 다시 수색"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "ПОИСК %d"
+msgstr "수색 %d"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Пальмовый берег"
+msgstr "야자 강변"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Памятники"
+msgstr "기념물"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Перемещение бесплатно"
+msgstr "이동은 무료"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Постройка готова · +%d влияния"
+msgstr "건물 완성 · 영향력 +%d"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Постройка перемещена"
+msgstr "건물을 옮겼어요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Припасы"
+msgstr "보급품"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Работы больше недоступны"
+msgstr "공사를 더 할 수 없어요"
+
+#: games/nile-archive/lua/archive_island.lua
+#, lua-format
+msgid "Работы завершены · +%d влияния"
+msgstr "공사 완료 · 영향력 +%d"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Работы на острове"
+msgstr "섬 공사"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "СЛЕДУЮЩАЯ ЦЕЛЬ"
+msgstr "다음 목표"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "СОБЕРИТЕ ТРИ ЗВЕЗДЫ"
+msgstr "별 3개를 모으세요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Сад"
+msgstr "정원"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "След ведёт вверх по Нилу"
+msgstr "단서가 나일강 상류로 이어져요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Сначала пройдите нужную главу или соберите больше звёзд"
+msgstr "먼저 필요한 장을 깨거나 별을 더 모으세요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Статуи"
+msgstr "조각상"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "ТАЙНИК ГОТОВ"
+msgstr "은닉처 준비 완료"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Тростниковый берег"
+msgstr "갈대 강변"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Уже восстановлено"
+msgstr "이미 복원됨"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Украшение на месте"
+msgstr "장식이 놓였어요"
+
+#: games/nile-archive/lua/archive_island.lua
+msgid "Цветы"
+msgstr "꽃"
+
+#: games/nile-archive/lua/archive_kit.lua
+msgid "Пропустить"
+msgstr "건너뛰기"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Амбары Ликона стоят на том же рукаве. Что там осталось?"
+msgstr "리콘의 곡창은 같은 지류에 있어요. 거기 뭐가 남았을까요?"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Амбары, второй круг"
+msgstr "곡창, 두 번째 탐색"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Амфора"
+msgstr "항아리"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Архив найден, но одной книги нет. Пересчитайте всё."
+msgstr "아카이브를 찾았지만 책 한 권이 없어요. 전부 다시 세어 보세요."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "В податных сундуках могут быть письма."
+msgstr "세금 상자 안에 편지가 있을지도 몰라요."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ведро"
+msgstr "양동이"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Верёвка"
+msgstr "밧줄"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Весло"
+msgstr "노"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Глина"
+msgstr "점토"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Гребень"
+msgstr "빗"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Дом Ликона брошен. Он уехал быстро."
+msgstr "리콘의 집은 버려졌어요. 서둘러 떠났나 봐요."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Дом надзирателя"
+msgstr "감독관의 집"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Дом надзирателя, второй круг"
+msgstr "감독관의 집, 두 번째 탐색"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Допрос"
+msgstr "심문"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Затопленные амбары"
+msgstr "침수된 곡창"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Зеркало"
+msgstr "거울"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Зерно"
+msgstr "곡식"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Канат"
+msgstr "굵은 밧줄"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кисть"
+msgstr "붓"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кол"
+msgstr "말뚝"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Корзина"
+msgstr "바구니"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Крыса"
+msgstr "쥐"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кубок"
+msgstr "잔"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Кувшин"
+msgstr "단지"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Куда ушла бы вода, если бы дамба устояла?"
+msgstr "제방이 버텼다면 물은 어디로 갔을까요?"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лаз выводит к ниломеру. Здесь отец встречал каждое утро."
+msgstr "개구멍이 나일로미터로 이어져요. 아버지가 매일 아침 여기서 해를 맞으셨어요."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лампа"
+msgstr "램프"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ларец"
+msgstr "작은 상자"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лесенка"
+msgstr "작은 사다리"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лестница"
+msgstr "계단"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лодочка"
+msgstr "작은 배"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лопата"
+msgstr "삽"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лотос"
+msgstr "연꽃"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Лягушка"
+msgstr "개구리"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мастерская печатей"
+msgstr "인장 공방"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мерка"
+msgstr "되"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мешок"
+msgstr "자루"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мешочек"
+msgstr "작은 주머니"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Молоток"
+msgstr "망치"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Монеты"
+msgstr "동전"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Мотыга"
+msgstr "괭이"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ниломер, второй круг"
+msgstr "나일로미터, 두 번째 탐색"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Опись"
+msgstr "목록"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Отец боялся за дамбу. Надо увидеть её своими глазами."
+msgstr "아버지는 제방을 걱정하셨어요. 직접 눈으로 봐야 해요."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Отчёт"
+msgstr "보고서"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Перерезанная дамба"
+msgstr "끊긴 제방"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Перстень"
+msgstr "반지"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Печать"
+msgstr "인장"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Письмо"
+msgstr "편지"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Плащ"
+msgstr "망토"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Последняя вещь"
+msgstr "마지막 물건"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Посох"
+msgstr "지팡이"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Резец"
+msgstr "조각칼"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Рейка"
+msgstr "측량대"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "С верхней ступени ниломера видно весь рукав."
+msgstr "나일로미터 맨 위 계단에서 지류 전체가 보여요."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Сандалии"
+msgstr "샌들"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Сандалия"
+msgstr "샌들 한 짝"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Серп"
+msgstr "낫"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Сеть"
+msgstr "그물"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "След киля"
+msgstr "용골 자국"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Совок"
+msgstr "부삽"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Ступка"
+msgstr "절구"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Счётные камни"
+msgstr "셈돌"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Табличка"
+msgstr "점토판"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Там, где началась первая печать, закончится игра."
+msgstr "첫 인장이 시작된 곳에서 게임이 끝나요."
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Тростинка"
+msgstr "갈대 줄기"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Фонарь"
+msgstr "등불"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Хранилище под храмом"
+msgstr "신전 지하 보관소"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Хранилище, второй круг"
+msgstr "보관소, 두 번째 탐색"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Цапля"
+msgstr "왜가리"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Цепь"
+msgstr "쇠사슬"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Чернильница"
+msgstr "잉크병"
+
+#: games/nile-archive/lua/archive_new_scenes.lua
+msgid "Что Ликон успел узнать раньше нас?"
+msgstr "리콘은 우리보다 먼저 무엇을 알아냈을까요?"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Восстановите мастерскую"
+msgstr "공방을 복원하세요"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Восстановите фонтан"
+msgstr "분수를 복원하세요"
+
+#: games/nile-archive/lua/archive_progress.lua
+#, lua-format
+msgid "Ещё %d влияния"
+msgstr "영향력 %d 더 필요"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Нужны предыдущие улики"
+msgstr "이전 단서가 필요해요"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Откройте предыдущий тайник"
+msgstr "이전 은닉처를 여세요"
+
+#: games/nile-archive/lua/archive_progress.lua
+msgid "Соберите все улики"
+msgstr "단서를 모두 모으세요"
+
+#: games/nile-archive/lua/archive_scene.lua
+msgid "Бонус"
+msgstr "보너스"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "«Мои амбары утопил хранитель Хорем. Его видели живым выше по реке. Иду за ним»."
+msgstr "“내 곡창을 물에 잠기게 한 건 기록관 호렘이다. 그가 강 위쪽에서 살아 있는 걸 본 사람이 있다. 그를 쫓아간다.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "«Хранитель утопил». Удобная ложь для вора. Отец никогда бы не тронул свой дом."
+msgstr "“기록관이 물에 잠기게 했다.” 도둑에게 참 편한 거짓말이네. 아버지는 절대 자기 집에 손대지 않으셨을 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "«Я видел, как он платил лодочнице. На золотом знаке — тростник и вода»."
+msgstr "“그가 뱃사공에게 값을 치르는 걸 봤다. 금 인장에는 갈대와 물이 새겨져 있었다.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А вот метка той воды. Выше всех. Такой ни я не видела, ни мать."
+msgstr "이게 그날 물의 표시야. 어느 것보다 높아. 나도, 엄마도 이런 건 본 적 없어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А здесь написал честно: яблоко. В игре это значит: смотри сюда."
+msgstr "여기엔 솔직하게 사과라고 쓰셨네. 이 놀이에서는 \"여기 봐\"라는 뜻이야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А они целы. Тётка говорит, в ту ночь у них даже зерно не намокло. Весь остров там плясал."
+msgstr "근데 멀쩡해. 이모 말이, 그날 밤 곡식 한 알 젖지 않았대. 섬 사람들이 다 거기서 춤췄다더라."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А потом пришла вода. Мой дом стоял на этом рукаве, писарша. Там теперь ил."
+msgstr "그러고 나서 물이 들이닥쳤지. 내 집이 이 지류에 있었어, 서기 아가씨. 지금은 진흙뿐이야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А потом?"
+msgstr "그다음엔?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А серьга у тебя откуда? Золото, и работа тонкая. Странная вещь для лодочницы."
+msgstr "그 귀걸이는 어디서 났어? 금인 데다 세공도 섬세하네. 뱃사공한테 어울리는 물건이 아닌데."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "А что он мог один, против шестерых?"
+msgstr "혼자서 여섯 명을 상대로 뭘 할 수 있었겠어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Амбары Ликона затоплены, зерно сгнило."
+msgstr "리콘의 곡창은 물에 잠겼고, 곡식은 썩었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Амбары Ликона. Гребла молча, как ты просила."
+msgstr "리콘의 곡창이야. 네가 말한 대로 말없이 노를 저었어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Анх, веер, ключ, перо, кошка... Мерит, это игра. Наша игра."
+msgstr "앙크, 부채, 열쇠, 깃펜, 고양이... 메리트, 이건 놀이야. 우리 놀이."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Архив без книг. Смешно. Но люди любят, когда у дома есть крыша."
+msgstr "책 없는 아카이브라니, 웃기네. 그래도 사람들은 집에 지붕이 있으면 좋아하니까."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Архив цел, 239 сундуков из 240. Нет Книги разливов. На ступенях свежая глина."
+msgstr "아카이브는 멀쩡해요. 상자 240개 중 239개가 있고, 범람의 책이 없어요. 계단에 새 진흙이 묻어 있어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Брали. Брат мой платил, пока поле не отдал."
+msgstr "가져갔지. 우리 형제는 밭을 내놓을 때까지 바쳤어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Брат бы порадовался. Поделом ему, надзирателю."
+msgstr "형제가 좋아했겠네. 감독관 꼴 좋다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Брось, говорю. Режь, если так нужен."
+msgstr "버리라고 했잖아. 그렇게 필요하면 잘라."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В детстве он прятал по дому восемь вещей. Последняя всегда вела в следующую комнату."
+msgstr "어릴 때 아버지는 집 안에 물건 여덟 개를 숨기곤 하셨어. 마지막 물건은 늘 다음 방으로 이어졌지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В мастерской, в тайнике под верстаком. Едем домой."
+msgstr "공방, 작업대 밑 은닉처에 있어. 집으로 가자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В списке вместо свитка — карта. Дальше нужна лодка Мерит."
+msgstr "목록에 두루마리 대신 지도가 있어요. 이제 메리트의 배가 필요해요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В списке яблоко. Яблони растут только у дома садовника. В ночь воды остров был пуст."
+msgstr "목록에 사과가 있어. 사과나무는 정원사의 집에만 있지. 물이 든 밤, 섬은 텅 비어 있었고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "В столицу пишут: воды мало, зерна мало. А с крестьян берут как за большую воду."
+msgstr "수도에는 물도 적고 곡식도 적다고 보고하면서, 농민한테는 큰물이 든 해만큼 거둬 가."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вези. Разговаривать не обязательно."
+msgstr "태워 줘. 말은 안 해도 돼."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Видишь? В списке вместо свитка стоит карта. В игре замена — это всегда подсказка."
+msgstr "봤어? 목록에 두루마리 대신 지도가 있잖아. 이 놀이에서 바뀐 건 늘 단서야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода затопила амбары Ликона. Нефра сомневается, что он приказал резать дамбу."
+msgstr "물이 리콘의 곡창을 덮쳤어요. 네프라는 그가 제방을 자르라고 시켰다는 게 믿기지 않아요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода их не смыла. Эта сторона была укрыта."
+msgstr "물이 쓸어 가지 않았어. 이쪽은 가려져 있었거든."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода поднимет то, что не поднимут руки. Сначала верни дом, потом людей, потом реку."
+msgstr "손으로 들 수 없는 것은 물이 들어 올릴 것이다. 먼저 집을 되찾고, 그다음 사람들, 그다음 강이다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вода придёт выше всех отметок. Удержит её дамба или нет, я не знаю, что хуже."
+msgstr "물은 어느 표시보다 높이 올 것이다. 제방이 버텨도, 못 버텨도 걱정이다. 어느 쪽이 더 나쁜지 나도 모르겠다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Возможно. Они отвлекли бы любого, кто искал Книгу."
+msgstr "그럴지도 몰라. 책을 찾는 사람이면 누구든 그쪽에 정신이 팔렸겠지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Возьму с собой. Последняя вещь всегда ведёт дальше."
+msgstr "가져갈게. 마지막 물건은 늘 다음으로 이어지니까."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вон твоя кошка опять сидит, как сторож. Что у неё на шее?"
+msgstr "저기 네 고양이가 또 파수꾼처럼 앉아 있네. 목에 뭐가 걸려 있어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот и всё, писарша. Нашла. Плясать будем?"
+msgstr "자, 이게 다야, 서기 아가씨. 찾았네. 춤이라도 출까?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот и сходи посмотри. А я постерегу лодку. Лодка у меня одна, как у тебя отец."
+msgstr "그럼 가서 봐. 난 배를 지킬게. 배는 나한테 하나뿐이야, 너한테 아버지가 한 분이듯."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот как он успел! Тоже мне тайна."
+msgstr "그렇게 손을 써 놓으셨던 거구나! 비밀치고는 시시하네."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот он. В корнях яблони кувшин, запечатан. Твоей печатью, писарша."
+msgstr "여기 있네. 사과나무 뿌리께에 단지가 있어, 봉인된 채로. 네 인장으로, 서기 아가씨."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот оно, золото, в ухе. Ношу, чтобы помнить, сколько я стою."
+msgstr "이게 그 금이야, 귀에 달고 있지. 내 값이 얼마인지 잊지 않으려고 차고 다녀."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот письмо в податном сундуке. Рука Ликона: просит Книгу «для царской переписи»."
+msgstr "세금 상자에 편지가 있어요. 리콘의 필체로 “왕실 인구 조사를 위해” 책을 요청하고 있어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот почему он написал «хранитель». Тростник и вода — печать нашей мастерской."
+msgstr "그래서 리콘이 ‘기록관’이라고 쓴 거야. 갈대와 물은 우리 공방의 인장이니까."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот тайник под верстаком. Пусто. Мерит, дай мне свою серьгу."
+msgstr "작업대 밑 은닉처야. 비어 있어. 메리트, 네 귀걸이 좀 줘 봐."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Вот черновик письма, свежий. Читай, я таких слов не знаю."
+msgstr "편지 초안이야, 최근 거. 읽어 봐, 난 이런 말은 몰라."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всех. Никто не утонул. Только я работала. За золото."
+msgstr "전부 다 데려다줬어. 아무도 안 빠졌어. 일한 사람은 나뿐이었고. 금을 받고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всех? В ту самую ночь?"
+msgstr "전부? 바로 그날 밤에?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всё, что осталось в амбарах, сгнило."
+msgstr "곡창에 남은 건 전부 썩었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Всё-таки считаю. Куда ушла бы вода, если бы дамба устояла?"
+msgstr "그래도 계산해 볼래. 제방이 버텼다면 물은 어디로 갔을까?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Выходит, та записка не последняя. И он пишет так, будто знал, что люди уйдут."
+msgstr "그러면 그 쪽지가 마지막이 아니었네. 게다가 사람들이 떠날 걸 알았다는 듯이 쓰셨어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Выше всех отметок. За месяц, Мерит. Он знал."
+msgstr "어느 표시보다 높아. 한 달 전에, 메리트. 아버지는 알고 계셨어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Гляди, сколько народу вернулось. При твоём отце так не шумели."
+msgstr "봐, 사람들이 얼마나 돌아왔는지. 네 아버지 때도 이렇게 시끌벅적하진 않았어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Да кому она нужна? Цифры про воду. Вода и так приходит каждый год."
+msgstr "그게 누구한테 필요하겠어? 물에 관한 숫자잖아. 물이야 어차피 해마다 오는데."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Дай сюда. Внутри его рука."
+msgstr "이리 줘. 안에 아버지 글씨가 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Дамбу перерезали. Воду сюда привели."
+msgstr "제방이 잘렸어요. 물이 이쪽으로 끌려왔어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Дважды он писал в списке «гранат», а клал яблоко. Я решила, что он стареет."
+msgstr "목록엔 두 번이나 ‘석류’라고 써 놓고선 사과를 넣었어. 나이 들어서 그러나 했지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Две борозды на колу. Твой киль мог их оставить?"
+msgstr "말뚝에 홈이 두 줄 있어. 네 배 용골이 낸 자국일 수 있어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Двести лет наш дом записывал высоту реки. Каждый локоть, каждый год."
+msgstr "이백 년 동안 우리 집안은 강의 높이를 기록했어. 해마다, 한 큐빗도 빠짐없이."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Девять месяцев я ждала в Мемфисе письма. А столы так и накрыты."
+msgstr "아홉 달 동안 멤피스에서 편지를 기다렸는데. 식탁은 아직도 차려진 채네."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Держи конец. Мой узел, кроме меня, никто не развяжет. Мать так вязала."
+msgstr "끝을 잡아. 내 매듭은 나 말고는 아무도 못 풀어. 엄마가 그렇게 묶으셨거든."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Думаешь, твои полки с маслом и верёвками были для Ликона?"
+msgstr "기름이랑 밧줄 장부로 채운 네 선반이 리콘 보라고 둔 거라고 생각해?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Думала, больше не спросишь."
+msgstr "이제 안 물어볼 줄 알았어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если бы дамба устояла, вода смыла бы семь селений на правом берегу."
+msgstr "제방이 버텼다면 물이 오른쪽 강변의 일곱 마을을 쓸어 갔을 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если нас утопит, я выплыву первой. Предупреждаю честно."
+msgstr "우리가 물에 빠지면 내가 먼저 헤엄쳐 나갈 거야. 미리 솔직하게 말해 둔다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если ты читаешь это, то злишься. Правильно. Злись и считай."
+msgstr "이걸 읽고 있다면 화가 났겠지. 맞다. 화내고, 계산해라."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Если это он, он утопил твой дом. И мой. Мой, писарша!"
+msgstr "그가 맞다면, 네 집을 물에 잠기게 한 거야. 내 집도! 내 집도라고, 서기 아가씨!"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Жив?!"
+msgstr "살아 있어?!"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Забил! Вот теперь твой канал услышит воду."
+msgstr "솟았어! 이제 네 수로가 물소리를 듣겠네."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Замолчи."
+msgstr "입 다물어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Записка отца: книги под храмом. Плита под крылатым солнцем не поднимается."
+msgstr "아버지의 쪽지에 따르면 책은 신전 아래에 있어요. 날개 달린 태양 아래의 판석은 올라가지 않아요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Записывает. Вот его день, вот вино, вот улыбка. Всё с датой."
+msgstr "다 적어 두셨네. 하루 일과, 포도주, 미소까지. 전부 날짜가 붙어 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Запись за месяц до воды. Он считал следующий разлив."
+msgstr "물이 들기 한 달 전의 기록이에요. 아버지는 다음 범람을 계산하고 있었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Заплатил золотом. Я такой платы в жизни не видела и вопросов не задавала."
+msgstr "금으로 줬어. 그런 값은 평생 처음 봤고, 묻지도 않았지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Зачем нам храм? Полки же ломятся. Вот твоя пропажа, бери да читай."
+msgstr "신전은 뭐 하러 가? 선반이 터지게 찼잖아. 여기 네가 찾던 거 있네, 가져다 읽어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Зачем? Ну, на."
+msgstr "왜? 아, 자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Здесь отец стоял каждое утро с рейкой. Вот его метки."
+msgstr "아버지는 매일 아침 측량대를 들고 여기 서 계셨어. 여기 아버지가 남긴 표시야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Злись и считай, писал он. Считать я пока не хочу."
+msgstr "화내고 계산하라고 쓰셨지. 아직은 계산하고 싶지 않아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Злюсь. Считаю. Мерит, фонтан бьёт, канал полон."
+msgstr "화났어. 계산했어. 메리트, 분수가 솟고 수로가 가득 찼어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Знал и написал в палату. А вот ответ: «Разлив ожидается слабый»."
+msgstr "알고서 곡물청에 편지를 쓰셨어. 그런데 답이 이래. “올해 범람은 약할 것으로 예상됨.”"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, вряд ли это он. Одна вода накрыла архив и его амбары."
+msgstr "그렇다면 그 사람 짓은 아닐 거야. 같은 물이 아카이브와 그의 곡창을 함께 덮쳤으니까."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, попали иначе. Кто-то был здесь совсем недавно. И взял только одну книгу."
+msgstr "그럼 다른 길로 들어온 거야. 누군가 아주 최근에 여기 있었어. 그리고 책을 한 권만 가져갔고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, следующий вопрос задаст ниломер."
+msgstr "그럼 다음 질문은 나일로미터가 던지겠네."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Значит, там записано, кто сколько должен был отдать. Тут у любого зачешутся руки."
+msgstr "거기엔 누가 얼마를 바쳐야 하는지 적혀 있다는 거네. 누구라도 손이 근질거리겠어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Золотой знак один. Им отец скреплял только то, за что отвечал сам."
+msgstr "금 인장은 하나뿐이야. 아버지는 자기가 책임지는 일에만 그걸 찍으셨어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И вот зачем нужна вода. Утопить архив, и нет больше чисел. Так?"
+msgstr "그래서 물이 필요했던 거야. 아카이브를 물에 잠기게 하면 숫자도 사라지니까. 맞지?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И где он лежит, этот знак?"
+msgstr "그 인장은 어디 있는데?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И людей отослал на праздник."
+msgstr "사람들까지 축제에 보냈고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И на этот раз я не знаю, что резать."
+msgstr "이번엔 뭘 잘라야 할지 나도 모르겠어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И сколько ей надо? Реку сюда на верёвке не приведёшь."
+msgstr "그게 얼마나 필요한데? 강을 밧줄로 끌어올 순 없잖아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И спас семь селений. Если это он, записать придётся и то и другое."
+msgstr "그리고 일곱 마을을 구했지. 그가 한 일이라면 둘 다 적어야겠어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И что сказал парень?"
+msgstr "그래서 그 청년은 뭐라고 했어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "И что? Амбары как амбары."
+msgstr "그래서? 곡창은 곡창일 뿐인데."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Игра не кончена. Последняя вещь всегда ведёт дальше. Где тут последняя?"
+msgstr "놀이는 안 끝났어. 마지막 물건은 늘 다음으로 이어지거든. 여기서 마지막이 뭐지?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ил по самые балки. Здесь хранилось зерно Ликона."
+msgstr "들보까지 진흙이야. 여기 리콘의 곡식이 있었어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ил укрывал дамбу после разлива. Теперь вода его смыла."
+msgstr "범람이 지나면 진흙이 제방을 덮어 줬는데, 이제 물이 그걸 씻어 냈어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ищи сама. Ты же у нас считаешь."
+msgstr "직접 찾아. 계산은 네 담당이잖아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "К храму. Значит, плиту держит не камень. Плите нужна вода."
+msgstr "신전으로 이어져. 그러니까 판석을 붙들고 있는 건 돌이 아니야. 판석에는 물이 필요해."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Карта значит: пешком не дойдёшь. Покажи свою."
+msgstr "지도가 있다는 건 걸어서는 못 간다는 뜻이야. 네 지도 좀 보여 줘."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ключ, скарабей, анх, перо. Вода уже шумит под плитой."
+msgstr "열쇠, 스카라베, 앙크, 깃펜. 판석 밑에서 벌써 물소리가 나."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Книги он спрятал заранее."
+msgstr "아버지는 책을 미리 숨겨 두셨어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Книги спрятаны под храмом. Восстанови остров — и библиотека снова откроется."
+msgstr "책은 신전 아래에 숨겨 두었다. 섬을 복원해라. 그러면 도서관이 다시 열릴 것이다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кол, канат, весло. Покажи, как стояла лодка."
+msgstr "말뚝, 굵은 밧줄, 노. 배가 어떻게 서 있었는지 보여 줘."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Конечно, не тронул бы. Свой дом, свои книги."
+msgstr "당연히 손대지 않으셨겠지. 자기 집, 자기 책인데."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кошка тоже вещь? Она на меня смотрит."
+msgstr "고양이도 물건이야? 나를 쳐다보고 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кошки сами узлов не вяжут. Лаз идёт вверх, на север. Там только ниломер."
+msgstr "고양이가 혼자 매듭을 지을 리 없지. 개구멍은 위쪽, 북쪽으로 이어져. 거기엔 나일로미터뿐이야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Края пролома ровные. Дамбу перерезали лопатами. Это не разлив."
+msgstr "터진 자리의 가장자리가 반듯해. 제방은 삽으로 잘렸어. 범람이 아니야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Крылатое солнце на этом ларе стоит криво. Под ним плита, и она не поднимается."
+msgstr "이 궤의 날개 달린 태양이 비뚤어져 있어. 그 밑에 판석이 있는데 올라가지 않아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто же меня тогда нанял?"
+msgstr "그럼 날 고용한 사람은 누구야?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто же прячет библиотеку за библиотекой?"
+msgstr "대체 누가 도서관 뒤에 도서관을 숨겨?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто их позвал, молчат. Говорят только: «Велели копать или тонуть»."
+msgstr "누가 불렀는지는 입을 다물어. 그냥 “파든지 가라앉든지 하라고 했다”고만 하더라."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто он был?"
+msgstr "그 사람은 누구였어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто-то очень хорошо знал этот берег. Запишем."
+msgstr "누군가 이 강변을 아주 잘 알았어. 적어 두자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Кто-то подправлял реку? Смелый человек."
+msgstr "누가 강을 손봤다고? 대담한 사람이네."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лаз. Узкий, но маленький сундук протащить можно. Миу у входа сторожит."
+msgstr "개구멍이야. 좁지만 작은 상자 정도는 끌고 갈 수 있어. 미우가 입구를 지키고 있고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лейка, вилы, корзина. Садовые вещи собраны у воды, а не у сарая."
+msgstr "물뿌리개, 쇠스랑, 바구니. 정원 도구들이 헛간이 아니라 물가에 모여 있어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон велел утопить собственное зерно? Весь свой запас?"
+msgstr "리콘이 자기 곡식을 물에 잠기게 했다고? 비축분을 전부?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон лжёт. Ему нужно, на кого свалить."
+msgstr "리콘이 거짓말하는 거야. 뒤집어씌울 사람이 필요했던 거지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон пишет в Мемфис: амбары утопил хранитель Хорем, и он жив."
+msgstr "리콘이 멤피스에 편지를 썼어요. 기록관 호렘이 곡창을 물에 잠기게 했고, 호렘은 살아 있다고요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон поймал одного из шестерых. Вот его допрос, слово в слово."
+msgstr "리콘이 여섯 명 중 하나를 붙잡았어. 여기 그 심문 기록이야, 한 마디도 빼지 않고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон просил Книгу «для царской переписи». Нефра подозревает, что полки — приманка."
+msgstr "리콘이 “왕실 인구 조사를 위해” 책을 요청했어요. 네프라는 선반이 미끼일 거라고 의심해요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон! Он в вашем доме вино пил. Лодку мою нанимать брезговал."
+msgstr "리콘이! 그 사람, 너희 집에서 포도주는 마시면서 내 배는 빌리기 싫다더니."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ликон. Он ответил, что воды будет мало. Запишем."
+msgstr "리콘이야. 물이 적을 거라고 답했어. 적어 두자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лица не видела. Руки только, тёмные, будто в смоле. А на том берегу амбары Ликона. У него и спроси."
+msgstr "얼굴은 못 봤어. 손만 봤는데, 송진을 묻힌 것처럼 거뭇했어. 건너편 강변이 리콘의 곡창이야. 그 사람한테 물어봐."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лодка в ту ночь была лодкой Мерит. Её нанял человек в капюшоне. Плата — золото в её ухе."
+msgstr "그날 밤 그 배는 메리트의 배였어요. 두건 쓴 사람이 빌렸고, 값은 메리트의 귀에 걸린 금이에요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Лодочнице заплатили золотым знаком с тростником и водой."
+msgstr "뱃사공은 갈대와 물이 새겨진 금 인장으로 값을 받았어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Людей он отослал ещё днём. Совпадение? Или он ждал беды?"
+msgstr "사람들은 낮에 이미 보내 버렸어. 우연일까? 아니면 재앙을 기다렸던 걸까?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Люди вернутся, когда будет куда. Сама их перевезу, если найдётся за что."
+msgstr "사람들은 돌아올 곳이 생기면 돌아올 거야. 값만 받을 수 있으면 내가 직접 실어 나르지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Люди и правда едут. Сегодня пекарь спросил, правда ли, что у хранителя снова горит свет."
+msgstr "사람들이 정말 오고 있어. 오늘 제빵사가 기록관 댁에 다시 불이 켜졌다는 게 사실이냐고 묻더라."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мало ли кто мог её украсть."
+msgstr "누가 훔쳤을 수도 있잖아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мало ли лодок на реке."
+msgstr "강에 배가 한두 척이야?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мало ли что я говорю."
+msgstr "내가 하는 말이야 뭐든 그렇지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мастерская. Твой отец тут просиживал ночи, глину мял."
+msgstr "공방이야. 네 아버지가 여기서 밤마다 점토를 주무르며 보냈지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Меня тоже. Садись. Будем злиться вдвоём."
+msgstr "나도 그래. 앉아. 같이 화내자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Меня-то почему не спросил?"
+msgstr "나한테는 왜 안 물어봤어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мерит, посмотри на ступени. Тут глина, и она ещё сырая."
+msgstr "메리트, 계단 좀 봐. 진흙이 있는데 아직 축축해."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мерит, развяжи его."
+msgstr "메리트, 그 사람 풀어 줘."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мерит. Покажи верх своей карты."
+msgstr "메리트. 네 지도의 윗부분을 보여 줘."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Миу, иди сюда. Ошейник у тебя тот же, а узел свежий. Странно."
+msgstr "미우, 이리 와. 목걸이는 그대로인데 매듭은 새거네. 이상하다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Многие."
+msgstr "많이들."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Мог. Я сама его чинила: два гвоздя так и торчат. Лодка была моя."
+msgstr "그럴 수 있어. 내가 직접 고쳤거든, 못 두 개가 아직 삐죽 나와 있지. 그 배는 내 거였어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На колу канат. Рядом две борозды, словно от киля."
+msgstr "말뚝에 밧줄이 걸려 있어. 옆에 용골이 긁은 듯한 홈이 두 줄 있고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На колу обрывок каната с речным узлом. Мерит не хочет на него смотреть."
+msgstr "말뚝에 강 매듭이 지어진 밧줄 조각이 걸려 있어요. 메리트는 그걸 쳐다보려 하지 않아요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На обороте печати проступил план острова. След ведёт к старому храму у восточного берега."
+msgstr "인장 뒷면에 섬의 평면도가 떠올랐어요. 단서는 동쪽 강변의 낡은 신전으로 이어져요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На правый берег. Там семь селений, и стоят они ниже реки. Тётка моя там."
+msgstr "오른쪽 강변으로. 거기 일곱 마을이 있는데, 강보다 낮은 데 있어. 우리 이모도 거기 살아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На рукаве тоже всех позвали на праздник?"
+msgstr "지류 쪽 사람들도 다 축제에 불렀어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На свитке — печать семейной мастерской. Отец успел спрятать архив до наводнения."
+msgstr "두루마리에 가문 공방의 인장이 찍혀 있어요. 아버지가 홍수 전에 아카이브를 숨겨 두었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На северном рукаве одна лодка и шесть лопат. На кормовом конце речной узел. Записано."
+msgstr "북쪽 지류에 배 한 척과 삽 여섯 자루. 선미 끝에 강 매듭. 기록해 둔다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На стене две шкалы. Вторая, свежая, занижает воду на два локтя."
+msgstr "벽에 눈금이 두 개야. 새로 새긴 두 번째 눈금은 물높이를 두 큐빗이나 낮게 잡아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "На террасе ты сказала: твой узел, кроме тебя, никто не развяжет."
+msgstr "테라스에서 네가 그랬잖아. 네 매듭은 너 말고 아무도 못 푼다고."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Не здесь. Поехали на дамбу. Там скажу."
+msgstr "여기선 안 돼. 제방으로 가자. 거기서 말할게."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Не я. На острове с той ночи никто не живёт."
+msgstr "난 아니야. 그날 밤 이후로 섬에는 아무도 안 살아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нет Книги разливов. Главной книги нашего дома."
+msgstr "범람의 책이 없어. 우리 집안의 가장 중요한 책이."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нет. Такой за горсть ячменя удавится."
+msgstr "아니. 그런 사람은 보리 한 줌 때문에 목이라도 맬걸."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нефра. Раз ты здесь, ты всё сосчитала. Дамбу велел резать я. Записано моей рукой."
+msgstr "네프라. 네가 여기 있다면 전부 계산했겠지. 제방을 자르라고 시킨 건 나다. 내 손으로 기록해 두었다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Низ смотри сколько хочешь. Верх не для тебя, писарша."
+msgstr "아래는 실컷 봐. 위쪽은 네가 볼 게 아니야, 서기 아가씨."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Никто ничего не видел. Хранитель ещё днём отпустил всех на праздник за реку, в Семь Селений."
+msgstr "아무도 아무것도 못 봤어. 기록관이 낮에 이미 모두를 강 건너 일곱 마을 축제에 보냈거든."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Но он успел спрятать книги и оставил подсказки. Я восстановлю наше поместье — и найду архив."
+msgstr "하지만 아버지는 책을 숨길 시간이 있었고 단서도 남기셨어. 우리 영지를 복원해서 아카이브를 찾을 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Новая записка в корнях яблони: сначала дом, потом люди, потом река."
+msgstr "사과나무 뿌리께에 새 쪽지가 있어요. 먼저 집, 그다음 사람들, 그다음 강."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Нравится мне твой отец. Жаль, не достать его веслом."
+msgstr "네 아버지 마음에 들어. 노로 때릴 수 없어서 아쉽지만."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он был здесь. Видел, как заработал фонтан. И ушёл."
+msgstr "그 사람이 여기 있었어. 분수가 솟는 걸 보고 떠났어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он видел. Стоял тут и видел, и записал."
+msgstr "아버지는 보셨어. 여기 서서 보고 기록하셨어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он всю ночь молчал. Руки тёмные. Я думала, смола. А вдруг чернила?"
+msgstr "밤새 한마디도 안 했어. 손이 거뭇했는데 난 송진인 줄 알았지. 혹시 잉크였을까?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он пишет мне. Не писцу, не наследнику. Мне."
+msgstr "나한테 쓰셨어. 서기한테도, 상속자한테도 아니고. 나한테."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Он пишет: «восстанови остров». Я думала, это красивые слова."
+msgstr "아버지가 “섬을 복원해라”라고 쓰셨어. 난 그냥 멋진 말인 줄 알았는데."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Она закрыла ухо платком. Вряд ли заметила, что закрыла."
+msgstr "메리트가 귀를 스카프로 가렸어. 가린 줄도 모르는 것 같아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Она ни разу не взглянула на этот кол. А ведь она смотрит на всё."
+msgstr "메리트는 이 말뚝을 한 번도 안 봤어. 늘 모든 걸 살피는 사람인데."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Они ниже настоящих на два локтя. По ним выходит, что разливы были плохие."
+msgstr "진짜보다 두 큐빗 낮아. 이 눈금대로면 범람은 계속 부실했던 셈이야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Опись до разлива: двести сорок сундуков перенесены под храм."
+msgstr "범람 전 목록: 상자 이백사십 개를 신전 아래로 옮김."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Опись составлена до разлива. Книга разливов хранила двухсотлетние записи воды."
+msgstr "목록은 범람 전에 작성됐어요. 범람의 책에는 이백 년 치 물 기록이 담겨 있었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ответил: книга не покидает острова. Он улыбнулся. Такие улыбки я записываю."
+msgstr "책은 섬 밖으로 나가지 않는다고 답했다. 그는 웃었다. 이런 웃음은 내가 적어 둔다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец видел лодку и шесть лопат и записал это. А людей с острова он отослал ещё днём."
+msgstr "아버지는 배와 삽 여섯 자루를 보고 기록하셨어요. 섬 사람들은 낮에 미리 내보냈고요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец видел эти метки каждое утро и вёл свой счёт. Двести лет настоящих чисел против поддельных."
+msgstr "아버지는 매일 아침 이 표시를 보며 직접 셈을 하셨어. 이백 년 치 진짜 숫자 대 가짜 숫자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец исчез после наводнения, а библиотека опустела."
+msgstr "아버지는 홍수 뒤에 사라졌고 도서관은 텅 비었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец не верил в везение. Он верил в записи."
+msgstr "아버지는 행운을 믿지 않으셨어. 기록을 믿으셨지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец рассчитал небывалую воду и предупредил палату. Ответ: «Разлив ожидается слабый»."
+msgstr "아버지는 유례없는 큰물을 계산해 곡물청에 경고했어요. 답은 “올해 범람은 약할 것으로 예상됨”이었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец спрятал книги и отослал людей заранее. Нефра пока не хочет это считать."
+msgstr "아버지는 책을 숨기고 사람들을 미리 내보냈어요. 네프라는 아직 그 사실을 받아들이고 싶지 않아 해요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отец твой и унёс, когда прятал. Делов-то."
+msgstr "네 아버지가 숨길 때 가져갔겠지. 별일도 아닌데."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Отчёты с подписью Ликона расходятся со шкалой. Книга могла бы их проверить."
+msgstr "리콘이 서명한 보고서가 눈금과 어긋나요. 범람의 책이라면 그걸 검증할 수 있어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ошейник. Тот самый свежий узел. А в бусине — его записка."
+msgstr "목걸이야. 바로 그 새 매듭이고. 구슬 안에 아버지 쪽지가 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Печать и руки человека в капюшоне указывают на Хорема. Нефре нужно подтверждение."
+msgstr "인장과 두건 쓴 사람의 손이 호렘을 가리켜요. 네프라에게는 확증이 필요해요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Печать семейной мастерской. Отец спрятал архив заранее и начал нашу старую игру."
+msgstr "가문 공방의 인장이야. 아버지는 아카이브를 미리 숨기고 우리의 오랜 놀이를 시작하신 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "План острова указывает на старый храм. Свитки на полках — приманка."
+msgstr "섬의 평면도가 낡은 신전을 가리켜요. 선반 위 두루마리는 미끼예요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плата. Раз в жизни мне заплатили золотом. Больше не спрашивай."
+msgstr "품삯이야. 평생 딱 한 번 금으로 받았어. 더는 묻지 마."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плита на террасе и есть весы. С одной стороны камень, с другой вода."
+msgstr "테라스의 판석이 바로 저울이야. 한쪽엔 돌, 한쪽엔 물."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плита на террасе работает как весы: камень против воды."
+msgstr "테라스의 판석은 저울처럼 움직여요. 돌 대 물이에요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Плиту только что подняли мы. Больше сюда никому не попасть."
+msgstr "판석은 방금 우리가 올렸어. 이제 아무도 여기엔 못 들어와."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "По Книге следующая вода будет выше. Иду сверять к первому порогу."
+msgstr "책에 따르면 다음 물은 더 높을 것이다. 제1폭포에 가서 대조해 본다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Повезло людям."
+msgstr "사람들은 운이 좋았네."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Под фонтаном сухой канал. Он идёт к храму."
+msgstr "분수 밑에 마른 수로가 있어. 신전으로 이어져."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Поддельные отчёты, двадцать лет. Он их даже не сжёг. Заберём: в Мемфисе их прочтут."
+msgstr "이십 년 치 위조 보고서야. 태우지도 않았네. 가져가자. 멤피스에서 읽어 줄 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Подожди. В описи двести сорок сундуков. Я насчитала двести тридцать девять."
+msgstr "잠깐. 목록에는 상자가 이백사십 개인데 내가 센 건 이백삼십구 개야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Подожди. Рядом вторые метки, резец другой, и работа новее."
+msgstr "잠깐. 옆에 두 번째 표시가 있어. 조각칼이 다르고 솜씨도 더 새거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Подпись можешь не читать."
+msgstr "서명은 안 읽어도 돼."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Поехали отсюда. Комары."
+msgstr "여기서 나가자. 모기가 너무 많아."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Помоги снять. Не развязывается, сколько ни тяни."
+msgstr "벗기게 도와줘. 아무리 당겨도 안 풀려."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Порядок открытия: ключ, скарабей, анх, перо."
+msgstr "여는 순서: 열쇠, 스카라베, 앙크, 깃펜."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Порядок ты знаешь: ключ, скарабей, анх, перо. Как в тот год, когда тебе было шесть."
+msgstr "순서는 알지? 열쇠, 스카라베, 앙크, 깃펜. 네가 여섯 살이던 그해처럼."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Последняя записка отца раскрыта."
+msgstr "아버지의 마지막 쪽지를 풀었어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Посмотри на весы. На чашах не гири, а отметки локтей. Как на ниломере."
+msgstr "저울을 봐. 접시에 추가 아니라 큐빗 눈금이 있어. 나일로미터처럼."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Постой. Амбары стоят на северном рукаве. Куда и пустили воду."
+msgstr "잠깐만. 곡창은 북쪽 지류에 있어. 물을 흘려보낸 바로 그쪽이야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Пошла! Плита пошла. Ступени сухие. Отец, ты и это рассчитал."
+msgstr "움직여! 판석이 움직여. 계단이 말라 있어. 아버지, 이것까지 계산하셨군요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "При такой воде от них остался бы один ил."
+msgstr "그런 물이었다면 곡창엔 진흙만 남았을 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Прижимаю к глине. Это не монета. Тростник и вода."
+msgstr "진흙에 눌러 볼게. 동전이 아니야. 갈대와 물이야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Причалили, писарша. Двор вода не тронула. Всё, что ниже, теперь ил: дома, мастерская, фонтан."
+msgstr "도착했어, 서기 아가씨. 뜰은 물이 건드리지 않았어. 그 아래는 전부 진흙이 됐지. 집도, 공방도, 분수도."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Разверни любой свиток. Счета за масло, за зерно, за верёвку. Настоящих книг здесь нет."
+msgstr "아무 두루마리나 펼쳐 봐. 기름, 곡식, 밧줄 계산서뿐이야. 진짜 책은 여기 없어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Разлив решает всё. Вода высокая — поле родит, и царь берёт больше."
+msgstr "범람이 모든 걸 정해. 물이 높으면 밭이 풍년이고, 왕은 더 많이 거둬 가."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Речной узел. Я весь вечер его тянула. Кто на реке так вяжет?"
+msgstr "강 매듭이야. 저녁 내내 잡아당겼는데. 강에서 누가 이렇게 묶지?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "С верхней ступени дамба как на ладони. И его табличка за той ночь, вот."
+msgstr "맨 위 계단에서 보면 제방이 한눈에 들어와. 그리고 그날 밤 아버지의 점토판이 여기 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Семь селений за ночь не увезёшь. А один остров можно отпустить на праздник."
+msgstr "일곱 마을은 하룻밤에 옮길 수 없어. 하지만 섬 하나는 축제에 보내면 되지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Семь селений или наш остров. Я выбрал и выбрал бы снова. Прощения не прошу."
+msgstr "일곱 마을이냐, 우리 섬이냐. 나는 골랐고, 다시 골라도 같을 것이다. 용서는 구하지 않는다."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Сколько поднимается в хороший год. Он всё на свете мерил разливом."
+msgstr "풍년에는 물이 얼마나 오르는지. 아버지는 세상 모든 걸 범람으로 재셨어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Следы идут не к двери, а к стене. Из-за сундуков тянет рекой."
+msgstr "발자국은 문이 아니라 벽으로 이어져. 상자들 뒤에서 강 냄새가 나."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Слышала. И что будешь делать, писарша?"
+msgstr "들었어. 그래서 어쩔 거야, 서기 아가씨?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Смотри, под фонтаном канал. Старый, сухой и идёт прямо на восток."
+msgstr "봐, 분수 밑에 수로가 있어. 오래되고 말랐고, 곧장 동쪽으로 뻗어 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Срез твёрдый. Видишь борозды от лопат?"
+msgstr "단면이 단단해. 삽 자국 보여?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Сундуки. Сколько же их тут... Целы?"
+msgstr "상자들이야. 대체 몇 개나 되는 거야... 멀쩡해?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Считаю в третий раз: здесь двести тридцать девять. Книги разливов нет."
+msgstr "세 번째 세는 거야. 여기엔 이백삼십구 개야. 범람의 책이 없어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Табличка говорит о лодке и узле. Он мог видеть их и с лодки."
+msgstr "점토판엔 배와 매듭 얘기가 있어. 그 사람도 배 위에서 그걸 볼 수 있었을 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тайник пуст. Серьга Мерит — золотой знак мастерской."
+msgstr "은닉처는 비어 있어요. 메리트의 귀걸이가 공방의 금 인장이에요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Твой отец сделал замок размером с остров? Кто так живёт?"
+msgstr "네 아버지가 섬만 한 자물쇠를 만든 거야? 누가 그렇게 살아?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тогда строим. Фонтан, мастерская, архив, храм. Запишем."
+msgstr "그럼 짓자. 분수, 공방, 아카이브, 신전. 적어 두자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тот, кто ждал гостей. Вор увидит полные полки и не станет искать дальше."
+msgstr "손님이 올 걸 기다린 사람이야. 도둑은 가득 찬 선반을 보면 더 안 찾겠지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тростник и вода. Такую режут только у нас."
+msgstr "갈대와 물. 이런 건 우리 집에서만 새겨."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Тростника на реке хватает."
+msgstr "강가에 갈대야 널렸지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Труба от фонтана входит в противовес. Значит, плиту подняла вода."
+msgstr "분수에서 나온 관이 평형추로 들어가. 그러니까 판석을 들어 올린 건 물이야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ты возила меня по острову. Ты смеялась. И всё это время ты знала?"
+msgstr "날 섬 여기저기 태우고 다녔잖아. 웃고 있었잖아. 그동안 줄곧 알고 있었어?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Ты слышала. Ликон тоже идёт вверх по реке."
+msgstr "들었지. 리콘도 강 상류로 올라가고 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "У противовеса труба фонтана. За сундуками лаз к ниломеру, у Миу свежий узел."
+msgstr "평형추에 분수 관이 닿아 있어요. 상자 뒤에는 나일로미터로 가는 개구멍이 있고, 미우에게는 새 매듭이 있어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Узел на дамбе похож на узел Мерит. Она обещает всё сказать на месте."
+msgstr "제방의 매듭이 메리트의 매듭과 비슷해요. 메리트는 현장에서 다 말하겠다고 해요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Успел? Вода пришла ночью, за один час. Никто на реке её не ждал. Что за печать?"
+msgstr "시간이 있었다고? 물은 밤에, 한 시간 만에 닥쳤어. 강에서 아무도 예상 못 했는데. 무슨 인장이야?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Хорем жив. Он ушёл к первому порогу с Книгой. Следующая вода будет выше."
+msgstr "호렘은 살아 있어요. 책을 들고 제1폭포로 갔어요. 다음 물은 더 높을 거예요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Храм Исиды. Теперь хотя бы есть кому пожаловаться на реку."
+msgstr "이시스 신전이네. 이제 강 때문에 하소연할 곳은 생겼어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Целы, и печати целы. Вся библиотека острова стоит под землёй, сухая."
+msgstr "멀쩡해, 인장도 그대로야. 섬의 도서관 전체가 땅속에 말라서 서 있어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Человек в капюшоне нанял меня на ночь. Шестеро парней с лопатами. Они сказали: чинить дамбу."
+msgstr "두건 쓴 사람이 하룻밤 날 고용했어. 삽 든 청년 여섯 명이었고, 제방을 고친다고 하더라."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Человек, у которого двести лет записей и один ключ."
+msgstr "이백 년 치 기록과 열쇠 하나를 가진 사람."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Чужой обыщет всё, но в нашу игру играть не умеет. Поэтому игра."
+msgstr "낯선 사람은 다 뒤질 수는 있어도 우리 놀이는 할 줄 몰라. 그래서 놀이로 한 거야."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Шестеро с лопатами были из тех селений. Они скрывают, кто их позвал."
+msgstr "삽 든 여섯 명은 그 마을 사람들이었어요. 누가 불렀는지는 숨기고 있어요."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Эти цифры я видела в Мемфисе, в отчётах зерновой палаты. Подпись: надзиратель Ликон."
+msgstr "이 숫자들은 멤피스의 곡물청 보고서에서 봤어. 서명은 감독관 리콘이었어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Этим знаком он отвечал за свои поступки. Но кто вынес его из тайника?"
+msgstr "아버지는 이 인장으로 자기 행동에 책임을 지셨어. 그런데 누가 그걸 은닉처에서 꺼내 갔을까?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это Миу, кошка архива. Сытая, блестит. А кто кормит её с самого наводнения?"
+msgstr "미우야, 아카이브의 고양이. 배불리 먹어서 털이 반짝여. 홍수 이후로 누가 얘를 먹여 살렸을까?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это знак семейной мастерской, с первого свитка. Он хранился в тайнике дома."
+msgstr "첫 두루마리에 찍힌 가문 공방의 인장이야. 집 은닉처에 보관돼 있었어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это мог быть он. Печать, чернила, заранее спасённые люди. Но нам нужно знать."
+msgstr "그 사람일 수도 있어. 인장, 잉크, 미리 구해 둔 사람들. 하지만 확실히 알아야 해."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Это та плата. Он заплатил мне печатью вашего дома?"
+msgstr "그게 그 품삯이었구나. 그가 너희 집 인장으로 나한테 값을 치른 거야?"
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Я вернулся за Книгой, пока ты строила. Увидел, как забил фонтан. Дальше смотреть не смог."
+msgstr "네가 짓는 동안 책을 찾으러 돌아왔다. 분수가 솟는 걸 보았다. 더는 지켜볼 수가 없더구나."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Я не просила тебя радоваться. Я просила грести."
+msgstr "기뻐해 달라고 한 적 없어. 노나 저으라고 했지."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Я спросила родню. Те шестеро с лопатами были оттуда, из селений."
+msgstr "친척들한테 물어봤어. 삽 든 그 여섯 명은 거기, 마을 사람들이었어."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Яблоко и яблоко. Съешь, и поехали."
+msgstr "사과는 사과야. 먹고 가자."
+
+#: games/nile-archive/lua/archive_story.lua
+msgid "Яблони на острове только у дома садовника. Садовник что-нибудь видел в ту ночь?"
+msgstr "섬에서 사과나무는 정원사의 집에만 있어요. 정원사는 그날 밤 뭔가 봤을까요?"
+
+#: games/nile-archive/lua/main.lua
+msgid "«Архив Нила» играется только в альбомной ориентации. Поверните устройство."
+msgstr "“나일 아카이브”는 가로 화면에서만 플레이할 수 있어요. 기기를 돌려 주세요."
+
+#: games/nile-archive/lua/main.lua
+msgid "Архив Нила"
+msgstr "나일 아카이브"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Недостаточно монет. Переиграйте открытую главу."
+msgstr "코인이 부족해요. 열린 장을 다시 플레이하세요."
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Остров без изменений"
+msgstr "섬에 변화 없음"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Откройте берег, чтобы найти свободное место"
+msgstr "빈자리를 찾으려면 강변을 여세요"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Перетащите постройку или коснитесь свободного места"
+msgstr "건물을 끌거나 빈자리를 누르세요"
+
+#: games/nile-archive/lua/town_config.lua
+msgid "Эта постройка уже восстановлена"
+msgstr "이 건물은 이미 복원됐어요"
