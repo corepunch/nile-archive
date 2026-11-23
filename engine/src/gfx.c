@@ -118,7 +118,9 @@ static float feather(void) { return 1.0f / maxf(app_pixel_scale(), .25f); }
 
 static int arc_segments(float radius)
 {
-    return clampi((int)(radius * app_pixel_scale() / 3), 2, 24);
+    /* Keep a quarter arc's chord error near an eighth of a device pixel. */
+    float pixels = radius * maxf(app_pixel_scale(), .25f);
+    return clampi((int)ceilf(sqrtf(2.5f * pixels)), 4, 24);
 }
 
 /* Perimeter of a rounded rect, clockwise from the top-left corner. */

@@ -21,6 +21,7 @@ return ui.skin{
     colors = {
         ink = "#3E311D",
         ink_shadow = "#1F2318B8",
+        button_shadow = "#111D37B8",
         moves_face = "#164630",
         moves_glow = "#2C7850",
         moves_low = "#80181E",
@@ -96,13 +97,13 @@ return ui.skin{
             },
         },
 
-        -- A festive red button with a gloss on an evergreen shadow; pressing
+        -- A festive red button with a gloss on a translucent blue shadow; pressing
         -- sinks it onto the shadow, disabled drains the colour from the same
         -- layers. Hover and selected look like normal: touch has no hover.
         button = {
             text = "cream", em = 25, text_inset = 8,
             normal = {layers = {
-                {name = "shadow", fill = "#0D362B", radius = 15, offset = {0, 6}, fixed = true},
+                {name = "shadow", fill = "button_shadow", radius = 15, offset = {0, 6}, fixed = true},
                 {name = "body", fill = "#85232E", radius = 15},
                 {name = "face", fill = "#B84041", radius = 12, inset = {3, 3, 3, 4}},
                 {name = "gloss", fill = "#D3665B", radius = 10, height_ratio = .4, inset = {6, 4, 6, -4}},
@@ -113,7 +114,7 @@ return ui.skin{
                 flat = {normal = {layers = {}}},
                 link = {text = "gold", normal = {layers = {}}},
                 -- Secondary actions (Restart, Quit) in evergreen, beside the red primary.
-                secondary = {normal = {set = {shadow = {fill = "#0A2A1E"}, body = {fill = "#1E5A3C"},
+                secondary = {normal = {set = {body = {fill = "#1E5A3C"},
                                               face = {fill = "#2C7850"}, gloss = {fill = "#4E9A6A"}}}},
                 navigation_build = buttons.navigation("build"),
                 navigation_project = buttons.project(economy.unlocks),
@@ -121,13 +122,13 @@ return ui.skin{
                 navigation_pause = buttons.navigation("pause"),
                 -- Confirm and cancel a placement beside the lifted building.
                 placement_confirm = {normal = {layers = {
-                    {fill = "#0D362B", radius = 28, offset = {0, 4}, fixed = true},
+                    {fill = "button_shadow", radius = 28, offset = {0, 4}, fixed = true},
                     {fill = "#1E5A3C", radius = 28},
                     {fill = "#3F9A5C", radius = 25, inset = 3},
                     {check = "#FFF9E2", width = 5, inset = 10},
                 }}, disabled = {alpha = .45}},
                 placement_cancel = {normal = {layers = {
-                    {fill = "#4A2C12", radius = 28, offset = {0, 4}, fixed = true},
+                    {fill = "button_shadow", radius = 28, offset = {0, 4}, fixed = true},
                     {fill = "#85232E", radius = 28},
                     {fill = "#B84041", radius = 25, inset = 3},
                     {inset = 18, paint = function(box)
@@ -143,18 +144,18 @@ return ui.skin{
             size = 40, gap = 16, text = "cream", em = 25,
             box = {
                 normal = {layers = {
-                    {name = "shadow", fill = "#0D362B", radius = 11, offset = {0, 5}, fixed = true},
-                    {name = "rim", fill = "#664427", radius = 11},
-                    {name = "well", fill = "#E6CB8C", fill2 = "#FFF3CC", radius = 8, inset = 3},
+                    {name = "shadow", fill = "button_shadow", radius = 12, offset = {0, 5}, fixed = true},
+                    {name = "rim", fill = "#664427", radius = 12},
+                    {name = "well", fill = "#E6CB8C", fill2 = "#FFF3CC", radius = 9, inset = 3},
                 }},
                 pressed = {offset = {0, 2}},
                 disabled = {set = {rim = {fill = "#6E655A"}, well = {fill = "#C9C2B2", fill2 = "#DDD8CC"}}},
             },
             mark = {
                 normal = {layers = {
-                    {name = "face", fill = "#B84041", fill2 = "#85232E", radius = 8, inset = 3},
+                    {name = "face", fill = "#B84041", fill2 = "#85232E", radius = 9, inset = 3},
                     {name = "gloss", fill = "#D3665B", radius = 6, height_ratio = .42, inset = {6, 5, 6, -5}},
-                    {name = "tick_rim", check = "#641D29", width = 7.5, inset = 3},
+                    {name = "tick_rim", check = "#641D29", width = 7, inset = 3},
                     {name = "tick", check = "#FFF9E2", width = 4.5, inset = 3},
                 }},
                 pressed = {offset = {0, 2}},

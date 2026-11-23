@@ -249,9 +249,16 @@ local function draw_layer(skin, layer, box, look, node, st)
             elseif layer.fit == 'contain' then gfx.image(image, out:fit(texture.size(image)), tint)
             else gfx.image(image, out, tint) end
         end
-    elseif layer.check then   -- a tick drawn as two strokes, for checkboxes without artwork
-        local w = (layer.width or 3) * scale
-        gfx.polyline({out:point(vec2(.2, .52)), out:point(vec2(.42, .74)), out:point(vec2(.8, .28))}, w, c(layer.check))
+    elseif layer.check then
+        local width, ink = (layer.width or 3) * scale, c(layer.check)
+        local start = out:point(vec2(.23, .53))
+        local joint = out:point(vec2(.42, .72))
+        local tip = out:point(vec2(.78, .32))
+        gfx.line(start, joint, width, ink)
+        gfx.line(joint, tip, width, ink)
+        gfx.circle(start, width / 2, ink)
+        gfx.circle(joint, width / 2, ink)
+        gfx.circle(tip, width / 2, ink)
     end
 end
 
