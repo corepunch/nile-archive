@@ -104,16 +104,23 @@ def checks(fast=False, arguments=(), games=()):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--budget", type=float, default=10)
+    parser.add_argument("--budget", type=float)
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--fast", action="store_true")
-    parser.add_argument("--games", default="", help="space-separated game suites to run beside the engine's")
+    scope = parser.add_mutually_exclusive_group()
+    scope.add_argument("--games", default="", help="space-separated game suites to run beside the engine's")
+    scope.add_argument("--game", help="run one game's unit tests with a five-second default budget")
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
-    if not math.isfinite(args.budget) or args.budget <= 0 or args.jobs < 1:
+    budget = args.budget if args.budget is not None else (5 if args.game else 10)
+    if not math.isfinite(budget) or budget <= 0 or args.jobs < 1:
         parser.error("budget and jobs must be positive (budget must be finite)")
     arguments = args.arguments[1:] if args.arguments[:1] == ["--"] else args.arguments
-    return run_jobs(checks(args.fast, arguments, args.games.split()), args.budget, args.jobs)
+    if args.game:
+        jobs = [(args.game, ["./build/test/all", f"--suite={args.game}", "--fast", *arguments])]
+    else:
+        jobs = checks(args.fast, arguments, args.games.split())
+    return run_jobs(jobs, budget, args.jobs)
 
 
 if __name__ == "__main__":

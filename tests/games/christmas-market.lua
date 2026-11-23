@@ -164,8 +164,8 @@ shot("building-card", "480x900", "--card 2")
 shot("project-lumber", "480x900", "--card 1")
 shot("project-lumber-phone", "390x844", "--card 1 --safe-area 0,47,0,34")
 shot("project-skating-phone", "390x844", "--card 8 --safe-area 0,47,0,34")
-shot("epoch-projects", "480x900", "--build-review ready --frames 48")
-shot("epoch-projects-phone", "390x844", "--city 1 --frames 48 --safe-area 0,47,0,34")
+shot("epoch-projects", "480x900", "--build-review ready --frames 1")
+shot("epoch-projects-phone", "390x844", "--city 1 --frames 1 --safe-area 0,47,0,34")
 for advent = 2, 5 do
     shot("advent-town-" .. advent, "480x900", "--epoch " .. (advent - 1))
 end

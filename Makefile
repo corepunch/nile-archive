@@ -224,7 +224,7 @@ test-full: gen-check xcode-check test-assets build/test/all $(TEST_AUX_BINS)
 	./build/test/all --full $(ONLY) $(TEST_ARGS)
 
 $(TEST_GAMES:%=test-%): test-%: build/test/all
-	./build/test/all --suite=$* --fast $(TEST_ARGS)
+	python3 tools/run_tests.py --game $* -- $(TEST_ARGS)
 test-engine: build/test/all build/test-audio
 	./build/test/all --suite=engine --fast $(TEST_ARGS)
 	./build/test-audio

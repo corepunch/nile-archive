@@ -1,25 +1,39 @@
 # Testing
 
 The default workflow is: select affected checks, capture a baseline when needed,
-edit, build affected targets, run the selected checks and lint, then stop. Expand
-coverage only for shared changes, a failure, an explicit request, or a concrete
-unresolved concern. A pull request does not itself require a full local run.
+edit, build affected targets as needed, run the selected checks and lint, then stop.
+Expand coverage for changed shared behaviour, a failure, an explicit request, or a
+concrete unresolved concern. A pull request does not itself require a full local run.
 
-For a game-local fix, use the affected tests and representative captures.
-For example, a Relic Rush board-size correction can use:
+For routine iterations, target 15–20 seconds from setup to handoff, with a
+30-second maximum excluding art generation. Reuse a current build. For a static
+visual edit, capture one existing scene on the first frame that shows the change.
+For example, this captures Relic Rush's town at 390 × 844:
 
 ```sh
-time make CFLAGS="-O2 -g -Werror" relic-rush build/test/relic-rush
-time build/test/relic-rush "rules relic_board" "shot hex-first" "shot phone-board"
-time make lint
+time build/test/all --suite=relic-rush "shot epoch-purchase-choice-phone"
+```
+
+Show `build/shots/relic-rush/epoch-purchase-choice-phone.png` directly and end
+the preview iteration there. Extra captures, capture review passes, preview
+exports, pointer smokes, and broad checks are outside this workflow. Use the
+separate verification steps when changing behaviour or preparing a push or
+pull request.
+
+For a game rule change, run one unit suite. The five-second deadline starts
+after any build. Use `TEST_ARGS` for a named test and lint the files you edited.
+
+```sh
+make test-relic-rush
+make test-relic-rush TEST_ARGS='"rules relic_board"'
 ```
 
 Filters match substrings of `kind name`. Including the kind avoids selecting
 unrelated captures: `phone-board` also matches an entrance reel, whereas
 `"shot phone-board"` selects just the screenshot. Check `--list` when unsure.
-Use before/after pairs at the two relevant sizes for a uniform visual change;
-add state boards or reels when the behaviour they cover changes. Run full local
-coverage for shared engine changes or a concrete unresolved concern. Native CI
+Use before/after pairs in visual pull requests. Add a state board or reel when
+you change interaction states or animation. Run full local coverage for changes
+to shared engine behaviour or a concrete unresolved concern. Native CI
 runs the extended rules, renderer, audio and one quick gameplay smoke test per game. See [AGENTS.md](../AGENTS.md) for scope rules.
 
 When reporting timings, use measured elapsed seconds and distinguish builds,
