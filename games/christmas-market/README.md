@@ -99,9 +99,9 @@ Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
 The town bar puts Play in the middle, with the round Build button and the
 Pause gear each centred in the space on its side.
-The town lists the current Advent's four projects at the upper left under its
-name: a numbered row each (a tick once built), saying "Ready to build!" or
-showing the amounts still missing. Tap a row to place a ready project or open
+The town lists the current Advent's four projects at the upper left: a
+numbered row each (a tick once built), with "Ready to build!" under one you
+can afford. Tap a row to place a ready project or open
 its card.
 Build opens the shop at the current Advent: its four projects first, then the
 decorations. Each row has the stall's name with the icon of what a project

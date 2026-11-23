@@ -27,7 +27,6 @@ R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
 R.board_art = {}   -- rule tests build the list without loading textures
-local first = R.words.epochs[1]
 local first_project, second_project = island.ladder[1], island.ladder[2]
 local funded_wallet = R.prog.wallet
 check(R.active_epoch() == 1 and R.can_build_project(), "the first epoch has an affordable project")
@@ -43,9 +42,8 @@ end
 check(row(5).heading == R.words.catalogue.decorations and not row(6).project,
     "decorations follow the four projects")
 local quests = R.town.hooks.quests()
-check(quests.title == first and #quests.entries == 4 and quests.entries[1].ready
-    and quests.entries[1].note == R.words.catalogue.ready,
-    "the town's tracker names the phase and its four projects, ready ones saying so")
+check(#quests == 4 and quests[1].ready and quests[1].note == R.words.catalogue.ready,
+    "the town's tracker numbers the phase's four projects, ready ones saying so")
 check(not R.catalogue_tile(island.buildings[island.ladder[5].kind + 1].key), "later phases' projects are left out")
 R.prog.wallet = purse(5)
 check(not R.can_build_project(), "a short wallet does not light the Build control")

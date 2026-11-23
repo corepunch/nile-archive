@@ -906,20 +906,15 @@ function G.bind(R, over)
                 if blocked == "built" then state = "built"
                 elseif blocked or blocked == nil and wallet[rules.CLEARED] < meta.cleared then state = "locked" end
                 local parts = state == "built" and {} or price_parts(def.cost)
-                local missing = {}   -- what the wallet still lacks, for the town's quest rows
                 for _, part in ipairs(parts) do
-                    local have = wallet[part.slot or rules.GOLD]
-                    local short = have < part.amount
+                    local short = wallet[part.slot or rules.GOLD] < part.amount
                     part.inline, part.number_style = true, short and "price_short" or "body"
-                    if short then
-                        missing[#missing + 1] = {icon=part.icon, amount=part.amount - have, inline=true, size=22}
-                    end
                 end
                 local reward = position and state ~= "built" and R.building_reward(i - 1) or nil
                 -- The reward's icon names the unlock; its payout is on its card.
                 if reward then reward = {icon=reward.icon, inline=true, size=34} end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts,
-                    state=state, available=available, project=position ~= nil, reward=reward, missing=missing,
+                    state=state, available=available, project=position ~= nil, reward=reward,
                     about=first_sentence(def.about),
                     faded=state == "poor" or state == "locked",
                     enabled=available or position ~= nil and state ~= "built"}
@@ -1104,18 +1099,15 @@ function G.bind(R, over)
             pause = function() R.overlay = R.OV_PAUSE end,
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function() R.open_catalogue() end,
-            -- The phase's four projects, numbered under its name: each says
-            -- whether it can be built now or what it still needs.
+            -- The phase's four projects, numbered; a ready one says so.
             quests = W.epochs and function()
                 local entries = {}
                 for _, record in ipairs(R.phase_projects()) do
-                    local state = record.state
-                    entries[#entries + 1] = {id=record.id, title=record.name, done=state == "built",
+                    entries[#entries + 1] = {id=record.id, title=record.name, done=record.state == "built",
                         ready=record.available,
-                        note=record.available and C.ready or state == "locked" and C.locked or nil,
-                        missing=state == "poor" and record.missing or nil}
+                        note=record.available and C.ready or nil}
                 end
-                return {title=W.epochs[R.active_epoch()], entries=entries}
+                return entries
             end or nil,
             quest_tap = function(key)
                 for _, record in ipairs(R.phase_projects()) do

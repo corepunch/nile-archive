@@ -95,10 +95,6 @@ return ui.skin{
 
         -- A pale inset card: one banked resource on the results dialog.
         border = {variants = {
-            -- The town's quest tracker: a soft dark glass behind its rows.
-            quest_tracker = {normal = {layers = {
-                {fill = "#0B1E2AB4", fill2 = "#0B1E2A60", radius = 14},
-            }}},
             resource_indicator = {normal = {layers = {
             {fill = "#F1DA9D", radius = 12},
             {fill = "#FFF2C9", radius = 10, inset = 2},
