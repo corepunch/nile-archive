@@ -372,7 +372,7 @@ def untranslated(d: Domain, tag: str) -> None:
         else:
             block.append('msgstr ""')
         out.append("\n".join(block))
-    print("\n\n".join(out))
+    print(header(tag, d.name) + "\n\n".join(out))
 
 
 def quote(s: str) -> str:
