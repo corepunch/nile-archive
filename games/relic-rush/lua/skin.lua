@@ -9,6 +9,12 @@
 -- `height_ratio` (the top fraction, taken before the inset); a state's
 -- `offset` moves every layer that isn't `fixed`.
 local buttons = require("match3.buttons")
+-- The town quest tracker's badge: a gold coin in a dark rim, on a soft shadow.
+local quest_coin = {
+    {fill = "#00000055", radius = 13, offset = {0, 2}},
+    {fill = "#5A3A16", radius = 13},
+    {fill = "#FFE08A", fill2 = "#D9962A", radius = 11, inset = 2},
+}
 local resource_fill = color(13, 47, 41, 0xD7)
 
 local rgb = color.hex
@@ -78,10 +84,14 @@ return ui.skin{
                 }}},
                 -- A gathered amount: the met-goal tick (Skin:paint_tick).
                 -- A quest row's number: a gold coin in a dark rim.
-                quest_number = {normal = {layers = {
-                    {fill = "#00000055", radius = 13, offset = {0, 2}},
-                    {fill = "#5A3A16", radius = 13},
-                    {fill = "#FFE08A", fill2 = "#D9962A", radius = 11, inset = 2},
+                quest_number = {normal = {layers = quest_coin}},
+                -- A finished quest: a green coin in the same rim carrying the
+                -- dark check (quest-check, tools/quest_check.py).
+                quest_done = {normal = {layers = {
+                    quest_coin[1],
+                    {fill = "#1F4A26", radius = 13},
+                    {fill = "#9BE07E", fill2 = "#3F9A45", radius = 11, inset = 2},
+                    {image = "quest_check", inset = 4, fit = "contain"},
                 }}},
                 done_tick = {normal = {layers = {
                     {paint = function(box, _, _, skin) skin:paint_tick(box) end},

@@ -83,8 +83,9 @@ return {
     hud={path="board/hud.png", frames={
         ["complete"]={0,0,128,128},
         ["life"]={128,0,128,128},
-        ["shop-built"]={256,0,128,128},
-        ["shop-locked"]={384,0,128,128},
+        ["quest-check"]={256,0,128,128},
+        ["shop-built"]={384,0,128,128},
+        ["shop-locked"]={512,0,128,128},
         ["signboard"]={2,130,960,161},
     }},
     fx={path="board/fx.png", frames={

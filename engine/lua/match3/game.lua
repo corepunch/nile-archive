@@ -1691,6 +1691,7 @@ function G.app(R)
         R.shop_built_art, R.shop_locked_art = R.hud_art["shop-built"], R.hud_art["shop-locked"]
         -- The painted green tick marks every met amount: board goals and cards.
         R.skin.images.tick = R.shop_built_art
+        R.skin.images.quest_check = R.hud_art["quest-check"]   -- the town tracker's finished mark
         -- The neutral skin has no life icon: borrow the game's own HUD atlas.
         R.life_art = R.hud_art.life or require("match3").hud(require("match3_hud")).life
         if app.arg("art-states") then

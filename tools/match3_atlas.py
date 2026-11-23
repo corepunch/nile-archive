@@ -67,7 +67,7 @@ GROUPS = ['pieces', 'blockers', 'cells', 'hud', 'fx']
 HUD_NAMES = {'score', 'complete', 'moves', 'life', 'signboard', 'hud-panel', 'tool-tray', 'discovery-star', 'next-clue'}
 BOARD_GROUPS = ['pieces', 'blockers', 'cells', 'fx']   # the board skin
 HUD_GROUPS = ['hud']                                   # the board HUD
-RELIC_HUD_ICONS = {'score', 'complete', 'life', 'discovery-star', 'next-clue', 'shop-built', 'shop-locked'}
+RELIC_HUD_ICONS = {'score', 'complete', 'life', 'discovery-star', 'next-clue', 'shop-built', 'shop-locked', 'quest-check'}
 
 
 def group_of(name):
@@ -78,7 +78,7 @@ def group_of(name):
         return 'blockers'
     if name.startswith('square-'):
         return 'cells'
-    if name in HUD_NAMES or name.startswith(('pause-', 'board-pause-', 'shop-')):
+    if name in HUD_NAMES or name.startswith(('pause-', 'board-pause-', 'shop-', 'quest-')):
         return 'hud'
     return 'pieces'
 

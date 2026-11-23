@@ -555,7 +555,7 @@
         128
       ]
     },
-    "relics-0": {
+    "quest-check": {
       "atlas": "pieces",
       "box": [
         896,
@@ -564,10 +564,19 @@
         128
       ]
     },
-    "relics-1": {
+    "relics-0": {
       "atlas": "pieces",
       "box": [
         0,
+        896,
+        128,
+        128
+      ]
+    },
+    "relics-1": {
+      "atlas": "pieces",
+      "box": [
+        128,
         896,
         128,
         128
@@ -576,7 +585,7 @@
     "relics-2": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         896,
         128,
         128
@@ -585,7 +594,7 @@
     "relics-3": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         896,
         128,
         128
@@ -594,7 +603,7 @@
     "relics-4": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         896,
         128,
         128
@@ -603,7 +612,7 @@
     "relics-5": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         896,
         128,
         128
@@ -612,7 +621,7 @@
     "resource-berries": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         896,
         128,
         128
@@ -621,7 +630,7 @@
     "resource-coin": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         896,
         128,
         128
@@ -630,8 +639,8 @@
     "resource-emerald": {
       "atlas": "pieces",
       "box": [
-        896,
-        896,
+        0,
+        1024,
         128,
         128
       ]
@@ -639,7 +648,7 @@
     "resource-rations": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         1024,
         128,
         128
@@ -648,7 +657,7 @@
     "resource-stone": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         1024,
         128,
         128
@@ -657,7 +666,7 @@
     "resource-timber": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         1024,
         128,
         128
@@ -666,7 +675,7 @@
     "resource-wallet-food": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         1024,
         128,
         128
@@ -675,7 +684,7 @@
     "resource-wallet-supplies": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         1024,
         128,
         128
@@ -684,7 +693,7 @@
     "resource-water": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         1024,
         128,
         128
@@ -693,7 +702,7 @@
     "resources-0": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         1024,
         128,
         128
@@ -702,8 +711,8 @@
     "resources-1": {
       "atlas": "pieces",
       "box": [
-        896,
-        1024,
+        0,
+        1152,
         128,
         128
       ]
@@ -711,7 +720,7 @@
     "resources-2": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         1152,
         128,
         128
@@ -720,7 +729,7 @@
     "resources-3": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         1152,
         128,
         128
@@ -729,7 +738,7 @@
     "resources-4": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         1152,
         128,
         128
@@ -738,7 +747,7 @@
     "resources-5": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         1152,
         128,
         128
@@ -747,7 +756,7 @@
     "score": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         1152,
         128,
         128
@@ -756,7 +765,7 @@
     "shop-built": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         1152,
         128,
         128
@@ -765,7 +774,7 @@
     "shop-locked": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         1152,
         128,
         128
@@ -774,8 +783,8 @@
     "story-cable": {
       "atlas": "pieces",
       "box": [
-        896,
-        1152,
+        0,
+        1280,
         128,
         128
       ]
@@ -783,7 +792,7 @@
     "story-chart": {
       "atlas": "pieces",
       "box": [
-        0,
+        128,
         1280,
         128,
         128
@@ -792,7 +801,7 @@
     "story-gear": {
       "atlas": "pieces",
       "box": [
-        128,
+        256,
         1280,
         128,
         128
@@ -801,7 +810,7 @@
     "story-lens": {
       "atlas": "pieces",
       "box": [
-        256,
+        384,
         1280,
         128,
         128
@@ -810,7 +819,7 @@
     "story-marker": {
       "atlas": "pieces",
       "box": [
-        384,
+        512,
         1280,
         128,
         128
@@ -819,7 +828,7 @@
     "story-note": {
       "atlas": "pieces",
       "box": [
-        512,
+        640,
         1280,
         128,
         128
@@ -828,7 +837,7 @@
     "story-supplies": {
       "atlas": "pieces",
       "box": [
-        640,
+        768,
         1280,
         128,
         128
@@ -837,7 +846,7 @@
     "story-tools": {
       "atlas": "pieces",
       "box": [
-        768,
+        896,
         1280,
         128,
         128
@@ -1247,6 +1256,7 @@
     "action-close": "art/registered/board-states/action-close.png",
     "complete": "art/registered/expedition-hud/complete.png",
     "life": "art/registered/expedition-hud/life.png",
+    "quest-check": "art/registered/expedition-hud/quest-check.png",
     "score": "art/registered/expedition-hud/score.png",
     "shop-built": "art/registered/expedition-hud/shop-built.png",
     "shop-locked": "art/registered/expedition-hud/shop-locked.png"
@@ -1883,7 +1893,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "c32e83b0a9b5a0d5c50a90be305d63fee8d2d2ee95090e61650fbf6f3aafcf47",
+    "recipe": "ae370011883aa7f2ee868e27b195bd5997bb89292f8c2c61a71b42a5a17884a1",
     "inputs": {
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
@@ -1935,6 +1945,7 @@
       "games/relic-rush/art/registered/campaign-pieces.png": "d555dfab2aef5dee495dcea1e301dff887cc72c7cf23cdc9cac74f06fbf03275",
       "games/relic-rush/art/registered/expedition-hud/complete.png": "8f2db8c6941dd8a717741555329734e7bf6ced57249c397d8dda982e26f0120c",
       "games/relic-rush/art/registered/expedition-hud/life.png": "3a2911fae91136e2e70c8519cc9a11b3b26823a3c91a44232382cbe0c05d26d5",
+      "games/relic-rush/art/registered/expedition-hud/quest-check.png": "1c7b2cf9ec9e27bb9adeeb2014d7d17a53c34731e0d005fe7fa96e69ffb1dd8b",
       "games/relic-rush/art/registered/expedition-hud/score.png": "8e395c4ae507674be6669e43d4a37a404886fed5acd70d1adac4c07e14818f65",
       "games/relic-rush/art/registered/expedition-hud/shop-built.png": "fbfd9c29bebcc710ead0261f3fc179499b93419f7e08247cc69be617dd115106",
       "games/relic-rush/art/registered/expedition-hud/shop-locked.png": "22ce874cec43ce0380af2aa2b5553e2fe9f01b8dea4672efcab54ecf2083e6af",
@@ -2012,8 +2023,8 @@
       "games/relic-rush/data/board/cells.png": "3207bf88a170125af7c53dcf0ae9072191ed127757041c9f4e7e6d7fb73a8a56",
       "games/relic-rush/data/board/fx.png": "8f712272e75f6aff7529eb29b00ed7c394f95525ff75c623cc1f798176693e38",
       "games/relic-rush/data/board/hud.png": "7ef579142cf66e9be6657229d15efab02d2d86b62ceda6f7e50359e3b3a75110",
-      "games/relic-rush/data/board/pieces.png": "fb70c83bf2cc343dfa3d2be302749dc7784b4e1f15b2e51ae82e2a4336cb5e0a",
-      "games/relic-rush/lua/match3_atlases.lua": "86c46853446ed6753093cc2a9a4125e732ea006a85bd2f3cc9796f7678dd12f0",
+      "games/relic-rush/data/board/pieces.png": "5125bcc35b3fc4cd76ed47126be6d8fc6a32e44694dc4b694175be6f868b0ecb",
+      "games/relic-rush/lua/match3_atlases.lua": "abe3eeaef9a449ec50d991593127ed7b7c0f87d43d84894c35ce73ea9e7be601",
       "games/relic-rush/lua/match3_hud.lua": "0525d0783e4ff80f06d488507903c04b685b3017445414f0b0779af9a848bf11",
       "games/relic-rush/lua/match3_skin.lua": "8f808605b0cc29149eefa9e51fda795e94d7c2554a65f145f3433e69a16ba05f"
     }

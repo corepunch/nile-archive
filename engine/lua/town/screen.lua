@@ -67,11 +67,12 @@ local DEFAULTS = {
     rail = {x = 10, top = 96, size = 60, gap = 12, caption = 22, role = "wallet", text = "cream",
             glow = "#FFDC786E", rim = "#668765E6", face = "#E7E0B9", ready = "#F9D368", shadow = "#1F23185A"},
     -- The quest tracker: numbered rows down the left edge, `gap` under the
-    -- header band, on the skin's quest_tracker border. `ready` and `text` are the names' text styles for a row
+    -- header band, on the skin's quest_tracker border, as wide as its text
+    -- up to `width`. `ready` and `text` are the names' text styles for a row
     -- that can be built now and for the rest; badges use the skin's
-    -- quest_number and done_tick panels.
+    -- quest_number and quest_done panels.
     quests = {x = 14, gap = 12, width = 240, badge = 26, em = 18,
-              text = "cream", ready = "gold", note = "green", note_em = 15, number = "body", done_opacity = .6},
+              text = "cream", ready = "gold", note = "green", note_em = 15, number = "body"},
     markers = {visible = true, label = 15, label_width = 160, glow = "#FFDC786E", text = "cream"},
     bubble = {width = 300, seconds = 0, fill = "#FFF6DEF5", edge = "#664427"},
     focus = {lift = 90, min_zoom = .65},
@@ -289,7 +290,12 @@ function View:draw_markers(c)
     for z = 1, c.zone_count - 1 do
         if not c:zone_open(z) then
             local p = cam:to_screen(zones[z + 1].marker)
-            if p.x > view.x - 90 and p.x < view:max().x + 90 and p.y > view.y - 50 and p.y < view:max().y + 40 then
+            -- The badge and its name, in screen units; a marker the quest
+            -- tracker would cover is left out until the map pans it clear.
+            local extent = rect(p.x - cfg.label_width / 2, p.y - 24, cfg.label_width, 58 + cfg.label)
+            local covered = self.quest_bounds and extent:intersect(self.quest_bounds).w > 0
+                and extent:intersect(self.quest_bounds).h > 0
+            if not covered and p.x > view.x - 90 and p.x < view:max().x + 90 and p.y > view.y - 50 and p.y < view:max().y + 40 then
                 local ready
                 if self.hooks.zone_ready then ready = self.hooks.zone_ready(z)
                 else ready = c:zone_available(z, self.hooks.wallet()) end
@@ -519,22 +525,23 @@ function View:rail()
     end
 end
 
--- The quest tracker: on the skin's quest_tracker glass, one row per entry, a
--- numbered badge (a tick once done) beside the name and, under it, the
--- entry's note. The whole row is the button.
+-- The quest tracker: on the skin's quest_tracker glass, as wide as its
+-- names, one row per entry, a numbered badge (quest_number; quest_done once
+-- done) beside the name and, under it, the entry's note. The whole row is
+-- the button.
 local function quest_form(cfg)
     return ui.form(N.column {N.border {role = "quest_tracker", padding = {10, 8, 10, 10},
         N.list {id = "quests", gap = 6, item = function(r)
             local note = not r.done and r.note
             return N.overlay {
-                N.column {gap = 2, opacity = r.done and cfg.done_opacity or nil,
+                N.column {gap = 2,
                     N.row {gap = 8, align = "center",
                         N.overlay {width = cfg.badge, height = cfg.badge,
-                            N.spacer {panel = true, role = r.done and "done_tick" or "quest_number"},
+                            N.spacer {panel = true, role = r.done and "quest_done" or "quest_number"},
                             N.label {text = r.done and "" or tostring(r.number), em = cfg.badge * .62,
                                      text_style = cfg.number, text_align = "center"},
                         },
-                        N.label {text = r.title, em = cfg.em, wrap = true, grow = 1, text_align = "start",
+                        N.label {text = r.title, em = cfg.em, wrap = true, text_align = "start",
                                  text_style = r.ready and cfg.ready or cfg.text},
                     },
                     note and N.row {padding = {cfg.badge + 8, 0, 0, 0},
@@ -549,6 +556,7 @@ end
 function View:quests(active)
     local h, cfg, skin = self.hooks, self.cfg.quests, self.hooks.skin
     local entries = h.quests() or {}
+    self.quest_bounds = nil
     if #entries == 0 then return end
     self.quest_form = self.quest_form or quest_form(cfg)
     local signature = {}
@@ -563,8 +571,8 @@ function View:quests(active)
     end
     local s, header = app.screen(), self.cfg.header
     local top = s.y + header.y + (header.band_height or header.height) + cfg.gap
-    local _, height = self.quest_form:measure(cfg.width, skin)
-    self.quest_bounds = rect(s.x + cfg.x, top, cfg.width, height)
+    local width, height = self.quest_form:measure(cfg.width, skin)   -- as wide as the names need
+    self.quest_bounds = rect(s.x + cfg.x, top, math.min(cfg.width, width), height)
     local event = self.quest_form:draw(self.quest_bounds, skin, {interactive = active, dim_controls = false})
     if event and event.source == "quests" then
         haptic.play(haptic.TICK, .6)

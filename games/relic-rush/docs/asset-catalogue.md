@@ -41,8 +41,13 @@ phase's building sprites, then the decorations. It draws the existing HUD frames
 `shop-locked` and `shop-built` large over a locked or built building's sprite.
 Review with `shot epoch-projects-phone` and the phone shop capture.
 The quest tracker at the upper left sits on the skin's `quest_tracker` border
-(dark glass) with `quest_number` panels (gold coins with the row's number) and the board
-goals' `done_tick` once a project is built.
+(dark glass), only as wide as its names. Each row has a `quest_number` panel
+(a gold coin with the row's number in brown); a built project keeps its name
+at full strength and shows `quest_done`: a green coin in the same rim
+carrying `quest-check`, a dark green check rendered by
+`python3 tools/quest_check.py` into `art/registered/expedition-hud/quest-check.png`
+and packed with the HUD frames. An area marker the tracker would cover is not
+drawn until the map pans it clear.
 
 ## Construction backdrops
 

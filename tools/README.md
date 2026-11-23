@@ -65,6 +65,7 @@ are the guides.
 | `pack_match_specials.py` | Repack the authored optional match specials for both games | `python3 tools/pack_match_specials.py` |
 | `town_play_art.py` | Registers the four painted states of the shared town Play button | `python3 tools/town_play_art.py`; use `--check` to validate the atlas |
 | `match3_buttons.py` | Centers each campaign action icon in its 128 px button cell using the silhouette's pixel opacity | `python3 tools/match3_buttons.py`, then `python3 tools/match3_atlas.py` to repack |
+| `quest_check.py` | Renders the town quest tracker's dark green check into both portrait games' registered HUD art | `python3 tools/quest_check.py` (`--check` compares), then `python3 tools/match3_atlas.py` to repack |
 | `epoch_medals.py` | Registers the authored phase medallions for the two town choosers | `python3 tools/epoch_medals.py` (`--check` in `make test-assets`) |
 | `board_tiles.py` | Reproduces the archived hex floor artwork | `--render-check` in `make test-assets` |
 | `board_grain.py` | Tileable grain texture for the board tiles | imported by `board_tiles.py` |
