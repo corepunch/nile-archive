@@ -1,37 +1,40 @@
 local bonuses = require("match3.bonuses")
+local l10n = require("l10n")
+local tr = l10n.tr
 
--- Wallet slots are save data: Tokens, Treats, Materials.
+-- Wallet slots are save data: Tokens, Treats, Materials. A currency's id names
+-- its wallet capsule (game_config.lua capsules.show); its name is what the player reads.
 local E = {
     GOLD=1, FOOD=2, SUPPLIES=3,
     CLEARED=4,   -- boards cleared: a counter in the purse's fourth slot, which opens regions and decorations
     currencies={
-        {name="Tokens", frame="market-3"},
-        {name="Treats", frame="resource-wallet-food"},
-        {name="Materials", frame="resource-wallet-supplies"},
+        {id="tokens", name=tr("Tokens"), frame="market-3"},
+        {id="treats", name=tr("Treats"), frame="resource-wallet-food"},
+        {id="materials", name=tr("Materials"), frame="resource-wallet-supplies"},
     },
     pieces={
-        [0]={name="Snow-dusted fir"},
-        {name="Knitted mitten"},
-        {name="Silver snowflake coin", slot=1, amount=3},
-        {name="Sun coin", slot=1, amount=5},
-        {name="Bundled pine", slot=3, amount=5},
-        {name="Farrier's hammer"},
-        {name="Toy blocks", slot=1, amount=6},
-        {name="Gingerbread man", slot=2, amount=4},
-        {name="Mulled wine", slot=2, amount=3},
-        {name="Wrapped gift", slot=1, amount=7},
-        {name="Candle lantern"},
-        {name="Hot cocoa", slot=2, amount=5},
-        {name="Dressed stone", slot=3, amount=7},
-        {name="Ice pendant"},
-        {name="Glass bauble", slot=1, amount=8},
-        {name="Candy cane"},
-        {name="Pretzel"},
-        {name="Ice skates", slot=1, amount=9},
-        {name="Carved reindeer", slot=1, amount=10},
-        {name="Santa hat", slot=1, amount=11},
-        {name="Winter vase"},
-        {name="Smoked trout", slot=2, amount=6},
+        [0]={name=tr("Snow-dusted fir")},
+        {name=tr("Knitted mitten")},
+        {name=tr("Silver snowflake coin"), slot=1, amount=3},
+        {name=tr("Sun coin"), slot=1, amount=5},
+        {name=tr("Bundled pine"), slot=3, amount=5},
+        {name=tr("Farrier's hammer")},
+        {name=tr("Toy blocks"), slot=1, amount=6},
+        {name=tr("Gingerbread man"), slot=2, amount=4},
+        {name=tr("Mulled wine"), slot=2, amount=3},
+        {name=tr("Wrapped gift"), slot=1, amount=7},
+        {name=tr("Candle lantern")},
+        {name=tr("Hot cocoa"), slot=2, amount=5},
+        {name=tr("Dressed stone"), slot=3, amount=7},
+        {name=tr("Ice pendant")},
+        {name=tr("Glass bauble"), slot=1, amount=8},
+        {name=tr("Candy cane")},
+        {name=tr("Pretzel")},
+        {name=tr("Ice skates"), slot=1, amount=9},
+        {name=tr("Carved reindeer"), slot=1, amount=10},
+        {name=tr("Santa hat"), slot=1, amount=11},
+        {name=tr("Winter vase")},
+        {name=tr("Smoked trout"), slot=2, amount=6},
     },
     CAMPAIGN_VERSION=8,
     BONUS_THRESHOLD=bonuses.THRESHOLD,
@@ -40,13 +43,13 @@ local E = {
 
 local B
 E.bonus_slots, B = bonuses.slots{
-    hammer={icon="booster-hammer", frame="market-5", name="Farrier's hammer"},
-    bomb={icon="booster-firework", frame="booster-firework-icon", name="Firework Bomb"},
-    shield={icon="booster-shield", frame="booster-shield-icon", name="Frost shield"},
-    plus={icon="booster-plus", frame="booster-plus-icon", name="Wish cross"},
-    hourglass={icon="booster-clock", frame="booster-hourglass-icon", name="Station clock"},
-    mixer={icon="booster-mixer", frame="booster-mixer-icon", name="Wind-up top"},
-    lightning={icon="booster-lantern", frame="market-10", name="Candle lantern"},
+    hammer={icon="booster-hammer", frame="market-5", name=tr("Farrier's hammer")},
+    bomb={icon="booster-firework", frame="booster-firework-icon", name=tr("Firework Bomb")},
+    shield={icon="booster-shield", frame="booster-shield-icon", name=tr("Frost shield")},
+    plus={icon="booster-plus", frame="booster-plus-icon", name=tr("Wish cross")},
+    hourglass={icon="booster-clock", frame="booster-hourglass-icon", name=tr("Station clock")},
+    mixer={icon="booster-mixer", frame="booster-mixer-icon", name=tr("Wind-up top")},
+    lightning={icon="booster-lantern", frame="market-10", name=tr("Candle lantern")},
     star={icon="booster-star", frame="booster-star-icon"},
 }
 E.bonuses = B

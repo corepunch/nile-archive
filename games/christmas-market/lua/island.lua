@@ -8,6 +8,8 @@
 local M = {}
 local journey = require("journey")
 local economy = require("economy")
+local l10n = require("l10n")
+local tr = l10n.tr
 
 M.ISLAND_W, M.ISLAND_H, M.ISLAND_ZONES, M.WONDERS = 1920, 2880, 5, 10
 local ZONES, WONDERS = M.ISLAND_ZONES, M.WONDERS
@@ -102,7 +104,7 @@ function M.restore_saved(c, level)
     return needs_relocation
 end
 
-local zone_names = {"Welcome Square", "Lantern Lane", "Gingerbread Green", "Carolers Court", "Starlight Terrace"}
+local zone_names = {tr("Welcome Square"), tr("Lantern Lane"), tr("Gingerbread Green"), tr("Carolers Court"), tr("Starlight Terrace")}
 local zone_seeds = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}

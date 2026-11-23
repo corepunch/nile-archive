@@ -1,6 +1,9 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
 -- engine's defaults (engine/lua/town/screen.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
+local l10n = require("l10n")
+local tr = l10n.tr
+
 return {
     background = "#738FB5",
     smooth_pan = true,
@@ -32,11 +35,11 @@ return {
         },
     },
     texts = {
-        placing = "Drag the building to choose a spot, or scroll the land.",
-        unchanged = "Your market is unchanged.",
-        blocked = "Choose open snow clear of other buildings.",
-        cant_afford = "Match more pieces to earn the resources for this.",
-        cant_buy = "Match more pieces to earn the resources for this.",
-        no_room = "Open more land before placing this building.",
+        placing = tr("Drag the building to choose a spot, or scroll the land."),
+        unchanged = tr("Your market is unchanged."),
+        blocked = tr("Choose open snow clear of other buildings."),
+        cant_afford = tr("Match more pieces to earn the resources for this."),
+        cant_buy = tr("Match more pieces to earn the resources for this."),
+        no_room = tr("Open more land before placing this building."),
     },
 }

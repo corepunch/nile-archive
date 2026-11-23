@@ -1,15 +1,19 @@
 -- game_config.lua — the words and options of the shared match-3 screens, merged
 -- over the engine's defaults (match3.game DEFAULTS): tables merge field by
 -- field, lists replace.
+local l10n = require("l10n")
+local tr = l10n.tr
+
 return {
     app = {title = "Christmas at Bellmere", id = "christmas-market", clear = "#09211F",
         privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
-    menu = {title = {"CHRISTMAS"}, title_em = 68, subtitle = "AT BELLMERE", subtitle_em = 40, play = "PLAY",
-        town = "VISIT MARKET", continue_in_town = true},
+    -- TRANSLATORS: the title screen reads CHRISTMAS / AT BELLMERE (Bellmere is the town)
+    menu = {title = {tr("CHRISTMAS")}, title_em = 68, subtitle = tr("AT BELLMERE"), subtitle_em = 40, play = tr("PLAY"),
+        town = tr("VISIT MARKET"), continue_in_town = true},
     campaign_dialogue = true,
-    epochs = {"First Advent", "Second Advent", "Third Advent", "Fourth Advent", "Christmas"},
-    epoch_title = "Advent & Christmas",
-    result = {visit = "COLLECT & VISIT MARKET"},
+    epochs = {tr("First Advent"), tr("Second Advent"), tr("Third Advent"), tr("Fourth Advent"), tr("Christmas")},
+    epoch_title = tr("Advent & Christmas"),
+    result = {visit = tr("COLLECT & VISIT MARKET")},
     transitions = {
         style = "wipe",
         theme = {
@@ -30,64 +34,67 @@ return {
     speech = {scale = 1, name = 15},
     region_speaker = "pip",
     town_tip = {
-        {"noelle", "Look at that, we have enough to build!"},
-        {"noelle", "This Advent’s stalls are listed at the top left. Tap one that says Ready to build."},
+        {"noelle", tr("Look at that, we have enough to build!")},
+        {"noelle", tr("This Advent’s stalls are listed at the top left. Tap one that says Ready to build.")},
     },
     board = {
-        tutorial_chain = "Match through the tied treat. Match that cell again to light its pane.",
-        tutorial_goal = {"noelle", "To finish, clear all the blue tiles. Make matches over them."},
-        kudos = {"Jolly!", "Merry!", "Magical!", "Christmas Magic!"},
-        locked = "Match the tied piece to untangle the tinsel.",
+        tutorial_chain = tr("Match through the tied treat. Match that cell again to light its pane."),
+        tutorial_goal = {"noelle", tr("To finish, clear all the blue tiles. Make matches over them.")},
+        kudos = {tr("Jolly!"), tr("Merry!"), tr("Magical!"), tr("Christmas Magic!")},
+        locked = tr("Match the tied piece to untangle the tinsel."),
         pieces = {kind_prefix="market-", scale=1.06},
         background = {min_height=900, align_y=.35, motes={245, 250, 255, 130}},
         review_replaces_tools = true,
     },
     notices = {
-        reward_building = "Select a project to see its cost.",
-        reward_replay = "Resources collected.",
-        all_open = "The whole market is open.",
-        quit = "Your board is saved. Tap Play to continue wish %d.",
+        reward_building = tr("Select a project to see its cost."),
+        reward_replay = tr("Resources collected."),
+        all_open = tr("The whole market is open."),
+        -- TRANSLATORS: %d is the number of the wish (level) in progress
+        quit = tr("Your board is saved. Tap Play to continue wish %d."),
     },
     capsules = {show = {"tokens", "treats", "materials"}},
     pause = {
-        guide = "MARKET GUIDE",
-        quit = "QUIT TO MARKET",
-        leaderboard = "LEADERBOARD",
+        guide = tr("MARKET GUIDE"),
+        quit = tr("QUIT TO MARKET"),
+        leaderboard = tr("LEADERBOARD"),
     },
     leaderboard = {
         board = "stars",
-        title = "Merriest markets",
+        title = tr("Merriest markets"),
     },
-    confirm = {title = "Restart this winter wish?"},
-    failed = {town = "VISIT MARKET"},
+    confirm = {title = tr("Restart this winter wish?")},
+    failed = {town = tr("VISIT MARKET")},
     zone = {
         epoch_hint = function(epoch)
-            return epoch == 5 and "Unlocked at Christmas" or ("Unlocked in Advent %d"):format(epoch)
+            return epoch == 5 and tr("Unlocked at Christmas") or tr("Unlocked in Advent %d"):format(epoch)
         end,
-        subtitle = "MORE ROOM FOR CHRISTMAS CHEER",
-        cleared = "WISHES GRANTED  %d / %d",
-        earn = "GRANT NEW WISHES TO OPEN IT",
+        subtitle = tr("MORE ROOM FOR CHRISTMAS CHEER"),
+        -- TRANSLATORS: wishes granted so far / wishes needed to open this part of the market
+        cleared = tr("WISHES GRANTED  %d / %d"),
+        earn = tr("GRANT NEW WISHES TO OPEN IT"),
     },
     finale = {
-        title = "To be continued",
+        title = tr("To be continued"),
         lines = {
-            {"There's a light in Noelle's window.", 16},
-            {"Fernhollow has asked for a few lights of its own.", 16},
-            {"THE ROAD TO FERNHOLLOW", 13, "cream"},
+            {tr("There's a light in Noelle's window."), 16},
+            {tr("Fernhollow has asked for a few lights of its own."), 16},
+            {tr("THE ROAD TO FERNHOLLOW"), 13, "cream"},
         },
     },
     complete = {
-        title = "You did it!",
+        title = tr("You did it!"),
         lines = {
-            {"ALL %d WINTER WISHES CAME TRUE.", 16},
+            -- TRANSLATORS: %d is the number of wishes in the campaign (100)
+            {tr("ALL %d WINTER WISHES CAME TRUE."), 16},
         },
     },
     card = {
-        every_wish = "EVERY WISH", moves = "MOVES",
+        every_wish = tr("EVERY WISH"), moves = tr("MOVES"),
     },
     catalogue = {
-        title = "Build your market",
-        poor = "MORE RESOURCES NEEDED",
+        title = tr("Build your market"),
+        poor = tr("MORE RESOURCES NEEDED"),
     },
     debug = {victory = 3, catalogue_card = 10, narrator = "noelle"},
 }

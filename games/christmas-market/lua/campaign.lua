@@ -1,4 +1,6 @@
 -- Original square-cell winter wishes. See match3.shapes.square_levels for the map legend.
+local l10n = require("l10n")
+local tr = l10n.tr
 local boards = {
     {name="Lantern Lane", tier="tutorial", moves=9,
         ".......",
@@ -1168,7 +1170,7 @@ local boards = {
         "--..+..--"},
 }
 
-local levels, shapes = require("match3.shapes").square_levels(boards, 9, 12, "Light every blue pane.")
+local levels, shapes = require("match3.shapes").square_levels(boards, 9, 12, tr("Light every blue pane."))
 
 -- Four in a line leave a line gem of that color; five leave a rainbow gem.
 return {levels=levels, colors=5, shapes=shapes, wonder_levels={1,11,21,31,51,56,61,76,81,91},

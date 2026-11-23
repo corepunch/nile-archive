@@ -11,41 +11,45 @@
 -- man_16 are Rome's. Resource ids are coins (Tokens), food (Treats) and
 -- supplies (Materials); stalls are buildings.lua keys. An upgrade is
 -- announced with a notice naming the stall and the improvement.
+local l10n = require("l10n")
+local tr = l10n.tr
+
 local function income(id, amount) return {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id=id, amount=amount} end
 local function tool(id) return {"THEN_GAME_CHARGE_TOOL", id=id, amount=1} end
 
 local upgrades = {
-    {id="man_03", building="arch", title="a mulled-wine hatch in the arch", keeper="noelle",
+    -- TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
+    {id="man_03", building="arch", title=tr("a mulled-wine hatch in the arch"), keeper="noelle",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=240}, perk=income("food", 15)},
-    {id="man_04", building="reindeer_stable", title="a new harness and bells for the reindeer", keeper="pip",
+    {id="man_04", building="reindeer_stable", title=tr("a new harness and bells for the reindeer"), keeper="pip",
         If={"IF_PLAYER_MAKE_MATCH", length=5}, perk=tool("hammer")},
-    {id="man_02", building="lumber", title="a drying shed for the pine", keeper="theo",
+    {id="man_02", building="lumber", title=tr("a drying shed for the pine"), keeper="theo",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=395}, perk=income("supplies", 75)},
-    {id="man_01", building="firework_stall", title="a rocket rack, ready in threes", keeper="pip",
+    {id="man_01", building="firework_stall", title=tr("a rocket rack, ready in threes"), keeper="pip",
         If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=10}, perk=tool("bomb")},
-    {id="man_05", building="bakery", title="a second oven", keeper="agnes",
+    {id="man_05", building="bakery", title=tr("a second oven"), keeper="agnes",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=315}, perk=income("food", 50)},
-    {id="man_06", building="chapel", title="the masons' yard behind the chapel", keeper="wren",
+    {id="man_06", building="chapel", title=tr("the masons' yard behind the chapel"), keeper="wren",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="supplies", amount=585}, perk=income("supplies", 115)},
-    {id="man_07", building="cocoa", title="Mrs Alder's ladle and second pot", keeper="alder",
+    {id="man_07", building="cocoa", title=tr("Mrs Alder's ladle and second pot"), keeper="alder",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=400}, perk=income("food", 80)},
-    {id="man_08", building="igloo", title="a second ice saw on the lake", keeper="theo",
+    {id="man_08", building="igloo", title=tr("a second ice saw on the lake"), keeper="theo",
         If={"IF_PLAYER_MAKE_MATCH_IN_LEVEL", amount=5, min_length=5}, perk=tool("shield")},
-    {id="man_09", building="log_cabin", title="a second smoking rack", keeper="finch",
+    {id="man_09", building="log_cabin", title=tr("a second smoking rack"), keeper="finch",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=575}, perk=income("food", 115)},
-    {id="man_10", building="toys", title="a second bench and a shop bell", keeper="henrik",
+    {id="man_10", building="toys", title=tr("a second bench and a shop bell"), keeper="henrik",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=985}, perk=income("coins", 195)},
-    {id="man_11", building="candles", title="Mr Wren trims every wick", keeper="wren",
+    {id="man_11", building="candles", title=tr("Mr Wren trims every wick"), keeper="wren",
         If={"IF_PLAYER_MAKE_MATCH_SERIES", amount=2, min_length=5}, perk=tool("lightning")},
-    {id="man_12", building="post_office", title="a second sorting rack", keeper="pip",
+    {id="man_12", building="post_office", title=tr("a second sorting rack"), keeper="pip",
         If={"IF_PLAYER_MAKE_MATCH_IN_TIME", amount=15, min_length=3, time=20}, perk=tool("plus")},
-    {id="man_13", building="glassblower", title="a second furnace", keeper="theo",
+    {id="man_13", building="glassblower", title=tr("a second furnace"), keeper="theo",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=1070}, perk=income("coins", 210)},
-    {id="man_14", building="carousel", title="a band organ", keeper="pip",
+    {id="man_14", building="carousel", title=tr("a band organ"), keeper="pip",
         If={"IF_PLAYER_COMPLETE_LEVELS_WITHOUT_LIFE_LOSS", amount=3}, perk=tool("mixer")},
-    {id="man_15", building="santa_workshop", title="Henrik's old apprentices come back", keeper="henrik",
+    {id="man_15", building="santa_workshop", title=tr("Henrik's old apprentices come back"), keeper="henrik",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="coins", amount=1170}, perk=income("coins", 235)},
-    {id="man_16", building="tree", title="a star for the top", keeper="theo",
+    {id="man_16", building="tree", title=tr("a star for the top"), keeper="theo",
         If={"IF_PLAYER_MAKE_EFFECTIVE_MOVES_SERIES", amount=15}, perk=tool("star")},
 }
 
@@ -54,10 +58,10 @@ local events = require("match3.user_events").upgrade_events(upgrades)
 -- The first line gem and the first rainbow gem each explain themselves once.
 events[#events + 1] = {id="hint_line_gem",
     If={"IF_PLAYER_MAKE_MATCH", length=4, max_length=4},
-    Then={{"THEN_SHOW_TUTORIAL", id="HINT_LINE_GEM", text="Four in a line leave a striped gem. Match it to sweep its line."}}}
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_LINE_GEM", text=tr("Four in a line leave a striped gem. Match it to sweep its line.")}}}
 events[#events + 1] = {id="hint_rainbow_gem",
     If={"IF_PLAYER_MAKE_MATCH", length=5},
-    Then={{"THEN_SHOW_TUTORIAL", id="HINT_RAINBOW_GEM", text="Five in a line leave a rainbow gem. Swap it to clear one kind."}}}
+    Then={{"THEN_SHOW_TUTORIAL", id="HINT_RAINBOW_GEM", text=tr("Five in a line leave a rainbow gem. Swap it to clear one kind.")}}}
 
 -- Rome kept trophy names in locale.xml: one trophy per upgrade, TROPHY_NN for man_NN.
 local trophies = {}
