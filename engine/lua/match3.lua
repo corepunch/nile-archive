@@ -576,7 +576,7 @@ function E.pause_form(guide_label, quit_label, leaderboard_label, corner, menu_l
                 N.button {id="guide",text=guide_label,height=32,grow=1,role="link",em=20},
                 menu_label and N.button {id="menu",text=menu_label,height=32,grow=1,role="link",em=20,visible_field="in_game"},
             },
-            privacy_link and N.button {id="privacy",text="PRIVACY POLICY",height=32,role="link",em=18},
+            privacy_link and N.button {id="privacy",text="PRIVACY POLICY",height=32,role="link",em=18} or nil,
         },
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
     }
