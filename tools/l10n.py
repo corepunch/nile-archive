@@ -17,6 +17,7 @@ every other language a game offers.
                                                 or text no font can draw
     python3 tools/l10n.py status [DOMAIN ...]   translated / total per catalogue
     python3 tools/l10n.py strings DOMAIN TAG    untranslated entries as PO, for a translator
+    python3 tools/l10n.py fill DOMAIN TAG FILE  merge a translator's PO into the catalogue
     python3 tools/l10n.py fonts --source DIR    subset the engine's script fonts to the catalogues
 
 Needs gettext (xgettext, msgmerge, msgfmt) and, for fonts and check, fontTools.
@@ -156,19 +157,23 @@ def normalise(path: Path, d: Domain, tag: str) -> None:
     path.write_text(header(tag, d.name) + body.strip("\n") + ("\n" if body.strip() else ""), encoding="utf-8")
 
 
-def update(d: Domain) -> None:
+def update(d: Domain, only: str | None = None, compendium: Path | None = None) -> None:
+    """Merge the extracted template into the catalogues. A compendium (a
+    translator's PO) fills entries that are still untranslated, by msgid."""
     d.catalogues.mkdir(parents=True, exist_ok=True)
+    tags = [only] if only else d.targets
     with tempfile.TemporaryDirectory() as tmp:
         pot = Path(tmp) / "messages.pot"
         extract(d, pot)
-        for tag in d.targets:
+        for tag in tags:
             po = d.po(tag)
             if not po.exists():
                 po.write_text(header(tag, d.name), encoding="utf-8")
+            extra = [f"--compendium={compendium}"] if compendium else []
             subprocess.run([tool("msgmerge"), "--quiet", "--update", "--backup=none", "--no-wrap",
-                            "--no-fuzzy-matching", "--add-location=file", "--sort-by-file", str(po), str(pot)], check=True)
+                            "--no-fuzzy-matching", "--add-location=file", "--sort-by-file", *extra, str(po), str(pot)], check=True)
             normalise(po, d, tag)
-    print(f"{d.name}: {len(d.targets)} catalogues updated")
+    print(f"{d.name}: {len(tags)} catalogues updated")
 
 
 # ------------------------------------------------------------------ parsing
@@ -429,6 +434,10 @@ def main() -> int:
     strings = sub.add_parser("strings")
     strings.add_argument("domain")
     strings.add_argument("tag")
+    fill = sub.add_parser("fill")
+    fill.add_argument("domain")
+    fill.add_argument("tag")
+    fill.add_argument("file", type=Path, help="a PO file whose translations fill the catalogue's empty entries")
     f = sub.add_parser("fonts")
     f.add_argument("--source", type=Path, required=True, help="folder holding the full Noto fonts")
     args = ap.parse_args()
@@ -438,6 +447,12 @@ def main() -> int:
     elif args.command == "status":
         for d in domains(args.domains):
             status(d)
+    elif args.command == "fill":
+        d = domain(args.domain)
+        if args.tag not in d.targets:
+            sys.exit(f"{d.name} has no {args.tag} catalogue")
+        subprocess.run([tool("msgfmt"), "--check", "-o", "/dev/null", str(args.file)], check=True)
+        update(d, args.tag, args.file.resolve())
     elif args.command == "strings":
         untranslated(domain(args.domain), args.tag)
     elif args.command == "fonts":

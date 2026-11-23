@@ -87,6 +87,7 @@ python3 tools/l10n.py update                 # extract (xgettext) and merge (msg
 python3 tools/l10n.py update relic-rush      # one domain
 python3 tools/l10n.py status                 # translated / total per catalogue
 python3 tools/l10n.py strings relic-rush de  # the entries still to translate, as PO
+python3 tools/l10n.py fill relic-rush de de.po   # merge a translator's PO (msgmerge --compendium)
 python3 tools/l10n.py check                  # also part of make test-assets
 ```
 
@@ -127,7 +128,7 @@ after full-width sentence punctuation.
 
 ```sh
 ./build/relic-rush --headless --mute --fresh --lang ja --size 480x900 --shot ja.png
-build/test/all --suite=relic-rush "shot phone-board" -- --lang de
+build/test/all --suite=relic-rush "shot lang-"      # the localized captures in tests/games/<game>.lua
 ```
 
 Look for clipped or shrunk text: German and Russian run about 30% longer than English.
