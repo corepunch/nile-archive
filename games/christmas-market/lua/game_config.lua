@@ -6,7 +6,7 @@ return {
         privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
     menu = {title = {"CHRISTMAS", "MARKET"}, subtitle = "WINTER WISHES", play = "PLAY",
         town = "VISIT MARKET", continue_in_town = true, first_launch = true},
-    campaign_dialogue = false,
+    campaign_dialogue = true,
     epochs = {"First Advent", "Second Advent", "Third Advent", "Fourth Advent", "Christmas"},
     epoch_title = "Advent & Christmas",
     result = {visit = "COLLECT & VISIT MARKET"},

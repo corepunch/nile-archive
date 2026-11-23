@@ -35,14 +35,16 @@ Captain Tavi's ship puts a dozen settlers and their builder, the player, ashore 
 
 ## Campaign
 
+**In the game only the opening plays** (`story_intro` in `lua/game_config.lua`), before the first board, and Settings → Story turns it off. The rest of this script is archived: the engine's story tests still run it, but the campaign does not.
+
 The numbered scenes play once, on the first clear. Levels between them have no scene. Building scenes play when the building is placed. The player can ask Tavi and Oren more in town.
 
 **Before level 1**
 
 - **Tavi:** Everyone ashore! Builder, welcome to our new home.
 - **Oren:** Lovely beach. Where's the town?
-- **Tavi:** There isn't one yet. Build one, and I'll send the ship back for the families.
-- **Sela:** There's a spring up in the rocks. Can we start with a well?
+- **Tavi:** You're standing in it. Once it's a town, I'll send the ship back for the families.
+- **Sela:** There's a spring up in the rocks! Fresh water, Oren. We'll be fine here.
 
 **Level 1**
 

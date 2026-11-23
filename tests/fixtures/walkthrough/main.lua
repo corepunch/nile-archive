@@ -13,12 +13,13 @@ end
 function desc.init()
     init()
     R.on_island, R.overlay = false, R.OV_NONE
+    R.story = false   -- Settings → Story off
 end
 function R.smoke()
     frames = frames + 1
     assert(frames < 1500, 'walkthrough pointer smoke timed out at stage ' .. stage)
     if R.diving() then return end
-    assert(not story.active() and not R.story_current, "opening, win and purchase must never start dialogue")
+    assert(not story.active() and not R.story_current, "with the story off, opening, win and purchase never start dialogue")
     if wait > 0 then wait = wait - 1; return end
     wait = 4
     if stage == 0 then

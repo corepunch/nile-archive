@@ -1,5 +1,4 @@
 rules("debug_walkthrough")
-rules("town_story")
 -- Christmas Market: every test, in one start of build/test/christmas-market. See docs/TESTING.md.
 rules("relic_board")
 rules("portrait_game")
@@ -208,30 +207,27 @@ for _, size in ipairs{"480x900", "390x844"} do
         "--lua tests/fixtures/trickling;games/christmas-market/lua;. --review-top-edge --reel"..safe)
 end
 
--- Story review (docs/review/story): all new busts, the longest line, the finale
--- and its end screen, at both phone sizes.
+-- Story review (docs/story.md): the opening, a stall scene, a scene along the
+-- way, a shout and the last scene, at both phone sizes.
 for _, size in ipairs{"480x900", "390x844"} do
     local safe = size == "390x844" and " --safe-area 0,47,0,34" or ""
     local prefix = size == "390x844" and "phone-story-" or "story-"
     shot(prefix .. "opening", size, "--story-beat before-01 --frames 240" .. safe)
     shot(prefix .. "agnes", size, "--story-beat before-01 --story-line 2 --frames 240" .. safe)
-    shot(prefix .. "theo", size, "--story-beat after-01 --frames 240" .. safe)
-    shot(prefix .. "wren", size, "--story-beat before-01 --story-line 3 --frames 240" .. safe)
-    shot(prefix .. "henrik", size, "--story-beat after-13 --frames 240" .. safe)
-    shot(prefix .. "shout", size, "--story-beat after-03 --frames 240" .. safe)
-    shot(prefix .. "finale", size, "--story-beat after-30 --story-line 3 --frames 240" .. safe)
+    shot(prefix .. "theo", size, "--story-beat placed-arch --frames 240" .. safe)
+    shot(prefix .. "pip", size, "--story-beat after-03 --frames 240" .. safe)
+    shot(prefix .. "shout", size, "--story-beat after-88 --frames 240" .. safe)
+    shot(prefix .. "finale", size, "--story-beat after-100 --story-line 2 --frames 240" .. safe)
     shot(prefix .. "end", size, "--dialog finale" .. safe)
 end
 shot("story-level-20", "480x900", "--level 20")
-local new_cast = {alder = "before-40 --story-line 2", finch = "after-47 --story-line 3",
-                  mary = "after-94 --story-line 2", rosa = "after-95 --story-line 2"}
-for _, speaker in ipairs{"alder", "finch", "mary", "rosa"} do
-    local args = "--story-beat " .. new_cast[speaker] .. " --frames 240"
-    shot("new-cast-" .. speaker, "480x900", args)
-    shot("new-cast-" .. speaker .. "-phone", "390x844", args .. " --safe-area 0,47,0,34")
+local cast_lines = {alder = "after-28", finch = "after-43", ada = "after-78", otis = "placed-station_kiosk",
+                    wren = "after-23", henrik = "after-68", mary = "after-100", rosa = "after-100 --story-line 2"}
+for _, speaker in ipairs{"alder", "finch", "ada", "otis", "wren", "henrik", "mary", "rosa"} do
+    local args = "--story-beat " .. cast_lines[speaker] .. " --frames 240"
+    shot("cast-" .. speaker, "480x900", args)
+    shot("cast-" .. speaker .. "-phone", "390x844", args .. " --safe-area 0,47,0,34")
 end
-shot("story-borrowed-lamps", "480x900", "--story-beat after-27 --story-line 3 --frames 240")
-shot("story-staying", "390x844", "--story-beat after-29 --story-line 2 --frames 240 --safe-area 0,47,0,34")
 shot("phone-story-level-30", "390x844", "--level 30 --safe-area 0,47,0,34")
 shot("dialogue-bar-480", "480x900", "--story-beat before-01 --talk-through 270 --frames 535")
 shot("dialogue-bar-390", "390x844", "--story-beat before-01 --talk-through 270 --frames 535 --safe-area 0,47,0,34")
@@ -278,40 +274,4 @@ if getenv("APP_STORE_SHOTS") == "1" then
 end
 
 shot("town-story-purchase", "480x900", "--story-beat placed-reindeer_stable --frames 240")
-shot("town-story-callback", "390x844", "--story-beat after-98 --story-line 2 --story-built --frames 240 --safe-area 0,47,0,34")
-
-shot("resident-meeting", "480x900", "--story-beat meeting-station_kiosk-glassblower --story-line 3 --frames 240")
-shot("resident-meeting-memory", "390x844", "--story-beat meeting-station_kiosk-glassblower --story-line 3 --story-asked --frames 240 --safe-area 0,47,0,34")
-shot("resident-arrival", "480x900", "--story-beat placed-glassblower --story-line 1 --frames 240")
-shot("resident-return", "390x844", "--story-beat after-74 --story-built --story-line 3 --frames 240 --safe-area 0,47,0,34")
-shot("resident-memory-unasked", "480x900", "--story-beat after-90 --story-line 3 --story-built --frames 240")
-shot("resident-memory-asked", "390x844", "--story-beat after-90 --story-line 3 --story-asked --frames 240 --safe-area 0,47,0,34")
-
-local visit = "--lua tests/fixtures/resident-visit;games/christmas-market/lua;. --visit-game christmas-market --frames 260 --visit-stage "
-shot("resident-keep-talking", "390x844", visit .. "after-84 --visit-continue --safe-area 0,47,0,34")
-shot("resident-visit-first", "480x900", visit .. "placed-glassblower")
-shot("resident-visit-later", "390x844", visit .. "after-84 --safe-area 0,47,0,34")
-shot("resident-questions-480", "480x900", visit .. "placed-glassblower --visit-questions")
-shot("resident-full-menu", "480x900", visit .. "after-85 --visit-meeting meeting-station_kiosk-glassblower --visit-ending --visit-full-menu --heard-at station_kiosk")
-shot("resident-full-menu-phone", "390x844", visit .. "after-85 --visit-meeting meeting-station_kiosk-glassblower --visit-ending --visit-full-menu --heard-at station_kiosk --safe-area 0,47,0,34")
-shot("resident-ending", "480x900", visit .. "after-85 --visit-meeting meeting-station_kiosk-glassblower --visit-ending --visit-site glassblower")
-shot("resident-ending-other", "390x844", visit .. "after-85 --visit-meeting meeting-station_kiosk-glassblower --visit-ending --visit-site station_kiosk --heard-at glassblower --safe-area 0,47,0,34")
-shot("resident-keepsake", "480x900", visit .. "after-85 --visit-meeting meeting-station_kiosk-glassblower --visit-ending --visit-site glassblower --visit-keepsake town")
-shot("resident-keepsake-phone", "390x844", visit .. "after-85 --visit-meeting meeting-station_kiosk-glassblower --visit-ending --visit-site station_kiosk --heard-at glassblower --visit-keepsake town --safe-area 0,47,0,34")
-shot("resident-keepsake-choices", "390x844", visit .. "after-85 --visit-meeting meeting-station_kiosk-glassblower --visit-ending --visit-site glassblower --heard-at station_kiosk --visit-keepsake choices --safe-area 0,47,0,34")
-shot("meeting-recall", "480x900", "--story-beat after-85 --story-sides both --story-line 5 --frames 240")
-shot("meeting-recall-phone", "390x844", "--story-beat after-85 --story-sides station_kiosk --story-line 4 --frames 240 --safe-area 0,47,0,34")
-shot("meeting-followup-direct", "480x900", visit .. "after-63 --visit-site station_kiosk --visit-meeting meeting-station_kiosk-glassblower --visit-questions")
-shot("meeting-followup-answer", "390x844", visit .. "after-74 --visit-meeting meeting-station_kiosk-glassblower --safe-area 0,47,0,34")
-shot("meeting-reply-menu", "480x900", visit .. "after-63 --visit-site station_kiosk --visit-meeting meeting-station_kiosk-glassblower --heard-at glassblower --visit-questions")
-shot("meeting-reply-answer", "390x844", visit .. "after-74 --visit-meeting meeting-station_kiosk-glassblower --heard-at station_kiosk --safe-area 0,47,0,34")
-shot("resident-questions-390", "390x844", visit .. "after-84 --visit-questions --safe-area 0,47,0,34")
-shot("otis-arrival", "480x900", "--story-beat placed-station_kiosk --frames 240")
-shot("otis-questions", "390x844", visit .. "placed-station_kiosk --visit-site station_kiosk --visit-questions --safe-area 0,47,0,34")
-shot("otis-revisit", "390x844", visit .. "after-94 --visit-site station_kiosk --visit-questions --safe-area 0,47,0,34")
-shot("otis-unasked", "480x900", "--story-beat after-63 --story-built --story-line 3 --frames 240")
-shot("otis-remembered", "390x844", "--story-beat after-63 --story-asked --story-line 3 --frames 240 --safe-area 0,47,0,34")
-
-local marker = "--lua tests/fixtures/resident-visit;games/christmas-market/lua;. --visit-game christmas-market --visit-marker --frames 45"
-shot("unheard-visit-480", "480x900", marker)
-shot("unheard-visit-390", "390x844", marker .. " --safe-area 0,47,0,34")
+shot("town-story-purchase-phone", "390x844", "--story-beat placed-reindeer_stable --frames 240 --safe-area 0,47,0,34")

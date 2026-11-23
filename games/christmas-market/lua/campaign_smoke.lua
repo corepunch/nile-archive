@@ -1,5 +1,5 @@
 -- campaign_smoke.lua — --smoke --campaign: the hundred square wishes, through the
--- real result, Collect, region, stall card, placement and Play
+-- real result, Collect, region, stall card, placement, dialogue and Play
 -- controls. Each board's goals are met before one real swap, so this checks
 -- the flow; the extended greedy-bot rules test checks the boards themselves.
 local R = require("state")
@@ -8,6 +8,7 @@ local island = require("island")
 
 local frames, wait, partner, advents = 0, 0, -1, 0
 local completion_seen = false
+local played = {}
 local due = 0
 for _, step in ipairs(island.ladder) do
     if step.after <= rules.LEVELS then due = due + 1 end
@@ -16,13 +17,17 @@ end
 function R.campaign_smoke()
     frames = frames + 1
     if frames > 48000 then   -- a hundred boards of up to 108 cells
-        error(("campaign smoke stalled at level %d (overlay %d, market %s)"):format(
-            R.prog.level, R.overlay, tostring(R.on_island)))
+        error(("campaign smoke stalled at level %d (overlay %d, market %s, story %s)"):format(
+            R.prog.level, R.overlay, tostring(R.on_island), table.concat(played, " ")))
     end
     if R.diving() then return end   -- the town HUD, Confirm included, is not drawn during the dive
-    assert(not story.active() and R.overlay ~= R.OV_STORY_CHOICE, "the campaign runs without dialogue")
     if wait > 0 then wait = wait - 1; return end
     wait = 2
+    if story.active() then
+        local b = R.story_current
+        if b and played[#played] ~= b.key then played[#played + 1] = b.key end
+        app.inject_click(vec2(240, 300)); return
+    end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
@@ -45,8 +50,11 @@ function R.campaign_smoke()
             wait = 10
             return
         end
-        print(("campaign smoke passed: %d winter wishes, %d stalls, %d Advents"):format(
-            R.prog.level, island.campaign_count(c), advents))
+        local journey = require("journey")
+        assert(#played == #journey.beats + #journey.placements,
+            ("every scene plays once: %d of %d"):format(#played, #journey.beats + #journey.placements))
+        print(("campaign smoke passed: %d winter wishes, %d scenes, %d stalls, %d Advents"):format(
+            R.prog.level, #played, island.campaign_count(c), advents))
         app.quit()
     elseif R.overlay == R.OV_RESULT then
         local claim = R.result_form.boxes.claim

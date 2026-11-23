@@ -40,7 +40,6 @@ G.DEFAULTS = {
     board = {},
     notices = {
         reward_building = "Building funded! Spare gold is yours to decorate.",
-        reward_story = "Something is happening in town.",
         reward_replay = "Replay gold collected. Choose something in the shop.",
         relocate = "Some buildings need a new spot. Hold one to move it.",
         all_open = "The whole town is open.",
@@ -303,6 +302,12 @@ function G.bind(R, over)
     local W = G.config(over)
     R.words = W
     local campaign_dialogue = W.campaign_dialogue
+    -- story_intro: only the opening scene plays, before the first board.
+    local intro_only = not campaign_dialogue and W.story_intro
+    local scripted = campaign_dialogue or intro_only
+    -- The player can turn the story off in Settings (R.story).
+    local function dialogue_on() return campaign_dialogue and R.story ~= false end
+    R.dialogue_on = dialogue_on
     local preview_visits = app.arg("shot") and app.arg("visit-game")
     local rules = require("rules")
     local island = require("island")
@@ -604,7 +609,7 @@ function G.bind(R, over)
         if keeper then
             wonder_form:set("keeper_portrait", texture.load(keeper.portrait_path))
         end
-        local about = campaign_dialogue and journey.building_about(i, R.prog.level, w.about) or w.about or ""
+        local about = dialogue_on() and journey.building_about(i, R.prog.level, w.about) or w.about or ""
         wonder_form.values.show_about = about ~= ""
         local ok, message = wonder_form:push{sprite=w.sprite, about=about,
             action=movable and W.card.move or can_build and (fixed and W.card.repair or W.card.build) or funding_play and (R.prog.level < rules.LEVELS and W.card.play or "EARN RESOURCES") or W.card.back}
@@ -650,7 +655,7 @@ function G.bind(R, over)
 
     local privacy_link = W.app.privacy_url and app.has_https_opener()
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard,
-        W.corner_close, W.menu.label, privacy_link)
+        W.corner_close, W.menu.label, privacy_link, scripted)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         assert(pause_form:push(R))
@@ -660,8 +665,13 @@ function G.bind(R, over)
     end, handle=function(event)
         local action = event.id
         if event.kind == "change" then
+            local story_was = R.story
             assert(pause_form:pull(R))
             sfx.enable(R.sound)
+            if R.story and not story_was then   -- back on: what was skipped stays skipped
+                journey.skip_backlog(R.prog)
+                R.save_progress()
+            end
             if not R.test_mode then save.write("settings", R.serialize_settings) end
         elseif action == "resume" or action == "close" then R.overlay = R.OV_NONE
         elseif action == "menu" then
@@ -721,7 +731,7 @@ function G.bind(R, over)
         if event.id == "open" and R.island:unlock(z, R.prog.wallet) then
             R.island_focus(R.island.zones[z + 1].marker, R.island.cam.zoom)
             R.save_progress()
-            if campaign_dialogue and journey.regions[z] then
+            if dialogue_on() and journey.regions[z] then
                 story.add({W.region_speaker, journey.regions[z], story.SHOUT})
             end
             R.tone(820)
@@ -997,7 +1007,7 @@ function G.bind(R, over)
         local definition = R.buildings[kind + 1]
         local upgrade = R.upgrade_card and R.upgrade_card(kind)
         local words = definition.name
-        if campaign_dialogue then words = words .. "\n" .. journey.building_about(kind, R.prog.level, definition.about) end
+        if dialogue_on() then words = words .. "\n" .. journey.building_about(kind, R.prog.level, definition.about) end
         return words .. (upgrade and upgrade.short and "\n" .. upgrade.short or "")
     end
 
@@ -1115,7 +1125,7 @@ function G.bind(R, over)
     function R.town_setup()
         visited_item = nil
         local function visit_for_kind(kind)
-            if campaign_dialogue or preview_visits then
+            if dialogue_on() or preview_visits then
                 return journey.visit(R.prog, island.buildings[kind + 1].key)
             end
         end
@@ -1291,7 +1301,13 @@ function G.bind(R, over)
     end
 
     function R.next_story(before_level)
-        if not campaign_dialogue then return end
+        if intro_only then
+            local intro = journey.beats[1]
+            if R.story ~= false and before_level == 0 and R.prog.level == 0 and intro.phase == "before"
+                and not R.prog.story_seen[intro.key] then return intro end
+            return
+        end
+        if not dialogue_on() then return end
         if before_level == nil then
             local pending = R.prog.pending_answer
             if pending then return answer_beat(pending, "visit") end
@@ -1331,25 +1347,25 @@ function G.bind(R, over)
                     show_visit_keepsake(visit)
                 end
             end
-            if b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
+            if b.phase ~= "before" and b.key == journey.beats[#journey.beats].key then R.overlay = R.OV_FINALE; return end
         end
-        if not campaign_dialogue or R.quiet or story.active() then return end
-        if R.overlay == R.OV_RESULT and R.g then
+        if not (dialogue_on() or intro_only and R.story ~= false) or R.quiet or story.active() then return end
+        if R.overlay == R.OV_RESULT and R.g and dialogue_on() then
             if require("match3.elements_view").reveal_holding(R, rules) then return end   -- the finished picture first
             local b = journey.result_beat(R.prog, R.g, rules.level_of(R.g))
             if b and not (R.clear_scene and R.clear_scene()) then R.queue_story(b, false, true) end
             return
         end
         if R.overlay ~= R.OV_NONE or R.island.placing >= 0 then return end
-        if R.prog.story_recap then
+        if R.prog.story_recap and dialogue_on() and journey.has_recap then
             R.on_island = true
             R.queue_story({key="recap", lines=journey.recap(R.prog.level)})
             return
         end
         local before = not R.on_island and R.g and R.g.level or (R.prog.level == 0 and 0 or nil)
         local b = R.next_story(before)
-        if not b and R.on_island then b = journey.next_placement(R.prog) end
-        if not b and R.on_island and R.upgrade_done then b = journey.next_upgrade(R.prog, R.upgrade_done) end
+        if not b and R.on_island and dialogue_on() then b = journey.next_placement(R.prog) end
+        if not b and R.on_island and dialogue_on() and R.upgrade_done then b = journey.next_upgrade(R.prog, R.upgrade_done) end
         if b and (R.on_island or b.phase == "before") then
             local reply = R.prog.story_choices and R.prog.story_choices[b.key]
             if reply then choice_reply(b, reply)
@@ -1371,12 +1387,12 @@ function G.bind(R, over)
             R.prog.wallet[rules.CLEARED] = R.prog.level
         end
         R.island:serialize(s)
-        if campaign_dialogue then
+        if scripted then
             story.serialize(s)
             journey.serialize(s, R.prog)
         end
         if save.is_reading(s) then
-            if campaign_dialogue then journey.migrate(R.prog, version) end
+            if scripted then journey.migrate(R.prog, version) end
             R.needs_relocation = island.restore_saved(R.island, R.prog.level)
         end
         if R.serialize_campaign then R.serialize_campaign(s) end
@@ -1395,6 +1411,7 @@ function G.bind(R, over)
     function R.serialize_settings(s)
         R.sound = s:int("sound", R.sound and 1 or 0) ~= 0
         R.reduced_motion = s:int("reduce_motion", R.reduced_motion and 1 or 0) ~= 0
+        R.story = s:int("story", R.story ~= false and 1 or 0) ~= 0
     end
 
     local function progress_slot()
@@ -1423,7 +1440,7 @@ function G.bind(R, over)
         if not R.quiet then
             local l = rules.level_of(R.g)
             R.mission(R.board_lesson and R.board_lesson(R.g) or l.lesson, ("%d. %s"):format(lvl + 1, l.name)); R.present_board()
-            if not campaign_dialogue and lvl == 0 then R.notice(l.lesson) end
+            if not dialogue_on() and lvl == 0 then R.notice(l.lesson) end
         end
         return true
     end
@@ -1475,18 +1492,12 @@ function G.bind(R, over)
         local completed = R.sync_epoch_regions()
         R.save_progress()
         R.on_island = true
-        if not campaign_dialogue then
-            if R.show_epoch_award(completed) then return end
-            local destination = result_destination(first, R.prog.level, R.prog.wallet)
-            R.overlay = destination == "complete" and R.OV_COMPLETE or R.OV_NONE
-            if destination == "play" then R.play_next()
-            elseif destination == "build" then R.notice(W.notices.reward_building)
-            elseif not first then R.notice(W.notices.reward_replay) end
-            return
-        end
-        R.overlay = first and R.g.story_clear == journey.beats[#journey.beats].key and R.OV_FINALE
-            or first and R.prog.level >= rules.LEVELS and R.OV_COMPLETE or R.OV_NONE
-        R.notice(first and (journey.wonder_at(R.prog.level) and W.notices.reward_building or W.notices.reward_story) or W.notices.reward_replay)
+        if R.show_epoch_award(completed) then return end
+        local destination = result_destination(first, R.prog.level, R.prog.wallet)
+        R.overlay = destination == "complete" and R.OV_COMPLETE or R.OV_NONE
+        if destination == "play" then R.play_next()
+        elseif destination == "build" then R.notice(W.notices.reward_building)
+        elseif not first then R.notice(W.notices.reward_replay) end
     end
 
     -- Opt-in walkthrough controls use the same result and placement paths as play.
@@ -1745,7 +1756,7 @@ function G.app(R)
         local at_result = drawn_overlay == R.OV_RESULT
         local outcome = at_result or drawn_overlay == R.OV_FAILED
         local revealing = at_result and elements.reveal_holding(R, rules)
-        local clear_due = W.campaign_dialogue and at_result and not R.quiet
+        local clear_due = R.dialogue_on() and at_result and not R.quiet
             and journey.result_beat(R.prog, R.g, rules.level_of(R.g))
         local story_wait = talking or revealing or clear_due
         if outcome then
@@ -1806,7 +1817,7 @@ function G.app(R)
         R.font = R.skin:font("lilita")
         local art = require("art")
         local dialog = app.arg("dialog")
-        if W.campaign_dialogue or app.arg("story-beat") or app.arg("story-choice") or app.arg("visit-game")
+        if W.campaign_dialogue or W.story_intro or app.arg("story-beat") or app.arg("story-choice") or app.arg("visit-game")
             or dialog == "intro" or dialog == "adrian" or dialog == "mara" or dialog == "tomas" then
             story.setup(R.cast, story_style{text = R.speech_style(21), name = R.pal(R.PAL_CREAM, W.speech.name), bubble = color(255, 246, 222, 252),
                                           edge = color(102, 68, 39), dim = color(5, 22, 22, 150), backdrop_blur = 7,
@@ -1853,7 +1864,7 @@ function G.app(R)
         R.wonders = {}
         for i = 1, island.WONDERS do R.wonders[i] = R.buildings[wonder_kind(island, i) + 1] end
 
-        R.sound, R.reduced_motion = true, false
+        R.sound, R.reduced_motion, R.story = true, false, true
         R.inspect, R.zone_card = -1, -1
         R.epoch_award = nil
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil
@@ -1879,7 +1890,7 @@ function G.app(R)
         if R.prog.level >= LEVELS then
             R.g.won, R.on_island = true, true
         end
-        if W.campaign_dialogue and (R.prog.story_recap or R.next_story(nil) or journey.next_placement(R.prog)) then
+        if R.dialogue_on() and (R.prog.story_recap and journey.has_recap or R.next_story(nil) or journey.next_placement(R.prog)) then
             R.on_island = true
         end
         if R.needs_relocation then R.on_island = true; R.notice(W.notices.relocate) end

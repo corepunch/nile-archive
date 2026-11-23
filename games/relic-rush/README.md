@@ -101,7 +101,7 @@ with sample rivals using `--gamecenter-demo --dialog leaderboard`.
 
 The Landing starts with gold coins, silver coins, leaves, flowers and amphoras. Water, timber and a bonus piece take existing slots once their buildings are confirmed.
 
-Clear every turquoise plaque to finish the expedition. The opening chapter’s dialogue follows island construction.
+Clear every turquoise plaque to finish the expedition. Tavi, Oren and Sela come ashore in a short scene before the first expedition; the rest of the [script](docs/story.md) is archived. **Story** in Settings turns the scene off.
 
 ## Shared UI and dialog layers
 
@@ -322,7 +322,7 @@ Debug and capture options (no progress is written): `--level N`, `--city N` (an 
 
 - `make test` runs the original rule regressions, ported: grid invariants, straight lines and rejection of bent, diamond and ring groups, holes and diagonal trickling, chains, tool targeting, playable opening boards, reward claims and construction. The extended campaign test runs with `make test-extended`. The greedy bot must win every board at least once in its seeds, without tools.
 - `--smoke` opens and closes the data-backed guide, then drives the real game loop with injected mouse clicks through swaps, cascades, the win dialog, the claim, construction, pan/long-press pickup/cancel/confirm and the start of level two.
-- `--smoke --campaign` plays the 100 expeditions through the real result, Collect, region, placement and Play controls. Each board's goals are met before one real swap. The run checks that dialogue never interrupts play and ends after the completion card with all twenty purchases placed. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
+- `--smoke --campaign` plays the 100 expeditions through the real result, Collect, region, placement and Play controls. Each board's goals are met before one real swap. The run taps through the landing scene, checks that no other dialogue interrupts play and ends after the completion card with all twenty purchases placed. It runs in `make test-full` (CI), or alone with `build/test/relic-rush "smoke campaign"`.
 - Every screenshot above is rendered by the same code; they were compared side by side with captures of the standalone prototype.
 - iPhone and Android device builds, touch feel, safe areas and performance still need device QA.
 

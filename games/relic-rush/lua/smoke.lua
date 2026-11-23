@@ -33,9 +33,12 @@ local function campaign()
             R.prog.level, R.overlay, tostring(R.on_island)))
     end
     if R.diving() then return end   -- the town HUD, Confirm included, is not drawn during the dive
-    assert(not story.active() and R.overlay ~= R.OV_STORY_CHOICE, "the campaign runs without dialogue")
     if wait > 0 then wait = wait - 1; return end
     wait = 2
+    if story.active() then   -- the landing is the campaign's only scene
+        assert(R.prog.level == 0 and R.story_current.key == "before-01", "only the landing plays")
+        app.inject_click(vec2(240, 300)); return
+    end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return
@@ -103,7 +106,10 @@ function R.smoke()
         return
     end
     wait = 3
-    assert(not story.active(), "the campaign runs without dialogue")
+    if story.active() then   -- tap through the landing
+        assert(R.prog.level == 0 and R.story_current.key == "before-01", "only the landing plays")
+        app.inject_click(vec2(240, 300)); return
+    end
     if R.mission_banner and not R.on_island and R.overlay == R.OV_NONE then   -- a tap sends the mission banner on
         if R.mission_banner.t > .2 and not R.mission_banner.skipped then app.inject_click(vec2(240, 300)); R.mission_banner.skipped = true end
         return

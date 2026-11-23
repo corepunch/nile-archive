@@ -463,8 +463,8 @@ do
     w = R.prog.wallet
     check(island.owned(R.island, market) == 1 and island.owned(R.island, steps) == 0
         and w[1] == 12 and w[2] == 34 and w[3] == 56, 'drop the saved staircase and preserve the market and wallet')
-    check(not R.prog.story_seen['restore-16'] and not R.prog.story_choices,
-        'old dialogue fields do not affect a resumed campaign')
+    R.on_island = true
+    check(not R.next_story(nil) and not R.next_story(16), 'old dialogue fields do not affect a resumed campaign')
 end
 
 -- A full old town with a paid Workshop keeps its whole inventory, and the

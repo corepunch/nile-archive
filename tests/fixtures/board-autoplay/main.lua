@@ -4,9 +4,13 @@ local R, rules = require("state"), require("rules")
 local journey, island = require("journey"), require("island")
 local stage, frames = 0, 0
 local started, expected_wallet
-local clear = "after-01"
+-- The first board's own scene, when the game plays one.
+local function first_clear()
+    return R.dialogue_on() and journey.find("after-01") and "after-01" or nil
+end
 
 function R.smoke()
+    local clear = first_clear()
     frames = frames + 1
     assert(frames < 360, "debug skip stalled at stage " .. stage)
     if stage == 3 and R.on_island then
@@ -20,7 +24,7 @@ function R.smoke()
         end
         stage = 4
     end
-    if stage == 4 and R.prog.story_seen[clear] then
+    if stage == 4 and (not clear or R.prog.story_seen[clear]) then
         app.quit()
         return
     end
@@ -47,7 +51,7 @@ function R.smoke()
         print(("debug skip cleared in %.2f game seconds"):format(seconds))
         expected_wallet = R.prog.wallet + rules.level_reward(R.g, R.wonders, R.prog)
         stage = 2
-    elseif stage == 2 and (not journey.clear_before_result or R.g.story_clear == clear)
+    elseif stage == 2 and (not journey.clear_before_result or not clear or R.g.story_clear == clear)
         and R.result_form.boxes.claim and R.dialog_settled() then
         app.inject_click(R.result_form.boxes.claim:center() + vec2(0, R.drop / 2))
         stage = 3

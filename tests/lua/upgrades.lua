@@ -246,7 +246,7 @@ do
     check(R.toast and R.toast:find(U.by_id.man_03.upgrade.title,1,true),'an earned upgrade shows a short notice')
     R.on_island=true
     R.story_tick()
-    check(not story.active() and not R.story_current,'upgrades cannot start dialogue on return to town')
+    check(not (R.story_current and R.story_current.phase=='upgrade'),'upgrades cannot start dialogue on return to town')
     R.on_island=false
 end
 

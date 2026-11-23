@@ -9,8 +9,8 @@
 -- a trophy is awarded and one perk lasts for good, either more of
 -- one currency in every win or a tool that charges faster. Ids man_01 to
 -- man_16 are Rome's. Resource ids are coins (Tokens), food (Treats) and
--- supplies (Materials); stalls are buildings.lua keys. The upgrade's
--- scene, played by its keeper, is its `## Upgrades` section in docs/story.md.
+-- supplies (Materials); stalls are buildings.lua keys. An upgrade is
+-- announced with a notice naming the stall and the improvement.
 local function income(id, amount) return {"THEN_PLAYER_ADD_RESOURCE_PER_LEVEL", id=id, amount=amount} end
 local function tool(id) return {"THEN_GAME_CHARGE_TOOL", id=id, amount=1} end
 

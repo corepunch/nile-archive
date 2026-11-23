@@ -43,7 +43,11 @@ function R.smoke()
     frames = frames + 1
     assert(frames < 900, "portrait menu timed out at step " .. stage)
     if R.diving() then return end
-    assert(not story.active() and not R.story_current, "the campaign must never interrupt play with dialogue")
+    if story.active() then   -- only the opening, before the first board
+        assert(not R.on_menu and R.story_current and R.story_current.key == "before-01", "the title never starts dialogue")
+        story.next()
+        return
+    end
     local menu = R.menu.form
     if stage == 0 then
         if show_menu then
@@ -57,7 +61,10 @@ function R.smoke()
         assert(not R.pause_form.values.expedition and not R.pause_form.values.in_game, "title settings carry no board actions")
         click(R.pause_form, "motion", true)
         stage = 2
-    elseif stage == 2 and R.reduced_motion then
+    elseif stage == 2 and R.reduced_motion and R.pause_form.boxes.story and R.story then
+        click(R.pause_form, "story", true)   -- Settings → Story off: no scene plays from here
+        stage = 21
+    elseif stage == 21 and R.story == false then
         click(R.pause_form, "resume", true)
         stage = 3
     elseif stage == 3 and R.overlay == R.OV_NONE then
@@ -79,6 +86,7 @@ function R.smoke()
         click(R.epoch_form, "play", true)
         stage = 4
     elseif stage == 4 and not R.on_menu then
+        assert(not R.story_current or R.story_current.key == "before-01", "only the opening may play")
         if completed then
             assert(R.overlay == R.OV_RESULT and R.g == game and R.g.earnings[1] == 40, "Continue must restore unclaimed rewards")
             app.quit()

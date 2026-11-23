@@ -11,7 +11,9 @@ for _,who in ipairs(R.cast) do cast[who.id]=true end
 -- Follow the actual rewards, purchase gate and scheduler through all 100 clears.
 local p={level=0,seed=1,wallet=purse(),story_seen={}}
 local c=city.new();island.island_setup(c)
-check(rules.LEVELS==100 and #journey.beats>=rules.LEVELS,'all hundred winter wishes are playable')   -- a scene per clear, plus the openings
+check(rules.LEVELS==100 and journey.beats[1].key=='before-01' and journey.beats[#journey.beats].key=='after-100',
+      'the story opens before the first wish and closes on the hundredth')
+check(#journey.placements==#island.ladder,'every stall has a scene when it is placed')
 local stocked = rules.game_start(0, 1)
 check(#stocked.spawn_kinds == 5 and stocked.tools[1] == 0, "opening board has three score pieces and two coins")
 check(stocked.resource_yields[2].amount == 3 and stocked.resource_yields[3].amount == 5,
@@ -93,17 +95,23 @@ for level=1,rules.LEVELS do
             check(R.prog.wallet[1] == bakery[1] and R.prog.wallet[2] == bakery[2] and R.prog.wallet[3] == bakery[3],
                 "saving the migrated wallet prevents a second top-up")
         end
-        check(not journey.next(p,owned(c),nil),'stall story waits for confirmed construction')
     end
+    local after=journey.next(p,owned(c),nil)
+    local scene=journey.find(('after-%02d'):format(level))
+    check(after==scene,'a cleared wish plays its own scene, if it has one, and nothing else')
+    if after then p.story_seen[after.key]=true end
     for _, step in ipairs(opened) do
         check(island.next_step(c,p.level)==step.kind and island.can_buy(c,p.wallet,p.level,step.kind),
             'earned stall is next on the ladder and affordable')
         check(island.island_place_next(c,p.wallet,p.level,0),'scheduled stall fits open land')
+        local key=island.buildings[step.kind+1].key
+        check(not journey.next_placement(p),'a stall scene waits for its stall')
+        journey.placed(p,key)
+        local placed=journey.next_placement(p)
+        check(placed and placed.building==key,'placing a stall plays its scene')
+        if placed then p.story_seen[placed.key]=true end
     end
     check(not island.island_place_next(c,p.wallet,p.level,0),'a wish opens only its own stalls')
-    local after=journey.next(p,owned(c),nil)
-    check(after and after.key==('after-%02d'):format(level),'the right post-clear beat follows every result')
-    p.story_seen[after.key]=true
     local replay=rules.game_start(level-1,100+level);replay.won=true;replay.moves=0
     local stars=p.wallet[4]
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
@@ -169,14 +177,18 @@ check(waivers[island.ladder_position[island.kinds.gifts]] and not waivers[island
       "the old waiver stays with the Gift wrapping pavilion after it changes gates")
 R.island = c
 
--- A version 2 player keeps every stall already built and starts episode two.
+-- An older save keeps its wallet and continues from its current wish.
 local old={level=19,seed=55,wallet=purse(1234,12,34,30,7)}
-journey.migrate(old,2)
-check(old.level==19 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
-check(journey.next(old,owned(c),19).key=='before-20','old progress opens the next scene without replaying what it has read')
+journey.migrate(old,4)
+check(old.level==19 and old.wallet[1]==1234 and old.wallet[4]==30 and not old.story_recap,'migration preserves the wallet')
+check(old.story_seen['after-18'] and not old.story_seen['after-23'],'old progress skips scenes for wishes already granted')
+local back={level=40,story_seen={['before-01']=true}}
+journey.placed(back,'cocoa')
+journey.skip_backlog(back)
+check(back.story_seen['after-38'] and not back.story_seen['after-43'] and not journey.next_placement(back),
+      'turning the story back on skips what was missed')
 local preserved=city.new();island.island_setup(preserved);preserved.open=63
 preserved:add(c.items[1].pos,9,0)
 island.restore_saved(preserved,10)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy Christmas tree')
-check(journey.building_about(9,99,'ordinary')~=journey.building_about(9,100,'ordinary'),'the Christmas tree answers at level 100')
 empty_queue()

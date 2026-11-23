@@ -66,7 +66,7 @@ end
 R.prog.story_recap = true
 R.quiet = false
 R.story_tick()
-check(not R.story_current and not story.active(), 'older campaign saves cannot replay their recap')
+check(not (R.story_current and R.story_current.key == 'recap'), 'older campaign saves cannot replay their recap')
 R.quiet = true
 R.prog.wallet = purse(0, 0, 0, 1)
 R.g = R.make_board(1, 2)

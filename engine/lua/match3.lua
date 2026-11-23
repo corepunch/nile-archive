@@ -558,13 +558,14 @@ function E.guide_form(copy, guide_icon, corner)
     })
 end
 
-function E.pause_form(guide_label, quit_label, leaderboard_label, corner, menu_label, privacy_link)
+function E.pause_form(guide_label, quit_label, leaderboard_label, corner, menu_label, privacy_link, story)
     return ui.form{
         root=N.column {panel=true,
             E.popup_header("Settings", nil, corner and "close"),
             N.column {panel=true,role="group",padding={18,8,18,10},gap=6,
                 N.checkbox {id="sound",text="SOUND",height=50},
                 N.checkbox {id="motion",text="REDUCE MOTION",height=50},
+                story and N.checkbox {id="story",text="STORY",height=50} or nil,
             },
             N.column {gap=12,
                 N.button {id="resume",text="RESUME",height=52},
@@ -578,7 +579,8 @@ function E.pause_form(guide_label, quit_label, leaderboard_label, corner, menu_l
             },
             privacy_link and N.button {id="privacy",text="PRIVACY POLICY",height=32,role="link",em=18} or nil,
         },
-        bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"}},
+        bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"},
+            story and {id="story",field="story",type="boolean"} or nil},
     }
 end
 

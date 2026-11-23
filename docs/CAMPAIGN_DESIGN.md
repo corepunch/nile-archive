@@ -115,4 +115,8 @@ Rome gives no feat to the Curia Octavia, Aqueduct, Pantheon and the city centre:
 
 ## Project copy
 
-Describe what each building does in ordinary language. Show a separate name and icon for its board reward. In Christmas Market, the same portrait can appear on related projects. Dialogue scripts remain available for development previews.
+Describe what each building does in ordinary language. Show a separate name and icon for its board reward. In Christmas Market, the same portrait can appear on related projects.
+
+## Story
+
+Scenes stay small and never steer construction. Christmas Market plays an opening, a short scene when each stall is placed (someone starts using it), and a scene every five boards of people going about Christmas (`games/christmas-market/docs/story.md`). Relic Rush plays only its opening (`story_intro`); the rest of its script is archived. **Settings → Story** turns scenes off; turning them back on continues from the current board without replaying what was missed (`journey.skip_backlog`).

@@ -5,6 +5,8 @@
 local function new(content)
     local M = {}
     for key, value in pairs(content) do M[key] = value end
+    local has_recap = content.recap ~= nil and #content.recap > 0
+    M.has_recap = has_recap
     M.about = M.about or {}
     -- Upgrade arrival scenes ({phase="upgrade", event="man_03", no level}) are
     -- kept apart from the level beats: they play on the next return to town
@@ -225,7 +227,19 @@ local function new(content)
             for _, b in ipairs(M.beats) do
                 if b.level <= p.level then p.story_seen[b.key] = true end
             end
-            p.story_recap = p.level > 0
+            p.story_recap = p.level > 0 and has_recap
+        end
+    end
+
+    -- With the story turned back on, play on from here: scenes for boards
+    -- already cleared and stalls already placed stay unplayed.
+    function M.skip_backlog(p)
+        p.story_seen = p.story_seen or {}
+        for _, b in ipairs(M.beats) do
+            if b.level <= p.level then p.story_seen[b.key] = true end
+        end
+        for _, b in ipairs(placements) do
+            if p.story_seen[b.key] == false then p.story_seen[b.key] = true end
         end
     end
 

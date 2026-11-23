@@ -2,79 +2,61 @@
 import argparse
 import json
 import re
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LEVELS = 100
-sys.path.insert(0, str(ROOT.parents[1] / 'tools'))
-from town_story import compile_town
-
-text = (ROOT / 'docs/story.md').read_text()
-# The upgrades' scenes live in their own section; the level beats never see it.
-section = re.search(r'^## Upgrades\n.*?(?=^## |\Z)', text, re.S | re.M)
-upgrade_source = section[0] if section else ''
-town_source = re.search(r'^## Town dialogue\n.*?(?=^## |\Z)', text, re.S | re.M)[0]
-source = text.replace(upgrade_source, '').replace(town_source, '')
-source = re.sub(r'^## Citizens\n.*?(?=^## |\Z)', '', source, flags=re.S | re.M).split('## Small lines')[0]   # also drop the superseded Citizens section
-beats, beat = [], None
 speakers = {'Otis': 'otis', 'Ada': 'ada', 'Noelle': 'noelle', 'Theo': 'theo', 'Agnes': 'agnes', 'Henrik': 'henrik', 'Pip': 'pip', 'Mr Wren': 'wren',
             'Mary': 'mary', 'Rosa': 'rosa', 'Mrs Alder': 'alder', 'Mr Finch': 'finch'}
 SPEAKER = '|'.join(speakers)
-# Rome 2's upgrade events (games/christmas-market/lua/user_events.lua) and the keeper who must speak in each.
-keeper_speakers = {'man_03': 'Noelle', 'man_04': 'Pip', 'man_02': 'Theo', 'man_01': 'Pip', 'man_05': 'Agnes', 'man_06': 'Mr Wren', 'man_07': 'Mrs Alder', 'man_08': 'Theo', 'man_09': 'Mr Finch', 'man_10': 'Henrik', 'man_11': 'Mr Wren', 'man_12': 'Pip', 'man_13': 'Theo', 'man_14': 'Pip', 'man_15': 'Henrik', 'man_16': 'Theo'}
-for line in source.splitlines():
-    heading = re.match(r'\*\*(Before level|Level) (\d+)', line)
+# The stalls the town ladder sells, in order (lua/economy.lua): each has a scene when placed.
+ladder = re.findall(r'\{building="(\w+)", after=\d+', (ROOT / 'lua/economy.lua').read_text())
+assert len(ladder) == 20, ladder
+
+scenes, beat = [], None
+for line in (ROOT / 'docs/story.md').read_text().splitlines():
+    if line.startswith('## '):
+        beat = None
+    heading = re.fullmatch(r'\*\*(Before level|Level) (\d+)\*\*', line)
+    placed = re.fullmatch(r'\*\*Placed (\w+) · [^*]+\*\*', line)
     if heading:
         phase, level = ('before' if heading[1] == 'Before level' else 'after'), int(heading[2])
         beat = {'key': f'{phase}-{level:02}', 'phase': phase, 'level': level, 'lines': []}
-        beats.append(beat)
-    spoken = re.match(r'- \*\*(' + SPEAKER + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
+        scenes.append(beat)
+    elif placed:
+        assert placed[1] in ladder, 'not a ladder stall: ' + line
+        beat = {'key': 'placed-' + placed[1], 'phase': 'placed', 'building': placed[1], 'lines': []}
+        scenes.append(beat)
+    elif line.startswith('**Placed') or line.startswith('**Level') or line.startswith('**Before'):
+        raise AssertionError('write scene headings as **Level N**, **Before level N** or **Placed <key> · <Name>**: ' + line)
+    spoken = re.fullmatch(r'- \*\*(' + SPEAKER + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
     if beat and line.startswith('- **') and ':**' in line:
         assert spoken, 'Christmas Market dialogue requires a named cast member: ' + line
     if spoken and beat:
         beat['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
-upgrades, upgrade = [], None
-for line in upgrade_source.splitlines():
-    heading = re.match(r'\*\*Upgrade (man_\d\d) · ([^·*]+) · ([^*]+)\*\*\s*$', line)
-    if line.startswith('**Upgrade'):
-        assert heading, 'write each upgrade heading as **Upgrade man_NN · <title> · <Building name>**: ' + line
-        assert heading[1] in keeper_speakers, 'unknown upgrade event ' + heading[1]
-        upgrade = {'key': 'upgrade-' + heading[1], 'event': heading[1], 'title': heading[2].strip(), 'building': heading[3].strip(), 'lines': []}
-        upgrades.append(upgrade)
-    spoken = re.match(r'- \*\*(' + SPEAKER + r')(?: \((thought|shout)\))?:\*\* (.+)', line)
-    if upgrade and line.startswith('- **') and ':**' in line:
-        assert spoken, 'Christmas Market dialogue requires a named cast member: ' + line
-    if spoken and upgrade:
-        upgrade['lines'].append((speakers[spoken[1]], spoken[3], spoken[2]))
-assert len({c['event'] for c in upgrades}) == len(upgrades), 'an upgrade has two scenes'
-for c in upgrades:
-    assert c['lines'] and len(c['lines']) <= 48, c['key'] + ' needs spoken lines'
-    assert speakers[keeper_speakers[c['event']]] in {who for who, _, _ in c['lines']}, \
-        c['key'] + ' must have its keeper (' + keeper_speakers[c['event']] + ') speak'
-    assert all(len(text) <= 100 for _, text, _ in c['lines']), c['key'] + ' has a line over 100 characters'
-# One beat after every wish's first clear; before-beats open Advents and turns.
-assert {b['level'] for b in beats if b['phase'] == 'after'} == set(range(1, LEVELS + 1))
-assert len({b['key'] for b in beats}) == len(beats), 'a level has two beats of one phase'
-BEATS, LINES = len(beats), sum(len(b['lines']) for b in beats)
-assert all(b['lines'] and len(b['lines']) <= 48 for b in beats)
-assert all(len(text) <= 100 for b in beats for _, text, _ in b['lines'])
+
+keys = [b['key'] for b in scenes]
+assert len(set(keys)) == len(keys), 'a scene is written twice'
+assert keys[0] == 'before-01', 'the opening plays first'
+levels = [b for b in scenes if b['phase'] != 'placed']
+assert levels[-1]['key'] == f'after-{LEVELS}', 'the last level scene is the hundredth wish'
+assert [b['level'] for b in levels] == sorted(b['level'] for b in levels), 'level scenes run in order'
+assert all(1 <= b['level'] <= LEVELS for b in levels)
+assert {b['building'] for b in scenes if b['phase'] == 'placed'} == set(ladder), 'every stall has a scene when placed'
+for b in scenes:
+    assert 0 < len(b['lines']) <= 4, b['key'] + ' needs one to four lines'
+    assert all(len(text) <= 100 for _, text, _ in b['lines']), b['key'] + ' has a line over 100 characters'
+
 quote = lambda s: json.dumps(s, ensure_ascii=False)
-replies, town_beats = compile_town(town_source, beats, speakers)
-lines = ['-- Generated by tools/prepare_story.py from docs/story.md; edit the reviewed script.', 'return {']
-for b in beats:
-    lines.append('    {key=%s, phase=%s, level=%d%s, lines={' % (quote(b['key']), quote(b['phase']), b['level'], replies.get(b['key'], '')))
+out = ['-- Generated by tools/prepare_story.py from docs/story.md; edit the reviewed script.', 'return {']
+for b in levels + [b for b in scenes if b['phase'] == 'placed']:
+    where = 'level=%d' % b['level'] if b['phase'] != 'placed' else 'building=%s' % quote(b['building'])
+    out.append('    {key=%s, phase=%s, %s, lines={' % (quote(b['key']), quote(b['phase']), where))
     for who, text, kind in b['lines']:
-        lines.append('        {%s, %s%s},' % (quote(who), quote(text), ', story.' + kind.upper() if kind else ''))
-    lines.append('    }},')
-for c in upgrades:
-    lines.append('    {key=%s, phase="upgrade", event=%s, title=%s, building=%s, lines={' % (quote(c['key']), quote(c['event']), quote(c['title']), quote(c['building'])))
-    for who, text, kind in c['lines']:
-        lines.append('        {%s, %s%s},' % (quote(who), quote(text), ', story.' + kind.upper() if kind else ''))
-    lines.append('    }},')
-lines.extend(town_beats)
-lines.append('}')
-content = '\n'.join(lines) + '\n'
+        out.append('        {%s, %s%s},' % (quote(who), quote(text), ', story.' + kind.upper() if kind else ''))
+    out.append('    }},')
+out.append('}')
+content = '\n'.join(out) + '\n'
 path = ROOT / 'lua/story_content.lua'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--check', action='store_true')
@@ -83,4 +65,5 @@ if args.check:
     assert path.read_text() == content, 'Story changed: run python3 games/christmas-market/tools/prepare_story.py'
 else:
     path.write_text(content)
-print(f'Christmas Market: {BEATS} story beats, {LINES} reviewed dialogue lines, {len(upgrades)} upgrade scenes')
+print(f'Christmas Market: {len(levels)} level scenes, {len(scenes) - len(levels)} stall scenes, '
+      f'{sum(len(b["lines"]) for b in scenes)} reviewed dialogue lines')
