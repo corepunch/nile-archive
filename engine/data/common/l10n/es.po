@@ -281,12 +281,20 @@ msgid "CONTINUE"
 msgstr "CONTINUAR"
 
 #: engine/lua/match3/game.lua
+msgid "DECORATION BONUS"
+msgstr "BONO DE DECORACIÓN"
+
+#: engine/lua/match3/game.lua
 msgid "Decorations"
 msgstr "Decoraciones"
 
 #: engine/lua/match3/game.lua
 msgid "EARN RESOURCES"
 msgstr "GANA RECURSOS"
+
+#: engine/lua/match3/game.lua engine/lua/match3/user_events.lua
+msgid "EVERY WIN"
+msgstr "CADA VICTORIA"
 
 #: engine/lua/match3/game.lua
 msgid "FINISH THE PREVIOUS PROJECTS"
@@ -499,10 +507,6 @@ msgstr "Intercambia las piezas resaltadas para combinar tres en línea."
 #, lua-format
 msgid "Tap %s. %s"
 msgstr "Toca %s. %s"
-
-#: engine/lua/match3/user_events.lua
-msgid "EVERY WIN"
-msgstr "CADA VICTORIA"
 
 #: engine/lua/match3/user_events.lua
 msgid "FEAT"

@@ -281,12 +281,20 @@ msgid "CONTINUE"
 msgstr "继续"
 
 #: engine/lua/match3/game.lua
+msgid "DECORATION BONUS"
+msgstr "装饰奖励"
+
+#: engine/lua/match3/game.lua
 msgid "Decorations"
 msgstr "装饰"
 
 #: engine/lua/match3/game.lua
 msgid "EARN RESOURCES"
 msgstr "赚取资源"
+
+#: engine/lua/match3/game.lua engine/lua/match3/user_events.lua
+msgid "EVERY WIN"
+msgstr "每次获胜"
 
 #: engine/lua/match3/game.lua
 msgid "FINISH THE PREVIOUS PROJECTS"
@@ -499,10 +507,6 @@ msgstr "交换高亮的棋子，让三个连成一线。"
 #, lua-format
 msgid "Tap %s. %s"
 msgstr "点击%s。%s"
-
-#: engine/lua/match3/user_events.lua
-msgid "EVERY WIN"
-msgstr "每次获胜"
 
 #: engine/lua/match3/user_events.lua
 msgid "FEAT"

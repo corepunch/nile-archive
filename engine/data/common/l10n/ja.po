@@ -281,12 +281,20 @@ msgid "CONTINUE"
 msgstr "続ける"
 
 #: engine/lua/match3/game.lua
+msgid "DECORATION BONUS"
+msgstr "飾りボーナス"
+
+#: engine/lua/match3/game.lua
 msgid "Decorations"
 msgstr "飾り"
 
 #: engine/lua/match3/game.lua
 msgid "EARN RESOURCES"
 msgstr "資源を集めよう"
+
+#: engine/lua/match3/game.lua engine/lua/match3/user_events.lua
+msgid "EVERY WIN"
+msgstr "勝つたび"
 
 #: engine/lua/match3/game.lua
 msgid "FINISH THE PREVIOUS PROJECTS"
@@ -499,10 +507,6 @@ msgstr "光っているピースを入れ替えて、3つ並べましょう。"
 #, lua-format
 msgid "Tap %s. %s"
 msgstr "%sをタップ。%s"
-
-#: engine/lua/match3/user_events.lua
-msgid "EVERY WIN"
-msgstr "勝つたび"
 
 #: engine/lua/match3/user_events.lua
 msgid "FEAT"

@@ -64,11 +64,14 @@ R.register_result(function()
     local reward, first = breakdown.total, breakdown.first
     local resources = {}
     for slot, currency in ipairs(economy.currencies) do
-        resources[slot] = {id=currency.id, amount=reward[slot], icon=currency_icon(slot)}
+        local amount = reward[slot] - (slot == economy.GOLD and breakdown.decoration or 0)
+        resources[slot] = {id=currency.id, amount=amount, icon=currency_icon(slot)}
     end
+    local bonus = breakdown.decoration > 0
+        and {id="decoration", amount="+" .. breakdown.decoration, icon=currency_icon(economy.GOLD)} or nil
     return {
         title=first and tr("Wish granted!") or tr("Replay complete"),
-        resources=resources, action=R.result_action(first, reward),
+        resources=resources, bonus=bonus, action=R.result_action(first, reward),
     }
 end)
 

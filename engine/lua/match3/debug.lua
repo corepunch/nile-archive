@@ -13,7 +13,7 @@ local D = {}
 function D.direct_preview()
     for _, key in ipairs{
         "level", "city", "opening-town", "epoch", "epoch-window", "showcase", "placing", "zone", "victory", "replay-victory",
-        "card", "purchase-card", "catalogue", "catalogue-page", "catalogue-item", "catalogue-card",
+        "card", "purchase-card", "catalogue", "catalogue-page", "catalogue-item", "catalogue-card", "shop-card",
         "build-review", "building-review", "dialog", "story-beat", "present", "mission", "kudos",
         "reveal", "goals-met", "art-board", "art-states", "hud-states", "element-states", "special-states", "fx",
     } do
@@ -403,6 +403,12 @@ function D.bind(R, W)
             assert(ok, "catalogue card needs a valid plot")
             R.inspect_item = R.island:add(spot, kind, 0)
             R.inspect = kind; R.overlay = R.OV_WONDER; R.toast_time = 0
+        end
+        if app.arg("shop-card") then   -- a catalogue item's card before it is bought
+            island_with(10); R.on_island = true
+            R.prog.wallet = purse(2000, 0, 0, 30)
+            R.inspect, R.inspect_item = tonumber(app.arg("shop-card")) or debug.catalogue_card, -1
+            R.overlay = R.OV_WONDER; R.toast_time = 0
         end
         if app.arg("art-states") or app.arg("hud-states") then R.art_review, R.toast_time, R.on_island = true, 0, false end
         if app.arg("element-states") then

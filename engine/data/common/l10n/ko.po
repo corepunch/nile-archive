@@ -281,12 +281,20 @@ msgid "CONTINUE"
 msgstr "계속하기"
 
 #: engine/lua/match3/game.lua
+msgid "DECORATION BONUS"
+msgstr "장식 보너스"
+
+#: engine/lua/match3/game.lua
 msgid "Decorations"
 msgstr "장식"
 
 #: engine/lua/match3/game.lua
 msgid "EARN RESOURCES"
 msgstr "자원 모으기"
+
+#: engine/lua/match3/game.lua engine/lua/match3/user_events.lua
+msgid "EVERY WIN"
+msgstr "매 승리"
 
 #: engine/lua/match3/game.lua
 msgid "FINISH THE PREVIOUS PROJECTS"
@@ -499,10 +507,6 @@ msgstr "표시된 조각을 바꿔서 세 개를 한 줄로 맞추세요."
 #, lua-format
 msgid "Tap %s. %s"
 msgstr "%s을(를) 누르세요. %s"
-
-#: engine/lua/match3/user_events.lua
-msgid "EVERY WIN"
-msgstr "매 승리"
 
 #: engine/lua/match3/user_events.lua
 msgid "FEAT"

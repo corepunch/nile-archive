@@ -75,11 +75,14 @@ R.register_result(function()
     local resources = {}
     for _, slot in ipairs(economy.currency_order) do
         local kind = economy.currencies[slot]
-        resources[#resources+1] = {id=kind.key, amount=reward[slot], icon=currency_icon(slot)}
+        local amount = reward[slot] - (slot == economy.GOLD and breakdown.decoration or 0)
+        resources[#resources+1] = {id=kind.key, amount=amount, icon=currency_icon(slot)}
     end
+    local bonus = breakdown.decoration > 0
+        and {id="decoration", amount="+" .. breakdown.decoration, icon=currency_icon(economy.GOLD)} or nil
     return {
         title=breakdown.first and tr("Expedition complete") or tr("Replay complete"),
-        resources=resources, action=R.result_action(breakdown.first, reward),
+        resources=resources, bonus=bonus, action=R.result_action(breakdown.first, reward),
     }
 end)
 

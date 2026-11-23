@@ -41,12 +41,13 @@ function M.reward_breakdown(g, wonders, progress)
     local w = kind and wonders[kind]
     local matched = purse(table.unpack(g.earnings or {}))
     local income = M.perk_income and M.perk_income() or purse()
-    local reward = matched + income + purse(0, 0, 0, first and 1 or 0)
+    local decoration = M.decoration_income and M.decoration_income() or 0   -- the town's decorations
+    local reward = matched + income + purse(decoration, 0, 0, first and 1 or 0)
     if first and w and app.arg("debug-walkthrough") then
         local available = (progress and progress.wallet or purse()) + reward
         for slot in ipairs(economy.currencies) do reward[slot] = reward[slot] + math.max(0, w.cost[slot] - available[slot]) end
     end
-    return {first=first, wonder=w, income=income, total=reward}
+    return {first=first, wonder=w, income=income, decoration=decoration, total=reward}
 end
 
 function M.level_reward(g, wonders, progress)

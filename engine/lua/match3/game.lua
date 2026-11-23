@@ -65,7 +65,7 @@ G.DEFAULTS = {
         {tr("YOU COMPLETED ALL %d LEVELS."), 16}, {tr("Your town stays open to build."), 16}}},
     result = {visit = tr("COLLECT & VISIT TOWN")},
     card = {move = tr("MOVE"), build = tr("BUILD"), repair = tr("RESTORE"),
-            gets = tr("YOU GET"), price = tr("PRICE"), missing = tr("STILL MISSING"),
+            gets = tr("YOU GET"), dividend = tr("EVERY WIN"), price = tr("PRICE"), missing = tr("STILL MISSING"),
             locked = tr("LOCKED")},
     catalogue = {
         title = tr("Build your town"),
@@ -293,8 +293,28 @@ function G.campaign_ladder(island, unlocks, journey, slots, levels_per_epoch)
         M.set_waived(c, positions)
         if predates then M.waive_passed(c, level) end
     end
+
+    -- Every kind of decoration standing in town pays gold on each won board:
+    -- one for every DECORATION_RETURN of its price, rounded up, so a piece
+    -- pays for itself in about twenty wins. A second copy of a kind adds
+    -- nothing, which keeps the dividend bounded by the catalogue.
+    function M.decoration_dividend(kind)
+        local d = M.buildings[kind + 1]
+        if not d or not d.decoration then return 0 end
+        local price = 0
+        for slot = 1, slots do price = price + (d.cost[slot] or 0) end
+        return math.ceil(price / G.DECORATION_RETURN)
+    end
+    function M.decoration_bonus(c)
+        local seen, total = {}, 0
+        for _, b in ipairs(c.items) do
+            if not seen[b.type] then seen[b.type] = true; total = total + M.decoration_dividend(b.type) end
+        end
+        return total
+    end
     return M
 end
+G.DECORATION_RETURN = 20
 
 G.journey = require("match3.journey")
 
@@ -316,6 +336,10 @@ function G.bind(R, over)
     local journey = require("journey")
     local match3 = require("match3")
     local LEVELS = rules.LEVELS
+    -- reward_breakdown adds the town's decoration bonus to every win.
+    function rules.decoration_income()
+        return R.island and island.decoration_bonus and island.decoration_bonus(R.island) or 0
+    end
     local rgba = color
 
     -------------------------------------------------------------- paint
@@ -524,6 +548,14 @@ function G.bind(R, over)
                     return match3.resource_indicator(entry)
                 end},
             },
+            -- What the town's decorations add to every win, once any stand.
+            N.column {gap=7,paint_group={.74,.25,10},visible_field="show_bonus",
+                N.label {text=tr("DECORATION BONUS"),em=13,text_style="caption"},
+                -- One resource cell's width, centred under the three above.
+                N.uniform_grid {id="bonus",rows=1,item=function(entry)
+                    return match3.resource_indicator(entry, math.floor((408 - 2 * ui.FORM_PADDING - 18) / 3))
+                end},
+            },
             N.button {id="claim",height=54,paint_group={.87,.22,8}},
         })
         R.result_form = form
@@ -535,6 +567,8 @@ function G.bind(R, over)
             match3.set_popup_header(form, data.title)
             form:set("claim", data.action)
             assert(form:set_items("resources", data.resources))
+            form.values.show_bonus = data.bonus ~= nil
+            assert(form:set_items("bonus", data.bonus and {data.bonus} or {}))
         end, handle=function(event)
             if event.id ~= "claim" then return end
             if R.dialog_settled() then close_popup(R.claim_reward) else R.dialog_skip() end
@@ -620,6 +654,14 @@ function G.bind(R, over)
         wonder_form.values.show_shop = project ~= nil
         local reward = R.building_reward(i)
         local gets = reward and {reward} or {}
+        -- A decoration of a new kind adds its bonus to every win.
+        local dividend = not built and island.decoration_dividend and island.owned(R.island, i) == 0
+            and island.decoration_dividend(i) or 0
+        if dividend > 0 then
+            local gold = price_parts(purse(dividend))[1]
+            gets = {{id="dividend", icon=gold.icon, amount="+" .. dividend}}
+        end
+        wonder_form:set("gets_caption", dividend > 0 and W.card.dividend or W.card.gets)
         local price = show_price and price_parts(w.cost) or {}
         -- While the building is being funded the card lists what is still
         -- missing, as amounts, in place of the full price.

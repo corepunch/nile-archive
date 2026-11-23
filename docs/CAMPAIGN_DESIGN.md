@@ -66,6 +66,7 @@ A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Sl
 
 - **Keep Rome's currency mix.** Each purchase uses the currency mix of its counterpart in the GameTop Windows `epochs.xml`. Only the price amounts are fitted.
 - **Fit to the bot's income without optional upgrades.** Players who earn upgrades build sooner and have more resources for decorations.
+- **Decorations are an investment.** Each kind of decoration standing in town adds a twentieth of its price, rounded up, in Coins/Tokens to every won board, so it pays for itself in about twenty wins. A second copy of a kind adds nothing, which caps the bonus at the catalogue: about 280 Coins a win for all 66 Relic Rush decorations, about 60 Tokens for Christmas at Bellmere's 15. The results card shows it as Decoration bonus; an unbought kind's card shows it under Every win. The bot buys no decorations, so prices are fitted without it.
 - **Fund each purchase by its target clear.** The income forecast and the fixed-seed `campaign_play` test both require all twenty purchases by their scheduled levels with zero replays for income. Failed board attempts can be retried.
 - **Keep total prices nondecreasing.** The fitter caps any early price spike at the next purchase's total while retaining every currency it uses.
 - **Refit after any change** to boards, piece yields, unlock order or upgrade perks, and commit the regenerated catalogue.
