@@ -24,6 +24,7 @@ def main():
         str(path.relative_to(ROOT)): digest(path)
         for path in sorted((ROOT/'data').rglob('*'))
         if path.is_file() and path.name != '.DS_Store'
+        and not path.relative_to(ROOT/'data').as_posix().startswith('common/l10n/')   # text, checked by tools/l10n.py
     }
     manifest = json.loads(MANIFEST.read_text())
     if '--update' in sys.argv:

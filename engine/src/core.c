@@ -92,7 +92,13 @@ static double test_clock;
 static bool test_clock_active;
 void app_test_reset(void)
 {
+    /* The command line is boot configuration, like the data root: the
+     * engine's Lua reads it (--lang) while script_open resets the rest. */
+    int argc = A.argc;
+    char **argv = A.argv;
     memset(&A, 0, sizeof A);
+    A.argc = argc;
+    A.argv = argv;
     A.logical = sz2(1200, 900);
     A.view = rc(0, 0, 1200, 900);
     A.output = A.logical;

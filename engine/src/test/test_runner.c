@@ -176,6 +176,7 @@ static void run_game(const test_job *j, const char *suite, const char *lua_dir, 
     }
     CHECKF(app_run(desc, n, args) == 0, "%s", "the game did not start");
     script_close();
+    app_boot_args(0, NULL);   /* args lives on this stack; app_test_reset keeps the command line */
 }
 
 static void run_rules(const test_job *j, const char *lua_dir, const char *data_dir)

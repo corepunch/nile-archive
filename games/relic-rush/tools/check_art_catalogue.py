@@ -15,7 +15,9 @@ art = (ROOT / "lua/art.lua").read_text()
 for field, key in [("states", "tool_states")]:
     declaration = re.search(r"A\." + field + r" = \{([^}]+)\}", art).group(1)
     assert re.findall(r'"([^"]+)"', declaration) == manifest[key], f"Runtime {field} need catalogue coverage"
-actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*") if p.is_file())
+# Translation catalogues are text, checked by tools/l10n.py.
+actual = sorted(str(p.relative_to(ROOT)) for p in (ROOT / "data").rglob("*")
+                if p.is_file() and "common/l10n" not in p.relative_to(ROOT).as_posix())
 assert actual == manifest["runtime_inventory"], "Runtime inventory changed: update manifest AND asset catalogue"
 economy = (ROOT / "lua/economy.lua").read_text()
 opening = re.search(r'E\.opening_backdrop = "([^"]+)"', economy)[1]
@@ -160,7 +162,7 @@ for building, _, tile, row in rows:
         wallet = {1: "GOLD", 2: "SUPPLIES", 3: "PROVISIONS"}[credit["type"]]
         assert f'slot=E.{wallet}, amount={credit["amount"]}' in row, building
 bonus_rules = (ROOT.parents[1] / "engine/lua/match3/bonuses.lua").read_text()
-variants = re.findall(r'\{key="([^"]+)", name="[^"]+", action="[^"]+"(?:, art="([^"]+)")?', bonus_rules)
+variants = re.findall(r'\{key="([^"]+)", name=(?:tr\()?"[^"]+"\)?, action="[^"]+"(?:, art="([^"]+)")?', bonus_rules)
 variant_art = {key: art_key or key for key, art_key in variants}
 assert variant_art == {key: bonus["art"] for key, bonus in gems["bonuses"].items()}
 assert set(variant_art.values()) == set(gems["columns"])
