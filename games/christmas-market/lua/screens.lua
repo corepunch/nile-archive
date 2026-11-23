@@ -70,7 +70,7 @@ R.register_result(function()
     end
     return {
         title=first and tr("Wish granted!") or tr("Replay complete"),
-        resources=resources, bonus=bonus, action=R.result_action(first, reward),
+        resources=resources, bonus=bonus, action=R.result_action(),
     }
 end)
 

@@ -54,7 +54,7 @@ function V.bind(R, rules)
         for k = 0, 3 do R.vfx_smoke[k + 1] = assert(board_skin["fx-smoke-" .. k], "missing match3 effect: smoke") end
     end
 
-    local special_art, special_fx = {}, {}
+    local special_art, special_fx, comets = {}, {}, {}
     local special_frames = {t_bomb=0, color_bomb=1, plane=2}
     local function special_texture(t)
         local frame = assert(special_frames[t.special], "missing match special artwork")
@@ -71,7 +71,7 @@ function V.bind(R, rules)
     end
 
     function R.vfx_reset()
-        special_fx = {}
+        special_fx, comets = {}, {}
         for i = 1, FX_CAP do pool[i].type, pool[i].life = FX_NONE, 0 end
         for i = 1, PARTICLES do parts[i].life = 0 end
         pool_next, part_next = 0, 0
@@ -333,16 +333,50 @@ function V.bind(R, rules)
         end
     end
 
-    -- A finale round: each piece flashes as it turns into a line gem.
-    function R.vfx_finale_arm(cells)
-        for k, cell in ipairs(cells) do
-            local at, kind = R.cell_pos(cell), R.g.tiles[cell].kind
-            add(FX_IMPACT, at, vec2(0, 0), kind, .3, (k - 1) * .05, 0)
-            vfx_emit(at, kind, false, 5)
+    -- The finale: a leftover move flies from the moves medallion as a comet
+    -- and bursts on the piece it arms as a bomb.
+    local COMET_TRAIL = 7
+    local function comet_at(c, t)
+        local f = ease.in_out_sine(t)
+        local arc = math.sin(f * PI)
+        return c.from:lerp(c.to, f) + vec2(arc * (c.to.x < c.from.x and -40 or 40), -arc * 70)
+    end
+    function R.vfx_finale_launch(from, cell, life)
+        if R.reduced_motion then return end
+        comets[#comets + 1] = {from=from, to=R.cell_pos(cell), cell=cell, age=0, life=life}
+        vfx_emit(from, 0, false, 3)
+    end
+    local function draw_comets()
+        local gold, white = rgba(255, 196, 82), rgba(255, 250, 230)
+        gfx.additive(true)
+        for _, c in ipairs(comets) do
+            local t = math.min(1, c.age / c.life)
+            for k = COMET_TRAIL, 1, -1 do
+                local tk = t - k * .045
+                if tk > 0 then
+                    local u = k / COMET_TRAIL
+                    vfx_halo(comet_at(c, tk), 16 * (1 - u) + 4, color.alpha(gold, 150 * (1 - u)))
+                end
+            end
+            local at = comet_at(c, t)
+            vfx_halo(at, 30, color.alpha(gold, 190))
+            sprite("flash", at, 34, c.age * 9, color.alpha(white, 235))
+            sprite("twinkle", at, 26, -c.age * 6, white)
         end
+        gfx.additive(false)
     end
 
     function R.vfx_update(dt)
+        for i = #comets, 1, -1 do
+            local c = comets[i]
+            c.age = c.age + dt
+            if c.age >= c.life then
+                table.remove(comets, i)
+                local kind = R.g.tiles[c.cell].kind
+                add(FX_IMPACT, c.to, vec2(0, 0), kind, .3, 0, 0)
+                vfx_emit(c.to, kind, false, 6)
+            end
+        end
         for i = #special_fx, 1, -1 do
             local entry = special_fx[i]
             entry.age = entry.age + dt
@@ -432,6 +466,7 @@ function V.bind(R, rules)
                 gfx.additive(false)
             end
         end
+        draw_comets()
         local P = R.P
         for i = 1, FX_CAP do
             local e = pool[i]

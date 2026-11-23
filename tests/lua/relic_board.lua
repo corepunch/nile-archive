@@ -215,6 +215,10 @@ for _, mode in ipairs({"fall", "won", "lost", "stale count"}) do
     elseif mode == "stale count" then g.moves, g.oil_left = 0, 0
     else g.moves = 0 end
     R.board_update(.02)
+    if mode == "won" then   -- the settled board rests a beat before its result
+        check(R.overlay == R.OV_NONE and R.phase == R.PH_FINALE, "a won board holds before its result")
+        for _ = 1, 20 do if R.overlay == R.OV_NONE then R.board_update(.1) end end
+    end
     if mode == "fall" then
         check(rules.game_hint(g) and R.toast == "No moves. Board reshuffled.", "post-fall recovery explains reshuffle too")
     else

@@ -80,7 +80,7 @@ R.register_result(function()
     end
     return {
         title=breakdown.first and tr("Expedition complete") or tr("Replay complete"),
-        resources=resources, bonus=bonus, action=R.result_action(breakdown.first, reward),
+        resources=resources, bonus=bonus, action=R.result_action(),
     }
 end)
 

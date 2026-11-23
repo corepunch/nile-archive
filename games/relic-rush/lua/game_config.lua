@@ -13,7 +13,6 @@ return {
     epoch_title = tr("Epochs"),
     -- TRANSLATORS: the medal won for finishing each epoch, named for what the town built in it
     epoch_medal_names = {tr("Spring Camp"), tr("Mill and Market"), tr("Harbour Town"), tr("Coastal Watch"), tr("Sun Temple")},
-    result = {visit = tr("COLLECT & VISIT ISLAND")},
     packs = {"relics", "jewels", "resources"},
     transitions = {
         style = "wipe",

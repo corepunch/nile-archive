@@ -12,7 +12,7 @@ R.g = rules.game_start(0, 1)
 check(R.debug_skip_level() and R.g.won and R.overlay == R.OV_RESULT, 'skip opens the normal result')
 check(not R.debug_skip_level(), 'a completed board cannot be skipped twice')
 local expected = rules.level_reward(R.g, R.wonders, R.prog)
-check(R.result_action(true, expected) == R.words.result.visit, 'the first clear opens the first construction')
+check(R.result_action(true, expected) == "CONTINUE", 'the first clear opens the first construction')
 R.claim_reward()
 check(R.prog.level == 1 and R.prog.wallet[1] == expected[1], 'first clear grants the normal reward')
 local wallet = R.prog.wallet[1]
@@ -86,10 +86,10 @@ R.prog.wallet = purse(0, 0, 0, 1)
 R.g = R.make_board(1, 2)
 R.on_island = false
 check(R.debug_skip_level(), 'win an ordinary board')
-check(R.result_action(true, purse()) == "COLLECT & PLAY NEXT", 'an ordinary result offers the next board')
+check(R.result_action(true, purse()) == "CONTINUE", 'an ordinary result also returns to town')
 R.claim_reward()
-check(R.prog.level == 2 and R.g.level == 2 and not R.on_island and R.overlay == R.OV_NONE,
-    'collecting an ordinary win starts the next board directly')
+check(R.prog.level == 2 and R.on_island and R.overlay == R.OV_NONE,
+    'collecting an ordinary win goes back to town')
 R.prog.wallet = funded_wallet
 R.on_island = true
 

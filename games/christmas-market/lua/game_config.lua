@@ -13,7 +13,6 @@ return {
     campaign_dialogue = true,
     epochs = {tr("First Advent"), tr("Second Advent"), tr("Third Advent"), tr("Fourth Advent"), tr("Christmas")},
     epoch_title = tr("Advent & Christmas"),
-    result = {visit = tr("COLLECT & VISIT MARKET")},
     transitions = {
         style = "wipe",
         theme = {

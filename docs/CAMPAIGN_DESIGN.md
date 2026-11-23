@@ -23,7 +23,7 @@ from the opening reward.
 The player's minute-to-minute loop:
 
 1. **Play a level.** The board shows the current pieces and, from its building on, one tool piece. Thirty matched tool pieces charge the tool's slot once.
-2. **Collect.** The results card banks the matched resources. Ordinary wins lead to the next board. The results action returns to town when a project opens or is affordable.
+2. **Collect.** The results card banks the matched resources, and every win returns to town, where the player starts the next board. A notice there says when a project opens or is affordable.
 3. **Build.** The bottom row puts Play between Build and Pause. Build opens the shop at the current phase: its four projects with their cost and reward, then decorations. An affordable row goes straight to placement. A trail circles Build when a campaign project is affordable. Choose a site and confirm.
 4. **See the change.** The next board shows the new piece or tool. Meeting a building's feat upgrades it, with a brief upgrade notice.
 
@@ -60,7 +60,7 @@ The move fit uses 40 starts per board with the pieces and tools earned by that l
 
 Line gems and rainbow gems are why the boards can be covered: a line gem sweeps a whole row or column of plaques, so a fully covered board takes the bot 20 to 34 moves where it took about 110 before the gems. When the rules change what a move clears, fill and trim again before fitting budgets and prices.
 
-A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins, including the [finale](MATCH3_ENGINE.md#finale-leftover-moves) that turns leftover moves into line gems. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas at Bellmere move budgets](../games/christmas-market/docs/level-moves.md)
+A 12-move median gets 23 moves in Relic Rush and 15 in Christmas at Bellmere. Slow runs remain visible in the within-budget count. The price fit uses 40 different starts per board and counts income from wins, including the [finale](MATCH3_ENGINE.md#finale-leftover-moves) that turns leftover moves into bombs. [Relic Rush move budgets](../games/relic-rush/docs/level-moves.md) · [Christmas at Bellmere move budgets](../games/christmas-market/docs/level-moves.md)
 
 **Rules for prices.**
 

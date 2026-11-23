@@ -1040,10 +1040,6 @@ msgid "CLEAR NEW EXPEDITIONS TO OPEN IT"
 msgstr "通关新远征即可开启"
 
 #: games/relic-rush/lua/game_config.lua
-msgid "COLLECT & VISIT ISLAND"
-msgstr "领取并回岛上"
-
-#: games/relic-rush/lua/game_config.lua
 msgid "Coastal Watch"
 msgstr "海岸守望"
 

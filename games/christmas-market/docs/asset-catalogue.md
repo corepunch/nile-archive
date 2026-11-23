@@ -575,10 +575,12 @@ a coloured mesh with no new states, and Reduce Motion hides them. Capture with
 `build/test/all --suite=christmas-market 'reel match-burst'`.
 [Reviewed frames](screenshots/review/match-burst/match-burst-480x900.jpg).
 
-After a win the leftover moves arm five line gems a round. Each armed piece takes
-its existing line gem state with an `fx-flash` impact and `fx-twinkle` sparks
-(`R.vfx_finale_arm`), then fires as a normal sweep; no new art or states. Capture with
-`build/test/all --suite=christmas-market 'reel match-finale'`.
+After a win the leftover moves arm bombs, five a round. Each move leaves the moves
+medallion as a procedural comet (`glow`, `fx-flash`, `fx-twinkle`; `R.vfx_finale_launch`)
+and the piece it lands on is drawn as the Firework Bomb's own painted piece
+(`booster-firework`, the same 3×3 blast) with a pop-in, throb and rim glow
+(`draw_finale_bomb`), then the round goes off as a normal wave; no new art or
+states. Capture with `build/test/all --suite=christmas-market 'reel match-finale'`.
 [Reviewed frames](screenshots/review/match-finale/match-finale-480x900.jpg).
 
 ## Ice

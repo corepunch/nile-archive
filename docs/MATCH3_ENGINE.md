@@ -435,13 +435,18 @@ board. Sources, creation and activation are declared together in
 
 ### Finale: leftover moves
 
-With `finale_batch = N` (it needs `striped`; `match3.square_campaign` sets 5),
-a won board spends its leftover moves before the result, as Candy Crush does.
-Each round turns up to N random plain, unlocked pieces into line gems on random
-axes, takes that many moves, holds them for a beat (`PH_FINALE`) and fires them
-in one wave. The wave's settle arms the next round until no moves are left, then
-the result opens. Matches stay the board's income, so the finale pays a small,
-diminishing share of what it sweeps: the k-th leftover move is worth
+With `finale_batch = N` (`match3.square_campaign` sets 5), a won board spends
+its leftover moves before the result, as Candy Crush does. The board runs the
+finale as a coroutine (`finale_script` in `engine/lua/match3.lua`) while it is in
+`PH_FINALE`. Each round arms up to N random plain, unlocked pieces as bombs:
+every move flies from the moves medallion as a comet (`R.vfx_finale_launch`),
+the medallion counting down one launch at a time, and the game's Bomb tool piece
+pops in where it lands. After a short fuse the round's bombs go off in one wave,
+each hitting the 3×3 square around it. The script yields while that wave and its
+cascades clear and fall, and resumes when the board settles to arm the next
+round. Once no moves are left the settled board rests 0.7 s, then the result
+opens; a board won on its last move rests too. Matches stay the board's income, so the finale pays a small,
+diminishing share of what it blasts: the k-th leftover move is worth
 ln(1 + 1/k) of `finale_share`, and n moves together pay in proportion to
 ln(1 + n). Going from 2 to 4 moves left pays about 1.5 times as much, and from
 2 to 6 about 1.8 times. Each round pays its moves' average share, and fractions

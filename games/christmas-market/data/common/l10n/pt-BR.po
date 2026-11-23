@@ -892,10 +892,6 @@ msgid "CHRISTMAS"
 msgstr "NATAL"
 
 #: games/christmas-market/lua/game_config.lua
-msgid "COLLECT & VISIT MARKET"
-msgstr "COLETAR E VISITAR A FEIRA"
-
-#: games/christmas-market/lua/game_config.lua
 msgid "Christmas"
 msgstr "Natal"
 

@@ -149,7 +149,7 @@ Board, HUD and character art is spatially extracted by `python3 games/christmas-
 
 ## Market projects
 
-Clear panes to bank resources and build twenty projects across the 100 boards. Collect and play the next board on ordinary wins. When a project opens or becomes affordable, Collect takes you to the market.
+Clear panes to bank resources and build twenty projects across the 100 boards. Collect returns you to the market after every win; play the next board from there.
 
 ## Review and validation
 

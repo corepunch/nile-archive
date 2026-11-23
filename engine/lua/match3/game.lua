@@ -63,7 +63,6 @@ G.DEFAULTS = {
     complete = {title = tr("You won!"), lines = {
         -- TRANSLATORS: %d is the campaign's number of levels, always 100
         {tr("YOU COMPLETED ALL %d LEVELS."), 16}, {tr("Your town stays open to build."), 16}}},
-    result = {visit = tr("COLLECT & VISIT TOWN")},
     card = {move = tr("MOVE"), build = tr("BUILD"), repair = tr("RESTORE"),
             gets = tr("YOU GET"), dividend = tr("EVERY WIN"), price = tr("PRICE"), missing = tr("STILL MISSING"),
             locked = tr("LOCKED")},
@@ -1388,10 +1387,10 @@ function G.bind(R, over)
         return R.start_level(level)
     end
 
-    -- Route first clears to town when a purchase opens or is ready. A shortfall
-    -- can be earned on later boards. Replays always return to town.
+    -- Every win returns to town. A first clear that opens or affords a purchase
+    -- ("build") says so there; "play" has nothing new to build yet.
     local function result_destination(first, level, wallet)
-        if not first then return "town" end
+        if not first then return "replay" end
         if level >= LEVELS then return "complete" end
         local c, ladder = R.island, island.ladder
         local _, position = island.next_step(c, level)
@@ -1408,11 +1407,9 @@ function G.bind(R, over)
         return "play"
     end
 
-    function R.result_action(first, reward)
-        local destination = result_destination(first, R.prog.level + (first and 1 or 0), R.prog.wallet + reward)
-        if destination == "play" then return tr("COLLECT & PLAY NEXT") end
-        if destination == "build" then return W.result.visit end
-        return tr("COLLECT")
+    -- Every win goes back to town, so the results card just continues.
+    function R.result_action()
+        return tr("CONTINUE")
     end
 
     -- Bank the reward only after the results dialog closes.
@@ -1427,8 +1424,7 @@ function G.bind(R, over)
         if R.show_epoch_award(completed) then return end
         local destination = result_destination(first, R.prog.level, R.prog.wallet)
         R.overlay = destination == "complete" and R.OV_COMPLETE or R.OV_NONE
-        if destination == "play" then R.play_next()
-        elseif destination == "build" then R.notice(W.notices.reward_building)
+        if destination == "build" then R.notice(W.notices.reward_building)
         elseif not first then R.notice(W.notices.reward_replay) end
     end
 

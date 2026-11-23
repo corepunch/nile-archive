@@ -181,7 +181,7 @@ do
     check(not island.can_buy(c, R.prog.wallet, 21, first) and island.can_buy(c, R.prog.wallet, 21, later)
         and R.can_build_project(),
         'later projects can be ready when the first is too expensive')
-    check(R.result_action(true, purse()) == R.words.result.visit, 'a later affordable project routes a win to town')
+    check(R.result_action(true, purse()) == "CONTINUE", 'a later affordable project routes a win to town')
     R.island, R.prog, R.town = old_city, old_progress, old_town
     R.buildings, R.placement_form = old_buildings, old_placement
     R.test_mode, R.reduced_motion = old_test_mode, old_motion

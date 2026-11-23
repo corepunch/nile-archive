@@ -265,18 +265,6 @@ msgid "CLEAR NEW LEVELS TO OPEN IT"
 msgstr "ПРОЙДИ НОВЫЕ УРОВНИ, ЧТОБЫ ОТКРЫТЬ"
 
 #: engine/lua/match3/game.lua
-msgid "COLLECT"
-msgstr "ЗАБРАТЬ"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & PLAY NEXT"
-msgstr "ЗАБРАТЬ И ДАЛЬШЕ"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & VISIT TOWN"
-msgstr "ЗАБРАТЬ И В ГОРОД"
-
-#: engine/lua/match3/game.lua
 msgid "CONTINUE"
 msgstr "ДАЛЕЕ"
 

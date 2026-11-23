@@ -265,18 +265,6 @@ msgid "CLEAR NEW LEVELS TO OPEN IT"
 msgstr "通关新关卡即可开启"
 
 #: engine/lua/match3/game.lua
-msgid "COLLECT"
-msgstr "领取"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & PLAY NEXT"
-msgstr "领取并继续"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & VISIT TOWN"
-msgstr "领取并回小镇"
-
-#: engine/lua/match3/game.lua
 msgid "CONTINUE"
 msgstr "继续"
 

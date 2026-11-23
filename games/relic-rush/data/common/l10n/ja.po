@@ -1040,10 +1040,6 @@ msgid "CLEAR NEW EXPEDITIONS TO OPEN IT"
 msgstr "新しい探検をクリアして開放"
 
 #: games/relic-rush/lua/game_config.lua
-msgid "COLLECT & VISIT ISLAND"
-msgstr "受け取って島へ"
-
-#: games/relic-rush/lua/game_config.lua
 msgid "Coastal Watch"
 msgstr "海岸の見張り"
 

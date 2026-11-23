@@ -265,18 +265,6 @@ msgid "CLEAR NEW LEVELS TO OPEN IT"
 msgstr "새 레벨을 깨면 열려요"
 
 #: engine/lua/match3/game.lua
-msgid "COLLECT"
-msgstr "받기"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & PLAY NEXT"
-msgstr "받고 다음 판 하기"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & VISIT TOWN"
-msgstr "받고 마을 가기"
-
-#: engine/lua/match3/game.lua
 msgid "CONTINUE"
 msgstr "계속하기"
 

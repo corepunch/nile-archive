@@ -157,6 +157,20 @@ function V.bind(R, rules, config, art, base_pieces)
         end
     end
 
+    -- A finale bomb is the game's own Bomb tool piece: it pops in where its
+    -- comet lands and throbs on its fuse until the round goes off.
+    local bomb = (require("economy").bonuses or {}).bomb
+    local function draw_finale_bomb(age, at, alpha)
+        local tex = R.board_art[bomb.icon]
+        local pop = R.reduced_motion and 1 or 1 + .35 * math.exp(-age * 9) * math.sin(age * 22)
+        local throb = R.reduced_motion and 1 or 1 + .06 * math.sin(age * 26)
+        local side = piece_size * 1.08 * pop * throb
+        local area = rect.centered(at, size2.splat(side))
+        elements.piece_shadow(tex, area, alpha, side)
+        elements.piece_glow(tex, area, alpha, side, LINE_GLOW, .8)
+        gfx.image(tex, area, color(255, 255, 255, alpha))
+    end
+
     local function draw_pieces(sx, highlights)
         local cover = elements.reveal_cover(R, rules)
         if cover <= 0 then return end
@@ -165,8 +179,12 @@ function V.bind(R, rules, config, art, base_pieces)
             if rules.game_cell_active(R.g, i) then
                 local tile, at, scale, alpha, aspect, clip = R.piece_pose(i, sx)
                 if clip then gfx.clip(clip) end
-                R.draw_relic(tile, at, scale * elements.selection_scale(R, i), alpha * cover, aspect,
-                    highlights and highlights[i])
+                local armed = bomb and R.finale_bomb and R.finale_bomb(i)
+                if armed then draw_finale_bomb(armed, at, alpha * cover)
+                else
+                    R.draw_relic(tile, at, scale * elements.selection_scale(R, i), alpha * cover, aspect,
+                        highlights and highlights[i])
+                end
                 if clip then gfx.clip(R.BOARD_CLIP) end
             end
         end

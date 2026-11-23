@@ -265,18 +265,6 @@ msgid "CLEAR NEW LEVELS TO OPEN IT"
 msgstr "SUPERA NUEVOS NIVELES PARA ABRIRLO"
 
 #: engine/lua/match3/game.lua
-msgid "COLLECT"
-msgstr "RECOGER"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & PLAY NEXT"
-msgstr "RECOGER Y SEGUIR"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & VISIT TOWN"
-msgstr "RECOGER E IR AL PUEBLO"
-
-#: engine/lua/match3/game.lua
 msgid "CONTINUE"
 msgstr "CONTINUAR"
 

@@ -342,7 +342,8 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         local scale = radius / 40
         local drawn = radius * .9 * arrive
         local depth = scale * arrive
-        local moves = R.g.moves
+        R.moves_center = c   -- the finale's comets leave from here
+        local moves = R.g.moves + (R.finale_held or 0)
         local urgent = moves <= 5 and not R.g.won
         if urgent and not R.reduced_motion then
             gfx.additive(true)
@@ -1633,18 +1634,14 @@ function E.new(config)
     end
 
     -- The finale: a won board spends its leftover moves FINALE_BATCH at a
-    -- time. Each round turns that many plain pieces into line gems, which fire
-    -- in one wave. Matches stay the board's income: the k-th leftover move is
+    -- time. Each move arms one plain piece as a bomb, and a round's bombs go
+    -- off in one wave, each hitting the 3×3 square around it, as the Bomb
+    -- tool does. Matches stay the board's income: the k-th leftover move is
     -- worth ln(1 + 1/k) of FINALE_SHARE, so n moves together pay in proportion
     -- to ln(1 + n) (2 -> 4 moves about 1.5 times, 2 -> 6 about 1.8 times) and a
-    -- round's sweep pays its moves' average. A game opts in with
-    -- config.finale_batch, which needs the striped special, and finale_share.
+    -- round's blast pays its moves' average. A game opts in with
+    -- config.finale_batch and finale_share.
     M.FINALE_BATCH, M.FINALE_SHARE = config.finale_batch, config.finale_share
-    if M.FINALE_BATCH then
-        local striped = false
-        for _, name in ipairs(config.special_rules or {}) do striped = striped or name == "striped" end
-        assert(striped, "the finale needs line gems")
-    end
 
     -- Arms one round and spends its moves; nil when the finale is over.
     function M.game_finale_arm(g)
@@ -1660,9 +1657,7 @@ function E.new(config)
         for k = 1, count do   -- a partial shuffle picks distinct cells
             local j = k + randn(g, #pool - k + 1)
             pool[k], pool[j] = pool[j], pool[k]
-            local cell = pool[k]
-            g.tiles[cell] = tile(g.tiles[cell].kind, "striped", randn(g, M.AXES))
-            armed[k] = cell
+            armed[k] = pool[k]
         end
         -- Moves k = a .. b of the finale are worth ln((b + 1) / a) together.
         local spent = g.finale_spent or 0
@@ -1672,14 +1667,14 @@ function E.new(config)
         return armed
     end
 
-    -- Puts an armed round's gems into `m`; game_apply fires them.
+    -- Puts an armed round's blasts into `m`; game_apply fires them. Like a
+    -- special's sweep, every piece they hit pays.
     function M.game_finale_fire(g, m, armed)
         reset_match(m)
-        for _, cell in ipairs(armed) do
-            if g.tiles[cell].special and not m.mask[cell] then
-                m.mask[cell], m.direct[cell], m.hits = true, true, m.hits + 1
-            end
-        end
+        for _, cell in ipairs(armed) do mark_area(g, m, cell, 1) end
+        m.swept = {}
+        for cell in pairs(m.mask) do m.swept[cell] = true end
+        count_hits(m)
         return m.hits > 0
     end
 
@@ -1928,7 +1923,9 @@ function E.new(config)
     local CELL_SIZE = R.piece_width or dy
     local PI = math.pi
     local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE, PH_FINALE = 0, 1, 2, 3, 4, 6, 7
-    local FINALE_ARMED = .38   -- seconds the armed line gems show before they fire
+    -- The finale's beats, in seconds: a comet's flight, the gap between
+    -- launches, the armed bombs' fuse and the settled board's rest before the result.
+    local FINALE_FLIGHT, FINALE_STAGGER, FINALE_FUSE, FINALE_REST = .42, .09, .32, .7
     local REJECT_LEG = .16
     local SHUFFLE_FLIGHT, SHUFFLE_STAGGER, SHUFFLE_GROUPS = .49, .015, 7
     local SHUFFLE_DURATION = SHUFFLE_FLIGHT + SHUFFLE_STAGGER * (SHUFFLE_GROUPS - 1)
@@ -2074,7 +2071,7 @@ function E.new(config)
         swap = {{392, .07, 0, .6}, {587.33, .09, .045, .6}},
         reject = {{311.13, .09, 0, .75}, {233.08, .15, .08, .75}},
         tool = {{C5, .07, 0, .6}, {G5, .1, .05, .6}},
-        finale = {{G5, .06, 0, .5}, {C6, .06, .04, .5}, {E6, .12, .08, .5}},   -- a round of line gems arms
+        finale = {{G5, .05, 0, .4}, {C6, .08, .03, .4}},   -- a leftover move launches at a piece
         mission = {{C5, .5, 0, .35}, {E5, .5, .04, .35}, {G5, .55, .08, .35}},
         win = {{C5, .14, 0, .8}, {E5, .14, .12, .8}, {G5, .14, .24, .8}, {C6, .5, .36, .9}, {E6, .5, .36, .45}, {G5, .5, .36, .45}},
         lose = {{G5, .2, 0, .7}, {E5, .2, .18, .7}, {C5, .2, .36, .7}, {261.63, .5, .54, .8}},
@@ -2172,26 +2169,62 @@ function E.new(config)
     end
 
     local settle
-    -- A won board with moves left plays the finale before its result: a
-    -- round arms line gems and holds them for a beat (PH_FINALE), then they
-    -- fire as an ordinary wave whose settle arms the next round.
-    local function finale_round()
-        local armed = rules.game_finale_arm(R.g)
-        if not armed then return false end
-        if R.stash_completed then R.stash_completed() end   -- quitting mid-finale still keeps the win
-        R.finale_armed = armed
-        R.phase, R.phase_time = PH_FINALE, 0
-        R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
-        if R.vfx_finale_arm then R.vfx_finale_arm(armed) end
-        R.play("finale")
-        haptic.play(haptic.MATCH, .5)
-        return true
+    -- A won board plays its finale as a coroutine before the result. Each
+    -- leftover move flies from the moves medallion to a piece and arms it as
+    -- a bomb; a round's bombs go off together as an ordinary wave. The script
+    -- yields while the board clears and falls and resumes once it settles
+    -- (PH_FINALE), so cascades finish before the next round. After the last
+    -- round the settled board holds for a beat, then the result opens.
+    local function finale_script()
+        local g = R.g
+        local function wait(seconds)
+            while seconds > 0 do seconds = seconds - coroutine.yield() end
+        end
+        local armed = rules.game_finale_arm(g)
+        while armed do
+            if R.stash_completed then R.stash_completed() end   -- quitting mid-finale still keeps the win
+            -- The medallion counts down one move per launch, not the round at once.
+            R.finale_held, R.finale_bombs = #armed, {}
+            for k, cell in ipairs(armed) do
+                R.finale_held = #armed - k
+                R.finale_bombs[cell] = R.finale_clock + FINALE_FLIGHT
+                if R.vfx_finale_launch then R.vfx_finale_launch(R.moves_center or R.cell_pos(cell), cell, FINALE_FLIGHT) end
+                R.play("finale")
+                if k < #armed then wait(FINALE_STAGGER) end
+            end
+            wait(FINALE_FLIGHT + FINALE_FUSE)
+            R.finale_bombs = nil
+            if rules.game_finale_fire(g, R.pending, armed) then
+                haptic.play(haptic.COMBO, 1)
+                R.finish_wave()
+                coroutine.yield()   -- the wave clears, falls and settles before this returns
+            end
+            armed = rules.game_finale_arm(g)
+        end
+        wait(FINALE_REST)
     end
 
-    local function finale_fire()
-        local armed = R.finale_armed
-        R.finale_armed = nil
-        if rules.game_finale_fire(R.g, R.pending, armed) then R.finish_wave() else settle() end
+    local function finale_step(dt)
+        local run = R.finale_run
+        if not run or run.g ~= R.g then R.finale_run = nil; return true end
+        R.finale_clock = R.finale_clock + dt
+        local ok, err = coroutine.resume(run.co, dt)
+        assert(ok, err)
+        return coroutine.status(run.co) == "dead"
+    end
+
+    local function show_result()
+        R.finale_run, R.finale_bombs, R.finale_held = nil, nil, nil
+        R.phase = PH_IDLE
+        R.overlay = R.OV_RESULT
+        if R.stash_completed then R.stash_completed() end
+        R.play("win"); haptic.play(haptic.SUCCESS)
+    end
+
+    -- A bomb's pop-in, from 0 as its flight lands; nil when the cell holds none.
+    function R.finale_bomb(cell)
+        local lands = R.finale_bombs and R.finale_bombs[cell]
+        if lands and R.finale_clock >= lands then return R.finale_clock - lands end
     end
 
     function settle(fast)
@@ -2210,11 +2243,13 @@ function E.new(config)
                 R.notice(tr("No moves. Board reshuffled."))
             end
         end
-        if R.g.won and finale_round() then return shuffled end
         if R.g.won then
-            R.overlay = R.OV_RESULT
-            if R.stash_completed then R.stash_completed() end
-            R.play("win"); haptic.play(haptic.SUCCESS)
+            -- The finale's waves settle back into its script, which ends on the result.
+            if not R.finale_run or R.finale_run.g ~= R.g then
+                R.finale_run, R.finale_clock = {g=R.g, co=coroutine.create(finale_script)}, 0
+            end
+            R.phase, R.phase_time = PH_FINALE, 0
+            R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
         elseif R.g.lost then R.overlay = R.OV_FAILED; R.play("lose"); haptic.play(haptic.ERROR) end
         R.idle_time = 0
         return shuffled
@@ -2253,7 +2288,8 @@ function E.new(config)
                 R.phase, R.phase_time, R.idle_time, R.shuffle_from = PH_IDLE, 0, 0, nil
             end
         elseif R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
-        elseif R.phase == PH_FINALE and R.phase_time > FINALE_ARMED * speed then finale_fire()
+        elseif R.phase == PH_FINALE then
+            if finale_step(dt / speed) then show_result() end
         elseif R.phase == PH_REJECT and R.phase_time >= 2 * REJECT_LEG * speed then R.phase = PH_IDLE
         elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)

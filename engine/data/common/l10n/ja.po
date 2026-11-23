@@ -265,18 +265,6 @@ msgid "CLEAR NEW LEVELS TO OPEN IT"
 msgstr "新しいレベルをクリアして開放"
 
 #: engine/lua/match3/game.lua
-msgid "COLLECT"
-msgstr "受け取る"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & PLAY NEXT"
-msgstr "受け取って次へ"
-
-#: engine/lua/match3/game.lua
-msgid "COLLECT & VISIT TOWN"
-msgstr "受け取って町へ"
-
-#: engine/lua/match3/game.lua
 msgid "CONTINUE"
 msgstr "続ける"
 

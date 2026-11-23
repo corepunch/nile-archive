@@ -1041,10 +1041,6 @@ msgid "CLEAR NEW EXPEDITIONS TO OPEN IT"
 msgstr "MEISTERE NEUE EXPEDITIONEN, UM ES ZU ÖFFNEN"
 
 #: games/relic-rush/lua/game_config.lua
-msgid "COLLECT & VISIT ISLAND"
-msgstr "EINSAMMELN & ZUR INSEL"
-
-#: games/relic-rush/lua/game_config.lua
 msgid "Coastal Watch"
 msgstr "Küstenwacht"
 
