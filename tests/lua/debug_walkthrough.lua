@@ -27,22 +27,22 @@ R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
 R.board_art = {}   -- rule tests build the list without loading textures
-local first, second = R.words.epochs[1], R.words.epochs[2]
+local first = R.words.epochs[1]
 local first_project, second_project = island.ladder[1], island.ladder[2]
 local funded_wallet = R.prog.wallet
 check(R.active_epoch() == 1 and R.can_build_project(), "the first epoch has an affordable project")
-R.open_catalogue("all")
+R.open_catalogue()
 local stock = R.catalogue_form.nodes.stock
 local function row(index) return stock.records[stock.children[index].item_key] end
-check(row(1).heading == first and row(6).heading == second,
-    "the catalogue separates the four projects in each epoch")
+check(row(1).heading == first and row(1).progress == "0 / 4", "the shop opens on the current phase and its progress")
 for i = 1, 4 do
     local project = row(i + 1)
-    check(project.kind == island.ladder[i].kind and project.available,
-        "every project in the opened epoch can be bought in catalogue order when funded")
+    check(project.kind == island.ladder[i].kind and project.project and project.available and project.reward,
+        "the first four rows are the phase's projects in build order, each with what it brings")
 end
-check(not row(7).available and row(7).action == R.words.catalogue.locked,
-    "future projects show a lock without a level requirement")
+check(row(6).heading == R.words.catalogue.decorations and not row(7).project,
+    "decorations follow the four projects")
+check(not R.catalogue_tile(island.buildings[island.ladder[5].kind + 1].key), "later phases' projects are left out")
 R.prog.wallet = purse(5)
 check(not R.can_build_project(), "a short wallet does not light the Build control")
 R.prog.wallet = funded_wallet

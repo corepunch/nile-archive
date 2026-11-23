@@ -168,23 +168,13 @@ function R.smoke()
         for slot = 1, 3 do R.prog.wallet[slot] = math.max(R.prog.wallet[slot], cost[slot]) end
         app.inject_click(R.town.buttons.build); stage = 101
     elseif stage == 101 and R.overlay == R.OV_SHOP then
-        if press_tile("well") then stage = 2 end
-    elseif stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
-        assert(R.inspect == island.kinds.well and R.wonder_form:get("action") == R.words.card.build,
-            "Build opens the funded Well")
-        app.inject_click(R.wonder_form.boxes.action:center()); stage = 3
+        if press_tile("well") then stage = 3 end   -- an affordable row goes straight to placement
     elseif stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); stage = 4   -- PLACE & BUILD
     elseif stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
         if R.island.count ~= 2 then error("smoke: the wonder was not built") end   -- beside the crew's tent
-        R.open_catalogue(); shop.categories = 0; stage = 20
-    elseif stage == 20 and R.overlay == R.OV_SHOP then
-        if shop.categories < 2 then
-            app.inject_click(R.catalogue_form.boxes.category_next:center())
-            shop.categories = shop.categories + 1
-        else stage = 21 end
+        R.open_catalogue(); R.scroll_catalogue_to("shrub"); stage = 21
     elseif stage == 21 and R.overlay == R.OV_SHOP then
-        assert(R.catalogue_tile("shrub"), "category source must refresh")
         shop.gold = R.prog.wallet[1]
         local node = press_tile("shrub")
         assert(node and select(2, R.catalogue_tile("shrub")).available, "smoke: starter decoration should be affordable")
@@ -194,7 +184,7 @@ function R.smoke()
         app.inject_click(R.placement_form.boxes.cancel:center()); stage = 23
     elseif stage == 23 and R.island.placing < 0 then
         assert(R.island.count == 2 and R.prog.wallet[1] == shop.gold, "cancelled purchase changed save state")
-        R.open_catalogue(); stage = 24
+        R.open_catalogue(); R.scroll_catalogue_to("shrub"); stage = 24
     elseif stage == 24 and R.overlay == R.OV_SHOP then
         if press_tile("shrub") then stage = 25 end
     elseif stage == 25 and R.island.placing >= 0 then

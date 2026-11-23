@@ -367,7 +367,7 @@ function D.bind(R, W)
         end
         if app.arg("catalogue") then
             island_with(4); R.on_island = true
-            R.open_catalogue(app.arg("catalogue"), tonumber(app.arg("catalogue-page")) or 1); R.toast_time = 0
+            R.open_catalogue(tonumber(app.arg("catalogue-page")) or 1); R.toast_time = 0
         end
         if app.arg("replay-victory") then
             island_with(4); R.g = rules.game_start(1, 123478); R.g.won = true; R.g.score = 5860; R.g.moves = 12

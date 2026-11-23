@@ -22,7 +22,7 @@ end
 
 -- The two match-3 cities share the same view templates. Game code supplies
 -- localized copy, skin colors, and records with stable keys via set_items.
-E.CATALOGUE_ROW, E.CATALOGUE_SLIM = 84, 56
+E.CATALOGUE_ROW, E.CATALOGUE_SLIM, E.CATALOGUE_ART = 128, 104, 116
 
 -- The subtitle value also owns its row's visibility. Hidden rows take no gap.
 local function header_title(title)
@@ -70,10 +70,12 @@ end
 ui.prefab("resource_indicator", function(p)
     local narrow = p.width and p.width < 76
     local figure = p.amount and N.label {text=tostring(p.amount),
-        em=p.compact and 16 or narrow and 21 or 25,text_style="gold"}
+        em=p.inline and 19 or p.compact and 16 or narrow and 21 or 25,text_style=p.number_style or "gold"}
     local children = {}
     if p.icon then
-        children[1] = N.image {image=p.icon,height=p.compact and 24 or figure and 36 or 62}
+        local inline = p.inline and (p.size or 26)
+        children[1] = N.image {image=p.icon,width=inline or nil,
+            height=inline or p.compact and 24 or figure and 36 or 62}
         if figure and p.done then
             -- A gathered amount: the board goals' tick in place of the figure.
             local side = narrow and 24 or 30
@@ -95,6 +97,8 @@ ui.prefab("resource_indicator", function(p)
     end
     children[#children + 1] = figure
     if p.label then children[#children + 1] = N.label {text=p.label,height=15,em=12,text_style="caption"} end
+    -- Inline: the icon beside its figure, with no frame, for a price in running layout.
+    if p.inline then return N.row {gap=4,align="center",children=children} end
     -- A lone icon stays centred when its row stretches it to a neighbour's height.
     if #children == 1 then children = {N.spacer {grow=1},children[1],N.spacer {grow=1}} end
     return N.border {role="resource_indicator",padding=p.compact and {4,2,4,3} or {4,5,4,7},
@@ -105,30 +109,44 @@ end)
 -- A resource record ({icon, amount, unit, label}) as that element.
 function E.resource_indicator(entry, width, compact)
     return N.resource_indicator {width=width,icon=entry.icon,amount=entry.amount,
-        unit=entry.unit,label=entry.label,done=entry.done,compact=compact}
+        unit=entry.unit,label=entry.label,done=entry.done,compact=compact,
+        number_style=entry.number_style,inline=entry.inline,size=entry.size}
 end
 
--- Full-screen sheets under the wallet row. One building per row: the whole
--- row is the button (id 'pick') and paint_row draws its art, name, price and
--- action. A record marked slim (already built) takes a short row.
-function E.catalogue_form(title, paint_row)
+-- Full-screen sheets under the wallet row: one list of headings and building
+-- rows. A row is its art (paint.art), its name, its price on one line and,
+-- for a campaign project, what it brings; the whole row is the button (id
+-- 'pick'). paint.rule draws the hairline between rows. A record marked slim
+-- (built, or with nothing to bring) takes a shorter row.
+function E.catalogue_form(title, paint, gets)
     return ui.form(N.column {panel=true,
         E.popup_header(title, nil, "close", true),
-        N.row {height=38,gap=8,
-            N.button {id='category_prev',text='<',width=42,em=22},
-            N.label {id='category',grow=1,em=21},
-            N.button {id='category_next',text='>',width=42,em=22},
-        },
-        N.list {id='stock',scroll=true,grow=1,gap=6,item=function(record)
+        N.list {id='stock',scroll=true,bounce=true,grow=1,item=function(record)
             if record.heading then
-                return N.row {height=32,gap=10,align="center",
-                    N.label {text=record.heading,text_style="popup_title",em=17},
+                return N.row {height=38,gap=10,align="center",padding={0,0,14,0},
+                    N.label {text=record.heading,text_style="popup_title",em=19},
                     N.spacer {grow=1,panel=true,role="popup_rule",height=14},
+                    N.label {text=record.progress or "",visible=record.progress ~= nil,text_style="caption",em=16},
                 }
             end
-            return N.overlay {height=record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW,
-                N.custom {paint=function(box) paint_row(box, record) end},
-                N.button {id='pick',text='',flat=true,enabled=record.project or record.available},
+            local prices = {}
+            for _, part in ipairs(record.prices) do prices[#prices + 1] = E.resource_indicator(part) end
+            local reward = record.reward
+            local height = record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW
+            return N.overlay {height=height,
+                N.custom {visible=not record.first,paint=function(box) paint.rule(box, record) end},
+                N.row {gap=12,align="center",padding={2,6,8,6},
+                    N.custom {width=E.CATALOGUE_ART,height=height - 12,paint=function(box) paint.art(box, record) end},
+                    N.column {grow=1,gap=7,align="start",
+                        N.label {text=record.name,em=21,wrap=true,text_style="body",text_align="start"},
+                        N.row {gap=10,align="center",visible=#prices > 0,children=prices},
+                        N.row {gap=8,align="center",visible=reward ~= nil,
+                            N.label {text=gets,em=14,text_style="caption"},
+                            reward and E.resource_indicator(reward) or N.spacer {},
+                        },
+                    },
+                },
+                N.button {id='pick',text='',flat=true,enabled=record.enabled},
             }
         end},
     })

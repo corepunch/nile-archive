@@ -91,12 +91,7 @@ function R.smoke()
     elseif smoke_stage == 101 and R.overlay == R.OV_SHOP then
         local node = R.catalogue_tile("arch")
         local box = node and R.catalogue_form.boxes[node.id]
-        if box then app.inject_click(box:center()); smoke_stage = 2 end
-    elseif smoke_stage == 2 and R.overlay == R.OV_WONDER and R.dialog_settled() then
-        local boxes = R.wonder_form.boxes
-        assert(boxes.sprite and math.abs(boxes.sprite:center().x - boxes.action:center().x) < .1,
-            "the Welcome arch preview is centered above the build action")
-        app.inject_click(R.wonder_form.boxes.action:center()); smoke_stage = 3
+        if box then app.inject_click(box:center()); smoke_stage = 3 end   -- an affordable row goes straight to placement
     elseif smoke_stage == 3 and R.island.placing >= 0 then
         app.inject_click(R.placement_form.boxes.confirm:center()); smoke_stage = 4   -- PLACE & BUILD
     elseif smoke_stage == 4 and R.island.placing < 0 and R.overlay == R.OV_NONE then
@@ -111,7 +106,7 @@ function R.smoke()
         })
         smoke_stage=6
     elseif smoke_stage==6 then
-        if not smoke_city_move() then R.open_catalogue("all");smoke_move.categories=0;smoke_stage=120 end
+        if not smoke_city_move() then R.open_catalogue();smoke_stage=120 end
     elseif smoke_stage==120 then
         smoke_move.scroll_start=R.catalogue_form.boxes.stock:point(vec2(.5,.8))
         app.inject_press(smoke_move.scroll_start);smoke_stage=121
@@ -122,15 +117,9 @@ function R.smoke()
     elseif smoke_stage==123 then
         assert(R.overlay==R.OV_SHOP and R.catalogue_form.nodes.stock.scroll_state.offset>100,
             "drag must scroll decorations without choosing a building")
-        smoke_stage=20
-    elseif smoke_stage==20 and R.overlay==R.OV_SHOP then
-        if smoke_move.categories<3 then
-            app.inject_click(R.catalogue_form.boxes.category_next:center())
-            smoke_move.categories=smoke_move.categories+1
-        else smoke_stage=21 end
+        R.scroll_catalogue_to("fir_snowy");smoke_stage=21
     elseif smoke_stage==21 and R.overlay==R.OV_SHOP then
         local f=R.catalogue_form
-        assert(R.catalogue_tile("fir_snowy") and not R.catalogue_tile("arch"),"category source must refresh")
         local node,record=R.catalogue_tile("fir_snowy")
         local balance = R.prog.wallet
         assert(node and record.available, ("starter decoration should be affordable with %d Gold, %d Food, %d Supplies")
@@ -143,7 +132,7 @@ function R.smoke()
         app.inject_click(R.placement_form.boxes.cancel:center());smoke_stage=23
     elseif smoke_stage==23 and R.island.placing<0 then
         assert(R.island.count==2 and same_wallet(R.prog.wallet, smoke_move.shop_wallet),"cancelled purchase changed save state")
-        R.open_catalogue();smoke_stage=24
+        R.open_catalogue();R.scroll_catalogue_to("fir_snowy");smoke_stage=24
     elseif smoke_stage==24 and R.overlay==R.OV_SHOP then
         local node=R.catalogue_tile("fir_snowy")
         if node then app.inject_click(R.catalogue_form.boxes[node.id]:center());smoke_stage=25 end

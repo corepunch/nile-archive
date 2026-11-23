@@ -37,8 +37,10 @@ medal uses the original colors.
 The town bar reuses the round enamel Build and Pause buttons with the
 [painted jade Play sprite](../../../art/match3-buttons/README.md#town-play)
 centred between them. The Build rim uses the board’s existing blue particles
-when an eligible project is affordable. The catalogue groups the building
-sprites by epoch. Review with `shot epoch-projects-phone` and the catalogue capture.
+when an eligible project is affordable. The shop lists the current
+phase's building sprites, then the decorations. It draws the existing HUD frames
+`shop-locked` and `shop-built` large over a locked or built building's sprite.
+Review with `shot epoch-projects-phone` and the phone shop capture.
 
 ## Construction backdrops
 

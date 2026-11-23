@@ -6,8 +6,7 @@ local journey = require("journey")
 
 local W = game.config()
 check(W.app.id == testing.game, "game_config.lua is read at load time and names its game")
-check(#W.packs >= 1 and #W.catalogue.categories >= 3, "packs and shop categories come from the game")
-for _, cat in ipairs(W.catalogue.categories) do check(#cat == 2, "a category is {key, label}") end
+check(#W.packs >= 1 and W.catalogue.title ~= game.DEFAULTS.catalogue.title, "packs and the shop's title come from the game")
 check(W.notices.reward_building ~= game.DEFAULTS.notices.reward_building, "the game words replace the engine defaults")
 check(W.confirm.cancel == game.DEFAULTS.confirm.cancel, "words a game leaves out keep the engine default")
 
@@ -16,8 +15,8 @@ require("main")
 check(not R.wonder_form.nodes.unlock and not R.wonder_form.nodes.upgrade and not R.result_form.nodes.next_step,
     "reward icons and essential figures carry the popup without extra unlock or next-project copy")
 
-local merged = game.config({catalogue = {categories = {{"all", "All"}}}, speech = {scale = 2}})
-check(#merged.catalogue.categories == 1 and merged.catalogue.title == game.DEFAULTS.catalogue.title,
+local merged = game.config({complete = {lines = {{"ALL DONE", 16}}}, speech = {scale = 2}})
+check(#merged.complete.lines == 1 and merged.complete.title == game.DEFAULTS.complete.title,
       "arrays replace, objects merge field by field")
 check(merged.speech.scale == 2 and merged.speech.name == game.DEFAULTS.speech.name, "nested defaults survive")
 

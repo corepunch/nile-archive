@@ -148,7 +148,7 @@ shot("quest-board-arrows", "480x900", "--level 6")
 shot("quest-board-cable", "480x900", "--level 9")
 shot("economy-wallet", "390x844", "--city 2 --safe-area 0,47,0,34")
 shot("economy-price-phone", "390x844", "--card 3 --safe-area 0,47,0,34")
-shot("economy-shop", "480x900", "--catalogue building")
+shot("economy-shop", "480x900", "--catalogue")
 shot("sawmill-shore", "480x900", "--city 3 --look 925,2195 --footprints")
 shot("sawmill-shore-phone", "390x844", "--city 3 --look 925,2195 --footprints --safe-area 0,47,0,34")
 shot("economy-result", "480x900", "--city 3 --victory 10")
@@ -281,12 +281,12 @@ for _, size in ipairs{"480x900", "390x844"} do
 end
 
 -- Continuous catalogues, including narrow safe-area layout.
-shot("catalogue", "480x900", "--catalogue building")
-shot("phone-catalogue", "390x844", "--catalogue building --safe-area 0,47,0,34")
-shot("shop-status", "480x900", "--catalogue all")
-shot("phone-shop-status", "390x844", "--catalogue all --safe-area 0,47,0,34")
+shot("catalogue", "480x900", "--catalogue")
+shot("phone-catalogue", "390x844", "--catalogue --safe-area 0,47,0,34")
+shot("shop-status", "480x900", "--catalogue")
+shot("phone-shop-status", "390x844", "--catalogue --safe-area 0,47,0,34")
 
-reel("phone-catalogue-scroll",24,3,"390x844","--catalogue all --scroll-review --safe-area 0,47,0,34")
+reel("phone-catalogue-scroll",24,3,"390x844","--catalogue --scroll-review --safe-area 0,47,0,34")
 shot("phone-island-bubble","390x844","--dialog bubble --safe-area 0,47,0,34")
 
 -- Full-script representative reads: longest line, thought, shout and the finale.

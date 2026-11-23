@@ -24,7 +24,7 @@ The player's minute-to-minute loop:
 
 1. **Play a level.** The board shows the current pieces and, from its building on, one tool piece. Thirty matched tool pieces charge the tool's slot once.
 2. **Collect.** The results card banks the matched resources. Ordinary wins lead to the next board. The results action returns to town when a project opens or is affordable.
-3. **Build.** The bottom row puts Play between Build and Pause. Build opens the catalogue grouped by phase. Select a project to see its cost and reward. A trail circles Build when a campaign project is affordable. Choose a site and confirm.
+3. **Build.** The bottom row puts Play between Build and Pause. Build opens the shop at the current phase: its four projects with their cost and reward, then decorations. An affordable row goes straight to placement. A trail circles Build when a campaign project is affordable. Choose a site and confirm.
 4. **See the change.** The next board shows the new piece or tool. Meeting a building's feat upgrades it, with a brief upgrade notice.
 
 The campaign's shape:

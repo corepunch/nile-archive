@@ -23,7 +23,7 @@ and follow the construction prompts. Release builds hide the button.
 
 ![The 41 market buildings and decorations](docs/screenshots/buildings.jpg)
 
-The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects in four tabs (Decorations, Snowy trees, Cottages): snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.
+The [reference sheet](art/building-reference-sheet.png) covers ten of the twenty campaign stalls: Welcome arch, Lumber workshop, Gingerbread bakery, Hot cocoa kiosk, Toymaker's workshop, Gift wrapping pavilion, Candlelight shop, Reindeer carousel, Winter skating rink and Christmas tree. Lantern firs and Snowman bench are repeatable decorations. The build shop adds 25 more objects after the projects: snowmen, presents, a sleigh, reindeer, a gingerbread house, a giant bauble and more.
 
 Direction: snow-covered timber and cream plaster, evergreen garlands, red ribbons, warm amber windows and lights, cool blue snow, readable isometric silhouettes. The Blender models resolve perspective and footprints exactly. The renders can still guide an ImageGen repaint ([#34](https://github.com/corepunch/nile-archive/issues/34)).
 
@@ -98,8 +98,11 @@ come to reopen starts there. The stall can be moved for free. [Opening market](d
 Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
 The town bar puts Play between the round Build button and the Pause gear.
-Build opens the catalogue grouped by Advent, with a trail when an open
-project is affordable. Tap a row to see its price or shortfall and reward.
+Build opens the shop at the current Advent: its four projects first, under
+the Advent's name and how many are built, then the decorations. A trail
+circles Build when an open project is affordable. A row that can be bought
+goes straight to placement; a project still out of reach opens its card with
+the shortfall.
 The [color map and construction ladder](docs/market-pieces.md) track the
 rewards and the Windows edition of Cradle of Rome 2 purchase order.
 
@@ -116,9 +119,9 @@ Native macOS and iOS project files are included.
 
 The build shop and Winter Wishes scroll continuously. Swipe inside either list or
 use the mouse wheel. Both are full-screen sheets under the wallet row. The shop
-lists one building per row with its whole price, an amount you cannot yet cover
-in red, and a BUILD button or the reason it waits; it keeps its category
-arrows. Winter Wishes opens near the current puzzle. Both screens share row
+lists one building per row: its art, its name, its price on one line (an amount
+you cannot yet cover in red) and, for a project, what it brings. A lock or a
+tick over the art marks a locked or built one. Winter Wishes opens near the current puzzle. Both screens share row
 templates with Relic Rush.
 
 Pause offers Resume, Restart (it asks first) and Quit to the market, which
