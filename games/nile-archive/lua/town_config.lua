@@ -1,6 +1,8 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
 -- engine's defaults (engine/lua/town/screen.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
+local l10n = require("l10n")
+local tr = l10n.tr
 local town = require("town.screen")
 
 return {
@@ -11,11 +13,11 @@ return {
     bubble = {width = 320, fill = "#F6E7C1F5", edge = "#6B4410"},
     focus = {lift = 50, min_zoom = 0.6},
     texts = {
-        placing = "Перетащите постройку или коснитесь свободного места",
-        unchanged = "Остров без изменений",
-        blocked = "Нужно свободное место на открытом берегу",
-        cant_afford = "Недостаточно монет. Переиграйте открытую главу.",
-        cant_buy = "Эта постройка уже восстановлена",
-        no_room = "Откройте берег, чтобы найти свободное место",
+        placing = tr("Перетащите постройку или коснитесь свободного места"),
+        unchanged = tr("Остров без изменений"),
+        blocked = tr("Нужно свободное место на открытом берегу"),
+        cant_afford = tr("Недостаточно монет. Переиграйте открытую главу."),
+        cant_buy = tr("Эта постройка уже восстановлена"),
+        no_room = tr("Откройте берег, чтобы найти свободное место"),
     },
 }

@@ -1,6 +1,8 @@
 -- archive_island.lua — the island: an engine city with the player plate,
 -- the currencies, the goal card, the building tray and the placement sheet.
 local N = ui.node
+local l10n = require("l10n")
+local tr, trn = l10n.tr, l10n.trn
 
 local G = require("archive_state")
 local content = require("archive_content")
@@ -35,7 +37,7 @@ function M.setup()
     c.movable = true
     c.buildable = buildable
     local zones = {{area = rect(580, 200, 600, 1050)}}
-    local shores = {"Тростниковый берег", "Пальмовый берег", "Дальний берег"}
+    local shores = {tr("Тростниковый берег"), tr("Пальмовый берег"), tr("Дальний берег")}
     for z = 1, ZONES - 1 do
         local area = rect(800 + z * 380, 200, 380, 1050)
         zones[z + 1] = {area = area, name = shores[z], marker = vec2(area:center().x, 640),
@@ -91,12 +93,12 @@ end
 local function draw_goal(c)
     local i, blocked, restore = progress.chapter_goal()
     local eyebrow, title
-    if not i then eyebrow, title = "ИСТОРИЯ ЗАВЕРШЕНА", "След ведёт вверх по Нилу"
-    elseif blocked then eyebrow, title = "СЛЕДУЮЩАЯ ЦЕЛЬ", blocked
-    elseif content.cache_chapter(i) then eyebrow, title = "ТАЙНИК ГОТОВ", content.scenes[i].title
+    if not i then eyebrow, title = tr("ИСТОРИЯ ЗАВЕРШЕНА"), tr("След ведёт вверх по Нилу")
+    elseif blocked then eyebrow, title = tr("СЛЕДУЮЩАЯ ЦЕЛЬ"), blocked
+    elseif content.cache_chapter(i) then eyebrow, title = tr("ТАЙНИК ГОТОВ"), content.scenes[i].title
     else
-        eyebrow = G.wins[i] == 0 and ("ПОИСК %d"):format(i)
-            or G.stars[i] < 3 and "СОБЕРИТЕ ТРИ ЗВЕЗДЫ" or "ПОВТОРИТЕ ПОИСК РАДИ УЛИКИ"
+        eyebrow = G.wins[i] == 0 and tr("ПОИСК %d"):format(i)
+            or G.stars[i] < 3 and tr("СОБЕРИТЕ ТРИ ЗВЕЗДЫ") or tr("ПОВТОРИТЕ ПОИСК РАДИ УЛИКИ")
         title = content.scenes[i].title
     end
     local w = math.max(text.measure(S.goal_title, title).w, text.measure(S.goal_eyebrow, eyebrow).w) + 110
@@ -122,20 +124,15 @@ end
 -- The build tray scrolls through one category at a time: the five restorations
 -- first, then the decoration catalogue (docs/building-catalogue.md).
 M.TRAY_CATEGORIES = {
-    {"story", "Восстановление"}, {"projects", "Работы на острове"}, {"all", "Все постройки"}, {"wonder", "Памятники"}, {"building", "Дома и мастерские"},
-    {"tree", "Деревья"}, {"bush", "Кусты"}, {"flower", "Цветы"}, {"statue", "Статуи"}, {"water", "Вода"},
-    {"garden", "Сад"}, {"camp", "Припасы"}, {"animal", "Животные"}, {"rock", "Камни"},
+    {"story", tr("Восстановление")}, {"projects", tr("Работы на острове")}, {"all", tr("Все постройки")}, {"wonder", tr("Памятники")}, {"building", tr("Дома и мастерские")},
+    {"tree", tr("Деревья")}, {"bush", tr("Кусты")}, {"flower", tr("Цветы")}, {"statue", tr("Статуи")}, {"water", tr("Вода")},
+    {"garden", tr("Сад")}, {"camp", tr("Припасы")}, {"animal", tr("Животные")}, {"rock", tr("Камни")},
 }
 M.tray = {category = 1}   -- 1 = the restorations
 
-local function plural(n, one, few, many)
-    local d, h = n % 10, n % 100
-    if d == 1 and h ~= 11 then return one end
-    if d >= 2 and d <= 4 and (h < 12 or h > 14) then return few end
-    return many
-end
-
-local function stars_text(n) return ("%d %s"):format(n, plural(n, "звезда", "звезды", "звёзд")) end
+local function coins_text(n) return trn("%d монета", "%d монет", n):format(n) end
+local function stars_text(n) return trn("%d звезда", "%d звёзд", n):format(n) end
+local function searches_needed(n) return trn("Нужно завершить %d поиск", "Нужно завершить %d поисков", n):format(n) end
 
 local build_form = ui.form(N.column {panel = true, radius = 20,
     N.row {height = 34, gap = 10,
@@ -143,14 +140,14 @@ local build_form = ui.form(N.column {panel = true, radius = 20,
         N.button {id = "category_prev", text = "<", width = 44},
         N.label {id = "category", role = "category", width = 230},
         N.button {id = "category_next", text = ">", width = 44},
-        N.button {id = "close", text = "Закрыть", width = 100},
+        N.button {id = "close", text = tr("Закрыть"), width = 100},
     },
     N.list {id = "stock", scroll = true, height = 454, gap = 8, item = function(e)
         return N.row {panel = true, role = "parchment", radius = 12, padding = 8, gap = 14, align = "center",
             N.image {image = e.sprite, width = 108, height = 68},
             N.column {grow = 1, gap = 3,
                 N.label {text = e.name, wrap = true, text_align = "start"},
-                N.label {text = ("%s · %d монет"):format(e.detail, e.coins), wrap = true, text_align = "start"},
+                N.label {text = e.detail .. " · " .. coins_text(e.coins), wrap = true, text_align = "start"},
             },
             N.button {id = "buy", text = e.action, enabled = e.available, width = 260, height = 44},
         }
@@ -162,8 +159,8 @@ local project_confirm = ui.form(N.column {panel = true, radius = 20,
     N.label {id = "title", role = "category", wrap = true},
     N.label {id = "detail", role = "budget", wrap = true},
     N.row {gap = 12, height = 56,
-        N.button {id = "cancel", text = "Отмена", grow = 1},
-        N.button {id = "confirm", text = "Выполнить", grow = 1, accent = true},
+        N.button {id = "cancel", text = tr("Отмена"), grow = 1},
+        N.button {id = "confirm", text = tr("Выполнить"), grow = 1, accent = true},
     },
 })
 
@@ -199,12 +196,12 @@ local function card(i)
     local restoration = i <= content.RESTORATIONS
     local owned = restoration and G.restored[i]
     local searches = d.needs[CHAPTERS]
-    local locked = restoration and ("Нужно завершить %d %s"):format(searches, plural(searches, "поиск", "поиска", "поисков"))
-        or "Нужно " .. stars_text(kind.stars)
-    local action = owned and "Уже восстановлено" or not unlocked and locked or full and "Остров заполнен"
-        or afford and "Выбрать место" or "Не хватает монет"
+    local locked = restoration and searches_needed(searches)
+        or trn("Нужно %d звезда", "Нужно %d звёзд", kind.stars):format(kind.stars)
+    local action = owned and tr("Уже восстановлено") or not unlocked and locked or full and tr("Остров заполнен")
+        or afford and tr("Выбрать место") or tr("Не хватает монет")
     local gain = d.reward[INFLUENCE]
-    local detail = ("+%d влияния"):format(gain)
+    local detail = tr("+%d влияния"):format(gain)
     if not restoration then detail = ("%d×%d · %s"):format(d.size.w, d.size.h, detail) end
     return {id = i, name = d.name, sprite = d.sprite, coins = d.cost[COINS], detail = detail,
         available = not owned and unlocked and afford and not full, action = action}
@@ -220,15 +217,15 @@ local function refresh_tray(tray)
         local building_types = {3, 4, 5, 2, 1, 3, 4, 5, 2, 1}
         for i, project in ipairs(economy.projects) do
             local lock = economy.project_lock(G, i)
-            local action = lock == "done" and "Выполнено" or lock == "chapter" and "Завершите предыдущую главу"
-                or lock == "coins" and "Не хватает монет" or "Выбрать"
+            local action = lock == "done" and tr("Выполнено") or lock == "chapter" and tr("Завершите предыдущую главу")
+                or lock == "coins" and tr("Не хватает монет") or tr("Выбрать")
             stock[#stock + 1] = {id = "project-" .. i, name = project.name,
                 sprite = G.buildings[building_types[i]].sprite, coins = project.coins,
-                detail = ("+%d влияния"):format(project.influence), available = not lock, action = action}
+                detail = tr("+%d влияния"):format(project.influence), available = not lock, action = action}
         end
     end
     assert(build_form:set_items("stock", stock))
-    build_form:set("budget", ("%d монет · %s"):format(G.wallet[COINS], stars_text(G.wallet[STARS])))
+    build_form:set("budget", coins_text(G.wallet[COINS]) .. " · " .. stars_text(G.wallet[STARS]))
     build_form:set("category", M.TRAY_CATEGORIES[tray.category][2])
     local index = num.clampi((math.floor(tray.review_page or 1) - 1) * 5 + 1, 1, math.max(1, #stock))
     build_form:scroll_to("stock", stock[index] and stock[index].id)
@@ -241,7 +238,8 @@ local function paint_tray(r, interactive)
     if tray.pending then
         local project = economy.projects[tray.pending]
         project_confirm:set("title", project.name)
-        project_confirm:set("detail", ("%d монет · +%d влияния"):format(project.coins, project.influence))
+        project_confirm:set("detail", trn("%d монета · +%d влияния", "%d монет · +%d влияния", project.coins)
+            :format(project.coins, project.influence))
         local _, height = project_confirm:measure(r.w, build_skin)
         r = r:bottom(height)
         ui.block(r)
@@ -252,8 +250,8 @@ local function paint_tray(r, interactive)
                 if event.id == "confirm" then
                     if economy.claim_project(G, tray.pending) then
                         progress.save()
-                        ui.toast(("Работы завершены · +%d влияния"):format(project.influence))
-                    else ui.toast("Работы больше недоступны") end
+                        ui.toast(tr("Работы завершены · +%d влияния"):format(project.influence))
+                    else ui.toast(tr("Работы больше недоступны")) end
                 end
                 tray.pending, tray.dirty, tray.motion = nil, true, tray_motion()
             end, G.reduced_motion)
@@ -306,7 +304,7 @@ local function finish_purchase(kind)
     end
     progress.save()
     local gain = G.buildings[kind].reward[INFLUENCE]
-    ui.toast(gain > 0 and ("Постройка готова · +%d влияния"):format(gain) or "Украшение на месте")
+    ui.toast(gain > 0 and tr("Постройка готова · +%d влияния"):format(gain) or tr("Украшение на месте"))
 end
 
 -------------------------------------------------------------------- frame
@@ -320,18 +318,22 @@ local function shore(z)
         story.add(content.merit_shore)
     elseif G.wallet[CHAPTERS] < G.island.zones[z + 1].needs[CHAPTERS] then
         local n = G.island.zones[z + 1].needs[CHAPTERS]
-        ui.toast(("Нужно завершить %d %s"):format(n, plural(n, "поиск", "поиска", "поисков")))
+        ui.toast(searches_needed(n))
     else
-        ui.toast(("Берег стоит %d монет. Переиграйте открытую главу."):format(G.island.zones[z + 1].cost[COINS]))
+        local coins = G.island.zones[z + 1].cost[COINS]
+        ui.toast(trn("Берег стоит %d монету. Переиграйте открытую главу.", "Берег стоит %d монет. Переиграйте открытую главу.", coins)
+            :format(coins))
     end
 end
 
 local function placement_words(kind)
     local def = G.buildings[kind]
     local gain = def.reward[INFLUENCE]
-    return G.island.moving >= 0 and "Перемещение бесплатно"
-        or gain > 0 and ("%d монет · +%d влияния после подтверждения"):format(def.cost[COINS], gain)
-        or ("%d монет после подтверждения"):format(def.cost[COINS])
+    local coins = def.cost[COINS]
+    return G.island.moving >= 0 and tr("Перемещение бесплатно")
+        or gain > 0 and trn("%d монета · +%d влияния после подтверждения", "%d монет · +%d влияния после подтверждения", coins)
+            :format(coins, gain)
+        or trn("%d монета после подтверждения", "%d монет после подтверждения", coins):format(coins)
 end
 
 function M.town_setup()
@@ -347,9 +349,9 @@ function M.town_setup()
             local function plus(r) K.plus_badge(vec2(r:max().x - r.h * .5, r:center().y), r.h * .5 - 3) end
             return {
                 {icon = G.coin, value = tostring(G.wallet[COINS]), width = 170, reserve = 42 * .7, decorate = plus,
-                 note = "80 монет за сцену · бонусы за первую победу, новые звёзды и поиск без ошибок и подсказок"},
+                 note = tr("80 монет за сцену · бонусы за первую победу, новые звёзды и поиск без ошибок и подсказок")},
                 {icon = G.influence, value = tostring(G.wallet[INFLUENCE]), width = 150, reserve = 42 * .7, decorate = plus,
-                 note = "Влияние дают постройки и украшения. Оно открывает поиски и не тратится."},
+                 note = tr("Влияние дают постройки и украшения. Оно открывает поиски и не тратится.")},
             }
         end,
         build = function() M.open_tray() end,
@@ -359,18 +361,19 @@ function M.town_setup()
         about = function(item)
             local def = G.buildings[G.island.items[item + 1].type + 1]
             local gain = def.reward[INFLUENCE]
-            return gain > 0 and ("%s\n+%d влияния"):format(def.name, gain) or def.name
+            -- TRANSLATORS: %s is a building's name
+            return gain > 0 and tr("%s\n+%d влияния"):format(def.name, gain) or def.name
         end,
         zone = shore,
         event = function(ev)
-            if ev.result == city.CANT_AFFORD then ui.toast("Недостаточно монет. Пройдите сцену ещё раз.")
-            elseif ev.result == city.BLOCKED then ui.toast("Нужно свободное место на открытом берегу")
-            elseif ev.result == city.LOCKED_TYPE then ui.toast("Сначала пройдите нужную главу или соберите больше звёзд") end
+            if ev.result == city.CANT_AFFORD then ui.toast(tr("Недостаточно монет. Пройдите сцену ещё раз."))
+            elseif ev.result == city.BLOCKED then ui.toast(tr("Нужно свободное место на открытом берегу"))
+            elseif ev.result == city.LOCKED_TYPE then ui.toast(tr("Сначала пройдите нужную главу или соберите больше звёзд")) end
         end,
         can_buy = function(kind) return not (kind < content.RESTORATIONS and G.restored[kind + 1]) end,
         placed = function(ev, fresh)
             if fresh then finish_purchase(G.island.items[ev.building + 1].type + 1)
-            else progress.save(); ui.toast("Постройка перемещена") end
+            else progress.save(); ui.toast(tr("Постройка перемещена")) end
             if not G.reduced_motion then fx.burst(ev.screen, 26, hex(0xF2D29A), 260, 9) end
         end,
         bubble_text = function() return K.skin:text("card_title", 18) end,
@@ -386,7 +389,7 @@ function M.town_setup()
         extras = function(screen)
             local area = screen:inflate(-18)
             draw_player(area:pos())
-            if K.round_button(vec2(area.x + 39, area.y + 150), 32, K.icon_people, "Герои") then G.open_modal(MODAL_CAST) end
+            if K.round_button(vec2(area.x + 39, area.y + 150), 32, K.icon_people, tr("Герои")) then G.open_modal(MODAL_CAST) end
             local island = G.island
             if island.placing >= 0 then
                 G.tray = false

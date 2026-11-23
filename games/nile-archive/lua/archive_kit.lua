@@ -8,6 +8,8 @@
 -- Fonts, text styles, the theme, frames and pill buttons are data in
 -- archive_skin.lua; K.styles is filled from it by K.setup_theme once the
 -- fonts load. This file keeps the drawn icons, ribbons and ornaments.
+local l10n = require("l10n")
+local tr = l10n.tr
 local hex, rgba = color.hex, color
 local skin = require("archive_skin")
 
@@ -231,7 +233,7 @@ function K.dialogue_style()
         text = style{font = K.sans, size = 22, fill = hex(0x203C36)},
         name = style{font = K.sans_bold, size = 17, fill = hex(0xFFF6E0)},
         bubble = hex(0xFBF1DA), edge = hex(0x9C7A3C), dim = rgba(6, 28, 33, 120),
-        portrait_height = .64, skip = "Пропустить",
+        portrait_height = .64, skip = tr("Пропустить"),
     }
 end
 

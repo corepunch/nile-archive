@@ -1,5 +1,7 @@
 -- Tested economy contract. Coins circulate; Influence comes only from building.
 -- Stars are best records, with one guaranteed per clear up to three.
+local l10n = require("l10n")
+local tr = l10n.tr
 local M={START_COINS=0,START_INFLUENCE=10,BASE_COINS=80,FIRST_COINS=40,STAR_COINS=20,PERFECT_COINS=20}
 M.gates={0,20,50,75,90,100,120,145,170,200,230,260,295,330,370}
 M.FOUNTAIN=4
@@ -16,16 +18,16 @@ M.buildings={
 M.shore_costs={120,180,240}
 -- Save data stores these project flags in catalogue order. Append new entries.
 M.projects={
-    {id="archive_survey",name="Обследовать архив",coins=100,influence=15,chapter=2},
-    {id="channel_survey",name="Обследовать канал",coins=150,influence=20,chapter=2},
-    {id="workshop_records",name="Разобрать записи мастерской",coins=200,influence=25,chapter=2},
-    {id="temple_records",name="Разобрать записи храма",coins=250,influence=25,chapter=2},
-    {id="garden_survey",name="Обследовать сад",coins=300,influence=30,chapter=2},
-    {id="archive_work",name="Работы в архиве",coins=300,influence=30,chapter=3},
-    {id="channel_work",name="Работы на канале",coins=320,influence=30,chapter=3},
-    {id="workshop_work",name="Работы в мастерской",coins=360,influence=35,chapter=3},
-    {id="temple_work",name="Работы в храме",coins=400,influence=35,chapter=3},
-    {id="garden_work",name="Работы в саду",coins=450,influence=40,chapter=3},
+    {id="archive_survey",name=tr("Обследовать архив"),coins=100,influence=15,chapter=2},
+    {id="channel_survey",name=tr("Обследовать канал"),coins=150,influence=20,chapter=2},
+    {id="workshop_records",name=tr("Разобрать записи мастерской"),coins=200,influence=25,chapter=2},
+    {id="temple_records",name=tr("Разобрать записи храма"),coins=250,influence=25,chapter=2},
+    {id="garden_survey",name=tr("Обследовать сад"),coins=300,influence=30,chapter=2},
+    {id="archive_work",name=tr("Работы в архиве"),coins=300,influence=30,chapter=3},
+    {id="channel_work",name=tr("Работы на канале"),coins=320,influence=30,chapter=3},
+    {id="workshop_work",name=tr("Работы в мастерской"),coins=360,influence=35,chapter=3},
+    {id="temple_work",name=tr("Работы в храме"),coins=400,influence=35,chapter=3},
+    {id="garden_work",name=tr("Работы в саду"),coins=450,influence=40,chapter=3},
 }
 
 local function cache_complete(state, chapter)

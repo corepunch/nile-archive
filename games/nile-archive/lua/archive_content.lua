@@ -1,4 +1,6 @@
 -- Nile Archive's search lists, island buildings, and cast.
+local l10n = require("l10n")
+local tr = l10n.tr
 local economy = require("archive_economy")
 local catalogue = require("archive_catalogue")
 local sprites = require("building_sprites")
@@ -7,32 +9,33 @@ local rgba = color
 local M = {}
 
 M.scenes = {
-    {title = "Двор хранителя", teaser = "На столах двора остались вещи отца. Начните с них.",
+    {title = tr("Двор хранителя"), teaser = tr("На столах двора остались вещи отца. Начните с них."),
      clues = {"c1s1a"},
      background = "story/scenes/scene0.png",
-     names = {"Анх", "Веер", "Гранат", "Скарабей", "Ключ", "Кошка", "Свиток", "Перо"},
+     -- TRANSLATORS: the objects a player looks for in the picture
+     names = {tr("Анх"), tr("Веер"), tr("Гранат"), tr("Скарабей"), tr("Ключ"), tr("Кошка"), tr("Свиток"), tr("Перо")},
      at = {vec2(133, 133), vec2(268, 422), vec2(491, 316), vec2(574, 660), vec2(1150, 368), vec2(965, 575), vec2(195, 598), vec2(1094, 170)},
      radius = {vec2(27, 55), vec2(82, 42), vec2(30, 30), vec2(40, 24), vec2(45, 20), vec2(95, 70), vec2(90, 42), vec2(42, 55)}},
-    {title = "Библиотека писца", teaser = "В библиотеке спрятан второй след.",
+    {title = tr("Библиотека писца"), teaser = tr("В библиотеке спрятан второй след."),
      clues = {"c1s2a", "c1s2b"},
      background = "story/scenes/scene1.png",
-     names = {"Анх", "Веер", "Гранат", "Скарабей", "Ключ", "Кошка", "Карта", "Перо"},
+     names = {tr("Анх"), tr("Веер"), tr("Гранат"), tr("Скарабей"), tr("Ключ"), tr("Кошка"), tr("Карта"), tr("Перо")},
      at = {vec2(180, 78), vec2(1023, 617), vec2(115, 430), vec2(513, 163), vec2(450, 617), vec2(1063, 453), vec2(273, 500), vec2(1070, 226)},
      radius = {vec2(25, 52), vec2(115, 55), vec2(35, 35), vec2(30, 42), vec2(45, 22), vec2(90, 70), vec2(195, 55), vec2(45, 55)}},
-    {title = "Храм на закате", teaser = "План привёл к старому храму.",
+    {title = tr("Храм на закате"), teaser = tr("План привёл к старому храму."),
      clues = {"c1s3a", "c1s3b"},
      background = "story/scenes/scene2.png",
-     names = {"Анх", "Веер", "Яблоко", "Скарабей", "Ключ", "Кошка", "Свиток", "Перо"},
+     names = {tr("Анх"), tr("Веер"), tr("Яблоко"), tr("Скарабей"), tr("Ключ"), tr("Кошка"), tr("Свиток"), tr("Перо")},
      at = {vec2(61, 109), vec2(1027, 530), vec2(120, 514), vec2(527, 334), vec2(1109, 114), vec2(656, 574), vec2(234, 98), vec2(379, 634)},
      radius = {vec2(30, 72), vec2(95, 50), vec2(35, 35), vec2(42, 24), vec2(25, 62), vec2(105, 58), vec2(70, 28), vec2(95, 30)}},
-    {title = "Двор, второй круг", teaser = "Яблоко указало на сад.",
+    {title = tr("Двор, второй круг"), teaser = tr("Яблоко указало на сад."),
      clues = {"c1s4a", "c1s4b"}, background = "story/scenes/scene0.png",
-     names = {"Лейка", "Вилы", "Золотой кувшин", "Корзина с зеленью", "Инжир", "Фонтан", "Виноград", "Ладья"},
+     names = {tr("Лейка"), tr("Вилы"), tr("Золотой кувшин"), tr("Корзина с зеленью"), tr("Инжир"), tr("Фонтан"), tr("Виноград"), tr("Ладья")},
      at = {vec2(757, 385), vec2(791, 405), vec2(316, 254), vec2(863, 444), vec2(477, 530), vec2(609, 229), vec2(432, 298), vec2(387, 153)},
      radius = {vec2(31, 34), vec2(24, 45), vec2(41, 52), vec2(35, 57), vec2(48, 28), vec2(54, 37), vec2(44, 24), vec2(23, 32)}},
-    {title = "Библиотека, второй круг", teaser = "Весы отца что-то взвешивали.",
+    {title = tr("Библиотека, второй круг"), teaser = tr("Весы отца что-то взвешивали."),
      clues = {"c1s5a", "c1s5b"}, background = "story/scenes/scene1.png",
-     names = {"Весы", "Чаша с огнём", "Бюст", "Ибис", "Ларец у бюста", "Бусы на ларце", "Каламы", "Большая амфора"},
+     names = {tr("Весы"), tr("Чаша с огнём"), tr("Бюст"), tr("Ибис"), tr("Ларец у бюста"), tr("Бусы на ларце"), tr("Каламы"), tr("Большая амфора")},
      at = {vec2(327, 323), vec2(490, 407), vec2(227, 251), vec2(922, 197), vec2(132, 283), vec2(726, 415), vec2(985, 251), vec2(778, 544)},
      radius = {vec2(85, 95), vec2(47, 36), vec2(30, 51), vec2(31, 70), vec2(50, 36), vec2(21, 47), vec2(28, 48), vec2(47, 107)}},
 }
@@ -43,7 +46,7 @@ M.SCENES = 15
 M.CACHES = {16, 17, 18}
 M.CACHE = M.CACHES[1]   -- legacy first-chapter capture and smoke entry point
 local temple = M.scenes[3]
-local cache = {title = "Дверь под крылатым солнцем", background = temple.background,
+local cache = {title = tr("Дверь под крылатым солнцем"), background = temple.background,
     names = {}, at = {}, radius = {}}
 for i, item in ipairs({5, 4, 1, 8}) do
     cache.names[i], cache.at[i], cache.radius[i] = temple.names[item], temple.at[item], temple.radius[item]
@@ -70,11 +73,11 @@ local function building(id, title, key)
 end
 
 M.buildings = {
-    building(1, "Дом садовника", "gardener_house"),
-    building(2, "Храм Исиды", "isis_temple"),
-    building(3, "Архив", "archive"),
-    building(4, "Фонтан", "fountain"),
-    building(5, "Мастерская", "workshop"),
+    building(1, tr("Дом садовника"), "gardener_house"),
+    building(2, tr("Храм Исиды"), "isis_temple"),
+    building(3, tr("Архив"), "archive"),
+    building(4, tr("Фонтан"), "fountain"),
+    building(5, tr("Мастерская"), "workshop"),
 }
 
 -- Decorations keep their catalogue indices and Star requirements.
@@ -91,14 +94,15 @@ for _, e in ipairs(catalogue) do
 end
 
 M.cast = {
-    {id = "nefra", name = "Нефра", role = "Дочь хранителя · ищет отца и архив", portrait_path = "story/characters/nefra.png",
+    -- TRANSLATORS: a character's name and their role in the story
+    {id = "nefra", name = tr("Нефра"), role = tr("Дочь хранителя · ищет отца и архив"), portrait_path = "story/characters/nefra.png",
      color = rgba(46, 140, 134), mouth = vec2(.48, .23)},
-    {id = "horem", name = "Хорем", role = "Пропавший хранитель · оставил подсказки", portrait_path = "story/characters/horem.png",
+    {id = "horem", name = tr("Хорем"), role = tr("Пропавший хранитель · оставил подсказки"), portrait_path = "story/characters/horem.png",
      color = rgba(185, 134, 46), right = true, mouth = vec2(.42, .21)},
-    {id = "merit", name = "Мерит", role = "Лодочница · проводник будущих глав", portrait_path = "story/characters/merit.png",
+    {id = "merit", name = tr("Мерит"), role = tr("Лодочница · проводник будущих глав"), portrait_path = "story/characters/merit.png",
      color = rgba(181, 84, 58), right = true, mouth = vec2(.40, .22)},
 }
 
-M.merit_shore = {"merit", "Открыт новый берег! Перетащите остров влево, чтобы его осмотреть.", story.SHOUT}
+M.merit_shore = {"merit", tr("Открыт новый берег! Перетащите остров влево, чтобы его осмотреть."), story.SHOUT}
 
 return M

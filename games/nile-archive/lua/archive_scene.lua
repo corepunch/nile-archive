@@ -1,4 +1,6 @@
 -- Nile Archive's chapter data, campaign awards and story around the shared search screen.
+local l10n = require("l10n")
+local tr = l10n.tr
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
@@ -16,7 +18,7 @@ local scene = screen.new(G, {
         hint_recharge = G.HINT_RECHARGE, star_times = G.STAR_TIMES,
     },
     hud = {
-        styles = K.styles, bonus_label = "Бонус", hint_icon = K.icon_bulb,
+        styles = K.styles, bonus_label = tr("Бонус"), hint_icon = K.icon_bulb,
         gold = K.GOLD, gold_hi = K.GOLD_HI, gold_seam = K.GOLD_SEAM,
     },
 }, {

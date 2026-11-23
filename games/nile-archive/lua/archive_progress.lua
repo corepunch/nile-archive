@@ -1,6 +1,8 @@
 -- archive_progress.lua — what the player keeps between sessions: the wallet,
 -- chapter wins and best stars, the island and the story beats already seen;
 -- and the questions the screens ask of that progress.
+local l10n = require("l10n")
+local tr = l10n.tr
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
@@ -121,12 +123,12 @@ function M.blocker(i)
     local chapter = content.cache_chapter(i)
     local lock
     if chapter then lock = economy.cache_lock(G, chapter) else lock = economy.lock(G, i) end
-    if lock == "influence" then return ("Ещё %d влияния"):format(economy.gates[i] - G.wallet[INFLUENCE]), true end
-    if lock == "fountain" then return "Восстановите фонтан", true end
-    if lock == "workshop" then return "Восстановите мастерскую", true end
-    if lock == "chapter" then return "Откройте предыдущий тайник", false end
-    if lock == "clue" then return chapter and "Соберите все улики" or "Нужны предыдущие улики", false end
-    if lock == "done" then return "Тайник открыт", false end
+    if lock == "influence" then return tr("Ещё %d влияния"):format(economy.gates[i] - G.wallet[INFLUENCE]), true end
+    if lock == "fountain" then return tr("Восстановите фонтан"), true end
+    if lock == "workshop" then return tr("Восстановите мастерскую"), true end
+    if lock == "chapter" then return tr("Откройте предыдущий тайник"), false end
+    if lock == "clue" then return chapter and tr("Соберите все улики") or tr("Нужны предыдущие улики"), false end
+    if lock == "done" then return tr("Тайник открыт"), false end
 end
 
 -- Search and cache order follows the story, while search save indices stay stable.

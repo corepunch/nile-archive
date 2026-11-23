@@ -12,6 +12,8 @@
 --   archive_scene     the shared search screen's chapter data and rewards
 --   archive_dialogs   the popups
 --   archive_smoke     the --smoke run
+local l10n = require("l10n")
+local tr = l10n.tr
 local G = require("archive_state")
 local content = require("archive_content")
 local economy = require("archive_economy")
@@ -264,13 +266,13 @@ local function init()
 end
 
 return {
-    title = "Архив Нила",
+    title = tr("Архив Нила"),
     id = "nile-archive",
     gamecenter_board = "influence",
     design = size2(1200, 900),
     max_aspect = 16 / 9,
     landscape = true,
-    rotate_text = "«Архив Нила» играется только в альбомной ориентации. Поверните устройство.",
+    rotate_text = tr("«Архив Нила» играется только в альбомной ориентации. Поверните устройство."),
     clear = rgba(14, 43, 46),
     init = init,
     frame = frame,
