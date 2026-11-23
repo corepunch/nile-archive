@@ -261,6 +261,12 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "folder";
 };
+"EF409BEBD2079C946CF27AD7" = {"isa" = "PBXFileReference";
+"path" = "../../engine/data/common";
+"name" = "common";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "folder";
+};
 "9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
 "path" = "Assets.xcassets";
 "sourceTree" = "<group>";
@@ -280,6 +286,7 @@
 "541B66CD1C747C1DB8B77446",
 "A150F31180C678E8E8A70275",
 "9A369C44F8A274915962CB02",
+"EF409BEBD2079C946CF27AD7",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
 "DB3AB349C060C5F6876F6B06",
@@ -462,6 +469,9 @@
 "7FB268C9CFB9234DDD01988C" = {"isa" = "PBXBuildFile";
 "fileRef" = "9A369C44F8A274915962CB02";
 };
+"E10B230DB902B09BB90F1CEE" = {"isa" = "PBXBuildFile";
+"fileRef" = "EF409BEBD2079C946CF27AD7";
+};
 "1CC5B81C792C3313A8544A33" = {"isa" = "PBXCopyFilesBuildPhase";
 "buildActionMask" = 2147483647;
 "dstPath" = "engine/data";
@@ -469,6 +479,7 @@
 "name" = "Engine data";
 "runOnlyForDeploymentPostprocessing" = 0;
 "files" = ("7FB268C9CFB9234DDD01988C",
+"E10B230DB902B09BB90F1CEE",
 );
 };
 "2A36D9AD493E8F127026AB98" = {"isa" = "PBXFileReference";
@@ -663,6 +674,9 @@
 "770C20D33DF03417FE92DB4C" = {"isa" = "PBXBuildFile";
 "fileRef" = "9A369C44F8A274915962CB02";
 };
+"47E1101422FEFBC576BA8CAB" = {"isa" = "PBXBuildFile";
+"fileRef" = "EF409BEBD2079C946CF27AD7";
+};
 "AA67CE9C1FD89FDFC87D7B3A" = {"isa" = "PBXCopyFilesBuildPhase";
 "buildActionMask" = 2147483647;
 "dstPath" = "engine/data";
@@ -670,6 +684,7 @@
 "name" = "Engine data";
 "runOnlyForDeploymentPostprocessing" = 0;
 "files" = ("770C20D33DF03417FE92DB4C",
+"47E1101422FEFBC576BA8CAB",
 );
 };
 "68F9A7A4F52019DF77028FAE" = {"isa" = "PBXFileReference";
@@ -713,6 +728,15 @@
 "compatibilityVersion" = "Xcode 14.0";
 "developmentRegion" = "en";
 "knownRegions" = ("en",
+"de",
+"es",
+"fr",
+"it",
+"pt-BR",
+"ru",
+"ja",
+"ko",
+"zh-Hans",
 "Base",
 );
 "mainGroup" = "664F835B1ED89846DAB355B5";

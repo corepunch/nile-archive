@@ -261,6 +261,12 @@
 "sourceTree" = "SOURCE_ROOT";
 "lastKnownFileType" = "folder";
 };
+"EF409BEBD2079C946CF27AD7" = {"isa" = "PBXFileReference";
+"path" = "../../engine/data/common";
+"name" = "common";
+"sourceTree" = "SOURCE_ROOT";
+"lastKnownFileType" = "folder";
+};
 "9F943A6EE595432EA31BD78A" = {"isa" = "PBXFileReference";
 "path" = "Assets.xcassets";
 "sourceTree" = "<group>";
@@ -280,6 +286,7 @@
 "541B66CD1C747C1DB8B77446",
 "A150F31180C678E8E8A70275",
 "9A369C44F8A274915962CB02",
+"EF409BEBD2079C946CF27AD7",
 "8C7BBF5CEC333F89C39F4DD3",
 "6C93BD11F9AA66A9F00EC3BD",
 "DB3AB349C060C5F6876F6B06",
@@ -466,6 +473,9 @@
 "B42986A888DFAE4A87D7D03E" = {"isa" = "PBXBuildFile";
 "fileRef" = "9A369C44F8A274915962CB02";
 };
+"69248AC2183A09D726E9C3E8" = {"isa" = "PBXBuildFile";
+"fileRef" = "EF409BEBD2079C946CF27AD7";
+};
 "CF6F4F4D8267BD3B2C93858F" = {"isa" = "PBXCopyFilesBuildPhase";
 "buildActionMask" = 2147483647;
 "dstPath" = "engine/data";
@@ -473,6 +483,7 @@
 "name" = "Engine data";
 "runOnlyForDeploymentPostprocessing" = 0;
 "files" = ("B42986A888DFAE4A87D7D03E",
+"69248AC2183A09D726E9C3E8",
 );
 };
 "C72034D90DBA23D41E5D536F" = {"isa" = "PBXFileReference";
@@ -669,6 +680,9 @@
 "CD49F47DDE9288183F2E935C" = {"isa" = "PBXBuildFile";
 "fileRef" = "9A369C44F8A274915962CB02";
 };
+"24C5854EEE01022A7914CFA0" = {"isa" = "PBXBuildFile";
+"fileRef" = "EF409BEBD2079C946CF27AD7";
+};
 "E30EA896676454D26051C0B1" = {"isa" = "PBXCopyFilesBuildPhase";
 "buildActionMask" = 2147483647;
 "dstPath" = "engine/data";
@@ -676,6 +690,7 @@
 "name" = "Engine data";
 "runOnlyForDeploymentPostprocessing" = 0;
 "files" = ("CD49F47DDE9288183F2E935C",
+"24C5854EEE01022A7914CFA0",
 );
 };
 "1CD1F7CCDD6A191FBAD3DF02" = {"isa" = "PBXFileReference";
@@ -717,8 +732,17 @@
 "244210E48437B6556980A702" = {"isa" = "PBXProject";
 "buildConfigurationList" = "1E4B6209DBC7689E3E7CF89C";
 "compatibilityVersion" = "Xcode 14.0";
-"developmentRegion" = "en";
-"knownRegions" = ("en",
+"developmentRegion" = "ru";
+"knownRegions" = ("ru",
+"en",
+"de",
+"es",
+"fr",
+"it",
+"pt-BR",
+"ja",
+"ko",
+"zh-Hans",
 "Base",
 );
 "mainGroup" = "664F835B1ED89846DAB355B5";

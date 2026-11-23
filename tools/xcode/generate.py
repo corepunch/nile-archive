@@ -156,6 +156,13 @@ class Project:
                         defaultConfigurationIsVisible=0, defaultConfigurationName='Debug')
 
 
+def languages(home):
+    """The game's languages, its source first (data/common/l10n/languages.txt)."""
+    path = home / 'data/common/l10n/languages.txt'
+    tags = [line.split('#', 1)[0].strip() for line in path.read_text(encoding='utf-8').splitlines()] if path.exists() else []
+    return [tag for tag in tags if tag] or ['en']
+
+
 def scheme(path, project_name, game, name, target):
     root = ET.Element('Scheme', LastUpgradeVersion='1600', version='1.3')
     action = ET.SubElement(root, 'BuildAction', parallelizeBuildables='YES', buildImplicitDependencies='YES')
@@ -224,9 +231,13 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     # The engine's Lua, copied as one folder to engine/lua.
     engine_lua = [project.add('engine/lua', 'PBXFileReference', path=rel('engine/lua'), name='lua',
                               sourceTree='SOURCE_ROOT', lastKnownFileType='folder')]
-    # The default skin's atlases and background, copied as one folder to engine/data/board.
-    engine_data = [project.add('engine/data/board', 'PBXFileReference', path=rel('engine/data/board'), name='board',
-                               sourceTree='SOURCE_ROOT', lastKnownFileType='folder')]
+    # The default skin's atlases and background, copied as one folder to engine/data/board,
+    # and the engine's catalogues and script fonts to engine/data/common.
+    engine_data = [project.add('engine/data/' + part, 'PBXFileReference', path=rel('engine/data/' + part), name=part,
+                               sourceTree='SOURCE_ROOT', lastKnownFileType='folder') for part in ('board', 'common')]
+    # The languages the game offers: iOS lists them for the per-app language
+    # setting and the App Store shows them; the engine reads the same file.
+    tags = languages(home)
     assets = None
     if (home / 'Assets.xcassets').is_dir():
         assets = project.add('game/assets', 'PBXFileReference', path='Assets.xcassets',
@@ -273,7 +284,8 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         info = dict(CFBundleExecutable='$(EXECUTABLE_NAME)', CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',
                     CFBundleName=meta.get('home', meta['name']), CFBundleDisplayName=meta.get('home', meta['name']), CFBundlePackageType='APPL',
                     CFBundleInfoDictionaryVersion='6.0', CFBundleShortVersionString='$(MARKETING_VERSION)',
-                    CFBundleVersion='$(CURRENT_PROJECT_VERSION)', CFBundleDevelopmentRegion='en',
+                    CFBundleVersion='$(CURRENT_PROJECT_VERSION)', CFBundleDevelopmentRegion=tags[0],
+                    CFBundleLocalizations=tags,
                     LSApplicationCategoryType='public.app-category.games', ITSAppUsesNonExemptEncryption=False)
         if ipad:
             info.update(LSRequiresIPhoneOS=True, UIRequiresFullScreen=True, UIStatusBarHidden=True,
@@ -336,7 +348,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
     products_group = project.add('group/products', 'PBXGroup', name='Products', children=products, sourceTree='<group>')
     main_group = project.add('group/main', 'PBXGroup', children=browse + [products_group], sourceTree='<group>')
     root = project.add('project', 'PBXProject', buildConfigurationList=root_configs, compatibilityVersion='Xcode 14.0',
-                       developmentRegion='en', knownRegions=['en', 'Base'], mainGroup=main_group,
+                       developmentRegion=tags[0], knownRegions=tags + ['Base'], mainGroup=main_group,
                        productRefGroup=products_group, projectDirPath='', projectRoot='',
                        targets=targets)
     if existing.get(root, {}).get('attributes'):
