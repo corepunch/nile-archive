@@ -73,7 +73,7 @@ for level=1,rules.LEVELS do
     end
     g.earnings = {price[1], price[2], price[3]}
     check(rules.progress_reward(p,g,island.wonders),'first clear advances the campaign')
-    for z=1,5 do c:unlock(z,p.wallet) end
+    for z=1,island.ISLAND_ZONES - 1 do c:unlock(z,p.wallet) end
     local kind=journey.wonder_at(level)
     if kind then
         if level == 21 then
@@ -117,7 +117,7 @@ for level=1,rules.LEVELS do
     check(rules.progress_reward(p,replay,island.wonders) and p.wallet[4]==stars,'replay gives no story progress or stars')
     check(not journey.next(p,owned(c),nil),'replay cannot repeat a completed beat')
 end
-check(c.count==20 and c.open==63 and p.wallet[4]==100,'a hundred clears open all twenty stalls and all five new regions')
+check(c.count==20 and c.open==31 and p.wallet[4]==100,'a hundred clears open all twenty stalls and all five districts')
 check(journey.next(p,owned(c),100)==nil,'finale ends at the hundredth wish, not the last stall')
 
 R.prog = {level=0, wallet=purse(), completed={level=0, rng=4, moves=10, score=400, earnings={33, 6, 9}}}
@@ -187,7 +187,7 @@ journey.placed(back,'cocoa')
 journey.skip_backlog(back)
 check(back.story_seen['after-38'] and not back.story_seen['after-43'] and not journey.next_placement(back),
       'turning the story back on skips what was missed')
-local preserved=city.new();island.island_setup(preserved);preserved.open=63
+local preserved=city.new();island.island_setup(preserved);preserved.open=(1 << island.ISLAND_ZONES) - 1
 preserved:add(c.items[1].pos,9,0)
 island.restore_saved(preserved,10)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy Christmas tree')

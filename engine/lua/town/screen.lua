@@ -147,12 +147,12 @@ function T.new(c, config, hooks)
         N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     })
     if b.layout == "play-primary" and b.pause then
-        v.navigation = ui.form(N.row {align = "center", gap = 8,
-            N.spacer {grow = 1},
-            N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
-            N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
-            N.button {id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height},
-            N.spacer {grow = 1},
+        v.navigation = ui.form(N.row {
+            N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height,
+                pin = {.25, .5}, pin_offset = {-b.play / 4, 0}},
+            N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height, pin = {.5, .5}},
+            N.button {id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height,
+                pin = {.75, .5}, pin_offset = {b.play / 4, 0}},
         })
     elseif b.layout == "play-primary" then
         v.navigation = ui.form(N.row {align = "center", gap = 8,
@@ -184,7 +184,9 @@ function View:layout()
     self.buttons.middle = m.kind == "round" and vec2(row.x + b.build + m.gap + m.diameter / 2, s:max().y - m.from_bottom)
         or vec2(row:center().x, s:max().y - m.from_bottom)
     if b.layout == "play-primary" then
-        if not b.pause then
+        if b.pause then
+            row = rect(s.x, row.y, s.w, row.h)
+        else
             -- The variant without Pause extends to the physical edge.
             row = rect(row.x, app.bleed():max().y - b.bottom - b.height, row.w, b.height)
         end
@@ -528,6 +530,9 @@ function View:frame(inp, dt, active)
     local cam = c.cam
     cam.view = view
     c.cam = cam
+    if self.cfg.smooth_pan then
+        c.smooth_pan = active and not (h.reduced_motion and h.reduced_motion()) or false
+    end
     local city_input = active and inp or input{pos = inp.pos, pinch = 1}
     -- A still has no pointer held down: feed the real gesture so a
     -- "--placing dragging" capture shows the lifted sprite and its shadow.

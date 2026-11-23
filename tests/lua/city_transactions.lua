@@ -75,6 +75,33 @@ t:case('injected hold picks up without spending, cancellation retains original',
     c:cancel()
     t:check(c.items[1].pos.x==original.x and c.items[1].pos.y==original.y and w[1]==0,'cancel restores building without payment')
 end)
+t:case('map swipe coasts and released overscroll eases to the edge',function()
+    local c = H.city({})
+    c.cam = camera{world=size2(1000,1000),view=rect(0,0,200,200),zoom=1,min_zoom=1,max_zoom=1,center=vec2(500,500)}
+    c.smooth_pan = true
+    local bank, point = purse(), vec2(100,100)
+    local function tick(pointer)
+        pointer.pinch, pointer.pos, pointer.press_pos = 1, point, point
+        c:update(input(pointer), bank, 0, 1/60)
+        return c.cam.center.x
+    end
+    tick{pressed=true,down=true}
+    local drag = tick{down=true,dragging=true,drag=vec2(-24,0)}
+    t:check(drag == 524, 'drag follows the pointer directly')
+    tick{released=true,dragging=true}
+    local coast = tick{}
+    t:check(coast > drag and tick{} > coast, 'map coasts across idle frames after release')
+    local stopped = tick{pressed=true,down=true}
+    t:check(tick{released=true} == stopped and tick{} == stopped, 'touch stops the coast')
+    tick{pressed=true,down=true}
+    local over = tick{down=true,dragging=true,drag=vec2(800,0)}
+    t:check(over < 100 and over > 52, 'dragging beyond the edge has bounded resistance')
+    tick{released=true,dragging=true}
+    local rebound = tick{}
+    t:check(rebound > over and rebound < 100, 'edge rebounds smoothly toward the bound')
+    for _ = 1, 60 do tick{} end
+    t:check(tick{} == 100, 'edge settles without drift')
+end)
 for slot=1,purse.MAX do
     t:case('region short resource '..slot,function()
         local c=H.city({})

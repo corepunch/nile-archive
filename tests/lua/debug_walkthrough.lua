@@ -27,22 +27,24 @@ R.prog.level = journey.wonder_levels[1]
 for slot = 1, purse.MAX do R.prog.wallet[slot] = 9999 end
 R.town_setup()
 R.board_art = {}   -- rule tests build the list without loading textures
-local first, second = R.words.epochs[1], R.words.epochs[2]
 local first_project, second_project = island.ladder[1], island.ladder[2]
 local funded_wallet = R.prog.wallet
 check(R.active_epoch() == 1 and R.can_build_project(), "the first epoch has an affordable project")
-R.open_catalogue("all")
+R.open_catalogue()
 local stock = R.catalogue_form.nodes.stock
 local function row(index) return stock.records[stock.children[index].item_key] end
-check(row(1).heading == first and row(6).heading == second,
-    "the catalogue separates the four projects in each epoch")
 for i = 1, 4 do
-    local project = row(i + 1)
-    check(project.kind == island.ladder[i].kind and project.available,
-        "every project in the opened epoch can be bought in catalogue order when funded")
+    local project = row(i)
+    check(project.kind == island.ladder[i].kind and project.project and project.available,
+        "each current quest has its own row and can be bought when funded")
 end
-check(not row(7).available and row(7).action == R.words.catalogue.locked,
-    "future projects show a lock without a level requirement")
+check(not row(5).project, "optional stock follows the four quests")
+local upcoming = island.buildings[island.ladder[5].kind + 1].key
+check(not R.catalogue_tile(upcoming), "future projects are hidden")
+local decoration = relic and "shrub" or "fir_snowy"
+local _, decoration_tile = R.catalogue_tile(decoration)
+check(decoration_tile and not decoration_tile.project and decoration_tile.available,
+    "the regular shop still sells decorations")
 R.prog.wallet = purse(5)
 check(not R.can_build_project(), "a short wallet does not light the Build control")
 R.prog.wallet = funded_wallet
@@ -54,6 +56,22 @@ check(R.debug_advance_town() and island.owned(R.island, first_project.kind) == 1
 R.prog.level = 20
 check(R.active_epoch() == 1, "clearing all twenty boards keeps the phase open while it still has projects")
 check(R.sync_epoch_regions() == 0 and not R.island:zone_open(1), "the first district stays fogged while projects are due")
+local first_key = island.buildings[first_project.kind + 1].key
+local current_wallet = R.prog.wallet
+R.prog.wallet = purse()
+R.open_catalogue()
+local _, built = R.catalogue_tile(first_key)
+check(built and built.state == "built" and #built.prices > 0 and built.prices[1].number_style == "body",
+    "built projects keep their original price in the regular style")
+R.prog.wallet = current_wallet
+local waivers = island.waived(R.island)
+island.set_waived(R.island, {[2]=true, [3]=true, [4]=true})
+R.open_catalogue()
+check(row(1).id == upcoming and not R.catalogue_tile(first_key),
+    "the shop replaces the previous phase when the next one opens")
+check(R.catalogue_tile(decoration), "decorations stay in the shop when the phase changes")
+island.set_waived(R.island, waivers)
+R.overlay = R.OV_NONE
 R.prog.level = 1
 check(not R.debug_advance_town() or island.owned(R.island, island.wonder_kinds and island.wonder_kinds[1] or 0) == 1, 'repeated action does not duplicate the building')
 R.on_island, R.overlay = true, R.OV_NONE
@@ -180,6 +198,11 @@ island.island_setup(R.island)
 R.prog = {level=20, seed=1, wallet=purse(99999,99999,99999,20), story_seen={}}
 R.on_island, R.overlay = true, R.OV_NONE
 R.town_setup()
+check(R.island.zone_count == 5 and R.island.open == 1, 'only the first of five districts starts open')
+for z = 1, 4 do
+    check(R.island:zone_of(R.island.zones[z + 1].marker) == z, 'each locked marker sits in its own district')
+end
+check(R.island:zone_of(vec2(1220, 860)) == 4, 'the old northern district belongs to the final phase')
 for _ = 1, 3 do
     check(island.island_place_next(R.island, R.prog.wallet, 20, 0), 'place an earned project')
 end
@@ -188,10 +211,10 @@ check(R.town:begin(island.ladder[4].kind, false) and R.town:confirm(), 'confirm 
 check(R.overlay == R.OV_EPOCH and R.epoch_award == 1 and R.island:zone_open(1),
     'late fourth purchase presents the award and opens its district')
 R.close_epoch(false)
-R.island.open = R.island.open | (1 << 2)
+R.island.open = R.island.open | (1 << 2) | (1 << 5)
 check(save.write('epoch-award', R.serialize), 'save the acknowledged award and previously opened land')
 R.island.open, R.prog.epoch_seen = 1, nil
-check(save.read('epoch-award', R.serialize) and R.island:zone_open(2) and R.prog.epoch_seen == 1
+check(save.read('epoch-award', R.serialize) and R.island.open == 23 and R.prog.epoch_seen == 1
     and not R.show_epoch_award(R.completed_epochs()), 'reload preserves older map access and does not repeat the award')
 R.open_menu()
 R.menu.actions.continue()

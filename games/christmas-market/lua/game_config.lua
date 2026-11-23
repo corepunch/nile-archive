@@ -57,6 +57,9 @@ return {
     confirm = {title = "Restart this winter wish?"},
     failed = {town = "VISIT MARKET"},
     zone = {
+        epoch_hint = function(epoch)
+            return epoch == 5 and "Unlocked at Christmas" or ("Unlocked in Advent %d"):format(epoch)
+        end,
         subtitle = "MORE ROOM FOR CHRISTMAS CHEER",
         cleared = "WISHES GRANTED  %d / %d",
         earn = "GRANT NEW WISHES TO OPEN IT",
@@ -79,19 +82,7 @@ return {
         every_wish = "EVERY WISH", moves = "MOVES",
     },
     catalogue = {
-        title = "Build your market",
-        categories = {
-            {"all", "All Christmas magic"},
-            {"wonder", "Market stalls"},
-            {"building", "Decorations"},
-            {"tree", "Snowy trees"},
-            {"cottage", "Cottages"},
-        },
-        category = "all",
-        built = "BUILT",
         poor = "MORE RESOURCES NEEDED",
-        reserved = "RESERVED FOR STALLS",
-        full = "MARKET IS FULL",
     },
     debug = {victory = 3, catalogue_card = 10, narrator = "noelle"},
 }

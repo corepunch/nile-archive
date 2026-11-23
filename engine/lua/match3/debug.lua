@@ -39,7 +39,7 @@ function D.bind(R, W)
     -- With `purchases`, a town after that many ladder purchases instead.
     -- Phase previews reveal land as each set of four is placed.
     local function island_with(n, purchases, levels_per_epoch)
-        local opened_at = {0, 6, 9, 15, 21, 27}
+        local opened_at = {0, 6, 9, 15, 21}
         local last = purchases and island.ladder[purchases]
         local cleared = levels_per_epoch and purchases // 4 * levels_per_epoch
             or last and last.after or n > 0 and journey.wonder_levels[n] or 0
@@ -232,7 +232,8 @@ function D.bind(R, W)
         if a then
             R.on_island, R.toast_time = true, 0
             local award = app.arg("epoch-award") and R.completed_epochs() or nil
-            if award then R.island_focus(R.island.zones[award + 1].marker, R.island.cam.zoom) end
+            local zone = award and R.island.zones[award + 1]
+            if zone then R.island_focus(zone.marker, R.island.cam.zoom) end
             R.open_epoch(award)
         end
         if app.arg("showcase") then
@@ -240,7 +241,7 @@ function D.bind(R, W)
                            vec2(1180, 1800), vec2(760, 1700), vec2(1040, 1620), vec2(620, 1550), vec2(920, 1400)}
             R.prog.level, R.prog.wallet = LEVELS, wallet(340, LEVELS * 3)
             R.island.count = 0
-            R.island.open = 63
+            R.island.open = (1 << ISLAND_ZONES) - 1
             for i = 0, WONDERS - 1 do
                 local kind = wonder_kind(i)
                 local p = R.island:snap(spots[i + 1], kind)
@@ -365,8 +366,10 @@ function D.bind(R, W)
             R.toast_time = 0
         end
         if app.arg("catalogue") then
-            island_with(4); R.on_island = true
-            R.open_catalogue(app.arg("catalogue"), tonumber(app.arg("catalogue-page")) or 1); R.toast_time = 0
+            local filter = app.arg("catalogue")
+            if filter == "current" then island_with(0, 1) else island_with(4) end
+            R.on_island = true
+            R.open_catalogue(filter, tonumber(app.arg("catalogue-page")) or 1); R.toast_time = 0
         end
         if app.arg("replay-victory") then
             island_with(4); R.g = rules.game_start(1, 123478); R.g.won = true; R.g.score = 5860; R.g.moves = 12
@@ -376,7 +379,7 @@ function D.bind(R, W)
         if app.arg("building-review") then
             local first = ((tonumber(app.arg("building-review")) or 1) - 1) * 4
             R.prog.level, R.prog.wallet = LEVELS, purse(2000, 0, 0, LEVELS * 3)
-            R.island.count = 0; R.island.open = 63
+            R.island.count = 0; R.island.open = (1 << ISLAND_ZONES) - 1
             local spots = {vec2(700, 1500), vec2(1100, 1500), vec2(700, 1850), vec2(1100, 1850)}
             for k = 0, 3 do
                 local kind = first + k

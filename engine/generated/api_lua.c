@@ -1620,6 +1620,7 @@ static int l_city_index(lua_State *L)
     if (!strcmp(k, "fog_clouds")) { lua_pushboolean(L, p->fog_clouds); return 1; }
     if (!strcmp(k, "road")) { api_push_texture(L, p->road); return 1; }
     if (!strcmp(k, "movable")) { lua_pushboolean(L, p->movable); return 1; }
+    if (!strcmp(k, "smooth_pan")) { lua_pushboolean(L, p->smooth_pan); return 1; }
     if (!strcmp(k, "placement_guides_on_ground")) { lua_pushboolean(L, p->placement_guides_on_ground); return 1; }
     if (!strcmp(k, "show_footprints")) { lua_pushboolean(L, p->show_footprints); return 1; }
     if (!strcmp(k, "income_icon")) { api_push_texture(L, p->income_icon); return 1; }
@@ -1698,6 +1699,7 @@ static int l_city_newindex(lua_State *L)
     if (!strcmp(k, "fog_clouds")) { p->fog_clouds = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "road")) { p->road = api_get_texture(L, 3); return 0; }
     if (!strcmp(k, "movable")) { p->movable = lua_toboolean(L, 3); return 0; }
+    if (!strcmp(k, "smooth_pan")) { p->smooth_pan = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "placement_guides_on_ground")) { p->placement_guides_on_ground = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "show_footprints")) { p->show_footprints = lua_toboolean(L, 3); return 0; }
     if (!strcmp(k, "income_icon")) { p->income_icon = api_get_texture(L, 3); return 0; }

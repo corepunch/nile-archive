@@ -22,7 +22,7 @@ island.restore_saved(old, 0)
 check(old.count == 1 and island.owned(old, starter) == 1 and old.items[1].pos:dist(pos) < .01,
       'an old opening save upgrades its starter in place')
 -- The map's minimum level thresholds match the five phase boundaries.
-local opens = {[20]=1, [40]=2, [60]=3, [80]=4, [100]=5}
+local opens = {[20]=1, [40]=2, [60]=3, [80]=4}
 for level=0,rules.LEVELS-1 do
     local g = rules.game_start(level,100+level)
     assert(rules.game_hint(g), 'Christmas opening needs a legal move')
@@ -50,7 +50,7 @@ for level=0,rules.LEVELS-1 do
     assert(island.campaign_count(c)==due, 'Every funded stall must fit the land open by then, in ladder order')
     assert(island.wonder_count(c)==journey.earned(p.level), 'Story stalls keep their schedule')
 end
-assert(c.open==63 and p.wallet[4]==rules.LEVELS and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
+assert(c.open==31 and p.wallet[4]==rules.LEVELS and p.wallet[2]>0 and p.wallet[3]>0 and p.wallet[5]==0,
        'A hundred cleared wishes open all five new regions and spare matched goods are banked')
 local before = p.wallet[1]
 local replay = rules.game_start(0,50)

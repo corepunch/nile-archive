@@ -1,8 +1,11 @@
 -- town_config.lua — the town screen's layout and wording, merged over the
 -- engine's defaults (engine/lua/town/screen.lua): tables merge field by field, lists
 -- replace and town.none clears a default.
+local tool_size = require("match3").TOOL_SIZE
+
 return {
     background = "#738FB5",
+    smooth_pan = true,
     header = {
         role = "wallet",
         align = "center",
@@ -16,7 +19,7 @@ return {
     },
     bottom = {
         layout = "play-primary",
-        build = 64, play = 100, height = 100, secondary_height = 64,
+        build = tool_size, play = 100, height = 100, secondary_height = tool_size,
         bottom = 12, pause = true,
     },
     bubble = {width = 300, title = "gold"},

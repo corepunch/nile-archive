@@ -317,7 +317,7 @@ local function test_island()
     -- shoreline, collisions, failed builds change nothing, moving is free
     c = city.new()
     island.island_setup(c)
-    c.open = 63
+    c.open = (1 << island.ISLAND_ZONES) - 1
     local wallet = purse(5000, 5000, 5000)
     c:begin_place(0, vec2(10, 10))
     check(c:confirm(wallet, 0).result == city.BLOCKED and c.count == 0 and wallet[1] == 5000, "water blocks")
@@ -343,12 +343,12 @@ local function test_island()
     local cleared=wallet[rules.CLEARED]
     check(c:unlock(1, wallet) and wallet[rules.COMPASSES] == 0 and wallet[rules.CLEARED] == cleared, "cleared boards alone open land and are not spent")
     check(not c:unlock(1, wallet) and c:can_place(vec2(1330, 2100), 0), "open region builds")
-    check(not island.island_zone_touches(5, 1), "the temple ridge is far from the harbour")
+    check(not island.island_zone_touches(4, 1), "the northern district is far from the harbour")
 end
 
 local function test_catalogue()
     check(#island.catalogue==97 and #island.buildings==97,"complete building catalogue")
-    local c=city.new();island.island_setup(c);c.open=63
+    local c=city.new();island.island_setup(c);c.open=(1 << island.ISLAND_ZONES) - 1
     local wallet=purse(1000,500,500,30,10)
     local shrub=37
     local reserve=island.reserved_cost(c,7)

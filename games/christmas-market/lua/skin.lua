@@ -50,6 +50,7 @@ return ui.skin{
         menu_subtitle = {extends = "gold", tracking = 8, outline = "#501D26", shadow = "#111D37DD"},
         green = {extends = "base", fill = "#C7FFC9", fill2 = "#5BC682"},
         white = {extends = "base", fill = "#FFFFFF", fill2 = "#C4E8DC"},
+        price_short = {font = "lilita", em = 64, fill = "#B42A21"},
         short = {extends = "base", fill = "#FFD9CC", fill2 = "#F0705A"},   -- a price the wallet cannot cover
         -- Running copy on parchment is flat ink. The rim, gradient and shadow
         -- above are for titles, buttons and figures.

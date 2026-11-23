@@ -69,6 +69,8 @@ void city_init(city *c, const char *ground_path)
     c->selected = c->pop_index = -1;
     city_cancel(c);
     c->press_consumed = false;
+    c->panning = false;
+    c->pan_velocity = v2(0, 0);
     c->lift = 0;
     for (int i = 0; i < c->def_count; i++) {
         building_def *d = &c->defs[i];
@@ -351,6 +353,68 @@ static city_event quick_build(city *c, vec2 p, purse *wallet, double now, vec2 s
     return ev;
 }
 
+static float pan_resistance(float over, float limit)
+{
+    return over * limit / (limit + fabsf(over));
+}
+
+static void city_update_camera(city *c, input in, bool interrupted, float dt)
+{
+    if (!c->smooth_pan || interrupted || c->placing >= 0 || c->selected >= 0 || c->cam.zoom <= 0) {
+        c->pan_velocity = v2(0, 0);
+        c->panning = false;
+        c->cam = camera_clamp(camera_input(c->cam, in));
+        return;
+    }
+
+    camera bounded = camera_clamp(c->cam);
+    dt = clampf(dt, 0, .05f);
+    if (in.pressed) {
+        c->pan_velocity = v2(0, 0);
+        c->panning = false;
+    }
+    if ((in.down || in.released) && in.dragging && rect_contains(bounded.view, in.press_pos)) {
+        if (!c->panning) c->pan_target = bounded.center;
+        c->panning = in.down;
+        c->pan_target = vec2_sub(c->pan_target, vec2_scale(in.drag, 1 / bounded.zoom));
+        bounded.center = c->pan_target;
+        bounded = camera_clamp(bounded);
+        /* Rubber-band at most a short distance in screen units, at every zoom. */
+        float limit = 48 / bounded.zoom;
+        vec2 over = vec2_sub(c->pan_target, bounded.center);
+        over = v2(clampf(over.x, -3 * limit, 3 * limit), clampf(over.y, -3 * limit, 3 * limit));
+        c->pan_target = vec2_add(bounded.center, over);
+        bounded.center = vec2_add(bounded.center, v2(pan_resistance(over.x, limit), pan_resistance(over.y, limit)));
+        c->cam = bounded;
+        if (dt > 0 && (in.down || vec2_dot(in.drag, in.drag) > 0)) {
+            vec2 sample = vec2_scale(in.drag, 1 / dt);
+            float speed = vec2_len(sample);
+            if (speed > 1500) sample = vec2_scale(sample, 1500 / speed);
+            c->pan_velocity = vec2_approach(c->pan_velocity, sample, 20, dt);
+        }
+        return;
+    }
+
+    if (in.down || in.pressed || c->panning) {
+        /* A new press stops the coast. Losing a press without release cancels it. */
+        c->pan_velocity = v2(0, 0);
+        c->panning = false;
+        c->cam = bounded;
+        return;
+    }
+    if (vec2_dist(c->cam.center, bounded.center) * bounded.zoom > .25f) {
+        c->pan_velocity = v2(0, 0);
+        bounded.center = vec2_approach(c->cam.center, bounded.center, 16, dt);
+    } else {
+        const float friction = 7;
+        float decay = expf(-friction * dt);
+        bounded = camera_pan(bounded, vec2_scale(c->pan_velocity, (1 - decay) / friction));
+        c->pan_velocity = vec2_scale(c->pan_velocity, decay);
+        if (vec2_len(c->pan_velocity) < 3) c->pan_velocity = v2(0, 0);
+    }
+    c->cam = bounded;
+}
+
 city_event city_update(city *c, input in, purse *wallet, double now, float dt)
 {
     city_event ev = {CITY_NONE, -1, -1, {{0}}, in.pos};
@@ -410,7 +474,7 @@ city_event city_update(city *c, input in, purse *wallet, double now, float dt)
 
     input cam_in = in;
     if (c->press_target == 1) cam_in.dragging = false, cam_in.drag = v2(0, 0);
-    c->cam = camera_clamp(camera_input(c->cam, cam_in));
+    city_update_camera(c, cam_in, interrupted, dt);
 
     bool consumed = c->press_consumed;
     if (in.released || !in.down) c->press_consumed = false;

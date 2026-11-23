@@ -1,4 +1,4 @@
--- island.lua — the Lost Valley map: shoreline, six regions and ten wonders.
+-- island.lua — the Lost Valley map: shoreline, five regions and ten wonders.
 --
 -- The island is an engine city. This file only knows the map: which world
 -- points are lawn (an authored contour), which region owns them (a hidden
@@ -9,7 +9,7 @@ local M = {}
 local journey = require("journey")
 local economy = require("economy")
 
-M.ISLAND_W, M.ISLAND_H, M.ISLAND_ZONES, M.WONDERS = 1920, 2880, 6, 10
+M.ISLAND_W, M.ISLAND_H, M.ISLAND_ZONES, M.WONDERS = 1920, 2880, 5, 10
 local ZONES, WONDERS = M.ISLAND_ZONES, M.WONDERS
 
 -- Ten restorations in campaign order. Each sprite's footprint is measured in
@@ -102,8 +102,8 @@ function M.restore_saved(c, level)
     return needs_relocation
 end
 
-local zone_names = {"Welcome Square", "Lantern Lane", "Gingerbread Green", "Carolers Court", "Starlight Terrace", "Evergreen Hill"}
-local zone_centers = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
+local zone_names = {"Welcome Square", "Lantern Lane", "Gingerbread Green", "Carolers Court", "Starlight Terrace"}
+local zone_seeds = {vec2(760, 2080), vec2(1330, 2100), vec2(670, 1430), vec2(1330, 1440), vec2(850, 770), vec2(1220, 860)}
 local suggestions = {vec2(760, 2030), vec2(1270, 2120), vec2(640, 1580), vec2(1110, 1830), vec2(1000, 1420),
                      vec2(1400, 1710), vec2(1070, 1040), vec2(1390, 1350), vec2(690, 1250), vec2(940, 780)}
 
@@ -135,16 +135,17 @@ local function region_init()
     region = {}
     local queue, head, tail = {}, 1, 0
     for i = 0, MQ * MR - 1 do region[i] = on_lawn(map_position(i)) and -1 or -2 end
-    for z = 0, ZONES - 1 do   -- seed each region at the land cell nearest its centre
+    -- Keep both northern seeds in the last district so existing plots stay on the same land.
+    for seed, center in ipairs(zone_seeds) do
         local best, best_d = -1, math.huge
         for i = 0, MQ * MR - 1 do
             if region[i] == -1 then
-                local d = map_position(i) - zone_centers[z + 1]
+                local d = map_position(i) - center
                 local dd = d:dot(d)
                 if dd < best_d then best_d, best = dd, i end
             end
         end
-        if best >= 0 then region[best] = z; tail = tail + 1; queue[tail] = best end
+        if best >= 0 then region[best] = math.min(seed, ZONES) - 1; tail = tail + 1; queue[tail] = best end
     end
     while head <= tail do   -- multi-source flood fill: every region grows at the same pace
         local i = queue[head]
@@ -206,7 +207,7 @@ function M.island_setup(c)
     c.defs = M.buildings
     local zones, levels = {}, #require("campaign").levels
     for z = 1, ZONES do
-        zones[z] = {name = zone_names[z], marker = zone_centers[z], needs = purse(0, 0, 0, (z - 1) * levels // (ZONES - 1)), cost = purse()}
+        zones[z] = {name = zone_names[z], marker = zone_seeds[z], needs = purse(0, 0, 0, (z - 1) * levels // ZONES), cost = purse()}
     end
     c.zones = zones
     c.buildable = function(_, p) return M.island_grass(p) end

@@ -111,7 +111,7 @@ capsules have the same brass rim and drop shadow as the round buttons. A circula
 counter sits at the left of the resource balances and turns red at five
 moves. Blue tablets mark the board objective. Winning banks the resources
 earned in the three slots.
-Four large circular bonus sockets sit beside a smaller Settings gear below the board from the first
+Four circular bonus sockets sit beside a matching Settings gear below the board from the first
 expedition. Settings opens the Explorer's Guide,
 and Results shows the score and rewards. Full-size popup actions use raised gold or ochre stone buttons. Small actions use text, and the corner X sits on red enamel. The build catalogue lists buildings directly on the scroll. Results show outlined resource icons and figures. Popup cards lift and fade in over a
 dimmed background, then drift down as they close. The board fades away before
@@ -165,7 +165,7 @@ See the [backdrop catalogue](docs/asset-catalogue.md#construction-backdrops).
 1. Start directly in the first match-3 level; there is no title-screen or friend-road detour.
 2. Clear all turquoise plaques within the move budget.
 3. Claim the matched resources. A first clear counts as a cleared board.
-4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. Tap Build to see projects grouped by epoch and select one for its cost. A particle trail marks Build when any eligible project is affordable.
+4. Collect and play the next expedition. When a restoration opens or becomes affordable, Collect takes you to the island. Tap Build to see the current epoch’s projects and select one for its cost. A particle trail marks Build when any eligible project is affordable.
 5. Confirm construction, pan across the growing settlement and open neighboring land when eligible.
 6. Construction adds a new resource piece or tool to later boards. The campaign has twenty restorations across five epochs.
 
@@ -206,9 +206,11 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 ## Buildings
 
-Build opens the catalogue grouped by epoch. A particle trail circles Build
-when a project is affordable. Select a project for its price or shortfall
-and board reward. The triangular Play button shows the next expedition
+Build opens the shop. The four buildings marked Quest for the current epoch appear first,
+followed by decorations and other optional stock. Each card shows prices in one row below the building name,
+with unaffordable amounts shown in red. The town checklist shows
+the current epoch’s projects. Particles mark the projects you can build now.
+Select a project in the catalogue for its price or shortfall and board reward. The triangular Play button shows the next expedition
 between Build and Pause. The next epoch opens after the current one’s
 20 expeditions and four projects.
 
@@ -252,16 +254,18 @@ and move like wonders, with a 160-object island limit. See the complete
 
 The 1920 × 2880 world scrolls beyond the phone screen. Hidden six-neighbor land tiles define connected regions, while placement itself uses continuous world coordinates. The puzzle grid and island territory graph are separate systems.
 
-| Region | Boards cleared to open |
-| --- | ---: |
-| Harbor glade | 0 |
-| Sunlit coast | 15 |
-| Fern meadow | 30 |
-| Sun garden | 50 |
-| Ancient heights | 70 |
-| Temple ridge | 85 |
+| Region | Opens in |
+| --- | --- |
+| Harbor glade | Epoch I |
+| Sunlit coast | Epoch II |
+| Fern meadow | Epoch III |
+| Sun garden | Epoch IV |
+| Ancient heights | Epoch V |
 
-A region must touch opened land and meet its boards-cleared gate. Expansion spends nothing. Regions do not open on a timer, and players do not need to build roads.
+Harbor glade is open from the start. Each new epoch opens its district once
+its predecessor’s twenty expeditions and four projects are complete. Tap a
+question mark to see which epoch opens that district. Swipe to coast across
+the island, with a gentle rebound at the edge.
 
 ## Play
 
@@ -274,9 +278,9 @@ A region must touch opened land and meet its boards-cleared gate. Expansion spen
   costs zero moves. [Bonus effects and restorations](docs/board-progression.md#bonus-pieces)
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
 - Each won attempt banks what the crew brings back. First clears count toward boards cleared. Restoration progress follows confirmed placement.
-- Large scrollable island, six connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
-- Adjacent clouded regions open by the number of boards cleared. There are no stars or compasses.
-- The settings gear sits beside the three resource balances. Buildings, Play and Expeditions occupy the town's bottom row. Both catalogues scroll continuously. The building shop shows three cards per row.
+- Large scrollable island, five connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
+- Locked districts open with their epochs.
+- The settings gear sits beside the three resource balances. Buildings, Play and Expeditions occupy the town's bottom row. Both catalogues scroll continuously. The building shop shows one card per row.
 - Choose any valid grassy position within opened land. Hold a placed building still for half a second to pick it up, then drag and confirm or cancel. The building shows no label; it turns semitransparent red where it can't go. Completed buildings can be moved without spending resources. Preview and cancellation never change the saved layout.
 - Footprint collision and shoreline checks prevent overlap and water placement. Automatic connector roads are disabled.
 - Progress saves after rewards, construction and region unlocks (a `key=value` file in the per-game preferences folder, or `localStorage["relic-rush/progress"]` in the browser). An unfinished board restarts if the application is closed.
@@ -388,7 +392,7 @@ Ideas discussed for later development:
 - Human playtesting, campaign balancing, sound design, haptics and more responsive device-specific polish.
 - Localization; app icons, safe-area validation, mobile performance checks and signed iOS/Android releases. The standalone prototype's Android/iOS host projects were not carried into this repository; mobile packaging is to be set up once for the shared engine.
 
-The offline prototype has 100 square boards, twenty campaign purchases, repeatable scenery, six regions and local saves.
+The offline prototype has 100 square boards, twenty campaign purchases, repeatable scenery, five regions and local saves.
 
 ## Fast rule tests
 

@@ -15,6 +15,7 @@ island.island_setup(R.island)
 R.wonders, R.buildings = island.wonders, island.buildings
 R.prog = {level=0, seed=1, wallet=purse(), story_seen={}}
 R.town_setup()
+check(R.island.zone_count == 5 and R.island.open == 1, 'the campaign starts with one of five districts open')
 R.story = false
 R.story_current, R.story_preview = nil, false
 local m = rules.new_match()
@@ -69,7 +70,8 @@ for level = 1, rules.LEVELS do
     local expected_wallet = R.prog.wallet + reward
     R.claim_reward()
     local completed = level // 20
-    check(R.island.open == (1 << (completed + 1)) - 1, 'each completed phase opens precisely one consecutive district')
+    check(R.island.open == (1 << math.min(completed + 1, R.island.zone_count)) - 1,
+        'the first four completed phases open one district each')
     if level % 20 == 0 then
         check(R.overlay == R.OV_EPOCH and R.on_island and R.epoch_award == completed,
             'a completed phase opens the illustrated chooser')

@@ -707,6 +707,7 @@ typedef struct city {
     bool fog_clouds;                        /* animated, world-anchored cloud density and lighting */
     texture road;                           /* 8 x 4 road tile atlas (tools/roads.py); none = no roads */
     bool movable;                           /* hold a building for .5 seconds to pick it up */
+    bool smooth_pan;                        /* coast after a map drag and ease back at the edge */
     bool placement_guides_on_ground;        /* placed sprites can occlude their neighbours' guides */
     bool show_footprints;                   /* debug: every building's footprint and pivot over its sprite */
     texture income_icon;                    /* bubble shown over buildings with income ready */
@@ -723,6 +724,8 @@ typedef struct city {
     float press_time;                       /* stationary single-pointer hold on a building */
     bool press_consumed;                      /* consume the release of a claimed/cancelled world gesture */
     vec2 grab;
+    vec2 pan_target, pan_velocity;
+    bool panning;
     int pop_index;
     float pop_time;
     float lift;                             /* 0 on the ground .. 1 held up */

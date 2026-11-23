@@ -41,8 +41,8 @@ The campaign's shape:
 - **Complete the phase to advance.** The active phase advances after the last level and all four purchases in the phase are complete. Earlier purchases waived by a migrated save do not hold the phase back. Players can keep clearing boards while raising funds. Confirming a purchase enables its reward on eligible boards.
 - **Each campaign purchase adds exactly one board item.** The bakery brings gingerbread, the stable brings a farrier's hammer, and the candle shop brings a lantern. Resource pieces replace a line of the palette. Charging pieces use four permanent slots (Hammer → Bomb, Shield → Plus, Hourglass → Mixer, Lightning → Star). [All 20 pairs beside the Windows reference](cradle-of-rome-reference/building-rewards.html).
 - **Boards follow a ten-level rhythm.** Tiers run `easy, easy, normal, normal, hard, easy, normal, normal, hard, boss` after four tutorials. A boss is dense and the board after it is a breather.
-- **Regions open with the phase.** After 20, 40, 60 and 80 clears and the four projects in each phase, fog lifts as the next phase opens. Completing the final phase opens the last district. Older saves keep land they already opened.
-- **The phase medals** appear after Continue on the main menu and when a phase opens a new district. Past phases have muted medals, the current phase has a full-color medal, and future phases carry a lock. Play resumes the current campaign.
+- **Regions open with the phase.** After 20, 40, 60 and 80 clears and the four projects in each phase, fog lifts as the next phase opens. The first district is open by default, for five districts total. Tap a question mark in the fog to see which phase opens its district. Older saves keep land they already opened.
+- **The phase medals** appear after Continue on the main menu and at the end of each phase. Past phases have muted medals, the current phase has a full-color medal, and future phases carry a lock. Play resumes the current campaign.
 
 ## Balance
 

@@ -139,7 +139,7 @@ for level=1,rules.LEVELS do
     check(after==written,'a quiet board advances without a clear scene')
     check(R.start_level(level),'an unread result leaves the next expedition open')
     if after then p.story_seen[after.key]=true end
-    for z=1,5 do c:unlock(z,p.wallet) end
+    for z=1,island.ISLAND_ZONES - 1 do c:unlock(z,p.wallet) end
     for _, step in ipairs(opened) do
         check(island.next_step(c,p.level)==step.kind,'restorations open in ladder order')
         if step.story then
@@ -208,7 +208,7 @@ local old={level=20,seed=55,wallet=purse(1234,12,34,30,7)}
 journey.migrate(old,5)
 check(old.level==20 and old.wallet[1]==1234 and old.wallet[4]==30 and old.story_recap,'migration preserves the wallet and offers a recap')
 check(journey.next(old,owned(c),20).key=='before-21','old completion opens the next epoch without replaying the earlier scenes')
-local preserved=city.new();island.island_setup(preserved);preserved.open=63
+local preserved=city.new();island.island_setup(preserved);preserved.open=(1 << island.ISLAND_ZONES) - 1
 preserved:add(c.items[1].pos,9,0)
 island.restore_saved(preserved,20)
 check(island.owned(preserved,9)==1,'migration never deletes the legacy temple')

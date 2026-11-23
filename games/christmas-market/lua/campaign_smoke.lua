@@ -37,7 +37,7 @@ function R.campaign_smoke()
         assert(R.epoch_award == advents + 1 and R.completed_epochs() == R.epoch_award,
             "each completed Advent shows its award once, in order")
         advents = R.epoch_award
-        assert(c:zone_open(R.epoch_award), "the seasonal award opens its district")
+        assert(c:zone_open(math.min(R.epoch_award, c.zone_count - 1)), "the epoch award opens its district")
         app.inject_click(R.epoch_form.boxes.back:center() + vec2(0, R.drop / 2)); wait = 10
     elseif R.overlay == R.OV_COMPLETE and R.dialog_settled() then
         completion_seen = R.prog.epoch_seen == #R.words.epochs

@@ -482,7 +482,8 @@ unlocked piece or tool. `unit` puts a second icon beside
 the figure, such as the resource a new piece banks. An entry without an amount
 shows its icon alone, and `label` adds one word under a larger figure only
 for an amount that has no art of its own. `match3.resource_indicator(entry, width)`
-builds the node from a resource record. The game supplies the building's
+builds the node from a resource record. Shop prices set `inline=true` on
+the record to put the icon beside the amount. The game supplies the building's
 reward through `R.building_reward(kind)`.
 Running copy and captions on parchment use the skin's flat `body` and `caption`
 text styles. The outlined styles are for titles, buttons and figures. Optional content participates in the measured stack only
@@ -494,7 +495,10 @@ expeditions, story choice and leaderboard use the same root contract through
 `paint_group` hands its subtree's painting to that scope, which must call
 `draw()` and return its event. The results reel uses this to fade and lift
 sections inside their measured layout while input uses the final boxes.
-Scroll clipping and the scrollbar follow the skin's paint transform. Use
+Scroll clipping and the scrollbar follow the skin's paint transform. A vertical
+scroll list can set `bounce=true` for a longer touch glide and rubber-band return
+at either end. Wheel and keyboard scrolling stay within the list. Reduce Motion
+removes the glide and bounce. Use
 `interactive=false, dim_controls=false` to block actions during motion while
 keeping the controls' enabled artwork.
 

@@ -209,6 +209,7 @@
 ---@field fog_clouds boolean Animated world-space cloud density and billow lighting, clipped to the closed-region mask.
 ---@field road texture Road tile atlas from tools/roads.py: every building gets a paved tail from its front to a flag tile, and the flags are joined along whole tiles. No texture = no roads.
 ---@field movable boolean Hold a building still for 0.5 seconds to pick it up; ordinary drags pan the map.
+---@field smooth_pan boolean Let map drags coast after release and rebound at the edge. Enable when the map has input and Reduce Motion is off.
 ---@field placement_guides_on_ground boolean Draw occupied-ground placement guides beneath the placed buildings so their sprites can cover the lines.
 ---@field show_footprints boolean Debug: draw every building's footprint and pivot over its sprite, to check the sprite's measurements.
 ---@field income_icon texture

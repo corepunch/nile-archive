@@ -112,6 +112,7 @@ local function copy_node(source, ids, depth, prefix, source_id, item_key, row_in
         if n[key] and (type(n[key]) ~= 'number' or n[key] < 0 or n[key] ~= n[key] or n[key] == math.huge) then fail('invalid ' .. key) end
     end
     if n.scroll and (n.kind~='list' or n.direction=='row') then fail('scroll requires a vertical list') end
+    if n.bounce and not n.scroll then fail('bounce requires a scroll list') end
     if n.pin ~= nil then
         local at, by = n.pin, n.pin_offset or {0, 0}
         if type(at) ~= 'table' or type(at[1]) ~= 'number' or type(at[2]) ~= 'number' or type(by) ~= 'table'
@@ -359,6 +360,7 @@ function StackPanel.measure_override(n, width, skin, form)
     if across then return w+gaps,h end
     return w,h+gaps
 end
+local function scroll_edge(n, offset) return math.max(0,math.min(n.scroll_max,offset)) end
 local function arrange_scroll(n, inner, skin, form)
     local m=row_metrics(n,inner.w,skin,form)
     if m.height~=inner.h then
@@ -374,10 +376,15 @@ local function arrange_scroll(n, inner, skin, form)
     end
     local st=n.scroll_state or {offset=0,velocity=0}
     n.scroll_state=st
-    n.scroll_max=math.max(0,m.length-inner.h)
+    local range=math.max(0,m.length-inner.h)
+    local resized=n.scroll_max~=range or n.scroll_inner and n.scroll_inner.h~=inner.h
+    n.scroll_max=range
     local target=n.scroll_target and m.by_index[n.indices[n.scroll_target]]
     n.scroll_target=nil
-    st.offset=math.max(0,math.min(n.scroll_max,target and target.top or st.offset))
+    if target or resized or not n.bounce then
+        st.offset=scroll_edge(n,target and target.top or st.offset)
+    end
+    if target or resized then st.spring=nil;st.velocity=0;st.finger=st.offset end
     n.scroll_inner=inner
     -- Row bottoms are ordered. Start at the first row that intersects the
     -- viewport, then give only visible rows current boxes for paint and input.
@@ -687,7 +694,8 @@ local function paint_node(n,skin,form,options,event)
         if length>0 then
             local viewport=n.scroll_inner
             local h=viewport.h*viewport.h/(viewport.h+length)
-            local thumb,scale,alpha=paint_box(skin,rect(viewport:max().x-4,viewport.y+(viewport.h-h)*n.scroll_state.offset/length,3,h))
+            local offset=scroll_edge(n,n.scroll_state.offset)
+            local thumb,scale,alpha=paint_box(skin,rect(viewport:max().x-4,viewport.y+(viewport.h-h)*offset/length,3,h))
             gfx.round_rect(thumb,1.5*scale,color(150,114,63,180*alpha))
         end
         gfx.unclip()
@@ -702,49 +710,102 @@ paint = function(n,skin,form,options,event)
     end
     return paint_node(n,skin,form,options,event)
 end
+-- Match the touch scroll curve in Mapview: .998 decay per millisecond,
+-- half-strength resistance at the edge, and a critically damped return.
+local TOUCH_DECAY=-1000*math.log(.998)
+local RUBBER_RESISTANCE=.55
+local SPRING_RATE=12.5
+
+local function advance_scroll(n, st, dt, bounce, reduced)
+    local edge=scroll_edge(n,st.offset)
+    if reduced then
+        st.offset,st.velocity,st.spring=edge,0,nil
+        return
+    end
+    if bounce and edge~=st.offset then st.spring=edge end
+    if st.spring then
+        local from=st.offset-st.spring
+        local slope=st.velocity+SPRING_RATE*from
+        local decay=math.exp(-SPRING_RATE*dt)
+        local excess=(from+slope*dt)*decay
+        local speed=slope*decay-SPRING_RATE*excess
+        if excess*(from~=0 and from or st.velocity)<0 or (math.abs(excess)<.5 and math.abs(speed)<5) then
+            st.offset,st.velocity,st.spring=st.spring,0,nil
+        else
+            st.offset,st.velocity=st.spring+excess,speed
+        end
+        return
+    end
+    local rate=bounce and TOUCH_DECAY or 7
+    local decay=math.exp(-rate*dt)
+    local next_offset=st.offset+st.velocity*(1-decay)/rate
+    st.offset=scroll_edge(n,next_offset)
+    st.velocity=st.velocity*decay
+    if next_offset~=st.offset and bounce then st.spring=st.offset
+    elseif next_offset~=st.offset or math.abs(st.velocity)<(bounce and 5 or 2) then st.velocity=0 end
+end
+
+local function update_scroll(n, form, options)
+    local st,inp=n.scroll_state,options.input
+    local hitbox=options.hit_offset and n.scroll_inner:offset(options.hit_offset) or n.scroll_inner
+    local inside=inp.pos and hitbox:contains(inp.pos)
+    local reduced=options.reduced_motion or tween.instant()
+    local bounce=n.bounce and not reduced and hitbox.h>1
+    local dt=options.dt or app.dt()
+    if inside and inp.wheel and inp.wheel~=0 then
+        st.offset=scroll_edge(n,scroll_edge(n,st.offset)-inp.wheel*45)
+        st.velocity,st.spring=0,nil
+        form.focus_visible=false
+        return
+    end
+    if inp.pressed then
+        st.down=inside
+        st.moved=inside and (math.abs(st.velocity)>20 or st.spring~=nil) or false
+        if inside then
+            local edge=scroll_edge(n,st.offset)
+            local shown=math.min(math.abs(st.offset-edge),hitbox.h-1)
+            local raw=bounce and shown*hitbox.h/((hitbox.h-shown)*RUBBER_RESISTANCE) or 0
+            st.finger=edge+(st.offset<edge and -raw or raw)
+            st.last,st.idle,st.velocity,st.spring=inp.pos.y,0,0,nil
+            if reduced then st.offset=edge end
+        end
+    end
+    if st.down then
+        st.idle=(st.idle or 0)+dt
+        if inp.cancelled or inp.multi_touch or inp.released or not inp.down then
+            st.down=false
+            if inp.cancelled or inp.multi_touch or st.idle>.1 or not st.moved then st.velocity=0 end
+        elseif inp.pos then
+            local dy=st.last-inp.pos.y
+            if inp.dragging or math.abs(dy)>8 then st.moved=true end
+            if st.moved and dy~=0 then
+                local previous=st.offset
+                st.finger=st.finger+dy
+                local edge=scroll_edge(n,st.finger)
+                local excess=(st.finger-edge)*RUBBER_RESISTANCE
+                if bounce then st.offset=edge+excess/(1+math.abs(excess)/hitbox.h)
+                else st.offset,st.finger=edge,edge end
+                local speed_limit=bounce and 3200 or 1800
+                local travel=bounce and st.offset-previous or dy
+                st.velocity=math.max(-speed_limit,math.min(speed_limit,travel/math.max(st.idle,1/120)))
+                st.last,st.idle=inp.pos.y,0
+            end
+        end
+    end
+    if not st.down then advance_scroll(n,st,dt,bounce,reduced) end
+end
+
 function Form:draw(box,skin,options)
     skin,options=skin or default_skin,options or {}; options.input=options.input or input.get()
     self:layout(box,skin)
-    -- Scrolling belongs to the form, before any child hit test. It uses the
-    -- engine dt (CAAnimation clock on iOS), not per-control wall clocks.
+    -- Update measured scroll positions before routing input to list controls.
     local moved=false
     local function scroll(n)
         if not visible(n,self.values) then return end
         if n.scroll and options.interactive~=false then
-            local st,inp=n.scroll_state,options.input
-            local before=st.offset
-            local hitbox=options.hit_offset and n.scroll_inner:offset(options.hit_offset) or n.scroll_inner
-            local inside=inp.pos and hitbox:contains(inp.pos)
-            if inp.pressed then
-                st.down=inside;st.moved=inside and math.abs(st.velocity)>20 or false
-                st.last=inp.pos and inp.pos.y or 0;st.last_time=app.time();st.velocity=0
-            end
-            local dt=options.dt or app.dt()
-            if st.down and inp.down and inp.pos then
-                local dy=st.last-inp.pos.y
-                if inp.dragging or math.abs(dy)>8 then st.moved=true end
-                if st.moved and dy~=0 then
-                    st.offset=math.max(0,math.min(n.scroll_max,st.offset+dy))
-                    st.velocity=math.max(-1800,math.min(1800,dy/math.max(dt,1/120)))
-                    st.last,st.last_time=inp.pos.y,app.time()
-                end
-            end
-            if inp.released or inp.cancelled or inp.multi_touch or (st.down and not inp.down) then
-                st.down=false
-                if inp.cancelled or inp.multi_touch or app.time()-(st.last_time or 0)>.1 or not st.moved then st.velocity=0 end
-            end
-            if not st.down then
-                if options.reduced_motion or tween.instant() then st.velocity=0 end
-                local decay=math.exp(-7*dt)
-                local next_offset=st.offset+st.velocity*(1-decay)/7
-                st.offset=math.max(0,math.min(n.scroll_max,next_offset));st.velocity=st.velocity*decay
-                if st.offset~=next_offset or math.abs(st.velocity)<2 then st.velocity=0 end
-            end
-            if inside and inp.wheel and inp.wheel~=0 then
-                st.offset=math.max(0,math.min(n.scroll_max,st.offset-inp.wheel*45));st.velocity=0
-                self.focus_visible=false
-            end
-            moved=moved or before~=st.offset
+            local before=n.scroll_state.offset
+            update_scroll(n,self,options)
+            moved=moved or before~=n.scroll_state.offset
         end
         if n.scroll then
             for i=n.first_row,n.last_row do scroll(n.row_metrics.rows[i].node) end
@@ -771,16 +832,17 @@ function Form:draw(box,skin,options)
         if owner and owner.scroll then
             local row=owner.row_metrics.by_index[focused.row_index]
             local st=owner.scroll_state
+            local edge=scroll_edge(owner,st.offset)
             local delta=row.top<st.offset and row.top-st.offset or math.max(0,row.bottom-st.offset-owner.scroll_inner.h)
-            if delta~=0 then
-                st.offset=st.offset+delta;st.velocity=0
+            if delta~=0 or st.offset~=edge then
+                st.offset=scroll_edge(owner,st.offset+delta);st.velocity=0;st.spring=nil
                 self:layout(box,skin)
             end
             local target=self.boxes[focused.id]
             if target then
                 local inner=owner.scroll_inner
                 delta=target.y<inner.y and target.y-inner.y or math.max(0,target:max().y-inner:max().y)
-                if delta~=0 then st.offset=st.offset+delta;self:layout(box,skin) end
+                if delta~=0 then st.offset=scroll_edge(owner,st.offset+delta);self:layout(box,skin) end
             end
         end
     end

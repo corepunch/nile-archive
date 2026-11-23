@@ -106,7 +106,9 @@ the building is held in a move preview.
 Both city games use the engine's `movable` gesture: hold a building still for
 **0.5 seconds**, then drag the lifted preview. A quick drag pans the map even
 when it begins on a building. Moving before the threshold permanently cancels
-that press's pickup; stopping the pan does not re-arm it. UI presses, two-finger
+that press's pickup; stopping the pan does not re-arm it. Relic Rush and
+Christmas at Bellmere let the map coast briefly after a swipe and ease back
+from its edge. Reduce Motion stops the map on release and keeps it within bounds. UI presses, two-finger
 gestures, wheel zoom, release and pointer/focus cancellation cannot trigger it.
 
 Release snaps the preview to the grid. Tapping land never repositions the preview;

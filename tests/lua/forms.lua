@@ -244,6 +244,35 @@ do
     check(not pcall(ui.form,N.row {scroll=true}),'scrolling is a vertical measured list capability')
 end
 
+do
+    local f=ui.form(N.list {id="rows",scroll=true,bounce=true,height=100,item=function(e)
+        return N.button {id="choose",text=e.id,height=80}
+    end})
+    assert(f:set_items("rows",{{id="a"},{id="b"}}))
+    local box=rect(0,0,240,100)
+    local look={button=function()end,button_text=function()end}
+    local function step(inp, dt, reduced)
+        return f:draw(box,look,{input=inp or {},dt=dt or .016,reduced_motion=reduced})
+    end
+    step({pos=vec2(100,30),pressed=true,down=true})
+    step({pos=vec2(100,80),down=true,dragging=true})
+    local state=f.nodes.rows.scroll_state
+    check(state.offset < -15 and state.offset > -25,"a top-edge pull meets rubber-band resistance")
+    check(not step({pos=vec2(100,80),released=true}),"a rubber-band drag cannot choose a row")
+    for _=1,70 do step() end
+    check(state.offset==0 and state.velocity==0,"the spring settles exactly at the top")
+    step({pos=vec2(100,80),pressed=true,down=true})
+    step({pos=vec2(100,30),down=true,dragging=true})
+    step({pos=vec2(100,30),released=true})
+    step()
+    check(state.offset > f.nodes.rows.scroll_max,"a fling carries through the bottom edge before springing back")
+    step({pos=vec2(100,80),wheel=1})
+    check(state.offset==15 and state.spring==nil and state.velocity==0,"wheel scroll clears the spring and stays in range")
+    step({pos=vec2(100,30),pressed=true,down=true},nil,true)
+    step({pos=vec2(100,80),down=true,dragging=true},nil,true)
+    check(state.offset==0,"Reduce Motion clamps the drag at the edge")
+end
+
 -- Element classes: every kind measures and arranges itself, so a border, a
 -- uniform grid, a prefab and a game's own panel all compose.
 do
