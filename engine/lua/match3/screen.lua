@@ -72,8 +72,8 @@ function V.bind(R, rules, config, art, base_pieces)
         gfx.image_striped(tex, area, angle, stripes.repeats, stripes.width, stripes.ink, color(255, 255, 255, alpha))
     end
     -- The painted specials carry a wider gutter than the pieces: this brings
-    -- the rainbow gem up to fill its square like a coin.
-    local special_scale = {color_bomb = 1.36}
+    -- the rainbow gem up to just under a coin in its square.
+    local special_scale = {color_bomb = 1.22}
     -- A gem is lit on the board. A rim of light follows its silhouette: warm
     -- cream on a line gem, a slow turn through the spectrum on a rainbow gem.
     -- Over the pieces a glint crosses a line gem the way it will sweep, and
