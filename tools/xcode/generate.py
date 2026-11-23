@@ -33,7 +33,8 @@ ENGINE_SOURCES = ['core', 'render', 'gfx', 'font', 'ui', 'save', 'city', 'audio'
 ENGINE_SOURCE_DIRS = {'haptic_platform': 'engine/src/platform', 'gamecenter_platform': 'engine/src/platform', 'api_lua': 'engine/generated'}
 
 GAMES = {
-    'christmas-market': dict(name='Christmas at Bellmere', bundle='com.corepunch.christmasmarket', device='iphone', orientations=('Portrait', 'PortraitUpsideDown')),
+    # home: the shorter name under the icon on the home screen, when name is too long for it.
+    'christmas-market': dict(name='Christmas at Bellmere', home='Bellmere', bundle='com.corepunch.christmasmarket', device='iphone', orientations=('Portrait', 'PortraitUpsideDown')),
     # Preserve the published bundle identity so Emergency updates installed copies.
     'emergency': dict(name='Emergency', bundle='com.corepunch.volcano', device='ipad', orientations=('LandscapeLeft', 'LandscapeRight')),
     # device: the iOS target - 'ipad' (device family 2) or 'iphone' (family 1)
@@ -270,7 +271,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
         configs = project.configurations(name, settings, debug_settings)
 
         info = dict(CFBundleExecutable='$(EXECUTABLE_NAME)', CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',
-                    CFBundleName=meta['name'], CFBundleDisplayName=meta['name'], CFBundlePackageType='APPL',
+                    CFBundleName=meta.get('home', meta['name']), CFBundleDisplayName=meta.get('home', meta['name']), CFBundlePackageType='APPL',
                     CFBundleInfoDictionaryVersion='6.0', CFBundleShortVersionString='$(MARKETING_VERSION)',
                     CFBundleVersion='$(CURRENT_PROJECT_VERSION)', CFBundleDevelopmentRegion='en',
                     LSApplicationCategoryType='public.app-category.games', ITSAppUsesNonExemptEncryption=False)

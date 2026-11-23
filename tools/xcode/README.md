@@ -96,6 +96,9 @@ and ES 3 on iOS. UIKit drives the iOS frame callback through
 and gestures use the platform API. Logical coordinates, letterboxing and
 Retina scaling are handled by the engine.
 
+A game's `home` name in `GAMES` (`generate.py`) replaces its full name under
+the icon: Christmas at Bellmere shows as Bellmere.
+
 The `lua/` and `data/` folders are bundled as folder references and found via
 `axShareDirectory`. The engine's own Lua and default art are copied beside them
 as `engine/lua` and `engine/data/board`, also as folder references. Native save paths retain the original
