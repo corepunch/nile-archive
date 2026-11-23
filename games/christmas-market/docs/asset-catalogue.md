@@ -43,8 +43,10 @@ The quest tracker at the upper left sits on the skin's `quest_tracker` border
 at full strength and shows `quest_done`: a green coin in the same rim
 carrying `quest-check`, a dark green check rendered by
 `python3 tools/quest_check.py` into `art/registered/expedition-hud/quest-check.png`
-and packed with the HUD frames. An area marker the tracker would cover is not
-drawn until the map pans it clear.
+and packed with the HUD frames. A project that can be built now has
+Build's blue ready trail (`R.vfx_ready_rim`, procedural) circling its coin,
+left out under reduced motion. An area marker the tracker would cover is
+not drawn until the map pans it clear.
 The Build rim uses the board’s existing blue particles
 when an eligible project is affordable. The shop lists the current
 phase's building sprites, then the decorations. It draws the existing HUD frames

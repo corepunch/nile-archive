@@ -208,7 +208,7 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 The town lists the current epoch's four projects at the upper left: a
 numbered row each (a tick once built), with "Ready to build!" under one you
-can afford. Tap a row to place a ready
+can afford and Build's particle trail circling its number. Tap a row to place a ready
 project or open its card.
 
 Build opens the shop at the current epoch: its four projects first, then the

@@ -32,6 +32,7 @@
 --                           numbered rows down the left edge under the header (the phase's
 --                           projects); a row's note is its second line
 --   quest_tap(id)           a quest row was tapped
+--   quest_rim(center, radius)   optional effect around a ready quest's badge
 --   rail_paint(box, entry, state, ready_time)   paints one marker's face and icon (default: a plain disc)
 --   play_label()            next level number printed on Play
 --   middle_icon(center)     the icon in the round middle button
@@ -536,7 +537,7 @@ local function quest_form(cfg)
             return N.overlay {
                 N.column {gap = 2,
                     N.row {gap = 8, align = "center",
-                        N.overlay {width = cfg.badge, height = cfg.badge,
+                        N.overlay {id = "badge", width = cfg.badge, height = cfg.badge,
                             N.spacer {panel = true, role = r.done and "quest_done" or "quest_number"},
                             N.label {text = r.done and "" or tostring(r.number), em = cfg.badge * .62,
                                      text_style = cfg.number, text_align = "center"},
@@ -574,6 +575,16 @@ function View:quests(active)
     local width, height = self.quest_form:measure(cfg.width, skin)   -- as wide as the names need
     self.quest_bounds = rect(s.x + cfg.x, top, math.min(cfg.width, width), height)
     local event = self.quest_form:draw(self.quest_bounds, skin, {interactive = active, dim_controls = false})
+    -- A quest that can be done now: the game's ready trail circles its badge.
+    if h.quest_rim then
+        local ready = {}
+        for _, entry in ipairs(entries) do ready[entry.id] = entry.ready and not entry.done end
+        for _, node in pairs(self.quest_form.nodes) do
+            if node.local_id == "badge" and ready[node.item_key] and node.box then
+                h.quest_rim(node.box:center(), cfg.badge * .66)   -- just outside the coin's rim
+            end
+        end
+    end
     if event and event.source == "quests" then
         haptic.play(haptic.TICK, .6)
         if h.quest_tap then h.quest_tap(event.key) end
