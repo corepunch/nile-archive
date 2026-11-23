@@ -149,8 +149,10 @@ function E.catalogue_form(title, paint)
                         -- A project's reward: a plus and its icon on the name's line.
                         N.row {gap=8,align="center",
                             N.label {text=record.name,em=21,wrap=true,grow=1,text_style="body",text_align="start"},
-                            N.label {text="+",em=24,text_style="caption",visible=reward ~= nil},
-                            reward and E.resource_indicator(reward) or N.spacer {width=0},
+                            reward and N.row {gap=0,align="center",
+                                N.label {text="+",em=24,text_style="caption"},
+                                E.resource_indicator(reward),
+                            } or N.spacer {width=0},
                         },
                         N.label {text=record.about or "",visible=(record.about or "") ~= "",em=15,wrap=true,
                             text_style="caption",text_align="start"},
