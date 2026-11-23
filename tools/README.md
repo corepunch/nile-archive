@@ -25,7 +25,8 @@ or `games/*/tools/` is missing from this page (`tests/test_tools_index.py`).
 | `test_web.py` | Runs the WebGL builds in Chromium (Playwright) | CI |
 | `screenshots.py` | Turns the pictures a test build rendered into documentation images; starts no game | `make shots` |
 | `make_reels.py` | Assembles reels from the frames `screenshots.py` collected | `python3 tools/make_reels.py` |
-| `requirements-assets.txt` | Python packages the art tools need (Pillow, NumPy, SciPy) | `pip install -r tools/requirements-assets.txt` |
+| `requirements-assets.txt` | Python packages the art and localization tools need (Pillow, NumPy, SciPy, fontTools) | `pip install -r tools/requirements-assets.txt` |
+| `l10n.py` | Extracts the strings marked with `tr`, merges them into every PO catalogue, checks the catalogues and subsets the engine's script fonts ([docs/LOCALIZATION.md](../docs/LOCALIZATION.md)) | `python3 tools/l10n.py update`; `check` in `make test-assets` |
 | `xcode/generate.py` | Generates `games/<game>/<game>.xcodeproj` | `make xcode` |
 | `xcode/deploy.py` | Builds, installs and launches a game on a connected iPhone or iPad | `make ios GAME=relic-rush` |
 | `xcode/smoke.py` | Launches each built game in an iOS Simulator and requires a frame | `python3 tools/xcode/smoke.py` |

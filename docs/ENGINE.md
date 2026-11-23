@@ -146,8 +146,13 @@ while drawing what sits under the dialog.
   pixels, cached per (outline, blur) pair. A styled string is drawn as up to
   three batched layers: shadow, outline, fill.
 - Kerning, letter spacing (`tracking`) and font fallback chains are built in.
+  Every chain ends in a **global fallback** (`font.set_global_fallback`) that
+  the `l10n` module points at the engine's Noto fonts for the language shown.
 - `text_box` wraps words into **balanced** lines (the narrowest width that
-  keeps the line count), so paragraphs have no lonely last word.
+  keeps the line count), so paragraphs have no lonely last word. Chinese and
+  Japanese break between characters, following the basic kinsoku rules.
+- **Localization**: `l10n.tr` and friends pick the player's language and read
+  gettext catalogues; see [LOCALIZATION.md](LOCALIZATION.md).
 - `text_ink` measures the visible ink of a line and `text_in` places a line by
   its ink, shrinking it to fit: optical centring for buttons and counters,
   independent of a font's ascent and descent.

@@ -1,5 +1,7 @@
 # Atlas registration/resampling is part of the authored pixel contract.
 Pillow==11.3.0
+# Localization: subsetting the engine's script fonts and checking glyph coverage (tools/l10n.py).
+fonttools==4.60.1
 # Optional painted-building atlas import / footprint fitting.
 numpy==2.3.5
 scipy==1.16.3
