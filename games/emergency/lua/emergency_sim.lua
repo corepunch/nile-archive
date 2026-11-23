@@ -1,17 +1,25 @@
 -- Emergency rules. Rendering, paths, widgets, dialogue and persistence live in the engine.
+local l10n = require('l10n')
+local tr, trn = l10n.tr, l10n.trn
 local M = {}
 M.defs = {
-    ['eruption-timber']={kind='obstacle',title='Salvage roof beams',sprite='emergency/timber',action='wood',cost={food=20},reward={wood=20}},
-    ['eruption-ash']={kind='obstacle',title='Clear ash and rubble',sprite='emergency/ash',action='pick',cost={food=20}},
-    ['eruption-wall']={kind='obstacle',title='Dismantle collapsed wall',sprite='emergency/wall',action='pick',cost={food=20}},
-    ['eruption-basalt']={kind='obstacle',title='Clear heavy basalt',sprite='emergency/basalt',action='pick',cost={food=40,money=100}},
-    road={kind='obstacle',title='Repair the road',sprite='road',action='srepair',cost={wood=20}},
-    ['eruption-kitchen']={kind='station',title='Field kitchen',sprite='emergency/kitchen',action='repair',cost={wood=20},resource='food',income=5},
-    ['eruption-yard']={kind='station',title='Timber yard',sprite='emergency/yard',action='repair',cost={wood=20},resource='wood',income=5},
-    ['eruption-office']={kind='station',title='District office',sprite='emergency/office',action='repair',cost={wood=30},resource='money',income=10},
-    cat={kind='animal',title='Rescue a cat',action='pet',cost={food=10},duration=1.2},
-    dog={kind='animal',title='Rescue a dog',action='pet',cost={food=10},duration=1.2},
-    civilian={kind='civilian',title='Resident'},worker={kind='worker',title='Rescue worker'},hq={kind='base',title='Rescue headquarters',sprite='hq'},
+    ['eruption-timber']={kind='obstacle',title=tr('Salvage roof beams'),sprite='emergency/timber',action='wood',cost={food=20},reward={wood=20}},
+    ['eruption-ash']={kind='obstacle',title=tr('Clear ash and rubble'),sprite='emergency/ash',action='pick',cost={food=20}},
+    ['eruption-wall']={kind='obstacle',title=tr('Dismantle collapsed wall'),sprite='emergency/wall',action='pick',cost={food=20}},
+    ['eruption-basalt']={kind='obstacle',title=tr('Clear heavy basalt'),sprite='emergency/basalt',action='pick',cost={food=40,money=100}},
+    road={kind='obstacle',title=tr('Repair the road'),sprite='road',action='srepair',cost={wood=20}},
+    ['eruption-kitchen']={kind='station',title=tr('Field kitchen'),sprite='emergency/kitchen',action='repair',cost={wood=20},resource='food',income=5},
+    ['eruption-yard']={kind='station',title=tr('Timber yard'),sprite='emergency/yard',action='repair',cost={wood=20},resource='wood',income=5},
+    ['eruption-office']={kind='station',title=tr('District office'),sprite='emergency/office',action='repair',cost={wood=30},resource='money',income=10},
+    cat={kind='animal',title=tr('Rescue a cat'),action='pet',cost={food=10},duration=1.2},
+    dog={kind='animal',title=tr('Rescue a dog'),action='pet',cost={food=10},duration=1.2},
+    civilian={kind='civilian',title=tr('Resident')},worker={kind='worker',title=tr('Rescue worker')},hq={kind='base',title=tr('Rescue headquarters'),sprite='hq'},
+}
+-- A job's price, one supply at a time; the wallet keeps its English keys.
+local COST={
+    food=function(n) return trn('%d food','%d food',n):format(n) end,
+    wood=function(n) return trn('%d wood','%d wood',n):format(n) end,
+    money=function(n) return trn('%d money','%d money',n):format(n) end,
 }
 local function pos(e) return {x=e.x,y=e.y} end
 local function distance(a,b) return math.sqrt((a.x-b.x)^2+(a.y-b.y)^2) end
@@ -90,13 +98,13 @@ function M.click(g,e)
     return true
 end
 function M.detail(g,e)
-    if not e then return 'Tap a job to send a worker. Tap again to cancel a queued job.' end
-    if e.done then return e.def.kind=='station' and 'Supplies arrive automatically every 5 seconds.' or 'Restored.' end
-    if e.assigned then return 'A worker is on the way.' end
-    if e.def.kind=='civilian' or e.recruit then return 'Returns to headquarters automatically once the route is safe.' end
+    if not e then return tr('Tap a job to send a worker. Tap again to cancel a queued job.') end
+    if e.done then return e.def.kind=='station' and tr('Supplies arrive automatically every 5 seconds.') or tr('Restored.') end
+    if e.assigned then return tr('A worker is on the way.') end
+    if e.def.kind=='civilian' or e.recruit then return tr('Returns to headquarters automatically once the route is safe.') end
     local t={}
-    for _,r in ipairs({'food','wood','money'}) do local n=(e.def.cost or {})[r];if n then t[#t+1]=n..' '..r end end
-    return table.concat(t,'  /  ')..(e.queued and '  |  Queued - tap to cancel' or '  |  Tap to assign')
+    for _,r in ipairs({'food','wood','money'}) do local n=(e.def.cost or {})[r];if n then t[#t+1]=COST[r](n) end end
+    return table.concat(t,'  /  ')..'  |  '..(e.queued and tr('Queued - tap to cancel') or tr('Tap to assign'))
 end
 local function travel(w,dt)
     local budget=175*dt

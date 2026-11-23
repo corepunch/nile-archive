@@ -16,7 +16,11 @@ from PIL import Image
 
 DEST = Path(__file__).resolve().parents[1]
 
+class Tr(str):
+    """Player-visible text, emitted as tr("...") so xgettext extracts it."""
+
 def lua(v):
+    if isinstance(v, Tr): return 'tr('+json.dumps(str(v), ensure_ascii=False)+')'
     if isinstance(v, dict): return '{' + ','.join('['+json.dumps(str(k))+']='+lua(x) for k,x in v.items()) + '}'
     if isinstance(v, (list, tuple)): return '{'+','.join(map(lua,v))+'}'
     if isinstance(v, str): return json.dumps(v, ensure_ascii=False)
@@ -110,7 +114,7 @@ def main():
     for folder in sorted((src/'missions').glob('volcano-*')):
         path=folder/'mission.xml'; root=ET.parse(path).getroot(); settings=root.find('settings')
         name=folder.name.replace('volcano-','emergency-',1)
-        level=dict(id=name,title=root.get('title').split(': ',1)[-1],briefing=root.get('briefing'),width=int(root.get('width')),height=int(root.get('height')),food=int(settings.get('food')),wood=int(settings.get('wood')),people=int(settings.get('people')),animals=int(settings.get('animals','0')),nodes=[],objects=[])
+        level=dict(id=name,title=Tr(root.get('title').split(': ',1)[-1]),briefing=Tr(root.get('briefing')),width=int(root.get('width')),height=int(root.get('height')),food=int(settings.get('food')),wood=int(settings.get('wood')),people=int(settings.get('people')),animals=int(settings.get('animals','0')),nodes=[],objects=[])
         for lane in root.findall('traffic'): level['nodes'].extend([dict(zip(['x','y'],map(float,p.split(',')))) for p in lane.text.split()])
         for e in root.findall('object'):
             level['objects'].append(dict(id=int(e.get('id')),type=e.get('type'),x=float(e.get('x')),y=float(e.get('y')),variant=int(e.get('variant','0'))))
@@ -118,7 +122,7 @@ def main():
         level['background']='levels/'+name+'.png'; (data/'levels').mkdir(parents=True,exist_ok=True); shutil.copyfile(folder/'background.png',data/level['background']); levels.append(level)
         record(path,'Native Lua campaign layout'); record(folder/'background.png','Painted campaign backdrop')
         for p in folder.glob('*.prompt.txt'): shutil.copyfile(p,DEST/'docs'/(name+'.prompt.txt'))
-    (code/'emergency_levels.lua').write_text('-- Native Lua campaign: no XML or retail level loader at runtime.\nreturn '+lua(levels)+'\n')
+    (code/'emergency_levels.lua').write_text('-- Native Lua campaign: no XML or retail level loader at runtime.\nlocal l10n = require("l10n")\nlocal tr = l10n.tr\nreturn '+lua(levels)+'\n')
     record(src/'assets/kenney-characters/README.md','Kenney provenance and authored animation details','kenney-cc0-and-volcano')
     runtime=[dict(asset=str(p.relative_to(data)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),bytes=p.stat().st_size) for p in sorted(data.rglob('*')) if p.is_file()]
     preservation=DEST/'docs/source-preservation.json'

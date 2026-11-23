@@ -1,4 +1,6 @@
 -- Emergency · After the Eruption. All presentation uses the shared engine.
+local l10n=require('l10n')
+local tr,trn=l10n.tr,l10n.trn
 local sim=require('emergency_sim')
 local levels=require('emergency_levels')
 local art=require('emergency_art')
@@ -6,6 +8,8 @@ local feedback=require('emergency_feedback')
 local S={chapter=1,unlocked=1,completed=0,sound=true,screen='menu',textures={},backs={},best={0,0,0,0,0}}
 local C={cream=color.hex(0xFFF2D2),ink=color.hex(0x193D43),gold=color.hex(0xF4CB78),teal=color.hex(0x234F55)}
 local white=color.WHITE
+-- Supply names on the HUD; the wallet keeps its English keys.
+local SUPPLY={food=tr('Food'),wood=tr('Wood'),money=tr('Money')}
 -- The look lives in emergency_skin.lua; lettering is one of its text styles at a size.
 local skin=require('emergency_skin')
 local still=app.arg('shot') and not app.arg('reel')
@@ -45,7 +49,7 @@ local function rescue_total()
     for i=1,#levels do if S.best[i]>0 then total=total+speed_score(S.best[i]) end end
     return total
 end
-local function open_rescue_board() boards:open('rescue','Rescue score') end
+local function open_rescue_board() boards:open('rescue',tr('Rescue score')) end
 local function load_back(i)
     if not S.backs[i] then S.backs[i]=texture.load(levels[i].background) end
     return S.backs[i]
@@ -127,74 +131,81 @@ end
 local function hud()
     local g=S.g
     panel(rect(14,12,1340,68))
-    label(rect(34,20,336,24),('EMERGENCY  /  %02d'):format(S.chapter),19,nil,'gold')
+    -- TRANSLATORS: HUD heading; %02d is the district number
+    label(rect(34,20,336,24),tr('EMERGENCY  /  %02d'):format(S.chapter),19,nil,'gold')
     label(rect(34,44,330,27),levels[S.chapter].title,25)
     local total=0;local idle=0
     for _,w in ipairs(g.workers) do if not w.recruit then total=total+1;if w.phase=='idle' then idle=idle+1 end end end
     -- Supplies have no icon art yet (docs/ASSETS.md), so each panel names its own.
     for i,r in ipairs({'food','wood','money'}) do
-        skin:draw_resource(rect(385+(i-1)*162,27,152,38),nil,('%s %d'):format(r:upper(),g.wallet[r]),{interactive=false})
+        skin:draw_resource(rect(385+(i-1)*162,27,152,38),nil,('%s %d'):format(l10n.upper(SUPPLY[r]),g.wallet[r]),{interactive=false})
     end
-    label(rect(887,23,206,23),('WORKERS  %d / %d'):format(idle,total),20)
+    label(rect(887,23,206,23),tr('WORKERS  %d / %d'):format(idle,total),20)
     label(rect(887,48,195,20),('%02d:%02d'):format(math.floor(g.time/60),math.floor(g.time%60)),17,nil,'white')
-    if button(rect(1114,24,106,44),'Hint') then
+    if button(rect(1114,24,106,44),tr('Hint')) then
         S.selected=sim.suggest(g)
         if S.selected then
-            S.cam=S.cam:look(vec2(S.selected.x,S.selected.y));ui.toast(S.selected.def.title..': '..sim.detail(g,S.selected))
-        else ui.toast('Let the team finish its jobs and the stations deliver supplies.') end
+            -- TRANSLATORS: a job's name, then what it needs
+            S.cam=S.cam:look(vec2(S.selected.x,S.selected.y));ui.toast(tr('%s: %s'):format(S.selected.def.title,sim.detail(g,S.selected)))
+        else ui.toast(tr('Let the team finish its jobs and the stations deliver supplies.')) end
     end
-    if button(rect(1230,24,110,44),'Pause') then open_modal('pause');g.paused=true end
+    if button(rect(1230,24,110,44),tr('Pause')) then open_modal('pause');g.paused=true end
     panel(rect(14,932,1340,80))
-    label(rect(34,943,440,26),S.selected and S.selected.def.title or 'Restore the city, one route at a time',23)
+    label(rect(34,943,440,26),S.selected and S.selected.def.title or tr('Restore the city, one route at a time'),23)
     label(rect(34,975,900,24),sim.detail(g,S.selected),17,nil,'white')
     local denominator=g.level.people+g.level.animals+g.routes
     local complete=g.rescued+g.animals+g.cleared
-    label(rect(963,942,366,26),('People %d/%d   Pets %d/%d   Roads %d/%d'):format(g.rescued,g.level.people,g.animals,g.level.animals,g.cleared,g.routes),17)
+    label(rect(963,942,366,26),tr('People %d/%d   Pets %d/%d   Roads %d/%d'):format(g.rescued,g.level.people,g.animals,g.level.animals,g.cleared,g.routes),17)
     skin:paint_progress(rect(966,978,361,12),complete/denominator)
 end
 local function menu()
     gfx.image(load_back(S.chapter),app.screen(),white)
     ui.modal_backdrop(.85)
     panel(rect(325,110,718,806))
-    label(rect(365,145,638,62),'EMERGENCY',62,vec2(.5,.5),'gold')
-    label(rect(365,215,638,30),'AFTER THE ERUPTION',24,vec2(.5,.5))
-    label(rect(374,264,620,53),'Reopen the streets. Restore supplies. Bring everyone home.',23,vec2(.5,.5))
+    label(rect(365,145,638,62),tr('EMERGENCY'),62,vec2(.5,.5),'gold')
+    label(rect(365,215,638,30),tr('AFTER THE ERUPTION'),24,vec2(.5,.5))
+    label(rect(374,264,620,53),tr('Reopen the streets. Restore supplies. Bring everyone home.'),23,vec2(.5,.5))
     for i,level in ipairs(levels) do
         local done=(S.completed&(1<<(i-1)))~=0
-        local title=('%02d   %s%s'):format(i,level.title,done and '   - restored' or '')
+        -- TRANSLATORS: district number and name on a menu button
+        local title=(done and tr('%02d   %s   - restored') or '%02d   %s'):format(i,level.title)
         if button(rect(380,340+(i-1)*82,608,64),title,i>S.unlocked and ui.DISABLED or (i==S.unlocked and ui.ACCENT or 0)) then start(i,false) end
     end
-    if button(rect(380,774,182,54),'How to play') then open_modal('help') end
-    if button(rect(576,774,214,54),'Leaderboard') then open_rescue_board() end
+    if button(rect(380,774,182,54),tr('How to play')) then open_modal('help') end
+    if button(rect(576,774,214,54),tr('Leaderboard')) then open_rescue_board() end
     -- Sound is a checkbox, centred in the slot beside them.
-    local width=skin:checkbox_size({kind='checkbox'},'Sound')
+    local width=skin:checkbox_size({kind='checkbox'},tr('Sound'))
     S.sound_box=rect(804+(184-width)/2,774,width,54)
-    local sound=skin:draw_checkbox(S.sound_box,'Sound',S.sound)
+    local sound=skin:draw_checkbox(S.sound_box,tr('Sound'),S.sound)
     if sound~=S.sound then S.sound=sound;sfx.enable(S.sound);persist() end
-    label(rect(374,850,620,27),'Five districts. One rescue team. A fresh start.',20,vec2(.5,.5))
+    label(rect(374,850,620,27),tr('Five districts. One rescue team. A fresh start.'),20,vec2(.5,.5))
 end
 local function paint_modal()
     local kind=S.modal
     -- each panel fits its content: no empty band under the last button
     panel(rect(344,226,680,kind=='pause' and 494 or kind=='win' and 534 or 544))
-    local title=kind=='pause' and 'Rescue paused' or kind=='win' and 'District restored!' or 'Every route matters'
+    local title=kind=='pause' and tr('Rescue paused') or kind=='win' and tr('District restored!') or tr('Every route matters')
     label(rect(385,267,598,62),title,42,vec2(.5,.5),'gold')
     if kind=='win' then
         local g=S.g
-        label(rect(390,342,588,112),('All %d residents and %d pets are safe.\n%d roads restored in %d:%02d.'):format(g.rescued,g.animals,g.routes,math.floor(g.time/60),math.floor(g.time%60)),27,vec2(.5,.5))
-        if button(rect(414,495,540,64),S.chapter<#levels and 'Next district' or 'Play the episode again',ui.ACCENT) then
+        -- TRANSLATORS: the first %s is "%d residents", the second "%d pets"
+        local safe=tr('All %s and %s are safe.'):format(trn('%d resident','%d residents',g.rescued):format(g.rescued),trn('%d pet','%d pets',g.animals):format(g.animals))
+        -- TRANSLATORS: the time is minutes:seconds
+        local roads=trn('%d road restored in %d:%02d.','%d roads restored in %d:%02d.',g.routes):format(g.routes,math.floor(g.time/60),math.floor(g.time%60))
+        label(rect(390,342,588,112),safe..'\n'..roads,27,vec2(.5,.5))
+        if button(rect(414,495,540,64),S.chapter<#levels and tr('Next district') or tr('Play the episode again'),ui.ACCENT) then
             close_modal(function() start(S.chapter<#levels and S.chapter+1 or 1,false) end)
         end
-        if button(rect(414,580,540,58),'Replay district') then close_modal(function() start(S.chapter,false) end) end
-        if button(rect(414,660,540,58),'Districts') then close_modal(function() S.screen='menu' end) end
+        if button(rect(414,580,540,58),tr('Replay district')) then close_modal(function() start(S.chapter,false) end) end
+        if button(rect(414,660,540,58),tr('Districts')) then close_modal(function() S.screen='menu' end) end
     elseif kind=='pause' then
-        label(rect(398,350,572,52),'Your team and production are paused.',25,vec2(.5,.5))
-        if button(rect(414,442,540,64),'Resume rescue',ui.ACCENT) then close_modal(function() S.g.paused=false end) end
-        if button(rect(414,533,540,58),'Restart district') then close_modal(function() start(S.chapter,true) end) end
-        if button(rect(414,620,540,58),'Districts') then close_modal(function() S.screen='menu' end) end
+        label(rect(398,350,572,52),tr('Your team and production are paused.'),25,vec2(.5,.5))
+        if button(rect(414,442,540,64),tr('Resume rescue'),ui.ACCENT) then close_modal(function() S.g.paused=false end) end
+        if button(rect(414,533,540,58),tr('Restart district')) then close_modal(function() start(S.chapter,true) end) end
+        if button(rect(414,620,540,58),tr('Districts')) then close_modal(function() S.screen='menu' end) end
     else
-        label(rect(390,342,588,262),'Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n\nKitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n\nDrag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home.',23,vec2(0,0))
-        if button(rect(414,630,540,62),'Ready',ui.ACCENT) then close_modal() end
+        label(rect(390,342,588,262),tr('Tap rubble, damaged roads or a station to assign a worker. Unavailable jobs join the queue; tap again to cancel.\n\nKitchens, timber yards and offices produce supplies automatically. Residents and stranded workers return when their route is safe. Assign a worker to rescue pets.\n\nDrag to pan. Pinch or scroll to zoom. Restore every road and bring everyone home.'),23,vec2(0,0))
+        if button(rect(414,630,540,62),tr('Ready'),ui.ACCENT) then close_modal() end
     end
 end
 local function smoke()
@@ -273,7 +284,7 @@ local function frame(dt)
         for _,ev in ipairs(S.g.events) do
             feedback.event(ev)
             local p=S.cam:to_screen(vec2(ev.x,ev.y))
-            if ev.kind=='income' then fx.text(p,lettering(18,'green'),'+ supplies')
+            if ev.kind=='income' then fx.text(p,lettering(18,'green'),tr('+ supplies'))
             else fx.burst(p,12,C.gold,70,3);sfx.tone(ev.kind=='rescue' and 660 or 440,.12) end
         end
         S.g.events={}
@@ -301,8 +312,8 @@ local function init()
     S.font=skin:font('lilita')
     ui.set_theme(skin.theme)
     -- briefings come from the rescue dispatcher: a caption with a name tag, no portrait
-    story.setup({{id='dispatch',name='Rescue dispatch',color=color.hex(0xB4532A)}},
-        story_style{text=style{font=S.font,size=27,fill=C.ink},name=lettering(21),bubble=C.cream,edge=C.teal,dim=color(9,23,28,150),skip='START RESCUE'})
+    story.setup({{id='dispatch',name=tr('Rescue dispatch'),color=color.hex(0xB4532A)}},
+        story_style{text=style{font=S.font,size=27,fill=C.ink},name=lettering(21),bubble=C.cream,edge=C.teal,dim=color(9,23,28,150),skip=tr('START RESCUE')})
     S.testing=app.arg('fresh')~=nil or app.arg('shot')~=nil or app.arg('smoke')~=nil
     S.smoke=app.arg('smoke')~=nil
     if not S.testing then save.read('campaign',serialize) end
@@ -330,5 +341,5 @@ local function init()
     if app.arg('leaderboard') then gamecenter.submit('rescue',5*speed_score(300));open_rescue_board() end
 end
 -- Keep the published save namespace so the rename retains existing progress.
-return {title='Emergency - After the Eruption',id='volcano',gamecenter_board='rescue',
+return {title=tr('Emergency - After the Eruption'),id='volcano',gamecenter_board='rescue',
     design=size2(1368,1026),fixed=true,landscape=true,clear=C.ink,init=init,frame=frame}
