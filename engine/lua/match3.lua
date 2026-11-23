@@ -135,21 +135,25 @@ function E.catalogue_form(title, paint, gets)
             local reward = record.reward
             -- Every line under the name is one height apart, so the name, the
             -- flavor line, the price and the reward sit at an even pitch.
-            return N.overlay {opacity=record.faded and E.CATALOGUE_FADE or nil,
+            -- The row's art and copy fade when it is out of reach; the lock or
+            -- tick over the art (paint.badge) stays opaque.
+            return N.overlay {
                 N.custom {visible=not record.first,paint=function(box) paint.rule(box, record) end},
-                N.row {gap=12,align="center",padding={2,10,8,10},
+                N.row {gap=12,align="center",padding={2,10,8,10},opacity=record.faded and E.CATALOGUE_FADE or nil,
                     N.custom {width=E.CATALOGUE_ART,height=E.CATALOGUE_ART,paint=function(box) paint.art(box, record) end},
                     N.column {grow=1,gap=E.CATALOGUE_GAP,align="start",
-                        N.label {text=record.name,em=21,wrap=true,text_style="body",text_align="start"},
+                        -- The reward's icon on the name's line, under its caption.
+                        N.row {gap=8,align="center",
+                            N.label {text=record.name,em=21,wrap=true,grow=1,text_style="body",text_align="start"},
+                            N.label {text=gets,em=13,text_style="caption",visible=reward ~= nil},
+                            reward and E.resource_indicator(reward) or N.spacer {width=0},
+                        },
                         N.label {text=record.about or "",visible=(record.about or "") ~= "",em=15,wrap=true,
                             text_style="caption",text_align="start"},
                         N.row {gap=10,align="center",height=E.CATALOGUE_LINE,visible=#prices > 0,children=prices},
-                        N.row {gap=8,align="center",height=E.CATALOGUE_LINE,visible=reward ~= nil,
-                            N.label {text=gets,em=14,text_style="caption"},
-                            reward and E.resource_indicator(reward) or N.spacer {},
-                        },
                     },
                 },
+                N.custom {paint=function(box) if paint.badge then paint.badge(box, record) end end},
                 N.button {id='pick',text='',flat=true,enabled=record.enabled},
             }
         end},

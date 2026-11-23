@@ -63,10 +63,10 @@ G.DEFAULTS = {
             locked = "LOCKED"},
     catalogue = {
         title = "Build your town",
-        projects = "Projects", decorations = "Decorations", progress = "%d / %d",
+        projects = "Projects", decorations = "Decorations", progress = "%d / %d", reward = "REWARD",
         locked = "LOCKED", opens = "OPENS IN %s",
         earlier = "FINISH THE PREVIOUS PROJECTS",
-        poor = "MORE GOLD NEEDED",
+        poor = "MORE GOLD NEEDED", ready = "Ready to build!",
     },
     debug = {victory = 1, catalogue_card = 10, narrator = ""},
 }
@@ -862,10 +862,16 @@ function G.bind(R, over)
             local art = box:fit(texture.size(record.sprite))
             local state = record.state
             R.picture(record.sprite, art, state == "built" and 190 or 255)
-            local badge = state == "locked" and R.shop_locked_art or state == "built" and R.shop_built_art
-            if badge then R.picture_fit(badge, rect.centered(art:center(), size2.splat(BADGE)), 255) end
+            record.art_center = art:center()
         end,
-    }, W.card.gets)
+        badge = function(_, record)
+            local state = record.state
+            local badge = state == "locked" and R.shop_locked_art or state == "built" and R.shop_built_art
+            if badge and record.art_center then
+                R.picture_fit(badge, rect.centered(record.art_center, size2.splat(BADGE)), 255)
+            end
+        end,
+    }, C.reward)
     R.catalogue_form = catalogue_form
 
     -- A row's flavor line: the first sentence of the building's description.
@@ -881,15 +887,17 @@ function G.bind(R, over)
     -- One list: the current phase's campaign projects, in the order they are
     -- built, then everything that can be bought again. Projects of other
     -- phases are left out.
-    local function refresh_catalogue()
+    -- The rows of the current phase's projects and, unless projects_only, the
+    -- stock that can be bought again.
+    local function catalogue_records(projects_only)
         local wallet = R.prog.wallet
         local epoch = W.epochs and R.active_epoch()
-        local projects, stock, built = {}, {}, 0
+        local projects, stock = {}, {}
         -- A game may list its catalogue in another order (rows stay save data).
         for _, i in ipairs(island.catalogue_order or catalogue_rows) do
             local meta = island.catalogue[i]
             local position = island.ladder_position[i - 1]
-            if not position or not epoch or project_epoch(position) == epoch then
+            if position and (not epoch or project_epoch(position) == epoch) or not position and not projects_only then
                 local def = R.buildings[i]
                 local owned = island.owned(R.island, i - 1)
                 local blocked = ladder_blocked(i - 1, owned)
@@ -898,35 +906,46 @@ function G.bind(R, over)
                 if blocked == "built" then state = "built"
                 elseif blocked or blocked == nil and wallet[rules.CLEARED] < meta.cleared then state = "locked" end
                 local parts = state == "built" and {} or price_parts(def.cost)
+                local missing = {}   -- what the wallet still lacks, for the town's quest rows
                 for _, part in ipairs(parts) do
-                    local short = wallet[part.slot or rules.GOLD] < part.amount
+                    local have = wallet[part.slot or rules.GOLD]
+                    local short = have < part.amount
                     part.inline, part.number_style = true, short and "price_short" or "body"
+                    if short then
+                        missing[#missing + 1] = {icon=part.icon, amount=part.amount - have, inline=true, size=22}
+                    end
                 end
                 local reward = position and state ~= "built" and R.building_reward(i - 1) or nil
                 -- The reward's icon names the unlock; its payout is on its card.
                 if reward then reward = {icon=reward.icon, inline=true, size=34} end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts,
-                    state=state, available=available, project=position ~= nil, reward=reward,
+                    state=state, available=available, project=position ~= nil, reward=reward, missing=missing,
                     about=first_sentence(def.about),
                     faded=state == "poor" or state == "locked",
                     enabled=available or position ~= nil and state ~= "built"}
-                tiles[meta.key] = record
-                if position then
-                    projects[#projects + 1] = record
-                    if state == "built" then built = built + 1 end
+                if position then projects[#projects + 1] = record
                 else stock[#stock + 1] = record end
             end
         end
+        return projects, stock
+    end
+    R.phase_projects = function() return (catalogue_records(true)) end
+
+    local function refresh_catalogue()
+        local projects, stock = catalogue_records()
+        for _, record in ipairs(projects) do tiles[record.id] = record end
+        for _, record in ipairs(stock) do tiles[record.id] = record end
         local records, building_ids = {}, {}
         local function section(id, heading, rows, progress)
             if #rows == 0 then return end
-            records[#records + 1] = {id=id, heading=heading, progress=progress}
+            if heading then records[#records + 1] = {id=id, heading=heading, progress=progress} end
             for k, record in ipairs(rows) do
                 record.first = k == 1
                 records[#records + 1], building_ids[#building_ids + 1] = record, record.id
             end
         end
-        section("projects", epoch and W.epochs[epoch] or C.projects, projects, C.progress:format(built, #projects))
+        -- The phase's projects lead without a heading; the decorations follow theirs.
+        section("projects", nil, projects)
         section("decorations", C.decorations, stock)
         assert(catalogue_form:set_items("stock", records))
         return building_ids
@@ -1085,6 +1104,27 @@ function G.bind(R, over)
             pause = function() R.overlay = R.OV_PAUSE end,
             middle_icon = function(at) R.town_middle_icon(at) end,
             build = function() R.open_catalogue() end,
+            -- The phase's four projects, numbered under its name: each says
+            -- whether it can be built now or what it still needs.
+            quests = W.epochs and function()
+                local entries = {}
+                for _, record in ipairs(R.phase_projects()) do
+                    local state = record.state
+                    entries[#entries + 1] = {id=record.id, title=record.name, done=state == "built",
+                        ready=record.available,
+                        note=record.available and C.ready or state == "locked" and C.locked or nil,
+                        missing=state == "poor" and record.missing or nil}
+                end
+                return {title=W.epochs[R.active_epoch()], entries=entries}
+            end or nil,
+            quest_tap = function(key)
+                for _, record in ipairs(R.phase_projects()) do
+                    if record.id == key then
+                        if record.available then R.island_begin(record.kind, true)
+                        else R.open_project(record.kind) end
+                    end
+                end
+            end,
             build_rim = function(center, radius)
                 if not R.reduced_motion and R.overlay == R.OV_NONE and R.can_build_project() then
                     R.vfx_ready_rim(center, radius, R.now)

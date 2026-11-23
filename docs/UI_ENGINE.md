@@ -654,11 +654,12 @@ for integration checks.
 
 Relic Rush and Christmas Market share `match3.catalogue_form`: headings and one
 building per row, the whole row a flat `pick` button over the game-painted art,
-the name, a flavor line (`about`), the price as inline `resource_indicator`s
-and, for a project, its reward's icon. The price and reward lines share one
-height and the lines one gap, so they sit at an even pitch; a row takes the
-height of its lines. A record marked `faded` (out of reach) draws at half
-opacity. It opens as a full-screen sheet
+the name with, for a project, its reward's icon under a REWARD caption on the
+same line, a flavor line (`about`) and the price as inline
+`resource_indicator`s, one gap apart; a row takes the height of its lines. A
+record marked `faded` (out of reach) draws its art and copy at half opacity,
+while `paint.badge` (the lock or tick over the art) stays opaque. A list may
+lead with rows and no heading. It opens as a full-screen sheet
 under the wallet row: a modal's `bounds` option may be a function of the screen,
 called every frame, and a `list` with `grow` takes the height the sheet leaves.
 A price the wallet cannot cover uses the skin's `price_short` text style.

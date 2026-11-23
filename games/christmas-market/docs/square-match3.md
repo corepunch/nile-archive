@@ -58,7 +58,9 @@ Build opens the shop at the current phase. Its four projects lead the list
 and are available in any order once the phase opens; later phases' projects
 are left out. A particle trail circles Build if you can afford a project.
 Each row shows a line about the stall, the price and the board reward's icon;
-rows out of reach are faded. Tap an affordable row to choose a
+rows out of reach are faded. The town's tracker at the upper left names the
+phase and numbers its four projects, each ready to build or showing what it
+still needs. Tap an affordable row to choose a
 site and confirm; a project out of reach opens its card with the shortfall. Play shows the next wish number
 between the round Build button and the Pause gear. The next phase opens
 after its predecessor’s twenty wishes and four projects are complete.

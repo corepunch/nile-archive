@@ -34,14 +34,18 @@ check(R.active_epoch() == 1 and R.can_build_project(), "the first epoch has an a
 R.open_catalogue()
 local stock = R.catalogue_form.nodes.stock
 local function row(index) return stock.records[stock.children[index].item_key] end
-check(row(1).heading == first and row(1).progress == "0 / 4", "the shop opens on the current phase and its progress")
+check(not row(1).heading, "the phase's projects lead without a heading")
 for i = 1, 4 do
-    local project = row(i + 1)
+    local project = row(i)
     check(project.kind == island.ladder[i].kind and project.project and project.available and project.reward,
         "the first four rows are the phase's projects in build order, each with what it brings")
 end
-check(row(6).heading == R.words.catalogue.decorations and not row(7).project,
+check(row(5).heading == R.words.catalogue.decorations and not row(6).project,
     "decorations follow the four projects")
+local quests = R.town.hooks.quests()
+check(quests.title == first and #quests.entries == 4 and quests.entries[1].ready
+    and quests.entries[1].note == R.words.catalogue.ready,
+    "the town's tracker names the phase and its four projects, ready ones saying so")
 check(not R.catalogue_tile(island.buildings[island.ladder[5].kind + 1].key), "later phases' projects are left out")
 R.prog.wallet = purse(5)
 check(not R.can_build_project(), "a short wallet does not light the Build control")

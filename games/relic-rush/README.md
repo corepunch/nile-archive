@@ -206,10 +206,15 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 ## Buildings
 
-Build opens the shop at the current epoch: its four projects first, under the
-epoch's name and how many are built, then the decorations. Each row shows the
-building's art, a line about it, its price on one line (an amount you cannot
-yet cover in red) and, for a project, the icon of what it brings. A lock or a
+The town lists the current epoch's four projects at the upper left under the
+epoch's name: a numbered row each (a tick once built), saying "Ready to
+build!" or showing the amounts still missing. Tap a row to place a ready
+project or open its card.
+
+Build opens the shop at the current epoch: its four projects first, then the
+decorations. Each row shows the building's art, its name with the icon of
+what a project brings, a line about it and its price on one line (an amount
+you cannot yet cover in red). A lock or a
 tick over the art marks a locked or built one, and a row you cannot build yet
 is faded. A particle trail circles Build when a project is
 affordable. A row that can be bought goes straight to placement; a project

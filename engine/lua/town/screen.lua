@@ -28,6 +28,11 @@
 --                            portrait=texture, progress=0..1}, ...}: round
 --                           markers down the left edge, under the header (requests, tasks)
 --   rail_tap(id)            a rail marker was tapped
+--   quests()                {title=string, entries={{id=, title=string, done=bool, ready=bool,
+--                           note=string, missing={resource entries}}, ...}}: numbered rows
+--                           under a heading down the left edge (the phase's projects); a row's
+--                           second line is its note or the inline amounts still missing
+--   quest_tap(id)           a quest row was tapped
 --   rail_paint(box, entry, state, ready_time)   paints one marker's face and icon (default: a plain disc)
 --   play_label()            next level number printed on Play
 --   middle_icon(center)     the icon in the round middle button
@@ -62,6 +67,12 @@ local DEFAULTS = {
     -- each figure sits in a `caption`-tall readout of the `role` resource look.
     rail = {x = 10, top = 96, size = 60, gap = 12, caption = 22, role = "wallet", text = "cream",
             glow = "#FFDC786E", rim = "#668765E6", face = "#E7E0B9", ready = "#F9D368", shadow = "#1F23185A"},
+    -- The quest tracker: numbered rows down the left edge, `gap` under the
+    -- header band. `ready` and `text` are the names' text styles for a row
+    -- that can be built now and for the rest; badges use the skin's
+    -- quest_number and done_tick panels.
+    quests = {x = 12, gap = 10, width = 240, badge = 26, em = 18, title = "gold", title_em = 21,
+              text = "cream", ready = "gold", note = "green", note_em = 15, number = "body", done_opacity = .6},
     markers = {visible = true, label = 15, label_width = 160, glow = "#FFDC786E", text = "cream"},
     bubble = {width = 300, seconds = 0, fill = "#FFF6DEF5", edge = "#664427"},
     focus = {lift = 90, min_zoom = .65},
@@ -509,6 +520,70 @@ function View:rail()
     end
 end
 
+-- The quest tracker: the phase's name over one row per entry, a numbered
+-- badge (a tick once done) beside the name and, under it, what the entry
+-- needs. The whole row is the button.
+local function quest_form(cfg)
+    return ui.form(N.column {N.border {role = "quest_tracker", padding = {10, 8, 10, 10}, N.column {gap = 6,
+        N.label {id = "title", em = cfg.title_em, text_style = cfg.title, text_align = "start"},
+        N.list {id = "quests", gap = 6, item = function(r)
+            local missing = {}
+            for _, entry in ipairs(r.missing or {}) do
+                missing[#missing + 1] = N.resource_indicator {icon = entry.icon, amount = entry.amount,
+                    inline = true, size = entry.size, number_style = cfg.text}
+            end
+            local detail = not r.done and (#missing > 0 and N.row {gap = 8, align = "center", children = missing}
+                or r.note and N.label {text = r.note, em = cfg.note_em, text_style = cfg.note, text_align = "start"})
+            return N.overlay {
+                N.column {gap = 2, opacity = r.done and cfg.done_opacity or nil,
+                    N.row {gap = 8, align = "center",
+                        N.overlay {width = cfg.badge, height = cfg.badge,
+                            N.spacer {panel = true, role = r.done and "done_tick" or "quest_number"},
+                            N.label {text = r.done and "" or tostring(r.number), em = cfg.badge * .62,
+                                     text_style = cfg.number, text_align = "center"},
+                        },
+                        N.label {text = r.title, em = cfg.em, wrap = true, grow = 1, text_align = "start",
+                                 text_style = r.ready and cfg.ready or cfg.text},
+                    },
+                    detail and N.row {padding = {cfg.badge + 8, 0, 0, 0}, detail} or nil,
+                },
+                N.button {id = "pick", text = "", flat = true, height = cfg.badge},
+            }
+        end},
+    }}})
+end
+
+function View:quests(active)
+    local h, cfg, skin = self.hooks, self.cfg.quests, self.hooks.skin
+    local quests = h.quests()
+    local entries = quests and quests.entries or {}
+    if #entries == 0 then return end
+    self.quest_form = self.quest_form or quest_form(cfg)
+    local signature = {quests.title or ""}
+    for i, entry in ipairs(entries) do
+        entry.number = i
+        local need = {}
+        for k, m in ipairs(entry.missing or {}) do need[k] = m.amount end
+        signature[#signature + 1] = table.concat({entry.id, tostring(entry.done), tostring(entry.ready),
+            entry.note or "", table.concat(need, "/")}, ":")
+    end
+    signature = table.concat(signature, ",")
+    if signature ~= self.quest_signature then
+        self.quest_form:set("title", quests.title or "")
+        assert(self.quest_form:set_items("quests", entries))
+        self.quest_signature = signature
+    end
+    local s, header = app.screen(), self.cfg.header
+    local top = s.y + header.y + (header.band_height or header.height) + cfg.gap
+    local _, height = self.quest_form:measure(cfg.width, skin)
+    self.quest_bounds = rect(s.x + cfg.x, top, cfg.width, height)
+    local event = self.quest_form:draw(self.quest_bounds, skin, {interactive = active, dim_controls = false})
+    if event and event.source == "quests" then
+        haptic.play(haptic.TICK, .6)
+        if h.quest_tap then h.quest_tap(event.key) end
+    end
+end
+
 -- Cancel and Confirm stand under the lifted building, kept on screen.
 function View:placement()
     local c, p = self.city, self.cfg.placement
@@ -588,6 +663,7 @@ function View:frame(inp, dt, active)
     elseif not (h.hide_bottom and h.hide_bottom()) then
         self:bottom(active)
         if h.rail then self:rail() end
+        if h.quests then self:quests(active) end
     end
     if h.extras then h.extras(app.screen()) end
 end
