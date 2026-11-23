@@ -22,10 +22,11 @@ local function check_layout(g)
         last = box
     end
     assert(first.x >= 0 and last:max().x <= app.screen().w, "the full row fits in the safe area")
-    local pause = R.board_pause
-    assert(pause.w == first.w and pause.h == pause.w and pause.y == first.y and pause.x >= last:max().x,
-        "the round Pause button is the fifth slot")
-    assert(math.abs((first.x + pause:max().x) / 2 - app.screen():center().x) < .01, "the five slots are centered")
+    -- Pause sits smaller, centred in the fifth slot.
+    local pause, fifth = R.board_pause, R.board_tool_bounds(#g.tool_slots)
+    assert(pause.w == pause.h and pause.w < fifth.w and (pause:center() - fifth:center()):len() < .01
+        and fifth.y == first.y and fifth.x >= last:max().x, "the round Pause button is centred in the fifth slot")
+    assert(math.abs((first.x + fifth:max().x) / 2 - app.screen():center().x) < .01, "the five slots are centered")
     local header = R.town.header_form.boxes
     assert(not header.menu and math.abs((header.leading.x + header.cap3:max().x) / 2 - app.screen():center().x) < .01,
         "the display-only header is centered")

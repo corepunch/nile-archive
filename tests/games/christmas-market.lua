@@ -76,9 +76,9 @@ shot("purchase-clock-board", "480x900", "--level 47 --frames 100")
 shot("purchase-skates-board", "480x900", "--level 82 --frames 100")
 local booster_flight = "--lua tests/fixtures/bonus-toolbar;games/christmas-market/lua;. --fly-bonus "
 local booster_safe = " --safe-area 0,47,0,34"
-reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 5" .. booster_safe)
-reel("booster-lantern-flight", 23, 4, "390x844", booster_flight .. "--level 20" .. booster_safe)
-shot("booster-reduced-motion", "480x900", booster_flight .. "--level 5 --flight-no-motion --frames 86")
+reel("booster-hammer-flight", 23, 4, "390x844", booster_flight .. "--level 7" .. booster_safe)
+reel("booster-lantern-flight", 23, 4, "390x844", booster_flight .. "--level 57" .. booster_safe)
+shot("booster-reduced-motion", "480x900", booster_flight .. "--level 7 --flight-no-motion --frames 86")
 -- Line gems and the rainbow gem: both axes of every kind, then one real swap each.
 local gems = "--level 30 --special-states "
 shot("line-gem-states", "480x900", gems .. "--frames 60")

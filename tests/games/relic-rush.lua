@@ -65,7 +65,7 @@ shot("bonus-toolbar", "480x900", bonus_review .. "--frames 10")
 shot("bonus-toolbar-phone", "390x844", bonus_review .. "--frames 10 --safe-area 0,47,0,34")
 shot("bonus-spent", "390x844", bonus_review .. "--spend-bonus --frames 25 --safe-area 0,47,0,34")
 shot("bonus-states", "480x900", "--level 28 --art-states bonuses")
-local bonus_flight = "--lua tests/fixtures/bonus-toolbar;games/relic-rush/lua;. --level 5 --fly-bonus"
+local bonus_flight = "--lua tests/fixtures/bonus-toolbar;games/relic-rush/lua;. --level 7 --fly-bonus"
 reel("bonus-gem-flight", 23, 4, "390x844", bonus_flight .. " --safe-area 0,47,0,34")
 shot("bonus-reduced-motion", "480x900", bonus_flight .. " --flight-no-motion --frames 86")
 shot("bonus-hammer-debut", "480x900", "--level 5")
