@@ -208,9 +208,10 @@ The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty 
 
 Build opens the shop at the current epoch: its four projects first, under the
 epoch's name and how many are built, then the decorations. Each row shows the
-building's art, its price on one line (an amount you cannot yet cover in red)
-and, for a project, what it brings. A lock or a tick over the art marks a
-locked or built one. A particle trail circles Build when a project is
+building's art, a line about it, its price on one line (an amount you cannot
+yet cover in red) and, for a project, the icon of what it brings. A lock or a
+tick over the art marks a locked or built one, and a row you cannot build yet
+is faded. A particle trail circles Build when a project is
 affordable. A row that can be bought goes straight to placement; a project
 still out of reach opens its card with the shortfall. The triangular Play button shows the next expedition
 between Build and Pause. The next epoch opens after the current one’s

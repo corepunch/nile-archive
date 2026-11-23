@@ -36,10 +36,11 @@ medal uses the original colors.
 
 The town bar reuses the round enamel Build and Pause buttons with the
 [painted jade Play sprite](../../../art/match3-buttons/README.md#town-play)
-centred between them. The Build rim uses the board’s existing blue particles
+centred between them; Build and Pause each centre in the space on their side. The Build rim uses the board’s existing blue particles
 when an eligible project is affordable. The shop lists the current
 phase's building sprites, then the decorations. It draws the existing HUD frames
-`shop-locked` and `shop-built` large over a locked or built building's sprite.
+`shop-locked` and `shop-built` large over a locked or built building's sprite;
+these are Relic Rush's painted padlock and checkmark, copied unchanged.
 Review with `shot epoch-projects-phone` and the phone shop capture.
 
 ## Construction backdrops
@@ -644,8 +645,9 @@ icons to the goal display.
 
 The shop's built and locked tiles use `art/registered/expedition-hud/shop-built.png`
 (checkmark) and `shop-locked.png` (padlock), packed into the HUD atlas as
-`shop-built` and `shop-locked`. The Christmas Market source, prompt and
-per-game styling still need to be recorded in
+`shop-built` and `shop-locked`. They are byte copies of Relic Rush's painted
+`art/registered/expedition-hud/` frames, replacing the earlier flat icons. The
+source, prompt and any per-game styling still need to be recorded in
 [#90](https://github.com/corepunch/nile-archive/issues/90).
 
 The engine's default resource skin is independent and embedded; both games

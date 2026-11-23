@@ -22,7 +22,7 @@ end
 
 -- The two match-3 cities share the same view templates. Game code supplies
 -- localized copy, skin colors, and records with stable keys via set_items.
-E.CATALOGUE_ROW, E.CATALOGUE_SLIM, E.CATALOGUE_ART = 128, 104, 116
+E.CATALOGUE_ART, E.CATALOGUE_LINE, E.CATALOGUE_GAP, E.CATALOGUE_FADE = 116, 34, 6, .5
 
 -- The subtitle value also owns its row's visibility. Hidden rows take no gap.
 local function header_title(title)
@@ -116,8 +116,9 @@ end
 -- Full-screen sheets under the wallet row: one list of headings and building
 -- rows. A row is its art (paint.art), its name, its price on one line and,
 -- for a campaign project, what it brings; the whole row is the button (id
--- 'pick'). paint.rule draws the hairline between rows. A record marked slim
--- (built, or with nothing to bring) takes a shorter row.
+-- 'pick'). paint.rule draws the hairline between rows. A row takes the
+-- height of its lines; a record marked faded (out of reach) draws at half
+-- opacity.
 function E.catalogue_form(title, paint, gets)
     return ui.form(N.column {panel=true,
         E.popup_header(title, nil, "close", true),
@@ -132,15 +133,18 @@ function E.catalogue_form(title, paint, gets)
             local prices = {}
             for _, part in ipairs(record.prices) do prices[#prices + 1] = E.resource_indicator(part) end
             local reward = record.reward
-            local height = record.slim and E.CATALOGUE_SLIM or E.CATALOGUE_ROW
-            return N.overlay {height=height,
+            -- Every line under the name is one height apart, so the name, the
+            -- flavor line, the price and the reward sit at an even pitch.
+            return N.overlay {opacity=record.faded and E.CATALOGUE_FADE or nil,
                 N.custom {visible=not record.first,paint=function(box) paint.rule(box, record) end},
-                N.row {gap=12,align="center",padding={2,6,8,6},
-                    N.custom {width=E.CATALOGUE_ART,height=height - 12,paint=function(box) paint.art(box, record) end},
-                    N.column {grow=1,gap=7,align="start",
+                N.row {gap=12,align="center",padding={2,10,8,10},
+                    N.custom {width=E.CATALOGUE_ART,height=E.CATALOGUE_ART,paint=function(box) paint.art(box, record) end},
+                    N.column {grow=1,gap=E.CATALOGUE_GAP,align="start",
                         N.label {text=record.name,em=21,wrap=true,text_style="body",text_align="start"},
-                        N.row {gap=10,align="center",visible=#prices > 0,children=prices},
-                        N.row {gap=8,align="center",visible=reward ~= nil,
+                        N.label {text=record.about or "",visible=(record.about or "") ~= "",em=15,wrap=true,
+                            text_style="caption",text_align="start"},
+                        N.row {gap=10,align="center",height=E.CATALOGUE_LINE,visible=#prices > 0,children=prices},
+                        N.row {gap=8,align="center",height=E.CATALOGUE_LINE,visible=reward ~= nil,
                             N.label {text=gets,em=14,text_style="caption"},
                             reward and E.resource_indicator(reward) or N.spacer {},
                         },

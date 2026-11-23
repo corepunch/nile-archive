@@ -97,9 +97,12 @@ come to reopen starts there. The stall can be moved for free. [Opening market](d
 
 Confirmed placement spends Tokens, Treats and Materials from that wallet.
 The Welcome arch is the first campaign purchase.
-The town bar puts Play between the round Build button and the Pause gear.
+The town bar puts Play in the middle, with the round Build button and the
+Pause gear each centred in the space on its side.
 Build opens the shop at the current Advent: its four projects first, under
-the Advent's name and how many are built, then the decorations. A trail
+the Advent's name and how many are built, then the decorations. Each row
+has a line about the stall, its price and, for a project, the icon of what it
+brings; a row you cannot build yet is faded. A trail
 circles Build when an open project is affordable. A row that can be bought
 goes straight to placement; a project still out of reach opens its card with
 the shortfall.

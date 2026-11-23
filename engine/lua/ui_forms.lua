@@ -704,11 +704,26 @@ local function paint_node(n,skin,form,options,event)
     end
     return event
 end
+-- The shift and opacity of the open popup layer; a node's opacity multiplies it.
+local layer_shift,layer_opacity=vec2(0,0),1
+local function set_layer(shift,opacity)
+    layer_shift,layer_opacity=shift,opacity
+    ui.popup_transform(shift,opacity)
+end
+local function paint_faded(n,skin,form,options,event)
+    if not n.opacity or n.opacity>=1 or not visible(n,form.values) then return paint_node(n,skin,form,options,event) end
+    local shift,opacity=layer_shift,layer_opacity
+    set_layer(shift,opacity*n.opacity)
+    local ok,result=pcall(paint_node,n,skin,form,options,event)
+    set_layer(shift,opacity)
+    if not ok then error(result,0) end
+    return result
+end
 paint = function(n,skin,form,options,event)
     if options.paint_scope and n.paint_group and visible(n,form.values) then
-        return options.paint_scope(n.paint_group,function() return paint_node(n,skin,form,options,event) end)
+        return options.paint_scope(n.paint_group,function() return paint_faded(n,skin,form,options,event) end)
     end
-    return paint_node(n,skin,form,options,event)
+    return paint_faded(n,skin,form,options,event)
 end
 -- Match the touch scroll curve in Mapview: .998 decay per millisecond,
 -- half-strength resistance at the edge, and a critically damped return.
@@ -908,9 +923,9 @@ function Popup:paint(draw, config)
     end
     self.fresh=false
     if opacity==1 then return draw() end
-    ui.popup_transform(vec2(0,24*(1-entry)+20*exit),opacity)
+    set_layer(vec2(0,24*(1-entry)+20*exit),opacity)
     local ok,result=pcall(draw)
-    ui.popup_transform(no_shift,1)
+    set_layer(no_shift,1)
     if not ok then error(result,0) end
     return result
 end

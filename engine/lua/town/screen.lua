@@ -147,10 +147,13 @@ function T.new(c, config, hooks)
         N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
     })
     if b.layout == "play-primary" and b.pause then
-        v.navigation = ui.form(N.row {align = "center", gap = 8,
+        -- Play in the middle; Build and Pause each centred in the space on its side.
+        v.navigation = ui.form(N.row {align = "center",
             N.spacer {grow = 1},
             N.button {id = "build", text = "", role = "navigation_build", width = b.build, height = b.secondary_height},
+            N.spacer {grow = 1},
             N.button {id = "play", text = "", role = "navigation_play", width = b.play, height = b.height},
+            N.spacer {grow = 1},
             N.button {id = "pause", text = "", role = "navigation_pause", width = b.build, height = b.secondary_height},
             N.spacer {grow = 1},
         })

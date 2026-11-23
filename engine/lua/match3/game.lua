@@ -855,17 +855,25 @@ function G.bind(R, over)
     local catalogue_form = match3.catalogue_form(C.title, {
         rule = function(box) R.fill(rect(box.x + 10, box.y, box.w - 20, 1.5), rgba(181, 140, 75, 110)) end,
         -- The building at full size in its slot; a lock over a locked one, a
-        -- tick over a built one, each centred on the art.
+        -- tick over a built one, each centred on the art. A row out of reach
+        -- fades as a whole.
         art = function(box, record)
             if record.sprite.w == 0 then return end
             local art = box:fit(texture.size(record.sprite))
             local state = record.state
-            R.picture(record.sprite, art, state == "locked" and 120 or state == "built" and 190 or 255)
+            R.picture(record.sprite, art, state == "built" and 190 or 255)
             local badge = state == "locked" and R.shop_locked_art or state == "built" and R.shop_built_art
             if badge then R.picture_fit(badge, rect.centered(art:center(), size2.splat(BADGE)), 255) end
         end,
     }, W.card.gets)
     R.catalogue_form = catalogue_form
+
+    -- A row's flavor line: the first sentence of the building's description.
+    local function first_sentence(about)
+        if not about then return nil end
+        about = about:gsub("%s+", " ")
+        return about:match("^.-[.!?]%f[%s%z]") or about
+    end
 
     local tiles = {}   -- building key -> its row record
     local catalogue_rows = {}
@@ -895,13 +903,13 @@ function G.bind(R, over)
                     part.inline, part.number_style = true, short and "price_short" or "body"
                 end
                 local reward = position and state ~= "built" and R.building_reward(i - 1) or nil
-                if reward then
-                    reward = {icon=reward.icon, amount=reward.amount, unit=reward.unit,
-                        inline=true, size=40, number_style="body"}
-                end
+                -- The reward's icon names the unlock; its payout is on its card.
+                if reward then reward = {icon=reward.icon, inline=true, size=34} end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts,
                     state=state, available=available, project=position ~= nil, reward=reward,
-                    slim=not reward, enabled=available or position ~= nil and state ~= "built"}
+                    about=first_sentence(def.about),
+                    faded=state == "poor" or state == "locked",
+                    enabled=available or position ~= nil and state ~= "built"}
                 tiles[meta.key] = record
                 if position then
                     projects[#projects + 1] = record

@@ -72,7 +72,8 @@ also holds visibility/enabled predicates.
 | `custom` | Game-specific painting inside engine-assigned bounds |
 
 Every node may have `width`, `height`, `min_width`, `min_height`, `grow`, `padding`,
-`gap`, `visible=false`, or `visible_field`. Containers support cross-axis
+`gap`, `visible=false`, `visible_field`, or `opacity` (0–1, multiplying the
+open popup's own fade for the node and its children). Containers support cross-axis
 `align="start|center|end|stretch"`; across a row only a child's `height` caps it,
 and across a column only its `width`, so a row child with just a width still
 stretches to the row's height. Buttons support `enabled=false`,
@@ -653,8 +654,11 @@ for integration checks.
 
 Relic Rush and Christmas Market share `match3.catalogue_form`: headings and one
 building per row, the whole row a flat `pick` button over the game-painted art,
-the name, the price as inline `resource_indicator`s and, for a project, its
-reward; a record marked `slim` takes a short row. It opens as a full-screen sheet
+the name, a flavor line (`about`), the price as inline `resource_indicator`s
+and, for a project, its reward's icon. The price and reward lines share one
+height and the lines one gap, so they sit at an even pitch; a row takes the
+height of its lines. A record marked `faded` (out of reach) draws at half
+opacity. It opens as a full-screen sheet
 under the wallet row: a modal's `bounds` option may be a function of the screen,
 called every frame, and a `list` with `grow` takes the height the sheet leaves.
 A price the wallet cannot cover uses the skin's `price_short` text style.
