@@ -432,3 +432,19 @@ Motion holds the rim still and hides the glint. A special swells in where its li
 made. `--level N --special-states` shows both axes of every kind on a square
 board. Sources, creation and activation are declared together in
 `engine/lua/match3/specials.lua`.
+
+### Finale: leftover moves
+
+With `finale_batch = N` (it needs `striped`; `match3.square_campaign` sets 5),
+a won board spends its leftover moves before the result, as Candy Crush does.
+Each round turns up to N random plain, unlocked pieces into line gems on random
+axes, takes that many moves, holds them for a beat (`PH_FINALE`) and fires them
+in one wave. The wave's settle arms the next round until no moves are left, then
+the result opens. Swept pieces bank as any special's sweep does, so the
+leftover moves become resources. The rules are `game_finale_arm` and
+`game_finale_fire`; `game_finale` plays every round with its cascades at once
+for bots and the balance simulations, so measured income
+includes the finale. Finale waves are not player moves: user events skip them.
+Each round saves the completed board, so quitting mid-finale keeps the win.
+`--level 1 --special-states --special-fire match` wins on its swap and plays the
+finale (`reel match-finale`).

@@ -575,6 +575,12 @@ a coloured mesh with no new states, and Reduce Motion hides them. Capture with
 `build/test/all --suite=christmas-market 'reel match-burst'`.
 [Reviewed frames](screenshots/review/match-burst/match-burst-480x900.jpg).
 
+After a win the leftover moves arm five line gems a round. Each armed piece takes
+its existing line gem state with an `fx-flash` impact and `fx-twinkle` sparks
+(`R.vfx_finale_arm`), then fires as a normal sweep; no new art or states. Capture with
+`build/test/all --suite=christmas-market 'reel match-finale'`.
+[Reviewed frames](screenshots/review/match-finale/match-finale-480x900.jpg).
+
 ## Ice
 
 The [ice archive](../../../art/match3-ice/README.md) records the source,

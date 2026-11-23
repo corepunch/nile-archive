@@ -66,6 +66,7 @@ for level = 1, rules.LEVELS do
     R.story_tick()
     check(not story.active() and not R.story_current, 'the results open without dialogue')
     local moves_left = R.g.moves
+    rules.game_finale(R.g, m)   -- the leftover moves pay out before the result, as on the board
     local reward = rules.level_reward(R.g, R.wonders, R.prog)
     local expected_wallet = R.prog.wallet + reward
     R.claim_reward()

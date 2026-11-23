@@ -16,6 +16,7 @@ function E.view(state)
     state.SCREEN_W, state.SCREEN_H = state.SCREEN_W or 480, state.SCREEN_H or 900
     state.HEX_R, state.drop = state.HEX_R or 32, 0
     state.PH_IDLE, state.PH_SWAP, state.PH_REJECT, state.PH_CLEAR, state.PH_FALL, state.PH_SHUFFLE = 0, 1, 2, 3, 4, 6
+    state.PH_FINALE = 7
     state.old_tiles, state.fall_from, state.wave_ice, state.wave_chain, state.wave_oil = {}, {}, {}, {}, {}
     state.phase, state.phase_time, state.idle_time, state.shake = 0, 0, 0, 0
     state.selected, state.swap_a, state.swap_b, state.tool, state.hint_a, state.hint_b = -1, -1, -1, -1, -1, -1
@@ -1618,6 +1619,65 @@ function E.new(config)
         return false
     end
 
+    -- The finale: a won board spends its leftover moves FINALE_BATCH at a
+    -- time. Each round turns that many plain pieces into line gems, which fire
+    -- in one wave; what they sweep pays like any special's sweep. A game opts
+    -- in with config.finale_batch, which needs the striped special.
+    M.FINALE_BATCH = config.finale_batch
+    if M.FINALE_BATCH then
+        local striped = false
+        for _, name in ipairs(config.special_rules or {}) do striped = striped or name == "striped" end
+        assert(striped, "the finale needs line gems")
+    end
+
+    -- Arms one round and spends its moves; nil when the finale is over.
+    function M.game_finale_arm(g)
+        if not M.FINALE_BATCH or not g.won or g.moves <= 0 then return nil end
+        local pool = {}
+        for i = 0, CELLS - 1 do
+            local t = g.tiles[i]
+            if cell_active(g, i) and not locked(g, i) and t.kind >= 0 and not t.special then pool[#pool + 1] = i end
+        end
+        local count = math.min(M.FINALE_BATCH, g.moves, #pool)
+        if count == 0 then return nil end
+        local armed = {}
+        for k = 1, count do   -- a partial shuffle picks distinct cells
+            local j = k + randn(g, #pool - k + 1)
+            pool[k], pool[j] = pool[j], pool[k]
+            local cell = pool[k]
+            g.tiles[cell] = tile(g.tiles[cell].kind, "striped", randn(g, M.AXES))
+            armed[k] = cell
+        end
+        g.moves = g.moves - count
+        return armed
+    end
+
+    -- Puts an armed round's gems into `m`; game_apply fires them.
+    function M.game_finale_fire(g, m, armed)
+        reset_match(m)
+        for _, cell in ipairs(armed) do
+            if g.tiles[cell].special and not m.mask[cell] then
+                m.mask[cell], m.direct[cell], m.hits = true, true, m.hits + 1
+            end
+        end
+        return m.hits > 0
+    end
+
+    -- The whole finale at once, cascades included, for bots and simulations.
+    function M.game_finale(g, m)
+        local armed = M.game_finale_arm(g)
+        while armed do
+            if M.game_finale_fire(g, m, armed) then
+                repeat
+                    M.game_apply(g, m)
+                    M.game_collapse(g, true)
+                    game_matches(g, m)
+                until m.hits == 0
+            end
+            armed = M.game_finale_arm(g)
+        end
+    end
+
     local extra_tools = config.extra_tools or {}
     local default_tools = {"hit", "blast", "sunburst"}
     local function tool_slot(g, tool)
@@ -1847,12 +1907,13 @@ function E.new(config)
     layout()
     local CELL_SIZE = R.piece_width or dy
     local PI = math.pi
-    local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE = 0, 1, 2, 3, 4, 6
+    local PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE, PH_FINALE = 0, 1, 2, 3, 4, 6, 7
+    local FINALE_ARMED = .38   -- seconds the armed line gems show before they fire
     local REJECT_LEG = .16
     local SHUFFLE_FLIGHT, SHUFFLE_STAGGER, SHUFFLE_GROUPS = .49, .015, 7
     local SHUFFLE_DURATION = SHUFFLE_FLIGHT + SHUFFLE_STAGGER * (SHUFFLE_GROUPS - 1)
-    R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL, R.PH_SHUFFLE =
-        PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE
+    R.PH_IDLE, R.PH_SWAP, R.PH_REJECT, R.PH_CLEAR, R.PH_FALL, R.PH_SHUFFLE, R.PH_FINALE =
+        PH_IDLE, PH_SWAP, PH_REJECT, PH_CLEAR, PH_FALL, PH_SHUFFLE, PH_FINALE
     function R.cell_pos(i) return R.board_origin + vec2(hex_q(i) * dx, screen_row(i) * dy) end
     local cell_pos = R.cell_pos
 
@@ -1993,6 +2054,7 @@ function E.new(config)
         swap = {{392, .07, 0, .6}, {587.33, .09, .045, .6}},
         reject = {{311.13, .09, 0, .75}, {233.08, .15, .08, .75}},
         tool = {{C5, .07, 0, .6}, {G5, .1, .05, .6}},
+        finale = {{G5, .06, 0, .5}, {C6, .06, .04, .5}, {E6, .12, .08, .5}},   -- a round of line gems arms
         mission = {{C5, .5, 0, .35}, {E5, .5, .04, .35}, {G5, .55, .08, .35}},
         win = {{C5, .14, 0, .8}, {E5, .14, .12, .8}, {G5, .14, .24, .8}, {C6, .5, .36, .9}, {E6, .5, .36, .45}, {G5, .5, .36, .45}},
         lose = {{G5, .2, 0, .7}, {E5, .2, .18, .7}, {C5, .2, .36, .7}, {261.63, .5, .54, .8}},
@@ -2089,7 +2151,30 @@ function E.new(config)
         end
     end
 
-    local function settle(fast)
+    local settle
+    -- A won board with moves left plays the finale before its result: a
+    -- round arms line gems and holds them for a beat (PH_FINALE), then they
+    -- fire as an ordinary wave whose settle arms the next round.
+    local function finale_round()
+        local armed = rules.game_finale_arm(R.g)
+        if not armed then return false end
+        if R.stash_completed then R.stash_completed() end   -- quitting mid-finale still keeps the win
+        R.finale_armed = armed
+        R.phase, R.phase_time = PH_FINALE, 0
+        R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
+        if R.vfx_finale_arm then R.vfx_finale_arm(armed) end
+        R.play("finale")
+        haptic.play(haptic.MATCH, .5)
+        return true
+    end
+
+    local function finale_fire()
+        local armed = R.finale_armed
+        R.finale_armed = nil
+        if rules.game_finale_fire(R.g, R.pending, armed) then R.finish_wave() else settle() end
+    end
+
+    function settle(fast)
         rules.game_matches(R.g, R.pending)
         if R.pending.hits > 0 then
             R.finish_wave(fast)
@@ -2105,6 +2190,7 @@ function E.new(config)
                 R.notice(tr("No moves. Board reshuffled."))
             end
         end
+        if R.g.won and finale_round() then return shuffled end
         if R.g.won then
             R.overlay = R.OV_RESULT
             if R.stash_completed then R.stash_completed() end
@@ -2147,6 +2233,7 @@ function E.new(config)
                 R.phase, R.phase_time, R.idle_time, R.shuffle_from = PH_IDLE, 0, 0, nil
             end
         elseif R.phase == PH_SWAP and R.phase_time > .17 * speed then R.finish_wave()
+        elseif R.phase == PH_FINALE and R.phase_time > FINALE_ARMED * speed then finale_fire()
         elseif R.phase == PH_REJECT and R.phase_time >= 2 * REJECT_LEG * speed then R.phase = PH_IDLE
         elseif R.phase == PH_CLEAR and R.phase_time > .24 * speed then
             R.fall_from, R.fall_steps = rules.game_collapse(R.g)
@@ -2248,7 +2335,7 @@ end
 function E.square_campaign(campaign)
     local rules = E.new{flags=E.LINE_MATCHES | E.COLOR_TOOL, square=true, columns=9, rows=12,
         colors=campaign.colors, match_min=3, refill_damping=2, levels=campaign.levels, level_shapes=campaign.shapes,
-        special_rules=campaign.special_rules,
+        special_rules=campaign.special_rules, finale_batch=5,
         kind_flags={[0]=E.GOAL, [2]=E.WOOD, [4]=E.STONE}}
     local start = rules.game_start
     local function wins_in_one(g)

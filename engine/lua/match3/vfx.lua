@@ -333,6 +333,15 @@ function V.bind(R, rules)
         end
     end
 
+    -- A finale round: each piece flashes as it turns into a line gem.
+    function R.vfx_finale_arm(cells)
+        for k, cell in ipairs(cells) do
+            local at, kind = R.cell_pos(cell), R.g.tiles[cell].kind
+            add(FX_IMPACT, at, vec2(0, 0), kind, .3, (k - 1) * .05, 0)
+            vfx_emit(at, kind, false, 5)
+        end
+    end
+
     function R.vfx_update(dt)
         for i = #special_fx, 1, -1 do
             local entry = special_fx[i]

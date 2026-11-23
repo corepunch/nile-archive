@@ -56,10 +56,14 @@ local function restored_by(number)
     return restored
 end
 
+-- Returns the board and its moves left; a win then plays the finale, whose
+-- leftover moves pay out before the reward, as on the board.
 local function play_board(level, run, restored)
     local g = rules.game_start(level - 1, seed_of(1000 * level + run), restored)
     play(g)
-    return g
+    local left = g.moves
+    rules.game_finale(g, m)
+    return g, left
 end
 
 local RUNS = testing.balance_runs
@@ -103,10 +107,10 @@ for level = first, found and 0 or last do
     for slot = 1, CURRENCIES do stats.income[slot], samples[slot] = 0, {} end
     local restored = restored_by(level)
     for run = 1, RUNS do
-        local g = play_board(level, 500 + run, restored)   -- separate seeds from the move fit
+        local g, left = play_board(level, 500 + run, restored)   -- separate seeds from the move fit
         if g.won then
             local reward = rules.reward_breakdown(g, {}).total
-            stats.wins, stats.moves = stats.wins + 1, stats.moves + g.moves
+            stats.wins, stats.moves = stats.wins + 1, stats.moves + left
             for slot = 1, CURRENCIES do
                 stats.income[slot] = stats.income[slot] + reward[slot]
                 samples[slot][stats.wins] = reward[slot]
