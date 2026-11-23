@@ -153,7 +153,7 @@ def normalise(path: Path, d: Domain, tag: str) -> None:
     """Our own header (no dates, the runtime's plural rule) and no obsolete entries."""
     text = path.read_text(encoding="utf-8")
     body = re.sub(r'\A(?:#.*\n)*msgid ""\nmsgstr ""\n(?:".*"\n)*\n?', "", text)
-    body = "\n".join(chunk for chunk in body.split("\n\n") if chunk.strip() and not chunk.lstrip().startswith("#~"))
+    body = "\n\n".join(chunk.strip("\n") for chunk in body.split("\n\n") if chunk.strip() and not chunk.lstrip().startswith("#~"))
     path.write_text(header(tag, d.name) + body.strip("\n") + ("\n" if body.strip() else ""), encoding="utf-8")
 
 
