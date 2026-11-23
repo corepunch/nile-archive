@@ -293,8 +293,10 @@ function Skin:measure_style(node)
     local spec = text_spec(self, name)
     local f, font_scale = font_of(self, spec.font)
     em = em or spec.em or 16
-    -- Measurement uses the bare font and size, so layout ignores decoration.
-    return style{font = f, size = em * font_scale}
+    -- Measurement uses the bare font and size, so layout ignores decoration,
+    -- but keeps the letter spacing, which widens every line.
+    local k = spec.scale_lengths == false and 1 or em / (spec.em or em)
+    return style{font = f, size = em * font_scale, tracking = spec.tracking and spec.tracking * k}
 end
 
 function Skin:text(name, em) return make_style(self, name, em, true) end

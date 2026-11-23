@@ -417,7 +417,7 @@ static inline text_style ts_fade(text_style s, float fade) { s.fade = fade; retu
 size2 text_measure(text_style s, const char *utf8);
 /* Draw one line with its pivot (0,0 top-left .. 1,1 bottom-right) at pos; returns its rect. */
 rect text_draw(text_style s, vec2 pos, vec2 pivot, const char *utf8);
-/* Word-wrapped text aligned inside box, lines balanced in length; shrinks the
+/* Word-wrapped text aligned inside box, each line filled in turn; shrinks the
  * font (down to 60%) if it would not fit. */
 rect text_box(text_style s, rect box, vec2 align, const char *utf8);
 rect text_box_ink(text_style s, rect box, vec2 align, const char *utf8);

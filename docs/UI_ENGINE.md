@@ -654,8 +654,8 @@ for integration checks.
 
 Relic Rush and Christmas Market share `match3.catalogue_form`: headings and one
 building per row, the whole row a flat `pick` button over the game-painted art,
-the name with, for a project, its reward's icon under a REWARD caption on the
-same line, a flavor line (`about`) and the price as inline
+the name with, for a project, a plus and its reward's icon on the same line,
+the building's description (`about`) and the price as inline
 `resource_indicator`s, one gap apart; a row takes the height of its lines. A
 record marked `faded` (out of reach) draws its art and copy at half opacity,
 while `paint.badge` (the lock or tick over the art) stays opaque. A list may

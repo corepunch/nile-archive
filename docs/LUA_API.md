@@ -1772,7 +1772,7 @@ One line with its pivot (0,0 top-left .. 1,1 bottom-right) at pos.
 
 ### `text.box(s, box, align, utf8)`
 
-Word-wrapped text aligned inside box, lines balanced in length; shrinks the font (down to 60%) if it would not fit.
+Word-wrapped text aligned inside box, each line filled in turn; shrinks the font (down to 60%) if it would not fit.
 
 | Argument | Type | |
 |---|---|---|

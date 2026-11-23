@@ -1193,7 +1193,7 @@ function text.measure(s, utf8) end
 ---@return rect
 function text.draw(s, pos, pivot, utf8) end
 
----Word-wrapped text aligned inside box, lines balanced in length; shrinks the font (down to 60%) if it would not fit.
+---Word-wrapped text aligned inside box, each line filled in turn; shrinks the font (down to 60%) if it would not fit.
 ---@param s text_style
 ---@param box rect
 ---@param align vec2

@@ -411,7 +411,7 @@ static void copy_wrapped_line(char line[512], const char *start, const char *end
     line[len] = 0;
 }
 
-/* Wraps (balanced), shrinks to fit, aligns and, when draw is set, draws the
+/* Wraps (filling each line in turn), shrinks to fit, aligns and, when draw is set, draws the
  * first `visible` codepoints (-1 = all). Lines keep the place they will have
  * when complete, so revealed text never jumps. */
 static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int visible, bool draw, bool align_ink)
@@ -427,15 +427,6 @@ static rect box_layout(text_style s, rect box, vec2 align, const char *utf8, int
         n = wrap(m, utf8, box.size.w / m.unit, starts, ends, &widest);
         line_h = s.size * 1.22f;
         if (widest * m.unit <= box.size.w + .5f && n * line_h - (line_h - s.size) <= box.size.h + .5f) break;
-    }
-    if (n > 1) {   /* balance: the narrowest width that still needs only n lines */
-        float lo = widest / n, hi = widest;
-        for (int i = 0; i < 12 && hi - lo > 1; i++) {
-            float mid = (lo + hi) * .5f, w;
-            if (wrap(m, utf8, mid, starts, ends, &w) <= n) hi = mid;
-            else lo = mid;
-        }
-        n = wrap(m, utf8, hi, starts, ends, &widest);
     }
     size2 total = sz2(widest * m.unit, n * line_h - (line_h - s.size));
     rect area = rect_align(box, total, align);

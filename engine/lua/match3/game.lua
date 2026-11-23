@@ -63,7 +63,7 @@ G.DEFAULTS = {
             locked = "LOCKED"},
     catalogue = {
         title = "Build your town",
-        projects = "Projects", decorations = "Decorations", progress = "%d / %d", reward = "REWARD",
+        projects = "Projects", decorations = "Decorations", progress = "%d / %d",
         locked = "LOCKED", opens = "OPENS IN %s",
         earlier = "FINISH THE PREVIOUS PROJECTS",
         poor = "MORE GOLD NEEDED", ready = "Ready to build!",
@@ -871,15 +871,8 @@ function G.bind(R, over)
                 R.picture_fit(badge, rect.centered(record.art_center, size2.splat(BADGE)), 255)
             end
         end,
-    }, C.reward)
+    })
     R.catalogue_form = catalogue_form
-
-    -- A row's flavor line: the first sentence of the building's description.
-    local function first_sentence(about)
-        if not about then return nil end
-        about = about:gsub("%s+", " ")
-        return about:match("^.-[.!?]%f[%s%z]") or about
-    end
 
     local tiles = {}   -- building key -> its row record
     local catalogue_rows = {}
@@ -915,7 +908,7 @@ function G.bind(R, over)
                 if reward then reward = {icon=reward.icon, inline=true, size=34} end
                 local record = {id=meta.key, kind=i - 1, name=def.name, sprite=def.sprite, prices=parts,
                     state=state, available=available, project=position ~= nil, reward=reward,
-                    about=first_sentence(def.about),
+                    about=def.about and def.about:gsub("%s+", " "),
                     faded=state == "poor" or state == "locked",
                     enabled=available or position ~= nil and state ~= "built"}
                 if position then projects[#projects + 1] = record

@@ -38,7 +38,11 @@ end
 -- The title is written on the card itself, over a thin rule: a plate of its
 -- own read as one more button. A dismissible card pins its X on the card's
 -- top right corner, where it takes no room from the title. A full-screen
--- sheet has no room outside its corner, so `tucked` keeps the X inside it.
+-- sheet has no room outside its corner, so `tucked` keeps the X inside it,
+-- centred on the title's line and as far from the top as from the right.
+-- The title line's centre below the card's top: the form padding and half
+-- the 30 em title's line.
+E.TITLE_CENTRE = 38
 function E.popup_header(title, subtitle, close_id, tucked)
     return N.column {id="header",role="popup_header",padding={16,0,16,0},gap=2,
         N.label {id="title",value=header_title(title),wrap=true,em=30,text_style="popup_title"},
@@ -49,7 +53,7 @@ function E.popup_header(title, subtitle, close_id, tucked)
         N.spacer {height=8},
         N.spacer {panel=true,role="popup_rule",height=14},
         close_id and N.button {id=close_id,role="popup_close",width=44,height=44,
-            pin={1,0},pin_offset=tucked and {-26,26} or {-8,8}} or nil,
+            pin={1,0},pin_offset=tucked and {-E.TITLE_CENTRE,E.TITLE_CENTRE} or {-8,8}} or nil,
     }
 end
 
@@ -119,7 +123,7 @@ end
 -- 'pick'). paint.rule draws the hairline between rows. A row takes the
 -- height of its lines; a record marked faded (out of reach) draws at half
 -- opacity.
-function E.catalogue_form(title, paint, gets)
+function E.catalogue_form(title, paint)
     return ui.form(N.column {panel=true,
         E.popup_header(title, nil, "close", true),
         N.list {id='stock',scroll=true,bounce=true,grow=1,item=function(record)
@@ -142,10 +146,10 @@ function E.catalogue_form(title, paint, gets)
                 N.row {gap=12,align="center",padding={2,10,8,10},opacity=record.faded and E.CATALOGUE_FADE or nil,
                     N.custom {width=E.CATALOGUE_ART,height=E.CATALOGUE_ART,paint=function(box) paint.art(box, record) end},
                     N.column {grow=1,gap=E.CATALOGUE_GAP,align="start",
-                        -- The reward's icon on the name's line, under its caption.
+                        -- A project's reward: a plus and its icon on the name's line.
                         N.row {gap=8,align="center",
                             N.label {text=record.name,em=21,wrap=true,grow=1,text_style="body",text_align="start"},
-                            N.label {text=gets,em=13,text_style="caption",visible=reward ~= nil},
+                            N.label {text="+",em=24,text_style="caption",visible=reward ~= nil},
                             reward and E.resource_indicator(reward) or N.spacer {width=0},
                         },
                         N.label {text=record.about or "",visible=(record.about or "") ~= "",em=15,wrap=true,
