@@ -157,9 +157,9 @@ def normalise(path: Path, d: Domain, tag: str) -> None:
     path.write_text(header(tag, d.name) + body.strip("\n") + ("\n" if body.strip() else ""), encoding="utf-8")
 
 
-def update(d: Domain, only: str | None = None, compendium: Path | None = None) -> None:
-    """Merge the extracted template into the catalogues. A compendium (a
-    translator's PO) fills entries that are still untranslated, by msgid."""
+def update(d: Domain, only: str | None = None, translations: Path | None = None) -> None:
+    """Merge the extracted template into the catalogues. A translator's PO
+    file, laid over the catalogue first, supplies the translations it has."""
     d.catalogues.mkdir(parents=True, exist_ok=True)
     tags = [only] if only else d.targets
     with tempfile.TemporaryDirectory() as tmp:
@@ -169,9 +169,10 @@ def update(d: Domain, only: str | None = None, compendium: Path | None = None) -
             po = d.po(tag)
             if not po.exists():
                 po.write_text(header(tag, d.name), encoding="utf-8")
-            extra = [f"--compendium={compendium}"] if compendium else []
+            if translations:          # its entries win; msgmerge then drops any the code lacks
+                subprocess.run([tool("msgcat"), "--use-first", "--no-wrap", "-o", str(po), str(translations), str(po)], check=True)
             subprocess.run([tool("msgmerge"), "--quiet", "--update", "--backup=none", "--no-wrap",
-                            "--no-fuzzy-matching", "--add-location=file", "--sort-by-file", *extra, str(po), str(pot)], check=True)
+                            "--no-fuzzy-matching", "--add-location=file", "--sort-by-file", str(po), str(pot)], check=True)
             normalise(po, d, tag)
     print(f"{d.name}: {len(tags)} catalogues updated")
 
@@ -451,7 +452,7 @@ def main() -> int:
         d = domain(args.domain)
         if args.tag not in d.targets:
             sys.exit(f"{d.name} has no {args.tag} catalogue")
-        subprocess.run([tool("msgfmt"), "--check", "-o", "/dev/null", str(args.file)], check=True)
+        subprocess.run([tool("msgfmt"), "--check-format", "-o", "/dev/null", str(args.file)], check=True)
         update(d, args.tag, args.file.resolve())
     elif args.command == "strings":
         untranslated(domain(args.domain), args.tag)

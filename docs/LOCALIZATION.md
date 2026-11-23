@@ -87,7 +87,7 @@ python3 tools/l10n.py update                 # extract (xgettext) and merge (msg
 python3 tools/l10n.py update relic-rush      # one domain
 python3 tools/l10n.py status                 # translated / total per catalogue
 python3 tools/l10n.py strings relic-rush de  # the entries still to translate, as PO
-python3 tools/l10n.py fill relic-rush de de.po   # merge a translator's PO (msgmerge --compendium)
+python3 tools/l10n.py fill relic-rush de de.po   # merge a translator's PO (msgcat, then msgmerge)
 python3 tools/l10n.py check                  # also part of make test-assets
 ```
 
