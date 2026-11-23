@@ -14,6 +14,12 @@ typedef struct {
 void app_step(void);
 void app_stop(void);
 void sfx_shutdown(void);
+/* The shared stereo device: music mixes under the tones. */
+void audio_lock(void);
+void audio_unlock(void);
+bool audio_start(void);   /* opens the device unless muted or disabled */
+void music_mix(float *left, float *right, int frames);   /* adds to both buffers */
+void music_restart(void);
 void font_shutdown(void);
 bool render_init(void);
 void render_shutdown(void);

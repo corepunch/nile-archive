@@ -12,6 +12,7 @@ case "${1:-}" in
 #include "save.c"
 #include "city.c"
 #include "audio.c"
+#include "music.c"
 #include "haptic.c"
 #include "gamecenter.c"
 #include "story.c"

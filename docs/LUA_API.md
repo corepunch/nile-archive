@@ -26,6 +26,7 @@ Argument types: `number`, `integer`, `boolean`, `string`, the value types below,
 - [`gamecenter`](#gamecenter) - Game Center sign-in, leaderboards and achievements, the same in every game. Boards and achievements are named by the game ("stars", "first_island"); on iOS the Game Center identifier is "<bundle id>.<name>", so create them in App Store Connect under that identifier (boards sorted high to low). Sign-in starts by itself at launch. Reports are saved until Game Center confirms them, so offline play or a late sign-in loses nothing. Everything is asynchronous: ask with gamecenter.load, then read gamecenter.entries each frame. Without Game Center (macOS, the web, headless runs, --no-gamecenter) the player's own results are kept and shown as a one-row board; --gamecenter-demo adds sample rivals for screenshots.
 - [`haptic`](#haptic) - Optional tactile feedback, independent of sound and reduced motion. Requests coalesce to the highest-priority effect each frame, with rate limiting for cascades; suppressed events are dropped. Native iOS and macOS, browser vibration when supported, otherwise silent. Headless, capture, smoke and test runs never drive hardware; --no-haptics also suppresses output.
 - [`sfx`](#sfx) - A tiny polyphonic synthesiser for feedback tones and jingles.
+- [`music`](#music) - A looping stereo synthesiser for soundtracks: detuned saw pads, FM keys and bells, filtered bass and plucks, a breathy lead and soft drums, through chorus, ping-pong delay and a hall. Stage a song with clear/note, then play swaps it in with a short fade. It mixes under sfx and follows sfx.enable and --mute. engine/lua/soundtrack.lua composes songs from bars and note names.
 - [`ui`](#ui) - Native widgets plus shared Lua form resources. ui.form(template) provides layout, skins and model bindings; ui.modals(skin) owns nested modal layers. See docs/UI_ENGINE.md. Immediate widgets remain available: if ui.button(r, 'Play') then.
 - [`sprite`](#sprite) - Authored atlas frames, pivot-aware bounds and animation timing.
 - [`nav`](#nav) - nav.new(); assign nodes and live blockers, then find. Indices are 0-based.
@@ -2092,6 +2093,94 @@ A bell-like note on one of 16 voices after `delay` seconds; `volume` 1 matches t
 | `on` | `boolean` |  |
 
 ### `sfx.enabled()`
+
+**Returns:** `boolean`
+
+## music
+
+A looping stereo synthesiser for soundtracks: detuned saw pads, FM keys and bells, filtered bass and plucks, a breathy lead and soft drums, through chorus, ping-pong delay and a hall. Stage a song with clear/note, then play swaps it in with a short fade. It mixes under sfx and follows sfx.enable and --mute. engine/lua/soundtrack.lua composes songs from bars and note names.
+
+- `music.PAD` (integer) Six detuned saws through a slow lowpass; sustained chords.
+
+- `music.KEYS` (integer) FM electric piano with a tine attack and stereo tremolo.
+
+- `music.BASS` (integer) Saw and sine through an enveloped lowpass, lightly saturated.
+
+- `music.PLUCK` (integer) Two saws with a fast filter envelope, sent to the delay.
+
+- `music.BELL` (integer) Celesta-like FM bell.
+
+- `music.LEAD` (integer) Soft flute-like lead with breath and delayed vibrato.
+
+- `music.KICK` (integer) Round sine kick; it ducks pads and keys.
+
+- `music.SNARE` (integer) Soft band-passed snare.
+
+- `music.HAT` (integer) Hi-hat; longer notes ring longer.
+
+- `music.SHAKER` (integer)
+
+- `music.JINGLE` (integer) Sleigh bells.
+
+### `music.clear()`
+
+Empty the staged song; the playing one continues until the next play.
+
+### `music.note(instrument, beat, length, pitch, velocity)`
+
+Stage one note: an instrument constant, its start and length in beats from the song's start, a MIDI pitch (69 = A4; drums ignore it) and velocity (about 0..1).
+
+| Argument | Type | |
+|---|---|---|
+| `instrument` | `integer` |  |
+| `beat` | `number` |  |
+| `length` | `number` |  |
+| `pitch` | `number` |  |
+| `velocity` | `number` |  |
+
+### `music.play(bpm, beats)`
+
+Fade out what plays and loop the staged song at bpm, wrapping after beats.
+
+| Argument | Type | |
+|---|---|---|
+| `bpm` | `number` |  |
+| `beats` | `number` |  |
+
+### `music.stop(fade?)`
+
+Fade out over seconds and stop.
+
+| Argument | Type | |
+|---|---|---|
+| `fade` | `number?` | Default 1. |
+
+### `music.volume(volume)`
+
+Music level, 0..2; 1 is the mixed level.
+
+| Argument | Type | |
+|---|---|---|
+| `volume` | `number` |  |
+
+### `music.playing()`
+
+**Returns:** `boolean`
+
+### `music.beat()`
+
+The playing position in beats.
+
+**Returns:** `number`
+
+### `music.render(path, seconds)`
+
+Write the song from its first beat to a 16-bit stereo WAV without a device, for auditioning.
+
+| Argument | Type | |
+|---|---|---|
+| `path` | `string` |  |
+| `seconds` | `number` |  |
 
 **Returns:** `boolean`
 

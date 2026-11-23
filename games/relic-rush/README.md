@@ -290,6 +290,7 @@ the island, with a gentle rebound at the edge.
   can feature one bonus gem family. Matching 30 fills one use, and activation
   costs zero moves. [Bonus effects and restorations](docs/board-progression.md#bonus-pieces)
 - Idle hints, automatic dead-board recovery, restart on failure, pause with Restart (confirmed), Quit to Island, and Sound and Reduce motion checkboxes.
+- A synthesised soundtrack, "Valley of Echoes" ([`lua/song.lua`](lua/song.lua)): a 32-bar D Dorian loop at 92 bpm with pad, electric piano, bass, flute-like lead, plucked arpeggios and a soft groove. Sound switches it off with the effects.
 - Each won attempt banks what the crew brings back. First clears count toward boards cleared. Restoration progress follows confirmed placement.
 - Large scrollable island, five connected land regions defined by a hidden hex tile graph. Drag the map to pan, even when the gesture starts on a building; pinch to zoom (or use the mouse wheel on desktop).
 - Locked districts open with their epochs.

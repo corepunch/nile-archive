@@ -3,6 +3,7 @@
 #include "render.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 static AXaudiospec device;
 static int opens, closes, locks;
 static bool muted;
@@ -41,5 +42,27 @@ int main(void) {
     for(int k=0;k<20;k++) sfx_note(300+k*10,.05f,0,1); // more notes than voices steal the oldest
     mix(out,12); assert(out[20]!=0 && out[20]==out[21]);
     sfx_shutdown(); assert(closes==2 && !locks);
-    puts("audio: tones, delayed polyphonic notes, expiry, mute, disable and device lifecycle passed");
+    // music: a staged song plays in stereo through the same device
+    muted=true; music_note(MUSIC_PAD,0,4,60,.8f); music_play(120,4); assert(opens==2 && music_playing()); muted=false;
+    music_restart(); assert(!music_playing());
+    music_note(-1,0,1,60,1); music_note(MUSIC_PAD,NAN,1,60,1); music_play(0,4); assert(!music_playing());
+    for(int k=0;k<4;k++) music_note(MUSIC_PAD,0,4,57+k*4,.8f);
+    music_note(MUSIC_PLUCK,1,.5f,72,.8f); music_note(MUSIC_KICK,0,.5f,36,1);
+    music_play(120,4); assert(opens==3 && music_playing());
+    static int16_t song[44100*2]; float energy=0, side=0;
+    for(int k=0;k<43;k++) mix(song+k*2048,1024);
+    for(int i=22050;i<44100;i++) { energy+=abs(song[i*2]); side+=abs(song[i*2]-song[i*2+1]); }
+    assert(energy>0 && side>0); // audible and wider than mono
+    assert(music_beat()>1.9f); // two seconds at 120 bpm wrapped the four-beat loop once
+    music_stop(.05f); assert(!music_playing());
+    for(int k=0;k<4;k++) mix(out,1024);
+    mix(out,1024); for(int i=0;i<2048;i++) assert(!out[i]); // faded out and stopped
+    assert(music_render("build/test-audio.wav",.1f)); // nothing staged anew: renders silence
+    music_restart();
+    for(int k=0;k<MUSIC_INSTRUMENTS;k++) music_note(k,k*.25f,.5f,60,.8f);
+    music_play(120,4); assert(music_render("build/test-audio.wav",.5f));
+    FILE *f=fopen("build/test-audio.wav","rb"); assert(f); fseek(f,0,SEEK_END); assert(ftell(f)==44+22050*4); fclose(f);
+    remove("build/test-audio.wav");
+    sfx_shutdown(); music_restart(); assert(!locks);
+    puts("audio: tones, delayed polyphonic notes, expiry, mute, disable, device lifecycle and music passed");
 }

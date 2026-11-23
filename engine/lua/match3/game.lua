@@ -22,9 +22,11 @@
 --   R.cast                  the story cast (narrative.lua)
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
+--   game_config.lua "song"  module name of the looping soundtrack (engine/lua/soundtrack.lua)
 -- See docs/PORTRAIT_GAMES.md.
 local N = ui.node
 local l10n = require("l10n")
+local soundtrack = require("soundtrack")
 local tr = l10n.tr
 
 local G = {}
@@ -1783,6 +1785,16 @@ function G.app(R)
             loaded = save.read(R.progress_slot(), R.serialize)
             save.read("settings", R.serialize_settings)
             sfx.enable(R.sound)
+        end
+        -- The soundtrack loops from the start; --music-wav renders it for auditioning.
+        if W.song then
+            local song = require(W.song)
+            soundtrack.play(song)
+            local wav = app.arg("music-wav")
+            if wav and wav ~= "" then
+                assert(music.render(wav, tonumber(app.arg("music-seconds") or "") or song.beats * 60 / song.bpm),
+                    "could not write " .. wav)
+            end
         end
         -- Seed the town before the player enters the campaign.
         if island.new_game and R.prog.level == 0 and R.island.count == 0 then island.new_game(R.island, app.clock()) end

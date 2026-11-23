@@ -3623,6 +3623,76 @@ static int l_sfx_enabled(lua_State *L)
     return 1;
 }
 
+/* music.clear() */
+static int l_music_clear(lua_State *L)
+{
+    music_clear();
+    return 0;
+}
+
+/* music.note(instrument, beat, length, pitch, velocity) */
+static int l_music_note(lua_State *L)
+{
+    int a_instrument = (int)luaL_checkinteger(L, 1);
+    float a_beat = (float)luaL_checknumber(L, 2);
+    float a_length = (float)luaL_checknumber(L, 3);
+    float a_pitch = (float)luaL_checknumber(L, 4);
+    float a_velocity = (float)luaL_checknumber(L, 5);
+    music_note(a_instrument, a_beat, a_length, a_pitch, a_velocity);
+    return 0;
+}
+
+/* music.play(bpm, beats) */
+static int l_music_play(lua_State *L)
+{
+    float a_bpm = (float)luaL_checknumber(L, 1);
+    float a_beats = (float)luaL_checknumber(L, 2);
+    music_play(a_bpm, a_beats);
+    return 0;
+}
+
+/* music.stop(fade?) */
+static int l_music_stop(lua_State *L)
+{
+    float a_fade = (float)luaL_optnumber(L, 1, 1);
+    music_stop(a_fade);
+    return 0;
+}
+
+/* music.volume(volume) */
+static int l_music_volume(lua_State *L)
+{
+    float a_volume = (float)luaL_checknumber(L, 1);
+    music_volume(a_volume);
+    return 0;
+}
+
+/* music.playing() */
+static int l_music_playing(lua_State *L)
+{
+    bool r = music_playing();
+    lua_pushboolean(L, r);
+    return 1;
+}
+
+/* music.beat() */
+static int l_music_beat(lua_State *L)
+{
+    float r = music_beat();
+    lua_pushnumber(L, r);
+    return 1;
+}
+
+/* music.render(path, seconds) */
+static int l_music_render(lua_State *L)
+{
+    const char * a_path = luaL_checkstring(L, 1);
+    float a_seconds = (float)luaL_checknumber(L, 2);
+    bool r = music_render(a_path, a_seconds);
+    lua_pushboolean(L, r);
+    return 1;
+}
+
 /* ui.popup_transform(shift, opacity) */
 static int l_ui_popup_transform(lua_State *L)
 {
@@ -4691,6 +4761,34 @@ static void open_sfx(lua_State *L)
     lua_setglobal(L, "sfx");
 }
 
+static void open_music(lua_State *L)
+{
+    static const luaL_Reg funcs[] = {
+        {"clear", l_music_clear},
+        {"note", l_music_note},
+        {"play", l_music_play},
+        {"stop", l_music_stop},
+        {"volume", l_music_volume},
+        {"playing", l_music_playing},
+        {"beat", l_music_beat},
+        {"render", l_music_render},
+        {NULL, NULL}
+    };
+    luaL_newlib(L, funcs);
+    lua_pushinteger(L, MUSIC_PAD); lua_setfield(L, -2, "PAD");
+    lua_pushinteger(L, MUSIC_KEYS); lua_setfield(L, -2, "KEYS");
+    lua_pushinteger(L, MUSIC_BASS); lua_setfield(L, -2, "BASS");
+    lua_pushinteger(L, MUSIC_PLUCK); lua_setfield(L, -2, "PLUCK");
+    lua_pushinteger(L, MUSIC_BELL); lua_setfield(L, -2, "BELL");
+    lua_pushinteger(L, MUSIC_LEAD); lua_setfield(L, -2, "LEAD");
+    lua_pushinteger(L, MUSIC_KICK); lua_setfield(L, -2, "KICK");
+    lua_pushinteger(L, MUSIC_SNARE); lua_setfield(L, -2, "SNARE");
+    lua_pushinteger(L, MUSIC_HAT); lua_setfield(L, -2, "HAT");
+    lua_pushinteger(L, MUSIC_SHAKER); lua_setfield(L, -2, "SHAKER");
+    lua_pushinteger(L, MUSIC_JINGLE); lua_setfield(L, -2, "JINGLE");
+    lua_setglobal(L, "music");
+}
+
 static void open_ui(lua_State *L)
 {
     static const luaL_Reg funcs[] = {
@@ -4904,6 +5002,7 @@ void api_open(lua_State *L)
     open_gamecenter(L);
     open_haptic(L);
     open_sfx(L);
+    open_music(L);
     open_ui(L);
     open_sprite(L);
     open_nav(L);

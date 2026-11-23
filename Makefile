@@ -163,9 +163,9 @@ build/test/all: $(ENGINE_TEST_SRC) $(TEST_OBJ) $(TEST_DEPS)
 	@mkdir -p build/test
 	$(CC) $(ALL_CFLAGS) -DENGINE_TEST -DTEST_ALL_GAMES='"$(TEST_GAMES)"' -o $@ $(ENGINE_TEST_SRC) $(TEST_OBJ) $(LIBS)
 
-build/test-audio: tests/test_audio.c engine/src/audio.c engine/src/engine.h
+build/test-audio: tests/test_audio.c engine/src/audio.c engine/src/music.c engine/src/engine.h engine/src/render.h
 	@mkdir -p build
-	$(CC) $(ALL_CFLAGS) -o $@ tests/test_audio.c engine/src/audio.c -lm
+	$(CC) $(ALL_CFLAGS) -o $@ tests/test_audio.c engine/src/audio.c engine/src/music.c -lm
 
 .PHONY: test-assets
 test-assets:

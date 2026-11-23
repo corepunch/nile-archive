@@ -1379,6 +1379,57 @@ function sfx.enable(on) end
 ---@return boolean
 function sfx.enabled() end
 
+---@class musiclib
+---@field PAD integer Six detuned saws through a slow lowpass; sustained chords.
+---@field KEYS integer FM electric piano with a tine attack and stereo tremolo.
+---@field BASS integer Saw and sine through an enveloped lowpass, lightly saturated.
+---@field PLUCK integer Two saws with a fast filter envelope, sent to the delay.
+---@field BELL integer Celesta-like FM bell.
+---@field LEAD integer Soft flute-like lead with breath and delayed vibrato.
+---@field KICK integer Round sine kick; it ducks pads and keys.
+---@field SNARE integer Soft band-passed snare.
+---@field HAT integer Hi-hat; longer notes ring longer.
+---@field SHAKER integer
+---@field JINGLE integer Sleigh bells.
+music = {}
+
+---Empty the staged song; the playing one continues until the next play.
+function music.clear() end
+
+---Stage one note: an instrument constant, its start and length in beats from the song's start, a MIDI pitch (69 = A4; drums ignore it) and velocity (about 0..1).
+---@param instrument integer
+---@param beat number
+---@param length number
+---@param pitch number
+---@param velocity number
+function music.note(instrument, beat, length, pitch, velocity) end
+
+---Fade out what plays and loop the staged song at bpm, wrapping after beats.
+---@param bpm number
+---@param beats number
+function music.play(bpm, beats) end
+
+---Fade out over seconds and stop.
+---@param fade? number
+function music.stop(fade) end
+
+---Music level, 0..2; 1 is the mixed level.
+---@param volume number
+function music.volume(volume) end
+
+---@return boolean
+function music.playing() end
+
+---The playing position in beats.
+---@return number
+function music.beat() end
+
+---Write the song from its first beat to a 16-bit stereo WAV without a device, for auditioning.
+---@param path string
+---@param seconds number
+---@return boolean
+function music.render(path, seconds) end
+
 ---@class uilib
 ---@field ACCENT integer Primary call to action.
 ---@field DISABLED integer

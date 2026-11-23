@@ -7,6 +7,7 @@ local tr = l10n.tr
 return {
     app = {title = "Relic Rush - The Lost Valley", id = "relic-rush", clear = "#09211F",
         privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
+    song = "song",   -- lua/song.lua, the looping soundtrack
     menu = {title = {tr("RELIC RUSH")}, subtitle = tr("THE LOST VALLEY"), town = tr("VISIT ISLAND")},
     campaign_dialogue = false,
     epochs = {tr("Epoch I"), tr("Epoch II"), tr("Epoch III"), tr("Epoch IV"), tr("Epoch V")},

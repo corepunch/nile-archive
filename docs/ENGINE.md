@@ -358,6 +358,27 @@ wins and losses from these notes. The 44.1 kHz stereo device opens on the first
 note. `--mute` prevents playback and `sfx_enable(false)` silences and clears
 every voice. Sampled audio belongs to the standalone Clayfight runtime.
 
+`music.c` loops one song under those tones in stereo. A song is a list of
+notes (instrument, start and length in beats, MIDI pitch, velocity) staged with
+`music_note`; `music_play(bpm, beats)` fades out whatever plays and swaps the
+new one in, so a game can change songs between screens without a click. The
+instruments are studio-synth patches, not chip tones: a pad of six detuned
+polyBLEP saws through a zero-delay-feedback lowpass, FM electric piano and
+celesta bell, a saturated filtered saw/sine bass, plucks with a filter
+envelope, a breathy lead with delayed vibrato, and synthesised kick, snare,
+hat, shaker and sleigh bells. Pads and keys duck under the kick. They feed a
+stereo chorus, a ping-pong delay synced to a dotted eighth and a Freeverb-style
+hall. 64 voices render in 32-sample control blocks on the audio thread, about
+3% of one desktop core. Music sits 6 dB under the tones, follows `sfx_enable`
+and `--mute`, and `music_render(path, seconds)` writes the song to a WAV without
+a device. `engine/lua/soundtrack.lua` composes songs from bars, chords and
+note-name melodies (`"d5:.5 f#5:1.5"`); the portrait match-3 games name theirs
+in `game_config.lua` (`song = "song"`), and `--music-wav out.wav` renders it:
+
+```sh
+./build/relic-rush --headless --mute --fresh --music-wav out.wav --shot /tmp/x.png
+```
+
 ## Platform notes
 
 - **Native**: corepunch/platform owns the window, GL context, events and audio.
@@ -413,7 +434,7 @@ the C and the Lua games and comparing them pixel for pixel.
 
 ## Possible next steps
 
-- Sampled sounds and music alongside the tone synthesiser.
+- Sampled sounds alongside the tone and music synthesisers; a song per screen.
 - Texture atlases / sprite sheets and frame animation for characters.
 - A tween helper for UI transitions (games currently use `ease_*` directly).
 - Removing placed buildings, and building upgrades.

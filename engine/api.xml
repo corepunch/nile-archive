@@ -403,6 +403,30 @@
     <function name="enabled" c="sfx_enabled"><returns type="bool"/></function>
   </module>
 
+  <module name="music" doc="A looping stereo synthesiser for soundtracks: detuned saw pads, FM keys and bells, filtered bass and plucks, a breathy lead and soft drums, through chorus, ping-pong delay and a hall. Stage a song with clear/note, then play swaps it in with a short fade. It mixes under sfx and follows sfx.enable and --mute. engine/lua/soundtrack.lua composes songs from bars and note names.">
+    <function name="clear" c="music_clear" doc="Empty the staged song; the playing one continues until the next play."/>
+    <function name="note" c="music_note" doc="Stage one note: an instrument constant, its start and length in beats from the song's start, a MIDI pitch (69 = A4; drums ignore it) and velocity (about 0..1).">
+      <arg name="instrument" type="int"/><arg name="beat" type="float"/><arg name="length" type="float"/><arg name="pitch" type="float"/><arg name="velocity" type="float"/>
+    </function>
+    <function name="play" c="music_play" doc="Fade out what plays and loop the staged song at bpm, wrapping after beats."><arg name="bpm" type="float"/><arg name="beats" type="float"/></function>
+    <function name="stop" c="music_stop" doc="Fade out over seconds and stop."><arg name="fade" type="float" default="1"/></function>
+    <function name="volume" c="music_volume" doc="Music level, 0..2; 1 is the mixed level."><arg name="volume" type="float"/></function>
+    <function name="playing" c="music_playing"><returns type="bool"/></function>
+    <function name="beat" c="music_beat" doc="The playing position in beats."><returns type="float"/></function>
+    <function name="render" c="music_render" doc="Write the song from its first beat to a 16-bit stereo WAV without a device, for auditioning."><arg name="path" type="string"/><arg name="seconds" type="float"/><returns type="bool"/></function>
+    <const name="PAD" c="MUSIC_PAD" type="int" doc="Six detuned saws through a slow lowpass; sustained chords."/>
+    <const name="KEYS" c="MUSIC_KEYS" type="int" doc="FM electric piano with a tine attack and stereo tremolo."/>
+    <const name="BASS" c="MUSIC_BASS" type="int" doc="Saw and sine through an enveloped lowpass, lightly saturated."/>
+    <const name="PLUCK" c="MUSIC_PLUCK" type="int" doc="Two saws with a fast filter envelope, sent to the delay."/>
+    <const name="BELL" c="MUSIC_BELL" type="int" doc="Celesta-like FM bell."/>
+    <const name="LEAD" c="MUSIC_LEAD" type="int" doc="Soft flute-like lead with breath and delayed vibrato."/>
+    <const name="KICK" c="MUSIC_KICK" type="int" doc="Round sine kick; it ducks pads and keys."/>
+    <const name="SNARE" c="MUSIC_SNARE" type="int" doc="Soft band-passed snare."/>
+    <const name="HAT" c="MUSIC_HAT" type="int" doc="Hi-hat; longer notes ring longer."/>
+    <const name="SHAKER" c="MUSIC_SHAKER" type="int"/>
+    <const name="JINGLE" c="MUSIC_JINGLE" type="int" doc="Sleigh bells."/>
+  </module>
+
   <!-- ================================================================== ui -->
 
   <struct name="ui_theme" c="ui_theme" doc="Colours and text styles the widgets read.">

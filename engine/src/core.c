@@ -106,7 +106,7 @@ void app_test_reset(void)
     A.in.pinch = 1;
     test_clock = 1700000000;
     test_clock_active = true;
-    ui_restart(); story_restart(); fx_restart(); city_restart(); haptic_restart(); gamecenter_restart();
+    ui_restart(); story_restart(); fx_restart(); city_restart(); haptic_restart(); gamecenter_restart(); music_restart();
 }
 void app_test_advance(double dt) { A.dt = (float)dt; A.time += dt; test_clock += dt; }
 void app_test_input(input in) { A.in = in; }

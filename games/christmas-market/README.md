@@ -47,7 +47,10 @@ The puzzle and town share a wallet with a coin, food basket, and logs with stone
 capsule has the brass rim and drop shadow of the round buttons. A round moves counter
 sits beside the wallet on the puzzle. The deep blue tablets mark the objectives on parchment cells, which meet at
 hairline seams; cleared tablets return to parchment. The smaller Pause gear beside the bonuses opens
-the Market Keeper's Guide alongside Sound and Reduce Motion.
+the Market Keeper's Guide alongside Sound and Reduce Motion. Sound also covers
+the synthesised soundtrack, "Lanterns on the Square" ([`lua/song.lua`](lua/song.lua)):
+a calm 32-bar F major loop at 84 bpm: pad, soft electric piano and bass under a
+flute-like lead, with a quiet celesta in the reprise.
 [Board palette and guide screenshots](docs/screenshots/review/spruce-palette/README.md).
 
 The board starts in Bellmere's village square. Each of the twenty campaign

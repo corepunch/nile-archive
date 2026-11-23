@@ -10,7 +10,7 @@ unused_args = false
 exclude_files = {"tests/fixtures/modules/first/loader/syntax.lua"}
 read_globals = {
     -- modules
-    "app", "input", "gfx", "texture", "camera", "fx", "font", "style", "text", "sfx", "ui", "save", "story", "city",
+    "app", "input", "gfx", "texture", "camera", "fx", "font", "style", "text", "sfx", "music", "ui", "save", "story", "city",
     "sprite", "nav", "board_intro", "haptic", "gamecenter",
     -- value types
     "vec2", "size2", "rect", "color", "purse", "num", "ease", "tween",

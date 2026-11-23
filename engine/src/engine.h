@@ -497,6 +497,19 @@ void sfx_note(float hz, float seconds, float delay, float volume);   /* one of 1
 void sfx_enable(bool on);
 bool sfx_enabled(void);
 
+/* Music: a looping sequenced synthesiser; see engine/src/music.c. Notes are
+ * staged with music_note and swapped in by music_play with a short fade. */
+enum { MUSIC_PAD, MUSIC_KEYS, MUSIC_BASS, MUSIC_PLUCK, MUSIC_BELL, MUSIC_LEAD,
+       MUSIC_KICK, MUSIC_SNARE, MUSIC_HAT, MUSIC_SHAKER, MUSIC_JINGLE, MUSIC_INSTRUMENTS };
+void music_clear(void);
+void music_note(int instrument, float beat, float length, float pitch, float velocity);
+void music_play(float bpm, float beats);
+void music_stop(float fade);
+void music_volume(float volume);
+bool music_playing(void);
+float music_beat(void);
+bool music_render(const char *path, float seconds);
+
 /* ===================================================================== */
 /* UI: immediate mode widgets                                             */
 /* ===================================================================== */

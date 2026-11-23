@@ -139,6 +139,7 @@ void script_open(const char *dir)
     static const struct { const char *file, *module; } files[] = {
         {"lua/l10n.lua", "l10n"},   /* first: the others' words resolve as they load */
         {"lua/tween.lua", NULL},
+        {"lua/soundtrack.lua", "soundtrack"},
         {"lua/ui_forms.lua", NULL},
         {"lua/ui_skin.lua", NULL},
         {"lua/city_smoke.lua", NULL},

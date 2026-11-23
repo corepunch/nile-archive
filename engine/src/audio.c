@@ -1,5 +1,6 @@
-/* Feedback-tone synthesiser; silent games never open the stereo device. */
+/* Feedback-tone synthesiser over the music mix; silent games never open the stereo device. */
 #include "engine.h"
+#include "render.h"
 #include <string.h>
 
 #define AUDIO_RATE 44100
@@ -30,14 +31,21 @@ static void audio_mix(void *user, uint8_t *stream, int length)
 {
     (void)user;
     memset(stream, 0, length);
+    if (audio_state.disabled) return;
     int16_t *out = (int16_t *)stream;
-    for (int i = 0; i < length / 4; i++) {
-        if (audio_state.disabled) continue;
-        float mix = 0;
-        for (int k = 0; k < VOICES; k++) mix += voice_sample(&audio_state.voices[k]);
-        mix = mix / (1 + fabsf(mix) * .8f);   /* soft-clip stacked chords */
-        int sample = (int)(clampf(mix, -1, 1) * 32767);
-        out[i * 2] = out[i * 2 + 1] = (int16_t)sample;
+    for (int at = 0, frames = length / 4; at < frames; at += 256) {
+        int n = frames - at < 256 ? frames - at : 256;
+        float left[256] = {0}, right[256] = {0};
+        music_mix(left, right, n);
+        for (int i = 0; i < n; i++) {
+            float tone = 0;
+            for (int k = 0; k < VOICES; k++) tone += voice_sample(&audio_state.voices[k]);
+            float l = left[i] + tone, r = right[i] + tone;
+            l = l / (1 + fabsf(l) * .8f);   /* soft-clip stacked chords */
+            r = r / (1 + fabsf(r) * .8f);
+            out[(at + i) * 2] = (int16_t)(clampf(l, -1, 1) * 32767);
+            out[(at + i) * 2 + 1] = (int16_t)(clampf(r, -1, 1) * 32767);
+        }
     }
 }
 
@@ -51,6 +59,10 @@ static bool audio_open(void)
     if (audio_state.device) axAudioPause(audio_state.device, 0);
     return audio_state.device != 0;
 }
+
+void audio_lock(void) { if (audio_state.device) axAudioLock(audio_state.device); }
+void audio_unlock(void) { if (audio_state.device) axAudioUnlock(audio_state.device); }
+bool audio_start(void) { return !audio_state.disabled && !app_arg("mute") && audio_open(); }
 
 void sfx_note(float hz, float seconds, float delay, float volume)
 {
@@ -76,6 +88,7 @@ void sfx_enable(bool on)
     audio_state.disabled = !on;
     if (!on) memset(audio_state.voices, 0, sizeof audio_state.voices);
     if (audio_state.device) axAudioUnlock(audio_state.device);
+    if (on && music_playing()) audio_start();   /* music staged while silent starts now */
 }
 bool sfx_enabled(void) { return !audio_state.disabled; }
 
