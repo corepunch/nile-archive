@@ -432,7 +432,7 @@ def game_sprites(game, root):
     """The game's other registered sprite sets, under the keys its art.lua uses."""
     registered = root / 'art/registered'
     files = folder_sprites(registered / 'story-pieces', 'story-')
-    sprites, inputs, aliases = {}, [], {}
+    sprites, inputs, aliases, outline_centered = {}, [], {}, set()
     if game == 'relic-rush':
         manifest = json.loads((root / 'art/board-states/manifest.json').read_text())
         files |= folder_sprites(registered / 'resource-pieces', 'resource-')
@@ -448,6 +448,7 @@ def game_sprites(game, root):
         files.update((name, (root / path).resolve()) for name, path in manifest['wallet_icons'].items())
         buttons = manifest['bonus_buttons']
         bonus_frames = list(buttons['icons'].values())
+        outline_centered = set(buttons.get('outline_centered', ()))
         goods = manifest['market_goods']
         aliases = goods['aliases']
         names = [None if name in aliases else name for name in goods['frames']]
@@ -455,7 +456,7 @@ def game_sprites(game, root):
         inputs.append(registered / 'market-goods.png')
     for name, path in files.items():
         sprites[name] = Image.open(path).convert('RGBA')
-    return sprites, inputs + list(files.values()), bonus_frames, aliases
+    return sprites, inputs + list(files.values()), bonus_frames, aliases, outline_centered
 
 
 def build_game(game, check):
@@ -508,7 +509,7 @@ def build_game(game, check):
     glow.putdata([(255, 255, 255, math.floor(255 * max(0, 1 - math.hypot(x - 31.5, y - 31.5) / 32) ** 3))
                   for y in range(64) for x in range(64)])
     loaded["glow"] = glow
-    extra, extra_inputs, bonus_frames, piece_aliases = game_sprites(game, root)
+    extra, extra_inputs, bonus_frames, piece_aliases, outline_centered = game_sprites(game, root)
     assert not set(extra) & set(loaded), set(extra) & set(loaded)
     loaded.update(extra)
     aliases.update(piece_aliases)
@@ -519,7 +520,9 @@ def build_game(game, check):
     button_centers = {}
     for name in sorted(bonus_frames):
         image = loaded[name]
-        x, y = match3_buttons.alpha_center(image)
+        # A lopsided icon (the hammer's heavy head) centres by its outline.
+        centre = match3_buttons.outline_center if name in outline_centered else match3_buttons.alpha_center
+        x, y = centre(image)
         button_centers[name] = (f'{x / image.width:.7f}', f'{y / image.height:.7f}')
     piece_icons = RELIC_HUD_ICONS if game == 'relic-rush' else ()
     hud_groups = ['pieces', *HUD_GROUPS] if piece_icons else HUD_GROUPS

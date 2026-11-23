@@ -19,7 +19,7 @@ button from the bottom of the same box.
 ImageGen painted the set together using the [campaign resource pieces](../../games/relic-rush/art/registered/campaign-pieces.png) as the material and lighting reference.
 The [master](actions-source.png), [prompt](prompt.txt) and [registration manifest](manifest.json) reproduce the shared [512×128 strip](actions.png).
 Within each 128 px square, Build and Play fit inside 110 px. Levels and Options fit inside 90 px for extra clearance inside the circular face. Registration centers each resized silhouette by pixel opacity on both axes, to the nearest pixel. If that placement would clip an edge, registration reduces the fit until the entire illustration fits. The same illustration is used in all five states.
-Bonus buttons take their image directly from the game's board atlas. The atlas builder records the center of opacity for each bonus frame. The painter aligns that point to the enamel center for both the inset silhouette and the color revealed from the bottom, at the original scale.
+Bonus buttons take their image directly from the game's board atlas. The atlas builder records the center of opacity for each bonus frame. The painter aligns that point to the enamel center for both the inset silhouette and the color revealed from the bottom, at the original scale. A lopsided icon listed under `outline_centered` in the game's `art/manifest.json` (Christmas Market's hammer, `market-5`) records the center of its outline instead, so its heavy head does not push the handle off center.
 
 Run `python3 tools/match3_buttons.py` to register the icons or pass `--check`
 to compare the pixels. Review the live [town row](../../games/relic-rush/docs/screenshots/enamel-town.jpg),

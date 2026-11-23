@@ -464,7 +464,8 @@
       "booster-plus": "booster-plus-icon",
       "booster-clock": "booster-hourglass-icon",
       "booster-mixer": "booster-mixer-icon"
-    }
+    },
+    "outline_centered": ["market-5"]
   },
   "market_goods": {
     "source": "art/market-goods/winter-stalls.png",

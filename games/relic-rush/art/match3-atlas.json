@@ -1883,7 +1883,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "27ea9bdf4d7bea55090144e3bb7489cf30d36d6d87d6d2c8cb8b3bf5248a4486",
+    "recipe": "c32e83b0a9b5a0d5c50a90be305d63fee8d2d2ee95090e61650fbf6f3aafcf47",
     "inputs": {
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
@@ -2000,7 +2000,7 @@
       "games/relic-rush/data/board/backs/scene-2.jpg": "ce90a3484d904b13441c874e3b34d3d7bd2c79aba6ee2943340f3c661fad6f61",
       "games/relic-rush/tools/prepare_assets.py": "779721ca99eb10a27d48680b8a71390fd1e1413061e319cfac42fa2278ee6333",
       "tools/board_frame_decor.py": "80b0c5ac9248e2c73659f1d6977899d2494bf0b9ab9208afc4e5db6da84aed73",
-      "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
+      "tools/match3_buttons.py": "665d065c8547a24aeb56f13edd590fc2396fb12efd64b81f038d8953b621bce9",
       "tools/match3_theme_art.py": "7919c0b1d38f68c41fc6aa9ca30e4a47d4ab9154b3b39d354ab4ad2a9aa10784",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368",
       "tools/square_board_frame.py": "41bb626ad3fb530ceb632e972f5872ba7c188e630f650c5f5f7d3df383983877"

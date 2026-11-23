@@ -1744,7 +1744,7 @@
   "reproduction": "python3 tools/match3_atlas.py",
   "review": "docs/review/trickling/README.md",
   "provenance": {
-    "recipe": "27ea9bdf4d7bea55090144e3bb7489cf30d36d6d87d6d2c8cb8b3bf5248a4486",
+    "recipe": "c32e83b0a9b5a0d5c50a90be305d63fee8d2d2ee95090e61650fbf6f3aafcf47",
     "inputs": {
       "art/match3-blockers/source.png": "9e15a804bf5583d65234bc9f92f816534c0a5ec6b7b065e4acdf0bd908e75a3d",
       "art/match3-buttons/actions.png": "d5898c5c3c6db48d04724544693c9a383e2fc1c44c2682077b640dd670358288",
@@ -1823,7 +1823,7 @@
       "games/christmas-market/data/story/characters/noelle.png": "0bda5ca55b35609e4a9eda5f2386d38ce3459d7704bfd2f026120373a79a5521",
       "games/relic-rush/art/registered/resource-pieces/wallet-food.png": "0e9289814444b3b2223b3058c10c9e01f7dcaf3c68e57662779c391ebad5380c",
       "games/relic-rush/art/registered/resource-pieces/wallet-supplies.png": "56d752b61f5fa5870f0225e468ed3d2a901ce6d8a5183f1806781946b942f502",
-      "tools/match3_buttons.py": "79f86ae1ab9f6e7f850275e1d7a6942f1d5d5c7169f1955eb070b04b7734c6a1",
+      "tools/match3_buttons.py": "665d065c8547a24aeb56f13edd590fc2396fb12efd64b81f038d8953b621bce9",
       "tools/match3_theme_art.py": "7919c0b1d38f68c41fc6aa9ca30e4a47d4ab9154b3b39d354ab4ad2a9aa10784",
       "tools/pack_particles.py": "642263afe6d52f8ab11af9bfe19fd7c92f0e51414fdb8fc321084a08bb415368",
       "tools/square_board_frame.py": "41bb626ad3fb530ceb632e972f5872ba7c188e630f650c5f5f7d3df383983877"
@@ -1836,7 +1836,7 @@
       "games/christmas-market/data/board/pieces.png": "eb0de789d77127cb76eaa6acea5876d9346a0de60bc40292763b5def8d4fd06f",
       "games/christmas-market/lua/match3_atlases.lua": "64b93a84006ec49ac1329039849523aca238023f8c0eb18f9374006b414a8347",
       "games/christmas-market/lua/match3_hud.lua": "a5d1fc373b20acff07a1f6ef704bf85e4dbffb4ba024b225d7f6f246f7cd9bd2",
-      "games/christmas-market/lua/match3_skin.lua": "d6606a045c2c933a6f5b94b36d8572c6d8974ec976ecfd20916c4c8b3f8a2e6d"
+      "games/christmas-market/lua/match3_skin.lua": "9d2c01e3066e34ec657a1f7c58483d7219408a163d73e5be7a82dff25024d7c0"
     }
   }
 }

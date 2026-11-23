@@ -24,6 +24,14 @@ def alpha_center(image):
     return moment_x / mass + .5, moment_y / mass + .5
 
 
+def outline_center(image, threshold=40):
+    """Center of the visible outline (alpha above threshold), from the top-left edge."""
+    bounds = image.getchannel("A").point(lambda a: 255 if a > threshold else 0).getbbox()
+    if not bounds:
+        raise ValueError("The icon is completely transparent")
+    return (bounds[0] + bounds[2]) / 2, (bounds[1] + bounds[3]) / 2
+
+
 def centered_icon(image, side, fit):
     """Place the alpha-weighted center of the visible artwork at the cell center."""
     bounds = image.getchannel("A").getbbox()
