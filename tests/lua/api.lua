@@ -78,6 +78,21 @@ check(save.read("lua-slot", serialize), "save read")
 check(state.coins == 7 and state.wallet[2] == 2 and state.pos.y == 2.5, "save round trip")
 check(not save.read("no-such-slot", serialize), "missing save")
 
+-- The match-3 finale saves between coroutine yields, on that coroutine's stack.
+local saver = coroutine.create(function()
+    check(save.write("lua-coroutine", serialize), "coroutine save write")
+    coroutine.yield()
+    state.coins = 0
+    check(save.read("lua-coroutine", serialize), "coroutine save read")
+    check(state.coins == 7, "coroutine save round trip")
+end)
+local resumed, failure = coroutine.resume(saver)
+check(resumed, failure)
+check(coroutine.status(saver) == "suspended", "saving lets the finale yield")
+resumed, failure = coroutine.resume(saver)
+check(resumed, failure)
+check(coroutine.status(saver) == "dead", "loading lets the coroutine finish")
+
 -- city handle: fields, arrays, callbacks and out arguments
 local c2 = city.new()
 c2.defs = {{name = "hut", cost = purse(10)}, {name = "well", cost = purse(20), size = size2(2, 1)}}

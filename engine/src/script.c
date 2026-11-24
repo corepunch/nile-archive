@@ -268,10 +268,10 @@ app_desc script_boot_args(const char *dir, const char *data_dir, int argc, char 
 /* save.read(slot, fn) / save.write(slot, fn): fn(s) runs with a save handle. */
 static void visit(save *s, void *user)
 {
-    (void)user;
-    lua_pushvalue(L, 2);
-    api_push_save(L, s);
-    call(1, 0);
+    lua_State *S = user;   /* callers may be running inside a coroutine */
+    lua_pushvalue(S, 2);
+    api_push_save(S, s);
+    lua_call(S, 1, 0);
 }
 
 int lsave_read(lua_State *S)
@@ -279,7 +279,7 @@ int lsave_read(lua_State *S)
     const char *slot = luaL_checkstring(S, 1);
     luaL_checktype(S, 2, LUA_TFUNCTION);
     lua_settop(S, 2);
-    lua_pushboolean(S, save_read(slot, visit, NULL));
+    lua_pushboolean(S, save_read(slot, visit, S));
     return 1;
 }
 
@@ -288,7 +288,7 @@ int lsave_write(lua_State *S)
     const char *slot = luaL_checkstring(S, 1);
     luaL_checktype(S, 2, LUA_TFUNCTION);
     lua_settop(S, 2);
-    lua_pushboolean(S, save_write(slot, visit, NULL));
+    lua_pushboolean(S, save_write(slot, visit, S));
     return 1;
 }
 
