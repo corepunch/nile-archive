@@ -36,10 +36,6 @@ msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on t
 msgstr "屋根のある長いカウンターで、お客さんが包みを作ったり、タグをつけたりできます。"
 
 #: games/christmas-market/lua/buildings.lua
-msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
-msgstr "マーケットの入口にあるホットワインのカウンターで、着いたお客さんが体を温められます。"
-
-#: games/christmas-market/lua/buildings.lua
 msgid "A seat for watching the snow fall."
 msgstr "雪が降るのをながめるための席。"
 
@@ -306,6 +302,10 @@ msgid "Toymaker’s workshop"
 msgstr "おもちゃ職人の工房"
 
 #: games/christmas-market/lua/buildings.lua
+msgid "Visitors can warm up with spiced fruit punch at the market entrance."
+msgstr "市場の入り口では、スパイス入りのフルーツパンチで体を温められます。"
+
+#: games/christmas-market/lua/buildings.lua
 msgid "Visitors from the other pole, in scarves."
 msgstr "反対の極からやってきた、マフラー姿のお客さん。"
 
@@ -494,10 +494,6 @@ msgid "Honey Cake"
 msgstr "ハニーケーキ"
 
 #: games/christmas-market/lua/campaign.lua
-msgid "Hot Cider Kettle"
-msgstr "ホットサイダーのケトル"
-
-#: games/christmas-market/lua/campaign.lua
 #: games/christmas-market/lua/island.lua
 msgid "Lantern Lane"
 msgstr "ランタン小路"
@@ -671,6 +667,10 @@ msgid "Spice Rack Glow"
 msgstr "スパイス棚の灯り"
 
 #: games/christmas-market/lua/campaign.lua
+msgid "Spiced Apple Kettle"
+msgstr "ホットアップルジュースの大鍋"
+
+#: games/christmas-market/lua/campaign.lua
 msgid "Spiced Star"
 msgstr "スパイスの星"
 
@@ -809,10 +809,6 @@ msgid "Materials"
 msgstr "資材"
 
 #: games/christmas-market/lua/economy.lua
-msgid "Mulled wine"
-msgstr "ホットワイン"
-
-#: games/christmas-market/lua/economy.lua
 msgid "Pretzel"
 msgstr "プレッツェル"
 
@@ -831,6 +827,10 @@ msgstr "マスのくん製"
 #: games/christmas-market/lua/economy.lua
 msgid "Snow-dusted fir"
 msgstr "雪をまとったモミ"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Spiced fruit punch"
+msgstr "スパイス入りフルーツパンチ"
 
 #: games/christmas-market/lua/economy.lua
 msgid "Station clock"
@@ -1233,8 +1233,8 @@ msgid "Market keeper's guide"
 msgstr "マーケット店主のガイド"
 
 #: games/christmas-market/lua/screens.lua
-msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
-msgstr "コインをそろえてアーチの資金に。アーチのホットワインでおやつが手に入ります。製材所はマツを足して資材にします。"
+msgid "Match coins to fund the arch. Its spiced fruit punch earns treats. The lumber workshop adds pine for materials."
+msgstr "コインをそろえてアーチの建設資金を集めましょう。フルーツパンチをそろえるとおやつが手に入ります。製材所ではマツの木材が手に入ります。"
 
 #: games/christmas-market/lua/screens.lua
 msgid "Match identical pieces in a straight line horizontally or vertically."
@@ -1265,8 +1265,8 @@ msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell t
 msgstr "花火の屋台がハンマーと入れ替わり、チャージも引き継ぎます。マスをタップすると3×3を叩きます。"
 
 #: games/christmas-market/lua/screens.lua
-msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
-msgstr "パン屋ができると、ホットワインがジンジャーブレッドマンに変わります。ココアの売店はホットココアを盤面に出します。"
+msgid "The bakery swaps spiced fruit punch for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "パン屋ができると、フルーツパンチがジンジャーブレッド人形に替わります。ココア屋台ができると、盤面にホットココアが加わります。"
 
 #: games/christmas-market/lua/screens.lua
 msgid "Untangle tinsel"
@@ -1670,8 +1670,8 @@ msgstr "マツの乾燥小屋"
 
 #. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
 #: games/christmas-market/lua/user_events.lua
-msgid "a mulled-wine hatch in the arch"
-msgstr "アーチのホットワイン窓口"
+msgid "a hatch in the arch for serving fruit punch"
+msgstr "アーチにフルーツパンチの受け渡し窓口"
 
 #: games/christmas-market/lua/user_events.lua
 msgid "a new harness and bells for the reindeer"

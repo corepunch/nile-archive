@@ -260,7 +260,7 @@ in the [art manifest](../art/manifest.json)), which moves it 2 px up and left. [
 column one of the [festive atlas](../art/festive-pieces/source.png). The campaign,
 guide and festive previews share that single registered sprite. The corresponding
 bay in the market goods sheet is reserved to keep the other source positions.
-[Review the mitten and mulled wine in play](market-pieces.md#in-game-review).
+[Review the mitten and spiced fruit punch in play](market-pieces.md#in-game-review).
 The gold Sun coin uses the first cell of the [Relic Rush campaign atlas](../../relic-rush/art/registered/campaign-pieces.png).
 The board, wallet, prices and results all use this shared artwork.
 [Compare the coin on the opening board and price card](market-pieces.md#shared-sun-coin-review).
@@ -293,7 +293,7 @@ so the shield button itself does not move.
 | 5 | Farrier's hammer | Forged steel and ash handle | +3 charge on the stable's single-cell blow. `market-5` on the board and `booster-hammer` on the card and toolbar. |
 | 6 | Toy blocks | Honey wood | +6 Tokens from the later Toymaker's workshop. |
 | 7 | Gingerbread man | Baked brown with ivory icing | +4 Treats from the bakery. |
-| 8 | Mulled wine | Cranberry | +3 Treats from the Welcome arch. |
+| 8 | Spiced fruit punch | Cranberry | Nonalcoholic fruit punch, +3 Treats from the Welcome arch. The existing cranberry cup with an orange slice represents it. |
 | 9 | Wrapped gift | Ruby red and cream | +7 Tokens from the later wrapping pavilion. |
 | 10 | Candle lantern | Black iron and amber | +3 Lightning charge from the later Candlelight shop. |
 | 11 | Hot cocoa | Ivory and chocolate | +5 Treats from the cocoa kiosk and the Treats wallet icon. |

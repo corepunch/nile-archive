@@ -36,10 +36,6 @@ msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on t
 msgstr "长长的遮雨柜台，顾客可以在这里包礼物、系标签。"
 
 #: games/christmas-market/lua/buildings.lua
-msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
-msgstr "集市入口的热红酒柜台，让刚到的客人暖暖身子。"
-
-#: games/christmas-market/lua/buildings.lua
 msgid "A seat for watching the snow fall."
 msgstr "看雪落下的好位置。"
 
@@ -306,6 +302,10 @@ msgid "Toymaker’s workshop"
 msgstr "玩具匠工坊"
 
 #: games/christmas-market/lua/buildings.lua
+msgid "Visitors can warm up with spiced fruit punch at the market entrance."
+msgstr "游客可以在集市入口喝杯热香料果露暖暖身子。"
+
+#: games/christmas-market/lua/buildings.lua
 msgid "Visitors from the other pole, in scarves."
 msgstr "来自另一极的客人，围着围巾。"
 
@@ -494,10 +494,6 @@ msgid "Honey Cake"
 msgstr "蜂蜜蛋糕"
 
 #: games/christmas-market/lua/campaign.lua
-msgid "Hot Cider Kettle"
-msgstr "热苹果酒壶"
-
-#: games/christmas-market/lua/campaign.lua
 #: games/christmas-market/lua/island.lua
 msgid "Lantern Lane"
 msgstr "灯笼巷"
@@ -671,6 +667,10 @@ msgid "Spice Rack Glow"
 msgstr "香料架的光"
 
 #: games/christmas-market/lua/campaign.lua
+msgid "Spiced Apple Kettle"
+msgstr "热苹果露壶"
+
+#: games/christmas-market/lua/campaign.lua
 msgid "Spiced Star"
 msgstr "香料之星"
 
@@ -809,10 +809,6 @@ msgid "Materials"
 msgstr "材料"
 
 #: games/christmas-market/lua/economy.lua
-msgid "Mulled wine"
-msgstr "热红酒"
-
-#: games/christmas-market/lua/economy.lua
 msgid "Pretzel"
 msgstr "扭结脆饼"
 
@@ -831,6 +827,10 @@ msgstr "熏鳟鱼"
 #: games/christmas-market/lua/economy.lua
 msgid "Snow-dusted fir"
 msgstr "覆雪冷杉"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Spiced fruit punch"
+msgstr "香料果露"
 
 #: games/christmas-market/lua/economy.lua
 msgid "Station clock"
@@ -1233,8 +1233,8 @@ msgid "Market keeper's guide"
 msgstr "集市主人指南"
 
 #: games/christmas-market/lua/screens.lua
-msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
-msgstr "匹配硬币来为拱门筹款。拱门的热红酒能赚点心，木材工坊供应松木作材料。"
+msgid "Match coins to fund the arch. Its spiced fruit punch earns treats. The lumber workshop adds pine for materials."
+msgstr "消除金币来筹建拱门。消除拱门解锁的果露可以获得点心。木工坊会提供松木作为材料。"
 
 #: games/christmas-market/lua/screens.lua
 msgid "Match identical pieces in a straight line horizontally or vertically."
@@ -1265,8 +1265,8 @@ msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell t
 msgstr "烟花摊取代锤子，并保留它的充能。点击一个格子，击中 3×3 范围。"
 
 #: games/christmas-market/lua/screens.lua
-msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
-msgstr "烘焙坊会把热红酒换成姜饼人，可可小亭会让棋盘上出现热可可。"
+msgid "The bakery swaps spiced fruit punch for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "面包房会用姜饼人替换果露。可可摊会把热可可加入棋盘。"
 
 #: games/christmas-market/lua/screens.lua
 msgid "Untangle tinsel"
@@ -1670,8 +1670,8 @@ msgstr "一间晾松木的棚子"
 
 #. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
 #: games/christmas-market/lua/user_events.lua
-msgid "a mulled-wine hatch in the arch"
-msgstr "拱门里的热红酒小窗"
+msgid "a hatch in the arch for serving fruit punch"
+msgstr "拱门上供应果露的小窗口"
 
 #: games/christmas-market/lua/user_events.lua
 msgid "a new harness and bells for the reindeer"

@@ -3,7 +3,7 @@ local l10n = require("l10n")
 local tr = l10n.tr
 local sprites = require("building_sprites")
 local items = {
-    {key="arch",name=tr("Welcome arch"),category="wonder",cleared=0,about=tr("A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."),cost=purse(45,0,0),needs=purse()},
+    {key="arch",name=tr("Welcome arch"),category="wonder",cleared=0,about=tr("Visitors can warm up with spiced fruit punch at the market entrance."),cost=purse(45,0,0),needs=purse()},
     {key="lumber",name=tr("Lumber workshop"),category="wonder",cleared=0,about=tr("The workshop saws pine for stalls and signboards. A roof keeps the bundled lumber dry."),cost=purse(1695,620,0),needs=purse()},
     {key="bakery",name=tr("Gingerbread bakery"),category="wonder",cleared=0,about=tr("A brick oven bakes spiced gingerbread. The counter has room to cool and ice each tray."),cost=purse(1635,600,895),needs=purse()},
     {key="cocoa",name=tr("Hot cocoa kiosk"),category="wonder",cleared=0,about=tr("A stove at the kiosk keeps cocoa hot. It faces the lane so visitors can buy a cup on their way through."),cost=purse(1665,800,1305),needs=purse()},

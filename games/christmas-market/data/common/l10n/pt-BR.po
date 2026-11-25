@@ -36,10 +36,6 @@ msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on t
 msgstr "Um balcão comprido e abrigado dá espaço para embrulhar pacotes e amarrar etiquetas."
 
 #: games/christmas-market/lua/buildings.lua
-msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
-msgstr "Um balcão de vinho quente na entrada da feira dá aos visitantes um lugar para se aquecer."
-
-#: games/christmas-market/lua/buildings.lua
 msgid "A seat for watching the snow fall."
 msgstr "Um assento para ver a neve cair."
 
@@ -306,6 +302,10 @@ msgid "Toymaker’s workshop"
 msgstr "Oficina do fabricante de brinquedos"
 
 #: games/christmas-market/lua/buildings.lua
+msgid "Visitors can warm up with spiced fruit punch at the market entrance."
+msgstr "Na entrada da feira, os visitantes podem se aquecer com ponche de frutas com especiarias."
+
+#: games/christmas-market/lua/buildings.lua
 msgid "Visitors from the other pole, in scarves."
 msgstr "Visitantes do outro polo, de cachecol."
 
@@ -494,10 +494,6 @@ msgid "Honey Cake"
 msgstr "Bolo de Mel"
 
 #: games/christmas-market/lua/campaign.lua
-msgid "Hot Cider Kettle"
-msgstr "Chaleira de Sidra Quente"
-
-#: games/christmas-market/lua/campaign.lua
 #: games/christmas-market/lua/island.lua
 msgid "Lantern Lane"
 msgstr "Alameda das Lanternas"
@@ -671,6 +667,10 @@ msgid "Spice Rack Glow"
 msgstr "Brilho do Armário de Especiarias"
 
 #: games/christmas-market/lua/campaign.lua
+msgid "Spiced Apple Kettle"
+msgstr "Caldeirão de suco de maçã quente"
+
+#: games/christmas-market/lua/campaign.lua
 msgid "Spiced Star"
 msgstr "Estrela de Especiarias"
 
@@ -809,10 +809,6 @@ msgid "Materials"
 msgstr "Materiais"
 
 #: games/christmas-market/lua/economy.lua
-msgid "Mulled wine"
-msgstr "Vinho quente"
-
-#: games/christmas-market/lua/economy.lua
 msgid "Pretzel"
 msgstr "Pretzel"
 
@@ -831,6 +827,10 @@ msgstr "Truta defumada"
 #: games/christmas-market/lua/economy.lua
 msgid "Snow-dusted fir"
 msgstr "Abeto polvilhado de neve"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Spiced fruit punch"
+msgstr "Ponche de frutas com especiarias"
 
 #: games/christmas-market/lua/economy.lua
 msgid "Station clock"
@@ -1233,8 +1233,8 @@ msgid "Market keeper's guide"
 msgstr "Guia da guardiã da feira"
 
 #: games/christmas-market/lua/screens.lua
-msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
-msgstr "Combine moedas para pagar o arco. O vinho quente dele rende guloseimas. A serraria acrescenta pinho aos materiais."
+msgid "Match coins to fund the arch. Its spiced fruit punch earns treats. The lumber workshop adds pine for materials."
+msgstr "Combine moedas para financiar o arco. O ponche de frutas rende doces. A marcenaria fornece madeira de pinho."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Match identical pieces in a straight line horizontally or vertically."
@@ -1265,8 +1265,8 @@ msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell t
 msgstr "A barraca de fogos substitui o martelo e mantém a carga. Toque em uma casa para atingir um quadrado de 3×3."
 
 #: games/christmas-market/lua/screens.lua
-msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
-msgstr "A padaria troca o vinho quente por homenzinhos de pão de mel. O quiosque de chocolate põe chocolate quente no tabuleiro."
+msgid "The bakery swaps spiced fruit punch for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "A padaria troca o ponche de frutas por biscoitos de gengibre. O quiosque de cacau acrescenta chocolate quente ao tabuleiro."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Untangle tinsel"
@@ -1670,8 +1670,8 @@ msgstr "um galpão para secar o pinho"
 
 #. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
 #: games/christmas-market/lua/user_events.lua
-msgid "a mulled-wine hatch in the arch"
-msgstr "uma janelinha de vinho quente no arco"
+msgid "a hatch in the arch for serving fruit punch"
+msgstr "uma janela no arco para servir ponche de frutas"
 
 #: games/christmas-market/lua/user_events.lua
 msgid "a new harness and bells for the reindeer"

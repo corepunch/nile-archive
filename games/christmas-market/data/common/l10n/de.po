@@ -36,10 +36,6 @@ msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on t
 msgstr "An der langen, überdachten Theke ist Platz, Päckchen einzuwickeln und Anhänger anzubinden."
 
 #: games/christmas-market/lua/buildings.lua
-msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
-msgstr "An der Glühweintheke am Markteingang können sich ankommende Besucher aufwärmen."
-
-#: games/christmas-market/lua/buildings.lua
 msgid "A seat for watching the snow fall."
 msgstr "Ein Platz, um dem Schneefall zuzusehen."
 
@@ -306,6 +302,10 @@ msgid "Toymaker’s workshop"
 msgstr "Werkstatt des Spielzeugmachers"
 
 #: games/christmas-market/lua/buildings.lua
+msgid "Visitors can warm up with spiced fruit punch at the market entrance."
+msgstr "Am Markteingang können sich Besucher mit Kinderpunsch aufwärmen."
+
+#: games/christmas-market/lua/buildings.lua
 msgid "Visitors from the other pole, in scarves."
 msgstr "Besucher vom anderen Pol, in Schals."
 
@@ -494,10 +494,6 @@ msgid "Honey Cake"
 msgstr "Honigkuchen"
 
 #: games/christmas-market/lua/campaign.lua
-msgid "Hot Cider Kettle"
-msgstr "Heißer Apfelwein im Kessel"
-
-#: games/christmas-market/lua/campaign.lua
 #: games/christmas-market/lua/island.lua
 msgid "Lantern Lane"
 msgstr "Laternengasse"
@@ -671,6 +667,10 @@ msgid "Spice Rack Glow"
 msgstr "Gewürzregal-Schimmer"
 
 #: games/christmas-market/lua/campaign.lua
+msgid "Spiced Apple Kettle"
+msgstr "Kessel mit heißem Apfelsaft"
+
+#: games/christmas-market/lua/campaign.lua
 msgid "Spiced Star"
 msgstr "Gewürzstern"
 
@@ -809,10 +809,6 @@ msgid "Materials"
 msgstr "Material"
 
 #: games/christmas-market/lua/economy.lua
-msgid "Mulled wine"
-msgstr "Glühwein"
-
-#: games/christmas-market/lua/economy.lua
 msgid "Pretzel"
 msgstr "Brezel"
 
@@ -831,6 +827,10 @@ msgstr "Geräucherte Forelle"
 #: games/christmas-market/lua/economy.lua
 msgid "Snow-dusted fir"
 msgstr "Schneebestäubte Tanne"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Spiced fruit punch"
+msgstr "Kinderpunsch"
 
 #: games/christmas-market/lua/economy.lua
 msgid "Station clock"
@@ -1233,8 +1233,8 @@ msgid "Market keeper's guide"
 msgstr "Anleitung für die Marktleiterin"
 
 #: games/christmas-market/lua/screens.lua
-msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
-msgstr "Kombiniere Münzen, um den Bogen zu bezahlen. Sein Glühwein bringt Leckereien. Die Sägewerkstatt liefert Kiefer als Material."
+msgid "Match coins to fund the arch. Its spiced fruit punch earns treats. The lumber workshop adds pine for materials."
+msgstr "Kombiniere Münzen, um den Bogen zu bezahlen. Sein Kinderpunsch bringt Leckereien. Die Sägewerkstatt liefert Kiefernholz."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Match identical pieces in a straight line horizontally or vertically."
@@ -1265,8 +1265,8 @@ msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell t
 msgstr "Der Feuerwerksstand ersetzt den Hammer und behält seine Ladung. Tippe auf ein Feld, um ein 3×3-Feld zu treffen."
 
 #: games/christmas-market/lua/screens.lua
-msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
-msgstr "Die Bäckerei tauscht Glühwein gegen Lebkuchenmännchen. Der Kakaokiosk bringt heißen Kakao aufs Brett."
+msgid "The bakery swaps spiced fruit punch for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "Die Bäckerei ersetzt Kinderpunsch durch Lebkuchenmännchen. Der Kakaostand bringt heißen Kakao aufs Spielfeld."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Untangle tinsel"
@@ -1670,8 +1670,8 @@ msgstr "ein Trockenschuppen für die Kiefer"
 
 #. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
 #: games/christmas-market/lua/user_events.lua
-msgid "a mulled-wine hatch in the arch"
-msgstr "eine Glühweinluke im Bogen"
+msgid "a hatch in the arch for serving fruit punch"
+msgstr "eine Ausgabeluke für Kinderpunsch im Bogen"
 
 #: games/christmas-market/lua/user_events.lua
 msgid "a new harness and bells for the reindeer"

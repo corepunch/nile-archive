@@ -586,7 +586,7 @@ local boards = {
         "*********"},
 
     -- 54
-    {name=tr("Hot Cider Kettle"), tier="normal", moves=33,
+    {name=tr("Spiced Apple Kettle"), tier="normal", moves=33,
         "---***---",
         "---***---",
         "--*****--",

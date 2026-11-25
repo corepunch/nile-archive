@@ -36,10 +36,6 @@ msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on t
 msgstr "Длинный навес даёт покупателям место, чтобы упаковать свёртки и повесить бирки."
 
 #: games/christmas-market/lua/buildings.lua
-msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
-msgstr "Прилавок с глинтвейном у входа на ярмарку — гостям есть где согреться."
-
-#: games/christmas-market/lua/buildings.lua
 msgid "A seat for watching the snow fall."
 msgstr "Скамья, чтобы смотреть, как падает снег."
 
@@ -306,6 +302,10 @@ msgid "Toymaker’s workshop"
 msgstr "Мастерская игрушек"
 
 #: games/christmas-market/lua/buildings.lua
+msgid "Visitors can warm up with spiced fruit punch at the market entrance."
+msgstr "У входа на ярмарку гости могут согреться пряным фруктовым пуншем."
+
+#: games/christmas-market/lua/buildings.lua
 msgid "Visitors from the other pole, in scarves."
 msgstr "Гости с другого полюса — в шарфах."
 
@@ -494,10 +494,6 @@ msgid "Honey Cake"
 msgstr "Медовый пирог"
 
 #: games/christmas-market/lua/campaign.lua
-msgid "Hot Cider Kettle"
-msgstr "Чайник с горячим сидром"
-
-#: games/christmas-market/lua/campaign.lua
 #: games/christmas-market/lua/island.lua
 msgid "Lantern Lane"
 msgstr "Фонарная аллея"
@@ -671,6 +667,10 @@ msgid "Spice Rack Glow"
 msgstr "Свет полки со специями"
 
 #: games/christmas-market/lua/campaign.lua
+msgid "Spiced Apple Kettle"
+msgstr "Котелок с горячим яблочным соком"
+
+#: games/christmas-market/lua/campaign.lua
 msgid "Spiced Star"
 msgstr "Пряная звезда"
 
@@ -809,10 +809,6 @@ msgid "Materials"
 msgstr "Материалы"
 
 #: games/christmas-market/lua/economy.lua
-msgid "Mulled wine"
-msgstr "Глинтвейн"
-
-#: games/christmas-market/lua/economy.lua
 msgid "Pretzel"
 msgstr "Крендель"
 
@@ -831,6 +827,10 @@ msgstr "Копчёная форель"
 #: games/christmas-market/lua/economy.lua
 msgid "Snow-dusted fir"
 msgstr "Ель в снежной пудре"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Spiced fruit punch"
+msgstr "Пряный фруктовый пунш"
 
 #: games/christmas-market/lua/economy.lua
 msgid "Station clock"
@@ -1233,8 +1233,8 @@ msgid "Market keeper's guide"
 msgstr "Памятка хозяина ярмарки"
 
 #: games/christmas-market/lua/screens.lua
-msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
-msgstr "Собирай монеты на арку. Её глинтвейн приносит лакомства. Лесопильня добавляет сосну на материалы."
+msgid "Match coins to fund the arch. Its spiced fruit punch earns treats. The lumber workshop adds pine for materials."
+msgstr "Собирай монеты на арку. Фруктовый пунш приносит лакомства. Лесопильня даёт сосновую древесину для строительства."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Match identical pieces in a straight line horizontally or vertically."
@@ -1265,8 +1265,8 @@ msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell t
 msgstr "Лавка фейерверков заменяет молоток и сохраняет его заряд. Нажми на клетку, чтобы ударить по квадрату 3×3."
 
 #: games/christmas-market/lua/screens.lua
-msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
-msgstr "Пекарня меняет глинтвейн на пряничных человечков. Киоск какао кладёт на поле горячее какао."
+msgid "The bakery swaps spiced fruit punch for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "Пекарня заменяет фруктовый пунш пряничными человечками. Киоск с какао добавляет на поле горячее какао."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Untangle tinsel"
@@ -1670,8 +1670,8 @@ msgstr "сушильный сарай для сосны"
 
 #. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
 #: games/christmas-market/lua/user_events.lua
-msgid "a mulled-wine hatch in the arch"
-msgstr "окошко с глинтвейном в арке"
+msgid "a hatch in the arch for serving fruit punch"
+msgstr "окошко в арке для подачи фруктового пунша"
 
 #: games/christmas-market/lua/user_events.lua
 msgid "a new harness and bells for the reindeer"

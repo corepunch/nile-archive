@@ -21,7 +21,7 @@ local E = {
         {name=tr("Farrier's hammer")},
         {name=tr("Toy blocks"), slot=1, amount=6},
         {name=tr("Gingerbread man"), slot=2, amount=4},
-        {name=tr("Mulled wine"), slot=2, amount=3},
+        {name=tr("Spiced fruit punch"), slot=2, amount=3},
         {name=tr("Wrapped gift"), slot=1, amount=7},
         {name=tr("Candle lantern")},
         {name=tr("Hot cocoa"), slot=2, amount=5},

@@ -60,7 +60,7 @@ Slow runs do not increase it. "Within budget" measures this bot sample; it is no
 | 51 | Angel Wings | easy | 30 | 24 | 11 | 150/200 |
 | 52 | Nutcracker Parade | easy | 30 | 24 | 8 | 148/200 |
 | 53 | Cinnamon Carousel | normal | 30 | 24 | 7 | 144/200 |
-| 54 | Hot Cider Kettle | normal | 33 | 26 | 7 | 160/200 |
+| 54 | Spiced Apple Kettle | normal | 33 | 26 | 7 | 160/200 |
 | 55 | Lantern Walk | hard | 39 | 31 | 11 | 146/200 |
 | 56 | Snowman Square | easy | 30 | 24 | 9 | 144/200 |
 | 57 | Santa Post Box | normal | 32 | 25 | 6 | 157/200 |

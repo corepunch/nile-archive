@@ -19,7 +19,7 @@ local function tool(id) return {"THEN_GAME_CHARGE_TOOL", id=id, amount=1} end
 
 local upgrades = {
     -- TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
-    {id="man_03", building="arch", title=tr("a mulled-wine hatch in the arch"), keeper="noelle",
+    {id="man_03", building="arch", title=tr("a hatch in the arch for serving fruit punch"), keeper="noelle",
         If={"IF_PLAYER_GET_RESOURCE_IN_LEVEL", id="food", amount=265}, perk=income("food", 15)},
     {id="man_04", building="reindeer_stable", title=tr("a new harness and bells for the reindeer"), keeper="pip",
         If={"IF_PLAYER_MAKE_MATCH", length=5}, perk=tool("hammer")},

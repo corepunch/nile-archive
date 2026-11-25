@@ -1,5 +1,5 @@
 [
-["arch", "Welcome arch", "wonder", 3, 3, [45, 0, 0], 0, "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."],
+["arch", "Welcome arch", "wonder", 3, 3, [45, 0, 0], 0, "Visitors can warm up with spiced fruit punch at the market entrance."],
 ["lumber", "Lumber workshop", "wonder", 3, 3, [1695, 620, 0], 0, "The workshop saws pine for stalls and signboards. A roof keeps the bundled lumber dry."],
 ["bakery", "Gingerbread bakery", "wonder", 3, 3, [1635, 600, 895], 0, "A brick oven bakes spiced gingerbread. The counter has room to cool and ice each tray."],
 ["cocoa", "Hot cocoa kiosk", "wonder", 3, 3, [1665, 800, 1305], 0, "A stove at the kiosk keeps cocoa hot. It faces the lane so visitors can buy a cup on their way through."],

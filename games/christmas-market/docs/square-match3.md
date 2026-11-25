@@ -6,7 +6,7 @@ On the first wish, after the third move settles, Noelle explains how to clear
 the remaining blue target tiles if Story is enabled.
 See the [guided lessons](../../../docs/PORTRAIT_GAMES.md#guided-board-lessons).
 
-Match Christmas pieces to light the teal panes. The 100-level campaign groups twenty stalls into five phases (see the [construction sequence](market-pieces.md#construction-sequence)). Each stall unlocks one item. The first Advent brings mulled wine, the Farrier's hammer, bundled pine and the Firework Bomb. The hammer charges a single-cell blow. The Firework Bomb inherits that slot and its charge. Bundled pine replaces the mitten, and dressed stone later replaces the pine.
+Match Christmas pieces to light the teal panes. The 100-level campaign groups twenty stalls into five phases (see the [construction sequence](market-pieces.md#construction-sequence)). Each stall unlocks one item. The first Advent brings spiced fruit punch, the Farrier's hammer, bundled pine and the Firework Bomb. The hammer charges a single-cell blow. The Firework Bomb inherits that slot and its charge. Bundled pine replaces the mitten, and dressed stone later replaces the pine.
 
 A legal swap across a shared edge makes a row or column of three or more
 identical pieces. A board spawns five kinds. Bonus pieces replace a kind

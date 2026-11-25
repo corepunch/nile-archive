@@ -22,10 +22,10 @@ check(p.wallet[1] == 80 and p.wallet[4] == 1 and p.level == 1, "replays pay actu
 check(island.island_place_next(c, p.wallet, p.level, 0), "funded arch can be built")
 check(p.wallet[1] == 80 - island.buildings[island.kinds.arch + 1].cost[1], "confirmed placement debits Gold once")
 
-local wine = rules.game_start(1, 18, island.wonder_count(c))
-check(#wine.spawn_kinds == 5 and wine.resource_yields[8].amount == 3, "confirmed arch adds mulled wine")
+local punch = rules.game_start(1, 18, island.wonder_count(c))
+check(#punch.spawn_kinds == 5 and punch.resource_yields[8].amount == 3, "confirmed arch adds spiced fruit punch")
 local plain = rules.game_start(1, 18, 0)
-check(not plain.resource_yields[8], "a cleared board alone does not add mulled wine")
+check(not plain.resource_yields[8], "a cleared board alone does not add spiced fruit punch")
 
 -- The top of the first column of four playable cells, straight down.
 local function column_top(board)
@@ -49,8 +49,8 @@ local function line(board, kind, length, wave)
     rules.game_apply(board, wave)
 end
 local wave = rules.new_match()
-line(wine, 8, 3, wave)
-check(wine.earnings[2] == 9 and wine.earnings[3] == 0, "mulled wine earns treats to fund the stable")
+line(punch, 8, 3, wave)
+check(punch.earnings[2] == 9 and punch.earnings[3] == 0, "spiced fruit punch earns treats to fund the stable")
 local wood = rules.game_start(11, 18)
 check(#wood.spawn_kinds == 5 and wood.resource_yields[4].slot == 3
       and not rules.game_start(10, 18).resource_yields[4], "pine materials start after the workshop opens")
@@ -71,7 +71,7 @@ check(rules.game_tool(stable, 0, column_top(stable), wave) and stable.tools[1] =
 
 local bakery, cocoa = rules.game_start(21, 42), rules.game_start(31, 42)
 check(#bakery.spawn_kinds == 5 and bakery.resource_yields[7].amount == 4 and not bakery.resource_yields[8],
-      "the bakery replaces mulled wine with gingerbread")
+      "the bakery replaces spiced fruit punch with gingerbread")
 check(#cocoa.spawn_kinds == 5 and cocoa.resource_yields[11].amount == 5 and not cocoa.resource_yields[7],
       "the kiosk replaces gingerbread with cocoa")
 local quarried = {lumber=true, chapel=true}

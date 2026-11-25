@@ -11,13 +11,13 @@ coin, a gold Sun coin and a red-and-ivory candy cane. The first four echo the
 green leaf, blue flower, silver coin and gold coin in the GameTop Windows
 release of Cradle of Rome 2. Its first purchase adds a water bucket worth 3
 Food. In Christmas Market, the Welcome arch replaces the candy cane with red
-mulled wine worth 3 Treats. The blue mitten distinguishes the score piece from
-the wine. The bakery's brown gingerbread man and the kiosk's ivory cocoa
+spiced fruit punch worth 3 Treats. The blue mitten distinguishes the score piece from
+the punch. The bakery's brown gingerbread man and the kiosk's ivory cocoa
 mug follow in the same Treats slot. The stable brings the Farrier's hammer, which charges a
 single-cell blow. The lumber workshop brings natural pine, which replaces the mitten. The
 chapel replaces it with the same slate-gray dressed stone used in Relic Rush.
 Its blocky profile and matte faces distinguish it from the bright round coin.
-The Firework bundles three indigo crackers and stands out beside the red mulled wine.
+The Firework bundles three indigo crackers and stands out beside the red spiced fruit punch.
 
 ## Construction sequence
 
@@ -25,7 +25,7 @@ Twenty purchases open at levels 1, 6, 11 … 96, four per Advent. Each unlocks e
 
 | After level | Stall | Reward | Price (Tokens / Treats / Materials) |
 | ---: | --- | --- | ---: |
-| 1 | **Welcome arch** | Mulled wine +3 Treats | 45 / 0 / 0 |
+| 1 | **Welcome arch** | Spiced fruit punch +3 Treats | 45 / 0 / 0 |
 | 6 | Reindeer stable | Farrier's hammer (single-cell blow) | 720 / 255 / 0 |
 | 11 | **Lumber workshop** | Bundled pine +5 Materials | 1695 / 620 / 0 |
 | 16 | Firework stall | Firework Bomb | 1500 / 555 / 565 |
@@ -58,8 +58,8 @@ gate can buy it from the shop.
 
 | Size | Board after the Welcome arch | Guide |
 | --- | --- | --- |
-| 480 × 900 | [Light-blue mitten and mulled wine](screenshots/review/blue-mitten/board-480.jpg) | [Untangle tinsel](screenshots/review/blue-mitten/guide-480.jpg) |
-| 390 × 844 | [Light-blue mitten and mulled wine](screenshots/review/blue-mitten/board-390.jpg) | [Untangle tinsel](screenshots/review/blue-mitten/guide-390.jpg) |
+| 480 × 900 | [Light-blue mitten and spiced fruit punch](screenshots/review/blue-mitten/board-480.jpg) | [Untangle tinsel](screenshots/review/blue-mitten/guide-480.jpg) |
+| 390 × 844 | [Light-blue mitten and spiced fruit punch](screenshots/review/blue-mitten/board-390.jpg) | [Untangle tinsel](screenshots/review/blue-mitten/guide-390.jpg) |
 
 | Board | Before | After |
 | --- | --- | --- |

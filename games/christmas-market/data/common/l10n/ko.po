@@ -36,10 +36,6 @@ msgid "A long sheltered counter gives shoppers room to wrap parcels and tie on t
 msgstr "길고 아늑한 카운터에서 소포를 싸고 꼬리표를 달 수 있어요."
 
 #: games/christmas-market/lua/buildings.lua
-msgid "A mulled-wine counter at the market entrance gives arriving visitors a place to warm up."
-msgstr "장터 입구의 뱅쇼 카운터에서 방문객이 몸을 녹여요."
-
-#: games/christmas-market/lua/buildings.lua
 msgid "A seat for watching the snow fall."
 msgstr "눈 내리는 풍경을 바라보는 자리예요."
 
@@ -306,6 +302,10 @@ msgid "Toymaker’s workshop"
 msgstr "장난감 장인의 작업장"
 
 #: games/christmas-market/lua/buildings.lua
+msgid "Visitors can warm up with spiced fruit punch at the market entrance."
+msgstr "시장 입구에서 손님들은 향신료를 넣은 따뜻한 과일 펀치로 몸을 녹일 수 있어요."
+
+#: games/christmas-market/lua/buildings.lua
 msgid "Visitors from the other pole, in scarves."
 msgstr "목도리를 두른, 반대쪽 극지방에서 온 손님들이에요."
 
@@ -494,10 +494,6 @@ msgid "Honey Cake"
 msgstr "꿀 케이크"
 
 #: games/christmas-market/lua/campaign.lua
-msgid "Hot Cider Kettle"
-msgstr "따뜻한 사과주 주전자"
-
-#: games/christmas-market/lua/campaign.lua
 #: games/christmas-market/lua/island.lua
 msgid "Lantern Lane"
 msgstr "등불 골목"
@@ -671,6 +667,10 @@ msgid "Spice Rack Glow"
 msgstr "향신료 선반의 불빛"
 
 #: games/christmas-market/lua/campaign.lua
+msgid "Spiced Apple Kettle"
+msgstr "따뜻한 사과 주스 주전자"
+
+#: games/christmas-market/lua/campaign.lua
 msgid "Spiced Star"
 msgstr "향신료 별"
 
@@ -809,10 +809,6 @@ msgid "Materials"
 msgstr "재료"
 
 #: games/christmas-market/lua/economy.lua
-msgid "Mulled wine"
-msgstr "뱅쇼"
-
-#: games/christmas-market/lua/economy.lua
 msgid "Pretzel"
 msgstr "프레첼"
 
@@ -831,6 +827,10 @@ msgstr "훈제 송어"
 #: games/christmas-market/lua/economy.lua
 msgid "Snow-dusted fir"
 msgstr "눈 덮인 전나무"
+
+#: games/christmas-market/lua/economy.lua
+msgid "Spiced fruit punch"
+msgstr "향신료를 넣은 과일 펀치"
 
 #: games/christmas-market/lua/economy.lua
 msgid "Station clock"
@@ -1233,8 +1233,8 @@ msgid "Market keeper's guide"
 msgstr "장터 지기 안내서"
 
 #: games/christmas-market/lua/screens.lua
-msgid "Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."
-msgstr "동전을 맞춰 아치 비용을 마련하세요. 아치의 뱅쇼는 간식을 벌어요. 목재 작업장은 재료로 쓸 소나무를 더해요."
+msgid "Match coins to fund the arch. Its spiced fruit punch earns treats. The lumber workshop adds pine for materials."
+msgstr "동전을 맞춰 아치 건설비를 모으세요. 아치에서 나오는 과일 펀치는 간식을 모아 줘요. 목공 작업장에서는 소나무 목재를 얻을 수 있어요."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Match identical pieces in a straight line horizontally or vertically."
@@ -1265,8 +1265,8 @@ msgid "The Firework stall replaces the hammer and keeps its charge. Tap a cell t
 msgstr "불꽃놀이 가게가 망치를 대신하고 충전도 그대로예요. 칸을 누르면 3×3 영역을 쳐요."
 
 #: games/christmas-market/lua/screens.lua
-msgid "The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
-msgstr "빵집은 뱅쇼를 진저브레드 맨으로 바꿔요. 코코아 키오스크는 핫코코아를 판에 올려요."
+msgid "The bakery swaps spiced fruit punch for gingerbread men. The cocoa kiosk puts hot cocoa on the board."
+msgstr "빵집을 지으면 과일 펀치 대신 생강 쿠키 인형이 나와요. 코코아 가판대를 지으면 보드에 따뜻한 코코아가 추가돼요."
 
 #: games/christmas-market/lua/screens.lua
 msgid "Untangle tinsel"
@@ -1670,8 +1670,8 @@ msgstr "소나무를 말리는 건조장"
 
 #. TRANSLATORS: each title names a stall's improvement, shown as "Upgraded: %s."
 #: games/christmas-market/lua/user_events.lua
-msgid "a mulled-wine hatch in the arch"
-msgstr "아치 안의 뱅쇼 창구"
+msgid "a hatch in the arch for serving fruit punch"
+msgstr "아치에 과일 펀치를 내주는 창구"
 
 #: games/christmas-market/lua/user_events.lua
 msgid "a new harness and bells for the reindeer"

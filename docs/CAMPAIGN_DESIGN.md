@@ -95,7 +95,7 @@ We keep the feats, the upgrades and the perks, and give each upgrade to **the ch
 
 | # | Rome 2 | Feat | Perk | Relic Rush upgrade (keeper) | Christmas at Bellmere upgrade (keeper) |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Well (`man_03`) | 300 Food / 265 Treats in one level | +20 / +15 every win | Spring well: a second rope and pulley (Oren) | Welcome arch: a mulled-wine hatch in the arch (Noelle) |
+| 1 | Well (`man_03`) | 300 Food / 265 Treats in one level | +20 / +15 every win | Spring well: a second rope and pulley (Oren) | Welcome arch: a hatch in the arch for serving fruit punch (Noelle) |
 | 2 | Hunter's hut (`man_04`) | A match of five | The single-cell tool charges faster | Trapper's cabin: his father's tools sharpened (Oren) | Reindeer stable: a new harness and bells for the reindeer (Pip) |
 | 3 | Sawmill (`man_02`) | 610 Supplies / 440 Materials in one level | +120 / +80 every win | Carpenter's workshop: a second saw bench (Sela) | Lumber workshop: a drying shed for the pine (Theo) |
 | 4 | Village (`man_01`) | 10 moves in a row that each clear a target | Bomb charges faster | Expedition camp: a dry tool store (Sela) | Firework stall: a rocket rack, ready in threes (Pip) |

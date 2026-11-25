@@ -85,7 +85,7 @@ each sprite. See the [placement captures](docs/review/placement-guides/README.md
 ## Market economy
 
 Silver snowflake coins pay 3 Tokens and gold Sun coins pay 5. Snowy firs, knitted mittens and candy canes earn score on the opening board.
-The Welcome arch serves mulled wine for Treats. The Lumber workshop introduces brown pine bundles tied with blue ribbon for Materials.
+The Welcome arch serves spiced fruit punch for Treats. The Lumber workshop introduces brown pine bundles tied with blue ribbon for Materials.
 The bakery and cocoa kiosk upgrade the red Treats piece. Each matched piece pays its own value. Each win
 banks the goods cleared on the board. Regions and decorations open by
 wishes cleared (the purse's fourth slot, `CLEARED`).

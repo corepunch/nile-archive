@@ -89,14 +89,14 @@ local guide_entries = {
      icon={banded="market-3"}},
     {id="rainbow-gem", title=tr("Five in a line: rainbow gem"), description=tr("Swap it with a neighbor to clear every piece of that kind."),
      icon={special="color_bomb"}},
-    {id="supplies", title=tr("Stock the market"), description=tr("Match coins to fund the arch. Its mulled wine earns treats. The lumber workshop adds pine for materials."),
+    {id="supplies", title=tr("Stock the market"), description=tr("Match coins to fund the arch. Its spiced fruit punch earns treats. The lumber workshop adds pine for materials."),
      icon={front="market-3"}},
     {id="banking", title=tr("Bank your matches"), description=tr("Each matched piece pays its own value. Clear the board to bank what you earned."),
      icon={front="market-4"}},
     {id="hammer", title=tr("Farrier's hammer"), description=tr("Build the Reindeer stable. Match 30 hammers to charge one blow. Tap a cell to hit it."), icon={tool=economy.bonuses.hammer.icon}},
     {id="boosters", title=tr("Firework Bomb"), description=tr("The Firework stall replaces the hammer and keeps its charge. Tap a cell to hit a 3×3 square."),
      icon={tool="booster-firework"}},
-    {id="bakery", title=tr("Winter treats"), description=tr("The bakery swaps mulled wine for gingerbread men. The cocoa kiosk puts hot cocoa on the board."), icon={front="market-7"}},
+    {id="bakery", title=tr("Winter treats"), description=tr("The bakery swaps spiced fruit punch for gingerbread men. The cocoa kiosk puts hot cocoa on the board."), icon={front="market-7"}},
 }
 local function guide_icon(box, icon)
     local at = box:center()
