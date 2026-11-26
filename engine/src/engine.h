@@ -244,6 +244,8 @@ const char *app_arg(const char *name);  /* value after --name, "" for a bare fla
 const char *app_languages(void);        /* preferred BCP 47 tags, comma-separated, most preferred first */
 bool app_has_https_opener(void);
 bool app_open_https(const char *url);
+bool app_can_request_review(void);      /* the store's own rating sheet exists here (iOS) */
+bool app_request_review(void);          /* ask for it; the system decides whether it shows */
 const char *app_path(const char *rel);  /* resolve an asset path against the data root */
 void app_boot_args(int argc, char **argv); /* command-line configuration while Lua modules load */
 void app_boot_data(const char *dir);   /* the data root before app_run (script_boot, rule tests) */

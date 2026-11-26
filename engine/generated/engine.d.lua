@@ -728,6 +728,14 @@ function app.has_https_opener() end
 ---@return boolean
 function app.open_https(url) end
 
+---Whether the platform has a store rating sheet to ask for (iOS). False on other platforms and in headless, capture and smoke runs.
+---@return boolean
+function app.can_request_review() end
+
+---Ask the system to show the App Store's own rating sheet over the game. Apple shows it at most three times a year per player and does not report whether it did, so true only means the request was handed over. Ask rarely, at a moment the player is pleased and idle; match3.rating picks that moment for the match-3 campaigns.
+---@return boolean
+function app.request_review() end
+
 ---An asset path resolved against the data root.
 ---@param rel string
 ---@return string

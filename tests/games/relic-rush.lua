@@ -23,6 +23,7 @@ rules("relic_wallet")
 rules("relic_user_events")
 rules("upgrades")
 rules("relic_leaderboard")
+rules("rating")
 smoke(nil, nil, "quick")   -- CI's one quick gameplay smoke
 smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;.", "portrait-menu")
 smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;. --returning --size 390x844 --safe-area 0,47,0,34", "portrait-menu-returning")

@@ -104,6 +104,37 @@ Use `--main-menu` to preview either title screen and `--opening-town` to see
 the seeded town. The direct board and town preview options still open their
 requested screen.
 
+## App Store rating
+
+Both campaigns ask for a rating with the App Store's own sheet
+(`app.request_review`, iOS only): the game's icon, five stars and Not Now over
+the game, in the player's language. Apple shows it at most three times a year
+per player, never in TestFlight builds, and does not say whether it showed. A
+custom look-alike is not allowed, so the game's part is picking the moment
+([match3/rating.lua](../engine/lua/match3/rating.lua)):
+
+- Only a first clear asks, never a replay.
+- The first ask comes at the tenth board cleared, or from the sixth when the
+  player lost that board and then won it.
+- Later asks are at least 25 boards and 30 days apart, three in all.
+- The sheet waits until the results are claimed and the player is back in
+  town with every card and story line closed and no finger on the screen for
+  1.2 seconds. Starting the next board first drops the ask unspent.
+
+The counters live in the settings save, so a new campaign does not ask again.
+A game tunes the numbers under `rating` in `game_config.lua`.
+
+Settings also has a permanent **Rate the game** link (iOS), which opens the
+review form on the game's App Store page. It needs `app.app_store_id` in
+`game_config.lua`.
+
+`--rate` shows the link in a capture, and on a development build on a device
+it raises the sheet as soon as the town is idle:
+
+```sh
+make ios-relic-rush ARGS='--rate'
+```
+
 ## Guided board lessons
 
 The first four levels each teach one move on the real board. Level 1

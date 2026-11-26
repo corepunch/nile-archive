@@ -104,6 +104,15 @@ player portraits and the player's own row. When offline, it shows the player's b
 Use `com.corepunch.relicrush.stars` in [Game Center](../../docs/GAMECENTER.md). Capture the dialog
 with sample rivals using `--gamecenter-demo --dialog leaderboard`.
 
+## App Store rating
+
+On iOS the game asks for a rating with Apple's own sheet after a first clear, once the player is back
+on the island and idle: at the tenth expedition, or from the sixth when it was lost and then won.
+Settings has a **Rate the game** link to the review form. See
+[App Store rating](../../docs/PORTRAIT_GAMES.md#app-store-rating); `--dialog pause --rate` captures the link.
+
+![Settings with the Rate the game link](docs/screenshots/settings-rate.jpg)
+
 The Landing starts with gold coins, silver coins, leaves, flowers and amphoras. Water, timber and a bonus piece take existing slots once their buildings are confirmed.
 
 Clear every turquoise plaque to finish the expedition. Tavi, Oren and Sela come ashore in a short scene before the first expedition; the rest of the [script](docs/story.md) is archived. **Story** in Settings turns the scene off.

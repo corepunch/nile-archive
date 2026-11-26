@@ -121,6 +121,10 @@ msgid "Pieces reshuffled."
 msgstr "Peças embaralhadas."
 
 #: engine/lua/match3.lua
+msgid "RATE THE GAME"
+msgstr "AVALIAR O JOGO"
+
+#: engine/lua/match3.lua
 msgid "REDUCE MOTION"
 msgstr "REDUZIR MOVIMENTO"
 

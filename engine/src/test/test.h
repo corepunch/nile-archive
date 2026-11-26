@@ -54,6 +54,8 @@ void app_test_close_window(void);
 void app_test_reset(void);
 void app_test_advance(double dt);
 void app_test_input(input in);
+void app_test_review(bool on);          /* a stand-in rating sheet that counts requests; off again on reset */
+int app_test_review_requests(void);
 bool story_test_portrait(const character *who, rect *r, color *tint);
 const char *test_suite(void);
 

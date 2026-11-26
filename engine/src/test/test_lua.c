@@ -61,6 +61,15 @@ static int l_test_haptics(lua_State *S)
     return 3;
 }
 
+/* testing.review(on): stand in for the store's rating sheet (or take it
+ * away); testing.review(): how many times it has been asked for since. */
+static int l_test_review(lua_State *S)
+{
+    if (!lua_isnone(S, 1)) app_test_review(lua_toboolean(S, 1));
+    lua_pushinteger(S, app_test_review_requests());
+    return 1;
+}
+
 static void test_lua_open(lua_State *S)
 {
     lua_register(S, "check", l_test_check);
@@ -68,7 +77,7 @@ static void test_lua_open(lua_State *S)
     app_test_reset();
     static const luaL_Reg hooks[] = {
         {"advance", l_test_advance}, {"input", l_test_input}, {"reset", l_test_reset},
-        {"haptics", l_test_haptics}, {"monotonic", l_test_monotonic}, {NULL, NULL}
+        {"haptics", l_test_haptics}, {"monotonic", l_test_monotonic}, {"review", l_test_review}, {NULL, NULL}
     };
     luaL_newlib(S, hooks);
     lua_pushstring(S, test_suite()); lua_setfield(S, -2, "game");

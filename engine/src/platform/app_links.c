@@ -3,6 +3,7 @@
 
 #if defined(AX_PLATFORM_IOS)
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
 #elif defined(__APPLE__)
 #import <AppKit/AppKit.h>
 #endif
@@ -30,6 +31,40 @@ bool app_open_https(const char *url)
 #endif
 #else
     (void)url;
+    return false;
+#endif
+}
+
+/* The App Store's rating sheet, drawn by the system over the game. Apple
+ * shows it at most three times a year per player and never says whether it
+ * did, so the engine only reports that the request was handed over. */
+bool app_platform_can_request_review(void)
+{
+#if defined(AX_PLATFORM_IOS)
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool app_platform_request_review(void)
+{
+#if defined(AX_PLATFORM_IOS)
+    UIWindowScene *scene = nil;
+    for (UIScene *open in UIApplication.sharedApplication.connectedScenes) {
+        if (open.activationState == UISceneActivationStateForegroundActive && [open isKindOfClass:UIWindowScene.class]) {
+            scene = (UIWindowScene *)open;
+            break;
+        }
+    }
+    if (!scene) return false;
+    /* StoreKit's replacement is Swift only; this is the same sheet. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [SKStoreReviewController requestReviewInScene:scene];
+#pragma clang diagnostic pop
+    return true;
+#else
     return false;
 #endif
 }

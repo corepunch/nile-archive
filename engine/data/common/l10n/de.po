@@ -121,6 +121,10 @@ msgid "Pieces reshuffled."
 msgstr "Steine neu gemischt."
 
 #: engine/lua/match3.lua
+msgid "RATE THE GAME"
+msgstr "SPIEL BEWERTEN"
+
+#: engine/lua/match3.lua
 msgid "REDUCE MOTION"
 msgstr "WENIGER BEWEGUNG"
 

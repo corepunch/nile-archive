@@ -19,6 +19,7 @@ rules("christmas")
 rules("christmas_story")
 rules("upgrades")
 rules("christmas_leaderboard")
+rules("rating")
 smoke(nil, nil, "quick")   -- CI's one quick gameplay smoke
 smoke("--lua tests/fixtures/portrait-menu;games/christmas-market/lua;.", "portrait-menu")
 smoke("--lua tests/fixtures/portrait-menu;games/christmas-market/lua;. --returning --size 390x844 --safe-area 0,47,0,34", "portrait-menu-returning")

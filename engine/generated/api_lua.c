@@ -2582,6 +2582,22 @@ static int l_app_open_https(lua_State *L)
     return 1;
 }
 
+/* app.can_request_review() */
+static int l_app_can_request_review(lua_State *L)
+{
+    bool r = app_can_request_review();
+    lua_pushboolean(L, r);
+    return 1;
+}
+
+/* app.request_review() */
+static int l_app_request_review(lua_State *L)
+{
+    bool r = app_request_review();
+    lua_pushboolean(L, r);
+    return 1;
+}
+
 /* app.path(rel) */
 static int l_app_path(lua_State *L)
 {
@@ -4507,6 +4523,8 @@ static void open_app(lua_State *L)
         {"arg", l_app_arg},
         {"has_https_opener", l_app_has_https_opener},
         {"open_https", l_app_open_https},
+        {"can_request_review", l_app_can_request_review},
+        {"request_review", l_app_request_review},
         {"path", l_app_path},
         {"read_text", lapp_read_text},
         {"read_engine_text", lapp_read_engine_text},

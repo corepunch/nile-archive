@@ -23,10 +23,12 @@
 --   R.smoke(), R.campaign_smoke()   the --smoke runs
 --   game_config.lua "leaderboard" {board, title}   Game Center leaderboard (below)
 --   game_config.lua "song"  module name of the looping soundtrack (engine/lua/soundtrack.lua)
+--   game_config.lua "app" app_store_id, "rating"   the App Store rating sheet (match3/rating.lua)
 -- See docs/PORTRAIT_GAMES.md.
 local N = ui.node
 local l10n = require("l10n")
 local soundtrack = require("soundtrack")
+local rating = require("match3.rating")
 local tr = l10n.tr
 
 local G = {}
@@ -78,6 +80,9 @@ G.DEFAULTS = {
         poor = tr("MORE GOLD NEEDED"), ready = tr("Ready to build!"),
     },
     debug = {victory = 1, catalogue_card = 10, narrator = ""},
+    -- When to ask for an App Store rating (match3.rating); app.app_store_id
+    -- adds Settings' own link to the review form.
+    rating = rating.DEFAULTS,
 }
 
 local function merge(base, over)
@@ -708,8 +713,10 @@ function G.bind(R, over)
     end})
 
     local privacy_link = W.app.privacy_url and app.has_https_opener()
+    -- The review form on the game's App Store page; --rate shows the link in captures.
+    local rate_link = W.app.app_store_id and (app.can_request_review() or app.arg("rate")) and true
     local pause_form = match3.pause_form(W.pause.guide, W.pause.quit, W.leaderboard and W.pause.leaderboard,
-        W.menu.label, privacy_link, campaign_dialogue)
+        W.menu.label, privacy_link, campaign_dialogue, rate_link)
     R.pause_form = pause_form
     popup(R.OV_PAUSE, pause_form, {width=396, shift=W.leaderboard and 24 or 0, prepare=function()
         assert(pause_form:push(R))
@@ -732,6 +739,7 @@ function G.bind(R, over)
             R.open_menu()
         elseif action == "guide" then R.overlay = R.OV_GUIDE
         elseif action == "privacy" then app.open_https(W.app.privacy_url)
+        elseif action == "rate" then app.open_https(rating.url(W.app.app_store_id))
         elseif action == "restart" then R.overlay = R.OV_CONFIRM
         elseif action == "leaderboard" then R.open_leaderboard()
         elseif action == "quit" then   -- the unfinished board waits in town
@@ -1346,6 +1354,44 @@ function G.bind(R, over)
         R.sound = s:int("sound", R.sound and 1 or 0) ~= 0
         R.reduced_motion = s:int("reduce_motion", R.reduced_motion and 1 or 0) ~= 0
         if campaign_dialogue then R.story = s:int("story", R.story ~= false and 1 or 0) ~= 0 end
+        rating.serialize(s, R.rating)
+    end
+    local function save_settings()
+        if not R.test_mode then save.write("settings", R.serialize_settings) end
+    end
+    R.rating = rating.new()
+
+    -- The App Store rating sheet (match3/rating.lua). A first clear that earns
+    -- an ask only marks it; the sheet waits until the player is back in town
+    -- with every card and line of story done and has let go of the screen.
+    function R.level_lost()
+        R.rating.losses = R.rating.losses + 1
+        save_settings()
+    end
+    local function rating_after_win(first)
+        local state = R.rating
+        R.rating_due = first and app.can_request_review()
+            and rating.due(W.rating, state, R.prog.level, rating.day(app.clock())) or nil
+        R.rating_calm = 0
+        if state.losses > 0 then
+            state.losses = 0
+            save_settings()
+        end
+    end
+    function R.rating_tick(dt, calm)
+        if app.arg("rate") and not R.rating_forced and R.on_island then   -- the sheet on a development build
+            R.rating_forced, R.rating_due, R.rating_calm = true, "forced", 0
+        end
+        if not R.rating_due then return end
+        if not R.on_island and not R.on_menu then R.rating_due = nil; return end   -- on to the next board: another win
+        R.rating_calm = calm and R.rating_calm + dt or 0
+        if R.rating_calm < W.rating.pause then return end
+        local forced = R.rating_due == "forced"
+        R.rating_due = nil
+        if app.request_review() and not forced then
+            rating.asked(R.rating, R.prog.level, rating.day(app.clock()))
+            save_settings()
+        end
     end
 
     local function progress_slot()
@@ -1429,6 +1475,7 @@ function G.bind(R, over)
         local completed = R.sync_epoch_regions()
         R.save_progress()
         R.on_island = true
+        rating_after_win(first)
         if R.show_epoch_award(completed) then return end
         local destination = result_destination(first, R.prog.level, R.prog.wallet)
         R.overlay = destination == "complete" and R.OV_COMPLETE or R.OV_NONE
@@ -1708,6 +1755,7 @@ function G.app(R)
         end
         if not R.on_menu and not backdrop_only then R.draw_toast() end
         ui.set_enabled(true)
+        R.rating_tick(dt, interactive and R.on_island and not R.on_menu and R.island.placing < 0 and not inp.down)
         local scene = clear_due and not revealing and R.clear_scene and R.clear_scene()
         if scene then R.draw_clear_scene(scene, inp) end
         if not story_wait and not transition:active() and drawn_overlay == R.overlay
@@ -1776,6 +1824,7 @@ function G.app(R)
         for i = 1, island.WONDERS do R.wonders[i] = R.buildings[wonder_kind(island, i) + 1] end
 
         R.sound, R.reduced_motion, R.story = true, false, true
+        R.rating, R.rating_due, R.rating_forced = rating.new(), nil, nil
         R.inspect, R.zone_card = -1, -1
         R.epoch_award = nil
         R.test_mode = app.arg("smoke") ~= nil or app.arg("shot") ~= nil or app.arg("fresh") ~= nil

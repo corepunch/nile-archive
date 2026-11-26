@@ -287,7 +287,9 @@ through `tween.update(dt)`, since no frame runs. Advance changes frame/wall cloc
 tests explicitly call updates. Input reaches the real `input.get()` without a
 window. Negative and nonfinite durations are rejected. Real game runs switch
 back to their normal clock. `testing.game` identifies the manifest's suite and
-`testing.extended` selects the larger sample. Release builds expose none of these
+`testing.extended` selects the larger sample. `testing.review(true)` stands in
+for the App Store rating sheet and `testing.review()` counts the requests made
+since. Release builds expose none of these
 hooks; declarations live with the existing test infrastructure in `engine/src/test/test.h`.
 
 Each rule file gets a fresh Lua state and selected game + engine + test module

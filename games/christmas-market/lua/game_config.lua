@@ -6,7 +6,8 @@ local tr = l10n.tr
 
 return {
     app = {title = "Christmas at Bellmere", id = "christmas-market", clear = "#09211F",
-        privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md"},
+        privacy_url = "https://github.com/corepunch/nile-archive/blob/main/docs/APP_PRIVACY.md",
+        app_store_id = "6830562867"},   -- Settings' link to the review form
     song = "song",   -- lua/song.lua, the looping soundtrack
     -- TRANSLATORS: the title screen reads CHRISTMAS / AT BELLMERE (Bellmere is the town)
     menu = {title = {tr("CHRISTMAS")}, title_em = 68, subtitle = tr("AT BELLMERE"), subtitle_em = 40, play = tr("PLAY"),

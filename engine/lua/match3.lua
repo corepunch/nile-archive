@@ -597,7 +597,11 @@ function E.guide_form(copy, guide_icon)
     })
 end
 
-function E.pause_form(guide_label, quit_label, leaderboard_label, menu_label, privacy_link, story)
+function E.pause_form(guide_label, quit_label, leaderboard_label, menu_label, privacy_link, story, rate_link)
+    -- The optional links close the column: a nil between children would end it.
+    local links = {}
+    if rate_link then links[#links + 1] = N.button {id="rate",text=tr("RATE THE GAME"),height=32,role="link",em=20} end
+    if privacy_link then links[#links + 1] = N.button {id="privacy",text=tr("PRIVACY POLICY"),height=32,role="link",em=18} end
     return ui.form{
         root=N.column {panel=true,
             E.popup_header(tr("Settings"), nil, "close"),
@@ -616,7 +620,7 @@ function E.pause_form(guide_label, quit_label, leaderboard_label, menu_label, pr
                 N.button {id="guide",text=guide_label,height=32,grow=1,role="link",em=20},
                 menu_label and N.button {id="menu",text=menu_label,height=32,grow=1,role="link",em=20,visible_field="in_game"},
             },
-            privacy_link and N.button {id="privacy",text=tr("PRIVACY POLICY"),height=32,role="link",em=18} or nil,
+            links[1], links[2],
         },
         bindings={{id="sound",field="sound",type="boolean"},{id="motion",field="reduced_motion",type="boolean"},
             story and {id="story",field="story",type="boolean"} or nil},
@@ -2250,7 +2254,10 @@ function E.new(config)
             end
             R.phase, R.phase_time = PH_FINALE, 0
             R.selected, R.tool, R.hint_a, R.hint_b = -1, -1, -1, -1
-        elseif R.g.lost then R.overlay = R.OV_FAILED; R.play("lose"); haptic.play(haptic.ERROR) end
+        elseif R.g.lost then
+            R.overlay = R.OV_FAILED; R.play("lose"); haptic.play(haptic.ERROR)
+            if R.level_lost then R.level_lost() end
+        end
         R.idle_time = 0
         return shuffled
     end

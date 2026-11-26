@@ -950,6 +950,18 @@ Ask the system to open an HTTPS page. Returns false if unsupported or the URL ca
 
 **Returns:** `boolean`
 
+### `app.can_request_review()`
+
+Whether the platform has a store rating sheet to ask for (iOS). False on other platforms and in headless, capture and smoke runs.
+
+**Returns:** `boolean`
+
+### `app.request_review()`
+
+Ask the system to show the App Store's own rating sheet over the game. Apple shows it at most three times a year per player and does not report whether it did, so true only means the request was handed over. Ask rarely, at a moment the player is pleased and idle; match3.rating picks that moment for the match-3 campaigns.
+
+**Returns:** `boolean`
+
 ### `app.path(rel)`
 
 An asset path resolved against the data root.

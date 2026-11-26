@@ -87,6 +87,35 @@ rect app_bleed(void)
 float app_pixel_scale(void) { return A.pixel_scale; }
 double app_time(void) { return A.time; }
 float app_dt(void) { return A.dt; }
+/* The store's rating sheet. Captures, smoke runs and tests never raise it;
+ * a test turns a recording stand-in on instead. */
+bool app_platform_can_request_review(void);
+bool app_platform_request_review(void);
+#ifdef ENGINE_TEST
+static bool test_review;
+static int test_review_requests;
+void app_test_review(bool on) { test_review = on; test_review_requests = 0; }
+int app_test_review_requests(void) { return test_review_requests; }
+#endif
+bool app_can_request_review(void)
+{
+#ifdef ENGINE_TEST
+    return test_review;
+#else
+    return !app_arg("headless") && !app_arg("shot") && !app_arg("smoke") && app_platform_can_request_review();
+#endif
+}
+bool app_request_review(void)
+{
+    if (!app_can_request_review()) return false;
+#ifdef ENGINE_TEST
+    test_review_requests++;
+    return true;
+#else
+    return app_platform_request_review();
+#endif
+}
+
 #ifdef ENGINE_TEST
 static double test_clock;
 static bool test_clock_active;
@@ -106,6 +135,7 @@ void app_test_reset(void)
     A.in.pinch = 1;
     test_clock = 1700000000;
     test_clock_active = true;
+    app_test_review(false);
     ui_restart(); story_restart(); fx_restart(); city_restart(); haptic_restart(); gamecenter_restart(); music_restart();
 }
 void app_test_advance(double dt) { A.dt = (float)dt; A.time += dt; test_clock += dt; }
@@ -438,6 +468,7 @@ int app_run(app_desc desc, int argc, char **argv)
     memset(&A, 0, sizeof A);
 #ifdef ENGINE_TEST
     test_clock_active = false;
+    app_test_review(false);
     /* every test shares this process, and each starts clean */
     ui_restart();
     story_restart();

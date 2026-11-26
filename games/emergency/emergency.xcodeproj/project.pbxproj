@@ -528,6 +528,8 @@
 "CoreHaptics",
 "-framework",
 "GameKit",
+"-framework",
+"StoreKit",
 );
 "LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
 "@executable_path/Frameworks",
@@ -570,6 +572,8 @@
 "CoreHaptics",
 "-framework",
 "GameKit",
+"-framework",
+"StoreKit",
 );
 "LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)",
 "@executable_path/Frameworks",

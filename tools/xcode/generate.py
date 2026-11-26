@@ -310,7 +310,7 @@ def generate(game, output, unsigned=True, bundle_id=None, team=None, settings_fr
             build_files.append(project.add(f'{name}/{filename}.c', 'PBXBuildFile', **fields))
         compile_phase = project.add(name + '/sources', 'PBXSourcesBuildPhase', buildActionMask=2147483647,
                                     files=build_files, runOnlyForDeploymentPostprocessing=0)
-        frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox', 'CoreHaptics', 'GameKit']
+        frameworks = (['UIKit', 'Foundation', 'CoreGraphics', 'QuartzCore', 'OpenGLES', 'Security', 'UniformTypeIdentifiers', 'AudioToolbox', 'CoreHaptics', 'GameKit', 'StoreKit']
                       if ipad else ['AppKit', 'OpenGL', 'IOSurface', 'Security', 'AudioToolbox'])
         settings['OTHER_LDFLAGS'] += [flag for framework in frameworks for flag in ('-framework', framework)]
         link_phase = project.add(name + '/frameworks', 'PBXFrameworksBuildPhase', buildActionMask=2147483647,

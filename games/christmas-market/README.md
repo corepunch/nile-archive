@@ -189,6 +189,15 @@ in [Game Center](../../docs/GAMECENTER.md) and capture the dialog with `--gamece
 
 ![The stars board on a 390x844 phone](docs/screenshots/phone-leaderboard.jpg)
 
+## App Store rating
+
+On iOS the game asks for a rating with Apple's own sheet after a first clear, once the player is back
+in the market and idle: at the tenth wish, or from the sixth when it was lost and then won.
+Settings has a **Rate the game** link to the review form. See
+[App Store rating](../../docs/PORTRAIT_GAMES.md#app-store-rating); `--dialog pause --rate` captures the link.
+
+![Settings with the Rate the game link](docs/screenshots/settings-rate.jpg)
+
 `python3 games/christmas-market/tools/check_assets.py` verifies the 125-file runtime inventory (five of them temporary name-card busts), 37 buildings, all forty authored atlas crops and eleven native icon slots. `python3 games/christmas-market/tools/capture_screenshots.py` reproduces the review captures; pass names such as `market phone-market` to capture a subset. Use `xvfb-run -a` on Linux. CI also builds the iOS Simulator target and the WebAssembly game.
 
 ## Fast rule tests
