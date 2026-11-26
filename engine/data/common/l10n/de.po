@@ -81,8 +81,8 @@ msgid "Ice and chains must be broken first."
 msgstr "Eis und Ketten müssen zuerst zerbrochen werden."
 
 #: engine/lua/match3.lua
-msgid "MOVES LEFT"
-msgstr "ZÜGE ÜBRIG"
+msgid "MOVES"
+msgstr "ZÜGE"
 
 #: engine/lua/match3.lua
 msgid "Match its pieces to charge this tool."

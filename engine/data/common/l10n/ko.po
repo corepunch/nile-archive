@@ -81,8 +81,8 @@ msgid "Ice and chains must be broken first."
 msgstr "얼음과 사슬을 먼저 깨야 해요."
 
 #: engine/lua/match3.lua
-msgid "MOVES LEFT"
-msgstr "남은 이동 횟수"
+msgid "MOVES"
+msgstr "이동"
 
 #: engine/lua/match3.lua
 msgid "Match its pieces to charge this tool."

@@ -873,7 +873,7 @@ ordinary matches, Line Gems, Rainbow Gems, tinsel and earned tools using
 the current campaign pieces and skin. Reduce Motion keeps the arrow still.
 Review with `build/test/all --suite=christmas-market "shot tutorial-line"`.
 
-The red Moves Left medallion uses the existing `fx-tablet-glow` and
+The red Moves medallion uses the existing `fx-tablet-glow` and
 `fx-tablet-spark` frames in an amber clockwise trail when 1–5 moves remain
 (`R.vfx_rim_trail`). Reduce Motion keeps the red face steady. Review the
 warning with `build/test/all --suite=christmas-market "shot low-moves"`.
