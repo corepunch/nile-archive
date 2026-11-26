@@ -81,8 +81,8 @@ msgid "Ice and chains must be broken first."
 msgstr "Eis und Ketten müssen zuerst zerbrochen werden."
 
 #: engine/lua/match3.lua
-msgid "MOVES"
-msgstr "ZÜGE"
+msgid "MOVES LEFT"
+msgstr "ZÜGE ÜBRIG"
 
 #: engine/lua/match3.lua
 msgid "Match its pieces to charge this tool."
@@ -464,6 +464,10 @@ msgstr "Dein Brett ist gespeichert. Tippe auf Spielen, um Level %d fortzusetzen.
 msgid "Your town stays open to build."
 msgstr "Deine Stadt steht dir weiter zum Bauen offen."
 
+#: engine/lua/match3/tutorial.lua
+msgid "Clear the targets before you run out of moves. Swap these pieces to match three in a line."
+msgstr "Räume die Ziele ab, bevor dir die Züge ausgehen. Tausche diese Steine für drei in einer Reihe."
+
 #. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...): its pieces charge it
 #: engine/lua/match3/tutorial.lua
 #, lua-format
@@ -489,10 +493,6 @@ msgstr "Überspringen"
 #: engine/lua/match3/tutorial.lua
 msgid "Swap the Rainbow Gem with a piece to clear every piece of that kind."
 msgstr "Tausche den Regenbogenstein mit einem Stein, um alle Steine dieser Sorte zu räumen."
-
-#: engine/lua/match3/tutorial.lua
-msgid "Swap the highlighted pieces to match three in a line."
-msgstr "Tausche die markierten Steine, um drei in einer Reihe zu bekommen."
 
 #. TRANSLATORS: a tool's name, then the sentence saying what it does
 #: engine/lua/match3/tutorial.lua

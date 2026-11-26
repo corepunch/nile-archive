@@ -27,6 +27,7 @@ smoke("--lua tests/fixtures/portrait-menu;games/christmas-market/lua;. --returni
 local tutorial_review = "--lua tests/fixtures/match3-tutorial;games/christmas-market/lua;."
 smoke(tutorial_review .. " --size 390x844 --safe-area 0,47,0,34", "match3-tutorial")
 shot("tutorial-line", "390x844", tutorial_review .. " --tutorial-lesson 2 --frames 8 --safe-area 0,47,0,34")
+shot("low-moves", "390x844", tutorial_review .. " --tutorial-lesson 6 --moves 5 --frames 60 --safe-area 0,47,0,34")
 shot("tutorial-charge", "480x900", tutorial_review .. " --tutorial-lesson 5 --frames 8")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 

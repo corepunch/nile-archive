@@ -47,6 +47,10 @@ Both target layers occupy the same cell. Green becomes teal on the first
 hit. A chain absorbs its own hit before a target underneath clears. Clear
 all the targets within the move budget and collect the matched Tokens, Treats and Materials.
 
+The upper-left Moves Left counter turns red and gains a circling amber
+trail at five moves. Reduce Motion keeps the red face steady. During a
+guided swap, the board dims around the two pieces.
+
 When one to three panes remain, a trail follows their four edges after a
 short pause. It glows blue on a single pane and green on a double pane.
 Reduce Motion hides the trail.

@@ -6,7 +6,7 @@ local Tutorial = {}
 Tutorial.__index = Tutorial
 
 local lessons = {
-    {copy=tr("Swap the highlighted pieces to match three in a line."), length=3, seed=1},
+    {copy=tr("Clear the targets before you run out of moves. Swap these pieces to match three in a line."), length=3, seed=1},
     {copy=tr("Match four in a line to make a Line Gem."), length=4, special="striped", seed=12,
         follow=tr("Match the Line Gem with pieces of its kind to clear a whole line.")},
     {copy=tr("Match five in a line to make a Rainbow Gem."), length=5, special="color_bomb", seed=24,
@@ -197,8 +197,20 @@ end
 function Tutorial:frame(inp, dt, step)
     local R, move = self.R, self.move
     local ink = color(255, 227, 151)
+    local hole
     if move then
         local a, b = R.cell_pos(move.a), R.cell_pos(move.b)
+        local full = app.bleed()
+        hole = rect.corners(a, b):inflate2(vec2(R.cell_width * .5, R.cell_height * .5)):intersect(full)
+        local edge = hole:max()
+        local shade = color(0, 0, 0, 178)
+        gfx.bleed(true)
+        gfx.rect(full:top(hole.y - full.y), shade)
+        gfx.rect(full:bottom(full:max().y - edge.y), shade)
+        gfx.rect(rect(full.x, hole.y, hole.x - full.x, hole.h), shade)
+        gfx.rect(rect(edge.x, hole.y, full:max().x - edge.x, hole.h), shade)
+        gfx.bleed(false)
+        gfx.round_rect_line(hole, 0, 1.5, ink)
         local direction = (b - a):norm()
         local slide = R.reduced_motion and 0 or 4 * math.sin(R.now * 5)
         local center = (a + b):scale(.5) + direction:scale(slide)
@@ -209,7 +221,12 @@ function Tutorial:frame(inp, dt, step)
     local style = R.pal(R.PAL_CREAM, 18)
     local width = R.SCREEN_W - 36
     local height = math.max(58, text.box_size(style, width - 100, step.copy).h + 14)
-    local y = R.hud_rect:max().y + 22
+    local hud_bottom = R.hud_rect:max().y
+    local y = hud_bottom + 22
+    if hole and y + height + 8 > hole.y and y < hole:max().y then
+        local above = hole.y - height - 8
+        y = above >= hud_bottom + 6 and above or hole:max().y + 8
+    end
     if step.tool then
         local button = R.board_tool_bounds(step.tool - 1)
         gfx.round_rect_line(button:inflate(-6), 9, 2, ink)

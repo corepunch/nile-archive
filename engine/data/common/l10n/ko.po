@@ -81,8 +81,8 @@ msgid "Ice and chains must be broken first."
 msgstr "얼음과 사슬을 먼저 깨야 해요."
 
 #: engine/lua/match3.lua
-msgid "MOVES"
-msgstr "이동"
+msgid "MOVES LEFT"
+msgstr "남은 이동 횟수"
 
 #: engine/lua/match3.lua
 msgid "Match its pieces to charge this tool."
@@ -464,6 +464,10 @@ msgstr "판이 저장됐어요. 플레이를 눌러 레벨 %d을(를) 이어 하
 msgid "Your town stays open to build."
 msgstr "마을은 계속 열려 있어요. 지어 보세요."
 
+#: engine/lua/match3/tutorial.lua
+msgid "Clear the targets before you run out of moves. Swap these pieces to match three in a line."
+msgstr "이동 횟수를 다 쓰기 전에 목표를 모두 없애세요. 이 조각을 서로 바꿔 같은 조각 세 개를 한 줄로 맞추세요."
+
 #. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...): its pieces charge it
 #: engine/lua/match3/tutorial.lua
 #, lua-format
@@ -489,10 +493,6 @@ msgstr "건너뛰기"
 #: engine/lua/match3/tutorial.lua
 msgid "Swap the Rainbow Gem with a piece to clear every piece of that kind."
 msgstr "무지개 보석을 조각과 바꿔서 그 종류의 조각을 모두 지우세요."
-
-#: engine/lua/match3/tutorial.lua
-msgid "Swap the highlighted pieces to match three in a line."
-msgstr "표시된 조각을 바꿔서 세 개를 한 줄로 맞추세요."
 
 #. TRANSLATORS: a tool's name, then the sentence saying what it does
 #: engine/lua/match3/tutorial.lua

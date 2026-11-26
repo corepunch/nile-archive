@@ -331,7 +331,7 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
     -- The row vertically centres the column by its visible lettering.
     local moves_form = ui.form(N.row {align="center",
         N.column {id="stack", grow=1,
-            N.label {id="caption", text=tr("MOVES"), text_style=PAL_CREAM, em=9},
+            N.label {id="caption", text=tr("MOVES LEFT"), text_style=PAL_CREAM, em=9},
             N.label {id="count", text_style=PAL_GOLD},
         },
     })
@@ -361,9 +361,14 @@ function E.bind_board_ui(R, rules, tool_art, icon_adjustments)
         gfx.circle(c, inner, face)
         gfx.glow(c + vec2(0, -4 * depth), inner * .86, glow, color.alpha(face, 0))
         if arrive < .8 then return end   -- the numbers come with the settled medallion
+        if urgent and moves > 0 and not R.reduced_motion and R.overlay == R.OV_NONE then
+            R.vfx_rim_trail(c, drawn + 2 * depth, R.now, true)
+        end
         local caption, count = moves_form.nodes.caption, moves_form.nodes.count
         count.em, count.text_style = 29 * arrive * scale, urgent and PAL_WHITE or PAL_GOLD
         local value = tostring(moves)
+        local ink = text.ink(R.skin:measure_text(caption.text_style, 9), caption.text)
+        caption.em = 9 * math.min(1, drawn * 1.65 / ink.w)
         caption.height = text.ink(R.skin:measure_text(caption.text_style, caption.em), caption.text).h
         count.height = text.ink(R.skin:measure_text(count.text_style, count.em), value).h
         moves_form.nodes.stack.gap = 6 * arrive * scale

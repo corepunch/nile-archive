@@ -44,7 +44,7 @@ at full strength and shows `quest_done`: a green coin in the same rim
 carrying `quest-check`, a dark green check rendered by
 `python3 tools/quest_check.py` into `art/registered/expedition-hud/quest-check.png`
 and packed with the HUD frames. A project that can be built now has
-Build's blue ready trail (`R.vfx_ready_rim`, procedural) circling its coin,
+Build's blue ready trail (`R.vfx_rim_trail`, procedural) circling its coin,
 left out under reduced motion. An area marker the tracker would cover is
 not drawn until the map pans it clear.
 The Build rim uses the board’s existing blue particles
@@ -866,9 +866,14 @@ The Station Kiosk introduces **Otis Bell**. The speaking and listening states sh
 
 ## Guided board lesson
 
-The shared board tutorial lights the silhouettes of the relevant pieces,
-uses a [painted ivory arrow](../../../engine/art/match3/tutorial-arrow.md) for the swap,
-and rims the charging tool in cream. These cues introduce
+The shared board tutorial dims the full display around a cream-outlined
+rectangle spanning the two swap cells. It lights the relevant piece silhouettes
+and uses a [painted ivory arrow](../../../engine/art/match3/tutorial-arrow.md) for the swap. Tool lessons rim the charging tool in cream. These cues introduce
 ordinary matches, Line Gems, Rainbow Gems, tinsel and earned tools using
 the current campaign pieces and skin. Reduce Motion keeps the arrow still.
-Review with `build/test/christmas-market "shot tutorial-"`.
+Review with `build/test/all --suite=christmas-market "shot tutorial-line"`.
+
+The red Moves Left medallion uses the existing `fx-tablet-glow` and
+`fx-tablet-spark` frames in an amber clockwise trail when 1–5 moves remain
+(`R.vfx_rim_trail`). Reduce Motion keeps the red face steady. Review the
+warning with `build/test/all --suite=christmas-market "shot low-moves"`.

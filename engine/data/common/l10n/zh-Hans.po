@@ -81,8 +81,8 @@ msgid "Ice and chains must be broken first."
 msgstr "必须先打破冰块和锁链。"
 
 #: engine/lua/match3.lua
-msgid "MOVES"
-msgstr "步数"
+msgid "MOVES LEFT"
+msgstr "剩余步数"
 
 #: engine/lua/match3.lua
 msgid "Match its pieces to charge this tool."
@@ -464,6 +464,10 @@ msgstr "棋盘已保存。点击“开始”继续第 %d 关。"
 msgid "Your town stays open to build."
 msgstr "你的小镇随时可以继续建设。"
 
+#: engine/lua/match3/tutorial.lua
+msgid "Clear the targets before you run out of moves. Swap these pieces to match three in a line."
+msgstr "在步数用完前清除所有目标。交换这两个棋子，让三个相同的棋子排成一行。"
+
 #. TRANSLATORS: %s is a tool's name (Hammer, Bomb ...): its pieces charge it
 #: engine/lua/match3/tutorial.lua
 #, lua-format
@@ -489,10 +493,6 @@ msgstr "跳过"
 #: engine/lua/match3/tutorial.lua
 msgid "Swap the Rainbow Gem with a piece to clear every piece of that kind."
 msgstr "把彩虹宝石与棋子交换，可清除所有同种棋子。"
-
-#: engine/lua/match3/tutorial.lua
-msgid "Swap the highlighted pieces to match three in a line."
-msgstr "交换高亮的棋子，让三个连成一线。"
 
 #. TRANSLATORS: a tool's name, then the sentence saying what it does
 #: engine/lua/match3/tutorial.lua

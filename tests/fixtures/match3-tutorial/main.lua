@@ -31,6 +31,8 @@ function desc.init()
     R.tutorial.enabled, R.quiet, R.reduced_motion = true, true, true
     lesson, frames = preview or 1, 0
     if lesson == 5 then start_bonus() else start(lesson) end
+    local preview_moves = preview and tonumber(app.arg("moves"))
+    if preview_moves then R.g.moves, R.reduced_motion = preview_moves, false end
 end
 
 local function other_swap(predicate)

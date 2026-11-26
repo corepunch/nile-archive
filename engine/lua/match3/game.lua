@@ -1174,7 +1174,7 @@ function G.bind(R, over)
             end or nil,
             -- Build's ready trail, around each project that can be built now.
             quest_rim = function(center, radius)
-                if not R.reduced_motion and R.overlay == R.OV_NONE then R.vfx_ready_rim(center, radius, R.now) end
+                if not R.reduced_motion and R.overlay == R.OV_NONE then R.vfx_rim_trail(center, radius, R.now) end
             end,
             quest_tap = function(key)
                 for _, record in ipairs(R.phase_projects()) do
@@ -1186,7 +1186,7 @@ function G.bind(R, over)
             end,
             build_rim = function(center, radius)
                 if not R.reduced_motion and R.overlay == R.OV_NONE and R.can_build_project() then
-                    R.vfx_ready_rim(center, radius, R.now)
+                    R.vfx_rim_trail(center, radius, R.now)
                 end
             end,
             play = R.play_next,

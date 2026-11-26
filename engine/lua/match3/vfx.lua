@@ -99,6 +99,7 @@ function V.bind(R, rules)
 
     local blue_hint = {face = rgba(12, 76, 235), shadow = rgba(14, 44, 199), glow = rgba(28, 105, 255), spark = rgba(53, 222, 255)}
     local green_hint = {face = rgba(18, 164, 47), shadow = rgba(12, 104, 39), glow = rgba(54, 203, 52), spark = rgba(161, 255, 105)}
+    local amber_warning = {glow = rgba(255, 105, 37), spark = rgba(255, 218, 112)}
     local HINT_PERIOD, HINT_DURATION, HINT_LAP = 9, 3.6, 2.65
     local TRAIL_PARTICLES = 36
     function R.tablet_hint_time(age)
@@ -121,14 +122,15 @@ function V.bind(R, rules)
         end
     end
 
-    function R.vfx_ready_rim(center, radius, time)
+    function R.vfx_rim_trail(center, radius, time, warning)
         -- Only the bright head and fading wake trace the brass rim. The face
         -- stays clear under the spinning particles.
         local angle = 2 * PI * (time / HINT_LAP - .25)
+        local ink = warning and amber_warning or blue_hint
         for n = 14, 0, -1 do
             local behind = n / TRAIL_PARTICLES
             local at = center + vec2.polar(angle - 2 * PI * behind, radius)
-            rim_particle(at, radius, time, n, behind, blue_hint, 1 - behind * 2.4)
+            rim_particle(at, radius, time, n, behind, ink, 1 - behind * 2.4)
         end
     end
 

@@ -215,6 +215,8 @@ The building upgrade is recorded but has no art yet.
 
 ## Campaign
 
+The upper-left Moves Left counter turns red and gains a circling amber trail at five moves. Guided swaps dim the board around the two pieces.
+
 The 100 square boards are authored in `lua/campaign.lua`, five epochs of twenty levels. Each board has a tier: levels 1–4 teach, then every ten levels run easy, easy, normal, normal, hard, easy, normal, normal, hard, boss. Single chains arrive on level 4 and double chains on level 9. `python3 tools/square_boards.py relic-rush` validates the boards, `tools/square_trim.py` fills and trims their plaques to the tier target and `tools/tune_moves.py` fits their move budgets. Every tier starts from the median clear × 1.25, rounded up. Relic Rush multiplies that result by 1.5 and rounds up again. Slow bot samples do not raise the budget. The [previous hex campaign](docs/board-progression.md) records the earlier layouts.
 
 ## Buildings

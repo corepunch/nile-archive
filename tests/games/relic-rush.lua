@@ -31,6 +31,7 @@ smoke("--lua tests/fixtures/portrait-menu;games/relic-rush/lua;. --returning res
 local tutorial_review = "--lua tests/fixtures/match3-tutorial;games/relic-rush/lua;."
 smoke(tutorial_review, "match3-tutorial")
 shot("tutorial-match-three", "480x900", tutorial_review .. " --tutorial-lesson 1 --frames 8")
+shot("low-moves", "480x900", tutorial_review .. " --tutorial-lesson 6 --moves 5 --frames 60")
 shot("tutorial-rainbow", "390x844", tutorial_review .. " --tutorial-lesson 3 --frames 8 --safe-area 0,47,0,34")
 smoke("--campaign --size 240x450", "campaign")   -- same logical phone layout, fewer pixels per frame
 smoke("--lua tests/fixtures/ui --data games/relic-rush/data --size 900x700", "ui")
